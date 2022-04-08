@@ -42,30 +42,31 @@ public class ProductionDBVerification {
 	String tagname;
 	String productionname;
 	String TempName;
-
-	@BeforeClass(alwaysRun = true)
-
-	private void TestStart() throws Exception, InterruptedException, IOException {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	}
-
 	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
-
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
-		driver = new Driver();
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		Input input = new Input();
+		input.loadEnvConfig();
 		base = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-
-		// Login as a PA
+		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
+
 	}
-	@Test(groups = { "regression" }, priority = 1)
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.info(testMethod.getName());
+	}
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void getTIFFpageCountAlwaysOne() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56070 -Production Sprint 06");
@@ -78,7 +79,7 @@ public class ProductionDBVerification {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
 
 		// search for folder
@@ -86,6 +87,7 @@ public class ProductionDBVerification {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
 		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 
 		//Verify pdf with burn redaction
 		ProductionPage page = new ProductionPage(driver);
@@ -116,8 +118,9 @@ public class ProductionDBVerification {
 		
 		//delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	
 	/**
@@ -125,7 +128,7 @@ public class ProductionDBVerification {
 	 *         No:RPMXCON-56076
 	 * @Description: To Verify if user selects only PDF for Native Placeholdering file then PageCount is always 1 and it will not skip the 'DOCPGCOUNTUPDT'.
 	 */
-	@Test(groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void getPageCountOneWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56076 -Production Sprint 06");
@@ -138,7 +141,7 @@ public class ProductionDBVerification {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
 
 		// search for folder
@@ -146,6 +149,7 @@ public class ProductionDBVerification {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
 		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 
 		//Verify 
 		ProductionPage page = new ProductionPage(driver);
@@ -175,15 +179,16 @@ public class ProductionDBVerification {
 		
 		//delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	/**
 	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-56081
 	 * @Description: To Verify in production if selects DAT,Native ,TIFF AND Text (ingested) then it will not skip the page count.
 	 */
-	@Test(groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void getProductionPageCountWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56081 -Production Sprint 06");
@@ -197,7 +202,7 @@ public class ProductionDBVerification {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
 
 		// search for folder
@@ -205,6 +210,7 @@ public class ProductionDBVerification {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
 		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 
 		//Verify 
 		ProductionPage page = new ProductionPage(driver);
@@ -233,37 +239,33 @@ public class ProductionDBVerification {
 		
 		//delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		base = new BaseClass(driver);
-		Reporter.setCurrentTestResult(result);
+	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+//			loginPage.logoutWithoutAssert();
 		}
 		try {
-			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR PRODUCTION EXECUTED******");
 		try {
-			loginPage.clearBrowserCache();
-		} catch (Exception e) {
-		// no session avilable
+			// LoginPage.clearBrowserCache();
 
-	}
-}
-	
+		} catch (Exception e) {
+			System.out.println("Sessions already closed");
+		}
+	}	
 }
 

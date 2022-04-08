@@ -34,7 +34,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SessionSearch {
- 
+
 	Driver driver;
 	public static int pureHit;
 	BaseClass base;
@@ -1027,7 +1027,15 @@ public class SessionSearch {
 	}
 
 	public Element getNodeToOw(String nodeName) {
-		return driver.FindElementByXPath("(//a[text()='" + nodeName + "']//..//i)[1]");
+//		return driver.FindElementByXPath("(//a[text()='" + nodeName + "']//..//i)[1]");
+		return driver.FindElementByXPath(
+				"(//a[@class='jstree-anchor jstree-disabled'and text()='" + nodeName + "']//preceding-sibling::i)[1]");
+	}
+
+	public Element getSecurityGroupNewNode(String Node) {
+		return driver.FindElementByXPath(
+				"//a[text()='Shared with Default Security Group']//following-sibling::ul//li//a[contains(text(),'"
+						+ Node + "')]");
 	}
 
 	public Element getChooseSearchToOverwrite(String searchName) {
@@ -1687,6 +1695,10 @@ public class SessionSearch {
 				.FindElementByXPath("(.//*[@data-original-title='Docs That Met Your Criteria']/span/count)[" + i + "]");
 	}
 
+	public Element getView() {
+		return driver.FindElementByXPath("//a[@class='submenu-a']");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1826,7 +1838,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_Name().SendKeys(searchName);
-		driver.Manage().window().fullscreen();
+//		driver.Manage().window().fullscreen();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1834,7 +1846,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getSaveSearch_SaveButton().Click();
-		driver.Manage().window().maximize();
+//		driver.Manage().window().maximize();
 		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
@@ -2918,7 +2930,15 @@ public class SessionSearch {
 		}
 
 		getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000);
+
+		base.waitTime(2);
+		if (getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			System.out.println("View is not found");
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -3027,11 +3047,11 @@ public class SessionSearch {
 
 	public void bulkAssign() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if (getPureHitAddButton().isElementAvailable(2)) {
-			getPureHitAddButton().waitAndClick(5);
-		} else {
+		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
 		getBulkActionButton().waitAndClick(3);
@@ -3041,7 +3061,6 @@ public class SessionSearch {
 				return getBulkAssignAction().Visible();
 			}
 		}), Input.wait60);
-
 		getBulkAssignAction().waitAndClick(10);
 
 		base.stepInfo("performing bulk assign");
@@ -3778,49 +3797,28 @@ public class SessionSearch {
 	 */
 	public void validateModifiedAdvnSearch(String option, String expectedPureHitCount, String modifiableQueryType) {
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getModifyASearch().Visible();
-			}
-		}), Input.wait90);
-		getModifyASearch().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getModifyASearch());
+		getModifyASearch().ScrollTo();
+		getModifyASearch().waitAndClick(20);
 		driver.waitForPageToBeReady();
 		if (modifiableQueryType == "savedsearch") {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifiableSavedSearchQueryAS().Visible();
-				}
-			}), Input.wait30);
 			driver.waitForPageToBeReady();
-			getModifiableSavedSearchQueryAS().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifiableSavedSearchQueryAS());
+			getModifiableSavedSearchQueryAS().waitAndClick(20);
 		}
 
 		else {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifiableSearchQuery(modifiableQueryType).Visible()
-							&& getModifiableSearchQuery(modifiableQueryType).Enabled();
-				}
-			}), Input.wait30);
 			driver.waitForPageToBeReady();
-			getModifiableSearchQuery(modifiableQueryType).waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifiableSearchQuery(modifiableQueryType));
+			getModifiableSearchQuery(modifiableQueryType).waitAndClick(20);
 
 		}
 		if (option == "YES") {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifysearchOKBtn().Visible();
-				}
-			}), Input.wait30);
-			getModifysearchOKBtn().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
+			getModifysearchOKBtn().waitAndClick(10);
 		} else {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getModifysearchNOBtn().Visible();
-				}
-			}), Input.wait30);
-			getModifysearchNOBtn().waitAndClick(5);
+			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
+			getModifysearchNOBtn().waitAndClick(10);
 		}
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -4746,6 +4744,8 @@ public class SessionSearch {
 		}), Input.wait30);
 		getRedactBtn().waitAndClick(10);
 
+		docviewpage.selectBatchRedactedDoc();
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBatchRedactionCount().Visible();
@@ -5047,7 +5047,7 @@ public class SessionSearch {
 	public void bulkAssignWithNewAssignment() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -5208,7 +5208,7 @@ public class SessionSearch {
 
 		// Click on Search button
 		if (select.equals("Yes")) {
-			getAdvanceSearch_btn_Current().Click();
+			getAdvanceSearch_btn_Current().waitAndClick(5);
 
 			// look for warnings, in case of proximity search
 			try {
@@ -5259,9 +5259,13 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 		try {
-			softAssert.assertTrue(getSaveSearchPopupFolderName(groupName).isElementAvailable(3));
-			base.stepInfo(groupName + " : is present");
-			getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+				base.stepInfo(groupName + " : is present");
+				getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+			} else {
+				System.out.println(groupName + " : SG not available");
+				base.stepInfo(groupName + " : SG not available");
+			}
 		} catch (Exception e) {
 			System.out.println(groupName + " : SG not available");
 			base.stepInfo(groupName + " : SG not available");
@@ -5272,6 +5276,7 @@ public class SessionSearch {
 
 		// base.waitForElement(getSaveSearch_SaveButton());
 		getSaveSearch_SaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("Saved search saved successfully");
 
@@ -9328,11 +9333,6 @@ public class SessionSearch {
 			}
 		}), Input.wait90);
 		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
-		System.out.println(
-				"Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
-		base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
-		base.stepInfo(
-				"Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
 		return pureHit;
 	}
 
@@ -10108,6 +10108,12 @@ public class SessionSearch {
 		base.waitForElement(getSearchButton());
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		if (getTallyContinue().isDisplayed()) {
+			base.waitForElement(getTallyContinue());
+			getTallyContinue().waitAndClick(5);
+		} else {
+			driver.waitForPageToBeReady();
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -10368,6 +10374,13 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
+		if (getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			System.out.println("View is not found");
+		}
 		getDocViewAction().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
 
@@ -10957,42 +10970,66 @@ public class SessionSearch {
 		base.VerifyWarningMessage("Please select the Language Pack/Dialect in Audio search");
 
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 * This method will assign/unassign pop up when we try to perform bulk 
-	 * assign from anysource for existing assignment.
+	 * @author Jayanthi.Ganesan This method will assign/unassign pop up when we try
+	 *         to perform bulk assign from anysource for existing assignment.
 	 * @param assignmentName
 	 */
-	  public void bulkAssignExistingWithoutActionTab(String assignmentName) {
-			UtilityLog.info("performing bulk assign");
-			driver.waitForPageToBeReady();
-			base.waitForElement(getSelectAssignmentExisting(assignmentName));
-			driver.waitForPageToBeReady();
-			getSelectAssignmentExisting(assignmentName).Click();
-			driver.scrollingToBottomofAPage();
-			driver.waitForPageToBeReady();
-			getPersistantHitCb_Existing().isElementAvailable(3);
-			getPersistantHitCb_Existing().waitAndClick(5);
-			base.waitTillElemetToBeClickable(getContinueButton());
-			getContinueButton().waitAndClick(20);
-			final BaseClass bc = new BaseClass(driver);
-			final int Bgcount = bc.initialBgCount();
+	public void bulkAssignExistingWithoutActionTab(String assignmentName) {
+		UtilityLog.info("performing bulk assign");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAssignmentExisting(assignmentName));
+		driver.waitForPageToBeReady();
+		getSelectAssignmentExisting(assignmentName).Click();
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		getPersistantHitCb_Existing().isElementAvailable(3);
+		getPersistantHitCb_Existing().waitAndClick(5);
+		base.waitTillElemetToBeClickable(getContinueButton());
+		getContinueButton().waitAndClick(20);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
-				}
-			}), Input.wait30);
-			getFinalizeButton().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		getFinalizeButton().Click();
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return bc.initialBgCount() == Bgcount + 1;
-				}
-			}), Input.wait60);
-			UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
-			Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
-		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
+		Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
+	}
 
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param Text
+	 * @param Value
+	 * @Description without passing url for keep previous used data and search in
+	 *              metadata
+	 */
+	public void SearchMetaDataWithoutUrlPassing(String Text, String Value) {
+		// To make sure we are in basic search page
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		getBasicSearch_MetadataBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(Text);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(Value);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		// Click on Search button
+		base.waitForElement(getSearchButton());
+		getSearchButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+	}
 
 }

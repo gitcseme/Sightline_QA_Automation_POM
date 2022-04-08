@@ -1068,6 +1068,140 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author :jayanthi
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void verifySummaryTab() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52612");
+		baseClass.stepInfo("To verify that saved Workflow Name and description should be displayed in Summary tab");
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+		// Search for any string
+		search = new SessionSearch(driver);
+		 search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		UtilityLog.info(Id);	
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		driver.waitForPageToBeReady();
+		workflow.editWorkFlow(wfName);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		workflow.nextButton();
+		workflow.actionTabToSelectFolder(folderName, true);
+		workflow.nextButton();
+		workflow.schedulesTab(1);
+		workflow.nextButton();
+		workflow.notificationTab();
+		workflow.nextButton();
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF name and description");
+		baseClass.waitForElement(workflow.getSummaryTab_WFName());
+		softAssertion.assertEquals(workflow.getSummaryTab_WFName().getText(),wfName);
+		softAssertion.assertEquals(workflow.getSummaryTab_WFDesc().getText(),wfDesc);
+		softAssertion.assertAll();
+		
+		baseClass.passedStep(" WF Name and Description is Displayed as expected in SummaryTab WFName- "
+		+ ""+workflow.getSummaryTab_WFName().getText()+" WFDescription"+workflow.getSummaryTab_WFDesc().getText()+"");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		page.deleteAllFolders(folderName);
+	
+	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 14/04/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that selected Source details is displayed in Summary tab.
+	 * 'RPMXCON-52613' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifySourceInSummaryTab() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52613");
+		baseClass.stepInfo("To verify that selected Source details is displayed in Summary tab.");
+		softAssertion = new SoftAssert();
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+		// Search for any string
+		search = new SessionSearch(driver);
+		 search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		UtilityLog.info(Id);	
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		driver.waitForPageToBeReady();
+		workflow.editWorkFlow(wfName);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		workflow.nextButton();
+		workflow.actionTabToSelectFolder(folderName, true);
+		workflow.nextButton();
+		workflow.schedulesTab(1);
+		workflow.nextButton();
+		workflow.notificationTab();
+		workflow.nextButton();
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF Source and description");
+		baseClass.waitForElement(workflow.getSummeryTabSource());
+		workflow.getSummeryTabSource().waitAndClick(5);
+		baseClass.waitForElement(workflow.getSummaryTab_SourceAssignment());
+		softAssertion.assertTrue(workflow.getSummaryTab_SourceAssignment().Displayed());
+		String SSName =workflow.getSummaryTab_SourceSavedSearch().getText();
+		if(SSName.equals(Id)){
+			baseClass.stepInfo("Source Saved Search Name is Displayed");
+		}
+		softAssertion.assertAll();
+		
+		baseClass.passedStep(" SourceSavedSearch and Assignment is Displayed as expected in SummaryTab SourceSavedSearch- "
+		+ ""+workflow.getSummaryTab_SourceSavedSearch().getText()+" Source Assignment"+workflow.getSummaryTab_SourceAssignment().getText()+"");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		page.deleteAllFolders(folderName);
+	
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

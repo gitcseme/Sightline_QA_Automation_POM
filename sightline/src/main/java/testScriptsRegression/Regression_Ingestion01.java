@@ -732,6 +732,221 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 29/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47595
+	 * Description :After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 34)
+	public void verifyIngestionStatusAfterRollback() throws InterruptedException   {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47595");
+		baseClass.stepInfo("After Rollback, ingestion should go back to the Draft state. Rollback will just take the ingestion in Draft mode.");
+		// verify ingestion Draft status after saving as draft
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		// Verify ingestion Draft status after Catalogging
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		//Verify ingestion Draft status after Copying
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		// Verify ingestion Draft status after indexing
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();		
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49020
+	 * Description :Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 35)
+	public void verifyTwoIngestionFromCatalogToIndexingSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49020");
+		baseClass.stepInfo("Verify two ingestions with step ( Cataloging, copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform catalog,copy and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 30/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49021
+	 * Description :Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 36)
+	public void verifyTwoIngestionRunSimultaneously() throws InterruptedException   {
+		
+		String[] dataset= {Input.TiffImagesFolder,Input.HiddenPropertiesFolder};
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49021");
+		baseClass.stepInfo("Verify two ingestions with step ( copying, indexing) having ingestion type add only  must run simultaneously");
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// Perform Copying and indexing for two ingestion
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 31/03/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48861
+	 * Description :Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 37)
+	public void verifyWarningMessageNotPromptedWhenRollingbackIngestion() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48861");
+		baseClass.stepInfo("Validate warning message is not prompted when rolling back an add only ingestion(copying/cataloging/indexing step)");
+		//Catalogging and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		//Copying and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		//indexing and rollback
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.YYYYMMDDHHMISSDat,Input.YYYYMMDDHHMISSLst);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+
+		}
+	
+	/** 
+     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47369
+	 * Description :To verify 'Ingestion Details' pop up display
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 38)
+	public void verifyIngestionDetailsPopupDisplay() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47369");
+		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
+		ingestionPage.verifyIngestionDetails();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47593
+	 * Description :As a project admin I will be able to rollback an ingestion - new approach
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 39)
+	public void verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47593");
+		baseClass.stepInfo("As a project admin I will be able to rollback an ingestion - new approach");
+		// verify rollback option after saving ingestion as draft
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		// Verify rollback option status after Catalogging stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyRollbackOptionStatus();
+		ingestionPage.rollBackIngestion();
+		//Verify rollback option status after Copying stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyRollbackOptionStatus();
+		ingestionPage.rollBackIngestion();
+		// Verify rollback option status after indexing stage
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyRollbackOptionStatus();	
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47362
+	 * Description :To verify that on Ingestion Home page, user is able to access all page by navigation controls.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 40)
+	public void verifyIngestionHomePageNavigation() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47362");
+		baseClass.stepInfo("To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
+		ingestionPage.verifyHomePageNavigationControl();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47258
+	 * Description :To Verify Contents of Ingestion Tiles On Ingestions Home.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 41)
+	public void verifyIngestionTileContentInHomePage() {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47258");
+		baseClass.stepInfo("To Verify Contents of Ingestion Tiles On Ingestions Home.");
+		ingestionPage.verifyContentOnIngestionTiles();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 06/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47589
+	 * Description :Ingestion error list changes for  ignore fields in UI
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 42)
+	public void verifyIgnoreOptionInErrorList() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47589");
+		baseClass.stepInfo("Ingestion error list changes for  ignore fields in UI");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder,Input.dateFormat,Input.DAT_DDMMYYYY_HHMISS,Input.Natives_DDMMYYYY_HHMISS);
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
+		ingestionPage.ingestionCopying();
+		ingestionPage.verifyIgnoreOptionAndCheckbox();
+		//rollback
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 06/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49526
+	 * Description :Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 43)
+	public void verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49526");
+		baseClass.stepInfo("Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
+		//rollback
+		ingestionPage.rollBackIngestion();
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

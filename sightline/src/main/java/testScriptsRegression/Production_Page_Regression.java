@@ -241,11 +241,11 @@ public class Production_Page_Regression {
 	 *                     Placeholder
 	 */
 
-	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void generateTIFFWithTechIssue() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-56087- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
+		baseClass.stepInfo("Test case Id: RPMXCON-56087- Production Sprint 06");
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -289,7 +289,7 @@ public class Production_Page_Regression {
 	 *                     Produced Documents Placeholder
 	 */
 
-	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 4)
+	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 4)
 	public void generateTIFFWithNativelyPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56089- Production Sprint 06");

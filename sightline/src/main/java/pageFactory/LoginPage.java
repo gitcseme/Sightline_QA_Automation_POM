@@ -103,6 +103,11 @@ public class LoginPage {
 		return driver.FindElementByXPath("//span[@class='clsUserName']");
 	}
 
+	public Element getProjectLang() {
+		return driver.FindElementByXPath("//div[@class='project-context hidden-xs projclass']//span[text()='DE: Project:']");
+	
+	}
+	
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;
@@ -559,10 +564,12 @@ public class LoginPage {
 	}
 
 	/*
-	 * @created by Jeevitha.R parameter: Edit profile language
+	 * @created by Jeevitha.R 
+	 * @parameter: Edit profile language
 	 */
 	public void editProfile(String language) {
 
+		base.waitTime(4);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSignoutMenu().Visible() && getSignoutMenu().Enabled();
@@ -575,7 +582,7 @@ public class LoginPage {
 				return getEditProfile().Visible() && getEditProfile().Enabled();
 			}
 		}), Input.wait30);
-		getEditProfile().Click();
+		getEditProfile().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -584,18 +591,37 @@ public class LoginPage {
 		}), Input.wait30);
 
 		getSelectLanguage().selectFromDropdown().selectByVisibleText(language);
-		getEditprofilesave().Click();
+		System.out.println("Selected Language : " + language);
+		base.stepInfo("Selected Language : " + language);
+		getEditprofilesave().waitAndClick(10);
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : returns Current Username
+	 * @return
+	 */
 	public String getCurrentUserName() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSignoutMenu());
 		getSignoutMenu().waitAndClick(10);
-		
+
 		base.waitForElement(getUsername());
 		String username = getUsername().getText();
-		System.out.println("Logged In Username : "+username);
+		System.out.println("Logged In Username : " + username);
 		getSignoutMenu().waitAndClick(10);
-        return username;
+		return username;
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : switch Language to English
+	 */
+	public void switchProjectToEnglish() {
+		if(getProjectLang().isElementAvailable(3)) {
+		editProfile("English - United States");
+		}else {
+			System.out.println("Selected language : English");
+		}
 	}
 }

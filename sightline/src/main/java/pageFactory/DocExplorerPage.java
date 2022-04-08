@@ -350,6 +350,11 @@ public class DocExplorerPage {
 				"//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li["
 						+ folderNumber + "]/a");
 	}
+	// Added by Brundha 
+	public Element getView() {
+		return driver.FindElementByXPath("//a[@class='submenu-a']");
+	}
+	
 
 	public Element getDocListCustodianName() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']/tbody/tr[1]/td[4]/div");
@@ -2292,7 +2297,15 @@ public class DocExplorerPage {
 	public void docExpViewInDocView() {
 
 		bc.waitForElement(getDocExp_actionButton());
-		getDocExp_actionButton().waitAndClick(5);
+		getDocExp_actionButton().waitAndClick(10);
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
+			}
+		
 		bc.waitForElement(getDocViewAction());
 		getDocViewAction().waitAndClick(5);
 	}

@@ -478,6 +478,9 @@ public class BatchRedactionPage {
 	public Element getLastPageNum() {
 		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
 	}
+	public ElementCollection getPageNumb() {
+		return driver.FindElementsByXPath("(//ul[@class='pagination pagination-sm']//a)");
+	}
 
 	public Element getActivePage() {
 		return driver.FindElementByXPath("//li[@class='paginate_button active']");
@@ -519,6 +522,10 @@ public class BatchRedactionPage {
 	public Element getInformativeErrorMessageText() {
 		return driver.FindElementByXPath("//div[@class='form-group']//strong//label");
 	}
+	
+	public Element getRedactDisabledBtn() {
+		return driver.FindElementByXPath("//button[text()='Redact' and @disabled='disabled']");
+		}
 
 	public BatchRedactionPage(Driver driver) {
 
@@ -556,7 +563,13 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
-
+		
+		boolean flag=verifyAnalyzeBtn(searchname,null);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.mySavedSearch);
+		}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -656,6 +669,12 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
+		boolean flag=verifyAnalyzeBtn(searchname,null);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.mySavedSearch);
+		}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -1028,10 +1047,17 @@ public class BatchRedactionPage {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @throws InterruptedException
+	 */
 	public void testDD() throws InterruptedException {
-
 		// Click Reduction Button
+		base.waitForElement(getRductionBtb());
 		getRductionBtb().waitAndClick(5);
+		
+        docview.selectBatchRedactedDoc();
+
 		// Choose Reduct
 		getNextbtn().waitAndClick(3);
 
@@ -1043,7 +1069,7 @@ public class BatchRedactionPage {
 		System.out.println("Drag and Dropped");
 		Thread.sleep(5000);// waiting for batch redacted text to resize
 		// Expand reduction
-		actions.dragAndDropBy(getRightBtm().getWebElement(), 50, 100).build().perform();
+		actions.dragAndDropBy(getRightBtm().getWebElement(), 50, 50).build().perform();
 		System.out.println("Exnded");
 		getDocViewSaveBtn().waitAndClick(10);
 		System.out.println("REdaction Tag Saved Successfully");
@@ -1068,6 +1094,13 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
+		
+		boolean flag=verifyAnalyzeBtn(searchname,null);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.mySavedSearch);
+		}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -1164,7 +1197,7 @@ public class BatchRedactionPage {
 		base.waitForElement(getRollbackbtn(searchName));
 		getRollbackbtn(searchName).waitAndClick(10);
 
-		base.waitTime(10);
+		base.waitTime(7);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPopupYesBtn().Visible();
@@ -1483,6 +1516,13 @@ public class BatchRedactionPage {
 		getMySavedSearchDropDown().waitAndClick(20);
 		getMySavedSearchTextbox(searchname).Selected();
 		final int Bgcount = base.initialBgCount();
+		
+		boolean flag=verifyAnalyzeBtn(searchname,null);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.mySavedSearch);
+		}
+		
 		base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(20)) {
 			getAnalyzeSearchForSavedSearchResult(searchname).waitAndClick(10);
@@ -1501,7 +1541,7 @@ public class BatchRedactionPage {
 			}
 		}), Input.wait60);
 		final int bgCountAfter = base.initialBgCount();
-//		base.waitForElement(getViewReportForSavedSearch(searchname));
+		base.waitForElement(getViewReportForSavedSearch(searchname));
 		if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			System.out.println("Clicked on View Report");
@@ -1511,7 +1551,6 @@ public class BatchRedactionPage {
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
 			getMySavedSearchTextbox(searchname).Selected();
-			getViewReportForSavedSearch(searchname).waitAndClick(20);
 			if (getViewReportForSavedSearch(searchname).Displayed()) {
 				getViewReportForSavedSearch(searchname).waitAndClick(10);
 				softassert.assertTrue(true);
@@ -1542,7 +1581,8 @@ public class BatchRedactionPage {
 		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
 		base.waitForElement(getMySavedSearchDropDown());
 		getMySavedSearchDropDown().waitAndClick(5);
-
+		final int Bgcount = base.initialBgCount();
+		
 		// Verify Analyze Btn
 		base.waitForElement(getNodeAnalyseBtn(node));
 
@@ -1580,8 +1620,15 @@ public class BatchRedactionPage {
 			base.stepInfo("Performed Analysis for " + node);
 		}
 
+		// verify View report Button.
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return base.initialBgCount() == Bgcount + 1;
+					}
+				}), Input.wait60);
+				final int bgCountAfter = base.initialBgCount();
 		// verify View Report Btn
-		
+		base.waitForElement(getNodeViewReportBtn(node));
 		if(getNodeViewReportBtn(node).isElementAvailable(10)) {
 			getNodeViewReportBtn(node).waitAndClick(10);
 			base.stepInfo("Performed View Report for " + node);
@@ -1590,7 +1637,7 @@ public class BatchRedactionPage {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
-
+			base.waitForElement(getNodeViewReportBtn(node));
 			if (getNodeViewReportBtn(node).isElementPresent()) {
 				getNodeViewReportBtn(node).waitAndClick(10);
 				base.stepInfo("Performed View Report for " + node);
@@ -1689,12 +1736,20 @@ public class BatchRedactionPage {
 	/*
 	 * @author Jeevitha
 	 */
-	public void performAnalysisGroupForRedcation(String searchname, String newNode, int purehit, boolean download)
+	public void performAnalysisGroupForRedcation(String searchname, String newNode, int purehit, boolean download,boolean checkAnalyze)
 			throws InterruptedException, IOException {
 
 		String bullHornValue = getBullHornIcon_CC().getText();
 		int valueBeforeAnalysis = Integer.parseInt(bullHornValue);
 
+		if(checkAnalyze) {
+		boolean flag=verifyAnalyzeBtn(searchname,newNode);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.mySavedSearch);
+		}
+		}
+		
 		// CLick Analysis Btn
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(5)) {
 			base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
@@ -1929,7 +1984,7 @@ public class BatchRedactionPage {
 		getViewAllBtn().waitAndClick(20);
 		driver.waitForPageToBeReady();
 		String url = driver.getUrl();
-		String expURL = "https://sightlinept.consilio.com/Background/BackgroundTask";
+		String expURL = Input.url + "Background/BackgroundTask";
 		softassert.assertEquals(expURL, url);
 		base.stepInfo("Navigated to My backgroud task page.");
 		base.waitForElement(getStatusDD());
@@ -1964,7 +2019,7 @@ public class BatchRedactionPage {
 		}
 		base.passedStep(
 				"Sucessfully verified the result  displayed on ''My BackgroundTask Page' for the selected Filter type 'Batch redaction'");
-
+		softassert.assertAll();
 	}
 
 	/**
@@ -2012,6 +2067,12 @@ public class BatchRedactionPage {
 		getDefaultTab().waitAndClick(10);
 		getSavedSearchNewGroupExpand().waitAndClick(10);
 
+		boolean flag=verifyAnalyzeBtn(searchname,null);
+		if(flag=false) {
+			driver.Navigate().refresh();
+		loadBatchRedactionPage(Input.shareSearchDefaultSG);
+		}
+		
 		// CLick Analysis Btn For Search Under Default TAB
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(5)) {
 			base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
@@ -2316,7 +2377,7 @@ public class BatchRedactionPage {
 		// verify Background Task page
 		driver.waitForPageToBeReady();
 		String url = driver.getUrl();
-		String expURL = "https://sightlinept.consilio.com/Background/BackgroundTask";
+		String expURL = Input.url + "Background/BackgroundTask";
 		softassert.assertEquals(expURL, url);
 		base.stepInfo("Navigated to My backgroud task page.");
 
@@ -2366,6 +2427,7 @@ public class BatchRedactionPage {
 		} else {
 			base.failedMessage(actualId + " is Not prsent In the Table");
 		}
+		softassert.assertAll();
 	}
 
 	/**
@@ -2375,6 +2437,7 @@ public class BatchRedactionPage {
 	 * @return
 	 */
 	public String verifyCompletedTimeOfSearchInBR(String searchName, String newNode) {
+		driver.waitForPageToBeReady();
 		if (getNodeAnalyseBtn(newNode).isDisplayed()) {
 			getNewNode(newNode).waitAndClick(10);
 			base.waitForElement(getSavedSearchNewGroupExpand());
@@ -2450,7 +2513,13 @@ public class BatchRedactionPage {
 	 */
 	public void verifyPreviousAndNextBtn() {
 		driver.scrollingToBottomofAPage();
-		String lastNum = getLastPageNum().getText();
+		String lastNum;
+		if(getLastPageNum().isElementAvailable(4)) {
+			lastNum=getLastPageNum().getText();
+		}else {
+		int totalNum = getPageNumb().size();
+		 lastNum=String.valueOf(totalNum-2);
+		}
 		System.out.println("LAst PAge No : " + lastNum);
 		String activePage = getActivePage().getText();
 		System.out.println("First Page No : " + activePage);
@@ -2465,8 +2534,7 @@ public class BatchRedactionPage {
 		} else {
 			base.stepInfo("Page No : " + activePage + " and Next Button is Enabled");
 		}
-
-		int totalPage = Integer.parseInt(lastNum);
+		int totalPage=Integer.parseInt(lastNum);
 		for (int i = 2; i <= totalPage; i++) {
 			getPageNum(i).waitAndClick(3);
 			driver.waitForPageToBeReady();
@@ -2489,16 +2557,21 @@ public class BatchRedactionPage {
 	 * @param searchname
 	 * @param node
 	 */
-	public void verifyAnalyzeBtn(String searchname, String node) {
+	public boolean verifyAnalyzeBtn(String searchname, String node) {
+		boolean flag=false;
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(3)) {
 			System.out.println("Analyze Search for Redactions button is Displayed for :" + searchname);
 			base.passedStep("Analyze Search for Redactions button is Displayed for :" + searchname);
+			flag=true;
 		} else if (getNodeAnalyseBtn(node).isElementAvailable(3)) {
 			System.out.println("Analyze Group for Redactions button is Displayed for :" + node);
 			base.passedStep("Analyze Group for Redactions button is Displayed for :" + node);
+			flag = true;
 		} else {
 			base.stepInfo("Analyze Search/Group for Redactions button is Not Displayed");
+		flag=false;
 		}
+		return flag;
 	}
 
 	/**
@@ -2509,7 +2582,7 @@ public class BatchRedactionPage {
 	public void verifyScrollBar(int limit) throws InterruptedException {
 		Boolean checkedLargerLimit = false;
 		int listSize = 0;
-		loadBatchRedactionPage(null);
+		loadBatchRedactionPage(Input.mySavedSearch);
 		driver.waitForPageToBeReady();
 
 		// getOptionDropdown(Input.mySavedSearch).waitAndClick(3);
@@ -2818,4 +2891,5 @@ public class BatchRedactionPage {
 			getPopupYesBtn().waitAndClick(3);
 		}
 	}
+	
 }

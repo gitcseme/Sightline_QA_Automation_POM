@@ -2055,6 +2055,7 @@ public class Production_Test_Regression_03 {
 	base.passedStep("files is split as per the split folder count");
 	base.passedStep("Verified that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10");
 	
+	page.deleteFiles();
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 	loginPage.logout();
@@ -2180,7 +2181,831 @@ public class Production_Test_Regression_03 {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
 		}
+		/**
+		 * @author Aathith Test case id-RPMXCON-49726
+		 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
+		 * 
+		 */
+		@Test(enabled = true,groups = { "regression" }, priority = 30)
+		public void verifyPdfBrandingGenerateSuccessfully() throws Exception {
 
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49726 -Production Component");
+			base.stepInfo("Verify that branding is applied on all pages for  image based documents on generated PDF file");
+			
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+			
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			DataSets dataset = new DataSets(driver);
+			base.stepInfo("Navigating to dataset page");
+			dataset.navigateToDataSetsPage();
+			base.stepInfo("Selecting uploadedset and navigating to doclist page");
+			dataset.selectDataSetWithName(Input.pdfDataSet);
+			DocListPage doc = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+
+			doc.selectAllDocs();
+			
+			doc.bulkTagExistingFromDoclist(tagname);
+
+			ProductionPage page = new ProductionPage(driver);
+			page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			int firstFile = Integer.parseInt(beginningBates);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingPDFSection(tagname);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			String PDocCount = page.getProductionDocCount().getText();
+			int DocCount = Integer.parseInt(PDocCount);
+			int lastfile = firstFile + DocCount;
+			page.extractFile();
+			page.pdf_Verification_In_Generated_PlaceHolder(firstFile, lastfile, prefixID, suffixID, Input.searchString4);
+			
+			base.passedStep("Verified that branding is applied on all pages for  image based documents on generated PDF file");
+			
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");	
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
+			
+		}
+		/**
+		 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+		 *         No:RPMXCON-55979
+		 * @Description: Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Progress bar Tile View
+		 */
+		@Test(groups = { "regression" }, priority = 31)
+		public void verifiyLSTGenCompleteOnTileView() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-55979 -Production Component");
+		base.stepInfo("Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Progress bar Tile View");
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		TempName ="Templete" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		//Verify archive status on Gen page
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		//verification
+		page.verifyProductionStatusInHomePage("Generating Load Files", productionname);
+		base.passedStep("Verified that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Progress bar Tile View");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		}
+		/**
+		 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+		 *         No:RPMXCON-55978
+		 * @Description: Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Generation Page
+		 */
+		@Test(groups = { "regression" }, priority = 32)
+		public void verifyGenerationLoadFileCompleteStatusInGenPage() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-55978 -Production");
+		base.stepInfo("Verify that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Generation Page");
+		
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		//Verify archive status on Gen page
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+
+		// Wait until Generate button enables
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+		page.verifyProductionStatusInGenPage("Load File Generation");
+		base.passedStep("Verified that after LST generation completed it should displays ' Generating Load Files Complete' status on Production Generation Page");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * 			RPMXCON-58561
+		 * @Description Verify the load files should be created under the mentioned default directory in the Export location
+		 * 
+		 */
+			@Test(groups = { "regression" }, priority = 33)
+			public void verifyLoadFileMentionedDirectory() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-58561 -Production");
+			base.stepInfo("Verify the load files should be created under the mentioned default directory in the Export location");
+			
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			String newExport = "Ex" + Utility.dynamicNameAppender();
+
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			sessionSearch.bulkTagExisting(tagname);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			String text = page.getProdExport_ProductionSets().getText();
+			if (text.contains("Export Set")) {
+				page.selectExportSetFromDropDown();
+			} else {
+				page.createNewExport(newExport);
+			}
+			page.addANewExport(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSection(tagname);
+			page.fillingTextSection();
+			page.fillingMP3();
+			page.getAdvancedProductionComponent().waitAndClick(10);
+			page.advancedProductionComponentsTranslations();
+			page.navigateToNextSection();
+			page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.GetVolumeLocation().selectFromDropdown().selectByVisibleText("In Delivery Folder");
+			page.visibleCheck("Load Files:");
+			page.visibleCheck("Folder Name:");
+			page.fillingExportLocationPage(productionname);
+			
+			String location = page.getProductionOutputLocation_VolumeName().GetAttribute("value");
+			String loadfile = page.getProductionComponentsFolderDetails_FolderName_LoadFiles().GetAttribute("value");
+			
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			String name = page.getProduction().getText().trim();
+			page.getCopyPath().waitAndClick(10);
+			
+	        String actualCopedText = page.getCopiedTextFromClipBoard();
+	        
+			String parentTab = page.openNewTab(actualCopedText);
+			page.getFileDir(location).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			page.getFileDir(loadfile).waitAndClick(10);
+	        driver.waitForPageToBeReady();
+	        
+	        page.visibleCheck(name+"_DAT.dat");
+	        page.visibleCheck(name+"_MP3.lst");
+	        page.visibleCheck(name+"_Native.lst");
+	        page.visibleCheck(name+"_Text.lst");
+	        page.visibleCheck(name+"_TIFF.OPT");
+	        page.visibleCheck(name+"_TRANSLATION.lst");
+	        
+	        driver.close();
+			driver.getWebDriver().switchTo().window(parentTab);
+			base.passedStep("Verified the load files should be created under the mentioned default directory in the Export location");
+			
+			//delete tags and folders
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			loginPage.logout();
+			
+		 }
+			/**
+			 * @author Aathith Test case id-RPMXCON-48314
+			 * @Description Verify that Producing a PDF with text highlighting and reviewer remarks, 
+			 * 		block redactions and 'this page', must not eliminate any text characters 
+			 * 		unintentionally in the produced document 
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 34)
+			public void verifyProducedPadWithTextReviewRemarkRedaction() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48314 -Production Component");
+				base.stepInfo("Verify that Producing a PDF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolderInRMU(foldername);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docCount =sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.ViewInDocViewWithoutPureHit();
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				docView.documentSelection(docCount);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.RedactTextInDocView(10,10,20,20);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.selectingRedactionTag2(Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+				page.getClk_burnReductiontoggle().ScrollTo();
+				page.getClk_burnReductiontoggle().waitAndClick(10);
+				page.burnRedactionWithRedactionTag(Redactiontag1);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/");
+				page.extractFile();
+				page.isdatFileExist();
+				page.isfileisExists(Native);
+				page.pdf_Verification_In_Generated_Pdf(prefixID, suffixID, beginningBates);
+				page.pdf_Verification_In_Generated_PlaceHolder(prefixID, suffixID, beginningBates, "REDACTED");
+				
+				base.passedStep("Verified that Producing a PDF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48315
+			 * @Description Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 35)
+			public void verifyProducedTiffWithTextReviewRemarkRedaction() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48315 -Production Component");
+				base.stepInfo("Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolderInRMU(foldername);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docCount =sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.ViewInDocViewWithoutPureHit();
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				docView.documentSelection(docCount);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.RedactTextInDocView(10,10,20,20);
+	            driver.waitForPageToBeReady();
+	            docViewRedactions.selectingRedactionTag2(Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionBurnRedaction(Redactiontag1, "REDACTED");
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/");
+				page.extractFile();
+				page.isdatFileExist();
+				page.isfileisExists(Native);
+				page.OCR_Verification_In_Generated_Tiff_tess4j(prefixID, suffixID, beginningBates);
+				
+				base.passedStep("Verified that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48494
+			 * @Description To verify that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced
+			 * 
+			 */
+			@Test(enabled =true,groups = { "regression" }, priority = 36)
+			public void verifyRedactionTagforAudioDoc() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48494-Production Component");
+				base.stepInfo("To verify that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+				
+		        SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.SearchMetaData("IngestionName", "B2F9_Automation_AllSources_20211130043120500");
+				sessionSearch.selectOperatorInBasicSearch("AND");
+				sessionSearch.SearchMetaDataWithoutUrlPassing("AudioPlayerReady", "1");
+				sessionSearch.addPureHit();
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.bulkTagExisting(tagname);
+	            
+	            loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				tagsAndFolderPage.selectFolderViewInDocView(foldername);
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				docViewRedactions.deleteAllAppliedRedactions();
+				driver.waitForPageToBeReady();
+	            docViewRedactions.clickOnAddRedactionForAudioDocument();
+	            docViewRedactions.addAudioRedaction(Input.startTime, Input.endTime, Redactiontag1);
+	            
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingTIFFSectionBurnRedaction(Redactiontag1, "REDACTED");
+				page.fillingTextSection();
+				page.fillingMP3FileWithBurnRedaction(Redactiontag1);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + doccount;
+				String home = System.getProperty("user.home");
+				File Native = new File(home + "/Downloads/VOL0001/Natives/"+prefixID+beginningBates+suffixID+".MP3");
+				driver.waitForPageToBeReady();
+				
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
+				
+				if (Native.exists()) {
+		            System.out.println(" file is Exists in pointed directory");
+		            base.failedStep(Native+" file is Exists in pointed directory");
+		            }
+		        else {
+		            base.passedStep("Natives is not be produced for MP3 if it is associated to selected Redaction Tag ");
+		        }
+				
+				base.passedStep("verifed that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced");
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * 			RPMXCONO-47172
+			 * @Description Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10
+			 */
+			@Test(enabled = true,groups = { "regression" }, priority = 37)
+			public void verifyPdfFileAreNotSplit() throws Exception {
+				
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47172 -Production");
+				base.stepInfo("Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10");
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.telecaSearchString);
+				sessionSearch.bulkTagExisting(tagname);
+				sessionSearch.bulkFolderExisting(foldername);
+				
+				//Verify archive status on Gen page
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingNativeSection();
+				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+				page.fillingTextSection();
+				page.navigateToNextSection();
+				page.visibleCheck("Numbering and Sorting");
+				page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.visibleCheck("Priv Guard");
+				page.fillingPrivGuardPage();
+				page.visibleCheck("Production Location");
+				driver.scrollingToBottomofAPage();
+				page.getsplitSubFolderbtn().waitAndClick(10);
+				base.stepInfo("split sub folder toggle as OFF");
+				driver.scrollPageToTop();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.visibleCheck("Summary & Preview");
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+				String home = System.getProperty("user.home");
+				
+				File dirPdf = new File(home+"\\Downloads\\VOL0001\\PDF");
+				File dirNative = new File(home+"\\Downloads\\VOL0001\\Natives");
+				File dirText = new File(home+"\\Downloads\\VOL0001\\Text");
+				softAssertion = new SoftAssert();
+				int dirPdfCount = page.dirFoldersCount(dirPdf);
+				int dirTextCount = page.dirFoldersCount(dirText);
+				softAssertion.assertEquals(1, dirPdfCount);
+				softAssertion.assertEquals(1, dirTextCount);
+				softAssertion.assertEquals(1, dirNative);
+				base.passedStep("files is not split as 'Split Folder' toggle was OFF");
+				base.passedStep("Verified that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10");
+				
+				page.deleteFiles();
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				loginPage.logout();
+			}
+			/**
+			 * @author Aathith Test case id-RPMXCON-48316
+			 * @Description Verify the production for Audio files which includes the Audio redaction extend to end of the audio file 
+			 * 
+			 */
+			@Test(enabled = true,groups = { "regression" }, priority = 38)
+			public void verifyProductionMp3File() throws Exception {
+
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48316 -Production Component");
+				base.stepInfo("Verify the production for Audio files which includes the Audio redaction extend to end of the audio file");
+				
+				String foldername = "Folder" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				
+				BaseClass base = new BaseClass(driver);
+				base.selectproject(Input.additionalDataProject);
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				
+				DataSets dataset = new DataSets(driver);
+				base.stepInfo("Navigating to dataset page");
+				dataset.navigateToDataSetsPage();
+				base.stepInfo("Selecting uploadedset and navigating to doclist page");
+				dataset.selectDataSetWithName("AudioEndFile");
+				DocListPage doc = new DocListPage(driver);
+				driver.waitForPageToBeReady();
+
+				doc.selectAllDocs();
+				doc.docListToBulkRelease(Input.securityGroup);
+				doc.bulkTagExistingFromDoclist(tagname);
+				doc.selectAllDocs();
+				doc.bulkFolderExisting(foldername);
+				
+				loginPage.logout();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				base.selectproject(Input.additionalDataProject);
+				
+				RedactionPage redactionpage=new RedactionPage(driver);
+		        driver.waitForPageToBeReady();
+		        redactionpage.manageRedactionTagsPage(Redactiontag1);
+				
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.selectFolderViewInDocView(foldername);
+				
+				DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+				DocViewPage docView = new DocViewPage(driver);
+				driver.waitForPageToBeReady();
+				docView.documentSelection(3);
+	            docViewRedactions.deleteAllAppliedRedactions();
+				driver.waitForPageToBeReady();
+	            docViewRedactions.clickOnAddRedactionForAudioDocument();
+	            docViewRedactions.addAudioRedaction(Input.startTime, Input.endTime, Redactiontag1);
+
+				ProductionPage page = new ProductionPage(driver);
+				page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingMP3FileWithBurnRedaction(Redactiontag1);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionWithTag(tagname);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + doccount;
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
+				base.passedStep("Verified the production for Audio files which includes the Audio redaction extend to end of the audio file");
+				
+				page.deleteFiles();
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+				loginPage.logout();
+				
+			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @Description :To verify that in Production, if sorting option is Sort by
+			 *              Selected Tags and 'Keep Families Together' check box is selected
+			 *              then produced document should be sorted by Tags with FamilyID [
+			 *              RPMXCON-49228]
+			 * @throws Exception
+			 */
+			@Test(enabled = true, groups = { "regression" }, priority = 39)
+			public void verifySortByTags() throws Exception {
+
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				ProductionPage page = new ProductionPage(driver);
+
+				String tagname = "TAG" + Utility.dynamicNameAppender();
+				String foldername = "prodFolder" + Utility.dynamicNameAppender();
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String beginningBates = page.getRandomNumber(2);
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+				base.stepInfo("Test case Id: RPMXCON-49228 Production Sprint 13");
+				base.stepInfo(
+						"To verify that in Production, if sorting option is Sort by Selected Tags and 'Keep Families Together' check box is selected then produced document should be sorted by Tags with FamilyID");
+
+				// create tag and folder
+				tagsAndFolderPage.navigateToTagsAndFolderPage();
+				tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+				tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+				
+				// search for folder
+				sessionSearch.basicContentSearch(Input.telecaSearchString);
+				sessionSearch.bulkFolderExisting(foldername);
+				sessionSearch.ViewInDocListWithOutPureHit();
+				
+				DocListPage doclist = new DocListPage(driver);
+				doclist.selectFirstParentDocumentWithChildDocument();
+				String docId = doclist.getParentDocumetId();
+				System.out.println(docId);
+				driver.scrollPageToTop();
+				doclist.bulkTagExistingFromDoclist(tagname);
+
+				base.stepInfo("Starting the production");
+				page.navigateToProductionPage();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.addNewFieldOnDAT();
+				page.addDatField(1, "Doc Basic", "DocID");
+				page.fillingNativeSection();
+				page.fillingTiffSectionDisablePrivilegedDocs();
+				page.fillingTextSection();
+				page.advancedProductionComponentsTranslations();
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPageWithSortByTags(prefixID, suffixID, beginningBates, tagname);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.waitForFileDownload();
+				page.extractFile();
+				
+				driver.waitForPageToBeReady();
+				String home = System.getProperty("user.home");
+				String name = page.getProduction().getText().trim();
+				driver.waitForPageToBeReady();
+				File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+				if (DatFile.exists()) {
+				base.passedStep("Dat file is exists in generated production");
+				} else {
+				base.failedStep("Dat file is not displayed as expected");
+				}
+
+				String line;
+				List<String> lines = new ArrayList<>();
+				BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+				while ((line = brReader.readLine()) != null) {
+				lines.add(line);
+				}
+				for (String a : lines) {
+				System.out.println(a);
+				}
+
+				System.out.println("secount row value : "+lines.get(1));
+				if (lines.get(1).contains(docId)) {
+				base.passedStep("Document is sorted as per order");
+				} else {
+				base.failedStep("failed");
+				}
+				
+				brReader.close();
+				
+				base.passedStep("verified that in Production, if sorting option is Sort by Selected Tags and 'Keep Families Together' check box is selected then produced document should be sorted by Tags with FamilyID");
+				page.deleteFiles();
+				
+				// Delete Tag and folder
+				tagsAndFolderPage.navigateToTagsAndFolderPage();
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+				loginPage.logout();
+			}
      
      
 	@AfterMethod(alwaysRun = true)

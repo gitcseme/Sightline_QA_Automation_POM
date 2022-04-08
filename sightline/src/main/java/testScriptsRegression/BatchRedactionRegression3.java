@@ -79,67 +79,6 @@ public class BatchRedactionRegression3 {
 		return users;
 	}
 
-	/**
-	 * @author Jeevitha
-	 * @Description : [Batch Redactions- TC 12386]Verify that PDF should Export with
-	 *              Burned Redaction if Only Burn Redaction is enabled for batch
-	 *              redacted documents (RPMXCON-53464)
-	 * @param username
-	 * @param password
-	 * @throws InterruptedException
-	 */
-	// @Test(enabled = true, dataProvider = "Users", groups = { "regression" },
-	// priority = 1)
-	public void createExport(String username, String password) throws InterruptedException {
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String exportname = "E" + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-		String newExport = "Ex" + Utility.dynamicNameAppender();
-
-		login.loginToSightLine(username, password);
-		base.stepInfo("Test case Id: RPMXCON-53464 Batch Redaction Sprint 07");
-		base.stepInfo(
-				"[Batch Redactions- TC 12386]Verify that PDF should Export with Burned Redaction if Only Burn Redaction is enabled for batch redacted documents");
-
-		// create folder and tag
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		// search for the created folder and check the pure hit count
-		base.selectproject();
-		session = new SessionSearch(driver);
-		session.basicContentSearch(testData1);
-		session.bulkFolderExisting(foldername);
-
-		// create export with PDF
-		ProductionPage page = new ProductionPage(driver);
-		String text = page.getProdExport_ProductionSets().getText();
-		if (text.contains("Export Set")) {
-			page.selectExportSetFromDropDown();
-		} else {
-			page.createNewExport(newExport);
-		}
-		page.addANewExport(exportname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
-		page.navigateToNextSection();
-		page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionPage(foldername);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingExportLocationPage(exportname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-
-		// Delete created folder
-		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		login.logout();
-	}
-
 	@DataProvider(name = "testData")
 	public Object[][] testData() {
 		return new Object[][] { { "ProximitySe*" }, { "Proximity*" }, };
@@ -152,7 +91,7 @@ public class BatchRedactionRegression3 {
 	 *              Home page(RPMXCON-53350)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "testData", groups = { "regression" }, priority = 2)
+	@Test(enabled = true, dataProvider = "testData", groups = { "regression" }, priority = 1)
 	public void verifyBRWithSavedSearchAsWildcard(String data) throws InterruptedException {
 		String searchName = "SearchName*" + Utility.dynamicNameAppender();
 
@@ -187,7 +126,7 @@ public class BatchRedactionRegression3 {
 	 *              Analysis(RPMXCON-53432)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThatProximityQueries() throws InterruptedException {
 		String searchName = "SearchNames" + Utility.dynamicNameAppender();
 		String data = "\"government money\"~7";
@@ -223,7 +162,7 @@ public class BatchRedactionRegression3 {
 	 *              redactions(RPMXCON-53403)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyEachBRForDeleteIcon() throws InterruptedException {
 		String searchName = "SearchNames" + Utility.dynamicNameAppender();
 		String data = Input.testData1;
@@ -275,7 +214,7 @@ public class BatchRedactionRegression3 {
 	 *              (coordinates, tags and history) shown in the dupe(RPMXCON-53427)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyInDiffSGWithDiffRedactionTAg() throws Exception {
 		String securityGroup = "SG0" + Utility.dynamicNameAppender();
 		String layer = "Layer00" + Utility.dynamicNameAppender();
@@ -296,7 +235,7 @@ public class BatchRedactionRegression3 {
 		// Craete security group
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
-		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
@@ -304,16 +243,14 @@ public class BatchRedactionRegression3 {
 
 		// Assign Diff redaction tag and Annotation layer to SG
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
+		driver.waitForPageToBeReady();
 		security.assignAnnotationToSG(layer);
 		security.assignRedactionTagtoSG(tagName);
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
-		if (userManagement.getSavePassword().isElementAvailable(3)) {
-			userManagement.getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
 
 		// Create saved search
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -387,7 +324,7 @@ public class BatchRedactionRegression3 {
 	 *              history) shown in the doc in 2nd sec group.(RPMXCON-53426)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyInDiffSGWithSameRedactionTAg() throws Exception {
 		String securityGroup = "SG0" + Utility.dynamicNameAppender();
 		String layer = "Layer00" + Utility.dynamicNameAppender();
@@ -408,23 +345,20 @@ public class BatchRedactionRegression3 {
 		// Craete security group
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
-		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
 
 		// Assign Diff redaction tag and Annotation layer to SG
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
 		security.selectSecurityGroup(securityGroup);
 		security.assignAnnotationToSG(layer);
 		security.assignRedactionTagtoSG(Input.defaultRedactionTag);
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu2userName);
-		if (userManagement.getSavePassword().isElementAvailable(3)) {
-			userManagement.getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
 
 		// Create saved search
 		session.basicContentSearch(Input.testData1);
@@ -471,78 +405,12 @@ public class BatchRedactionRegression3 {
 	}
 
 	/**
-	 * @author sowndariya.velraj
-	 * @Description :[Batch Redactions- TC 11680]To verify that PDF should burn
-	 *              multiple batch redactions and display the correct text for each
-	 *              redaction
-	 * 
-	 * @Description :[Batch Redactions- TC 6827]To verify that if annotation layer
-	 *              option is selected in PDF section and document is batch redacted
-	 *              then selected Metadata should not be displayed on DAT
-	 * @param username
-	 * @param password
-	 * @throws InterruptedException
-	 */
-	// @Test(enabled = true, dataProvider = "Users", groups = { "regression" },
-	// priority = 7)
-	public void generateProductionWithMultipleRedactionTags(String username, String password)
-			throws InterruptedException {
-		String tagname = "FirstTag" + Utility.dynamicNameAppender();
-		String tagname2 = "SecondTag" + Utility.dynamicNameAppender();
-
-		login.loginToSightLine(username, password);
-		base.stepInfo("Test case Id: RPMXCON-53463 Batch Redaction Sprint 07");
-		base.stepInfo(
-				"[Batch Redactions- TC 11680]To verify that PDF should burn multiple batch redactions and display the correct text for each redaction");
-		base.stepInfo("Test case Id: RPMXCON-53461 Batch Redaction Sprint 07");
-		base.stepInfo(
-				"[Batch Redactions- TC 6827]To verify that if annotation layer option is selected in PDF section and document is batch redacted then selected Metadata should not be displayed on DAT");
-
-		// create tag and folder
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
-		driver.Navigate().refresh();
-		tagsAndFolderPage.createNewTagwithClassification(tagname2, "Privileged");
-
-		// search for folder
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkTagExisting(tagname2);
-
-		// create production with DAT,Native,PDF& ingested Text
-		ProductionPage page = new ProductionPage(driver);
-		String productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingPDFSectionwithBurnRedaction(tagname);
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.navigateToNextSection();
-		page.fillingDocumentSelectionPageWithTag(tagname, tagname2);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		base.passedStep(
-				"verified that PDF should burn multiple batch redactions and  display the correct text for each redaction");
-		base.passedStep(
-				"verify that if annotation layer option is selected in PDF section and document is batch redacted then selected Metadata should not be displayed on DAT");
-
-		login.logout();
-	}
-
-	/**
 	 * @author Jeevitha
 	 * @Description :Verify the My Background Tasks page once user started 'Batch
 	 *              Redactions'(RPMXCON-53342)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyBackgroundTasksPage() throws Exception {
 		String search = "Search01" + Utility.dynamicNameAppender();
 
@@ -565,7 +433,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// Navigate to BAckGroundTAsk PAge
 		base.waitForElement(batch.getDocCountFromTable(search));
@@ -581,7 +449,7 @@ public class BatchRedactionRegression3 {
 	 *              Unredactions' / 'Rollback' (RPMXCON-53343)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyBackgroundTasksPageForRollback() throws Exception {
 		String search = "Search01" + Utility.dynamicNameAppender();
 
@@ -625,7 +493,7 @@ public class BatchRedactionRegression3 {
 	 *              same[RPMXCON-53422]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyDemandSearchTerm() throws Exception {
 		String searchName = "SearchNames" + Utility.dynamicNameAppender();
 		String data = Input.testData1;
@@ -664,122 +532,6 @@ public class BatchRedactionRegression3 {
 	}
 
 	/**
-	 * @author Aathiht.Senthilkumar RPMXCON-53462
-	 * @Description : [Batch Redactions- TC 11372]Verify that production should
-	 *              generated with modified Redaction placeholder text for batch
-	 *              redacted documents.
-	 * @throws InterruptedException
-	 */
-//	@Test(groups = { "regression" }, priority = 11)
-	public void verifyModifiedPlaceholdertext() throws InterruptedException {
-		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-		String testData1 = Input.testData1;
-
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Test case Id: RPMXCON-53462 Batch Redaction Sprint 07");
-		base.stepInfo(
-				"[Batch Redactions- TC 11372]Verify that production should generated with modified Redaction placeholder text for batch redacted documents");
-
-		// create folder and tag
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
-		// search for the created folder and check the pure hit count
-		base.selectproject();
-		session = new SessionSearch(driver);
-		session.basicContentSearch(testData1);
-		session.bulkFolderExisting(foldername);
-
-		// create export with PDF
-		ProductionPage page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
-
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingTIFFSectionwithBurnRedaction(Input.defaultRedactionTag);
-		page.fillingTextSection();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
-		page.fillingTextSection();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		login.logout();
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingTIFFSectionwithBurnRedaction(Input.defaultRedactionTag);
-		page.fillingTextSection();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
-		page.fillingTextSection();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		base.passedStep(
-				"Verified that production should generated with modified Redaction placeholder text for batch redacted documents");
-
-		// Delete created folder
-		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		login.logout();
-	}
-
-	/**
-	 * @author Jeevitha
-	 * @Description : Verify that batch redaction when saved search with pattern
-	 *              \"simple\" email - 99% coverage[RPMXCON-53375]
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
-	public void verifyBrWithPatternEmail() throws Exception {
-		String searchName = "SearchNames" + Utility.dynamicNameAppender();
-		String data = "\"##[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}\"";
-
-		// Login as a RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		// Test Case Description
-		base.stepInfo("Testcase ID : RPMXCON-53375   Bacth Redaction  Sprint-7");
-		base.stepInfo("Verify that batch redaction when saved search with pattern \"simple\" email - 99% coverage");
-
-		// Search The Query
-		int purehit = session.basicContentSearch(data);
-		session.saveSearch(searchName);
-
-		// perform Batch redaction
-		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
-		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
-
-		// verify History status
-		batch.verifyBatchHistoryStatus(searchName);
-
-		// Delete Search
-		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-		login.logout();
-	}
-
-	/**
 	 * @author Jeevitha
 	 * @Description:Verify on click of 'Cancel and Rollback' when batch redaction is
 	 *                     'In progress' should cancel the batch
@@ -787,7 +539,7 @@ public class BatchRedactionRegression3 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCancelAndRollback() throws InterruptedException, IOException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -823,7 +575,7 @@ public class BatchRedactionRegression3 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyBR() throws Exception {
 		String searchName = "79ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWX"
 				+ Utility.dynamicNameAppender();
@@ -863,7 +615,7 @@ public class BatchRedactionRegression3 {
 	 *              Time (Saved Search) [RPMXCON-53508]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyBRSearchTreeTimestamp() throws Exception {
 		String searchName = "search" + Utility.dynamicNameAppender();
 		String data = Input.testData1;
@@ -905,7 +657,7 @@ public class BatchRedactionRegression3 {
 	 *              saved search criteria[RPMXCON-53471]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyRollbackSuccessfullyCompletedBR() throws Exception {
 		String search = "Search" + UtilityLog.dynamicNameAppender();
 		String othSG = "Security Group_" + UtilityLog.dynamicNameAppender();
@@ -926,14 +678,12 @@ public class BatchRedactionRegression3 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		sg.AddSecurityGroup(othSG);
 		base.stepInfo(othSG + " : created");
+		driver.waitForPageToBeReady();
+		sg.selectSecurityGroup(othSG);
 		sg.assignRedactionTagtoSG(Input.defaultRedactionTag);
 
 		// Assign access to SG
 		userManagemet.assignAccessToSecurityGroups(othSG, Input.rmu1userName);
-		if (userManagemet.getSavePassword().isElementAvailable(3)) {
-			userManagemet.getSavePassword().waitAndClick(3);
-			driver.waitForPageToBeReady();
-		}
 		session.basicContentSearch(Input.testData1);
 		session.bulkRelease(othSG);
 
@@ -950,7 +700,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// perform RollBack first time for the same search
 		batch.verifyRollback(search, "Yes");
@@ -959,7 +709,7 @@ public class BatchRedactionRegression3 {
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
-		batch.verifyBatchHistoryStatus(search);
+		batch.verifyHistoryStatus(search);
 
 		// perform RollBack Second time for the same search
 		batch.verifyRollback(search, "Yes");
@@ -984,7 +734,7 @@ public class BatchRedactionRegression3 {
 	 *              redaction[RPMXCON-53431]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyRedactedDocuments() throws Exception {
 		String search = "Search" + UtilityLog.dynamicNameAppender();
 
@@ -1017,64 +767,13 @@ public class BatchRedactionRegression3 {
 	}
 
 	/**
-	 * @author sowndariya.velraj
-	 * @Description :Verify that redacted text should not be shifted in produced
-	 *              document when batch redaction is executed for the documents with
-	 *              bullet points
-	 * @param username
-	 * @param password
-	 * @throws InterruptedException
-	 */
-//	@Test(enabled = true, groups = { "regression" }, priority = 18)
-	public void generateProductionWithMultipleRedactionTags() throws InterruptedException {
-
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		base.stepInfo("Test case Id: RPMXCON-53475 Batch Redaction Sprint 08");
-		base.stepInfo(
-				"Verify that redacted text should not be shifted in produced document when batch redaction is executed for the documents with bullet points");
-
-		base.stepInfo("Search and save the test data");
-		int purehit = session.basicContentSearch(Input.testData1);
-		session.saveSearch("CH 43");
-
-		batch.VerifyBatchRedaction_ElementsDisplay("CH 43", true);
-		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
-
-		// verify History status
-		batch.verifyBatchHistoryStatus("CH 43");
-
-		// create production with DAT,Native,TIFF with Redaction andSelecting documents
-		// from saved search
-		ProductionPage page = new ProductionPage(driver);
-		String productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingTIFFSectionwithBurnRedaction();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
-		page.navigateToNextSection();
-		page.fillingDocuSelectionPage("CH 43", null);
-		page.navigateToNextSection();
-		page.fillingPrivGuardPage();
-		page.fillingProductionLocationPage(productionname);
-		page.navigateToNextSection();
-		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
-		base.passedStep(
-				"Redacted text should not  shifted in produced document when batch redaction is executed for the documents with bullet points");
-		login.logout();
-	}
-
-	/**
 	 * @author Jeevitha
 	 * @Description :Verify that 'View Report and Apply Redactions' button from
 	 *              Batch Redactions page is displayed for Saved search only after
 	 *              Analyzing the saved search for redaction[RPMXCON-48804]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyViewReportBtn() throws Exception {
 		String search = "Search" + Utility.dynamicNameAppender();
 
@@ -1089,7 +788,7 @@ public class BatchRedactionRegression3 {
 		session.saveSearch(search);
 
 		batch.loadBatchRedactionPage(search);
-		batch.performAnalysisGroupForRedcation(search, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(search, null, purehit, false, true);
 
 		batch.verifyViewReportBtn(search, null);
 		login.logout();
@@ -1103,7 +802,7 @@ public class BatchRedactionRegression3 {
 	 *              redacted terms ] [RPMXCON-53401]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyingRedactionInDocView() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1134,6 +833,7 @@ public class BatchRedactionRegression3 {
 		base.waitForElement(docview.getDocView_RedactIcon());
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
+		docview.selectBatchRedactedDoc();
 
 		// getting the All Redaction total Count
 		Element allRedacCount = docview.getDocView_AllRedactionCount();
@@ -1174,7 +874,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53398]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyingAllRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1203,6 +903,7 @@ public class BatchRedactionRegression3 {
 		base.waitForElement(docview.getDocView_RedactIcon());
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
+		docview.selectBatchRedactedDoc();
 
 		// getting the All Redaction total Count
 		Element allRedacCount = docview.getDocView_AllRedactionCount();
@@ -1225,7 +926,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53399]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyingBatchRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1256,6 +957,7 @@ public class BatchRedactionRegression3 {
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
 		dcRedact.verifyRedactionsSubMenu();
+		docview.selectBatchRedactedDoc();
 
 		// getting the Batch Redaction total count
 		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
@@ -1280,7 +982,7 @@ public class BatchRedactionRegression3 {
 	 *              redatcions panel [RPMXCON-53400]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyingComponentBatchRedactionsNavigationOptionInDocView() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1311,6 +1013,7 @@ public class BatchRedactionRegression3 {
 		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
 		docview.getDocView_RedactIcon().waitAndClick(10);
 		dcRedact.verifyRedactionsSubMenu();
+		docview.selectBatchRedactedDoc();
 
 		// getting the Component Batch Redaction total count
 		Element componentCount = docview.getComponentBatchRedactionsRatioCount();
@@ -1335,7 +1038,7 @@ public class BatchRedactionRegression3 {
 	 *              displayed on batch redaction page[RPMXCON-53368]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifySavedSearchInDraftMode() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1367,7 +1070,7 @@ public class BatchRedactionRegression3 {
 	 *              search is with Credit card number [RPMXCON-53379]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void performBRWithCreditCardNum() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String data = " \"##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}\"";
@@ -1402,7 +1105,7 @@ public class BatchRedactionRegression3 {
 	 *              Redact' [RPMXCON-53386]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyRedactionTag() throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1445,7 +1148,7 @@ public class BatchRedactionRegression3 {
 	 *              [Covered localization] [RPMXCON-53404]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyConfirmationMessagelocalized() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1482,6 +1185,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// verifying warning message whether it is Localized to German language
 		docViewRedactions.VerifyDeletePopUp_BatchRedact(false);
@@ -1503,7 +1207,7 @@ public class BatchRedactionRegression3 {
 	 *              redacted terms ] [RPMXCON-53402]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyNavigatingToFirstAndLastRedaction() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1536,6 +1240,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// All Redactions navigating to First and Last Redaction
 		base.stepInfo("For All Redactions navigating to First and Last Redaction");
@@ -1569,7 +1274,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53406]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyWarningMessageOnClickingTrashIcon() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1609,6 +1314,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// redaction count before Deletion
 		base.stepInfo("Redaction count Before performing Delete Action");
@@ -1641,7 +1347,7 @@ public class BatchRedactionRegression3 {
 	 *              searches (RPMXCON-53385)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyWhenUserClickAnalyzeGroup() throws InterruptedException, IOException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -1650,6 +1356,8 @@ public class BatchRedactionRegression3 {
 		base.stepInfo("Tescase ID :RPMXCON-53385 Batch Redaction ");
 		base.stepInfo(
 				"Verify that batch redaction should be successful when 'View and Redact Searches' is selected for the search group with saved searches");
+
+		login.editProfile("English - United States");
 
 		// load the saved search page and click on create new search group
 		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "RMU", "Yes");
@@ -1663,7 +1371,7 @@ public class BatchRedactionRegression3 {
 
 		// Check Analyse btn After search is saved
 		batch.loadBatchRedactionPage(newNode);
-		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 		batch.performViewReportAndApplyRedactions(newNode);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
@@ -1695,7 +1403,7 @@ public class BatchRedactionRegression3 {
 	 *              fails for search and check for tooltip (RPMXCON-53333)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyFailedStatusToolTip() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -1717,6 +1425,7 @@ public class BatchRedactionRegression3 {
 		sgpage.assignRedactionTagtoSG(Input.defaultRedactionTag);
 		annotation.AddAnnotation(Annotation);
 		sgpage.navigateToSecurityGropusPageURL();
+		driver.waitForPageToBeReady();
 		sgpage.selectSecurityGroup(securityGroup);
 		sgpage.assignAnnotationToSG(Annotation);
 
@@ -1745,7 +1454,7 @@ public class BatchRedactionRegression3 {
 		driver.waitForPageToBeReady();
 
 		// verify Failed status
-		batch.verifyBatchHistoryStatus(searchName);
+		batch.verifyHistoryStatus(searchName);
 
 		String tooltipMsg = batch.getColorStatusToolTip(searchName).GetAttribute("data-content");
 		String expectedMsg = "Hard failure.  There may be partial redactions.  Please contact your administrator.";
@@ -1753,7 +1462,7 @@ public class BatchRedactionRegression3 {
 
 		// verify Doc count
 		String docCount = batch.getDocCountFromTable(searchName).getText();
-		base.compareTextViaContains(docCount, "0 /", docCount + " : is the docCount Displayed", "");
+		base.compareTextViaContains(docCount, "/", docCount + " : is the docCount Displayed", "");
 
 		base.selectsecuritygroup(Input.securityGroup);
 		login.logout();
@@ -1770,7 +1479,7 @@ public class BatchRedactionRegression3 {
 	 *         than 10 : RPMXCON-53358 - Sprint 10
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void chechInlineScrollBarDisplayedforSavedSearchSection() throws InterruptedException {
 		int limit = 9;
 		String searchName = "SearchName_" + Utility.dynamicNameAppender();
@@ -1801,7 +1510,7 @@ public class BatchRedactionRegression3 {
 	 *         process is started : RPMXCON-53338 - Sprint 10
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verfyTheBatchRedactionReportInBackGroundTaskAndDownload() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1826,6 +1535,7 @@ public class BatchRedactionRegression3 {
 		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
+		base.waitTime(1);
 		String bullHornValue = batch.getBullHornIcon_CC().getText();
 		System.out.println(bullHornValue);
 		int valueBforeAnalysis = Integer.parseInt(bullHornValue);
@@ -1854,7 +1564,7 @@ public class BatchRedactionRegression3 {
 	 *              be created(RPMXCON-53510)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyOrphanRedactioTagAfterRollBack() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		String tagName = "Tag Name" + Utility.dynamicNameAppender();
@@ -1889,6 +1599,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// getting the total count of redaction
 		int redactionCount = docview.getRedactionCount(docview.getComponentBatchRedactionsRatioCount(),
@@ -1900,7 +1611,7 @@ public class BatchRedactionRegression3 {
 
 		// Rollbacking the select savedSearch
 		batch.loadBatchRedactionPage(searchName);
-		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
 		batch.verifyRollback(searchName, "Yes");
 
 		// selecting the rollBacked Saved search
@@ -1908,6 +1619,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// getting the total count of redaction after rollback
 		int redactionCount1 = docview.getRedactionCount(docview.getComponentBatchRedactionsRatioCount(), componentBR);
@@ -1928,7 +1640,8 @@ public class BatchRedactionRegression3 {
 
 	@DataProvider(name = "multipleSearchTerm")
 	public Object[][] multipleSearchTerm() {
-		Object[][] searchTerm = { { "denise" }, { "*@consilio.com" },
+		Object[][] searchTerm = { { "denise" },
+//				{ "*@consilio.com" },
 //				{ "\"##[1-9]{3}-[1-9]{3}-[1-9]{4}\"" },
 //				{ "*@enron.com" }, 
 //				{"\"denise legasse\"~2"},
@@ -1944,7 +1657,7 @@ public class BatchRedactionRegression3 {
 	 * @param searchTerm
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multipleSearchTerm", groups = { "regression" }, priority = 35)
+	@Test(enabled = true, dataProvider = "multipleSearchTerm", groups = { "regression" }, priority = 30)
 	public void verifyRedactionNavigationIconAndDeleteIcon(String searchTerm) throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1972,6 +1685,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// verifying the Navigation and Trash Icon
 		docview.verifyingPositionOfNavigationIconAndTrashIcon(true, true, true);
@@ -1988,7 +1702,7 @@ public class BatchRedactionRegression3 {
 	 * @param searchTerm
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyingInformativeErrorMessageInBothLanguage() throws Exception {
 
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
@@ -2049,11 +1763,11 @@ public class BatchRedactionRegression3 {
 	 *              multiple batch redactions that are numeric [RPMXCON-53502]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyRedactionNavigationIconAndDeleteIcon1() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
-		String searchTerm = Integer.toString(Input.metaDataCNcount);
+		String searchTerm = "490";
 
 		base.stepInfo("Test case Id:RPMXCON-53502");
 		base.stepInfo(
@@ -2061,6 +1775,8 @@ public class BatchRedactionRegression3 {
 
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		login.editProfile("English - United States");
 
 		// Create saved search
 		session.basicContentSearch(searchTerm);
@@ -2078,6 +1794,7 @@ public class BatchRedactionRegression3 {
 
 		// verifying redaction panel
 		docview.verifyPanel();
+		docview.selectBatchRedactedDoc();
 
 		// getting the Batch Redaction total count
 		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
@@ -2102,7 +1819,7 @@ public class BatchRedactionRegression3 {
 	 *              [RPMXCON-53330]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyAnalyzeSearchForSavedSearch() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -2119,7 +1836,8 @@ public class BatchRedactionRegression3 {
 		session.saveSearch(searchName);
 
 		batch.loadBatchRedactionPage(searchName);
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, true);
+		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
 		batch.verifyViewReportBtn(searchName, null);
 
 		// Delete Search
@@ -2134,7 +1852,7 @@ public class BatchRedactionRegression3 {
 	 *              successfully [RPMXCON-53467]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyDocumentHistoryAfterRollback() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String redactionTag = "Redact" + Utility.dynamicNameAppender();
@@ -2175,6 +1893,7 @@ public class BatchRedactionRegression3 {
 		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
 
 		// perform ROLLBACK and view docs in DOCVIEW
+		driver.waitForPageToBeReady();
 		batch.loadBatchRedactionPage(searchName);
 		batch.verifyRollback(searchName, Input.yesButton);
 		session.ViewInDocView();
@@ -2202,7 +1921,7 @@ public class BatchRedactionRegression3 {
 	 *              on 2 different TABS [RPMXCON-53520]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyRelevantReAnalyzeMsgInGer() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -2227,7 +1946,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2271,7 +1992,7 @@ public class BatchRedactionRegression3 {
 	 *              different TABS [RPMXCON-53516]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyRelevantReAnalyzeMsgInEng() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -2295,7 +2016,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2334,7 +2057,7 @@ public class BatchRedactionRegression3 {
 	 *              redactions on doc view redactions panel[RPMXCON-53397]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyCompletedErrorToolTip() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -2388,7 +2111,7 @@ public class BatchRedactionRegression3 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verfifyRollBackMsgFromTabTwo() throws InterruptedException, ParseException, AWTException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		String SearchName = "SearchName" + Utility.dynamicNameAppender();
@@ -2417,7 +2140,9 @@ public class BatchRedactionRegression3 {
 		// Another way - Press ALT + D + Enter
 		base.stepInfo("Initiating Duplicate Current tab");
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// Switch to Child Tab
 		base.stepInfo("Switch to Child Tab ( Duplicated tab )");
@@ -2474,7 +2199,7 @@ public class BatchRedactionRegression3 {
 	 *              different TABS [RPMXCON-53519]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void performRedactionAndAnalyzeSameDoc() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String expectedErrorMsg = "One or more of your selected searches need to be re-analyzed. Please refresh and try again.";
@@ -2496,7 +2221,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2513,8 +2240,10 @@ public class BatchRedactionRegression3 {
 		// second tab
 		driver.switchToWindow(secondWindow);
 		base.stepInfo("Switched To Second Window");
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, false);
 		batch.verifyViewReportBtn(searchName, null);
+		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
+		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
 
 		// first tab
 		driver.switchToWindow(firstUserWindow);
@@ -2525,8 +2254,6 @@ public class BatchRedactionRegression3 {
 		// second tab
 		driver.switchToWindow(secondWindow);
 		base.stepInfo("Switched To Second Window");
-		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
-		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
 		base.stepInfo("Analyze Button is clicked On Second Window");
 
@@ -2573,7 +2300,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2590,7 +2319,7 @@ public class BatchRedactionRegression3 {
 		// second tab
 		driver.switchToWindow(secondWindow);
 		base.stepInfo("Switched To Second Window");
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, false);
 		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
 		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
 
@@ -2668,7 +2397,7 @@ public class BatchRedactionRegression3 {
 		batch.getPopupYesBtn().Click();
 		base.stepInfo("Clicked Yes Button");
 		// verify History status
-		batch.verifyHistoryStatus2(search, purehit);
+		batch.verifyHistoryStatus(search);
 		SavedSearch savedsearch = new SavedSearch(driver);
 		savedsearch.savedSearchToDocView(search);
 		docViewRedact.checkinHighlitedText();
@@ -2709,7 +2438,9 @@ public class BatchRedactionRegression3 {
 		// Opening duplicate TAb
 		base.stepInfo("Initiating Duplicate Current tab");
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2791,7 +2522,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2808,7 +2541,7 @@ public class BatchRedactionRegression3 {
 		// second tab
 		driver.switchToWindow(secondWindow);
 		base.stepInfo("Switched To Second Window");
-		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false);
+		batch.performAnalysisGroupForRedcation(searchName, null, purehit, false, false);
 		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
 		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
 
@@ -2875,7 +2608,9 @@ public class BatchRedactionRegression3 {
 		// open duplicate window
 		base.stepInfo("Initiating Duplicate Current tab");
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// Switch to Child Tab
 		base.stepInfo("Switch to Child Tab ( Duplicated tab )");
@@ -2904,7 +2639,7 @@ public class BatchRedactionRegression3 {
 
 		// Rollback confirmation from Tab 2
 		batch.getPopupYesBtn().waitAndClick(2);
-		String ExpectedMsgErr = "DE-A Rollback for this Batch Redaction has already been requested. Please refresh to see status.";
+		String ExpectedMsgErr = "DE: A Rollback for this Batch Redaction has already been requested. Please refresh to see status.";
 		base.VerifyErrorMessageInGerman(ExpectedMsgErr);
 
 		// Edit Profile To German
@@ -2943,7 +2678,7 @@ public class BatchRedactionRegression3 {
 		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 
 		// Create saved search
-		int purehit = session.basicContentSearch(Input.testData1);
+		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearchInNewNode(searchName, newNode);
 
 		// navigate to saved search page and execute
@@ -2954,7 +2689,9 @@ public class BatchRedactionRegression3 {
 
 		// open duplicate tab
 		String firstUserWindow = driver.CurrentWindowHandle();
+		driver.waitForPageToBeReady();
 		base.openDuplicateTab();
+		driver.waitForPageToBeReady();
 
 		// second tab
 		driver.switchToChildWindow();
@@ -2965,6 +2702,7 @@ public class BatchRedactionRegression3 {
 		// first tab
 		driver.switchToWindow(firstUserWindow);
 		base.stepInfo("Switched To first Window");
+		base.waitTime(2);
 		saveSearch.getExecuteContinueBtn().waitAndClick(10);
 
 		// second tab
@@ -2979,6 +2717,94 @@ public class BatchRedactionRegression3 {
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects the saved search is with metadata/
+	 *              Conceptual search for batch redaction [RPMXCON-53407]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyRedactButtonForMetadataAndConceptual() throws Exception {
+		String metadataSearch = "Search" + Utility.dynamicNameAppender();
+		String conceptSearch = "Search" + Utility.dynamicNameAppender();
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53407 Batch Redaction");
+		base.stepInfo(
+				"Verify when user selects the saved search is with metadata/ Conceptual search for batch redaction");
+
+		session.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		session.saveSearch(metadataSearch);
+
+		base.selectproject();
+		session.conceptualSearch_new(Input.conceptualSearchString1, "mid");
+		session.saveSearch(conceptSearch);
+
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(metadataSearch, true);
+
+		// check redact btn disabled for metadata search
+		base.waitForElement(batch.getCloseBtn());
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
+		base.stepInfo("Redact Button is Disabled for Metadata Search");
+		batch.getCloseBtn().waitAndClick(10);
+		
+		// perform Batch redaction and verify Status
+		batch.VerifyBatchRedaction_ElementsDisplay(conceptSearch, true);
+
+		// check redact btn disabled for conceptual search
+		base.waitForElement(batch.getCloseBtn());
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(batch.getRedactDisabledBtn(), "Disabled Redact Button");
+		base.stepInfo("Redact Button is disabled for Conceptual Search");
+		batch.getCloseBtn().waitAndClick(10);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that tool tip should be displayed for the failed batch
+	 *              redactions on doc view redactions panel [RPMXCON-53396]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void veriryToolTipOfFailedBR() throws Exception {
+		String metadataSearch = "Search" + Utility.dynamicNameAppender();
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id:RPMXCON-53396 Batch Redaction");
+		base.stepInfo(
+				"Verify that tool tip should be displayed for the failed batch redactions on doc view redactions panel");
+
+		// Basic search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
+
+		// verify History status
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		docview.verifyPanel();
+		docview.selectErrorFile();
+
+		login.logout();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -3001,9 +2827,11 @@ public class BatchRedactionRegression3 {
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
+
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			login.switchProjectToEnglish();
 			login.logoutWithoutAssert();
 		}
 		try {

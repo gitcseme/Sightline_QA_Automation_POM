@@ -1,5 +1,9 @@
 package pageFactory;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -1476,7 +1480,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -2402,7 +2406,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//span//h1");
+		return driver.FindElementByXPath("//div[@id='content']//h2");
 	}
 
 	public Element getDocList() {
@@ -2724,7 +2728,7 @@ public class ProductionPage {
 	}
 
 	public Element getDocPages() {
-		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: i");
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives:')]/following-sibling:: label");
 	}
 
 	public Element getRedactDATCheckBox(int i) {
@@ -2781,6 +2785,20 @@ public class ProductionPage {
 	}
 	public Element getNumberOfNativeDocs() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives: ')]//following-sibling::label");
+	}
+	public Element getFileDir(String dir) {
+		return driver.FindElementByXPath("//a[@class='icon dir' and contains(text(),'"+dir+"')]");
+	}
+	public Element keepFamiliesTogetherChkbox_sortByTags() {
+		return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']//label[text()='Keep Families Together:']//..//..//label[@class='checkbox col-md-3']//i");
+	}
+
+	public Element selectingTagsFromSortByTags(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagsTree']//a[contains(text(),'"+tag+"')]");
+	}
+
+	public Element sortByTagsRadioButton() {
+		return driver.FindElementByXPath("//span[text()='Sort by Selected Tags: ']//.//..//i");
 	}
 	
 	public ProductionPage(Driver driver) {
@@ -4854,34 +4872,30 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar
-	 * @Description Second dat field choosed value TiffPageCount
-	 */
+	* @author Aathith.Senthilkumar.Modified on 04/04/22
+	* @Description Second dat field choosed value TiffPageCount
+	*/
 	public void datMetaDataTiffPageCount() {
-		addNewFieldOnDAT();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(Input.Production);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_SourceField2().selectFromDropdown().selectByVisibleText(Input.TIFFPageCount);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
-			}
-		}), Input.wait30);
-		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
-		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
-
+	addNewFieldOnDAT();
+	driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
 	}
+	}), Input.wait30);
+	getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production"); driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+	}
+	}), Input.wait30);
+	getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount"); driver.WaitUntil((new Callable<Boolean>() {
+	public Boolean call() {
+	return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+	}
+	}), Input.wait30);
+	getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+	base.stepInfo("Dat section is filled with TIFFPAGECOUNT"); }
+
+
 
 	/**
 	 * 
@@ -6799,7 +6813,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnContinueGeneration().isElementAvailable(150);
+		getbtnContinueGeneration().isElementAvailable(320);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
 			getbtnContinueGeneration().waitAndClick(10);
@@ -12344,9 +12358,9 @@ for (int i = 0; i < 6; i++) {
 				return getRegenerateContinueButton().isElementAvailable(540);
 			}
 		}), Input.wait120);
-		try {
+		if(getRegenerateContinueButton().isDisplayed()) {
 			getRegenerateContinueButton().Click();
-		} catch (Exception e) {
+		}else {
 		}
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -13499,7 +13513,7 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * @authorGopinath
+	 * @authorGopinath.Modified on 04/01/2022
 	 * @description : Method for copy Path In QC Tab.
 	 */
 	public void copyPathInQCTab() throws InterruptedException {
@@ -13512,34 +13526,27 @@ for (int i = 0; i < 6; i++) {
 					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
 				}
 			}), Input.wait30);
-			getbtnProductionGenerate().Click();
+			getbtnProductionGenerate().waitAndClick(10);
 
+			getbtnContinueGeneration().isElementAvailable(150);
 			if (getbtnContinueGeneration().isDisplayed()) {
 				base.waitForElement(getbtnContinueGeneration());
 				getbtnContinueGeneration().waitAndClick(10);
 			}
-			
+
 			Reporter.log("Wait for generate to complete", true);
 			System.out.println("Wait for generate to complete");
 			UtilityLog.info("Wait for generate to complete");
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDocumentGeneratetext().isElementAvailable(540);
-				}
-			}), Input.wait120);
+			getDocumentGeneratetext().isElementAvailable(180);
+			base.stepInfo("wait until Document Generated Text is visible");
 			String actualText = getStatusSuccessTxt().getText();
 			System.out.println(actualText);
 
 			softAssertion.assertTrue(actualText.contains(expectedText));
 			base.passedStep("Documents Generated successfully");
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
-				}
-			}), Input.wait60);
-
+			base.waitForElement(getConfirmProductionCommit());
 			// added thread.sleep to avoid exception while executing in batch
 			Thread.sleep(Input.wait30 / 10);
 			getConfirmProductionCommit().waitAndClick(10);
@@ -13575,6 +13582,7 @@ for (int i = 0; i < 6; i++) {
 
 		}
 	}
+
 
 	/*
 	 * @author: Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -14169,92 +14177,42 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * @author Aathith.Senthilkumar
-	 * @throws InterruptedException
-	 * @Description Production reverse bates range failed check
-	 */
-	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByButton().Click();
-		base.stepInfo("Filtering the failed production");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByDRAFT().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByDRAFT().Click();
-		base.stepInfo("Removing filter by draft");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByINPROGRESS().Enabled();
-			}
-		}), Input.wait30);
-		getFilterByINPROGRESS().Click();
-		base.stepInfo("Removing filter by in progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterDropDown().Enabled();
-			}
-		}), Input.wait30);
-		getFilterDropDown().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return gettxtReservingBatesFailedAt1stProdShown().Enabled();
-			}
-		}), Input.wait30);
-		base.stepInfo("Reserving Bates Range Failed production displays");
-
-		if (gettxtReservingBatesFailedAt1stProdShown().Enabled()) {
-			String batesFailedMsg = gettxtReservingBatesFailedAt1stProdShown().getText();
-			base.passedStep("verifing the failed status :" + batesFailedMsg);
-			Assert.assertTrue(true, batesFailedMsg);
-		} else {
-			base.passedStep("No Reserving Bates Range failed production occurs");
+	* @author Aathith.Senthilkumar.Modified on 04/04/2022
+	* @throws InterruptedException
+	* @Description Production reverse bates range failed check
+	*/
+	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException { driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return gettxtReservingBatesFailedAt1stProdShown().Enabled();
 		}
-		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getGearIcon().Enabled() && getGearIcon().isDisplayed();
-			}
 		}), Input.wait30);
-
-		getGearIcon().Click();
+		base.stepInfo("Reserving Bates Range Failed production displays"); if (gettxtReservingBatesFailedAt1stProdShown().Enabled()) {
+		String batesFailedMsg = gettxtReservingBatesFailedAt1stProdShown().getText();
+		base.passedStep("verifing the failed status :" + batesFailedMsg);
+		Assert.assertTrue(true, batesFailedMsg);
+		} else {
+		base.passedStep("No Reserving Bates Range failed production occurs");
+		}
+		driver.waitForPageToBeReady(); driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return getGearIcon().Enabled() && getGearIcon().isDisplayed();
+		}
+		}), Input.wait30); getGearIcon().Click();
+		driver.waitForPageToBeReady(); driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+		return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
+		}
+		}), Input.wait30); getOpenWizard().Click(); base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(5); base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().Click(); verifyProductionStatusInGenPage("Preparing Data In Progress");
 		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
-			}
-		}), Input.wait30);
-
-		getOpenWizard().Click();
-
-		base.waitForElement(getbtnReGenerateMarkComplete());
-		getbtnReGenerateMarkComplete().waitAndClick(5);
-
-		base.waitForElement(getbtnRegenerateContinue());
-		getbtnRegenerateContinue().Click();
-
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
-		getbtnReGenerateMarkComplete().isElementAvailable(200);
-		getbtnReGenerateMarkComplete().waitAndClick(10);
-
-		base.waitForElement(getbtnRegenerateCancel());
-		getbtnRegenerateCancel().Click();
-
-	}
+		driver.waitForPageToBeReady(); getbtnReGenerateMarkComplete().isElementAvailable(180);
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(10); base.waitForElement(getbtnRegenerateCancel());
+		getbtnRegenerateCancel().Click(); }
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -14308,11 +14266,14 @@ for (int i = 0; i < 6; i++) {
 		}), Input.wait30);
 		
 		getbtnProductionGenerate().Click();
-
+		getbtnContinueGenerate().isElementAvailable(120);
+if(getbtnContinueGenerate().isDisplayed()) {
 		driver.waitForPageToBeReady();
-		getbtnContinueGenerate().isElementAvailable(320);
 		getbtnContinueGenerate().Click();
-
+}else {
+	System.out.println("Continue generation not found");
+	
+}
 	}
 
 	/**
@@ -15453,6 +15414,7 @@ for (int i = 0; i < 6; i++) {
 			}
 		}), Input.wait30);
 		getDAT_DATField(i).waitAndClick(10);
+		driver.waitForPageToBeReady();
 		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo(i + "th Dat section is filled");
 	}
@@ -17311,6 +17273,7 @@ for (int i = 0; i < 6; i++) {
 			getCheckBoxCheckedVerification(getGenrateTIFFRadioButton());
 		} else if ("pdf".equals(GenerateButton)) {
 			base.stepInfo("Verifying  Generate TIFF radio button in Component tab");
+			driver.waitForPageToBeReady();
 			getCheckBoxCheckedVerification(getGenratePDFRadioButton());
 		}
 		Select select = new Select(
@@ -18346,14 +18309,29 @@ for (int i = 0; i < 6; i++) {
 	 * @authorAathith.Senthilkumar
 	 * @throws ZipException
 	 * @Description Extract downloaded file
+	 * 
 	 */
-	public void extractFile() throws ZipException {
+	public void extractFile() throws ZipException, InterruptedException {
 		driver.waitForPageToBeReady();
+		waitForFileDownload();
 		String name = getProduction().getText().trim();
 		String home = System.getProperty("user.home");
-
+		
+		File file = new File(home + "/Downloads/"+name+".zip");
+		File file1 = new File(Input.fileDownloadLocation+name+".zip");
+		
+		if(file.exists()) {
+		driver.waitForPageToBeReady();	
 		unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
 		System.out.println("Unzipped the downloaded files");
+		}else if(file1.exists()) {
+			driver.waitForPageToBeReady();
+			unzipping(Input.fileDownloadLocation+name+".zip", home + "/Downloads/");
+			System.out.println("Unzipped the downloaded files in BatchDownload");
+		}else {
+			System.out.println("Unzipped failed");
+			base.failedStep("file not found");
+		}
 		driver.waitForPageToBeReady();
 		base.stepInfo("Downloaded zip file was extracted");
 	}
@@ -19175,5 +19153,227 @@ for (int i = 0; i < 6; i++) {
 		}
 		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Delete downloaded zip file and extracted file
+	 */
+	 public void deleteFiles() {
+			String name = getProduction().getText().trim();
+			String home = System.getProperty("user.home");
+			File extacted = new File(home+"/Downloads/VOL0001/");
+			File zipped = new File(home + "/Downloads/" + name + ".zip");
+			deleteDirectory(extacted);
+			zipped.delete();
+			base.stepInfo("downloaded zip file and extracted file was deleted");
+	 }
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param path
+	  * @Description delete method for directory deletion
+	  */
+	 public boolean deleteDirectory(File path) {
+		    if (path.exists()) {
+		        File[] files = path.listFiles();
+		        for (int i = 0; i < files.length; i++) {
+		            if (files[i].isDirectory()) {
+		                deleteDirectory(files[i]);
+		            } else {
+		                files[i].delete();
+		            }
+		        }
+		    }
+		    return (path.delete());
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return
+	  * @throws UnsupportedFlavorException
+	  * @throws IOException
+	  * @Description get text from copied ClipBoard
+	  */
+	 public String getCopiedTextFromClipBoard() throws UnsupportedFlavorException, IOException {
+			driver.waitForPageToBeReady();
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+	        Clipboard clipboard = toolkit.getSystemClipboard();
+	        String actualCopedText = (String) clipboard.getData(DataFlavor.stringFlavor);
+			System.out.println(actualCopedText);
+			return actualCopedText;
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description verify the generated production file contains with dat file
+	  */
+	 public void isdatFileExist() {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			String name = getProduction().getText().trim();
+			driver.waitForPageToBeReady();
+			File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+			if (DatFile.exists()) {
+				base.passedStep("Dat file is exists in generated production");
+			} else {
+				base.failedStep("Dat file is not displayed as expected");
+			}
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param file
+	  * @Description verify that file is exists or not
+	  */
+	 public void isfileisExists(File file) {
+			if (file.exists()) {
+	            System.out.println(" file is Exists in pointed directory");
+	            base.passedStep(file+" file is Exists in pointed directory");
+	            }
+	        else {
+	            System.out.println(" Does not Exists");
+	            base.stepInfo(file+" load file is not generated");
+	    }
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param prefixID
+	  * @param suffixID
+	  * @param beginningBates
+	  * @param verificationText
+	  * @throws IOException
+	  * @Description Verify that generated pdf file is generated with placleholder
+	  */
+	 public void pdf_Verification_In_Generated_PlaceHolder( String prefixID, String suffixID,String beginningBates, String verificationText) throws IOException {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			PDDocument document = PDDocument.load(new File(home+"/Downloads/VOL0001/PDF/0001/"+prefixID+beginningBates+suffixID+".pdf"));
+			if (!document.isEncrypted()) {
+			    PDFTextStripper stripper = new PDFTextStripper();
+			    String text = stripper.getText(document);
+			    System.out.println("Text:" + text);
+			    if(text.contains(verificationText)) {
+			    	base.passedStep(verificationText+" text is produced in this document");
+			    }
+			document.close();
+			}
+		}
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param prefixID
+	  * @param suffixID
+	  * @param beginningBates
+	  * @Description verify that generated tiff file
+	  */
+	 public void OCR_Verification_In_Generated_Tiff_tess4j( String prefixID, String suffixID, String beginningBates) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			
+			File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+beginningBates+suffixID+".tiff");
+		       // ITesseract instance = new Tesseract();  // JNA Interface Mapping
+		         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		         instance.setDatapath(tessDataFolder.getPath());
+
+		        try {
+		            String result = instance.doOCR(imageFile);
+		            System.out.println(result);
+		            if (result!=null) {
+						base.passedStep("Document is produced as expect");
+					} else {
+						base.failedStep("document validation failed");
+					}
+		        } catch (TesseractException e) {
+		            System.err.println(e.getMessage());
+		        }
+		}
+	 /**
+		 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException 
+		 * @Description wait for generated zip file download
+		 */
+		public void waitForFileDownload() throws InterruptedException {
+			String home = System.getProperty("user.home");
+			String name = getProduction().getText().trim();
+			File file = new File(home + "/Downloads/"+name+".zip");
+			File file1 = new File(Input.fileDownloadLocation+name+".zip");
+			
+			for(int i = 0; i < 30 ; i++) {
+				base.waitTime(1);
+				driver.waitForPageToBeReady();
+				if (file.exists()) {
+		            System.out.println(" file is Exists in pointed directory");
+		            base.passedStep(file+" file is Exists in pointed directory");
+		            break;
+				}else if(file1.exists()){
+					System.out.println(" file is Exists in pointed directory");
+		            base.passedStep(file+" file is Exists in pointed directory");
+		            break;
+				}else {
+					base.wait(1);
+					driver.waitForPageToBeReady();
+				}
+			}
+			
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @Description verifying downloaded mp3 file in generated production
+		 */
+		public void isMp3FileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			driver.waitForPageToBeReady();
+			
+			for(int i=firstFile; i<lastFile ;i++) {
+			File mp3 = new File(home+"/Downloads/VOL0001/MP3 Files/0001/"+prefixID+i+suffixID+".MP3");
+			if (mp3.exists()) {
+				System.out.println("mp3 is available");
+				base.passedStep("mp3 file is exists in generated production");
+			} else {
+				base.failedStep("mp3 file not exists in this directory");
+			}
+			}
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param prefixId
+		 * @param suffixId
+		 * @param beginningBates
+		 * @param tagname
+		 * @throws InterruptedException
+		 */
+		public void fillingNumberingAndSortingPageWithSortByTags(String prefixId, String suffixId, String beginningBates,String tagname)
+				throws InterruptedException {
+
+			base.waitForElement(getBeginningBates());
+			driver.waitForPageToBeReady();
+			getBeginningBates().waitAndClick(10);
+			getBeginningBates().SendKeys(beginningBates);
+			num = getRandomNumber(2);
+
+			base.waitForElement(gettxtBeginningBatesIDPrefix());
+			gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+			base.waitForElement(gettxtBeginningBatesIDSuffix());
+			gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+
+			base.waitForElement(gettxtBeginningBatesIDMinNumLength());
+			gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
+			num1 = getRandomNumber(1);
+			System.out.println("Beginning BatesID Min Num Length=" + num1);
+			gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+			driver.scrollingToBottomofAPage();
+
+			sortByTagsRadioButton().waitAndClick(10);
+			base.stepInfo("sorting by tags option is selected");
+
+			selectingTagsFromSortByTags(tagname).waitAndClick(10);
+			keepFamiliesTogetherChkbox_sortByTags().waitAndClick(10);
+			base.waitForElement(getAddSelected());
+			getAddSelected().waitAndClick(10);
+			base.stepInfo("Keep families checkbox selected");
+
+		}
 
 }

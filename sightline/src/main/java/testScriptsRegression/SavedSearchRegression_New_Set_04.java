@@ -957,7 +957,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
@@ -1144,7 +1144,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
@@ -1331,7 +1331,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
@@ -3160,7 +3160,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
 		saveSearch.checkStatus(searchName);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
@@ -3466,7 +3466,7 @@ public class SavedSearchRegression_New_Set_04 {
 		session.saveSearch(searchName);
 
 		saveSearch.verifyRenamedsavsearch(searchName, SearchRename);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		miniDocListPage = new MiniDocListPage(driver);
 		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());

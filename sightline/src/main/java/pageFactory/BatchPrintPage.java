@@ -1,7 +1,6 @@
 package pageFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -253,6 +252,14 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getToggleButton() {
+		return driver.FindElementByXPath("(//i[@class='pull-left'])[last()]");
+	}
+
+	public Element getBackButton() {
+		return driver.FindElementByXPath("//a[@title='Back']");
+	}
+
 	public Element getBgPageDD() {
 		return driver.FindElementByXPath("//select[@name='StatusList']");
 	}
@@ -809,42 +816,42 @@ public class BatchPrintPage {
 	}
 
 	private static void unzip(File zipFilePath, String destDir) {
-		File dir = new File(destDir);
-		// create output directory if it doesn't exist
-		if (!dir.exists())
-			dir.mkdirs();
-		FileInputStream fis;
-		// buffer for read and write data to file
-		byte[] buffer = new byte[1024];
-		try {
-			fis = new FileInputStream(zipFilePath.toString());
-			ZipInputStream zis = new ZipInputStream(fis);
-			ZipEntry ze = zis.getNextEntry();
-			while (ze != null) {
-				String fileName = ze.getName();
-				File newFile = new File(destDir + File.separator + fileName);
-				System.out.println("Unzipping to " + newFile.getAbsolutePath());
-				// create directories for sub directories in zip
-				new File(newFile.getParent()).mkdirs();
-				FileOutputStream fos = new FileOutputStream(newFile);
-				int len;
-				while ((len = zis.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-				fos.close();
-				// close this ZipEntry
-				zis.closeEntry();
-				ze = zis.getNextEntry();
-			}
-			// close last ZipEntry
-			zis.closeEntry();
-			zis.close();
-			fis.close();
-			// Add_Log.info(TestCaseName+": Unziped done successfully");
-		} catch (IOException e) {
-			// Add_Log.info(TestCaseName+": Failed to unzip the file");
-			e.printStackTrace();
-		}
+//		File dir = new File(destDir);
+//		// create output directory if it doesn't exist
+//		if (!dir.exists())
+//			dir.mkdirs();
+////		FileInputStream fis;
+//		// buffer for read and write data to file
+//		byte[] buffer = new byte[1024];
+//		try {
+//			fis = new FileInputStream(zipFilePath.toString());
+//			ZipInputStream zis = new ZipInputStream(fis);
+//			ZipEntry ze = zis.getNextEntry();
+//			while (ze != null) {
+//				String fileName = ze.getName();
+//				File newFile = new File(destDir + File.separator + fileName);
+//				System.out.println("Unzipping to " + newFile.getAbsolutePath());
+//				// create directories for sub directories in zip
+//				new File(newFile.getParent()).mkdirs();
+//				FileOutputStream fos = new FileOutputStream(newFile);
+//				int len;
+//				while ((len = zis.read(buffer)) > 0) {
+//					fos.write(buffer, 0, len);
+//				}
+//				fos.close();
+//				// close this ZipEntry
+//				zis.closeEntry();
+//				ze = zis.getNextEntry();
+//			}
+//			// close last ZipEntry
+//			zis.closeEntry();
+//			zis.close();
+//			fis.close();
+//			// Add_Log.info(TestCaseName+": Unziped done successfully");
+//		} catch (IOException e) {
+//			// Add_Log.info(TestCaseName+": Failed to unzip the file");
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -1535,7 +1542,7 @@ public class BatchPrintPage {
 			}), Input.wait60);
 			getSavedSearch_dropdown().waitAndClick(5);
 			driver.scrollingToBottomofAPage();
-			if (getSelectSavedSearch(SearchName).Displayed()) {
+			if (getSelectSavedSearch(SearchName).isElementAvailable(5)) {
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
 						return getSelectSavedSearch(SearchName).Visible();
@@ -2036,7 +2043,7 @@ public class BatchPrintPage {
 			base.waitForElement(getSelectFolder(searchOrTagOrFol));
 			getSelectFolder(searchOrTagOrFol).waitAndClick(10);
 			System.out.println("Selected Tag : " + searchOrTagOrFol);
-			base.passedStep("Select Tag From Sorce Selection Tab is : " + searchOrTagOrFol);
+			base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
 
 		}
 		if (Next) {
@@ -2050,13 +2057,19 @@ public class BatchPrintPage {
 	 * @param Native : If Native Checkbox or not
 	 * @param Next   : Next Button
 	 */
-	public void fillingBasisForPrinting(boolean Native, boolean Next) {
+	public void fillingBasisForPrinting(boolean Native, boolean Next, String production) {
 		driver.waitForPageToBeReady();
 
 		if (Native) {
 			base.waitForElement(getNativeCB_BasisPage());
 			getNativeCB_BasisPage().waitAndClick(3);
 			base.stepInfo("Checked Viewable file variant in DocView (typically natives)");
+		} else {
+			base.waitForElement(getProductionRadioButton());
+			getProductionRadioButton().waitAndClick(5);
+
+			base.waitForElement(getSelectProduction());
+			getSelectProduction().selectFromDropdown().selectByVisibleText(production);
 		}
 
 		if (Next) {
@@ -2185,7 +2198,7 @@ public class BatchPrintPage {
 
 		String fielPath = testPath + fileName;
 		System.out.println(fileName);
-		base.stepInfo("Downloade File  : "+fielPath);
+		base.stepInfo("Downloade File  : " + fielPath);
 		return fileName;
 	}
 
@@ -2193,8 +2206,8 @@ public class BatchPrintPage {
 	 * @Author Jeevitha
 	 * @Description : Extracts ZIp File And Creates Another Folder And Place The
 	 *              extracted file in it
-	 * @param fileName  : Zip file name
-	 * @return  : return newFolder created file name
+	 * @param fileName : Zip file name
+	 * @return : return newFolder created file name
 	 * @throws ZipException
 	 */
 	public String extractFile(String fileName) throws ZipException {
@@ -2247,13 +2260,48 @@ public class BatchPrintPage {
 			String fileFormat = FilenameUtils.getExtension(filename);
 			String expectedFormat = "pdf";
 
-			String passMsg = "Downloaded File : "+filename+"    And Verified Format IS  : " + fileFormat;
+			String passMsg = "Downloaded File : " + filename + "    And Verified Format IS  : " + fileFormat;
 			String failMsg = "Downloaded File Format is Not As Expected";
 			base.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
 
 			fileNames.add(filename);
 		}
 		return fileNames;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verifies back bTn
+	 * @param select
+	 * @param searchOrTagOrFol
+	 * @param Next
+	 */
+	public void navigateAndVerifyBackBtn(String select, String searchOrTagOrFol, boolean Next) {
+
+		String[] listOfHeaders = { "Source Selection", "Basis for Printing", "Analysis", "Exception File Types",
+				"Slip Sheets", "Branding and Redactions", "Export Format" };
+		fillingSourceSelectionTab(select, searchOrTagOrFol, Next);
+		String Header = getPageHeader().getText();
+		SoftAssert softAssert = new SoftAssert();
+		softAssert.assertEquals(listOfHeaders[0], Header);
+		base.stepInfo("The Current Header : " + Header);
+		for (int i = 1; i < listOfHeaders.length; i++) {
+
+			String currentHeader = navigateToNextPage(1);
+			base.ValidateElement_Presence(getBackButton(), "Back Button");
+			softAssert.assertEquals(currentHeader, listOfHeaders[i]);
+
+			if (currentHeader.equalsIgnoreCase("Export Format")) {
+				base.ValidateElement_Presence(getGenerateButton(), "Generate Button");
+			}
+			if (currentHeader.equalsIgnoreCase("Slip Sheets")) {
+				getToggleButton().waitAndClick(5);
+			}
+			if (currentHeader.equalsIgnoreCase("Exception File Types")) {
+				getToggleButton().waitAndClick(5);
+			}
+		}
+		softAssert.assertAll();
 	}
 
 }

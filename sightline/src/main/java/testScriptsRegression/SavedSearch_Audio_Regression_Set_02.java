@@ -102,8 +102,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
 				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName }
-				};
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
 		return users;
 	}
 
@@ -135,7 +134,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		base.stepInfo("Search and saveSearch in the created node");
 		String savedSearchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		session.basicContentSearch(Input.searchString2);
-		
+
 //		session.saveSearchInNode(savedSearchName1);
 		session.saveSearchInNewNode(savedSearchName1, newNode2);
 		driver.waitForPageToBeReady();
@@ -156,7 +155,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @Stabilization : Completed
 	 */
 	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 2)
-	
+
 	public void verifyMoveRenamedSearch(String UserName, String PassWord, String fullName) throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-49352 - Saved Search Sprint 03");
@@ -174,10 +173,10 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		base.stepInfo("Search and saveSearch in the created node");
 		session.basicContentSearch(Input.searchString2);
-		
+
 //		session.saveSearchInNode(searchName);
 		session.saveSearchInNewNode(searchName, newNode2);
-		
+
 		driver.waitForPageToBeReady();
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
@@ -317,7 +316,6 @@ public class SavedSearch_Audio_Regression_Set_02 {
 //		session.saveSearchInNode(searchName1);
 		session.saveSearchInNewNode(searchName1, newNode);
 
-		
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
@@ -417,14 +415,13 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		// Search and Save in the SG
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
 		session.basicContentSearch(Input.searchString2);
-		
+
 //		session.saveSearchInNode(searchName1);
 		session.saveSearchInNewNode(searchName1, newNode);
-	
 
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.rootGroupExpansion(); 
+		saveSearch.rootGroupExpansion();
 		driver.waitForPageToBeReady();
 
 		// Share to SG
@@ -637,7 +634,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Raghuram A Date: 9/15/21 Modified date:N/A Modified by: A Description
 	 *         : To verify as an RM user login, I will be able to search a saved
@@ -654,13 +651,11 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 
 		// add save search in node
 		int purehit = session.basicContentSearch(Input.searchString1);
-		session.saveSearchInNode(search_Name1);
+		session.saveSearchInNewNode(search_Name1, newNode);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.selectNode1(newNode);
@@ -669,7 +664,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Jeevitha Date: 9/16/21 Modified date:N/A Modified by: A Description :
 	 *         To verify as a Reviewer user login, I will be able to search a saved
@@ -685,13 +680,11 @@ public class SavedSearch_Audio_Regression_Set_02 {
 		base.stepInfo("Loggedin As : " + Input.rev1FullName);
 
 		// create new searchgroup
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 
 		// add save search in node
 		int purehit = session.basicContentSearch(Input.searchString1);
-		session.saveSearchInNode(search_Name1);
+		session.saveSearchInNewNode(search_Name1, newNode);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.selectNode1(newNode);
@@ -700,15 +693,16 @@ public class SavedSearch_Audio_Regression_Set_02 {
 
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 * @description Renames an existing Advanced saved search on Saved Search
 	 *              Screen. RPMXCON-49351
 	 */
-	@Test(enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 18)
-	public void ValidateRenamedAdvancedSavedSearch(String UserName, String PassWord) throws InterruptedException {
+	@Test(enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 18)
+	public void ValidateRenamedAdvancedSavedSearch(String UserName, String PassWord, String fullName)
+			throws InterruptedException {
 		base.stepInfo("TEST CASE ID- 49351 --- Saved search");
 		base.stepInfo("Renames an existing Advanced saved search on Saved Search Screen.");
 		String searchName = "SavedSearch" + Utility.dynamicNameAppender();

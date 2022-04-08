@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -49,6 +50,8 @@ public class Tally_Regression1 {
 	String expectedEAName;
 	String expectedDocFileType;
 	String expectedEAAdress;
+	String saerchSG = "ss" + Utility.dynamicNameAppender();
+	int pureHitTwoStrings;
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -628,6 +631,117 @@ public class Tally_Regression1 {
 
 				}
 			}
+		}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 15)
+		public void verifyTallyReportSourceAsSearch(String username, String password, String role)
+				throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56964");
+			bc.stepInfo("Verify and generate Tally Report with source as Search");
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as " + role);
+			TallyPage tp = new TallyPage(driver);
+			String saveSearch = "ss" + Utility.dynamicNameAppender();
+			String[] SavedSearchName = { saerchSG, saveSearch };
+			SoftAssert softAssertion = new SoftAssert();
+			SessionSearch ss = new SessionSearch(driver);
+			if (role == "RMU") {
+				ss.basicContentSearchForTwoItems(Input.testData1, Input.TallySearch);
+				pureHitTwoStrings = Integer.parseInt(ss.verifyPureHitsCount());
+				ss.getNewSearchButton().waitAndClick(5);
+				ss.advancedContentSearchWithSearchChanges(Input.TallySearch, "Yes");
+				ss.saveSearchAtAnyRootGroup(saerchSG, Input.shareSearchDefaultSG);
+				ss.getNewSearchButton().waitAndClick(5);
+				ss.advancedContentSearchWithSearchChanges(Input.testData1, "Yes");
+				ss.saveSearchAtAnyRootGroup(saveSearch, Input.mySavedSearch);
+
+			}
+			if (role == "PA") {
+				ss.navigateToSessionSearchPageURL();
+				ss.advancedContentSearchWithSearchChanges(Input.testData1, "Yes");
+				ss.saveSearchAtAnyRootGroup(saveSearch, Input.shareSearchPA);
+			}
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_MultipleSavedSearch(SavedSearchName);
+			tp.selectTallyByMetaDataField(Input.metaDataName);
+			tp.validateMetaDataFieldName(Input.metaDataName);
+			tp.verifyTallyChart();
+			softAssertion.assertEquals(pureHitTwoStrings, tp.verifyDocCountBarChart());
+			tp.tallyActions();
+			bc.waitTime(2);
+			tp.getTally_actionSubTally().Click();
+			bc.stepInfo("**To Verify Sub Tally Report Table**");
+			tp.selectMetaData_SubTally(Input.docFileType);
+			tp.verifyDocCountSubTally(pureHitTwoStrings);
+			softAssertion.assertAll();
+		}
+
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 16)
+		public void verifyExport(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-48705");
+			bc.stepInfo("To Verify User will be able to export data in an excel format from Subtally.");
+
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as " + role);
+			TallyPage tp = new TallyPage(driver);
+			String[] sourceNames = new String[4];
+			if (role == "RMU") {
+				sourceNames = sourceName_RMU;
+			}
+			if (role == "PA") {
+				sourceNames = sourceName_PA;
+			}
+			// iterating this for loop to change the source for every iteration of loop
+			for (int k = 0; k < sourceNames.length; k++) {
+
+				tp.navigateTo_Tallypage();
+				tp.sourceSelectionUsers(role, sourceNames, k);
+				tp.verifySourceSelected();
+				tp.selectTallyByMetaDataField(Input.metaDataName);
+				tp.validateMetaDataFieldName(Input.metaDataName);
+				bc.stepInfo("** Generating Tally report **");
+				tp.verifyTallyChart();
+				tp.tallyActions();
+				bc.waitTime(2);
+				tp.getTally_actionSubTally().Click();
+				bc.stepInfo("**Generating  Sub Tally Report Table**");
+				tp.selectMetaData_SubTally(Input.docFileType);
+				int docsSelected = tp.getSelectedColumnDocCountSubTally(2);
+				tp.subTallyActionsWithOutTallyAllSelection();
+				bc.stepInfo("**Exporting selected data from  Sub Tally Report Table**");
+				tp.subTallyToExport();
+				CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+				String metaData[] = { Input.metaDataName };
+				cddr.selectMetaDataFields(metaData);
+				String Filename2 = cddr.runReportandVerifyFileDownloaded();
+				System.out.println(Filename2);
+				List<String> exportedData = cddr.csvfileSize("", Filename2);
+				String value = exportedData.get(0);
+				String[] strArray = value.split(",");
+				List<String> slectdFieldList_excel = Arrays.asList(strArray);
+				List<String> slectdFieldList = Arrays.asList(metaData);
+				for (int i = 0; i < slectdFieldList_excel.size(); i++) {
+					String temp = slectdFieldList_excel.get(i).replaceAll("\"", "");
+					slectdFieldList_excel.set(i, temp);
+					slectdFieldList_excel.get(i).trim();
+				}
+				// Verification of doc count reflected in export page from tally page selected
+				// criteria reflected in report
+				if (slectdFieldList.containsAll(slectdFieldList_excel) && (exportedData.size() - 2) == (docsSelected)) {
+					bc.passedStep("Sucessfully Verified that  Export Data Action is working properly on Tally Page");
+				} else {
+					bc.failedStep("Exported Data is not  reflected in excel file.");
+				}
+			}
+
 		}
 
 	@BeforeMethod

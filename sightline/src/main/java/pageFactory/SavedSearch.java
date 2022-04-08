@@ -172,8 +172,17 @@ public class SavedSearch {
 		return driver.FindElementById("btnDocumentList");
 	}
 
+	// Xpath change based on new implemetation - ("document-btn");
 	public Element getToDocView() {
 		return driver.FindElementById("document-btn");
+	}
+
+	public Element getLaunchDocView() {
+		return driver.FindElementByXPath("//li[@id='rbngViewGroup']//a[@id='view']");
+	}
+
+	public Element getToDocViewAction(String action) {
+		return driver.FindElementByXPath("//a[@title='Doc View']//..//li//a[text()='" + action + "']");
 	}
 
 	public Element getCountofDocs() {
@@ -1174,7 +1183,8 @@ public class SavedSearch {
 
 		getSelectWithName(searchName).waitAndClick(10);
 
-		getToDocView().waitAndClick(10);
+//		getToDocView().waitAndClick(10);
+		docViewFromSS("View in DocView");
 
 		try {
 			if (base.getYesBtn().isElementAvailable(3)) {
@@ -1976,7 +1986,8 @@ public class SavedSearch {
 
 		getSavedSearchNewGroupButton().waitAndClick(5);
 		base.waitTime(2);// to handle wait for observing the text
-		base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
+//		base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
+		getSavedSearchNewGroupButton().waitAndClick(2);
 
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
@@ -2697,7 +2708,7 @@ public class SavedSearch {
 		savedSearch_Searchandclick(searchName);
 		renameSavedSearch(searchName, searchName2);
 		savedSearch_Searchandclick(searchName2);
-		if (getSearchName(searchName2).isElementPresent()) {
+		if (getSearchName(searchName2).isElementAvailable(4)) {
 			base.passedStep("Sucesfully verified the Renamed saved search");
 		} else {
 			base.failedStep("Renamed saved search is not displayed as expected");
@@ -2711,20 +2722,17 @@ public class SavedSearch {
 	 * @throws InterruptedException
 	 * @Stabilization : changes implemented
 	 */
-	public void verifySavedSearch_isEmpty() throws InterruptedException {
+	public Boolean verifySavedSearch_isEmpty() throws InterruptedException {
 
-		try {
-			driver.waitForPageToBeReady();
-			// base.waitForElement(getsearchResultEmptyMessage());
-			if (getsearchResultEmptyMessage().isElementAvailable(2)) {
-				base.stepInfo("No Records found");
-				System.out.println("No Records found");
-			} else {
-				base.stepInfo("Data Available");
-				System.out.println("Data Available");
-			}
-		} catch (Exception e) {
-
+		driver.waitForPageToBeReady();
+		if (getsearchResultEmptyMessage().isElementAvailable(3)) {
+			base.stepInfo("No Records found");
+			System.out.println("No Records found");
+			return false;
+		} else {
+			base.stepInfo("Data Available");
+			System.out.println("Data Available");
+			return true;
 		}
 	}
 
@@ -2983,7 +2991,7 @@ public class SavedSearch {
 		}
 
 		getRenameButton().waitAndClick(5);
-		getRenameSearchGroupNode(newNode).SendKeys(SearchGroupRenamed);
+		getRenameSearchGroupNode(newNode).SendKeysNoClear(SearchGroupRenamed);
 		getTermReportTitle().Click();
 		base.VerifySuccessMessage("Save search tree node successfully updated.");
 		base.CloseSuccessMsgpopup();
@@ -3238,9 +3246,10 @@ public class SavedSearch {
 		for (int i = 1; i <= size; i++) {
 			// Create SearchGroup
 			base.waitForElement(getSavedSearchNewGroupButton());
-			getSavedSearchNewGroupButton().Click();
+			getSavedSearchNewGroupButton().waitAndClick(2);
 			base.waitTime(2);// to handle wait for observing the text
-			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
+//			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
+			getSavedSearchNewGroupButton().waitAndClick(2);
 			try {
 				if (getSuccessPopup().isElementAvailable(2)) {
 					base.VerifySuccessMessage("Save search tree node successfully created.");
@@ -3357,23 +3366,21 @@ public class SavedSearch {
 		search = new SessionSearch(driver);
 		driver.waitForPageToBeReady();
 
-		try {
-//			base.waitForElement(getSaveSearch_Button());
-			search.getSaveSearch_Button().waitAndClick(5);
-		} catch (Exception e) {
-			try {
-//				base.waitForElement(getAdvanceS_SaveSearch_Button());
-				search.getAdvanceS_SaveSearch_Button().waitAndClick(5);
-			} catch (Exception e1) {
-				search.getBsSecondSaveSearch_Button().waitAndClick(5);
-			}
-		}
+		search.saveSearchAction();
 
 		base.waitForElement(search.getExpandAllTab());
 		search.getExpandAllTab().waitAndClick(5);
 
 		base.waitForElement(search.getExpandSecurityGroupOw());
 		search.getExpandSecurityGroupOw().Click();
+
+		base.waitForElement(search.getSecurityGroupNewNode(newNode));
+		search.getSecurityGroupNewNode(newNode).waitAndClick(5);
+
+		Actions ac = new Actions(driver.getWebDriver());
+//		ac.moveToElement(search.getNodeToOw(newNode).getWebElement()).build().perform();
+		base.waitTime(3);
+		ac.click().build().perform();
 
 		base.waitForElement(search.getNodeToOw(newNode));
 		search.getNodeToOw(newNode).Click();
@@ -3436,6 +3443,7 @@ public class SavedSearch {
 		UtilityLog.info(System.getProperty("user.dir") + Input.batchFileNewLocation + batchFile);
 		getSelectFile().SendKeys(System.getProperty("user.dir") + Input.batchFileNewLocation + batchFile);
 		getSubmitToUpload().Click();
+		driver.waitForPageToBeReady();
 
 		base.VerifySuccessMessage("File uploaded successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3574,17 +3582,23 @@ public class SavedSearch {
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
 			getSavedSearchGroupName(node).waitAndClick(5);
+			driver.waitForPageToBeReady();
 			base.waitTime(3);// To handle abnormal waits
-			// get Search ID
-			String searchiD = GetSearchID(nodeSearchpair.get(node));
-			searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
-			try {
-				if (i != nodeSearchpair.size() - 1) {
-					rootGroupExpansion(); // not required at direct situation added in order to prevent future impact
+			if (verifySavedSearch_isEmpty()) {
+				// get Search ID
+				String searchiD = GetSearchID(nodeSearchpair.get(node));
+				searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
+				try {
+					if (i != nodeSearchpair.size() - 1) {
+						rootGroupExpansion(); // not required at direct situation added in order to prevent future
+												// impact
+					}
+					getSavedSearchGroupName(node).waitAndClick(5);
+				} catch (Exception e) {
+					System.out.println("End of Node");
 				}
-				getSavedSearchGroupName(node).waitAndClick(5);
-			} catch (Exception e) {
-				System.out.println("End of Node");
+			} else {
+				searchGroupSearchpID.put(nodeSearchpair.get(node), "No Data found");
 			}
 		}
 
@@ -3621,18 +3635,18 @@ public class SavedSearch {
 	 * @author Raghuram A Date: 10/5/21 Modified date:11/30/21 Modified by: Raghuram
 	 *         Description :verifyImpactinSharedchildNodes - included Result count
 	 *         updated for(); newNodeList.size() -> nodeSearchpair.size() - S
+	 * @throws InterruptedException
 	 */
 	public void verifyImpactinSharedchildNodes(String SGtoShare, List<String> newNodeList, int selectIndex,
-			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair) {
+			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair)
+			throws InterruptedException {
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+		rootGroupExpansion();
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
 			// verify id should get changed
-			try {
-				base.waitForElement(getSavedSearchGroupName(node));
-				softAssertion.assertTrue(getSavedSearchGroupName(node).isDisplayed());
+			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
 				getSavedSearchGroupName(node).Click();
@@ -3658,8 +3672,9 @@ public class SavedSearch {
 					verifySavedSearch_isEmpty();
 					base.passedStep("Not the selected search group");
 				}
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-			} catch (Exception e) {
+//				getSavedSearchNewGroupExpand().waitAndClick(20);
+				rootGroupExpansion();
+			} else {
 				System.out.println(node + " : Search group is not Present in " + SGtoShare);
 				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
 			}
@@ -3700,28 +3715,22 @@ public class SavedSearch {
 
 	/**
 	 * @author Raghuram A Date: 10/5/21 Modified date:10/28/21 Modified by:
-	 *         Description :
+	 *         Description : - updated based on new implementations
 	 */
 	public void moveNodeToNode(String nodeToBeMoved, String moveToNode) {
-		// Move Search from one folder to another folder
 		selectNode1(nodeToBeMoved);
 		moveSearchToAnotherFolder(moveToNode);
 		moveActionButton("Save");
 		base.stepInfo("Moved : " + nodeToBeMoved + " to " + moveToNode);
 		driver.waitForPageToBeReady();
+		getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		getSavedSearchNewNode().waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+		selectNode1(moveToNode);
+		rootGroupExpansion();
 		driver.waitForPageToBeReady();
-		try {
-			softAssertion.assertEquals(getSavedSearchNewNode().getText(), nodeToBeMoved);
-			base.passedStep("Moved Node is Available at right destination");
-		} catch (Exception e) {
-			base.failedStep("Fails");
-		}
-		softAssertion.assertAll();
+		base.textCompareEquals(getLastNodeFromTab(moveToNode).getText(), nodeToBeMoved,
+				"Moved Node is Available at right destination", "Move Action Failed");
 	}
 
 	/**
@@ -3748,11 +3757,11 @@ public class SavedSearch {
 
 			for (int i = 0; i < 2; i++) {
 
-				createNewSearchGrp("PA" + Utility.dynamicNameAppender());
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-				newNodeList.add(getSavedSearchNewNode().getText());
+				String newNode = createSearchGroupAndReturn(Input.mySavedSearch, "", "No");
+				newNodeList.add(newNode);
 				// To make sure we are in basic search page
 				driver.getWebDriver().get(Input.url + "Search/Searches");
+				driver.waitForPageToBeReady();
 				if (i == 0) {
 					// Create saved search
 					search.basicContentSearch("transport");
@@ -3761,12 +3770,14 @@ public class SavedSearch {
 				String name2 = "SearchName" + Utility.dynamicNameAppender();
 				savedInRoot.add(name1);
 				savedInNode.add(name2);
-				search.saveSearch(name1);
-				search.saveSearchInNode(name2);
+				search.saveSearchAtAnyRootGroup(name1, Input.mySavedSearch);
+				search.saveSearchInNewNode(name2, newNode);
 			}
-			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveSavedSearchToNode(savedInRoot.get(0), newNodeList.get(1));
-			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveNodeToNode(newNodeList.get(0), newNodeList.get(1));
 		}
 	}
@@ -3794,9 +3805,8 @@ public class SavedSearch {
 			List<String> savedInNode = new ArrayList<String>();// to store name of saved file in the newly created node
 
 			for (int i = 0; i < 2; i++) {
-				createNewSearchGrp("PA" + Utility.dynamicNameAppender());
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-				newNodeList.add(getSavedSearchNewNode().getText());
+				String newNode = createSearchGroupAndReturn(Input.mySavedSearch, "", "No");
+				newNodeList.add(newNode);
 				// To make sure we are in basic search page
 				driver.getWebDriver().get(Input.url + "Search/Searches");
 				if (i == 0) {
@@ -3807,26 +3817,32 @@ public class SavedSearch {
 				String name2 = "Oct0" + Utility.dynamicNameAppender();
 				savedInRoot.add(name1);
 				savedInNode.add(name2);
-				search.saveSearch(name1);
-				search.saveSearchInNode(name2);
+				search.saveSearchAtAnyRootGroup(name1, Input.mySavedSearch);
+				search.saveSearchInNewNode(name2, newNode);
 			}
 			if (a == 0) {
-				driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+				navigateToSavedSearchPage();
+				getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 				selectNode1(newNodeList.get(0));
 				shareSavedNodeWithDesiredGroup(newNodeList.get(0), "Default Security Group");
 				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(verifySharedNode(newNodeList.get(0)), true);
 
-				driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+				navigateToSavedSearchPage();
+				getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 				selectNode1(newNodeList.get(0));
 				shareSavedNodeWithDesiredGroup(newNodeList.get(0), "Project Administrator");
 				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(verifySharedNodeInProjectAdminGroup(newNodeList.get(0)), true);
 			}
 
 			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveSavedSearchToNode(savedInRoot.get(0), newNodeList.get(1));
 			navigateToSavedSearchPage();
+			getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 			moveNodeToNode(newNodeList.get(0), newNodeList.get(1));
 		}
 	}
@@ -4062,7 +4078,8 @@ public class SavedSearch {
 			base.waitForElement(getAddToSelected_Button());
 			getAddToSelected_Button().Click();
 			base.waitForElement(getRunReport_Button());
-			getRunReport_Button().Click();
+			getRunReport_Button().waitAndClick(3);
+			driver.waitForPageToBeReady();
 			final BaseClass bc = new BaseClass(driver);
 			final int Bgcount = bc.initialBgCount();
 			try {
@@ -4403,7 +4420,7 @@ public class SavedSearch {
 	public void verifyWarning_messageForDocView(int pureHit) throws InterruptedException {
 
 		driver.waitForPageToBeReady();
-		getToDocView().waitAndClick(10);
+		docViewFromSS("View in DocView");
 		if (pureHit == 0) {
 			try {
 				base.VerifyWarningMessage("There are no documents in the search results to proceed.");
@@ -6115,10 +6132,11 @@ public class SavedSearch {
 
 	/**
 	 * @author Raghuram.A Date: 11/25/21 Modified date:N/A Modified by: N/A
+	 * @throws InterruptedException
 	 */
 	public void verifyListofsharedNodesandSearchesAcrossUsers(String SGtoShare, List<String> newNodeList,
 			int selectIndex, HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair,
-			String[] rolesToVerify, String passMessage) {
+			String[] rolesToVerify, String passMessage) throws InterruptedException {
 
 		for (int i = 0; i < rolesToVerify.length; i++) {
 			System.out.println(rolesToVerify[i]);
@@ -6302,7 +6320,7 @@ public class SavedSearch {
 		getSavedSearchGroupName(sg).waitAndClick(10);
 		rootGroupExpansion();
 
-		boolean flag = getSavedSearchGroupName(Node).isElementPresent();
+		boolean flag = getSavedSearchGroupName(Node).isElementAvailable(5);
 		if (flag == true) {
 			getSavedSearchGroupName(Node).waitAndClick(10);
 			System.out.println(Node + " is present in  " + "'" + sg + "'");
@@ -6455,7 +6473,7 @@ public class SavedSearch {
 			getSavedSearchGroupName(selectRootGroup).waitAndClick(3);
 			base.stepInfo("Root node : " + newNodeList.get(0));
 			selectNode1(newNodeList.get(0));
-			getToDocView().waitAndClick(5);
+			docViewFromSS("View in DocView");
 
 			// Load latency Verification
 			Element loadingElement = search.getspinningWheel();
@@ -6930,10 +6948,11 @@ public class SavedSearch {
 	public void openUplodedBatchFile(String batchFile) {
 		try {
 			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
 			getMySeraches().isElementAvailable(15);
-			getMySeraches().Click();
+			getMySeraches().waitAndClick(2);
 			getSelectUploadedFile(batchFile).isElementAvailable(15);
-			getSelectUploadedFile(batchFile).Click();
+			getSelectUploadedFile(batchFile).waitAndClick(2);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while open uploded batch file." + e.getMessage());
@@ -7783,6 +7802,24 @@ public class SavedSearch {
 			base.textCompareEquals(countValuefromBG, countValue,
 					"Count of results from saved search after batch upload matchs with the actual docs from background tasks page with large data  ",
 					"FAIL");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param action - action selection
+	 */
+	public void docViewFromSS(String action) {
+		if (getLaunchDocView().isElementAvailable(2)) {
+			getLaunchDocView().waitAndClick(3);
+		} else if (getToDocView().isElementAvailable(2)) {
+			getToDocView().waitAndClick(2);
+			// to handle old and new changes
+			// - can be removed once PT build is moved to UAT
+		}
+		if (getToDocViewAction(action).isElementAvailable(2)) {
+			System.out.println(action);
+			getToDocViewAction(action).waitAndClick(3);
 		}
 	}
 }

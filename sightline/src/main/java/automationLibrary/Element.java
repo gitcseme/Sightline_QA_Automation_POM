@@ -186,16 +186,16 @@ public class Element {
 			return;
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.moveToElement(element);
-	//	actions.moveToElement(element);
+		// actions.moveToElement(element);
 		actions.build().perform();
 
-	/*	try {
-			((JavascriptExecutor) (driver.getWebDriver())).executeScript("arguments[0].scrollIntoView(true);", element);
-		} catch (Exception e) {
-			// System.out.println("Scrolling Into View Exception");
-			e.printStackTrace(pw);
-			UtilityLog.info(sw.toString());
-		}*/
+		/*
+		 * try { ((JavascriptExecutor)
+		 * (driver.getWebDriver())).executeScript("arguments[0].scrollIntoView(true);",
+		 * element); } catch (Exception e) { //
+		 * System.out.println("Scrolling Into View Exception"); e.printStackTrace(pw);
+		 * UtilityLog.info(sw.toString()); }
+		 */
 	}
 
 	public void javascriptclick() {
@@ -811,5 +811,4 @@ public class Element {
 			return false;
 		}
 	}
-
 }

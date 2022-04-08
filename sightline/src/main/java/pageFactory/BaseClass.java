@@ -222,8 +222,8 @@ public class BaseClass {
 		return driver.FindElementById("btnsubmit");
 	}
 
-	public Element selectSecurityGroup() {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='SG1134047']");
+	public Element selectSecurityGroup(String SecurityGrp) {
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='"+SecurityGrp+"']");
 	}
 
 	public Element selectDefaultSecurityGroup() {
@@ -252,6 +252,15 @@ public class BaseClass {
 
 	public Element getGlobalMessagePopUpClose() {
 		return driver.FindElementById("btnDialogClose");
+	}
+	
+	// added by iyappan
+	public Element getWarningsMsgHeader() {
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
+	}
+	
+	public Element getWarningMsg() {
+		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
 	}
 
 	public BaseClass(Driver driver) {
@@ -606,11 +615,11 @@ public class BaseClass {
 	public void VerifyWarningMessage(String ExpectedMsg) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getSuccessMsgHeader().Visible();
+				return getWarningsMsgHeader().Visible();
 			}
 		}), Input.wait30);
-		Assert.assertEquals("Warning !", getSuccessMsgHeader().getText().toString());
-		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		Assert.assertEquals("Warning !", getWarningsMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getWarningMsg().getText().toString());
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
 	}
@@ -2554,7 +2563,7 @@ public class BaseClass {
 		softAssertion.assertAll();
 	}
 
-	public void SelectSecurityGrp(String username) {
+	public void SelectSecurityGrp(String username,String SecurityGrp) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
@@ -2562,10 +2571,10 @@ public class BaseClass {
 		waitTillElemetToBeClickable(getEditButton());
 		getEditButton().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		selectSecurityGroup().ScrollTo();
-		selectSecurityGroup().isDisplayed();
-		waitTillElemetToBeClickable(selectSecurityGroup());
-		selectSecurityGroup().waitAndClick(10);
+		selectSecurityGroup(SecurityGrp).ScrollTo();
+		selectSecurityGroup(SecurityGrp).isDisplayed();
+		waitTillElemetToBeClickable(selectSecurityGroup(SecurityGrp));
+		selectSecurityGroup(SecurityGrp).Click();
 		getSaveBtn().waitAndClick(5);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
@@ -3022,7 +3031,7 @@ public class BaseClass {
 		}
 
 		System.out.println(lines.size());
-		for (int i = 1; i < lines.size() - 1; i++) {
+		for (int i = 1; i < lines.size()-1; i++) {
 			String value = lines.get(i);
 			String[] arrOfStr = value.split(",");
 

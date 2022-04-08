@@ -752,7 +752,6 @@ public class AdvancedSearch_Regression3 {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			lp.logoutWithoutAssert();
 		}
 		try {
 			lp.quitBrowser();

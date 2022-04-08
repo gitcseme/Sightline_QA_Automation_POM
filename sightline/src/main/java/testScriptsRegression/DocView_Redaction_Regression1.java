@@ -119,7 +119,7 @@ public class DocView_Redaction_Regression1 {
 // Adding rectangular redaction and saving-modified on 24/08/2021
 		baseClass.stepInfo("Test case Id: RPMXCON-52321, RPMXCON-52322");
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch("ID00000240");
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
@@ -253,6 +253,7 @@ public class DocView_Redaction_Regression1 {
 
 	@Test(description = "RPMXCON-52255",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyDocViewRedactionPanel() throws Exception {
+
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -322,6 +323,7 @@ public class DocView_Redaction_Regression1 {
 			assertTrue(false);
 		}
 		loginPage.logout();
+	
 	}
 
 	/**
@@ -745,14 +747,16 @@ public class DocView_Redaction_Regression1 {
 		docViewRedact.clickingRemarksIcon();
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
-		if (docViewRedact.addRemarksTextArea().Enabled() == true) {
+		if (baseClass.getSuccessMsgHeader().isDisplayed() == true) {
+			baseClass.passedStep("Remarks as RMU Can not be selected as text area is not selected");
+			
+		} else {
+			
 			actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
 			actions.click();
 			actions.sendKeys("Remark by RMU");
 			actions.build().perform();
 			baseClass.failedStep("Created Remarks as RMU");
-		} else {
-			baseClass.passedStep("Remarks as RMU Can not be selected as text area is not selected");
 
 		}
 		loginPage.logout();
@@ -825,129 +829,22 @@ public class DocView_Redaction_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
-	 * selected on DocView Screen
-	 */
-	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
-	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
-		loginPage = new LoginPage(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		SoftAssert softAssert = new SoftAssert();
 
-		String docId = Input.searchDocId;
-
-		baseClass.stepInfo("Test case Id: RPMXCON-52214");
-		baseClass.stepInfo("Verify that multiple Rectangle Redaction does not remain selected on DocView Screen");
-		sessionsearch.basicContentSearch(Input.searchDocId);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Select the doc from mini doc list for redactions");
-		docViewPage.selectDocIdInMiniDocList(docId);
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Creation of Rectangle Redaction on First Page");
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 200);
-
-		docViewRedact.selectingRectangleRedactionTag();
-
-		baseClass.waitForElement(docViewRedact.docViewNextPage());
-		docViewRedact.docViewNextPage().waitAndClick(10);
-
-		baseClass.waitForElement(docViewRedact.redactionIcon());
-		docViewRedact.redactionIcon().waitAndClick(20);
-
-		baseClass.stepInfo("Creation of Rectangle Redaction on Next Page");
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 200);
-		docViewRedact.selectingRectangleRedactionTag();
-
-		baseClass.stepInfo("Prerequisites created successfully");
-
-		loginPage.logout();
-
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-
-		baseClass.stepInfo("Verify whether the multiple rectangle redaction does not remain selected for RMU user");
-		sessionsearch.basicContentSearch(Input.searchDocId);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionsearch.ViewInDocView();
-		baseClass.waitForElement(docViewRedact.redactionIcon());
-		baseClass.stepInfo("Select the doc from mini doc list for redactions");
-		docViewPage.selectDocIdInMiniDocList(docId);
-
-		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of redacted page");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-
-		driver.scrollPageToTop();
-		baseClass.waitForElement(docViewRedact.docViewNextPage());
-		docViewRedact.docViewNextPage().Click();
-
-		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of next redacted page");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-
-		if (docViewRedact.getRedactionPopups().size() == 1) {
-			softAssert.assertEquals(docViewRedact.getRedactionPopups().size(), 1);
-			baseClass.passedStep("Multiple rectangle redaction does not remain selected, Only one is selected");
-		}
-
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("Logged in as User: " + Input.rev1userName);
-
-		baseClass
-				.stepInfo("Verify whether the multiple rectangle redaction does not remain selected for Reviewer user");
-		sessionsearch.basicContentSearch(Input.searchDocId);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionsearch.ViewInDocView();
-		baseClass.waitForElement(docViewRedact.redactionIcon());
-		baseClass.stepInfo("Select the doc from mini doc list for redactions");
-		docViewPage.selectDocIdInMiniDocList(docId);
-
-		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of redacted page");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-
-		driver.scrollPageToTop();
-		baseClass.waitForElement(docViewRedact.docViewNextPage());
-		docViewRedact.docViewNextPage().Click();
-
-		baseClass.stepInfo("Verify whether the redaction popup is displayed on select of next redacted page");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-
-		baseClass.stepInfo(
-				"Verify whether the multiple rectangle redaction does not remain selected, Only one is selected");
-		if (docViewRedact.getRedactionPopups().size() == 1) {
-			softAssert.assertEquals(docViewRedact.getRedactionPopups().size(), 1);
-			baseClass.passedStep("Multiple rectangle redaction does not remain selected, Only one is selected");
-		}
-
-		softAssert.assertAll();
-		loginPage.logout();
-
-	}
 
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-47723 From Audio search go to DocView Create Redaction in Audio
 	 * Docs
 	 */
-	@Test(description = "RPMXCON-47723",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-47723",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyRedactionInAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case id : RPMXCON-47723");
 		baseClass.stepInfo(
 				"Verify user after impersonating as RMU/Reviewer can see the redaction and can redact in a audio file");
 		loginPage = new LoginPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -963,7 +860,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47034 Verify that error message is present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(description = "RPMXCON-47034",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-47034",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void VerifyMultiPagePopUpInput() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -998,7 +895,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47033 Verify the error message present when invalid page range is
 	 * given as input for redaction
 	 */
-	@Test(description = "RPMXCON-47033",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-47033",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void VerifyMultiPagePopUpInputMessage() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1037,7 +934,7 @@ public class DocView_Redaction_Regression1 {
 	 * clicked
 	 * 
 	 */
-	@Test(description = "RPMXCON-47031",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-47031",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyMultiPageRedactionPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1080,7 +977,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyRedactionTagSelectionAfterChangingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1147,177 +1044,7 @@ public class DocView_Redaction_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-49372 Verify that when 'This page' redaction selected to delete with
-	 * 'Delete' key from keyboard should be disabled keyboard action
-	 * 
-	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
-	public void verifyKeyBoardDelActionDisabledForThisRedaction() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		SoftAssert softAssert = new SoftAssert();
-		// Login As RMU
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		baseClass.stepInfo("Test case Id: RPMXCON-49372 ");
-		baseClass.stepInfo(
-				"Verify that when 'This Page' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action");
-
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-
-		baseClass.stepInfo("Adding Text redaction");
-		docViewRedact.redactTextUsingOffset();
-		docViewRedact.selectingRectangleRedactionTag();
-
-		baseClass.passedStep("Text redaction is added successfully");
-
-		baseClass.stepInfo("Adding the this page redaction");
-		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		baseClass.stepInfo("This page redaction has been performed");
-
-		String getRedactedDocid = docViewRedact.activeDocId().getText();
-
-		baseClass.stepInfo("Navigate to another document and come back to redacted document");
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
-		docViewRedact.nextDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		String nextDoc = docViewRedact.activeDocId().getText();
-
-		baseClass.stepInfo("Verify that user is navigated to next document");
-		softAssert.assertNotEquals(getRedactedDocid, nextDoc);
-
-		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
-		docViewRedact.previousDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-		nextDoc = docViewRedact.activeDocId().getText();
-		softAssert.assertEquals(getRedactedDocid, nextDoc);
-
-		baseClass.stepInfo("Select the rectangular redaction and Press Delete key");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_DELETE);
-		robot.keyRelease(KeyEvent.VK_DELETE);
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Move to next page to add this page redaction");
-		baseClass.waitForElement(docViewRedact.docViewNextPage());
-		docViewRedact.docViewNextPage().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Adding the this page redaction");
-		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		baseClass.stepInfo("This page redaction has been performed");
-
-		baseClass.stepInfo(
-				"Move to previous page to verify this page redaction is still present after del key is pressed");
-		baseClass.waitForElement(docViewRedact.docViewPreviousPage());
-		docViewRedact.docViewPreviousPage().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Navigate to another document and come back to redacted document");
-		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
-		docViewRedact.nextDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
-		docViewRedact.previousDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Verify still the this redaction is displayed even after  del key is pressed");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-
-		softAssert.assertAll();
-		loginPage.logout();
-	}
-
-	/**
-	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
-	 * RPMXCON-49371 Verify that when 'Rectangle' redaction selected to delete with
-	 * 'Delete' key from keyboard should be disabled keyboard action
-	 * 
-	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
-	public void verifyKeyBoardDelActionDisabledForRectangleRedaction() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		SoftAssert softAssert = new SoftAssert();
-		// Login As RMU
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		baseClass.stepInfo("Test case Id: RPMXCON-49371 ");
-		baseClass.stepInfo(
-				"Verify that when 'Rectangle' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action");
-
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-
-		baseClass.stepInfo("Adding Text redaction");
-		docViewRedact.redactTextUsingOffset();
-		docViewRedact.selectingRectangleRedactionTag();
-
-		baseClass.passedStep("Text redaction is added successfully");
-
-		baseClass.stepInfo("Adding Rectangle redaction");
-		docViewRedact.redactionIcon().waitAndClick(20);
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
-		docViewRedact.selectingRectangleRedactionTag();
-		baseClass.passedStep("Rect redaction is added successfully");
-
-		String getRedactedDocid = docViewRedact.activeDocId().getText();
-
-		baseClass.stepInfo("Navigate to another document and come back to redacted document");
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
-		docViewRedact.nextDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		String nextDoc = docViewRedact.activeDocId().getText();
-
-		baseClass.stepInfo("Verify that user is navigated to next document");
-		softAssert.assertNotEquals(getRedactedDocid, nextDoc);
-
-		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
-		docViewRedact.previousDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-		nextDoc = docViewRedact.activeDocId().getText();
-		softAssert.assertEquals(getRedactedDocid, nextDoc);
-
-		baseClass.stepInfo("Select the rectangular redaction and Press Delete key");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_DELETE);
-		robot.keyRelease(KeyEvent.VK_DELETE);
-
-		baseClass.stepInfo("Adding the third redaction");
-		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		baseClass.stepInfo("This page redaction has been performed");
-
-		baseClass.stepInfo("Navigate to another document and come back to redacted document");
-		baseClass.waitForElement(docViewRedact.nextDocViewBtn());
-		docViewRedact.nextDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.waitForElement(docViewRedact.previousDocViewBtn());
-		docViewRedact.previousDocViewBtn().Click();
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Verify still the rectangle redaction is displayed even after  del key is pressed");
-		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-
-		softAssert.assertAll();
-		loginPage.logout();
-	}
+	
 
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
@@ -1328,7 +1055,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyRedactionTagReflectionAfterChanged() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1382,7 +1109,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void VerifyPageSyntaxAgainstMultiPageRedactionsPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1396,7 +1123,7 @@ public class DocView_Redaction_Regression1 {
 
 		// Performing basic search
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch("ID00003915");
+		sessionSearch.basicContentSearch("ID00000230");
 
 		// Adding search results and view in docview
 		sessionSearch.ViewInDocView();
@@ -1416,7 +1143,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyAutomaticSelectionOfRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1484,7 +1211,7 @@ public class DocView_Redaction_Regression1 {
 	 * redaction should be applied
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyOnlyPageRangeMultipageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1530,164 +1257,14 @@ public class DocView_Redaction_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author : Vijaya.Rani date: 03/02/22 NA Modified date: NA Modified by:NA
-	 * Description :Verify that user should be able to edit an applied redaction and
-	 * change the redaction tag that was applied automatically. 'RPMXCON-46958'
-	 * Sprint : 11
-	 * 
-	 * @throws AWTException
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
-	public void verifyEditAndApplyRedactionTag() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-46958");
-		baseClass.stepInfo(
-				"Verify that user should be able to edit an applied redaction and change the redaction tag that was applied automatically.");
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		Actions actions = new Actions(driver.getWebDriver());
-
-		// Login as RMU
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-
-		baseClass.stepInfo("Step 1:Search and Go to docView");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionSearch.ViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
-		docViewRedact.selectingRectangleRedactionTag();
-		sessionSearch.ViewInDocView();
-		docView.redactionIcon().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
-			}
-		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveClick().getWebElement());
-		actions.click();
-		actions.build().perform();
-		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
-		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
-		loginPage.logout();
-
-		// login As Reviewer
-		baseClass.stepInfo("Step 1: Login As Reviewer");
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-		baseClass.stepInfo("Step 1:Search and Go to docView");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionSearch.ViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
-		docViewRedact.selectingRectangleRedactionTag();
-		sessionSearch.ViewInDocView();
-		docView.redactionIcon().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
-			}
-		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveClick().getWebElement());
-		actions.click();
-		actions.build().perform();
-		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
-		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
-	}
-
-	/**
-	 *
-	 * @Author : Brundha
-	 * @Testcase id : 49988 - Verify that after deletion of the last saved
-	 *           redaction, last saved redaction tag should be selected
-	 *           automatically from redaction pop up
-	 */
-	@Test(groups = { "regression" }, priority = 29)
-	public void verifyRedactionTagInPopUpDropDown() throws Exception {
-		BaseClass baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-49988 from Docview/redaction Component");
-		baseClass.stepInfo(
-				"Verify that after deletion of the last saved redaction, last saved redaction tag should be selected automatically from redaction pop up");
-
-		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
-		String Redactiontag2 = "SecondRedactionTag" + Utility.dynamicNameAppender();
-
-		RedactionPage redactionpage = new RedactionPage(driver);
-		baseClass.stepInfo("Creating a redaction tag");
-		redactionpage.manageRedactionTagsPage(Redactiontag1);
-		driver.waitForPageToBeReady();
-		redactionpage.manageRedactionTagsPage(Redactiontag2);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Input.testData1);
-
-		baseClass.stepInfo("Navigate to doc view page");
-		sessionSearch.ViewInDocView();
-
-		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
-		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
-		driver.scrollPageToTop();
-		docViewRedactions.selectDoc1();
-
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 120);
-		driver.waitForPageToBeReady();
-		docViewRedactions.selectingRedactionTag2(Redactiontag1);
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 130);
-		driver.waitForPageToBeReady();
-		docViewRedactions.selectingRedactionTag2(Redactiontag2);
-
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		redactionpage = new RedactionPage(driver);
-		baseClass.stepInfo("Deleting Redaction tag");
-		redactionpage.DeleteRedaction(Redactiontag2);
-
-		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.ViewInDocView();
-
-		docViewRedactions = new DocViewRedactions(driver);
-		docViewRedactions.selectFirstDoc().isElementAvailable(10);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
-		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
-		Select select = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
-		String option = select.getFirstSelectedOption().getText();
-		System.out.println("the value is " + option);
-		if (option.equals(Redactiontag1)) {
-			baseClass.passedStep("Last saved redaction tag is selected automatically from redaction pop up");
-		} else {
-			baseClass.failedStep("Last saved redaction tag is not  selected automatically from redaction pop up");
-		}
-		loginPage.logout();
-
-	}
-	
 	/**
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-47878 To verify that when redaction control in red "on" state, if the
 	 * icon is clicked again by the user, it must revert to an "off" state DocView
 	 * Page
 	 */
-	@Test(description ="RPMXCON-47878",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-47878",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void VerifyOnColourChangeInRedactionMenu() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1726,7 +1303,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46860
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void VerifyRectangleRedactionDeletionFromDocExlorer() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1737,23 +1314,27 @@ public class DocView_Redaction_Regression1 {
 		DocExplorerPage docexp = new DocExplorerPage(driver);
 		docexp.documentSelectionIteration();
 		docexp.docExpViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
+		docViewRedact.rectangleClick().waitAndClick(20);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
 		actions.build().perform();
+		if(docViewRedact.deleteClick().isDisplayed() == true) {
 		actions.moveToElement(docViewRedact.deleteClick().getWebElement());
 		actions.click();
 		actions.build().perform();
 		baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+		}
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Deleted successfully");
 
+	
 	}
 
 	
@@ -1764,7 +1345,7 @@ public class DocView_Redaction_Regression1 {
 	 *         
 	 */
 	
-	@Test(description ="RPMXCON-47736",groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-47736",groups = { "regression" }, priority = 27)
 	public void printRedactedDocsAfterImpersonation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47736");
@@ -1805,7 +1386,7 @@ public class DocView_Redaction_Regression1 {
 		// Thread sleep added for the session to move to next page to extract url
 		Thread.sleep(4000);
 		String urlBackgroundfromdocview = driver.getUrl();
-		assertEquals(urlBackgroundfromdocview, "https://sightlinept.consilio.com/Background/BackgroundTask");
+		assertEquals(urlBackgroundfromdocview, "https://sightlineuat.consiliotest.com/Background/BackgroundTask");
 		baseClass.passedStep("Navigated to document download page");
 		loginPage.logout();
 	}
@@ -1819,7 +1400,7 @@ public class DocView_Redaction_Regression1 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-49994",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-49994",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyRedactionTagSelectionAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-49994");
@@ -1850,7 +1431,7 @@ public class DocView_Redaction_Regression1 {
 	 * applied
 	 * 
 	 */
-	@Test(description ="RPMXCON-49974",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-49974",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void VerifyMultiPageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1882,7 +1463,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-47725
 	 * 
 	 */
-	@Test(description ="RPMXCON-47725",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-47725",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
 	public void VerifyRectangleRedactionDeletion() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1894,7 +1475,7 @@ public class DocView_Redaction_Regression1 {
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 200, 100);
+		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
 		docViewRedact.selectingRectangleRedactionTag();
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -1918,7 +1499,7 @@ public class DocView_Redaction_Regression1 {
 	 *
 	 * 
 	 */
-	@Test(description ="RPMXCON-49973",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-49973",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void VerifyMultiPageRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1969,7 +1550,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-49972
 	 * 
 	 */
-	@Test(description ="RPMXCON-49972",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-49972",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 32)
 	public void VerifyThisPageRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2006,7 +1587,7 @@ public class DocView_Redaction_Regression1 {
 	 * RPMXCON-49971
 	 * 
 	 */
-	@Test(description ="RPMXCON-49971",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 38)
+	@Test(description ="RPMXCON-49971",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void VerifyRectangleRedactionTagSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2042,7 +1623,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46954
 	 */
-	@Test(description ="RPMXCON-46954",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-46954",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
 	public void VerifyMultiPageRedactionTagDefaultSelection() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -2079,8 +1660,6 @@ public class DocView_Redaction_Regression1 {
 		}
 		loginPage.logout();
 		}
-	
-	
 	
 
 	@AfterClass(alwaysRun = true)

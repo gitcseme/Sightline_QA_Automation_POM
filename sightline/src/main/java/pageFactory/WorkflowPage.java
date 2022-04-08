@@ -350,6 +350,28 @@ public class WorkflowPage {
 
 	}
 
+	// added by jayanthi
+	public Element getSummaryTab_WFName() {
+		return driver.FindElementByXPath("//label[contains(text(),'Workflow Name:')]/following-sibling::div");
+	}
+
+	public Element getSummaryTab_WFDesc() {
+		return driver.FindElementByXPath("//label[contains(text(),'Workflow Description:')]/following-sibling::div");
+	}
+
+	public Element getAction_EditWF() {
+		return driver.FindElementById("lnkEditWorkflow");
+	}
+
+	// Added by Vijaya.Rani
+	public Element getSummaryTab_SourceAssignment() {
+		return driver.FindElementByXPath("//label[contains(text(),'Assignments:')]/following-sibling::div");
+	}
+
+	public Element getSummaryTab_SourceSavedSearch() {
+		return driver.FindElementByXPath("//label[contains(text(),'Saved Search:')]/following-sibling::div");
+	}
+
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
@@ -1320,7 +1342,7 @@ public class WorkflowPage {
 		baseClass.passedStep("'Completed' status is displayed in the list successfully");
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani Modified Date:24/3/2022
 	 * @throws ParseException
@@ -1387,4 +1409,18 @@ public class WorkflowPage {
 		softAssertion.assertAll();
 	}
 
+	/**
+	 * @author Jayanthi This method will select and open the work flow in edit mode
+	 * @param wfName[Name of work flow]
+	 */
+	public void editWorkFlow(String wfName) {
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		selectWorkFlowUsingPagination(wfName);
+		// action to edit
+		baseClass.waitForElement(getWorkFlow_ActionDropdown());
+		getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.waitForElement(getAction_EditWF());
+		getAction_EditWF().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
 }

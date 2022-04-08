@@ -1580,6 +1580,34 @@ public class DocList_Regression1 {
 			docPage.performTallyAction();
 
 		}
+  	/**
+  	 * @author Gopinath
+  	 * @Testcase Id:54285 Verify 3 play counter readouts are displayed on preview document from doc list
+  	 * @Description:To Verify 3 play counter readouts are displayed on preview document from doc list
+  	 * @throws InterruptedException
+  	 */
+  	@Test(alwaysRun = true,groups={"regression"},priority = 2)
+  	public void verifyPlayCounterReadOutsDisplayed() throws InterruptedException {
+  		baseClass = new BaseClass(driver);
+ 		baseClass.stepInfo("Test case Id: RPMXCON-54285");
+ 		baseClass.stepInfo("Verify 3 play counter readouts are displayed on preview document from doc list");
+ 		
+ 		SessionSearch search = new SessionSearch(driver);
+
+ 		loginPage.logout();
+ 		baseClass.stepInfo("login As PA");
+ 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+ 		
+ 		baseClass.stepInfo("Basic meta data search");
+ 		search.audioDocumentMetaData();
+
+ 		baseClass.stepInfo("View search data in doc list");
+ 		search.ViewInDocList();
+ 		DocListPage docPage = new DocListPage(driver);
+ 		
+ 		baseClass.stepInfo("Verify 3 play counters are displayed in preview document");
+ 		docPage.verifyPlayCountersDisplay();
+  	}
   	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {

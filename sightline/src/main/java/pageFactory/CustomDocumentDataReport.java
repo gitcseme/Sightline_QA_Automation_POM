@@ -341,7 +341,11 @@ public class CustomDocumentDataReport {
 		}
 		return expected;
 	}
-
+/**
+ * @author Jayanthi.Ganesan
+ * This method will save the custom document data report
+ * @param reportName
+ */
 	public void SaveReport(String reportName) {
 
 		if (getSaveReportBtn().isElementAvailable(2)) {
@@ -353,6 +357,10 @@ public class CustomDocumentDataReport {
 		getSaveReportName().Clear();
 		getSaveReportName().SendKeys(reportName);
 		getSaveBtn().Click();
+		bc.CloseSuccessMsgpopup();
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 	}
 
 	public void selectMetaDataFields(String[] Mfields) {
@@ -370,7 +378,7 @@ public class CustomDocumentDataReport {
 		getWorkProductTab().Click();
 		for (int i = 0; i < Wfields.length; i++) {
 			getWorkProductField(Wfields[i]).ScrollTo();
-			getWorkProductField(Wfields[i]).waitAndClick(5);
+			getWorkProductField(Wfields[i]).waitAndClick(10);
 		}
 		getAddToSelectedBtn().waitAndClick(2);
 		driver.scrollPageToTop();
@@ -591,7 +599,17 @@ public class CustomDocumentDataReport {
 				bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
 			}
 			break;
+		
+	case "tally":
+		if (sourceName.equalsIgnoreCase("Documents: Selected Documents from Tally")) {
+			bc.passedStep(sourceName + " selected source name reflected in export page as expected.");
+		} else {
+
+			bc.failedStep(sourceName + " selected source name reflected in export page which is not expected.");
 		}
+		break;
+	}
+		
 
 	}
 	/**
@@ -604,5 +622,26 @@ public class CustomDocumentDataReport {
 		driver.waitForPageToBeReady();
 		
 	}
-
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will retrieve the value from csv file downloaded 
+	 * @param fileLocation
+	 * @param fileName[Name of file]
+	 * @return return a list of string [Values from csv file column]
+	 */
+	public List<String> csvfileSize(String fileLocation, String fileName) {
+		FileReader file = bc.fileLocate(fileLocation, fileName);
+		List<String> lines = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader(file);
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				lines.add(line.trim().replaceAll("ï»¿\"", ""));
+			}
+			System.out.println(lines);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lines;
+	}
 }

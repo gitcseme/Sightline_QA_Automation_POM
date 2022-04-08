@@ -25,6 +25,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import akka.japi.Util;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AnnotationLayer;
@@ -90,8 +91,8 @@ public class DocViewAudio_IndiumRegression {
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		Input in = new Input();
-		in.loadEnvConfig();
+		// Input in = new Input();
+		// in.loadEnvConfig();
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -990,7 +991,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51862 Description : When a user tries to navigate to Audio DocView
 	 * with some documents, the first document must present completely and be ready
 	 * to be acted upon fully
@@ -1055,7 +1056,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51818 Description : Verify that when audio file is playing and
 	 * clicked to Save the document, then waveform should be loaded [Less than 1 hr
 	 * audio file]
@@ -1394,7 +1395,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author :Aathith date: NA Modified date: NA Modified by: NA Test Case
+	 * Author :Aathith date: NA Modified date: NA Modified by: NA @Test Case
 	 * Id:RPMXCON-51780 Description : Verify that audio hits should be displayed
 	 * when documents searched with same term and different/same threshold from
 	 * session search
@@ -1873,7 +1874,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+	 * Author : Brundha Created date: NA Modified date: NA Modified by:NA @TestCase
 	 * id :RPMXCON- 51858 Description:Audio only - If user modified Search Term and
 	 * re-execute the same query then modified Term does not appear in Persistent
 	 * Search panel in DocView screen.
@@ -2327,9 +2328,9 @@ public class DocViewAudio_IndiumRegression {
 
 	/**
 	 * Author : Vijaya.Rani date: 09/02/22 NA Modified date: NA Modified by:NA
-	 * Description :To verify that after scrolling the mini doc list, when â€˜Loadingâ€™
-	 * is displayed then document list should be loaded immediately..'RPMXCON-51812'
-	 * Sprint: 12
+	 * Description :To verify that after scrolling the mini doc list, when
+	 * â€˜Loadingâ€™ is displayed then document list should be loaded
+	 * immediately..'RPMXCON-51812' Sprint: 12
 	 * 
 	 * 
 	 * @throws Exception
@@ -2376,8 +2377,8 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
-	 *         Id:RPMXCON-52009 Description : Verify that when applies audio
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA @Test
+	 *         Case Id:RPMXCON-52009 Description : Verify that when applies audio
 	 *         redaction for the first time then application should automatically
 	 *         select the â€˜Default Redaction Tagâ€™ Sprint 12
 	 * @throws InterruptedException
@@ -2685,11 +2686,11 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA Test Case
-	 *         Id:RPMXCON-46922 Description : Verify when audio document present in
-	 *         two different save searches with common term, then on navigating to
-	 *         doc view with selection of search group it should not display
-	 *         repetitive search term on persistent hits panel Sprint 12
+	 * @author Raghuram.A date: 02/03/22 Modified date: NA Modified by: NA @Test
+	 *         Case Id:RPMXCON-46922 Description : Verify when audio document
+	 *         present in two different save searches with common term, then on
+	 *         navigating to doc view with selection of search group it should not
+	 *         display repetitive search term on persistent hits panel Sprint 12
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 * 
@@ -3094,7 +3095,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA Test
+	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA @Test
 	 *         Case Description : Verify the automatically selected audio redaction
 	 *         tag when shared annotation layer with un-shared redactation tags in
 	 *         security groups and all documents are released to security groups.
@@ -3207,7 +3208,7 @@ public class DocViewAudio_IndiumRegression {
 	}
 
 	/**
-	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA Test
+	 * @author Vijaya.Rani date: 17/03/22 Modified date: NA Modified by: NA @Test
 	 *         Case Description :Verify the automatically selected audio redaction
 	 *         tag when shared annotation layer with shared redactation tags in
 	 *         security groups and all propogated documents are not released to
@@ -3254,7 +3255,7 @@ public class DocViewAudio_IndiumRegression {
 
 		redact.AddRedaction(RedactName, Input.rev1FullName);
 		annotationLayer.AddAnnotation(addName);
-		
+
 		loginPage.logout();
 
 		// Login as USER
@@ -3319,7 +3320,7 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/03/2021 Modified date: NA Modified by: Baskar
 	 * @Description : Verify the reviewer apply 'Code same as last' action then
@@ -3567,8 +3568,9 @@ public class DocViewAudio_IndiumRegression {
 
 	/**
 	 * @Author : Baskar date: 22/03/2021 Modified date: NA Modified by: Baskar
-	 * @Description : Saved Search > Doc List > Doc view when search is with Metadata & Content search 
-	 *                first and then Audio search, hits should be highlighted
+	 * @Description : Saved Search > Doc List > Doc view when search is with
+	 *              Metadata & Content search first and then Audio search, hits
+	 *              should be highlighted
 	 */
 
 	@Test(description = "RPMXCON-47006", enabled = true, groups = { "regression" }, priority = 49)
@@ -3645,7 +3647,7 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @Author : Baskar date: 22/03/2021 Modified date: NA Modified by: Baskar
 	 * @Description : Search > Doc List > Doc view when search is set up with the
@@ -3653,7 +3655,7 @@ public class DocViewAudio_IndiumRegression {
 	 *              be highlighted
 	 */
 
-    @Test(description = "RPMXCON-47007", enabled = true, groups = { "regression" }, priority = 50)
+	@Test(description = "RPMXCON-47007", enabled = true, groups = { "regression" }, priority = 50)
 	public void verifyHitFromSavedToDocListToDocviewFirstAudio() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -3727,11 +3729,12 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-    /**
-	 * @Author : Jayanthi date: 25/03/2021 Modified date: NA Modified by: N/A 
+
+	/**
+	 * @Author : Jayanthi date: 25/03/2021 Modified date: NA Modified by: N/A
 	 */
 
-    @Test(description = "RPMXCON-47009", enabled = true, groups = { "regression" }, priority = 51)
+	@Test(description = "RPMXCON-47009", enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyHitFromSavedToBulkAssingnToDocviewFirstAudio() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -3739,10 +3742,9 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch = new SavedSearch(driver);
 		miniDocListpage = new MiniDocListPage(driver);
 
-		
 		List<String> docIDlist = new ArrayList<>();
 		String firnstDocname;
-		String searchName = "ss"+Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
+		String searchName = "ss" + Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
 		String[] combinations = { "Audio + Metadata" };
 		String audioSearchInput = Input.audioSearch;
 		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
@@ -3756,9 +3758,8 @@ public class DocViewAudio_IndiumRegression {
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
-		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
-				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-				metaDataType, metaDataIp, "", false);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
 		sessionSearch.saveAndReturnPureHitCount();
 		driver.scrollPageToTop();
 		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
@@ -3769,8 +3770,8 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(5);
 		baseClass.stepInfo("Saved Search to assignment page");
-		
-		AssignmentsPage assgnPage=new AssignmentsPage(driver);
+
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
 		assgnPage.FinalizeAssignmentAfterBulkAssign();
 		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		assgnPage.getAssignmentSaveButton().waitAndClick(5);
@@ -3785,7 +3786,6 @@ public class DocViewAudio_IndiumRegression {
 		// view selected documents from assignment in Docview
 		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
 
-
 		// Main method Validations
 		docIDlist = miniDocListpage.getDocListDatas();
 		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
@@ -3799,9 +3799,9 @@ public class DocViewAudio_IndiumRegression {
 				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
 		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
 		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
-		
+
 		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
-		
+
 		// Launch DocView via Saved Search>Assignment/Existing assignment
 		savedSearch.navigateToSSPage();
 		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
@@ -3809,14 +3809,12 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(5);
 		baseClass.stepInfo("Saved Search to assignment page");
 		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
-		
-		
+
 		assgnPage.navigateToAssignmentsPage();
 		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
 		assgnPage.Checkclickedstatus(assignmentName1);
 		assgnPage.assgnViewInAllDocView();
 		driver.waitForPageToBeReady();
-		
 
 		// view selected documents from assignment in Docview
 		baseClass.stepInfo("After selected docs from DocListpage user navigate to Docview Page");
@@ -3839,11 +3837,12 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-    /**
+
+	/**
 	 * @Author : Jayanthi date: 25/03/2021 Modified date: NA Modified by: N/A
 	 */
 
-    @Test(description = "RPMXCON-47008", enabled = true, groups = { "regression" }, priority = 52)
+	@Test(description = "RPMXCON-47008", enabled = true, groups = { "regression" }, priority = 52)
 	public void verifyHitFromSavedToBulkAssingnToDocviewFirstMeta() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -3851,26 +3850,25 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch = new SavedSearch(driver);
 		miniDocListpage = new MiniDocListPage(driver);
 
-		
 		List<String> docIDlist = new ArrayList<>();
 		String firnstDocname;
-		String searchName = "ss"+Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
+		String searchName = "ss" + Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
 		String[] combinations = { "Metadata + Audio" };
 		String audioSearchInput = Input.audioSearch;
 		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
 		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case id :RPMXCON-47008");
-		baseClass.stepInfo("Saved Search > Bulk assign > New/existing assignment when search is with Metadata & Content search "
-				+ "first and then Audio search, hits should be highlighted");
+		baseClass.stepInfo(
+				"Saved Search > Bulk assign > New/existing assignment when search is with Metadata & Content search "
+						+ "first and then Audio search, hits should be highlighted");
 
 		// Login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Combinational Search
 		baseClass.stepInfo("Audio Input : " + audioSearchInput);
-		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
-				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-				metaDataType, metaDataIp, "", false);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
 		sessionSearch.saveAndReturnPureHitCount();
 		driver.scrollPageToTop();
 		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
@@ -3881,8 +3879,8 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(5);
 		baseClass.stepInfo("Saved Search to assignment page");
-		
-		AssignmentsPage assgnPage=new AssignmentsPage(driver);
+
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
 		assgnPage.FinalizeAssignmentAfterBulkAssign();
 		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		assgnPage.getAssignmentSaveButton().waitAndClick(5);
@@ -3897,7 +3895,6 @@ public class DocViewAudio_IndiumRegression {
 		// view selected documents from assignment in Docview
 		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
 
-
 		// Main method Validations
 		docIDlist = miniDocListpage.getDocListDatas();
 		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
@@ -3911,9 +3908,9 @@ public class DocViewAudio_IndiumRegression {
 				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
 		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
 		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
-		
+
 		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
-		
+
 		// Launch DocView via Saved Search>Assignment/Existing assignment
 		savedSearch.navigateToSSPage();
 		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
@@ -3921,14 +3918,12 @@ public class DocViewAudio_IndiumRegression {
 		savedSearch.getSavedSearchToBulkAssign().waitAndClick(5);
 		baseClass.stepInfo("Saved Search to assignment page");
 		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
-		
-		
+
 		assgnPage.navigateToAssignmentsPage();
 		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
 		assgnPage.Checkclickedstatus(assignmentName1);
 		assgnPage.assgnViewInAllDocView();
 		driver.waitForPageToBeReady();
-		
 
 		// view selected documents from assignment in Docview
 		baseClass.stepInfo("After selected docs from DocListpage user navigate to Docview Page");
@@ -3951,231 +3946,951 @@ public class DocViewAudio_IndiumRegression {
 		loginPage.logout();
 
 	}
-    /**
-   	 * @Author : Jayanthi date: 28/03/2021 Modified date: NA Modified by: N/A 
-   	 */
 
-       @Test(description = "RPMXCON-47005", enabled = true, groups = { "regression" }, priority = 53)
-   	public void verifyHitFromSSToBulkAssingnToDocListToDocviewFirstAudio() throws InterruptedException {
-   		baseClass = new BaseClass(driver);
-   		docViewPage = new DocViewPage(driver);
-   		sessionSearch = new SessionSearch(driver);
-   		savedSearch = new SavedSearch(driver);
-   		miniDocListpage = new MiniDocListPage(driver);
-   		DocListPage docListPage=new DocListPage(driver);
-   		
-   		List<String> docIDlist = new ArrayList<>();
-   		String firnstDocname;
-   		String searchName = "ss"+Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
-   		String[] combinations = { "Audio + Metadata" };
-   		String audioSearchInput = Input.audioSearch;
-   		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
-   		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
-   		baseClass.stepInfo("Test case id :RPMXCON-47005");
-   		baseClass.stepInfo("Saved Search > Doc list > Bulk assign > New/existing assignment Verify that audio hits should be highlighted when "
-   				+ "search is set up with the Audio search first then Metadata & Content search and documents are assigned");
+	/**
+	 * @Author : Jayanthi date: 28/03/2021 Modified date: NA Modified by: N/A
+	 */
 
-   		// Login as RMU
-   		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	@Test(description = "RPMXCON-47005", enabled = true, groups = { "regression" }, priority = 53)
+	public void verifyHitFromSSToBulkAssingnToDocListToDocviewFirstAudio() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		savedSearch = new SavedSearch(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+		DocListPage docListPage = new DocListPage(driver);
 
-   		// Combinational Search
-   		baseClass.stepInfo("Audio Input : " + audioSearchInput);
-   		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
-   				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-   				metaDataType, metaDataIp, "", false);
-   		sessionSearch.saveAndReturnPureHitCount();
-   		driver.scrollPageToTop();
-   		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
-   		baseClass.stepInfo("**Verification of Persistent Highlight for new assignment**");
-   		// Launch DocView via Saved Search>Assignment
-   		savedSearch.navigateToSSPage();
-   		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
-   		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
-   		savedSearch.saveSearchToDoclist();
-   		
-   		docListPage.DoclisttobulkAssign(null, "100");
-   		AssignmentsPage assgnPage=new AssignmentsPage(driver);
-   		assgnPage.FinalizeAssignmentAfterBulkAssign();
-   		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-   		assgnPage.getAssignmentSaveButton().waitAndClick(5);
-   		baseClass.stepInfo("Created Assignment name : " + assignmentName);
-   		assgnPage.navigateToAssignmentsPage();
-   		driver.Navigate().refresh();
-   		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
-   		assgnPage.Checkclickedstatus(assignmentName);
-   		assgnPage.assgnViewInAllDocView();
-   		driver.waitForPageToBeReady();
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String searchName = "ss" + Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Audio + Metadata" };
+		String audioSearchInput = Input.audioSearch;
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case id :RPMXCON-47005");
+		baseClass.stepInfo(
+				"Saved Search > Doc list > Bulk assign > New/existing assignment Verify that audio hits should be highlighted when "
+						+ "search is set up with the Audio search first then Metadata & Content search and documents are assigned");
 
-   		// view selected documents from assignment in Docview
-   		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
+		sessionSearch.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
+		baseClass.stepInfo("**Verification of Persistent Highlight for new assignment**");
+		// Launch DocView via Saved Search>Assignment
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		savedSearch.saveSearchToDoclist();
 
-   		// Main method Validations
-   		docIDlist = miniDocListpage.getDocListDatas();
-   		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
-   		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+		docListPage.DoclisttobulkAssign(null, "100");
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		assgnPage.navigateToAssignmentsPage();
+		driver.Navigate().refresh();
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assgnPage.Checkclickedstatus(assignmentName);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
 
-   		// Validate audio docs eye icon with persistent hits
-   		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
 
-   		// Hits Notch On Jplayer check
-   		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
-   				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
-   		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
-   		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
-   		
-   		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
-   		
-   		// Launch DocView via Saved Search>Assignment/Existing assignment
-   		savedSearch.navigateToSSPage();
-   		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
-   		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
-   		savedSearch.saveSearchToDoclist();
-   		docListPage.DoclisttobulkAssign(null, "100");
-   		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
-   		
-   		
-   		assgnPage.navigateToAssignmentsPage();
-   		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
-   		assgnPage.Checkclickedstatus(assignmentName1);
-   		assgnPage.assgnViewInAllDocView();
-   		driver.waitForPageToBeReady();
-   		
+		// Main method Validations
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
 
-   		// view selected documents from assignment in Docview
-   		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
 
-   		// Main method
-   		docIDlist = miniDocListpage.getDocListDatas();
-   		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
-   		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
 
-   		// Validate audio docs eye icon with persistent hits
-   		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
 
-   		// Hits Notch On Jplayer check
-   		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
-   				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
-   		// Delete Search
-   		savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		// Launch DocView via Saved Search>Assignment/Existing assignment
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		savedSearch.saveSearchToDoclist();
+		docListPage.DoclisttobulkAssign(null, "100");
+		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
 
-   		// logout
-   		loginPage.logout();
+		assgnPage.navigateToAssignmentsPage();
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+		assgnPage.Checkclickedstatus(assignmentName1);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
 
-   	}
-       /**
-      	 * @Author : Jayanthi date: 28/03/2021 Modified date: NA Modified by: N/A 
-      	 */
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
 
-          @Test(description = "RPMXCON-47004", enabled = true, groups = { "regression" }, priority = 54)
-      	public void verifyHitFromSSToBulkAssingnToDocListToDocview() throws InterruptedException {
-      		baseClass = new BaseClass(driver);
-      		docViewPage = new DocViewPage(driver);
-      		sessionSearch = new SessionSearch(driver);
-      		savedSearch = new SavedSearch(driver);
-      		miniDocListpage = new MiniDocListPage(driver);
-      		DocListPage docListPage=new DocListPage(driver);
-      		
-      		List<String> docIDlist = new ArrayList<>();
-      		String firnstDocname;
-      		String searchName = "ss"+Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
-      		String[] combinations = { "Metadata + Audio" };
-      		String audioSearchInput = Input.audioSearch;
-      		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
-      		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
-      		baseClass.stepInfo("Test case id :RPMXCON-47004");
-      		baseClass.stepInfo("Saved Search > Doc list > Bulk assign > New/existing assignment"
-      				+ " (Metadata & Content) search first and then Audio search)");
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
 
-      		// Login as RMU
-      		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
 
-      		// Combinational Search
-      		baseClass.stepInfo("Audio Input : " + audioSearchInput);
-      		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(
-      				Input.searchString1, Input.searchString1, audioSearchInput, Input.language, "", combinations,
-      				metaDataType, metaDataIp, "", false);
-      		sessionSearch.saveAndReturnPureHitCount();
-      		driver.scrollPageToTop();
-      		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
-      		baseClass.stepInfo("**Verification of Persistent Highlight for new assignment**");
-      		// Launch DocView via Saved Search>Assignment
-      		savedSearch.navigateToSSPage();
-      		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
-      		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
-      		savedSearch.saveSearchToDoclist();
-      		
-      		docListPage.DoclisttobulkAssign(null, "100");
-      		AssignmentsPage assgnPage=new AssignmentsPage(driver);
-      		assgnPage.FinalizeAssignmentAfterBulkAssign();
-      		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-      		assgnPage.getAssignmentSaveButton().waitAndClick(5);
-      		baseClass.stepInfo("Created Assignment name : " + assignmentName);
-      		assgnPage.navigateToAssignmentsPage();
-      		driver.Navigate().refresh();
-      		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
-      		assgnPage.Checkclickedstatus(assignmentName);
-      		assgnPage.assgnViewInAllDocView();
-      		driver.waitForPageToBeReady();
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+		// Delete Search
+		savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 
-      		// view selected documents from assignment in Docview
-      		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		// logout
+		loginPage.logout();
 
+	}
 
-      		// Main method Validations
-      		docIDlist = miniDocListpage.getDocListDatas();
-      		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
-      		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+	/**
+	 * @Author : Jayanthi date: 28/03/2021 Modified date: NA Modified by: N/A
+	 */
 
-      		// Validate audio docs eye icon with persistent hits
-      		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+	@Test(description = "RPMXCON-47004", enabled = true, groups = { "regression" }, priority = 54)
+	public void verifyHitFromSSToBulkAssingnToDocListToDocview() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		savedSearch = new SavedSearch(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+		DocListPage docListPage = new DocListPage(driver);
 
-      		// Hits Notch On Jplayer check
-      		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
-      				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
-      		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
-      		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
-      		
-      		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
-      		
-      		// Launch DocView via Saved Search>Assignment/Existing assignment
-      		savedSearch.navigateToSSPage();
-      		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
-      		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
-      		savedSearch.saveSearchToDoclist();
-      		docListPage.DoclisttobulkAssign(null, "100");
-      		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
-      		
-      		
-      		assgnPage.navigateToAssignmentsPage();
-      		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
-      		assgnPage.Checkclickedstatus(assignmentName1);
-      		assgnPage.assgnViewInAllDocView();
-      		driver.waitForPageToBeReady();
-      		
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String searchName = "ss" + Utility.dynamicNameAppender(), metaDataType = "DocID", metaDataIp = "ID00*";
+		String[] combinations = { "Metadata + Audio" };
+		String audioSearchInput = Input.audioSearch;
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case id :RPMXCON-47004");
+		baseClass.stepInfo("Saved Search > Doc list > Bulk assign > New/existing assignment"
+				+ " (Metadata & Content) search first and then Audio search)");
 
-      		// view selected documents from assignment in Docview
-      		baseClass.stepInfo("After selected docs from DocListpage user navigate to Docview Page");
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-      		// Main method
-      		docIDlist = miniDocListpage.getDocListDatas();
-      		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
-      		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+		// Combinational Search
+		baseClass.stepInfo("Audio Input : " + audioSearchInput);
+		sessionSearch.advancedSearchWithCombinationsSaveUnderMySearches(Input.searchString1, Input.searchString1,
+				audioSearchInput, Input.language, "", combinations, metaDataType, metaDataIp, "", false);
+		sessionSearch.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		sessionSearch.saveSearchAdvanced_New(searchName, Input.mySavedSearch);
+		baseClass.stepInfo("**Verification of Persistent Highlight for new assignment**");
+		// Launch DocView via Saved Search>Assignment
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		savedSearch.saveSearchToDoclist();
 
-      		// Validate audio docs eye icon with persistent hits
-      		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+		docListPage.DoclisttobulkAssign(null, "100");
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		assgnPage.navigateToAssignmentsPage();
+		driver.Navigate().refresh();
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assgnPage.Checkclickedstatus(assignmentName);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
 
-      		// Hits Notch On Jplayer check
-      		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
-      				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
-			// Delete Search
-			savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-			assgnPage.deleteAssgnmntUsingPagination(assignmentName1);
-			// logout
-			loginPage.logout();
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
 
+		// Main method Validations
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+		assgnPage.createAssignment(assignmentName1, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
+
+		baseClass.stepInfo("**Verification of Persistent Highlight for existing assignment**");
+
+		// Launch DocView via Saved Search>Assignment/Existing assignment
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		savedSearch.saveSearchToDoclist();
+		docListPage.DoclisttobulkAssign(null, "100");
+		sessionSearch.bulkAssignExistingWithoutActionTab(assignmentName1);
+
+		assgnPage.navigateToAssignmentsPage();
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+		assgnPage.Checkclickedstatus(assignmentName1);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected docs from DocListpage user navigate to Docview Page");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.verifyPersistantDataPresent(audioSearchInput);
+
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+		// Delete Search
+		savedSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		assgnPage.deleteAssgnmntUsingPagination(assignmentName1);
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA @Test Case
+	 * Id:RPMXCON-51793
+	 * 
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id :RPMXCON-51793");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with same term and different/same "
+						+ "threshold are assigned to assignment at different time from session search");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as RMU");
+
+		String searchString = Input.audioSearchString2;
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		// First audio Search
+		sessionSearch.audioSearch(searchString, Input.language);
+		sessionSearch.getPureHitAddButton().waitAndClick(10);
+
+		// second audio search with same term and same threshold
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString, Input.language);
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		// view All audio Docs in DocList
+		sessionSearch.bulkAssign();
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		assgnPage.navigateToAssignmentsPage();
+
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assgnPage.Checkclickedstatus(assignmentName);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		baseClass.stepInfo("**Verifying that audio hits should be displayed when documents searched with same term and "
+				+ "same threshold navigated to doc view from session search > Bulk Assign**");
+		// verifying the audio hits and triangular arrow Icon
+		docViewPage.clickOnPersistantHitEyeIcon();
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+
+		// First audio search term with max threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		// second audio search with same term and min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
+		// view All audio Docs in DocList
+		sessionSearch.bulkAssign();
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
+		assgnPage.navigateToAssignmentsPage();
+
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+		assgnPage.Checkclickedstatus(assignmentName1);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigating to Docview Page");
+
+		baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+				+ "threshold navigated to doc view from session search > Assignments Page>Docview");
+
+		// verifying the audio hits and triangular arrow Icon
+		docViewPage.clickOnPersistantHitEyeIcon();
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author :Jayanthi Test Case Id:RPMXCON-51787
+	 * 
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
+	public void verifySameDifferentThresholdInSavedSaerchBulkAssign() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		SavedSearch ss = new SavedSearch(driver);
+		baseClass.stepInfo("Test case id :RPMXCON-51787");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with "
+				+ "same term and different/same threshold are assigned to assignment from saved search with search group");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as RMU");
+		String saveSaerchName = "ss" + Utility.dynamicNameAppender();
+		String saveSaerchName1 = "ss" + Utility.dynamicNameAppender();
+		String searchString = Input.audioSearchString2;
+		// Creating saerch group
+		ss.navigateToSavedSearchPage();
+		String revNode = ss.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+
+		// First audio Search
+		sessionSearch.audioSearch(searchString, Input.language);
+		sessionSearch.getPureHitAddButton().waitAndClick(10);
+
+		// second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.audioSearchTwoTimesandAddingTwoPureHits(searchString, Input.language);
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		sessionSearch.saveSearchInNewNode(saveSaerchName, revNode);
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+
+		ss.navigateToSavedSearchPage();
+		ss.selectNode1(revNode);
+		ss.savedSearch_SearchandSelect(saveSaerchName, "Yes");
+		ss.getSavedSearchToBulkAssign().waitAndClick(10);
+		// view All audio Docs in DocList
+		sessionSearch.bulkAssign();
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+		assgnPage.navigateToAssignmentsPage();
+
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
+		assgnPage.Checkclickedstatus(assignmentName);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
+				+ "same threshold navigated to doc view from session search > Saved Search>Bulk Assign");
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+
+		// Creating saerch group
+		ss.navigateToSavedSearchPage();
+		String revNode1 = ss.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "");
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+
+		// First audio search term with max threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		// second audio search with same term and min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString, Input.language, "min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		sessionSearch.saveSearchInNewNode(saveSaerchName1, revNode1);
+		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
+		// Bulk assign from saved saerch
+
+		ss.navigateToSavedSearchPage();
+		ss.selectNode1(revNode1);
+		ss.savedSearch_SearchandSelect(saveSaerchName1, "Yes");
+		ss.getSavedSearchToBulkAssign().waitAndClick(10);
+		sessionSearch.bulkAssign();
+		assgnPage.FinalizeAssignmentAfterBulkAssign();
+		assgnPage.createAssignment_fromAssignUnassignPopup(assignmentName1, Input.codeFormName);
+		assgnPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
+		assgnPage.navigateToAssignmentsPage();
+
+		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
+		assgnPage.Checkclickedstatus(assignmentName1);
+		assgnPage.assgnViewInAllDocView();
+		driver.waitForPageToBeReady();
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+		baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+				+ "threshold navigated to doc view from session search > Saved Search> Bulk Assign");
+
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 31/03/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify after impersonation user can see the transcript in audio
+	 * doc view outside of an assignment.'RPMXCON-46864' Sprint: 14
+	 * 
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void verifyAfterImpersonationSeeTheTranscriptInAudioDocViewPage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-46864");
+		baseClass.stepInfo(
+				"Verify after impersonation user can see the transcript in audio doc view outside of an assignment.");
+
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to PA
+		baseClass.impersonateSAtoPA();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to RMU
+		baseClass.impersonateSAtoRMU();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as System Assient with " + Input.sa1userName + "");
+		// Impersonate SA to Reviewer
+		baseClass.impersonateSAtoReviewer();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assient with " + Input.pa1userName + "");
+		// Impersonate PA to RMU
+		baseClass.impersonatePAtoRMU();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Assient with " + Input.pa1userName + "");
+		// Impersonate PA to Reviewer
+		baseClass.impersonatePAtoReviewer();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviwer Manager with " + Input.rmu1userName + "");
+		// Impersonate RMU to Rviewer
+		baseClass.impersonateRMUtoReviewer();
+		// Performing advanced search with audio
+		baseClass.stepInfo("Advanced audio search");
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearch, Input.language);
+		// view in docview
+		sessionSearch.ViewInDocView();
+		docViewPage.verifyTranScriptsTabDisplayInAudioPage();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author Vijaya.Rani date:04/04/2022 Modified date: NA Modified by:N/A
+	 * @Description : Verify that Audio Remark functionality is working properly for
+	 *              Video file inside Doc view screen. 'RPMXCON-59966' Sprint-14
+	 * 
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 58)
+	public void VerifyAddedReviewerRemarkForAudioDocInVideoFile(String username, String password, String fullName)
+			throws Exception {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewpage = new DocViewPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+
+		Map<String, String> datas = new HashMap<String, String>();
+		String remark = "Remark" + Utility.dynamicNameAppender();
+		String searchName = "SS" + Utility.dynamicNameAppender();
+		int iteration = 1;
+
+		baseClass.stepInfo("Test case Id:RPMXCON-59966 Sprint 14");
+		baseClass.stepInfo(
+				"Verify that Audio Remark functionality is working properly for Video file inside Doc view screen.");
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// adding remark to audio documents
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.saveSearch(searchName);
+		sessionSearch.ViewInDocView();
+		datas = docviewpage.addRemarkToDocumentsT(iteration, remark, true, "Success");
+
+		// SavedSearch to DocVIew
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		// Verify Existing remarks + Edit File
+		docviewpage.verifyExistingRemarks(iteration, datas, true, true);
+		baseClass.stepInfo("Audio Remark functionality is work properly for Video file inside Doc view screen successfully");
+
+		// Delete Search
+		baseClass.stepInfo("Initiating Delete Search");
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify the waveform from audio player for the audio files greater
+	 * than 1 hour
+	 * 
+	 */
+	
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 59)
+	public void validateZoomInFunctionForOneHourAudioDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46889");
+		baseClass.stepInfo("Verify the waveform from audio player for the audio " + "files greater than 1 hour");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// search to docview
+		int audioPurehit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
+
+		driver.waitForPageToBeReady();
+		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// verifying more than one hour audio docs
+		String overAllAudioTime = docViewPage.getDocview_Audio_EndTime().getText();
+		String[] splitData = overAllAudioTime.split(":");
+		String data = splitData[0].toString();
+		System.out.println(data);
+		if (Integer.parseInt(data) >= 01) {
+			baseClass.stepInfo("Audio docs have more than:" + overAllAudioTime + " hour to check zoom function");
+		} else {
+			baseClass.failedMessage("Lesser than one hour");
 		}
 
+		// checking zoom in function working for more than one hour audio docs
+		baseClass.waitForElement(docViewPage.getAudioDocZoom());
+		boolean zoomIN = docViewPage.getAudioDocZoom().Displayed();
+		softAssertion.assertTrue(zoomIN);
+		docViewPage.getAudioDocZoom().waitAndClick(5);
+		boolean zoomBar = docViewPage.getAudioZoomBar().Displayed();
+		softAssertion.assertTrue(zoomBar);
+		baseClass.passedStep("Zoom functionality working for more than one hour of document");
+		// Hits Notch On Jplayer check
+		baseClass.verifyElementCollectionIsNotEmpty(docViewPage.getHitsNotchOnJplayer(),
+				"Audio hits highlighted on the jplayer", "Audio hits not highlighted on the jplayer");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Play functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 60)
+	public void validatePlayFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59791");
+		baseClass.stepInfo("Verify that Video files Play functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		
+		// validating video player docs
+		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeTime);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.waitTime(5);
+		Double afterTime=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterTime);
+        softAssertion.assertNotEquals(Long.toString(beforeTime), Double.toString(afterTime));
+        baseClass.passedStep("Video play functionality working properly inside docview screen");
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Pause functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 61)
+	public void validatePauseFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59792");
+		baseClass.stepInfo("Verify that Video files Play functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeTime);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("video file is playing");
+		baseClass.waitTime(5);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').pause()");
+		baseClass.waitTime(1);
+		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').paused;");
+        Assert.assertTrue(paused);
+        baseClass.passedStep("Video file pause functionality working properly");
+		Double beforePaused=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforePaused);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		Double afterPaused=(Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPaused);
+		if (beforePaused<afterPaused) {
+			 baseClass.passedStep("Video pause and resume function working properly inside docview screen");
+		}
+		else {
+			baseClass.failedStep("pause button function not working");
+		}
+		
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Increase volume functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 62)
+	public void validateIncreaseVolumeFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59813");
+		baseClass.stepInfo("Verify that Video files Increase volume functionality is "
+				+ "working properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("Video file started playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+        // setting the volume
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').volume=0.75;");
+		// validating volume button
+		baseClass.waitTime(2);
+		Double volumeSize=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').volume;");
+		if (volumeSize==0.75) {
+	        baseClass.passedStep("Video file volume increase/decrease function working properly inside docview screen");
+		}
+		else {
+			baseClass.failedStep("Volume button increase/decrease not working properly");
+		}
+        baseClass.passedStep("Video file volume increase/decrease function working properly inside docview screen");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that Video files Mute functionality is working properly inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 63)
+	public void validateMuteFunctionInVideoDocs(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59812");
+		baseClass.stepInfo("Verify that Video files Mute functionality is working "
+				+ "properly inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("video file is playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+        baseClass.passedStep("Video file started playing");
+        // muteing the volume button
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').muted=true;");
+		// validating volume button
+		baseClass.waitTime(2);
+		boolean paused=(boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').muted;");
+		Assert.assertTrue(paused);
+        baseClass.passedStep("Video file volume button is muted inside docview screen");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that User can complete Video file document inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="RMUandREV", groups = { "regression" }, priority = 64)
+	public void validateCompleteDocsFunctionInVideoDocs(String userName,String password,String fullName) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59814");
+		baseClass.stepInfo("Verify that User can complete Video file document inside Doc view screen");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		
+		// validating video player docs
+		Long beforeplay=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(beforeplay);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+		baseClass.stepInfo("Video file started playing");
+		baseClass.waitTime(5);
+		Double afterPlay=(double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+		System.out.println(afterPlay);
+		softAssertion.assertNotEquals(Long.toString(beforeplay), Double.toString(afterPlay));
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		baseClass.passedStep("user can able to complete the document inside having the video file docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/04/2022 Modified by: Baskar
+	 * Description:Verify that audio player gets display inside Doc view screen when User 
+	 *             Ingest only MP3 files and no natives
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 65)
+	public void validateMp3VersionOnDefaultTab(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59969");
+		baseClass.stepInfo("Verify that audio player gets display inside Doc view screen when "
+				+ "User Ingest only MP3 files and no natives");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep("Mp3 version in Default tab displayed for video and player docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 05/04/22 Modified date: NA Modified by: NA @Test
+	 *         Description :Verify that Audio Redaction functionality is working
+	 *         properly for Video file inside Doc view screen. 'RPMXCON-59965'
+	 *         Sprint 14
+	 * 
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "RMUandREV", groups = { "regression" }, priority = 66)
+	public void audioRedactionDefaultTagSelectionVideoFile(String username, String password, String fullName)
+			throws InterruptedException, ParseException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		String headerName = "RedactionTags";
+		int index;
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+		String audioSearchInput = Input.audioSearchString1;
+
+		baseClass.stepInfo("Test case id :RPMXCON-59965 Sprint 14");
+		baseClass.stepInfo(
+				"Verify that Audio Redaction functionality is working properly for Video file inside Doc view screen.");
+
+		// login as RMU/reviewer
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Loggedin As : " + fullName);
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+		baseClass.stepInfo("Audio Redaction functionality is work properly for Video file inside Doc view screen");
+
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+
+	}
+
+	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },

@@ -35,6 +35,7 @@ import pageFactory.SearchTermReportPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -644,6 +645,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -710,6 +712,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -777,6 +780,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -949,7 +953,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.savedSearch_SearchandSelect(savedSearchName, "Yes");
 		base.waitForElement(saveSearch.getSearchStatus(savedSearchName, statusToCheck));
 		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 		base.stepInfo("Clicked DocView button");
 		driver.waitForPageToBeReady();
 		base.VerifyWarningMessage(warningMessage);
@@ -1003,7 +1007,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", false);
 		base.stepInfo("Search is in " + statusToCheck + " status before clicking DocView");
 		saveSearch.getLastStatusSelectionFromGrid(statusToCheck).waitAndClick(5);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 		base.stepInfo("Clicked DocView button");
 		driver.waitForPageToBeReady();
 		base.VerifyWarningMessage(warningMessage);
@@ -1046,6 +1050,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1123,6 +1128,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to RMU
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1520,6 +1526,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -1593,6 +1600,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -2120,7 +2128,7 @@ public class SavedSearchRegression_New_Set_05 {
 		saveSearch.navigateToSSPage();
 		base.stepInfo("Root node selected : " + nodeIndex);
 		saveSearch.selectNode1(nodeToSelect);
-		saveSearch.getToDocView().waitAndClick(5);
+		saveSearch.docViewFromSS("View in DocView");
 
 		// Load latency Verification
 		Element loadingElement = session.getspinningWheel();
@@ -2672,7 +2680,7 @@ public class SavedSearchRegression_New_Set_05 {
 		base.textCompareEquals(status, "ERROR", passMsg, failMsg);
 
 		// verify warning msg
-		saveSearch.getDocView_button().waitAndClick(10);
+		saveSearch.docViewFromSS("View in DocView");
 		base.VerifyWarningMessage(expectedMsg);
 
 		// Delete Uploaded File
@@ -2806,6 +2814,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// To Pick Expected Aggregate count
 		session.selectSavedsearchInASWp(nodeToSelect);
+		driver.waitForPageToBeReady();
 		session.SearchBtnAction();
 		int purehit = session.returnPurehitCount();
 		base.stepInfo("Expected aggregate purehit count from Export : " + purehit);
@@ -3205,7 +3214,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Search Group on Saved Search Screen. [RPMXCON-48127]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyMovedSearchGroupInSgAsRmu() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -3227,6 +3236,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -3285,7 +3295,7 @@ public class SavedSearchRegression_New_Set_05 {
 	 *              respective Security Group on Saved Search Screen.[RPMXCON-48136]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
 	public void verifyMovedSearchGroupInSgAsRev() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
@@ -3307,6 +3317,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -3331,7 +3342,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 		base.selectsecuritygroup(securityGroup);
 		base.stepInfo("Selected Security Group : " + securityGroup);
-		String passMsg = defNode + " : is Not Available & "+searchName + " : Not Available";
+		String passMsg = defNode + " : is Not Available & " + searchName + " : Not Available";
 
 		// verify Renamed Node In Other SG
 		saveSearch.navigateToSavedSearchPage();
@@ -3349,6 +3360,309 @@ public class SavedSearchRegression_New_Set_05 {
 		// Delete Node
 		saveSearch.deleteNode(Input.mySavedSearch, defNode);
 		saveSearch.deleteNode(Input.mySavedSearch, defNode2);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : RMU User - Verify that user can edit Existing Search under the
+	 *              respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48125]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
+	public void verifyEditSearchGroupInSgAsRmu() throws Exception {
+		String defSgSearch = "Search" + Utility.dynamicNameAppender();
+		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48125 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can move appropriate Search to respective Search Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
+
+		// Release docs To SG
+		session.basicContentSearch(Input.searchString1);
+		session.bulkRelease(securityGroup);
+		base.selectproject();
+		session.basicContentSearch(Input.searchString2);
+		session.bulkRelease(securityGroup);
+
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create search in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(defSgSearch);
+
+		// Edit Search As Default SG
+		saveSearch.savedSearch_Searchandclick(defSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(defSgSearch));
+		String docCountsOfDef = saveSearch.getSavedSearchCount(defSgSearch).getText();
+
+		saveSearch.savedSearchEdit(defSgSearch);
+		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
+		session.searchAndReturnPureHit_BS();
+
+		// Overwriting the the same saved search
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, defSgSearch, "first", "Success", "", null);
+
+		// create search In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(otherSgSearch);
+
+		// Modify Search In Other SG
+		saveSearch.savedSearch_Searchandclick(otherSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(otherSgSearch));
+		String countBeforEdit = saveSearch.getSavedSearchCount(otherSgSearch).getText();
+
+		saveSearch.savedSearchEdit(otherSgSearch);
+		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
+		session.searchAndReturnPureHit_BS();
+
+		// Overwriting the the same saved search
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, otherSgSearch, "first", "Success", "", null);
+
+		// Verify Edited query in Other SG
+		saveSearch.savedSearch_Searchandclick(otherSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(otherSgSearch));
+		String updatedCountOthSg = saveSearch.getSavedSearchCount(otherSgSearch).getText();
+
+		String passMsg = "Edited query is reflected in security group : " + securityGroup;
+		String failMsg = "Edited query is Not Reflected ";
+
+		base.textCompareNotEquals(updatedCountOthSg, countBeforEdit, passMsg, failMsg);
+
+		// Verify Edited query in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+
+		saveSearch.savedSearch_Searchandclick(defSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(defSgSearch));
+		String updatedCountDefSg = saveSearch.getSavedSearchCount(defSgSearch).getText();
+
+		String passMsgOfDef = "Edited query is reflected in security group : " + Input.securityGroup;
+		base.textCompareNotEquals(updatedCountOthSg, docCountsOfDef, passMsgOfDef, failMsg);
+
+		// Delete Search
+		saveSearch.deleteSearch(defSgSearch, Input.mySavedSearch, Input.yesButton);
+
+		login.logout();
+
+		// Delete Other SG
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		security.deleteSecurityGroups(securityGroup);
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : RMU User - Verify that User can perform the Tally from search
+	 *              Group under the respective Security Group on Saved Search
+	 *              Screen. [RPMXCON-48133]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void verifyTallySearchGroupInSg() throws Exception {
+		String defSgSearch = "Search" + Utility.dynamicNameAppender();
+		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48133 Saved Search");
+		base.stepInfo(
+				"RMU User - Verify that User can perform the Tally from search Group under the respective Security Group on Saved Search Screen.");
+
+		base.failedMessage(
+				"Expected Failure : Tally Button should be Enabled But It is Disabled when Searchgroup is selected");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
+
+		// Release docs To SG
+		session.basicContentSearch(Input.searchString2);
+		session.bulkRelease(securityGroup);
+
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// create search in Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		String othNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNewNode(otherSgSearch, othNode);
+
+		// create search in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		String defNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNewNode(defSgSearch, defNode);
+
+		// perform tally from Search Group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+		saveSearch.selectNode1(defNode);
+
+		Element tallyBtnStatus = saveSearch.getSavedSearchToTally();
+		saveSearch.checkButtonEnabled(tallyBtnStatus, "Should be Enabled", "Tally");
+		saveSearch.getSavedSearchToTally().waitAndClick(10);
+
+		// Have to Continue Scripting Once the Tally Button is Enabled.
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Reviewer User - Verify that user can edit Existing Search
+	 *              under the respective Security Group on Saved Search Screen.
+	 *              [RPMXCON-48134]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	public void verifyEditSearchGroupInSgAsRev() throws Exception {
+		String defSgSearch = "Search" + Utility.dynamicNameAppender();
+		String otherSgSearch = "Search" + Utility.dynamicNameAppender();
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityTab = "Shared with " + securityGroup;
+
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-48134 Saved Search");
+		base.stepInfo(
+				"Reviewer User - Verify that user can edit Existing Search under the respective Security Group on Saved Search Screen.");
+
+		// Create security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
+		// access to security group to Rmu
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+		userManagement.saveSecurityGroup();
+
+		// Release docs To SG
+		session.basicContentSearch(Input.searchString1);
+		session.bulkRelease(securityGroup);
+		base.selectproject();
+		session.basicContentSearch(Input.searchString2);
+		session.bulkRelease(securityGroup);
+
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// create search in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(defSgSearch);
+
+		// Edit Search As Default SG
+		saveSearch.savedSearch_Searchandclick(defSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(defSgSearch));
+		String docCountsOfDef = saveSearch.getSavedSearchCount(defSgSearch).getText();
+
+		saveSearch.savedSearchEdit(defSgSearch);
+		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
+		session.searchAndReturnPureHit_BS();
+
+		// Overwriting the the same saved search
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, defSgSearch, "first", "Success", "", null);
+
+		// create search In Other SG
+		base.selectsecuritygroup(securityGroup);
+		base.stepInfo("Selected Security Group : " + securityGroup);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(otherSgSearch);
+
+		// Modify Search In Other SG
+		saveSearch.savedSearch_Searchandclick(otherSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(otherSgSearch));
+		String countBeforEdit = saveSearch.getSavedSearchCount(otherSgSearch).getText();
+
+		saveSearch.savedSearchEdit(otherSgSearch);
+		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
+		session.searchAndReturnPureHit_BS();
+
+		// Overwriting the the same saved search
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, otherSgSearch, "first", "Success", "", null);
+
+		// Verify Edited query in Other SG
+		saveSearch.savedSearch_Searchandclick(otherSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(otherSgSearch));
+		String updatedCountOthSg = saveSearch.getSavedSearchCount(otherSgSearch).getText();
+
+		String passMsg = "Edited query is reflected in security group : " + securityGroup;
+		String failMsg = "Edited query is Not Reflected ";
+
+		base.textCompareNotEquals(updatedCountOthSg, countBeforEdit, passMsg, failMsg);
+
+		// Verify Edited query in Default SG
+		base.selectsecuritygroup(Input.securityGroup);
+		base.stepInfo("Selected Security Group : " + Input.securityGroup);
+
+		saveSearch.savedSearch_Searchandclick(defSgSearch);
+		base.waitForElement(saveSearch.getSavedSearchCount(defSgSearch));
+		String updatedCountDefSg = saveSearch.getSavedSearchCount(defSgSearch).getText();
+
+		String passMsgOfDef = "Edited query is reflected in security group : " + Input.securityGroup;
+		base.textCompareNotEquals(updatedCountOthSg, docCountsOfDef, passMsgOfDef, failMsg);
+
+		// Delete Search
+		saveSearch.deleteSearch(defSgSearch, Input.mySavedSearch, Input.yesButton);
 
 		login.logout();
 

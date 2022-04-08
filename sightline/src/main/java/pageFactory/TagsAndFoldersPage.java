@@ -2257,9 +2257,13 @@ public class TagsAndFoldersPage {
 			if (verifyNotification.equalsIgnoreCase("Success")) {
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Tag group updated successfully");
+				base.stepInfo("TagGroup name updated successfully : " + retagGroupName);
+				System.out.println("TagGroup name updated successfully : " + retagGroupName);
+			} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				driver.waitForPageToBeReady();
+				base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 			}
-			base.stepInfo("TagGroup name updated successfully : " + retagGroupName);
-			System.out.println("TagGroup name updated successfully : " + retagGroupName);
+
 		}
 
 	}
@@ -2290,6 +2294,8 @@ public class TagsAndFoldersPage {
 				if (verifyNotification.equalsIgnoreCase("Success")) {
 					base.VerifySuccessMessage("Tag group deleted successfully");
 					base.CloseSuccessMsgpopup();
+				} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+					base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 				}
 			}
 		}
@@ -2351,9 +2357,13 @@ public class TagsAndFoldersPage {
 			if (verifyNotification.equalsIgnoreCase("Success")) {
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Folder group updated successfully");
+				base.stepInfo("Folder name updated successfully : " + reFolderGroupName);
+				System.out.println("Folder name updated successfully : " + reFolderGroupName);
+			} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				driver.waitForPageToBeReady();
+				base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 			}
-			base.stepInfo("Folder name updated successfully : " + reFolderGroupName);
-			System.out.println("Folder name updated successfully : " + reFolderGroupName);
+
 		}
 
 	}
@@ -2379,6 +2389,9 @@ public class TagsAndFoldersPage {
 				if (verifyNotification.equalsIgnoreCase("Success")) {
 					base.VerifySuccessMessage("Folder group deleted successfully");
 					base.CloseSuccessMsgpopup();
+				} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+					driver.waitForPageToBeReady();
+					base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 				}
 			}
 		}
@@ -2416,9 +2429,14 @@ public class TagsAndFoldersPage {
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Folder updated successfully");
 				base.CloseSuccessMsgpopup();
+				base.stepInfo("Folder name updated successfully : " + reFolderName);
+				System.out.println("Folder name updated successfully : " + reFolderName);
+			} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				driver.waitForPageToBeReady();
+				base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
+				base.CloseSuccessMsgpopup();
 			}
-			base.stepInfo("Folder name updated successfully : " + reFolderName);
-			System.out.println("Folder name updated successfully : " + reFolderName);
+
 		}
 	}
 
@@ -2500,9 +2518,13 @@ public class TagsAndFoldersPage {
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage("Tag updated successfully");
 				base.CloseSuccessMsgpopup();
+				base.stepInfo("Tag name updated successfully : " + reTagName);
+				System.out.println("Tag name updated successfully : " + reTagName);
+			} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				driver.waitForPageToBeReady();
+				base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
+				base.CloseSuccessMsgpopup();
 			}
-			base.stepInfo("Tag name updated successfully : " + reTagName);
-			System.out.println("Tag name updated successfully : " + reTagName);
 		}
 	}
 
@@ -2555,6 +2577,7 @@ public class TagsAndFoldersPage {
 			base.stepInfo(toSelectName + " : " + passMsg);
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param strFolder
@@ -2564,13 +2587,13 @@ public class TagsAndFoldersPage {
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
-		
+
 		driver.scrollingToBottomofAPage();
 		getFolderName(strFolder).ScrollTo();
 		base.waitForElement(getFolderName(strFolder));
 		getFolderName(strFolder).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
+
 		driver.scrollPageToTop();
 		base.waitForElement(getFolderActionDropDownArrow());
 		getFolderActionDropDownArrow().waitAndClick(10);
@@ -2620,6 +2643,22 @@ public class TagsAndFoldersPage {
 
 		base.VerifySuccessMessage("Records saved successfully");
 
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param verifyNotification - notification to verify
+	 * @param type               - type Tag/Folder/Tag group/FOlder group
+	 * @param additional1        - additional parameter for future use
+	 */
+	public void verifyNotificationMsg(String verifyNotification, String type, String additional1, String additional2) {
+		if (verifyNotification.equalsIgnoreCase("deleteSuccess")) {
+			base.VerifySuccessMessage(type + " deleted successfully");
+			base.CloseSuccessMsgpopup();
+		} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+			base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
+			base.CloseSuccessMsgpopup();
+		}
 	}
 
 }

@@ -6301,6 +6301,7 @@ public class DocView_Regression1 {
 	 * Author : Steffy Created date: NA Modified date: NA Modified by:NA TestCase id
 	 * : RPMXCON-50957 - To verify that user can redirect doc view page from Doc
 	 * List->'Back to Source
+	 * stabilization done
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 45)
 	public void verifyBackToSourceBtnRedirectToDocViewPage() throws Exception {
@@ -7154,6 +7155,7 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
+
 	/**
 	 * @Author : Baskar date:09/12/21 Modified date: NA Modified by: Baskar
 	 * @Description : Verify user can apply coding stamp for the document once
@@ -7190,6 +7192,7 @@ public class DocView_Regression1 {
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
+
 	
 	/**
 	 * @Author : Sakthivel date:30/12/2021 Modified date:NA
@@ -7304,7 +7307,7 @@ public class DocView_Regression1 {
 	 * @Description:Verify assignment progress bar refreshesh after completing the
 	 *                     document same as last prior documents should be completed
 	 *                     by clicking complete button after selecting code same as
-	 *                     this action.
+	 *                     this action. stabilization done
 	 */
 
 	@Test(enabled = true, groups = { "regression" }, priority = 198)
@@ -7322,6 +7325,7 @@ public class DocView_Regression1 {
 		String codingForm = Input.codeFormName;
 		String docTextbox = "assignment click";
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+
 		
 		loginPage.logout();
 		

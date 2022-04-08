@@ -9809,4 +9809,49 @@ public boolean verifyToggleEnableORDisabled(Element ele,String elementInfo) {
 	}
 	return status;
 }
+
+/**
+ * @author Indium-Baskar date: 31/03/2021 Modified date: NA
+ * @Description: Add DA user and distributed docs to them
+ */
+public void assignmentDistributeToDa() {
+	bc.waitForElement(getAssignment_ManageReviewersTab());
+	getAssignment_ManageReviewersTab().waitAndClick(10);
+	bc.waitForElement(getAddReviewersBtn());
+	getAddReviewersBtn().waitAndClick(10);
+	driver.scrollingToElementofAPage(getSelectUserToAssignDA());
+	getSelectUserToAssignDA().waitAndClick(5);
+	bc.waitForElement(getAdduserBtn());
+	getAdduserBtn().waitAndClick(5);
+	bc.waitForElement(getDistributeTab());
+	getDistributeTab().waitAndClick(5);
+	bc.waitForElement(getSelectUserInDistributeDA());
+	getSelectUserInDistributeDA().waitAndClick(5);
+	getDistributeBtn().waitAndClick(3);
+	bc.stepInfo("Documents are distributed to DA user successfully");
+
+}
+
+/**
+ * @author Indium-Baskar date: 31/03/2021 Modified date: NA
+ * @Description: Add Pa user and distributed docs to them
+ */
+public void assignmentDistributeToPa() {
+	bc.waitForElement(getAssignment_ManageReviewersTab());
+	getAssignment_ManageReviewersTab().waitAndClick(10);
+	bc.waitForElement(getAddReviewersBtn());
+	getAddReviewersBtn().waitAndClick(10);
+	driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+	getSelectUserToAssignPA().waitAndClick(5);
+	bc.waitForElement(getAdduserBtn());
+	getAdduserBtn().waitAndClick(5);
+	bc.waitForElement(getDistributeTab());
+	getDistributeTab().waitAndClick(5);
+	getSelectUserInDistributeTabsPA().waitAndClick(5);
+	getDistributeBtn().waitAndClick(3);
+	bc.stepInfo("Documents are distributed to PA user successfully");
+
+}
+
+
 }
