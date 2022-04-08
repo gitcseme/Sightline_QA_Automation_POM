@@ -3226,6 +3226,11 @@ public class DocViewPage {
 	}
 
 	// Added by Vijaya.Rani
+	
+	public Element getDocView_MetaData_AttachCount() {
+		return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'AttachDocIDs')]");
+		}
+	
 	public ElementCollection getDocView_Analytics_ThreadedMapParticipantDocs() {
 		return driver.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
 	}
@@ -7828,9 +7833,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
-			base.waitForElement(getDocView_MiniDoc_Selectdoc(1));
-			getDocView_MiniDoc_Selectdoc(1).ScrollTo();
-			getDocView_MiniDoc_Selectdoc(1).waitAndClick(5);
+			selectDocIdInMiniDocList(text);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataDocId(text));
 			getMetaDataDocId(text).ScrollTo();
@@ -8474,21 +8477,21 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			base.waitForElement(getDocView_Analytics_FamilyTab());
-			getDocView_Analytics_FamilyTab().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
-			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
+			String text = getDocView_ThreadMapTab_FirstDoc_Text().getText();
 			System.out.println(text);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
-			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(2));
+			getDocView_Analytics_ThreadMap_DocCheckBox(2).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_FamilyCodeSameAs());
-			getDocView_FamilyCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+			getDocView_Analytics_Thread_CodeSameAs().waitAndClick(5);
 
 			base.VerifyWarningMessage(
 					"Cannot perform Code Same As action, as the selected documents include one or more completed documents");
@@ -8547,21 +8550,23 @@ public class DocViewPage {
 					driver.switchTo().window(eachId);
 				}
 			}
-			base.waitForElement(getDocView_Analytics_FamilyTab());
-			getDocView_Analytics_FamilyTab().waitAndClick(5);
-			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
-			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+
+			base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
+			String text = getDocView_ThreadMapTab_FirstDoc_Text().getText();
 			System.out.println(text);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
-			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(2));
+			getDocView_Analytics_ThreadMap_DocCheckBox(2).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_FamilyCodeSameAs());
-			getDocView_FamilyCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+			getDocView_Analytics_Thread_CodeSameAs().waitAndClick(5);
 
+			driver.getWebDriver().close();
 			driver.switchTo().window(parentWindowID);
 
 			driver.waitForPageToBeReady();
@@ -27166,6 +27171,30 @@ public class DocViewPage {
 		}
 		catch(Exception e) {
 			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * @author Indium Mohan Description : Method to click complete toggle
+	 *         Date: 08/04/22 Modified date: NA Modified by: N/A
+	 */
+	public void selectSourceDocIdInCompletedDocs() {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+				if (getShowCompletedDocsToggle().isDisplayed()) {
+					base.waitForElement(getShowCompletedDocsToggle());
+					getShowCompletedDocsToggle().waitAndClick(5);
+			}
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
 }
