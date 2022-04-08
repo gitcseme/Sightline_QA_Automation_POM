@@ -723,29 +723,34 @@ public class SecurityGroupsPage {
 	public void unTagFromRedatctionTags(String tagName) {
 		try {
 			driver.waitForPageToBeReady();
+			bc.waitTime(2);
 			bc.waitForElement(getReductionTagLink());
 			bc.waitTillElemetToBeClickable(getReductionTagLink());
 			getReductionTagLink().Click();
+			bc.waitTime(2);
 			bc.waitForElement(getUnReductionLayerTable());
 			bc.waitTillElemetToBeClickable(getUnReductionLayerTable());
 			getUnReductionLayerTable().Click();
+			bc.waitTime(2);
 			bc.waitForElement(getUnReductionTag(tagName));
 			bc.waitTillElemetToBeClickable(getUnReductionTag(tagName));
 			getUnReductionTag(tagName).Click();
+			bc.waitTime(2);
 			bc.waitForElement(getReductionTagLeftShiftButton());
 			getReductionTagLeftShiftButton().Click();
+			bc.waitTime(2);
 			getProjectLevelEmailCheckBox().Click();
 			driver.scrollingToBottomofAPage();
 			for (int i = 0; i < 15; i++) {
 				try {
-					Thread.sleep(2000);
+					bc.waitTime(2);
 					getSG_AnnSaveButton().waitAndFind(10);
 					getSG_AnnSaveButton().Click();
 					break;
 				} catch (Exception e) {
 					bc.waitForElement(getSG_AnnSaveButton());
 					bc.waitTillElemetToBeClickable(getSG_AnnSaveButton());
-				}
+				} 
 			}
 			bc.waitForElement(bc.getSuccessMsg());
 			bc.getSuccessMsg().waitAndFind(10);

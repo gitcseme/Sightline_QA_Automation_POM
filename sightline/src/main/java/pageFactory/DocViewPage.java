@@ -8053,13 +8053,18 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
+			base.waitTime(3);
+			getLastCodeIconWhitePencil().isElementAvailable(10);
 			base.waitForElement(getLastCodeIconWhitePencil());
 			Actions builder = new Actions(driver.getWebDriver());
+			base.waitTime(2);
 			builder.moveToElement(getLastCodeIconWhitePencil().getWebElement()).build().perform();
+			getCodeSameAsLastDocMessage().isElementAvailable(20);
 			base.waitForElement(getCodeSameAsLastDocMessage());
 			System.out.println("Got mesage - " + getCodeSameAsLastDocMessage().getText());
 			Assert.assertEquals(getCodeSameAsLastDocMessage().getWebElement().isDisplayed(), true,
 					"Code this Document is same as last document message is not displayed");
+			base.waitTime(2);
 			String message = getCodeSameAsLastDocMessage().getText().trim();
 			if (message.trim().equalsIgnoreCase(expectedMessage.trim())) {
 				base.passedStep("Code this Document is same as last coded document message is displayed successfully");
@@ -10920,7 +10925,7 @@ public class DocViewPage {
 
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDocviewCommentSection());
-			base.waitTillElemetToBeClickable(getDocviewCommentSection());
+			base.waitTime(3);
 			getDocviewCommentSection().waitAndClick(10);
 			getDocviewCommentSection().SendKeys(Text);
 			base.waitForElement(getSelectSaveLink());
@@ -16066,6 +16071,7 @@ public class DocViewPage {
 		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			getDocView_AnnotateIcon().isElementAvailable(8);
 			getDocView_AnnotateIcon().waitAndClick(10);
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -16074,9 +16080,11 @@ public class DocViewPage {
 				}
 			}), Input.wait30);
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			getDocView_Annotate_ThisPage().isElementAvailable(8);
 			getDocView_Annotate_ThisPage().waitAndClick(10);
 			base.passedStep("Added Annotation to document sucessfully");
+			base.waitTime(3);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while performing non audio annotation." + e.getMessage());
@@ -16103,7 +16111,7 @@ public class DocViewPage {
 			}), Input.wait30);
 			driver.waitForPageToBeReady();
 			int annotation = getAnnotations().FindWebElements().size();
-			if (annotation > alreadyExistsLayers) {
+			if (annotation <= alreadyExistsLayers) {
 				base.passedStep("Annotation is displayed to document successfully");
 			} else {
 				base.failedStep("Annotation is not displayed to document");
@@ -19434,6 +19442,7 @@ public class DocViewPage {
 		base.waitForElement(getPersistantHitEyeIcon());
 		getPersistantHitEyeIcon().waitAndClick(5);
 		base.waitForElementCollection(getHitPanels());
+		base.waitTime(3);
 		int numOfPanels = getHitPanels().size();
 		boolean flag = false;
 		for (int i = 2; i <= numOfPanels; i++) {
@@ -20440,8 +20449,10 @@ public class DocViewPage {
 					return getNonAudioRemarkBtn().isElementAvailable(10);
 				}
 			}), Input.wait60);
+			base.waitTime(2);
+			getNonAudioRemarkBtn().isElementAvailable(10);
 			getNonAudioRemarkBtn().waitAndClick(9);
-
+			base.waitTime(2);
 			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
 				getDocView_Remark_DeleteIcon().waitAndClick(10);
 				base.getPopupYesBtn().waitAndClick(5);
@@ -20453,7 +20464,7 @@ public class DocViewPage {
 					return getSelectRemarkDocArea().isElementAvailable(10);
 				}
 			}), Input.wait30);
-			Thread.sleep(Input.wait30 / 10);
+			base.waitTime(3);
 			System.out.println(off1 + "...." + off2);
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
@@ -21357,6 +21368,7 @@ public class DocViewPage {
 		}
 		base.waitForElement(getClickDocviewID(1));
 		getClickDocviewID(1).Click();
+		base.waitTime(3);
 		getDocument_CommentsTextBox().ScrollTo();
 		getDocument_CommentsTextBox().isElementAvailable(10);
 		base.waitForElement(getDocument_CommentsTextBox());
@@ -21368,8 +21380,10 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveBtn());
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
+		getClickDocviewID(noOfRows).isElementAvailable(10);
 		base.waitForElement(getClickDocviewID(noOfRows));
 		getClickDocviewID(noOfRows).waitAndClick(5);
+		base.waitTime(3);
 		getDocument_CommentsTextBox().ScrollTo();
 		getDocument_CommentsTextBox().isElementAvailable(10);
 		base.waitForElement(getDocument_CommentsTextBox());
@@ -21401,13 +21415,17 @@ public class DocViewPage {
 		getClickDocviewID(5).waitAndClick(5);
 		driver.switchTo().window(parentId);
 		reusableDocView.editingCodingFormWithSaveButton();
+		getDocument_CommentsTextBox().isElementAvailable(10);
+		base.waitTime(3);
 		base.waitForElement(getDocument_CommentsTextBox());
 		String mainDocText = getDocument_CommentsTextBox().getText();
 		System.out.println(mainDocText);
 		String parentId2 = reusableDocView.switchTochildWindow();
+		driver.waitForPageToBeReady();
 		base.waitForElement(getClickDocviewID(3));
 		getClickDocviewID(3).waitAndClick(5);
 		driver.switchTo().window(parentId2);
+		base.waitTime(3);
 		getDocument_CommentsTextBox().ScrollTo();
 		getDocument_CommentsTextBox().isElementAvailable(10);
 		base.waitForElement(getDocument_CommentsTextBox());
@@ -23320,8 +23338,7 @@ public class DocViewPage {
 			getDocView_NumTextBox().Enter();
 			long start = System.currentTimeMillis();
 			for (int i = 0; i < 500; i++) {
-				if (documentOnDocView().getWebElement().isDisplayed()
-						&& documentOnDocView().getWebElement().isEnabled()) {
+				if (documentOnDocView().getWebElement().isEnabled()) {
 					break;
 				}
 			}
@@ -23466,6 +23483,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			List<WebElement> annotations = getAnnotations().FindWebElements();
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			annotations.get(annotations.size() - 1).click();
 			base.passedStep("Editing annotation layer of current document successfully");
 		} catch (Exception e) {
@@ -23721,7 +23739,7 @@ public class DocViewPage {
 	 *                            annotaion layers count of previous document.
 	 */
 	public void verifyAnnotationsToDocument(int alreadyExistsLayers) throws InterruptedException {
-		try {
+		try { 
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getDocView_AnnotateIcon().isElementAvailable(8);
@@ -23732,6 +23750,7 @@ public class DocViewPage {
 				}
 			}), Input.wait30);
 			driver.waitForPageToBeReady();
+			base.waitTime(4);
 			int annotation = getAnnotations().FindWebElements().size();
 			if (annotation == alreadyExistsLayers) {
 				base.passedStep("Annotation is displayed to document successfully");
@@ -24973,6 +24992,7 @@ public class DocViewPage {
 	public void showCompletedDocumentsConfigureMiniDocList() {
 		try {
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			getDocView_ConfigMinidoclist().isElementAvailable(10);
 			getDocView_ConfigMinidoclist().Click();
 			driver.waitForPageToBeReady();
@@ -25203,7 +25223,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDocViewNotificationBellIcon());
 			getDocViewNotificationBellIcon().waitAndClick(3);
-			base.waitTime(2);
+			base.waitTime(4);
 			base.waitForElementCollection(getDocViewBackGroundTasks());
 			getDocViewBackGroundTasks().FindWebElements().get(0).click();
 
@@ -25230,22 +25250,27 @@ public class DocViewPage {
 	 */
 	public void performPrintDocument(String docId) {
 		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			base.waitForElement(getDocViewNotificationBellIcon());
 			getDocViewNotificationBellIcon().waitAndClick(10);
 			getDocViewNotificationBellIcon().waitAndClick(10);
 			base.waitForElement(getDocView_Print());
 			getDocView_Print().waitAndClick(10);
+			
 			if (base.getSuccessMsg().getText().contains("Your document is being printed")) {
 				base.passedStep("Your document is being printed");
 			} else {
 				base.failedStep("failed to print the document");
 			}
 			base.waitForElementToBeGone(base.getSuccessMsgHeader(), 10);
+			base.waitTime(3);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getBackgroundNotificationCountNew().Visible();
 				}
 			}), Input.wait30);
+			base.waitTime(2);
 			if (getBackgroundNotificationCountNew().isElementAvailable(7)) {
 				base.passedStep("Document print completed");
 				base.waitForElement(getDocViewNotificationBellIcon());
@@ -25254,7 +25279,7 @@ public class DocViewPage {
 			} else {
 				base.failedStep("Document printing unsucessful");
 			}
-
+			base.waitTime(3);
 			String lastThreeDigitsOfDocId = docId.substring(docId.length() - 1, docId.length());
 			List<WebElement> listOfBackgroundTasks = getDocViewBackGroundTasks().FindWebElements();
 			boolean printedDocInNotification = false;
@@ -26096,8 +26121,8 @@ public class DocViewPage {
 		}
 		base.waitForElement(getComparisonNearDupeView());
 		base.waitTime(3);
-		if (getComparisonNearDupeView().isElementAvailable(10)) {
-			if (getCentralPanelDispaly().getWebElement().isDisplayed()) {
+		if (getComparisonNearDupeView().isElementAvailable(20)) {
+			if (getCentralPanelDispaly().getWebElement().isDisplayed() && !(getComparisonNearDupeView().isDisplayed())) {
 				base.failedStep("spinning wheel is not gone after near dupe is loaded");
 			} else {
 				base.passedStep("Ater near dupe is loaded spinning wheel is disappear from the pge ");

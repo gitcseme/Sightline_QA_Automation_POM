@@ -32,7 +32,7 @@ public class DocViewRedactions {
 
 	Driver driver;
 	BaseClass base;
-	LoginPage loginPage;
+	LoginPage loginPage; 
 	SoftAssert softAssertion;
 	ProductionPage page;
 	DocViewPage docView;
@@ -1745,6 +1745,7 @@ public class DocViewRedactions {
 		try {
 			base = new BaseClass(driver);
 			base.waitForElement(thisPageRedaction());
+			base.waitTime(3);
 			base.waitTillElemetToBeClickable(thisPageRedaction());
 			thisPageRedaction().waitAndClick(5);
 			base.waitForElement(getSelectReductionTagDropDown());

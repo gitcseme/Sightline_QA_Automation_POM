@@ -1564,9 +1564,10 @@ public class DocViewMetaDataPage {
 		try {
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
-			Thread.sleep(Input.wait30 / 15);
+			base.waitTime(3);
 			getTotalPageCountSelectedDoc().isElementAvailable(15);
 			base.waitForElement(getTotalPageCountSelectedDoc());
+			base.waitTime(2);
 			List<WebElement> elemts = driver.getWebDriver()
 					.findElements(By.xpath("//tr//td[contains(text(),'MS Excel Worksheet')]"));
 
@@ -1645,9 +1646,10 @@ public class DocViewMetaDataPage {
 			}
 			driver.getWebDriver().navigate().refresh();
 			driver.scrollPageToTop();
+			base.waitTime(5);
 			selectPaginatedDocAndPerformPagination();
 			driver.waitForPageToBeReady();
-			Thread.sleep(Input.wait30 / 10);
+			Thread.sleep(3);
 			driver.scrollingToBottomofAPage();
 			JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
 			driver.waitForPageToBeReady();
@@ -1655,6 +1657,7 @@ public class DocViewMetaDataPage {
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 			getFolderButton().ScrollTo();
 			getFolderButton().isElementAvailable(15);
+			base.waitTime(2);
 			try {
 				getFolderButton().getWebElement().isDisplayed();
 			} catch (Exception e) {
@@ -2432,7 +2435,7 @@ public class DocViewMetaDataPage {
 	 *                   members).
 	 */
 	public void selectDocFromFamilyMembersAndCreateFolder(String docId, String folderName) {
-		try {
+		try { 
 			boolean flag = false;
 			driver.scrollPageToTop();
 			getRowFromMiniDoclist(docId).ScrollTo();
@@ -2441,12 +2444,14 @@ public class DocViewMetaDataPage {
 			getRowFromMiniDoclist(docId).waitAndClick(8);
 			driver.scrollPageToTop();
 			// needed sleep due to scroll to element
-			Thread.sleep(Input.wait3);
+			base.waitTime(3);
 			getFamilyMemberTab().ScrollTo();
 			getFamilyMemberTab().isElementAvailable(10);
 			getFamilyMemberTab().Click();
 			try {
 				driver.waitForPageToBeReady();
+				base.waitTime(3);
+				getFirstRowCheckBoxFamilyMem().ScrollTo();
 				driver.scrollingToElementofAPage(getFirstRowCheckBoxFamilyMem());
 				getFirstRowCheckBoxFamilyMem().ScrollTo();
 				getFirstRowCheckBoxFamilyMem().isElementAvailable(10);
@@ -2456,6 +2461,7 @@ public class DocViewMetaDataPage {
 				base.stepInfo("Documents are not present in family members table");
 			}
 			if (flag == true) {
+				base.waitTime(2);
 				getAnalyticActionButton().ScrollTo();
 				base.waitForElement(getAnalyticActionButton());
 				getAnalyticActionButton().isElementAvailable(10);
@@ -2482,7 +2488,7 @@ public class DocViewMetaDataPage {
 						return getSelectAllFoldersOption().Enabled();
 					}
 				}), Input.wait90);
-
+				getSelectAllFoldersOption().isElementAvailable(15);
 				getSelectAllFoldersOption().Displayed();
 				getSelectAllFoldersOption().Click();
 				getNameTextField().isElementAvailable(15);
@@ -2493,6 +2499,7 @@ public class DocViewMetaDataPage {
 				}), Input.wait90);
 				getNameTextField().SendKeys(folderName);
 				getContinueButton().isElementAvailable(15);
+				base.waitTillElemetToBeClickable(getContinueButton());
 				getContinueButton().Displayed();
 				getContinueButton().Click();
 
@@ -2997,7 +3004,7 @@ public class DocViewMetaDataPage {
 			actions.moveToElement(annotation.get(0)).click().build().perform();
 			base.waitForElement(getUnTaggedDeleteButton());
 			actions.moveToElement(getUnTaggedDeleteButton().getWebElement()).click().build().perform();
-			base.VerifySuccessMessage("Annotation Removed successfully.");
+			base.VerifySuccessMessageB("Annotation Removed successfully.");
 			base.passedStep("Annotation removed from docuent");
 
 		} catch (Exception e) {
@@ -3093,14 +3100,14 @@ public class DocViewMetaDataPage {
 			actions.moveToElement(getHistoryTab().getWebElement()).click().perform();
 
 			for (int count = 0; count < 2; count++) {
-				Thread.sleep(Input.wait30 / 10);
+				base.waitTime(3);
 				getTimeStamp().isElementAvailable(15);
 				base.waitForElement(getTimeStamp());
 				getTimeStamp().waitAndClick(15);
 			}
 			getActionByRowInHistory(2).isElementAvailable(15);
 			actions.moveToElement(getActionByRowInHistory(2).getWebElement()).build().perform();
-			Thread.sleep(Input.wait30 / 10);
+			base.waitTime(3);
 
 			remarkHistory = getActionByRowInHistory(2).getText().toLowerCase().trim();
 			getActionByRowInHistory(1).isElementAvailable(15);

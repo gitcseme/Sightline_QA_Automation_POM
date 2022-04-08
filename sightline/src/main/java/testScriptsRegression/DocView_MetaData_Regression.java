@@ -233,12 +233,12 @@ public class DocView_MetaData_Regression {
 		sessionSearch.navigateToSessionSearchPageURL();
 		
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCN,null);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.addDocsMetCriteriaToActionBoard();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		baseClass.waitTime(3);
-		docView.addRemarkToNonAudioDocument(30, 45, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 		
 		baseClass.stepInfo("Verify Remark Actions To History .");
 		docViewMetaDataPage.verifyRemarkActionsToHistory();
@@ -256,7 +256,7 @@ public class DocView_MetaData_Regression {
 	 */
 	@Test(description ="RPMXCON-51144",alwaysRun = true,groups={"regression"},priority = 5)
 	public void verifyUpdatedMetaDataDisplayedOnMetaDataTable()throws Exception {
-		
+		 
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51144- DocView/MetaData Sprint 01");
 		utility = new Utility(driver);

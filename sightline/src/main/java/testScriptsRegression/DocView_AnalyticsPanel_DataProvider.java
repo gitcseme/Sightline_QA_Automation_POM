@@ -1095,6 +1095,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 	@DataProvider(name = "multiUserCredentials")
 	public Object[][] multiuserLoginDetails() {
+		Object[][] credentials = new Object[2][4];
 		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, "RMU", "REV" },
 				{ Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA", "RMU" },
 				{ Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA", "rev" } };
