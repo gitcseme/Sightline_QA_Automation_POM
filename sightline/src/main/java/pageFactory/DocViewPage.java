@@ -1318,6 +1318,10 @@ public class DocViewPage {
 				"//*[@id='dtDocumentThreadedDocuments']//tr//th[contains(text(),'Threaded Documents: ')]");
 	}
 
+	public Element getDocView_Analytics_ThreadMap_WholeTable() {
+		return driver.FindElementByXPath("//*[@id='analyticsResize']//*[@id='dtDocumentThreadedDocuments']");
+	}
+	
 	public Element getDocView_Analytics_NearDupe_WholeTable() {
 		return driver.FindElementByXPath("//*[@id='analyticsResize']//*[@id='dtDocumentNearDuplicates']");
 	}
@@ -9962,7 +9966,7 @@ public class DocViewPage {
 	 * @Description To verify Analytics Thread Map Tab with docs
 	 * 
 	 */
-	public void verifyThreadMapWithDocs(String docId1, String docId2, String docId3) {
+	public void verifyThreadMapWithDocs() {
 
 		try {
 
@@ -9981,17 +9985,7 @@ public class DocViewPage {
 			getDocView_Analytics_LoadMoreButton().waitAndClick(10);
 
 			driver.waitForPageToBeReady();
-			getDocView_PrincipalDocIdE1(docId1).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId1));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
-
-			getDocView_PrincipalDocIdE1(docId2).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId2));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId2).isDisplayed());
-
-			getDocView_PrincipalDocIdE1(docId3).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId3));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
+			softAssertion.assertTrue(getDocView_Analytics_ThreadMap_WholeTable().isDisplayed());
 			softAssertion.assertAll();
 			base.passedStep("E1,E2 and E3 docs are present in ThreadMap tab successfully");
 
@@ -27197,4 +27191,6 @@ public class DocViewPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
+	
+	
 }
