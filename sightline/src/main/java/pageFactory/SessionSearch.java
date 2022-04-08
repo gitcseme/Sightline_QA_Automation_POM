@@ -1027,7 +1027,15 @@ public class SessionSearch {
 	}
 
 	public Element getNodeToOw(String nodeName) {
-		return driver.FindElementByXPath("(//a[text()='" + nodeName + "']//..//i)[1]");
+//		return driver.FindElementByXPath("(//a[text()='" + nodeName + "']//..//i)[1]");
+		return driver.FindElementByXPath(
+				"(//a[@class='jstree-anchor jstree-disabled'and text()='" + nodeName + "']//preceding-sibling::i)[1]");
+	}
+
+	public Element getSecurityGroupNewNode(String Node) {
+		return driver.FindElementByXPath(
+				"//a[text()='Shared with Default Security Group']//following-sibling::ul//li//a[contains(text(),'"
+						+ Node + "')]");
 	}
 
 	public Element getChooseSearchToOverwrite(String searchName) {
@@ -3806,7 +3814,7 @@ public class SessionSearch {
 
 		}
 		if (option == "YES") {
-			base.waitTillElemetToBeClickable( getModifysearchOKBtn());
+			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
 			getModifysearchOKBtn().waitAndClick(10);
 		} else {
 			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
@@ -3841,7 +3849,6 @@ public class SessionSearch {
 		base.passedStep("Sucessfully verified the PureHits count after modify Search when option is" + option);
 		softAssertion.assertAll();
 	}
-
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -4736,9 +4743,9 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getRedactBtn().waitAndClick(10);
-		
+
 		docviewpage.selectBatchRedactedDoc();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBatchRedactionCount().Visible();
@@ -10079,6 +10086,7 @@ public class SessionSearch {
 		base.waitForElement(getAs_AudioTextBox_CombinationSearch());
 		getAs_AudioTextBox_CombinationSearch().SendKeys(Input.audioSearchString1);
 	}
+
 	/**
 	 * @Author :Aathith
 	 * @Description :Selecting metadata in search
@@ -10100,11 +10108,12 @@ public class SessionSearch {
 		base.waitForElement(getSearchButton());
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-	if(	getTallyContinue().isDisplayed()) {
-		base.waitForElement(getTallyContinue());
-		getTallyContinue().waitAndClick(5);
-	}else {
-		driver.waitForPageToBeReady();}
+		if (getTallyContinue().isDisplayed()) {
+			base.waitForElement(getTallyContinue());
+			getTallyContinue().waitAndClick(5);
+		} else {
+			driver.waitForPageToBeReady();
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
@@ -10997,11 +11006,13 @@ public class SessionSearch {
 		UtilityLog.info("Bulk assign is done, assignment is : " + assignmentName);
 		Reporter.log("Bulk assign is done, assignment is : " + assignmentName, true);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param Text
 	 * @param Value
-	 * @Description without passing url for keep previous used data and search in metadata
+	 * @Description without passing url for keep previous used data and search in
+	 *              metadata
 	 */
 	public void SearchMetaDataWithoutUrlPassing(String Text, String Value) {
 		// To make sure we are in basic search page

@@ -2722,20 +2722,17 @@ public class SavedSearch {
 	 * @throws InterruptedException
 	 * @Stabilization : changes implemented
 	 */
-	public void verifySavedSearch_isEmpty() throws InterruptedException {
+	public Boolean verifySavedSearch_isEmpty() throws InterruptedException {
 
-		try {
-			driver.waitForPageToBeReady();
-			// base.waitForElement(getsearchResultEmptyMessage());
-			if (getsearchResultEmptyMessage().isElementAvailable(2)) {
-				base.stepInfo("No Records found");
-				System.out.println("No Records found");
-			} else {
-				base.stepInfo("Data Available");
-				System.out.println("Data Available");
-			}
-		} catch (Exception e) {
-
+		driver.waitForPageToBeReady();
+		if (getsearchResultEmptyMessage().isElementAvailable(3)) {
+			base.stepInfo("No Records found");
+			System.out.println("No Records found");
+			return false;
+		} else {
+			base.stepInfo("Data Available");
+			System.out.println("Data Available");
+			return true;
 		}
 	}
 
@@ -3375,13 +3372,21 @@ public class SavedSearch {
 		search.getExpandAllTab().waitAndClick(5);
 
 		base.waitForElement(search.getExpandSecurityGroupOw());
-		search.getExpandSecurityGroupOw().waitAndClick(5);
+		search.getExpandSecurityGroupOw().Click();
+
+		base.waitForElement(search.getSecurityGroupNewNode(newNode));
+		search.getSecurityGroupNewNode(newNode).waitAndClick(5);
+
+		Actions ac = new Actions(driver.getWebDriver());
+//		ac.moveToElement(search.getNodeToOw(newNode).getWebElement()).build().perform();
+		base.waitTime(3);
+		ac.click().build().perform();
 
 		base.waitForElement(search.getNodeToOw(newNode));
-		search.getNodeToOw(newNode).waitAndClick(5);
+		search.getNodeToOw(newNode).Click();
 
 		base.waitForElement(search.getChooseSearchToOverwrite(searchName1));
-		search.getChooseSearchToOverwrite(searchName1).waitAndClick(5);
+		search.getChooseSearchToOverwrite(searchName1).Click();
 
 		base.waitForElement(search.getSaveSearch_SaveButton());
 		search.getSaveSearch_SaveButton().Click();
@@ -3577,17 +3582,23 @@ public class SavedSearch {
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
 			getSavedSearchGroupName(node).waitAndClick(5);
+			driver.waitForPageToBeReady();
 			base.waitTime(3);// To handle abnormal waits
-			// get Search ID
-			String searchiD = GetSearchID(nodeSearchpair.get(node));
-			searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
-			try {
-				if (i != nodeSearchpair.size() - 1) {
-					rootGroupExpansion(); // not required at direct situation added in order to prevent future impact
+			if (verifySavedSearch_isEmpty()) {
+				// get Search ID
+				String searchiD = GetSearchID(nodeSearchpair.get(node));
+				searchGroupSearchpID.put(nodeSearchpair.get(node), searchiD);
+				try {
+					if (i != nodeSearchpair.size() - 1) {
+						rootGroupExpansion(); // not required at direct situation added in order to prevent future
+												// impact
+					}
+					getSavedSearchGroupName(node).waitAndClick(5);
+				} catch (Exception e) {
+					System.out.println("End of Node");
 				}
-				getSavedSearchGroupName(node).waitAndClick(5);
-			} catch (Exception e) {
-				System.out.println("End of Node");
+			} else {
+				searchGroupSearchpID.put(nodeSearchpair.get(node), "No Data found");
 			}
 		}
 
@@ -3624,18 +3635,18 @@ public class SavedSearch {
 	 * @author Raghuram A Date: 10/5/21 Modified date:11/30/21 Modified by: Raghuram
 	 *         Description :verifyImpactinSharedchildNodes - included Result count
 	 *         updated for(); newNodeList.size() -> nodeSearchpair.size() - S
+	 * @throws InterruptedException
 	 */
 	public void verifyImpactinSharedchildNodes(String SGtoShare, List<String> newNodeList, int selectIndex,
-			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair) {
+			HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair)
+			throws InterruptedException {
 		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+		rootGroupExpansion();
 		String node = null, searchiD;
 		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
 			node = newNodeList.get(i);
 			// verify id should get changed
-			try {
-				base.waitForElement(getSavedSearchGroupName(node));
-				softAssertion.assertTrue(getSavedSearchGroupName(node).isDisplayed());
+			if (getSavedSearchGroupName(node).isElementAvailable(5)) {
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
 				getSavedSearchGroupName(node).Click();
@@ -3661,8 +3672,9 @@ public class SavedSearch {
 					verifySavedSearch_isEmpty();
 					base.passedStep("Not the selected search group");
 				}
-				getSavedSearchNewGroupExpand().waitAndClick(20);
-			} catch (Exception e) {
+//				getSavedSearchNewGroupExpand().waitAndClick(20);
+				rootGroupExpansion();
+			} else {
 				System.out.println(node + " : Search group is not Present in " + SGtoShare);
 				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
 			}
@@ -6120,10 +6132,11 @@ public class SavedSearch {
 
 	/**
 	 * @author Raghuram.A Date: 11/25/21 Modified date:N/A Modified by: N/A
+	 * @throws InterruptedException
 	 */
 	public void verifyListofsharedNodesandSearchesAcrossUsers(String SGtoShare, List<String> newNodeList,
 			int selectIndex, HashMap<String, String> nodeSearchpair, HashMap<String, String> searchGroupSearchpIDpair,
-			String[] rolesToVerify, String passMessage) {
+			String[] rolesToVerify, String passMessage) throws InterruptedException {
 
 		for (int i = 0; i < rolesToVerify.length; i++) {
 			System.out.println(rolesToVerify[i]);

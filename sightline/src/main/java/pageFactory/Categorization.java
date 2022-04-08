@@ -323,6 +323,7 @@ public class Categorization {
 			getSavedSearchBtn().waitAndClick(5);
 			base.stepInfo("Clicked Saved Search Button");
 			System.out.println("Clicked Saved Search Button");
+			driver.waitForPageToBeReady();
 		} catch (Exception e) {
 			driver.getWebDriver().navigate().refresh();
 			System.out.println("Exception handled");
