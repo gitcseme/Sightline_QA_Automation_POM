@@ -3330,6 +3330,15 @@ public class DocViewPage {
 				"//*[@id='divBulkFolderJSTree']//a[@id='19_anchor']//i[@class='jstree-icon jstree-checkbox']");
 	}
 
+	//Added By Vijaya.Rani
+	public Element getMetaData_AttachCountIds() {
+		return driver
+				.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'AttachDocIDs')]/following-sibling::td");
+	}
+
+	public ElementCollection getAnalticsHeaderIds() {
+		return driver.FindElementsByXPath("//*[@id='threadedDocumentIdRow']//th");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -27052,4 +27061,86 @@ public class DocViewPage {
 		}
 	}
 
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : Method to select AttachCount DocId In AvailableField
+	 * 
+	 */
+	public void selectAttachCountDocIdInAvailableField() {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
+			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
+
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
+		}
+	}
+
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : Method to AttachCount DocId Display In meta Data
+	 * 
+	 */
+	public String selectAttachCountDocIdDisplayMetaData() {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_MetaData_AttachCount().Displayed();
+			}
+		}), Input.wait60);
+		String AttachEmail = getMetaData_AttachCountIds().getText();
+		base.stepInfo("Meta Data AttachCount Id Is Displayed "  + AttachEmail);
+		System.out.println(AttachEmail);
+
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_liDocumentThreadMap().Visible()
+						&& getDocView_Analytics_liDocumentThreadMap().Enabled();
+			}
+		}, Input.wait30);
+		getDocView_Analytics_liDocumentThreadMap().Click();
+		return AttachEmail;
+
+	}
+
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : select Attach Email Id Not Display In AnalyticsPanel
+	 * 
+	 */
+	public void selectAttachEmailIdDisplayInAnalyticsPanel(String id) {
+		driver.waitForPageToBeReady();
+		List<WebElement> elementList = getAnalticsHeaderIds().FindWebElements();
+		try {
+		for (WebElement wenElementNames : elementList) {
+
+			String elementName = wenElementNames.getText().trim();
+			System.out.println(elementName);
+			System.out.println(id);
+			if (id.equalsIgnoreCase(elementName)) {
+				base.failedStep("Attach Email Ids is diplayed");
+				break;
+			}
+		}
+		base.passedStep("Attach Email Ids is not diplayed");
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
 }
