@@ -65,7 +65,6 @@ public class BatchRedaction_Production {
 	String tagname;
 	String redactionStyle = "White with black font";
 
-	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -135,7 +134,7 @@ public class BatchRedaction_Production {
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Jeevitha
 	 * @Description : Verify that Batch Redaction should be successful when selected
@@ -150,7 +149,7 @@ public class BatchRedaction_Production {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		String data = "\"##77\"";
 		DocViewMetaDataPage docviewMetadata = new DocViewMetaDataPage(driver);
-		
+
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Testcase ID : RPMXCON-53348  Bacth Redaction");
@@ -195,7 +194,7 @@ public class BatchRedaction_Production {
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Jeevitha
 	 * @Description : Verify that batch redaction when saved search with pattern
@@ -229,7 +228,7 @@ public class BatchRedaction_Production {
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Jeevitha
 	 * @Description : [Batch Redactions- TC 12386]Verify that PDF should Export with
@@ -362,7 +361,7 @@ public class BatchRedaction_Production {
 	 *              redacted documents.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority =6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyModifiedPlaceholdertext() throws InterruptedException {
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -436,7 +435,7 @@ public class BatchRedaction_Production {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		login.logout();
 	}
-	
+
 	/**
 	 * @author sowndariya.velraj
 	 * @Description :Verify that redacted text should not be shifted in produced
@@ -446,7 +445,7 @@ public class BatchRedaction_Production {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void generateProductionWithMultipleRedactionTags() throws InterruptedException {
 
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -712,7 +711,124 @@ public class BatchRedaction_Production {
 
 		login.logout();
 	}
-	
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Check whether user can complete the Batch redaction on not
+	 *              redacted content search data documents (RPMXCON-61152)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void checkWhetherCanCompleteBrAndDownloadPreReport() throws InterruptedException {
+		String searchName = "SearchName" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		// will login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Tescase ID :RPMXCON-61152  Bacth Redaction ");
+		base.stepInfo(
+				"Check whether user can complete the Batch redaction on not redacted content search data documents");
+
+		// basic search and view in docview
+		session.basicContentSearch(Input.searchString2);
+		session.ViewInDocView();
+		docview.verifyPanel();
+
+		// navigate back to SS page and again view in doc view
+		session.navigateToSessionSearchPageURL();
+		session.removePureHitsFromSelectedResult();
+		session.addNewSearch();
+		session.multipleBasicContentSearch(Input.testData1);
+		session.ViewInDocView();
+		docview.verifyPanel();
+
+		// save the search
+		driver.waitForPageToBeReady();
+		session.navigateToSessionSearchPageURL();
+		session.saveSearch(searchName);
+
+		// perform BatchRedaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+
+		// Download Pre-Redaction Report
+		String fileName =batch.verifyPreRedactionReport();
+
+		// Select Tag and verify history
+		batch.loadBatchRedactionPage(Input.mySavedSearch);
+		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
+		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		batch.verifyHistoryStatus(searchName);
+
+		// verify Expected Redaction
+		batch.verifyExpectedRedactionCount(fileName);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : Check whether user can complete the Batch redaction upon the
+	 *              Text redaction of other than searched data on few of the
+	 *              resulted searched documents using same redaction tag
+	 *              (RPMXCON-61151)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	public void checkWhetherCanCompleteBrUponTextRedaction() throws Exception {
+		String searchName = "SearchName" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+        DocViewRedactions dcRedact = new DocViewRedactions(driver);
+        
+		// will login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Tescase ID :RPMXCON-61151  Bacth Redaction ");
+		base.stepInfo(
+				"Check whether user can complete the Batch redaction upon the Text redaction of other than searched data on few of the resulted searched documents using same redaction tag");
+
+		// basic search and view in docview
+		session.basicContentSearch(Input.searchString2);
+		session.ViewInDocView();
+		dcRedact.RedactTextInDocView(10, 10, 100, 100);
+		driver.waitForPageToBeReady();
+		dcRedact.selectingRedactionTag2(Input.defaultRedactionTag);
+
+		// navigate back to SS page and again view in doc view
+		session.navigateToSessionSearchPageURL();
+		session.removePureHitsFromSelectedResult();
+		session.addNewSearch();
+		session.multipleBasicContentSearch(Input.testData1);
+		session.ViewInDocView();
+		docview.verifyPanel();
+
+		// save the search
+		driver.waitForPageToBeReady();
+		session.navigateToSessionSearchPageURL();
+		session.saveSearch(searchName);
+
+		// perform BatchRedaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+
+		// Download Pre-Redaction Report
+		String fileName = batch.verifyPreRedactionReport();
+
+		// Select Tag and verify history
+		batch.loadBatchRedactionPage(Input.mySavedSearch);
+		base.waitForElement(batch.getViewReportForSavedSearch(searchName));
+		batch.getViewReportForSavedSearch(searchName).waitAndClick(10);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		batch.verifyHistoryStatus(searchName);
+
+		// verify Expected Redaction
+		batch.verifyExpectedRedactionCount(fileName);
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
