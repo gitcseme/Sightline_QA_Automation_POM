@@ -617,4 +617,7 @@ public class TestData {
 	public String cfDocId1;
 	public String cfDocId2;
 
+	//Added by Gopinath - 08/04/2022
+	public String warningMsgDocId;
+	public String externalLinkDocId;
 }
