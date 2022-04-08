@@ -2964,13 +2964,15 @@ public class SessionSearch {
 	}
 
 	/**
+	 * Modified on 04/08/2022
+	 * stabilized navigating to docview as per new deployment in PT.
 	 * @Stabilization Done
 	 * @throws InterruptedException
 	 */
 
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
- 
+
 		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
@@ -2988,17 +2990,16 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
-		if(getViewBtn().isElementAvailable(2)) {
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
-			Actions actions = new Actions(driver.getWebDriver());
-			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
-			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
-			base.waitForElement(getDocViewFromDropDown());
-			getDocViewFromDropDown().waitAndClick(10);
-		}else {
+		if (getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			System.out.println("View is not found");
+		}
+		
 		getDocViewAction().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
-		}
 
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");

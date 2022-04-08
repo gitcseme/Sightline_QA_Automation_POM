@@ -887,6 +887,17 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getPageNum(int num) {
+		return driver.FindElementByXPath("//div[@id='customTemplatesDatatable_paginate']//li[@class='paginate_button ']//a[text()='" + num + "']");
+	}
+	
+	public Element getLastPageNum() {
+		return driver.FindElementByXPath("(//div[@id='customTemplatesDatatable_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	
+	public ElementCollection getTotalCustomTemplatePageSize() {
+		return driver.FindElementsByXPath("//div[@id='customTemplatesDatatable_paginate']//ul[@class='pagination pagination-sm']//a");
+	}
 
 	public Element fieldMappingtTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
@@ -6930,25 +6941,14 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingDocumentSelectionPageWithTag(String tag1, String tag2) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagRadioButton().Enabled();
-			}
-		}), Input.wait30);
-		getTagRadioButton().Click();
+		
+		base.waitForElement(getTagRadioButton());
+		getTagRadioButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(tag1).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(tag1));
 		getSelectFolder(tag1).waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(tag2).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(tag2));
 		getSelectFolder(tag2).waitAndClick(10);
 
 		driver.scrollingToBottomofAPage();
@@ -6963,6 +6963,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Document Selection Page section is filled");
 	}
+
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj
@@ -9859,7 +9860,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorSowndarya.velraj.Modified on 02/08/22
+	 * @authorSowndarya.velraj.Modified on 04/08/22
 	 * @Description : Method to save a production as template and verifying it in
 	 *              Manage template tab
 	 * @param productionname : productionname is String value that name of
@@ -9885,17 +9886,22 @@ public class ProductionPage {
 		base.VerifySuccessMessage("Production Saved as a Custom Template.");
 
 		getManageTemplates().waitAndClick(10);
-
-		getDeleteBtn(templateName).ScrollTo();
-		getDeleteBtn(templateName).isElementAvailable(5);
-		base.stepInfo("Delete option is displayed");
-
-		getViewBtn(templateName).ScrollTo();
-		base.waitForElement(getViewBtn(templateName));
+		driver.scrollingToBottomofAPage();
+		
 		if (getViewBtn(templateName).isElementAvailable(5)) {
 			getViewBtn(templateName).waitAndClick(10);
 			base.stepInfo("View option is displayed");
 		}
+		else {
+			NavigateToLastTemplatePage();
+			driver.waitForPageToBeReady();
+			getViewBtn(templateName).waitAndClick(10);
+			base.stepInfo("View option is displayed");
+		}
+
+		getDeleteBtn(templateName).ScrollTo();
+		getDeleteBtn(templateName).isElementAvailable(5);
+		base.stepInfo("Delete option is displayed");
 
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
@@ -12729,15 +12735,16 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * Author sowndarya.velraj
-	 * 
+	 * Author sowndarya.velraj.Modified on 04/08/2022
 	 * @param TempName
 	 */
 	public void saveTemplate(String TempName) {
+		driver.waitForPageToBeReady();
 		getprod_Templatetext().SendKeys(TempName);
 		getProdExport_SaveButton().waitAndClick(5);
 		base.VerifySuccessMessage("Production Saved as a Custom Template.");
 	}
+
 
 	/**
 	 * Author sowndarya.velraj
@@ -15441,18 +15448,11 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @Description  method for filling document selction page with one tag
 	 */
 	public void fillingDocumentSelectionWithTag(String Tag) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagRadioButton().Enabled();
-			}
-		}), Input.wait30);
-		getTagRadioButton().Click();
+		
+		base.waitForElement(getTagRadioButton());
+		getTagRadioButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(Tag).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(Tag));
 		getSelectFolder(Tag).waitAndClick(10);
 		base.passedStep(Tag + " : Tag Is Selected");
 
@@ -15468,6 +15468,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		driver.scrollPageToTop();
 		base.stepInfo("Document Selection Page section is filled");
 	}
+
 
 	/**
 	 *
@@ -19583,4 +19584,23 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	        return nosPage;
 	    }
 
+
+		/**
+		 * @Author sowndarya.velraj
+		 */
+		public void NavigateToLastTemplatePage() {
+			driver.scrollingToBottomofAPage();
+			String lastNum;
+			driver.waitForPageToBeReady();
+			if(getLastPageNum().isElementAvailable(4)) {
+				lastNum=getLastPageNum().getText();
+			}else {
+			int totalNum = getTotalCustomTemplatePageSize().size();
+			 lastNum=String.valueOf(totalNum-2);
+			}
+				int totalPage=Integer.parseInt(lastNum);
+				base.waitForElement(getPageNum(totalPage));
+					getPageNum(totalPage).waitAndClick(5);
+					driver.waitForPageToBeReady();
+		}
 }
