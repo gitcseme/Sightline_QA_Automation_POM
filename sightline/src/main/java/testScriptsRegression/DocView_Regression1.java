@@ -7394,32 +7394,6 @@ public class DocView_Regression1 {
 		// logout
 		loginPage.logout();
 	}
-	/**
-	 * @author Gopinath
-	 * @TestCase Id:52002 Verify Hidden Property Metadata label warning from Doc view page hidden comments
-	 * @Description:To Verify Hidden Property Metadata label warning from Doc view page hidden comments
-	 * @throws InterruptedException
-	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 198)
-	public void verifyHiddenPropWarningMsgAndValue() throws InterruptedException {
-		baseClass = new BaseClass(driver);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		String docId=Input.warningMsgDocId;
-		String project="AutomationAdditionalDataProject";
-		baseClass.selectproject(project);
-		baseClass.stepInfo("Test case Id: RPMXCON-52002");
-		baseClass.stepInfo("###Verify Hidden Property Metadata label warning from Doc view page hidden comments####");
-		
-		baseClass.stepInfo("basic content search");
-		sessionsearch.basicContentSearch(docId);
-		
-		baseClass.stepInfo("view in docView");
-		sessionsearch.viewInDocView();
-		
-		baseClass.stepInfo("verify warning message for hidden properties document and metadat value not empty");
-		docView.verifyWarningMsgAndHiddenPropValue(docId);
-	}
 	
 	
 	/**
