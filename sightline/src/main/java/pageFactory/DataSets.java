@@ -74,17 +74,17 @@ public class DataSets {
 	
 	}
 	public Element getPublishedCount(int i) {
-		return driver.FindElementByXPath("(//input[contains(@value,'View Set' )]/../../../following-sibling::div//div[@class='ingestCt col-md-4 txt-color-green']//span)["+i+"]");
+		return driver.FindElementByXPath("(//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//div[@class='ingestCt col-md-4 txt-color-green']//span)["+i+"]");
 		}
 		public Element getSelectAction(int i) {
-		return driver.FindElementByXPath("(//button[@id='idAction'])["+i+"]");
+		return driver.FindElementByXPath("(//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//button[@id='idAction'])["+i+"]");
 		}
 		public Element getSelectDocList(int i) {
-		return driver.FindElementByXPath("(//a[@id='idBulkTag'][text()='DocList'])["+i+"]");
+		return driver.FindElementByXPath("(//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//a[@id='idBulkTag'][text()='DocList'])["+i+"]");
 
 		}
 		public ElementCollection getPublishedCount() {
-		return driver.FindElementsByXPath("//input[contains(@value,'View Set' )]/../../../following-sibling::div//div[@class='ingestCt col-md-4 txt-color-green']//span");
+		return driver.FindElementsByXPath("//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//div[@class='ingestCt col-md-4 txt-color-green']//span");
 		}
 	
 	public DataSets(Driver driver) {

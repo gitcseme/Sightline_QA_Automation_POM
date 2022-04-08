@@ -17843,7 +17843,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		base.waitForElement(getbtnProductionGenerate());
 		getbtnProductionGenerate().waitAndClick(10);
 
-		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -18936,32 +18936,33 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @param prefixID
 	 * @param suffixID
 	 * @param verificationText
+	 * @throws TesseractException 
 	 * @throws IOException
 	 * @Description :  OCR Verification In Generated Tiff SS.
 	 */
 	public void OCR_Verification_In_Generated_Tiff_SS(int firstFile, int lastFile, String prefixID, String suffixID,
-			String verificationText) {
+			String verificationText) throws TesseractException {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		Ocr.setUp();
-		Ocr ocr = new Ocr();
-		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
-		for (int i = firstFile; i < lastFile; i++) {
+		
+		for(int i=firstFile; i<lastFile ;i++) {
 			
-			String Tifffile = ocr.recognize(
-					new File[] {
-							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".ss.tiff") },
-					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-			System.out.println(Tifffile);
+			File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".ss.tiff");
+		       // ITesseract instance = new Tesseract();  // JNA Interface Mapping
+		         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		         instance.setDatapath(tessDataFolder.getPath());
 
-			if (Tifffile.contains(verificationText)) {
-				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + " file expected");
-			} else {
-				base.failedStep( prefixID + i + suffixID +" : "+verificationText);
-			}
-			
-		}
-		ocr.stopEngine();
+		        
+		            String result = instance.doOCR(imageFile);
+		            System.out.println(result);
+		            if (result.contains(verificationText)) {
+						base.passedStep(verificationText+" is displayed in "+prefixID+i+suffixID+".tiff"+" file as expected");
+					} else {
+						base.failedStep(verificationText+" verification failed");
+					}
+		        }
+		
 	}
 
 

@@ -104,7 +104,7 @@ public class Production_Test_Regression_03 {
 	 *              data
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyIceDataGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -153,12 +153,10 @@ public class Production_Test_Regression_03 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		driver.waitForPageToBeReady();
-		String name = page.getProduction().getText().trim();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
 
-		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads");
-		System.out.println("Unzipped the downloaded files");
+		page.extractFile();
 		driver.waitForPageToBeReady();
 
 		File Native = new File(home + "/Downloads/VOL0001/Natives");
@@ -180,7 +178,7 @@ public class Production_Test_Regression_03 {
 	 *              file types for ICE processed data.
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyIceDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -232,11 +230,9 @@ public class Production_Test_Regression_03 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		driver.waitForPageToBeReady();
-		String name = page.getProduction().getText().trim();
 		String home = System.getProperty("user.home");
 
-		page.unzipping(home + "/Downloads/" + name + ".zip", home + "/Downloads/");
-		System.out.println("Unzipped the downloaded files");
+		page.extractFile();
 		driver.waitForPageToBeReady();
 
 		for (int i = number; i < lastfile; i++) {
@@ -277,7 +273,7 @@ public class Production_Test_Regression_03 {
 	 * @Description: To verify that document should produced with 'Tech Issues Docs'
 	 *               placeholdering by selecting more than one Tag
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyTeccIssueDocPlaceholdering() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-49337 ");
@@ -326,7 +322,7 @@ public class Production_Test_Regression_03 {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		page.extractFile();
-		page.OCR_Verification_In_Generated_Tiff(firstFile, lastFile, prefixID, suffixID, Input.technicalIssue);
+		page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, lastFile, prefixID, suffixID, Input.technicalIssue);
 
 		base.passedStep(
 				"Verified that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag");
@@ -345,7 +341,7 @@ public class Production_Test_Regression_03 {
 	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT
 	 *       environment
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyPdfIceMappedSetProdGenSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -410,7 +406,7 @@ public class Production_Test_Regression_03 {
 	 *              with Multiple Branding Tags"
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyMultipleDocumentCountisZero() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -499,7 +495,7 @@ public class Production_Test_Regression_03 {
 	 * @Description: To Verify "Enable Placeholders by Selecting File Types" for
 	 *               (.mdb/.mdf) under TIFF /PDF Should works for Production.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyPlaceholderForMDB() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48034 ");
@@ -546,7 +542,7 @@ public class Production_Test_Regression_03 {
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		page.extractFile();
-		page.OCR_Verification_In_Generated_Tiff(firstFile, lastFile, prefixID, suffixID, testing);
+		page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, lastFile, prefixID, suffixID, testing);
 
 		base.passedStep(
 				"Verified \"Enable Placeholders by Selecting File Types\" for  (.mdb/.mdf) under TIFF /PDF Should works for Production.");
@@ -566,7 +562,7 @@ public class Production_Test_Regression_03 {
 	 * layout. 'RPMXCON-48031'
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyDocsBothLandScapeRotationLayout() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -638,7 +634,7 @@ public class Production_Test_Regression_03 {
 	 *              file types for NUIX processed data.
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyNuixDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -711,7 +707,7 @@ public class Production_Test_Regression_03 {
 	 *              Mark complete.
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyPlaceholderPrivDocAtPrivGuard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -793,7 +789,7 @@ public class Production_Test_Regression_03 {
 	 *              documents with annotation
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyProdGenDocumentWithAnnotation() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -864,7 +860,7 @@ public class Production_Test_Regression_03 {
 	 *              document
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+   @Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyPrivPlaceholderGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -925,14 +921,13 @@ public class Production_Test_Regression_03 {
 		loginPage.logout();
 
 	}
-
 	/**
 	 * Author : Vijaya.Rani date: 3/03/22 NA Modified date: NA Modified by:NA
 	 * Description :To Verify Removal of Redaction Tag from a documents Should get
 	 * produced in Production for Native. 'RPMXCON-48038'
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyRemovalRedactionTagProductionForNative() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -965,7 +960,7 @@ public class Production_Test_Regression_03 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSection(tagname, Input.tagNameTechnical);
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname1);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -985,9 +980,9 @@ public class Production_Test_Regression_03 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-
-		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".doc");
+		//File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff");
+		File Native = new File(home+"/Downloads/VOL0001/Natives/0001/"+prefixID+beginningBates+suffixID+".doc");
+				
 
 		if (Native.exists()) {
 			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".doc");
@@ -997,6 +992,7 @@ public class Production_Test_Regression_03 {
 			System.out.println("failed");
 
 		}
+		driver.waitForPageToBeReady();
 		page.clickBackBtnandSelectingNative(7, tagname);
 		driver.scrollingToBottomofAPage();
 		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
