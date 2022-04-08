@@ -342,11 +342,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		login.loginToSightLine(username, password);
 
 		// create new search group
-		saveSearch.createNewSearchGrp(searchName1);
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = saveSearch.getSavedSearchNewNode().getText();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.selectNode1(newNode);
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, fullName, "No");
 		saveSearch.uploadBatchFile_New(saveSearch.renameFile(Input.batchFileNewLocation));
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -355,15 +351,17 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		int pureHit = session.basicContentSearchWithSaveChanges("gas", "Yes", "Third");
 		session.saveSearchInNode(search);
 
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-
+		saveSearch.navigateToSavedSearchPage();
 		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearch_SearchandSelect(search, "Yes");
 		String CountOfDoc = saveSearch.getCountofDocs().getText();
-
 		softAssertion.assertEquals(pureHit, Integer.parseInt(CountOfDoc));
-
 		softAssertion.assertAll();
+
+		saveSearch.navigateToSavedSearchPage();
+		base.stepInfo("Initiatind delete node");
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+
 		login.logout();
 	}
 
@@ -394,6 +392,8 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		}
 		session.verifyReleventMessage_draftQuery();
 
+		login.logout();
+
 	}
 
 	/**
@@ -421,6 +421,8 @@ public class SavedSearch_Audio_Regression_Set_03 {
 			base.failedStep("Continues spinning Wheel is present");
 		}
 		session.verifyReleventMessage_draftQuery();
+
+		login.logout();
 
 	}
 
@@ -457,6 +459,8 @@ public class SavedSearch_Audio_Regression_Set_03 {
 			base.failedStep("Continues spinning Wheel is present");
 		}
 		session.verifyReleventMessage_draftQuery();
+
+		login.logout();
 
 	}
 
@@ -522,15 +526,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		session.selectTagInASwp(TagName);
 		pureHit = session.serarchWP();
 		finalCountresult = Integer.parseInt(finalCount);
-		try {
-			softAssertion.assertEquals(pureHit, finalCountresult);
-			base.passedStep(
-					"After the Bulk Tag - Pure hit appear like aggregate results set of all child search groups and searches   ");
-		} catch (Exception e) {
-			base.failedStep("Count Mismatches");
-		}
+		base.digitCompareEquals(pureHit, finalCountresult,
+				"After the Bulk Tag - Pure hit appear like aggregate results set of all child search groups and searches   s",
+				"Count Mismatches");
 
-		softAssertion.assertAll();
 		login.logout();
 	}
 
@@ -591,15 +590,10 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		// Get the count of total no.of document list
 		finalCountresult = saveSearch.launchDocListViaSSandReturnDocCount();
 
-		try {
-			softAssertion.assertEquals(hitCount, finalCountresult);
-			base.passedStep(
-					"Shows all documents that are in the aggregate results set of all child search groups and searches");
-		} catch (Exception e) {
-			base.failedStep("Count Mismatches");
-		}
+		base.digitCompareEquals(hitCount, finalCountresult,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches");
 
-		softAssertion.assertAll();
 		login.logout();
 	}
 
@@ -729,10 +723,9 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		// Search ID collection
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		driver.waitForPageToBeReady();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
@@ -767,7 +760,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 39)
+	 @Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void sharingLastLeafNode() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 6;
 		int selectIndex = 4;
@@ -846,7 +839,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	// @Test(enabled = true, groups = { "regression" }, priority = 40)
+	 @Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void VerifyTheDocumentCountforRMU() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-57391");
 		String tagName = "TAG" + Utility.dynamicNameAppender();
