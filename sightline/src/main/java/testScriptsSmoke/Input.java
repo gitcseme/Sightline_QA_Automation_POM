@@ -698,6 +698,9 @@ public class Input {
 	public static String createDate;
 	public static String highVolumeProjSearchString;
 	
+	public static String cfDocId1;
+	public static String cfDocId2;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1401,6 +1404,10 @@ public class Input {
 		langName_japnese= testData.getLangName_japnese();
 		 createDate= testData.getCreateDate();
 		 highVolumeProjSearchString= testData.getHighVolumeProjSearchString();
+		 
+		 cfDocId1 =testData.getCfDocId1();
+		 cfDocId2 = testData.getCfDocId2();
+		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

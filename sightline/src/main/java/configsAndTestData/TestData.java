@@ -613,5 +613,8 @@ public class TestData {
 	public String langName_japnese;
 	public String createDate;
 	public String highVolumeProjSearchString;
+	
+	public String cfDocId1;
+	public String cfDocId2;
 
 }
