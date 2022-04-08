@@ -3007,7 +3007,7 @@ public class Production_Test_Regression_02{
 	 *               selected tags are produced unless they are to excluded due to
 	 *               Redaction or PrivTags.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	 @Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyNativeDocs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48020 ");

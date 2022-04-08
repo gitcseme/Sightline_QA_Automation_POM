@@ -462,6 +462,7 @@ public class Production_Regression2 {
 
 		driver.waitForPageToBeReady();
 		DocViewPage doc = new DocViewPage(driver);
+		driver.waitForPageToBeReady();
 		doc.clickOnImageTab();
 		driver.waitForPageToBeReady();
 		doc.verifyProductionNameForPDFFileInDocView(productionname);
@@ -881,7 +882,7 @@ public class Production_Regression2 {
 		page.fillingProductionLocationPageAndPassingText(productionname3);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutDownload();
 		base.passedStep(
 				"Verify that produced PDF/TIFF files should not be split when 'Split Sub Folders' is ON with split count as 10 and selected documents <= 10");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2200,6 +2201,7 @@ public class Production_Regression2 {
 
 		driver.waitForPageToBeReady();
 		DocViewPage doc = new DocViewPage(driver);
+		driver.waitForPageToBeReady();
 		doc.clickOnImageTab();
 		driver.waitForPageToBeReady();
 		doc.verifyProductionNameForPDFFileInDocView(productionname);
@@ -2697,7 +2699,7 @@ public class Production_Regression2 {
 	 *              export only Natives.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyingNativelyProducedDocInProducedFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2858,7 +2860,7 @@ public class Production_Regression2 {
 	 * @DescriptionProduction Document Selection to DocList with Child Documents
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2923,6 +2925,7 @@ public class Production_Regression2 {
 		if (Integer.valueOf(Document) <= Integer.valueOf(DocCount)) {
 			driver.waitForPageToBeReady();
 			doc.getSelectParentDocument().waitAndClick(10);
+			driver.waitForPageToBeReady();
 			ArrayList<String> IncludeFamilyMembDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
 			if (DocumentIdInDoclist.equals(IncludeFamilyMembDocs)) {
 				base.passedStep("Include family member doc is displayed as expected");
