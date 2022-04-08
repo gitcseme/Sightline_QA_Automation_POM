@@ -231,12 +231,12 @@ public class DocView_MetaData_Regression {
 		sessionSearch.navigateToSessionSearchPageURL();
 		
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCN,null);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.addDocsMetCriteriaToActionBoard();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
 		baseClass.waitTime(3);
-		docView.addRemarkToNonAudioDocument(30, 45, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 		
 		baseClass.stepInfo("Verify Remark Actions To History .");
 		docViewMetaDataPage.verifyRemarkActionsToHistory();

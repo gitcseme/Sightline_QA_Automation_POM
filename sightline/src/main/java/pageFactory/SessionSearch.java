@@ -5053,7 +5053,7 @@ public class SessionSearch {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
-		base.waitTime(1);
+		base.waitTime(3);
 		getBulkActionButton().isElementAvailable(10);
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().Click();

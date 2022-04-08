@@ -2018,6 +2018,7 @@ public class DocView_Regression1 {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
 		String folderName = Input.randomText + Utility.dynamicNameAppender();
+		String docId = "ID00001130";
 		baseClass.stepInfo("Test case Id: RPMXCON-51446");
 		utility = new Utility(driver);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
@@ -2029,8 +2030,8 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Input.familyMembersDocId);
-
+		sessionSearch.basicContentSearch(docId);
+		
 		baseClass.stepInfo("Bulk assign with new assignment");
 		sessionSearch.bulkAssignWithNewAssignment();
 
@@ -2043,7 +2044,7 @@ public class DocView_Regression1 {
 		agnmt.selectAssignmentToViewinDocview(assignmentName);
 
 		baseClass.stepInfo("Select Doc From Family Members And Create Folder");
-		docViewMetaDataPage.selectDocFromFamilyMembersAndCreateFolder(Input.familyMembersDocId, folderName);
+		docViewMetaDataPage.selectDocFromFamilyMembersAndCreateFolder(docId, folderName);
 		loginPage.logout();
 
 	}
@@ -2188,7 +2189,7 @@ public class DocView_Regression1 {
 		docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(10, 20, remark);
+		docView.addRemarkToNonAudioDocument(5, 55, remark);
 
 		baseClass.stepInfo("Navigate To Session Search Page URL");
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -3109,6 +3110,7 @@ public class DocView_Regression1 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
 		// selecting the assignment
+		driver.waitForPageToBeReady();
 		assignmentPage.SelectAssignmentByReviewer(AssignName);
 
 		docView.persistenHitWithSearchString(Input.searchString2);
@@ -3137,7 +3139,7 @@ public class DocView_Regression1 {
 				"#### Verify user can download the redacted document when 'Allow reviewers to print docs to PDF' is on at an assigment level. ####");
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Bulk Assign");
 		search.bulkAssign();
@@ -3169,6 +3171,12 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Click on persistant hit eye icon.");
 		metaData.verifyDocumenetPrintOnDocView();
 
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
+
+		// Login As Review Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
 		baseClass.stepInfo("Navigate To Assignments Page");
 		assgnPage.navigateToAssignmentsPage();
 
@@ -3437,7 +3445,7 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("#### To verify that remarks can add/edit/delete if document is marked as Completed. ####");
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.telecaSearchString);
 
 		baseClass.stepInfo("Bulk Assign");
 		search.bulkAssign();
@@ -3467,7 +3475,7 @@ public class DocView_Regression1 {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(30, 45, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -3718,7 +3726,7 @@ public class DocView_Regression1 {
 				"#### To verify that Remark can be update and deleted by other reviewers in same security group. ####");
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Bulk Assign");
 		search.bulkAssign();
@@ -3742,7 +3750,7 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(30, 45, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -3790,7 +3798,7 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Bulk assign with new assignment");
 		sessionSearch.bulkAssignWithNewAssignment();
@@ -3804,7 +3812,7 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Add Remark To Non Audio Document by 1000 characters");
-		docView.addRemarkToNonAudioDocument1000Characters(30, 45);
+		docView.addRemarkToNonAudioDocument1000Characters(5, 55);
 		loginPage.logout();
 
 	}
@@ -4424,10 +4432,9 @@ public class DocView_Regression1 {
 		sessionSearch.bulkAssign();
 
 		baseClass.stepInfo("Create assignment WIth allow user to save with out complete option");
-
 		assignmentPage.createAssignmentWithAllowUserToSave(AssignStamp, Input.codingFormName);
+		
 		baseClass.stepInfo("editiing assignment");
-
 		assignmentPage.editAssignment(AssignStamp);
 
 		baseClass.stepInfo("Reviewers added and distributed to Reviewer");
@@ -4472,13 +4479,13 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Basic  content search ");
-		session.basicContentSearch(Input.searchString1);
+		session.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("View serached dos in DOcview");
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Perform Remark with save operation");
-		docViewMetaDataPage.performRemarkWithSaveOperation(10, 15, remark);
+		docViewMetaDataPage.performRemarkWithSaveOperation(5,55, remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -4542,7 +4549,7 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Basic  content search ");
-		session.basicContentSearch(Input.searchString1);
+		session.basicContentSearch(docId);
 
 		baseClass.stepInfo("View serached dos in DOcview");
 		session.ViewInDocView();
@@ -4789,13 +4796,14 @@ public class DocView_Regression1 {
 	}
 
 	/**
-	 * @author Gopinath TestCase Id:51100 Verify user should be able to click the
+	 * @author Gopinath TestCase I
+	 * d:51100 Verify user should be able to click the
 	 *         download icon when associated files are ingested Description:To
 	 *         Verify user should be able to click the download icon when associated
 	 *         files are ingested
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 65)
 	public void verifyAssociatedFileDownloadOptions() throws InterruptedException {
 		String docId1 = "ID00001069";
 		String docId2 = "ID00001004";// id to download translation 1
@@ -5361,7 +5369,7 @@ public class DocView_Regression1 {
 		driver.getWebDriver().get(currentUrl);
 
 		baseClass.stepInfo("Adding remark to document");
-		docView.addRemarkToNonAudioDocument(56, 134, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("Switchimg to first window");
 		driver.switchTo().window(parentWindowHandle);
@@ -5542,7 +5550,7 @@ public class DocView_Regression1 {
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Adding remark to document");
-		docView.addRemarkToNonAudioDocument(56, 134, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -5618,7 +5626,7 @@ public class DocView_Regression1 {
 		session.ViewInDocView();
 
 		baseClass.stepInfo("Adding remark to document");
-		docView.addRemarkToNonAudioDocument(56, 134, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -5714,14 +5722,14 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Verify Disable Remark Warning Message");
 		docView.verifyDisableAnnotationWarningMessageAndSubMenu();
 
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
 		baseClass.stepInfo("Verify annotation is added to document.");
 		docView.verifyAnnotationAddedToDocument(previousAnnotationCount);
 
 		baseClass.stepInfo("Switch to child window");
 		driver.switchTo().window(childWindowHandle);
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Verify annotation is added to document.");
 		docView.verifyAddedAnnotationToDocument(previousAnnotationCount);
@@ -5833,10 +5841,14 @@ public class DocView_Regression1 {
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
 
 		DocExplorerPage docExp = new DocExplorerPage(driver);
-		docExp.documentSelectionIteration();
-		driver.waitForPageToBeReady();
-		docExp.docExpViewInDocView();
-
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Basic Content Search");
+		sessionSearch.basicContentSearch(Input.testData1);
+		
+		baseClass.stepInfo("View in doc view");
+		sessionSearch.ViewInDocView();
+		
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
 		docViewRedactions.selectDoc1();
 		driver.waitForPageToBeReady();
@@ -5850,9 +5862,13 @@ public class DocView_Regression1 {
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		// Adding folder to bulkfolder
-		DocExplorerPage docExplorer = new DocExplorerPage(driver);
-		docExplorer.documentSelectionIteration();
-		docExplorer.bulkFolderExisting(foldername);
+		sessionSearch.navigateToSessionSearchPageURL();
+		
+		baseClass.stepInfo("Refresh page");
+		driver.Navigate().refresh();
+		
+		baseClass.stepInfo("Bulk Folder Existing");
+		sessionSearch.bulkFolderExisting(foldername);
 
 		BatchPrintPage batchPrint = new BatchPrintPage(driver);
 
@@ -6106,7 +6122,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 45)
 	public void verifyEditHighlightingOnDifferentTabsOfSameBrowser() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51536 sprint 11");
@@ -6231,7 +6247,7 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that if the document native is being presented, the 'X' icon with the accompanying mouse over tool tip must appear ####");
 
-		String DocId = Input.newNearDupeDocId;
+		String DocId = Input.MiniDocId;
 		String ExpectedText = "Text file variant of the document being displayed";
 		baseClass.stepInfo("Basic meta data search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6631,7 +6647,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51979 - Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 * @Description : Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifySearchTermAndKeywordHighlightedOnDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String keyword = "es";
@@ -6689,7 +6705,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51648 - Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
 	 * @Description : Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifyDocPagesAreNotLoadedProperlyForAbove500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51648 Sprint 12");
@@ -6719,7 +6735,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51647 - Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
 	 * @Description : Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifyDocPagesAreLoadedProperlyByLessthan10MB() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51647 Sprint 12");
@@ -6751,7 +6767,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 52265 - Verify that uploaded documents should be threaded into families.
 	 * @Description : Verify that uploaded documents should be threaded into families.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
@@ -6993,7 +7009,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51650 - Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view.
 	 * @Description : Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view
 	 **/
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifyDocPagesLoadedProperlyForLessThan500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51650 Sprint 13");
@@ -7024,7 +7040,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51649 - Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 * @Description : Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 **/
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
 	public void verifyDocPagesLoadedProperlyForLessThanOrEqual500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51649 Sprint 13");
@@ -7099,64 +7115,6 @@ public class DocView_Regression1 {
 	}
 	
 	/**
-	 * @author Gopinath
-	 * @TestCase Id:51438 Verify that after impersonation if the document
-	 *           native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the
-	 *           accompanying mouse over tool tip must appear
-	 * @Description :To Verify that after impersonation if the document
-	 *              native/PDF/TIFF/Text is being presented, the N/P/T/X icon with
-	 *              the accompanying mouse over tool tip must appear.
-	 * @throws InterruptedException stabilization - not done
-	 */
-	// @Test(enabled = true,dataProvider="multiUserCredentials", groups = {
-	// "regression" }, priority = 15)
-	public void verifyDocIdIconOnDocViewPanal(String fullName, String userName, String password, String fromRole,
-			String toRole) throws InterruptedException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		baseClass.stepInfo("Test case id : RPMXCON-51438");
-		baseClass.stepInfo(
-				"Verify that after impersonation if the document native/PDF/TIFF/Text is being presented, the N/P/T/X icon with the accompanying mouse over tool tip must appear");
-		String N_DocID = "ID00001351";
-		String N_DocToolTipMessage = "Native file variant of the document being displayed";
-		String X_DocID = "ID00000102";
-		String X_DocToolTipMessage = "Text file variant of the document being displayed";
-		String T_DocID = "ID00001012";
-		String T_DocToolTipMessage = "TIFF file variant of the document being displayed";
-		String P_DocId = "ID00001464";
-		String P_DocToolTipMessage = "PDF file variant of the document being displayed";
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(userName, password);
-		UtilityLog.info("Logged in as User: " + fullName);
-		baseClass.stepInfo("Logged in as User: " + fullName);
-		SessionSearch session = new SessionSearch(driver);
-		DocViewPage docView = new DocViewPage(driver);
-
-		baseClass.stepInfo("Impersnated from " + fromRole + " to " + toRole);
-		baseClass.rolesToImp(fromRole, toRole);
-
-		baseClass.stepInfo("Step 1: Search for the docs ");
-		session.basicContentSearch(Input.searchString1);
-
-		baseClass.stepInfo("Step 2:view docS in DocView");
-		session.ViewInDocView();
-
-		baseClass.stepInfo("Verify T icon and tolltip message for selected document");
-		docView.verifyingToolTipPopupMessage(T_DocID, T_DocToolTipMessage);
-
-		baseClass.stepInfo("Verify X icon and tolltip message for selected document");
-		docView.verifyingToolTipPopupMessage(X_DocID, X_DocToolTipMessage);
-
-		baseClass.stepInfo("Verifying P icon and tolltip message for selected document");
-		docView.verifyingToolTipPopupMessage(P_DocId, P_DocToolTipMessage);
-
-		baseClass.stepInfo("Verifying N icon and tolltip message for selected document");
-		docView.verifyingToolTipPopupMessage(N_DocID, N_DocToolTipMessage);
-
-		loginPage.logout();
-	}
-	
-	/**
 	 * @Author : Baskar date:06/12/21 Modified date: NA Modified by: Baskar
 	 * @Description : Verify when RMU impersonates as Reviewer and complete same as
 	 *              last doc when preceding document is completed
@@ -7166,7 +7124,7 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
-
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-51608");
 		baseClass.stepInfo("Verify when RMU impersonates as Reviewer and complete "
 				+ "same as last doc when preceding document is completed");
@@ -7174,18 +7132,15 @@ public class DocView_Regression1 {
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String fieldText = "stamp" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		if (roll.equalsIgnoreCase("rmu")) {
-//			searching document for assignment creation
-			sessionSearch.basicContentSearch(Input.searchString2);
-			sessionSearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
-			assignmentPage.toggleCodingStampEnabled();
-			assignmentPage.assignmentDistributingToReviewer();
-			driver.waitForPageToBeReady();
-			System.out.println(assignName);
-		}
+		
+//		searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+		driver.waitForPageToBeReady();
+		System.out.println(assignName);
 		loginPage.logout();
 		// login as reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -7209,7 +7164,6 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
-		
 		baseClass.stepInfo("Test case Id: RPMXCON-51049");
 		baseClass.stepInfo(
 				"Verify user can apply coding stamp for the " + "document once marked as un-complete in an assignment");
@@ -7217,18 +7171,14 @@ public class DocView_Regression1 {
 		String filedText = "stampName" + Utility.dynamicNameAppender();
 		String comment = "commentValue" + Utility.dynamicNameAppender();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		if (roll.equalsIgnoreCase("rmu")) {
-//			searching document for assignment creation
-			sessionSearch.basicContentSearch(Input.searchString2);
-			sessionSearch.bulkAssign();
-			assignmentPage.assignmentCreation(assignName, Input.codingFormName);
-			assignmentPage.toggleCodingStampEnabled();
-			assignmentPage.add2ReviewerAndDistribute();
-			driver.waitForPageToBeReady();
-			System.out.println(assignName);
-		}
+//		searching document for assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		driver.waitForPageToBeReady();
+		System.out.println(assignName);
 		baseClass.impersonateRMUtoReviewer();
 		// selecting the assignment
 		assignmentPage.SelectAssignmentByReviewer(assignName);
@@ -7254,7 +7204,7 @@ public class DocView_Regression1 {
 		SoftAssert 	softAssertion = new SoftAssert();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
-
+		loginPage.logout();
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -7308,6 +7258,7 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		// Login As RMU
+		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51921");
@@ -7371,7 +7322,9 @@ public class DocView_Regression1 {
 		String codingForm = Input.codeFormName;
 		String docTextbox = "assignment click";
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		
+		loginPage.logout();
+		
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -7454,12 +7407,13 @@ public class DocView_Regression1 {
 
 	}
 
-	@AfterClass(alwaysRun = true)
+	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
-			// loginPage.quitBrowser();
+			loginPage = new LoginPage(driver);
+			loginPage.quitBrowser();
 		} finally {
-			loginPage.closeBrowser();
+//			loginPage.closeBrowser();
 			LoginPage.clearBrowserCache();
 		}
 	}

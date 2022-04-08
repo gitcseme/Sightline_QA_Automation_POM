@@ -1029,20 +1029,21 @@ public class DocExplorerPage {
 					bc.waitTillElemetToBeClickable(getAllDocSelectedCheckBox());
 				}
 			}
-			try {
+			if(getOkButton().isDisplayed()) {
 				bc.waitTillElemetToBeClickable(getOkButton());
 				getOkButton().Click();
-			} catch (Exception e) {
+			} else {
 				bc.stepInfo("Ok button is not appered");
 			}
 			for (int i = 0; i < 10; i++) {
 				try {
+					bc.waitTime(2);
 					bc.waitForElement(getDocExp_actionButton());
 					bc.waitTillElemetToBeClickable(getDocExp_actionButton());
 					getDocExp_actionButton().Click();
 					break;
 				} catch (Exception e) {
-					Thread.sleep(1000);
+					bc.waitTime(2);
 				}
 			}
 			bc.waitTillElemetToBeClickable(getBulkTagButton());
@@ -1050,6 +1051,7 @@ public class DocExplorerPage {
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getDocBoard());
 			getDocBoard().Click();
+			bc.waitTime(2);
 			getTag(tagName).Click();
 			for (int i = 0; i < 20; i++) {
 				try {
@@ -1880,8 +1882,9 @@ public class DocExplorerPage {
 			selectFolder(folderNumber);
 
 			driver.waitForPageToBeReady();
+			getDocListCustodianName().isElementAvailable(10);
 			String custodianNameInTable = getDocListCustodianName().getText();
-
+			getfolderFromTreeByNumber(folderNumber).isElementAvailable(10);
 			bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
 			String CustodianNameInTree = getfolderFromTreeByNumber(folderNumber).getText();
 			String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,
@@ -1893,6 +1896,7 @@ public class DocExplorerPage {
 
 			if (PaginationCount > 3) {
 				for (int i = 1; i <= PaginationCount - 3; i++) {
+					getDocLictPaginationNextButton().isElementAvailable(10);
 					bc.waitForElement(getDocLictPaginationNextButton());
 					getDocLictPaginationNextButton().waitAndClick(3);
 					driver.waitForPageToBeReady();
@@ -2152,17 +2156,19 @@ public class DocExplorerPage {
 	public void verifyFolderName() {
 		try {
 			driver.waitForPageToBeReady();
-			bc.waitTime(3);
-			bc.waitForElementCollection(getFolderOfMoreCharacters());
+			bc.waitTime(2);
 			List<WebElement> folders = getFolderOfMoreCharacters().FindWebElements();
 			for (int i = 0; i < folders.size(); i++) {
+				driver.waitForPageToBeReady();
 				String foldername = folders.get(i).getText();
 				if (foldername.length() > 18) {
 					Actions ac = new Actions(driver.getWebDriver());
-					ac.moveToElement(folders.get(i)).perform();
-					//ac.moveByOffset(50, 50).perform();
-					//ac.moveToElement(folders.get(i)).perform();
+					bc.waitTime(3);
+					folders.get(i).click();
+					ac.moveByOffset(50, 50).perform();
 					bc.passedStep("after mouse hover to the folder full name " + foldername + " is displayed in tool tip");
+					ac.moveToElement(folders.get(i));
+					ac.perform();
 					getFolderToolTip().isElementAvailable(10);
 					if (getFolderToolTip().isDisplayed()) {
 						String folderNameInToolTip = getFolderToolTip().getText();
