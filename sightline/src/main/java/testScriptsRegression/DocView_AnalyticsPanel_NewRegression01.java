@@ -2795,16 +2795,15 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @Description Verify that on thread map tab when the principal document is F1,
 	 *              the thread map should not present any emails. 'RPMXCON-51521'
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyThreadMapPrincipalDocIsF1NotPresentAnyEmails() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docView = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
 		DocViewPage docViewAnalytics = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51521");
-		String docId = "T445D";
+		String docId = Input.sourceDocId5;
 		baseClass.stepInfo(
 				"Verify that on thread map tab when the principal document is F1, the thread map should not present any emails.");
 
@@ -2812,15 +2811,11 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully Logged into slightline webpage as PA with " + Input.pa1userName + "");
 		driver.waitForPageToBeReady();
-		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocId7, Input.sourceDocIdSearch);
-		sessionSearch.addPureHit();
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
-		baseClass.stepInfo(Input.sourceDocId7 + "..Document searched in metadata sourcedocid with ingestion name");
+		baseClass.stepInfo(Input.docId + "..Document searched in metadata sourcedocid with ingestion name");
 		driver.waitForPageToBeReady();
-		miniDocListpage.selectSourceDocIdInAvailableField();
-
-		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectTextBoxInDocView(docId, docId);
+		docViewAnalytics.selectDocIdInMiniDocList(docId);
 
 		// verify Thread map should not present any other emails
 		docViewAnalytics.verifyThreadMapWithNoEmailDocs();

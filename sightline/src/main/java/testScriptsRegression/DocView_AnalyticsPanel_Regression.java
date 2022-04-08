@@ -2095,18 +2095,16 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyThreadMapTabWithPrincipalDocs() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		miniDocListPage = new MiniDocListPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51522");
 
-		String docId = Input.principalDocId;
 		String sourceId = Input.sourceDocId;
 
 		// Login As PA
@@ -2115,17 +2113,14 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
-		miniDocListPage.selectSourceDocIdInAvailableField();
-
-		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectTextBoxInDocView(docId, sourceId);
+		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 
 		// verify Thread map should not present any other emails
-		docViewAnalytics.verifyThreadMapWithNoEmailDocs();
+		docViewAnalytics.verifyThreadMapWithDocs();
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is F2, the thread map should not present any emails is verified successfully");
@@ -2141,20 +2136,16 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyThreadMapPrincipalDocsE2() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		miniDocListPage = new MiniDocListPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51518");
 
-		String docId1 = Input.principalDocId6;
-		String docId2 = Input.principalDocId3;
-		String docId3 = Input.principalDocId2;
 		String sourceId = Input.sourceDocId3;
 
 		// Login As PA
@@ -2163,17 +2154,15 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
-		miniDocListPage.selectSourceDocIdInAvailableField();
+		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 
-		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectTextBoxInDocView(docId3, sourceId);
 
 		// verify Thread map should not present any other emails
-		docViewAnalytics.verifyThreadMapWithDocs(docId1, docId2, docId3);
+		docViewAnalytics.verifyThreadMapWithDocs();
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is E2, the thread map presents E1, E2, E3 is verified successfully");
@@ -2189,7 +2178,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyThreadMapPrincipalDocsE3() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2200,10 +2189,6 @@ public class DocView_AnalyticsPanel_Regression {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51519");
 
-		String docId = Input.principalDocId1;
-		String docId1 = Input.principalDocId6;
-		String docId2 = Input.principalDocId3;
-		String docId3 = Input.principalDocId2;
 		String sourceId = Input.sourceDocId1;
 		String sourceId2 = Input.sourceDocId2;
 
@@ -2213,24 +2198,24 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully Logged into slightline webpage as Project Admin with " + Input.pa1userName + "");
 
 		// Basic search to Docview
-		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
 
-		miniDocListPage.selectSourceDocIdInAvailableField();
+		
 
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectTextBoxInDocView(docId3, sourceId);
+		docViewAnalytics.selectDocIdInMiniDocList(sourceId);
 		baseClass.stepInfo("Docs Selected from Mini doclist with sourceId 331ID00000209 succesfully");
 		// verify Thread map should not present any other emails
-		docViewAnalytics.verifyThreadMapWithDocs(docId1, docId2, docId3);
+		docViewAnalytics.verifyThreadMapWithDocs();
 
 		driver.scrollPageToTop();
 		// view the doc From MiniDocList and ThreadMap Tab
-		docViewAnalytics.selectTextBoxInDocView(docId, sourceId2);
+		docViewAnalytics.selectDocInMiniDocList(sourceId2);
 		baseClass.stepInfo("Docs Selected from Mini doclist with sourceId 331ID00000186 succesfully");
 		// verify Thread map should not present any other emails
-		docViewAnalytics.verifyThreadMapWithDocs(docId1, docId2, docId3);
+		docViewAnalytics.verifyThreadMapWithDocs();
 
 		baseClass.passedStep(
 				"To Verify that on thread map tab when the principal document is E3, the thread map presents E1, E2, E3 is verified successfully");
