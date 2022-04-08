@@ -11058,7 +11058,7 @@ public class SessionSearch {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkActionButton().Visible();
-			}
+			} 
 		}), Input.wait30);
 		base.waitTime(2); // App synch
 		getBulkActionButton().waitAndClick(5);

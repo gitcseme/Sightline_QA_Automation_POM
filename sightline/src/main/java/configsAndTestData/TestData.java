@@ -595,7 +595,7 @@ public class TestData {
 	public String multiPageTIFFSourceFolder;
 	public String multiPageTIFFDATLoadFile;
 	public String documentKeyBNum;
-	public String documentKeyDSource;
+	public String documentKeyDSource; 
 	public String documentKeyCName;
 
 	// Added by gopinath - 23/03/2022

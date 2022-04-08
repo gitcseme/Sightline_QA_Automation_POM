@@ -27103,7 +27103,7 @@ public class DocViewPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying warning message ");
-		}
+		} 
 	}
 	
 	/**

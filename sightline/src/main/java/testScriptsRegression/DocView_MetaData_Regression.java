@@ -1443,7 +1443,7 @@ public class DocView_MetaData_Regression {
 		baseClass.selectproject(project);
 		baseClass.stepInfo("Test case Id: RPMXCON-52002");
 		baseClass.stepInfo("###Verify Hidden Property Metadata label warning from Doc view page hidden comments####");
-		 
+		  
 		baseClass.stepInfo("basic content search");
 		sessionsearch.basicContentSearch(docId);
 		
