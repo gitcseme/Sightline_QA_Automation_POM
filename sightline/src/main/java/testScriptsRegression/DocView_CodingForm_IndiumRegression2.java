@@ -152,7 +152,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * in context of assignment RPMXCON-52159 DocView/Coding Forms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52159");
 		// login as Rmu
@@ -195,7 +195,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * DocView/CodingForms Sprint 01
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void codingFormAssignmentLevelCodingStampOFF() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52160");
 		// login as Rmu
@@ -240,7 +240,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 99)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyingCodingStampPostFixColourParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52226");
 		String assgnColour = "AssignColour" + Utility.dynamicNameAppender();
@@ -394,8 +394,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Reviewer of an assignment can not complete the document outside his batch when 'Allow coding outside reviewer batch' is off at assignment level");
 		String assName = "2022Loading" + Utility.dynamicNameAppender();
-		int id = 70;
-		int reviewerId = 3;
+		
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -420,13 +419,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(id));
-		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.selectDocIdInMiniDocList(Input.cfDocId1);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -461,11 +454,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(reviewerId));
-		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.selectDocIdInMiniDocList(Input.cfDocId2);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -499,16 +488,14 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 *              outside of reviewers batch, then on mouse hover tool tip should
 	 *              be displayed for the stamp icon. 'RPMXCON-51577'
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void assignmentCannotCompleteDocsOutsideBatchCodingStamp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51577");
 		baseClass.stepInfo(
 				"Verify that when coding stamp is created/saved using the coding of a completed document viewed from analytics panel outside of reviewers batch, then on mouse hover tool tip should be displayed for the stamp icon.");
 		String assName = "2022Loading" + Utility.dynamicNameAppender();
-		int id = 1;
 		String stampName = "Stamp" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
-		int reviewerId = 16;
 
 		// Login As Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -533,13 +520,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(id));
-		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.selectDocIdInMiniDocList(Input.cfDocId1);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -561,12 +542,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 
 		docViewPage.editCodingFormComplete();
 
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(id));
-		docViewPage.getDocView_NumTextBox().Enter();
-		driver.waitForPageToBeReady();
+		docViewPage.selectDocInMiniDocList(Input.cfDocId1);
 
 		reusableDocView.stampColourSelection(stampName, colour);
 		driver.waitForPageToBeReady();
@@ -593,11 +569,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		baseClass.stepInfo(
 				"Step 4: Select document from analytics panel outside the reviewer batch but within the assignment and action as code same as this, complete the document");
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(reviewerId));
-		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.selectDocIdInMiniDocList(Input.cfDocId2);
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -618,12 +590,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 		driver.waitForPageToBeReady();
 		docViewPage.editCodingFormComplete();
 
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		baseClass.waitForElement(docViewPage.getDocView_NumTextBox());
-		docViewPage.getDocView_NumTextBox().Clear();
-		docViewPage.getDocView_NumTextBox().SendKeys(Integer.toString(reviewerId));
-		docViewPage.getDocView_NumTextBox().Enter();
-		driver.waitForPageToBeReady();
+		docViewPage.selectDocInMiniDocList(Input.cfDocId2);
 
 		reusableDocView.stampColourSelection(stampName, colour);
 		driver.waitForPageToBeReady();
@@ -1133,7 +1100,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * for the document in security group context
 	 */
 
-    @Test(enabled = true, groups = { "regression" }, priority = 2)
+    @Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void validateCommentAndMetadataPureHitCountSavedStamp() throws InterruptedException, AWTException {
 		projectPage = new ProjectPage(driver);
 		securityGroupPage = new SecurityGroupsPage(driver);
@@ -6284,7 +6251,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "rmuAndrev", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "rmuAndrev", groups = { "regression" }, priority = 99)
 	public void verifyCfEditableOrNotBasedOnDocStatusWithDiffrentCodingFormsWithSecurityGruop(String userName,
 			String password, String user) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-50972");
