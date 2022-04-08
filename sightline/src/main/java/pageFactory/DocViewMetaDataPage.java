@@ -2435,7 +2435,7 @@ public class DocViewMetaDataPage {
 	 *                   members).
 	 */
 	public void selectDocFromFamilyMembersAndCreateFolder(String docId, String folderName) {
-		try {
+		try { 
 			boolean flag = false;
 			driver.scrollPageToTop();
 			getRowFromMiniDoclist(docId).ScrollTo();

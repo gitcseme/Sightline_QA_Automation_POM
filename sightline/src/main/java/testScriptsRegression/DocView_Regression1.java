@@ -348,7 +348,7 @@ public class DocView_Regression1 {
 		String redactnam = "ATest" + utility.dynamicNameAppender();
 		final String redactname = redactnam;
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		baseClass.stepInfo(
+		baseClass.stepInfo( 
 				"#### Verify that when applied redaction tag is unassigned then blank row should be displayed in edit redaction pop up on doc view ####");
 
 		docView = new DocViewPage(driver);

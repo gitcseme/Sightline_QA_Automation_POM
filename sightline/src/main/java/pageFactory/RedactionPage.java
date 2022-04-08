@@ -245,7 +245,7 @@ public class RedactionPage {
 
 
 			driver.waitForPageToBeReady();
-			bc.waitTime(2);
+			bc.waitTime(2); 
 			getselectAllRedactionTag().isElementAvailable(15);
 			bc.waitForElement(getselectAllRedactionTag());
 			getselectAllRedactionTag().waitAndClick(10);

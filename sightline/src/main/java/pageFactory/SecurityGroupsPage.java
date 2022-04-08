@@ -729,7 +729,7 @@ public class SecurityGroupsPage {
 				} catch (Exception e) {
 					bc.waitForElement(getSG_AnnSaveButton());
 					bc.waitTillElemetToBeClickable(getSG_AnnSaveButton());
-				}
+				} 
 			}
 			bc.waitForElement(bc.getSuccessMsg());
 			bc.getSuccessMsg().waitAndFind(10);

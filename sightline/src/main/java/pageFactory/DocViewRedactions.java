@@ -32,7 +32,7 @@ public class DocViewRedactions {
  
 	Driver driver;
 	BaseClass base;
-	LoginPage loginPage;
+	LoginPage loginPage; 
 	SoftAssert softAssertion;
 	ProductionPage page;
 	DocViewPage docView;

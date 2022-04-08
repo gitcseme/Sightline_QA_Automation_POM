@@ -2945,7 +2945,7 @@ public class SessionSearch {
 
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-
+ 
 		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {

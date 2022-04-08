@@ -23721,7 +23721,7 @@ public class DocViewPage {
 	 *                            annotaion layers count of previous document.
 	 */
 	public void verifyAnnotationsToDocument(int alreadyExistsLayers) throws InterruptedException {
-		try {
+		try { 
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			getDocView_AnnotateIcon().isElementAvailable(8);

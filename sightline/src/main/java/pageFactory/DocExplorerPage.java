@@ -1902,7 +1902,7 @@ public class DocExplorerPage {
 					driver.waitForPageToBeReady();
 					int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
 					numberOfDocumentsInPage = numberOfDocumentsInPage + numberOfDocumentsInNextPage;
-				}
+				} 
 
 			}
 			if (CustodianNameInTree.contains(custodianNameInTable)) {
