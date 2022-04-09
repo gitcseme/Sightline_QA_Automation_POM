@@ -22637,7 +22637,7 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 		base.passedStep("Selected folder is applied to the selected documents successfully");
-
+		driver.scrollPageToTop();
 		base.waitForElement(getManageTab());
 		getManageTab().waitAndClick(10);
 
@@ -23883,7 +23883,7 @@ public class DocViewPage {
 	 * @description to open NearDupe ComparisonWindow pagination
 	 */
 
-	public void openNearDupeComparisonWindowForDocumentPagination(String documentId) throws InterruptedException {
+	public void openNearDupeComparisonWindowForDocumentPagination() throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -23891,8 +23891,9 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-
-		getDocView_NearDupeIconForSpecificDocument(documentId).waitAndClick(10);
+		base.waitForElement(getDocView_NearDupeIcon());
+		getDocView_NearDupeIcon().waitAndClick(5);
+		
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
