@@ -1036,8 +1036,6 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		// FamilyMember Folder Action
 		docView.Analytics_FamilyActionsFolderMultipleDocument(text);
-		driver.scrollPageToTop();
-		driver.waitForPageToBeReady();
 		tagsAndFolderPage.getFolderName(text).ScrollTo();
 		softAssertion.assertTrue(tagsAndFolderPage.getFolderName(text).isDisplayed());
 		baseClass.passedStep("All existing folder under that security group is " + text + "displayed");
@@ -1290,7 +1288,6 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-		String documentId = Input.nearDupePagination;
 
 		loginPage.loginToSightLine(userName, password);
 		UtilityLog.info("Logged in as User: " + fullName);
@@ -1305,7 +1302,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		sessionSearch.ViewNearDupeDocumentsInDocView();
 		
 		//NearDupe Child Window Pagination
-		docView.openNearDupeComparisonWindowForDocumentPagination(documentId);
+		docView.openNearDupeComparisonWindowForDocumentPagination();
 		
 		loginPage.logout();
 	}
@@ -2588,7 +2585,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51515");
 		baseClass.stepInfo("Verify that documents on thread map should be in chronological order (oldest email first) by SentDate");
-		sessionsearch.basicSearchWithMetaDataQuery(Input.query, "IngestionName");
+		sessionsearch.basicSearchWithMetaDataQuery(Input.ingestionQuery01, "IngestionName");
 		sessionsearch.saveSearchAtAnyRootGroup(savedSearchName, Input.shareSearchDefaultSG);
 		docView.selectSavedSearchInDefaultSecurityGroupAndGotoDocview(savedSearchName);
 		driver.waitForPageToBeReady();
