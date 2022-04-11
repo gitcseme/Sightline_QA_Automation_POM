@@ -1622,6 +1622,8 @@ public class DocView_AnalyticsPanel_Regression {
 
 		driver.waitForPageToBeReady();
 
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
+
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		// Popout MiniDocList
@@ -1635,7 +1637,7 @@ public class DocView_AnalyticsPanel_Regression {
 		}
 
 		// Select DocId In MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(documnetToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documnetToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -1737,6 +1739,8 @@ public class DocView_AnalyticsPanel_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		driver.waitForPageToBeReady();
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
+
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
 		try {
@@ -1760,7 +1764,7 @@ public class DocView_AnalyticsPanel_Regression {
 		}
 
 		// Select MiniDocList Docs
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelectedForReviewer);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelectedForReviewer);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.getWebDriver().close();
@@ -2003,7 +2007,7 @@ public class DocView_AnalyticsPanel_Regression {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String documentToBeSelected = Input.conceptualDocumentReviewer;
 		String documentToBeSelectedForReviewer = Input.conceptualDocs1;
-		
+
 		// Basic Search
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2086,7 +2090,6 @@ public class DocView_AnalyticsPanel_Regression {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * 
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
@@ -2305,6 +2308,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 	}
 
+
 	/**
 	 * 
 	 * @Author: Mohan Created date: NA Modified date: NA Modified by: Mohan
@@ -2321,7 +2325,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51239");
 
 		baseClass.stepInfo(
@@ -2370,7 +2374,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51241");
 
 		baseClass.stepInfo("Verify when user select 'Folder' action from thread map without selecting document");
@@ -2420,7 +2424,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Verify when no document to display on thread map all actions should be disable");
 
 		// Login RMU
@@ -2468,7 +2472,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo(
 				"Verify user select multiple documents in Thread Map->Analytic Panel and Select Action as 'Folder'");
 
@@ -2670,7 +2674,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51454");
 		baseClass.stepInfo(
 				"Verify that for uncompleted documents on thread map tab completed icon should not be displayed");
@@ -2710,12 +2714,11 @@ public class DocView_AnalyticsPanel_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyCompleteIconOnShouldNotDisplayOnThreadMapTabChildWindow() throws InterruptedException {
 
-
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51455");
 		baseClass.stepInfo(
 				"Verify that completed icon should not be displayed on thread map tab of analytics panel child window which are completed from assignment");
@@ -2725,7 +2728,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String selectDocsMiniDocList = Input.threadDocWithToolTip;
+		String selectDocsMiniDocList = Input.threadDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
@@ -2764,7 +2767,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// basic Search with metadata query
 		driver.waitForPageToBeReady();
-		sessionSearch.basicSearchWithMetaDataQuery(selectDocsMiniDocList);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(selectDocsMiniDocList);
 
 		// view in docView
 		sessionSearch.ViewInDocView();
@@ -2804,11 +2807,10 @@ public class DocView_AnalyticsPanel_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void verifyNavigateToOherDocsAnalyticsPanelRemainsSame() throws InterruptedException {
 
-
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51286");
 		baseClass.stepInfo(
 				"Verify that user has selected an Analytics Panel > Family Member tab and navigates to another document, the Analytics Panel Tab previously selected must remain.");
@@ -2826,19 +2828,28 @@ public class DocView_AnalyticsPanel_Regression {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Purehits are added to shopping cart and viewed in DocView successfully");
 
-		String selectDocsMiniDocList = Input.historyClockIconDocId;
+		String selectDocsMiniDocList = Input.sourceDocId1;
 
-		// Select Family Member Analytics Panel
-		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_FamilyTab());
-		//docViewAnalytics.getDocView_Analytics_FamilyTab().ScrollTo();
-		docViewAnalytics.getDocView_Analytics_FamilyTab().waitAndClick(10);
-
-		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
 
 		// navigate to other docs in MiniDocList
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
 		driver.waitForPageToBeReady();
 		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+
+		// Select Family Member Analytics Panel
+		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_FamilyTab());
+		// docViewAnalytics.getDocView_Analytics_FamilyTab().ScrollTo();
+		docViewAnalytics.getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		driver.scrollPageToTop();
+
+		selectDocsMiniDocList = Input.familyDocumentForReviewer;
+
+		// navigate to other docs in MiniDocList
+		baseClass.stepInfo("Navigates to other document from Mini doc list.");
+		driver.waitForPageToBeReady();
+		docViewAnalytics.selectDocInMiniDocList(selectDocsMiniDocList);
 
 		// verify Family member tab
 		docViewAnalytics.verifyFamilyMemberRemainsSameNavigatedAlso();
@@ -2859,11 +2870,10 @@ public class DocView_AnalyticsPanel_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 41)
 	public void verifyNavigateToOherDocsConceptualTabAnalyticsPanelRemainsSame() throws InterruptedException {
 
-
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		String selectDocsMiniDocList;
 		baseClass.stepInfo("Test case Id: RPMXCON-51415");
 		baseClass.stepInfo(
@@ -2882,16 +2892,21 @@ public class DocView_AnalyticsPanel_Regression {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Purehits are added to shopping cart and viewed in DocView successfully");
 
+		selectDocsMiniDocList = Input.sourceDocId1;
+
+		baseClass.stepInfo("Navigates to other document from Mini doc list.");
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab());
-		//docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
 		driver.scrollPageToTop();
 		selectDocsMiniDocList = Input.familyDocumentForReviewer;
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+		docViewAnalytics.selectDocInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -2914,16 +2929,23 @@ public class DocView_AnalyticsPanel_Regression {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Purehits are added to shopping cart and viewed in DocView successfully");
 
+		selectDocsMiniDocList = Input.sourceDocId1;
+
+		baseClass.stepInfo("Navigates to other document from Mini doc list.");
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab());
-		//docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
 		driver.scrollPageToTop();
 
+		selectDocsMiniDocList = Input.familyDocumentForReviewer;
+
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+		docViewAnalytics.selectDocInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -2946,16 +2968,23 @@ public class DocView_AnalyticsPanel_Regression {
 		sessionSearch.ViewInDocView();
 		baseClass.stepInfo("Purehits are added to shopping cart and viewed in DocView successfully");
 
+		selectDocsMiniDocList = Input.sourceDocId1;
+
+		baseClass.stepInfo("Navigates to other document from Mini doc list.");
+		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab());
-		//docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(10);
 
 		driver.scrollPageToTop();
 
+		selectDocsMiniDocList = Input.familyDocumentForReviewer;
+
 		// Navigate to other docs in MiniDoclist
 		baseClass.stepInfo("Navigates to other document from Mini doc list.");
-		docViewAnalytics.selectDocIdInMiniDocList(selectDocsMiniDocList);
+		docViewAnalytics.selectDocInMiniDocList(selectDocsMiniDocList);
 
 		// verify the tab which is to remains in the same position
 		docViewAnalytics.verifyConceputalTabRemainsSameNavigatedAlso();
@@ -2979,7 +3008,7 @@ public class DocView_AnalyticsPanel_Regression {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51416");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Thread Map tab and navigates to another document, the Analytics Panel Tab previously selected must remain.");
@@ -2999,7 +3028,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentThreadMap());
-		//docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		driver.scrollPageToTop();
@@ -3031,7 +3060,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentThreadMap());
-		//docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		driver.scrollPageToTop();
@@ -3064,7 +3093,7 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentThreadMap());
-		//docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		driver.scrollPageToTop();
@@ -3096,7 +3125,7 @@ public class DocView_AnalyticsPanel_Regression {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51226");
 		baseClass.stepInfo(
 				"To verify when user select action as 'Remove code same' for documents which are not marked as code same as this from thread map");
@@ -3163,7 +3192,7 @@ public class DocView_AnalyticsPanel_Regression {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51227");
 		baseClass.stepInfo(
 				"To Verify for Project Admin 'Remove Code same as' action should not be displayed in mini doc list, analytics panel");
@@ -3204,7 +3233,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51417");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Thread Map tab and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -3214,7 +3243,7 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocWithToolTip;
+		String documentToBeSelected = Input.threadDocId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
@@ -3234,7 +3263,7 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.waitForPageToBeReady();
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentThreadMap());
-		//docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
@@ -3245,12 +3274,14 @@ public class DocView_AnalyticsPanel_Regression {
 		// complete the docs
 		docViewAnalytics.editCodingFormComplete();
 		baseClass.stepInfo("Docs are completed successfully");
+		driver.waitForPageToBeReady();
 
 		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyThreadMapTabWhenThreadedDocsInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Thread Map tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
-
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		// logout RMU
 		loginPage.logout();
 
@@ -3265,11 +3296,11 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.waitForPageToBeReady();
 		// Select Conceptually Similar Tab
 		baseClass.waitForElement(docViewAnalytics.getDocView_Analytics_liDocumentThreadMap());
-		//docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
+		// docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().ScrollTo();
 		docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(Input.newNearDupeDocId);
+		docViewAnalytics.selectDocIdInMiniDocList(Input.nearDupeBulkAssignReviewId);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3277,16 +3308,16 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.editCodingFormComplete();
 		baseClass.stepInfo("Docs are completed successfully");
 
-		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(Input.newNearDupeDocId);
-		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-
 		driver.waitForPageToBeReady();
 		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyThreadMapTabWhenThreadedDocsInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Thread Map tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
+
 		loginPage.logout();
+
 	}
 
 	/**
@@ -3306,7 +3337,7 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51418");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Family Member tab and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -3343,11 +3374,11 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.editCodingFormComplete();
 		baseClass.stepInfo("Docs are completed successfully");
 
-		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyFamilyMemberWhenDocsAreCompletedInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Family Member tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
-
+		if (docViewAnalytics.getDocView_Analytics_FamilyTab().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		// logout RMU
 		loginPage.logout();
 
@@ -3370,10 +3401,11 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics.editCodingFormComplete();
 		baseClass.stepInfo("Docs are completed successfully");
 
-		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyFamilyMemberWhenDocsAreCompletedInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Family Member tab and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		if (docViewAnalytics.getDocView_Analytics_FamilyTab().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		loginPage.logout();
 	}
 
@@ -3394,7 +3426,7 @@ public class DocView_AnalyticsPanel_Regression {
 		softAssertion = new SoftAssert();
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-51421");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Thread Map tab from child window and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -3404,8 +3436,8 @@ public class DocView_AnalyticsPanel_Regression {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = Input.threadDocWithToolTip;
-		String revDocsToBeSelected = Input.newNearDupeDocId;
+		String documentToBeSelected = Input.threadDocId;
+		String revDocsToBeSelected = Input.nearDupeBulkAssignReviewId;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignThreadedDocs();
@@ -3423,6 +3455,8 @@ public class DocView_AnalyticsPanel_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 
 		// popout Analytics Panel
 		docViewAnalytics.popOutAnalyticsPanel();
@@ -3443,7 +3477,7 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3457,10 +3491,11 @@ public class DocView_AnalyticsPanel_Regression {
 				driver.switchTo().window(eachId);
 			}
 		}
-		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyThreadMapTabWhenThreadedDocsInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Thread Map tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 		// logout RMU
@@ -3475,6 +3510,9 @@ public class DocView_AnalyticsPanel_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
+		
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
+
 		// popout Analytics Panel
 		docViewAnalytics.popOutAnalyticsPanel();
 
@@ -3494,7 +3532,7 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3513,9 +3551,11 @@ public class DocView_AnalyticsPanel_Regression {
 			}
 		}
 		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyThreadMapTabWhenThreadedDocsInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Thread Map tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		if (docViewAnalytics.getDocView_Analytics_liDocumentThreadMap().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 		loginPage.logout();
@@ -3540,7 +3580,6 @@ public class DocView_AnalyticsPanel_Regression {
 		docViewAnalytics = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
 
-		
 		baseClass.stepInfo("Test case Id: RPMXCON-51422");
 		baseClass.stepInfo(
 				"To verify that user has selected an Analytics Panel > Family Member tab from child window and completed document, the Analytics Panel Tab previously selected must remain.");
@@ -3566,6 +3605,8 @@ public class DocView_AnalyticsPanel_Regression {
 
 		// Select assgn by reviewer
 		assignmentPage.SelectAssignmentByReviewer(assname);
+		
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -3588,7 +3629,7 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3602,10 +3643,12 @@ public class DocView_AnalyticsPanel_Regression {
 				driver.switchTo().window(eachId);
 			}
 		}
-		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyFamilyMemberWhenDocsAreCompletedInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Family Member tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		
+		if (docViewAnalytics.getDocView_Analytics_FamilyTab().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 		// logout RMU
@@ -3620,6 +3663,9 @@ public class DocView_AnalyticsPanel_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assname);
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
+		
+		docViewAnalytics.selectSourceDocIdInAvailableField("SourceDocID");
+
 		// popout Analytics Panel
 		docViewAnalytics.popOutAnalyticsPanel();
 
@@ -3639,7 +3685,7 @@ public class DocView_AnalyticsPanel_Regression {
 		driver.switchTo().window(parentWindowID);
 
 		// Select Docid from MiniDocList
-		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		docViewAnalytics.selectDocInMiniDocList(revDocsToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		driver.scrollPageToTop();
@@ -3653,10 +3699,11 @@ public class DocView_AnalyticsPanel_Regression {
 				driver.switchTo().window(eachId);
 			}
 		}
-		// verify ThreadMap remains in same position
-		docViewAnalytics.verifyFamilyMemberWhenDocsAreCompletedInMiniDocList();
-		baseClass.passedStep(
-				"To verify that user has selected an Analytics Panel > Family Member tab from child window and completed document, the Analytics Panel Tab previously selected must remain. has been verified successfully");
+		if (docViewAnalytics.getDocView_Analytics_FamilyTab().isDisplayed()) {
+			baseClass.passedStep("Analytical tab remains same after completing document");
+		} else {
+			baseClass.failedStep("Analytical Panel tab is changed after completing document");
+		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 		loginPage.logout();
@@ -3678,14 +3725,14 @@ public class DocView_AnalyticsPanel_Regression {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			//LoginPage.clearBrowserCache();
+			// LoginPage.clearBrowserCache();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close2() {
 		try {
-		//	LoginPage.clearBrowserCache();
+			// LoginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no such session
 		}
