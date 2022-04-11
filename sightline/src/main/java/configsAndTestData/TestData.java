@@ -597,7 +597,7 @@ public class TestData {
 	public String multiPageTIFFSourceFolder;
 	public String multiPageTIFFDATLoadFile;
 	public String documentKeyBNum;
-	public String documentKeyDSource;
+	public String documentKeyDSource; 
 	public String documentKeyCName;
 
 	// Added by gopinath - 23/03/2022
@@ -619,4 +619,7 @@ public class TestData {
 	public String cfDocId1;
 	public String cfDocId2;
 
+	//Added by Gopinath - 08/04/2022
+	public String warningMsgDocId;
+	public String externalLinkDocId;
 }

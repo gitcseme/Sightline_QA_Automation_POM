@@ -1704,6 +1704,13 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//a[@class='submenu-a']");
 	}
 
+	//Added by Gopinath - 08/04/2022
+	public Element getViewOn() {
+		return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
+	}
+	public Element getViewInDocViewLat() {
+		return driver.FindElementByXPath("//a[text()='View In DocView']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -11079,6 +11086,44 @@ public class SessionSearch {
 		} catch (Exception e) {
 			base.failedStep("Query is not found");
 		}
+
+  }
+	/**
+	 * @author Gopinath.Srinivasan
+	 * @description : Method to seached documents view in doc view.
+	 */
+
+	public void viewInDocView() throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+ 
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			} 
+		}), Input.wait30);
+		base.waitTime(2); // App synch
+		getBulkActionButton().waitAndClick(5);
+		base.waitTime(2); // App Synch
+
+		if(getDocViewAction().isDisplayed()) {
+			getDocViewAction().Click();
+		}else {
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getViewOn().getWebElement()).build().perform();
+			base.waitTime(2);
+			getViewInDocViewLat().isElementAvailable(15);
+			getViewInDocViewLat().Click();
+		}
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 
 	}
 
