@@ -6,8 +6,11 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,7 +21,10 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -48,6 +54,15 @@ import net.sourceforge.tess4j.Tesseract1;
 import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.LoadLibs;
 import testScriptsSmoke.Input;
+
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+
+import java.awt.image.BufferedImage;
 
 public class ProductionPage {
 
@@ -872,6 +887,17 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getPageNum(int num) {
+		return driver.FindElementByXPath("//div[@id='customTemplatesDatatable_paginate']//li[@class='paginate_button ']//a[text()='" + num + "']");
+	}
+	
+	public Element getLastPageNum() {
+		return driver.FindElementByXPath("(//div[@id='customTemplatesDatatable_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	
+	public ElementCollection getTotalCustomTemplatePageSize() {
+		return driver.FindElementsByXPath("//div[@id='customTemplatesDatatable_paginate']//ul[@class='pagination pagination-sm']//a");
+	}
 
 	public Element fieldMappingtTextInDAT() {
 		return driver.FindElementByXPath("//label[contains(text(),'Field Mapping:')]");
@@ -6915,25 +6941,14 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingDocumentSelectionPageWithTag(String tag1, String tag2) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagRadioButton().Enabled();
-			}
-		}), Input.wait30);
-		getTagRadioButton().Click();
+		
+		base.waitForElement(getTagRadioButton());
+		getTagRadioButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(tag1).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(tag1));
 		getSelectFolder(tag1).waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(tag2).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(tag2));
 		getSelectFolder(tag2).waitAndClick(10);
 
 		driver.scrollingToBottomofAPage();
@@ -6948,6 +6963,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Document Selection Page section is filled");
 	}
+
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj
@@ -9844,7 +9860,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorSowndarya.velraj.Modified on 02/08/22
+	 * @authorSowndarya.velraj.Modified on 04/08/22
 	 * @Description : Method to save a production as template and verifying it in
 	 *              Manage template tab
 	 * @param productionname : productionname is String value that name of
@@ -9870,17 +9886,22 @@ public class ProductionPage {
 		base.VerifySuccessMessage("Production Saved as a Custom Template.");
 
 		getManageTemplates().waitAndClick(10);
-
-		getDeleteBtn(templateName).ScrollTo();
-		getDeleteBtn(templateName).isElementAvailable(5);
-		base.stepInfo("Delete option is displayed");
-
-		getViewBtn(templateName).ScrollTo();
-		base.waitForElement(getViewBtn(templateName));
+		driver.scrollingToBottomofAPage();
+		
 		if (getViewBtn(templateName).isElementAvailable(5)) {
 			getViewBtn(templateName).waitAndClick(10);
 			base.stepInfo("View option is displayed");
 		}
+		else {
+			NavigateToLastTemplatePage();
+			driver.waitForPageToBeReady();
+			getViewBtn(templateName).waitAndClick(10);
+			base.stepInfo("View option is displayed");
+		}
+
+		getDeleteBtn(templateName).ScrollTo();
+		getDeleteBtn(templateName).isElementAvailable(5);
+		base.stepInfo("Delete option is displayed");
 
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
@@ -12714,15 +12735,16 @@ for (int i = 0; i < 6; i++) {
 	}
 
 	/**
-	 * Author sowndarya.velraj
-	 * 
+	 * Author sowndarya.velraj.Modified on 04/08/2022
 	 * @param TempName
 	 */
 	public void saveTemplate(String TempName) {
+		driver.waitForPageToBeReady();
 		getprod_Templatetext().SendKeys(TempName);
 		getProdExport_SaveButton().waitAndClick(5);
 		base.VerifySuccessMessage("Production Saved as a Custom Template.");
 	}
+
 
 	/**
 	 * Author sowndarya.velraj
@@ -15426,18 +15448,11 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @Description  method for filling document selction page with one tag
 	 */
 	public void fillingDocumentSelectionWithTag(String Tag) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagRadioButton().Enabled();
-			}
-		}), Input.wait30);
-		getTagRadioButton().Click();
+		
+		base.waitForElement(getTagRadioButton());
+		getTagRadioButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectFolder(Tag).Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSelectFolder(Tag));
 		getSelectFolder(Tag).waitAndClick(10);
 		base.passedStep(Tag + " : Tag Is Selected");
 
@@ -15453,6 +15468,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		driver.scrollPageToTop();
 		base.stepInfo("Document Selection Page section is filled");
 	}
+
 
 	/**
 	 *
@@ -17828,7 +17844,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		base.waitForElement(getbtnProductionGenerate());
 		getbtnProductionGenerate().waitAndClick(10);
 
-		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
@@ -18921,32 +18937,33 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @param prefixID
 	 * @param suffixID
 	 * @param verificationText
+	 * @throws TesseractException 
 	 * @throws IOException
 	 * @Description :  OCR Verification In Generated Tiff SS.
 	 */
 	public void OCR_Verification_In_Generated_Tiff_SS(int firstFile, int lastFile, String prefixID, String suffixID,
-			String verificationText) {
+			String verificationText) throws TesseractException {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		Ocr.setUp();
-		Ocr ocr = new Ocr();
-		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
-		for (int i = firstFile; i < lastFile; i++) {
+		
+		for(int i=firstFile; i<lastFile ;i++) {
 			
-			String Tifffile = ocr.recognize(
-					new File[] {
-							new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".ss.tiff") },
-					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
-			System.out.println(Tifffile);
+			File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".ss.tiff");
+		       // ITesseract instance = new Tesseract();  // JNA Interface Mapping
+		         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		         instance.setDatapath(tessDataFolder.getPath());
 
-			if (Tifffile.contains(verificationText)) {
-				base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + " file expected");
-			} else {
-				base.failedStep( prefixID + i + suffixID +" : "+verificationText);
-			}
-			
-		}
-		ocr.stopEngine();
+		        
+		            String result = instance.doOCR(imageFile);
+		            System.out.println(result);
+		            if (result.contains(verificationText)) {
+						base.passedStep(verificationText+" is displayed in "+prefixID+i+suffixID+".tiff"+" file as expected");
+					} else {
+						base.failedStep(verificationText+" verification failed");
+					}
+		        }
+		
 	}
 
 
@@ -19375,5 +19392,215 @@ if(getbtnContinueGenerate().isDisplayed()) {
 			base.stepInfo("Keep families checkbox selected");
 
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @return
+		 * @throws InterruptedException
+		 * @Description for large Document need more time for generation page so that higher wait time added in this method
+		 */
+		public int fillingGeneratePageWithContinueGenerationPopupHigerWaitTime() throws InterruptedException {
 
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+				}
+			}), Input.wait30);
+			getbtnProductionGenerate().waitAndClick(10);
+
+			getbtnContinueGeneration().isElementAvailable(500);
+			if (getbtnContinueGeneration().isDisplayed()) {
+				base.waitForElement(getbtnContinueGeneration());
+				getbtnContinueGeneration().waitAndClick(10);
+			}
+
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+
+			getDocumentGeneratetext().isElementAvailable(340);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+				}
+			}), Input.wait120);
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+				}
+			}), Input.wait60);
+
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(2000);
+			getConfirmProductionCommit().waitAndClick(10);
+
+			String PDocCount = getProductionDocCount().getText();
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(1000);
+			System.out.println(PDocCount);
+			int Doc = Integer.parseInt(PDocCount);
+
+			Reporter.log("Doc - " + Doc, true);
+			System.out.println(Doc);
+			UtilityLog.info(Doc);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCopyPath().isDisplayed();
+				}
+			}), Input.wait60);
+			getCopyPath().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getQC_Download().isDisplayed();
+				}
+			}), Input.wait30);
+
+			getQC_Download().waitAndClick(10);
+			getQC_Downloadbutton_allfiles().waitAndClick(10);
+			base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+			base.stepInfo("Generate production page is filled");
+			
+			return Doc;
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param source
+		 * @param dest
+		 * @throws IOException
+		 * @Descrription Copy a File and paste it another location
+		 */
+		public  void copyFileUsingStream(File source, File dest) throws IOException {
+		    InputStream is = null;
+		    OutputStream os = null;
+		    try {
+		        is = new FileInputStream(source);
+		        os = new FileOutputStream(dest);
+		        byte[] buffer = new byte[1024];
+		        int length;
+		        while ((length = is.read(buffer)) > 0) {
+		            os.write(buffer, 0, length);
+		        }
+		        base.stepInfo("File was copied and pasted another location");
+		    } finally {
+		        is.close();
+		        os.close();
+		    }
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param file
+		 * @param numberOfImages
+		 * @throws Exception
+		 * @Description Rotate a pdf file content
+		 */
+		public void RotatePdfFile(File file, int numberOfImages) throws Exception
+	    {
+		String home =System.getProperty("user.home");
+	        try {
+	            
+	            // Creating a PdfWriter
+	            PdfWriter pdfwriter = new PdfWriter(file);
+	  
+	            // Creating a PdfDocument object.
+	            // passing PdfWriter object constructor of
+	            // pdfDocument.
+	            PdfDocument pdfdocument = new PdfDocument(pdfwriter);
+	  
+	            // Creating a Document and passing pdfDocument
+	            // object
+	            Document document = new Document(pdfdocument);
+	            
+	            for(int i = 0; i<numberOfImages; i++) {
+	            // Create an ImageData object
+	            String imageFile = home+"\\Downloads\\image"+i+".jpg";
+	            ImageData data = ImageDataFactory.create(imageFile);
+	            
+	            // Creating an Image object
+	            Image image = new Image(data);
+	            
+	            // Rotating the image
+	            image.setRotationAngle(90);
+	  
+	            // Adding image to the document
+	            document.add(image);
+	            }
+	            // Closing the document
+	            document.close();
+	  
+	            System.out.println(
+	                "Image has been rotated successfully");
+	            base.stepInfo("file was rotated 90 degree");
+	        }
+	        catch (Exception e) {
+	            System.out.println(
+	                "failed to rotate the image in the file due to "
+	                + e);
+	        }
+	    }
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param pdf
+		 * @return
+		 * @throws Exception
+		 * @Description Convert Pdf to Jpg file
+		 */
+		public int pdfToJpgConverter(File pdf) throws Exception
+	    {
+		 	String home =System.getProperty("user.home");
+	        // Existing PDF Document
+	        // to be Loaded using file io
+	        PDDocument pdfDocument = PDDocument.load(pdf);
+	  
+	        // PDFRenderer class to be Instantiated
+	        // i.e. creating it's object
+	        PDFRenderer pdfRenderer = new PDFRenderer(pdfDocument);
+	        
+	        int nosPage = pdfDocument.getNumberOfPages();
+	        // Rendering an image
+	        // from the PDF document
+	        // using BufferedImage class
+	        for(int i = 0; i<nosPage;i++) {
+	        BufferedImage img = pdfRenderer.renderImage(i);
+	        // Writing the extracted
+	        // image to a new file
+	        ImageIO.write(
+	            img, "JPEG", new File(home+"\\Downloads\\image"+i+".jpg"));
+	        System.out.println("Image has been extracted successfully");
+	        base.stepInfo("pdf file converted to jpg image file");
+	        }
+	  
+	        // Closing the PDF document
+	        pdfDocument.close();
+	        return nosPage;
+	    }
+
+
+		/**
+		 * @Author sowndarya.velraj
+		 */
+		public void NavigateToLastTemplatePage() {
+			driver.scrollingToBottomofAPage();
+			String lastNum;
+			driver.waitForPageToBeReady();
+			if(getLastPageNum().isElementAvailable(4)) {
+				lastNum=getLastPageNum().getText();
+			}else {
+			int totalNum = getTotalCustomTemplatePageSize().size();
+			 lastNum=String.valueOf(totalNum-2);
+			}
+				int totalPage=Integer.parseInt(lastNum);
+				base.waitForElement(getPageNum(totalPage));
+					getPageNum(totalPage).waitAndClick(5);
+					driver.waitForPageToBeReady();
+		}
 }

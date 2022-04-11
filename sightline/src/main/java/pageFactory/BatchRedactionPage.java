@@ -262,7 +262,7 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//table[@id='BatchRedactionsDataTable']//tbody//tr//td[text()='" + searchName
 				+ "']//following::td[3]//div");
 	}
-	
+
 	public Element getRollBackNotification() {
 		return driver.FindElementByXPath("(//ul[@class='notification-body']//a)[1]");
 	}
@@ -314,9 +314,10 @@ public class BatchRedactionPage {
 
 	// Added By Jeevitha
 	public Element getRollbackQueText(String ssName) {
-		return driver.FindElementByXPath("//td[text()='" + ssName + "']//parent::tr//td//div[contains(text(),'Rollback Batch Redaction queued')]");
+		return driver.FindElementByXPath("//td[text()='" + ssName
+				+ "']//parent::tr//td//div[contains(text(),'Rollback Batch Redaction queued')]");
 	}
-	
+
 	public Element getNodeAnalyseBtn(String newNode) {
 		return driver.FindElementByXPath(
 				"//div[text()='" + newNode + "']//parent::a//child::div//button[contains(text(),'Analyze Group')]");
@@ -478,6 +479,7 @@ public class BatchRedactionPage {
 	public Element getLastPageNum() {
 		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
 	}
+
 	public ElementCollection getPageNumb() {
 		return driver.FindElementsByXPath("(//ul[@class='pagination pagination-sm']//a)");
 	}
@@ -495,7 +497,7 @@ public class BatchRedactionPage {
 		return driver.FindElementByXPath("//table[@id='BatchRedactionsDataTable']//tbody//tr//td[text()='" + SearchName
 				+ "']//following::td[3]//p//a");
 	}
-	
+
 	public Element getCompletedToolTipMSg(String SearchName) {
 		return driver.FindElementByXPath("(//tr[@role='row']//td[text()='" + SearchName
 				+ "']//..//p[@class='CompWithError'])//a//following::div[@class='popover-content']");
@@ -522,10 +524,10 @@ public class BatchRedactionPage {
 	public Element getInformativeErrorMessageText() {
 		return driver.FindElementByXPath("//div[@class='form-group']//strong//label");
 	}
-	
+
 	public Element getRedactDisabledBtn() {
 		return driver.FindElementByXPath("//button[text()='Redact' and @disabled='disabled']");
-		}
+	}
 
 	public BatchRedactionPage(Driver driver) {
 
@@ -563,13 +565,13 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
-		
-		boolean flag=verifyAnalyzeBtn(searchname,null);
-		if(flag=false) {
+
+		boolean flag = verifyAnalyzeBtn(searchname, null);
+		if (flag = false) {
 			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.mySavedSearch);
+			loadBatchRedactionPage(Input.mySavedSearch);
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -669,12 +671,12 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
-		boolean flag=verifyAnalyzeBtn(searchname,null);
-		if(flag=false) {
+		boolean flag = verifyAnalyzeBtn(searchname, null);
+		if (flag = false) {
 			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.mySavedSearch);
+			loadBatchRedactionPage(Input.mySavedSearch);
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -1055,8 +1057,8 @@ public class BatchRedactionPage {
 		// Click Reduction Button
 		base.waitForElement(getRductionBtb());
 		getRductionBtb().waitAndClick(5);
-		
-        docview.selectBatchRedactedDoc();
+
+		docview.selectBatchRedactedDoc();
 
 		// Choose Reduct
 		getNextbtn().waitAndClick(3);
@@ -1094,13 +1096,13 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
-		
-		boolean flag=verifyAnalyzeBtn(searchname,null);
-		if(flag=false) {
+
+		boolean flag = verifyAnalyzeBtn(searchname, null);
+		if (flag = false) {
 			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.mySavedSearch);
+			loadBatchRedactionPage(Input.mySavedSearch);
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -1274,7 +1276,6 @@ public class BatchRedactionPage {
 
 		}
 	}
-	
 
 	/**
 	 * @author Jeevitha
@@ -1445,7 +1446,7 @@ public class BatchRedactionPage {
 		boolean flag = true;
 		while (flag) {
 			String currentUrl = driver.getWebDriver().getCurrentUrl();
-			if((Input.url + "BatchRedaction/BatchRedaction").equals(currentUrl)) {
+			if ((Input.url + "BatchRedaction/BatchRedaction").equals(currentUrl)) {
 				if (getFailedStatus(ssName).isDisplayed()) {
 					System.out.println("Status : Failed");
 					flag = false;
@@ -1456,7 +1457,7 @@ public class BatchRedactionPage {
 					System.out.println("Status : Successfully Completed");
 					flag = false;
 				}
-			}else {
+			} else {
 				base.failedStep("Session Logged Out");
 				break;
 			}
@@ -1469,10 +1470,10 @@ public class BatchRedactionPage {
 	public void loadBatchRedactionPage(String groupName) {
 		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
 		driver.waitForPageToBeReady();
-		if(groupName.equals(Input.shareSearchDefaultSG)) {
+		if (groupName.equals(Input.shareSearchDefaultSG)) {
 			base.waitForElement(getOptionDropdown(Input.shareSearchDefaultSG));
-			getOptionDropdown(Input.shareSearchDefaultSG).waitAndClick(5);	
-		}else {
+			getOptionDropdown(Input.shareSearchDefaultSG).waitAndClick(5);
+		} else {
 			base.waitForElement(getOptionDropdown(Input.mySavedSearch));
 			getOptionDropdown(Input.mySavedSearch).waitAndClick(5);
 		}
@@ -1516,13 +1517,13 @@ public class BatchRedactionPage {
 		getMySavedSearchDropDown().waitAndClick(20);
 		getMySavedSearchTextbox(searchname).Selected();
 		final int Bgcount = base.initialBgCount();
-		
-		boolean flag=verifyAnalyzeBtn(searchname,null);
-		if(flag=false) {
+
+		boolean flag = verifyAnalyzeBtn(searchname, null);
+		if (flag = false) {
 			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.mySavedSearch);
+			loadBatchRedactionPage(Input.mySavedSearch);
 		}
-		
+
 		base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(20)) {
 			getAnalyzeSearchForSavedSearchResult(searchname).waitAndClick(10);
@@ -1582,7 +1583,7 @@ public class BatchRedactionPage {
 		base.waitForElement(getMySavedSearchDropDown());
 		getMySavedSearchDropDown().waitAndClick(5);
 		final int Bgcount = base.initialBgCount();
-		
+
 		// Verify Analyze Btn
 		base.waitForElement(getNodeAnalyseBtn(node));
 
@@ -1621,15 +1622,15 @@ public class BatchRedactionPage {
 		}
 
 		// verify View report Button.
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return base.initialBgCount() == Bgcount + 1;
-					}
-				}), Input.wait60);
-				final int bgCountAfter = base.initialBgCount();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		final int bgCountAfter = base.initialBgCount();
 		// verify View Report Btn
 		base.waitForElement(getNodeViewReportBtn(node));
-		if(getNodeViewReportBtn(node).isElementAvailable(10)) {
+		if (getNodeViewReportBtn(node).isElementAvailable(10)) {
 			getNodeViewReportBtn(node).waitAndClick(10);
 			base.stepInfo("Performed View Report for " + node);
 
@@ -1667,7 +1668,7 @@ public class BatchRedactionPage {
 		driver.waitForPageToBeReady();
 		getRedactionTagDropDown().waitAndClick(10);
 		getRedactionTagDropDownValue(Redactiontag).waitAndClick(10);
-	//	getRedactionTagDropDown().selectFromDropdown().selectByVisibleText(Redactiontag);
+		// getRedactionTagDropDown().selectFromDropdown().selectByVisibleText(Redactiontag);
 
 		// Click on redact button
 		base.waitForElement(getPopUpRedactButton());
@@ -1711,9 +1712,10 @@ public class BatchRedactionPage {
 	/**
 	 * @author jeevitha Description : Verify Pre Redaction Report Link and download
 	 *         File
+	 * @return
 	 * @throws InterruptedException
 	 */
-	public void verifyPreRedactionReport() throws InterruptedException {
+	public String verifyPreRedactionReport() throws InterruptedException {
 
 		if (preRedactionReport().isElementPresent()) {
 			base.waitForElement(getPreRedactReportMessage1());
@@ -1730,26 +1732,26 @@ public class BatchRedactionPage {
 		String expectedFormat = "xlsx";
 
 		softassert.assertEquals(fileFormat, expectedFormat);
-
+		return fileName;
 	}
 
 	/*
 	 * @author Jeevitha
 	 */
-	public void performAnalysisGroupForRedcation(String searchname, String newNode, int purehit, boolean download,boolean checkAnalyze)
-			throws InterruptedException, IOException {
+	public void performAnalysisGroupForRedcation(String searchname, String newNode, int purehit, boolean download,
+			boolean checkAnalyze) throws InterruptedException, IOException {
 
 		String bullHornValue = getBullHornIcon_CC().getText();
 		int valueBeforeAnalysis = Integer.parseInt(bullHornValue);
 
-		if(checkAnalyze) {
-		boolean flag=verifyAnalyzeBtn(searchname,newNode);
-		if(flag=false) {
-			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.mySavedSearch);
+		if (checkAnalyze) {
+			boolean flag = verifyAnalyzeBtn(searchname, newNode);
+			if (flag = false) {
+				driver.Navigate().refresh();
+				loadBatchRedactionPage(Input.mySavedSearch);
+			}
 		}
-		}
-		
+
 		// CLick Analysis Btn
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(5)) {
 			base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
@@ -2028,12 +2030,12 @@ public class BatchRedactionPage {
 	 */
 	public void performViewReportAndApplyRedactions(String node) {
 		// verify View Report Btn For Node
-		
-			if(getNodeViewReportBtn(node).isElementAvailable(20)) {
+
+		if (getNodeViewReportBtn(node).isElementAvailable(20)) {
 			getNodeViewReportBtn(node).waitAndClick(10);
 			base.stepInfo("Performed View Report for " + node);
 
-		}else {
+		} else {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
@@ -2067,12 +2069,12 @@ public class BatchRedactionPage {
 		getDefaultTab().waitAndClick(10);
 		getSavedSearchNewGroupExpand().waitAndClick(10);
 
-		boolean flag=verifyAnalyzeBtn(searchname,null);
-		if(flag=false) {
+		boolean flag = verifyAnalyzeBtn(searchname, null);
+		if (flag = false) {
 			driver.Navigate().refresh();
-		loadBatchRedactionPage(Input.shareSearchDefaultSG);
+			loadBatchRedactionPage(Input.shareSearchDefaultSG);
 		}
-		
+
 		// CLick Analysis Btn For Search Under Default TAB
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(5)) {
 			base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
@@ -2113,8 +2115,8 @@ public class BatchRedactionPage {
 		}
 
 		// verify View report Button. Under Default TAb
-		
-			if(getViewReportForSavedSearch(searchname).isElementAvailable(10)) {
+
+		if (getViewReportForSavedSearch(searchname).isElementAvailable(10)) {
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			softassert.assertTrue(true);
 			base.passedStep("Analyze completed and \"View Report & Apply Redactions\" button appeared. for Search");
@@ -2514,11 +2516,11 @@ public class BatchRedactionPage {
 	public void verifyPreviousAndNextBtn() {
 		driver.scrollingToBottomofAPage();
 		String lastNum;
-		if(getLastPageNum().isElementAvailable(4)) {
-			lastNum=getLastPageNum().getText();
-		}else {
-		int totalNum = getPageNumb().size();
-		 lastNum=String.valueOf(totalNum-2);
+		if (getLastPageNum().isElementAvailable(4)) {
+			lastNum = getLastPageNum().getText();
+		} else {
+			int totalNum = getPageNumb().size();
+			lastNum = String.valueOf(totalNum - 2);
 		}
 		System.out.println("LAst PAge No : " + lastNum);
 		String activePage = getActivePage().getText();
@@ -2534,7 +2536,7 @@ public class BatchRedactionPage {
 		} else {
 			base.stepInfo("Page No : " + activePage + " and Next Button is Enabled");
 		}
-		int totalPage=Integer.parseInt(lastNum);
+		int totalPage = Integer.parseInt(lastNum);
 		for (int i = 2; i <= totalPage; i++) {
 			getPageNum(i).waitAndClick(3);
 			driver.waitForPageToBeReady();
@@ -2558,18 +2560,18 @@ public class BatchRedactionPage {
 	 * @param node
 	 */
 	public boolean verifyAnalyzeBtn(String searchname, String node) {
-		boolean flag=false;
+		boolean flag = false;
 		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(3)) {
 			System.out.println("Analyze Search for Redactions button is Displayed for :" + searchname);
 			base.passedStep("Analyze Search for Redactions button is Displayed for :" + searchname);
-			flag=true;
+			flag = true;
 		} else if (getNodeAnalyseBtn(node).isElementAvailable(3)) {
 			System.out.println("Analyze Group for Redactions button is Displayed for :" + node);
 			base.passedStep("Analyze Group for Redactions button is Displayed for :" + node);
 			flag = true;
 		} else {
 			base.stepInfo("Analyze Search/Group for Redactions button is Not Displayed");
-		flag=false;
+			flag = false;
 		}
 		return flag;
 	}
@@ -2834,9 +2836,9 @@ public class BatchRedactionPage {
 	 * @Author Jeevitha
 	 * @Description : Verifies completed with error icon and tooltip message
 	 * @param searchName : search query name
-	 * @param expected : expected tooltip Msg
-	 * @param passMsg : pass messsage
-	 * @param failMsg  : fail message
+	 * @param expected   : expected tooltip Msg
+	 * @param passMsg    : pass messsage
+	 * @param failMsg    : fail message
 	 */
 	public void verifyCompletedErrorToolTip(String searchName, String expected, String passMsg, String failMsg) {
 		String color = null;
@@ -2862,7 +2864,7 @@ public class BatchRedactionPage {
 			base.failedStep(" Colour Mismatch ");
 		}
 	}
-	
+
 	/**
 	 * @author Raghuram.A
 	 * @param searchName - Searchname to perform Rollback
@@ -2891,5 +2893,18 @@ public class BatchRedactionPage {
 			getPopupYesBtn().waitAndClick(3);
 		}
 	}
-	
+
+	public void verifyExpectedRedactionCount(String filePath) {
+		String[][] record = base.readExcelData(filePath, 4);
+		for (String[] data : record) {
+			String Name = data[2];
+			if (Name != null) {
+				int count = (int) Float.parseFloat(Name);
+				if (count > 0) {
+					System.out.println("Expected Redaction : " + count);
+					base.stepInfo("Expected Redaction : " + count);
+				}
+			}
+		}
+	}
 }

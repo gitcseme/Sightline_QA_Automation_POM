@@ -403,5 +403,16 @@
     <artifactId>tess4j</artifactId>
     <version>4.5.2</version>
 </dependency>
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>kernel</artifactId>
+    <version>7.2.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
+<dependency>
+    <groupId>com.itextpdf</groupId>
+    <artifactId>layout</artifactId>
+    <version>7.2.1</version>
+</dependency>
 	</dependencies>
 </project>

@@ -107,6 +107,8 @@ public class TestData {
 	public String conceptDoc1;
 	public String familyDoc1;
 	public String highlightDoc1;
+	public String warning01;
+	public String ingestionQuery01;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

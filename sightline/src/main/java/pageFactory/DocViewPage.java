@@ -1318,6 +1318,10 @@ public class DocViewPage {
 				"//*[@id='dtDocumentThreadedDocuments']//tr//th[contains(text(),'Threaded Documents: ')]");
 	}
 
+	public Element getDocView_Analytics_ThreadMap_WholeTable() {
+		return driver.FindElementByXPath("//*[@id='analyticsResize']//*[@id='dtDocumentThreadedDocuments']");
+	}
+	
 	public Element getDocView_Analytics_NearDupe_WholeTable() {
 		return driver.FindElementByXPath("//*[@id='analyticsResize']//*[@id='dtDocumentNearDuplicates']");
 	}
@@ -3226,6 +3230,11 @@ public class DocViewPage {
 	}
 
 	// Added by Vijaya.Rani
+	
+	public Element getDocView_MetaData_AttachCount() {
+		return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'AttachDocIDs')]");
+		}
+	
 	public ElementCollection getDocView_Analytics_ThreadedMapParticipantDocs() {
 		return driver.FindElementsByXPath("//tbody[@id='threadedEmailRow']//tr");
 	}
@@ -3335,6 +3344,15 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//table[@id='MetaDataDT']/tbody/tr/td[text()='HiddenProperties']/following-sibling::td");
 	}
 
+	//Added By Vijaya.Rani
+	public Element getMetaData_AttachCountIds() {
+		return driver
+				.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'AttachDocIDs')]/following-sibling::td");
+	}
+
+	public ElementCollection getAnalticsHeaderIds() {
+		return driver.FindElementsByXPath("//*[@id='threadedDocumentIdRow']//th");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7824,9 +7842,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
-			base.waitForElement(getDocView_MiniDoc_Selectdoc(1));
-			getDocView_MiniDoc_Selectdoc(1).ScrollTo();
-			getDocView_MiniDoc_Selectdoc(1).waitAndClick(5);
+			selectDocIdInMiniDocList(text);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getMetaDataDocId(text));
 			getMetaDataDocId(text).ScrollTo();
@@ -8470,21 +8486,21 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			Point p = getDocView_Analytics_FamilyTab().getWebElement().getLocation();
 			je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
-			base.waitForElement(getDocView_Analytics_FamilyTab());
-			getDocView_Analytics_FamilyTab().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
-			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
+			String text = getDocView_ThreadMapTab_FirstDoc_Text().getText();
 			System.out.println(text);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
-			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(2));
+			getDocView_Analytics_ThreadMap_DocCheckBox(2).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_FamilyCodeSameAs());
-			getDocView_FamilyCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+			getDocView_Analytics_Thread_CodeSameAs().waitAndClick(5);
 
 			base.VerifyWarningMessage(
 					"Cannot perform Code Same As action, as the selected documents include one or more completed documents");
@@ -8543,21 +8559,23 @@ public class DocViewPage {
 					driver.switchTo().window(eachId);
 				}
 			}
-			base.waitForElement(getDocView_Analytics_FamilyTab());
-			getDocView_Analytics_FamilyTab().waitAndClick(5);
-			base.waitForElement(getDocView_Analytics_FamilyMember_Text(2));
-			String text = getDocView_Analytics_FamilyMember_Text(2).getText();
+			base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+
+			base.waitForElement(getDocView_ThreadMapTab_FirstDoc_Text());
+			String text = getDocView_ThreadMapTab_FirstDoc_Text().getText();
 			System.out.println(text);
 
-			base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
-			getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(2));
+			getDocView_Analytics_ThreadMap_DocCheckBox(2).waitAndClick(10);
 
 			base.waitForElement(getDocView_ChildWindow_ActionButton());
 			getDocView_ChildWindow_ActionButton().waitAndClick(5);
 
-			base.waitForElement(getDocView_FamilyCodeSameAs());
-			getDocView_FamilyCodeSameAs().waitAndClick(5);
+			base.waitForElement(getDocView_Analytics_Thread_CodeSameAs());
+			getDocView_Analytics_Thread_CodeSameAs().waitAndClick(5);
 
+			driver.getWebDriver().close();
 			driver.switchTo().window(parentWindowID);
 
 			driver.waitForPageToBeReady();
@@ -9953,7 +9971,7 @@ public class DocViewPage {
 	 * @Description To verify Analytics Thread Map Tab with docs
 	 * 
 	 */
-	public void verifyThreadMapWithDocs(String docId1, String docId2, String docId3) {
+	public void verifyThreadMapWithDocs() {
 
 		try {
 
@@ -9972,17 +9990,7 @@ public class DocViewPage {
 			getDocView_Analytics_LoadMoreButton().waitAndClick(10);
 
 			driver.waitForPageToBeReady();
-			getDocView_PrincipalDocIdE1(docId1).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId1));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
-
-			getDocView_PrincipalDocIdE1(docId2).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId2));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId2).isDisplayed());
-
-			getDocView_PrincipalDocIdE1(docId3).ScrollTo();
-			base.waitForElement(getDocView_PrincipalDocIdE1(docId3));
-			softAssertion.assertTrue(getDocView_PrincipalDocIdE1(docId1).isDisplayed());
+			softAssertion.assertTrue(getDocView_Analytics_ThreadMap_WholeTable().isDisplayed());
 			softAssertion.assertAll();
 			base.passedStep("E1,E2 and E3 docs are present in ThreadMap tab successfully");
 
@@ -22634,7 +22642,7 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 		base.passedStep("Selected folder is applied to the selected documents successfully");
-
+		driver.scrollPageToTop();
 		base.waitForElement(getManageTab());
 		getManageTab().waitAndClick(10);
 
@@ -23880,7 +23888,7 @@ public class DocViewPage {
 	 * @description to open NearDupe ComparisonWindow pagination
 	 */
 
-	public void openNearDupeComparisonWindowForDocumentPagination(String documentId) throws InterruptedException {
+	public void openNearDupeComparisonWindowForDocumentPagination() throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -23888,8 +23896,9 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-
-		getDocView_NearDupeIconForSpecificDocument(documentId).waitAndClick(10);
+		base.waitForElement(getDocView_NearDupeIcon());
+		getDocView_NearDupeIcon().waitAndClick(5);
+		
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -27138,5 +27147,114 @@ public class DocViewPage {
 			base.stepInfo("Exception occured while verifying warning messgae for External hyper link");
 		}
 
+  }
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : Method to select AttachCount DocId In AvailableField
+	 * 
+	 */
+	public void selectAttachCountDocIdInAvailableField() {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
+			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+
+			base.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
+
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("AttachCount");
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
+		}
 	}
+
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : Method to AttachCount DocId Display In meta Data
+	 * 
+	 */
+	public String selectAttachCountDocIdDisplayMetaData() {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_MetaData_AttachCount().Displayed();
+			}
+		}), Input.wait60);
+		String AttachEmail = getMetaData_AttachCountIds().getText();
+		base.stepInfo("Meta Data AttachCount Id Is Displayed "  + AttachEmail);
+		System.out.println(AttachEmail);
+
+		driver.WaitUntil(new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_liDocumentThreadMap().Visible()
+						&& getDocView_Analytics_liDocumentThreadMap().Enabled();
+			}
+		}, Input.wait30);
+		getDocView_Analytics_liDocumentThreadMap().Click();
+		return AttachEmail;
+
+	}
+
+	/**
+	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
+	 *         Description : select Attach Email Id Not Display In AnalyticsPanel
+	 * 
+	 */
+	public void selectAttachEmailIdDisplayInAnalyticsPanel(String id) {
+		driver.waitForPageToBeReady();
+		List<WebElement> elementList = getAnalticsHeaderIds().FindWebElements();
+		try {
+		for (WebElement wenElementNames : elementList) {
+
+			String elementName = wenElementNames.getText().trim();
+			System.out.println(elementName);
+			System.out.println(id);
+			if (id.equalsIgnoreCase(elementName)) {
+				base.failedStep("Attach Email Ids is diplayed");
+				break;
+			}
+		}
+		base.passedStep("Attach Email Ids is not diplayed");
+		}
+		catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * @author Indium Mohan Description : Method to click complete toggle
+	 *         Date: 08/04/22 Modified date: NA Modified by: N/A
+	 */
+	public void selectSourceDocIdInCompletedDocs() {
+
+		try {
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+				if (getShowCompletedDocsToggle().isDisplayed()) {
+					base.waitForElement(getShowCompletedDocsToggle());
+					getShowCompletedDocsToggle().waitAndClick(5);
+			}
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
+		}
+	}
+	
+	
+
 }

@@ -937,6 +937,10 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//tr[@role='row']//label[text()='Ignore']");
 	}
 	
+	public Element rollbackButtonStatus() {
+		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]//a");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6800,6 +6804,94 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
 		    	getCloseButton().waitAndClick(10);
 		}
+		
+		/**
+		 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify perform the approval stage ingestion
+		 */
+		public void approveIngestion(int numberofingestion) {
+			
+			    driver.waitForPageToBeReady();
+			    int j= numberofingestion;
+		    	getIngestionDetailPopup(j).waitAndClick(Input.wait30);
+		    	base.waitTime(1);
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingestionDetailActionDropdown().Visible()  ;}}), Input.wait30); 
+		    	ingestionDetailActionDropdown().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getActionApprove().Visible()  ;}}), Input.wait30); 
+		    	getActionApprove().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getApproveMessageOKButton().Visible();
+					}
+				}), Input.wait30);
+				getApproveMessageOKButton().waitAndClick(10);
+		    		
+		    	base.VerifySuccessMessage("Approve started successfully");
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+		    	getCloseButton().waitAndClick(10);
+		    	 
+		    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+			    getFilterByButton().waitAndClick(10);
+			    	
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
+			    getFilterByAPPROVED().waitAndClick(10);
+			    	
+			    getRefreshButton().waitAndClick(10);
+			    
+			    	for(int i=0;i<40;i++) {
+			    		base.waitTime(2);
+						String status = getStatus(j).getText().trim();
+					
+			    		if(status.contains("Approved")) {
+			    			base.passedStep("Approve completed for ingestion");
+			    			break;
+			    		}
+			    		else if (status.contains("In Progress")) {
+			    			base.waitTime(10);
+			    			getRefreshButton().waitAndClick(5);
+			    		}
+			    		else if (status.contains("Failed")){
+			    			base.failedStep("Approve Failed for ingestion");
+			    		}
+			    	}
+		}
+
+
+
+			/**
+			 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify rollback status for approved ingestion
+			 */
+			public void verifyRollbackOptionForApprovedIngestion() {
+		    
+		    getRefreshButton().waitAndClick(10);
+		    getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return ingestionDetailActionDropdown().Visible();
+				}
+			}), Input.wait30);
+			ingestionDetailActionDropdown().waitAndClick(10);
+			
+			String status = rollbackButtonStatus().GetAttribute("class").trim();
+			if(status.contains("disable")) {
+				base.passedStep("Rollback option not available for approved ingestion");
+			}
+			else {
+				base.failedStep("Rollback option available for approved ingestion");
+			}		
+	
+		    	    	
+	
+			}
 		
 	
 }

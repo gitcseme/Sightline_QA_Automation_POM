@@ -100,6 +100,11 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	
+	public Element getViewBtn() {
+		return driver.FindElementByXPath("//a[text()='View']");
+	}
+	
 	public Element getPersistantHitCb_Existing() {
 		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
 	}
@@ -2966,13 +2971,15 @@ public class SessionSearch {
 	}
 
 	/**
+	 * Modified on 04/08/2022
+	 * stabilized navigating to docview as per new deployment in PT.
 	 * @Stabilization Done
 	 * @throws InterruptedException
 	 */
 
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
- 
+
 		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
@@ -2990,6 +2997,14 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
+		if (getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			System.out.println("View is not found");
+		}
+		
 		getDocViewAction().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
 
