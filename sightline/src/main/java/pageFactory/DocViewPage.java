@@ -13639,8 +13639,8 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
-			geDocView_ThreadMap_CheckMarkIcon(rowNo).ScrollTo();
-			if (geDocView_ThreadMap_CheckMarkIcon(rowNo).isDisplayed())
+			getverifyCodeSameAsLast().ScrollTo();
+			if (getverifyCodeSameAsLast().isDisplayed())
 				base.passedStep("Completed CheckMark is displayed under thread map tab Successfully");
 		} catch (Exception e) {
 			base.failedStep("Complete checkmark Icon is not displayed under thread map tab");

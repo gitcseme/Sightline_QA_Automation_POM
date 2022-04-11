@@ -11046,5 +11046,40 @@ public class SessionSearch {
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 	}
+	/**
+	 * @author Mohan 11/10/21 NA Modified date: NA Modified by:NA
+	 * @param metadataDocId
+	 * @description: to search metadataquery
+	 * 
+	 */
+	public void basicSearchWithMetaDataQueryUsingSourceDOCID(String metadataDocId) {
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getBasicSearch_MetadataBtn());
+			driver.waitForPageToBeReady();
+			getBasicSearch_MetadataBtn().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().selectFromDropdown().selectByValue("SourceDocID");
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(metadataDocId);
+
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+
+			base.waitForElement(getSearchButton());
+			getSearchButton().waitAndClick(10);
+
+		} catch (Exception e) {
+			base.failedStep("Query is not found");
+		}
+
+	}
 
 }
