@@ -2844,6 +2844,7 @@ public class SavedSearch {
 			getRenameTextdfield().SendKeys(searchName2);
 			base.waitForElement(getRenameSaveBtn());
 			getRenameSaveBtn().Click();
+			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage("Rename of Saved Search done successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3349,6 +3350,7 @@ public class SavedSearch {
 		// get Search ID
 		String searchiD = null;
 		try {
+			savedSearch_SearchandSelect(searchName, "No");
 			searchiD = getSelectSearchWithID(searchName).getText();
 			System.out.println(searchiD);
 		} catch (Exception e) {
@@ -6586,7 +6588,7 @@ public class SavedSearch {
 	 */
 	public void SavedSearchToTermReport_New(String GroupName, boolean selectNode, String newNode, String search,
 			String select) throws InterruptedException {
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		navigateToSavedSearchPage();
 		getSavedSearchGroupName(GroupName).waitAndClick(10);
 
 		if (selectNode) {
@@ -6594,15 +6596,19 @@ public class SavedSearch {
 		}
 		savedSearch_SearchandSelect(search, select);
 		driver.waitForPageToBeReady();
+//		Element strBtnStatus = getSavedSearchToTermReport();
+//		if (checkButtonEnabled(strBtnStatus, "Should be Enabled", "Report Action"))
 		if (getSavedSearchToTermReport().Enabled()) {
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();// temporary fix because of application abnormal behaviour
 			base.passedStep("Report Action is Enabled and has Access");
 			getSavedSearchToTermReport().waitAndClick(5);
 			base.waitTime(5);
 			driver.waitForPageToBeReady();
 		} else {
-
 			System.out.println("Not Enabled - No Access");
 		}
+
 	}
 
 	/**
@@ -6674,8 +6680,8 @@ public class SavedSearch {
 			node = newNodeList.get(i);
 			// verify id should get changed
 			try {
-				base.waitForElement(getSavedSearchGroupName(node));
-				Assert.assertTrue(getSavedSearchGroupName(node).Displayed());
+				driver.waitForPageToBeReady();
+				Assert.assertTrue(getSavedSearchGroupName(node).isElementAvailable(3));
 				System.out.println(node + " : Search group is Present in " + SGtoShare);
 				base.passedStep(node + " : Search group is Present in " + SGtoShare);
 				getSavedSearchGroupName(node).Click();
@@ -6768,9 +6774,10 @@ public class SavedSearch {
 						driver.waitForPageToBeReady();
 
 						// GetStatus
-						String searchStatus = getLastStatus();
-						base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
-						softAssertion.assertEquals(searchStatus, "COMPLETED");
+//						String searchStatus = getLastStatus();
+//						base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
+//						softAssertion.assertEquals(searchStatus, "COMPLETED");
+						verifyStatusByReSearch(searchNames, "COMPLETED", 10);
 
 						// Result count
 						String resultCount = getSelectSearchWithResultCount(searchNames).getText();
@@ -6785,7 +6792,8 @@ public class SavedSearch {
 					verifySavedSearch_isEmpty();
 					base.passedStep("Not the selected search group");
 				}
-				sgExpansion();
+//				sgExpansion();
+				rootGroupExpansion();
 			} catch (Exception e) {
 				System.out.println(node + " : Search group is not Present in " + SGtoShare);
 				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
@@ -6832,7 +6840,8 @@ public class SavedSearch {
 		}
 
 		if (verifyNodes) {
-			getSavedSearchNewGroupExpand().waitAndClick(3);
+//			getSavedSearchNewGroupExpand().waitAndClick(3);
+			rootGroupExpansion();
 			for (String nodeDatas : nodes) {
 				verifyNodePresent(nodeDatas);
 			}
@@ -7372,7 +7381,7 @@ public class SavedSearch {
 
 		if (selectGroupExpand) {
 			getSavedSearchGroupName(groupName).waitAndClick(2);
-			getSavedSearchNewGroupExpand().waitAndClick(2);
+			rootGroupExpansion();
 		}
 
 		if (custom) {
