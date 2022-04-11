@@ -3338,6 +3338,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divBulkFolderJSTree']//a[@id='19_anchor']//i[@class='jstree-icon jstree-checkbox']");
 	}
+	
+	//Added by Gopinath-08/04/2022
+	public Element getHiddenPropValue() {
+		return driver.FindElementByXPath("//table[@id='MetaDataDT']/tbody/tr/td[text()='HiddenProperties']/following-sibling::td");
+	}
 
 	//Added By Vijaya.Rani
 	public Element getMetaData_AttachCountIds() {
@@ -3347,6 +3352,14 @@ public class DocViewPage {
 
 	public ElementCollection getAnalticsHeaderIds() {
 		return driver.FindElementsByXPath("//*[@id='threadedDocumentIdRow']//th");
+	}
+	
+	public Element getDownload() {
+		return driver.FindElementByXPath("//i[@class='fa fa-download']");
+	}
+	
+	public ElementCollection getDownloadOption() {
+		return driver.FindElementsByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
 	}
 	public DocViewPage(Driver driver) {
 
@@ -27085,7 +27098,64 @@ public class DocViewPage {
 			}
 		}
 	}
+	/**
+	 * @author Gopinath
+	 * @Description:methoad to verify warning message fro hidden property document and hidden property metada value is not empty
+	 * @param docId : docId is String value that document id need to pass to get warning message.
+	 */
+	public void verifyWarningMsgAndHiddenPropValue(String docId) {
+		try {
+			driver.waitForPageToBeReady();
+			verifyWaringMessageForExternalProtectSheet(docId);
+			base.waitForElement(getHiddenPropValue());
+			driver.waitForPageToBeReady();
+			getHiddenPropValue().ScrollTo();
+			driver.waitForPageToBeReady();
+			int HiddenProValueLength = getHiddenPropValue().getText().trim().length();
+			if (HiddenProValueLength > 0) {
+				base.passedStep("Hidden property metadata value is not empty as expected");
+			} else {
+				base.failedStep("Hidden property metadata value is empty");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying warning message ");
+		} 
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: methoad to verify warning message is not displayed for document having hidden property value as External Hyper link
+	 * @param docId : docId is String value that document id
+	 */
+	public void verifyNoWarningMessageForExternalLink(String docId) {
+		try {
+			getDocView_DocId(docId).isElementAvailable(15);
+			base.waitForElement(getDocView_DocId(docId));
+			getDocView_DocId(docId).waitAndClick(5);
+			getHiddenPropValue().ScrollTo();
+			getHiddenPropValue().isElementAvailable(10);
+			base.waitForElement(getHiddenPropValue());
+			if (getHiddenPropValue().getText().contains("External hyperlink")) {
+				base.passedStep("Document is having hidden property value as External Hyper link");
+				getDocView_DocId(docId).waitAndClick(5);
+				base.waitForElement(getHiddenPropValue());
+			} else {
+				base.failedStep("document is not having the hidden property value as ExterNal hyper link");
+			}
+			if (base.getSuccessMsgHeader().isElementAvailable(3)) {
+				base.failedStep(
+						"Warning message is displayed for the document that having with Hidden Properties has 'External Link'");
+			} else {
+				base.passedStep(
+						"Warning message is not displayed for the document that having with Hidden Properties has 'External Link");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.stepInfo("Exception occured while verifying warning messgae for External hyper link");
+		}
 
+  }
 	/**
 	 * @author Vijaya.Rani Date: 08/04/22 Modified date: NA Modified by: N/A
 	 *         Description : Method to select AttachCount DocId In AvailableField
@@ -27194,4 +27264,5 @@ public class DocViewPage {
 	}
 	
 	
+
 }

@@ -21,8 +21,7 @@
 	<totalNumberOfDocsincludeadvoption>103
 	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -57,10 +56,8 @@
 	
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
-	</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
-	</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -139,8 +136,7 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>S22936960011001028</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
-	</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -226,7 +222,7 @@
 	<searchStringStar>*</searchStringStar>
 	<docIDs>ID0000</docIDs>
 
-	<!-- Raghuram Indium modified on 02/24/22 -->
+	<!-- Raghuram Indium modified on 04/11/22 -->
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
@@ -236,14 +232,14 @@
 	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
 	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
 	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
-	<validBatchFileLocation>\Misc\ValidBatchFiles\</validBatchFileLocation>
+	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
 	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
@@ -287,8 +283,7 @@
 	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
-	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error
-	</BatchFileduplicateHeader>
+	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -633,7 +628,7 @@
 		<documentKeyBNum>BNum</documentKeyBNum>
 		<documentKeyDSource>DSource</documentKeyDSource>
 		<documentKeyCName>CName</documentKeyCName>
-		
+		 
 		<!--   Added by Gopinath Created date - 23/03/2022	-->
 		<pageNum>2</pageNum>
 		
@@ -651,5 +646,9 @@
 	
 	<cfDocId1>ICE010062-20-00000019</cfDocId1>
 	<cfDocId2>ICE010062-10-00000007</cfDocId2>
+	
+	<!--   Added by Gopinath Created date - 08/04/2022	-->
+		<warningMsgDocId>ID00002019</warningMsgDocId>
+		<externalLinkDocId>ID00000168</externalLinkDocId>
 		
 </TestData>

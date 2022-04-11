@@ -7395,6 +7395,34 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
+	
+	/**
+	 * @author Gopinath
+	 * @TestCase Id:51964 Verify that when viewing the document with Hidden Properties has "External Link" as well as another hidden property, warning message should not be displayed
+	 * @Description :To Verify that when viewing the document with Hidden Properties has "External Link" as well as another hidden property, warning message should not be displayed
+	 *@throws InterruptedException
+	 */ 
+	@Test(enabled = false, groups = { "regression" }, priority = 198)
+	public void verifyNowarningMessageForExternalLinkHiddenProp() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String ExternalLinkDocId=Input.externalLinkDocId;
+		String projectName="AutomationAdditionalDataProject";
+		baseClass.selectproject(projectName);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51964");
+		baseClass.stepInfo("###Verify that when viewing the document with Hidden Properties has \"External Link\" as well as another hidden property, warning message should not be displayed####");
+		
+		baseClass.stepInfo("basic content search");
+		sessionsearch.basicContentSearch(ExternalLinkDocId);
+		
+		baseClass.stepInfo("view in docView");
+		sessionsearch.viewInDocView();
+		
+		baseClass.stepInfo("verify warning message for hidden properties document and metadat value not empty");
+		docView.verifyNoWarningMessageForExternalLink(ExternalLinkDocId);
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

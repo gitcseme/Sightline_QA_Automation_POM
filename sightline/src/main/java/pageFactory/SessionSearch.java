@@ -100,11 +100,11 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
-	
+
 	public Element getViewBtn() {
 		return driver.FindElementByXPath("//a[text()='View']");
 	}
-	
+
 	public Element getPersistantHitCb_Existing() {
 		return driver.FindElementByXPath("//div[@id='existingassignment']//div//label[@class='checkbox']//i");
 	}
@@ -1704,6 +1704,24 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//a[@class='submenu-a']");
 	}
 
+	// Added by Gopinath - 08/04/2022
+	public Element getViewOn() {
+		return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
+	}
+
+	public Element getViewInDocViewLat() {
+		return driver.FindElementByXPath("//a[text()='View In DocView']");
+	}
+
+	public Element getCurrentTabClosed() {
+		return driver.FindElementByXPath("//li[@aria-selected='true' and contains(@class,'closed')]");
+	}
+
+	public Element getCurrentTabClosedExpand() {
+		return driver.FindElementByXPath(
+				"//li[@aria-selected='true' and contains(@class,'closed')]//i[@class='jstree-icon jstree-ocl']");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -2964,8 +2982,9 @@ public class SessionSearch {
 	}
 
 	/**
-	 * Modified on 04/08/2022
-	 * stabilized navigating to docview as per new deployment in PT.
+	 * Modified on 04/08/2022 stabilized navigating to docview as per new deployment
+	 * in PT.
+	 * 
 	 * @Stabilization Done
 	 * @throws InterruptedException
 	 */
@@ -2997,7 +3016,7 @@ public class SessionSearch {
 		} else {
 			System.out.println("View is not found");
 		}
-		
+
 		getDocViewAction().waitAndClick(10);
 		base.waitTime(3); // added for stabilization
 
@@ -7627,8 +7646,7 @@ public class SessionSearch {
 			System.out.println(searchName + " already checked");
 		}
 
-		base.waitForElement(getSaveSearch_SaveButton_cc());
-		getSaveSearch_SaveButton_cc().Click();
+		getSaveSearch_SaveButton_cc().waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		if (notificationMsg.equals("ExecutionErrorInProgress")) {
@@ -8562,7 +8580,8 @@ public class SessionSearch {
 			purehit = multipleBasicContentSearch(Input.searchString5);
 
 			driver.waitForPageToBeReady();
-			saveSearchInNodewithChildNode(searchName1, newNodeList.get(i));
+//			saveSearchInNodewithChildNode(searchName1, newNodeList.get(i));
+			saveSearchInNodewithChildNode(searchName1, newNodeList.get(i), newNodeList);
 			System.out.println("Added new Search to " + newNodeList.get(i) + " : " + searchName1);
 			base.stepInfo("Added new Search to " + newNodeList.get(i) + " : " + searchName1);
 			nodeNewSearchpair.put(newNodeList.get(i), searchName1);
@@ -11046,6 +11065,7 @@ public class SessionSearch {
 		getSearchButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 	}
+
 	/**
 	 * @author Mohan 11/10/21 NA Modified date: NA Modified by:NA
 	 * @param metadataDocId
@@ -11080,6 +11100,94 @@ public class SessionSearch {
 			base.failedStep("Query is not found");
 		}
 
+	}
+
+	/**
+	 * @author Gopinath.Srinivasan
+	 * @description : Method to seached documents view in doc view.
+	 */
+
+	public void viewInDocView() throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		base.waitTime(2); // App synch
+		getBulkActionButton().waitAndClick(5);
+		base.waitTime(2); // App Synch
+
+		if (getDocViewAction().isDisplayed()) {
+			getDocViewAction().Click();
+		} else {
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getViewOn().getWebElement()).build().perform();
+			base.waitTime(2);
+			getViewInDocViewLat().isElementAvailable(15);
+			getViewInDocViewLat().Click();
+		}
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param searchName  - Search name to save
+	 * @param nodeName    - node name to save search
+	 * @param newNodeList - available nodeList
+	 * @throws InterruptedException
+	 */
+	public void saveSearchInNodewithChildNode(String searchName, String nodeName, List<String> newNodeList)
+			throws InterruptedException {
+		String rootNode = newNodeList.get(0);
+		// SaveSearch
+		saveSearchAction();
+
+		try {
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} catch (Exception e) {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
+
+		if (getSavedSearch_MySearchesTabClosed().isElementAvailable(4)) {
+			getSavedSearch_MySearchesTabClosed().waitAndClick(5);
+		} else {
+			System.out.println("Already Expanded");
+		}
+
+		getCreatedNode(rootNode).waitAndClick(3);
+		if (getCurrentTabClosed().isElementAvailable(2)) {
+			getCurrentTabClosedExpand().waitAndClick(5);
+		}
+
+		for (int i = 0; i <= newNodeList.size(); i++) {
+			getCreatedNode(newNodeList.get(i)).waitAndClick(3);
+			if (newNodeList.get(i).equalsIgnoreCase(nodeName)) {
+				break;
+			}
+			if (getCurrentTabClosed().isElementAvailable(2)) {
+				getCurrentTabClosedExpand().waitAndClick(5);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		getSaveSearch_Name().SendKeys(searchName);
+		getSaveSearch_SaveButton().Click();
+		base.VerifySuccessMessage("Saved search saved successfully");
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
 	}
 
 }
