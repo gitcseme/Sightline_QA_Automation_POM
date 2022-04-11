@@ -4888,7 +4888,128 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 
+	}/**
+	 * Author : Baskar date: NA Modified date: 08/04/2022 Modified by: Baskar
+	 * Description:Verify that Application does not auto Scroll up when User click on download 
+	 *              or Remark option when document contains Video player inside Doc view screen
+	 * 
+	 */
+
+	@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 68)
+	public void validateWindowNotScrollUpWhenDownloadClicked(String fullName,String userName,String password) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59980");
+		baseClass.stepInfo("Verify that Application does not auto Scroll up when User click on download or Remark option when "
+				+ "document contains Video player inside Doc view screen");
+		// Login as 
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocView();
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.scroll(0,350);");
+		Long beforePage = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(beforePage);
+		baseClass.waitForElement(docViewPage.getDownload());
+		docViewPage.getDownload().waitAndClick(5);
+		baseClass.waitTime(2);
+		int optionDownloadCount=docViewPage.getDownloadOption().size();
+		List<String> optionDownload=baseClass.availableListofElements(docViewPage.getDownloadOption());
+		System.out.println(optionDownload);
+		baseClass.stepInfo("Download option count available are : " +optionDownloadCount+"");
+		softAssertion.assertEquals(Integer.toString(optionDownloadCount),"5");
+		Long afterPage = (Long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return window.pageYOffset;");
+		System.out.println(afterPage);
+		softAssertion.assertEquals(beforePage, afterPage);
+		baseClass.passedStep("Apllication not scrolled up automatically to top of the page");
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
 	}
+
+		/**
+		 * Author : Baskar date: NA Modified date: 08/04/2022 Modified by: Baskar
+		 * Description:Verify that Audio Persistent Search functionality is working properly 
+		 *             for Video file inside Doc view screen
+		 * 
+		 */
+
+		@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 69)
+		public void validateAudioPersistentInsideVideoPlayerScreen(String fullName,String userName,String password) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59967");
+			baseClass.stepInfo("Verify that Audio Persistent Search functionality is working "
+					+ "properly for Video file inside Doc view screen");
+			// Login as 
+			loginPage.loginToSightLine(userName, password);
+			baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+			docViewPage = new DocViewPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			// search to docview with video docs
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			sessionSearch.getAdvancedSearchLink().waitAndClick(20);
+			sessionSearch.advMetaDataSearchQueryInsertTest("VideoPlayerReady", "1");
+			sessionSearch.advancedSearchAudio(Input.audioSearchString1, Input.language);// Audio Search
+			baseClass.waitForElement(sessionSearch.getAdvanceSearch_btn_Current());
+			sessionSearch.getAdvanceSearch_btn_Current().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return sessionSearch.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+			int pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+			sessionSearch.ViewInDocView();
+			baseClass.waitTime(2);
+			driver.waitForPageToBeReady();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.scroll(0,350);");
+			docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+			docViewPage.verifyingThePresenceOfPersistentHit(true,Input.audioSearchString1);
+			baseClass.passedStep("Audio Persistent highlighted inside having the video player screen");
+			driver.waitForPageToBeReady();
+			// logout
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 08/04/2022 Modified by: Baskar
+		 * Description:Verify that Video files 'Playback Speed' functionality is working 
+		 *             properly inside Doc view screen
+		 * 
+		 */
+
+		@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 70)
+		public void validatingPlayBackSpeed(String fullName,String userName,String password) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59962");
+			baseClass.stepInfo("Verify that Video files 'Playback Speed' functionality is "
+					+ "working properly inside Doc view screen");
+			// Login as 
+			loginPage.loginToSightLine(userName, password);
+			baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+			docViewPage = new DocViewPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			// search to docview
+			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+			sessionSearch.ViewInDocView();
+			boolean defaultSpeed = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').defaultPlaybackRate==1;");
+			softAssertion.assertTrue(defaultSpeed);
+			baseClass.stepInfo("Default play back speed Normal");
+			baseClass.stepInfo("Selecting any one of option and checking as per selection");
+			baseClass.waitTime(1);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').playbackRate=1.75;");
+			baseClass.waitTime(1);
+			boolean playBackSpeedModified = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').playbackRate==1.75;");
+			softAssertion.assertTrue(playBackSpeedModified);
+			baseClass.passedStep("Video file playing as per the play back speed modified");
+			softAssertion.assertAll();
+			// logout
+			loginPage.logout();
+		}
+
 
 	
 	@DataProvider(name = "userDetails")

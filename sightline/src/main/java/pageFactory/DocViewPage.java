@@ -3353,6 +3353,14 @@ public class DocViewPage {
 	public ElementCollection getAnalticsHeaderIds() {
 		return driver.FindElementsByXPath("//*[@id='threadedDocumentIdRow']//th");
 	}
+	
+	public Element getDownload() {
+		return driver.FindElementByXPath("//i[@class='fa fa-download']");
+	}
+	
+	public ElementCollection getDownloadOption() {
+		return driver.FindElementsByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
