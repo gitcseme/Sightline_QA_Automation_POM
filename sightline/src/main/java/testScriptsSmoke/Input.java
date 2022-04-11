@@ -703,6 +703,10 @@ public class Input {
 	public static String cfDocId1;
 	public static String cfDocId2;
 	
+	//Added by Gopinath - 08/04/2022
+	public static String warningMsgDocId;
+	public static String externalLinkDocId;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1411,6 +1415,10 @@ public class Input {
 		 
 		 cfDocId1 =testData.getCfDocId1();
 		 cfDocId2 = testData.getCfDocId2();
+		 
+		 //Added by Gopinath - 08/04/2022
+		 warningMsgDocId =testData.getWarningMsgDocId();
+		 externalLinkDocId =testData.getExternalLinkDocId();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
