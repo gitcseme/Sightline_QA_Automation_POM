@@ -192,18 +192,21 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// Search ID collection set 1
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
-		saveSearch.navigateToSSPage();
+//		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
 		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
+		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 
 		// Adding new searches to root node and leafe node
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -211,8 +214,8 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// modify existing search Name
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		saveSearch.modifyExistingSearchName(newNodeList, nodeSearchpair, 1);
 
 		List<String> newNodeList_1 = new ArrayList<String>();
@@ -222,14 +225,16 @@ public class SavedSearchRegression_New_Set_04 {
 		nodeSearchpair_1 = base.hashMapOfRandomIndexToAdd(newNodeList_1, listTOSelectPair, nodeSearchpair);
 
 		// collecting search ID from 3th hierarchy level node
-		saveSearch.navigateToSSPage();
+//		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
 
 		searchGroupSearchpIDpair_1 = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList_1,
 				nodeSearchpair_1, searchGroupSearchpIDpair_1);
 
 		// share the 3th hierarchy level node with Default Security group
-		saveSearch.navigateToSSPage();
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex1, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -530,20 +535,23 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// collection of search_ID in My Saved Search
 		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		// share the Root node with pa set_01
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
 		driver.waitForPageToBeReady();
 		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
+		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 
 		// Adding new searches to root node and leaf node
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -552,8 +560,8 @@ public class SavedSearchRegression_New_Set_04 {
 		// modify existing search Name
 		saveSearch.navigateToSavedSearchPage();
 		driver.waitForPageToBeReady();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		Map<String, String> nodeRenameSearchpair = saveSearch.modifyExistingSearchName(newNodeList, nodeSearchpair, 1);
 		for (int i = 0; i < nodeRenameSearchpair.size(); i++) {
 			nodeSearchpair.replace(newNodeList.get(i), nodeSearchpair.get(newNodeList.get(i)),
@@ -561,23 +569,17 @@ public class SavedSearchRegression_New_Set_04 {
 		}
 
 		// collecting search_ID in modified search in my saved search
-		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		HashMap<String, String> modifiedSearchIDpair = new HashMap<String, String>();
 		modifiedSearchIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				modifiedSearchIDpair);
 
 		// collecting search_ID in add search in my saved search
-		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		HashMap<String, String> addSearchIDpair = new HashMap<String, String>();
 		addSearchIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeNewSearchpair,
 				addSearchIDpair);
 
 		// share the Root node with pa set_02
-		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -661,20 +663,22 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// collection of search_ID in My Saved Search
 		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		// share the Root node with pa set_01
-		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
 		driver.waitForPageToBeReady();
 		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
+		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 
 		// Adding new searches to root node and leaf node
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -682,9 +686,8 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// modify existing search Name
 		saveSearch.navigateToSavedSearchPage();
-		driver.waitForPageToBeReady();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		Map<String, String> nodeRenameSearchpair = saveSearch.modifyExistingSearchName(newNodeList, nodeSearchpair, 1);
 		for (int i = 0; i < nodeRenameSearchpair.size(); i++) {
 			nodeSearchpair.replace(newNodeList.get(i), nodeSearchpair.get(newNodeList.get(i)),
@@ -692,23 +695,17 @@ public class SavedSearchRegression_New_Set_04 {
 		}
 
 		// collecting search_ID in modified search in my saved search
-		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		HashMap<String, String> modifiedSearchIDpair = new HashMap<String, String>();
 		modifiedSearchIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				modifiedSearchIDpair);
 
 		// collecting search_ID in add search in my saved search
-		saveSearch.navigateToSavedSearchPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		HashMap<String, String> addSearchIDpair = new HashMap<String, String>();
 		addSearchIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeNewSearchpair,
 				addSearchIDpair);
 
 		// share the Root node with pa set_02
-		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -879,7 +876,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo(
 				"PA impersonate down as RMU/RU role, create Searchgroups and Searches, and then perform bulk actions against My saved searches in PAU role");
 
-		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		String newNodePA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "searchPA", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchPA);
 		session.saveSearchInNewNode(searchPANode, newNodePA);
@@ -887,7 +884,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("PA", "RMU");
 
-		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		String newNodeRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "searchRMU", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchRMU);
 		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
@@ -895,7 +892,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("RMU", "REV");
 
-		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		String newNodeREV = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "searchREVs", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchREV);
 		session.saveSearchInNewNode(searchREVNode, newNodeREV);
@@ -908,6 +905,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 
 		// Verify Searches and Nodes
 		base.stepInfo(
@@ -1066,7 +1064,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("DA", "PA");
 
-		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		String newNodePA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchPA);
 		session.saveSearchInNewNode(searchPANode, newNodePA);
@@ -1074,7 +1072,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("PA", "RMU");
 
-		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		String newNodeRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchRMU);
 		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
@@ -1082,7 +1080,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("RMU", "REV");
 
-		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		String newNodeREV = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchREV);
 		session.saveSearchInNewNode(searchREVNode, newNodeREV);
@@ -1253,7 +1251,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("SA", "PA");
 
-		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		String newNodePA = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchPA);
 		session.saveSearchInNewNode(searchPANode, newNodePA);
@@ -1261,7 +1259,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("PA", "RMU");
 
-		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		String newNodeRMU = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchRMU);
 		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
@@ -1269,7 +1267,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		base.rolesToImp("RMU", "REV");
 
-		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		String newNodeREV = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "REV", "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchREV);
 		session.saveSearchInNewNode(searchREVNode, newNodeREV);
@@ -1282,6 +1280,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 
 		// Verify Searches and Nodes
 		base.stepInfo(
@@ -1433,11 +1432,12 @@ public class SavedSearchRegression_New_Set_04 {
 		session.navigateToSessionSearchPageURL();
 		int pureHit = session.basicContentSearchWithSaveChanges(Input.searchString1, "Yes", "First");
 		session.saveSearchInNewNode(searchName, parentNode);
-		session.saveSearchInRootNode(searchName1, parentNode, childNode);
+		session.saveSearchInNodewithChildNode(searchName1, newNodeList.get(1), newNodeList);
 
 		// Share the node with Default security group
 		saveSearch.navigateToSavedSearchPage();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		saveSearch.rootGroupExpansion();
 		saveSearch.shareSavedNodeToSG(Input.securityGroup, parentNode, searchName);
 
 		// Executing the Search Group
@@ -1448,8 +1448,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verifying the Child Node present in the Node
 		saveSearch.verifyNodePresentInSG(Input.shareSearchDefaultSG, parentNode);
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().Click();
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(5);
 		saveSearch.getSharedGroupName(childNode).waitAndClick(10);
 		base.passedStep(childNode + " : Is Present in " + parentNode);
 
@@ -1531,32 +1530,31 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// Search ID collection set 1
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		saveSearch.rootGroupExpansion();
 
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
-		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
+		driver.Navigate().refresh();
 		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		// Search ID collection set 2
-		saveSearch.navigateToSSPage();
-		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(3);
 
 		searchGroupSearchpIDpair2 = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		// Verify shared SG/Searches
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -1632,9 +1630,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify Searches in child nodes and share to SG
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -1797,12 +1793,13 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Verify that Scheduler works properly on saved Search Screen");
 
 		// Save search in Node
-		String node = saveSearch.createASearchGroupandReturnName(Search);
+		String node = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, Input.pa1FullName, "No");
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearchInNewNode(Search, node);
 
 		// verify schedule Btn
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		saveSearch.selectNode1(node);
 		saveSearch.savedSearch_SearchandSelect(Search, "Yes");
 		driver.waitForPageToBeReady();
@@ -1862,9 +1859,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify Searches in child nodes and share to SG
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 
 		// verify Assign btn
@@ -2361,9 +2356,8 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify Searches in child nodes and share to SG
 		saveSearch.navigateToSSPage();
-		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		saveSearch.rootGroupExpansion();
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -2409,7 +2403,6 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// Navigate on Saved Search & Multiple Node Creation & save search in node
-		saveSearch.navigateToSSPage();
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(basicSearchName);
 
@@ -2471,7 +2464,6 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// Navigate on Saved Search & Multiple Node Creation & save search in node
-		saveSearch.navigateToSSPage();
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(basicSearchName);
 
@@ -2598,7 +2590,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Verify that status and counts are updated when Batch search file is uploaded");
 
 		// Upload Batch File And Get count of docs
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.navigateToSavedSearchPage();
 		saveSearch.uploadWPBatchFile(file);
 		saveSearch.StatusAndCountForListOfSearches(headerName, nearDupe);
 
@@ -2626,9 +2618,9 @@ public class SavedSearchRegression_New_Set_04 {
 				"To verify, As a RM user login, when user select any folder or sub folder (Node) in saved search page under search group, that will be highlighted");
 
 		// Saved Search
-		String node = saveSearch.createSearchGroupAndReturn(null, "PA");
+		String node = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
-		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		saveSearch.selectNode1(node);
 		base.stepInfo("Selected : " + node);
 		driver.waitForPageToBeReady();
@@ -2669,7 +2661,7 @@ public class SavedSearchRegression_New_Set_04 {
 		newNodeList = saveSearch.createSGAndReturn("Rev", "No", noOfNodesToCreate);
 
 		// select node
-		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		String node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		base.stepInfo("Selected : " + node);
 		driver.waitForPageToBeReady();
@@ -2714,7 +2706,8 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.getSubmitToUpload().Click();
 		saveSearch.verifyBatchUploadMessage("DataFailure", false);
 
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
 				"Searches not uploaded in Saved search screen.");
 		softAssertion.assertAll();
@@ -2803,7 +2796,8 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.getSubmitToUpload().Click();
 		saveSearch.verifyBatchUploadMessage("DataFailure", false);
 
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
 				"Searches not uploaded in Saved search screen.");
 		softAssertion.assertAll();
@@ -2831,7 +2825,7 @@ public class SavedSearchRegression_New_Set_04 {
 				"When the user selects any query from Saved search, selected search and it's folder is highlighted indicating the selection");
 
 		// Saved Search
-		String node = saveSearch.createSearchGroupAndReturn(null, "PA");
+		String node = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "No");
 
 		// basic search
 		session.basicContentSearch(Input.searchString1);
@@ -2839,6 +2833,8 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// selectsaved query from node
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		saveSearch.selectNode1(node);
 		saveSearch.savedSearch_SearchandSelect(search, "Yes");
 		base.stepInfo("Selected : " + search);
@@ -2886,7 +2882,8 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.getSubmitToUpload().Click();
 		saveSearch.verifyBatchUploadMessage("DataFailure", false);
 
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
 				"Searches not uploaded in Saved search screen.");
 		softAssertion.assertFalse(saveSearch.verifyNodePresent(renamedbatchSheet),
@@ -4078,7 +4075,7 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

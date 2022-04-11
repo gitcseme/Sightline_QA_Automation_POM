@@ -594,6 +594,7 @@ public class SearchTermReportPage {
 		driver.waitForPageToBeReady();
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
 		softAssertion.assertEquals(Input.url + "DataAnalysisReport/SearchTermReport", currentUrl);
+		softAssertion.assertAll();
 		bc.stepInfo("Landed on Search Term Report Page : " + currentUrl);
 
 		bc.waitForElement(getNodeCheckBox(Node));
