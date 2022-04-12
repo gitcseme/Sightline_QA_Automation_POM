@@ -1629,4 +1629,20 @@ public class ReusableDocViewPage {
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a mini Doclist child window
+	 */
+	public void clickGearIconMiniDocListChildWindow() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_EditMode());
+		base.waitTillElemetToBeClickable(getDocView_EditMode());
+		getDocView_EditMode().waitAndClick(10);
+		
+		DocViewPage doc = new DocViewPage(driver);
+		base.waitForElement(doc.getDocView_ChildWindowPopOut());
+		base.waitTillElemetToBeClickable(doc.getDocView_ChildWindowPopOut());
+		doc.getDocView_ChildWindowPopOut().waitAndClick(10);
+		
+	}
 }

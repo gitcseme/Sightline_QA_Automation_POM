@@ -3361,6 +3361,12 @@ public class DocViewPage {
 	public ElementCollection getDownloadOption() {
 		return driver.FindElementsByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
 	}
+	
+	//added by Aathith
+	public ElementCollection getDocView_Audio_Hits() {
+		return driver.FindElementsByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -17691,6 +17697,7 @@ public class DocViewPage {
 			base.waitForElement(getVerifyPrincipalDocument());
 			String prnDoc = getVerifyPrincipalDocument().getText();
 			reusableDocView.editCodingForm(comment);
+			driver.scrollPageToTop();
 			base.waitForElement(getCodingFormStampButton());
 			getCodingFormStampButton().waitAndClick(5);
 			reusableDocView.popUpAction(fieldText, colour);
@@ -27262,7 +27269,74 @@ public class DocViewPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
-	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description audio persistant hit display check
+	 */
+	public void audioPersistantHitDisplayCheck() {
+		driver.waitForPageToBeReady();
+
+		// audio eye icon verification
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		base.stepInfo("Audio eye icon is clicked");
+		base.elementDisplayCheck(getAudioPersistantHitEyeIcon());
+		base.stepInfo("Audio eye icon is displayed in docview");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString1
+	 * @param SearchString2
+	 * @param SearchString3
+	 * @Description verify the audio persisten hit value
+	 */
+	public void verifyAudioPersistenHitValues(String SearchString1, String SearchString2, String SearchString3) {
+		driver.waitForPageToBeReady();
+		List<WebElement> audiohits = getDocView_Audio_Hits().FindWebElements();
+		for (WebElement hits :audiohits) {
+			String StringInPanels = hits.getText().trim().toString().toLowerCase();
+			if(StringInPanels.contains(SearchString1)) {
+				base.passedStep(SearchString1+" is diplayed");
+			}if(StringInPanels.contains(SearchString2)) {
+				base.passedStep(SearchString2+" is diplayed");
+			}if(StringInPanels.contains(SearchString3)) {
+				base.passedStep(SearchString3+" is diplayed");
+			}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString
+	 * @Description value not displayed check
+	 */
+	public void verifyAudioPersistanHitNotDisplayed(String SearchString) {
+
+		driver.waitForPageToBeReady();
+		if (getAudioPersistentHits().isDisplayed()) {
+			base.passedStep("Persistent hits panel is displayed as expected");
+		} else {
+			base.failedStep("Persistent Hit panel is not displayed as expected");
+		}
+		base.waitForElement(getDocView_Audio_Hit());
+		String StringInPanels = getDocView_Audio_Hit().getText();
+
+		System.out.println("expected text" + StringInPanels);
+		if(!StringInPanels.contains(SearchString)) {
+			base.passedStep(SearchString+"search string not displayed");
+		}else {
+			base.failedStep("seach string displayed");
+		}
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a miniDocList Child window
+	 */
+	public void childWindow_MiniDocList() {
+		driver.scrollPageToTop();
+		reusableDocView.clickGearIconMiniDocListChildWindow();
+		reusableDocView.switchTochildWindow();
+	}
 	
 
 }
