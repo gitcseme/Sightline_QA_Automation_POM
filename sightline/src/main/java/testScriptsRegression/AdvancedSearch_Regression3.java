@@ -41,10 +41,9 @@ public class AdvancedSearch_Regression3 {
 
 	String prefixID = "A_" + Utility.dynamicNameAppender();
 	String suffixID = "_P" + Utility.dynamicNameAppender();
-	String productionname = "prod" + Utility.dynamicNameAppender();
+	String productionname = "AdvancedSearchRegression3";//"prod" + Utility.dynamicNameAppender();
+	String tagname = "Tag_Productions" ;//"Tag" + Utility.dynamicNameAppender();
 	String foldername = "FolderProd" + Utility.dynamicNameAppender();
-	String tagname = "Tag" + Utility.dynamicNameAppender();
-
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException, AWTException {
 
@@ -52,6 +51,7 @@ public class AdvancedSearch_Regression3 {
 
 	//	Input in = new Input();
 	//	in.loadEnvConfig();
+		
 		// Open browser
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
@@ -59,18 +59,21 @@ public class AdvancedSearch_Regression3 {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// Pre-requesites creation
-
-		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		
+//If we want to generate production via code pls  un comment the below lines[Production generation 
+//code] and change the hard coded 'tagname' and 'productionname' Variable value.
+		
+	/*	baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tp.CreateFolder(foldername, Input.securityGroup);
-		tp.createNewTagwithClassification(tagname, "Privileged");
+		tp.createNewTagwithClassification(tagname, "Privileged");     */
 
-		// search for folder
+		// search for Bulk Tag
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		hitsCountPA = sessionSearch.verifyPureHitsCount();
-		sessionSearch.bulkTagExisting(tagname);
+/*	    sessionSearch.bulkTagExisting(tagname);
 		baseClass.stepInfo("Created a Tag " + tagname + "Count of docs bulk tagged " + hitsCountPA);
 
 		// create production with DAT,Native,PDF& ingested Text
@@ -91,7 +94,7 @@ public class AdvancedSearch_Regression3 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopup();    */
 		lp.logout();
 		lp.closeBrowser(); 
 	}
@@ -699,12 +702,60 @@ public class AdvancedSearch_Regression3 {
 		lp.logout();
 	}
 	/**
+	 * @author Sowndarya
+	 * @throws InterruptedException
+	 * @description To verify, As an PA login into the Application, when user select
+	 *              a multiple production with production status as "Already
+	 *              Produced" from work product tab, he will be able to set that as
+	 *              an search criteria
+	 *                [  Note-Minimum of two productions[Completed] should be there in project.]
+	 */
+	@Test(description ="RPMXCON-47755",groups = { "regression" }, priority = 14)
+	public void VerifySearchCriteriaWithMultipleProductions() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-47755");
+		baseClass.stepInfo("Verify user can set search criteria with multiple productions");
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		SessionSearch search = new SessionSearch(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		search.switchToWorkproduct();
+		search.selectMultipleProductionstWithAlreadyProducedFilter();
+		search.verifySearchQueryForAlreadyProducedFilter();
+		baseClass.passedStep(
+				"Search criteria is set by selecting Multiple Production and Already Produced Optional Filter.");
+		lp.logout();
+	}
+
+	/**
+	 * @author Sowndarya
+	 * @throws InterruptedException
+	 * @description To verify, As an PA login into the Application, when user select
+	 *              a multiple production with production status as "Selected for
+	 *              productions" from work product tab, he will be able to set that
+	 *              as an search criteria
+	 *              
+	 *           [   Note-Minimum of two productions should be there in project.]
+	 */
+	@Test(description ="RPMXCON-47754",groups = { "regression" }, priority = 15)
+	public void VerifySearchCriteriaWithMultipleProductionsAndOptionalFilter() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-47754");
+		baseClass.stepInfo("Verify user can set search criteria with multiple productions");
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		SessionSearch search = new SessionSearch(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		search.switchToWorkproduct();
+		search.selectMultipleProductionstWithSelectedForProductionFilter();
+		search.verifySearchQueryForSelectedForProductionFilter();
+		baseClass.passedStep(
+				"Search criteria is set by selecting Multiple Production and Selected For Productions Optional Filter.");
+		lp.logout();
+	}
+	/**
 	 * @author Jayanthi.ganesan
 	 * @param username
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47635",dataProvider = "Users",groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-47635",dataProvider = "Users",groups = { "regression" }, priority = 16)
 	public void verifyEmailAllDomain(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id:47635 ");
 		baseClass.stepInfo("Verify that Advanced Search is"
@@ -735,6 +786,7 @@ public class AdvancedSearch_Regression3 {
 		softAssert.assertEquals(docCount, pureHit);
 		softAssert.assertAll();
 		baseClass.passedStep("Email All domains Functionality is working properly in advanced search screen.");
+		lp.logout();
 	}
 
 	@BeforeMethod

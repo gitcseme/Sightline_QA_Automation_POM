@@ -43,8 +43,8 @@ public class Assignment_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		softAssertion=new SoftAssert ();
 		searchText = Input.TallySearch;
@@ -514,12 +514,12 @@ public class Assignment_Regression1 {
 	 * @author Jayanthi.ganesan
 	 * 
 	 * @description: To verify the functionality of the Instructions while creating
-	 *               New Assignment.. (RPMXCON-53797)
+	 *               New Assignment.. (RPMXCON-53796)
 	 */
-	@Test(description ="RPMXCON-53797",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-53796",enabled = true, groups = { "regression" }, priority = 14)
 	public void validateInstructionPopUpInNewAssignment() throws InterruptedException {
 		bc.stepInfo("To verify the functionality of the Instructions while creating New Assignment.");
-		bc.stepInfo("Test case Id:RPMXCON-53797");
+		bc.stepInfo("Test case Id:RPMXCON-53796");
 		String assignmentName = "AR1Assignment" + Utility.dynamicNameAppender();
 		search = new SessionSearch(driver);
 		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);

@@ -3319,94 +3319,69 @@ public class SessionSearch {
 	}
 
 	public void selectTagInASwp(String tagName) {
+		 base.waitForElement(getWP_TagBtn());		
+				getWP_TagBtn().Click();
+				driver.waitForPageToBeReady();
+				System.out.println(getTree().FindWebElements().size());
+				UtilityLog.info(getTree().FindWebElements().size());
+				for (WebElement iterable_element : getTree().FindWebElements()) {
+					if (iterable_element.getText().contains(tagName)) {
+						new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+						driver.scrollingToBottomofAPage();
+						iterable_element.click();
+						break;
+					}
+				}
+				base.waitForElement(getMetaDataInserQuery());
+				getMetaDataInserQuery().Click();
+				driver.scrollPageToTop();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getWP_TagBtn().Visible();
 			}
-		}), Input.wait30);
-		getWP_TagBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree().Visible();
+
+			public void selectFolderInASwp(String folderName) {
+		base.waitForElement(getWP_FolderBtn());
+				getWP_FolderBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+				System.out.println(getTree().FindWebElements().size());
+				UtilityLog.info(getTree().FindWebElements().size());
+				for (WebElement iterable_element : getTree().FindWebElements()) {
+					if (iterable_element.getText().contains(folderName)) {
+						new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+						driver.scrollingToBottomofAPage();
+						iterable_element.click();
+						break;
+					}
+				}
+				base.waitForElement(getMetaDataInserQuery());
+				getMetaDataInserQuery().waitAndClick(10);
+				driver.scrollPageToTop();
+
 			}
-		}), Input.wait30);
-		System.out.println(getTree().FindWebElements().size());
-		UtilityLog.info(getTree().FindWebElements().size());
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(tagName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+
+		//modified by jayanthi 12/4/22 reduced un-necessary waits
+			public void selectSecurityGinWPS(String sgname) {
+				base.waitForElement( getSecurityGrpBtn());		
+				getSecurityGrpBtn().Click();
+				driver.waitForPageToBeReady();
+				System.out.println(getSecurityNamesTree().FindWebElements().size());
+				UtilityLog.info(getSecurityNamesTree().FindWebElements().size());
+				for (WebElement iterable_element : getSecurityNamesTree().FindWebElements()) {
+					// System.out.println(iterable_element.getText());
+					if (iterable_element.getText().contains(sgname)) {
+						new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+						driver.scrollingToBottomofAPage();
+						iterable_element.click();
+						break;
+					}
+				}
 				driver.scrollingToBottomofAPage();
-				iterable_element.click();
-			}
-		}
+				base.waitForElement(getMetaDataInserQuery());
+				getMetaDataInserQuery().waitAndClick(5);
+				driver.scrollPageToTop();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
 			}
-		}), Input.wait30);
-		getMetaDataInserQuery().Click();
-		driver.scrollPageToTop();
 
-	}
 
-	public void selectFolderInASwp(String folderName) {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getWP_FolderBtn().Visible();
-			}
-		}), Input.wait30);
-		getWP_FolderBtn().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree().Visible();
-			}
-		}), Input.wait30);
-		System.out.println(getTree().FindWebElements().size());
-		UtilityLog.info(getTree().FindWebElements().size());
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			if (iterable_element.getText().contains(folderName)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
-			}
-		}
-		getMetaDataInserQuery().waitAndClick(10);
-		driver.scrollPageToTop();
-
-	}
-
-//modified by jayanthi 24/8/21 added scrollingToElementofAPage
-	public void selectSecurityGinWPS(String sgname) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSecurityGrpBtn().Visible();
-			}
-		}), Input.wait30);
-		getSecurityGrpBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree().Visible();
-			}
-		}), Input.wait30);
-		System.out.println(getSecurityNamesTree().FindWebElements().size());
-		UtilityLog.info(getSecurityNamesTree().FindWebElements().size());
-		for (WebElement iterable_element : getSecurityNamesTree().FindWebElements()) {
-			// System.out.println(iterable_element.getText());
-			if (iterable_element.getText().contains(sgname)) {
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				iterable_element.click();
-			}
-		}
-		driver.scrollingToBottomofAPage();
-		driver.scrollingToElementofAPage(getMetaDataInserQuery());
-		getMetaDataInserQuery().waitAndClick(5);
-		driver.scrollPageToTop();
-
-	}
 
 	// modified by Jayanthi 16/9/21
 	public void selectOperator(String operator) {
@@ -3430,91 +3405,63 @@ public class SessionSearch {
 	}
 
 	// Function to perform redaction name search
-	// modified by jayanthi 24/8/21
-	public void selectRedactioninWPS(final String redactName) throws InterruptedException {
+		// modified by jayanthi 12/4/22
+		public void selectRedactioninWPS(final String redactName) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getRedactionBtn().Visible();
-			}
-		}), Input.wait30);
-		getRedactionBtn().Click();
+			base.waitForElement(getRedactionBtn());	
+			getRedactionBtn().Click();
 
-		//
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree().Visible();
-			}
-		}), Input.wait30);
-		System.out.println(getTree().FindWebElements().size());
-		UtilityLog.info(getTree().FindWebElements().size());
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			// System.out.println(iterable_element.getText());
-			if (iterable_element.getText().contains(redactName)) {
+			System.out.println(getTree().FindWebElements().size());
+			UtilityLog.info(getTree().FindWebElements().size());
+			for (WebElement iterable_element : getTree().FindWebElements()) {
+				// System.out.println(iterable_element.getText());
+				if (iterable_element.getText().contains(redactName)) {
 
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				System.out.println(iterable_element.getText());
-				iterable_element.click();
+					new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+					driver.scrollingToBottomofAPage();
+					System.out.println(iterable_element.getText());
+					iterable_element.click();
+					break;
+				}
 			}
+			//
+			// driver.scrollingToBottomofAPage();
+			// added on 24/8/21
+			driver.scrollingToElementofAPage(getMetaDataInserQuery());
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+
+			driver.scrollPageToTop();
+
 		}
-		//
-		// driver.scrollingToBottomofAPage();
-		// added on 24/8/21
-		driver.scrollingToElementofAPage(getMetaDataInserQuery());
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
-			}
-		}), Input.wait60);
-		getMetaDataInserQuery().Click();
-
-		driver.scrollPageToTop();
-
-	}
 
 	// Function to perform assignment name search in work product
-	public void selectAssignmentInWPS(final String assignMentName) throws InterruptedException {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getWP_assignmentsBtn().Visible();
+		public void selectAssignmentInWPS(final String assignMentName) throws InterruptedException {
+	        base.waitForElement(getWP_assignmentsBtn());	
+			getWP_assignmentsBtn().Click();
+			System.out.println(getTree().FindWebElements().size());
+			UtilityLog.info(getTree().FindWebElements().size());
+			for (WebElement iterable_element : getTree().FindWebElements()) {
+				// System.out.println(iterable_element.getText());
+				if (iterable_element.getText().contains(assignMentName)) {
+					new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+					driver.scrollingToBottomofAPage();
+					System.out.println(iterable_element.getText());
+					UtilityLog.info(iterable_element.getText());
+					iterable_element.click();
+					break;
+				}
 			}
-		}), Input.wait30);
-		getWP_assignmentsBtn().Click();
+			//
+			// driver.scrollingToBottomofAPage();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree().Visible();
-			}
-		}), Input.wait30);
-		System.out.println(getTree().FindWebElements().size());
-		UtilityLog.info(getTree().FindWebElements().size());
-		for (WebElement iterable_element : getTree().FindWebElements()) {
-			// System.out.println(iterable_element.getText());
-			if (iterable_element.getText().contains(assignMentName)) {
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(20);
+			driver.scrollPageToTop();
+			base.stepInfo("Assignment is selected in work product - advanced search");
 
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
-				driver.scrollingToBottomofAPage();
-				System.out.println(iterable_element.getText());
-				UtilityLog.info(iterable_element.getText());
-				iterable_element.click();
-			}
 		}
-		//
-		// driver.scrollingToBottomofAPage();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
-			}
-		}), Input.wait60);
-		getMetaDataInserQuery().waitAndClick(20);
-
-		driver.scrollPageToTop();
-		base.stepInfo("Assignment is selected in work product - advanced search");
-
-	}
 
 	public void switchToWorkproduct() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -3830,36 +3777,27 @@ public class SessionSearch {
 	 *                             "productions" or "assignments" )
 	 */
 	public void validateModifiedAdvnSearch(String option, String expectedPureHitCount, String modifiableQueryType) {
+		base.waitTime(5);
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(getModifyASearch());
 		getModifyASearch().ScrollTo();
-		getModifyASearch().waitAndClick(20);
+		getModifyASearch().Click();
 		driver.waitForPageToBeReady();
 		if (modifiableQueryType == "savedsearch") {
-			driver.waitForPageToBeReady();
-			base.waitTillElemetToBeClickable(getModifiableSavedSearchQueryAS());
 			getModifiableSavedSearchQueryAS().waitAndClick(20);
 		}
-
 		else {
-			driver.waitForPageToBeReady();
-			base.waitTillElemetToBeClickable(getModifiableSearchQuery(modifiableQueryType));
 			getModifiableSearchQuery(modifiableQueryType).waitAndClick(20);
-
 		}
 		if (option == "YES") {
-			base.waitTillElemetToBeClickable(getModifysearchOKBtn());
-			getModifysearchOKBtn().waitAndClick(10);
+			base.waitTime(1);
+			getModifysearchOKBtn().waitAndClick(20);
 		} else {
-			base.waitTillElemetToBeClickable(getModifysearchNOBtn());
-			getModifysearchNOBtn().waitAndClick(10);
+			base.waitTime(1);
+			getModifysearchNOBtn().waitAndClick(20);
 		}
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getQuerySearchButton().Visible() && getQuerySearchButton().Enabled();
-			}
-		}), Input.wait60);
+		base.waitForElement(getQuerySearchButton());
 		getQuerySearchButton().waitAndClick(5);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3880,8 +3818,9 @@ public class SessionSearch {
 				+ option + "-" + actualPureHitCount);
 		SoftAssert softAssertion = new SoftAssert();
 		softAssertion.assertEquals(actualPureHitCount, expectedPureHitCount);
-		base.passedStep("Sucessfully verified the PureHits count after modify Search when option is" + option);
 		softAssertion.assertAll();
+		base.passedStep("Sucessfully verified the PureHits count after modify Search when option is" + option);
+		
 	}
 
 	/**
@@ -4095,7 +4034,7 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan Modidfied on-7/2/21
+	 * @author Jayanthi.ganesan Modidfied on-12/4/22
 	 * @param productionName
 	 * @throws InterruptedException
 	 * @description-This method selects the production under Work product-
@@ -4105,29 +4044,19 @@ public class SessionSearch {
 		base.waitForElement(getProductionBtn());
 		getProductionBtn().ScrollTo();
 		getProductionBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree_productions().Visible();
-			}
-		}), Input.wait30);
 		driver.scrollingToBottomofAPage();
 		System.out.println(getTree_productions().FindWebElements().size());
 		for (WebElement iterable_element : getTree_productions().FindWebElements()) {
 			if (iterable_element.getText().contains(productionName)) {
-
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				System.out.println(iterable_element.getText());
 				iterable_element.click();
+				break;
 			}
 		}
 		driver.scrollingToBottomofAPage();
-		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 
@@ -5181,17 +5110,19 @@ public class SessionSearch {
 			if (iterable_element.getText().contains(SaveName)) {
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
+				base.waitTime(2);
 				iterable_element.click();
+				break;
 			}
 		}
 	}
-
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
 	 * @description This method will run and return conceptual hits.
 	 */
 	public int runAndVerifyConceptualSearch() throws InterruptedException {
+		driver.waitForPageToBeReady();
 		base.waitForElement(getConceptuallyPlayButton());
 		getConceptuallyPlayButton().waitAndClick(20);
 		base.waitForElement(getConceptualCount());
@@ -5353,23 +5284,14 @@ public class SessionSearch {
 	 * @description-This method selects the production under Work product-
 	 *                   productions search tree.
 	 */
-	public void selectMultipleProductionstWithAlreadyProducedFilter(String productionName) throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProductionBtn().Visible() && getProductionBtn().Enabled();
-			}
-		}), Input.wait30);
+	public void selectMultipleProductionstWithAlreadyProducedFilter() throws InterruptedException {
+		base.waitForElement(getProductionBtn());
 		getProductionBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree_productions().Visible();
-			}
-		}), Input.wait30);
 		driver.scrollingToBottomofAPage();
 		System.out.println(getTree_productions().FindWebElements().size());
 		UtilityLog.info(getTree_productions().FindWebElements().size());
 
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i < 3; i++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getSelectProductionName(i));
 			getSelectProductionName(i).ScrollTo();
@@ -5383,14 +5305,9 @@ public class SessionSearch {
 		getadwp_assgn_status().waitAndClick(5);
 		base.waitForElement(getDdnAlreadyProducedOption());
 		getDdnAlreadyProducedOption().waitAndClick(5);
-
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 
@@ -5402,49 +5319,33 @@ public class SessionSearch {
 	 * @description-This method selects the production under Work product-
 	 *                   productions search tree.
 	 */
-	public void selectMultipleProductionstWithSelectedForProductionFilter(String productionName)
+	public void selectMultipleProductionstWithSelectedForProductionFilter()
 			throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProductionBtn().Visible() && getProductionBtn().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getProductionBtn());
 		getProductionBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTree_productions().Visible();
-			}
-		}), Input.wait30);
 		driver.scrollingToBottomofAPage();
 		System.out.println(getTree_productions().FindWebElements().size());
 		UtilityLog.info(getTree_productions().FindWebElements().size());
-
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i < 3; i++) {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getSelectProductionName(i));
 			getSelectProductionName(i).ScrollTo();
 			getSelectProductionName(i).waitAndClick(10);
 			selectedProductionName = getSelectProductionName(i).getText();
 			System.out.println(selectedProductionName);
-
 		}
-
 		base.waitForElement(getadwp_assgn_status());
 		getadwp_assgn_status().waitAndClick(5);
 		base.waitForElement(getDdnSelectedForProductionOption());
 		getDdnSelectedForProductionOption().waitAndClick(5);
-
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMetaDataInserQuery().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 
 	}
+
 
 	/**
 	 * @author Jayanthi.ganesan

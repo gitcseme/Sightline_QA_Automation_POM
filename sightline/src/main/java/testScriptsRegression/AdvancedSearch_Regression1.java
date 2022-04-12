@@ -47,8 +47,8 @@ public class AdvancedSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -260,14 +260,15 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47703");
 		baseClass.stepInfo("Verify that Maximum confidence level is set proper on Advanced Search screen");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String AcutalValue = search.VerifyaudioSearchThreshold("right", "North American English", "Max");
-		try {
+		int AcutalValue =Integer.parseInt(search.VerifyaudioSearchThreshold("right", "North American English", "Max"));
+		int expThresholdValue=Integer.parseInt(Input.maxAudioThresholdValue);
+		if (AcutalValue >= expThresholdValue - 5 && AcutalValue <= expThresholdValue) {
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
-			softAssertion.assertEquals(AcutalValue, Input.maxAudioThresholdValue);
-			baseClass.passedStep(
-					"Sucessfully Verified that Maximum confidence level is set proper on Advanced Search screen");
-			softAssertion.assertAll();
-		} catch (Exception e) {
+		baseClass.passedStep(
+				"Sucessfully Verified that Maximum confidence level is set proper on Advanced Search screen");
+	}
+	    else
+	       {
 			baseClass.failedStep(" Maximum confidence level is not set as expected on Advanced Search screen");
 		}
 		loginPage.logout();
@@ -285,14 +286,13 @@ public class AdvancedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47702");
 		baseClass.stepInfo("Verify that Minimum confidence level is set proper on Advanced Search screen");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String AcutalValue = search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "Min");
-		try {
-			softAssertion.assertEquals(AcutalValue, Input.minAudioThresholdValue);
+		int AcutalValue = Integer.parseInt(search.VerifyaudioSearchThreshold(Input.audioSearchString1, Input.language, "Min"));
+		int expThreshold=Integer.parseInt(Input.minAudioThresholdValue);
+		if (AcutalValue >= expThreshold  && AcutalValue <= expThreshold +5) {	
 			baseClass.stepInfo("Threshold Value displayed in Advanced search screen is" + AcutalValue);
 			baseClass.passedStep(
 					"Sucessfully Verified that Minimum confidence level is set proper on Advanced Search screen");
-			softAssertion.assertAll();
-		} catch (Exception e) {
+		} else {
 			baseClass.failedStep(" Minimum confidence level is not set as expected on Advanced Search screen");
 		}
 		loginPage.logout();
@@ -544,55 +544,7 @@ public class AdvancedSearch_Regression1 {
 		loginPage.logout();
 	}
 
-	/**
-	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
-	 * @description To verify, As an PA login into the Application, when user select
-	 *              a multiple production with production status as "Already
-	 *              Produced" from work product tab, he will be able to set that as
-	 *              an search criteria
-	 */
-	@Test(description ="RPMXCON-47755",groups = { "regression" }, priority = 14)
-	public void VerifySearchCriteriaWithMultipleProductions() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-47755");
-		baseClass.stepInfo("Verify user can set search criteria with multiple productions");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-		String productionname = "p" + Utility.dynamicNameAppender();
-
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-		search.switchToWorkproduct();
-		search.selectMultipleProductionstWithAlreadyProducedFilter(productionname);
-		search.verifySearchQueryForAlreadyProducedFilter();
-		baseClass.passedStep(
-				"Search criteria is set by selecting Multiple Production and Already Produced Optional Filter.");
-		loginPage.logout();
-	}
-
-	/**
-	 * @author Jayanthi.ganesan
-	 * @throws InterruptedException
-	 * @description To verify, As an PA login into the Application, when user select
-	 *              a multiple production with production status as "Selected for
-	 *              productions" from work product tab, he will be able to set that
-	 *              as an search criteria
-	 */
-	@Test(description ="RPMXCON-47754",groups = { "regression" }, priority = 15)
-	public void VerifySearchCriteriaWithMultipleProductionsAndOptionalFilter() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-47754");
-		baseClass.stepInfo("Verify user can set search criteria with multiple productions");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-		String productionname = "p" + Utility.dynamicNameAppender();
-
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-		search.switchToWorkproduct();
-		search.selectMultipleProductionstWithSelectedForProductionFilter(productionname);
-		search.verifySearchQueryForSelectedForProductionFilter();
-		baseClass.passedStep(
-				"Search criteria is set by selecting Multiple Production and Selected For Productions Optional Filter.");
-		loginPage.logout();
-	}
+	
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -600,7 +552,7 @@ public class AdvancedSearch_Regression1 {
 	 * @description Verify Audio threshold value saved correctly under My Saved
 	 *              Search
 	 */
-	@Test(description ="RPMXCON-46981",dataProvider = "AudioSearchwithUsers", groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-46981",dataProvider = "AudioSearchwithUsers", groups = { "regression" }, priority = 14)
 	public void VerifyAudio_ModifySearchInMySavedSearch(String username, String password, String ImpersonateOption)
 			throws InterruptedException {
 		String Search1 = "AudioSearchONE" + Utility.dynamicNameAppender();
@@ -670,7 +622,7 @@ public class AdvancedSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @description Verify Audio threshold value saved correctly under Shared folder
 	 */
-	@Test(description ="RPMXCON-46982",dataProvider = "AudioSearchwithUsers", groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-46982",dataProvider = "AudioSearchwithUsers", groups = { "regression" }, priority = 15)
 	public void VerifyAudio_ModifySearchInSharedFolder(String username, String password, String ImpersonateOption)
 			throws InterruptedException {
 		String Search1 = "AudioSearchONE" + Utility.dynamicNameAppender();
@@ -750,7 +702,7 @@ public class AdvancedSearch_Regression1 {
 	 *              Dialect list box
 	 * 
 	 */
-	@Test(description ="RPMXCON-47707",dataProvider = ("DDLanguage"), groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-47707",dataProvider = ("DDLanguage"), groups = { "regression" }, priority = 16)
 	public void VerifyAudioSearchLanguageDropdown(String Language) throws InterruptedException {
 		if (Language == "German") {
 			baseClass.stepInfo("Test case Id: RPMXCON-47707");
@@ -772,7 +724,7 @@ public class AdvancedSearch_Regression1 {
 	 *              to set the default precision for concept search in advanced
 	 *              search & get the search results based on that .
 	 */
-	@Test(description ="RPMXCON-47745",dataProvider = ("SavedSearchwithUsers"), groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-47745",dataProvider = ("SavedSearchwithUsers"), groups = { "regression" }, priority = 17)
 	public void VerifyDefaultConceptualSearch(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47745");
 		baseClass.stepInfo("To verify, as an user login into the Application, I will be able to set the default "
@@ -790,7 +742,7 @@ public class AdvancedSearch_Regression1 {
 	 *              documents) and clicks on "Conceptually Similar" tile.
 	 *              RPMXCON-57246
 	 */
-	@Test(description ="RPMXCON-57246",groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-57246",groups = { "regression" }, priority = 18)
 	public void verifyConceptualCountUsingAllthreadedAdvOption() throws InterruptedException {
         baseClass.stepInfo("Test case Id: RPMXCON-57246");
         baseClass.stepInfo("Verify that Conceptually Similartile result appears when user"
@@ -814,7 +766,7 @@ public class AdvancedSearch_Regression1 {
      *              documents) and clicks on "Conceptually Similar" tile.
      *              RPMXCON-57247
      */
-    @Test(description ="RPMXCON-57247",groups = { "regression" }, priority = 21)
+    @Test(description ="RPMXCON-57247",groups = { "regression" }, priority = 19)
     public void verifyConceptualCountUsingFamilyMembersAdvOption() throws InterruptedException {
         baseClass.stepInfo("Test case Id: RPMXCON-57247");
         baseClass.stepInfo("Verify that Conceptually Similartile result appears when user"
@@ -837,7 +789,7 @@ public class AdvancedSearch_Regression1 {
      *              textual near duplicate documents) and clicks on "Conceptually
      *              Similar" tile. RPMXCON-57248
      */
-    @Test(description ="RPMXCON-57248",groups = { "regression" }, priority = 22)
+    @Test(description ="RPMXCON-57248",groups = { "regression" }, priority = 20)
     public void verifyConceptualCountUsingNearDupeDocsAdvOption() throws InterruptedException {
         baseClass.stepInfo("Test case Id: RPMXCON-57248");
         baseClass.stepInfo("Verify that Conceptually Similartile result appears when user"
@@ -860,7 +812,7 @@ public class AdvancedSearch_Regression1 {
 	 *              able to search by Applying By Pass sanitization filter on
 	 *              Folders in work product tab TestCaseNo-47784
 	 */
-	@Test(description ="RPMXCON-47784",groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-47784",groups = { "regression" }, priority = 21)
 	public void verifySantizationFilterForFoldersInwp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47784");
 		baseClass.stepInfo(
@@ -887,7 +839,7 @@ public class AdvancedSearch_Regression1 {
 	 *              able to search by Applying By Pass sanitization filter on Saved
 	 *              search in work product tab TestCaseNo-47785
 	 */
-	@Test(description ="RPMXCON-47785",groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-47785",groups = { "regression" }, priority = 22)
 	public void verifySantizationFilterForSavedSearchInwp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47785");
 		baseClass.stepInfo(
@@ -913,7 +865,7 @@ public class AdvancedSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void TallyResult() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47957 - Saved Search Sprint 05");
