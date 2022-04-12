@@ -5194,6 +5194,211 @@ public class DocViewAudio_IndiumRegression {
 
 			loginPage.logout();
 		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 12/04/2022 Modified by: Baskar
+		 * Description:Verify that Video files 'Move Player Head' functionality is 
+		 *             working properly inside Doc view screen
+		 * 
+		 */
+
+		@Test(enabled = true,dataProvider="userDetails", groups = { "regression" }, priority = 73)
+		public void validatingMovePlayerHead(String fullName,String userName,String password) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59963");
+			baseClass.stepInfo("Verify that Video files 'Move Player Head' functionality is working "
+					+ "properly inside Doc view screen");
+			// Login as 
+			loginPage.loginToSightLine(userName, password);
+			baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+			docViewPage = new DocViewPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			// search to docview
+			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+			sessionSearch.ViewInDocViews();
+			baseClass.waitTime(2);
+			long currentTime = (long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+			Double durationTime = (Double) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').duration;");
+			int size=(int) (durationTime-100);
+			System.out.println(size);
+			// moving the player head
+			baseClass.waitTime(2);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').currentTime="+size+";");
+			long playerMoved = (long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
+			if (currentTime!=playerMoved) {
+				baseClass.passedStep("Player head is moveable in video docview screen");
+				
+			}
+			else {
+				baseClass.failedStep("player head is not moved");
+			}
+			// logout
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 12/04/2022 Modified by: Baskar
+		 * Description:Verify that when document present in different save searches with common term then, 
+		 *             should not display repetitive search term on persistent hits panel on document 
+		 *             navigation options [<<, <, >, >>, enter document number]
+		 * 
+		 */
+		@Test(enabled = true, groups = { "regression" }, priority = 74)
+		public void audioMultidd() throws InterruptedException, ParseException {
+			baseClass = new BaseClass(driver);
+			docViewPage = new DocViewPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+			SavedSearch saveSearch = new SavedSearch(driver);
+			String commonDocName = "";
+			Set<String> hash_Set = new HashSet<String>();
+			List<String> docIDlist = new ArrayList<>();
+			List<String> docIDlistT = new ArrayList<>();
+			String audioSearchInput = "interview";
+			String audioSearchInput1 = "interview six";
+			String[] stringDatas = { audioSearchInput, audioSearchInput1 };
+			String SearchName = "SearchName" + Utility.dynamicNameAppender();
+			String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+
+			baseClass.stepInfo("Test case Id: RPMXCON-51806");
+			baseClass.stepInfo(
+					"Verify that when document present in different save searches with "
+					+ "common term then, should not display repetitive search term on persistent hits panel on document navigation options [<<, <, >, >>, enter document number]");
+
+			// Login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+			// Perform create node - Search - SaveSearch in nodes
+			String nodeName = saveSearch.createSearchGroupAndReturn("", Input.rmu1FullName, "No");
+
+			// Audio Search
+			sessionSearch.audioSearch(audioSearchInput, Input.language);
+			sessionSearch.saveSearchInNewNode(SearchName, nodeName);
+
+			// Launch DocVia via Search
+			sessionSearch.ViewInDocViews();
+
+			// Main method
+			docIDlist = miniDocListpage.getDocListDatas();
+			hash_Set = baseClass.addListIntoSet(docIDlist);
+			baseClass.selectproject();
+
+			// Audio Search
+			sessionSearch.audioSearch(audioSearchInput1, Input.language);
+			sessionSearch.saveSearchInNewNode(SearchName1, nodeName);
+
+			// Launch DocVia via Search
+			sessionSearch.ViewInDocViews();
+
+			// Main method
+			docIDlistT = miniDocListpage.getDocListDatas();
+			baseClass.stepInfo("Select a document present in both the searches ");
+			commonDocName = docViewPage.pickFirstDuplicate(docIDlistT, hash_Set);
+
+			// Launch DocVia via Saved Search
+			saveSearch.navigateToSSPage();
+			saveSearch.selectNode1(nodeName);
+			driver.waitForPageToBeReady();
+			saveSearch.getToDocView().waitAndClick(5);
+
+			// Persistant data to check
+			miniDocListpage.getDocListDatas();
+			miniDocListpage.getDociD(commonDocName).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String docID = docViewPage.getDocView_CurrentDocId().getText();
+			baseClass.stepInfo("Current viewed document : " + docID);
+			baseClass.textCompareEquals(commonDocName, docID,
+					"User on audio doc view and selected document is same as on audio doc view", "Audio DocView failed");
+			docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			// verifySearchTermlist
+			docViewPage.verifySearchTermlist(stringDatas, "equalsP", 1,
+					"earch term not been displayed repetitively on persistent hit panel",
+					"search term displayed repetitively on persistent hit panel");
+
+			// Delete created Node
+			baseClass.stepInfo("Initiating delete nodes");
+			saveSearch.deleteNode(Input.mySavedSearch, nodeName);
+
+			loginPage.logout();
+
+		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 12/04/2022 Modified by: Baskar
+		 * Description:Verify that User can add redaction and Save Video file documents 
+		 *              inside Doc view screen
+		 * @throws ParseException 
+		 * 
+		 */
+
+		@Test(enabled = true, groups = { "regression" }, priority = 75)
+		public void validatingMovePlayerHeads() throws InterruptedException, ParseException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59816");
+			baseClass.stepInfo("Verify that User can add redaction and Save Video file "
+					+ "documents inside Doc view screen\r\n"
+					+ "");
+			// Login as 
+			String headerName = "RedactionTags";
+			int index;
+			String RedactName = "new" + Utility.dynamicNameAppender();
+
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
+
+			docViewPage = new DocViewPage(driver);
+			RedactionPage redact = new RedactionPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			redact.AddRedaction(RedactName, Input.rmu1FullName);
+			
+			// search to docview
+			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+			sessionSearch.ViewInDocViews();
+			baseClass.waitTime(2);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play();");
+			
+			// adding redactions
+			driver.waitForPageToBeReady();
+			docViewPage.getDocview_RedactionsTab().waitAndClick(10);
+			
+			// click on + icon to add redactions
+			docViewPage.getDocview_RedactionsTab_Add().waitAndClick(10);
+			
+			// Get Audio duration start and End time first
+			docViewPage.audioRedactionTimeConfig();
+			
+			// select redaction tags
+			baseClass.waitForElement(docViewPage.getDocview_AudioRedactions());
+			docViewPage.getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(RedactName);
+			driver.waitForPageToBeReady();
+			
+			// click on save button
+			docViewPage.getSaveButton().waitAndClick(20);
+			
+			// verify success message
+			driver.waitForPageToBeReady();
+			baseClass.VerifySuccessMessage("Record added Successfully");
+			baseClass.CloseSuccessMsgpopup();
+			System.out.println("Redaction added successfully");
+			UtilityLog.info("Redaction added successfully");
+			index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+			baseClass.stepInfo("Audio Redaction functionality is work properly for Video file inside Doc view screen");
+            driver.scrollPageToTop();
+            docViewPage.editCodingForm(RedactName);
+            docViewPage.codingFormSaveButton();
+            baseClass.VerifySuccessMessage("Document saved successfully");
+            baseClass.passedStep("After adding redaction tag user can save the coding form  successfully inside video docview screen");
+            
+			// Audio Redaction Tag deletion
+    		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.scroll(0,350);");
+    		baseClass.waitTime(1);
+			docViewPage.deleteAudioRedactionTag();
+			
+			// logout
+			loginPage.logout();
+		}
 
 	
 	@DataProvider(name = "userDetails")
