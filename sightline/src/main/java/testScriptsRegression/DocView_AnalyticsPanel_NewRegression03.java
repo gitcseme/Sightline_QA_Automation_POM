@@ -201,6 +201,110 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 		loginPage.logout();
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 12/04/2022 Modified date: NA Modified by: NA
+	 * 
+	 * @description:Verify that thread map presents only threaded emails when threaded document contains email attachment which is not parent/child
+	 * of any other document [non threaded email attachment]. 'RPMXCON-51511' Sprint-13
+	 * 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyThreadedMapEmailsPresentsContainsNonThreadedEmailAttachment() throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51511");
+		baseClass.stepInfo(
+				"Verify that thread map presents only threaded emails when threaded document contains email attachment which is not parent/child of any other document [non threaded email attachment].");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
+		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		//Select Configure Mini DocList Add AttachCount
+		baseClass.stepInfo("Step 3 :Select Configure MiniDocList AttachCount Fields");
+		docView.selectAttachCountDocIdInAvailableField();
+		
+		baseClass.stepInfo("Step 4 :Select Email Attach Docs in MiniDocList");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(55));
+		docView.getDocView_MiniDoc_Selectdoc(55).waitAndClick(5);
+		baseClass.stepInfo("Successfully Selected Email Attach Count Document");
+		
+		//MetaData AttachIds Display
+		String id = docView.selectAttachCountDocIdDisplayMetaData();
+		
+		//AttachIds Not DisPlay AnaltyticsPanel
+		driver.waitForPageToBeReady();
+		docView.selectAttachEmailIdDisplayInAnalyticsPanel(id);
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 12/04/2022 Modified date: NA Modified by: NA
+	 * 
+	 * @description:Verify that thread map presents only threaded emails when threaded document contains email attachment which is
+	 * parent/child of any other document [threaded email attachment]. 'RPMXCON-51512' Sprint-13
+	 * 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyThreadedMapEmailsPresentsContainsParentThreadedEmail() throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51512");
+		baseClass.stepInfo(
+				"Verify that thread map presents only threaded emails when threaded document contains email attachment which is parent/child of any other document [threaded email attachment].");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
+		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		//Select Configure Mini DocList Add AttachCount
+		baseClass.stepInfo("Step 3 :Select Configure MiniDocList AttachCount Fields");
+		docView.selectAttachCountDocIdInAvailableField();
+		
+		baseClass.stepInfo("Step 4 :Select Email Attach Docs in MiniDocList");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(6));
+		docView.getDocView_MiniDoc_Selectdoc(6).waitAndClick(5);
+		baseClass.stepInfo("Successfully Selected Email Attach Count Document");
+		
+		//MetaData AttachIds Display
+		String id = docView.selectAttachCountDocIdDisplayMetaData();
+		
+		//AttachIds Not DisPlay AnaltyticsPanel
+		driver.waitForPageToBeReady();
+		docView.selectAttachEmailIdDisplayInAnalyticsPanel(id);
+
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
