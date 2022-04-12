@@ -56,42 +56,45 @@ public class ModifySearchInAdvancedSearch_Regression{
     String TagName_2="Patch"+ Utility.dynamicNameAppender();
     String folderName_2="Patch"+ Utility.dynamicNameAppender();
 
-	@BeforeClass(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
-		driver = new Driver();
-		baseClass = new BaseClass(driver);
-		search = new SessionSearch(driver);
-		softAssertion=new SoftAssert ();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("Started Execution for prerequisite");
-		loginPage = new LoginPage(driver);
 		searchText = Input.searchString1;
 		
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		driver = new Driver();
+		loginPage=new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		search = new SessionSearch(driver);
+		softAssertion=new SoftAssert ();
 	
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
-		loginPage.logout();
-		System.out.println("logged out");
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
 	}
+
+
 
 	/**
 	 * @author Jayanthi.ganesan 
@@ -283,7 +286,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57976),(RPMXCON-57969)
 	 */
 	
-	@Test(dataProvider = "WPSearchwithOperators",groups = {"regression"},priority=7,enabled=true )
+	//@Test(dataProvider = "WPSearchwithOperators",groups = {"regression"},priority=7,enabled=true )
 		public void validateEditSearchin_AdvnSearchWPproduction(String operator) throws Exception {
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57976");}
@@ -566,11 +569,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
-			loginPage.quitBrowser();
-		} finally {
-			//LoginPage.clearBrowserCache();
-		}
+		System.out.println("Sessions already closed");
 	}
 }
 
