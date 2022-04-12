@@ -11090,5 +11090,45 @@ public class SessionSearch {
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString1
+	 * @param SearchString2
+	 * @param language
+	 * @return
+	 * @Description New audio search with two search string
+	 */
+	public int newAudioSearch(String SearchString1, String SearchString2, String language) {
+
+		base.waitForElement(getCurrentAudioButton());
+		getCurrentAudioButton().waitAndClick(10);
+
+		base.waitForElement(getCurrentLanguageSelectButton());
+		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
+		// Enter seatch string
+		base.waitForElement(get_Current_As_AudioText());
+		get_Current_As_AudioText().SendKeys(SearchString1 + Keys.ENTER + SearchString2 + Keys.ENTER );
+
+		// Click on Search button
+		getAdvanceSearch_btn_Current().Click();
+
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPureHitsCount2ndSearch());
+		
+		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		System.out.println("Audio Search is done for " + SearchString1 + SearchString2 
+				+ " and PureHit is : " + pureHit);
+		UtilityLog.info("Audio Search is done for " + SearchString1 + SearchString2
+				+ " and PureHit is : " + pureHit);
+
+		return pureHit;
+
+	}
 
 }
