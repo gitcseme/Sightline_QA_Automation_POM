@@ -2699,7 +2699,7 @@ public class Production_Regression2 {
 	 *              export only Natives.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyingNativelyProducedDocInProducedFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2860,7 +2860,7 @@ public class Production_Regression2 {
 	 * @DescriptionProduction Document Selection to DocList with Child Documents
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
 	public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
