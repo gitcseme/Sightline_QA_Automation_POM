@@ -61,12 +61,16 @@
 		</resources>
 	</build>
 	<dependencies>
-	<dependency>
-			<groupId>com.thed.zephyr.connect</groupId>
-			<artifactId>zfj-cloud-rest-client</artifactId>
-			<version>3.0</version>
-			<scope>runtime</scope>
-		</dependency>
+<!-- JIRA Changes START -->
+
+
+		<dependency>
+            <groupId>com.thed.zephyr.connect</groupId>
+            <artifactId>zfj-cloud-rest-client</artifactId>
+            <version>3.0</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/com/thed/zephyr/connect/zfj-cloud-rest-client-3.0.jar</systemPath>
+        </dependency>
 
 		<dependency>
 
