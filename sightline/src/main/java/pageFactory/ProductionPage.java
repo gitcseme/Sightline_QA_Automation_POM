@@ -995,7 +995,7 @@ public class ProductionPage {
 	}
 
 	public Element arrowSymbolInHomePage() {
-		return driver.FindElementByXPath("//b[@class='caret']]");
+		return driver.FindElementByXPath("//b[@class='caret']");
 	}
 
 	public Element productionNameInGeneratePage(String productionname) {
@@ -9819,6 +9819,11 @@ public class ProductionPage {
 
 		getManageTemplates().waitAndClick(10);
 
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getNextBtn());
+		getNextBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
 		getDeleteBtn(templateName).ScrollTo();
 		getDeleteBtn(templateName).isElementAvailable(5);
 		base.stepInfo("Delete option is displayed");
