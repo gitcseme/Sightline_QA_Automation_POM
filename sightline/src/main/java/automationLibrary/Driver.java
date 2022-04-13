@@ -37,6 +37,7 @@ import org.openqa.selenium.support.ui.Wait;
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
 import executionMaintenance.UtilityLog;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -249,44 +250,41 @@ public class Driver {
 
 	private WebDriver chromeDriver() {
 
+
+
 		try {
+		// System.setProperty("webdriver.chrome.silentOutput", "true");
+		// System.setProperty("webdriver.chrome.driver",
+		// System.getProperty("user.dir") + "//BrowserDrivers//chromedriver.exe");
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("chrome.switches", "--disable-extensions");
+		new DesiredCapabilities();
+		DesiredCapabilities caps = DesiredCapabilities.chrome();
+		caps.setCapability(ChromeOptions.CAPABILITY, options);
 
-			System.setProperty("webdriver.chrome.silentOutput", "true");
-			System.setProperty("webdriver.chrome.driver",
-					System.getProperty("user.dir") + "//BrowserDrivers//chromedriver.exe");
-			ChromeOptions options = new ChromeOptions();
-			options.addArguments("chrome.switches", "--disable-extensions");
+		Map<String, Object> prefs = new HashMap<String, Object>();
 
-			new DesiredCapabilities();
-			DesiredCapabilities caps = DesiredCapabilities.chrome();
-			caps.setCapability(ChromeOptions.CAPABILITY, options);
-
-			Map<String, Object> prefs = new HashMap<String, Object>();
-
-			prefs.put("profile.default_content_settings.popups", 0);
-			prefs.put("download.prompt_for_download", "false");
-			prefs.put("download.default_directory", "C:\\BatchPrintFiles\\downloads");
-
-			prefs.put("credentials_enable_service", false);
-			prefs.put("profile.password_manager_enabled", false);
-			options.setExperimentalOption("prefs", prefs);
-			// Added by : Raghuram A - to disable "Chrome is being controlled by Automated
-			// software" while execution
-			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
-
-			driver = new ChromeDriver(options);
-			driver.manage().window().maximize();
-			driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-			return driver;
+		prefs.put("profile.default_content_settings.popups", 0);
+		prefs.put("download.prompt_for_download", "false");
+		prefs.put("download.default_directory", "C:\\BatchPrintFiles\\downloads");
+		prefs.put("credentials_enable_service", false);
+		prefs.put("profile.password_manager_enabled", false);
+		options.setExperimentalOption("prefs", prefs);
+		// Added by : Raghuram A - to disable "Chrome is being controlled by Automated
+		// software" while execution
+		options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
+		driver = new ChromeDriver(options);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		return driver;
 		}
-
 		catch (Exception ex) {
-			ex.printStackTrace();
-			throw new RuntimeException("couldnt create chrome driver");
+		ex.printStackTrace();
+		throw new RuntimeException("couldnt create chrome driver");
 		}
-	}
+		}
 
 	private WebDriver edgeDriver() {
 
