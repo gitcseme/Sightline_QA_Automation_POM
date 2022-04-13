@@ -204,6 +204,9 @@ public class Input {
 	public static String highlightDoc1;
 	public static String warning01;
 	public static String ingestionQuery01;
+	public static String sourceDocId10;
+	public static String sourceDocId11;
+	public static String sourceDocId12;
 
 	// DocView codingform Baskar Indium
 
@@ -892,6 +895,9 @@ public class Input {
 		highlightDoc1 = testData.getHighlightDoc1();
 		warning01=testData.getWarning01();
 		ingestionQuery01=testData.getIngestionQuery01();
+		sourceDocId10 = testData.getSourceDocId10();
+		sourceDocId11 = testData.getSourceDocId11();
+		sourceDocId12 = testData.getSourceDocId12();
 		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
