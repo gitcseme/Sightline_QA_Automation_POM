@@ -40,6 +40,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	SoftAssert softAssertion;
 	DocViewRedactions docViewRedact;
 	SavedSearch savedSearch;
+	MiniDocListPage miniDocList;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -3239,6 +3240,61 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 13/04/2022 Modified date: NA Modified by: NA
+	 * 
+	 * @description:Verify that on thread map tab when the principal document is E1,
+	 *                     the thread map presents E1, E2, E3. 'RPMXCON-51517'
+	 *                     Sprint-13
+	 * 
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyThreadedMapEmailsDoesnotPresentEmailsdocs()
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51517");
+		baseClass.stepInfo(
+				"Verify that on thread map tab when the principal document is E1, the thread map presents E1, E2, E3.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		miniDocList = new MiniDocListPage(driver);
+		softAssertion = new SoftAssert();
+		String sourceIdE1 = Input.sourceDocId10;
+		String sourceIdE2 = Input.sourceDocId11;
+		String sourceIdE3 = Input.sourceDocId12;
+
+		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
+		sessionSearch.SearchMetaData("IngestionName", "8DFD_QA_EmailConcatenatedData_SS_20220322044013610");
+		sessionSearch.ViewInDocViews();
+
+		// miniDocList Add SourceDocid in Configure MiniDocList
+		baseClass.stepInfo("Step 3 : Select Source DocId In Available Field");
+		miniDocList.selectSourceDocIdInAvailableField();
+
+		// view the doc From MiniDocList E1 Doc
+		baseClass.stepInfo("Step 3 : Select The SourceId In miniDocList E1 Document");
+		docView.selectTextBoxInDocViewSourceDocId(sourceIdE1);
+
+		// view the doc From MiniDocList E1 Doc
+		baseClass.stepInfo("Step 3 : Select The SourceId In miniDocList E2 Document");
+		docView.selectTextBoxInDocViewSourceDocId(sourceIdE2);
+
+		// view the doc From MiniDocList E1 Doc
+		baseClass.stepInfo("Step 3 : Select The SourceId In miniDocList E3 Document");
+		docView.selectTextBoxInDocViewSourceDocId(sourceIdE3);
+
+		loginPage.logout();
 	}
 
 

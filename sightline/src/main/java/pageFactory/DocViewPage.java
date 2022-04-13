@@ -27338,5 +27338,45 @@ public class DocViewPage {
 		reusableDocView.switchTochildWindow();
 	}
 	
+	/**
+	 * @Author Vijaya.Rani Created on 13/04/2022
+	 * @Description To verify Analytics Threaded Map
+	 * 
+	 */
+	public void selectTextBoxInDocViewSourceDocId(String sourceId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoclist_SourceDocIdText(sourceId).ScrollTo();
+			String sourceDocId = getDocView_MiniDoclist_SourceDocIdText(sourceId).getText();
+			softAssertion.assertEquals(sourceId, sourceDocId);
+			softAssertion.assertTrue(getDocView_MiniDoclist_SourceDocIdText(sourceId).isDisplayed());
+			softAssertion.assertAll();
+			base.passedStep("Doc is viewed in the MiniDoclist successfully");
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoclist_SourceDocIdText(sourceId).waitAndClick(10);
+			//verifyUncompleteCheckMarkForThreadMapTabDocs();
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+			for (int i = 3; i <= 3; i++) {
+				try {
+					base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(i));
+					if (geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed())
+						softAssertion.assertEquals(geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed().booleanValue(), true);
+					softAssertion.assertAll();
+					base.passedStep("Arrow Down Icon is displayed under thread map tab Successfully");
+				} catch (Exception e) {
+					base.failedStep("Arrow Down Icon is not displayed under thread map tab");
+				}
+
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No Doc is viewed from MiniDoclist");
+
+		}
+	}
 
 }

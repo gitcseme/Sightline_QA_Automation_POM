@@ -504,6 +504,10 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("(//*[@id='ulDocViewHistory']/li/a[contains(text(),'ID')])[last()]");
 	}
 
+	public Element getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount() {
+		return driver.FindElementByXPath("//li[text()='FamilyMemberCount']//following-sibling::i");
+	}
+	
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -2301,6 +2305,9 @@ public class MiniDocListPage {
 
 			baseClass.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields());
 			getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().waitAndClick(10);
+
+			baseClass.waitForElement(getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount());
+			getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().waitAndClick(10);
 
 			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("SourceDocID");
 
