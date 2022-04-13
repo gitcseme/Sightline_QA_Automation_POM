@@ -836,6 +836,7 @@ public class ReusableDocViewPage {
 //	Reusable method click analytical panel code same as part of minidoclist
 	public String analyticalDocsPartOfMiniDocList(int count) throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		base.waitForElementCollection(getDocView_MiniListDocuments());
 		List<String> uniqueDocuments= new ArrayList<>();
 		Set<String>docList=new HashSet<String>();
@@ -862,8 +863,8 @@ public class ReusableDocViewPage {
 			}
 		}
 			if (uniqueDocuments.size()<1) {
-				driver.scrollPageToTop();
 			for (int i = 1; i < docList.size(); i++) {
+				driver.scrollPageToTop();
 				getClickDocviewID(++i).waitAndClick(5);
 				base.waitTime(5);
 				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
@@ -871,12 +872,16 @@ public class ReusableDocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!docList.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 						}
 				}
-				break;
-				
-			}
+				if (status == true) {
+					break;
 				}
+
+			}
+		}
 		String docIdText=uniqueDocuments.get(0);
 		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(docIdText));
@@ -884,6 +889,7 @@ public class ReusableDocViewPage {
 		return docIdText;
 
 	}
+	
 	
 	/**
 	 * @author Indium-Baskar
