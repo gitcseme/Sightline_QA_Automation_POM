@@ -304,6 +304,58 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 
 		loginPage.logout();
 	}
+	/**
+	* Author : Aathith date: 13/04/2022 Modified date: NA Modified by: NA
+	*
+	* @description:Verify that thread map presents only emails and doesn't present any attachments of type
+	* email that itself is a parent for other docs. 'RPMXCON-51513' Sprint-13
+	*
+	*
+	*/
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyThreadedMapEmailsDoesnotPresentEmailsdocs() throws ParseException, InterruptedException, IOException {
+
+	baseClass.stepInfo("Test case Id: RPMXCON-51513");
+	baseClass.stepInfo(
+	"Verify that thread map presents only emails and doesn't present any attachments of type email that itself is a parent for other docs.");
+
+	// login as RMU
+	loginPage = new LoginPage(driver);
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.selectproject(Input.additionalDataProject);
+	UtilityLog.info("Logged in as User: " + Input.pa1userName);
+	baseClass.stepInfo(
+	"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+	sessionSearch = new SessionSearch(driver);
+	docView = new DocViewPage(driver);
+	softAssertion = new SoftAssert();
+
+	baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
+	sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+	sessionSearch.ViewThreadedDocsInDocViews();
+
+	//Select Configure Mini DocList Add AttachCount
+	baseClass.stepInfo("Step 3 :Select Configure MiniDocList AttachCount Fields");
+	docView.selectAttachCountDocIdInAvailableField();
+
+	baseClass.stepInfo("Step 4 :Select Email Attach Docs in MiniDocList");
+	driver.waitForPageToBeReady();
+	baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(7));
+	docView.getDocView_MiniDoc_Selectdoc(7).waitAndClick(10);
+	baseClass.stepInfo("Successfully Selected Email Attach Count Document");
+
+	//MetaData AttachIds Display
+	String id = docView.selectAttachCountDocIdDisplayMetaData();
+
+	//AttachIds Not DisPlay AnaltyticsPanel
+	driver.waitForPageToBeReady();
+	docView.selectAttachEmailIdDisplayInAnalyticsPanel(id);
+
+	loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
