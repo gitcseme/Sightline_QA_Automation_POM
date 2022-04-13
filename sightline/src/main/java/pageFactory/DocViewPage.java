@@ -9640,6 +9640,7 @@ public class DocViewPage {
 	public void codeSameAsAnalyticalChildWindow(String fieldValue, String icon, String lastIcon, String lastIcons)
 			throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		List<String> uniqueDocuments = new ArrayList<>();
 		Set<String> duplicates = new HashSet<String>();
 		List<String> miniDocList = reusableDocView.miniDocList();
@@ -9668,10 +9669,11 @@ public class DocViewPage {
 			}
 		}
 		if (uniqueDocuments.size() < 1) {
-			switchToNewWindow(1);
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				base.waitForElement(getClickDocviewID(++i));
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
@@ -9681,10 +9683,14 @@ public class DocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 					}
 				}
-				break;
+				if (status == true) {
+					break;
 
+				}
 			}
 		}
 		String DocIdName = uniqueDocuments.get(0);
@@ -9715,6 +9721,7 @@ public class DocViewPage {
 
 	}
 
+
 	/**
 	 * @author Indium-Baskar date: 15/09/2021 Modified date: NA
 	 * @Description : this method used for code same as last in analytical panel
@@ -9723,6 +9730,7 @@ public class DocViewPage {
 	public void codeSameAsLastAnalytical(String fieldValue, String icon, String lastIcon, String lastIcons)
 			throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		List<String> uniqueDocuments = new ArrayList<>();
 		Set<String> duplicates = new HashSet<String>();
 		List<String> miniDocList = reusableDocView.miniDocList();
@@ -9750,10 +9758,10 @@ public class DocViewPage {
 			}
 		}
 		if (uniqueDocuments.size() < 1) {
-			switchToNewWindow(1);
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
@@ -9763,9 +9771,13 @@ public class DocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 					}
 				}
-				break;
+				if (status == true) {
+					break;
+				}
 
 			}
 		}
