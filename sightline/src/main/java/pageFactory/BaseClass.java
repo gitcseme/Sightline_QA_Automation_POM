@@ -206,9 +206,10 @@ public class BaseClass {
 		return driver.FindElementById("txtsearchUser");
 	}
 
-	public Element getEditButton() {
-		return driver.FindElementByXPath("//a[text()='Edit']");
+	public Element getEditButton(String ProjectName) {
+		return driver.FindElementByXPath("//td[text()='"+ProjectName+"']//following-sibling::td//a[text()='Edit']");
 	}
+
 
 	public Element getFunctionalityButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Functionality')] ");
@@ -2491,9 +2492,9 @@ public class BaseClass {
 		SelectSearchOption().Enter();
 		driver.waitForPageToBeReady();
 
-		waitTillElemetToBeClickable(getEditButton());
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
 		driver.waitForPageToBeReady();
-		getEditButton().waitAndClick(10);
+		getEditButton(Input.projectName).waitAndClick(10);
 		getFunctionalityButton().waitAndClick(20);
 
 		waitTillElemetToBeClickable(UnSelectProductionCheckBox());
@@ -2568,8 +2569,8 @@ public class BaseClass {
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
 		driver.waitForPageToBeReady();
-		waitTillElemetToBeClickable(getEditButton());
-		getEditButton().waitAndClick(10);
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
+		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		selectSecurityGroup(SecurityGrp).ScrollTo();
 		selectSecurityGroup(SecurityGrp).isDisplayed();
@@ -2585,8 +2586,8 @@ public class BaseClass {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
-		waitTillElemetToBeClickable(getEditButton());
-		getEditButton().waitAndClick(10);
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
+		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		selectDefaultSecurityGroup().ScrollTo();
 		driver.waitForPageToBeReady();
