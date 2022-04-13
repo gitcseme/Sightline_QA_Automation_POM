@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Dimension;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -1003,6 +1004,27 @@ public class Regression_Ingestion01 {
 			ingestionPage.verifyRollbackOptionForApprovedIngestion();
 
 		}
+	}
+	
+	/** 
+     *Author :Arunkumar date: 13/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50764
+	 * Description :Verify that after resize browser Ingestion grid does not resize
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 46)
+	public void verifyIngestionGridAfterResizeBrowser()  {
+		loginPage.logout();
+		// Resize browser
+		int width = 1200;
+		int height =900;
+		Dimension dimension = new Dimension(width,height);
+		driver.Manage().window().setSize(dimension);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-50764");
+		baseClass.stepInfo("Verify that after resize browser Ingestion grid does not resize");
+		// verify size of the grid after resize browser
+		ingestionPage.verifySizeOfIngestionGrid();
 	}
 	
 		

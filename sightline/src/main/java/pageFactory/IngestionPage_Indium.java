@@ -940,6 +940,9 @@ public class IngestionPage_Indium {
 	public Element rollbackButtonStatus() {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]//a");
 	}
+	public Element gridTable() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table[@role='grid']");
+	}
 	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -6864,8 +6867,6 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			    	}
 		}
 
-
-
 			/**
 			 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
 			 * @description: this method will verify rollback status for approved ingestion
@@ -6888,10 +6889,45 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			else {
 				base.failedStep("Rollback option available for approved ingestion");
 			}		
-	
-		    	    	
-	
+
 			}
+			
+			/**
+			 * @author: Arun Created Date: 13/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify size of ingestion grid after resize browser
+			 */
+			
+			public void verifySizeOfIngestionGrid() {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByPUBLISHED().waitAndClick(10);
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+		    	getFilterByDRAFT().waitAndClick(10);
+		    	getIngestion_GridView().Click();
+		    	driver.waitForPageToBeReady();
+		    	base.waitTime(2);
+		    	String gridsizeBefore =gridTable().GetAttribute("style");
+		    	System.out.println(gridsizeBefore);
+		    	
+		    	driver.Manage().window().maximize();
+		    	base.waitTime(2);
+		    	String gridsizeAfter=gridTable().GetAttribute("style");
+		    	System.out.println(gridsizeAfter);
+		    	if(gridsizeBefore.equalsIgnoreCase(gridsizeAfter)) {
+		    		base.passedStep("Size of the grid not resized");
+		    	}
+		    	else {
+		    		base.failedStep("Size of the grid resized");
+		    	}
+		    	
+		    	
+			}
+			
 		
 	
 }
