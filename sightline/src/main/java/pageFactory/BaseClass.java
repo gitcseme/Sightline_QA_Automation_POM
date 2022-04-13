@@ -223,7 +223,7 @@ public class BaseClass {
 	}
 
 	public Element selectSecurityGroup(String SecurityGrp) {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='"+SecurityGrp+"']");
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='" + SecurityGrp + "']");
 	}
 
 	public Element selectDefaultSecurityGroup() {
@@ -253,12 +253,12 @@ public class BaseClass {
 	public Element getGlobalMessagePopUpClose() {
 		return driver.FindElementById("btnDialogClose");
 	}
-	
+
 	// added by iyappan
 	public Element getWarningsMsgHeader() {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
 	}
-	
+
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
 	}
@@ -2563,7 +2563,7 @@ public class BaseClass {
 		softAssertion.assertAll();
 	}
 
-	public void SelectSecurityGrp(String username,String SecurityGrp) {
+	public void SelectSecurityGrp(String username, String SecurityGrp) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
@@ -2771,7 +2771,7 @@ public class BaseClass {
 		if (compare) {
 			passedStep(passMsg);
 		} else {
-			failedMessage(failMsg);
+			failedStep(failMsg);
 		}
 
 	}
@@ -3031,7 +3031,7 @@ public class BaseClass {
 		}
 
 		System.out.println(lines.size());
-		for (int i = 1; i < lines.size()-1; i++) {
+		for (int i = 1; i < lines.size() - 1; i++) {
 			String value = lines.get(i);
 			String[] arrOfStr = value.split(",");
 

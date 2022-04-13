@@ -1212,7 +1212,7 @@ public class SavedSearchRegression_New {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = false, groups = { "regression" }, priority = 19)
 	public void validatePASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
@@ -2006,12 +2006,8 @@ public class SavedSearchRegression_New {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
+
 		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
-		try {
-			login.quitBrowser();
-		} catch (Exception e) {
-			login.quitBrowser();
-		}
 	}
 
 }

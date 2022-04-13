@@ -78,6 +78,16 @@ public class SavedSearchAudio_Regresssion {
 		Input in = new Input();
 		in.loadEnvConfig();
 
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod)
+			throws IOException, ParseException, InterruptedException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+
 		// Open browser
 		driver = new Driver();
 		base = new BaseClass(driver);
@@ -88,7 +98,6 @@ public class SavedSearchAudio_Regresssion {
 		softAssertion = new SoftAssert();
 		dcPage = new DocListPage(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
 	}
 
 	/**
@@ -895,14 +904,6 @@ public class SavedSearchAudio_Regresssion {
 		login.logout();
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
-	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
@@ -913,8 +914,14 @@ public class SavedSearchAudio_Regresssion {
 			try { // if any tc failed and dint logout!
 				login.logoutWithoutAssert();
 			} catch (Exception e) {
-//						 TODO: handle exception
+//							 TODO: handle exception
 			}
+		}
+		try {
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
+			login.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
@@ -922,13 +929,6 @@ public class SavedSearchAudio_Regresssion {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
-		} finally {
-			login.clearBrowserCache();
-//			LoginPage.clearBrowserCache();
-		}
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 }
