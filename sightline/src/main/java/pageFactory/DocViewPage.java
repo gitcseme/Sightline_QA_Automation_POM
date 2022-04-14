@@ -7786,15 +7786,13 @@ public class DocViewPage {
 
 			base.waitForElement(getAnalyticalDropDown());
 			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
-			softAssertion.assertAll();
 			getAnalyticalDropDown().waitAndClick(5);
 			base.stepInfo("'View Document' action is displayed on thread map successfully");
 
 			driver.scrollPageToTop();
-
+			base.waitTime(3);
 			base.waitForElement(getDocView_CurrentDocId());
 			softAssertion.assertTrue(getDocView_CurrentDocId().isDisplayed());
-			softAssertion.assertAll();
 			base.stepInfo(
 					"On selecting document and view document action from thread map is displayed in doc view panel with complete DocID successfully");
 			base.passedStep("Both the DocIds are verified successfully");
@@ -19038,6 +19036,7 @@ public class DocViewPage {
 	 */
 	public void performNearDupeWithOutSelectDocActionViewInDocList() {
 
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
