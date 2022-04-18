@@ -78,6 +78,68 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author : Aathith date: NA Modified date: Modified by: 
+	 * Description :Verify when Domain Admin impersonates as PA in domain project and then changes the project from header drop down
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	public void verifyDaImpersateAndChangeProject() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53266");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Verify when Domain Admin impersonates as PA in domain project and then changes the project from header drop down");
+		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		Reporter.log("Logged in as User: " + Input.da1password);
+
+		baseClass.impersonateDAtoPAforMultiDominUser();
+		baseClass.stepInfo("Impersonated as PA in same domain project");
+		
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Changed the project from header drop down");
+		driver.waitForPageToBeReady();
+		baseClass.verifyCurrentProject(Input.additionalDataProject);
+		
+		baseClass.passedStep("Verified when Domain Admin impersonates as PA in domain project and then changes the project from header drop down");
+
+		
+		loginPage.logout();
+
+	}
+	/**
+	 * Author : Aathith date: NA Modified date: Modified by: 
+	 * Description :Verify when Domain Admin impersonates as RMU in domain project and then changes the project from header drop down
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	public void verifyDaImpersateRmuAndChangeProject() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53265");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Verify when Domain Admin impersonates as RMU in domain project and then changes the project from header drop down");
+		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		Reporter.log("Logged in as User: " + Input.da1password);
+
+		baseClass.impersonateDAtoRMU();
+		baseClass.stepInfo("Impersonated as RMU in same domain project");
+		
+		baseClass.selectproject(Input.additionalDataProject);
+		baseClass.stepInfo("Changed the project from header drop down");
+		driver.waitForPageToBeReady();
+		baseClass.verifyCurrentProject(Input.additionalDataProject);
+		
+		baseClass.passedStep("Verified when Domain Admin impersonates as RMU in domain project and then changes the project from header drop down");
+
+		
+		loginPage.logout();
+
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
