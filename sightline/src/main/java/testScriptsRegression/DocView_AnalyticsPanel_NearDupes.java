@@ -543,8 +543,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
-		revDocToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeDoc05;
+		revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -801,8 +801,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
-		revDocToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeDoc05;
+		revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -910,8 +910,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		documentToBeSelected = Input.nearDupeDocIdForReviewer03;
-		revDocToBeSelected = Input.nearDupeDocId;
+		documentToBeSelected = Input.nearDupeDoc05;
+		revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignNearDupeDocuments();
@@ -1230,7 +1230,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// complete the docs
 		docViewPage.completeDocsAndVerifyCheckMark();
 		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer02);
+		docViewPage.selectDocInMiniDocList(Input.conceptualDocIdForReviewer01);
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// Open Near Dupe Comparison window and click Apply coding button
@@ -1534,7 +1534,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		if (executionURL.contains("pt")) {
 			documentToBeSelected = Input.nearDupeDoc05;
 		} else {
-			documentToBeSelected = "ID00001406";
+			documentToBeSelected = "ID00001190";
 		}
 
 		loginPage = new LoginPage(driver);
@@ -1557,7 +1557,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId01);
 
 		baseClass.stepInfo("To Verify that document pagination should work from near dupe comparison window");
 
@@ -1571,7 +1571,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		loginPage.logout();
 
-		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
@@ -1586,7 +1585,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId01);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -1599,7 +1598,6 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		loginPage.logout();
 
-		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		baseClass.stepInfo(
@@ -1615,7 +1613,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		baseClass.stepInfo("Verify whether the near dedupe documents are getting listed in Mini Doc List");
 		docViewPage.verifyNdDocumentsPureHits(ndPureHit);
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocIdForReviewer03);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId01);
 
 		baseClass.stepInfo(
 				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
@@ -3077,7 +3075,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 			revDocToBeSelected = Input.familyDocumentForReviewer;
 		} else {
 			documentToBeSelected = Input.familyDocument;
-			revDocToBeSelected = Input.familyDocumentForReviewer;
+			revDocToBeSelected = Input.familyDocIdForReviewer01;
 		}
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3636,8 +3634,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
 			} else {
-			documentToBeSelected = Input.nearDupeDocIdForReviewer03;
-			revDocToBeSelected = Input.nearDupeDocId;
+				documentToBeSelected = Input.nearDupeDoc05;
+				revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 			}
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
@@ -4038,8 +4036,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 			documentToBeSelected = Input.nearDupeCompletedDocId;
 			revDocToBeSelected = Input.nearDupeDocumentForReviewer;
 			} else {
-			documentToBeSelected = Input.nearDupeDocIdForReviewer03;
-			revDocToBeSelected = Input.nearDupeDocId;
+				documentToBeSelected = Input.nearDupeDoc05;
+				revDocToBeSelected = Input.conceptualDocIdForReviewer01;
 			}
 
 		String searchString = Input.searchString1;
