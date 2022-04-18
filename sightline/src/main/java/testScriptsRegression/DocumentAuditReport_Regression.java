@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -32,8 +33,8 @@ public class DocumentAuditReport_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 	}
 	/**
@@ -54,12 +55,12 @@ public class DocumentAuditReport_Regression {
 		bc.stepInfo("Logged in as -" + role);
 		docaudit = new DocumentAuditReportPage(driver);
 		docaudit.navigateTODocAuditReportPage();
-		docaudit.verifyReportDisplay(Input.NewDocId);
+		docaudit.verifyReportDisplay(Input.docIDs+"0001");
+		lp.logout();
 		
 	}
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
 	  public void validateDocAuditBulkTag(String username, String password, String role) throws InterruptedException {
-			driver = new Driver();
 			bc = new BaseClass(driver);
 			lp = new LoginPage(driver);
 			String tagName="DA"+Utility.dynamicNameAppender();
@@ -74,7 +75,7 @@ public class DocumentAuditReport_Regression {
 			docaudit.navigateTODocAuditReportPage();
 			docaudit.verifyReportDisplay(Input.docIDs+"0001");
 			docaudit.validateDocumentAuditActionColumn("Tagged - Bulk");
-			
+			lp.logout();
 		}
 
 	@BeforeMethod
@@ -88,20 +89,17 @@ public class DocumentAuditReport_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
-			LoginPage lp = new LoginPage(driver);
-			lp.logout();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@DataProvider(name = "Users_PARMU")

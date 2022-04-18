@@ -296,7 +296,7 @@ public class TallyPage {
 	}
 
 	public Element getTallyViewinDocViewBtn() {
-		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idViewInDocview']");
+		return driver.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idViewInDocview']");
 	}
 
 	public Element getSubTallyBulkReleaseAction() {
@@ -406,7 +406,7 @@ public class TallyPage {
 	}
 
 	public Element getSubTallyViewinDocViewBtn() {
-		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idSubTallyViewInDocview']");
+		return driver.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idSubTallyViewInDocview']");
 	}
 	public Element clearingActiveFiltersInTallyBy() {
 		return driver.FindElementByXPath("//strong[text()='ACTIVE FILTERS:']/parent::div//i[@class='fa fa-times-circle']");
@@ -1359,8 +1359,8 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void Tally_ViewInDocView() {
-		base.waitForElement(getTallyViewBtn());
-		getTallyViewBtn().ScrollTo();
+		//base.waitForElement(getTallyViewBtn());
+	//	getTallyViewBtn().ScrollTo();
 		getTallyViewinDocViewBtn().ScrollTo();
 		getTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
@@ -1630,11 +1630,11 @@ public class TallyPage {
 	 * @author Jayanthi.ganesan
 	 */
 	public void SubTally_ViewInDocView() {
-		base.waitForElement(getSubTallyViewBtn());
+		//base.waitForElement(getSubTallyViewBtn());
 		driver.scrollingToBottomofAPage();
 		base.waitTime(1);
-		getSubTallyViewBtn().ScrollTo();
-		getSubTallyViewBtn().ScrollTo();
+		//getSubTallyViewBtn().ScrollTo();
+		//getSubTallyViewBtn().ScrollTo();
 		getSubTallyViewinDocViewBtn().ScrollTo();
 		getSubTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
