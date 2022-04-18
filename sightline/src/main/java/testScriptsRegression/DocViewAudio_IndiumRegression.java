@@ -15,6 +15,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -92,8 +95,8 @@ public class DocViewAudio_IndiumRegression {
 	public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException {
 		System.out.println("Executing method : " + testMethod.getName());
 		UtilityLog.info("Executing method : " + testMethod.getName());
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		 Input in = new Input();
+		 in.loadEnvConfig();
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -2934,7 +2937,8 @@ public class DocViewAudio_IndiumRegression {
 	public Object[][] userLoginDetailsAndRole() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, "PA" },
 				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, "REV" } };
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, "REV" } 
+			};
 	}
 
 	/**
@@ -2944,10 +2948,11 @@ public class DocViewAudio_IndiumRegression {
 	 * @param password
 	 * @param role
 	 * @throws InterruptedException
+	 * @throws AWTException 
 	 */
 	@Test(enabled = true, dataProvider = "userDetailsAndRole", groups = { "regression" }, priority = 41)
 	public void verifyPersistentHit_DifferentSearch(String fullName, String userName, String password, String role)
-			throws InterruptedException {
+			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51848");
 		baseClass.stepInfo(
 				"Verify that when document present in different searches with term then, should display search term on persistent hits panel on"
@@ -2963,7 +2968,7 @@ public class DocViewAudio_IndiumRegression {
 		assignmentPage = new AssignmentsPage(driver);
 		docListPage = new DocListPage(driver);
 
-		if (role.equals("PA")) {
+		if (role.contains("PA")) {
 			audioSearchTerms.add(searchString1);
 			audioSearchTerms.add(searchString2);
 			// creating new node as PA
@@ -3030,6 +3035,8 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("verifying the AudioPersistantHitPanel for document having both audio search term '"
 				+ searchString1 + "' and '" + searchString2 + "'");
 		docViewPage.getDociD(DocIdsWithBothSearchTerm.get(1)).waitAndClick(10);
+		baseClass.waitTime(2);
+		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocIdsWithBothSearchTerm1 = docViewPage.getSelectedDocIdMiniDocList().getText();
 		softAssertion.assertEquals(DocIdsWithBothSearchTerm1, DocIdsWithBothSearchTerm.get(1));
 		baseClass.stepInfo("Document with DocID '" + DocIdsWithBothSearchTerm1
@@ -3041,6 +3048,8 @@ public class DocViewAudio_IndiumRegression {
 		driver.Navigate().refresh();
 		baseClass.stepInfo("verifying the AudioPersistantHitPanel for random document selected using the NumTextBox");
 		docViewPage.searchDocumentBasedOnId(5);
+		baseClass.waitTime(2);
+		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocId1 = docViewPage.getSelectedDocIdMiniDocList().getText();
 		baseClass.stepInfo("Document with DocID '" + DocId1 + "' is selected in MiniDocList panel in DocView Page");
 		List<String> searchTerm1 = docViewPage.selectingTheAudioSearchTermBasedOnDocId(UniqueSearchString1,
@@ -3053,6 +3062,7 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo(
 				"verifying the AudioPersistantHitPanel for random document selected by using the navigation Arrow symbol");
 		docViewPage.performNextNavigation(2);
+		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocId2 = docViewPage.getSelectedDocIdMiniDocList().getText();
 		baseClass.stepInfo("Document with DocID '" + DocId2 + "' is selected in MiniDocList panel in DocView Page");
 		List<String> searchTerm2 = docViewPage.selectingTheAudioSearchTermBasedOnDocId(UniqueSearchString1,
@@ -3082,17 +3092,39 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage = new DocViewPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		String audioSearchString2 = "left";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
 		docViewPage.selectPureHit();
 		driver.waitForPageToBeReady();
 		sessionsearch.modifyAudioSearch(audioSearchString2, Input.language, null);
 		docViewPage.selectPureHit();
-		sessionsearch.ViewInDocView();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(sessionsearch.getBulkActionButton());
+		Thread.sleep(2000); // App synch
+		sessionsearch.getBulkActionButton().waitAndClick(5);
+		Thread.sleep(2000); // App Synch
+		if (sessionsearch.getViewBtn().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(sessionsearch.getViewBtn().getWebElement()));
+			actions.moveToElement(sessionsearch.getViewBtn().getWebElement()).build().perform();
+			baseClass.waitForElement(sessionsearch.getDocViewFromDropDown());
+			sessionsearch.getDocViewFromDropDown().waitAndClick(10);
+		} else {
+			sessionsearch.getDocViewAction().waitAndClick(10);
+			baseClass.waitTime(3); // added for stabilization
+		}
+
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
+
 		baseClass.stepInfo("Searching multiterms in audioDoc view in docview");
 		// click PersistentHits icon on select Docs
 		docViewRedact.checkingPersistentHitPanelAudio();
 		miniDocList.verifyViewDocInPersistentHitPanel(Input.audioSearchString1, audioSearchString2);
 		miniDocList.verifySelectedDocsInClockIcon(audioSearchString2, Input.audioSearchString1);
+		loginPage.logout();
 	}
 
 	/**
@@ -3345,8 +3377,7 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// search to Assignment creation
-		driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.assignmentDistributingToReviewer();
@@ -3414,7 +3445,7 @@ public class DocViewAudio_IndiumRegression {
 
 		// search to Assignment creation
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.toggleCodingStampEnabled();
@@ -4216,7 +4247,8 @@ public class DocViewAudio_IndiumRegression {
 		baseClass.stepInfo("**Verifying that audio hits should be displayed when documents searched with same term and "
 				+ "same threshold navigated to doc view from session search > Bulk Assign**");
 		// verifying the audio hits and triangular arrow Icon
-		docViewPage.clickOnPersistantHitEyeIcon();
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
 
 		// removing the pure Hits in Selected Result
@@ -4254,7 +4286,8 @@ public class DocViewAudio_IndiumRegression {
 				+ "threshold navigated to doc view from session search > Assignments Page>Docview");
 
 		// verifying the audio hits and triangular arrow Icon
-		docViewPage.clickOnPersistantHitEyeIcon();
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString);
 		loginPage.logout();
 
@@ -4607,6 +4640,7 @@ public class DocViewAudio_IndiumRegression {
 		sessionSearch.ViewInDocView();
 		
 		// validating video player docs
+		baseClass.waitTime(3);
 		Long beforeTime=(long) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').currentTime;");
 		System.out.println(beforeTime);
 		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
@@ -4889,7 +4923,82 @@ public class DocViewAudio_IndiumRegression {
 
 		loginPage.logout();
 
-	}/**
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 12/04/2022 Modified by: Baskar
+	 * Description:Verify that User can add redaction and Save Video file documents 
+	 *              inside Doc view screen
+	 * @throws ParseException 
+	 * 
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	public void validatingMovePlayerHeads() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-59816");
+		baseClass.stepInfo("Verify that User can add redaction and Save Video file "
+				+ "documents inside Doc view screen\r\n"
+				+ "");
+		// Login as 
+		String headerName = "RedactionTags";
+		int index;
+		String RedactName = "new" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		RedactionPage redact = new RedactionPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		redact.AddRedaction(RedactName, Input.rmu1FullName);
+		
+		// search to docview
+		sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+		sessionSearch.ViewInDocViews();
+		baseClass.waitTime(2);
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play();");
+		
+		// adding redactions
+		driver.waitForPageToBeReady();
+		docViewPage.getDocview_RedactionsTab().waitAndClick(10);
+		
+		// click on + icon to add redactions
+		docViewPage.getDocview_RedactionsTab_Add().waitAndClick(10);
+		
+		// Get Audio duration start and End time first
+		docViewPage.audioRedactionTimeConfig();
+		
+		// select redaction tags
+		baseClass.waitForElement(docViewPage.getDocview_AudioRedactions());
+		docViewPage.getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(RedactName);
+		driver.waitForPageToBeReady();
+		
+		// click on save button
+		docViewPage.getSaveButton().waitAndClick(20);
+		
+		// verify success message
+		driver.waitForPageToBeReady();
+		baseClass.VerifySuccessMessage("Record added Successfully");
+		baseClass.CloseSuccessMsgpopup();
+		System.out.println("Redaction added successfully");
+		UtilityLog.info("Redaction added successfully");
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+		baseClass.stepInfo("Audio Redaction functionality is work properly for Video file inside Doc view screen");
+        driver.scrollPageToTop();
+        docViewPage.editCodingForm(RedactName);
+        docViewPage.codingFormSaveButton();
+        baseClass.VerifySuccessMessage("Document saved successfully");
+        baseClass.passedStep("After adding redaction tag user can save the coding form  successfully inside video docview screen");
+        
+		// Audio Redaction Tag deletion
+		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.scroll(0,350);");
+		baseClass.waitTime(1);
+		docViewPage.deleteAudioRedactionTag();
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
 	 * Author : Baskar date: NA Modified date: 08/04/2022 Modified by: Baskar
 	 * Description:Verify that Application does not auto Scroll up when User click on download 
 	 *              or Remark option when document contains Video player inside Doc view screen
@@ -5326,81 +5435,6 @@ public class DocViewAudio_IndiumRegression {
 
 		}
 		
-		/**
-		 * Author : Baskar date: NA Modified date: 12/04/2022 Modified by: Baskar
-		 * Description:Verify that User can add redaction and Save Video file documents 
-		 *              inside Doc view screen
-		 * @throws ParseException 
-		 * 
-		 */
-
-		@Test(enabled = true, groups = { "regression" }, priority = 75)
-		public void validatingMovePlayerHeads() throws InterruptedException, ParseException {
-			baseClass.stepInfo("Test case Id: RPMXCON-59816");
-			baseClass.stepInfo("Verify that User can add redaction and Save Video file "
-					+ "documents inside Doc view screen\r\n"
-					+ "");
-			// Login as 
-			String headerName = "RedactionTags";
-			int index;
-			String RedactName = "new" + Utility.dynamicNameAppender();
-
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
-
-			docViewPage = new DocViewPage(driver);
-			RedactionPage redact = new RedactionPage(driver);
-			sessionSearch = new SessionSearch(driver);
-			redact.AddRedaction(RedactName, Input.rmu1FullName);
-			
-			// search to docview
-			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
-			sessionSearch.ViewInDocViews();
-			baseClass.waitTime(2);
-			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play();");
-			
-			// adding redactions
-			driver.waitForPageToBeReady();
-			docViewPage.getDocview_RedactionsTab().waitAndClick(10);
-			
-			// click on + icon to add redactions
-			docViewPage.getDocview_RedactionsTab_Add().waitAndClick(10);
-			
-			// Get Audio duration start and End time first
-			docViewPage.audioRedactionTimeConfig();
-			
-			// select redaction tags
-			baseClass.waitForElement(docViewPage.getDocview_AudioRedactions());
-			docViewPage.getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(RedactName);
-			driver.waitForPageToBeReady();
-			
-			// click on save button
-			docViewPage.getSaveButton().waitAndClick(20);
-			
-			// verify success message
-			driver.waitForPageToBeReady();
-			baseClass.VerifySuccessMessage("Record added Successfully");
-			baseClass.CloseSuccessMsgpopup();
-			System.out.println("Redaction added successfully");
-			UtilityLog.info("Redaction added successfully");
-			index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
-			baseClass.stepInfo("Audio Redaction functionality is work properly for Video file inside Doc view screen");
-            driver.scrollPageToTop();
-            docViewPage.editCodingForm(RedactName);
-            docViewPage.codingFormSaveButton();
-            baseClass.VerifySuccessMessage("Document saved successfully");
-            baseClass.passedStep("After adding redaction tag user can save the coding form  successfully inside video docview screen");
-            
-			// Audio Redaction Tag deletion
-    		((JavascriptExecutor) driver.getWebDriver()).executeScript("window.scroll(0,350);");
-    		baseClass.waitTime(1);
-			docViewPage.deleteAudioRedactionTag();
-			
-			// logout
-			loginPage.logout();
-		}
-
-	
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
