@@ -2676,7 +2676,7 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getHighlightedKeywords() {
-		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='rgb(0, 255, 255)']");
+		return driver.FindElementsByCssSelector("rect[style*='fill: rgb(0, 0, 255);']");
 	}
 
 	public Element getDocView_MiniDoc_SelectDOcId(String DocId) {
@@ -20001,7 +20001,7 @@ public class DocViewPage {
 			System.out.println(keyword.get(0).getCssValue("fill"));
 			String color = keyword.get(0).getCssValue("fill");
 			String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
-			if (keyword.get(0).isDisplayed() && (hex.contentEquals("#00ffff"))) {
+			if (keyword.get(0).isDisplayed() && (hex.contentEquals("#00ffff") || (hex.contentEquals("#0000ff")))) {
 				base.passedStep("Keyword highlighted on doc view successfully");
 				base.passedStep("Keyword highlighted on doc view with expected colour");
 			} else {
