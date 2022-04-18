@@ -7010,9 +7010,14 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 
-		driver.Navigate().refresh();
-		driver.Navigate().refresh();
-		driver.Navigate().refresh();
+		for (int i = 1; i <= 3; i++) {
+			if (getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				break;
+			} else {
+				driver.Navigate().refresh();
+			}
+		}
 
 		base.waitForElement(getApplyCodingNearDedupeBtn());
 		base.waitTillElemetToBeClickable(getApplyCodingNearDedupeBtn());

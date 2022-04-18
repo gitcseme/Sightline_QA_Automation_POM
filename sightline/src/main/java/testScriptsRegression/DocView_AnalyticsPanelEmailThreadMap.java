@@ -1079,6 +1079,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
+		baseClass.waitTime(1);
 		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -1102,6 +1103,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
+		baseClass.waitTime(1);
 		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
@@ -1125,6 +1127,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
 		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
 
+		baseClass.waitTime(1);
 		softAssertion.assertTrue(docView.getDocView_AnalyticsPanel_ThreadMapFirstRow().isDisplayed());
 		softAssertion.assertAll();
 		baseClass.passedStep(
