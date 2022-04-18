@@ -536,17 +536,17 @@ public class SearchTermReportPage {
 		List<Integer> HitsAfterSorting = new ArrayList<>();
 		if (HitsBeforeSorting.size() > 0) {
 			for (int k = 1; k <= 2; k++) {
-				bc.waitForElement(getUniqueHits());
-				getUniqueHits().Click();
+				bc.waitForElement(ele);
+				ele.Click();
 				Thread.sleep(2000);
-				String attribute = getUniqueHits().GetAttribute("aria-sort");
+				String attribute = ele.GetAttribute("aria-sort");
 				if (attribute.equalsIgnoreCase("descending")) {
 					HitsAfterSorting = getColumn(getColumnValues(i));
 					Collections.sort(HitsBeforeSorting, Collections.reverseOrder());
 					bc.stepInfo("Verifying sorting fueature of " + eleValue + " when order is " + attribute);
 					softAssertion.assertEquals(HitsBeforeSorting, HitsAfterSorting);
 				}
-				if (getUniqueHits().GetAttribute("aria-sort").equalsIgnoreCase("ascending")) {
+				if (ele.GetAttribute("aria-sort").equalsIgnoreCase("ascending")) {
 					HitsAfterSorting = getColumn(getColumnValues(i));
 					Collections.sort(HitsBeforeSorting);
 					bc.stepInfo("Verifying sorting fueature of " + eleValue + " when order is " + attribute);
@@ -594,7 +594,6 @@ public class SearchTermReportPage {
 		driver.waitForPageToBeReady();
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
 		softAssertion.assertEquals(Input.url + "DataAnalysisReport/SearchTermReport", currentUrl);
-		softAssertion.assertAll();
 		bc.stepInfo("Landed on Search Term Report Page : " + currentUrl);
 
 		bc.waitForElement(getNodeCheckBox(Node));
