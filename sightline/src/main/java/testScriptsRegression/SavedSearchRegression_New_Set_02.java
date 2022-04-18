@@ -174,8 +174,7 @@ public class SavedSearchRegression_New_Set_02 {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "MySaveSearch" },
 				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "Folder" },
 				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "MySaveSearch" },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "Folder" } 
-		};
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "Folder" } };
 		return users;
 	}
 
@@ -186,8 +185,7 @@ public class SavedSearchRegression_New_Set_02 {
 				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "MySaveSearch" },
 				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, "Folder" },
 				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "MySaveSearch" },
-				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "Folder" } 
-		};
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName, "Folder" } };
 		return users;
 	}
 
@@ -541,11 +539,11 @@ public class SavedSearchRegression_New_Set_02 {
 		saveSearch.checkButtonDisabled(docListIcon, "Should be enabled", "DocList Icon");
 
 		// Get the count of total no.of document list
-		
+
 		saveSearch.launchDocListViaSS(latencyCheckTime, passMessage, failureMsg);
 		finalCountresult = saveSearch.docListPageFooterCountCheck();
 
-		System.out.println(hitCount +" : : " + finalCountresult);
+		System.out.println(hitCount + " : : " + finalCountresult);
 		if (hitCount == finalCountresult) {
 			softAssertion.assertEquals(hitCount, finalCountresult);
 			base.passedStep(
@@ -705,18 +703,19 @@ public class SavedSearchRegression_New_Set_02 {
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
 
 		String newNode = saveSearch.createSearchGroupAndReturn(SearchName, Input.pa1FullName, "No");
+		saveSearch.getCreatedNode(newNode).waitAndClick(5);
 		driver.waitForPageToBeReady();
-		saveSearch.getCreatedNodeName(newNode).waitAndClick(5);
-		System.out.println("Selected : " + newNode);
 		base.stepInfo("Selected : " + newNode);
-		driver.waitForPageToBeReady();
-		base.waitTime(purehits);
-		String bgColor = saveSearch.getCreatedNodeName(newNode).GetCssValue("background-color");
+		String bgColor = saveSearch.getCreatedNode(newNode).GetCssValue("background-color");
 		System.out.println(bgColor);
 		bgColor = base.rgbTohexaConvertor(bgColor);
 
 		// Text Comparision
 		base.textCompareEquals(bgColor, Input.selectionHighlightColor, passMsg, failMsg);
+
+		// Delete node
+		base.stepInfo("Initiating delete node");
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
 
 		login.logout();
 	}
@@ -729,7 +728,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * @throws InterruptedException
 	 * @Stablization - done
 	 */
-	@Test(enabled = true, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 10)
+	@Test(enabled = false, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 10)
 	public void metaDataCombinationSharedSGExecutionwithSAimpAllRoles(String username, String password, String userRole,
 			String saveFlow, String impToRole) throws InterruptedException, ParseException {
 
@@ -768,7 +767,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         documents (RPMXCON-57384) Sprint 06
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "DAUwithAllroles", groups = { "regression" }, priority = 11)
+	@Test(enabled = false, dataProvider = "DAUwithAllroles", groups = { "regression" }, priority = 11)
 	public void metaDataCombinationSharedSGExecutionwithDAimpAllRoles(String username, String password, String userRole,
 			String saveFlow, String impToRole) throws InterruptedException, ParseException {
 
@@ -1579,15 +1578,16 @@ public class SavedSearchRegression_New_Set_02 {
 
 		// Create Node
 		base.stepInfo("Node (or) New Search Group creation");
-		String newNode = saveSearch.createSearchGroupAndReturn(searchName, "PA", "Yes");
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "Yes");
 
 		// Search and save under My Saved Search
 		int pureHits = session.basicContentSearch(Input.searchString1);
-		session.saveSearchInNode(searchName);
+		session.saveSearchInNewNode(searchName, newNode);
 
 		// Landed on Saved Search
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
+		saveSearch.rootGroupExpansion();
 
 		// Share to SG
 		searchID = saveSearch.shareSavedNodePA(SGtoShare, newNode, true, true, searchName);
@@ -2117,12 +2117,13 @@ public class SavedSearchRegression_New_Set_02 {
 		saveSearch.navigateToSavedSearchPage();
 		saveSearch.selectRootGroupTab(Input.mySavedSearch);
 		saveSearch.rootGroupExpansion();
-		
+
 		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
 				searchGroupSearchpIDpair);
 
 		// share the Root node with pa set_01
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectRootGroupTab(Input.mySavedSearch);
 		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
 		System.out.println("Final : " + node);
 		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
@@ -2132,7 +2133,7 @@ public class SavedSearchRegression_New_Set_02 {
 
 		// Adding new searches to root node and leaf node
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		saveSearch.selectRootGroupTab(Input.mySavedSearch);
+//		saveSearch.selectRootGroupTab(Input.mySavedSearch);
 		HashMap<String, String> nodeNewSearchpair = session.addSearchInNodewithChildNode(newNodeList, 1);
 
 		// modify existing search Name
@@ -2240,17 +2241,13 @@ public class SavedSearchRegression_New_Set_02 {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-			login.logoutWithoutAssert();
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
-			base.clearAllCookies();
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
@@ -2260,12 +2257,8 @@ public class SavedSearchRegression_New_Set_02 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
+
 		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
-		try {
-			login.quitBrowser();
-		} catch (Exception e) {
-			login.quitBrowser();
-		}
 	}
 
 }

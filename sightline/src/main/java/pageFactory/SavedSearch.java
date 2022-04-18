@@ -6176,11 +6176,11 @@ public class SavedSearch {
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		try {
-			if (getSelectWithName(searchName).isElementPresent() == true) {
-				softAssertion.assertTrue(true);
+			if (getSelectWithName(searchName).isElementAvailable(3)) {
+//				softAssertion.assertTrue(true);
 				base.passedStep("Search Found :" + searchName);
 			} else {
-				softAssertion.assertTrue(false);
+//				softAssertion.assertTrue(false);
 				base.failedMessage("Search Not Found :" + searchName);
 			}
 		} catch (Exception e) {

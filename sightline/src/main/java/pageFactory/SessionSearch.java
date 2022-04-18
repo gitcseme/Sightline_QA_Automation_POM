@@ -3011,12 +3011,12 @@ public class SessionSearch {
 
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
-		
+
 			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
 			Actions actions = new Actions(driver.getWebDriver());
 			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
 			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
-			
+
 			base.waitForElement(getDocViewFromDropDown());
 			getDocViewFromDropDown().waitAndClick(10);
 		} else {
@@ -4873,7 +4873,7 @@ public class SessionSearch {
 			driver.waitForPageToBeReady();
 			base.stepInfo("Current search string : " + searchString2);
 			getEditSessionSearchTextField(searchNum, searchString2).Click();
-			getTextAreaEdit().Clear();
+//			getTextAreaEdit().Clear();
 			getTextAreaEdit().SendKeys(editSearch);
 			base.stepInfo("Modified search string : " + editSearch);
 			if (actionType.equals("Save")) {

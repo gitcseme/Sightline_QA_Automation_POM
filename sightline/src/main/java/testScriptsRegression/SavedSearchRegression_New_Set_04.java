@@ -153,7 +153,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup()
 			throws Exception {
 
@@ -293,7 +293,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void modificationsInMiddleOfHierarchyWithSecurityGroupAsPA() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -2367,7 +2367,7 @@ public class SavedSearchRegression_New_Set_04 {
 		driver.Navigate().refresh();
 		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(10);
 		saveSearch.performExecute();
-
+		driver.waitForPageToBeReady();
 		// Verify Search Status And Count in all nodes
 		saveSearch.verifyStatusAndCountInAllChildNode(SGtoShare, newNodeList, selectIndex, nodeSearchpair);
 
@@ -2562,6 +2562,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// modifying the saved search
 		saveSearch.getSavedSearchEditButton().waitAndClick(10);
+		base.waitTime(10);// To handle abnormal load time in application
 		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
 		session.getSearchButton().Click();
 
@@ -3017,7 +3018,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Bulk folder done from saved search screen" + folderName);
 		saveSearch.savedSearch_Searchandclick(searchName1);
 		saveSearch.getSavedSearchToBulkFolder().Click();
-		saveSearch.bulkUnFolder("Bulk Unfolder done from saved search screen" + folderName);
+		saveSearch.bulkUnFolder(folderName);
 		base.stepInfo(folderName);
 		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 		tf.navigateToTagsAndFolderPage();
@@ -3830,7 +3831,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              12
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	@Test(enabled = false, groups = { "regression" }, priority = 59)
 	public void verifyErrorMsgOfSearchGroup() throws Exception {
 		String Search = "Search" + Utility.dynamicNameAppender();
 		String Search2 = "Search" + Utility.dynamicNameAppender();
@@ -4109,23 +4110,16 @@ public class SavedSearchRegression_New_Set_04 {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				login.logoutWithoutAssert();
-			} catch (Exception e) {
-//							 TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
-			login.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}

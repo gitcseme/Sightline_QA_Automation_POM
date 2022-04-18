@@ -78,6 +78,15 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		Input in = new Input();
 		in.loadEnvConfig();
 
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+
 		// Open browser
 		driver = new Driver();
 		base = new BaseClass(driver);
@@ -88,7 +97,6 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		softAssertion = new SoftAssert();
 		dcPage = new DocListPage(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
 	}
 
 	/**
@@ -372,7 +380,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *              Advanced Search(Audio) - DRAFT Query >> Edit from saved search
 	 *              page on Search Screen. RPMXCON-48636
 	 */
-	@Test(groups = { "regression" }, priority = 32)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void VerifyReleventMessageInAudioDraftQuery() throws InterruptedException {
 		base.stepInfo("Test case Id:RPMXCON-48636");
 		base.stepInfo(
@@ -403,7 +411,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *              Advanced Search(Conceptual) - DRAFT Query >> Edit from saved
 	 *              search page on Search Screen. RPMXCON-48637
 	 */
-	@Test(groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void VerifyReleventMessageInConceptualDraftQuery() throws InterruptedException {
 		base.stepInfo("Test case Id:RPMXCON-48637");
 		base.stepInfo(
@@ -433,7 +441,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 *              Advanced Search(WorkProduct) - DRAFT Query >> Edit from saved
 	 *              search page on Search Screen. RPMXCON-RPMXCON-48638
 	 */
-	@Test(groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void VerifyReleventMessageInWorkproductDraftQuery() throws InterruptedException {
 		base.stepInfo("Test case Id:RPMXCON-48638");
 		base.stepInfo("Verify that relevant message appears when user Navigate - Advanced Search(WorkProduct) - "
@@ -760,7 +768,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
 	public void sharingLastLeafNode() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 6;
 		int selectIndex = 4;
@@ -839,7 +847,7 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
 	public void VerifyTheDocumentCountforRMU() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-57391");
 		String tagName = "TAG" + Utility.dynamicNameAppender();
@@ -879,26 +887,18 @@ public class SavedSearch_Audio_Regression_Set_03 {
 		return users;
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
-	}
-
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				login.logout();
-			} catch (Exception e) {
-//						 TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			base.clearAllCookies();
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
@@ -906,13 +906,6 @@ public class SavedSearch_Audio_Regression_Set_03 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
-		} finally {
-			login.clearBrowserCache();
-			LoginPage.clearBrowserCache();
-		}
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 }
