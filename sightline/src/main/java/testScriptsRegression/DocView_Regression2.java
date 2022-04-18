@@ -1317,7 +1317,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51115",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-51115",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void verifyPrintIconAfterDisablingToggle() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1334,24 +1334,26 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		docViewRedact.DisablePrintToggleinAssignment();
+		assignmentspage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignmentspage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignmentspage.getAssignmentSaveButton());
+		assignmentspage.getAssignmentSaveButton().Click();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
-		if (docViewRedact.get_PrintIcon().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		String printIconStatus =docViewRedact.get_PrintIcon().GetAttribute("style");
+		if (printIconStatus.contains("none")) {
+			baseClass.passedStep("The print Icon is not present in DocView as expected");
 		} else {
-			assertTrue(false);
-			baseClass.failedStep("The print Icon is present in DoocView - failed");
+			baseClass.failedStep("The print Icon is present in DocView - failed");
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
-		if (docViewRedact.get_PrintIcon().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		if (printIconStatus.contains("none")) {
+			baseClass.passedStep("The print Icon is not present in DocView as expected");
 		} else {
-			assertTrue(false);
-			baseClass.failedStep("The print Icon is present in DoocView - failed");
+			baseClass.failedStep("The print Icon is present in DocView - failed");
 		}
 		loginPage.logout();
 
@@ -3590,7 +3592,7 @@ public class DocView_Regression2 {
 	 * Description :Verify user can download the redacted document from default view using print icon outside of an assignment.
 	 * validated the step of checking the format of Downloaded document in pdf for rectangle and current page redaction
 	 */
-	//@Test(description ="RPMXCON-51107",enabled = true, groups = {"regression" },priority = 76)
+	@Test(description ="RPMXCON-51107",enabled = true, groups = {"regression" },priority = 76)
 	public void verifyDownloadDocsInPDF() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3614,6 +3616,7 @@ public class DocView_Regression2 {
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
 		baseClass.stepInfo("Current Page Redaction Completed");
 		driver.waitForPageToBeReady();
+		docViewRedact.redactionIcon().waitAndClick(10);
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.stepInfo("Rectangle Redaction Completed");
