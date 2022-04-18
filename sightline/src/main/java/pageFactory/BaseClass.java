@@ -3157,5 +3157,55 @@ public class BaseClass {
 		String url = driver.getUrl();
 		textCompareEquals(expURL, url, passMsg, failMsg);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description impersonate Da to pa if Da user is multi domain assigned
+	 */
+	public void impersonateDAtoPAforMultiDominUser() {
+		getSignoutMenu().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait30);
+		getChangeRole().Click();
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait30);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectTo().Visible();
+			}
+		}), Input.wait30);
+		
+		waitForElement(getAvlDomain());
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from DA to PA");
+		UtilityLog.info("Impersnated from DA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectVerify
+	 * @Description verify that current project is selected project
+	 */
+	public void verifyCurrentProject(String projectVerify) {
+		String project = getProjectNames().getText().trim();
+		softAssertion.assertEquals(projectVerify, project);
+		passedStep(projectVerify+" is the Current Project");
+	}
 }
