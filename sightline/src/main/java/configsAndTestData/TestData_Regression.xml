@@ -56,16 +56,13 @@
 		text and audio have already been updated. The searches run in the
 		project will reflect these changes. Rolling back will not roll back
 		the updates to the index, so you MUST rerun indexing for the entire
-		project. Do you want to continue with Rollback?
-	</indexingWarningMessage>
+		project. Do you want to continue with Rollback?</indexingWarningMessage>
 
 
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
-	</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
-	</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -118,14 +115,11 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ICE010058-13-00000001</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183
-	</ingestionQuery>
-	<ingestionDocIdFamilyMember>H16135-0188-002093
-	</ingestionDocIdFamilyMember>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
+	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
-	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610
-	</ingestionQuery01>
+	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
@@ -151,8 +145,7 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>S22936960011001028</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
-	</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -247,15 +240,12 @@
 	</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group
-	</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\
-	</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of
-		typexls/xlsx</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
@@ -265,24 +255,18 @@
 	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\
 	</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
-	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error
-	</batchColumnHeaderErrorFileName>
-	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet
-	</BatchFileWithMultiplesheetFile>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 	<searchString8>XLS OR XLSX OR CSV</searchString8>
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
-	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS
-	</batchFileWithMultiSheetColumnMissing>
-	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS -
-		Duplicate</batchFileWithMultiSheetColumnDuplicate>
+	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
+	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
 	<searchString9>document</searchString9>
-	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange
-	</batchFileWithColumnOrderChange>
-	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS
-	</batchFileWithMultiSheetColumnOrderChange>
+	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange</batchFileWithColumnOrderChange>
+	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS</batchFileWithMultiSheetColumnOrderChange>
 	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
@@ -302,9 +286,7 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded
-		document
-	</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -313,8 +295,7 @@
 	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
-	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error
-	</BatchFileduplicateHeader>
+	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -580,10 +561,8 @@
 	<SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
 	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction
 	</GD994NativeTextForProductionFolder>
-	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file
-	</GNonsearchablePDFLoadfileFolder>
-	<HiddenPropertiesFolder>HiddenProperties_IngestionData
-	</HiddenPropertiesFolder>
+	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 

@@ -1515,7 +1515,7 @@ public class BatchRedactionRegression {
 		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
 		base.hitEnterKey(1);
 		session.selectOperatorInBasicSearch("And");
-		session.basicContentSearchWithSaveChanges(Input.testData1, "Yes", "Third");
+		session.basicContentSearchWithSaveChanges(Input.audioSearch, "Yes", "Third");
 		session.bulkReleaseNearDupeAndDoc(securityGroup);
 
 		login.logout();
@@ -1528,7 +1528,7 @@ public class BatchRedactionRegression {
 		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
 		base.hitEnterKey(1);
 		session.selectOperatorInBasicSearch("And");
-		session.basicContentSearchWithSaveChanges(Input.testData1, "Yes", "Third");
+		session.basicContentSearchWithSaveChanges(Input.audioSearch, "Yes", "Third");
 		session.saveSearch(search);
 
 		// #1
@@ -1564,7 +1564,7 @@ public class BatchRedactionRegression {
 		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
 		base.hitEnterKey(1);
 		session.selectOperatorInBasicSearch("And");
-		session.basicContentSearchWithSaveChanges(Input.testData1, "Yes", "Third");
+		session.basicContentSearchWithSaveChanges(Input.audioSearch, "Yes", "Third");
 		session.ViewInDocView();
 
 		docview.verifyRedactionPanel();
