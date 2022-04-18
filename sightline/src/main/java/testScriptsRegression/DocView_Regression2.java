@@ -1611,7 +1611,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51046",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-51046",enabled = true, groups = { "regression" }, priority = 37)
 	public void verifyKeywordsHighlightingWhenMappedToAssignment() throws InterruptedException, AWTException {
 
 		baseClass = new BaseClass(driver);
@@ -3094,7 +3094,7 @@ public class DocView_Regression2 {
 	 *                 native, text and pdf
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-51965",alwaysRun = true, groups = { "regression" }, priority = 64)
+	@Test(description ="RPMXCON-51965",alwaysRun = true, groups = { "regression" }, priority = 64)
 	public void verifySearchHighlighAndDownloadFiles() throws InterruptedException {
 		String metaDataField = "DocFileExtension";
 		String fileExtensionName = ".wmf";
@@ -3103,6 +3103,7 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51965 sprint 11");
 		baseClass.stepInfo("###Validate Search, Highlighling, PDF creation, and download of native, text and pdf###");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		baseClass.stepInfo("basic metadata search");
@@ -3135,13 +3136,14 @@ public class DocView_Regression2 {
 	 *                 context of an assignment
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-51265",alwaysRun = true, groups = { "regression" }, priority = 65)
+	@Test(description ="RPMXCON-51265",alwaysRun = true, groups = { "regression" }, priority = 65)
 	public void verifyUnicodeFilesInNearNativeView() throws InterruptedException {
 		String AssignmentName = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51265 sprint 10");
 		baseClass
 				.stepInfo("####Verify user can view unicode files in near native view in context of an assignment####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -3193,7 +3195,7 @@ public class DocView_Regression2 {
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Hidden Columns;Protected Sheets";
 		String expectedMessage3 = "Protected Excel Sheets";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51954");
 		baseClass.stepInfo(
 				"Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
@@ -3475,11 +3477,11 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51953
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51953",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =73)
+	@Test(description ="RPMXCON-51953",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =73)
 	public void verifyMessageForHiddenContentDocsFromDocNavigation(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51953");
 		baseClass.stepInfo("Verify that on doc-to-doc navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3497,6 +3499,7 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The hidden info icon is NOT present in the docViewr to indicate hidden content");
 		}
 	}
+	
 	
 
 	/**
