@@ -3206,9 +3206,11 @@ public class DocView_Regression4 {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		String remark = Input.randomText + Utility.dynamicNameAppender();
 
 		// login as RMU
 		loginPage = new LoginPage(driver);
+		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
@@ -3229,7 +3231,9 @@ public class DocView_Regression4 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 3: Select document and click to see Reviewer Remarks");
-		docViewRedact.clickingRemarksIcon();
+		docView = new DocViewPage(driver);
+		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
 
@@ -3240,7 +3244,8 @@ public class DocView_Regression4 {
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.clickingRemarksIcon();
+		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
 
@@ -3252,7 +3257,8 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.clickingRemarksIcon();
+		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
 
@@ -3264,7 +3270,8 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
-		docViewRedact.clickingRemarksIcon();
+		docViewRedact.selectMiniDocListAndViewInDocView(2);
+		docView.addRemarkToNonAudioDocument(1, 20, remark);
 		docViewRedact.verifyReviewerRemarksIsPresent();
 		loginPage.logout();
 
@@ -3279,61 +3286,60 @@ public class DocView_Regression4 {
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-52170", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 43)
-	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
-		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
-		int pureHitCount = 201;
-		// Selecting Document from Session search
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52170");
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.bulkAssign();
-		baseClass.stepInfo("Search with text input for docs completed");
+		public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
+			String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
+			// Selecting Document from Session search
+			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-52170");
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			sessionsearch.basicContentSearch(Input.searchString1);
+			sessionsearch.bulkAssign();
+			baseClass.stepInfo("Search with text input for docs completed");
 
-		// Creating Assignment from Basic search
+			// Creating Assignment from Basic search
 
-		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
-		baseClass.stepInfo(
-				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
+			assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+			baseClass.stepInfo(
+					"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 
-		// Add reviewer and distribute docs and Select Assign and View in DocView
-		assignmentPage.addReviewerAndDistributeDocs(assignmentName, pureHitCount);
-		assignmentPage.editAssignment(assignmentName);
-		docViewRedact.toggleCompletedRedactionTagEnabled();
-		assignmentPage.SelectAssignmentToViewinDocview(assignmentName);
-		baseClass.stepInfo("Reviewer are added and doc distributed and Viewed in Docview successfully");
+			// Add reviewer and distribute docs and Select Assign and View in DocView
+			assignmentPage.add2ReviewerAndDistribute();
+			assignmentPage.selectAssignmentToViewinDocview(assignmentName);
+			baseClass.stepInfo("Reviewer are added and doc distributed and Viewed in Docview successfully");
 
-		// select docs from MiniDoclist
-		docViewRedact.selectMiniDocListAndViewInDocView();
-		baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
+			// select docs from MiniDoclist
+			docViewRedact.selectMiniDocListAndViewInDocView(3);
+			baseClass.stepInfo("Doc is Selected from MiniDocList successfully");
 
-		// Mini doc list having all page redaction
-		docViewRedact.selectRedactionIconAndRedactWholePage();
+			// Mini doc list having all page redaction
+			docViewRedact.selectRedactionIconAndRedactWholePage();
 
-		String parentWindowID = driver.getWebDriver().getWindowHandle();
+			String parentWindowID = driver.getWebDriver().getWindowHandle();
 
-		// MouseHover to CodeAsLastDoc Icon
-		docViewRedact.mouseOverToCodeSameAsLastIcon();
+			// MouseHover to CodeAsLastDoc Icon
+			docViewRedact.mouseOverToCodeSameAsLastIcon();
 
-		// pop-out child window
-		docViewRedact.popOutCodingFormChildWindow();
+			// pop-out child window
+			docViewRedact.popOutCodingFormChildWindow();
 
-		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
-		for (String eachId : allWindowsId) {
-			if (!parentWindowID.equals(eachId)) {
-				driver.switchTo().window(eachId);
+			Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+			for (String eachId : allWindowsId) {
+				if (!parentWindowID.equals(eachId)) {
+					driver.switchTo().window(eachId);
+				}
 			}
+
+			// MouseHover to CodeAsLastDoc Icon
+			docViewRedact.mouseOverToCodeSameAsLastIcon();
+			driver.
+			driver.switchTo().window(parentWindowID);
+			baseClass.passedStep(
+					"'Code this document the same as the last coded document' is displayed when mouserhover to Code Same As Last doc successfully");
+			loginPage.logout();
+
 		}
-
-		// MouseHover to CodeAsLastDoc Icon
-		docViewRedact.mouseOverToCodeSameAsLastIcon();
-		baseClass.passedStep(
-				"'Code this document the same as the last coded document' is displayed when mouserhover to Code Same As Last doc successfully");
-		loginPage.logout();
-
-	}
-
+		
 	/**
 	 * Author : Vijaya.Rani date: 2/12/21 NA Modified date: NA Modified by:NA
 	 * Description :Verify that > and < arrows should work when the hit in the
@@ -3415,7 +3421,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId1);
+		docViewPage.selectDocIdInMiniDocList(Input.StitchedTiffSourceDocID);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -3713,10 +3719,16 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Verify Persistent KW Groups as well as Saved Searching on doc view");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
+		KeywordPage keywordPage = new KeywordPage(driver);
 		docView = new DocViewPage(driver);
 		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
-		String panelText = "basis)";
+		String panelText = "basis)"+ Utility.dynamicNameAppender();
+		
 		SoftAssert softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step1: Add Keyword to the project");
+		keywordPage.navigateToKeywordPage();
+		keywordPage.addKeyword(saveName,panelText, "Blue");
 
 		baseClass.stepInfo("Step 2: Search for documents with search term and save the search");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -3726,6 +3738,7 @@ public class DocView_Regression4 {
 		savedSearch.savedSearchToDocView(saveName);
 
 		baseClass.stepInfo("Step 4: Verify the persistent hit panel from doc view");
+		
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
 

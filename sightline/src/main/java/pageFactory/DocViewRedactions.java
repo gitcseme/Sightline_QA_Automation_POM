@@ -1548,35 +1548,38 @@ public class DocViewRedactions {
 	 * @author Mohan 9/06/21 NA Modified date: NA Modified by:NA
 	 * @description To Select Docs From mini doclist for case number 52170
 	 */
-	public void selectMiniDocListAndViewInDocView() {
-		for (int i = 1; i <= 1; i++) {
-			getDocView_MiniDoc_Selectdoc(i).waitAndClick(10);
-
-		}
-	}
-
-	public void selectRedactionIconAndRedactWholePage() throws Exception {
-		base = new BaseClass(driver);
-		Actions actions = new Actions(driver.getWebDriver());
+public void selectMiniDocListAndViewInDocView(int docNo) {
+		
 		driver.waitForPageToBeReady();
-		base.waitForElement(redactionIcon());
-		redactionIcon().waitAndClick(10);
-		actions.moveToElement(thisPageTagSelect().getWebElement());
-		actions.click().build().perform();
-		System.out.println("Current page is Redacted successfully");
+		getDocView_MiniDoc_Selectdoc(docNo).waitAndClick(10);
+
+		
 	}
 
-	public void popOutCodingFormChildWindow() {
-		base = new BaseClass(driver);
-		Actions actions = new Actions(driver.getWebDriver());
-		base.waitForElement(getGearIcon());
-		driver.waitForPageToBeReady();
-		getGearIcon().waitAndClick(10);
-		actions.moveToElement(popoutCodingForm().getWebElement());
-		actions.click().build().perform();
-		base.stepInfo("Coding form child window opened successfully");
+public void selectRedactionIconAndRedactWholePage() throws Exception {
+	base = new BaseClass(driver);
+	driver.waitForPageToBeReady();
+	base.waitForElement(redactionIcon());
+	redactionIcon().waitAndClick(10);
+	base.waitForElement(thisPageRedaction());
+	thisPageRedaction().waitAndClick(10);
+	base.waitForElement(redactionSave());
+	redactionSave().waitAndClick(10);
+	System.out.println("Current page is Redacted successfully");
+}
 
-	}
+public void popOutCodingFormChildWindow() {
+	base = new BaseClass(driver);
+	Actions actions = new Actions(driver.getWebDriver());
+	base.waitForElement(getGearIcon());
+	driver.waitForPageToBeReady();
+	getGearIcon().waitAndClick(10);
+	actions.moveToElement(getCodingFormStampButton().getWebElement());
+	actions.moveToElement(popoutCodingForm().getWebElement());
+	actions.click().build().perform();
+	base.stepInfo("Coding form child window opened successfully");
+
+}
 
 	public void mouseOverToCodeSameAsLastIcon() {
 		base = new BaseClass(driver);
