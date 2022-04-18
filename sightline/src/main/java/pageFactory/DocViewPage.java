@@ -21810,9 +21810,10 @@ public class DocViewPage {
 			int row = i + 1;
 			if (row <= docrow.size()) {
 				String mindListdocId = doclist.get(row);
+				driver.scrollPageToTop();
 				base.waitForElement(getDocView_Next());
-				base.waitTime(2);
 				getDocView_Next().waitAndClick(5);
+				base.waitTime(2);
 				if (getDocViewPanelDocId(mindListdocId).isElementAvailable(5)
 						&& getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
 					System.out.println("after click on next navigation button miniDOclist Scrolled from " + (row - 1)
@@ -24564,8 +24565,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
-		getAudioPersistantHitEyeIcon().Click();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		getAudioPersistentHits().isElementAvailable(10);
 		if (getAudioPersistentHits().isDisplayed()) {
@@ -25909,8 +25910,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
-		getAudioPersistantHitEyeIcon().Click();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		List<WebElement> AudioPersistentHitsPanels = getAudioPersistentHitsPanels().FindWebElements();
 		List<WebElement> AudioSearchTerms = getDocView_Audio_HitTerms(1).FindWebElements();
@@ -25935,6 +25936,7 @@ public class DocViewPage {
 			base.failedStep(
 					"The Count of Audio Search Terms passed as parameter is not match with the count of Audio search Term Present in the AudioPersistantHitPanel for selected Document");
 		}
+
 
 	}
 

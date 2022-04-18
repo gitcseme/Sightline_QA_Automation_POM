@@ -1949,7 +1949,7 @@ public void popOutCodingFormChildWindow() {
 				deleteButton.click();
 				base.waitForElement(getDeleteAudioRedactYesButton());
 				base.waitTillElemetToBeClickable(getDeleteAudioRedactYesButton());
-				getDeleteAudioRedactYesButton().Click();
+				getDeleteAudioRedactYesButton().waitAndClick(5);
 			}
 			base.passedStep("Deleted all applied redactions successfully");
 		} catch (Exception e) {

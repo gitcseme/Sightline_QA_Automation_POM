@@ -6762,7 +6762,8 @@ public Element getFamilyMembersCount() {
 				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
-
+		bc.waitForElement(getAssgn_TotalCount());
+		bc.waitForElement(getFinalizeButton());
 		getFinalizeButton().waitAndClick(30);
 	}
 

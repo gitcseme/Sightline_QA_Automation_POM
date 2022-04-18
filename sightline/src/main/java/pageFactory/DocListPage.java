@@ -1399,6 +1399,7 @@ public class DocListPage {
 			}
 		}), Input.wait60);
 		getPopUpOkBtn().Click();
+		driver.scrollPageToTop();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

@@ -4246,6 +4246,7 @@ public class MiniDocListPage {
 	public void verifyViewDocInPersistentHitPanel(String searchString, String searchString1) throws Exception {
 		driver.waitForPageToBeReady();
 		DocViewRedactions docviewRedactions = new DocViewRedactions(driver);
+		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
 		String persistenthits = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
 		System.out.println(persistenthits);
 		if (persistenthits.contains(searchString)) {
@@ -4260,9 +4261,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_MiniDocListIds(8));
 		docViewPage.getDocView_MiniDocListIds(8).waitAndClick(10);
-		baseClass.waitForElement(docviewRedactions.persistantHitBtnAudio());
-		docviewRedactions.persistantHitBtnAudio().waitAndClick(30);
-		baseClass.waitTime(5);
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewPage.getDocView_Audio_Hit());
 		String persistenthits1 = docViewPage.getDocView_Audio_Hit().getText().toLowerCase();
 		System.out.println(persistenthits1);

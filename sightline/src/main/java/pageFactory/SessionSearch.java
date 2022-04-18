@@ -10542,41 +10542,46 @@ public class SessionSearch {
 	 * @param searchName
 	 * @param nodeName
 	 * @throws InterruptedException
+	 * @throws AWTException 
 	 */
 	public void saveSearchInNodeUnderGroup(String searchName, String nodeName, String groupName)
-			throws InterruptedException {
+			throws InterruptedException, AWTException {
 		// SaveSearch
-		saveSearchAction();
+				saveSearchAction();
 
-		try {
-			getSaveAsNewSearchRadioButton().waitAndClick(5);
-		} catch (Exception e) {
-			System.out.println("Radio button already selected");
-			UtilityLog.info("Radio button already selected");
-		}
+				try {
+					getSaveAsNewSearchRadioButton().waitAndClick(5);
+				} catch (Exception e) {
+					System.out.println("Radio button already selected");
+					UtilityLog.info("Radio button already selected");
+				}
 
-		if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
-			base.stepInfo(groupName + " : is present");
-			getSaveSearchPopupFolderName(groupName).waitAndClick(10);
-		} else {
-			base.stepInfo(groupName + " : is not present");
-		}
+				if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+					base.stepInfo(groupName + " : is present");
+					getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+				} else {
+					base.stepInfo(groupName + " : is not present");
+				}
 
-		if (getCreatedNode(nodeName).isElementAvailable(7)) {
-			System.out.println("On");
-			getCreatedNode(nodeName).waitAndClick(5);
-		} else {
-			System.out.println("To Expand");
-			getExpandCurrentNode().waitAndClick(20);
-			getCreatedNode(nodeName).waitAndClick(3);
-		}
+				if (getCreatedNode(nodeName).isElementAvailable(7)) {
+					System.out.println("On");
+					getCreatedNode(nodeName).waitAndClick(5);
+				} else {
+					System.out.println("To Expand");
+					Robot robot = new Robot();
+					robot.mouseMove(200, 200);
+					base.waitForElement(getExpandCurrentNode());
+					getExpandCurrentNode().waitAndClick(20);
+					base.waitForElement(getCreatedNode(nodeName));
+					getCreatedNode(nodeName).waitAndClick(3);
+				}
 
-		driver.waitForPageToBeReady();
-		getSaveSearch_Name().SendKeys(searchName);
-		getSaveSearch_SaveButton().Click();
-		base.VerifySuccessMessage("Saved search saved successfully");
-		Reporter.log("Saved the search with name '" + searchName + "'", true);
-		UtilityLog.info("Saved search with name - " + searchName);
+				driver.waitForPageToBeReady();
+				getSaveSearch_Name().SendKeys(searchName);
+				getSaveSearch_SaveButton().waitAndClick(5);
+				base.VerifySuccessMessage("Saved search saved successfully");
+				Reporter.log("Saved the search with name '" + searchName + "'", true);
+				UtilityLog.info("Saved search with name - " + searchName);
 	}
 
 	/**
