@@ -497,15 +497,18 @@ public class DocView_Redactions_Regression {
 		sessionSearch.ViewInDocView();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 40, 40);
 		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
 		driver.scrollPageToTop();
 		docViewRedactions.selectDoc1();
 
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 120);
+		baseClass.waitTime(1);
+		driver.scrollPageToTop();
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 20, 20);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 130);
+		baseClass.waitTime(1);
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10,80, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag2);
 
@@ -522,7 +525,7 @@ public class DocView_Redactions_Regression {
 
 		docViewRedactions = new DocViewRedactions(driver);
 		docViewRedactions.selectFirstDoc().isElementAvailable(10);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 30, 30);
 		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
 		Select select = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
 		String option = select.getFirstSelectedOption().getText();
