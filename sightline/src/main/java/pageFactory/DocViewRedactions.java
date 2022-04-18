@@ -127,7 +127,7 @@ public class DocViewRedactions {
 	}
 
 	public Element redactionSave() {
-		return driver.FindElementByXPath("//*[@id=\"btnSave\"]");
+		return driver.FindElementById("btnSave");
 	}
 
 	public Element redactionForwardNavigate() {
@@ -1375,10 +1375,6 @@ public class DocViewRedactions {
 		multiPageInputSavaBtn().waitAndClick(4);
 	}
 
-	/**
-	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
-	 * Description : Selecting a rectangular tag for redaction
-	 */
 	public void selectingRectangleRedactionTag() throws Exception {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -1389,10 +1385,13 @@ public class DocViewRedactions {
 		rectangleRedactionTagSelect().waitAndFind(10);
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		redactionTag.selectByVisibleText("Default Redaction Tag");
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		base.waitTime(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionSave().Visible() && redactionSave().Enabled();
+			}
+		}), Input.wait30);
+		redactionSave().waitAndClick(20);
+		
 	}
 
 	/**
