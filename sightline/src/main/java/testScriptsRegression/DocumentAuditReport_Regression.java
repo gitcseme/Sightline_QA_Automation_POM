@@ -32,7 +32,6 @@ public class DocumentAuditReport_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
 		Input in = new Input();
 		in.loadEnvConfig();
 
@@ -55,6 +54,7 @@ public class DocumentAuditReport_Regression {
 		bc.stepInfo("Logged in as -" + role);
 		docaudit = new DocumentAuditReportPage(driver);
 		docaudit.navigateTODocAuditReportPage();
+		bc.waitTime(5);
 		docaudit.verifyReportDisplay(Input.docIDs+"0001");
 		lp.logout();
 		
@@ -73,6 +73,7 @@ public class DocumentAuditReport_Regression {
 			search.bulkTag(tagName);
 			docaudit = new DocumentAuditReportPage(driver);
 			docaudit.navigateTODocAuditReportPage();
+			bc.waitTime(5);
 			docaudit.verifyReportDisplay(Input.docIDs+"0001");
 			docaudit.validateDocumentAuditActionColumn("Tagged - Bulk");
 			lp.logout();
@@ -89,6 +90,8 @@ public class DocumentAuditReport_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		bc = new BaseClass(driver);
+		lp = new LoginPage(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);

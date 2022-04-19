@@ -1335,10 +1335,11 @@ public class TallyPage {
 	public void selectMetaData_SubTally(String subtallyBy) throws InterruptedException {
 		base.waitForElement(getSubTallyField());
 		base.waitTillElemetToBeClickable(getSubTallyField());
-		getSubTallyField().Click();
-		base.waitForElement(getTally_subMetadata());
-		getTally_subMetadata().Click();
-		base.waitForElement(getTally_submetadataselect());
+		getSubTallyField().waitAndClick(5);
+		base.waitTime(6);
+		base.waitTillElemetToBeClickable(getTally_subMetadata());
+		getTally_subMetadata().waitAndClick(5);
+		base.waitTillElemetToBeClickable(getTally_submetadataselect());
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText(subtallyBy);
 		base.waitForElement(getTally_subMetadata());
 		String actualFieldName = getSubTallyField().getText();

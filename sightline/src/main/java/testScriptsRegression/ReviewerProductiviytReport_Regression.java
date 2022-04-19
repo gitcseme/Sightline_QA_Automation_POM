@@ -111,6 +111,7 @@ public class ReviewerProductiviytReport_Regression {
 	
 	// Completing the 2 documents
 	driver.waitForPageToBeReady();
+	bc.waitTime(5);
 	docViewPage.CompleteTheDocumentInMiniDocList(2);
 	bc.stepInfo("Document completed successfully");
 	lp.logout();
@@ -122,7 +123,7 @@ public class ReviewerProductiviytReport_Regression {
 	softAssertion = new SoftAssert();
 	
 	//checking the total docs count value in reviwer productivity page
-	softAssertion.assertEquals(2,rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
+	softAssertion.assertEquals("2",rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
 	softAssertion.assertAll();
 	bc.passedStep("Sucessfully verified  the 'Total Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'.");
 	lp.logout();

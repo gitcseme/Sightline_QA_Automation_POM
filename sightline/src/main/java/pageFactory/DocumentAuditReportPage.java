@@ -203,7 +203,7 @@ public class DocumentAuditReportPage {
 		bc.waitForElement(getDocIDTextBox());
 		getDocIDTextBox().SendKeys(DocID);
 		bc.stepInfo("Entered " + DocID + " as doc id value  in doc id text box");
-		bc.waitForElement(getApplyBtn());
+		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().waitAndClick(10);
 		bc.waitForElement(getDocAuditTable());
 		if (getDocAuditTable().isElementPresent()) {
