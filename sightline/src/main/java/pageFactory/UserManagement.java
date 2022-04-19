@@ -2,10 +2,12 @@ package pageFactory;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -489,6 +491,11 @@ public class UserManagement {
 	}
 	public Element getAllReportTab() {
 		return driver.FindElementByXPath("//label[text()='Reports']//parent::a");
+	}
+	
+	//add by Aathith
+	public ElementCollection unAssigneduserlist() {
+		return driver.FindElementsByXPath("//select[@id='UnAssignedUsersForDomain']//option");
 	}
 
 	public UserManagement(Driver driver) {
@@ -1640,6 +1647,31 @@ public class UserManagement {
 		}
 		
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param saUser
+	 * @Description verify that sa user not in the un unassigned user
+	 */
+	public void verifySaUserNotInUnAssigneduser(String saUser) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		List<WebElement> elementList = null;
+		
+			elementList = unAssigneduserlist().FindWebElements();
+			for (WebElement unassign : elementList) {
+
+				String userName = unassign.getText().trim();
+				
+				if (userName.equalsIgnoreCase(saUser)) {
+					bc.failedStep("verification failed");
+					break;
+				} 
+			}
+			bc.passedStep("unAssigned user not contain System Admin user");
+}
 	
 
 }
