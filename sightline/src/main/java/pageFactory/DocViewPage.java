@@ -3367,6 +3367,10 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]");
 	}
 	
+	public Element getDocView_AnalyticsExitingFolderName1() {
+		return driver.FindElementById("82_anchor");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -23153,8 +23157,8 @@ public class DocViewPage {
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName());
-		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
+		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -27397,4 +27401,31 @@ public class DocViewPage {
 		}
 	}
 
+	/**
+	 * @Author Vijaya.Rani Created on 18/04/2022
+	 * @Description To perform CodeSame thread docs in the DocView Test Case id:
+	 *              RPMXCON-51374
+	 * 
+	 */
+	public void performCodeSameForFamilyMembersDocs() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().Displayed();
+			}
+		}), Input.wait60);
+		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+	}
+	
 }
