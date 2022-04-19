@@ -9986,6 +9986,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 04/19/22
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void AssertionInTIFFSection() throws InterruptedException {
@@ -10007,28 +10008,19 @@ public class ProductionPage {
 		getTIFFTab().Click();
 
 		driver.scrollingToBottomofAPage();
+		
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getclkNativelyProducedDocumentLnk().Enabled();
-			}
-		}), Input.wait30);
-		getclkNativelyProducedDocumentLnk().Click();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		base.stepInfo("Disabled priviledge docs");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFillingPlaceHolder().Enabled();
-			}
-		}), Input.wait30);
-		new Actions(driver.getWebDriver()).moveToElement(getFillingPlaceHolder().getWebElement()).click();
-		getFillingPlaceHolder().SendKeys("testing");
+		base.waitForElement(getclkNativelyProducedDocumentLnk());
+		getclkNativelyProducedDocumentLnk().waitAndClick(10);
 
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getMarkCompleteLink());
-		getMarkCompleteLink().Enabled();
+		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-
-		Thread.sleep(5000);
 
 		String ExpectedMsg = "In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.";
 		driver.WaitUntil((new Callable<Boolean>() {

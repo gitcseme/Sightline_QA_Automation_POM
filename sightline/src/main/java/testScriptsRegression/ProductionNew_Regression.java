@@ -75,6 +75,261 @@ public class ProductionNew_Regression {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
 	}
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56132
+	 * @Description:Verify that for the saved template controls in Specify DAT Field
+	 *                     Mapping should be disabled
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	public void verifySavedTemplateControlIsDisabled() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-56132 Production-Sprint 01");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		// create production and fill dat field and verify specify controls
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		productionname = "p" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		// verify saved template controls in dat mapping
+		page.viewSaveTemplateControlForDATMapping();
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56130
+	 * @Description:Verify that on click of Mark Incomplete from the Component
+	 *                     section, already selected Redaction tags should not
+	 *                     available for Redaction text
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	public void verifyClickMarkIncompleteDisablesALreadyRedactedTags() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-56130 Production - Sprint 01");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// create production and fill dat field and verify specify controls
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		productionname = "p" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithBurnRedaction(tagname);
+		page.fillingTextSection();
+		page.clickComponentMarkCompleteAndIncomplete();
+		page.fillingTIFFWithBurningRedactionsAndPreviouslySelectedTagDisabled(tagname);
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON_56163
+	 * @Description:Verify if user selects document level numbering and Sub-Bates
+	 *                     number is null and user select multipage Tiff or PDF then
+	 *                     Production preview is displays without any error
+	 * 
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	public void passingSubBatesNullAndPreview() throws InterruptedException, AWTException {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id: RPMXCON-56163 -Production Sprint 02");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// viewing preview in summary tab after passing null value in sub bates
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFWithMultiPage(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingPageWithDocumentAndPassingNullSubBatesSuccess();
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.viewingPreviewInSummaryTab();
+		base.passedStep("Verified sub bates Null and preview");
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON_56164
+	 * @Description:Verify if user selects document level numbering and Sub-Bates
+	 *                     number is null and user select SinglePage Tiff or PDF
+	 *                     then error message should be displays on 'Numbering and
+	 *                     Sorting' tab
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	public void passingSubBatesNullAndVerifyErrorMessage() throws InterruptedException, AWTException {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id: RPMXCON-56164 -Production Sprint 02");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// viewing preview in summary tab after passing null value in sub bates
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFWithSinglePage(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingPageWithDocumentAndPassingNullSubBatesError();
+		base.passedStep("Verified Error message while passing sub bates Null value");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56149
+	 * @Description:Verify that for Native section should be displayed message which
+	 *                     will inform the user about the privileged and redacted
+	 *                     docs from Production
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	public void verifyTooltipDisplayedOnPreview() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id: RPMXCON-56149 -Production Sprint 02");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create folder and tag
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for the created folder and check the pure hit count
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production using dat,native and display tooltip display on preview
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname,Input.tagNameTechnical);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.viewingToolTipInSummaryAndPreview();
+		base.passedStep("verified Tooltip Displayed On Preview");
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON_56120
+	 * @Description:Verify that on Tiff/PDF section," Redaction without redaction tags" is pre-activated with the text "REDACTED"
+	 *  when user clicks on 'Specify Redaction Text by Selecting Redaction Tags:'
+	 * 
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	public void verifyTiffSectionRedactionTag() throws InterruptedException, AWTException {
+		
+		UtilityLog.info(Input.prodPath);
+
+		base.stepInfo("Test case Id: RPMXCON-56120 -Production Sprint 02");
+	// viewing preview in summary tab after passing null value in sub bates
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingTheTIFFSection();
+		base.passedStep("Verified TIFF section");
+		loginPage.logout();		
+	}
+	
+	/**
+	* @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	*         No:RPMXCON_56099
+	* @Description:Verify the error message for NATIVE component when 'Select Native component without tag and file type
+	*/
+
+	@Test(enabled = false, groups = { "regression" }, priority =7)
+	public void AssertionOnNativeSection() throws Exception {
+	UtilityLog.info(Input.prodPath);
+
+	base.stepInfo("Test case Id: RPMXCON-56099 -Production Sprint 02");
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSectionWithoutSelectingTag();
+	base.passedStep("Error Message for NATIVE is Displayed");
+	loginPage.logout();
+	}
 	
 	/**
 	* @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
@@ -237,6 +492,7 @@ public class ProductionNew_Regression {
             loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
             SecurityGroupsPage securityGroupsPage=new SecurityGroupsPage(driver);
+            securityGroupsPage.navigateToSecurityGropusPageURL();
             securityGroupsPage.unAssigningTheTagInRedaction(Redactiontag3);
 
             //create tags and folders
@@ -283,7 +539,7 @@ public class ProductionNew_Regression {
 	 *         TESTCASE No:RPMXCON_56108
 	 * @Description:Verify the error message for MP3 component when 'Enable burn redaction without selecting redaction tag'
 	 */
-	@Test(enabled = false, groups = { "regression" },priority = 11)
+	@Test(enabled = true, groups = { "regression" },priority = 11)
 	public void verifyErrorMessageForMP3() throws Exception 
 	{
 		String message="You have chosen MP3 redactions but have not specified redaction tags. In the MP3 section, please specify"
@@ -322,7 +578,7 @@ public class ProductionNew_Regression {
 	 *         TESTCASE No:RPMXCON_56106
 	 * @Description:Verify the error message for TIFF/PDF component when 'Enable redaction without selecting redaction tag'
 	 */
-	@Test(enabled = false, groups = { "regression" },priority = 12)
+	@Test(enabled = true, groups = { "regression" },priority = 12)
 	public void verifyErrorMessageInSpecifyRedactionWithNoText() throws Exception 
 	{
 		String message="You have chosen TIFF/PDF redactions but have not specified redaction tags. In the TIFF/PDF section, "
@@ -365,7 +621,7 @@ public class ProductionNew_Regression {
 	 *         TESTCASE No:RPMXCON_56102
 	 * @Description:Verify the error message for TIFF/PDF component when 'Enable Tech issue doc without tag or text'
 	 */
-	@Test(enabled = false, groups = { "regression" },priority = 13)
+	@Test(enabled = true, groups = { "regression" },priority = 13)
 	public void verifyErrorMessageForEnableTechIssue() throws Exception 
 	{
 		String message="Technical Issue tags or corresponding placeholder text is missing in the Technical Issue Placeholdering of the TIFF/PDF section.";
@@ -403,7 +659,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_56079
 	 * @Description: generate production with ingested text
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void generateProductionWithIngestedText() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -460,7 +716,7 @@ public class ProductionNew_Regression {
 	 *                     section, already selected tags should not available for
 	 *                     selection in branding
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyClickMarkIncompleteDisablesALreadySelectedTags() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -498,7 +754,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_56077
 	 * @Description:generateProductionWithIngestedText1.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void generateProductionWithIngestedText1() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -617,7 +873,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_58592
 	 * @Description: generateProductionUnderDefaultDirectory.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = false, groups = { "regression" }, priority = 18)
 	public void generateProductionUnderDefaultDirectory() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -681,7 +937,7 @@ public class ProductionNew_Regression {
 	 *  TESTCASE NO: RPMXCON-56157
 	 * @Description: Verify that Production should generate with Priv placholder for Orphan redacted document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = false, groups = { "regression" }, priority = 19)
 	public void verifyProductionWithOrphanRedactedDocumemtsForNativelyPlaceholder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56159 Production- Sprint 04");
@@ -740,7 +996,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON-56158
 	 * @Description:Verify that Production should generate with Tech Issue placholder for Orphan redacted document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = false, groups = { "regression" }, priority = 20)
 	public void verifyProductionWithOrphanRedactedDocumemtsForTechIssuePlaceholders() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56158 Production- Sprint 04");
@@ -1138,7 +1394,7 @@ public class ProductionNew_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			loginPage.logoutWithoutAssert();
+//			loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();

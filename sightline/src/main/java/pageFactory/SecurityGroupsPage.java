@@ -775,36 +775,18 @@ public class SecurityGroupsPage {
 	public void unAssigningTheTagInRedaction(String Tag)
 
 	{
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return redactionTags().Enabled();
-			}
-		}), Input.wait30);
-		redactionTags().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return
-
-				SelectredactionCheckBox(Tag).Enabled();
-			}
-		}), Input.wait30);
-		SelectredactionCheckBox(Tag).waitAndClick(10);
-		SelectredactionCheckBox(Tag).ScrollTo();
 		driver.waitForPageToBeReady();
+		bc.waitForElement(redactionTags());
+		redactionTags().waitAndClick(10);
+		
+		bc.waitForElement(SelectredactionCheckBox(Tag));
+		SelectredactionCheckBox(Tag).waitAndClick(10);
+		
+		bc.waitForElement(getSG_AddAnnLayer_Left());
+		getSG_AddAnnLayer_Left().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSG_AddAnnLayer_Left().Enabled();
-			}
-		}), Input.wait120);
-		getSG_AddAnnLayer_Left().Click();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSG_AnnSaveButton().Enabled();
-			}
-		}), Input.wait120);
-		getSG_AnnSaveButton().Click();
+		bc.waitForElement(getSG_AnnSaveButton());
+		getSG_AnnSaveButton().waitAndClick(10);
 	}
 
 	/**
