@@ -7567,7 +7567,7 @@ public class DocViewPage {
 
 	public void saveAndCompleteButtonPerformCodeSameAs() {
 		driver.waitForPageToBeReady();
-		for (int j = 1; j <= 1; j++) {
+		for (int j = 1; j <= 2; j++) {
 			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
 			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
 		}
@@ -7575,15 +7575,16 @@ public class DocViewPage {
 		base.passedStep("Performing code same as action with save button");
 		reusableDocView.editingCodingFormWithSaveButton();
 		driver.waitForPageToBeReady();
-		for (int j = 2; j <= 2; j++) {
+		for (int j = 3; j <= 4; j++) {
 			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
 		}
 		reusableDocView.clickCodeSameAsParent();
 		base.passedStep("performing code same as action with complete button");
 		reusableDocView.editingCodingFormWithCompleteButton();
 		base.stepInfo("Tick mark icon displayed after completed document");
-		for (int i = 2; i <= 2; i++) {
+		for (int i = 3; i <= 3; i++) {
 			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
 		}
 		if (getUnCompleteButton().Displayed()) {
 			softAssertion.assertEquals(getUnCompleteButton().Displayed().booleanValue(), true);
