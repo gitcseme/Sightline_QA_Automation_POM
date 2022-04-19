@@ -65,6 +65,7 @@ public class ProductionDBVerification {
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
 	}
+
 	
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void getTIFFpageCountAlwaysOne() throws Exception {
@@ -266,6 +267,6 @@ public class ProductionDBVerification {
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
-	}	
+	}
 }
 
