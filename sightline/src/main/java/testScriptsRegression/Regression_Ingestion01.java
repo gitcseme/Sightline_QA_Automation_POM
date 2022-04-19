@@ -1027,6 +1027,63 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifySizeOfIngestionGrid();
 	}
 	
+	/** 
+     *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49732
+	 * Description :Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 47)
+	public void verifyStitchedTiffDocCountAfterRollback() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49732");
+		baseClass.stepInfo("Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion");
+		ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyDataPresentInCopyTableColumn(Input.StitchedTIFF, "source");
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
+		ingestionPage.verifyValueInCopyingSectionAfterRollback(Input.StitchedTIFF);
+		}
+	
+	/** 
+     *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49497
+	 * Description :Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 48)
+	public void verifyGeneratedSearchablePDFsErrorCountForTiff() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49497");
+		baseClass.stepInfo("Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
+		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "error");
+		// Rollback ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49496
+	 * Description :Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 49)
+	public void verifyGeneratedSearchablePDFsDocumentCountForTiff() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49496");
+		baseClass.stepInfo("Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up");
+		ingestionPage.tiffImagesIngestion(Input.DATFile3,Input.tiffFile2,"true");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "source");
+		// Rollback ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

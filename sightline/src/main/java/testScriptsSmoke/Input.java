@@ -626,6 +626,10 @@ public class Input {
 	public static String DAT_DDMMYYYY;
 	public static String Natives_DDMMYYYY;
 	public static String differentDateFormatError;
+	public static String tiffLoadFile;
+	public static String prodBeg;
+	public static String tiffFile2;
+	public static String generateSearchablePDF;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1368,6 +1372,10 @@ public class Input {
 		DAT_DDMMYYYY = testData.getDAT_DDMMYYYY();
 		Natives_DDMMYYYY = testData.getNatives_DDMMYYYY();
 		differentDateFormatError = testData.getDifferentDateFormatError();
+		tiffLoadFile = testData.getTiffLoadFile();
+		prodBeg = testData.getProdBeg();
+		tiffFile2 = testData.getTiffFile2();
+		generateSearchablePDF = testData.getGenerateSearchablePDF();
 
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
