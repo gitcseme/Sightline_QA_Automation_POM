@@ -16,6 +16,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocViewRedactions;
+import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.UserManagement;
@@ -136,6 +137,69 @@ public class DomainManagement_IndiumRegression {
 		
 		baseClass.passedStep("Verified when Domain Admin impersonates as RMU in domain project and then changes the project from header drop down");
 
+		
+		loginPage.logout();
+
+	}
+	/**
+	 * Author : Aathith date: NA Modified date: Modified by: 
+	 * Description :Verify when user impersonate from SA to DA,Project name hyperlink should be displayed on dashboard page
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
+	public void verifySaImporsonateDAtoPa() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53127");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Verify when user impersonate from SA to DA,Project name hyperlink should be displayed on dashboard page");
+		userManage = new UserManagement(driver);
+		DomainDashboard domain = new DomainDashboard(driver);
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+
+		baseClass.impersonateSAtoDA(Input.domainName);
+		baseClass.stepInfo("Login as SA user and impersonate to DA");
+		
+		baseClass.waitForElement(domain.getprojectnamelink(Input.projectName));
+		baseClass.elementDisplayCheck(domain.getprojectnamelink(Input.projectName));
+		domain.getprojectnamelink(Input.projectName).waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		baseClass.verifyCurrentProject(Input.projectName);
+		baseClass.visibleCheck("Datasets");
+		baseClass.stepInfo("Clickied on hyperlink that automatically impersonated user as project admin into the clicked project.");
+		baseClass.passedStep("Verify when user impersonate from SA to DA,Project name hyperlink should be displayed on dashboard page");
+		
+		loginPage.logout();
+
+	}
+	/**
+	 * Author : Aathith date: NA Modified date: Modified by: 
+	 * Description :To verify that For Domain, Unassigned user list should not contain any user who is a System Admin in the system.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
+	public void verifyUnassignUsernotContainSaUser() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53120");
+		utility = new Utility(driver);
+		baseClass.stepInfo("verify that For Domain, Unassigned user list should not contain any user who is a System Admin in the system.");
+		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+
+		userManage.passingUserName(Input.sa1userName);
+		userManage.applyFilter();
+		String firstName = userManage.getUserFirstName(1).getText();
+		String lastName = userManage.getUserLastName(1).getText();
+		String userName = firstName+" "+lastName;
+		userManage.verifySaUserNotInUnAssigneduser(userName);
+		
+		baseClass.passedStep("verified that For Domain, Unassigned user list should not contain any user who is a System Admin in the system.");
 		
 		loginPage.logout();
 
