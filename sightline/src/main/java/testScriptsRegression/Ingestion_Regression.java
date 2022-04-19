@@ -72,10 +72,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * //@TestCase id:50755 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
+	 * @TestCase id:50755 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
 	 * @Description: Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
 	 */
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyProjectLvelExportedDataSetWithExpFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -108,10 +108,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * //@TestCase id:50756 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets.
+	 * @TestCase id:50756 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets.
 	 * @Description: Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets
 	 */
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyProjectLvelExportedDataSetsExistingProject() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -145,10 +145,10 @@ public class Ingestion_Regression {
   
 	/**  
 	 * @author Gopinath
-	 * //@TestCase id:50758 : Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions.
+	 * @TestCase id:50758 : Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions.
 	 * @Description: Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions
 	 */
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyProjectLvelExportedDataSetWithLoadedWithErrorFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -186,10 +186,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * //@TestCase id:50771 : Verify that after Re-run the copy process without ignoring the errors, copy should continues.
+	 * @TestCase id:50771 : Verify that after Re-run the copy process without ignoring the errors, copy should continues.
 	 * @Description: Verify that after Re-run the copy process without ignoring the errors, copy should continues
 	 */
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
 		baseClass = new BaseClass(driver);
 		String projectName = "AutomationIngestionProject";
@@ -273,10 +273,10 @@ public class Ingestion_Regression {
 	/**  
 	 * @author Gopinath
 	 * @throws InterruptedException 
-	 * //@TestCase id:50744 : Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
+	 * @TestCase id:50744 : Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
 	 * @Description: Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
 	 */
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyRollBackIsInProgressErrorMsgNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String projectName = Input.ingestionProjectName;
@@ -379,10 +379,10 @@ public class Ingestion_Regression {
 	/**  
 	 * @author Gopinath
 	 * @throws InterruptedException 
-	 * //@TestCase id:58503 : Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System.
+	 * @TestCase id:58503 : Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System.
 	 * @Description: Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System
 	 */  
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String projectName = "AutomationRegressionBackup";
