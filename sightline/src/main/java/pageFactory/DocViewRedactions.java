@@ -712,7 +712,7 @@ public class DocViewRedactions {
 	}
 
 	public Element get_textHighlightedColor() {
-		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
+		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(n-3)");
 	}
 
 	public Element requiredDocumentFromTable() // RPMXCON-51563
@@ -1552,7 +1552,7 @@ public void selectMiniDocListAndViewInDocView(int docNo) {
 		driver.waitForPageToBeReady();
 		getDocView_MiniDoc_Selectdoc(docNo).waitAndClick(10);
 
-		
+		}
 	}
 
 public void selectRedactionIconAndRedactWholePage() throws Exception {
@@ -1578,7 +1578,7 @@ public void popOutCodingFormChildWindow() {
 	actions.click().build().perform();
 	base.stepInfo("Coding form child window opened successfully");
 
-}
+	}
 
 	public void mouseOverToCodeSameAsLastIcon() {
 		base = new BaseClass(driver);
@@ -2709,6 +2709,7 @@ public void popOutCodingFormChildWindow() {
 			base.waitForElement(get_textHighlightedColor());
 			String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex = Color.fromString(color).asHex();
+			driver.waitForPageToBeReady();
 			System.err.println(hex);
 			if ((hex.equals(Input.keyWordHexCode)) || hex.equalsIgnoreCase(Input.colorCodeOfRed))
 				base.passedStep("The text for keyword is highlited in the document");
