@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -693,8 +694,7 @@ public class SearchTermReport_Regression1 {
 			driver.waitForPageToBeReady();
 			st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).ScrollTo();
 			SoftAssertion.assertTrue(st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).isElementAvailable(2));
-			SoftAssertion
-					.assertTrue(st.getRowCheckBox(Input.TallySearch, uniqueFamilyHitsColumn).isElementAvailable(2));
+			SoftAssertion.assertTrue(st.getRowCheckBox(Input.searchString1, uniqueFamilyHitsColumn).isElementAvailable(5));
 			SoftAssertion.assertAll();
 			bc.passedStep("Each cell in both columns have checkboxes "
 					+ " that will look identically to other columns in STR.");

@@ -520,7 +520,7 @@ public class Tally_Regression1 {
 						tp.selectTallyByMetaDataField(metadataTally);
 						tp.validateMetaDataFieldName(metadataTally);
 						String metadataBarchartTally=tp.verifyTallyChartMetadata();
-						if ((!sourceNames[k].equalsIgnoreCase(Input.projectName))||(!sourceNames[k].equalsIgnoreCase(Input.securityGroup)) ){
+						if ((!sourceNames[k].equalsIgnoreCase(Input.projectName))&&(!sourceNames[k].equalsIgnoreCase(Input.securityGroup)) ){
 							softAssertion.assertEquals(expectedMetaData[i],metadataBarchartTally.toLowerCase());
 						}
 						tp.tallyActions();
