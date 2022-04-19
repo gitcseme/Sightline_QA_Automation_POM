@@ -24,6 +24,7 @@ import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
@@ -71,10 +72,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * @TestCase id:50755 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
+	 * //@TestCase id:50755 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
 	 * @Description: Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for a project having Uploaded ingestions.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyProjectLvelExportedDataSetWithExpFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -107,10 +108,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * @TestCase id:50756 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets.
+	 * //@TestCase id:50756 : Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets.
 	 * @Description: Project level exported dataset details - Validate "Not Processed and Not Loaded" tab details for an existing project having mapped ingestions and uploaded datasets
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyProjectLvelExportedDataSetsExistingProject() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -144,10 +145,10 @@ public class Ingestion_Regression {
   
 	/**  
 	 * @author Gopinath
-	 * @TestCase id:50758 : Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions.
+	 * //@TestCase id:50758 : Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions.
 	 * @Description: Project level exported dataset details - Validate "Loaded with Error" tab details for an existing project having mapped and uploaded ingestions
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyProjectLvelExportedDataSetWithLoadedWithErrorFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -185,10 +186,10 @@ public class Ingestion_Regression {
 	
 	/**  
 	 * @author Gopinath
-	 * @TestCase id:50771 : Verify that after Re-run the copy process without ignoring the errors, copy should continues.
+	 * //@TestCase id:50771 : Verify that after Re-run the copy process without ignoring the errors, copy should continues.
 	 * @Description: Verify that after Re-run the copy process without ignoring the errors, copy should continues
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
 		baseClass = new BaseClass(driver);
 		String projectName = "AutomationIngestionProject";
@@ -272,10 +273,10 @@ public class Ingestion_Regression {
 	/**  
 	 * @author Gopinath
 	 * @throws InterruptedException 
-	 * @TestCase id:50744 : Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
+	 * //@TestCase id:50744 : Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
 	 * @Description: Verify that when rollback is in-progress then error page should not be displayed on Datasets page.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyRollBackIsInProgressErrorMsgNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String projectName = Input.ingestionProjectName;
@@ -378,10 +379,10 @@ public class Ingestion_Regression {
 	/**  
 	 * @author Gopinath
 	 * @throws InterruptedException 
-	 * @TestCase id:58503 : Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System.
+	 * //@TestCase id:58503 : Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System.
 	 * @Description: Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System
 	 */  
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String projectName = "AutomationRegressionBackup";
@@ -438,6 +439,70 @@ public class Ingestion_Regression {
 		
 		loginPage.logout();
 		
+	}
+	
+	
+	
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Verify Search should work by concatenated email metadata field
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =3)
+	public void verifySearchForSelectedMetadata() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-49560");
+		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		baseClass.passedStep("Verified Search should work by concatenated email metadata field");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Verify Search should work by split email metadata field
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =4)
+	public void verifySearchForEmailMetaData() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-49565");
+		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		baseClass.passedStep("Verified Search should work by split email metadata field");
+		
+		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
