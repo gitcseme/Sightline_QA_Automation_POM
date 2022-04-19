@@ -11134,5 +11134,25 @@ public class SessionSearch {
 		return pureHit;
 
 	}
-
+	/**
+	 * @author Brundha
+	 * @description : Method to verify the document count in metadata
+	 */
+	public void verifyTheCountOfDocumentForMetaData() {
+		driver.waitForPageToBeReady();
+		getPureHitsCount().isElementAvailable(2);
+		String PurehitCount=getPureHitsCount().getText();
+		if(Integer.valueOf(PurehitCount)!=0) {
+			base.passedStep("Document is displayed as expected");
+		}else {
+			base.failedStep("Document count is not displayed as expected");
+		}
+		getTDHitsCount().isElementAvailable(1);
+		String DocCount=getTDHitsCount().getText();
+		if(Integer.valueOf(DocCount)!=0) {
+			base.passedStep("Document is displayed as expected");
+		}else {
+			base.failedStep("Document count is not displayed as expected");
+		}
+	}
 }
