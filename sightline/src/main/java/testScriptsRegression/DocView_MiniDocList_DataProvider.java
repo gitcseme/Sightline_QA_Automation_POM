@@ -1604,7 +1604,8 @@ public class DocView_MiniDocList_DataProvider {
 	public Object[][] userRole() {
 		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password },
 				{"rmu", Input.rmu1userName, Input.rmu1password },
-				{ "rev", Input.rev1userName, Input.rev1password } };
+				{ "rev", Input.rev1userName, Input.rev1password } 
+			};
 	}
 	@Test(description ="RPMXCON-50809",enabled = true, dataProvider = "userRole", groups = { "regression" }, priority = 38)
 	public void savedSearchToDocView_PanelVerify(String roll, String userName, String password)
@@ -1626,6 +1627,7 @@ public class DocView_MiniDocList_DataProvider {
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(savedSearchs, "Yes");
 		savedSearch.getToDocView().waitAndClick(5);
+		baseClass.waitTime(3);
 		driver.waitForPageToBeReady();
 		if(driver.getUrl().equals(expectedURL)) {
 			baseClass.passedStep("User navigated to docview page from SavedSearch  page");

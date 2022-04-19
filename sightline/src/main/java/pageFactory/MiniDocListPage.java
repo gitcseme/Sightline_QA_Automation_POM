@@ -508,6 +508,10 @@ public class MiniDocListPage {
 		return driver.FindElementByXPath("//li[text()='FamilyMemberCount']//following-sibling::i");
 	}
 	
+	public Element getDashBoardReviewer() {
+		return driver.FindElementByXPath("//a[@name='ReviewerDashboard']");
+	}
+	
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
 	 *         (GenericMethod) Date:8/15/21 Modified date: N/A Modified by: N/A
@@ -864,116 +868,81 @@ public class MiniDocListPage {
 	 * @author Indium Raghuram Description :Main method for Test case 58104 Date:
 	 *         8/15/21 Modified date: 8/16/21 Modified by: Raghuram A
 	 */
-	public void verifyDocMiniListConfiguration() throws InterruptedException, Exception {
+	public void verifyDocMiniListConfiguration(String assignmentOne,String assignmentTwo) throws InterruptedException, Exception {
 		// Total no.of Assignment
-		AssignmentNumber = 1;
-		totalAssignmentsinList = getAssignmentAvailable().size();
-		UtilityLog.info("Total no.of Assignment : " + totalAssignmentsinList);
-		System.out.println("List Size : " + totalAssignmentsinList);
+		assignmentPage.SelectAssignmentByReviewer(assignmentOne);
+		System.out.println("Selected Assignement "  + assignmentOne);
+		baseClass.stepInfo("Selected Assignement "  + assignmentOne);
 
-		// Available Assignment List
-		ElementCollection assignmentNames = getAssignmentAvailable();
-		assignmentList = availableListofElements(assignmentNames);
-		for (String assignments : assignmentList) {
-			System.out.println(assignments);
+		// Click on the Gear icon
+		baseClass.waitForElement(getGearIcon());
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(5);
+
+		// Verifying Configure Mini Doc list tab
+		baseClass.waitForElement(getConfigureMiniDocTab());
+		driver.waitForPageToBeReady();
+		String configureMiniDocTab = getConfigureMiniDocTab().getText();
+		softAssertion.assertEquals(configureMiniDocTab, "Configure Mini DocList");
+		baseClass.passedStep("Landed on Configure Mini DocList");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getManualSortRadioButton());
+		getManualSortRadioButton().waitAndClick(5);
+		// Pick Column Display
+		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodforPickColumndisplay();
+		// Set Document Sort
+		afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getMiniDocListConfirmationButton("Save").Visible();
+			}
+		}), Input.wait30);
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
+		System.out.println("Saved Confirmed");
+		driver.waitForPageToBeReady();
+		// Verify the impact in mini-doc child window - Child Window Method
+		childWindowHeaderFields = childWindowImpactVerification();
+		baseClass.stepInfo("Child Window Headers");
+		for (String hearderFields : childWindowHeaderFields) {
+			System.out.println(hearderFields);
+			baseClass.stepInfo(hearderFields);
 		}
+		String childWindowHeaderFieldsC = childWindowHeaderFields.toString().toLowerCase();
+		String afterActionselectedFieldsPickColumnDisplayFirst = afterActionselectedFieldsPickColumnDisplayFirstAssignment
+				.toString().toLowerCase();
+		System.out.println(
+				afterActionselectedFieldsPickColumnDisplayFirstAssignment.size() + " After Pick fields");
 
-		do {
-			// Mini Doc Steps
-			String assignname = assignmentSelection(AssignmentNumber, assignmentList, totalAssignmentsinList);
-			docviewMinlistComparisionMethodOne(AssignmentNumber, assignname, assignmentList, numbertoChoose);
+		softAssertion.assertEquals(childWindowHeaderFieldsC, afterActionselectedFieldsPickColumnDisplayFirst);
 
-			if (AssignmentNumber == 1) {
-				driver.waitForPageToBeReady();
-				baseClass.waitForElement(getManualSortRadioButton());
-				getManualSortRadioButton().Click();
-				// Pick Column Display
-				afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodforPickColumndisplay();
-				// Set Document Sort
-				afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
-			} else if (AssignmentNumber == 2) {
-				{
-					selectedFieldsSecondAssignment = docviewMinlistComparisionMethodTwo();
-				}
+		if (childWindowHeaderFieldsC.equals(afterActionselectedFieldsPickColumnDisplayFirst)) {
+			System.out.println("Changes made in minidoclist reflected in Child Window");
+			baseClass.passedStep("Pick Column Display Changes reflected in childwindow headers");
+		} else {
+			System.out.println("Changes doesn't reflect on child window");
+			baseClass.stepInfo("Changes doesn't reflect on child window");
+		}
+		baseClass.waitTime(2);
+		baseClass.waitForElement(getDashBoardReviewer());
+		getDashBoardReviewer().waitAndClick(3);
+
+		baseClass.waitForElement(getNavigationConfirmationPopup("Yes"));
+		getNavigationConfirmationPopup("Yes").waitAndClick(5);
+		baseClass.waitTime(2);
+		assignmentPage.SelectAssignmentByReviewer(assignmentTwo);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(5);
+		selectedFieldsSecondAssignment = docviewMinlistComparisionMethodTwo();
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+				return getMiniDocListcloseButton().Visible();
 			}
-			if (AssignmentNumber == 1) {
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMiniDocListConfirmationButton("Save").Visible();
-					}
-				}), Input.wait30);
-				getMiniDocListConfirmationButton("Save").waitAndClick(5);
-				System.out.println("Saved Confirmed");
-				driver.waitForPageToBeReady();
-			} else if (AssignmentNumber == 2) {
-				driver.WaitUntil((new Callable<Boolean>() {
-
-					public Boolean call() {
-						return getMiniDocListcloseButton().Visible();
-					}
-				}), Input.wait30);
-				getMiniDocListcloseButton().waitAndClick(5);
-				driver.waitForPageToBeReady();
-			}
-			if (AssignmentNumber == 1) {
-				// Verify the impact in mini-doc child window - Child Window Method
-				childWindowHeaderFields = childWindowImpactVerification();
-				baseClass.stepInfo("Child Window Headers");
-				for (String hearderFields : childWindowHeaderFields) {
-					System.out.println(hearderFields);
-					baseClass.stepInfo(hearderFields);
-				}
-			}
-
-			if (AssignmentNumber == 1) {
-				// Back to Dashboard
-				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDocumentSaveButton().Visible();
-					}
-				}), Input.wait30);
-
-				String childWindowHeaderFieldsC = childWindowHeaderFields.toString().toLowerCase();
-				String afterActionselectedFieldsPickColumnDisplayFirst = afterActionselectedFieldsPickColumnDisplayFirstAssignment
-						.toString().toLowerCase();
-				System.out.println(
-						afterActionselectedFieldsPickColumnDisplayFirstAssignment.size() + " After Pick fields");
-
-				softAssertion.assertEquals(childWindowHeaderFieldsC, afterActionselectedFieldsPickColumnDisplayFirst);
-
-				if (childWindowHeaderFieldsC.equals(afterActionselectedFieldsPickColumnDisplayFirst)) {
-					System.out.println("Changes made in minidoclist reflected in Child Window");
-					baseClass.passedStep("Pick Column Display Changes reflected in childwindow headers");
-				} else {
-					System.out.println("Changes doesn't reflect on child window");
-					baseClass.stepInfo("Changes doesn't reflect on child window");
-				}
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDashBoardLink().Visible();
-					}
-				}), Input.wait30);
-				baseClass.waitForElement(getDashBoardLink());
-				getDashBoardLink().waitAndClick(3);
-
-				baseClass.waitForElement(getNavigationConfirmationPopup("Yes"));
-				getNavigationConfirmationPopup("Yes").Click();
-
-				driver.waitForPageToBeReady();
-				getDashBoardLink().waitAndClick(5);
-				baseClass.stepInfo("Landed Back to Dashboard");
-
-			}
-
-			System.out.println("----------------------------End of " + AssignmentNumber + "------------------");
-
-			driver.waitForPageToBeReady();
-			AssignmentNumber++;
-		} while (AssignmentNumber <= 2);
-
-		System.out.println("Result --------------------------------");
-
+		}), Input.wait30);
+		getMiniDocListcloseButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(afterActionselectedFieldsPickColumnDisplayFirstAssignment,
 				afterActionselectedFieldsList);
 
@@ -1031,7 +1000,7 @@ public class MiniDocListPage {
 		docViewSortlistVerify();
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getManualSortRadioButton());
-		getManualSortRadioButton().Click();
+		getManualSortRadioButton().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
 		ElementCollection pickColumnSelectedListAssignmentTwo = getSelectedFieldsAvailablePickColumnDisplay();
@@ -1412,29 +1381,91 @@ public class MiniDocListPage {
 	 * @throws InterruptedException
 	 * @throws Exception
 	 */
-	public void verifyDocMiniListMethodChildWindow() throws InterruptedException, Exception {
-		// Total no.of Assignment
-		int AssignmentNumber = 1;
-		totalAssignmentsinList = getAssignmentAvailable().size();
-		UtilityLog.info("Total no.of Assignment : " + totalAssignmentsinList);
-		System.out.println("List Size : " + totalAssignmentsinList);
+	public void verifyDocMiniListMethodChildWindow(String assignmentOne,String assignmentTwo) throws InterruptedException, Exception {
+		assignmentPage.SelectAssignmentByReviewer(assignmentOne);
+		System.out.println("Selected Assignement "  + assignmentOne);
+		baseClass.stepInfo("Selected Assignement "  + assignmentOne);
+		// Launching Mini doc Child Window
+		launchingMindoclistChildWindow();
+		// Handling Minidoclist Child Window
+		handlingViaMinidoclistChildWindow(1);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getManualSortRadioButton());
+		getManualSortRadioButton().waitAndClick(3);
+		// Pick Column Display
+		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodforPickColumndisplay();
+		// Set Document Sort
+		afterActionselectedFieldsSetDocumentFirstAssignment = methodforSetDocumetSort();
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").waitAndClick(3);
+		System.out.println("Saved Confirmed");
+		baseClass.waitTime(3);
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		System.out.println("Handled Alert");
 
-		// Available Assignment List
-		ElementCollection assignmentNames = getAssignmentAvailable();
-		assignmentList = availableListofElements(assignmentNames);
-		UtilityLog.info("------ Assignment List : ");
-		for (String assignments : assignmentList) {
-			System.out.println(assignments);
+		driver.getWebDriver().navigate().refresh();
+		baseClass.waitTillElemetToBeClickable(getGearIcon());
+
+		launchingMindoclistChildWindow();
+
+		driver.waitForPageToBeReady();
+		childWindowHeaderFields = handlingViaMinidoclistChildWindow(2);
+		childWindowHeaderFields.removeAll(Arrays.asList(null, ""));
+		System.out.println("---------childWindowHeaderFields Listed Below-------------");
+		for (String childHeaders : childWindowHeaderFields) {
+			System.out.println(childHeaders);
 		}
 
-		do {
-			// Mini Doc Steps
-			String assignname = assignmentSelection(AssignmentNumber, assignmentList, totalAssignmentsinList);
-			miniDocListChildWindow(AssignmentNumber, assignname, assignmentList, numbertoChoose, "childWindow");
+		String headerfieldtoCompare = childWindowHeaderFields.toString().toLowerCase();
+		String PickcolumnfieldtoCompare = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
+				.toLowerCase();
 
-			AssignmentNumber++;
-		} while (AssignmentNumber <= 2);
+		softAssertion.assertEquals(headerfieldtoCompare, PickcolumnfieldtoCompare);
+
+		if (PickcolumnfieldtoCompare.equals(headerfieldtoCompare)) {
+			System.out.println("Changes reflected in childwindow headers");
+			baseClass.passedStep("Pick Column Display Changes reflected in childwindow headers");
+		} else {
+			System.out.println("Changes didn't reflect in child window headers");
+			baseClass.stepInfo("Changes didn't reflect in child window headers");
+		}
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitTime(2);
+		baseClass.waitForElement(getDashBoardReviewer());
+		getDashBoardReviewer().waitAndClick(3);
+
+		baseClass.waitForElement(getNavigationConfirmationPopup("Yes"));
+		getNavigationConfirmationPopup("Yes").waitAndClick(5);
+		baseClass.waitTime(2);
+		assignmentPage.SelectAssignmentByReviewer(assignmentTwo);
+		baseClass.waitTime(3);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(10);
+
+		selectedFieldsSecondAssignment = docviewMinlistComparisionMethodTwo();
+		baseClass.waitForElement(getMiniDocListcloseButton());
+		getMiniDocListcloseButton().waitAndClick(3);
+		driver.waitForPageToBeReady();
+
+		softAssertion.assertNotEquals(afterActionselectedFieldsPickColumnDisplayFirstAssignment,
+				selectedFieldsSecondAssignment);
+
+		if (afterActionselectedFieldsPickColumnDisplayFirstAssignment
+				.equals(selectedFieldsSecondAssignment)) {
+			System.out.println("--");
+		}
+		{
+			System.out.println("Changes made in assignment 1 doesn't impact assignment 2");
+			baseClass.passedStep("Changes made in assignment 1 doesn't impact assignment 2");
+		}
+
 	}
+
 
 	/**
 	 * @author Indium Raghuram Description : Date:8/17/21 Modified date: N/A
@@ -2154,16 +2185,17 @@ public class MiniDocListPage {
 		getGearIcon().waitAndClick(5);
 
 		baseClass.waitForElement(getCompletedDocsToggle());
-		getCompletedDocsToggle().Click();
+		getCompletedDocsToggle().waitAndClick(5);
 
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
-		getMiniDocListConfirmationButton("Save").Click();
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
 		driver.waitForPageToBeReady();
 		Thread.sleep(5000);
 
 		for (int i = 1; i <= 3; i++) {
 			String name = docIDlist.get(i);
-			getDociD(name).Click();
+			getDociD(name).waitAndClick(5);
+			driver.waitForPageToBeReady();
 			System.out.println("Selected Document : " + name);
 			baseClass.stepInfo("Selected Document : " + name);
 			String currentSelectionIconFromDocumentList = getCurrentSelectionIcon(name).GetAttribute("class");
@@ -2175,7 +2207,7 @@ public class MiniDocListPage {
 
 			String currentSelectionIconFromHistoryDD = getCurrentSelectionIconFromHistoryDD(name).GetAttribute("class");
 			System.out.println(currentSelectionIconFromHistoryDD);
-			getCurrentSelectionIconFromHistoryDD(name).Click();
+			getCurrentSelectionIconFromHistoryDD(name).waitAndClick(5);
 			driver.waitForPageToBeReady();
 
 			if (currentSelectionIconFromHistoryDD.equals(currentSelectionIconFromDocumentList)) {
