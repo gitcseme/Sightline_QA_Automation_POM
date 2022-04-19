@@ -914,7 +914,7 @@ public class DocViewRedactions {
 	}
 
 	public Element getNextArrowBtn() {
-		return driver.FindElementById("NextHit_Get");
+		return driver.FindElementById("PrevHit_key1279552");
 	}
 
 	public Element getDocView_PageNumber() {
