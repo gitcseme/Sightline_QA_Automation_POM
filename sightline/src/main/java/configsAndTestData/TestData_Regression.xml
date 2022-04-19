@@ -626,6 +626,10 @@
 	<differentDateFormatError>Date format selected in the ingestion is not
 		matching with the date format of the dates in the DAT file. Please
 		provide the matching date format.</differentDateFormatError>
+	<prodBeg>ProdBeg</prodBeg>
+	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
+	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
+	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
 
 	<!-- Ingestion Related data END -->
 

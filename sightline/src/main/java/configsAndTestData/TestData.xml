@@ -18,9 +18,11 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103
+	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -54,8 +56,7 @@
 		text and audio have already been updated. The searches run in the
 		project will reflect these changes. Rolling back will not roll back
 		the updates to the index, so you MUST rerun indexing for the entire
-		project. Do you want to continue with Rollback?
-	</indexingWarningMessage>
+		project. Do you want to continue with Rollback?</indexingWarningMessage>
 
 
 
@@ -115,8 +116,7 @@
 	<highlightDocId>ICE010058-13-00000001</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
 	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
-	<ingestionDocIdFamilyMember>H16135-0188-002093
-	</ingestionDocIdFamilyMember>
+	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
 	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
@@ -200,7 +200,8 @@
 	<TextHidden>Hidden</TextHidden>
 	<HiddenContentExcelSheet>H16135-0188-001064</HiddenContentExcelSheet>
 	<HiddenContentExcelBook>H16135-0188-001070</HiddenContentExcelBook>
-	<HiddenContentExternalLink>H16135-0188-001060</HiddenContentExternalLink>
+	<HiddenContentExternalLink>H16135-0188-001060
+	</HiddenContentExternalLink>
 	<audioString1>THE THE</audioString1>
 	<audioString2>"THE THE"</audioString2>
 	<sourceDocId7>331ID00000220</sourceDocId7>
@@ -235,15 +236,14 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\
+	</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group
-	</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\
-	</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
 	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
@@ -252,7 +252,8 @@
 	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
 		in progress, you cannot overwrite it. Please wait until SavedSearch is
 		completed.</errMsgSinceExecutionInProgress>
-	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
+	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\
+	</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
 	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
@@ -371,7 +372,8 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains
+	</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -416,7 +418,8 @@
 	<notSelect>Not Selected</notSelect>
 	<securityGroup_sg47>SG1134047</securityGroup_sg47>
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
-	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
+	<regressionConsilio1>Regression_AllDataset_Consilio1
+	</regressionConsilio1>
 	<audioSearchString2>interview</audioSearchString2>
 	<audioSearchString3>six</audioSearchString3>
 	<audioSearchString4>Phrase</audioSearchString4>
@@ -471,7 +474,8 @@
 	<TallyCN>4</TallyCN>
 	<sameThreadDocs_EmailThreadID>F00000001</sameThreadDocs_EmailThreadID>
 	<sameFamilyDocs_FamilyID>41ID00000005</sameFamilyDocs_FamilyID>
-	<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590</IngestionName_PT>
+	<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590
+	</IngestionName_PT>
 	<IngestionName_UAT></IngestionName_UAT>
 	<metadataIngestion>IngestionName</metadataIngestion>
 	<custodianName_Andrew>Andrew</custodianName_Andrew>
@@ -519,7 +523,8 @@
 	<conceptualDocIdForReviewer01>331ID00000014
 	</conceptualDocIdForReviewer01>
 	<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
-	<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
+	<conceptualDocIdForReviewer03>331ID00000166
+	</conceptualDocIdForReviewer03>
 	<familyDocId01>T486D</familyDocId01>
 	<familyDocId02>T487D</familyDocId02>
 	<familyDocId03>T488D</familyDocId03>
@@ -551,9 +556,11 @@
 	<SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
 	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData
 	</CJK_FrenchAudioTestDataFolder>
-	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
+	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS
+	</EmailConcatenatedDataFolder>
 	<SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
-	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction
+	</GD994NativeTextForProductionFolder>
 	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
 	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
@@ -572,41 +579,57 @@
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
 	<DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
-	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
-	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
-	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
-	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
+	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST
+	</MP3GermanFile>
+	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST
+	</MP3JapneseFile>
+	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst
+	</TranscriptJapneseFile>
+	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst
+	</TranscriptGermanFile>
 	<YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
 	<YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
 	<StitchedTIFF>Stitched TIFFs</StitchedTIFF>
-	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
+	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat
+	</DATFile1>
 	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
 	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
 	<DAT_MMDDYYYY>DAT_MMDDYYYY.dat</DAT_MMDDYYYY>
 	<Natives_MMDDYYYY>Natives_MMDDYYYY.lst</Natives_MMDDYYYY>
 	<DAT_YYYYDDMM_Slash>DAT_YYYYDDMM_Slash.dat</DAT_YYYYDDMM_Slash>
-	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst</Natives_YYYYDDMM_Slash>
+	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst
+	</Natives_YYYYDDMM_Slash>
 	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
 	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
 	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
-	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
+	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst
+	</Natives_DDMMYYYY_Slash>
 	<DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
-	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
+	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst
+	</Natives_MMDDYYYY_Slash>
 	<DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
 
 	<DAT_MMDDYYYY_HHMI>DAT_MMDDYYYY HHMI.dat</DAT_MMDDYYYY_HHMI>
-	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst</Natives_MMDDYYYY_HHMI>
+	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst
+	</Natives_MMDDYYYY_HHMI>
 	<DAT_DDMMYYYY_HHMI>DAT_DDMMYYYY HHMI.dat</DAT_DDMMYYYY_HHMI>
-	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst</Natives_DDMMYYYY_HHMI>
+	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst
+	</Natives_DDMMYYYY_HHMI>
 	<DAT_MMDDYYYY_HHMISS>DAT_MMDDYYYY HHMISS.dat</DAT_MMDDYYYY_HHMISS>
-	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst</Natives_MMDDYYYY_HHMISS>
+	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst
+	</Natives_MMDDYYYY_HHMISS>
 	<DAT_DDMMYYYY_HHMISS>DAT_DDMMYYYY HHMISS.dat</DAT_DDMMYYYY_HHMISS>
-	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
+	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst
+	</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
 	<differentDateFormatError>Date format selected in the ingestion is not
 		matching with the date format of the dates in the DAT file. Please
 		provide the matching date format.</differentDateFormatError>
+	<prodBeg>ProdBeg</prodBeg>
+	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
+	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
+	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
 
 	<!-- Ingestion Related data END -->
 
