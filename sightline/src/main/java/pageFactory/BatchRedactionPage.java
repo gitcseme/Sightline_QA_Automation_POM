@@ -567,7 +567,7 @@ public class BatchRedactionPage {
 		final int Bgcount = base.initialBgCount();
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		if (flag = false) {
+		if (flag == false) {
 			driver.Navigate().refresh();
 			loadBatchRedactionPage(Input.mySavedSearch);
 		}
@@ -672,7 +672,7 @@ public class BatchRedactionPage {
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		if (flag = false) {
+		if (flag == false) {
 			driver.Navigate().refresh();
 			loadBatchRedactionPage(Input.mySavedSearch);
 		}
@@ -1098,7 +1098,7 @@ public class BatchRedactionPage {
 		final int Bgcount = base.initialBgCount();
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		if (flag = false) {
+		if (flag == false) {
 			driver.Navigate().refresh();
 			loadBatchRedactionPage(Input.mySavedSearch);
 		}
@@ -1519,7 +1519,9 @@ public class BatchRedactionPage {
 		final int Bgcount = base.initialBgCount();
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		if (flag = false) {
+		
+		System.out.println(flag);
+		if (flag == false) {
 			driver.Navigate().refresh();
 			loadBatchRedactionPage(Input.mySavedSearch);
 		}
@@ -1746,7 +1748,7 @@ public class BatchRedactionPage {
 
 		if (checkAnalyze) {
 			boolean flag = verifyAnalyzeBtn(searchname, newNode);
-			if (flag = false) {
+			if (flag == false) {
 				driver.Navigate().refresh();
 				loadBatchRedactionPage(Input.mySavedSearch);
 			}
@@ -2070,7 +2072,7 @@ public class BatchRedactionPage {
 		getSavedSearchNewGroupExpand().waitAndClick(10);
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		if (flag = false) {
+		if (flag == false) {
 			driver.Navigate().refresh();
 			loadBatchRedactionPage(Input.shareSearchDefaultSG);
 		}
@@ -2894,6 +2896,10 @@ public class BatchRedactionPage {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param filePath
+	 */
 	public void verifyExpectedRedactionCount(String filePath) {
 		String[][] record = base.readExcelData(filePath, 4);
 		for (String[] data : record) {
