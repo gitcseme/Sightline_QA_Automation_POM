@@ -2747,7 +2747,7 @@ public class BaseClass {
 		Assert.assertEquals(ExpectedMsg2, getSecondLineSuccessMsg(1).getText().toString());
 		String string3 = getSecondLineSuccessMsg(1).getText().toString();
 		System.out.println(string3);
-		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
+		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(2).getText().toString());
 	}
 
 	/**

@@ -1553,7 +1553,7 @@ public void selectMiniDocListAndViewInDocView(int docNo) {
 		getDocView_MiniDoc_Selectdoc(docNo).waitAndClick(10);
 
 		}
-	}
+	
 
 public void selectRedactionIconAndRedactWholePage() throws Exception {
 	base = new BaseClass(driver);
