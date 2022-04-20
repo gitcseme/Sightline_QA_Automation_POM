@@ -19,6 +19,8 @@ import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -204,6 +206,51 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void verifyingBackGroungTaskInBullIcon() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53093");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)");
+		userManage = new UserManagement(driver);
+		String TagName="Tag"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
+
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.impersonateDAtoReviewer();
+		baseClass.stepInfo("Impersonated as Reviewer in same domain project");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		search.verifyingBackGrounTaskInBullHornIcon();
+		
+		loginPage.logout();
+	    loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	    UtilityLog.info("Logged in as User: " + Input.rev1userName);
+	    Reporter.log("Logged in as User: " + Input.rev1userName);
+
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		search.verifyingBackGrounTaskInBullHornIcon();
+	
+		loginPage.logout();
+
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)

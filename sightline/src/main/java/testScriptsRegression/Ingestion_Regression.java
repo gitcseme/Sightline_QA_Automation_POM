@@ -23,6 +23,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -447,7 +448,7 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: 
 	 * Description :Verify Search should work by concatenated email metadata field
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority =3)
+	@Test(alwaysRun = true, groups = { "regression" }, priority =4)
 	public void verifySearchForSelectedMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		
@@ -478,7 +479,7 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: 
 	 * Description :Verify Search should work by split email metadata field
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority =4)
+	@Test(alwaysRun = true, groups = { "regression" }, priority =3)
 	public void verifySearchForEmailMetaData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		
@@ -503,6 +504,30 @@ public class Ingestion_Regression {
 		baseClass.passedStep("Verified Search should work by split email metadata field");
 		
 		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Verify Email metadata in Manage-Project fields
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =5)
+	public void verifyingEmailMetaDataInProjectField() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-49563");
+		baseClass.stepInfo("### Verify Email metadata in Manage-Project fields ###");
+		String EmailMetaData="Email";
+		baseClass.stepInfo(" Go to Manage > Project Fields");
+		ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
+		projectFieldsPage.navigateToProjectFieldsPage();
+		
+		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
+		projectFieldsPage.applyFilterByFilterName(EmailMetaData);
+		projectFieldsPage.validateFilterFieldsByContainsValueInTheGrid(projectFieldsPage.getProjectGridFieldNameValue(EmailMetaData),EmailMetaData);
+		
+		baseClass.passedStep("Verified Email metadata in Manage-Project fields");
+		loginPage.logout();
+		
 	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
