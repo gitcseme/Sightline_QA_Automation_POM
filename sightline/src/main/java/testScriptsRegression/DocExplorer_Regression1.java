@@ -807,13 +807,13 @@ public class DocExplorer_Regression1 {
 				}
 			}
 
-		  	@AfterMethod(alwaysRun = true)
-			public void takeScreenShot(ITestResult result) {
+			@AfterMethod(alwaysRun = true)
+			private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+				baseClass = new BaseClass(driver);
+				Reporter.setCurrentTestResult(result);
 				if (ITestResult.FAILURE == result.getStatus()) {
-					Utility bc = new Utility(driver);
-					bc.screenShot(result);
-					System.out.println("Executed :" + result.getMethod().getMethodName());
-					loginPage.logoutWithoutAssert();
+					Utility baseClass = new Utility(driver);
+					baseClass.screenShot(result);
 				}
 				try {
 					loginPage.quitBrowser();
@@ -821,5 +821,4 @@ public class DocExplorer_Regression1 {
 					loginPage.quitBrowser();
 				}
 			}
-
 }
