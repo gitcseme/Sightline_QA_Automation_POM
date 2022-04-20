@@ -7214,7 +7214,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 							}
 							break;
 						}
-						
+						 
 					}
 					driver.Navigate().refresh();
 					for(int i=0;i<1000;i++) {
