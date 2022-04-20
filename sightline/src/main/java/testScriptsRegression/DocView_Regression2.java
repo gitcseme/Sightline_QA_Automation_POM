@@ -2425,7 +2425,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51961
 	 * 
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 51)
 	public void verifyDocsWithHiddenProperties(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2434,7 +2434,7 @@ public class DocView_Regression2 {
 				"Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook should display alert message");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicMetaDataSearch("SourceDocID", null, Input.DocIdWithHiddenContent, null);
+		sessionsearch.basicMetaDataSearch("DocID", null, Input.DocIdWithHiddenContent, null);
 		sessionsearch.ViewInDocView();
 		baseClass.VerifyWarningMessage(
 				"The document has the following hidden information that is presented in the Viewer.");
@@ -3446,7 +3446,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51960
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51960",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =72)
+	@Test(description ="RPMXCON-51960",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =72)
 	public void verifyHiddenContentDocswhileSwitchingViews(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -3457,18 +3457,17 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that on tabs navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
-		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();	
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
+		sessionsearch.ViewInDocView();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
-		docViewRedact.imagesIconDocView().waitAndClick(2);
+		docViewRedact.imagesIconDocView().waitAndClick(10);
 		baseClass.stepInfo("Navigated to images tab");
-		docViewRedact.defaultViewTab().waitAndClick(3);
+		docViewRedact.defaultViewTab().waitAndClick(10);
 		baseClass.stepInfo("Navigated back to default/Native tab");
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
-		docViewRedact.hiddenInfoIcon().waitAndClick(5);
+		docViewRedact.hiddenInfoIcon().waitAndClick(10);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
 		loginPage.logout();
 	}
@@ -3658,12 +3657,10 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.TextHidden);
-		sessionsearch.ViewInDocView();
-		DocViewPage docviewpage = new DocViewPage(driver);
 		
 //Selecting Doc with excel protected workbook
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelBook);
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
+		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
@@ -3672,9 +3669,9 @@ public class DocView_Regression2 {
 //Selecting Doc with excel protected worksheet		
 		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage5 = "Protected Excel Sheets";
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
-		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
-		driver.waitForPageToBeReady();	
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
 		loginPage.logout();
 		
