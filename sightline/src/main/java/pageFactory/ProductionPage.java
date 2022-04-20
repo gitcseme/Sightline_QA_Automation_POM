@@ -114,7 +114,7 @@ public class ProductionPage {
 	}
 
 	public Element getDAT_FieldClassification3() {
-		return driver.FindElementById("TY_1");
+		return driver.FindElementById("TY_2");
 	}
 
 	public Element getDAT_SourceField1() {
@@ -424,7 +424,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldge_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[contains(text(),'" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='"+tag+"']");
 	}
 
 	public Element getSelectTechnicalIssueTag() {
@@ -862,7 +862,7 @@ public class ProductionPage {
 	}
 
 	public Element getQC_backbutton() {
-		return driver.FindElementByXPath("//a[contains(text(),'Back')]");
+		return driver.FindElementByXPath("(//a[contains(text(),'Back')])[2]");
 	}
 
 	public Element getQC_Download() {
@@ -995,7 +995,7 @@ public class ProductionPage {
 	}
 
 	public Element arrowSymbolInHomePage() {
-		return driver.FindElementByXPath("//b[@class='caret']]");
+		return driver.FindElementByXPath("//b[@class='caret']");
 	}
 
 	public Element productionNameInGeneratePage(String productionname) {
@@ -1228,7 +1228,7 @@ public class ProductionPage {
 
 	public Element getProductionFromHomePage(String productionName) {
 		return driver
-				.FindElementByXPath("//a[@title='" + productionName + "']//..//..//span[@class='progressBarText']");
+				.FindElementByXPath("//a[@title='"+ productionName +"']//..//..//span[@class='progressBarText']");
 	}
 
 	public Element gettxtPreGenChecks() {
@@ -6707,11 +6707,16 @@ public class ProductionPage {
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
+		getbtnContinueGeneration().isElementAvailable(320);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
+		getbtnContinueGeneration().waitAndClick(10);
 		// Get Documents Generated Text
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getDocumentGeneratetext().isElementAvailable(860);
+				return getDocumentGeneratetext().isElementAvailable(160);
 			}
 		}), Input.wait120);
 		String actualText = getStatusSuccessTxt().getText();
@@ -6725,19 +6730,21 @@ public class ProductionPage {
 		base.waitForElement(getQC_backbutton());
 		getQC_backbutton().waitAndClick(10);
 
-		base.waitForElement(getBtnMarkIncomplete());
-		getBtnMarkIncomplete().Enabled();
-		base.clickButton(getBtnMarkIncomplete());
+		base.waitForElement(getMarkInCompleteBtn());
+		getMarkInCompleteBtn().Enabled();
+		base.clickButton(getMarkInCompleteBtn());
 		base.stepInfo("Going back to generate Page from QC Page");
 
-		base.waitForElement(getbtnProductionGenerate());
-		getbtnProductionGenerate().isElementPresent();
-		getbtnProductionGenerate().waitAndClick(10);
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().isElementPresent();
+		getbtnReGenerateMarkComplete().waitAndClick(10);
 		base.stepInfo("Regenerate Button is clicked");
 
 		base.waitForElement(getbtnRegenerateContinue());
 		getbtnRegenerateContinue().waitAndClick(10);
 		base.stepInfo("Regenerating the production");
+		driver.Navigate().refresh();
+		
 
 	}
 
@@ -9812,6 +9819,11 @@ public class ProductionPage {
 
 		getManageTemplates().waitAndClick(10);
 
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getNextBtn());
+		getNextBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
 		getDeleteBtn(templateName).ScrollTo();
 		getDeleteBtn(templateName).isElementAvailable(5);
 		base.stepInfo("Delete option is displayed");
@@ -9974,6 +9986,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 04/19/22
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void AssertionInTIFFSection() throws InterruptedException {
@@ -9995,28 +10008,19 @@ public class ProductionPage {
 		getTIFFTab().Click();
 
 		driver.scrollingToBottomofAPage();
+		
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getclkNativelyProducedDocumentLnk().Enabled();
-			}
-		}), Input.wait30);
-		getclkNativelyProducedDocumentLnk().Click();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		base.stepInfo("Disabled priviledge docs");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFillingPlaceHolder().Enabled();
-			}
-		}), Input.wait30);
-		new Actions(driver.getWebDriver()).moveToElement(getFillingPlaceHolder().getWebElement()).click();
-		getFillingPlaceHolder().SendKeys("testing");
+		base.waitForElement(getclkNativelyProducedDocumentLnk());
+		getclkNativelyProducedDocumentLnk().waitAndClick(10);
 
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getMarkCompleteLink());
-		getMarkCompleteLink().Enabled();
+		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
-
-		Thread.sleep(5000);
 
 		String ExpectedMsg = "In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.";
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -10393,12 +10397,15 @@ public class ProductionPage {
 		getTechissue_SelectTagButton().ScrollTo();
 		getTechissue_SelectTagButton().waitAndClick(10);
 
+
+		driver.waitForPageToBeReady();
+
 		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-
 		base.waitForElement(getPriveldge_TagTree(tagname));
-		getPriveldge_TagTree(tagname).waitAndClick(20);
-
-		base.waitForElement(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree(tagname).Enabled();
+		getPriveldge_TagTree(tagname).Click();
+		
+		base.waitTillElemetToBeClickable(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
@@ -12838,16 +12845,21 @@ for (int i = 0; i < 6; i++) {
 		base.waitForElement(getBackButton());
 		getBackButton().waitAndClick(5);
 
-		base.waitForElement(getbtnGenMarkIncomplete());
-		getbtnGenMarkIncomplete().waitAndClick(5);
+		
 
-		base.waitForElement(getbtnGenMarkIncomplete());
-		getbtnReGenerateMarkComplete().waitAndClick(5);
+		base.waitForElement(getMarkInCompleteBtn());
+		getMarkInCompleteBtn().waitAndClick(5);
 		base.stepInfo("Regenarate button clicked");
+
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().isElementPresent();
+		getbtnReGenerateMarkComplete().waitAndClick(5);
+		base.stepInfo("Regenerate Button is clicked");
 
 		base.waitForElement(getbtnRegenerateContinue());
 		getbtnRegenerateContinue().waitAndClick(5);
-
+		base.stepInfo("Regenerating the production");
+		getVerifyGenStatus("Preparing Data Complete").isElementAvailable(20);
 		// StatusVerification
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -15375,14 +15387,13 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getDAT_DATField1().SendKeys("BatesNumber");
 
 		base.stepInfo("Dat section is filled with BATES");
-
 		base.waitForElement(getAddFieldButtonInDAT());
 		getAddFieldButtonInDAT().Click();
-
-		getDAT_FieldClassification2().ScrollTo();
-//		getDAT_FieldClassification2().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDAT_FieldClassification2());
 		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
 
+        driver.waitForPageToBeReady();
 		base.waitForElement(getDAT_SourceField2());
 		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
 
@@ -15390,14 +15401,16 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
 
 		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
+		
 
 		base.waitForElement(getAddFieldButtonInDAT());
 		getAddFieldButtonInDAT().Click();
 
-		getDAT_FieldClassification3().ScrollTo();
-		getDAT_FieldClassification3().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDAT_FieldClassification3());
 		getDAT_FieldClassification3().selectFromDropdown().selectByVisibleText("Doc Basic");
-
+		
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDAT_SourceField3());
 		getDAT_SourceField3().selectFromDropdown().selectByVisibleText("DocID");
 

@@ -204,6 +204,9 @@ public class Input {
 	public static String highlightDoc1;
 	public static String warning01;
 	public static String ingestionQuery01;
+	public static String sourceDocId10;
+	public static String sourceDocId11;
+	public static String sourceDocId12;
 
 	// DocView codingform Baskar Indium
 
@@ -623,6 +626,10 @@ public class Input {
 	public static String DAT_DDMMYYYY;
 	public static String Natives_DDMMYYYY;
 	public static String differentDateFormatError;
+	public static String tiffLoadFile;
+	public static String prodBeg;
+	public static String tiffFile2;
+	public static String generateSearchablePDF;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -892,6 +899,9 @@ public class Input {
 		highlightDoc1 = testData.getHighlightDoc1();
 		warning01=testData.getWarning01();
 		ingestionQuery01=testData.getIngestionQuery01();
+		sourceDocId10 = testData.getSourceDocId10();
+		sourceDocId11 = testData.getSourceDocId11();
+		sourceDocId12 = testData.getSourceDocId12();
 		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -1362,6 +1372,10 @@ public class Input {
 		DAT_DDMMYYYY = testData.getDAT_DDMMYYYY();
 		Natives_DDMMYYYY = testData.getNatives_DDMMYYYY();
 		differentDateFormatError = testData.getDifferentDateFormatError();
+		tiffLoadFile = testData.getTiffLoadFile();
+		prodBeg = testData.getProdBeg();
+		tiffFile2 = testData.getTiffFile2();
+		generateSearchablePDF = testData.getGenerateSearchablePDF();
 
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();

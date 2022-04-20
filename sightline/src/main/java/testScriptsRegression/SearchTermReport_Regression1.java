@@ -7,7 +7,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -29,6 +31,7 @@ import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagCountbyTagReport;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
@@ -61,8 +64,8 @@ public class SearchTermReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		
 		// Open browser
 		driver = new Driver();
@@ -165,7 +168,7 @@ public class SearchTermReport_Regression1 {
 		lp.logout();
 	}
 
-	// @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
 	public void ValidateSearchTermreport_viewInDocView(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56496");
@@ -375,12 +378,11 @@ public class SearchTermReport_Regression1 {
 		if (role == "RMU") {
 			st.GenerateReportWithAllSearches(savedSearchNamesRMU);
 		}
-
 		bc.passedStep("Report  generated for All saved searches.");
 		st.verifyColumnSorting("UNIQUE HITS", st.getUniqueHits());
 		driver.scrollPageToTop();
-		// st.getUniqueFamilyHits().ScrollTo();
-		// st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());
+		 st.getUniqueFamilyHits().ScrollTo();
+		 st.verifyColumnSorting("UNIQUE FAMILY HITS",st.getUniqueFamilyHits());
 		lp.logout();
 	}
 
@@ -449,7 +451,7 @@ public class SearchTermReport_Regression1 {
 			bc.stepInfo("The unique Hits Count for saved saerch " + saveSearchNamePA2 + "--"
 					+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA2));
 			SoftAssertion.assertAll();
-			bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+			bc.passedStep("Sucessfully verified the Unique Hits Column value in STR Page");
 		}
 		if (role == "RMU") {
 			st.GenerateReportWithAllSearches(savedSearchRMU);
@@ -652,7 +654,7 @@ public class SearchTermReport_Regression1 {
 				+ st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2));
 		SoftAssertion.assertAll();
 		bc.passedStep("Sucessfully verified the Unique Family Hits Column value in STR Page");
-
+		lp.logout();
 	}
 
 	/**
@@ -669,9 +671,11 @@ public class SearchTermReport_Regression1 {
 				"Search Term Report - UI Validatation for additional columns 'Unique Hits' and 'Unique Family Hits'");
 		st = new SearchTermReportPage(driver);
 		lp = new LoginPage(driver);
+		TagCountbyTagReport tcPage= new TagCountbyTagReport(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Logged in as PA");
 		String[] savedSearchPA = { saveSearchNamePA1, saveSearchNamePA2 };
+		tcPage.navigateToReportPage();
 		st.GenerateReportWithAllSearches(savedSearchPA);
 		driver.waitForPageToBeReady();
 		int conceptualColumn = bc.getIndex(st.getSummaryTableHeader(), "CONCEPTUALLY SIMILAR");
@@ -690,8 +694,7 @@ public class SearchTermReport_Regression1 {
 			driver.waitForPageToBeReady();
 			st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).ScrollTo();
 			SoftAssertion.assertTrue(st.getRowCheckBox(Input.searchString2, uniqueHitsColumn).isElementAvailable(2));
-			SoftAssertion
-					.assertTrue(st.getRowCheckBox(Input.TallySearch, uniqueFamilyHitsColumn).isElementAvailable(2));
+			SoftAssertion.assertTrue(st.getRowCheckBox(Input.searchString1, uniqueFamilyHitsColumn).isElementAvailable(5));
 			SoftAssertion.assertAll();
 			bc.passedStep("Each cell in both columns have checkboxes "
 					+ " that will look identically to other columns in STR.");
@@ -699,6 +702,7 @@ public class SearchTermReport_Regression1 {
 		} else {
 			bc.failedStep("Report not generated / columns are not displayed as expected");
 		}
+		lp.logout();
 	}
 	
 	
@@ -749,10 +753,10 @@ public class SearchTermReport_Regression1 {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			lp.logoutWithoutAssert();
 		}
 		try {
 			lp.quitBrowser();

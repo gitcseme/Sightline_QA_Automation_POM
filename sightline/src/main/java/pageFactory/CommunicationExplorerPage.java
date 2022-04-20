@@ -98,11 +98,15 @@ public class CommunicationExplorerPage {
 	public Element getTally_SubTallyActionButton() {
 		return driver.FindElementById("subtallyactionbtn");
 	}
-
-	public Element getAction_ViewInDoclistButton() {
-		return driver.FindElementByXPath(".//*[@class='dropdown-menu']//a[contains(.,'View All in DocList')]");
+	public Element getBG_NotificationPopUp() {
+		return driver.FindElementByXPath("//p[contains(text(),'This report is taking a')]");
 	}
-
+	public Element getYesButton() {
+		return driver.FindElementById("btnYes");
+	}
+	public Element getAction_ViewInDoclistButton() {
+		return driver.FindElementByXPath("//ul[@class='dropdown-menu']//a[contains(.,'in DocList')]");
+	}
 	public Element getTally_SubTally_Action_ViewButton() {
 		return driver.FindElementByXPath(".//*[@id='freezediv']//a[contains(.,'View')]");
 	}
@@ -172,6 +176,9 @@ public class CommunicationExplorerPage {
 	public Element getVisualizedReportDisplay() {
 		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node']");
 	}
+	public Element getVisualizedSelectedReportDisplay() {
+		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node node-active']");
+	}
 	public Element getIncludeRadioBtn() {
 		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[1])");
 	}
@@ -189,7 +196,7 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByXPath("(//div[@class='font-lg col-md-8']//strong)[last()]");
 	}
 	public Element getViewInDocView() {
-		return driver.FindElementByXPath("//a[contains(text(),'View All in DocView')]");
+		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[contains(text(),'in DocView')]");
 	}
 	public Element getMailCountOFSelectedReport() {
 		return driver.FindElementByCssSelector("g>[class='node normal-node node-active']>text>tspan[class='mail-count']");
@@ -200,6 +207,13 @@ public class CommunicationExplorerPage {
 	public Element getCommunicationExplorer_ApplyResult() {
 		return driver.FindElementByXPath("//div[@class='font-lg col-md-8']//strong");
 	}
+	public Element getViewBtn() {
+		return driver.FindElementByXPath("//a[@class='submenu-a' and text()='View']");
+	}
+	public Element getLoadedImage() {
+		return driver.FindElementByXPath("//div[@id='processingPopupDiv' and @style='display: none;']");
+	}
+
 	public CommunicationExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -357,11 +371,21 @@ public class CommunicationExplorerPage {
 		getTally_SaveSelections().waitAndClick(15);
 		base.waitForElement(getCommunicationExplorer_ApplyBtn());
 		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return getTally_LoadingScreen().Stale();
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++) {
+			if(getLoadedImage().isElementAvailable(1)) {
+				base.waitTime(1);
+				continue;
 			}
-		}), Input.wait30);
+			else {
+			break;
+		}}
+		if(getBG_NotificationPopUp().isElementAvailable(2)) {
+		getYesButton().Click();
+		}else {
+			base.stepInfo("Bulk Navigation pop up not appeared");
+		}
+		
 	}
 	/** 
 	 * @author Jayanthi.Ganesan
@@ -468,10 +492,15 @@ public class CommunicationExplorerPage {
 	 */
 	public void clickReport() {
 		driver.waitForPageToBeReady();
-		driver.scrollingToElementofAPage(getVisualizedReportDisplay());
+		base.waitForElement(getVisualizedReportDisplay());
 		getVisualizedReportDisplay().ScrollTo();
-		base.waitTillElemetToBeClickable(getVisualizedReportDisplay());
-		getVisualizedReportDisplay().waitAndClick(30);
+		getVisualizedReportDisplay().waitAndClick(10);
+		if(getVisualizedSelectedReportDisplay().isElementAvailable(1)) {
+			base.stepInfo("Clicked on visualized Communications exp report");
+		}else {
+			base.stepInfo("Not clicked on visualized Communications exp report");
+			getVisualizedReportDisplay().waitAndClick(30);
+		}
 	}
 
 	/**
@@ -482,9 +511,13 @@ public class CommunicationExplorerPage {
 		driver.scrollPageToTop();
 		base.waitForElement(getActionBtn());
 		getActionBtn().waitAndClick(10);
+		if(getViewBtn().isElementAvailable(2)) {
+			getViewBtn().ScrollTo();
+		}
 		base.waitForElement(getAction_ViewInDoclistButton());
 		getAction_ViewInDoclistButton().waitAndClick(10);
-		base.stepInfo("Navigated to docListPage.");
+		base.stepInfo("Navigating  to docListPage.");
+		driver.waitForPageToBeReady();
 	}
 	
 	public String VerifyTaggedDocsCountDisplay() {
@@ -499,17 +532,17 @@ public class CommunicationExplorerPage {
 	 */
 	public void viewinDocView() {
 		driver.scrollPageToTop();
-		if (getViewInDocView().isElementPresent()) {
-			base.passedStep("View in Doc View option is displayed under action "
-					+ "dropdown in Communication exp reporta page");
 			base.waitForElement(getActionBtn());
 			getActionBtn().ScrollTo();
 			getActionBtn().waitAndClick(10);
-			base.waitForElement(getAction_ViewInDoclistButton());
+			base.waitForElement(getViewInDocView());
+			if(getViewBtn().isElementAvailable(2)) {
+				getViewBtn().ScrollTo();
+			}
 			if (getViewInDocView().isElementPresent()) {
 				base.passedStep("View in Doc View option is displayed under action "
-						+ "dropdown in Communication exp reporta page");
-			base.waitForElement(getAction_ViewInDoclistButton());
+						+ "dropdown in Communication exp reports page");
+				getViewInDocView().ScrollTo();
 			getViewInDocView().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.stepInfo("Navigated to docViewPage.");
@@ -517,7 +550,7 @@ public class CommunicationExplorerPage {
 			base.failedStep("View in doc view option is not displayed");
 
 		}
-	}}
+	}
 	
 
 	/**

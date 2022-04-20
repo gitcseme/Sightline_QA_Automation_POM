@@ -2676,7 +2676,7 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getHighlightedKeywords() {
-		return driver.FindElementsByCssSelector("rect[style*='fill'][style*='rgb(0, 255, 255)']");
+		return driver.FindElementsByCssSelector("rect[style*='fill: rgb(0, 0, 255);']");
 	}
 
 	public Element getDocView_MiniDoc_SelectDOcId(String DocId) {
@@ -3361,6 +3361,16 @@ public class DocViewPage {
 	public ElementCollection getDownloadOption() {
 		return driver.FindElementsByXPath("//ul[@id='audioDocumentTypeDropDown']//a");
 	}
+	
+	//added by Aathith
+	public ElementCollection getDocView_Audio_Hits() {
+		return driver.FindElementsByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]");
+	}
+	
+	public Element getDocView_AnalyticsExitingFolderName1() {
+		return driver.FindElementById("82_anchor");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7004,9 +7014,14 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 
-		driver.Navigate().refresh();
-		driver.Navigate().refresh();
-		driver.Navigate().refresh();
+		for (int i = 1; i <= 3; i++) {
+			if (getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				break;
+			} else {
+				driver.Navigate().refresh();
+			}
+		}
 
 		base.waitForElement(getApplyCodingNearDedupeBtn());
 		base.waitTillElemetToBeClickable(getApplyCodingNearDedupeBtn());
@@ -7552,7 +7567,7 @@ public class DocViewPage {
 
 	public void saveAndCompleteButtonPerformCodeSameAs() {
 		driver.waitForPageToBeReady();
-		for (int j = 1; j <= 1; j++) {
+		for (int j = 1; j <= 2; j++) {
 			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
 			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
 		}
@@ -7560,15 +7575,16 @@ public class DocViewPage {
 		base.passedStep("Performing code same as action with save button");
 		reusableDocView.editingCodingFormWithSaveButton();
 		driver.waitForPageToBeReady();
-		for (int j = 2; j <= 2; j++) {
+		for (int j = 3; j <= 4; j++) {
 			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
 		}
 		reusableDocView.clickCodeSameAsParent();
 		base.passedStep("performing code same as action with complete button");
 		reusableDocView.editingCodingFormWithCompleteButton();
 		base.stepInfo("Tick mark icon displayed after completed document");
-		for (int i = 2; i <= 2; i++) {
+		for (int i = 3; i <= 3; i++) {
 			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
 		}
 		if (getUnCompleteButton().Displayed()) {
 			softAssertion.assertEquals(getUnCompleteButton().Displayed().booleanValue(), true);
@@ -7780,15 +7796,13 @@ public class DocViewPage {
 
 			base.waitForElement(getAnalyticalDropDown());
 			softAssertion.assertTrue(getAnalyticalDropDown().isDisplayed());
-			softAssertion.assertAll();
 			getAnalyticalDropDown().waitAndClick(5);
 			base.stepInfo("'View Document' action is displayed on thread map successfully");
 
 			driver.scrollPageToTop();
-
+			base.waitTime(3);
 			base.waitForElement(getDocView_CurrentDocId());
 			softAssertion.assertTrue(getDocView_CurrentDocId().isDisplayed());
-			softAssertion.assertAll();
 			base.stepInfo(
 					"On selecting document and view document action from thread map is displayed in doc view panel with complete DocID successfully");
 			base.passedStep("Both the DocIds are verified successfully");
@@ -9634,6 +9648,7 @@ public class DocViewPage {
 	public void codeSameAsAnalyticalChildWindow(String fieldValue, String icon, String lastIcon, String lastIcons)
 			throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		List<String> uniqueDocuments = new ArrayList<>();
 		Set<String> duplicates = new HashSet<String>();
 		List<String> miniDocList = reusableDocView.miniDocList();
@@ -9662,10 +9677,11 @@ public class DocViewPage {
 			}
 		}
 		if (uniqueDocuments.size() < 1) {
-			switchToNewWindow(1);
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				base.waitForElement(getClickDocviewID(++i));
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
@@ -9675,10 +9691,14 @@ public class DocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 					}
 				}
-				break;
+				if (status == true) {
+					break;
 
+				}
 			}
 		}
 		String DocIdName = uniqueDocuments.get(0);
@@ -9709,6 +9729,7 @@ public class DocViewPage {
 
 	}
 
+
 	/**
 	 * @author Indium-Baskar date: 15/09/2021 Modified date: NA
 	 * @Description : this method used for code same as last in analytical panel
@@ -9717,6 +9738,7 @@ public class DocViewPage {
 	public void codeSameAsLastAnalytical(String fieldValue, String icon, String lastIcon, String lastIcons)
 			throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		List<String> uniqueDocuments = new ArrayList<>();
 		Set<String> duplicates = new HashSet<String>();
 		List<String> miniDocList = reusableDocView.miniDocList();
@@ -9744,10 +9766,10 @@ public class DocViewPage {
 			}
 		}
 		if (uniqueDocuments.size() < 1) {
-			switchToNewWindow(1);
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
 			for (int i = 1; i < duplicates.size(); i++) {
+				switchToNewWindow(1);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
 				getClickDocviewID(++i).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				switchToNewWindow(2);
@@ -9757,9 +9779,13 @@ public class DocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!duplicates.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 					}
 				}
-				break;
+				if (status == true) {
+					break;
+				}
 
 			}
 		}
@@ -17691,6 +17717,7 @@ public class DocViewPage {
 			base.waitForElement(getVerifyPrincipalDocument());
 			String prnDoc = getVerifyPrincipalDocument().getText();
 			reusableDocView.editCodingForm(comment);
+			driver.scrollPageToTop();
 			base.waitForElement(getCodingFormStampButton());
 			getCodingFormStampButton().waitAndClick(5);
 			reusableDocView.popUpAction(fieldText, colour);
@@ -19019,6 +19046,7 @@ public class DocViewPage {
 	 */
 	public void performNearDupeWithOutSelectDocActionViewInDocList() {
 
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
@@ -19978,7 +20006,7 @@ public class DocViewPage {
 			System.out.println(keyword.get(0).getCssValue("fill"));
 			String color = keyword.get(0).getCssValue("fill");
 			String hex = org.openqa.selenium.support.Color.fromString(color).asHex();
-			if (keyword.get(0).isDisplayed() && (hex.contentEquals("#00ffff"))) {
+			if (keyword.get(0).isDisplayed() && (hex.contentEquals("#00ffff") || (hex.contentEquals("#0000ff")))) {
 				base.passedStep("Keyword highlighted on doc view successfully");
 				base.passedStep("Keyword highlighted on doc view with expected colour");
 			} else {
@@ -21787,9 +21815,10 @@ public class DocViewPage {
 			int row = i + 1;
 			if (row <= docrow.size()) {
 				String mindListdocId = doclist.get(row);
+				driver.scrollPageToTop();
 				base.waitForElement(getDocView_Next());
-				base.waitTime(2);
 				getDocView_Next().waitAndClick(5);
+				base.waitTime(2);
 				if (getDocViewPanelDocId(mindListdocId).isElementAvailable(5)
 						&& getSelectedDocIdMiniDocList().getText().equals(mindListdocId)) {
 					System.out.println("after click on next navigation button miniDOclist Scrolled from " + (row - 1)
@@ -23125,12 +23154,12 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
-
+		driver.Manage().window().fullscreen();
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName());
-		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
+		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -23178,7 +23207,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
-
+		driver.Manage().window().fullscreen();
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
@@ -24541,8 +24570,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
-		getAudioPersistantHitEyeIcon().Click();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		getAudioPersistentHits().isElementAvailable(10);
 		if (getAudioPersistentHits().isDisplayed()) {
@@ -25886,8 +25915,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getAudioPersistantHitEyeIcon());
-		getAudioPersistantHitEyeIcon().Click();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		List<WebElement> AudioPersistentHitsPanels = getAudioPersistentHitsPanels().FindWebElements();
 		List<WebElement> AudioSearchTerms = getDocView_Audio_HitTerms(1).FindWebElements();
@@ -25912,6 +25941,7 @@ public class DocViewPage {
 			base.failedStep(
 					"The Count of Audio Search Terms passed as parameter is not match with the count of Audio search Term Present in the AudioPersistantHitPanel for selected Document");
 		}
+
 
 	}
 
@@ -27262,7 +27292,172 @@ public class DocViewPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
-	
-	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description audio persistant hit display check
+	 */
+	public void audioPersistantHitDisplayCheck() {
+		driver.waitForPageToBeReady();
 
+		// audio eye icon verification
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(10);
+		base.stepInfo("Audio eye icon is clicked");
+		base.elementDisplayCheck(getAudioPersistantHitEyeIcon());
+		base.stepInfo("Audio eye icon is displayed in docview");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString1
+	 * @param SearchString2
+	 * @param SearchString3
+	 * @Description verify the audio persisten hit value
+	 */
+	public void verifyAudioPersistenHitValues(String SearchString1, String SearchString2, String SearchString3) {
+		driver.waitForPageToBeReady();
+		List<WebElement> audiohits = getDocView_Audio_Hits().FindWebElements();
+		for (WebElement hits :audiohits) {
+			String StringInPanels = hits.getText().trim().toString().toLowerCase();
+			if(StringInPanels.contains(SearchString1)) {
+				base.passedStep(SearchString1+" is diplayed");
+			}if(StringInPanels.contains(SearchString2)) {
+				base.passedStep(SearchString2+" is diplayed");
+			}if(StringInPanels.contains(SearchString3)) {
+				base.passedStep(SearchString3+" is diplayed");
+			}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param SearchString
+	 * @Description value not displayed check
+	 */
+	public void verifyAudioPersistanHitNotDisplayed(String SearchString) {
+
+		driver.waitForPageToBeReady();
+		if (getAudioPersistentHits().isDisplayed()) {
+			base.passedStep("Persistent hits panel is displayed as expected");
+		} else {
+			base.failedStep("Persistent Hit panel is not displayed as expected");
+		}
+		base.waitForElement(getDocView_Audio_Hit());
+		String StringInPanels = getDocView_Audio_Hit().getText();
+
+		System.out.println("expected text" + StringInPanels);
+		if(!StringInPanels.contains(SearchString)) {
+			base.passedStep(SearchString+"search string not displayed");
+		}else {
+			base.failedStep("seach string displayed");
+		}
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a miniDocList Child window
+	 */
+	public void childWindow_MiniDocList() {
+		driver.scrollPageToTop();
+		reusableDocView.clickGearIconMiniDocListChildWindow();
+		reusableDocView.switchTochildWindow();
+	}
+	
+	/**
+	 * @Author Vijaya.Rani Created on 13/04/2022
+	 * @Description To verify Analytics Threaded Map
+	 * 
+	 */
+	public void selectTextBoxInDocViewSourceDocId(String sourceId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoclist_SourceDocIdText(sourceId).ScrollTo();
+			String sourceDocId = getDocView_MiniDoclist_SourceDocIdText(sourceId).getText();
+			softAssertion.assertEquals(sourceId, sourceDocId);
+			softAssertion.assertTrue(getDocView_MiniDoclist_SourceDocIdText(sourceId).isDisplayed());
+			softAssertion.assertAll();
+			base.passedStep("Doc is viewed in the MiniDoclist successfully");
+			driver.waitForPageToBeReady();
+			getDocView_MiniDoclist_SourceDocIdText(sourceId).waitAndClick(10);
+			//verifyUncompleteCheckMarkForThreadMapTabDocs();
+			getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+			for (int i = 3; i <= 3; i++) {
+				try {
+					base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(i));
+					if (geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed())
+						softAssertion.assertEquals(geDocView_ThreadMap_ArrowDownIcon(i).isDisplayed().booleanValue(), true);
+					softAssertion.assertAll();
+					base.passedStep("Arrow Down Icon is displayed under thread map tab Successfully");
+				} catch (Exception e) {
+					base.failedStep("Arrow Down Icon is not displayed under thread map tab");
+				}
+
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No Doc is viewed from MiniDoclist");
+
+		}
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 18/04/2022
+	 * @Description To perform CodeSame thread docs in the DocView Test Case id:
+	 *              RPMXCON-51374
+	 * 
+	 */
+	public void performCodeSameForFamilyMembersDocs() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().Displayed();
+			}
+		}), Input.wait60);
+		getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		getDocView_Analytics_Family_Member_CodeSameAs().waitAndClick(15);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+	}
+	
+	/**
+	 * @author Mohan 9/02/21 NA Modified date: NA Modified by:NA
+	 * @description To Select DocId From mini doclist
+	 */
+	public void selectDosFromMiniDocList(String docId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			selectSourceDocIdInAvailableField("SourceDocID");
+			
+				try {
+					driver.waitForPageToBeReady();
+					if(getDocView_DocId(docId).isElementAvailable(5)) {
+					base.waitForElement(getDocView_DocId(docId));
+					getDocView_DocId(docId).waitAndClick(15);
+					base.passedStep("Doc is selected from MiniDoclist successfully");
+					}else {
+						base.stepInfo("The respective docs are not present in this prj");
+					}
+				
+
+				} catch (Exception e) {
+					driver.Navigate().refresh();
+				}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Docs Arenot selected from mini doclist");
+		}
+	}
+	
 }

@@ -15,6 +15,10 @@
         <!-- User Name : SA QA -->    
         <sa1userName>qasa1@consilio.com</sa1userName> 
         <sa1password>TestCons!042021</sa1password> 
+        
+         <!-- User Name : DA QA -->    
+        <sa1userName>qada1@consilio.com</sa1userName> 
+        <sa1password>TestCons!042021</sa1password> 
                   
         <!-- Consilio PAU Automation   -->
         <pa1FullName>Consilio PAU1 Automation</pa1FullName>

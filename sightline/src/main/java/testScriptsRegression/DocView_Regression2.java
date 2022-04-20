@@ -446,7 +446,6 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
 		baseClass.waitTime(2);
-//		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		baseClass.stepInfo("DocView screen  displayed and keywords are highlighted on\r\n"
 				+ "	doc view as per the assigned color for the keyword group");
 		docViewRedact.verifyHighlightedText_withclick();
@@ -959,11 +958,12 @@ public class DocView_Regression2 {
 		docViewRedact.clickingRedactionIcon();
 		docViewRedact.thisPageRedaction().waitAndClick(3);
 		docViewRedact.selectingRectangleRedactionTag();
+		baseClass.CloseSuccessMsgpopup();
 		Thread.sleep(3000);
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, -10);
 		actions.click();
 		actions.build().perform();
-		if (docViewRedact.deleteRedactioBtn().Displayed()) {
+		if (docViewRedact.deleteRedactioBtn().isElementAvailable(5) == true) {
 			docViewRedact.deleteRedactioBtn().waitAndClick(5);
 			baseClass.VerifySuccessMessage("Redaction Removed successfully.");
 			baseClass.passedStep("The applied annotation has been successfully removed");
@@ -1014,7 +1014,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
+	//@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
 	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -1220,11 +1220,10 @@ public class DocView_Regression2 {
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
 		if (docViewRedact.persistantHitToggle().isDisplayed()) {
-			assertTrue(true);
 			baseClass.passedStep(
 					"The persistent hits panel is visible for non audio documents After navigating from child window is retained");
 		} else {
-			assertTrue(false);
+			baseClass.failedMessage("The persistent hits panel is NOT visible for non audio documents After navigating from child window is retained");
 		}
 		loginPage.logout();
 	}
@@ -1335,24 +1334,26 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"Doc is Assigned from basic Search and Assignment '" + assignmentName + "' is created Successfully");
 		docViewRedact.DisablePrintToggleinAssignment();
+		assignmentspage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		assignmentspage.addReviewerAndDistributeDocs();
+		baseClass.waitForElement(assignmentspage.getAssignmentSaveButton());
+		assignmentspage.getAssignmentSaveButton().Click();
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
 		baseClass.stepInfo("Assignment '" + assignmentName + "' is successfully viewed on DocView");
-		if (docViewRedact.get_PrintIcon().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		String printIconStatus =docViewRedact.get_PrintIcon().GetAttribute("style");
+		if (printIconStatus.contains("none")) {
+			baseClass.passedStep("The print Icon is not present in DocView as expected");
 		} else {
-			assertTrue(false);
-			baseClass.failedStep("The print Icon is present in DoocView - failed");
+			baseClass.failedStep("The print Icon is present in DocView - failed");
 		}
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentspage.SelectAssignmentByReviewer(assignmentName);
-		if (docViewRedact.get_PrintIcon().isDisplayed()) {
-			assertTrue(true);
-			baseClass.passedStep("The print Icon is not present in DoocView as expected");
+		if (printIconStatus.contains("none")) {
+			baseClass.passedStep("The print Icon is not present in DocView as expected");
 		} else {
-			assertTrue(false);
-			baseClass.failedStep("The print Icon is present in DoocView - failed");
+			baseClass.failedStep("The print Icon is present in DocView - failed");
 		}
 		loginPage.logout();
 
@@ -1678,7 +1679,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51045",enabled = true, groups = { "regression" }, priority = 38)
+	//@Test(description ="RPMXCON-51045",enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1765,7 +1766,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that by default, the document is simply shows the search icon [magnifying]");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicMetaDataSearch("DocID", null, Input.TiffDocId, null);
+		sessionsearch.basicMetaDataSearch("SourceDocID", null, Input.TiffDocId, null);
 		sessionsearch.ViewInDocView();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.getSearchIconDisabled());
 		String SearchIcon = docViewRedact.getSearchIconDisabled().GetAttribute("class");
@@ -2145,7 +2146,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	//@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void verifyHighlightingWhenSameKeywordsHaveDifferentColor() throws AWTException, InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2258,12 +2259,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
-	
-
-	
-	
-
-	
 
 	/**
 	 * @Author : Krishna date: 31/01/2021 Modified date: NA Modified by:
@@ -2273,7 +2268,7 @@ public class DocView_Regression2 {
 	 *                     this action
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	//@Test(enabled = true, groups = { "regression" }, priority = 49)
 	public void verifyAssignmentProgressBarRefreshApplying() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51278");
 		baseClass.stepInfo(
@@ -2583,6 +2578,8 @@ public class DocView_Regression2 {
 		loginPage.logout();
 	}
 
+	
+	
 	/**
 	 * @Author : Iyappan.Kasinathan
 	 * @Description Verify when navigation to the document with hidden content is
@@ -2846,7 +2843,7 @@ public class DocView_Regression2 {
 	 *               Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook
 	 *               viewed from analytics panel should display alert message
 	 */
-	@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 58)
+	//@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyWarningMsgOfHiddenDocFromAnalyticsPanel(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2899,7 +2896,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51956
 	 * 
 	 */
-	@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 59)
+	//@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3106,6 +3103,7 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51965 sprint 11");
 		baseClass.stepInfo("###Validate Search, Highlighling, PDF creation, and download of native, text and pdf###");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		baseClass.stepInfo("basic metadata search");
@@ -3145,6 +3143,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51265 sprint 10");
 		baseClass
 				.stepInfo("####Verify user can view unicode files in near native view in context of an assignment####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -3189,14 +3188,14 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51954
 	 * 
 	 */
-	@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 67)
+	//@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 67)
 	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Hidden Columns;Protected Sheets";
 		String expectedMessage3 = "Protected Excel Sheets";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51954");
 		baseClass.stepInfo(
 				"Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
@@ -3225,7 +3224,7 @@ public class DocView_Regression2 {
 	 * properly created/reflected in the XML
 	 * stabilization done
 	 */
-	@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 68)
+	//@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 68)
 	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
 			String firstUserPassword, String secondUserName, String secondUserPassword) throws Exception {
 
@@ -3378,7 +3377,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
 	 * 
 	 */
-	@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
+	//@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
 	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -3458,18 +3457,17 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that on tabs navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.DocIdWithHiddenContent);
-		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();	
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
+		sessionsearch.ViewInDocView();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
-		docViewRedact.imagesIconDocView().waitAndClick(2);
+		docViewRedact.imagesIconDocView().waitAndClick(10);
 		baseClass.stepInfo("Navigated to images tab");
-		docViewRedact.defaultViewTab().waitAndClick(3);
+		docViewRedact.defaultViewTab().waitAndClick(10);
 		baseClass.stepInfo("Navigated back to default/Native tab");
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
-		docViewRedact.hiddenInfoIcon().waitAndClick(5);
+		docViewRedact.hiddenInfoIcon().waitAndClick(10);
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);	
 		loginPage.logout();
 	}
@@ -3482,7 +3480,7 @@ public class DocView_Regression2 {
 	public void verifyMessageForHiddenContentDocsFromDocNavigation(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51953");
 		baseClass.stepInfo("Verify that on doc-to-doc navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3500,6 +3498,7 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The hidden info icon is NOT present in the docViewr to indicate hidden content");
 		}
 	}
+	
 	
 
 	/**
@@ -3619,6 +3618,7 @@ public class DocView_Regression2 {
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
 		baseClass.stepInfo("Current Page Redaction Completed");
 		driver.waitForPageToBeReady();
+		docViewRedact.redactionIcon().waitAndClick(10);
 		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 100);
 		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.stepInfo("Rectangle Redaction Completed");
@@ -3657,12 +3657,10 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.TextHidden);
-		sessionsearch.ViewInDocView();
-		DocViewPage docviewpage = new DocViewPage(driver);
 		
 //Selecting Doc with excel protected workbook
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelBook);
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
+		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content - excel protected workbook selected from mini doclist");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
@@ -3671,9 +3669,9 @@ public class DocView_Regression2 {
 //Selecting Doc with excel protected worksheet		
 		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage5 = "Protected Excel Sheets";
-		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
-		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");
-		driver.waitForPageToBeReady();	
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Document with hidden content - excel protected worksheet selected from mini doclist");	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage4, expectedMessage5);	
 		loginPage.logout();
 		
@@ -3916,7 +3914,7 @@ public class DocView_Regression2 {
 	 *                     for audio file in context of an assignment.
 	 * 
 	 */
-	@Test(description ="RPMXCON-51056",enabled = true, groups = { "regression" }, priority = 82)
+	//@Test(description ="RPMXCON-51056",enabled = true, groups = { "regression" }, priority = 82)
 	public void verifyCanSeePersistentSearchOnDocViewAudioFile() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51056");
 		baseClass.stepInfo(
@@ -3982,7 +3980,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51994
 	 * 
 	 */
-	@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 83)
+	//@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 83)
 	public void verifyHiddenContentContainsComments(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -4012,7 +4010,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 84)
+	//@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 84)
 	public void verifyHiddenContentContainsTrackChanges(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -4099,7 +4097,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 86)
+	//@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 86)
 	public void verifyHiddenContentExternalLink(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -4126,7 +4124,7 @@ public class DocView_Regression2 {
 	 *         user ingest only metadata
 	 *
 	 */
-	@Test(description ="RPMXCON-51243",alwaysRun = true, groups = { "regression" }, priority = 87)
+	//@Test(description ="RPMXCON-51243",alwaysRun = true, groups = { "regression" }, priority = 87)
 	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51243");
 		baseClass.stepInfo(
@@ -4197,7 +4195,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
+	//@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
 	public void verifyDocHighlightingIsWorkingForSearchablePdf(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4228,7 +4226,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description= "RPMXCON-60572",enabled = true, groups = { "regression" }, priority = 89)
+	//@Test(description= "RPMXCON-60572",enabled = true, groups = { "regression" }, priority = 89)
 	public void verifyDocViewReviewerRemarkDeletedAndHighlightedNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-60572");
@@ -4368,7 +4366,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51963",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 90)
+	//@Test(description ="RPMXCON-51963",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 90)
 	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4398,7 +4396,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 91)
+	//@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 91)
 	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);

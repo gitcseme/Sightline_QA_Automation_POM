@@ -206,9 +206,10 @@ public class BaseClass {
 		return driver.FindElementById("txtsearchUser");
 	}
 
-	public Element getEditButton() {
-		return driver.FindElementByXPath("//a[text()='Edit']");
+	public Element getEditButton(String ProjectName) {
+		return driver.FindElementByXPath("//td[text()='"+ProjectName+"']//following-sibling::td//a[text()='Edit']");
 	}
+
 
 	public Element getFunctionalityButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Functionality')] ");
@@ -223,7 +224,7 @@ public class BaseClass {
 	}
 
 	public Element selectSecurityGroup(String SecurityGrp) {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='"+SecurityGrp+"']");
+		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='" + SecurityGrp + "']");
 	}
 
 	public Element selectDefaultSecurityGroup() {
@@ -253,12 +254,12 @@ public class BaseClass {
 	public Element getGlobalMessagePopUpClose() {
 		return driver.FindElementById("btnDialogClose");
 	}
-	
+
 	// added by iyappan
 	public Element getWarningsMsgHeader() {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
 	}
-	
+
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
 	}
@@ -2491,9 +2492,9 @@ public class BaseClass {
 		SelectSearchOption().Enter();
 		driver.waitForPageToBeReady();
 
-		waitTillElemetToBeClickable(getEditButton());
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
 		driver.waitForPageToBeReady();
-		getEditButton().waitAndClick(10);
+		getEditButton(Input.projectName).waitAndClick(10);
 		getFunctionalityButton().waitAndClick(20);
 
 		waitTillElemetToBeClickable(UnSelectProductionCheckBox());
@@ -2563,13 +2564,13 @@ public class BaseClass {
 		softAssertion.assertAll();
 	}
 
-	public void SelectSecurityGrp(String username,String SecurityGrp) {
+	public void SelectSecurityGrp(String username, String SecurityGrp) {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
 		driver.waitForPageToBeReady();
-		waitTillElemetToBeClickable(getEditButton());
-		getEditButton().waitAndClick(10);
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
+		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		selectSecurityGroup(SecurityGrp).ScrollTo();
 		selectSecurityGroup(SecurityGrp).isDisplayed();
@@ -2585,8 +2586,8 @@ public class BaseClass {
 		waitForElement(SelectSearchOption());
 		SelectSearchOption().SendKeys(username);
 		SelectSearchOption().Enter();
-		waitTillElemetToBeClickable(getEditButton());
-		getEditButton().waitAndClick(10);
+		waitTillElemetToBeClickable(getEditButton(Input.projectName));
+		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		selectDefaultSecurityGroup().ScrollTo();
 		driver.waitForPageToBeReady();
@@ -2746,7 +2747,7 @@ public class BaseClass {
 		Assert.assertEquals(ExpectedMsg2, getSecondLineSuccessMsg(1).getText().toString());
 		String string3 = getSecondLineSuccessMsg(1).getText().toString();
 		System.out.println(string3);
-		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(3).getText().toString());
+		Assert.assertEquals(ExpectedMsg3, getSecondLineSuccessMsg(2).getText().toString());
 	}
 
 	/**
@@ -2771,7 +2772,7 @@ public class BaseClass {
 		if (compare) {
 			passedStep(passMsg);
 		} else {
-			failedMessage(failMsg);
+			failedStep(failMsg);
 		}
 
 	}
@@ -3031,7 +3032,7 @@ public class BaseClass {
 		}
 
 		System.out.println(lines.size());
-		for (int i = 1; i < lines.size()-1; i++) {
+		for (int i = 1; i < lines.size() - 1; i++) {
 			String value = lines.get(i);
 			String[] arrOfStr = value.split(",");
 
@@ -3156,5 +3157,55 @@ public class BaseClass {
 		String url = driver.getUrl();
 		textCompareEquals(expURL, url, passMsg, failMsg);
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description impersonate Da to pa if Da user is multi domain assigned
+	 */
+	public void impersonateDAtoPAforMultiDominUser() {
+		getSignoutMenu().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait30);
+		getChangeRole().Click();
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait30);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectTo().Visible();
+			}
+		}), Input.wait30);
+		
+		waitForElement(getAvlDomain());
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from DA to PA");
+		UtilityLog.info("Impersnated from DA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectVerify
+	 * @Description verify that current project is selected project
+	 */
+	public void verifyCurrentProject(String projectVerify) {
+		String project = getProjectNames().getText().trim();
+		softAssertion.assertEquals(projectVerify, project);
+		passedStep(projectVerify+" is the Current Project");
+	}
 }

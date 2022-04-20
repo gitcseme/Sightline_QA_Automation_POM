@@ -39,7 +39,18 @@ public class WorkFlow_IndiumRegression {
 	TagsAndFoldersPage page;
 	SessionSearch search;
 	AssignmentsPage assignmentPage;
-
+	
+	String actionQuery="Define What Actions To Take On Candidate Documents That Meet Your Family Options";
+    String pageQuery="On this page you can define what action the application will take on eac h candidate "
+    		        + "document that also meets the selected Family Option rules. When the Workflow runs, "
+    		        + "it will evaluate whether each document in the Source Universe meets the Filter "
+    		        + "Criteria. Those that do are considered \"candidate documents\". "
+    		        + "If you have Family Option rules set up, the applicaiton will further evaluate"
+    		        + " whether all selected Family Option rules are met. If they are met, the Action "
+    		        + "specified below will be taken on the family unit if Family Option rules are specified,"
+    		        + " or on the candidate document if the document is not part of a family unit, or if no Family "
+    		        + "Options are configured. You can either action documents to an Assignment or into a Folder.";
+	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -475,7 +486,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that CONFIGURED status is displayed in the list if user
 	 * save the workflow.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void validateConfiguredStatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52620");
 		baseClass.stepInfo("To verify that CONFIGURED status is displayed in the list " + "if user save the workflow.");
@@ -527,7 +538,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyHistoryBtn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52645");
 		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
@@ -557,7 +568,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyFilter_CreatedUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52657");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
@@ -597,7 +608,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can save the record. 'RPMXCON-52591' Sprint-13
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52591");
 		baseClass.stepInfo("To verify that RMU can save the record.");
@@ -649,7 +660,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
 	 * Description:To verify that all details displayed on history.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void validationActionHederValues() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52647");
 		baseClass.stepInfo("To verify that all details displayed on history.");
@@ -689,7 +700,7 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 	
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void validatestatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52655");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected Status.");
@@ -798,7 +809,7 @@ public class WorkFlow_IndiumRegression {
  * @author Jayanthi.ganesan
  * @throws InterruptedException
  */
-@Test(enabled = true, groups = { "regression" }, priority = 14)
+@Test(enabled = true, groups = { "regression" }, priority = 15)
 public void verifyHistoryBtnEnabled() throws InterruptedException {
 	baseClass.stepInfo("Test case Id: RPMXCON-52646");
 	baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
@@ -844,7 +855,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyAllColumnSorting() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52618");
 		baseClass.stepInfo("To verify that RMU can sort by ascending and descending on all columns");
@@ -927,7 +938,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
  * @throws ParseException
  * @throws AWTException
  */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52656");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Enabled State'.");
@@ -1001,7 +1012,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	 * Description:To verify that Status list should be displayed as Complete or
 	 * Assigned. 'RPMXCON-52605' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyRMUStatusListCompleteOptionDisplay() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52605");
 		baseClass.stepInfo("To verify that Status list should be displayed as Complete or Assigned.");
@@ -1024,7 +1035,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	 * Description:To verify that Summary tab will displays all the details.
 	 * 'RPMXCON-52611' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifySummaryTabWillDisplayAllDetails() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52611");
@@ -1071,7 +1082,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	/**
 	 * Author :jayanthi
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifySummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52612");
@@ -1136,7 +1147,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	 * Description:To verify that selected Source details is displayed in Summary tab.
 	 * 'RPMXCON-52613' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifySourceInSummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52613");
@@ -1201,6 +1212,9 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		page.deleteAllFolders(folderName);
 	
 	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

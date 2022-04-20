@@ -312,8 +312,8 @@ public class BatchRedactionRegression2 {
 		batch.verifyNodeAnalyseAndViewBtn(newNode, searchName, null, null);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "No");
 		driver.waitForPageToBeReady();
-		base.waitForElement(batch.getCloseBtn());
-		batch.getCloseBtn().waitAndFind(10);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
 		// Delete Search
 		saveSearch.deleteNode(Input.mySavedSearch, newNode);

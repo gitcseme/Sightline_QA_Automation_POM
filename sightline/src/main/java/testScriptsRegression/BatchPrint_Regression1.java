@@ -70,8 +70,12 @@ public class BatchPrint_Regression1 {
 	 * production set. Description : To Verify PDF file should be generated for the
 	 * selected production set.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-47841", enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyPdfFileGeneratedBySelectedProductionSet() throws InterruptedException {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -84,16 +88,37 @@ public class BatchPrint_Regression1 {
 
 		baseClass.stepInfo("#### Verify PDF file should be generated for the selected production set ####");
 
+		// Create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolderInRMU(foldername);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName, Input.tagNamePrev);
+
+		// Bulk Folder
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Save searched content");
 		search.saveSearch(searchname);
+		
+		search.bulkFolderExisting(foldername);
+
+		// Generate Production
+		String productionname = "P" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagName);
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
 
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Verify PDF file should be generated for the selected production set");
-		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType);
+		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType, true,"P4332316",false,false);
 		loginPage.logout();
 
 	}
@@ -102,50 +127,49 @@ public class BatchPrint_Regression1 {
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: Gopinath
 	 * @Testcase id : 49900 - Verify and generate BatchPrint with Search as source.
 	 * @Description : Verify and generate BatchPrint with Search as source
+	 * @Stabilized
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-49900", enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyBatchPrintWithSearchAsSource() throws InterruptedException {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49900");
 
 		SessionSearch search = new SessionSearch(driver);
-		String searchname = Input.randomText + Utility.dynamicNameAppender();
+		String searchnamePA = Input.randomText + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("#### Verify and generate BatchPrint with Search as source ####");
 
+		// Bulk Tag
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Save searched content");
-		search.saveSearch(searchname);
+		search.saveSearch(searchnamePA);
 
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Perform batch print by saved search");
-		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType);
-
-		baseClass.stepInfo("Navigate to back");
-		driver.Navigate().back();
+		batchPrint.BatchPrintWithProduction(searchnamePA, Input.orderCriteria, Input.orderType, false,null,true,false);
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String searchnameRMU = Input.randomText + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("Save searched content");
-		search.saveSearch(searchname);
+		search.saveSearch(searchnameRMU);
 
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Perform batch print by saved search");
-		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType);
+		batchPrint.BatchPrintWithProduction(searchnameRMU, Input.orderCriteria, Input.orderType, false,null,true,false);
 
-		baseClass.stepInfo("Navigate to back");
-		driver.Navigate().back();
 		loginPage.logout();
 
 	}
@@ -157,7 +181,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Excel files is
 	 *              displayed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-48728", enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyTotalCountExcelFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -231,7 +255,7 @@ public class BatchPrint_Regression1 {
 	 * @Description : To verify that user can view the total count of Media files is
 	 *              displayed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-48727", enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyTotalCountMediaFilesDisplayed() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -278,7 +302,8 @@ public class BatchPrint_Regression1 {
 	 *              DocFileName [RPMXCON-58917]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-58917", enabled = true, dataProvider = "Users", groups = {
+			"regression" }, priority = 5)
 	public void verifyPDFForAllDoc(String username, String password) throws InterruptedException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);
@@ -318,7 +343,8 @@ public class BatchPrint_Regression1 {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-58915", enabled = true, dataProvider = "Users", groups = {
+			"regression" }, priority = 5)
 	public void verifyPDFForAllDocWithFileNameDocID(String username, String password)
 			throws InterruptedException, ZipException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
@@ -368,7 +394,8 @@ public class BatchPrint_Regression1 {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-58918", enabled = true, dataProvider = "Users", groups = {
+			"regression" }, priority = 6)
 	public void verifyPDFForEachDoc(String username, String password) throws InterruptedException, ZipException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);
@@ -409,13 +436,12 @@ public class BatchPrint_Regression1 {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-58973", enabled = true, dataProvider = "Users", groups = {
+			"regression" }, priority = 7)
 	public void verifySpecialCharactForBatchPrint(String username, String password)
 			throws InterruptedException, ZipException {
 		String tagName = Input.randomText + Utility.dynamicNameAppender();
-		String expectedFileName = "SpecialCharacter&";
-		String metaDataField = "DocFileName";
-		String value = "SpecialCharact";
+		String value = "SpecialCharacter&";
 		SessionSearch search = new SessionSearch(driver);
 
 		// Login As User
@@ -426,7 +452,7 @@ public class BatchPrint_Regression1 {
 				"Verify batch print should generate successfully for the files containing special characters in DocFileName.");
 
 		// Bulk Tag
-		search.validateAutosuggestSearchResult_BS(expectedFileName, metaDataField, value);
+		search.basicContentSearch(value);
 		search.bulkTag(tagName);
 
 		// Select TAG
@@ -453,7 +479,7 @@ public class BatchPrint_Regression1 {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-58921", enabled = true, groups = { "regression" }, priority = 8)
 	public void validateBatchPrintWithProduction() throws InterruptedException, ZipException {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
@@ -495,7 +521,7 @@ public class BatchPrint_Regression1 {
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
 		batchPrint.fillingBasisForPrinting(false, true, productionname);
-		batchPrint.navigateToNextPage(3);
+		batchPrint.navigateToNextPage(2);
 
 		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
 		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
@@ -520,7 +546,7 @@ public class BatchPrint_Regression1 {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-60553", enabled = true, groups = { "regression" }, priority = 9)
 	public void validateBatchPrintWithPriorProduction() throws InterruptedException, ZipException {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
@@ -586,7 +612,7 @@ public class BatchPrint_Regression1 {
 	 *              tabs [RPMXCON-58909]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-58909", enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyBackBtnInBatchPrintPage() throws InterruptedException {
 		String tagName = "TagName" + utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);

@@ -65,10 +65,8 @@ public class DocView_CodingForm_Regression {
 
 	String projectFieldINT = "DataINT" + Utility.dynamicNameAppender();
 	String projectFieldNVARCHAR = "Nvarchar" + Utility.dynamicNameAppender();
-	String projectFieldBit = "DataBIT" + Utility.dynamicNameAppender();
 	String assignmentCreationStampOff = "StampOFF" + Utility.dynamicNameAppender();
 	String assignmentCreationOn = "StampON" + Utility.dynamicNameAppender();
-	String saveText = "TestFolder" + Utility.dynamicNameAppender();
 	String completeBtnCodingForm = "popupStamp" + Utility.dynamicNameAppender();
 	String tinyInt = "TinyInt" + Utility.dynamicNameAppender();
 	String smallInt = "SmallInt" + Utility.dynamicNameAppender();
@@ -79,17 +77,8 @@ public class DocView_CodingForm_Regression {
 	String roll = "rmu";
 	String stampOverWrite = "The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?";
 	String date = "Date" + Utility.dynamicNameAppender();
-	String cfNameEdit = "CF" + Utility.dynamicNameAppender();
-	String assignOne = "Assignment" + Utility.dynamicNameAppender();
-	String assignTwo = "Assignment" + Utility.dynamicNameAppender();
-	String assignThree = "Assignment" + Utility.dynamicNameAppender();
-	String assignFour = "Assignment" + Utility.dynamicNameAppender();
-	String assignFive = "Assignment" + Utility.dynamicNameAppender();
-	String assign = "Assignment" + Utility.dynamicNameAppender();
-	String assgn = "Assignment" + Utility.dynamicNameAppender();
 	String assgnCf = "Assignment" + Utility.dynamicNameAppender();
 	String cfName = "CfName" + Utility.dynamicNameAppender();
-	String cfLarge = "CfNameLarge" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -1997,6 +1986,13 @@ public class DocView_CodingForm_Regression {
 		String Defaultaction = "Make It Required";
 		String stamptext = "Stamp" + Utility.dynamicNameAppender();
 		String alpha = "a@";
+		String tinyInt = "TinyInt" + Utility.dynamicNameAppender();
+		String smallInt = "SmallInt" + Utility.dynamicNameAppender();
+		String avearageInt = "SmallInt" + Utility.dynamicNameAppender();
+		String bigInt = "BigInt" + Utility.dynamicNameAppender();
+		String hugeInt = "HugeInt" + Utility.dynamicNameAppender();
+
+
 		UtilityLog.info("Started Execution for prerequisite");
 
 		// Login as a PA
@@ -3307,6 +3303,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.passedStep("Coding form saved with maximum NVARCHAR character successfully");
 		docViewPage.passingNvacharDatatypeUsingLength(tinyInt, smallInt, avearageInt, bigInt, 19, 49, 399, 3999);
 		baseClass.passedStep("Coding form saved with minimum NVARCHAR character successfully");
+		baseClass.waitTime(2);
 		codingForm.assignCodingFormToSG(Input.codeFormName);
 		codingForm.deleteCodingForm(formName, formName);
 
@@ -3669,6 +3666,13 @@ public class DocView_CodingForm_Regression {
 		String Defaultaction = "Make It Required";
 		String stamptext = "Stamp" + Utility.dynamicNameAppender();
 		String alpha = "a@";
+		String tinyInt = "TinyInt" + Utility.dynamicNameAppender();
+		String smallInt = "SmallInt" + Utility.dynamicNameAppender();
+		String avearageInt = "SmallInt" + Utility.dynamicNameAppender();
+		String bigInt = "BigInt" + Utility.dynamicNameAppender();
+		String hugeInt = "HugeInt" + Utility.dynamicNameAppender();
+
+
 		UtilityLog.info("Started Execution for prerequisite");
 
 		// Login as a PA
@@ -6180,6 +6184,7 @@ public class DocView_CodingForm_Regression {
 		String cfName = "coding" + Utility.dynamicNameAppender();
 		String commentText = "ct" + Utility.dynamicNameAppender();
 		String metadataText = "mt" + Utility.dynamicNameAppender();
+		String projectFieldINT = "DataA" + Utility.dynamicNameAppender();
 
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -6209,7 +6214,7 @@ public class DocView_CodingForm_Regression {
 
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViews();
 
 		// verify the coding form panel
 		docViewPage.verifyCommentAndMetadata(addComment, commentText, projectFieldINT, metadataText);
@@ -6321,6 +6326,8 @@ public class DocView_CodingForm_Regression {
 				+ "created with metadata field as DateOnly on click of 'Complete'");
 		String codingForms = "CFDate" + Utility.dynamicNameAppender();
 		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+		String date = "Date" + Utility.dynamicNameAppender();
+
 
 		UtilityLog.info("Started Execution for prerequisite");
 		// Login as a PA
@@ -6396,6 +6403,8 @@ public class DocView_CodingForm_Regression {
 		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
 		String assgnColour = "ColourAssign" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
+		String date = "Date" + Utility.dynamicNameAppender();
+
 		UtilityLog.info("Started Execution for prerequisite");
 
 		// Login as a PA
@@ -6837,6 +6846,9 @@ public class DocView_CodingForm_Regression {
 		String cfName = "coding" + Utility.dynamicNameAppender();
 		String commentText = "ct" + Utility.dynamicNameAppender();
 		String metadataText = "mt" + Utility.dynamicNameAppender();
+		String projectFieldINT = "DataAA" + Utility.dynamicNameAppender();
+
+	    
 
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);

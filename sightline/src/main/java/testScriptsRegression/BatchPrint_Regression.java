@@ -103,7 +103,7 @@ public class BatchPrint_Regression {
 		 bp.BatchPrintWitMP3(searchnameMP3);
 		   }
 		 
-		 //@Test(groups={"regression"})
+		 @Test(groups={"regression"})
 		 public void BatchPrintWithProduction() throws InterruptedException {
 			 
 		 SessionSearch search = new SessionSearch(driver);
@@ -112,7 +112,7 @@ public class BatchPrint_Regression {
 		 search.saveSearch(searchname);
 		 
 		 bp = new BatchPrintPage(driver);
-		 bp.BatchPrintWithProduction(searchname, orderCriteria, orderType);
+		 bp.BatchPrintWithProduction(searchname, orderCriteria, orderType,true,null,false,true);
 		   }
 		
 		

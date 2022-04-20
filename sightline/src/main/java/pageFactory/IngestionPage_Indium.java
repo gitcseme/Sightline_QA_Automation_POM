@@ -941,6 +941,12 @@ public class IngestionPage_Indium {
 	public Element rollbackButtonStatus() {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]//a");
 	}
+	public Element gridTable() {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table[@role='grid']");
+	}
+	public Element copyingErrorCount() {
+		return driver.FindElementByXPath("//label[contains(.,'Document Files Copied :')]//..//div//span//a");
+	}
 	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -6927,8 +6933,6 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			    	}
 		}
 
-
-
 			/**
 			 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
 			 * @description: this method will verify rollback status for approved ingestion
@@ -6951,10 +6955,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			else {
 				base.failedStep("Rollback option available for approved ingestion");
 			}		
-	
-		    	    	
-	
+
 			}
+
 		
 	
 			
@@ -7239,4 +7242,280 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					base.failedStep("Exception occured while unpublish saved search."+e.getLocalizedMessage());
 				}
 			}
+
+			
+			/**
+			 * @author: Arun Created Date: 13/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify size of ingestion grid after resize browser
+			 */
+			
+			public void verifySizeOfIngestionGrid() {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByPUBLISHED().waitAndClick(10);
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+		    	getFilterByDRAFT().waitAndClick(10);
+		    	getIngestion_GridView().Click();
+		    	driver.waitForPageToBeReady();
+		    	base.waitTime(2);
+		    	String gridsizeBefore =gridTable().GetAttribute("style");
+		    	System.out.println(gridsizeBefore);
+		    	
+		    	driver.Manage().window().maximize();
+		    	base.waitTime(2);
+		    	String gridsizeAfter=gridTable().GetAttribute("style");
+		    	System.out.println(gridsizeAfter);
+		    	if(gridsizeBefore.equalsIgnoreCase(gridsizeAfter)) {
+		    		base.passedStep("Size of the grid not resized");
+		    	}
+		    	else {
+		    		base.failedStep("Size of the grid resized");
+		    	}
+		    	
+		    	
+			}
+			/**
+			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform add only ingestion for TIFF images folder
+			 */
+			public void tiffImagesIngestion(String DATfile,String TIFFfile,String genSearchPDFCheckBox) {
+				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.TiffImagesFolder);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				selectDATSource(DATfile,"ProdBeg");
+				getTIFFLST().ScrollTo();
+				base.waitForElement(getTIFFLST());
+				getTIFFLST().isElementAvailable(15);
+				getTIFFLST().selectFromDropdown().selectByVisibleText(TIFFfile);
+				
+				if(genSearchPDFCheckBox.contains("true")) {
+					getTIFFSearchablePDFCheckBox().isElementAvailable(10);
+					getTIFFSearchablePDFCheckBox().Click();
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
+				clickOnPreviewAndRunButton();
+			}
+			
+			/**
+			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will ignore errors and perform catlogging
+			 */
+			
+			public void ignoreErrorsAndCatlogging() {
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByFAILED().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByCATALOGED().waitAndClick(10);
+		    	
+		    	//catlogging
+		    	for(int i=0;i<70;i++) {
+		    		base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+					
+		    		if(status.contains("Cataloged")) {
+		    			base.passedStep("Cataloged completed");
+		    			break;
+		    		}
+		    		else if (status.contains("In Progress")) {
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(10);
+		    		}
+		    		else if (status.contains("Failed")){
+		    			getIngestionDetailPopup(1).waitAndClick(10);
+		    			base.waitForElement(errorCountCatalogingStage());
+					    errorCountCatalogingStage().waitAndClick(10);
+					    base.waitForElement(ignoreAllButton());
+					    ignoreAllButton().waitAndClick(10);
+					    if (getApproveMessageOKButton().isElementAvailable(5)) {
+								getApproveMessageOKButton().waitAndClick(10);
+								base.passedStep("Clicked on OK button to ignore all errors");
+							}
+					      
+					    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    		  doneButton().Enabled()  ;}}), Input.wait30); 
+					    doneButton().waitAndClick(10);
+					      
+					    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+					  	getCloseButton().waitAndClick(10);
+					  	base.VerifySuccessMessage("Action done successfully");
+					  	base.waitTime(2);
+					  	getRefreshButton().waitAndClick(10);
+		    		}
+		    	}
+			
+			}
+			/**
+			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will ignore errors and perform copying
+			 */
+			public void ignoreErrorsAndCopying() {
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByCOPIED().waitAndClick(10);
+				 	getIngestionDetailPopup(1).waitAndClick(10);
+				 	base.waitTime(2);
+			    	driver.scrollingToElementofAPage(getRunCopying());
+			    	base.waitForElement(getRunCopying());
+			        getRunCopying().waitAndClick(10);
+			        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+			    	getCloseButton().waitAndClick(10);
+			    	base.waitTime(2);
+			        base.VerifySuccessMessage("Ingestion copy has Started.");
+
+			    	getRefreshButton().waitAndClick(10);
+			    	for(int i=0;i<40;i++) {
+			    		getRefreshButton().waitAndClick(10);
+			    		base.waitTime(2);
+						String status = getStatus(1).getText().trim();
+					
+			    		if(status.contains("Copied")) {
+			    			base.passedStep("Copied completed");
+			    			break;
+			    		}
+			    		else if (status.contains("In Progress")) {
+			    			base.waitTime(5);
+			    			getRefreshButton().waitAndClick(5);
+			    		}
+			    		else if (status.contains("Failed")){
+			    			getIngestionDetailPopup(1).waitAndClick(10);
+			    			driver.scrollingToElementofAPage(copyingErrorCount());
+			    			copyingErrorCount().waitAndClick(10);
+			    			base.waitTime(1);
+						    base.waitForElement(ignoreAllButton());
+						    ignoreAllButton().waitAndClick(10);
+						    if (getApproveMessageOKButton().isElementAvailable(5)) {
+									getApproveMessageOKButton().waitAndClick(10);
+									base.passedStep("Clicked on OK button to ignore all errors");
+								}
+						      
+						    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						    		  doneButton().Enabled()  ;}}), Input.wait30); 
+						    doneButton().waitAndClick(10);
+							base.waitTime(2);
+						  	base.VerifySuccessMessage("Action done successfully");
+						  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+						  	getCloseButton().waitAndClick(10);
+						  	getRefreshButton().waitAndClick(5);
+						  	getIngestionDetailPopup(1).waitAndClick(10);
+						 	
+					    	driver.scrollingToElementofAPage(getRunCopying());
+					    	base.waitForElement(getRunCopying());
+					        getRunCopying().waitAndClick(10);
+					        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+					    	getCloseButton().waitAndClick(10);
+					    	base.waitTime(5);
+					    	getRefreshButton().waitAndClick(10);
+						  
+			    		}
+			    	}
+			    	
+			}
+			
+			/**
+			 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will validate the value and term which present in the copying table column
+			 */
+			public void verifyDataPresentInCopyTableColumn(String term,String type) {
+				 getRefreshButton().waitAndClick(10);	
+			     getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+			    
+			 	driver.scrollingToElementofAPage(getRunIndexing());
+			 	base.waitForElement(getRunIndexing());
+			 	if(type.equalsIgnoreCase("source")) {
+			 		int sourceCount =Integer.parseInt(copyTableDataValue(term,1).getText());
+			 		if(sourceCount>0 && copyTableDataValue(term,1).isElementAvailable(5)) {
+				 		base.passedStep(term+ " source docs count is present in the copying table column");
+				 	}
+				 	else {
+				 		base.failedMessage(term+"source docs count in the copying table column is 0");
+				 	}
+			 	}
+			 	if(type.equalsIgnoreCase("copied")) {
+			 		int copiedCount =Integer.parseInt(copyTableDataValue(term,2).getText());
+			 		if(copiedCount>0 && copyTableDataValue(term,2).isElementAvailable(5)) {
+				 		base.passedStep(term+ "Copied docs count present in the copying table column");
+				 	}
+				 	else {
+				 		base.failedMessage(term+"Copied count in the copying table column is 0");
+				 	}
+			 	}
+			 	if(type.equalsIgnoreCase("error")) {
+			 		int errorCount =Integer.parseInt(copyTableDataValue(term,3).getText());
+			 		if(errorCount>0 && copyTableDataValue(term,3).isElementAvailable(5)) {
+				 		base.passedStep(term+ "Errors count present in the copying table column");
+				 	}
+				 	else {
+				 		base.failedMessage(term+"Errors count in the copying table column is 0");
+				 	}
+			 	}
+			 	if(type.equalsIgnoreCase("missed")) {
+			 		int missedCount =Integer.parseInt(copyTableDataValue(term,4).getText());
+			 		if(missedCount>0 && copyTableDataValue(term,4).isElementAvailable(5)) {
+				 		base.passedStep(term+ "Missed docs count present in the copying table column");
+				 	}
+				 	else {
+				 		base.failedMessage(term+"Missed docs count in the copying table column is 0");
+				 	}
+			 	}
+			 	getCloseButton().waitAndClick(10);	
+			}
+			/**
+			 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will check the value in copying section after performing rollback
+			 */
+			public void verifyValueInCopyingSectionAfterRollback(String term) {
+				 getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+				    
+				 	driver.scrollingToElementofAPage(getRunIndexing());
+				 	base.waitTime(1);
+				 	int count = Integer.parseInt(copyTableDataValue(term,1).getText());
+				 	
+				 	if(count>0) {
+				 		base.failedStep(term+ "count not set to 0 in the copying table column after rolling back Ingestion");
+				 	}
+				 	else {
+				 		base.passedStep(term+"count set to 0 in the copying table column after rolling back ingestion");
+				 	}
+				 	getCloseButton().waitAndClick(10); 
+			}
+
+
 }

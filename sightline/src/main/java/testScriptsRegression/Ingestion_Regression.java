@@ -24,6 +24,7 @@ import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
@@ -438,6 +439,70 @@ public class Ingestion_Regression {
 		
 		loginPage.logout();
 		
+	}
+	
+	
+	
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Verify Search should work by concatenated email metadata field
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =3)
+	public void verifySearchForSelectedMetadata() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-49560");
+		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		
+		search.SearchMetaData("EmailCCNamesAndAddresses",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		baseClass.passedStep("Verified Search should work by concatenated email metadata field");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Verify Search should work by split email metadata field
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =4)
+	public void verifySearchForEmailMetaData() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-49565");
+		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		
+		search.SearchMetaData("EmailCCNames",Input.EmailAuthourName);
+		search.verifyTheCountOfDocumentForMetaData();
+		baseClass.passedStep("Verified Search should work by split email metadata field");
+		
+		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

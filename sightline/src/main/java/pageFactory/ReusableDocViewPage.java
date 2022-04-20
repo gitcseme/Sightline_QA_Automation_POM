@@ -836,6 +836,7 @@ public class ReusableDocViewPage {
 //	Reusable method click analytical panel code same as part of minidoclist
 	public String analyticalDocsPartOfMiniDocList(int count) throws InterruptedException {
 		driver.waitForPageToBeReady();
+		boolean status=false;
 		base.waitForElementCollection(getDocView_MiniListDocuments());
 		List<String> uniqueDocuments= new ArrayList<>();
 		Set<String>docList=new HashSet<String>();
@@ -862,8 +863,8 @@ public class ReusableDocViewPage {
 			}
 		}
 			if (uniqueDocuments.size()<1) {
-				driver.scrollPageToTop();
 			for (int i = 1; i < docList.size(); i++) {
+				driver.scrollPageToTop();
 				getClickDocviewID(++i).waitAndClick(5);
 				base.waitTime(5);
 				ElementCollection analyticsElementAgain=getAnalyticalPanelDocIdText();
@@ -871,12 +872,16 @@ public class ReusableDocViewPage {
 				for (String analyticalAgain : analyticalDocsAgain) {
 					if (!docList.add(analyticalAgain)) {
 						uniqueDocuments.add(analyticalAgain);
+						status=true;
+						break;
 						}
 				}
-				break;
-				
-			}
+				if (status == true) {
+					break;
 				}
+
+			}
+		}
 		String docIdText=uniqueDocuments.get(0);
 		getAnalyCheckBox(docIdText).WaitUntilPresent().ScrollTo();
 		base.waitForElement(getAnalyCheckBox(docIdText));
@@ -884,6 +889,7 @@ public class ReusableDocViewPage {
 		return docIdText;
 
 	}
+	
 	
 	/**
 	 * @author Indium-Baskar
@@ -1628,5 +1634,21 @@ public class ReusableDocViewPage {
 		switchTochildWindow();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a mini Doclist child window
+	 */
+	public void clickGearIconMiniDocListChildWindow() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_EditMode());
+		base.waitTillElemetToBeClickable(getDocView_EditMode());
+		getDocView_EditMode().waitAndClick(10);
+		
+		DocViewPage doc = new DocViewPage(driver);
+		base.waitForElement(doc.getDocView_ChildWindowPopOut());
+		base.waitTillElemetToBeClickable(doc.getDocView_ChildWindowPopOut());
+		doc.getDocView_ChildWindowPopOut().waitAndClick(10);
+		
 	}
 }

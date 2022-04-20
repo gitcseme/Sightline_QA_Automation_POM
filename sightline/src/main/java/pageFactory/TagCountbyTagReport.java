@@ -353,7 +353,7 @@ public class TagCountbyTagReport {
  * @author Jayanthi.ganesan
  * This method will verify Doc Count for given Tags displayed in report table
  * @param tagName[Name of Tag whose doc count to be validated from report]
- * @param Count[Doc coun to be verified in Report table]
+ * @param Count[Doc count to be verified in Report table]
  * @param i[Index Value of Table Header Element]
  * @return
  */
@@ -373,5 +373,17 @@ public class TagCountbyTagReport {
 
 		return status;
 	}
-
+	/**
+	 * @author jayanthi
+	 */
+	public void navigateToReportPage() {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().contains("Report/ReportsLanding")) {
+			bc.stepInfo("Navigated to reports page");
+		} else {
+			bc.failedStep("Report page not loaded.");
+		}
+		
+	}
 }

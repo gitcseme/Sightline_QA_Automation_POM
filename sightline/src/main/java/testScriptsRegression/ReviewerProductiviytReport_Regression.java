@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -103,14 +104,15 @@ public class ReviewerProductiviytReport_Regression {
 	lp.logout();
 	lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 	bc.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
-
-	// Assignment Selection
-	agnmt.SelectAssignmentByReviewer(assignmentName2);
-	bc.stepInfo("User on the doc view after selecting the assignment");
+	// navigating from Dashboard to DocView
+	DocViewPage docViewPage=new DocViewPage(driver);
+	docViewPage.selectAssignmentfromDashborad(assignmentName2);
+	bc.stepInfo("Doc is viewed in the docView Successfully");
+	
+	// Completing the 2 documents
 	driver.waitForPageToBeReady();
-	 DocViewPage docViewPage= new DocViewPage(driver);
-	docViewPage.editingCodingFormWithCompleteButton();
-	driver.waitForPageToBeReady();
+	bc.waitTime(5);
+	docViewPage.CompleteTheDocumentInMiniDocList(2);
 	bc.stepInfo("Document completed successfully");
 	lp.logout();
 	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);	
@@ -121,7 +123,7 @@ public class ReviewerProductiviytReport_Regression {
 	softAssertion = new SoftAssert();
 	
 	//checking the total docs count value in reviwer productivity page
-	softAssertion.assertEquals(Input.pageCount,rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
+	softAssertion.assertEquals("2",rp.verifyColumnValueDisplay(rp.getTableHeaders(),"TOTAL DOCS COMPLETED BY THIS REVIEWER"));
 	softAssertion.assertAll();
 	bc.passedStep("Sucessfully verified  the 'Total Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'.");
 	lp.logout();
@@ -137,20 +139,20 @@ public class ReviewerProductiviytReport_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
+		LoginPage lp = new LoginPage(driver);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			LoginPage lp = new LoginPage(driver);
-			lp.logoutWithoutAssert();
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
+
 
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {

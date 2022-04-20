@@ -127,7 +127,7 @@ public class DocViewRedactions {
 	}
 
 	public Element redactionSave() {
-		return driver.FindElementByXPath("//*[@id=\"btnSave\"]");
+		return driver.FindElementById("btnSave");
 	}
 
 	public Element redactionForwardNavigate() {
@@ -712,7 +712,7 @@ public class DocViewRedactions {
 	}
 
 	public Element get_textHighlightedColor() {
-		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
+		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(n-3)");
 	}
 
 	public Element requiredDocumentFromTable() // RPMXCON-51563
@@ -914,7 +914,7 @@ public class DocViewRedactions {
 	}
 
 	public Element getNextArrowBtn() {
-		return driver.FindElementById("NextHit_Get");
+		return driver.FindElementById("PrevHit_key1279552");
 	}
 
 	public Element getDocView_PageNumber() {
@@ -1375,10 +1375,6 @@ public class DocViewRedactions {
 		multiPageInputSavaBtn().waitAndClick(4);
 	}
 
-	/**
-	 * Author : Krishna D date: NA Modified date: NA Modified by: Krishna D Krishna
-	 * Description : Selecting a rectangular tag for redaction
-	 */
 	public void selectingRectangleRedactionTag() throws Exception {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -1389,10 +1385,13 @@ public class DocViewRedactions {
 		rectangleRedactionTagSelect().waitAndFind(10);
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		redactionTag.selectByVisibleText("Default Redaction Tag");
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		base.waitTime(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return redactionSave().Visible() && redactionSave().Enabled();
+			}
+		}), Input.wait30);
+		redactionSave().waitAndClick(20);
+		
 	}
 
 	/**
@@ -1548,33 +1547,36 @@ public class DocViewRedactions {
 	 * @author Mohan 9/06/21 NA Modified date: NA Modified by:NA
 	 * @description To Select Docs From mini doclist for case number 52170
 	 */
-	public void selectMiniDocListAndViewInDocView() {
-		for (int i = 1; i <= 1; i++) {
-			getDocView_MiniDoc_Selectdoc(i).waitAndClick(10);
+public void selectMiniDocListAndViewInDocView(int docNo) {
+		
+		driver.waitForPageToBeReady();
+		getDocView_MiniDoc_Selectdoc(docNo).waitAndClick(10);
 
 		}
-	}
+	
 
-	public void selectRedactionIconAndRedactWholePage() throws Exception {
-		base = new BaseClass(driver);
-		Actions actions = new Actions(driver.getWebDriver());
-		driver.waitForPageToBeReady();
-		base.waitForElement(redactionIcon());
-		redactionIcon().waitAndClick(10);
-		actions.moveToElement(thisPageTagSelect().getWebElement());
-		actions.click().build().perform();
-		System.out.println("Current page is Redacted successfully");
-	}
+public void selectRedactionIconAndRedactWholePage() throws Exception {
+	base = new BaseClass(driver);
+	driver.waitForPageToBeReady();
+	base.waitForElement(redactionIcon());
+	redactionIcon().waitAndClick(10);
+	base.waitForElement(thisPageRedaction());
+	thisPageRedaction().waitAndClick(10);
+	base.waitForElement(redactionSave());
+	redactionSave().waitAndClick(10);
+	System.out.println("Current page is Redacted successfully");
+}
 
-	public void popOutCodingFormChildWindow() {
-		base = new BaseClass(driver);
-		Actions actions = new Actions(driver.getWebDriver());
-		base.waitForElement(getGearIcon());
-		driver.waitForPageToBeReady();
-		getGearIcon().waitAndClick(10);
-		actions.moveToElement(popoutCodingForm().getWebElement());
-		actions.click().build().perform();
-		base.stepInfo("Coding form child window opened successfully");
+public void popOutCodingFormChildWindow() {
+	base = new BaseClass(driver);
+	Actions actions = new Actions(driver.getWebDriver());
+	base.waitForElement(getGearIcon());
+	driver.waitForPageToBeReady();
+	getGearIcon().waitAndClick(10);
+	actions.moveToElement(getCodingFormStampButton().getWebElement());
+	actions.moveToElement(popoutCodingForm().getWebElement());
+	actions.click().build().perform();
+	base.stepInfo("Coding form child window opened successfully");
 
 	}
 
@@ -1946,7 +1948,7 @@ public class DocViewRedactions {
 				deleteButton.click();
 				base.waitForElement(getDeleteAudioRedactYesButton());
 				base.waitTillElemetToBeClickable(getDeleteAudioRedactYesButton());
-				getDeleteAudioRedactYesButton().Click();
+				getDeleteAudioRedactYesButton().waitAndClick(5);
 			}
 			base.passedStep("Deleted all applied redactions successfully");
 		} catch (Exception e) {
@@ -2707,6 +2709,7 @@ public class DocViewRedactions {
 			base.waitForElement(get_textHighlightedColor());
 			String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex = Color.fromString(color).asHex();
+			driver.waitForPageToBeReady();
 			System.err.println(hex);
 			if ((hex.equals(Input.keyWordHexCode)) || hex.equalsIgnoreCase(Input.colorCodeOfRed))
 				base.passedStep("The text for keyword is highlited in the document");

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -149,19 +150,18 @@ public class ReviewResultReport_Regression{
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
+		LoginPage lp = new LoginPage(driver);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			lp.logoutWithoutAssert();
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@DataProvider(name = "Users_PARMU")

@@ -111,6 +111,7 @@ public class DocView_Redactions_Regression {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
+	 * Stabilization done
 	 */
 	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
@@ -299,7 +300,6 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Verify still the this redaction is displayed even after  del key is pressed");
 		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
 		loginPage.logout();
@@ -380,7 +380,6 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Verify still the rectangle redaction is displayed even after  del key is pressed");
 		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
 		loginPage.logout();
@@ -397,71 +396,33 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyEditAndApplyRedactionTag() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
 		baseClass.stepInfo("Test case Id: RPMXCON-46958");
 		baseClass.stepInfo(
 				"Verify that user should be able to edit an applied redaction and change the redaction tag that was applied automatically.");
-
+		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		Actions actions = new Actions(driver.getWebDriver());
-
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
-		baseClass.stepInfo("Step 1:Search and Go to docView");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		baseClass.stepInfo("Search with text input is completed");
+		Actions actions = new Actions(driver.getWebDriver());
+		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.ViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 50, 25);
-		docViewRedact.selectingRectangleRedactionTag();
-		docView.redactionIcon().waitAndClick(5);
-		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
-				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
+				return docViewRedact.redactionIcon().Visible() && docViewRedact.redactionIcon().Enabled();
 			}
 		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveClick().getWebElement());
-		actions.click();
-		actions.build().perform();
-		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
+		docViewRedact.redactionIcon().waitAndClick(20);
+		actions.moveToElement(docViewRedact.thisPageRedaction().getWebElement());
+		actions.click().build().perform();
+		docViewRedact.selectingRectangleRedactionTag();
 		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
 		loginPage.logout();
 
-		// login As Reviewer
-		baseClass.stepInfo("Step 1: Login As Reviewer");
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as reviewer with " + Input.rev1userName + "");
-		baseClass.stepInfo("Step 1:Search and Go to docView");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		baseClass.stepInfo("Search with text input is completed");
-		sessionSearch.ViewInDocView();
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
-		docViewRedact.selectingRectangleRedactionTag();
-		sessionSearch.ViewInDocView();
-		docView.redactionIcon().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.rectangleClick().Visible() && docViewRedact.rectangleClick().Enabled();
-			}
-		}), Input.wait30);
-		docViewRedact.rectangleClick().waitAndClick(8);
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).click();
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveClick().getWebElement());
-		actions.click();
-		actions.build().perform();
-		baseClass.VerifySuccessMessage("Redaction tags saved successfully");
-		baseClass.passedStep("Text redaction has been performed by RMU user and Redaction Tag Saved successfully");
 	}
 
 	/**
@@ -497,15 +458,18 @@ public class DocView_Redactions_Regression {
 		sessionSearch.ViewInDocView();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 40, 40);
 		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
 		driver.scrollPageToTop();
 		docViewRedactions.selectDoc1();
 
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 120);
+		baseClass.waitTime(1);
+		driver.scrollPageToTop();
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 20, 20);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
-		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10, 100, 130);
+		baseClass.waitTime(1);
+		docViewRedactions.redactRectangleUsingOffsetWithDoubleClick(10, 10,80, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag2);
 
@@ -522,7 +486,7 @@ public class DocView_Redactions_Regression {
 
 		docViewRedactions = new DocViewRedactions(driver);
 		docViewRedactions.selectFirstDoc().isElementAvailable(10);
-		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 30, 30);
 		docViewRedactions.rectangleRedactionTagSelect().isDisplayed();
 		Select select = new Select(docViewRedactions.rectangleRedactionTagSelect().getWebElement());
 		String option = select.getFirstSelectedOption().getText();

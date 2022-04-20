@@ -107,9 +107,13 @@ public class ReviewerProductivityReportPage {
 		bc.stepInfo("Selected all Reviewers.");
 		getReviewerExpandButton().waitAndClick(2);
 		if (assgnName != null) {
-			getAssignmentExpandButton().waitAndClick(2);
-			getAssignmentChkBox(assgnName).waitAndClick(2);
-			getAssignmentExpandButton().waitAndClick(2);
+			bc.waitTillElemetToBeClickable(getAssignmentExpandButton());
+			getAssignmentExpandButton().waitAndClick(10);
+			bc.waitTime(5);
+			bc.waitTillElemetToBeClickable(getAssignmentChkBox(assgnName));
+			getAssignmentChkBox(assgnName).waitAndClick(10);
+			bc.waitTillElemetToBeClickable(getAssignmentExpandButton());
+			getAssignmentExpandButton().waitAndClick(10);
 		}
 		bc.waitForElement(getDataRangeExpandBtn());
 		getDataRangeExpandBtn().waitAndClick(2);

@@ -78,6 +78,16 @@ public class SavedSearchAudio_Regresssion {
 		Input in = new Input();
 		in.loadEnvConfig();
 
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod)
+			throws IOException, ParseException, InterruptedException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+
 		// Open browser
 		driver = new Driver();
 		base = new BaseClass(driver);
@@ -88,7 +98,6 @@ public class SavedSearchAudio_Regresssion {
 		softAssertion = new SoftAssert();
 		dcPage = new DocListPage(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
 	}
 
 	/**
@@ -100,7 +109,7 @@ public class SavedSearchAudio_Regresssion {
 	 * @throws ParseException
 	 * @Stabilization - done
 	 */
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void searchAudioAndSharePA() throws InterruptedException, ParseException {
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -140,7 +149,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         Security group. and schedule the save search(RPMXCON-57420)
 	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
-	@Test(groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void searchAudioAndShareToDefaultsgRmu() throws InterruptedException, ParseException {
 		// Login as a Rmu
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -172,7 +181,7 @@ public class SavedSearchAudio_Regresssion {
 	 *         Security group. and schedule the save search(RPMXCON-57420)
 	 * @Stabilization - done - session.saveSearchadvanced(searchName);
 	 */
-	@Test(groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void searchAudioAndShareToDefaultsgRev() throws InterruptedException, ParseException {
 		// Login as a Rev
 		login.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -466,7 +475,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              searches in PAU role RPMXCON-57413
 	 * @Stabilization - done
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void reviewResultReport() throws InterruptedException {
 		String TagName = "Tag" + Utility.dynamicNameAppender();
 		String folderName = "Folder" + Utility.dynamicNameAppender();
@@ -541,7 +550,7 @@ public class SavedSearchAudio_Regresssion {
 	 *                              runs Production against My saved searches in PAU
 	 *                              role successfully RPMXCON-57416
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void productionManagementReport() throws InterruptedException {
 		String searchGroup = "Group2" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search2" + Utility.dynamicNameAppender();
@@ -637,6 +646,7 @@ public class SavedSearchAudio_Regresssion {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 //	page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		login.logout();
 
 	}
@@ -709,7 +719,7 @@ public class SavedSearchAudio_Regresssion {
 	 * saved searches(with audio and non-audio docs) under <My Saved Search> and
 	 * verify documents - RPMXCON-57418 Sprint 03
 	 */
-	@Test(groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void searchAndShareAsPa() throws InterruptedException, ParseException {
 		// Login as a PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -743,7 +753,7 @@ public class SavedSearchAudio_Regresssion {
 	 * 
 	 * @Stabilzation - done
 	 */
-	@Test(groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void documentAuditReport() throws InterruptedException {
 		String searchGroup = "Group1" + Utility.dynamicNameAppender();
 		String saveSearch1 = "search1" + Utility.dynamicNameAppender();
@@ -805,7 +815,7 @@ public class SavedSearchAudio_Regresssion {
 	 * Validate modifying searches/groups from the shared with <Security Group Name>
 	 * by any other PAU user - RPMXCON-49885 Sprint 03
 	 */
-	@Test(groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifySharedNode() throws InterruptedException {
 		String SearchNamePA = "Search1" + Utility.dynamicNameAppender();
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -895,26 +905,17 @@ public class SavedSearchAudio_Regresssion {
 		login.logout();
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
-	}
-
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				login.logoutWithoutAssert();
-			} catch (Exception e) {
-//						 TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			login.quitBrowser();
+		} catch (Exception e) {
+			login.quitBrowser();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
@@ -922,13 +923,6 @@ public class SavedSearchAudio_Regresssion {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		try {
-			driver.scrollPageToTop();
-
-			login.closeBrowser();
-		} finally {
-			login.clearBrowserCache();
-//			LoginPage.clearBrowserCache();
-		}
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 }

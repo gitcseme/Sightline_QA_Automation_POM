@@ -153,7 +153,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup()
 			throws Exception {
 
@@ -293,7 +293,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void modificationsInMiddleOfHierarchyWithSecurityGroupAsPA() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -2302,6 +2302,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// Upload Error Query Through Batch File
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.uploadWPBatchFile_New(file, Input.batchFileNewLocation);
+		base.waitTime(10);
 		saveSearch.selectSavedSearch(search);
 		base.waitForElement(saveSearch.getSavedSearchCount(search));
 		String countOfDocs = saveSearch.getSavedSearchCount(search).getText();
@@ -2366,7 +2367,7 @@ public class SavedSearchRegression_New_Set_04 {
 		driver.Navigate().refresh();
 		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(10);
 		saveSearch.performExecute();
-
+		driver.waitForPageToBeReady();
 		// Verify Search Status And Count in all nodes
 		saveSearch.verifyStatusAndCountInAllChildNode(SGtoShare, newNodeList, selectIndex, nodeSearchpair);
 
@@ -2561,6 +2562,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// modifying the saved search
 		saveSearch.getSavedSearchEditButton().waitAndClick(10);
+		base.waitTime(10);// To handle abnormal load time in application
 		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
 		session.getSearchButton().Click();
 
@@ -2789,12 +2791,20 @@ public class SavedSearchRegression_New_Set_04 {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in as : " + Input.pa1FullName);
 
+		// Rename as dynamic fileName and store data respectively
+		String fileLocation = System.getProperty("user.dir") + Input.invalidBatchFileNewLocation;
+		String fileToSelect = base.renameFile(true, fileLocation, fileName, fileFormat, false, "");
+		System.out.println(fileToSelect);
+
 		saveSearch.navigateToSSPage();
 
 		// upload batch file
-		saveSearch.uploadBatchFile_D(Input.invalidBatchFileNewLocation, fileName + fileFormat, false);
+		saveSearch.uploadBatchFile_D(Input.invalidBatchFileNewLocation, fileToSelect + fileFormat, false);
 		saveSearch.getSubmitToUpload().Click();
 		saveSearch.verifyBatchUploadMessage("DataFailure", false);
+
+		// Reset FIleName
+		base.renameFile(false, fileLocation, fileToSelect, fileFormat, true, fileName);
 
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		saveSearch.rootGroupExpansion();
@@ -3008,7 +3018,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Bulk folder done from saved search screen" + folderName);
 		saveSearch.savedSearch_Searchandclick(searchName1);
 		saveSearch.getSavedSearchToBulkFolder().Click();
-		saveSearch.bulkUnFolder("Bulk Unfolder done from saved search screen" + folderName);
+		saveSearch.bulkUnFolder(folderName);
 		base.stepInfo(folderName);
 		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 		tf.navigateToTagsAndFolderPage();
@@ -3040,7 +3050,8 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo(
 				"Verify that logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		String currentUserName = login.getCurrentUserName();
+		base.stepInfo("Loggedin As : " + currentUserName);
 
 		// saving the Search
 		String SearchName = "Search" + Utility.dynamicNameAppender();
@@ -3052,11 +3063,14 @@ public class SavedSearchRegression_New_Set_04 {
 
 		login.logout();
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		currentUserName = login.getCurrentUserName();
+		base.stepInfo("Loggedin As : " + currentUserName);
 		saveSearch.selectSavedSearchTAb(SearchName, Input.shareSearchDefaultSG, Input.yesButton);
 		saveSearch.savedSearchExecute_Draft(SearchName, purehit);
 		driver.waitForPageToBeReady();
 		String actualName = saveSearch.getListFromSavedSearchTable1(headername, SearchName);
-		softAssertion.assertEquals(actualName, Input.rmu1FullName);
+		softAssertion.assertEquals(actualName, currentUserName);
+		softAssertion.assertAll();
 		login.logout();
 	}
 
@@ -3075,7 +3089,8 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo(
 				"Verify that - After impersonation (SysAdmin to RMU) - logged User Information gets updated in \"Last Submitted By\" column in Saved Search screen");
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		String currentUserName = login.getCurrentUserName();
+		base.stepInfo("Loggedin As : " + currentUserName);
 
 		// saving the Search
 		String headername = "Last Submitted By";
@@ -3091,11 +3106,14 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.impersonateSAtoRMU();
+		currentUserName = login.getCurrentUserName();
+		base.stepInfo("Loggedin As : " + currentUserName);
 		saveSearch.selectSavedSearchTAb(SearchName, Input.shareSearchDefaultSG, Input.yesButton);
 		saveSearch.savedSearchExecute_Draft(SearchName, purehit);
 		driver.waitForPageToBeReady();
 		String actualName = saveSearch.getListFromSavedSearchTable1(headername, SearchName);
-		softAssertion.assertEquals(actualName, Input.rmu1FullName);
+		softAssertion.assertEquals(actualName, currentUserName);
+		softAssertion.assertAll();
 		login.logout();
 	}
 
@@ -3123,16 +3141,21 @@ public class SavedSearchRegression_New_Set_04 {
 		// Navigate to SavedSearch Page
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(5);
-		saveSearch.verifyStatusFilter(statusToCheck);
+//		saveSearch.verifyStatusFilter(statusToCheck);
+		base.stepInfo("To verify Completed Status By applying filter");
+		saveSearch.getStatusDropDown().waitAndClick(2);
+		saveSearch.getLastStatusAs(statusToCheck).waitAndClick(2);
+		saveSearch.getSavedSearch_ApplyFilterButton().waitAndClick(2);
+		saveSearch.verifyStatusFilterT(statusToCheck, "Last Status", true);
 
 		login.logout();
 
 	}
 
-	/*
+	/**
 	 * @author Raghuram A Date: 02/05/22 Modified date:N/A Modified by: Description
-	 * : Validate navigation to DocView screen from a saved search with Completed
-	 * status - RPMXCON-48610 Sprint 11
+	 *         : Validate navigation to DocView screen from a saved search with
+	 *         Completed status - RPMXCON-48610 Sprint 11
 	 */
 	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 45)
 	public void verifyDocsDisplayAndNavigatingToDocview(String username, String password) throws Exception {
@@ -3196,7 +3219,7 @@ public class SavedSearchRegression_New_Set_04 {
 	public void verifyPaUserNames() throws InterruptedException {
 		String searchName = " Search" + Utility.dynamicNameAppender();
 		String headerName = "Last Submitted By";
-		String expectedName = Input.pa1FullName;
+		String expectedName;
 		List<String> list = new ArrayList<>();
 		// Login as PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -3204,6 +3227,9 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("Test case Id: RPMXCON-57018 - Saved Search Sprint 11");
 		base.stepInfo(
 				"To Verify, As a Project Admin login, In saved search page, in \"My Search\" section he will be only able to see his my searches query, not other users my searches");
+
+		// Get current user name
+		expectedName = login.getCurrentUserName();
 
 		// basic search
 		session.basicContentSearch(Input.searchString1);
@@ -3214,7 +3240,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		list = saveSearch.getListFromSavedSearchTable(headerName);
 
-		String passMsg = expectedName + " : is the Last Submiited Name Displayed";
+		String passMsg = expectedName + " : is the Last Submitted Name Displayed";
 		String failMsg = "Able to See other User Searches";
 		base.compareListWithString(list, expectedName, passMsg, failMsg);
 
@@ -3243,7 +3269,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify TAG enabled
 		saveSearch.navigateToSavedSearchPage();
-		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.rootGroupExpansion();
 		base.verifyElementCollectionIsNotEmpty(saveSearch.getList(), passMsg, failMsg);
 
 		saveSearch.getSavedSearchNewNode().waitAndClick(5);
@@ -3329,8 +3355,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// Verify Conceptually Column
 		saveSearch.savedSearch_Searchandclick(Search);
 		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search);
-		softAssertion.assertEquals(Count, concept);
-		softAssertion.assertAll();
+		base.textCompareEquals(Count, Integer.toString(concept), "Count matches", "Count mis-matches");
 		base.stepInfo("Conceptual Column Count is Updated");
 
 		// Delete Searches
@@ -3440,10 +3465,10 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
-	/*
+	/**
 	 * @author Jayanthi A Date: 02/09/22 Modified date:N/A Modified by: Description
-	 * :Verify that User can navigate Renamed search to DocView from Saved Search
-	 * Screen- RPMXCON-48786 Sprint 11
+	 *         :Verify that User can navigate Renamed search to DocView from Saved
+	 *         Search Screen- RPMXCON-48786 Sprint 11
 	 */
 	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 53)
 	public void verifyRenamedSearchNavigatingToDocview(String username, String password) throws Exception {
@@ -3617,6 +3642,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		base.stepInfo("Root node selected : " + nodeToSelect);
 		saveSearch.selectNode1(nodeToSelect);
 
@@ -3684,6 +3710,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		base.stepInfo("Root node selected : " + newNodeList.get(1));
 		saveSearch.selectNode1(nodeToSelect);
 
@@ -3770,6 +3797,7 @@ public class SavedSearchRegression_New_Set_04 {
 		base.stepInfo("-------Pre-requesties completed--------");
 
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		base.stepInfo("Root node selected : " + newNodeList.get(0));
 		saveSearch.selectNode1(nodeToSelect);
 		saveSearch.checkButtonEnabled(saveSearch.getSavedSearchToTermReport(), "Should be Enabled", "Report");
@@ -3803,7 +3831,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              12
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 59)
+	@Test(enabled = false, groups = { "regression" }, priority = 59)
 	public void verifyErrorMsgOfSearchGroup() throws Exception {
 		String Search = "Search" + Utility.dynamicNameAppender();
 		String Search2 = "Search" + Utility.dynamicNameAppender();
@@ -3828,6 +3856,7 @@ public class SavedSearchRegression_New_Set_04 {
 		session.saveSearchInNewNode(Search2, node);
 
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		saveSearch.selectNode1(node);
 		saveSearch.performExecute();
 
@@ -3869,6 +3898,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify status
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		saveSearch.selectNode1(node1);
 		saveSearch.savedSearch_SearchandSelect(SearchName, Input.yesButton);
 		String actualStatus = saveSearch.getLastStatus();
@@ -3906,6 +3936,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// verify status
 		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		saveSearch.selectNode1(node1);
 		saveSearch.savedSearch_SearchandSelect(SearchName, Input.yesButton);
 		String actualStatus = saveSearch.getLastStatus();
@@ -3944,6 +3975,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -4020,6 +4052,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// access to security group to Rmu
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
+		userManagement.saveSecurityGroup();
 
 		login.logout();
 
@@ -4077,23 +4110,16 @@ public class SavedSearchRegression_New_Set_04 {
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				login.logoutWithoutAssert();
-			} catch (Exception e) {
-//							 TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
 			login.quitBrowser();
 		} catch (Exception e) {
 			login.quitBrowser();
-			login.clearBrowserCache();
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
@@ -4101,11 +4127,7 @@ public class SavedSearchRegression_New_Set_04 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 
-		try {
-			login.clearBrowserCache();
-		} finally {
-			login.clearBrowserCache();
-		}
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 
 }

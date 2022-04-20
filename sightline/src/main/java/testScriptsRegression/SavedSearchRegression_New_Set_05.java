@@ -3697,12 +3697,7 @@ public class SavedSearchRegression_New_Set_05 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-
-		try {
-			login.clearBrowserCache();
-		} finally {
-			login.clearBrowserCache();
-		}
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 
 }

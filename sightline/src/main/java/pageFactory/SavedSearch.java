@@ -2208,7 +2208,7 @@ public class SavedSearch {
 
 		String childNodeName = null;
 		base.waitForElement(getCreatedNodeName(nodeName));
-		getCreatedNodeName(nodeName).Click();
+		getCreatedNodeName(nodeName).waitAndClick(10);
 		System.out.println("Clicked " + nodeName);
 		Thread.sleep(3000);
 		for (int i = 1; i <= count; i++) {
@@ -3034,7 +3034,7 @@ public class SavedSearch {
 				return getSavedSearchExecuteButton().Visible();
 			}
 		}), Input.wait30);
-		getSavedSearchExecuteButton().Click();
+		getSavedSearchExecuteButton().waitAndClick(10);
 
 		try {
 			base.VerifySuccessMessage("Successfully added to background search.");
@@ -3374,7 +3374,7 @@ public class SavedSearch {
 		search.getExpandAllTab().waitAndClick(5);
 
 		base.waitForElement(search.getExpandSecurityGroupOw());
-		search.getExpandSecurityGroupOw().Click();
+		search.getExpandSecurityGroupOw().waitAndClick(5);
 
 		base.waitForElement(search.getSecurityGroupNewNode(newNode));
 		search.getSecurityGroupNewNode(newNode).waitAndClick(5);
@@ -3385,10 +3385,10 @@ public class SavedSearch {
 		ac.click().build().perform();
 
 		base.waitForElement(search.getNodeToOw(newNode));
-		search.getNodeToOw(newNode).Click();
+		search.getNodeToOw(newNode).waitAndClick(5);
 
 		base.waitForElement(search.getChooseSearchToOverwrite(searchName1));
-		search.getChooseSearchToOverwrite(searchName1).Click();
+		search.getChooseSearchToOverwrite(searchName1).waitAndClick(5);
 
 		base.waitForElement(search.getSaveSearch_SaveButton());
 		search.getSaveSearch_SaveButton().Click();
@@ -4455,7 +4455,8 @@ public class SavedSearch {
 
 		// default SG tab
 		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
+//		getSavedSearchNewGroupExpand().waitAndClick(20);
+		rootGroupExpansion();
 		savedSearch_SearchandSelect(searchName, "Yes");
 
 		deleteFunctionality();
@@ -5535,6 +5536,7 @@ public class SavedSearch {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
 			Element batchUploadButton = getBatchUploadButton();
+			base.waitTime(2);
 			checkButtonDisabled(batchUploadButton, "Should be disabled", "Batch Upload Button");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -5631,6 +5633,7 @@ public class SavedSearch {
 		softAssertion.assertEquals(Input.url + "en-us/Document/DocList", currentUrl);
 		base.stepInfo("Landed on DocList Page : " + currentUrl);
 		driver.scrollingToBottomofAPage();
+		base.waitTime(3);
 		footerData = dcPage.getTableFooterDocListCount().getText();
 		arrOfStr = footerData.split(" ");
 		aggregatedDocCount = arrOfStr[arrOfStr.length - 2];
@@ -6173,11 +6176,11 @@ public class SavedSearch {
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		try {
-			if (getSelectWithName(searchName).isElementPresent() == true) {
-				softAssertion.assertTrue(true);
+			if (getSelectWithName(searchName).isElementAvailable(3)) {
+//				softAssertion.assertTrue(true);
 				base.passedStep("Search Found :" + searchName);
 			} else {
-				softAssertion.assertTrue(false);
+//				softAssertion.assertTrue(false);
 				base.failedMessage("Search Not Found :" + searchName);
 			}
 		} catch (Exception e) {

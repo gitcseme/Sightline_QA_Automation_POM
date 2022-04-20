@@ -1399,6 +1399,7 @@ public class DocListPage {
 			}
 		}), Input.wait60);
 		getPopUpOkBtn().Click();
+		driver.scrollPageToTop();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2677,6 +2678,11 @@ public class DocListPage {
 				base.waitForElement(getselectDoc(row + 1));
 				getselectDoc(row + 1).waitAndClick(10);
 				base.stepInfo("Document is selected in doc list");
+				if(getPopUpOkBtn().isElementAvailable(2))
+				{
+					getPopUpOkBtn().Click();
+				}
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

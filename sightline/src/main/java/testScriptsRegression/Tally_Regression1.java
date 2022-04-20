@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -35,17 +36,14 @@ public class Tally_Regression1 {
 	BaseClass bc;
 	String hitsCountPA;
 	int hitsCount;
-	List<String> exp1 =Arrays.asList("2", "Gavin","Jaydeep","Owen","P Allen","Sai","Tyler","ViKas Mestry");
-    List<String> exp2=Arrays.asList("Document", "Microsoft Word Document", "MS Excel Worksheet/Template (OLE)", "MS Outlook Message");
-	List<String> exp3=Arrays.asList("","gouri.dhavalikar@symphonyteleca.com", "Jaydeep Gatlewar", "Jaydeep Gatlewar@symphonyteleca.com","Sai Theodare", "Sai.Theodare@symphonyteleca.com","ViKas Mestry","Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
-	List<String> exp4=Arrays.asList("","gouri.dhavalikar@symphonyteleca.com","Jaydeep.Gatlewar@symphonyteleca.com","Sai.Theodare@symphonyteleca.com","Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
+	
 	String SearchName="Tally"+Utility.dynamicNameAppender();
 	String  assgnName="Tally"+Utility.dynamicNameAppender();
 	String  folderName="Tally"+Utility.dynamicNameAppender();
 	String securityGrpName="Tally"+Utility.dynamicNameAppender(); 
 	String projectName=Input.projectName;
-	String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
-	String[] sourceName_PA = {projectName, folderName,SearchName,"Default Security Group"};
+	//String[] sourceName_RMU ;
+	//String[] sourceName_PA ;
 	String expectedCusName;
 	String expectedEAName;
 	String expectedDocFileType;
@@ -90,7 +88,7 @@ public class Tally_Regression1 {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		ss.bulkFolderWithOutHitADD(folderName);
 		lp.logout();
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		securityPage.AddSecurityGroup(securityGrpName);
 		ss.basicContentSearch(Input.TallySearch);
@@ -204,8 +202,10 @@ public class Tally_Regression1 {
 			bc.stepInfo("Test case Id: RPMXCON-56203");
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by metadata fields for searches.");
 			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			String[] expectedMetaData = { expectedCusName,expectedDocFileType, expectedEAName, expectedEAAdress };
 			lp.loginToSightLine(username, password);
 			bc.stepInfo("Logged in as " + role);
+			String metadataBarchartTally;
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
@@ -214,25 +214,14 @@ public class Tally_Regression1 {
 				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
 				tp.selectTallyByMetaDataField(metadata[i]);
 				tp.validateMetaDataFieldName(metadata[i]);
-				if (i == 0) {
-					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
-				}
-				if (i == 1) {
-					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
-				}
-				if (i == 2) {
-					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
-				}
-				if (i == 3) {
-					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
-				}
-				softAssertion.assertAll();
+				metadataBarchartTally=tp.verifyTallyChartMetadata();
+				softAssertion.assertEquals(expectedMetaData[i], metadataBarchartTally.toLowerCase());
+			softAssertion.assertAll();
 				bc.passedStep(
 						"Verified whether " + role + " will have a report in Tally with document counts by metadata "
 								+ "fields for Searches if Tally by metadata is " + metadata[i]);
 			}
 		}
-		//savedSearchToTally
 		
 
 		
@@ -244,7 +233,9 @@ public class Tally_Regression1 {
 		public void verifyTallyDropDown(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56196");
 			bc.stepInfo("To Verify \"Tally By\" Drop Down And \"Apply\" button on Tally Page");
-			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress"};
+			String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
+			String[] sourceName_PA = {Input.projectName, folderName,SearchName,"Default Security Group"};
 			lp.loginToSightLine(username, password);
 			bc.stepInfo("Logged in as " + role);
 			SoftAssert softAssertion = new SoftAssert();
@@ -312,13 +303,15 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 		@Test( groups = { "regression" }, priority = 7)
-		public void verifyTally_SG() throws InterruptedException {
+			public void verifyTally_SG() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-48704");
 			bc.stepInfo("To Verify Admin/RMU will have a report that provides ability to view the document volume by metadata "
 					+ "fields for security groups in Tally.");
 			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			String[] expectedMetaData = { expectedCusName, expectedDocFileType, expectedEAName, expectedEAAdress };
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.stepInfo("Logged in as PA");
+			String metadataBarchartTally;
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
@@ -327,18 +320,8 @@ public class Tally_Regression1 {
 				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
 				tp.selectTallyByMetaDataField(metadata[i]);
 				tp.validateMetaDataFieldName(metadata[i]);
-				if (i == 0) {
-					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
-				}
-				if (i == 1) {
-					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
-				}
-				if (i == 2) {
-					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
-				}
-				if (i == 3) {
-					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
-				}
+				metadataBarchartTally=tp.verifyTallyChartMetadata();
+					softAssertion.assertEquals(expectedMetaData[i], metadataBarchartTally.toLowerCase());
 				softAssertion.assertAll();
 				bc.passedStep(
 						"Verified whether user will have a report in Tally with document counts by metadata "
@@ -356,33 +339,22 @@ public class Tally_Regression1 {
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by"
 					+ " metadata fields for security groups.");
 			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
-			String[] list = { "exp1", "exp2", "exp3", "exp4" };
+			String[] expectedMetaData = { expectedCusName, expectedDocFileType, expectedEAName, expectedEAAdress };
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.stepInfo("Logged in as PA");
+			String metadataBarchartTally;
 			SoftAssert softAssertion = new SoftAssert();
 			TallyPage tp = new TallyPage(driver);
 			tp.navigateTo_Tallypage();
-			tp.SelectSource_SavedSearch("abctally");
+			tp.SelectSource_SecurityGroup(securityGrpName);
 			for (int i = 0; i < metadata.length; i++) {
 				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
 				tp.selectTallyByMetaDataField(metadata[i]);
 				tp.validateMetaDataFieldName(metadata[i]);
-				if (i == 0) {
-					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
+				metadataBarchartTally=tp.verifyTallyChartMetadata();
+					softAssertion.assertEquals(expectedMetaData[i], metadataBarchartTally.toLowerCase());
 					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
-				}
-				if (i == 1) {
-					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
-					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
-				}
-				if (i == 2) {
-					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
-					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
-				}
-				if (i == 3) {
-					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
-					softAssertion.assertEquals(hitsCount, tp.verifyDocCountBarChart());
-				}
+				
 				softAssertion.assertAll();
 				bc.passedStep(
 						"Verified whether user will have a report in Tally with document counts by metadata "
@@ -408,7 +380,7 @@ public class Tally_Regression1 {
 			SoftAssert softAssertion = new SoftAssert();
 			for (int i = 0; i < subTally.length; i++) {
 				tp.navigateTo_Tallypage();
-				tp.SelectSource_Assignment("subtally");
+				tp.SelectSource_Assignment(assgnName);
 				String metadataTally = subTally[i][0];
 				tp.selectTallyByMetaDataField(metadataTally);
 				tp.validateMetaDataFieldName(metadataTally);
@@ -519,6 +491,8 @@ public class Tally_Regression1 {
 					{ "DocFileType", "EmailAuthorName", "EmailAuthorAddress", "CustodianName" },
 					{ "EmailAuthorAddress", "CustodianName", "DocFileType", "EmailAuthorName" } };
 			String[] expectedMetaData = { expectedCusName, expectedEAName, expectedDocFileType, expectedEAAdress };
+			String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
+			String[] sourceName_PA = {Input.projectName, folderName,SearchName,"Default Security Group"};
 			lp.loginToSightLine(username, password);
 			String[] sourceNames = new String[4];
 			if (role == "RMU") {
@@ -546,7 +520,7 @@ public class Tally_Regression1 {
 						tp.selectTallyByMetaDataField(metadataTally);
 						tp.validateMetaDataFieldName(metadataTally);
 						String metadataBarchartTally=tp.verifyTallyChartMetadata();
-						if ((!sourceNames[k].equalsIgnoreCase(Input.projectName))||(!sourceNames[k].equalsIgnoreCase(Input.securityGroup)) ){
+						if ((!sourceNames[k].equalsIgnoreCase(Input.projectName))&&(!sourceNames[k].equalsIgnoreCase(Input.securityGroup)) ){
 							softAssertion.assertEquals(expectedMetaData[i],metadataBarchartTally.toLowerCase());
 						}
 						tp.tallyActions();
@@ -587,6 +561,8 @@ public class Tally_Regression1 {
 			String[][] subTally = { { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" },
 					{ "EmailAuthorName", "CustodianName", "DocFileType", "EmailAuthorAddress" },
 					{ "DocFileType", "EmailAuthorName", "CustodianName", "EmailAuthorAddress" } };
+			String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
+			String[] sourceName_PA = {Input.projectName, folderName,SearchName,"Default Security Group"};
 			lp.loginToSightLine(username, password);
 			bc.stepInfo("Logged in as " + role);
 			TallyPage tp = new TallyPage(driver);
@@ -693,6 +669,8 @@ public class Tally_Regression1 {
 			bc.stepInfo("Logged in as " + role);
 			TallyPage tp = new TallyPage(driver);
 			String[] sourceNames = new String[4];
+			String[] sourceName_RMU = { assgnName, folderName,SearchName,"Default Security Group"};
+			String[] sourceName_PA = {Input.projectName, folderName,SearchName,"Default Security Group"};
 			if (role == "RMU") {
 				sourceNames = sourceName_RMU;
 			}
@@ -752,25 +730,21 @@ public class Tally_Regression1 {
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
 	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			lp.quitBrowser();
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
-			lp.logout();
-			//LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
+	
 
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {

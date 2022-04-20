@@ -109,6 +109,9 @@ public class TestData {
 	public String highlightDoc1;
 	public String warning01;
 	public String ingestionQuery01;
+	public String sourceDocId10;
+	public String sourceDocId11;
+	public String sourceDocId12;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -539,6 +542,10 @@ public class TestData {
 	public String DAT_DDMMYYYY;
 	public String Natives_DDMMYYYY;
 	public String differentDateFormatError;
+	public String tiffLoadFile;
+	public String prodBeg;
+	public String tiffFile2;
+	public String generateSearchablePDF;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- REGRESSION TEST DATA -->
 
-<TestData> 
+<TestData>
 	<!-- Serach strings and expected pure hit counts -->
 	<searchString1>test</searchString1>
 	<searchString2>comments</searchString2>
@@ -18,8 +18,7 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103
-	</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
 	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
@@ -51,9 +50,13 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
-	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
-	
-	
+	<indexingWarningMessage>As part of indexing step, index for metadata,
+		text and audio have already been updated. The searches run in the
+		project will reflect these changes. Rolling back will not roll back
+		the updates to the index, so you MUST rerun indexing for the entire
+		project. Do you want to continue with Rollback?</indexingWarningMessage>
+
+
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -86,7 +89,8 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<threadDocumentForReviewer>H16135-0188-002339</threadDocumentForReviewer>
+	<threadDocumentForReviewer>H16135-0188-002339
+	</threadDocumentForReviewer>
 	<nearDupeCompletedDocIdReviewer>T2393D</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ICE010058-9-00000006</newNearDupeDocId>
 	<warningDocId>H16135-0188-002241</warningDocId>
@@ -100,7 +104,7 @@
 	<threadMapNewId>H16135-0188-001606</threadMapNewId>
 	<conceptualDocId1>ID00000055</conceptualDocId1>
 	<nearDupeDocId1>H16135-0188-001799</nearDupeDocId1>
-	<nearDupeImageDoc>H16135-0188-001994</nearDupeImageDoc>
+	<nearDupeImageDoc>T1295D</nearDupeImageDoc>
 	<analyticsConceptualDocId1>331ID00000201</analyticsConceptualDocId1>
 	<analyticsConceptualDocId2>T2396D</analyticsConceptualDocId2>
 	<miniConceptualNoDoc>ID00001511</miniConceptualNoDoc>
@@ -114,6 +118,9 @@
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
 	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
+	<sourceDocId10>T2549D</sourceDocId10>
+	<sourceDocId11>T2545D</sourceDocId11>
+	<sourceDocId12>T2529D</sourceDocId12>
 
 
 	<!-- DocView Coding Form -->
@@ -127,7 +134,7 @@
 	<stampColours>BLACK</stampColours>
 	<stampSelection>YELLOW</stampSelection>
 	<oneHourAudio>ID00001113</oneHourAudio>
-	
+
 
 	<!-- Sowndariya Indium -->
 
@@ -187,27 +194,27 @@
 	<TiffDocId>H16135-0188-001997</TiffDocId>
 	<UniCodeDocId>ID00005206</UniCodeDocId>
 	<IconOriginalColour>#444444</IconOriginalColour>
-	<DocIdWithHiddenContent>H16135-0188-001036</DocIdWithHiddenContent>
+	<DocIdWithHiddenContent>ID00000027</DocIdWithHiddenContent>
 	<TextHidden>Hidden</TextHidden>
-	<HiddenContentExcelSheet>H16135-0188-001064</HiddenContentExcelSheet>
-	<HiddenContentExcelBook>H16135-0188-001070</HiddenContentExcelBook>
-	<HiddenContentExternalLink>H16135-0188-001060</HiddenContentExternalLink>
+	<HiddenContentExcelSheet>ID00000061</HiddenContentExcelSheet>
+	<HiddenContentExcelBook>ID00000053</HiddenContentExcelBook>
+	<HiddenContentExternalLink>ID00000157</HiddenContentExternalLink>
 	<audioString1>THE THE</audioString1>
 	<audioString2>"THE THE"</audioString2>
-	 <sourceDocId7>331ID00000220</sourceDocId7>
-	 <sourceDocIdSearch>SourceDocID</sourceDocIdSearch>
-	 <HiddenIngestionDocId>H16135-0188-001003</HiddenIngestionDocId>
-	 <HiddenIngestionName>HiddenPropertiesDragDrop1</HiddenIngestionName>
-	 <HiddenLinkDocId>H136960002001068</HiddenLinkDocId>
-	 <pdfDocId>H16135-0188-002326</pdfDocId>
-	 <xlsExcelDocId>H16135-0188-001439</xlsExcelDocId>
-	 <tiffDocId1>H16135-0188-001991</tiffDocId1>
-	 <pptDocId>H16135-0188-002275</pptDocId>
-	 <messageDocId>H16135-0188-001174</messageDocId>
-	 <defaultPdfDocId>ID00005228</defaultPdfDocId>
-	 <multiplePageSourceDocID>ID00000230</multiplePageSourceDocID>
-	 <StitchedTiffSourceDocID>921ID00000166</StitchedTiffSourceDocID>
-	 <SinglePageTiffSourceDocID>ID00001483</SinglePageTiffSourceDocID>
+	<sourceDocId7>331ID00000220</sourceDocId7>
+	<sourceDocIdSearch>SourceDocID</sourceDocIdSearch>
+	<HiddenIngestionDocId>ID00000100</HiddenIngestionDocId>
+	<HiddenIngestionName>HiddenPropertiesDragDrop1</HiddenIngestionName>
+	<HiddenLinkDocId>ID00000068</HiddenLinkDocId>
+	<pdfDocId>ID00001389</pdfDocId>
+	<xlsExcelDocId>ID00000536</xlsExcelDocId>
+	<tiffDocId1>ID00001069</tiffDocId1>
+	<pptDocId>ID00001338</pptDocId>
+	<messageDocId>ID00000271</messageDocId>
+	<defaultPdfDocId>ID00005228</defaultPdfDocId>
+	<multiplePageSourceDocID>ID00000230</multiplePageSourceDocID>
+	<StitchedTiffSourceDocID>921ID00000166</StitchedTiffSourceDocID>
+	<SinglePageTiffSourceDocID>ID00001483</SinglePageTiffSourceDocID>
 
 
 	<!-- Baskar Indium Audio Search to DocView MiniList - modify on 9/01/21 -->
@@ -238,7 +245,9 @@
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
-	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
+		in progress, you cannot overwrite it. Please wait until SavedSearch is
+		completed.</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
@@ -257,7 +266,7 @@
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
 	<masterDateBatchFile>MasterDate-IS-RANGE</masterDateBatchFile>
-    
+
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
@@ -272,9 +281,7 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded
-		document
-	</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -315,8 +322,8 @@
 	<searchString5>commit</searchString5>
 	<searchString6>welcome</searchString6>
 	<docIdRemarks2>H136960002001012</docIdRemarks2>
-    <docSelectionHighlight>#3E65AC</docSelectionHighlight>
-    
+	<docSelectionHighlight>#3E65AC</docSelectionHighlight>
+
 	<!-- Added by Gopinath Created date - 11/10/2021 -->
 	<atternoyClient>Atternoy_client</atternoyClient>
 	<confidential>Confidential</confidential>
@@ -420,12 +427,13 @@
 	<documentID>H16135-0188-002270</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>H16135-0188-002430</docFile>
-    <stampRed>RED</stampRed>
+	<stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
-	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
+	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009
+		STC4_00001016</fileGroup>
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
-	
+
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 
@@ -433,7 +441,9 @@
 	<thankyouText>thank you</thankyouText>
 
 	<!-- Added by Gopinath Created date - 08/12/2021 -->
-	<anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
+	<anotherRemarkMessage>Another user has applied redactions, annotations
+		or Reviewer Remarks to this document since you presented it in
+		DocView.</anotherRemarkMessage>
 
 	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>H16135-0188-002188</familyMembersDocId>
@@ -448,21 +458,22 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
+	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 	<conceptualDoc>H136960002001001</conceptualDoc>
 	<TallySearch>null</TallySearch>
 	<TallyCN>4</TallyCN>
-<sameThreadDocs_EmailThreadID>F00000001</sameThreadDocs_EmailThreadID>
-<sameFamilyDocs_FamilyID>41ID00000005</sameFamilyDocs_FamilyID>
-<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590</IngestionName_PT>
-<IngestionName_UAT></IngestionName_UAT>
-<metadataIngestion>IngestionName</metadataIngestion>
-<custodianName_Andrew>Andrew</custodianName_Andrew>
-<custodianName_allen>allen</custodianName_allen>
-<SearchString_Audio>well</SearchString_Audio>
-<SearchString_HighVolume>s</SearchString_HighVolume>
-<DocCount_BG_Page>500000</DocCount_BG_Page>
+	<sameThreadDocs_EmailThreadID>F00000001</sameThreadDocs_EmailThreadID>
+	<sameFamilyDocs_FamilyID>41ID00000005</sameFamilyDocs_FamilyID>
+	<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590</IngestionName_PT>
+	<IngestionName_UAT></IngestionName_UAT>
+	<metadataIngestion>IngestionName</metadataIngestion>
+	<custodianName_Andrew>Andrew</custodianName_Andrew>
+	<custodianName_allen>allen</custodianName_allen>
+	<SearchString_Audio>well</SearchString_Audio>
+	<SearchString_HighVolume>s</SearchString_HighVolume>
+	<DocCount_BG_Page>500000</DocCount_BG_Page>
 	<!-- Added by Gopinath Created date - 05/01/2022 -->
 	<downloadDocID>H16135-0188-001991</downloadDocID>
 	<translationDocId>STC4_00000001</translationDocId>
@@ -484,7 +495,7 @@
 	<nearDoc1>T2541D</nearDoc1>
 	<familyDoc1>T2378D</familyDoc1>
 	<conceptDoc1>331ID00000210</conceptDoc1>
-		<highlightDoc1>ICE010058-13-00000001</highlightDoc1>
+	<highlightDoc1>ICE010058-13-00000001</highlightDoc1>
 
 	<TermOperator>ALL</TermOperator>
 
@@ -493,68 +504,70 @@
 
 	<hiddenDocId>ICE010044-18-00000035</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000053</excelProtectedHiddenDocId>
-	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
+	<warningMessage>Another user has applied redactions, annotations or
+		Reviewer Remarks to this document since you presented it in DocView.
+		You may not apply markup because that would overwrite the markup work
+		done by the other user. Please reload the document.</warningMessage>
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>
 	<conceptualDocId03>ID00000015</conceptualDocId03>
 	<conceptualDocIdForReviewer01>331ID00000014</conceptualDocIdForReviewer01>
-		<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
-		<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
-		<familyDocId01>T486D</familyDocId01> 
-		<familyDocId02>T487D</familyDocId02>
-		<familyDocId03>T488D</familyDocId03>
-		<familyDocIdForReviewer01>331ID00000005</familyDocIdForReviewer01>
-		<familyDocIdForReviewer02>331ID00000008</familyDocIdForReviewer02>
+	<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
+	<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
+	<familyDocId01>T486D</familyDocId01>
+	<familyDocId02>T487D</familyDocId02>
+	<familyDocId03>T488D</familyDocId03>
+	<familyDocIdForReviewer01>331ID00000005</familyDocIdForReviewer01>
+	<familyDocIdForReviewer02>331ID00000008</familyDocIdForReviewer02>
 	<familyDocIdForReviewer03>331ID00000176</familyDocIdForReviewer03>
-	<nearDupeDocId01>T1796D</nearDupeDocId01> 
-		<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
-		 <nearDupeDocId03>T1862D</nearDupeDocId03>
+	<nearDupeDocId01>T1796D</nearDupeDocId01>
+	<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
+	<nearDupeDocId03>T1862D</nearDupeDocId03>
 	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
 	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
 	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
 	<threadMapWithNonEmailAttachment>H16135-0188-001001</threadMapWithNonEmailAttachment>
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
-		<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
-	
-	
-	 <!-- Ingetion Related data Start -->
-    <Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
-    <FamilyFolder>Automation_20Family_20Threaded</FamilyFolder>
-    <AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
-    <H1369Folder>0002_H13696_1_Latest</H1369Folder>
-    <MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
-    <SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
-    <CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
-    <EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
-    <SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
-    <GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
-    <GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
-    <HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
-    <UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
-    <IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
-    
-    <DATFile>RegressionAllDataset.dat</DATFile>
-    <TextFile>RegressionAllDatasetText.lst</TextFile>
-    <NativeFile>RegressionAllDatasetNatives.lst</NativeFile> 
-    <TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
-    <TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
-    <TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
-    <PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
-    <TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
-    <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.lst</MP3File> 
-    
-   <!--    <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> 
-     <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File>-->
-     <DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
-     <DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
-     <MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
-     <MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
-      <TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
-       <TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
-    <YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
-       <YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
-       <StitchedTIFF>Stitched TIFFs</StitchedTIFF>
+	<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
+
+
+	<!-- Ingetion Related data Start -->
+	<Collection1KFolder>Automation_Collection1K_Tally</Collection1KFolder>
+	<FamilyFolder>Automation_20Family_20Threaded</FamilyFolder>
+	<AllSourcesFolder>Automation_AllSources</AllSourcesFolder>
+	<H1369Folder>0002_H13696_1_Latest</H1369Folder>
+	<MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
+	<SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
+	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
+	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
+	<SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
+	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
+	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
+	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
+
+	<DATFile>RegressionAllDataset.dat</DATFile>
+	<TextFile>RegressionAllDatasetText.lst</TextFile>
+	<NativeFile>RegressionAllDatasetNatives.lst</NativeFile>
+	<TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
+	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
+	<TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
+	<PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
+	<TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
+	<MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.lst</MP3File>
+
+	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
+	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
+	<DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
+	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
+	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
+	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
+	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
+	<YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
+	<YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
+	<StitchedTIFF>Stitched TIFFs</StitchedTIFF>
 	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
 	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
 	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
@@ -565,12 +578,12 @@
 	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
 	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
 	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
-    <Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
-    <DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
-    <Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
-    <DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
-    
-    <DAT_MMDDYYYY_HHMI>DAT_MMDDYYYY HHMI.dat</DAT_MMDDYYYY_HHMI>
+	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
+	<DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
+	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
+	<DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
+
+	<DAT_MMDDYYYY_HHMI>DAT_MMDDYYYY HHMI.dat</DAT_MMDDYYYY_HHMI>
 	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst</Natives_MMDDYYYY_HHMI>
 	<DAT_DDMMYYYY_HHMI>DAT_DDMMYYYY HHMI.dat</DAT_DDMMYYYY_HHMI>
 	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst</Natives_DDMMYYYY_HHMI>
@@ -580,74 +593,80 @@
 	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
-	<differentDateFormatError>Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format.</differentDateFormatError>
-    
-     <!-- Ingestion Related data END -->
+	<differentDateFormatError>Date format selected in the ingestion is not
+		matching with the date format of the dates in the DAT file. Please
+		provide the matching date format.</differentDateFormatError>
+	<prodBeg>ProdBeg</prodBeg>
+	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
+	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
+	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
 
-<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
-<miniDocListID>T2414D</miniDocListID>
-<!-- REGRESSION TEST DATA -->
+	<!-- Ingestion Related data END -->
+
+	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
+	<miniDocListID>T2414D</miniDocListID>
+	<!-- REGRESSION TEST DATA -->
 
 
-     <!-- Ingestion Related data END -->
-     
-     
-     <!-- Added by Gopinath Created date - 02/03/2022 -->
-     	<ingestionProjectName>AutomationIngestionProject</ingestionProjectName>
-		<ingestionType>Add Only</ingestionType>
-		<sourceSystem>TRUE</sourceSystem>
-		<sourceLocation>IngestionTestData\Automation</sourceLocation>
-		<sourceFolder>SSAudioSpeech_Transcript</sourceFolder>
-		<fieldSeperator>ASCII(20)</fieldSeperator>
-		<textQualifier>ASCII(254)</textQualifier>
-		<multiValue>ASCII(174)</multiValue>
-		<datLoadFile>DAT4_STC_newdateformat.dat</datLoadFile>
-		<documentKey>DocID</documentKey>
-		<mp3LoadFile>MP3 Files.LST</mp3LoadFile>
-		<dateFormat>YYYY/MM/DD HH:MM:SS</dateFormat>
-		<docId>DocID</docId> 
-		<dataSource>Datasource</dataSource>
-		<custodian>Custodian</custodian>
-		<fileExt>FileExt</fileExt>
-		<fileName>FileName</fileName>
-		<fileSize>FileSize</fileSize>
-		<fileType>FileType</fileType>
-		<ingDocBasic>DOCBASIC</ingDocBasic>
-		<docFileExt>DocFileExtension</docFileExt>
-		<ingDocFileName>DocFileName</ingDocFileName>
-		<ingDocFileSize>DocFileSize</ingDocFileSize>
-		<ingDocFileType>DocFileType</ingDocFileType>
-		<lessThan500PagesDocId>H16135-0188-001092</lessThan500PagesDocId>
-		<d500PagesDocId>H16135-0188-001166</d500PagesDocId>
-		
-		     <!-- Added by Gopinath Created date - 21/03/2022 -->
-		<iceSourceSystem>ICE</iceSourceSystem>
-		<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
-		<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
-		<documentKeyBNum>BNum</documentKeyBNum>
-		<documentKeyDSource>DSource</documentKeyDSource>
-		<documentKeyCName>CName</documentKeyCName>
-		 
-		<!--   Added by Gopinath Created date - 23/03/2022	-->
-		<pageNum>2</pageNum>
-		
-		<maxAudioThresholdValue>90</maxAudioThresholdValue>
-		<minAudioThresholdValue>50</minAudioThresholdValue>
-		<defaultAudioThresholdValue>70</defaultAudioThresholdValue>
-		<expectedCombinedSearchHits1>837</expectedCombinedSearchHits1>
-		<expectedCombinedSearchHits2>53</expectedCombinedSearchHits2>
-		<expectedPH_german>2</expectedPH_german>
+	<!-- Ingestion Related data END -->
+
+
+	<!-- Added by Gopinath Created date - 02/03/2022 -->
+	<ingestionProjectName>AutomationIngestionProject</ingestionProjectName>
+	<ingestionType>Add Only</ingestionType>
+	<sourceSystem>TRUE</sourceSystem>
+	<sourceLocation>IngestionTestData\Automation</sourceLocation>
+	<sourceFolder>SSAudioSpeech_Transcript</sourceFolder>
+	<fieldSeperator>ASCII(20)</fieldSeperator>
+	<textQualifier>ASCII(254)</textQualifier>
+	<multiValue>ASCII(174)</multiValue>
+	<datLoadFile>DAT4_STC_newdateformat.dat</datLoadFile>
+	<documentKey>DocID</documentKey>
+	<mp3LoadFile>MP3 Files.LST</mp3LoadFile>
+	<dateFormat>YYYY/MM/DD HH:MM:SS</dateFormat>
+	<docId>DocID</docId>
+	<dataSource>Datasource</dataSource>
+	<custodian>Custodian</custodian>
+	<fileExt>FileExt</fileExt>
+	<fileName>FileName</fileName>
+	<fileSize>FileSize</fileSize>
+	<fileType>FileType</fileType>
+	<ingDocBasic>DOCBASIC</ingDocBasic>
+	<docFileExt>DocFileExtension</docFileExt>
+	<ingDocFileName>DocFileName</ingDocFileName>
+	<ingDocFileSize>DocFileSize</ingDocFileSize>
+	<ingDocFileType>DocFileType</ingDocFileType>
+	<lessThan500PagesDocId>H16135-0188-001092</lessThan500PagesDocId>
+	<d500PagesDocId>H16135-0188-001166</d500PagesDocId>
+
+	<!-- Added by Gopinath Created date - 21/03/2022 -->
+	<iceSourceSystem>ICE</iceSourceSystem>
+	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
+	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
+	<documentKeyBNum>BNum</documentKeyBNum>
+	<documentKeyDSource>DSource</documentKeyDSource>
+	<documentKeyCName>CName</documentKeyCName>
+
+	<!-- Added by Gopinath Created date - 23/03/2022 -->
+	<pageNum>2</pageNum>
+
+	<maxAudioThresholdValue>90</maxAudioThresholdValue>
+	<minAudioThresholdValue>50</minAudioThresholdValue>
+	<defaultAudioThresholdValue>70</defaultAudioThresholdValue>
+	<expectedCombinedSearchHits1>837</expectedCombinedSearchHits1>
+	<expectedCombinedSearchHits2>53</expectedCombinedSearchHits2>
+	<expectedPH_german>2</expectedPH_german>
 	<expectedPH_Japanese>4</expectedPH_Japanese>
 	<langName_german>German</langName_german>
 	<langName_japnese>Japanese</langName_japnese>
 	<createDate>2021-02-25</createDate>
 	<highVolumeProjSearchString>2</highVolumeProjSearchString>
-	
+
 	<cfDocId1>ICE010062-20-00000019</cfDocId1>
 	<cfDocId2>ICE010062-10-00000007</cfDocId2>
-	
-	<!--   Added by Gopinath Created date - 08/04/2022	-->
-		<warningMsgDocId>ID00002019</warningMsgDocId>
-		<externalLinkDocId>ID00000168</externalLinkDocId>
-		
+
+	<!-- Added by Gopinath Created date - 08/04/2022 -->
+	<warningMsgDocId>ID00002019</warningMsgDocId>
+	<externalLinkDocId>ID00000168</externalLinkDocId>
+
 </TestData>

@@ -1453,6 +1453,8 @@ public class DocView_MetaData_Regression {
 		baseClass.stepInfo("verify warning message for hidden properties document and metadat value not empty");
 		docView.verifyWarningMsgAndHiddenPropValue(docId);
 	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -1460,10 +1462,8 @@ public class DocView_MetaData_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
 		}
 		try {
-//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
