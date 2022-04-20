@@ -1213,6 +1213,63 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date: /04/2022 Modified by: Baskar
+	 * Description:To verify that RMU can veiw the Action tab details on Workflow.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	public void validatingActionTabMessage() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52554");
+		baseClass.stepInfo("To verify that RMU can veiw the Action tab details on Workflow.");
+		int Id;
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+	    search = new SessionSearch(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// Creating workflow upto action tab
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("validating action tab query message");
+		workflow.createNewWorkFlow();
+		workflow.descriptionTab(wfName, wfDesc);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		workflow.nextButton();
+		
+		// validating action tab message
+		String actualActionQuery=workflow.getActionTab_QueryMessage().getText();
+		softAssertion.assertEquals(actualActionQuery, actionQuery);
+		
+		String actualPageQuery=workflow.getActionTab_PageMessage().getText();
+		softAssertion.assertEquals(actualPageQuery, pageQuery);
+		softAssertion.assertAll();
+		baseClass.passedStep("Action tab help query as per the expected one");
+
+		// logout
+		loginPage.logout();
+	}
+	
+	
+	
 	
 	
 	
