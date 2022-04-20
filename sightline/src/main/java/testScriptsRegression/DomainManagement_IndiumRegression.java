@@ -261,6 +261,7 @@ public class DomainManagement_IndiumRegression {
 	/**
 	* Author :Aathith date: NA Modified date: Modified by:
 	* Description :Validate notification alert for bulk actions(Folder/Tag/Export) as Reviewer(impersonate from DAU)
+	*  @Hint : this cases is run under uat environment need "Automation_NonDomain" project allocation the users pa and reviewer
 	*/
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyingBackGroungTaskInBullIcon() throws Exception {
@@ -286,11 +287,17 @@ public class DomainManagement_IndiumRegression {
 	search.basicContentSearch(Input.testData1);
 	search.bulkTagExisting(TagName);
 	search.verifyingBackGrounTaskInBullHornIcon();
-
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.selectproject("Automation_NonDomain");
+	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
 	loginPage.logout();
 	
 	baseClass.stepInfo("perform task for non domain project");
 	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	baseClass.selectproject("Automation_NonDomain");
+	baseClass.stepInfo("Non domin project is selected");
 	UtilityLog.info("Logged in as User: " + Input.rev1userName);
 	Reporter.log("Logged in as User: " + Input.rev1userName);
 	
