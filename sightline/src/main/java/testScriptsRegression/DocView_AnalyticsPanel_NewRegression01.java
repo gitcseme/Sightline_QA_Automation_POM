@@ -1638,7 +1638,46 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		loginPage.logout();
 	}
 
-	
+	/**
+	 * Author : Vijaya.Rani date: 20/04/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify that On Zoom-in, Zoom-out from 'Near Dupe'/'Original'
+	 * document panel, zoom bar should change from respective panel of near dupe
+	 * comparison window.'RPMXCON-51706' Sprint : 13
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	public void verifyZoomInZoomOutInNearDupePanel(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51706");
+		baseClass.stepInfo(
+				"Verify that On Zoom-in, Zoom-out from 'Near Dupe'/'Original' document panel, zoom bar should change from respective panel of near dupe comparison window.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		// NeaeDupe Comparision Window Zoomin ZoomOut
+		docView.verifyNearNupeComparisionWindow();
+
+		loginPage.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

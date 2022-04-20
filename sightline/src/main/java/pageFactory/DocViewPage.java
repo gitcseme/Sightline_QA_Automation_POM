@@ -27460,4 +27460,43 @@ public class DocViewPage {
 		}
 	}
 	
+	/**
+	 * @author Vijaya.Rani Date: 20/04/22 Modified date: NA Modified by: N/A
+	 *         Description : verify NearNupe Comparision Window
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void verifyNearNupeComparisionWindow() throws InterruptedException {
+		driver.waitForPageToBeReady();
+	
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getDocView_Analytics_NearDupeTab().Displayed();
+		}
+	}), Input.wait30);
+	getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+	String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+	getDocView_NearDupeIcon().waitAndClick(10);
+	Thread.sleep(3000);
+
+	for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+		driver.switchTo().window(winHandle);
+	}
+
+	base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
+	getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
+	base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
+
+	base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
+	getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
+	base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
+	
+	driver.getWebDriver().close();
+
+	driver.switchTo().window(parentWindowID);
+	
+	}
+	
 }
