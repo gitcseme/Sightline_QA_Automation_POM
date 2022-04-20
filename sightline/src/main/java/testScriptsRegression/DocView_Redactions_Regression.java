@@ -500,4 +500,130 @@ public class DocView_Redactions_Regression {
 
 	}
 	
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by: NA.
+	 *         ////@Testcase_Id : 47029 - Verify that pages which are included for
+	 *         multi page redaction should be redacted successfully with changed
+	 *         redaction tag from what is presented in pop up.
+	 * @Description : Verify that pages which are included for multi page redaction
+	 *              should be redacted successfully with changed redaction tag from
+	 *              what is presented in pop up.
+	 */
+	 @Test(groups = { "regression" }, priority = 6)
+	public void verifyMultiplePageRedactionsIncludeWithDiffRedTag() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47029 DocView Sprint 06");
+		String Redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
+		utility = new Utility(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		baseClass.stepInfo(
+				"#### Verify that pages which are included for multi page redaction should be redacted successfully with changed redaction tag from what is presented in pop up. ####");
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		Reporter.log("Logged in as User: " + Input.pa2userName);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate to session search");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Bulk Release");
+		sessionSearch.bulkRelease(Input.securityGroup);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+		redactionpage.navigateToRedactionsPageURL();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Navigate to session search");
+		sessionSearch.navigateToSessionSearchPageURL();
+
+		baseClass.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
+
+		DocViewRedactions redact = new DocViewRedactions(driver);
+
+		baseClass.stepInfo("Perform exclude Multiple Page Redaction by page range");
+		redact.performMultiplePageRedactionForInclude(Redactiontag1, Input.pageRange);
+		loginPage.logout();
+	}
+	 
+		/**
+		 * @Author : Gopinath Created date: NA Modified date: NA Modified by: NA.
+		 *         ////@Testcase_Id : 47028 - Verify that on click of Save from
+		 *         'Multi-Page Redactions' pop up, all pages other than pages which are
+		 *         excluded should be redacted successfully.
+		 * @Description : Verify that on click of Save from 'Multi-Page Redactions' pop
+		 *              up, all pages other than pages which are excluded should be
+		 *              redacted successfully.
+		 */
+		@Test(groups = { "regression" }, priority = 7)
+		public void verifyMultiplePageRedactionsByExcludePages() throws InterruptedException {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-47028 DocView Sprint 06");
+
+			utility = new Utility(driver);
+			docViewMetaDataPage = new DocViewMetaDataPage(driver);
+			baseClass.stepInfo(
+					"#### Verify that on click of Save from 'Multi-Page Redactions' pop up, all pages other than pages which are excluded should be redacted successfully. ####");
+			loginPage = new LoginPage(driver);
+
+			baseClass.stepInfo("Login with project administrator");
+			loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+			Reporter.log("Logged in as User: " + Input.pa2userName);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("Navigate to session search");
+			sessionSearch.navigateToSessionSearchPageURL();
+
+			baseClass.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(Input.testData1);
+
+			baseClass.stepInfo("Bulk Release");
+			sessionSearch.bulkRelease(Input.securityGroup);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+			sessionSearch = new SessionSearch(driver);
+
+			baseClass.stepInfo("Navigate to session search");
+			sessionSearch.navigateToSessionSearchPageURL();
+
+			baseClass.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.addDocsMetCriteriaToActionBoard();
+
+			DocViewRedactions redact = new DocViewRedactions(driver);
+
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+
+			baseClass.stepInfo("Perform exclude Multiple Page Redaction by page range");
+			redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageRange);
+
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+
+			baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number");
+			redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag, Input.pageNum);
+
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+
+			baseClass.stepInfo("Perform exclude Multiple Page Redaction by page number and page range");
+			redact.performMultiplePageRedactionForExclude(Input.defaultRedactionTag,
+					Input.pageNum + "," + Input.pageRange);
+			loginPage.logout();
+		}
+	
 }
