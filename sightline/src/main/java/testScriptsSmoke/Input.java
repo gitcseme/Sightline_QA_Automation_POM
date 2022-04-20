@@ -207,6 +207,7 @@ public class Input {
 	public static String sourceDocId10;
 	public static String sourceDocId11;
 	public static String sourceDocId12;
+	public static String projectName01;
 
 	// DocView codingform Baskar Indium
 
@@ -902,6 +903,7 @@ public class Input {
 		sourceDocId10 = testData.getSourceDocId10();
 		sourceDocId11 = testData.getSourceDocId11();
 		sourceDocId12 = testData.getSourceDocId12();
+		projectName01= testData.getProjectName01();
 		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
