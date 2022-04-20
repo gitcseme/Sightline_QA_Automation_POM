@@ -124,11 +124,11 @@
 	</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
-	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610
-	</ingestionQuery01>
+	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
+	<projectName01>AutomationAdditionalDataProject</projectName01>
 
 
 	<!-- DocView Coding Form -->

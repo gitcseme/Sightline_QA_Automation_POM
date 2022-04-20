@@ -112,6 +112,7 @@ public class TestData {
 	public String sourceDocId10;
 	public String sourceDocId11;
 	public String sourceDocId12;
+	public String projectName01;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
