@@ -27429,4 +27429,35 @@ public class DocViewPage {
 		base.VerifySuccessMessage("Code same performed successfully.");
 	}
 	
+	/**
+	 * @author Mohan 9/02/21 NA Modified date: NA Modified by:NA
+	 * @description To Select DocId From mini doclist
+	 */
+	public void selectDosFromMiniDocList(String docId) {
+
+		try {
+			driver.waitForPageToBeReady();
+			selectSourceDocIdInAvailableField("SourceDocID");
+			
+				try {
+					driver.waitForPageToBeReady();
+					if(getDocView_DocId(docId).isElementAvailable(5)) {
+					base.waitForElement(getDocView_DocId(docId));
+					getDocView_DocId(docId).waitAndClick(15);
+					base.passedStep("Doc is selected from MiniDoclist successfully");
+					}else {
+						base.stepInfo("The respective docs are not present in this prj");
+					}
+				
+
+				} catch (Exception e) {
+					driver.Navigate().refresh();
+				}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Docs Arenot selected from mini doclist");
+		}
+	}
+	
 }
