@@ -111,6 +111,7 @@ public class DocView_Redactions_Regression {
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-52214 Verify that multiple Rectangle Redaction does not remain
 	 * selected on DocView Screen
+	 * Stabilization done
 	 */
 	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
@@ -299,7 +300,6 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Verify still the this redaction is displayed even after  del key is pressed");
 		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
 		loginPage.logout();
@@ -380,7 +380,6 @@ public class DocView_Redactions_Regression {
 
 		baseClass.stepInfo("Verify still the rectangle redaction is displayed even after  del key is pressed");
 		docViewRedact.verifyWhetherRedactionIsSaved(true);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
 
 		softAssert.assertAll();
 		loginPage.logout();
@@ -395,7 +394,7 @@ public class DocView_Redactions_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 72)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyEditAndApplyRedactionTag() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46958");
