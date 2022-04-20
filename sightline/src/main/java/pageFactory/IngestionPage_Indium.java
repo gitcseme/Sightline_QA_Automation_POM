@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.pdfbox.contentstream.operator.text.EndText;
@@ -953,6 +954,68 @@ public class IngestionPage_Indium {
 	}
 	public Element getIngestionGearIcon(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[@class='dropdown-toggle']//i");
+	}
+	
+	//Added by Gopinath - 12/04/2022
+	public Element firstTileTitle() {
+		return driver.FindElementByXPath("(//div[@id='cardCanvas']//li//a//span)[1]");
+	}
+	public Element errorsCount() {
+		return driver.FindElementByXPath("//span[contains(text(),'Errors')]//a");
+	}
+	public Element ignoreAllButon() {
+		return driver.FindElementByXPath("//button[@id='btnignoreall'] | //button[contains(text(),'Ignore All')]");
+	}
+	public Element catalogDone() {
+		return driver.FindElementByXPath("//button[@id='Catalogdone'] | //button[text()='Done']");
+	}
+	public Element startCoping() {
+		return driver.FindElementByXPath("//a[@id='RunCopying']//i");
+	}
+	public Element statusOfIngestion(String ingestionName) {
+		return driver.FindElementByXPath("(//span[@title='"+ingestionName+"']//..//..//strong)[2]");
+	}
+	public Element startIndexing() {
+		return driver.FindElementByXPath("//a[@id='RunIndexing']//i");
+	}
+	public Element actionDropDown() {
+		return driver.FindElementByXPath("//div[@class='btn-group select-actions']//button[@class='btn btn-defualt dropdown-toggle']");
+	}
+	public Element approveOption() {
+		return driver.FindElementByXPath("//a[text()='Approve']");
+	}
+	public Element fullAnalysisRadioButton() {
+		return driver.FindElementByXPath("(//h6[text()='Project Level Analytics and Indexing']//..//div//i)[1]");
+	}
+	public Element runButton() {
+		return driver.FindElementById("run");
+	}
+	public Element endTime() {
+		return driver.FindElementByXPath("//table[@id='ProjectFieldsDataTable']//tbody//td[4]");
+	}
+	public Element publishButton() {
+		return driver.FindElementById("publish");
+	}
+	public Element savedSearch(String savedSearch) {
+		return driver.FindElementByXPath("//a[@data-content = '"+savedSearch+"']//i");
+	}
+	public Element unPublishButton() {
+		return driver.FindElementById("Analyze");
+	}
+	public ElementCollection totalPages() {
+		return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']//li//a");
+	}
+	public Element disabledNextButton() {
+		return driver.FindElementByXPath("//ul[@class='pagination pagination-sm']//li[contains(@class,'disabled')]");
+	}
+	public ElementCollection totalRowsUnpublishTable() {
+		return driver.FindElementsByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr");
+	}
+	public Element nextButton() {
+		return driver.FindElementByXPath("//li//a[text()='Next']");
+	}
+	public Element unPunlishSearch(String savedSearch) {
+		return driver.FindElementByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr//td[text()='"+savedSearch+"']/following-sibling::td//a[text()='Inprogress']");
 	}
 	public IngestionPage_Indium(Driver driver) {
 
@@ -6894,6 +6957,292 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}		
 
 			}
+
+		
+	
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to get name of ingestion created.
+			 * @return createdIngestionName : createdIngestionName is String value that returns created ingestion name.
+			 */
+			public String getNameOfIngestionCreated() {
+				String createdIngestionName = null;
+				try {
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					firstTileTitle().isElementAvailable(15);
+					createdIngestionName = firstTileTitle().GetAttribute("title").trim();
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while getting name of ingestion created."+e.getLocalizedMessage());
+				}
+				return createdIngestionName;
+			}
+		
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to ignore erros in catalog stage and continue to copied state.
+			 * @param ingestionName : ingestionName is String value that name of ingestion created.
+			 */
+			public void ignoreErrorsInCatalogStageAndContinueToCopiedState(String ingestionName) {
+				try {
+					String status = null;
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					getIngestionLinkByName(ingestionName).isElementAvailable(15);
+					getIngestionLinkByName(ingestionName).Click();
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					errorsCount().ScrollTo();
+					errorsCount().isElementAvailable(15);
+					errorsCount().Click();
+					ignoreAllButon().isElementAvailable(15);
+					ignoreAllButon().Click();
+					base.waitTime(2);
+					getApproveMessageOKButton().isElementAvailable(10);
+					getApproveMessageOKButton().Click();
+					driver.waitForPageToBeReady();
+					catalogDone().isElementAvailable(15);
+					catalogDone().Click();
+					base.VerifySuccessMessage("Action done successfully");
+					base.waitTime(2);
+					driver.waitForPageToBeReady();
+					startCoping().ScrollTo();
+					startCoping().isElementAvailable(10);
+					startCoping().Click();
+					driver.scrollPageToTop();
+					getCloseButton().isElementAvailable(15);
+					getCloseButton().Click();
+					base.waitTime(2);
+					for(int i=0;i<8000;i++) {
+						driver.scrollPageToTop();
+						getRefreshButton().isElementAvailable(15);
+						getRefreshButton().Click();
+						driver.waitForPageToBeReady();
+						statusOfIngestion(ingestionName).isElementAvailable(15);
+						status = statusOfIngestion(ingestionName).getText();
+						if(status.contains("Copied")) {
+							base.passedStep("Errors are ignored and shifted to copied state successfully");
+							break;
+						}
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while ignoring erros in catalog stage and continue to copied state."+e.getLocalizedMessage());
+				}
+			}
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to shift copied stage to indexed stage by without marking audio optional
+			 * @param ingestionName : ingestionName is String value that name of ingestion created.
+			 */
+			public void copiedStageToIndexedStateByWithoutAudioOptional(String ingestionName) {
+				try {
+					String status = null;
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					getIngestionLinkByName(ingestionName).isElementAvailable(15);
+					getIngestionLinkByName(ingestionName).Click();
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					startIndexing().ScrollTo();
+					startIndexing().isElementAvailable(15);
+					startIndexing().Click();
+					driver.waitForPageToBeReady();
+					driver.scrollPageToTop();
+					getCloseButton().isElementAvailable(15);
+					getCloseButton().Click();
+					base.waitTime(2);
+					for(int i=0;i<8000;i++) {
+						driver.scrollPageToTop();
+						getRefreshButton().isElementAvailable(15);
+						getRefreshButton().Click();
+						driver.waitForPageToBeReady();
+						statusOfIngestion(ingestionName).isElementAvailable(15);
+						status = statusOfIngestion(ingestionName).getText();
+						if(status.contains("Indexed")) {
+							base.passedStep("Copied stage to indexed stage shifted successfully");
+							break;
+						}
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while shifting copied stage to indexed stage by without marking audio optional"+e.getLocalizedMessage());
+				}
+			}
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to approved indexed ingestion.
+			 * @param ingestionName : ingestionName is String value that name of ingestion created.
+			 */
+			public void approveIndexedIngestion(String ingestionName) {
+				try {
+					String status = null;
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					getIngestionLinkByName(ingestionName).isElementAvailable(15);
+					getIngestionLinkByName(ingestionName).Click();
+					driver.waitForPageToBeReady();
+					driver.scrollPageToTop();
+					base.waitTime(2);
+					actionDropDown().isElementAvailable(15);
+					actionDropDown().Click();
+					driver.waitForPageToBeReady();
+					driver.scrollPageToTop();
+					base.waitTime(2);
+					approveOption().isElementAvailable(15);
+					approveOption().Click();
+					getApproveMessageOKButton().isElementAvailable(10);
+					if(getApproveMessageOKButton().isDisplayed()) {
+						getApproveMessageOKButton().Click();
+					}
+					driver.waitForPageToBeReady();
+					driver.scrollPageToTop();
+					getCloseButton().isElementAvailable(15);
+					getCloseButton().Click();
+					base.waitTime(2);
+					for(int i=0;i<8000;i++) {
+						driver.scrollPageToTop();
+						getRefreshButton().isElementAvailable(15);
+						getRefreshButton().Click();
+						driver.waitForPageToBeReady();
+						statusOfIngestion(ingestionName).isElementAvailable(15);
+						status = statusOfIngestion(ingestionName).getText();
+						if(status.contains("Approved")) {
+							base.passedStep("Approved ingestion successfully");
+							break;
+						}
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while Approving ingestion"+e.getLocalizedMessage());
+				}
+			}
+			
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to navigate analytics page.
+			 */
+			public void navigateToAnalyticsPage() {
+				try {
+					driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while navigating analytics page."+e.getLocalizedMessage());
+				}
+			}
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to run full analysis and publish.
+			 */
+			public void runFullAnalysisAndPublish() {
+				try {
+					driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					fullAnalysisRadioButton().isElementAvailable(15);
+					fullAnalysisRadioButton().Click();
+					driver.waitForPageToBeReady();
+					runButton().isElementAvailable(10);
+					if(runButton().getWebElement().isEnabled()) {
+						runButton().Click();
+					}
+					for(int i=0;i<10000;i++) {
+						driver.Navigate().refresh();
+						endTime().ScrollTo();
+						String endTime = endTime().getText();
+						publishButton().isElementAvailable(15);
+						if((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
+							driver.waitForPageToBeReady();
+							publishButton().ScrollTo();
+							publishButton().Click();
+							break;
+						}
+					}
+					driver.Navigate().refresh();
+					publishButton().isElementAvailable(10);
+					if(publishButton().getWebElement().isEnabled()) {
+						driver.waitForPageToBeReady();
+						base.passedStep("Published ingested documents successfully");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while running full analysis and publish."+e.getLocalizedMessage());
+				}
+			}
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to navigate unpublish.
+			 */
+			public void navigateToUnPublishPage() {
+				try {
+					driver.getWebDriver().get(Input.url + "Ingestion/UnPublish");
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while navigating unpublish page."+e.getLocalizedMessage());
+				}
+			}
+			
+			/**
+			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method is used to unpublish saved search.
+			 */
+			public void unpublish(String savedSearch) {
+				try {
+					driver.waitForPageToBeReady();
+					base.waitTime(2);
+					savedSearch(savedSearch).isElementAvailable(15);
+					savedSearch(savedSearch).Click();
+					unPublishButton().isElementAvailable(15);
+					unPublishButton().Click();
+					driver.scrollingToBottomofAPage();
+					List<WebElement> totalPages = totalPages().FindWebElements();
+					int totalPagesCount = totalPages.size()-2;
+					for(int i=0;i<totalPagesCount+1;i++) {
+						driver.scrollingToBottomofAPage();
+						nextButton().isElementAvailable(10);
+						nextButton().Click();
+						if(disabledNextButton().isDisplayed())
+						{
+							base.waitTime(3);
+							unPunlishSearch(savedSearch).isElementAvailable(10);
+							if(unPunlishSearch(savedSearch).isDisplayed()){
+								base.passedStep("Unpublish of '"+savedSearch+"' is in progess");
+							}
+							break;
+						}
+						 
+					}
+					driver.Navigate().refresh();
+					for(int i=0;i<1000;i++) {
+						driver.scrollingToBottomofAPage();
+						nextButton().isElementAvailable(10);
+						nextButton().Click();
+						if(disabledNextButton().isDisplayed())
+						{
+							base.waitTime(3);
+							if(!unPunlishSearch(savedSearch).isDisplayed()){
+								base.passedStep("Unpublish of '"+savedSearch+"' is completed");
+								break;
+							}else {
+								driver.Navigate().refresh();
+							}
+							
+						}
+						
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+					base.failedStep("Exception occured while unpublish saved search."+e.getLocalizedMessage());
+				}
+			}
+
 			
 			/**
 			 * @author: Arun Created Date: 13/04/2022 Modified by: NA Modified Date: NA
@@ -7167,5 +7516,6 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				 	}
 				 	getCloseButton().waitAndClick(10); 
 			}
+
 
 }
