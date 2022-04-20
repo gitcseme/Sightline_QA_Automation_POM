@@ -20,6 +20,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
@@ -1720,6 +1721,15 @@ public class SessionSearch {
 	public Element getCurrentTabClosedExpand() {
 		return driver.FindElementByXPath(
 				"//li[@aria-selected='true' and contains(@class,'closed')]//i[@class='jstree-icon jstree-ocl']");
+	}
+	
+	public Element getBackGroundTask() {
+		return driver.FindElementByXPath("//div[@id='bgTask']//em/following-sibling::span");
+
+	}
+	
+	public Element getBullIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -11155,4 +11165,35 @@ public class SessionSearch {
 			base.failedStep("Document count is not displayed as expected");
 		}
 	}
+	/**
+	 * @author Brundha
+	 */
+	public void verifyingBackGrounTaskInBullHornIcon() {
+
+		getBullHornIcon().isElementAvailable(30);
+		base.waitForElement(getBullHornIcon());
+		String color = getBullIcon().getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#e74735";
+		if (ActualColor.equals(ExpectedColor)) {
+		base.passedStep("BullHorn icon is highlighted red as expected");
+		} else {
+		base.failedStep("Bullhorn icon is not red as expected");
+		}
+		getBullHornIcon().waitAndClick(20);
+		getBackGroundTask().isDisplayed();
+		String BackGroundText=getBackGroundTask().getText();
+		System.out.println(BackGroundText);
+		String[] Tag=BackGroundText.split("-");
+		String output=Tag[1];
+		System.out.println(output);
+		if(output.equals("Tag with Bulkaction")) {
+		base.passedStep("Related task is displayed in the background task");
+		}else {
+		base.failedStep("Related task is not displayed in the backgroundtask");
+		}
+
+		}
 }
