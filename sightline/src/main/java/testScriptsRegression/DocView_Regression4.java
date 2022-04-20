@@ -98,7 +98,7 @@ public class DocView_Regression4 {
 	 * DocView as RMU and REV
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyPersistentHitNavigation2() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -169,7 +169,7 @@ public class DocView_Regression4 {
 	 * from persistent hit panel from basic search
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyPersistentHitNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
@@ -2645,7 +2645,7 @@ public class DocView_Regression4 {
 	 * of the doc view
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
+	//@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void verifyAfterImpersonationMiddlePanelInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -2796,7 +2796,7 @@ public class DocView_Regression4 {
 	 * Assignment/Manage Reviewers.
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void verifyMaximizeTheMiddlePanelInDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -2837,7 +2837,7 @@ public class DocView_Regression4 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void VerifyCompleteDocCountViaRevTab() throws Exception {
 
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
@@ -2902,7 +2902,7 @@ public class DocView_Regression4 {
 	 * view page as per the selected assignment
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void verifyAssignmentProgressBarDisplayedOnDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -3053,7 +3053,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51981");
@@ -3138,7 +3138,7 @@ public class DocView_Regression4 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 39)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 35)
 	public void verifyFolderWorksFineInCompleteAndUnCompleteSateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51881");
 		baseClass.stepInfo(
@@ -3179,7 +3179,7 @@ public class DocView_Regression4 {
 	 *         with records in an Uncompleted state in Mini DocList
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 40)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 36)
 	public void verifyRemoveCodeSameInCompleteandUncompleteStateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51880");
 		baseClass.stepInfo(
@@ -3239,7 +3239,7 @@ public class DocView_Regression4 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 41)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 37)
 	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51006");
 		baseClass.stepInfo(
@@ -3273,7 +3273,7 @@ public class DocView_Regression4 {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -3358,7 +3358,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52170", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 43)
+	@Test(description = "RPMXCON-52170", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 39)
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
 		// Selecting Document from Session search
@@ -3420,7 +3420,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 40)
 	public void verifyArrowsRedirdctedToDocViewFromBasicSearch() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -3479,7 +3479,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo("Step 2: Assignment should be created with  'Show Default Tab' toggle as OFF");
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssignNearDupeDocuments();
+		sessionSearch.bulkAssignFamilyMemberDocuments();
 
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.toggleDisableShowDefaultViewTab();
@@ -3493,7 +3493,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.StitchedTiffSourceDocID);
+		docViewPage.selectDosFromMiniDocList(Input.nearDupeDoc05);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -3528,7 +3528,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeImageDoc);
+		docViewPage.selectDosFromMiniDocList(Input.nearDupeImageDoc);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -3552,7 +3552,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 42)
 	public void verifyWithOutAddingRemarkShouldNotSave() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51625");
@@ -3605,7 +3605,7 @@ public class DocView_Regression4 {
 	 * Verifying persistent hit for docs from assignment DocView- sprint 3
 	 */
 
-	@Test(description = "RPMXCON-51871", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 47)
+	@Test(description = "RPMXCON-51871", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 43)
 	public void persistentHitCheckNonAudioDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -3641,7 +3641,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsAanalytics() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51355");
@@ -3689,7 +3689,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 49)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51354");
@@ -3767,7 +3767,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 50)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyKWGroupAndSavedSeacrhOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51553");
@@ -3862,7 +3862,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 51)
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51775");
@@ -3921,7 +3921,7 @@ public class DocView_Regression4 {
 	 * Id:RPMXCON-51008 Verify thumbnails in Doc View From assignments page
 	 */
 
-	@Test(description = "RPMXCON-51008", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
+	//@Test(description = "RPMXCON-51008", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 48)
 	public void checkingThumbnailsIconFromAssignment() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -3953,7 +3953,7 @@ public class DocView_Regression4 {
 	 * previously viewed hits for the document on completing the document after
 	 * applying the coding stamp.
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 49)
 	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4049,7 +4049,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
 	public void verifyAfterImpersonationNavigatePageSavingFromDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50923");
@@ -4133,7 +4133,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyAfterImpersonationProducedDocsByDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51271");
@@ -4211,7 +4211,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 56)
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
 	public void verifyAfterImpersonationProducedDocsInImageTabDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51270");
@@ -4292,7 +4292,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
 	public void verifyAssignmentProgressBarCompleteDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51272");
@@ -4377,7 +4377,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
 	public void veriyUserCanSeeTheFlodersSecurityGroup() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50820");
@@ -4439,7 +4439,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51031", enabled = true, groups = { "regression" }, priority = 59)
+	@Test(description = "RPMXCON-51031", enabled = true, groups = { "regression" }, priority = 55)
 	public void verifyCountShouldBeUpdatedDocumentIsMarkedIsUncompleted() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51031");
 		baseClass
@@ -4487,7 +4487,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 60)
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
 	public void verifyDateRemovalInPersistentSearchPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51501");
@@ -4532,7 +4532,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
 	public void verifyAssignmentProgressBarCompleteDocsCodeSameAs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51279");
@@ -4686,7 +4686,7 @@ public class DocView_Regression4 {
 	 * @author Jayanthi.ganesan
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-59583", alwaysRun = true, groups = { "regression" }, priority = 62)
+	@Test(description = "RPMXCON-59583", alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyConfigureManualMode_RMUDashboard() throws Exception {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
@@ -4697,10 +4697,6 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id: RPMXCON-59583");
 		baseClass.stepInfo("Verify the context on navigating to doc view from RMU dashboard "
 				+ "after configuring the mini doc list should be assignment");
-
-		// login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// creating And Distributing the Assignment
 		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
