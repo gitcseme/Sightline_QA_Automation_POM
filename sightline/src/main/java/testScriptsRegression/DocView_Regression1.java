@@ -7423,30 +7423,20 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("verify warning message for hidden properties document and metadat value not empty");
 		docView.verifyNoWarningMessageForExternalLink(ExternalLinkDocId);
 	}
+	
+	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
-	}
-
-	@AfterMethod(alwaysRun = true)
-	public void close() {
 		try {
-			loginPage = new LoginPage(driver);
 			loginPage.quitBrowser();
-		} finally {
-//			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
 	}
 
