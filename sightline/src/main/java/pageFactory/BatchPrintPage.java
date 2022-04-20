@@ -1171,8 +1171,19 @@ public class BatchPrintPage {
 		Thread.sleep(10000);
 	}
 
-	public void BatchPrintWithProduction(String searchname, String orderCriteria, String orderType)
-			throws InterruptedException {
+	/**
+	 * @Modified By Jeevitha
+	 * @param searchname  : Search Name of Source Selection
+	 * @param orderCriteria
+	 * @param orderType
+	 * @param production  : If Production to be Selected
+	 * @param prodName  : Production Name FOr Selection
+	 * @param DisableSlipSheetToggle  :  If Sip Sheet Toggle to be Disabled
+	 * @param randomProd  : Random Production To be Selected 
+	 * @throws InterruptedException
+	 */
+	public void BatchPrintWithProduction(String searchname, String orderCriteria, String orderType, boolean production,
+			String prodName, boolean DisableSlipSheetToggle,boolean randomProd) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1190,6 +1201,7 @@ public class BatchPrintPage {
 
 		getSelectSavedSearch(searchname).waitAndClick(5);
 
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSourcenextbutton().Enabled();
@@ -1197,19 +1209,32 @@ public class BatchPrintPage {
 		}), Input.wait30);
 		getSourcenextbutton().waitAndClick(5);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getProductionRadioButton().Enabled();
-			}
-		}), Input.wait30);
-		getProductionRadioButton().waitAndClick(5);
+		if (production) {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectProduction().Enabled();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProductionRadioButton().Enabled();
+				}
+			}), Input.wait30);
+			getProductionRadioButton().waitAndClick(5);
+
+			if(randomProd) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProduction().Enabled();
+				}
+			}), Input.wait30);
+			getSelectProduction().selectFromDropdown().selectByIndex(1);
 			}
-		}), Input.wait30);
-		getSelectProduction().selectFromDropdown().selectByIndex(1);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProduction().Enabled();
+				}
+			}), Input.wait30);
+			getSelectProduction().selectFromDropdown().selectByVisibleText(prodName);
+			
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1221,13 +1246,11 @@ public class BatchPrintPage {
 
 		driver.scrollingToBottomofAPage();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSkippedFolderButton().Enabled();
-			}
-		}), Input.wait30);
-		getSkippedFolderButton().waitAndClick(5);
-
+		if (getSkippedFolderButton().isElementAvailable(4)) {
+			getSkippedFolderButton().waitAndClick(5);
+		} else {
+			System.out.println("Skip Folder Toggle is Not Available");
+		}
 		driver.scrollPageToTop();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -1237,12 +1260,26 @@ public class BatchPrintPage {
 		}), Input.wait30);
 		getAnalysisnextbutton().waitAndClick(5);
 
+		if (getExceptionNext().isElementAvailable(8)) {
+			getExceptionNext().waitAndClick(5);
+		}
+
+		driver.waitForPageToBeReady();
+		if (DisableSlipSheetToggle) {
+			base.waitForElement(getToggleButton());
+			getToggleButton().waitAndClick(5);
+		}
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSlipnextbutton().Enabled();
 			}
 		}), Input.wait30);
 		getSlipnextbutton().waitAndClick(5);
+
+		if (getBrandingnextbutton().isElementAvailable(8)) {
+			getBrandingnextbutton().waitAndClick(5);
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1275,18 +1312,14 @@ public class BatchPrintPage {
 		base.VerifySuccessMessage(
 				"Successfully initiated the batch print. You will be prompted with notification once completed.");
 
-		for (int i = 0; i < 20; i++) {
-			try {
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled();
-					}
-				}), Input.wait30);
-				if (getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled())
-					break;
-			} catch (Exception e) {
+		for (int i = 0; i < 40; i++) {
+			if (getbackgroundDownLoadLink().isElementAvailable(20)) {
+				base.stepInfo("DOWNLOAD link is Available");
+				break;
+			} else {
 				driver.Navigate().refresh();
 				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
 			}
 		}
 
