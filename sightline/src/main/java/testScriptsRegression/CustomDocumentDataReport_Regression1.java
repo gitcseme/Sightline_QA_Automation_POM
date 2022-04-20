@@ -20,18 +20,14 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
-import pageFactory.ABMReportPage;
-import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.CustomDocumentDataReport;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
-import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
-import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
@@ -51,24 +47,26 @@ public class CustomDocumentDataReport_Regression1 {
 	String tagName = "AAtag" + Utility.dynamicNameAppender();
 	String saveSearchNameRMU = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNamePA = "ST" + Utility.dynamicNameAppender();
-	String report1 = "Report" + Utility.dynamicNameAppender();
-	String report2 = "Report" + Utility.dynamicNameAppender();
-
+	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
-		// Login as a PA
+		// Login as a RMU
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		search = new SessionSearch(driver);
+		// add comment field
+		CommentsPage comments = new CommentsPage(driver);
+		comments.AddComments("Comment" + Utility.dynamicNameAppender());
+		
 		search.basicContentSearch(Input.testData1);
 		search.saveSearch(saveSearchNameRMU);
 		hitsCount = search.verifyPureHitsCount();
@@ -136,6 +134,9 @@ public class CustomDocumentDataReport_Regression1 {
 		lp.loginToSightLine(username, password);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -" + role);
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		// report1
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
@@ -185,7 +186,7 @@ public class CustomDocumentDataReport_Regression1 {
 		String Filename2 = bc.GetLastModifiedFileName();
 		bc.stepInfo(Filename2 + "Last Modified File name after Downloading the report");
 		String actualValue = cddr.csvfileVerification("", Filename2);
-		softAssertion.assertTrue(actualValue.contains("Alltags" + tagName + "\"CustodianName\"\""));
+		softAssertion.assertTrue(actualValue.contains("All Tags\\"+tagName+"\"\"\"CustodianName\"\""));
 		softAssertion.assertAll();
 		bc.passedStep("Sucessfully verified that verify that Users can save the selected criteria for custom"
 				+ " document data report and view the custom report");
@@ -381,7 +382,9 @@ public class CustomDocumentDataReport_Regression1 {
 		String[] metaDataFields = { Input.metaDataName };
 		String textFormat1 = "039";
 		String textFormat2 = "034";
-		
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
 		search = new SessionSearch(driver);
 		
@@ -426,7 +429,7 @@ public class CustomDocumentDataReport_Regression1 {
 		cddr.validateSelectedExports(workProductFields);
 		final int Bgcount = bc.initialBgCount();
 		cddr.getRunReport().Click();
-		//cddr.reportRunSuccessMsg();
+		cddr.reportRunSuccessMsg();
 		SoftAssert softAssertion = new SoftAssert();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -457,6 +460,8 @@ public class CustomDocumentDataReport_Regression1 {
 		String[] metaDataField_afterReport = { Input.docId };
 		String textFormat1 = "039";
 		String textFormat2 = "034";
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
 
 		bc.stepInfo("Test case Id: RPMXCON-58572");
 		bc.stepInfo("Verify saved Document Data Export Report from Advanced Search "
@@ -482,7 +487,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 		// report2
 		bc.selectproject();
-		search.basicContentSearch(Input.testData1);
+		search.advancedContentSearch(Input.testData1);
 		driver.waitForPageToBeReady();
 		search.exportData();
 		cddr.selectExportFieldFormat(textFormat2);
@@ -542,12 +547,16 @@ public class CustomDocumentDataReport_Regression1 {
 		String textFormat2 = "034";
 		String[] metaDataField_afterReport = { Input.docId };
 		String saerchName = "ss" + Utility.dynamicNameAppender();
+		String saerchName1 = "ss" + Utility.dynamicNameAppender();
 		bc.stepInfo("Test case Id: RPMXCON-58573");
 		bc.stepInfo("Verify saved Document Data Export Report from Saved Search"
 				+ " should retain the selected criteria in custom report");
 		lp.loginToSightLine(username, password);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("Logged in as -" + role);
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		// report1
 		SavedSearch ss = new SavedSearch(driver);
 		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
@@ -569,9 +578,12 @@ public class CustomDocumentDataReport_Regression1 {
 
 		// report2
 		bc.selectproject();
-		search.basicContentSearch(Input.testData1);
-		driver.waitForPageToBeReady();
-		search.exportData();
+		search.advancedContentSearch(Input.testData1);
+		search.saveSearchadvanced(saerchName1);
+		ss.savedSearch_Searchandclick(saerchName1);
+		ss.getSavedSearchExportButton().Click();
+		cddr.validateSourceSelction("save search");
+		bc.stepInfo("Navigated from saved search to Export Page");
 		cddr.selectExportFieldFormat(textFormat2);
 		cddr.selectExportTextFormat(textFormat2);
 		cddr.selectMetaDataFields(metaDataFields);
@@ -626,6 +638,9 @@ public class CustomDocumentDataReport_Regression1 {
 		String[] metaDataFields = { Input.metaDataName };
 		String textFormat1 = "039";
 		String textFormat2 = "034";
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		String[] metaDataField_afterReport = { Input.docId };
 		bc.stepInfo("Test case Id: RPMXCON-58574");
 		bc.stepInfo("Verify saved Document Data Export Report from Doc List"
@@ -715,7 +730,9 @@ public class CustomDocumentDataReport_Regression1 {
 		String textFormat1 = "039";
 		String textFormat2 = "034";
 		String[] metaDataField_afterReport = { Input.docId };
-		
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		bc.stepInfo("Test case Id: RPMXCON-58570");
 		bc.stepInfo("Verify saved Document Data Export Report from Doc Explorer"
 				+ " should retain the selected criteria in custom report");
@@ -814,6 +831,9 @@ public class CustomDocumentDataReport_Regression1 {
 		String textFormat1 = "039";
 		String textFormat2 = "034";
 		String[] metaDataField_afterReport = { Input.docId };
+		String report1 = "Report" + Utility.dynamicNameAppender();
+		String report2 = "Report" + Utility.dynamicNameAppender();
+
 		//report 1
 		tp.navigateTo_Tallypage();
 		tp.SelectSource_SecurityGroup(Input.securityGroup);
@@ -828,7 +848,7 @@ public class CustomDocumentDataReport_Regression1 {
 		tp.subTallyActions();
 		tp.subTallyToExport();
 		
-		cddr.validateSourceSelction("tally");
+		//cddr.validateSourceSelction("tally");
 		cddr.selectExportFieldFormat(textFormat1);
 		cddr.selectExportTextFormat(textFormat1);
 		cddr.selectMetaDataFields(metaDataFields);
@@ -852,7 +872,7 @@ public class CustomDocumentDataReport_Regression1 {
 		tp.subTallyActions();
 		tp.subTallyToExport();
 		
-		cddr.validateSourceSelction("tally");
+		//cddr.validateSourceSelction("tally");
 		cddr.selectExportFieldFormat(textFormat2);
 		cddr.selectExportTextFormat(textFormat2);
 		cddr.selectMetaDataFields(metaDataFields);

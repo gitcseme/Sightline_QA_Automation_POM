@@ -358,8 +358,6 @@ public class CustomDocumentDataReport {
 		getSaveReportName().SendKeys(reportName);
 		getSaveBtn().Click();
 		bc.CloseSuccessMsgpopup();
-		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
-		bc.getCloseSucessmsg().waitAndClick(10);
 		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 	}
 

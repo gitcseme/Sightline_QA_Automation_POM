@@ -366,6 +366,8 @@ public class CommunicationExplorer_Regression1 {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
