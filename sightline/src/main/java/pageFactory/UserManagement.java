@@ -497,6 +497,7 @@ public class UserManagement {
 	public ElementCollection unAssigneduserlist() {
 		return driver.FindElementsByXPath("//select[@id='UnAssignedUsersForDomain']//option");
 	}
+
 	public Element VerifyingAssignedUser(String UserName) {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+UserName+"')]");
 	}
@@ -516,6 +517,36 @@ public class UserManagement {
 	public Element getSelectuserassignindomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
+
+	public Element getSelectAssignedUserDomain() {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
+	}
+	public ElementCollection userDetailsTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='dtUserList_wrapper']/div/div/div/table/thead/tr/th");
+	}
+	public Element tableValue(int row, int colum) {
+		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+row+"]/td["+colum+"]");
+	}
+	public Element getbellyBandMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+	public ElementCollection getAssignedUserName(String userName) {
+		return driver.FindElementsByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+userName+"')]");
+	}
+	public Element getDomaintab() {
+		return driver.FindElementByXPath("//a[@id='tabExiting']");
+	}
+	public Element getProjectTab() {
+		return driver.FindElementByXPath("//a[@id='tabNew']");
+	}
+	public Element getPopUpCloseBtn() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
+	public Element getLeftBtndomainuser() {
+		return driver.FindElementByXPath("//a[@id='btnLeftUserMaappingForDomain']");
+	}
+
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1808,5 +1839,146 @@ public class UserManagement {
 	}
 	
 	
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domainName
+	 * @param unAssigedUserName
+	 * @Description Assign domain to domain user
+	 */
+	public void AssignUserToDomain(String domainName, String unAssigedUserName ) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().Click();
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+
+		bc.waitForElement(getSelectusertoassignindomain());
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(unAssigedUserName);
+
+		getrightBtndomainuser().waitAndClick(10);
+		getsavedomainuser().waitAndClick(10);
+		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.stepInfo("Domain user Assiged succesfully");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domainName
+	 * @param AssigedUserName
+	 * @Description unassign domain to domain user 
+	 */
+	public void unAssignUserToDomain(String domainName, String AssigedUserName ) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+
+		bc.waitForElement(getSelectAssignedUserDomain());
+		getSelectAssignedUserDomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
+		getLeftBtndomainuser().waitAndClick(10);
+
+		getsavedomainuser().waitAndClick(10);
+		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.stepInfo("Domain user unAssiged succesfully");
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param ColumName
+	 * @param row
+	 * @return
+	 * @Description get data from tableuser table
+	 */
+	public String getTableData(String ColumName, int row) {
+		int colum = bc.getIndex(userDetailsTableHeader(), ColumName);
+		String data = tableValue(row, colum).getText().trim();
+		return data;
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domainName
+	 * @param AssigedUserName
+	 * @Description verify status of belly band message yes
+	 */
+	public void verifyUnAssignUserToAssignUserBellyBandYes(String domainName, String AssigedUserName ) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+
+		bc.waitForElement(getSelectusertoassignindomain());
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
+		driver.waitForPageToBeReady();
+		getrightBtndomainuser().waitAndClick(10);
+		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+			bc.passedStep("Selected User is displayed in the Assign user list");
+		}else {
+			bc.failedStep("verification failed");
+		}
+		getProjectTab().waitAndClick(10);
+		bc.waitForElement(getbellyBandMsg());
+		String msg = getbellyBandMsg().getText();
+		String expectedText = "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
+		
+		bc.textCompareEquals(msg, expectedText, 
+				"Bully Band message is displayed as expect", "verification failed");
+		bc.getYesBtn().waitAndClick(10);
+		bc.stepInfo("clicked yes");
+		
+		getDomaintab().waitAndClick(10);
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+			bc.passedStep("Selected User is displayed in the Assign user list");
+		}else {
+			bc.failedStep("verification failed");
+		}
+
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domainName
+	 * @param AssigedUserName
+	 * @Description verify belly Band msg if no
+	 */
+	public void verifyUnAssignUserToAssignUserBellyBandNo(String domainName, String AssigedUserName ) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+
+		bc.waitForElement(getSelectusertoassignindomain());
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
+		driver.waitForPageToBeReady();
+		getrightBtndomainuser().waitAndClick(10);
+		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+			bc.passedStep("Selected User is displayed in the Assign user list");
+		}else {
+			bc.failedStep("verification failed");
+		}
+		getProjectTab().waitAndClick(10);
+		bc.waitForElement(getbellyBandMsg());
+		String msg = getbellyBandMsg().getText();
+		String expectedText = "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
+		
+		bc.textCompareEquals(msg, expectedText, 
+				"Bully Band message is displayed as expect", "verification failed");
+		getConfirmDelete().waitAndClick(10);
+		bc.stepInfo("clicked No");
+		
+		getDomaintab().waitAndClick(10);
+		bc.waitForElement(getSelectDomainname());
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
+		if(!getAssignedUserName(AssigedUserName).isElementAvailable(1)) {
+			bc.passedStep("Selected User is displayed in the Assign user list");
+		}else {
+			bc.failedStep("verification failed");
+		}
+
+	}
+
 
 }

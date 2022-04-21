@@ -19,6 +19,9 @@ public class DomainDashboard {
 	 public Element getprojectnamelink(String projectname){ return driver.FindElementByXPath("(//*[@id='taskbasic']//a[contains(text(),'"+Input.projectName+"')])[1]"); }
 	 public Element getdashboardtitle(){ return driver.FindElementById("domainDashboardTitle"); }
 	 public Element getBacktodomaindashboard(){ return driver.FindElementByXPath("//a[@name='Back to the Domain Dashboard']"); }
+	 public Element availableDomains(String domain){
+		 return driver.FindElementByXPath("//ul[@id='ddlDomains']/li/a[contains(text(),'"+domain+"')]"); 
+	}
 	 
 	 public DomainDashboard(Driver driver){
 
