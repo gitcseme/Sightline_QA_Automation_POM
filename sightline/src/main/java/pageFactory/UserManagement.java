@@ -497,6 +497,27 @@ public class UserManagement {
 	public ElementCollection unAssigneduserlist() {
 		return driver.FindElementsByXPath("//select[@id='UnAssignedUsersForDomain']//option");
 	}
+
+	public Element VerifyingAssignedUser(String UserName) {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+UserName+"')]");
+	}
+	
+	public Element getProjectBtn() {
+		return driver.FindElementByXPath("//a[text()='Projects']");
+	}
+	public Element gettDomainBtn() {
+		return driver.FindElementByXPath("//a[text()='Domains']");
+	}
+	public Element getBellyBandMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+	public Element getLeftArrow() {
+		return driver.FindElementById("btnLeftUserMaappingForDomain");
+	}
+	public Element getSelectuserassignindomain() {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
+	}
+
 	public Element getSelectAssignedUserDomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
@@ -524,6 +545,7 @@ public class UserManagement {
 	public Element getLeftBtndomainuser() {
 		return driver.FindElementByXPath("//a[@id='btnLeftUserMaappingForDomain']");
 	}
+
 
 	public UserManagement(Driver driver) {
 
@@ -1753,6 +1775,71 @@ public class UserManagement {
 		bc.VerifyErrorMessage("20001000021 : user cannot be created at this level");
 
 	}
+	
+	/**
+	 * @author Brundha
+	 * @param projectName
+	 * @param UserName
+	 * @param UserName1
+	 * @Description verifying the belly band message and assign the user 
+	 */
+	public void verifyingBellyBandMessageInAssignUser(String DomainName,String UserName,String UserName1) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
+		bc.waitTime(1);
+		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		getLeftArrow().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
+		getrightBtndomainuser().waitAndClick(10);
+		getProjectBtn().waitAndClick(10);
+		String ActualText=getBellyBandMsg().getText();
+		String bandMsg="You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
+		bc.textCompareEquals(bandMsg, ActualText,"Belly band message is displayed as expected", "Belly band message is not displayed as expected");
+		bc.getYesBtn().waitAndClick(10);
+		gettDomainBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
+		if(VerifyingAssignedUser(UserName).isDisplayed()) {
+			bc.passedStep("The changes made on the user is not modified as expected");
+		}else {
+			bc.failedStep("The changes made on user is modified");
+			
+		}
+		
+	}
+	/**
+	 * @author Brundha
+	 * 
+	 * @param projectName
+	 * @param UserName
+	 * @Description verifying the belly band message and un assign the user 
+	 */
+	public void selectingConfirmButtonToUnAssignTheAssignedUser(String DomainName,String UserName) {
+		driver.waitForPageToBeReady();
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
+		bc.waitTime(2);
+		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		getLeftArrow().waitAndClick(5);
+		getProjectBtn().waitAndClick(5);
+		getConfirmDelete().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		gettDomainBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
+		if(VerifyingAssignedUser(UserName).isDisplayed()) {
+			bc.passedStep("The changes made on the user is modified as expected");
+		}else {
+			bc.failedStep("The changes made on user is not modified");
+			
+		}
+		
+	}
+	
+	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param domainName
@@ -1892,5 +1979,6 @@ public class UserManagement {
 		}
 
 	}
+
 
 }
