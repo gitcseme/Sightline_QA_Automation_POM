@@ -632,6 +632,9 @@ public class Input {
 	public static String prodBeg;
 	public static String tiffFile2;
 	public static String generateSearchablePDF;
+	public static String DATFile4;
+	public static String AK_NativeFolder;
+	public static String duplicateIngestionError;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1380,6 +1383,9 @@ public class Input {
 		prodBeg = testData.getProdBeg();
 		tiffFile2 = testData.getTiffFile2();
 		generateSearchablePDF = testData.getGenerateSearchablePDF();
+		DATFile4 = testData.getDATFile4();
+		AK_NativeFolder = testData.getAK_NativeFolder();
+		duplicateIngestionError = testData.getDuplicateIngestionError();
 
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();

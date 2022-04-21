@@ -548,6 +548,9 @@ public class TestData {
 	public String prodBeg;
 	public String tiffFile2;
 	public String generateSearchablePDF;
+	public String DATFile4;
+	public String AK_NativeFolder;
+	public String duplicateIngestionError;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;
