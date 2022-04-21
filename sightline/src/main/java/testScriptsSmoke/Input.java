@@ -635,6 +635,8 @@ public class Input {
 	public static String DATFile4;
 	public static String AK_NativeFolder;
 	public static String duplicateIngestionError;
+	public static String datLoadFile1;
+	public static String textFile1;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1386,6 +1388,8 @@ public class Input {
 		DATFile4 = testData.getDATFile4();
 		AK_NativeFolder = testData.getAK_NativeFolder();
 		duplicateIngestionError = testData.getDuplicateIngestionError();
+		datLoadFile1 = testData.getDatLoadFile1();
+		textFile1 = testData.getTextFile1();
 
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();

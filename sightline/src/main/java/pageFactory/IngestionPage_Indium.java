@@ -7684,7 +7684,65 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				
 			}
 			
+			/**
+			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform add only ingestion for unicodefiles folder
+			 */
+			public void unicodeFilesIngestion(String datFile,String textFile,String datKey) {
+				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.UniCodeFilesFolder);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				selectDATSource(datFile,datKey);
+				base.stepInfo("*******Selecing text files***************");
+				base.waitForElement(getSourceSelectionText());
+				getSourceSelectionText().waitAndClick(20);
+				base.waitForElement(getSourceSelectionTextLoadFile());
+				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				base.waitTime(2);
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
+				clickOnPreviewAndRunButton();
+				base.stepInfo("Ingestion started");
+			}
+			/**
+			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify the copy,index and approve option status during the ingestion inprogress
+			 */
 			
-
-
+			public void verifyStatusDuringInProgress() {
+				base.waitTime(3);
+				driver.waitForPageToBeReady();
+				getIngestionDetailPopup(1).waitAndClick(5);
+				
+				String copyingStatus =  getRunCopying().GetAttribute("class");
+				String indexingStatus = getRunIndexing().GetAttribute("class");
+				
+				base.waitForElement(getActionDropdownArrow());
+				getActionDropdownArrow().waitAndClick(5);
+				String approveStatus = getActionApprove().GetAttribute("class");
+				
+				if(copyingStatus.contains("disable") && indexingStatus.contains("disable") && approveStatus.contains("disable")) {
+					base.passedStep("Copying and Indexing option not enabled and approve option disabled during inprogress ingestion");
+				}
+				else {
+					base.failedStep("copying,indexing and approve option enabled during inprogress ingestion");
+				}
+				getCloseButton().waitAndClick(5);
+				
+			}
 }

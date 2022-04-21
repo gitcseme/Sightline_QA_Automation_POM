@@ -551,6 +551,8 @@ public class TestData {
 	public String DATFile4;
 	public String AK_NativeFolder;
 	public String duplicateIngestionError;
+	public String datLoadFile1;
+	public String textFile1;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;
