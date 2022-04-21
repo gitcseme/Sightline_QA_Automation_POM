@@ -653,12 +653,13 @@ public class DomainManagement_IndiumRegression {
 	loginPage.logout();
 	}
 
-  
-  	/ * Author :Brundha date: NA Modified date: Modified by: Description :To verify
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: Description :To verify
 	 * that if System Admin UnAssign users in Domain tab and tries to navigate to
 	 * the Project tab without saving the changes, it should display the
 	 * confirmation message
 	 */
+  	
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyBellyBandMessageInSAUser() throws Exception {
 		baseClass = new BaseClass(driver);
