@@ -371,6 +371,13 @@ public class WorkflowPage {
 	public Element getSummaryTab_SourceSavedSearch() {
 		return driver.FindElementByXPath("//label[contains(text(),'Saved Search:')]/following-sibling::div");
 	}
+	
+	public Element getActionTab_QueryMessage() {
+		return driver.FindElementByXPath("//h2[contains(normalize-space(.),'Define What Actions')]");
+	}
+	public Element getActionTab_PageMessage() {
+		return driver.FindElementByXPath("//p[contains(normalize-space(.),'On this page you')]");
+	}
 
 	public WorkflowPage(Driver driver) {
 
