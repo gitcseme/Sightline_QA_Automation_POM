@@ -219,6 +219,7 @@ public class DomainManagement_IndiumRegression {
 		baseClass.stepInfo("Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)");
 		userManage = new UserManagement(driver);
 		String TagName="Tag"+Utility.dynamicNameAppender();
+		String TagName1="Tag"+Utility.dynamicNameAppender();
 		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -239,12 +240,16 @@ public class DomainManagement_IndiumRegression {
 		search.verifyingBackGrounTaskInBullHornIcon();
 		
 		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject("Automation_NonDomain");
+		tagsAndFolderPage.createNewTagwithClassification(TagName1,"Select Tag Classification");
+		loginPage.logout();
 	    loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 	    UtilityLog.info("Logged in as User: " + Input.rev1userName);
 	    Reporter.log("Logged in as User: " + Input.rev1userName);
-
+	    baseClass.selectproject("Automation_NonDomain");
 		search.basicContentSearch(Input.testData1);
-		search.bulkTagExisting(TagName);
+		search.bulkTagExisting(TagName1);
 		search.verifyingBackGrounTaskInBullHornIcon();
 	
 		loginPage.logout();
