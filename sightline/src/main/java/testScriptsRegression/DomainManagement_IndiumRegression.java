@@ -547,7 +547,36 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author :Brundha date: NA Modified date: Modified by: Description :To verify
+	 * that if System Admin UnAssign users in Domain tab and tries to navigate to
+	 * the Project tab without saving the changes, it should display the
+	 * confirmation message
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	public void verifyBellyBandMessageInSAUser() throws Exception {
+		baseClass = new BaseClass(driver);
 
+		baseClass.stepInfo("Test case Id: RPMXCON-53034");
+		utility = new Utility(driver);
+		baseClass.stepInfo(
+				"To verify that if System Admin UnAssign users in Domain tab and tries to navigate to the Project tab without saving the changes, it should display the confirmation message");
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+		userManage = new UserManagement(driver);
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		String lastName =  userManage.getTableData("LAST NAME", 1);
+		String Billable=" || IsBillable: false";
+		String userName=firstName+" "+lastName+Billable;
+		String userName1=firstName+" "+lastName;
+		
+		userManage.verifyingBellyBandMessageInAssignUser(Input.domainName,userName,userName1);
+		userManage.selectingConfirmButtonToUnAssignTheAssignedUser(Input.domainName, userName);
+		loginPage.logout();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
