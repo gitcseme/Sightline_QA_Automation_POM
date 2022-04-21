@@ -207,7 +207,58 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
+  
 	/**
+	 * Author :Brundha date: NA Modified date: Modified by: 
+	 * Description :Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void verifyingBackGroungTaskInBullIcon() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53093");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)");
+		userManage = new UserManagement(driver);
+		String TagName="Tag"+Utility.dynamicNameAppender();
+		String TagName1="Tag"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
+
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.impersonateDAtoReviewer();
+		baseClass.stepInfo("Impersonated as Reviewer in same domain project");
+		
+		SessionSearch search=new SessionSearch(driver);
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		search.verifyingBackGrounTaskInBullHornIcon();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject("Automation_NonDomain");
+		tagsAndFolderPage.createNewTagwithClassification(TagName1,"Select Tag Classification");
+		loginPage.logout();
+	    loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	    UtilityLog.info("Logged in as User: " + Input.rev1userName);
+	    Reporter.log("Logged in as User: " + Input.rev1userName);
+	    baseClass.selectproject("Automation_NonDomain");
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName1);
+		search.verifyingBackGrounTaskInBullHornIcon();
+	
+		loginPage.logout();
+
+	}
+	
+/**
 	 * Author : Aathith date: NA Modified date: Modified by: 
 	 * Description :When a user is a domain admin in multiple domains,
 	 *  and when the user is edited to modify the rights for one domain, the modified rights should be saved 
@@ -323,7 +374,6 @@ public class DomainManagement_IndiumRegression {
 		
 	baseClass.stepInfo("Test case Id: RPMXCON-53149");
 	utility = new Utility(driver);
-	
 	baseClass.stepInfo("Verify that after saving the rights for the user for one domain should not alter the rights for any other domain in which the user is a domain admin.");
 	userManage = new UserManagement(driver);
 	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
