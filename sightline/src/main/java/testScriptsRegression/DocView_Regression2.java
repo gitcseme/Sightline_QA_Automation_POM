@@ -4473,7 +4473,100 @@ public class DocView_Regression2 {
 		loginPage.logout();	
 	}
 	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-52211 Verify that email metadata should present with single quote
+	 * on DocView
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyEmailMetaDataPresentOnDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52211");
+		baseClass.stepInfo("Verify that email metadata should present with single quote on DocView");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewThreadedDocsInDocViews();
+		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
+
+		// Verify concatenated and separate fields from metadata tab in DocView.
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailAuthorName());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorName().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorAddress().isDisplayed());
+		baseClass.passedStep(
+				"EmailAuthorName/EmailAuthorAddress fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorNameAndAddress().isDisplayed());
+		baseClass.passedStep(
+				"EmailAuthorNameAndAddress field is displayed on metadata panel and field is a concatenated fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailToNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailToNames/EmailToAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToNamesAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailToNamesAndAddresses field is displayed on metadata panel and field is a concatenated fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailCCNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailCCNames/EmailCCAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCNamesAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailCCNamesAndAddresses field is displayed on metadata panel and field is a concatenation fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailBCCNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailBCCNames/EmailBCCAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCNameAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailBCCNamesAndAddresses field is displayed on metadata panel and field is a concatenation fields.");
+		softassertion.assertAll();
+	}
 	
+	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51565 Verify when enteres the long text to search in a document
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyEntersLongTextToSearchDocument() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51565");
+		baseClass.stepInfo("Verify when enteres the long text to search in a document");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+
+		// verify a enter longer text in scrolling left in SearchBox
+		docView.verifyEnterLongTextInScrollLeft();
+	}
+
+
 	
 
 	@AfterMethod(alwaysRun = true)
