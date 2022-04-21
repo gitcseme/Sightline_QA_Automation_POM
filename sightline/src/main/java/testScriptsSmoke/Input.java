@@ -508,6 +508,7 @@ public class Input {
 	public static String pdfDataSet;
 	public static String dbFile;
 	public static String sourceDocIdDB992;
+	public static String NonDomainProject;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -957,6 +958,7 @@ public class Input {
 		pdfDataSet = testData.getPdfDataSet();
 		dbFile = testData.getDbFile();
 		sourceDocIdDB992 = testData.getSourceDocIdDB992();
+		NonDomainProject = testData.getNonDomainProject();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

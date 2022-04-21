@@ -290,13 +290,13 @@ public class DomainManagement_IndiumRegression {
 	loginPage.logout();
 	
 	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-	baseClass.selectproject("Automation_NonDomain");
+	baseClass.selectproject(Input.NonDomainProject);
 	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
 	loginPage.logout();
 	
 	baseClass.stepInfo("perform task for non domain project");
 	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-	baseClass.selectproject("Automation_NonDomain");
+	baseClass.selectproject(Input.NonDomainProject);
 	baseClass.stepInfo("Non domin project is selected");
 	UtilityLog.info("Logged in as User: " + Input.rev1userName);
 	Reporter.log("Logged in as User: " + Input.rev1userName);
