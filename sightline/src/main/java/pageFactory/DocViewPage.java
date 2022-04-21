@@ -23207,12 +23207,13 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
+		
 		driver.Manage().window().fullscreen();
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName());
-		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
+		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);

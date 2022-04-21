@@ -909,10 +909,6 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//i[@class='fa fa-eye']");
 	}
 
-	public Element getVisiableText() {
-		return driver.FindElementById("PHitCount_Get");
-	}
-
 	public Element getNextArrowBtn() {
 		return driver.FindElementById("PrevHit_key1279552");
 	}
@@ -2940,12 +2936,13 @@ public void popOutCodingFormChildWindow() {
 
 		base.stepInfo("docView Eye Icon Clicked Successfully");
 
-		if (getVisiableText().isElementPresent() == true) {
-			base.passedStep("verified The Visiable Text is Displayed");
-		} else {
-			base.failedStep("The Visiable Text is Not Displayed");
-		}
+		if (docViewEyeSearchTerm().Displayed()) {
 
+			base.passedStep("HighLighting Text is Displayed");
+		} else {
+
+			base.failedStep("HighLighting Text  is Not Displayed");
+		}
 		driver.waitForPageToBeReady();
 		if (getNextArrowBtn().Displayed()) {
 
