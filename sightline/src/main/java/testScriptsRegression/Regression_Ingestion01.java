@@ -1084,6 +1084,72 @@ public class Regression_Ingestion01 {
 		ingestionPage.rollBackIngestion();
 	}
 	
+	/** 
+     *Author :Arunkumar date: 20/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-59385
+	 * Description :Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 50)
+	public void verifyErrorStatusWhenPdfPathInDatOption() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-59385");
+		baseClass.stepInfo("Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option");
+		ingestionPage.selectPdfInPathFileAndSaveAsDraft(Input.AK_NativeFolder,Input.DATFile1,Input.documentKey,Input.prodBeg);
+	}
+	
+	/** 
+     *Author :Arunkumar date: 20/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47293
+	 * Description :Ingesting Duplicate files.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 51)
+	public void verifyErrorForIngestingDuplicateFiles() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47293");
+		baseClass.stepInfo("Ingesting Duplicate files.");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+		// verify duplicate ingestion error
+		ingestionPage.verifyDuplicateIngestionErrorMessage();
+		// rollback ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47296
+	 * Description :Ingestion with draft mode.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 52)
+	public void verifyIngestionWithDraftMode() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47296");
+		baseClass.stepInfo("Ingestion with draft mode.");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		// verify options available for ingestion in draft state
+		ingestionPage.verifyOptionsAvailableForDraftStageIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47299
+	 * Description :Verify Successful ingestion with ingestion details display with the help of Valid data and DAT file.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 53)
+	public void verifyIngestionDetailWithValidData() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47299");
+		baseClass.stepInfo("Verify Successful ingestion with ingestion details display with the help of Valid data and DAT file.");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		// verify ingestion details after ingestion started
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		
+	}
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

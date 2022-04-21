@@ -614,6 +614,9 @@
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
+	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
+	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 
 	<!-- Ingestion Related data END -->
 
