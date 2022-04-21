@@ -1150,6 +1150,26 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47406
+	 * Description :To verify indexing for the Text file from Ingestion details pop up.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 54)
+	public void verifyIndexingForTextFile() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47406");
+		baseClass.stepInfo("To verify indexing for the Text file from Ingestion details pop up.");
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
+		// verify copy,index and approve status during the ingestion in inprogress state
+		ingestionPage.verifyStatusDuringInProgress();
+		ingestionPage.ingestionCatalogging();
+		// rollback ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

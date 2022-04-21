@@ -618,6 +618,8 @@
 	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
 	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
 	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
+	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
+	<textFile1>DAT4_STC_Text.lst</textFile1>
 
 	<!-- Ingestion Related data END -->
 
