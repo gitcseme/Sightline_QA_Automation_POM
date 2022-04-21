@@ -1674,6 +1674,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		// NeaeDupe Comparision Window Zoomin ZoomOut
 		docView.verifyNearNupeComparisionWindow();
 
+		//Logoff
 		loginPage.logout();
 
 	}

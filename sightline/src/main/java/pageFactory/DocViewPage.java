@@ -27463,6 +27463,7 @@ public class DocViewPage {
 	/**
 	 * @author Vijaya.Rani Date: 20/04/22 Modified date: NA Modified by: N/A
 	 *         Description : verify NearNupe Comparision Window
+	 *         
 	 * @throws InterruptedException 
 	 * 
 	 */

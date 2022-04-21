@@ -299,6 +299,7 @@ public class DomainManagement_IndiumRegression {
 	
 	//Login As RMU
 	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.selectproject("Automation_NonDomain");
 	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
 	loginPage.logout();
