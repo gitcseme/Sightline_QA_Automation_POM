@@ -3336,7 +3336,7 @@ public class DocViewPage {
 
 	public Element getDocView_AnalyticsExitingFolderName() {
 		return driver.FindElementByXPath(
-				"//*[@id='divBulkFolderJSTree']//a[@id='19_anchor']//i[@class='jstree-icon jstree-checkbox']");
+				"(//*[@id='divBulkFolderJSTree']//a[@class='jstree-anchor']//i[@class='jstree-icon jstree-checkbox'])[2]");
 	}
 	
 	//Added by Gopinath-08/04/2022
