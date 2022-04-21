@@ -372,6 +372,7 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//label[contains(text(),'Saved Search:')]/following-sibling::div");
 	}
 	
+	//Added by Baskar
 	public Element getActionTab_QueryMessage() {
 		return driver.FindElementByXPath("//h2[contains(normalize-space(.),'Define What Actions')]");
 	}
@@ -379,6 +380,11 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//p[contains(normalize-space(.),'On this page you')]");
 	}
 
+	//Added by Vijaya.Rani 
+	public Element getSummaryTab_FamilyOptionAssignment() {
+		return driver.FindElementByXPath("//label[contains(text(),'Member 1:')]/following-sibling::div");
+	}
+	
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
