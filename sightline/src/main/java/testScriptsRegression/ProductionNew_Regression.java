@@ -82,7 +82,7 @@ public class ProductionNew_Regression {
 	 *                     Mapping should be disabled
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifySavedTemplateControlIsDisabled() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -105,7 +105,7 @@ public class ProductionNew_Regression {
 	 *                     section, already selected Redaction tags should not
 	 *                     available for Redaction text
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyClickMarkIncompleteDisablesALreadyRedactedTags() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -144,7 +144,7 @@ public class ProductionNew_Regression {
 	 *                     Production preview is displays without any error
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void passingSubBatesNullAndPreview() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -195,7 +195,7 @@ public class ProductionNew_Regression {
 	 *                     then error message should be displays on 'Numbering and
 	 *                     Sorting' tab
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void passingSubBatesNullAndVerifyErrorMessage() throws InterruptedException, AWTException {
 
 		UtilityLog.info(Input.prodPath);
@@ -239,7 +239,7 @@ public class ProductionNew_Regression {
 	 *                     will inform the user about the privileged and redacted
 	 *                     docs from Production
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyTooltipDisplayedOnPreview() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -293,7 +293,7 @@ public class ProductionNew_Regression {
 	 *  when user clicks on 'Specify Redaction Text by Selecting Redaction Tags:'
 	 * 
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyTiffSectionRedactionTag() throws InterruptedException, AWTException {
 		
 		UtilityLog.info(Input.prodPath);
@@ -316,7 +316,7 @@ public class ProductionNew_Regression {
 	* @Description:Verify the error message for NATIVE component when 'Select Native component without tag and file type
 	*/
 
-	@Test(enabled = false, groups = { "regression" }, priority =7)
+	@Test(enabled = true, groups = { "regression" }, priority =7)
 	public void AssertionOnNativeSection() throws Exception {
 	UtilityLog.info(Input.prodPath);
 
@@ -337,7 +337,7 @@ public class ProductionNew_Regression {
 	* @Description:Verify the error message for TIFF/PDF component when 'Enable natively produce placeholder without tag and file type'
 	*/
 
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void AssertionOnTiffSection() throws Exception {
 	UtilityLog.info(Input.prodPath);
 
@@ -359,7 +359,7 @@ public class ProductionNew_Regression {
 	* @Description:Verify that if user selects the 'Genrate TIFF' option in production then preview document should be displays with the bates number in branding section
 	*/
 
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyTIFFWithBatesNUmber() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("Test case Id: RPMXCON-56112 -production Sprint 03");
@@ -413,7 +413,7 @@ public class ProductionNew_Regression {
 	 *         TESTCASE No:RPMXCON_56162
 	 * @Description:Verify that count of redacted documents displays correct in the Summary & Preview tab when documents having orphan redactions and redaction un-released redaction tags
 	 */
-	@Test(enabled = false, groups = { "regression" },priority = 10)
+	@Test(enabled = true, groups = { "regression" },priority = 10)
 	public void selectingThreeRedactionDocs() throws Exception 
 	{
 		String Redactiontag1;
@@ -707,7 +707,6 @@ public class ProductionNew_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 		loginPage.logout();
 	}
-	
 
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
@@ -873,7 +872,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_58592
 	 * @Description: generateProductionUnderDefaultDirectory.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void generateProductionUnderDefaultDirectory() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -903,7 +902,7 @@ public class ProductionNew_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTiffSectionBranding();
+		page.fillingTIFFSection(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -937,7 +936,7 @@ public class ProductionNew_Regression {
 	 *  TESTCASE NO: RPMXCON-56157
 	 * @Description: Verify that Production should generate with Priv placholder for Orphan redacted document
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyProductionWithOrphanRedactedDocumemtsForNativelyPlaceholder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56159 Production- Sprint 04");
@@ -996,7 +995,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON-56158
 	 * @Description:Verify that Production should generate with Tech Issue placholder for Orphan redacted document
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyProductionWithOrphanRedactedDocumemtsForTechIssuePlaceholders() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56158 Production- Sprint 04");
@@ -1055,7 +1054,7 @@ public class ProductionNew_Regression {
 	 * @Description:Validate text on "Text redactions" applied documents with PDF generated files
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void generateProductionWithPDFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56156 Production- Sprint 04");
@@ -1112,7 +1111,7 @@ public class ProductionNew_Regression {
 	 *                       applied area on documents with TIFF generated files
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void generateProductionWithTIFFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56153 Production- Sprint 04");
@@ -1164,7 +1163,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_47968
 	 * @Description:To verify In Production user can select the only DAT and TIFF component and Production should generated successfully
 	 */                      
-	@Test(enabled = false, groups = { "regression" }, priority = 23)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void generateProductionWithDATAndTIFF() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47968 Production- Sprint 04");
@@ -1212,7 +1211,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_48308
 	 * @Description:To verify that the all the pages are together in proper sequence for a document in OPT.
 	 */                      
-	@Test(enabled = false, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyDocumentsInOPT() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48308 Production- Sprint 04");
@@ -1268,7 +1267,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_48309
 	 * @Description:To verify that the order of docs in "Text, Native, MP3, PDF" LST is matching the order of docs in DAT.
 	 */                      
-	@Test(enabled = false, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyDocOrder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48309 Production- Sprint 04");
@@ -1329,7 +1328,7 @@ public class ProductionNew_Regression {
 	 *         No:RPMXCON_49225
 	 * @Description:To verify that Family members having the same FamilyID must be withheld, if 'Withhold Natives for Entire Family for Priv and Redacted Docs' option is enabled
 	 */                      
-	@Test(enabled = false, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyParentIDInPrivAndRedactedDocs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-49225 Production- Sprint 04");
@@ -1351,10 +1350,10 @@ public class ProductionNew_Regression {
 		base=new BaseClass(driver);
 		base.selectproject();
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.documentID);
+		sessionSearch.basicContentSearch(Input.parentDocument);
 		sessionSearch.ViewInDocList();
 		docPage = new DocListPage(driver);
-		docPage.SelectingParentDocumentFromDocList(Input.documentID);
+		docPage.SelectingParentDocumentFromDocList(Input.parentDocument);
 		System.out.println(foldername);
 		docPage.bulkFolderExisting(foldername);
 		
