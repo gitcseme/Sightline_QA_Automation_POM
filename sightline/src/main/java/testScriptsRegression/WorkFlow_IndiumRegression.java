@@ -1268,7 +1268,74 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Vijaya.Rani date: 21/04/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that selected Family options details is displayed in Summary tab.
+	 * 'RPMXCON-52615' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void verifyFamilyOptionInSummaryTab() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52615");
+		baseClass.stepInfo("To verify that selected Family options details is displayed in Summary tab.");
+		softAssertion = new SoftAssert();
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+		// Search for any string
+		search = new SessionSearch(driver);
+		 search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		UtilityLog.info(Id);	
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		driver.waitForPageToBeReady();
+		workflow.editWorkFlow(wfName);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		workflow.nextButton();
+		workflow.actionTabToSelectFolder(folderName, true);
+		workflow.nextButton();
+		workflow.schedulesTab(1);
+		workflow.nextButton();
+		workflow.notificationTab();
+		workflow.nextButton();
+		softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF Family Option and description");
+		baseClass.waitForElement(workflow.getSummeryTabFamilyOption());
+		workflow.getSummeryTabFamilyOption().waitAndClick(5);
+		baseClass.waitForElement(workflow.getSummaryTab_FamilyOptionAssignment());
+		softAssertion.assertTrue(workflow.getSummaryTab_FamilyOptionAssignment().Displayed());
+		String getFamilyOption =workflow.getSummaryTab_FamilyOptionAssignment().getText();
+		System.out.println(getFamilyOption);
+		softAssertion.assertAll();
+		
+		baseClass.passedStep("Family Option is Displayed as expected in SummaryTab FamilyOption- "
+		+ ""+workflow.getSummaryTab_FamilyOptionAssignment().getText()+"");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		page.deleteAllFolders(folderName);
 	
+	}
 	
 	
 	
