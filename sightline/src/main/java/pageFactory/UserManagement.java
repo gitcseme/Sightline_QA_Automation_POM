@@ -1803,9 +1803,9 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		if(VerifyingAssignedUser(UserName).isDisplayed()) {
-			bc.passedStep("The changes made on the user is not modified as expected");
+			bc.passedStep("The changes made on the user is  modified as expected");
 		}else {
-			bc.failedStep("The changes made on user is modified");
+			bc.failedStep("The changes made on user is not  modified");
 			
 		}
 		
@@ -1830,9 +1830,9 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		if(VerifyingAssignedUser(UserName).isDisplayed()) {
-			bc.passedStep("The changes made on the user is modified as expected");
+			bc.passedStep("The changes made on the user is not  modified as expected");
 		}else {
-			bc.failedStep("The changes made on user is not modified");
+			bc.failedStep("The changes made on user is modified");
 			
 		}
 		

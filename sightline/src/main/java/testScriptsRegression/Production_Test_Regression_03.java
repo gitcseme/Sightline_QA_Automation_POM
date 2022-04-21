@@ -50,7 +50,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Production_Test_Regression_03 {
+public class Production_Test_Regression_03{
 
 	Driver driver;
 	LoginPage loginPage;
@@ -511,13 +511,13 @@ public class Production_Test_Regression_03 {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		// tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		 tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		int docno = sessionSearch.MetaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.sourceDocIdDB992);
-		// sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
 		// Verify
@@ -529,7 +529,7 @@ public class Production_Test_Regression_03 {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		page.fillingTIFFWithNativelyProducedDocs(Input.dbFile, testing);
+		 page.fillingTIFFWithNativelyProducedDocs(Input.dbFile, testing);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -549,8 +549,8 @@ public class Production_Test_Regression_03 {
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security
-		// Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
@@ -562,7 +562,7 @@ public class Production_Test_Regression_03 {
 	 * layout. 'RPMXCON-48031'
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyDocsBothLandScapeRotationLayout() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -587,7 +587,7 @@ public class Production_Test_Regression_03 {
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		page.fillingDATSection();
+	    page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		driver.scrollPageToTop();
@@ -943,7 +943,7 @@ public class Production_Test_Regression_03 {
 		suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname,"Select Tag Classification");
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, "Select Tag Classification");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
@@ -960,7 +960,7 @@ public class Production_Test_Regression_03 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSectionwithNativelyPlaceholder(tagname1);
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -977,27 +977,15 @@ public class Production_Test_Regression_03 {
 		page.getCopyPath().Click();
 		page.getQC_Download().waitAndClick(10);
 		page.getQC_Downloadbutton_allfiles().waitAndClick(10);
-		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		//File imageFile = new File(home+"/Downloads/VOL0001/Images/0001/"+prefixID+i+suffixID+".tiff");
-		File Native = new File(home+"/Downloads/VOL0001/Natives/0001/"+prefixID+beginningBates+suffixID+".doc");
-				
+		page.extractFile();
 
-		if (Native.exists()) {
-			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".doc");
-			System.out.println("passeed");
-		} else {
-			base.failedStep("verification failed");
-			System.out.println("failed");
-
-		}
 		driver.waitForPageToBeReady();
-		page.clickBackBtnandSelectingNative(7, tagname);
-		driver.scrollingToBottomofAPage();
-		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
-		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
-		page.clickMArkCompleteMutipleTimes(6);
+		page.clickBackBtnandSelectingNative(7, tagname1);
+		page.clickMArkCompleteMutipleTimes(3);
+		page.fillingPrivGuardPage();
+		page.clickMArkCompleteMutipleTimes(2);
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		page.extractFile();
 
@@ -1025,7 +1013,7 @@ public class Production_Test_Regression_03 {
 	 *
 	 */
 
-	@Test(enabled = false,groups = { "regression" }, priority = 13)
+	@Test(enabled = true,groups = { "regression" }, priority = 13)
 	public void verifyTiffSectionVariosOption() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1168,6 +1156,7 @@ public class Production_Test_Regression_03 {
 	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s4);
 
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 	loginPage.logout();
 	}
@@ -2055,6 +2044,7 @@ public class Production_Test_Regression_03 {
 	
 	page.deleteFiles();
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 	loginPage.logout();
     }
@@ -2277,7 +2267,6 @@ public class Production_Test_Regression_03 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
-		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		//Verify archive status on Gen page
@@ -2287,9 +2276,6 @@ public class Production_Test_Regression_03 {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		page.fillingNativeSection();
-		page.fillingTIFFSection(tagname);
-		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
@@ -2299,7 +2285,7 @@ public class Production_Test_Regression_03 {
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.getbtnProductionGenerate().waitAndClick(10);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
 		
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
@@ -2823,6 +2809,7 @@ public class Production_Test_Regression_03 {
 				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 				String prefixID = Input.randomText + Utility.dynamicNameAppender();
 				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				int docCount = 3;
 				
 				BaseClass base = new BaseClass(driver);
 				base.selectproject(Input.additionalDataProject);
@@ -2839,10 +2826,10 @@ public class Production_Test_Regression_03 {
 				DocListPage doc = new DocListPage(driver);
 				driver.waitForPageToBeReady();
 
-				doc.selectAllDocs();
+				doc.documentSelection(docCount);
 				doc.docListToBulkRelease(Input.securityGroup);
 				doc.bulkTagExistingFromDoclist(tagname);
-				doc.selectAllDocs();
+				doc.documentSelection(docCount);
 				doc.bulkFolderExisting(foldername);
 				
 				loginPage.logout();
@@ -2882,9 +2869,8 @@ public class Production_Test_Regression_03 {
 				page.fillingProductionLocationPage(productionname);
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
-				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
-				int lastFile = firstFile + doccount;
-				page.waitForFileDownload();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + docCount;
 				page.extractFile();
 				
 				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
@@ -2962,7 +2948,6 @@ public class Production_Test_Regression_03 {
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
 				page.fillingGeneratePageWithContinueGenerationPopup();
-				page.waitForFileDownload();
 				page.extractFile();
 				
 				driver.waitForPageToBeReady();
@@ -3025,7 +3010,6 @@ public class Production_Test_Regression_03 {
 				
 				BaseClass base = new BaseClass(driver);
 				base.selectproject(Input.additionalDataProject);
-
 				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
