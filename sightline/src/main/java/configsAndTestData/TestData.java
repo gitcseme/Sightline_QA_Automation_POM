@@ -112,6 +112,7 @@ public class TestData {
 	public String sourceDocId10;
 	public String sourceDocId11;
 	public String sourceDocId12;
+	public String projectName01;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -429,6 +430,7 @@ public class TestData {
 	public String pdfDataSet;
 	public String dbFile;
 	public String sourceDocIdDB992;
+	public String NonDomainProject;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;
@@ -546,6 +548,9 @@ public class TestData {
 	public String prodBeg;
 	public String tiffFile2;
 	public String generateSearchablePDF;
+	public String DATFile4;
+	public String AK_NativeFolder;
+	public String duplicateIngestionError;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;

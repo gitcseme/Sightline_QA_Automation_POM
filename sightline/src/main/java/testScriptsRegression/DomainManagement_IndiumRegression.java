@@ -15,6 +15,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
@@ -206,6 +207,7 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
+  
 	/**
 	 * Author :Brundha date: NA Modified date: Modified by: 
 	 * Description :Validate notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)
@@ -256,7 +258,228 @@ public class DomainManagement_IndiumRegression {
 
 	}
 	
+/**
+	 * Author : Aathith date: NA Modified date: Modified by: 
+	 * Description :When a user is a domain admin in multiple domains,
+	 *  and when the user is edited to modify the rights for one domain, the modified rights should be saved 
+	 *  and persisted accordingly for the domain selected
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	public void verifyModifiedUserRightPersistAccordingly() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53148");
+		utility = new Utility(driver);
+		baseClass.stepInfo("When a user is a domain admin in multiple domains, and when the user is edited"
+				+ " to modify the rights for one domain, the modified rights should be saved and persisted accordingly for the domain selected");
+		userManage = new UserManagement(driver);
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		userManage.editFunctionality(Input.domainName);
+		
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusIngestion("true");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+		
+		baseClass.impersonateDAtoPAforMultiDominUser();
+		
+		driver.waitForPageToBeReady();
+		baseClass.verifyCurrentProject(Input.projectName);
+		baseClass.visibleCheck("Ingestions");
+		baseClass.stepInfo("Modified rights is saved for the user for the selected domain and is persisted");
+		baseClass.passedStep("Verified When a user is a domain admin in multiple domains, and when the user is edited to modify the rights for one domain,"
+				+ " the modified rights should be saved and persisted accordingly for the domain selected");
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		userManage.editFunctionality(Input.domainName);
+		
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusIngestion("false");
+		loginPage.logout();
+	}
+	/**
+	* Author :Aathith date: NA Modified date: Modified by:
+	* Description :Validate notification alert for bulk actions(Folder/Tag/Export) as Reviewer(impersonate from DAU)
+	*  @Hint : this cases is run under uat environment need "Automation_NonDomain" project allocation the users pa and reviewer
+	*/
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	public void verifyingBackGroungTaskInBullIcon() throws Exception {
+	baseClass = new BaseClass(driver);
+
+	baseClass.stepInfo("Test case Id: RPMXCON-53095");
+	utility = new Utility(driver);
+	baseClass.stepInfo("Validate notification alert for bulk actions(Folder/Tag/Export) as Reviewer(impersonate from DAU)");
+	userManage = new UserManagement(driver);
+	String TagName="Tag"+Utility.dynamicNameAppender();
+
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
+
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+	Reporter.log("Logged in as User: " + Input.da1userName);
+	baseClass.impersonateDAtoReviewer();
+	baseClass.stepInfo("Impersonated as Reviewer in same domain project");
+
+	SessionSearch search=new SessionSearch(driver);
+	search.basicContentSearch(Input.testData1);
+	search.bulkTagExisting(TagName);
+	search.verifyingBackGrounTaskInBullHornIcon();
+	loginPage.logout();
 	
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.selectproject(Input.NonDomainProject);
+	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
+	loginPage.logout();
+	
+	baseClass.stepInfo("perform task for non domain project");
+	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	baseClass.selectproject(Input.NonDomainProject);
+	baseClass.stepInfo("Non domin project is selected");
+	UtilityLog.info("Logged in as User: " + Input.rev1userName);
+	Reporter.log("Logged in as User: " + Input.rev1userName);
+	
+	search.basicContentSearch(Input.testData1);
+	search.bulkTagExisting(TagName);
+	search.verifyingBackGrounTaskInBullHornIcon();
+	
+	baseClass.passedStep("Validated notification alert for bulk actions(Folder/Tag/Export) as Reviewer(impersonate from DAU)");
+	
+	loginPage.logout();
+	}
+	
+	/**
+	* Author : Vijaya.Rani date: 20/04/2022 Modified date: Modified by:
+	* Description :Verify that after saving the rights for the user for one domain should not
+	* alter the rights for any other domain in which the user is a domain admin.'RPMXCON-53149' Sprint-14
+	* 
+	*/
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	public void verifyAfterSavingRightsForUserDomainAdmin() throws Exception {
+		baseClass = new BaseClass(driver);
+		
+	baseClass.stepInfo("Test case Id: RPMXCON-53149");
+	utility = new Utility(driver);
+	baseClass.stepInfo("Verify that after saving the rights for the user for one domain should not alter the rights for any other domain in which the user is a domain admin.");
+	userManage = new UserManagement(driver);
+	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+	UtilityLog.info("Logged in as User: " + Input.sa1userName);
+	Reporter.log("Logged in as User: " + Input.sa1userName); userManage.passingUserName(Input.da1userName);
+	userManage.applyFilter();
+	userManage.editFunctionality(Input.domainName);
+	userManage.getFunctionalityTab().waitAndClick(5);
+	userManage.verifyStatusIngestion("true");
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+	UtilityLog.info("Logged in as User: " + Input.da1userName);
+	Reporter.log("Logged in as User: " + Input.da1userName);
+	baseClass.impersonateDAtoPAforMultiDominUser();
+	driver.waitForPageToBeReady();
+	baseClass.verifyCurrentProject(Input.projectName);
+	baseClass.visibleCheck("Ingestions");
+	baseClass.stepInfo("Modified rights is saved for the user for the selected domain and is persisted");
+	baseClass.passedStep("Verified When a user is a domain admin in multiple domains, and when the user is edited to modify the rights for one domain,"
+	+ " the modified rights should be saved and persisted accordingly for the domain selected");
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+	userManage.passingUserName(Input.da1userName);
+	userManage.applyFilter();
+	userManage.editFunctionality(Input.domainName);
+	userManage.getFunctionalityTab().waitAndClick(5);
+	userManage.verifyStatusIngestion("false");
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+	UtilityLog.info("Logged in as User: " + Input.sa1userName);
+	Reporter.log("Logged in as User: " + Input.sa1userName); userManage.passingUserName(Input.da1userName);
+	userManage.applyFilter();
+	userManage.editFunctionality(Input.domainName);
+	userManage.getFunctionalityTab().waitAndClick(5);
+	userManage.verifyStatusIngestion("true");
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+	UtilityLog.info("Logged in as User: " + Input.da1userName);
+	Reporter.log("Logged in as User: " + Input.da1userName);
+	baseClass.impersonateDAtoPAforMultiDominUser();
+	driver.waitForPageToBeReady();
+	baseClass.verifyCurrentProject(Input.additionalDataProject);
+	baseClass.visibleCheck("Ingestions");
+	baseClass.stepInfo("Modified rights is saved for the user for the selected domain and is persisted");
+	baseClass.passedStep("Verified When a user is a domain admin in multiple domains, and when the user is edited to modify the rights for one domain,"
+	+ " the modified rights should be saved and persisted accordingly for the domain selected");
+	loginPage.logout();
+	
+	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+	userManage.passingUserName(Input.da1userName);
+	userManage.applyFilter();
+	userManage.editFunctionality(Input.domainName);
+	userManage.getFunctionalityTab().waitAndClick(5);
+	userManage.verifyStatusIngestion("false");
+	loginPage.logout();
+	
+	}
+	
+	/**
+	* Author :Vijaya.Rani date: 20/04/2022 Modified date: Modified by:
+	* Description :Validate notification alert and clickable link for Doc View and DocList for Reviewer(impersonate from DAU).
+	* 'RPMXCON-53094' Sprint-14
+	*/
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	public void verifyAlertClickableLinkDocViewForReviewer() throws Exception {
+		baseClass = new BaseClass(driver);
+	baseClass.stepInfo("Test case Id: RPMXCON-53094");
+	utility = new Utility(driver);
+	baseClass.stepInfo("Validate notification alert and clickable link for Doc View and DocList for Reviewer(impersonate from DAU)");
+	userManage = new UserManagement(driver);
+	String TagName="Tag"+Utility.dynamicNameAppender();
+	
+	//Login As RMU
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.selectproject("Automation_NonDomain");
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(TagName,"Select Tag Classification");
+	loginPage.logout();
+	
+	//Login as DA
+	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+	baseClass.impersonateDAtoReviewer();
+	baseClass.stepInfo("Impersonated as Reviewer in same domain project");
+	SessionSearch search=new SessionSearch(driver);
+	search.basicContentSearch(Input.searchString1);
+	search.ViewInDocList();
+	DocListPage doc =new DocListPage(driver);
+	doc.documentSelection(3);
+	doc.bulkTagExisting(TagName);
+	search.verifyingBackGrounTaskInBullHornIcon();
+	loginPage.logout();
+	
+	//Login as Reviewer
+	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	search.basicContentSearch(Input.searchString1);
+	search.ViewInDocList();
+	doc.documentSelection(3);
+	doc.bulkTagExisting(TagName);
+	search.verifyingBackGrounTaskInBullHornIcon();
+	loginPage.logout();
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

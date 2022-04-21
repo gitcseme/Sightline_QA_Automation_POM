@@ -18,9 +18,11 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103
+	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar
+	</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -54,13 +56,16 @@
 		text and audio have already been updated. The searches run in the
 		project will reflect these changes. Rolling back will not roll back
 		the updates to the index, so you MUST rerun indexing for the entire
-		project. Do you want to continue with Rollback?</indexingWarningMessage>
+		project. Do you want to continue with Rollback?
+	</indexingWarningMessage>
 
 
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
+	</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
+	</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -113,14 +118,17 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ICE010058-13-00000001</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
-	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183
+	</ingestionQuery>
+	<ingestionDocIdFamilyMember>H16135-0188-002093
+	</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
 	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
+	<projectName01>AutomationAdditionalDataProject</projectName01>
 
 
 	<!-- DocView Coding Form -->
@@ -143,7 +151,8 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>S22936960011001028</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
+	</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -154,8 +163,7 @@
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -206,7 +214,7 @@
 	<HiddenIngestionDocId>ID00000100</HiddenIngestionDocId>
 	<HiddenIngestionName>HiddenPropertiesDragDrop1</HiddenIngestionName>
 	<HiddenLinkDocId>ID00000068</HiddenLinkDocId>
-	<pdfDocId>ID00001389</pdfDocId>
+	<pdfDocId>ICE010032-14-00000004</pdfDocId>
 	<xlsExcelDocId>ID00000536</xlsExcelDocId>
 	<tiffDocId1>ID00001069</tiffDocId1>
 	<pptDocId>ID00001338</pptDocId>
@@ -281,7 +289,8 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded
+		document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -367,7 +376,8 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains
+	</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -422,6 +432,7 @@
 	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
+	<NonDomainProject>Automation_NonDomain</NonDomainProject>
 
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
@@ -430,7 +441,8 @@
 	<stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
 	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009
-		STC4_00001016</fileGroup>
+		STC4_00001016
+	</fileGroup>
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
 
@@ -458,8 +470,7 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
-	</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 	<conceptualDoc>H136960002001001</conceptualDoc>
 	<TallySearch>null</TallySearch>
@@ -507,11 +518,13 @@
 	<warningMessage>Another user has applied redactions, annotations or
 		Reviewer Remarks to this document since you presented it in DocView.
 		You may not apply markup because that would overwrite the markup work
-		done by the other user. Please reload the document.</warningMessage>
+		done by the other user. Please reload the document.
+	</warningMessage>
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>
 	<conceptualDocId03>ID00000015</conceptualDocId03>
-	<conceptualDocIdForReviewer01>331ID00000014</conceptualDocIdForReviewer01>
+	<conceptualDocIdForReviewer01>331ID00000014
+	</conceptualDocIdForReviewer01>
 	<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
 	<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
 	<familyDocId01>T486D</familyDocId01>
@@ -523,7 +536,8 @@
 	<nearDupeDocId01>T1796D</nearDupeDocId01>
 	<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
 	<nearDupeDocId03>T1862D</nearDupeDocId03>
-	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
+	<nearDupeDocIdForReviewer01>ICE010058-9-00000007
+	</nearDupeDocIdForReviewer01>
 	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
 	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
@@ -595,11 +609,15 @@
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
 	<differentDateFormatError>Date format selected in the ingestion is not
 		matching with the date format of the dates in the DAT file. Please
-		provide the matching date format.</differentDateFormatError>
+		provide the matching date format.
+	</differentDateFormatError>
 	<prodBeg>ProdBeg</prodBeg>
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
+	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
+	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 
 	<!-- Ingestion Related data END -->
 
@@ -641,7 +659,8 @@
 
 	<!-- Added by Gopinath Created date - 21/03/2022 -->
 	<iceSourceSystem>ICE</iceSourceSystem>
-	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
+	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF
+	</multiPageTIFFSourceFolder>
 	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
 	<documentKeyBNum>BNum</documentKeyBNum>
 	<documentKeyDSource>DSource</documentKeyDSource>

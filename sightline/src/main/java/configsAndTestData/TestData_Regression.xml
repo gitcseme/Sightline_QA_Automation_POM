@@ -124,11 +124,11 @@
 	</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
-	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610
-	</ingestionQuery01>
+	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
+	<projectName01>AutomationAdditionalDataProject</projectName01>
 
 
 	<!-- DocView Coding Form -->
@@ -214,7 +214,7 @@
 	<HiddenIngestionDocId>ID00000100</HiddenIngestionDocId>
 	<HiddenIngestionName>HiddenPropertiesDragDrop1</HiddenIngestionName>
 	<HiddenLinkDocId>ID00000068</HiddenLinkDocId>
-	<pdfDocId>ID00001389</pdfDocId>
+	<pdfDocId>ICE010032-14-00000004</pdfDocId>
 	<xlsExcelDocId>ID00000536</xlsExcelDocId>
 	<tiffDocId1>ID00001069</tiffDocId1>
 	<pptDocId>ID00001338</pptDocId>
@@ -432,6 +432,7 @@
 	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
+	<NonDomainProject>Automation_NonDomain</NonDomainProject>
 
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
@@ -614,6 +615,9 @@
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
+	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
+	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 
 	<!-- Ingestion Related data END -->
 
