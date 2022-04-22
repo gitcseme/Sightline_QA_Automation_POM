@@ -157,6 +157,7 @@ public class WorkflowPage {
 		return driver.FindElementByXPath(".//*[@id='divCentralPanel']//a[contains(.,'Next')]");
 	}
 
+	
 	// public Element getWorkFlow_Desc(){ return
 	// driver.FindElementByCssSelector("textarea#workflowDesc"); }
 	public ElementCollection getElements() {
@@ -385,6 +386,9 @@ public class WorkflowPage {
 		return driver.FindElementByXPath("//label[contains(text(),'Member 1:')]/following-sibling::div");
 	}
 	
+	public Element getSecondFamilyOptions() {
+		return driver.FindElementByXPath("//input[@id='SecondFamily']//parent::label");
+	}
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
@@ -1436,4 +1440,25 @@ public class WorkflowPage {
 		getAction_EditWF().waitAndClick(10);
 		driver.waitForPageToBeReady();
 	}
+	
+	/**
+	 * @author Vijaya.Rani Modified Date:22/4/2022
+	 * @throws AWTException
+	 * @Description : Method for family option tab for clicking second family options
+	 */
+	// Reusable method for clicking second family options
+	public void secondFamilyOptions(boolean flag) {
+		driver.waitForPageToBeReady();
+		if (flag == true) {
+			baseClass.waitTillElemetToBeClickable(getSecondFamilyOptions());
+			getSecondFamilyOptions().ScrollTo();
+			boolean flg2 = getSecondFamilyOptions().isDisplayed();
+			System.out.println(flg2);
+			baseClass.stepInfo("SecondFamilyOption is " +flg2);
+			getSecondFamilyOptions().waitAndClick(40);
+		} else {
+			System.out.println("No need this action");
+		}
+	}
+
 }

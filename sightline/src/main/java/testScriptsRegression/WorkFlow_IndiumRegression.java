@@ -1337,7 +1337,127 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	
 	}
 	
-	
+	/**
+	 * Author :Vijaya.Rani date: 21/04/2022 Modified date: NA Modified by: NA
+	 * Description:To verify that RMU can view the Family Option tab.
+	 * 'RPMXCON-52575' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifyRMUInFamilyOptionTab() throws InterruptedException, ParseException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52575");
+		baseClass.stepInfo("To verify that RMU can view the Family Option tab.");
+		softAssertion = new SoftAssert();
+		int Id;
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
+		// Search for any string
+		search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Thread.sleep(2000);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		UtilityLog.info(Id);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		driver.waitForPageToBeReady();
+		workflow.editWorkFlow(wfName);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		baseClass.waitForElement(workflow.getSecondFamilyOptions());
+		if (workflow.getSecondFamilyOptions().Displayed()) {
+			baseClass.passedStep(
+					"Secnod Family Option text and Secnod family option check box is Displayed Successfully.");
+		} else {
+			baseClass.failedStep("Secnod Family Option text and Secnod family option check box is Not Displayed .");
+		}
+		workflow.secondFamilyOptions(true);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: NA Modified date: 22/04/2022 Modified by: NA
+	 * Description:Create/Edit/Delete workflow with Folder destination.
+	 * 'RPMXCON-52726' Sprint-14
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void createEditDeleteTheWorkFlow() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52726");
+		baseClass.stepInfo("Create/Edit/Delete workflow with Folder destination.");
+		int Id;
+		String tagName = "tag" + Utility.dynamicNameAppender();
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		page = new TagsAndFoldersPage(driver);
+		page.CreateTag(tagName, "Default Security Group");
+		page.CreateFolder(folderName, "Default Security Group");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 1);
+		baseClass.passedStep("New WorkFlow Is Created Successfully");
+
+		// Edit WorkFlow
+		workflow.selectWorkFlowUsingPagination(wfName);
+		workflow.editWorkFlow(wfName);
+		
+		baseClass.passedStep(" WorkFlow Is Edited Successfully");
+
+		// Selecet DropDown And Delete
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.selectWorkFlowUsingPagination(wfName);
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
+		baseClass.stepInfo("Action DropDown is selected");
+
+		baseClass.waitForElement(workflow.getWorkFlow_ActionDeleteWorkFlow());
+		workflow.getWorkFlow_ActionDeleteWorkFlow().waitAndClick(10);
+		baseClass.stepInfo("Action DropDown Delete Button is Clicked");
+		baseClass.waitForElement(workflow.getWorkFlow_RunWorkflowNow_YesButton());
+		workflow.getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
+		baseClass.passedStep("workFlow Docs Deleted Successfully");
+
+		// logout
+		loginPage.logout();
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
