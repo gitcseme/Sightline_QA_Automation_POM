@@ -589,6 +589,7 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
 
 	/**
 	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
@@ -603,8 +604,10 @@ public class UsersAndRoleManagement_Regression {
 				"Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String firstName = "Automation";
-
+		String fullName = Input.pa1FullName;
+	    String[] splittingFullName=fullName.split(" ");
+	    String firstName=splittingFullName[0];
+		
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -639,28 +642,35 @@ public class UsersAndRoleManagement_Regression {
 				"Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String lastName = "Indium";
+		String str = Input.pa1FullName;
+		int index = str.lastIndexOf(" ");
+		String lastString = str.substring(index +1);
 
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 
-		userManage.passingUserName(lastName);
+		userManage.passingUserName(lastString);
 		userManage.applyFilter();
 		baseClass.stepInfo("Apply Filter Button in clicked successfully");
 
 		driver.waitForPageToBeReady();
 		String AfterfilterUserLastName = userManage.getLastNameTab().getText().trim();
-		System.out.println(AfterfilterUserLastName);
+		int indexTwo = AfterfilterUserLastName.lastIndexOf(" ");
+		String lastAfterFilter = AfterfilterUserLastName.substring(indexTwo +1);
+		if (lastString.contains(lastAfterFilter)) {
+			baseClass.passedStep(
+					"Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
+		}
+		else {
+			baseClass.failedStep("after applying the filter for last name is not displayed");
+		}
 
-		softAssertion.assertEquals(lastName, AfterfilterUserLastName);
-		baseClass.passedStep(
-				"Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
-		softAssertion.assertAll();
 
 		// logout
 		loginPage.logout();
 	}
+
 
 	/**
 	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
