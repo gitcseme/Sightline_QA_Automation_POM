@@ -3296,6 +3296,10 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	public Element getMetadataFieldValueText(String fieldName) {
+		return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[text()='"+fieldName+"']//following-sibling::td");
+	}
+	
 	public Element getDocView_MiniDoclist_GearIcon() {
 		return driver.FindElementByXPath("//*[@id='miniDocListConfig']//i[@class='fa fa-gear']");
 	}
@@ -3338,6 +3342,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"(//*[@id='divBulkFolderJSTree']//a[@class='jstree-anchor']//i[@class='jstree-icon jstree-checkbox'])[2]");
 	}
+	
 	
 	//Added by Gopinath-08/04/2022
 	public Element getHiddenPropValue() {
@@ -27596,4 +27601,35 @@ public class DocViewPage {
 		base.passedStep(docid + "Document is viewed from minidoclist in after selected history dropdown");
 	}
 	
+	
+	/**
+	 * @author Mohan 23/04/22 NA Modified date: NA Modified by:NA
+	 * @description To get field value from MetaData panel
+	 */
+	public void selectMeatdataGetFieldValue(String fieldName) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetadataFieldValueText(fieldName));
+			getMetadataFieldValueText(fieldName).waitAndClick(5);
+			
+			if (getMetadataFieldValueText(fieldName).isElementAvailable(5)) {
+				String fieldValue = getMetadataFieldValueText(fieldName).getText();
+				System.out.println("For "+fieldName+" the fieldvalue is "+fieldValue+"");
+				base.stepInfo("For "+fieldName+" the fieldvalue is "+fieldValue+" displayed");
+				base.passedStep("Metadata with Datetime is displayed with the sightline standard Date Format successfully");
+				
+			}else {
+				base.failedStep("The Datetime is not displayed in the Metadata field");
+			}
+			
+			} 
+
+		 catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Docs Arenot there from DocView");
+		}
+	
+
+	}
 }

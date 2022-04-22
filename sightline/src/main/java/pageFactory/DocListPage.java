@@ -396,6 +396,10 @@ public class DocListPage {
 	public Element getViewInDocView() {
 		return driver.FindElementById("ViewInDocView");
 	}
+	
+	public Element getMasterDateTableValue() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']//tr[@class='odd']//following-sibling::td[contains(text(),':')]");
+	}
 
 	// Added by Gopinath
 	public Element getSelectAllDocCheckBox() {
@@ -4635,5 +4639,29 @@ public List<String> gettingAllDocIDs(){
 		int index = base.getIndex(getTableRowHeader(), "DOCID");
 		String docId = getParentDocumentID(index).getText().trim();
 		return docId;
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal created date: 23/04/2022
+	 * @description: To verify MasterDate in Doclist
+	 * 
+	 */
+	public void verifyMasterDateColumnValue() {
+		try {
+			driver.waitForPageToBeReady();
+			if (getMasterDateTableValue().isElementAvailable(5)) {
+				
+				String fieldValue = getMasterDateTableValue().getText();
+				System.out.println("For MasterDate the fieldvalue is "+fieldValue+"");
+				base.stepInfo("For MasterDate the fieldvalue is "+fieldValue+" displayed");
+				base.passedStep("Metadata with Datetime is displayed with the sightline standard Date Format successfully");
+				
+			}else {
+				base.failedStep("The Datetime is not displayed in the DocList");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
