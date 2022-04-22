@@ -1230,7 +1230,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// complete the docs
 		docViewPage.completeDocsAndVerifyCheckMark();
 		docViewPage.selectSourceDocIdInAvailableField("SourceDocID");
-		docViewPage.selectDocInMiniDocList(Input.conceptualDocIdForReviewer01);
+		docViewPage.selectDocInMiniDocList(Input.nearDupeDocumentForReviewer);
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
 		// Open Near Dupe Comparison window and click Apply coding button
