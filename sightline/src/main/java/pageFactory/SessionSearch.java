@@ -11165,6 +11165,66 @@ public class SessionSearch {
 			base.failedStep("Document count is not displayed as expected");
 		}
 	}
+
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify Precision Sensitivity Of Conceptual Search
+	 * @param conceptualBtn
+	 * @param ConceptSearch
+	 * @return
+	 */
+	public String verifyingPrecisionValue(boolean conceptualBtn, String ConceptSearch, boolean DefaultValue,
+			boolean MoveSlider) {
+
+		if (conceptualBtn) {
+			advancedSearchConceptual(ConceptSearch);
+		}
+
+		if (DefaultValue) {
+			base.waitForElement(gettingThresholdValue());
+			String defSliderValueInPer = gettingThresholdValue().getText();
+			base.stepInfo("Default precision slider value : " + defSliderValueInPer);
+			System.out.println("Default precision slider value : " + defSliderValueInPer);
+
+			String defPrecisionTbValue = driver
+					.findAttributeValueViaJS("return document.querySelector('.form-control').value");
+			base.stepInfo("Default precision textbox value  : " + defPrecisionTbValue);
+			System.out.println("Default precision textbox value  : " + defPrecisionTbValue);
+
+			String[] defSliderValue = defSliderValueInPer.split(" ");
+			String passMsg = "Default Slider and Textbox Value is Same";
+			String failMsg = "Default Slider and Textbox Value is Not Same";
+			base.textCompareEquals(defSliderValue[0], defPrecisionTbValue, passMsg, failMsg);
+
+			softAssert.assertEquals(defSliderValue[0], "70");
+		}
+
+		if (MoveSlider) {
+			driver.waitForPageToBeReady();
+			getConceptualRight().waitAndClick(10);
+			base.passedStep("Precision Slider is Flexible to Move");
+		}
+
+		driver.waitForPageToBeReady();
+		String sliderValueAfterInPer = gettingThresholdValue().getText();
+		base.stepInfo("precision slider value after moving : " + sliderValueAfterInPer);
+		System.out.println("precision slider value after moving : " + sliderValueAfterInPer);
+
+		String precisionTbValue = driver
+				.findAttributeValueViaJS("return document.querySelector('.form-control').value");
+		base.stepInfo("precision textbox value  : " + precisionTbValue);
+		System.out.println("precision textbox value : " + precisionTbValue);
+
+		String[] sliderChangeValue = sliderValueAfterInPer.split(" ");
+		String passMsg2 = "Slider and Textbox Value is Same After Changing Moving Slider";
+		String failMsg2 = "Slider and Textbox Value is Not Same";
+		base.textCompareEquals(sliderChangeValue[0], precisionTbValue, passMsg2, failMsg2);
+
+		softAssert.assertAll();
+		return precisionTbValue;
+	}
+
 	/**
 	 * @author Brundha
 	 */
@@ -11196,4 +11256,5 @@ public class SessionSearch {
 		}
 
 		}
+
 }
