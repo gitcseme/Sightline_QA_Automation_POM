@@ -177,7 +177,7 @@ public class DocView_Regression2 {
 	 * box and hits Enter, then the app looks for the corresponding text and
 	 * highlights them in the document
 	 */
-	@Test(description ="RPMXCON-51562",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-51562",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -199,15 +199,14 @@ public class DocView_Regression2 {
 	 * of 30) and the option to traverse through these hits using the forward and
 	 * backward arrows.
 	 */
-	@Test(description ="RPMXCON-51563",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 4)
-	public void verifyTraverseForwardAndBackwardOnHits(String fullName, String userName, String password)
+	@Test(description ="RPMXCON-51563",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	public void verifyTraverseForwardAndBackwardOnHits()
 			throws Exception {
 		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51563");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("login as" + fullName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input - TEST completed");
 		sessionsearch.ViewInDocView();
@@ -441,7 +440,7 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.docIdThumbnails);
+		sessionsearch.basicContentSearch("enron");
 		baseClass.stepInfo("Search with text 'test' completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
@@ -592,8 +591,6 @@ public class DocView_Regression2 {
 		} else {
 			baseClass.failedStep("The dropdown for downloading is not present");
 		}
-		DocViewPage docviewpage = new DocViewPage(driver);
-		docviewpage.selectDocIdInMiniDocList("ID00001069");
 		driver.waitForPageToBeReady();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.downloadIcon());
 		docViewRedact.downloadIcon().waitAndClick(10);
@@ -720,15 +717,6 @@ public class DocView_Regression2 {
 		sessionSearch.ViewInDocView();
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingImagesTab();
-		DocViewPage docviewpage = new DocViewPage(driver);
-		docviewpage.selectDocIdInMiniDocList(Input.testTenthDocId);
-		driver.scrollPageToTop();
-		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesIconDocView());
-		if (docViewRedact.imagesTabDropDown().isDisplayed()) {
-			baseClass.passedStep("images Tab drop down is Visible");
-		} else {
-			baseClass.failedStep("images Tab drop down is not visible");
-		}
 		baseClass.waitTillElemetToBeClickable(docViewRedact.imagesTabZoomOut());
 		docViewRedact.imagesTabZoomOut().Click();
 		if (docViewRedact.imagesTabZoomOut().isDisplayed()) {
@@ -2901,7 +2889,7 @@ public class DocView_Regression2 {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
-		String expectedMessage3 = "Protected Excel Workbook";
+		String expectedMessage3 = "Protected Excel Sheets";
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51956");
 		baseClass.stepInfo(
@@ -3191,7 +3179,7 @@ public class DocView_Regression2 {
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
-		String expectedMessage2 = "Hidden Columns;Protected Sheets";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Sheets";
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51954");
@@ -4065,7 +4053,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 // Verifying as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Document with hidden content selected from mini doclist");
@@ -4075,7 +4063,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 // Verifying as Rev
-				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password, Input.additionalDataProject);
 				sessionsearch.basicContentSearch(Input.HiddenIngestionDocId);
 				sessionsearch.ViewInDocView();
 				baseClass.stepInfo("Document with hidden content selected from mini doclist");
