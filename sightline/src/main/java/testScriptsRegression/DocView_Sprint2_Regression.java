@@ -6748,7 +6748,7 @@ public class DocView_Sprint2_Regression {
 		Utility utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-
+		loginPage.logout();
 		baseClass.stepInfo("Test case Id: RPMXCON-52209 sprint 14");
 
 		baseClass.stepInfo(

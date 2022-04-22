@@ -1014,7 +1014,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	//@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
 	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -1031,7 +1031,6 @@ public class DocView_Regression2 {
 		driver.scrollPageToTop();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.historyDrowDownBtn());
 		docViewRedact.historyDrowDownBtn().waitAndClick(3);
-		docViewRedact.historyDropDownDocSelect(Input.testSecondDocId).waitAndClick(3);
 		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
 		System.out.println(status);
 		if (status.equalsIgnoreCase("true")) {
@@ -2843,7 +2842,7 @@ public class DocView_Regression2 {
 	 *               Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook
 	 *               viewed from analytics panel should display alert message
 	 */
-	//@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 58)
+	@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 58)
 	public void verifyWarningMsgOfHiddenDocFromAnalyticsPanel(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2896,7 +2895,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51956
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 59)
+	@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 59)
 	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2923,7 +2922,6 @@ public class DocView_Regression2 {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		driver.waitForPageToBeReady();
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 	}
 
@@ -3188,7 +3186,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51954
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 67)
 	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3201,12 +3199,11 @@ public class DocView_Regression2 {
 				"Verify that when document with hidden content is clicked to view from mini doc list then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.TextHidden);
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
 		sessionsearch.ViewInDocView();
 		DocViewPage docviewpage = new DocViewPage(driver);
-		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithHiddenContent);
+		docviewpage.selectDocIdInMiniDocList(Input.HiddenContentExcelSheet);
 		baseClass.stepInfo("Document with hidden content - excel protected worsheet selected from mini doclist");
-		driver.waitForPageToBeReady();
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 
 	}
@@ -3377,7 +3374,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
+	@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
 	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -4097,7 +4094,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	//@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 86)
+	@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 86)
 	public void verifyHiddenContentExternalLink(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -4119,24 +4116,25 @@ public class DocView_Regression2 {
 	
 	
 	/**
-	 * @author Krishna TestCase Id:51243 Verify user after impersonation should
-	 *         see the message like 'No files associated with this document' when
-	 *         user ingest only metadata
+	 * @author Krishna TestCase Id:51243 Verify user after impersonation should see
+	 *         the message like 'No files associated with this document' when user
+	 *         ingest only metadata
 	 *
 	 */
-	//@Test(description ="RPMXCON-51243",alwaysRun = true, groups = { "regression" }, priority = 87)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 87)
 	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51243");
 		baseClass.stepInfo(
 				"Verify user after impersonation should see the message like 'No files associated with this document' when user ingest only metadata");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		String pdfDocId = Input.pdfDocId;
 
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Step 1: Impersonating SA to PA");
 		baseClass.impersonateSAtoPA();
 		// searching metadataSearch for default pdfDocId
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4145,7 +4143,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating SA to RMU");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateSAtoRMU();
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null, pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4154,7 +4152,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating SA to Rev");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateSAtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4163,7 +4161,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating PA to Rmu");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonatePAtoRMU();
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4172,7 +4170,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating PA to Rev");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonatePAtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null, pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4181,7 +4179,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		// searching metadataSearch for default pdfDocId
 		baseClass.impersonateRMUtoReviewer();
-		sessionSearch.basicMetaDataSearch("DocID", null, Input.defaultPdfDocId, null);
+		sessionSearch.basicMetaDataSearch("DocID", null,pdfDocId, null);
 		sessionSearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		loginPage.logout();
@@ -4195,7 +4193,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	//@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
 	public void verifyDocHighlightingIsWorkingForSearchablePdf(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4205,10 +4203,11 @@ public class DocView_Regression2 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		String text = "Message";
+		String pdfDocId = Input.pdfDocId;
 
 		// Searching for document with dataset having required PDF
 		loginPage.loginToSightLine(userName, password);
-		sessionsearch.basicContentSearch(Input.defaultPdfDocId);
+		sessionsearch.basicContentSearch(pdfDocId);
 		baseClass.stepInfo("Searching a documents having 'RequiredPDFGenertion is TRUE' ");
 		sessionsearch.ViewInDocView();
 		docView.verifyDisplaysTheDefaultPdfInDocView();
@@ -4216,7 +4215,7 @@ public class DocView_Regression2 {
 		// verifying a corresponding text and highlighting a document.
 		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
 	}
-	
+
 	/**
 	 * Author :Sakthivel date: 23/03/2022 Modified date: NA Modified by: NA
 	 * Description Verify that In DocView Reviewer Remarks, when a user while
@@ -4226,7 +4225,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	//@Test(description= "RPMXCON-60572",enabled = true, groups = { "regression" }, priority = 89)
+	@Test(enabled = true, groups = { "regression" }, priority = 89)
 	public void verifyDocViewReviewerRemarkDeletedAndHighlightedNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-60572");
@@ -4238,6 +4237,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo(
 				"Verify that In DocView Reviewer Remarks, when a user while deleting a reviewer remark gets an error and yet deletes the remark, the remark should be deleted and the highlighting should not be seen.");
 		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -4245,7 +4245,7 @@ public class DocView_Regression2 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString2);
 		search.bulkAssign();
 		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		tagsAndFolderPage.layerAnnotationsAsRMU();
@@ -4266,21 +4266,22 @@ public class DocView_Regression2 {
 		wait.until(
 				ExpectedConditions.elementToBeClickable(docViewRedact.getDocView_Redactrec_textarea().getWebElement()));
 		Thread.sleep(Input.wait3);
+		baseClass.waitTime(4);
 		// Thread sleep added for the page to adjust resolution
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(100, 20).release().build().perform();
-		baseClass.stepInfo("text for remarks has been highlighted on selected document");
-		softAssertion.assertTrue(docViewRedact.addRemarksBtn().Displayed());
-		baseClass.stepInfo("Remark text area is displayed successfully");
-		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-		actions.click().build().perform();
-		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-		actions.click();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		docViewRedact.getDocView_Redactrec_textarea().waitAndClick(5);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), -10, 10).clickAndHold()
+				.moveByOffset(200, 90).release().build().perform();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksBtn());
+		docViewRedact.addRemarksBtn().waitAndClick(10);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.addRemarksTextArea());
+		docViewRedact.addRemarksTextArea().waitAndClick(10);
 		actions.sendKeys("Remark by RMU");
 		actions.build().perform();
 		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
 		actions.click().build().perform();
 		baseClass.passedStep("Verified Remarks is saved successfully");
+		driver.waitForPageToBeReady();
 		if (docViewRedact.deleteRemarksBtn().isDisplayed()) {
 			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.deleteRemarksBtn().getWebElement()));
 			docViewRedact.deleteRemarksBtn().waitAndClick(3);
@@ -4288,11 +4289,12 @@ public class DocView_Regression2 {
 			baseClass.passedStep(
 					"verified remark is deleted successfully and the highlighted on the document is removed");
 		} else {
-			baseClass.passedStep("Verified Remarks");
+			baseClass.failedStep("verified remarks");
 		}
 		loginPage.logout();
 
 	}
+
 	
 
 	@DataProvider(name = "multiUserCredentials")
@@ -4375,7 +4377,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("###Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message####");
 		
 		baseClass.stepInfo("Log in as user");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		
 		baseClass.stepInfo("basic content search");
 		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
@@ -4471,7 +4473,100 @@ public class DocView_Regression2 {
 		loginPage.logout();	
 	}
 	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-52211 Verify that email metadata should present with single quote
+	 * on DocView
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyEmailMetaDataPresentOnDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52211");
+		baseClass.stepInfo("Verify that email metadata should present with single quote on DocView");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewThreadedDocsInDocViews();
+		baseClass.stepInfo("Basic Search and Docs are viewed in DocView successfully");
+
+		// Verify concatenated and separate fields from metadata tab in DocView.
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailAuthorName());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorName().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorAddress().isDisplayed());
+		baseClass.passedStep(
+				"EmailAuthorName/EmailAuthorAddress fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailAuthorNameAndAddress().isDisplayed());
+		baseClass.passedStep(
+				"EmailAuthorNameAndAddress field is displayed on metadata panel and field is a concatenated fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailToNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailToNames/EmailToAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailToNamesAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailToNamesAndAddresses field is displayed on metadata panel and field is a concatenated fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailCCNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailCCNames/EmailCCAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailCCNamesAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailCCNamesAndAddresses field is displayed on metadata panel and field is a concatenation fields.");
+
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(docView.getDocView_MetaDataPanel_EmailBCCNames());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCNames().isDisplayed());
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailBCCNames/EmailBCCAddresses fields is displayed on metadata panel and fields is a separate fields.");
+		softassertion.assertTrue(docView.getDocView_MetaDataPanel_EmailBCCNameAndAddresses().isDisplayed());
+		baseClass.passedStep(
+				"EmailBCCNamesAndAddresses field is displayed on metadata panel and field is a concatenation fields.");
+		softassertion.assertAll();
+	}
 	
+	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51565 Verify when enteres the long text to search in a document
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyEntersLongTextToSearchDocument() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51565");
+		baseClass.stepInfo("Verify when enteres the long text to search in a document");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as RMU");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+
+		// verify a enter longer text in scrolling left in SearchBox
+		docView.verifyEnterLongTextInScrollLeft();
+	}
+
+
 	
 
 	@AfterMethod(alwaysRun = true)

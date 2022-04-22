@@ -3296,6 +3296,10 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	public Element getMetadataFieldValueText(String fieldName) {
+		return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[text()='"+fieldName+"']//following-sibling::td");
+	}
+	
 	public Element getDocView_MiniDoclist_GearIcon() {
 		return driver.FindElementByXPath("//*[@id='miniDocListConfig']//i[@class='fa fa-gear']");
 	}
@@ -3336,8 +3340,9 @@ public class DocViewPage {
 
 	public Element getDocView_AnalyticsExitingFolderName() {
 		return driver.FindElementByXPath(
-				"//*[@id='divBulkFolderJSTree']//a[@id='19_anchor']//i[@class='jstree-icon jstree-checkbox']");
+				"(//*[@id='divBulkFolderJSTree']//a[@class='jstree-anchor']//i[@class='jstree-icon jstree-checkbox'])[2]");
 	}
+	
 	
 	//Added by Gopinath-08/04/2022
 	public Element getHiddenPropValue() {
@@ -3370,7 +3375,47 @@ public class DocViewPage {
 	public Element getDocView_AnalyticsExitingFolderName1() {
 		return driver.FindElementById("82_anchor");
 	}
+// Added by sakthi	
 	
+	public Element getTextFieldXIcon() {
+		return driver.FindElementByXPath("//i[@class=\"fa fa-times-circle\"]");
+	}
+	
+	public Element getDocView_MetaDataPanel_EmailAuthorName() {
+		return driver.FindElementByXPath("//td[text()='EmailAuthorName']");
+	}
+	public Element getDocView_MetaDataPanel_EmailAuthorAddress() {
+		return driver.FindElementByXPath("//td[text()='EmailAuthorAddress']");
+	}
+	public Element getDocView_MetaDataPanel_EmailToNames() {
+		return driver.FindElementByXPath("//td[text()='EmailToNames']");
+	}
+	public Element getDocView_MetaDataPanel_EmailToAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailToAddresses']");
+	}
+	public Element getDocView_MetaDataPanel_EmailToNamesAndAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailToNamesAndAddresses']");
+	}
+	public Element getDocView_MetaDataPanel_EmailCCAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailCCAddresses']");
+	}
+	public Element getDocView_MetaDataPanel_EmailCCNames() {
+		return driver.FindElementByXPath("//td[text()='EmailCCNames']");
+	}
+	public Element getDocView_MetaDataPanel_EmailCCNamesAndAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailCCNamesAndAddresses']");
+	}
+	public Element getDocView_MetaDataPanel_EmailBCCNames() {
+		return driver.FindElementByXPath("//td[text()='EmailBCCNames']");
+	}
+	public Element getDocView_MetaDataPanel_EmailBCCAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailBCCAddresses']");
+	}
+	public Element getDocView_MetaDataPanel_EmailBCCNameAndAddresses() {
+		return driver.FindElementByXPath("//td[text()='EmailBCCNamesAndAddresses']");
+	}
+
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7401,19 +7446,26 @@ public class DocViewPage {
 		base.passedStep("Right arrow displayed for pending principal document");
 		base.passedStep("Principal document displayed at first");
 	}
+	
 
 	/**
 	 * @author Indium-Baskar date: 08/09/2021 Modified date: NA
 	 * @Description : warning message should display for code same as
 	 */
+	
 
 	public void verifyWarningMessage() {
 		driver.waitForPageToBeReady();
+		MiniDocListPage mini = new MiniDocListPage(driver);
+		mini.configureMiniDocListToShowCompletedDocs();
 		reusableDocView.editingCodingFormWithCompleteButton();
+		base.waitTime(2);
 		reusableDocView.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		for (int j = 1; j <= 1; j++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+			base.waitTime(5);
 		}
 		reusableDocView.verifyWarningMessageClickCodeSameAs();
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
@@ -7576,13 +7628,15 @@ public class DocViewPage {
 		reusableDocView.editingCodingFormWithSaveButton();
 		driver.waitForPageToBeReady();
 		for (int j = 3; j <= 4; j++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
 		}
 		reusableDocView.clickCodeSameAsParent();
 		base.passedStep("performing code same as action with complete button");
 		reusableDocView.editingCodingFormWithCompleteButton();
 		base.stepInfo("Tick mark icon displayed after completed document");
 		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 			driver.waitForPageToBeReady();
 		}
@@ -23207,12 +23261,13 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		softAssertion.assertTrue(getDocView_AnalyticsExitingFolderConceptual().Displayed());
 		base.passedStep("Folder pop up is opened successfully");
+		
 		driver.Manage().window().fullscreen();
 		base.waitForElement(getDocView_AnalyticsExitingFolderConceptual());
 		getDocView_AnalyticsExitingFolderConceptual().waitAndClick(10);
 
-		base.waitForElement(getDocView_AnalyticsExitingFolderName());
-		getDocView_AnalyticsExitingFolderName().waitAndClick(10);
+		base.waitForElement(getDocView_AnalyticsExitingFolderName1());
+		getDocView_AnalyticsExitingFolderName1().waitAndClick(10);
 
 		base.waitForElement(getDocView_AnalyticsNewFolderContiBtn());
 		getDocView_AnalyticsNewFolderContiBtn().waitAndClick(10);
@@ -27460,4 +27515,130 @@ public class DocViewPage {
 		}
 	}
 	
+	/**
+	 * @author Vijaya.Rani Date: 20/04/22 Modified date: NA Modified by: N/A
+	 *         Description : verify NearNupe Comparision Window
+	 *         
+	 * @throws InterruptedException 
+	 * 
+	 */
+	public void verifyNearNupeComparisionWindow() throws InterruptedException {
+		driver.waitForPageToBeReady();
+	
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getDocView_Analytics_NearDupeTab().Displayed();
+		}
+	}), Input.wait30);
+	getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+	String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+	getDocView_NearDupeIcon().waitAndClick(10);
+	Thread.sleep(3000);
+
+	for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+		driver.switchTo().window(winHandle);
+	}
+
+	base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomIn());
+	getDocView_Analytics_NearDupe_NearDupeView_ZoomIn().waitAndClick(10);
+	base.stepInfo("NearDupe Comparision Window ZoomIn Is Clicked Successfully");
+
+	base.waitForElement(getDocView_Analytics_NearDupe_NearDupeView_ZoomOut());
+	getDocView_Analytics_NearDupe_NearDupeView_ZoomOut().waitAndClick(10);
+	base.stepInfo("NearDupe Comparision Window ZoomOut Is Clicked Successfully");
+	
+	driver.getWebDriver().close();
+
+	driver.switchTo().window(parentWindowID);
+	
+	}
+	
+	/**
+	 * @author Sakthivel 12/04/22 NA Modified date: NA Modified by:NA
+	 * @description verifying a enter longer text in search box it is scrolled to
+	 *              the left while entered longer text.
+	 */
+
+	public void verifyEnterLongTextInScrollLeft() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getDocView_SearchButton().Visible() && getDocView_SearchButton().Enabled();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getDocView_SearchButton());
+		getDocView_SearchButton().Click();
+		base.waitForElement(getTextFieldXIcon());
+		softAssertion.assertTrue(getTextFieldXIcon().isDisplayed());
+		base.stepInfo("After Click on the magnifying icon with the text field and X presentation is displayed");
+		base.waitForElement(searchTextBox());
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(400);
+		Random random = new Random();
+		for (int i = 0; i < 100; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		String output = sb.toString();
+		searchTextBox().waitAndClick(5);
+		searchTextBox().WaitUntilPresent().SendKeys(output);
+		base.stepInfo("entered a longer text in search text box.");
+		for (int i = 0; i < output.length(); i++) {
+			searchTextBox().getWebElement().sendKeys(Keys.ARROW_LEFT);
+		}
+		base.passedStep("Entered longer text in search box. it is scrolled to the left while entered a longer text.");
+	}
+	/**
+	 * @author Sakthivel
+	 * @throws InterruptedException
+	 * @Description verify after scrolling on selecting doc in historydropdown viewed on mindoclist.
+	 */
+	public void verifyDocViewedAfterScrollOnHistoryDropDown() {
+		driver.waitForPageToBeReady();
+		MiniDocListPage mini = new MiniDocListPage(driver);
+		String docid = getVerifyPrincipalDocument().getText();
+		mini.getDociD(docid).waitAndClick(5);
+		base.stepInfo(docid + "document selected in minidoclist");
+		softAssertion.assertTrue(mini.getDociD(docid).Displayed());
+		base.passedStep(docid + "Document is viewed from minidoclist");
+		scrollingDocumentInMiniDocList();
+		clickClockIconMiniDocList();
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(mini.getDociD(docid).Displayed());
+		base.passedStep(docid + "Document is viewed from minidoclist in after selected history dropdown");
+	}
+	
+	
+	/**
+	 * @author Mohan 23/04/22 NA Modified date: NA Modified by:NA
+	 * @description To get field value from MetaData panel
+	 */
+	public void selectMeatdataGetFieldValue(String fieldName) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetadataFieldValueText(fieldName));
+			getMetadataFieldValueText(fieldName).waitAndClick(5);
+			
+			if (getMetadataFieldValueText(fieldName).isElementAvailable(5)) {
+				String fieldValue = getMetadataFieldValueText(fieldName).getText();
+				System.out.println("For "+fieldName+" the fieldvalue is "+fieldValue+"");
+				base.stepInfo("For "+fieldName+" the fieldvalue is "+fieldValue+" displayed");
+				base.passedStep("Metadata with Datetime is displayed with the sightline standard Date Format successfully");
+				
+			}else {
+				base.failedStep("The Datetime is not displayed in the Metadata field");
+			}
+			
+			} 
+
+		 catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Docs Arenot there from DocView");
+		}
+	
+
+	}
 }

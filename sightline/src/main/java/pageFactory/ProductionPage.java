@@ -2826,7 +2826,9 @@ public class ProductionPage {
 	public Element sortByTagsRadioButton() {
 		return driver.FindElementByXPath("//span[text()='Sort by Selected Tags: ']//.//..//i");
 	}
-	
+	public Element getclkSelectTags() {
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_1']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -18632,23 +18634,19 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getMarkInCompleteBtn().waitAndClick(10);
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().Click();
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
-		// disabling enable for priviledged docs
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
 		base.waitForElement(getTiff_NativeDoc());
 		getTiff_NativeDoc().Click();
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
+		base.waitForElement(getclkSelectTags());
+		getclkSelectTags().waitAndClick(10);
 		base.waitForElement(getPriveldged_TagTree(tagname));
 		getPriveldged_TagTree(tagname).Click();
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
+		getNativeDocsPlaceholder().SendKeys(Input.tagNameTechnical);
 	}
+
 
 	/**
 	 * @authorAathith.Senthilkumar

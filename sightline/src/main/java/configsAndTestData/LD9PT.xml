@@ -17,8 +17,8 @@
         <sa1password>TestCons!042021</sa1password> 
         
          <!-- User Name : DA QA -->    
-        <sa1userName>qada1@consilio.com</sa1userName> 
-        <sa1password>TestCons!042021</sa1password> 
+        <da1userName>qada1@consilio.com</da1userName> 
+        <da1password>TestCons!042021</da1password> 
                   
         <!-- Consilio PAU Automation   -->
         <pa1FullName>Consilio PAU1 Automation</pa1FullName>
