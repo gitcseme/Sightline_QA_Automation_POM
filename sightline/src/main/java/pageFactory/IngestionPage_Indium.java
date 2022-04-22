@@ -958,6 +958,9 @@ public class IngestionPage_Indium {
 	public Element getIngestionDeleteButton() {
 		return driver.FindElementByXPath("//dt[contains(.,'Delete')]");
 	}
+	public Element getActionOpenWizard() {
+		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Open in Wizard ']");
+	}
 	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -6156,6 +6159,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		
 		public void verifyIngestionStatusAfterSaveAsDraft() {
 			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
 			base.waitForElement(getIngestion_SaveAsDraft());
 			getIngestion_SaveAsDraft().waitAndClick(5);
 			
@@ -6266,15 +6270,16 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		public void IngestionFromDraftMode() {
 			
 			driver.waitForPageToBeReady();
-			base.waitForElement(getIngestionSettingGearIcon());
-			getIngestionSettingGearIcon().waitAndClick(5);
+			getIngestionDetailPopup(1).waitAndClick(5);
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(5);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
-					return getIngestionOpenWizardbutton().Visible();
+					return getActionOpenWizard().Visible();
 				}
 			}), Input.wait30);
 			
-			getIngestionOpenWizardbutton().waitAndClick(5);
+			getActionOpenWizard().waitAndClick(5);
 			base.waitTime(3);
 			base.stepInfo("Starting ingestion again from draft mode");
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -7745,4 +7750,62 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				getCloseButton().waitAndClick(5);
 				
 			}
+			
+			/**
+			 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will enter overlay ingestion data without enabling mapping field
+			 */
+			
+			public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName,String datFile, String datKey) {
+				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				selectDATSource(datFile,datKey);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+			}
+			/**
+			 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will enter overlay ingestion data with enabling mapping field
+			 */
+			
+			public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName,String datFile, String datKey) {
+				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				selectDATSource(datFile,datKey);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				clickOnNextButton();
+				base.waitTime(2);
+				base.stepInfo("mapping field section enabled");
+				
+			}
+			
+			
 }

@@ -1169,6 +1169,46 @@ public class Regression_Ingestion01 {
 		ingestionPage.rollBackIngestion();
 	}
 	
+	/** 
+     *Author :Arunkumar date: 22/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47598
+	 * Description :Edit of saved Overlay ingestion with out mapping field selection.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 55)
+	public void verifyEditOverlayIngestionWithoutMapping() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47598");
+		baseClass.stepInfo("Edit of saved Overlay ingestion with out mapping field selection.");
+		ingestionPage.OverlayIngestionForDATWithoutMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		baseClass.stepInfo("Saved ingestion as draft without clicking next button and mapping field in disabled state");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on open in wizard option to edit ingestion
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.ingestionCatalogging();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 22/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47597
+	 * Description :Edit of Overlay saved ingestion with mapping field selection
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 56)
+	public void verifyEditOverlayIngestionWithMapping() throws InterruptedException  {
+		
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47597");
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		baseClass.stepInfo("Saved ingestion as draft after clicking next button and mapping field enabled");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on open in wizard option to edit ingestion
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.ingestionCatalogging();
+		
+	}
+	
 	
 		
 	@AfterMethod(alwaysRun = true)
