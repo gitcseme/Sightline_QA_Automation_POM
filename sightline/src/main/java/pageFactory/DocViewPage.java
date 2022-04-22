@@ -7446,19 +7446,26 @@ public class DocViewPage {
 		base.passedStep("Right arrow displayed for pending principal document");
 		base.passedStep("Principal document displayed at first");
 	}
+	
 
 	/**
 	 * @author Indium-Baskar date: 08/09/2021 Modified date: NA
 	 * @Description : warning message should display for code same as
 	 */
+	
 
 	public void verifyWarningMessage() {
 		driver.waitForPageToBeReady();
+		MiniDocListPage mini = new MiniDocListPage(driver);
+		mini.configureMiniDocListToShowCompletedDocs();
 		reusableDocView.editingCodingFormWithCompleteButton();
+		base.waitTime(2);
 		reusableDocView.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		for (int j = 1; j <= 1; j++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
+			base.waitTime(5);
 		}
 		reusableDocView.verifyWarningMessageClickCodeSameAs();
 		reusableDocView.childWindowToParentWindowSwitching(parentWindow);
@@ -7621,13 +7628,15 @@ public class DocViewPage {
 		reusableDocView.editingCodingFormWithSaveButton();
 		driver.waitForPageToBeReady();
 		for (int j = 3; j <= 4; j++) {
-			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().Click();
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(j));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(j).WaitUntilPresent().waitAndClick(5);
 		}
 		reusableDocView.clickCodeSameAsParent();
 		base.passedStep("performing code same as action with complete button");
 		reusableDocView.editingCodingFormWithCompleteButton();
 		base.stepInfo("Tick mark icon displayed after completed document");
 		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
 			driver.waitForPageToBeReady();
 		}
