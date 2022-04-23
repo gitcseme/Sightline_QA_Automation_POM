@@ -407,6 +407,7 @@ public class DocView_Redactions_Regression {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		Actions actions = new Actions(driver.getWebDriver());
 		sessionSearch.basicContentSearch(Input.randomText);
