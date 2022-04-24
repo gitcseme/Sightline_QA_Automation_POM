@@ -1849,7 +1849,7 @@ public void popOutCodingFormChildWindow() {
 			driver.waitForPageToBeReady();
 			base.waitForElement(audioDocRedactionadd());
 			base.waitTillElemetToBeClickable(audioDocRedactionadd());
-			audioDocRedactionadd().Click();
+			audioDocRedactionadd().waitAndClick(10);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while clicking on add audio redaction button" + e.getMessage());

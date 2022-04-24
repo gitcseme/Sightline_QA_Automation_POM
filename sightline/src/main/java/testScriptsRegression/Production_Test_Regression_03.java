@@ -50,7 +50,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Production_Test_Regression_03{
+public class Production_Test_Regression_03 {
 
 	Driver driver;
 	LoginPage loginPage;
@@ -104,7 +104,7 @@ public class Production_Test_Regression_03{
 	 *              data
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyIceDataGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -178,7 +178,7 @@ public class Production_Test_Regression_03{
 	 *              file types for ICE processed data.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifyIceDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -273,7 +273,7 @@ public class Production_Test_Regression_03{
 	 * @Description: To verify that document should produced with 'Tech Issues Docs'
 	 *               placeholdering by selecting more than one Tag
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyTeccIssueDocPlaceholdering() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-49337 ");
@@ -328,7 +328,6 @@ public class Production_Test_Regression_03{
 				"Verified that document should produced with 'Tech Issues Docs' placeholdering by selecting more than one Tag");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -341,7 +340,7 @@ public class Production_Test_Regression_03{
 	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT
 	 *       environment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyPdfIceMappedSetProdGenSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -356,7 +355,7 @@ public class Production_Test_Regression_03{
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		DataSets dataset = new DataSets(driver);
@@ -392,7 +391,6 @@ public class Production_Test_Regression_03{
 				"Verified that Production should be generated successfully if PDF documents are  ICE processed with Mapped set");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -406,7 +404,7 @@ public class Production_Test_Regression_03{
 	 *              with Multiple Branding Tags"
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void verifyMultipleDocumentCountisZero() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -495,7 +493,7 @@ public class Production_Test_Regression_03{
 	 * @Description: To Verify "Enable Placeholders by Selecting File Types" for
 	 *               (.mdb/.mdf) under TIFF /PDF Should works for Production.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyPlaceholderForMDB() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48034 ");
@@ -511,13 +509,13 @@ public class Production_Test_Regression_03{
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		 tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		// tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		int docno = sessionSearch.MetaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.sourceDocIdDB992);
-		sessionSearch.bulkFolderExisting(foldername);
+		// sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 
 		// Verify
@@ -529,7 +527,7 @@ public class Production_Test_Regression_03{
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		 page.fillingTIFFWithNativelyProducedDocs(Input.dbFile, testing);
+		page.fillingTIFFWithNativelyProducedDocs(Input.dbFile, testing);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -549,8 +547,8 @@ public class Production_Test_Regression_03{
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		
+		// tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security
+		// Group");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
@@ -562,7 +560,7 @@ public class Production_Test_Regression_03{
 	 * layout. 'RPMXCON-48031'
 	 * 
 	 */
-@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyDocsBothLandScapeRotationLayout() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -571,6 +569,11 @@ public class Production_Test_Regression_03{
 				"To Verify if a document has both landscape and portrait pages, the rotation selected is applied only to the pages that are in landscape layout.");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		BaseClass base = new BaseClass(driver);
+		base.selectproject(Input.regressionConsilio);
+		
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -587,7 +590,7 @@ public class Production_Test_Regression_03{
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-	    page.fillingDATSection();
+		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		driver.scrollPageToTop();
@@ -603,12 +606,12 @@ public class Production_Test_Regression_03{
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
 		page.extractFile();
 		System.out.println("Unzipped the downloaded files");
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		String firstFile =  prefixID + beginningBates + suffixID;
+		File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
 
 		BufferedImage bimg = ImageIO.read(file);
 		int width = bimg.getWidth();
@@ -634,7 +637,7 @@ public class Production_Test_Regression_03{
 	 *              file types for NUIX processed data.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = false, groups = { "regression" }, priority = 8)
 	public void verifyNuixDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -707,7 +710,7 @@ public class Production_Test_Regression_03{
 	 *              Mark complete.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = false, groups = { "regression" }, priority = 9)
 	public void verifyPlaceholderPrivDocAtPrivGuard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -789,7 +792,7 @@ public class Production_Test_Regression_03{
 	 *              documents with annotation
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = false, groups = { "regression" }, priority = 10)
 	public void verifyProdGenDocumentWithAnnotation() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -860,7 +863,7 @@ public class Production_Test_Regression_03{
 	 *              document
 	 * 
 	 */
-   @Test(enabled = true, groups = { "regression" }, priority = 11)
+   @Test(enabled = false, groups = { "regression" }, priority = 11)
 	public void verifyPrivPlaceholderGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -939,11 +942,11 @@ public class Production_Test_Regression_03{
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String tagname1 = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
-		prefixID = Input.randomText + Utility.dynamicNameAppender();
-		suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname,"Select Tag Classification");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateTagwithClassification(tagname1, "Select Tag Classification");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
@@ -956,11 +959,13 @@ public class Production_Test_Regression_03{
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
+		int nativefile = Integer.parseInt(beginningBates);
+		int NativeDocStart = nativefile+3;
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname1);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -977,12 +982,15 @@ public class Production_Test_Regression_03{
 		page.getCopyPath().Click();
 		page.getQC_Download().waitAndClick(10);
 		page.getQC_Downloadbutton_allfiles().waitAndClick(10);
+		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		page.extractFile();
 
 		driver.waitForPageToBeReady();
-		page.clickBackBtnandSelectingNative(7, tagname1);
+		page.clickBackBtnandSelectingNative(7, tagname);
+		driver.scrollingToBottomofAPage();
+		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
+		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 		page.clickMArkCompleteMutipleTimes(3);
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
@@ -991,11 +999,10 @@ public class Production_Test_Regression_03{
 
 		driver.waitForPageToBeReady();
 
-		File Native1 = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".doc");
+		File Native1 = new File(home+"\\Downloads\\VOL0001\\Natives\\0001\\"+prefixID+NativeDocStart+suffixID+".doc");
 
 		if (Native1.exists()) {
-			base.passedStep("Native file are generated correctly : " + prefixID + beginningBates + suffixID + ".doc");
+			base.passedStep("Native file are generated correctly : " + prefixID + NativeDocStart + suffixID + ".doc");
 			System.out.println("passeed");
 		} else {
 			base.failedStep("verification failed");
@@ -1006,6 +1013,7 @@ public class Production_Test_Regression_03{
 		loginPage.logout();
 
 	}
+	
 
 	/**
 	 * @author Vijaya.Rani Modify Date: 14/03/2022 Test case id-RPMXCON-47886
@@ -1022,6 +1030,7 @@ public class Production_Test_Regression_03{
 		String productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		BaseClass base = new BaseClass(driver);
 		page = new ProductionPage(driver);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1074,8 +1083,10 @@ public class Production_Test_Regression_03{
 		} else {
 			base.failedStep("verification failed");
 		}
-		page.getTiffAdvanceBtn().ScrollTo();
-		page.getTiffAdvanceBtn().waitAndClick(10);
+		page.getAdvanceBtnOpenCloseCheck().ScrollTo();
+		driver.scrollPageToTop();
+		page.getAdvanceBtnOpenCloseCheck().ScrollTo();
+		page.getAdvanceBtnOpenCloseCheck().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		boolean flag6 = page.getAdvanceBtnOpenCloseCheck().GetAttribute("class").contains("right");
 		if (flag6) {
@@ -1099,7 +1110,7 @@ public class Production_Test_Regression_03{
 	 *
 	 * @throws IOException
 	 */
-	@Test(enabled=true,groups = { "regression" }, priority = 14)
+	@Test(enabled = false,groups = { "regression" }, priority = 14)
 	public void verifyEmailValueDisplayOnSlipSheets() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-55940 -Production Sprint 13");
@@ -1156,7 +1167,6 @@ public class Production_Test_Regression_03{
 	page.OCR_Verification_In_Generated_Tiff_SS(firstFile, lastfile, prefixID, suffixID, s4);
 
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 	tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 	loginPage.logout();
 	}
@@ -1165,7 +1175,7 @@ public class Production_Test_Regression_03{
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
 	 * 
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 15)
+	@Test(enabled = false,groups = { "regression" }, priority = 15)
 	public void verifyDiffFileBrandingGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1237,7 +1247,7 @@ public class Production_Test_Regression_03{
 	 * @Description To verify, User able to edit a production to regenerate it
 	 * 
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 16)
+	@Test(enabled = false,groups = { "regression" }, priority = 16)
 	public void verifyRegenerateWithEditSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1308,7 +1318,7 @@ public class Production_Test_Regression_03{
 	 * @Description Verify that Production should generated successfully for Natively PDF documents
 	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT environment
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 17)
+	@Test(enabled = false,groups = { "regression" }, priority = 17)
 	public void verifyProdGenSuccussNativePdf() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1402,7 +1412,7 @@ public class Production_Test_Regression_03{
 		page = new ProductionPage(driver);
 		driver.Navigate().to(currentURL);
 		driver.waitForPageToBeReady();
-		String ErrorMsg=page.getErrorMsgText().getText();
+		String ErrorMsg=page.getErrorMsgHeader().getText();
 		if(ErrorMsg.contains("Error")) { base.passedStep("Error message is displayed as expected"); }
 		else {base.failedStep("Error message is not  displayed as expected");	}
 		driver.Navigate().back();
@@ -1427,9 +1437,14 @@ public class Production_Test_Regression_03{
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String securityGroup = "Production_Security_Group"+ Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.createSecurityGroups(securityGroup);
 		
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1438,18 +1453,17 @@ public class Production_Test_Regression_03{
 		sessionSearch.ViewInDocList();
 		DocListPage doc = new DocListPage(driver);
 		doc.selectAllDocs();
-		doc.docListToBulkRelease(Input.securityGroup_sg47);
+		doc.docListToBulkRelease(securityGroup);
 		driver.waitForPageToBeReady();
 		doc.bulkTagExistingFromDoclist(tagname);
 		
-		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
-		sg.addTagToSecurityGroup(Input.securityGroup_sg47, tagname);
+		sg.addTagToSecurityGroup(securityGroup, tagname);
 		
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
-		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		page.selectingSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1478,7 +1492,7 @@ public class Production_Test_Regression_03{
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated TIFF file
 	 * 
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 20)
+	@Test(enabled = false,groups = { "regression" }, priority = 20)
 	public void verifyBrandingText() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1553,25 +1567,29 @@ public class Production_Test_Regression_03{
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String securityGroup = "Production_Security_Group"+ Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.createSecurityGroups(securityGroup);
 		
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkRelease(Input.securityGroup_sg47);
+		sessionSearch.bulkRelease(securityGroup);
 		sessionSearch.bulkFolderExisting(foldername);
 		
-		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
-		sg.addFolderToSecurityGroup(Input.securityGroup_sg47, foldername);
+		sg.addFolderToSecurityGroup(securityGroup, foldername);
 		
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
-		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		page.selectingSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1601,7 +1619,7 @@ public class Production_Test_Regression_03{
 	 *         No:RPMXCON-55993
 	 * @Description: Verify that status text along with the docment counts show properly in the space available for the progress bar on tile view
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = false, groups = { "regression" }, priority = 22)
 	public void verifyStatusTextAndDocumentCountWithDifferentResolution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1684,7 +1702,7 @@ public class Production_Test_Regression_03{
 	* @author Aathith created on:NA modified by:NA TESTCASE No:RPMXCON-47926
 	* @Description:To Verify PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production
 	*/
-	@Test(enabled=true,groups = { "regression" }, priority = 23)
+	@Test(enabled = false,groups = { "regression" }, priority = 23)
 	public void verifyDatFiledisBlank() throws Exception {
 	UtilityLog.info(Input.prodPath);
 
@@ -1879,7 +1897,7 @@ public class Production_Test_Regression_03{
 	 * @Description Verify Production should be generated successfully with the redacted documents (for documents with annotation) 
 	 * 
 	 */
-	@Test(enabled= true,groups = { "regression" }, priority = 26)
+	@Test(enabled = true,groups = { "regression" }, priority = 26)
 	public void verifyAnotationForRedactionPdf() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1973,7 +1991,7 @@ public class Production_Test_Regression_03{
 	* @Description:Verify that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10.
 	* 'RPMXCON-47171' 
 	*/
-     @Test(enabled = true, groups = { "regression" }, priority = 27)
+     @Test(enabled = false, groups = { "regression" }, priority = 27)
 	public void verifyTheSubFolderAfterGenrationPDFFile() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	loginPage.logout();
@@ -2044,7 +2062,6 @@ public class Production_Test_Regression_03{
 	
 	page.deleteFiles();
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 	tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 	loginPage.logout();
     }
@@ -2053,7 +2070,7 @@ public class Production_Test_Regression_03{
 		 *         No:RPMXCON-55983
 		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Progress bar Tile View as 'Creating Archive - 10%'
 		 */
-		@Test(enabled = true,groups = { "regression" }, priority = 28)
+		@Test(enabled = false,groups = { "regression" }, priority = 28)
 		public void verifiyCreateArchicTenPercenteOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55983 - Production Component");
@@ -2116,7 +2133,7 @@ public class Production_Test_Regression_03{
 		 *         No:RPMXCON-55982
 		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Generation page as 'Creating Archive - 10%'
 		 */
-		@Test(enabled = true,groups = { "regression" }, priority = 29)
+		@Test(enabled = false,groups = { "regression" }, priority = 29)
 		public void createArchivingTenPercentStatusVerifyOnGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55982 -Production");
@@ -2174,7 +2191,7 @@ public class Production_Test_Regression_03{
 		 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
 		 * 
 		 */
-		@Test(enabled = true,groups = { "regression" }, priority = 30)
+		@Test(enabled = false,groups = { "regression" }, priority = 30)
 		public void verifyPdfBrandingGenerateSuccessfully() throws Exception {
 
 			UtilityLog.info(Input.prodPath);
@@ -2267,6 +2284,7 @@ public class Production_Test_Regression_03{
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		//Verify archive status on Gen page
@@ -2276,6 +2294,9 @@ public class Production_Test_Regression_03{
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
+		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
@@ -2285,7 +2306,7 @@ public class Production_Test_Regression_03{
 		page.fillingProductionLocationPageAndPassingText(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+		page.getbtnProductionGenerate().waitAndClick(10);
 		
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
@@ -2458,7 +2479,7 @@ public class Production_Test_Regression_03{
 			 * 		unintentionally in the produced document 
 			 * 
 			 */
-			@Test(enabled =true,groups = { "regression" }, priority = 34)
+			@Test(enabled  = false,groups = { "regression" }, priority = 34)
 			public void verifyProducedPadWithTextReviewRemarkRedaction() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -2542,7 +2563,7 @@ public class Production_Test_Regression_03{
 			 * @Description Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document
 			 * 
 			 */
-			@Test(enabled =true,groups = { "regression" }, priority = 35)
+			@Test(enabled  = false,groups = { "regression" }, priority = 35)
 			public void verifyProducedTiffWithTextReviewRemarkRedaction() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -2622,7 +2643,7 @@ public class Production_Test_Regression_03{
 			 * @Description To verify that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced
 			 * 
 			 */
-			@Test(enabled =true,groups = { "regression" }, priority = 36)
+			@Test(enabled = true,groups = { "regression" }, priority = 36)
 			public void verifyRedactionTagforAudioDoc() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -2704,10 +2725,6 @@ public class Production_Test_Regression_03{
 				
 				base.passedStep("verifed that If user select RedactionTag and if Audio document is associated to the selected Redaction Tag then Native should not produced");
 				
-				tagsAndFolderPage = new TagsAndFoldersPage(driver);
-				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-				tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);	
-				tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 				loginPage.logout();
 				
 			}
@@ -2716,7 +2733,7 @@ public class Production_Test_Regression_03{
 			 * 			RPMXCONO-47172
 			 * @Description Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10
 			 */
-			@Test(enabled = true,groups = { "regression" }, priority = 37)
+			@Test(enabled = false,groups = { "regression" }, priority = 37)
 			public void verifyPdfFileAreNotSplit() throws Exception {
 				
 				UtilityLog.info(Input.prodPath);
@@ -2809,7 +2826,6 @@ public class Production_Test_Regression_03{
 				String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 				String prefixID = Input.randomText + Utility.dynamicNameAppender();
 				String suffixID = Input.randomText + Utility.dynamicNameAppender();
-				int docCount = 3;
 				
 				BaseClass base = new BaseClass(driver);
 				base.selectproject(Input.additionalDataProject);
@@ -2826,10 +2842,10 @@ public class Production_Test_Regression_03{
 				DocListPage doc = new DocListPage(driver);
 				driver.waitForPageToBeReady();
 
-				doc.documentSelection(docCount);
+				doc.selectAllDocs();
 				doc.docListToBulkRelease(Input.securityGroup);
 				doc.bulkTagExistingFromDoclist(tagname);
-				doc.documentSelection(docCount);
+				doc.selectAllDocs();
 				doc.bulkFolderExisting(foldername);
 				
 				loginPage.logout();
@@ -2869,8 +2885,9 @@ public class Production_Test_Regression_03{
 				page.fillingProductionLocationPage(productionname);
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
-				page.fillingGeneratePageWithContinueGenerationPopup();
-				int lastFile = firstFile + docCount;
+				int doccount =page.fillingGeneratePageWithContinueGenerationPopup();
+				int lastFile = firstFile + doccount;
+				page.waitForFileDownload();
 				page.extractFile();
 				
 				page.isMp3FileExist(firstFile, lastFile, prefixID, suffixID);
@@ -2892,7 +2909,7 @@ public class Production_Test_Regression_03{
 			 *              RPMXCON-49228]
 			 * @throws Exception
 			 */
-			@Test(enabled = true, groups = { "regression" }, priority = 39)
+			@Test(enabled = false, groups = { "regression" }, priority = 39)
 			public void verifySortByTags() throws Exception {
 
 				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2948,6 +2965,7 @@ public class Production_Test_Regression_03{
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
 				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.waitForFileDownload();
 				page.extractFile();
 				
 				driver.waitForPageToBeReady();
@@ -2994,7 +3012,7 @@ public class Production_Test_Regression_03{
 			 * @Description Verify that if document is produced  and if user rotate the redacted images then after copying to any other file then redacted image should not be displayed 
 			 * 
 			 */
-			@Test(enabled= true,groups = { "regression" }, priority = 40)
+			@Test(enabled = false,groups = { "regression" }, priority = 40)
 			public void verifyAfterRotationRedactionNotDisplayed() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -3010,6 +3028,7 @@ public class Production_Test_Regression_03{
 				
 				BaseClass base = new BaseClass(driver);
 				base.selectproject(Input.additionalDataProject);
+
 				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 				tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");

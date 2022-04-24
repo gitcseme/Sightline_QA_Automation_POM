@@ -2829,6 +2829,11 @@ public class ProductionPage {
 	public Element getclkSelectTags() {
 		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_1']");
 	}
+	
+	public Element getErrorMsgHeader() {
+		return driver.FindElementByXPath("//h1");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -18624,11 +18629,8 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @throws InterruptedException
 	 */
 	public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
-		int i;
-		for (i = 0; i < Count; i++) {
-			driver.waitForPageToBeReady();
-			getQC_backbutton().waitAndClick(10);
-		}
+		clickElementNthtime(getBackButton(), Count);
+
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		getMarkInCompleteBtn().waitAndClick(10);
@@ -19333,7 +19335,6 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		            base.passedStep(file+" file is Exists in pointed directory");
 		            break;
 				}else {
-					base.wait(1);
 					driver.waitForPageToBeReady();
 				}
 			}
