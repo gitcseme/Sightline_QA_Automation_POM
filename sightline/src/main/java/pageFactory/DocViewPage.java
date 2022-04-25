@@ -6502,8 +6502,10 @@ public class DocViewPage {
 				return getDocView_DefaultViewTab().Visible();
 			}
 		}), Input.wait30);
+		driver.scrollPageToTop();
 		base.waitForElement(getDocView_NumTextBox());
 		getDocView_NumTextBox().SendKeys(Integer.toString(id));
+		base.waitTime(5);
 		getDocView_NumTextBox().Enter();
 		driver.waitForPageToBeReady();
 		base.waitTime(5);
