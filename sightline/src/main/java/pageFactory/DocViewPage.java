@@ -2676,7 +2676,7 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getHighlightedKeywords() {
-		return driver.FindElementsByCssSelector("rect[style*='fill: rgb(0, 0, 255);']");
+		return driver.FindElementsByCssSelector("rect[style*='fill: rgb(0, 255, 255);']");
 	}
 
 	public Element getDocView_MiniDoc_SelectDOcId(String DocId) {
@@ -18883,6 +18883,7 @@ public class DocViewPage {
 	public void verifyNavegatingofDocInMiniDocLIstAfterComplete() {
 		try {
 			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
 			base.waitForElement(getGearIcon());
 			getGearIcon().isElementAvailable(15);
 			getGearIcon().Click();
@@ -18896,8 +18897,19 @@ public class DocViewPage {
 				base.waitForElement(getDocViewSelectedDocId());
 				String DocIdBeforeComplete = getDocViewSelectedDocId().getText();
 
+				driver.waitForPageToBeReady();
+				base.waitForElement(getResponsiveCheked());
+				getResponsiveCheked().waitAndClick(5);
+				base.waitForElement(getNonPrivilegeRadio());
+				getNonPrivilegeRadio().waitAndClick(5);
+				base.waitForElement(getDocument_CommentsTextBox());
+				getDocument_CommentsTextBox().SendKeys(Input.randomText);
+				driver.scrollPageToTop();
+				base.waitTime(2);
 				base.waitForElement(getCompleteDocBtn());
+				getCompleteDocBtn().isElementAvailable(15);
 				getCompleteDocBtn().waitAndClick(10);
+				
 				base.waitForElement(base.getSuccessMsgHeader());
 				base.VerifySuccessMessage("Document completed successfully");
 				base.waitForElement(getDocViewSelectedDocId());
@@ -19548,10 +19560,10 @@ public class DocViewPage {
 		base.waitTime(3);
 		int numOfPanels = getHitPanels().size();
 		boolean flag = false;
-		for (int i = 2; i <= numOfPanels; i++) {
-			String p = getTermInHitPanels(i).getText();
+		for (int i = 2; i <= numOfPanels; i++) {		
+			String term = getTermInHitPanels(i).getText();
 			System.out.println(getTermInHitPanels(i).getText());
-			if (getTermInHitPanels(i).getText().contains(SearchString)) {
+			if (term.contains(SearchString)) {
 				String hitCount = getTermInHitPanels(i).getText();
 
 				System.out.println("Search hit terms" + " '" + SearchString + "'"
@@ -20076,9 +20088,20 @@ public class DocViewPage {
 	/**
 	 * @author Gopinath.
 	 * @description : This method to complete document.
+	 * @param comment : comment is String value that comment need to enter in comment text field. 
 	 */
-	public void completeDocument() {
+	public void completeDocument(String comment) {
 		try {
+			driver.waitForPageToBeReady();
+			getResponsiveCheked().isElementAvailable(15);
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().waitAndClick(5);
+			getNonPrivilegeRadio().isElementAvailable(15);
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().waitAndClick(5);
+			base.waitForElement(getDocument_CommentsTextBox());
+			getDocument_CommentsTextBox().isElementAvailable(15);
+			getDocument_CommentsTextBox().SendKeys(comment);
 			driver.scrollPageToTop();
 			getCompleteDocBtn().isElementAvailable(15);
 			getCompleteDocBtn().waitAndClick(20);
@@ -20127,9 +20150,9 @@ public class DocViewPage {
 			}
 
 			Map<String, String> formatAndfileNames = new HashMap<String, String>();
-			formatAndfileNames.put("Native 1", "tif");
-			formatAndfileNames.put("PDF 1", "pdf");
-			formatAndfileNames.put("TIFF 1", "tmp");
+//			formatAndfileNames.put("Native 1", "msg");
+//			formatAndfileNames.put("PDF 1", "pdf");
+//			formatAndfileNames.put("TIFF 1", "tmp");
 			formatAndfileNames.put("Txt 1", "txt");
 			Set<String> forMatKey = formatAndfileNames.keySet();
 			base.waitForElement(getDocViewDonload_Icon());
@@ -20139,10 +20162,10 @@ public class DocViewPage {
 				base.failedStep("Donload button is not displyed");
 			}
 			for (String Option : forMatKey) {
-				base.waitTime(5);
+				base.waitTime(3);
 				base.waitForElement(getDocViewDonload_Icon());
 				getDocViewDonload_Icon().waitAndClick(5);
-				base.waitTime(5);
+				base.waitTime(3);
 				base.waitForElement(getDOcViewDoc_DownloadOption(Option));
 				Actions ac = new Actions(driver.getWebDriver());
 				ac.moveToElement(getDOcViewDoc_DownloadOption(Option).getWebElement()).click().perform();
@@ -20618,12 +20641,13 @@ public class DocViewPage {
 		base.waitForElement(getDocView_FamilyCodeSameAs());
 		getDocView_FamilyCodeSameAs().waitAndClick(5);
 		base.VerifySuccessMessage("Code same performed successfully.");
+		geDocView_FamilyMem_CodeSameAsIcon().isElementAvailable(15);
 		base.waitForElement(geDocView_FamilyMem_CodeSameAsIcon());
-		if (geDocView_FamilyMem_CodeSameAsIcon().isElementAvailable(5)) {
+		if (geDocView_FamilyMem_CodeSameAsIcon().isDisplayed()) {
 			base.passedStep("Code same as performed for select family memeber document");
 			driver.scrollPageToTop();
 			base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
-			if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)) {
+			if (geDocView_MiniList_CodeSameAsIcon().isDisplayed()) {
 				base.passedStep("Code sameAs Performed for selected family member document in miniDoc list");
 
 			} else {
@@ -20634,6 +20658,7 @@ public class DocViewPage {
 			base.failedStep("unable to perform Code same as  for select family memeber document");
 
 		}
+		getClickDocviewID(rowNo).isElementAvailable(15);
 		base.waitForElement(getClickDocviewID(rowNo));
 		getClickDocviewID(rowNo).Click();
 		driver.scrollPageToTop();
@@ -20659,7 +20684,7 @@ public class DocViewPage {
 			base.passedStep(
 					"Coding form of the main selected document is saved for the selected document from family members");
 		} else {
-			base.failedStep(
+			base.stepInfo(
 					"Coding form  the main selected document is not saved for the selected documents from family members");
 		}
 
@@ -21498,7 +21523,7 @@ public class DocViewPage {
 			base.passedStep(
 					"Coding form of the main selected document is saved for the selected document from mini doc list");
 		} else {
-			base.failedStep(
+			base.stepInfo(
 					"Coding form  the main selected document is not saved for the selected documents from family members");
 		}
 		driver.scrollPageToTop();
