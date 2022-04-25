@@ -68,7 +68,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              from Analytics panel child window 'RPMXCON-51846'
 	 * @Stabilization - not done[PT Env]
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true,description ="RPMXCON-51846", groups = { "regression" }, priority = 1)
 	public void verifyDocumentFromAnalyticsPanelWithEmailThreadMap()
 			throws ParseException, InterruptedException, IOException {
 		
@@ -118,7 +118,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              'RPMXCON-51753'
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true,description ="RPMXCON-51753", groups = { "regression" }, priority = 2)
 	public void verifyDocumentFromAnalyticsPanel() throws ParseException, InterruptedException, IOException {
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
@@ -164,7 +164,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *           panel is open with pop-out child window
 	 *  @Stabilization - done         
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true,description ="RPMXCON-51754", groups = { "regression" }, priority = 3)
 	public void verifyDocumentFromAnalyticsPanelWithChildWindow()
 			throws ParseException, InterruptedException, IOException {
 		
@@ -218,7 +218,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              'RPMXCON-51723'
 	 *   @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true,description ="RPMXCON-51723", groups = { "regression" }, priority = 4)
 	public void verifyHorizontalScrollBarInAnalyticsPanel() throws InterruptedException {
 
 		softAssertion = new SoftAssert();
@@ -292,7 +292,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              navigating to doc view outside of assignment 'RPMXCON-51847'
 	 *  @Stabilization - done             
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true,description ="RPMXCON-51847", groups = { "regression" }, priority = 5)
 	public void verifyDocumentFromAnalyticsPanelWithThreadMap()
 			throws ParseException, InterruptedException, IOException {
 
@@ -332,7 +332,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *  @Stabilization - done
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true,description ="RPMXCON-51845", groups = { "regression" }, priority = 6)
 	public void verifyAnalyticsPanelWithEmailThreadMapEnable()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51845");
@@ -411,7 +411,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              view'RPMXCON-51843'
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true,description ="RPMXCON-51843", groups = { "regression" }, priority = 7)
 	public void verifyAnalyticsPanelWithEmailThreadMapDisabled()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51843");
@@ -465,7 +465,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *  @Stabilization - done
      */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true,description ="RPMXCON-51844", groups = { "regression" }, priority = 8)
 	public void verifyAnalyticsPanelEmailThreadMapDisabled() throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51844");
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
@@ -517,7 +517,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              folder action from analytics panel.'RPMXCON-51735 '
 	 *   @Stabilization - done            
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true,description ="RPMXCON-51735", groups = { "regression" }, priority = 9)
 	public void verifyCodeAsSameFromFamilyMembersAnalyticsPanel() throws Exception {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
@@ -562,7 +562,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 *              analytics panel.'RPMXCON-51733'
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true,description ="RPMXCON-51733", groups = { "regression" }, priority = 10)
 	public void verifyDocFolderAction() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51733");
 		
@@ -602,7 +602,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true,description ="RPMXCON-50952", groups = { "regression" }, priority = 11)
 	public void verifyThreadMapTabWithNoDocs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50952");
@@ -669,7 +669,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true,description ="RPMXCON-50953", groups = { "regression" }, priority = 12)
 	public void verifyViewAllThreadMapTabWith20Docs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50953");
@@ -737,7 +737,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 *  @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true,description ="RPMXCON-50954", groups = { "regression" }, priority = 13)
 	public void verifyThreadedDocsFromSavedSearch() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
@@ -815,7 +815,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true,description ="RPMXCON-50955", groups = { "regression" }, priority = 14)
 	public void verifyThreadedDocRedirectFromDocList() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
@@ -891,7 +891,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true,description ="RPMXCON-51413", groups = { "regression" }, priority = 15)
 	public void verifyOptionToViewDocInThreadMapTab() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docViewAnalytics = new DocViewPage(driver);
@@ -967,7 +967,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true,description ="RPMXCON-51414", groups = { "regression" }, priority = 16)
 	public void verifyAnalyticsPanelTabDOcsSelectsFromMiniDocList() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -1043,7 +1043,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true,description ="RPMXCON-51508", groups = { "regression" }, priority = 17)
 	public void verifyThreadedDocsContainsNonEmailAttachment() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51508");
@@ -1108,7 +1108,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true,description ="RPMXCON-51721", groups = { "regression" }, priority = 18)
 	public void verifyHorizontalscrollTabAndChangingTheAnalyticsPosition() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51721");
@@ -1184,7 +1184,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true,description ="RPMXCON-51722", groups = { "regression" }, priority = 19)
 	public void verifyHorizontalscrollTabAndChangingTheAnalyticsPositionWithChildWindow() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51722");
@@ -1260,7 +1260,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true,description ="RPMXCON-51719", groups = { "regression" }, priority = 20)
 	public void verifyThreadedDocuments() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -1327,7 +1327,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true,description ="RPMXCON-51720", groups = { "regression" }, priority = 21)
 	public void verifyThreadedDocumentsWithChildWindow() throws InterruptedException {
 
 
@@ -1397,7 +1397,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true,description ="RPMXCON-51411", groups = { "regression" }, priority = 22)
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanel() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -1454,7 +1454,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true,description ="RPMXCON-51412", groups = { "regression" }, priority = 23)
 	public void verifyWarningMessageCodeAsSameInAnalyticsPanelWithChildWindow() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51412");
@@ -1513,7 +1513,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true,description ="RPMXCON-50960", groups = { "regression" }, priority = 24)
 	public void verifyMetaDataPanelIsDisplayed() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50960");
@@ -1582,7 +1582,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true,description ="RPMXCON-51385", groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameConceptuallySimilarChildWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -1876,7 +1876,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true,description ="RPMXCON-51383", groups = { "regression" }, priority = 26)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51383");
 		baseClass.stepInfo(
@@ -1987,7 +1987,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true,description ="RPMXCON-51382", groups = { "regression" }, priority = 27)
 	public void verifyCodeAsSameConceptuallySimilarParentWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2098,7 +2098,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true,description ="RPMXCON-51522", groups = { "regression" }, priority = 28)
 	public void verifyThreadMapTabWithPrincipalDocs() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2139,7 +2139,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true,description ="RPMXCON-51518", groups = { "regression" }, priority = 29)
 	public void verifyThreadMapPrincipalDocsE2() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2181,7 +2181,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - not done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true,description ="RPMXCON-51519", groups = { "regression" }, priority = 30)
 	public void verifyThreadMapPrincipalDocsE3() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2233,7 +2233,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(enabled = true,description ="RPMXCON-51428", groups = { "regression" }, priority = 31)
 	public void verifyViewDocumentInThreadMapMutiDocsAreSelected() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2318,7 +2318,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(enabled = true,description ="RPMXCON-51239", groups = { "regression" }, priority = 32)
 	public void verifyMutiDocsSelectedAndCodeAsSame() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2367,7 +2367,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true,description ="RPMXCON-51241", groups = { "regression" }, priority = 33)
 	public void verifyFolderActionWithoutSelectingThreadDocsAndActionAsFolder() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2416,7 +2416,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true,description ="RPMXCON-51242", groups = { "regression" }, priority = 34)
 	public void verifyWhenNoDocsAreThereInThreadMapAndAllActionShouldBeDisabled() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51242");
 
@@ -2464,7 +2464,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true,description ="RPMXCON-51240", groups = { "regression" }, priority = 35)
 	public void verifyMultiDocsInThreadMapTabAndSelectActionAsFolder() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51240");
 
@@ -2514,7 +2514,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(enabled = true,description ="RPMXCON-51370", groups = { "regression" }, priority = 36)
 	public void verifyCodeAsSameWithCodingFormThreadMapParentWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2602,7 +2602,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	@Test(enabled = true,description ="RPMXCON-51453", groups = { "regression" }, priority = 37)
 	public void verifyCompleteIconOnThreadMapTab() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2667,7 +2667,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	@Test(enabled = true,description ="RPMXCON-51454", groups = { "regression" }, priority = 38)
 	public void verifyUncompleteIconOnThreadMapTab() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2711,7 +2711,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(enabled = true,description ="RPMXCON-51455", groups = { "regression" }, priority = 39)
 	public void verifyCompleteIconOnShouldNotDisplayOnThreadMapTabChildWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2804,7 +2804,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	@Test(enabled = true,description ="RPMXCON-51286", groups = { "regression" }, priority = 40)
 	public void verifyNavigateToOherDocsAnalyticsPanelRemainsSame() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -2867,7 +2867,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	@Test(enabled = true,description ="RPMXCON-51415", groups = { "regression" }, priority = 41)
 	public void verifyNavigateToOherDocsConceptualTabAnalyticsPanelRemainsSame() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -3002,7 +3002,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	@Test(enabled = true,description ="RPMXCON-51416", groups = { "regression" }, priority = 42)
 	public void verifyNavigateToOherDocsThreadMapTabAnalyticsPanelRemainsSame() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -3119,7 +3119,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	@Test(enabled = true,description ="RPMXCON-51226", groups = { "regression" }, priority = 43)
 	public void verifyWarningMessageWhenRemoveCodeAsSameActionIsPerformed() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -3186,7 +3186,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = true,description ="RPMXCON-51227", groups = { "regression" }, priority = 44)
 	public void verifyRemoveCodeAsSameShouldNotbeDispalyedInMiniDocLitAndAnalyticsPanel() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -3226,7 +3226,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	@Test(enabled = true,description ="RPMXCON-51417", groups = { "regression" }, priority = 45)
 	public void verifyPositionOfThreadMapTabNavigatedToOtherDocs() throws InterruptedException {
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
@@ -3329,7 +3329,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = true,description ="RPMXCON-51418", groups = { "regression" }, priority = 46)
 	public void verifyPositionOfFamilyMemberTabNavigatedToOtherDocs() throws InterruptedException {
 
 		softAssertion = new SoftAssert();
@@ -3418,7 +3418,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	@Test(enabled = true,description ="RPMXCON-51421", groups = { "regression" }, priority = 47)
 	public void verifyPositionOfThreadMapTabNavigatedToOtherDocsChildWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -3571,7 +3571,7 @@ public class DocView_AnalyticsPanel_Regression {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	@Test(enabled = true,description ="RPMXCON-51422", groups = { "regression" }, priority = 48)
 	public void verifyPositionOfFamilyMemberTabNavigatedToOtherDocsChildWindow() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);

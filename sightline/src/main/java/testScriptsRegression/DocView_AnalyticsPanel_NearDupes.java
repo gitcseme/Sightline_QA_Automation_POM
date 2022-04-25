@@ -65,7 +65,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Original and NearDupe windows of near dupe comparison window
 	 *              RPMXCON-51707 stabilization done
 	 */
-	@Test(priority = 1, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51707",priority = 1, enabled = true, groups = { "regression" })
 	public void verifySearchTextboxIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51707");
@@ -181,7 +181,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify whether the DocID is getting displayed in the near
 	 *              dupe comparison window. RPMXCON-51710 stabilization done
 	 */
-	@Test(priority = 2, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51710",priority = 2, enabled = true, groups = { "regression" })
 	public void verifyDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 
@@ -322,7 +322,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify that 'Apply Coding to this Near Dupe' is not be
 	 *              visible for Project Admin user. RPMXCON-51715 stabilization done
 	 */
-	@Test(priority = 3, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51715",priority = 3, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeNotvisibleForProjectAdminUser()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51715");
@@ -369,7 +369,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify 'View in doc list' action when no document in
 	 *              Threaded Map panel. RPMXCON-50868 stabilization done
 	 */
-	@Test(priority = 4, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-50868",priority = 4, enabled = true, groups = { "regression" })
 	public void verifyViewInDoclistWhenNoDocumentSelected() {
 
 		String searchString = Input.searchString1;
@@ -424,7 +424,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              from analytics panel parent window 'RPMXCON-51712' stabilization
 	 *              done
 	 */
-	@Test(priority = 5, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51712",priority = 5, enabled = true, groups = { "regression" })
 	public void verifyDocCompletedAndIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		String revDocument = Input.nearDupeDocId01;
@@ -525,7 +525,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * 
 	 *                              stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-51381",enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -783,7 +783,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException stabilization done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description="RPMXCON-51379",enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyCodeAsSameWithCodingFormChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -892,7 +892,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51380'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-51380",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyCodeAsSameNearDupeSimilarParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1055,7 +1055,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException         stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-51713",enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyDocsCompletedApplyingStamp() throws InterruptedException {
 		String revDocument = Input.nearDupeDocId01;
 
@@ -1162,7 +1162,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException         stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-51714",enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyDocsCompletedApplyingStampAndCodeSameAsLast() throws InterruptedException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
@@ -1264,7 +1264,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * 
 	 *                              stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-51716",enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyDocsInAnalyticsPanelChildWindow() throws InterruptedException {
 		String revDocument = Input.nearDupeDocId01;
 
@@ -1391,7 +1391,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException         stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-51717",enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDocsByApplyingStampAnalyticsPanelChildWindow() throws InterruptedException {
 		String revDocument = Input.nearDupeDocId01;
 
@@ -1527,7 +1527,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * @throws AWTException         stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-51702",enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyPageNavigationInNearDupeDocumentInComparisonWindow() throws InterruptedException {
 		baseClass.stepInfo("Test Case Id: RPMXCON-51702");
 		String searchString = Input.searchString1;
@@ -1635,7 +1635,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              document selected for code same on thread map'RPMXCON-51361'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-51361",enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCodeAsSameThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1702,7 +1702,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51288'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-51288",enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyColumsInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1761,7 +1761,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51289'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-51289",enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyColumsInNearDupeTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1829,7 +1829,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Analytics Panel'RPMXCON-51290'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description="RPMXCON-51290",enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyColumsInConceptualTabAnalyticalPanel() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -1900,7 +1900,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51371'
 	 * @throws InterruptedException stabilization not done- threaded docs are not avialble for reviwer
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description="RPMXCON-51371",enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyCodeAsSameWithCodingFormChildWindowForThreadedDocs() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2017,7 +2017,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51372'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description="RPMXCON-51372",enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyCodeAsSameThreadDocumentsParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2184,7 +2184,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form child window 'RPMXCON-51373'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description="RPMXCON-51373",enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodeAsSameThreadMapSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2441,7 +2441,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51374'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description="RPMXCON-51374",enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyCodeAsSameFamilyMemberParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -2552,7 +2552,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51375'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description="RPMXCON-51375",enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyCodeSameFamilyMemberCodingFormChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -2709,7 +2709,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              form parent window'RPMXCON-51376'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description="RPMXCON-51376",enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyCodeAsSameFamilyMemberChildWindowCodingFormParentWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -2949,7 +2949,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              window'RPMXCON-51378'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description="RPMXCON-51378",enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyCodeAsSameWithCodingFormParentWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3064,7 +3064,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description="RPMXCON-51377",enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCodeAsSameFamilyMemberSimilarChildWindow() throws InterruptedException {
 
 		String codingForm = Input.codeFormName;
@@ -3324,7 +3324,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              documents on thread map tab'RPMXCON-51362'
 	 * @throws InterruptedException stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description="RPMXCON-51362",enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCodeCompleteThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3435,7 +3435,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws AWTException
 	 * pls stabilize this Mohan
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)
+	//@Test(description="RPMXCON-51718",enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyDocsCompletedSameAslastInAnalyticsPanelChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3620,7 +3620,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description="RPMXCON-51419",enabled = true, groups = { "regression" }, priority = 28)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingNearDupeDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3820,7 +3820,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description="RPMXCON-51420",enabled = true, groups = { "regression" }, priority = 29)
 	public void verifySelectedTabStilRemainInAnalyticalPanelAfterCompletingCoceptualDoc() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4021,7 +4021,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description="RPMXCON-51423",enabled = true, groups = { "regression" }, priority = 30)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingNearDupeDoc()
 			throws InterruptedException {
 
@@ -4288,7 +4288,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description="RPMXCON-51424",enabled = true, groups = { "regression" }, priority = 31)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingCoceptualDoc()
 			throws InterruptedException {
 
@@ -4559,7 +4559,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws InterruptedException stabilization done
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description="RPMXCON-51514",enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyInclusiveEmailThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4605,7 +4605,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              stabilization done
 	 * 
 	 */
-	@Test(priority = 33, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51711",priority = 33, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51711");
@@ -4725,7 +4725,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * 
 	 *              stabilization done
 	 */
-	@Test(priority = 34, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51708",priority = 34, enabled = true, groups = { "regression" })
 	public void verifyNearDupeDocIsSaved() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51708");
 		baseClass.stepInfo(
