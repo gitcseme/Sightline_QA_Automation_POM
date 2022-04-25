@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.ITestResult;
@@ -1518,6 +1519,230 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Search' is Checked from
+	 * Edit User > functionality tab
+	 */
+
+	@DataProvider(name = "impersonateRmu")
+	public Object[][] impersonateRmu() {
+		return new Object[][] { { "rmu", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password },
+				{ "rmu", Input.da1userName, Input.da1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.da1userName, Input.da1password, Input.rev1userName, Input.rev1password },
+				{ "rmu", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
+	public void validatingRmuFunctionTab(String roll, String loginuser, String loginPass, String assignUser,
+			String assignPass) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53322");
+		baseClass.stepInfo("Validate impersonated RMU has access to Functionality tab and able to modify permissions");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		baseClass.impersonateSAtoRMU();
+		baseClass.selectproject(Input.projectName);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		List<String> rmuRevCount = userManage.getTableCoumnValue("Role");
+		if (rmuRevCount.contains("Project Administrator")) {
+			baseClass.failedStep("Project admin user also displayed after impersonate to rmu");
+		} else {
+			baseClass.passedStep("Rmu and Rev user only displayed after impersonate to rmu");
+
+		}
+		userManage.passingUserName(assignUser);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		if (roll == "rmu") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusCategorize("false");
+			baseClass.stepInfo("Categorize checkbox unselected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifyCategorizeIcon(false, false);
+			baseClass.passedStep("After impersoante for rmu user unselected checkbox is not displaying in left menu");
+
+			// logout
+			loginPage.logout();
+		}
+		if (roll == "rev") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusSearch("true");
+			baseClass.stepInfo("Search checkbox selected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifySearchIcon(true, true, roll);
+			baseClass.passedStep("After impersoante for rev user selected checkbox is displaying in left menu");
+
+			// logout
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Validate RMU has access to Functionality tab and able to modify
+	 * permissions
+	 */
+
+	@DataProvider(name = "rmuRev")
+	public Object[][] rmuRev() {
+		return new Object[][] {
+				{ "rmu", Input.rmu1userName, Input.rmu1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.rmu1userName, Input.rmu1password, Input.rev1userName, Input.rev1password }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
+	public void validatingRmuFunctionToModify(String roll, String loginuser, String loginPass, String assignUser,
+			String assignPass) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53321");
+		baseClass.stepInfo("Validate RMU has access to Functionality tab and able to modify permissions");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		baseClass.selectproject(Input.projectName);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(assignUser);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		if (roll == "rmu") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusCategorize("false");
+			baseClass.stepInfo("Categorize checkbox unselected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifyCategorizeIcon(false, false);
+			baseClass.stepInfo("Unselected checkbox is not displaying in left menu");
+			baseClass.passedStep("Rmu user can modify permissions for reviewer manager user ");
+
+			// logout
+			loginPage.logout();
+		}
+		if (roll == "rev") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusSearch("true");
+			baseClass.stepInfo("Search checkbox selected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifySearchIcon(true, true, roll);
+			baseClass.stepInfo("selected Search icon is displaying in left menu");
+			baseClass.passedStep("Rmu user can modify permissions for reviewer user");
+
+			// logout
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Verify if SAU impersonate as Reviewer, he should able to
+	 * impersonate back as PAU
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	public void validatingSAImpRevBackToPau() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53288");
+		baseClass.stepInfo("Verify if SAU impersonate as Reviewer, he should able to impersonate back as PAU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// sa impersonating to reviewer
+		baseClass.impersonateSAtoReviewer();
+
+		// validating reviewer dashboard page
+		Boolean revDashboard = userManage.getDashBoardReviewer().isElementAvailable(2);
+		softAssertion.assertTrue(revDashboard);
+		baseClass.passedStep("Successfully impersonated to SA to Reviewer user");
+
+		// Reviewer impersonating to Pa user
+		baseClass.impersonateSAtoPA();
+
+		// validating Pa home page
+		baseClass.waitForElement(loginPage.getSignoutMenu());
+		loginPage.getSignoutMenu().waitAndClick(10);
+		Boolean paHomePage = userManage.getPaHomePage().isElementAvailable(2);
+		softAssertion.assertTrue(paHomePage);
+		baseClass.passedStep("Successfully impersonated to Reviewer to project admin user");
+
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Verify for the "Filter by User Name" field from Manage Users
+	 * page
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	public void validatingUserNameMyEmail() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53175");
+		baseClass.stepInfo("Verify for the Filter by User Name field from Manage Users page");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String fullName = Input.pa1FullName;
+		String[] splittingFullName = fullName.split(" ");
+		String firstName = splittingFullName[0];
+
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// applying filter by using email
+		userManage.passingUserName(Input.pa1userName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+
+		driver.waitForPageToBeReady();
+		String AfterfilterUserName = userManage.getFirstNameTab().getText().trim();
+		System.out.println(AfterfilterUserName);
+
+		softAssertion.assertEquals(firstName, AfterfilterUserName);
+		baseClass.stepInfo("Filter action done by email address");
+		baseClass.passedStep("After email filter done firstname displayed successfully as expecteds");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
 	}
 	
 	@DataProvider(name = "saImpPa")

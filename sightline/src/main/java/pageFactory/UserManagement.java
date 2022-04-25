@@ -545,6 +545,34 @@ public class UserManagement {
 	public Element getLeftBtndomainuser() {
 		return driver.FindElementByXPath("//a[@id='btnLeftUserMaappingForDomain']");
 	}
+	public ElementCollection getUserManageTab() {
+		return driver.FindElementsByXPath("//table[@class='table dataTable no-footer']//tr//th");
+	}
+	public ElementCollection getTableColumnData(int i) {
+		return driver.FindElementsByXPath("//table[@id='dtUserList']//tbody//tr//td[" + i + "]");
+
+	}
+	
+	public Element getSearchIconCheck() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanSearching']//parent::label//i");
+	}
+	public Element getSearchStatusCheck() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanSearching'][@checked='checked']");
+	}
+	
+	public Element getDashBoardReviewer() {
+		return driver.FindElementByXPath("//h1[text()[normalize-space()='My Dashboard']]");
+	}
+	public Element getPaHomePage() {
+		return driver.FindElementByXPath("//li//span[text()='Project Administrator']");
+	}
+	public Element getRedaction() {
+		return driver.FindElementByXPath("//a//span[text()='REDACTIONS']");
+	}
+	public Element getBulkUserCancelBtn() {
+		return driver.FindElementById("btnCancelBulkAccessControls");
+	}
+	
 
 
 	public UserManagement(Driver driver) {
@@ -1978,6 +2006,50 @@ public class UserManagement {
 			bc.failedStep("verification failed");
 		}
 
+	}
+	
+
+	/**
+	 * @author Indium-Baskar This method will get Values from user table
+	 *         particular column based on index passed.
+	 * @param eleName[Name of coulmn from which value needs to be extracted.]
+	 * @return
+	 */
+	public List<String> getTableCoumnValue(String eleName) {
+		int index = bc.getIndex(getUserManageTab(), eleName);
+		List<String> tableValue = bc.availableListofElements(getTableColumnData(index));
+		return tableValue;
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
+	 * @Description:Methods Search status checkbox
+	 */
+	public void verifyStatusSearch(String status) throws Exception {
+		driver.waitForPageToBeReady();
+		
+	    boolean flagChecked=getSearchStatusCheck().isElementAvailable(3);
+	    System.out.println(flagChecked);
+	    if (flagChecked==false) {
+	    	bc.stepInfo("Search checkbox is unchecked");
+		}
+	    if (flagChecked==true) {
+	    	bc.stepInfo("Search checkbox is checked");
+		}
+	    if (flagChecked==true&& status=="false") {
+	    	bc.waitForElement(getSearchIconCheck());
+	    	getSearchIconCheck().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+		}
+	    if (flagChecked==false&& status=="true") {
+	    	bc.waitForElement(getSearchIconCheck());
+	    	getSearchIconCheck().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo("Search checkbox is checked");
+		}
+		
 	}
 
 
