@@ -1458,7 +1458,35 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 	}
-	
+	/**
+	 * Author : Aathith date: NA Modified date: 25/04/2022 Modified by: 
+	 * Description: To verify that RMU can view the Workflow details.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyRmuWorkflowDetails() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52617");
+		baseClass.stepInfo("To verify that RMU can view the Workflow details.");
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'"); 
+		 
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		baseClass.visibleCheck("Workflow ID");
+		baseClass.visibleCheck("Status");
+		baseClass.visibleCheck("Enabled State");
+		baseClass.visibleCheck("Created By");
+		baseClass.visibleCheck("Apply Filter");
+		baseClass.visibleCheck("Reset");
+		baseClass.visibleCheck("Create New Workflow");
+		baseClass.visibleCheck("Action");
+		
+		baseClass.stepInfo("Following details is displayed->  Filter criteria  List of the available of workflow,  "
+				+ "Reset and Apply Filters buttons,  Create New Workflow button and Action");
+		baseClass.passedStep("verified that RMU can view the Workflow details.");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
