@@ -263,6 +263,10 @@ public class BaseClass {
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
 	}
+	
+	public Element getSelectSecurityGroupBulk() {
+		return driver.FindElementByXPath("(//select[@name='SecurityGroupID'])[last()]");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -3207,5 +3211,51 @@ public class BaseClass {
 		String project = getProjectNames().getText().trim();
 		softAssertion.assertEquals(projectVerify, project);
 		passedStep(projectVerify+" is the Current Project");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 * @Description This Method used for impersonate to pa to rmu user
+	 *              after bulk user access done
+	 */
+	public void impersonatePAtoRMUAfterbulk() throws InterruptedException {
+		waitForElement(getSignoutMenu());
+		waitTillElemetToBeClickable(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait60);
+		getChangeRole().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		Thread.sleep(3000);
+		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+		Thread.sleep(3000);
+		getSelectSecurityGroupBulk().selectFromDropdown().selectByVisibleText("Default Security Group");
+		getSaveChangeRole().waitAndClick(10);
+		this.stepInfo("Impersnated from PA to RMU");
+		UtilityLog.info("Impersnated from PA to RMU");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 	}
 }
