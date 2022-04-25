@@ -103,7 +103,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-51358",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
 	public void verifyToolTipDocsTextInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -156,7 +156,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : Verify system doc id is displayed in near dupe child window
 	 *              RPMXCON-51257 Stabilized - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-51257",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
 	public void verifySystemDocIdDisplayedInNearDupeChildWindow(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51257");
@@ -212,7 +212,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *         thread map panel'RPMXCON-51357' Sprint : 6
 	 * @throws InterruptedException Stabilized - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-51357",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void VerifyInclusiveEmailDocsOnThreadMapPanel(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -284,7 +284,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *         Sprint : 6
 	 * @throws InterruptedException Stabilized - not done [We need thread docs more than 20 records]
 	 */
-//	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
+//	@Test(description="RPMXCON-51363",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void VerifyMoreDataExistsRecordsToDisplayOnThreadMap(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51363");
@@ -323,7 +323,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              conceptual RPMXCON-51225
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-51225",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
 	public void verifyConceputallyTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
 			String password) throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51225");
@@ -370,7 +370,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51216
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-51216",enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51216");
 		baseClass.stepInfo(
@@ -453,7 +453,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              member RPMXCON-51224
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 7)
+	@Test(description="RPMXCON-51224",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 7)
 	public void verifyFamilyMemberTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
 			String password) throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51224");
@@ -500,7 +500,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51218
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-51218",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51218");
@@ -586,7 +586,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
 	 *              stabilized - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-51217",enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51217");
@@ -679,7 +679,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-51256",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
 	public void verifyZoomInZoomOutForNearDupeDocuments(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -732,7 +732,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-51571",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 11)
 	public void verifyWhenNavigatingFromThreadMapToNearDupeTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51571");
@@ -823,7 +823,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-51572
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-51572",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 12)
 	public void verifyWhenNavigatingFromThreadMapToConceptualTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51572");
@@ -915,7 +915,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-51570",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
 	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1000,7 +1000,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws Exception
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-51058",enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51058");
@@ -1099,7 +1099,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - not done
 	 * @throws Exception
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 15)
+	 @Test(description="RPMXCON-51059",enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51059");
@@ -1197,7 +1197,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-51232",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16)
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1335,7 +1335,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51222
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	@Test(description="RPMXCON-51222",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1395,7 +1395,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description="RPMXCON-50973",enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyViewDocumnetDisableWithoutSelectingDocument() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1432,7 +1432,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description="RPMXCON-51364",enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1565,7 +1565,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description="RPMXCON-50941",enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCannotViewTheActionCodeSameAsNearDupes() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50941");
@@ -1622,7 +1622,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 21)
+	@Test(description="RPMXCON-50910",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 21)
 	public void verifyCodeSameAsActionWithOutSelectingDocsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1666,7 +1666,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
+	@Test(description="RPMXCON-50951",enabled = true, dataProvider = "userDetails", groups = { "regression"
 	}, priority = 22)
 	public void verifySeeAllTheThreadedDocsInAnalyticsPanelSelectedDocInDocView(String fullName, String userName,
 			String password) throws InterruptedException {
@@ -1713,7 +1713,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 23)
+	@Test(description="RPMXCON-50909",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 23)
 	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1759,7 +1759,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              RPMXCON-50956
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 24)
+	@Test(description="RPMXCON-50956",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 24)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
 			String password, String impersonate) throws InterruptedException {
 
@@ -1837,7 +1837,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description="RPMXCON-51062",enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1916,7 +1916,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(description="RPMXCON-51359",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1968,7 +1968,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	@Test(description="RPMXCON-50900",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
 	public void verifyCompareSimilarDocsInNearDupe(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -2017,7 +2017,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description="RPMXCON-50875",enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
@@ -2083,7 +2083,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
+	@Test(description="RPMXCON-50947",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29)
 	public void verifyDocChilsWindowThenSameDocWillDisplayInDocView(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -2143,7 +2143,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
+	@Test(description="RPMXCON-51133",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 30)
 	public void verifyRemoveAssignedFolderDockoutAnalyticalNearDupe() throws Exception {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2214,7 +2214,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * stabilization done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description="RPMXCON-51388",enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyBGColorOnMousehoverInFamilyMemBerTabAnalyticalPanel() throws InterruptedException {
 
 		String assname = "assgnment" + Utility.dynamicNameAppender();
