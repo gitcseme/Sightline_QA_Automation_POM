@@ -2833,7 +2833,22 @@ public class ProductionPage {
 	public Element getErrorMsgHeader() {
 		return driver.FindElementByXPath("//h1");
 	}
-	
+
+	public Element getRdbOcr() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']/following-sibling::i");
+	}
+	public Element getBellyBandText() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+	public Element getBellyBangMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']/following-sibling::p");
+	}
+	public Element getTextRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']");
+	}
+	public Element getYesBtn() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -19615,4 +19630,38 @@ if(getbtnContinueGenerate().isDisplayed()) {
 					getPageNum(totalPage).waitAndClick(5);
 					driver.waitForPageToBeReady();
 		}
+		/**
+		 * @Author Brundha
+		 * Description:Method to verify Text Component
+		 */
+		public void textComponentVerification() {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			boolean flag;
+			flag = getTextRadioBtn().GetAttribute("value").contains("True");
+
+			if (flag) {
+				base.passedStep("only export file option is selected by default as expected");
+			} else {
+				base.failedStep("only export file option is not  selected by default as expected");
+			}
+			base.waitForElement(getRdbOcr());
+			getRdbOcr().waitAndClick(5);
+			base.waitTime(1);
+			String ExpectedText="OCR can take a long time to perform if there are a lot of documents - that can slow down your production delivery."
+					+" Plus, its likely that these non-redacted docs failed OCR earlier in processing - which may be why no text exists for these records in the Sightline workspace."
+					+" That could complicate your production delivery timelines.";
+			String ActualText=getBellyBandText().getText();
+			base.compareTextViaContains(ActualText,ExpectedText, "Belly band message is displayed as expected", "Belly Band message is not displayed as expected");
+			String BellyBandMsg="Are you sure you want to OCR these non-redacted documents that have no text already in the workspace?";
+			String ExpText=getBellyBangMsg().getText();
+			base.compareTextViaContains(BellyBandMsg,ExpText, "Belly band message is displayed as expected", "Belly Band message is not displayed as expected");
+			base.getNOBtn().waitAndClick(10);
+			base.waitForElement(getRdbOcr());
+			getRdbOcr().waitAndClick(5);
+			getYesBtn().waitAndClick(5);
+		
+		}
+
+
 }
