@@ -3,6 +3,8 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -169,6 +171,156 @@ public class Ingestion_Regression01 {
 		
 		}
 	
+	/**
+	 * Author : Mohan date: 17/02/22 NA Modified date: NA Modified by:NA
+	 * Description :Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page'RPMXCON-58508' 
+	 * @throws Exception
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	public void verifySourceSystemIsDisabled() throws Exception {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+	
+		baseClass.stepInfo("Test case Id: RPMXCON-58508");
+		baseClass.stepInfo("Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Step 2: Create an new Ingestion");
+		ingestionPage.IngestionRegression(Input.AllSourcesFolder);
+		baseClass.stepInfo("Step 3&4 : Go to Ingestion Add New Ingestion and Ingestion Type as 'Overlay Only' and Ingestion Type as 'Overlay Only'");
+		ingestionPage.verifySourceSystemDisabledWhenOverylayIsAddedAsIngestionType();
+		
+		}
+	
+	/** 
+     *Author :Arunkumar date: 08/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49022
+	 * Description :Verify two ingestions with step (Indexing  , Approval ) having ingestion type add only  must run simultaneously
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 5)
+	public void verifyTwoIngestionRunTillApprovingSimultaneously() throws InterruptedException   {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		String[] dataset= {Input.AllSourcesFolder,Input.TiffImagesFolder};
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49022");
+		baseClass.stepInfo("Verify two ingestions with step (Indexing  , Approval ) having ingestion type add only  must run simultaneously");
+		// Verify two add only type ingestion run simultaneously
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder,Input.DATFile3);
+		ingestionPage.multipleIngestionCopying(2);
+		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		ingestionPage.approveIngestion(2);
+	}
+	
+	/** 
+     *Author :Arunkumar date: 08/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47594
+	 * Description :To Verify for Approved ingestions, there should not have any option for Rollback. 
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 6)
+	public void verifyRollbackStatusForApprovedIngestion() throws InterruptedException {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+	
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47594");
+		baseClass.stepInfo("To Verify for Approved ingestions, there should not have any option for Rollback.");
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			ingestionPage.getFilterByButton().Visible()  ;}}), Input.wait30); 
+		ingestionPage.getFilterByButton().waitAndClick(10);
+    	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			ingestionPage.getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+		ingestionPage.getFilterByAPPROVED().waitAndClick(10);
+		ingestionPage.getRefreshButton().waitAndClick(10);
+		// Verify rollback option for approved ingestion
+		if(ingestionPage.getIngestionDetailPopup(1).isElementAvailable(5)) {
+			baseClass.stepInfo("Ingestion already present in approved stage");
+			ingestionPage.verifyRollbackOptionForApprovedIngestion();
+		}
+		else {
+			baseClass.stepInfo("Need to perform new ingestion");
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.verifyRollbackOptionForApprovedIngestion();
+
+		}
+	}
+	
+	/** 
+     *Author :Arunkumar date: 22/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47598
+	 * Description :Edit of saved Overlay ingestion with out mapping field selection.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 7)
+	public void verifyEditOverlayIngestionWithoutMapping() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47598");
+		baseClass.stepInfo("Edit of saved Overlay ingestion with out mapping field selection.");
+		ingestionPage.OverlayIngestionForDATWithoutMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		baseClass.stepInfo("Saved ingestion as draft without clicking next button and mapping field in disabled state");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on open in wizard option to edit ingestion
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.ingestionCatalogging();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 22/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47597
+	 * Description :Edit of Overlay saved ingestion with mapping field selection
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 8)
+	public void verifyEditOverlayIngestionWithMapping() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47597");
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		baseClass.stepInfo("Saved ingestion as draft after clicking next button and mapping field enabled");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on open in wizard option to edit ingestion
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.ingestionCatalogging();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 20/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47293
+	 * Description :Ingesting Duplicate files.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 9)
+	public void verifyErrorForIngestingDuplicateFiles() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47293");
+		baseClass.stepInfo("Ingesting Duplicate files.");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+		// verify duplicate ingestion error
+		ingestionPage.verifyDuplicateIngestionErrorMessage();
+		// rollback ingestion
+		ingestionPage.rollBackIngestion();
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
