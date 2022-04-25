@@ -573,6 +573,13 @@ public class UserManagement {
 		return driver.FindElementById("btnCancelBulkAccessControls");
 	}
 	
+	public Element getAllReportIconCheck() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanAllReports']//parent::label//i");
+	}
+	public Element getAllReportStatusCheck() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanAllReports'][@checked='checked']");
+	}
+	
 
 
 	public UserManagement(Driver driver) {
@@ -2048,6 +2055,68 @@ public class UserManagement {
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo("Search checkbox is checked");
+		}
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 24/43/2022 Modified date:24/43/2022
+	 * @Description:Methods for validating the left icon based on parameter passing
+	 * @param elementName [Element name for checking and unchecking the checkbox]
+	 * @param menuName [leftmenu name passing inside passed step]
+	 * @param downloadFalse [False will return  icon not present]
+	 * @param downloadTrue  [True will return  icon present]
+	 */
+
+	public void verifyLeftIcon(Element elementName,String menuName,boolean downloadFalse, boolean downloadTrue) {
+		driver.waitForPageToBeReady();
+		if (downloadFalse == false) {
+			if (elementName.isElementAvailable(4)) {
+				bc.failedStep(menuName + " tab icon available after unchecking the " + menuName +"");
+			} else {
+				bc.passedStep(menuName + "tab icon not present in left of the menu after unchecking the " + menuName +"");
+			}
+		} else if (downloadTrue == true) {
+			if (elementName.isElementAvailable(4)) {
+				bc.passedStep(menuName + "tab icon present in left of the menu after checking the " + menuName +"");
+			} else {
+				bc.failedStep(menuName + " tab icon not available after checking the " + menuName +"");
+			}
+		}
+	}
+	
+	
+	/**
+	 * @author Indium-Baskar date: 25/04/2022 Modified date: 25/04/2022
+	 * @Description:Methods for checking the checkedbox is checked or not
+	 * @param elementName 
+	 * @param elementStatus
+	 * @param menuName [leftmenu name passing inside step info]
+	 * @param status [based on the status we can check and uncheck the checkbox True will check and false will uncheck]
+	 */
+	public void verifyCheckboxStatusBasedOnCondition(Element elementStatus,Element elementName,String menuName,String status) throws Exception {
+		driver.waitForPageToBeReady();
+		
+	    boolean flagChecked=elementStatus.isElementAvailable(3);
+	    System.out.println(flagChecked);
+	    if (flagChecked==false) {
+	    	bc.stepInfo(menuName + " checkbox is unchecked");
+		}
+	    if (flagChecked==true) {
+	    	bc.stepInfo(menuName + " checkbox is checked");
+		}
+	    if (flagChecked==true&& status=="false") {
+	    	bc.waitForElement(elementName);
+			elementName.waitAndClick(10);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo(menuName + " checkbox is unchecked");
+		}
+	    if (flagChecked==false&& status=="true") {
+	    	bc.waitForElement(elementName);
+	    	elementName.waitAndClick(5);
+	    	bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo(menuName + " checkbox is checked");
 		}
 		
 	}
