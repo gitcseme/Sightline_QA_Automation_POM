@@ -10411,7 +10411,8 @@ public class SessionSearch {
 				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
-
+		getPureHitsCount().isElementAvailable(10);
+		base.waitTime(5);
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
 		System.out.println("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
 				+ " and PureHit is : " + pureHit);
