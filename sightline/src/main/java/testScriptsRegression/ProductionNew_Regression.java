@@ -936,7 +936,7 @@ public class ProductionNew_Regression {
 	 *  TESTCASE NO: RPMXCON-56157
 	 * @Description: Verify that Production should generate with Priv placholder for Orphan redacted document
 	 */
-	@Test(description="RPMXCON-56159",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description="RPMXCON-56159,RPMXCON-56157,RPMXCON-56160",enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyProductionWithOrphanRedactedDocumemtsForNativelyPlaceholder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56159 Production- Sprint 04");
@@ -1054,7 +1054,7 @@ public class ProductionNew_Regression {
 	 * @Description:Validate text on "Text redactions" applied documents with PDF generated files
 	 */
 
-	@Test(description="RPMXCON-56154",enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description="RPMXCON-56154,RPMXCON-56156",enabled = true, groups = { "regression" }, priority = 21)
 	public void generateProductionWithPDFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56156 Production- Sprint 04");
@@ -1111,7 +1111,7 @@ public class ProductionNew_Regression {
 	 *                       applied area on documents with TIFF generated files
 	 */
 
-	@Test(description="RPMXCON-56153",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description="RPMXCON-56153,RPMXCON-56155",enabled = true, groups = { "regression" }, priority = 22)
 	public void generateProductionWithTIFFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56153 Production- Sprint 04");

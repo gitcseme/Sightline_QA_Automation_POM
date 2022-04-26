@@ -749,7 +749,7 @@ public class Production_Regression2 {
 	 *                     'Split Sub Folders' is ON with split count as 10 and
 	 *                     selected documents <= 10
 	 */
-	 @Test(description="RPMXCON-47125",enabled = true, groups = { "regression" }, priority = 13)
+	 @Test(description="RPMXCON-47175",enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyTheSubFolderAfterGenration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
