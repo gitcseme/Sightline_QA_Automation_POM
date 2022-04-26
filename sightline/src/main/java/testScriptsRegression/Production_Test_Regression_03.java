@@ -104,7 +104,7 @@ public class Production_Test_Regression_03 {
 	 *              data
 	 * 
 	 */
-	@Test(description="RPMXCON-49334",enabled = false, groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-49334",enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyIceDataGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -178,7 +178,7 @@ public class Production_Test_Regression_03 {
 	 *              file types for ICE processed data.
 	 * 
 	 */
-	@Test(description="RPMXCON-49373",enabled = false, groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-49373",enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyIceDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -273,7 +273,7 @@ public class Production_Test_Regression_03 {
 	 * @Description: To verify that document should produced with 'Tech Issues Docs'
 	 *               placeholdering by selecting more than one Tag
 	 */
-	@Test(description="RPMXCON-49337",enabled = false, groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-49337",enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyTeccIssueDocPlaceholdering() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-49337 ");
@@ -340,7 +340,7 @@ public class Production_Test_Regression_03 {
 	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT
 	 *       environment
 	 */
-	@Test(description="RPMXCON-49867",enabled = false, groups = { "regression" }, priority = 4)
+	@Test(description="RPMXCON-49867",enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyPdfIceMappedSetProdGenSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -404,7 +404,7 @@ public class Production_Test_Regression_03 {
 	 *              with Multiple Branding Tags"
 	 * 
 	 */
-	@Test(description="RPMXCON-49046",enabled = false, groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-49046",enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyMultipleDocumentCountisZero() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -493,7 +493,7 @@ public class Production_Test_Regression_03 {
 	 * @Description: To Verify "Enable Placeholders by Selecting File Types" for
 	 *               (.mdb/.mdf) under TIFF /PDF Should works for Production.
 	 */
-	@Test(description="RPMXCON-48034",enabled = false, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-48034",enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyPlaceholderForMDB() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case id : RPMXCON-48034 ");
@@ -637,7 +637,7 @@ public class Production_Test_Regression_03 {
 	 *              file types for NUIX processed data.
 	 * 
 	 */
-	@Test(description="RPMXCON-49374",enabled = false, groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-49374",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyNuixDatafilesGenerateSuccesfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -710,7 +710,7 @@ public class Production_Test_Regression_03 {
 	 *              Mark complete.
 	 * 
 	 */
-	@Test(description="RPMXCON-48255",enabled = false, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-48255",enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyPlaceholderPrivDocAtPrivGuard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -792,7 +792,7 @@ public class Production_Test_Regression_03 {
 	 *              documents with annotation
 	 * 
 	 */
-	@Test(description="RPMXCON-60902",enabled = false, groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-60902",enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyProdGenDocumentWithAnnotation() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -863,7 +863,7 @@ public class Production_Test_Regression_03 {
 	 *              document
 	 * 
 	 */
-   @Test(description="RPMXCON-56146",enabled = false, groups = { "regression" }, priority = 11)
+   @Test(description="RPMXCON-56146",enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyPrivPlaceholderGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1110,7 +1110,7 @@ public class Production_Test_Regression_03 {
 	 *
 	 * @throws IOException
 	 */
-	@Test(description="RPMXCON-55940",enabled = false,groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-55940",enabled = true,groups = { "regression" }, priority = 14)
 	public void verifyEmailValueDisplayOnSlipSheets() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-55940 -Production Sprint 13");
@@ -1175,7 +1175,7 @@ public class Production_Test_Regression_03 {
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
 	 * 
 	 */
-	@Test(description="RPMXCON-49729",enabled = false,groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-49729",enabled = true,groups = { "regression" }, priority = 15)
 	public void verifyDiffFileBrandingGenerateSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1247,7 +1247,7 @@ public class Production_Test_Regression_03 {
 	 * @Description To verify, User able to edit a production to regenerate it
 	 * 
 	 */
-	@Test(description="RPMXCON-47932",enabled = false,groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-47932",enabled = true,groups = { "regression" }, priority = 16)
 	public void verifyRegenerateWithEditSuccessfully() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1318,7 +1318,7 @@ public class Production_Test_Regression_03 {
 	 * @Description Verify that Production should generated successfully for Natively PDF documents
 	 * @Hint : test case run on the project Regression_AllDataset_Consilio1 in UAT environment
 	 */
-	@Test(description="RPMXCON-48814",enabled = false,groups = { "regression" }, priority = 17)
+	@Test(description="RPMXCON-48814",enabled = true,groups = { "regression" }, priority = 17)
 	public void verifyProdGenSuccussNativePdf() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1492,7 +1492,7 @@ public class Production_Test_Regression_03 {
 	 * @Description Verify that branding is applied on all pages for  image based documents on generated TIFF file
 	 * 
 	 */
-	@Test(description="RPMXCON-49725",enabled = false,groups = { "regression" }, priority = 20)
+	@Test(description="RPMXCON-49725",enabled = true,groups = { "regression" }, priority = 20)
 	public void verifyBrandingText() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1619,7 +1619,7 @@ public class Production_Test_Regression_03 {
 	 *         No:RPMXCON-55993
 	 * @Description: Verify that status text along with the docment counts show properly in the space available for the progress bar on tile view
 	 */
-	@Test(description="RPMXCON-55993",enabled = false, groups = { "regression" }, priority = 22)
+	@Test(description="RPMXCON-55993",enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyStatusTextAndDocumentCountWithDifferentResolution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1702,7 +1702,7 @@ public class Production_Test_Regression_03 {
 	* @author Aathith created on:NA modified by:NA TESTCASE No:RPMXCON-47926
 	* @Description:To Verify PRIV flag configured in the DAT section of Production is to being honored for all docs in the generated production
 	*/
-	@Test(description="RPMXCON-47926",enabled = false,groups = { "regression" }, priority = 23)
+	@Test(description="RPMXCON-47926",enabled = true,groups = { "regression" }, priority = 23)
 	public void verifyDatFiledisBlank() throws Exception {
 	UtilityLog.info(Input.prodPath);
 
@@ -1991,7 +1991,7 @@ public class Production_Test_Regression_03 {
 	* @Description:Verify that PDF files should be copied to folder when 'Split Sub Folders' is ON with split count as 10.
 	* 'RPMXCON-47171' 
 	*/
-     @Test(description="RPMXCON-47171",enabled = false, groups = { "regression" }, priority = 27)
+     @Test(description="RPMXCON-47171",enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyTheSubFolderAfterGenrationPDFFile() throws Exception {
 	UtilityLog.info(Input.prodPath);
 	loginPage.logout();
@@ -2070,7 +2070,7 @@ public class Production_Test_Regression_03 {
 		 *         No:RPMXCON-55983
 		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Progress bar Tile View as 'Creating Archive - 10%'
 		 */
-		@Test(description="RPMXCON-55983",enabled = false,groups = { "regression" }, priority = 28)
+		@Test(description="RPMXCON-55983",enabled = true,groups = { "regression" }, priority = 28)
 		public void verifiyCreateArchicTenPercenteOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55983 - Production Component");
@@ -2133,7 +2133,7 @@ public class Production_Test_Regression_03 {
 		 *         No:RPMXCON-55982
 		 * @Description: Verify that once Archiving is in progress, it will displays status on Production Generation page as 'Creating Archive - 10%'
 		 */
-		@Test(description="RPMXCON-55982",enabled = false,groups = { "regression" }, priority = 29)
+		@Test(description="RPMXCON-55982",enabled = true,groups = { "regression" }, priority = 29)
 		public void createArchivingTenPercentStatusVerifyOnGenPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55982 -Production");
@@ -2191,7 +2191,7 @@ public class Production_Test_Regression_03 {
 		 * @Description Verify that branding is applied on all pages for  image based documents on generated PDF file 
 		 * 
 		 */
-		@Test(description="RPMXCON-49726",enabled = false,groups = { "regression" }, priority = 30)
+		@Test(description="RPMXCON-49726",enabled = true,groups = { "regression" }, priority = 30)
 		public void verifyPdfBrandingGenerateSuccessfully() throws Exception {
 
 			UtilityLog.info(Input.prodPath);
@@ -2479,7 +2479,7 @@ public class Production_Test_Regression_03 {
 			 * 		unintentionally in the produced document 
 			 * 
 			 */
-			@Test(description="RPMXCON-48314",enabled  = false,groups = { "regression" }, priority = 34)
+			@Test(description="RPMXCON-48314",enabled  = true,groups = { "regression" }, priority = 34)
 			public void verifyProducedPadWithTextReviewRemarkRedaction() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -2563,7 +2563,7 @@ public class Production_Test_Regression_03 {
 			 * @Description Verify that Producing a TIFF with text highlighting and reviewer remarks, block redactions and 'this page', must not eliminate any text characters unintentionally in the produced document
 			 * 
 			 */
-			@Test(description="RPMXCON-48315",enabled  = false,groups = { "regression" }, priority = 35)
+			@Test(description="RPMXCON-48315",enabled  = true,groups = { "regression" }, priority = 35)
 			public void verifyProducedTiffWithTextReviewRemarkRedaction() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
@@ -2733,7 +2733,7 @@ public class Production_Test_Regression_03 {
 			 * 			RPMXCONO-47172
 			 * @Description Verify that PDF files should be copied to folder when 'Split Sub Folders' is OFF with split count as 10
 			 */
-			@Test(description="RPMXCON-47172",enabled = false,groups = { "regression" }, priority = 37)
+			@Test(description="RPMXCON-47172",enabled = true,groups = { "regression" }, priority = 37)
 			public void verifyPdfFileAreNotSplit() throws Exception {
 				
 				UtilityLog.info(Input.prodPath);
@@ -2909,7 +2909,7 @@ public class Production_Test_Regression_03 {
 			 *              RPMXCON-49228]
 			 * @throws Exception
 			 */
-			@Test(description="RPMXCON-49228",enabled = false, groups = { "regression" }, priority = 39)
+			@Test(description="RPMXCON-49228",enabled = true, groups = { "regression" }, priority = 39)
 			public void verifySortByTags() throws Exception {
 
 				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3012,7 +3012,7 @@ public class Production_Test_Regression_03 {
 			 * @Description Verify that if document is produced  and if user rotate the redacted images then after copying to any other file then redacted image should not be displayed 
 			 * 
 			 */
-			@Test(description="RPMXCON-49781",enabled = false,groups = { "regression" }, priority = 40)
+			@Test(description="RPMXCON-49781",enabled = true,groups = { "regression" }, priority = 40)
 			public void verifyAfterRotationRedactionNotDisplayed() throws Exception {
 
 				UtilityLog.info(Input.prodPath);
