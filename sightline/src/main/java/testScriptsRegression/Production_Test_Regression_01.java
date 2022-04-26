@@ -4176,7 +4176,7 @@ public class Production_Test_Regression_01 {
 		page.fillingPDFWithMultiPage(tagname);
 		page.navigateToNextSection();
 		page.fillingNumberingPageWithDocumentAndPassingNullSubBatesSuccess();
-		page.navigateToNextSection()
+		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
