@@ -86,6 +86,18 @@ public class DataSets {
 		public ElementCollection getPublishedCount() {
 		return driver.FindElementsByXPath("//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//div[@class='ingestCt col-md-4 txt-color-green']//span");
 		}
+		
+		public Element getSelectDocView() {
+			return driver.FindElementByXPath("//a[@id='idBulkFolder']");
+		}
+		public Element getSelectDataSetMenu(String name ,String menu) {
+			return driver.FindElementByXPath("//*[@title='"+name+"']//..//..//ul//li//a[text()='"+menu+"']");
+		}
+		public Element getSelectDatasetsAndActionButton(String name) {
+			return driver.FindElementByXPath("//*[@title='"+name+"']//..//..//button");
+		}
+
+
 	
 	public DataSets(Driver driver) {
 
@@ -325,6 +337,98 @@ public class DataSets {
 			base.failedStep("Exception occcured while verify data sets page is loaded."+e.getMessage());
 			
 		}
+	}
+	
+	
+	/*	
+	 * @author Sakthivel
+	 * @description : Method to select a uploaded dataset in dropDown.
+	 */
+	public void SelectingUploadedDataSets() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+		base.stepInfo("uploaded dataset is selected on a dropdown successfully");
+	}
+	/**
+	 * @author Sakthivel
+	 * @description : Method to select a datasets in dropDown.
+	 */
+	public void SelectingDataSets(String Set) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText(Set);
+		base.stepInfo(Set+" is selected on a dropdown successfully");
+		
+	}
+
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a search dataset and go to doclist
+	 */
+	public void SearchDataSetsInDocList(String dataset) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSearchTheFile().Enabled();
+			}
+		}), Input.wait30);
+		getSearchTheFile().waitAndClick(5);
+		getSearchTheFile().SendKeys(dataset);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getClkSearch().Enabled();
+			}
+		}), Input.wait30);
+		getClkSearch().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAction());
+		getSelectAction().waitAndClick(10);
+		base.waitForElement(getSelectDocList());
+		getSelectDocList().waitAndClick(10);
+	}
+
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a search dataset and go to docview.
+	 */
+	public void SearchDataSetsInDocView(String dataset) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSearchTheFile().Enabled();
+			}
+		}), Input.wait30);
+		getSearchTheFile().waitAndClick(5);
+		getSearchTheFile().SendKeys(dataset);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getClkSearch().Enabled();
+			}
+		}), Input.wait30);
+		getClkSearch().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAction());
+		getSelectAction().waitAndClick(10);
+		base.waitForElement(getSelectDocView());
+		getSelectDocView().waitAndClick(10);
+	}
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a automationallSourcesData and go to docview.
+	 */
+	public void getAutomationAllSourcesData(String AllSourceData, String name) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		base.waitTime(3);
+		driver.scrollingToBottomofAPage();
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getSelectDatasetsAndActionButton(AllSourceData));
+		getSelectDatasetsAndActionButton(AllSourceData).waitAndClick(2);
+		driver.waitForPageToBeReady();
+		getSelectDataSetMenu(AllSourceData, name).waitAndClick(5);		
 	}
 }
 

@@ -25,6 +25,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
@@ -1840,6 +1841,53 @@ public class DocView_Regression5 {
 		loginPage.logout();
 	}
 
+	
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51977 Verify that DocView should be able to load the stitched TIFF
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyDocViewStichedTIFFIsLoad() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-51977");
+		baseClass.stepInfo("Verify that DocView should be able to load the stitched TIFF");
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		DataSets dataset = new DataSets(driver);
+		String datasets = "Only Mapped Sets";
+		String AllSourceData = "B2F9_Automation_AllSources_20211130043120500";
+		String name = "DocView";
+
+		// login as PA
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as PA");
+		dataset.navigateToDataSetsPage();
+		baseClass.stepInfo("Navigating to dataset page");
+
+		// verify selected a automationallSourcesData and go to docview.
+		dataset.SelectingDataSets(datasets);
+		baseClass.passedStep("Dataset is successfully published");
+		dataset.getAutomationAllSourcesData(AllSourceData, name);
+		baseClass.passedStep(AllSourceData + "..data is selected and go to docviewpage");
+		docView.verifyDisplaysTheDefaultPdfInDocView();
+
+		// verify click on image tag.
+		docView.clickOnImageTab();
+		softassertion.assertTrue((docView.getImageTabAllSourcesDataOnDocView().isDisplayed()));
+		softassertion.assertAll();
+		baseClass.waitForElement(docView.getImageTabAllSourcesDataOnDocView());
+		docView.getImageTabAllSourcesDataOnDocView().waitAndClick(2);
+		softassertion.assertTrue((docView.getAllSourcesDatasetImage().isDisplayed()));
+		baseClass.stepInfo("AutomationAllsources dataset view in imagetab");
+		if (docView.getAllSourcesDatasetImage().isDisplayed()) {
+			baseClass.passedStep(AllSourceData + "...Multipage stitched TIFF is loaded on Doc View is successfully");
+		} else {
+			baseClass.failedStep("loaded failed");
+		}
+		softassertion.assertAll();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
