@@ -1924,6 +1924,53 @@ public class UsersAndRoleManagement_Regression {
  		loginPage.logout();
 
  	}
+ 	/**
+ 	 * Author : Aathith date: NA Modified date: /04/2022 Modified by: 
+ 	 * Description :To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role
+ 	 */
+ 	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
+ 	public void verifySysAdminEditRoleOfRmu() throws Exception {
+ 		baseClass.stepInfo("Test case Id: RPMXCON-52480");
+ 		baseClass.stepInfo("To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role");
+ 		userManage = new UserManagement(driver);
+
+ 		// login
+ 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+ 		Reporter.log("Logged in as User: " + Input.sa1userName);
+ 		
+ 		userManage.passingUserName(Input.rmu1userName);
+ 		userManage.applyFilter();
+ 		userManage.verifyUserHasMoreThanOneProject();
+ 		
+ 		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusDataSet("true");
+		
+		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		if(userManage.getDataSetStatus().isElementAvailable(3)) {
+			baseClass.passedStep("user rights is saved in database for the respective project.");
+		}else {
+			baseClass.failedStep("not saved in database for the respective project");
+		}
+		userManage.getCancel().waitAndClick(10);
+		
+		userManage.editFunctionality(Input.additionalDataProject);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		if(!userManage.getDataSetStatus().isElementAvailable(1)) {
+			baseClass.passedStep("User rights saved for the user for Project1 is not be overwrite for Project2.");
+		}else {
+			baseClass.failedStep("verification failed");
+		}
+		userManage.getCancel().waitAndClick(10);
+		baseClass.passedStep("verified when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role");
+		
+		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusDataSet("false");
+		
+		loginPage.logout();
+ 	}
 
 	
 	@DataProvider(name = "saImpPa")
