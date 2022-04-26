@@ -241,7 +241,7 @@ public class Production_Page_Regression {
 	 *                     Placeholder
 	 */
 
-	@Test(description="RPMXCON-56037",enabled = true,groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-56087",enabled = true,groups = { "regression" }, priority = 3)
 	public void generateTIFFWithTechIssue() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56087- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
@@ -708,7 +708,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that after Pre-gen checks is in progress, it will
 	 *                     displays status on Production Grid view
 	 */
-	@Test(description="RPMXCON-56042",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-56042,RPMXCON-56036",enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyPreGenChecksInHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56042- Production Sprint 07");

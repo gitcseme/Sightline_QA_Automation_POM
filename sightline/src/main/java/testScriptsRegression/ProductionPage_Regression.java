@@ -457,7 +457,7 @@ public class ProductionPage_Regression {
 	 * @throws Exception
 	 * check
 	 */
-	@Test(description="RPMXCON-56003",enabled = true, groups = { " regression" }, priority = 8)
+	@Test(description="RPMXCON-56003,RPMXCON-56004",enabled = true, groups = { " regression" }, priority = 8)
 	public void verifySharableLinks() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56003- Production Sprint 05");
 		baseClass.stepInfo("Test case Id: RPMXCON-56004- Production Sprint 05");
@@ -694,7 +694,7 @@ public class ProductionPage_Regression {
 	 * check
 	 */
 
-	@Test(description="RPMXCON-55971",enabled = true, groups = { " regression" }, priority = 12)
+	@Test(description="RPMXCON-55971,RPMXCON-55972",enabled = true, groups = { " regression" }, priority = 12)
 	public void ViewDraftAssertionInGeneratePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55971- Production Sprint 05");
@@ -760,7 +760,7 @@ public class ProductionPage_Regression {
 	 * configuration
 	 * check
 	 */
-	@Test(description="RPMXCON-58592",enabled = true, groups = { " regression" }, priority = 13)
+	@Test(description="RPMXCON-58592,RPMXCON-58594",enabled = true, groups = { " regression" }, priority = 13)
 	public void passProductionNameAsLoadFilesName() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1005,7 +1005,7 @@ public class ProductionPage_Regression {
 	 * check
 	 */
 
-	@Test(description="RPMXCON-56122",enabled = true, groups = { " regression" }, priority = 18)
+	@Test(description="RPMXCON-56122,RPMXCON-56123",enabled = true, groups = { " regression" }, priority = 18)
 	public void generatingTheProductionAfterBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56122- Production Sprint 05");
@@ -3105,10 +3105,10 @@ public class ProductionPage_Regression {
 	 *         No:RPMXCON-47888,RPMXCON-47894
 	 * @Description:To Verify in Priv Guard View in Doclist and DocView.
 	 */
-	@Test(description="RPMXCON-47888",enabled = true, groups = { " regression" }, priority = 56)
+	@Test(description="RPMXCON-47888,RPMXCON-47894",enabled = true, groups = { " regression" }, priority = 56)
 	public void verifyPrivGuardSectionViewInDoclistAndDocView() throws Exception {
 
-		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
+		baseClass.stepInfo("Test case Id RPMXCON-47888 & 47894- Production Sprint 11");
 		baseClass.stepInfo("To Verify in Priv Guard View in Doclist and DocView.");
 		baseClass.stepInfo("To Verify Priv Guard Section on the self production wizard");
 		UtilityLog.info(Input.prodPath);
