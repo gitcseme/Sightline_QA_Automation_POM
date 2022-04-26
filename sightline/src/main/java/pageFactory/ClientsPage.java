@@ -172,11 +172,10 @@ public class ClientsPage {
 		 addNewClientWithDomainType();
 		 bc.waitForElement(databaseHelpIcon_clientPg());
 		 databaseHelpIcon_clientPg().ScrollTo();
-		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==false) {
+		 if(databaseHelpIconPopOver_clientPg().isElementAvailable(5)==false) {
 			 bc.passedStep("Help popup is not appeared while hovering on help icon");
 		 }else {
 			 bc.failedStep("Help popup is appeared while hovering on help icon");
-			 Assert.fail();
 		 }
 		 
 	 }
@@ -190,19 +189,17 @@ public class ClientsPage {
 		 bc.waitForElement(databaseHelpIcon_clientPg());
 		 databaseHelpIcon_clientPg().Click();
 		 bc.stepInfo("Help icon is clicked");
-		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==true) {
+		 if(databaseHelpIconPopOver_clientPg().isElementAvailable(5)==true) {
 			 bc.passedStep("Help popup appeared when we click on help icon");
 		 }else {
 			 bc.failedStep("Help popup is not appeared");
-			 Assert.fail();
 		 }
 		 dataBaseTitle().Click();
 		 bc.stepInfo("Other than help icon is clicked");
-		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==false) {
+		 if(databaseHelpIconPopOver_clientPg().isElementAvailable(5)==false) {
 			 bc.passedStep("Help popover is disappeared");
 		 }else {
 			 bc.failedStep("Help popup not disappeared");
-			 Assert.fail();
 		 }
 		 
 	 }
