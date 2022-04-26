@@ -1392,7 +1392,7 @@ public class AssignmentsPage {
 
 	public Element getBatchAssignmentBar(String assignmentName) {
 		return driver.FindElementByXPath("//strong[text()='" + assignmentName
-				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']/div[@class='progress-bar bg-color-green']");
+				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']");
 	}
 
 	public ElementCollection getKeywordNames() {
