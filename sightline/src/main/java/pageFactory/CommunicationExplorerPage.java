@@ -514,6 +514,7 @@ public class CommunicationExplorerPage {
 		getActionBtn().waitAndClick(10);
 		if(getViewBtn().isElementAvailable(5)) {
 			getViewBtn().ScrollTo();
+			base.waitTime(1);
 			getViewBtn().ScrollTo();
 		}
 		base.waitForElement(getAction_ViewInDoclistButton());
