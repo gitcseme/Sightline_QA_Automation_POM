@@ -53,8 +53,8 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -843,7 +843,7 @@ public class CustomDocumentDataReport_Regression1 {
 		tp.tallyActions();
 		bc.waitTime(2);
 		tp.getTally_actionSubTally().Click();
-		tp.selectMetaData_SubTally(Input.MetaDataEAName);
+		tp.selectMetaData_SubTally(Input.MetaDataEAName,1);
 		driver.waitForPageToBeReady();
 		tp.subTallyActions();
 		tp.subTallyToExport();
@@ -867,7 +867,7 @@ public class CustomDocumentDataReport_Regression1 {
 		tp.tallyActions();
 		bc.waitTime(2);
 		tp.getTally_actionSubTally().Click();
-		tp.selectMetaData_SubTally(Input.MetaDataEAName);
+		tp.selectMetaData_SubTally(Input.MetaDataEAName,1);
 		driver.waitForPageToBeReady();
 		tp.subTallyActions();
 		tp.subTallyToExport();
@@ -932,13 +932,15 @@ public class CustomDocumentDataReport_Regression1 {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
+		LoginPage lp = new LoginPage(driver);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
 			lp.logout();
-			LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

@@ -107,6 +107,7 @@ public class ReviewerProductivityReportPage {
 		bc.stepInfo("Selected all Reviewers.");
 		getReviewerExpandButton().waitAndClick(2);
 		if (assgnName != null) {
+			bc.waitTime(5);
 			bc.waitTillElemetToBeClickable(getAssignmentExpandButton());
 			getAssignmentExpandButton().waitAndClick(10);
 			bc.waitTime(5);
@@ -116,7 +117,7 @@ public class ReviewerProductivityReportPage {
 			getAssignmentExpandButton().waitAndClick(10);
 		}
 		bc.waitForElement(getDataRangeExpandBtn());
-		getDataRangeExpandBtn().waitAndClick(2);
+		getDataRangeExpandBtn().waitAndClick(10);
 		selectDate(getFromDateRangeTxtBox(), "From date range");
 		driver.waitForPageToBeReady();
 		selectDate(getToDateRangeTxtBox(), "To date range");

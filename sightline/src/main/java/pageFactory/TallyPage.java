@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -1332,13 +1333,18 @@ public class TallyPage {
 	 * @param subtallyBy
 	 * @throws InterruptedException
 	 */
-	public void selectMetaData_SubTally(String subtallyBy) throws InterruptedException {
+	public void selectMetaData_SubTally(String subtallyBy,int j) throws InterruptedException {
 		base.waitForElement(getSubTallyField());
 		base.waitTillElemetToBeClickable(getSubTallyField());
 		getSubTallyField().waitAndClick(5);
-		base.waitTime(6);
+		base.waitTime(10);
+		if(j==1) {
 		base.waitTillElemetToBeClickable(getTally_subMetadata());
-		getTally_subMetadata().waitAndClick(5);
+		getTally_subMetadata().ScrollTo();
+		getTally_subMetadata().waitAndClick(20);
+		}
+//		Actions action = new Actions(driver.getWebDriver());
+//		action.moveToElement(getTally_subMetadata().getWebElement()).click().perform();		
 		base.waitTillElemetToBeClickable(getTally_submetadataselect());
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText(subtallyBy);
 		base.waitForElement(getTally_subMetadata());
@@ -1479,8 +1485,11 @@ public class TallyPage {
 	 */
 	public void selectSource_Project(String prjName) {
 		base.stepInfo("**Selecting source as project --" + prjName + "**");
+		base.waitTime(2);
 		base.waitForElement(getTally_SelectSource());
+		base.waitTillElemetToBeClickable(getTally_SelectSource());
 		getTally_SelectSource().Click();
+		base.waitTime(2);
 		base.waitForElement(getTally_Projects());
 		getTally_Projects().Click();
 		base.waitTime(2);
@@ -1679,7 +1688,7 @@ public class TallyPage {
 	 */
 	public int getDocCountSubTally() {
 		Integer sum = 0;
-		if (getSubtallyTable().isElementAvailable(10)) {
+		if (getSubtallyTable().isElementAvailable(30)) {
 			List<WebElement> elementList = null;
 			List<Integer> docCount = new ArrayList<>();
 			elementList = getUniqueDocs_Subtally().FindWebElements();
@@ -2072,7 +2081,7 @@ case "assignment":
 	applyingSubTallyByAssgnName(tallyName);
 break;    
 case "metadata": 
-selectMetaData_SubTally(tallyName);  
+selectMetaData_SubTally(tallyName,1);  
 break;    
 }
 }
