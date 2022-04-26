@@ -3,9 +3,11 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -1971,6 +1973,403 @@ public class UsersAndRoleManagement_Regression {
 		
 		loginPage.logout();
  	}
+ 	
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify that Bulk User Access Control button is not displayed
+	 * on Manage User when logged in as an RMU
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
+	public void validatingBulkUserTabPresence() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52712");
+		baseClass.stepInfo("To verify that Bulk User Access Control button is not "
+				+ "displayed on Manage User when logged in as an RMU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// validating bulk user tab presence
+		driver.waitForPageToBeReady();
+		Boolean bulkFlagfalse = userManage.getBulkUserAccessTab().isElementAvailable(2);
+		softAssertion.assertFalse(bulkFlagfalse);
+		softAssertion.assertAll();
+		baseClass.passedStep("Bulk user tab icon not available for rmu user");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify when 'Analytics Panels' is Checekd/Unchecked from Bulk
+	 * User Access Control
+	 */
+
+	@DataProvider(name = "analyticalPanel")
+	public Object[][] analyticalPanel() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, "Reviewer", Input.rev1userName, Input.rev1password, "sa",
+						Input.rev1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
+						Input.rev1FullName, },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
+						Input.rev1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "analyticalPanel", groups = { "regression" }, priority = 27)
+	public void validatingAnalyticalPanel(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52707");
+		baseClass.stepInfo("To verify when 'Analytics Panels' is Checekd/Unchecked from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, true, true, true, false);
+		}
+		baseClass.stepInfo("Disable the radio btn for Analytical panel checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Analytical panel
+		docViewPage.verifyElementNameBasedOnParameterDocView(false, false, "Analytical panel",
+				docViewPage.getDocView_ChildWindow_ActionButton());
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, true, true, true, false);
+		}
+		baseClass.stepInfo("Enable the radio btn for Analytical panel checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Analytical panel
+		docViewPage.verifyElementNameBasedOnParameterDocView(true, true, "Analytical panel",
+				docViewPage.getDocView_ChildWindow_ActionButton());
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :Verify security group from edit user pop up when user changes
+	 * security group from header
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+	public void validatingRmuCanRemoveSG() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52679");
+		baseClass.stepInfo(
+				"Verify security group from edit user pop up when user " + "changes security group from header");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		security = new SecurityGroupsPage(driver);
+		String securityGroup = "sGName" + Utility.dynamicNameAppender();
+
+		// Login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating new sg
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		security.AddSecurityGroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.addingSGToUser(Input.securityGroup, securityGroup);
+
+		// logout
+		loginPage.logout();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectsecuritygroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		Select selectSG = new Select(userManage.userSelectSecurityGroup().getWebElement());
+		int count = selectSG.getOptions().size();
+		List<String> allSG = new ArrayList<String>();
+		for (int j = 0; j < selectSG.getOptions().size(); j++) {
+			if (count <= 1) {
+				baseClass.passedStep("When user change the Sg from header changed sg displaying in edit user detailss");
+			}
+			allSG.add(selectSG.getOptions().get(j).getText());
+		}
+		baseClass.waitForElement(userManage.getEditCancel());
+		userManage.getEditCancel().waitAndClick(5);
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		softAssertion.assertEquals(securityGroup, String.join(" ", allSG));
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :Verify after removing the security group user assigned security
+	 * group should be updated
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void validatingAfterdeletingSGFromSA() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52675");
+		baseClass.stepInfo(
+				"Verify after removing the security group user " + "assigned security group should be updated");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		security = new SecurityGroupsPage(driver);
+		String securityGroup = "sGName" + Utility.dynamicNameAppender();
+
+		// Login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating new sg
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		security.AddSecurityGroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.addingSGToUser(Input.securityGroup, securityGroup);
+
+		// Deleting the security group
+		security.deleteSecurityGroups(securityGroup);
+		baseClass.stepInfo("Deleting the security group which created new");
+
+		// logout
+		loginPage.logout();
+
+		// Login As sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.waitForElement(userManage.getAssignUserButton());
+		userManage.getAssignUserButton().waitAndClick(5);
+		baseClass.waitForElement(userManage.getProjectTab());
+		userManage.getProjectTab().waitAndClick(5);
+		baseClass.waitForElement(userManage.getAssignUserProjectDrp_Dwn());
+		userManage.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getSelectDropProject(Input.projectName));
+		userManage.getSelectDropProject(Input.projectName).waitAndClick(5);
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(Input.rmu1FullName));
+		String assignedUserStatus=userManage.getCheckingAssignedUserSG(Input.rmu1FullName).getText();
+		if (assignedUserStatus.contains(securityGroup)) {
+			baseClass.failedStep("Deleted Sg displaying in assigned user window");
+		}
+		else {
+			baseClass.passedStep("Deleted Sg not displaying in assigned user from SA");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify for Project Admin when 'Reviewer Remarks' is Checekd/Unchecked 
+	 *              from Bulk User Access Control
+	 */
+
+
+	@Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 30)
+	public void validatingBulkUserReviewerRemarksForPa(String roll, String loginuser, String loginPass, String rollUser,
+			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52706");
+		baseClass.stepInfo("To verify for Project Admin when 'Reviewer Remarks' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		sessionSearch = new SessionSearch(driver);
+
+		// login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, false, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Reviewer Remarks tag is disabled");
+
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// validating redaction tab
+		boolean remarksNotpresent = userManage.getAdvancedSearchAudioRemarkIcon().isElementAvailable(2);
+		softAssertion.assertFalse(remarksNotpresent);
+		baseClass.passedStep("Reviewer Remarks tag not displayed in docview page");
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, false, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Reviewer Remarks tag is Enabled");
+
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// validating redaction tab
+		baseClass.waitForElement(userManage.getAdvancedSearchAudioRemarkIcon());
+		boolean remarkspresent = userManage.getAdvancedSearchAudioRemarkIcon().isElementAvailable(2);
+		softAssertion.assertTrue(remarkspresent);
+		baseClass.passedStep("Reviewer Remarks tag  displayed in docview page");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+
 
 	
 	@DataProvider(name = "saImpPa")

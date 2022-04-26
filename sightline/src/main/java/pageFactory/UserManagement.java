@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -587,6 +588,19 @@ public class UserManagement {
 	}
 	public ElementCollection getRowValues(int rowNum) {
 		return driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td["+rowNum+"]");
+	}
+	
+	public Element getEditCancel() {
+		return driver.FindElementByXPath("//input[@value='Cancel']");
+	}
+	public Element getCheckingAssignedUserSG(String FullName) {
+		return driver.FindElementByXPath("//select[@id='AssignedUser']//option[contains(text(),'"+FullName+"')]");
+	}
+	public Element getAssignUserProjectDrp_Dwn() {
+		return driver.FindElementById("lstProjects");
+	}
+	public Element getAdvancedSearchAudioRemarkIcon() {
+		return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]");
 	}
 
 	public UserManagement(Driver driver) {
@@ -2171,6 +2185,29 @@ public class UserManagement {
 		}else {
 			bc.failedStep("please use a multi project rmu user");
 		}
-		
 	}
+	
+	/**
+	 * @author Indium-Baskar date: 26/04/2022 Modified date: 26/04/2022
+	 * @throws AWTException 
+	 * @Description:Methods for adding sg to user
+	 */
+	
+	public void addingSGToUser(String defaultName,String newSG) throws InterruptedException, AWTException {
+		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		selectSG.selectByVisibleText(defaultName);
+		selectSG.selectByVisibleText(newSG);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
+
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		Thread.sleep(3000);
+		bc.passedStep(
+				"Given access for these SG's " + defaultName + " " + newSG + "  for this user" + " Rmu user");
+	}
+	
+	
 }

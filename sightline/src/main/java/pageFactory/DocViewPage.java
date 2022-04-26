@@ -27665,7 +27665,37 @@ public class DocViewPage {
 			e.printStackTrace();
 			System.out.println("Docs Arenot there from DocView");
 		}
+	}
 	
+	/**
+	 * @author Indium-Baskar date: 26/04/2022 Modified date: 26/04/2022
+	 * @Description:This method used for Analytical panel validation
+	 * @param downloadFalse
+	 * @param downloadTrue
+	 * @param tabName
+	 * @param elementName
+	 */
 
+	public void verifyElementNameBasedOnParameterDocView(boolean downloadFalse, boolean downloadTrue, 
+			String tabName,Element elementName) {
+		driver.waitForPageToBeReady();
+		if (downloadFalse == false) {
+			boolean notPresent = elementName.isElementAvailable(2);
+			softAssertion.assertFalse(notPresent);
+			if (notPresent == downloadFalse) {
+				base.passedStep(tabName + " icon not available in DocView page + ");
+			} else {
+				base.failedStep(tabName + " icon  available in DocView page + ");
+			}
+		} else if (downloadTrue == true) {
+			base.waitForElement(elementName);
+			boolean present = elementName.isElementAvailable(2);
+			softAssertion.assertFalse(present);
+			if (present == downloadFalse) {
+				base.passedStep(tabName + " icon available in DocView page + ");
+			} else {
+				base.failedStep(tabName + " icon not available in DocView page + ");
+			}
+		}
 	}
 }
