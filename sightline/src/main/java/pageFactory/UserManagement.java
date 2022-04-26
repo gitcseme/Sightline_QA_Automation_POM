@@ -579,8 +579,15 @@ public class UserManagement {
 	public Element getAllReportStatusCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanAllReports'][@checked='checked']");
 	}
-	
-
+	public Element getDataSetStatus() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanDatasets'][@checked='checked']");
+	}
+	public Element getDataSet() {
+		return driver.FindElementByXPath("//input[@id='UserRights_CanDatasets']//parent::label//i");
+	}
+	public ElementCollection getRowValues(int rowNum) {
+		return driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td["+rowNum+"]");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -2120,6 +2127,50 @@ public class UserManagement {
 		}
 		
 	}
-
-
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param status
+	 * @throws Exception
+	 * @Description Verify DataSet is checked/unchecked perform
+	 */
+	public void verifyStatusDataSet(String status) throws Exception {
+		driver.waitForPageToBeReady();
+		
+	    boolean flagChecked=getDataSetStatus().isElementAvailable(3);
+	    System.out.println(flagChecked);
+	    if (flagChecked==false) {
+	    	bc.stepInfo("DataSet checkbox is unchecked");
+		}
+	    if (flagChecked==true&& status=="false") {
+	    	bc.waitForElement(getDataSet());
+	    	getDataSet().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+		}
+	    if (flagChecked==false&& status=="true") {
+	    	bc.waitForElement(getDataSet());
+	    	getDataSet().waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
+			getSaveEditUser().waitAndClick(10);
+			bc.stepInfo("DataSet checkbox is checked");
+		}
+		
+	}
+	/**
+	 * 
+	 * @author Aathith.Senthilkumar
+	 * @Description verify user has more than one project availabe
+	 */
+	public void verifyUserHasMoreThanOneProject() {
+		
+		List<WebElement> projects = getRowValues(bc.getIndex(userDetailsTableHeader(), "PROJECT")).FindWebElements();
+		int projectAvailable = projects.size();
+		System.out.println(projectAvailable);
+		if(projectAvailable>1) {
+			bc.stepInfo("this user has more than one project");
+		}else {
+			bc.failedStep("please use a multi project rmu user");
+		}
+		
+	}
 }
