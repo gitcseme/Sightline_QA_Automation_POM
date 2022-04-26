@@ -5478,7 +5478,7 @@ public class DocView_Regression1 {
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.testData1);
+		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
@@ -5499,7 +5499,7 @@ public class DocView_Regression1 {
 		baseClass.impersonateRMUtoReviewer();
 
 		baseClass.stepInfo(" Basic content search");
-		session.basicContentSearch(Input.testData1);
+		session.basicContentSearch(Input.searchString1);
 
 		baseClass.stepInfo("view in docview");
 		session.ViewInDocView();
