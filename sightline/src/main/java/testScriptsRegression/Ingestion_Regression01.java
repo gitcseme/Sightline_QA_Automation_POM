@@ -99,7 +99,7 @@ public class Ingestion_Regression01 {
 		docView.selectMeatdataGetFieldValue(fieldName);
 		
 		baseClass.stepInfo("Step 5 : Select all documents   Click on View in Doc List   Verify the Date fields from the metadata");
-		baseClass.selectproject(Input.projectName);
+		baseClass.selectproject(Input.projectName02);
 		sessionSearch.basicContentSearch(fieldName);
 		sessionSearch.ViewInDocList();
 		DocListPage docListPage = new DocListPage(driver);
