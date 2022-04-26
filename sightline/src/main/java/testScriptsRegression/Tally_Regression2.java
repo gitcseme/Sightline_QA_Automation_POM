@@ -68,18 +68,18 @@ public class Tally_Regression2 {
 		SessionSearch ss = new SessionSearch(driver);
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		String FilterType = "Include";
-		if (role.equalsIgnoreCase("RMU")) {
+		lp.loginToSightLine(username, password);
+		if (role.equalsIgnoreCase("PA")) {
 			// Pre-requesites block
-			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		//	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 			securityPage.AddSecurityGroup(secGrpName);
 			ss.basicContentSearch(Input.TallySearch);
 			hitsCount = Integer.parseInt(ss.verifyPureHitsCount());
 			ss.bulkRelease(secGrpName);
 			bc.stepInfo("Created a security group" + secGrpName + "Bulk Relaese is done");
-			lp.logout();
+		//	lp.logout();
 		}
-		lp.loginToSightLine(username, password);
 		if (role.equalsIgnoreCase("RMU")) {
 			// Pre-requesites block
 			ss.basicContentSearch(Input.TallySearch);
@@ -118,8 +118,13 @@ public class Tally_Regression2 {
 			ss.bulkFolder(folderName2);
 			bc.stepInfo("Created a Folder " + folderName2);
 		}
-		String[][] sourceNames = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
-				{ secGrpName, Input.securityGroup }, { "AutomationRegressionBackup", null } };
+	/*	String[][] sourceNames = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
+				{ secGrpName, Input.securityGroup }, { Input.projectName, null } };*/
+		String[][] sourceNames = null ;
+		String[][] sourceNames_PA = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
+				{ secGrpName, Input.securityGroup }, { Input.projectName, null } };
+		String[][] sourceNames_RMU = { { SearchName2, SearchName1 }, { folderName1, folderName2 },
+				{ secGrpName, Input.securityGroup } };
 		String[][] tallyByName = { { assgnTallyBy, folderName1, tagTallyBy, Input.metaDataName },
 				{ folderName1, tagTallyBy, assgnTallyBy, Input.metaDataName },
 				{ tagTallyBy, assgnTallyBy, folderName1, Input.metaDataName } };
@@ -128,6 +133,12 @@ public class Tally_Regression2 {
 				{ "folder", "tag", "assignment", "metadata" }, { "tag", "assignment", "folder", "metadata" } };
 		SoftAssert assertion = new SoftAssert();
 		TallyPage tp = new TallyPage(driver);
+		if(role.equalsIgnoreCase("PA")) {
+			sourceNames=sourceNames_PA;
+		}
+		if(role.equalsIgnoreCase("RMU")) {
+			sourceNames=sourceNames_RMU;
+		}
 		for (int k = 0; k < sourceNames.length; k++) {
 
 			for (int i = 0; i < tallyByName.length; i++) {
@@ -143,7 +154,11 @@ public class Tally_Regression2 {
 				String expValue=ListOfMetaData.get(0).trim();
 				System.out.println(actualValue);
 				System.out.println(expValue);
-				assertion.assertEquals(actualValue, expValue);
+				if (actualValue.equalsIgnoreCase(expValue)) {
+					bc.passedStep("Displayed Tally  by value " + expValue + " Which is expected.");
+				} else {
+					bc.failedStep("Displayed Tally  by value " + expValue + " which is not expected. ");
+				}
 				tp.tallyActions();
 				bc.waitTime(2);
 				tp.getTally_actionSubTally().Click();

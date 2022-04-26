@@ -64,8 +64,8 @@ public class SearchTermReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		
 		// Open browser
 		driver = new Driver();
@@ -541,7 +541,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13, enabled = false)
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13, enabled = true)
 	public void VerifyCombinedUniqueHits(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56586");
 		bc.stepInfo(
@@ -664,7 +664,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 13, enabled = true)
+	@Test(groups = { "regression" }, priority = 15, enabled = true)
 	public void UIvalidation_STR() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56582");
 		bc.stepInfo(
@@ -714,7 +714,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14, enabled = true)
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 16, enabled = true)
 	public void VerifyTotalDocsSelectedFontSize(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-61220");
 		bc.stepInfo("Verify that in Reports/Search Term Report , Doc Count Font Size is Increased");

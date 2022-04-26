@@ -37,8 +37,8 @@ public class ConceptExplorerRegression{
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 	}
 /**
@@ -49,7 +49,7 @@ public class ConceptExplorerRegression{
  * @throws InterruptedException
  */
 	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
-	public void reviewerResultDisplay(String username, String password, String role)
+	public void conceptExplorerDisplay(String username, String password, String role)
 			throws InterruptedException{
 		bc.stepInfo("Test case Id: RPMXCON-56386");
 		bc.stepInfo("To verify that Users are able to view filters on Concept Explorer Page");
@@ -91,7 +91,6 @@ public class ConceptExplorerRegression{
 		}
 		try {
 			lp.logout();
-			LoginPage.clearBrowserCache();
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();

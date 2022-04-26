@@ -177,8 +177,8 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node']");
 	}
 	public Element getVisualizedSelectedReportDisplay() {
-		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node node-active']");
-	}
+		return driver.FindElementByCssSelector("g[class='graph']>g[Class*='node-active']");
+		}
 	public Element getIncludeRadioBtn() {
 		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[1])");
 	}
@@ -495,9 +495,10 @@ public class CommunicationExplorerPage {
 		base.waitForElement(getVisualizedReportDisplay());
 		getVisualizedReportDisplay().ScrollTo();
 		getVisualizedReportDisplay().waitAndClick(10);
-		if(getVisualizedSelectedReportDisplay().isElementAvailable(1)) {
-			base.stepInfo("Clicked on visualized Communications exp report");
-		}else {
+		for (int i = 0; i < 5; i++) {
+			if (getVisualizedSelectedReportDisplay().isElementAvailable(1)) {
+				break;
+			}
 			base.stepInfo("Not clicked on visualized Communications exp report");
 			getVisualizedReportDisplay().waitAndClick(30);
 		}
@@ -535,8 +536,8 @@ public class CommunicationExplorerPage {
 			base.waitForElement(getActionBtn());
 			getActionBtn().ScrollTo();
 			getActionBtn().waitAndClick(10);
-			base.waitForElement(getViewInDocView());
-			if(getViewBtn().isElementAvailable(2)) {
+			base.waitForElement(getViewBtn());
+			if(getViewBtn().isElementAvailable(5)) {
 				getViewBtn().ScrollTo();
 			}
 			if (getViewInDocView().isElementPresent()) {
