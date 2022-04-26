@@ -199,7 +199,7 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[contains(text(),'in DocView')]");
 	}
 	public Element getMailCountOFSelectedReport() {
-		return driver.FindElementByCssSelector("g>[class='node normal-node node-active']>text>tspan[class='mail-count']");
+		return driver.FindElementByCssSelector("g>[Class*='node-active']>text>tspan[class='mail-count']");
 	}
 	public ElementCollection metaDataslist_reviewerPg() {
 		return driver.FindElementsByXPath("//div[@id='SearchDataTable_wrapper']//tr[@role='row']/td[position()=2]");
@@ -509,10 +509,11 @@ public class CommunicationExplorerPage {
 	 */
 	public void viewinDoclist() {
 		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
 		base.waitForElement(getActionBtn());
+		getActionBtn().ScrollTo();
 		getActionBtn().waitAndClick(10);
-		if(getViewBtn().isElementAvailable(2)) {
+		if(getViewBtn().isElementAvailable(5)) {
+			getViewBtn().ScrollTo();
 			getViewBtn().ScrollTo();
 		}
 		base.waitForElement(getAction_ViewInDoclistButton());
