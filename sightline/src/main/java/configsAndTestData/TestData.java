@@ -449,6 +449,9 @@ public class TestData {
 	public String fileGroup;
 	public String document;
 	public String fileTypeInNativeDocs;
+	public String filterMonth;
+	public String filterYear;
+	public String userRole;
 
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;

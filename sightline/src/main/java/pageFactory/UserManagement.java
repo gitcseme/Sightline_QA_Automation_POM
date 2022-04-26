@@ -589,6 +589,22 @@ public class UserManagement {
 		return driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td["+rowNum+"]");
 	}
 
+	public Element getCalendarOption() {
+		return driver.FindElementByXPath("//i[@class='icon-append fa fa-calendar']");
+	}
+	public Element getYearDropDown() {
+		return driver.FindElementByXPath("//select[@class='ui-datepicker-year']");
+	}
+	public Element getMonthDropDown() {
+		return driver.FindElementByXPath("//select[@class='ui-datepicker-month']");
+	}
+
+	
+	public Element getSlectDate(String SendValue) {
+		return driver.FindElementByXPath("//a[@class='ui-state-default'][text()="+SendValue+"]");
+	}
+	
+	
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -2173,4 +2189,47 @@ public class UserManagement {
 		}
 		
 	}
+	
+	/**
+	 * @author Brundha
+	 * @Description:Methods to apply filter
+	 * @param Value 
+	 */
+	public void verifyingFilterOptionInManageUser(String Value) {
+		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(Input.rmu1userName);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(Input.userRole);
+		bc.waitForElement(getCalendarOption());
+		getCalendarOption().Click();
+		bc.waitForElement(getYearDropDown());
+		getYearDropDown().selectFromDropdown().selectByVisibleText(Input.filterYear);
+		bc.waitForElement(getMonthDropDown());
+		getMonthDropDown().selectFromDropdown().selectByVisibleText(Input.filterMonth);
+		getSlectDate(Value).waitAndClick(10);
+		getFilerApplyBtn().waitAndClick(10);
+		
+		
+	}
+	/**
+	 * @author Brundha
+	 * @Description:Methods to validate the applied filter
+	 * @param Value 
+	 */
+public void validateFilterOptionInUserManage(String Header,String ValidatingText) {
+	driver.waitForPageToBeReady();
+	List<WebElement> Role = getRowValues(bc.getIndex(userDetailsTableHeader(), Header)).FindWebElements();
+	
+	for(WebElement RowData:Role) {
+		String getRole=RowData.getText();
+		System.out.println(getRole);
+		bc.compareTextViaContains(getRole, ValidatingText, "Filter is applied successfully in manage user page for '"+Header+"'", "Filter is not applied successfully");
+	}
+	
 }
+}
+
+
+
+
