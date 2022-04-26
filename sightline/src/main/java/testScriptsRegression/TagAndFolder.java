@@ -293,6 +293,7 @@ public class TagAndFolder {
 		lp.logout();
 	}
 
+	
 	/**
 	 * @author Raghuram A Date: 01/18/21 Modified date:N/A Modified by: Description
 	 *         : Verify that after Impersonation af SA User - can edit/delete folder
@@ -1037,6 +1038,7 @@ public class TagAndFolder {
 		driver.waitForPageToBeReady();
 		tagAndFolderPage.selectallFolderRoot();
 		tagAndFolderPage.verifyNodePresent(folder2, true, "Folder");
+		driver.scrollPageToTop();
 		tagAndFolderPage.bulkReleaseFolder(securityGroup);
 		bc.stepInfo("Folder Released to Security Group");
 
@@ -1123,7 +1125,7 @@ public class TagAndFolder {
 		tagAndFolderPage.editTag(Input.securityGroup, tag2, renamedTag, "Success", null);
 
 		// delete edited tag set02
-		tagAndFolderPage.DeleteTag(renamedTag, Input.securityGroup);
+		tagAndFolderPage.DeleteTagWithClassificationInRMU(renamedTag);
 
 		// logout
 		lp.logout();
