@@ -3463,6 +3463,103 @@ public class Production_Page_Regression {
 		}
 	}
 
+	/**
+	 * @author Brundha.T TESTCASE No:RPMXCON-47979
+	 * @Description:To Verify OCRing of Text component of the production, only for Redacted Documents when "OCR non-redacted docs... " option is selected in Production-text component
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 68)
+	public void verifyTextFileComponentInGeneratedProduction() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47979- Production ");
+		baseClass.stepInfo(
+				"To Verify OCRing of Text component of the production, only for Redacted Documents when \"OCR non-redacted docs... \" option is selected in Production-text component");
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tagname = "Tag" + Utility.dynamicNameAppender();
+        foldername="Folder"+Utility.dynamicNameAppender();
+        String prefixID = "A_" + Utility.dynamicNameAppender();
+    	String suffixID = "_P" + Utility.dynamicNameAppender();
+    	
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		DocViewPage doc= new DocViewPage(driver);
+		doc.getDocView_MiniDoc_Selectdoc(4).waitAndClick(5);
+		doc.getDocView_MiniDoc_Selectdoc(5).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewRedactions.redactRectangleUsingOffset(10, 10,100,100);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.datMetaDataTiffPageCount();
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.burnRedactionWithRedactionTag(Input.defaultRedactionTag);
+		page.fillingTextSection();
+		page.textComponentVerification();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.getIncludeFamilies().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String home= System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		page.extractFile();
+		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Load Files/" + name + "_TIFF.OPT");
+		File TextFile=new File(home + "/Downloads/VOL0001/Text/0001");
+		if(TextFile.exists()) {
+			baseClass.passedStep("Text file generated successfully");
+		}else {
+			baseClass.failedStep("Text document is not generated successfully");
+		}
+
+		if (TiffFile.exists()) {
+			baseClass.passedStep("Tiff is generated successfully");
+		} else {
+			baseClass.failedStep("Tiff is not generated successfully");
+		}
+		if (DatFile.exists()) {
+			baseClass.passedStep("Dat file is displayed as expected");
+		} else {
+			baseClass.failedStep("Dat file is not displayed as expected");
+		}
+		
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		loginPage.logout();
+		
+	}
+
+	
 	
 
 	@AfterMethod(alwaysRun = true)
