@@ -4664,4 +4664,32 @@ public List<String> gettingAllDocIDs(){
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param eleValue
+	 */
+	public void SelectColumnDisplayByRemovingExistingOnes(String[] eleValue) {
+
+		try {
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			
+			int metadatasCount = getAvailableRemoveButtonCount().size();
+			for (int i = 0; i < metadatasCount; i++) {
+				getRemoveBtn().Click();
+				System.out.println(i);
+			}
+			for(int j=0;j<eleValue.length;j++) {
+			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+			getSelectAvailMetadata(eleValue[j]).ScrollTo();
+			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

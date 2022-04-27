@@ -96,8 +96,11 @@ public class DataSets {
 		public Element getSelectDatasetsAndActionButton(String name) {
 			return driver.FindElementByXPath("//*[@title='"+name+"']//..//..//button");
 		}
-
-
+		
+		//added by Aatith
+		public Element getDataSetName(String DataSet) {
+			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]");
+		}
 	
 	public DataSets(Driver driver) {
 
@@ -430,7 +433,28 @@ public class DataSets {
 		driver.waitForPageToBeReady();
 		getSelectDataSetMenu(AllSourceData, name).waitAndClick(5);		
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param DataSet
+	 * @return
+	 * @Description check weather data is there or not 
+	 */
+	public String isDataSetisAvailable(String DataSet) {
+		navigateToDataSetsPage();
+		String datasetName = null;
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++)
+		if(getDataSetName(DataSet).isElementAvailable(2)) {
+			base.passedStep(DataSet+" is available in this project");
+			datasetName = getDataSetName(DataSet).GetAttribute("title");
+			break;
+		}else if(i==9){
+			base.stepInfo("Dataset is not in the project, we need to ingest it");
+		}else {
+			driver.scrollingToBottomofAPage();
+		}
+		return datasetName;
+	}
 }
-
 
 

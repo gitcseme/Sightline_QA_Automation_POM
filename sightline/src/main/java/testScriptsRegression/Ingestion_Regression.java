@@ -17,6 +17,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -44,6 +45,10 @@ public class Ingestion_Regression {
 	SecurityGroupsPage securityGroup;
 	DocExplorerPage docexp;
 	DataSets dataSets;
+	SessionSearch sessionsearch;
+	TagsAndFoldersPage tagandfolder;
+	DocListPage doclist;
+	DocViewPage docview;
 
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -526,6 +531,116 @@ public class Ingestion_Regression {
 		projectFieldsPage.validateFilterFieldsByContainsValueInTheGrid(projectFieldsPage.getProjectGridFieldNameValue(EmailMetaData),EmailMetaData);
 		
 		baseClass.passedStep("Verified Email metadata in Manage-Project fields");
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify Email metadata in DocList and in DocView
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority =6)
+	public void verifyingEmailMetaDataInDoclistDocview() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		tagandfolder = new TagsAndFoldersPage(driver);
+		doclist = new DocListPage(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49558");
+		baseClass.stepInfo("Verify Email metadata in DocList and in DocView");
+		
+		String foldername = "IngestionFolder" + Utility.dynamicNameAppender();
+		String folderTheadMap = "IngestionFolderTheadMap" + Utility.dynamicNameAppender();
+		String[] addEmailColumn = {"EmailAuthorName", "EmailAuthorAddress", "EmailToNames", "EmailToAddresses", "EmailCCNames", "EmailCCAddresses", "EmailBCCNames", "EmailBCCAddresses"};
+		
+		tagandfolder.CreateFolder(foldername, Input.securityGroup);
+		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
+		
+		baseClass.selectproject(Input.regressionConsilio1);
+		String ingestionFullName = dataSets.isDataSetisAvailable("IngestionEmailData");
+		if(ingestionFullName!=null) {
+			
+			sessionsearch.MetaDataSearchInBasicSearch(Input.metadataIngestion, ingestionFullName);
+			sessionsearch.bulkReleaseIngestions(Input.securityGroup);
+			sessionsearch.bulkFolderExisting(foldername);
+			sessionsearch.ViewInDocListWithOutPureHit();
+			
+			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("Email metadata is display correctly in doc list");
+			
+			doclist.selectAllDocs();
+			doclist.viewSelectedDocumentsInDocView();
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("In Doc View -Meta Data panel , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
+			
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {	
+			docview.selectSourceDocIdInAvailableField(metadata);	
+			}
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
+			
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			sessionsearch.Removedocsfromresults();
+			driver.waitForPageToBeReady();
+			int doccount = Integer.parseInt(sessionsearch.getThreadedLastCount().getText().trim());
+			System.out.println(doccount);
+			sessionsearch.getThreadedAddButton().waitAndClick(10);
+			sessionsearch.bulkFolderExistingWithoutPureHit(folderTheadMap);
+			sessionsearch.ViewInDocViewWithoutPureHit();
+			docview.verifyTheadMapValue(doccount, "participant");
+			
+			loginPage.logout();
+			baseClass.stepInfo("perform task for review manager");
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
+			tagandfolder.selectFolderViewInDocList(foldername);
+			
+			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("Email metadata is display correctly in doc list");
+			
+			doclist.selectAllDocs();
+			doclist.viewSelectedDocumentsInDocView();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("In Doc View -Meta Data panel , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
+			
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			for(String metadata : addEmailColumn) {	
+			docview.selectSourceDocIdInAvailableField(metadata);	
+			}
+			for(String metadata : addEmailColumn) {
+				baseClass.visibleCheck(metadata);
+			}
+			baseClass.stepInfo("In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
+			
+			tagandfolder.selectFolderViewInDocView(folderTheadMap);
+			docview.verifyTheadMapValue(doccount, "participant");
+			
+		}
+		
+		baseClass.passedStep("Verified Email metadata in DocList and in DocView");
 		loginPage.logout();
 		
 	}

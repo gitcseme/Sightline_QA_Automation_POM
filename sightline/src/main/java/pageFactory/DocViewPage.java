@@ -27704,4 +27704,24 @@ public class DocViewPage {
 			}
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param count
+	 * @param value
+	 */
+	public void verifyTheadMapValue(int count, String value) {
+		driver.waitForPageToBeReady();
+		for(int i=0;i<count;i++) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(base.text(value).isElementAvailable(2)) {
+				base.passedStep(value+" is displayed");
+				break;
+			}else {
+				driver.scrollPageToTop();
+				getDocView_Next().waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
+		}
+	} 
 }
