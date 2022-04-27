@@ -1732,9 +1732,14 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
 	}
 	
+
+	public Element getSavedSearch_SharedWithPA() {
+		return driver.FindElementById("-2_anchor");
+  }
 	//added by Aathith
 	public Element getThreadedLastCount() {
 		return driver.FindElementByXPath("(//*[@id='002']//count)[last()]");
+
 	}
 
 	public SessionSearch(Driver driver) {
@@ -11278,6 +11283,59 @@ public class SessionSearch {
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(10);
 
+
+	/**
+	 * @author Vijaya.Rani modifiedOn : 27/4/22 by modified by :NA
+	 * @param searchName Shared With Project Administrator
+	 */
+	public void saveSearchSharedWithPA(String searchName) {
+		// Save Search
+		saveSearchAction();
+
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+				}
+			}), Input.wait30);
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} else {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+				return getSavedSearch_SharedWithPA().Visible() && getSavedSearch_SharedWithPA().Enabled();
+			}
+		}), Input.wait30);
+		getSavedSearch_SharedWithPA().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+			}
+		}), Input.wait30);
+		getSaveSearch_Name().SendKeys(searchName);
+//		driver.Manage().window().fullscreen();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+			}
+		}), Input.wait30);
+		getSaveSearch_SaveButton().Click();
+//		driver.Manage().window().maximize();
+		driver.waitForPageToBeReady();
+
+		base.VerifySuccessMessage("Saved search saved successfully");
+
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
+	}
+
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkFolderAction().Visible();
@@ -11327,4 +11385,5 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
+
 }

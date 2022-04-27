@@ -21,6 +21,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -36,6 +37,7 @@ public class Ingestion_Regression01 {
 	DataSets dataSets;
 	IngestionPage_Indium ingestionPage;
 	Input ip;
+	SavedSearch savedSearch;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -176,7 +178,7 @@ public class Ingestion_Regression01 {
 	 * Description :Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page'RPMXCON-58508' 
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifySourceSystemIsDisabled() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -388,6 +390,34 @@ public class Ingestion_Regression01 {
 		ingestionPage.IngestionOverlayUsingCopyFromDraftMode("Native",Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		ingestionPage.ingestionCatalogging();
 		
+	}
+	
+	/** 
+     *Author :Vijaya.Rani date: 27/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49902
+	 * Description :Unpublish documents - Verify Search as source.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 13)
+	public void verifyUnpublishDocumentsSource() throws InterruptedException  {
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+	
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49902");
+		baseClass.stepInfo("Unpublish documents - Verify Search as source.");
+		
+		baseClass.stepInfo("Search the documents and Save");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchSharedWithPA(BasicSearchName);
+		
+		//Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
 	}
 	
 	@AfterMethod(alwaysRun = true)
