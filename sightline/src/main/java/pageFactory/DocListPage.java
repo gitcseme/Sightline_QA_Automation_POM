@@ -1204,7 +1204,12 @@ public class DocListPage {
 		public Element getParentDocumentID(int i) {
 			return driver.FindElementByXPath("//td[@class=' details-control']/..//td["+i+"]");
 		}
-		
+		public Element getParentDocumentDocId() {
+			return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td[contains(@class,'sorting')]");
+		}
+		public Element getSelectDocument(String DocID) {
+			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
+		}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
