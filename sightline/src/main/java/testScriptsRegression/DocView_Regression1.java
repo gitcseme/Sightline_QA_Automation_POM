@@ -6317,7 +6317,7 @@ public class DocView_Regression1 {
 		page.navigateToNextSection();
 		
 		baseClass.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
+		page.fillingSummaryAndPreview(); 
 		
 		baseClass.stepInfo("Filling Generate Page With Continue Generation Popup");
 		page.fillingGeneratePageWithContinueGenerationPopup();
