@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
@@ -27,6 +29,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.MiniDocListPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -50,6 +53,7 @@ public class UsersAndRoleManagement_Regression {
 	SessionSearch sessionSearch;
 	DocViewPage docViewPage;
 	SoftAssert softAssertion;
+	MiniDocListPage miniDocListPage;
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -2385,7 +2389,7 @@ public class UsersAndRoleManagement_Regression {
 	 * User Name 2) Filter By Role 3) Created on or After, search should return
 	 * results which are an INTERSECTION of all the entered filter criteria
 	 */
-	@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 25)
+	@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 31)
 	public void verifyingFilterTabInManageUser(String username,String Password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53193");
@@ -2408,10 +2412,134 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.stepInfo("Validating username in applied filter");
 		userManage.validateFilterOptionInUserManage("FIRST NAME",firstName);
 		loginPage.logout();
-		
-		
 
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:27/04/2022 Modified by: Baskar
+	 * Description :Verify that option to check/uncheck the option will be available
+	 * only if the non-billable user is creating/editing a user
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 32)
+	public void validatingBilliableCheckBox() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53204");
+		baseClass.stepInfo("Verify that option to check/uncheck the option will be available "
+				+ "only if the non-billable user is creating/editing a user");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// validating billable user checkbox available from non-billable user
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(userManage.getAddUserBtn());
+		userManage.getAddUserBtn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getAddNewUserPopUpWindow());
+		boolean userWindow = userManage.getAddNewUserPopUpWindow().isElementAvailable(2);
+		softAssertion.assertTrue(userWindow);
+		baseClass.stepInfo("Add user popup window opened successfully");
+		baseClass.waitForElement(userManage.getBilliableUserText());
+		String billiableName = userManage.getBilliableUserText().getText();
+		softAssertion.assertEquals("Billable User:", billiableName);
+		baseClass.waitForElement(userManage.getBilliableUserCheckBox());
+		boolean billiableCheckBox = userManage.getBilliableUserCheckBox().isElementAvailable(2);
+		softAssertion.assertTrue(billiableCheckBox);
+		baseClass.passedStep("Billiable user checkbox available in add user popup window");
+
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:27/04/2022 Modified by: Baskar
+	 * Description :Verify functionalities by PAU post impersonate as a RMU
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 33)
+	public void validatingAssignmentPaToRmuImp() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53166");
+		baseClass.stepInfo("Verify functionalities by PAU post impersonate as a RMU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		agnmt = new AssignmentsPage(driver);
+		sessionSearch=new SessionSearch(driver);
+		miniDocListPage=new MiniDocListPage(driver);
+		docViewPage=new DocViewPage(driver);
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
+		String remarks = "remark" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String headerName = "RedactionTags";
+		Map<String, String> datas = new HashMap<String, String>();
+		int iteration = 1;
+		int index;
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
+		sessionSearch.bulkAssign();
+		agnmt.assignmentCreation(assignmentName, Input.codingFormName);
+		agnmt.toggleSaveButton();
+		agnmt.assignmentDistributeToPa();
+
+		// logout
+		loginPage.logout();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		// impersonate pa to rmu
+		baseClass.impersonatePAtoRMU();
+		miniDocListPage.chooseAnAssignmentFromDashBoard(assignmentName);
+		
+		// adding remarks
+		datas = docViewPage.addRemarkToDocumentsT(iteration, remarks, true, "Success");
+		baseClass.stepInfo("Remarks added successfully when Pa Impersonate To Rmu");
+		
+		// adding Redaction
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+
+		// AfterSave Default Selection
+		String defautTagSelection = docViewPage.getAudioRedactionColumnValue(index).getText();
+		baseClass.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"After Save : â€˜Default Redaction Tagâ€™ is displayed", "After Save : invalid redaction tag selected");
+        baseClass.passedStep("Redaction added successfully when Pa Impersonate To Rmu");
+        
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+		driver.scrollPageToTop();
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		
+		// validating save button
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		docViewPage.verifyingComments(comment);
+		baseClass.passedStep("Document saved with some loaded value using save button when Pa Impersonate To Rmu ");
+		
+		// validating uncomplete button
+        docViewPage.completeButton();
+        docViewPage.getDociD(prnDoc).waitAndClick(5);
+        boolean uncompleteBtn=docViewPage.getUnCompleteButton().isElementAvailable(2);
+        softAssertion.assertTrue(uncompleteBtn);
+		baseClass.passedStep("Document completed using complete button and tick mark displaying when Pa Impersonate To Rmu ");
+		for (int i = 2; i <=3; i++) {
+			docViewPage.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		docViewPage.clickCodeSameAs();
+		baseClass.passedStep("Code same as action  performed when Pa Impersonate To Rmu ");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
 	
 	@DataProvider(name = "saImpPa")
 	public Object[][] saImpPa() {
