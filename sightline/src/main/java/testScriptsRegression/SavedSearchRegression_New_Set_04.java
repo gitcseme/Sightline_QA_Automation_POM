@@ -83,8 +83,10 @@ public class SavedSearchRegression_New_Set_04 {
 
 	@DataProvider(name = "UserPaAndSaAndDa")
 	public Object[][] UserPaAndSaAndDa() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.sa1userName, Input.sa1password },
-				{ Input.da1userName, Input.da1password } };
+		Object[][] users = { { Input.pa1userName, Input.pa1password },
+//				{ Input.sa1userName, Input.sa1password },
+//				{ Input.da1userName, Input.da1password }
+				};
 		return users;
 	}
 
@@ -483,9 +485,9 @@ public class SavedSearchRegression_New_Set_04 {
 		report.verifySearchFromTGReport(sourceOption, search4, false, false);
 
 		// Check Search And node created by PA
+		report.verifySearchFromTGReport(sourceOption, search0, false, false);
 		report.verifySearchFromTGReport(sourceOption, search, false, true);
 		report.verifySearchFromTGReport(sourceOption, newNode, true, true);
-		report.verifySearchFromTGReport(sourceOption, search0, false, false);
 		report.generateTimelineAndGapsReport("LastSaveDate");
 
 		// delete search
