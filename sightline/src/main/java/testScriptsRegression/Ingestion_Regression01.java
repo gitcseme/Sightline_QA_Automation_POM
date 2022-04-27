@@ -322,6 +322,73 @@ public class Ingestion_Regression01 {
 		ingestionPage.rollBackIngestion();
 	}
 	
+	/** 
+     *Author :Arunkumar date: 26/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47600
+	 * Description :Edit of saved Overlay with out ingestion with out mapping field selection.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 10)
+	public void verifyEditOverlayIngestionWithoutDatAndIngestionMapping() {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47600");
+		baseClass.stepInfo("Edit of saved Overlay with out DAT ingestion with out mapping field selection.");
+		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
+		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on open in wizard option to edit ingestion
+		ingestionPage.IngestionFromDraftMode();
+		ingestionPage.ingestionCatalogging();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 26/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47596
+	 * Description :Copy of Overlay saved ingestion with mapping field selection
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 11)
+	public void verifyCopyOverlayIngestionWithMapping()  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47596");
+		baseClass.stepInfo("Copy of Overlay saved ingestion with mapping field selection");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		baseClass.stepInfo("Saved ingestion as draft after clicking next button and mapping field enabled");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on copy option from draft mode
+		ingestionPage.IngestionOverlayUsingCopyFromDraftMode("DAT",Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.ingestionCatalogging();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 27/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47599
+	 * Description :Copy of saved Overlay without DAT ingestion with out mapping field selection.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 12)
+	public void verifyCopyOverlayIngestionWithoutDatAndMapping()  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47599");
+		baseClass.stepInfo("Copy of saved Overlay without DAT ingestion with out mapping field selection.");
+		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
+		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		//click on copy option from draft mode
+		ingestionPage.IngestionOverlayUsingCopyFromDraftMode("Native",Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.ingestionCatalogging();
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

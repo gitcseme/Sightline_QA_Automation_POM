@@ -962,6 +962,13 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Open in Wizard ']");
 	}
 	
+	public Element datCheckboxStatus() {
+		return driver.FindElementByXPath("//*[@id='chkDAT']//..//i");
+	}
+	public Element getActionCopy() {
+		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Copy ']");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6288,7 +6295,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			base.passedStep("Clicked on Next button");
 
 			base.stepInfo("Pop up messgae for Ingestion without text file");
-			if (getApproveMessageOKButton().isElementAvailable(5)) {
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
 				getApproveMessageOKButton().waitAndClick(10);
 				base.passedStep("Clicked on OK button to continue without text files");
 			}
@@ -7804,6 +7811,99 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				clickOnNextButton();
 				base.waitTime(2);
 				base.stepInfo("mapping field section enabled");
+				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 26/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will enter overlay ingestion data without enabling mapping field and DAT field
+			 */
+			
+			public void OverlayForNativeWithoutIngestion(String ingestionName,String nativeFile) {
+				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				datCheckboxStatus().waitAndClick(5);
+				selectNativeSource(nativeFile,false);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform ingestion using copy action for Native from draft mode
+			 */
+			
+			public void IngestionOverlayUsingCopyFromDraftMode(String fileType,String sourceFolder,String nativeFile,String datFile,String docKey) {
+				
+				driver.waitForPageToBeReady();
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(getActionDropdownArrow());
+				getActionDropdownArrow().waitAndClick(5);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getActionCopy().Visible();
+					}
+				}), Input.wait30);
+				
+				getActionCopy().waitAndClick(5);
+				base.waitTime(3);
+				base.stepInfo("Starting ingestion again from draft mode using copy option");
+				
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+				base.waitTime(2);
+				
+				try {
+					
+				if(fileType.equalsIgnoreCase("native")) {
+				base.waitForElement(datCheckboxStatus());
+				datCheckboxStatus().waitAndClick(5);
+				
+				selectNativeSource(nativeFile,false);
+				}
+				else if(fileType.equalsIgnoreCase("dat")) {
+					selectDATSource(datFile,docKey);
+				}
+				}
+				catch(Exception e) {
+					e.printStackTrace();	
+				}
+				driver.scrollPageToTop();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getNextButton().Visible()  ;}}), Input.wait30); 
+				getNextButton().waitAndClick(10);
+				base.passedStep("Clicked on Next button");
+
+				base.stepInfo("Pop up messgae for Ingestion without text file");
+				if (getApproveMessageOKButton().isElementAvailable(10)) {
+					getApproveMessageOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to continue without text files");
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getPreviewRun().Visible()  ;}}), Input.wait30); 
+		    	getPreviewRun().waitAndClick(10);
+		    	
+		    	if(getApproveMessageOKButton().isElementAvailable(10)) {
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+		    	getApproveMessageOKButton().waitAndClick(10);
+		    	}
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
+		    	getbtnRunIngestion().waitAndClick(10);
 				
 			}
 			
