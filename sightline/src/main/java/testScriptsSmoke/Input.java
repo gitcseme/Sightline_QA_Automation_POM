@@ -521,7 +521,9 @@ public class Input {
 	public static String fileGroup;
 	public static String document;
 	public static String fileTypeInNativeDocs;
-
+	public static String filterMonth;
+	public static String filterYear;
+	public static String userRole;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1272,6 +1274,9 @@ public class Input {
 		fileGroup = testData.getFileGroup();
 		document = testData.getDocument();
 		fileTypeInNativeDocs = testData.getFileTypeInNativeDocs();
+		filterMonth=testData.getFilterMonth();
+		filterYear=testData.getFilterYear();
+		userRole=testData.getUserRole();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
