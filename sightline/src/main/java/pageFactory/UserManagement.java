@@ -618,6 +618,16 @@ public class UserManagement {
 		return driver.FindElementByXPath("//a[@class='ui-state-default'][text()="+SendValue+"]");
 	}
 	
+	public Element getAddNewUserPopUpWindow() {
+		return driver.FindElementByXPath("//span[@id='ui-id-1']");
+	}
+	public Element getBilliableUserText() {
+		return driver.FindElementByXPath("//label[normalize-space(.)='Billable User:']");
+	}
+	public Element getBilliableUserCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsBillableCheckbox']//..//i");
+	}
+	
 	
 	public UserManagement(Driver driver) {
 
@@ -2227,7 +2237,7 @@ public class UserManagement {
 	
 	
 
-	 * @author Brundha
+    /** @author Brundha
 	 * @Description:Methods to apply filter
 	 * @param Value 
 	 */
