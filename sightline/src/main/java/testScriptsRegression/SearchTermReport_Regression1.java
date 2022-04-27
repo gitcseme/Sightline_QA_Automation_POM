@@ -54,10 +54,7 @@ public class SearchTermReport_Regression1 {
 	String[] searchData = { "test", "comments", "null" };
 	String[] Hits = new String[3];
 	String[] HitsRMU = new String[3];
-	String cmbSearchName1 = "STR" + Utility.dynamicNameAppender();
-	String cmbSearchName2 = "STR" + Utility.dynamicNameAppender();
-	String expectedUHit2;
-	String expectedUHit1;
+	
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -546,33 +543,36 @@ public class SearchTermReport_Regression1 {
 		bc.stepInfo("Test case Id: RPMXCON-56586");
 		bc.stepInfo(
 				"Search Term Report - Validate Unique Hits and Unique Family Hits column value for combined search results");
+		String cmbSearchName1 = "STR" + Utility.dynamicNameAppender();
+		String cmbSearchName2 = "STR" + Utility.dynamicNameAppender();
+		String expectedUHit2;
+		String expectedUHit1;
 		st = new SearchTermReportPage(driver);
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
 		bc.stepInfo("Logged in as -" + role);
 		String saveSearch[] = { cmbSearchName1, cmbSearchName2 };
 		SessionSearch ss = new SessionSearch(driver);
-		if (role == "RMU") {
-			ss.advancedSearch_CombinedResults(Input.searchString1, ss.getadvoption_family());
-			ss.saveSearchAdvanced_New(cmbSearchName1, "Shared with Default Security Group");
-			bc.selectproject();
-			ss.advancedSearch_CombinedResults(Input.searchString2, ss.getadvoption_family());
-			ss.saveSearchAdvanced_New(cmbSearchName2, "Shared with Default Security Group");
-			ss.selectSavedsearchInASWp(cmbSearchName1);
-			driver.waitForPageToBeReady();
-			ss.selectOperator("NOT");
-			driver.waitForPageToBeReady();
-			ss.searchSavedSearch(cmbSearchName2);
-			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
-			expectedUHit1 = Integer.toString(ss.serarchWP());
-			ss.selectSavedsearchInASWp(cmbSearchName2);
-			driver.waitForPageToBeReady();
-			ss.selectOperator("NOT");
-			driver.waitForPageToBeReady();
-			ss.searchSavedSearch(cmbSearchName1);
-			expectedUHit2 = Integer.toString(ss.serarchWP());
-			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
-		}
+		ss.advancedSearch_CombinedResults(Input.searchString1, ss.getadvoption_family());
+		ss.saveSearchAdvanced_New(cmbSearchName1, "Shared with Default Security Group");
+		bc.selectproject();
+		ss.advancedSearch_CombinedResults(Input.searchString2, ss.getadvoption_family());
+		ss.saveSearchAdvanced_New(cmbSearchName2, "Shared with Default Security Group");
+		ss.selectSavedsearchInASWp(cmbSearchName1);
+		driver.waitForPageToBeReady();
+		ss.selectOperator("NOT");
+		driver.waitForPageToBeReady();
+		ss.searchSavedSearch(cmbSearchName2);
+		bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
+		expectedUHit1 = Integer.toString(ss.serarchWP());
+		ss.selectSavedsearchInASWp(cmbSearchName2);
+		driver.waitForPageToBeReady();
+		ss.selectOperator("NOT");
+		driver.waitForPageToBeReady();
+		ss.searchSavedSearch(cmbSearchName1);
+		expectedUHit2 = Integer.toString(ss.serarchWP());
+		bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
+
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		st.GenerateReportWithSharedWithSGSearches(saveSearch);
 		SoftAssert SoftAssertion = new SoftAssert();
@@ -584,11 +584,7 @@ public class SearchTermReport_Regression1 {
 				+ st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName2));
 		SoftAssertion.assertAll();
 		bc.passedStep("Sucessfully verified the Unique Hits Column value for Combined search in STR Page");
-		if (role == "PA") {
-			SavedSearch savedSearch = new SavedSearch(driver);
-			savedSearch.SaveSearchDelete(cmbSearchName1);
-			savedSearch.SaveSearchDelete(cmbSearchName2);
-		}
+
 		lp.logout();
 	}
 
