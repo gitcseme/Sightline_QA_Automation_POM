@@ -174,7 +174,7 @@ public class ReportsPage {
 	}
 
 	public Element getFolder(String folderName) {
-		return driver.FindElementByXPath("//a[@data-content='" + folderName + "']");
+		return driver.FindElementByXPath("//a[text()='" + folderName + "']");
 	}
 
 	public Element getInFolders() {
@@ -1176,7 +1176,7 @@ public class ReportsPage {
 		getApplyChangesBtn().waitAndClick(5);
 
 		driver.waitForPageToBeReady();
-		if (getTimelineReport().isDisplayed()) {
+		if (getTimelineReport().isElementAvailable(40)) {
 			base.stepInfo("Timeline Report generated sucessfull");
 		} else {
 			base.failedStep("Timeline Report generated sucessfull");
