@@ -2371,6 +2371,47 @@ public class UsersAndRoleManagement_Regression {
 	}
 
 
+	@DataProvider(name = "Users")
+	public Object[][] Users() {
+		return new Object[][] {
+				{  Input.rmu1userName, Input.rmu1password},
+				{  Input.pa1userName, Input.pa1password},
+				{Input.da1userName, Input.da1password },
+				{Input.sa1userName, Input.sa1password}};
+	}
+	/**
+	 * Author : Brundha date: NA Modified date:
+	 * Description :Verify when user enters value in more than 3 fields 1) Filter By
+	 * User Name 2) Filter By Role 3) Created on or After, search should return
+	 * results which are an INTERSECTION of all the entered filter criteria
+	 */
+	@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 25)
+	public void verifyingFilterTabInManageUser(String username,String Password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53193");
+		baseClass.stepInfo(
+				"Verify when user enters value in more than 3 fields 1) Filter By User Name 2) Filter By Role 3) Created on or After, search should return results which are an INTERSECTION of all the entered filter criteria ");
+						
+		userManage = new UserManagement(driver);
+		loginPage.loginToSightLine(username,Password);
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		driver.waitForPageToBeReady();
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		System.out.println(firstName);
+		driver.waitForPageToBeReady();
+		userManage.verifyingFilterOptionInManageUser(Input.pageCount);
+		
+		baseClass.stepInfo("Validating user role in applied filter");
+		userManage.validateFilterOptionInUserManage("ROLE",Input.userRole);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Validating username in applied filter");
+		userManage.validateFilterOptionInUserManage("FIRST NAME",firstName);
+		loginPage.logout();
+		
+		
+
+	}
 	
 	@DataProvider(name = "saImpPa")
 	public Object[][] saImpPa() {

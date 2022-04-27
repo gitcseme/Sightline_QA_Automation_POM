@@ -3327,7 +3327,7 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("#### To verify that remarks can add/edit/delete if document is marked as Completed. ####");
 
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString2);
 
 		baseClass.stepInfo("Bulk Assign");
 		search.bulkAssign();
@@ -3356,8 +3356,8 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Refresh page");
 		driver.Navigate().refresh();
 
-		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(10,65, remark);
+		baseClass.stepInfo("Adding remark to document");
+		docView.addRemarkByText(remark);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -6317,7 +6317,7 @@ public class DocView_Regression1 {
 		page.navigateToNextSection();
 		
 		baseClass.stepInfo("Filling Summary And Preview");
-		page.fillingSummaryAndPreview();
+		page.fillingSummaryAndPreview(); 
 		
 		baseClass.stepInfo("Filling Generate Page With Continue Generation Popup");
 		page.fillingGeneratePageWithContinueGenerationPopup();

@@ -426,7 +426,9 @@
 	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
-
+   <filterMonth>Dec</filterMonth>
+	<filterYear>2021</filterYear>
+	<userRole>Review Manager</userRole>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 
