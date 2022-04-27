@@ -432,7 +432,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldged_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'"+tag+"')]");
 	}
 
 	public Element getPriveldge_PDFTagTree(String tag) {
@@ -2040,8 +2040,8 @@ public class ProductionPage {
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
-				+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+				
 	}
 
 	public Element redactionTagInBurnRedaction2CheckBox(String RedactionTag2) {
@@ -2432,7 +2432,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//div[@id='content']//h2");
+		return driver.FindElementByXPath("//span//h1");
 	}
 
 	public Element getDocList() {
@@ -16568,7 +16568,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getSecurityGroupDropDown().waitAndClick(10);
 		base.waitForElement(getSecurityGroup(securityGroup));
 		getSecurityGroup(securityGroup).waitAndClick(10);
-
+		driver.waitForPageToBeReady();
 	}
 
 
@@ -17392,14 +17392,14 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		// clicking enable for natively placeholder
 		base.waitForElement(getTiff_NativeDoc());
 		getTiff_NativeDoc().ScrollTo();
-		clickElementNthtime(getTiff_NativeDoc(), 3);
+		clickElementNthtime(getTiff_NativeDoc(), 2);
 
 		base.waitForElement(getclkSelectTag());
 		getclkSelectTag().ScrollTo();
 		getclkSelectTag().Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
-		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		base.waitForElement(getNativeDocsPlaceholder());
@@ -17410,24 +17410,24 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getclkSelectTag(1).ScrollTo();
 		getclkSelectTag(1).Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
-
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(2));
-		getclkSelectTag(2).ScrollTo();
-		getclkSelectTag(2).Click();
-		driver.waitForPageToBeReady();
 		base.waitForElement(getPriveldged_TagTree(tagname1));
 		getPriveldged_TagTree(tagname1).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname1);
+//
+//		driver.waitForPageToBeReady();
+//		base.waitForElement(getclkSelectTag(2));
+//		getclkSelectTag(2).ScrollTo();
+//		getclkSelectTag(2).Click();
+//		driver.waitForPageToBeReady();
+//		base.waitForElement(getPriveldged_TagTree(tagname1));
+//		getPriveldged_TagTree(tagname1).waitAndClick(10);
+//		base.waitForElement(getClkSelect());
+//		getClkSelect().Click();
+//		base.waitForElement(getNativeDocsPlaceholder());
+//		getNativeDocsPlaceholder().SendKeys(tagname1);
 
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
@@ -17817,7 +17817,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		driver.waitForPageToBeReady();
 		String Value = getBatesRange().getText();
 		System.out.println(Value);
-
+base.waitTime(2);
 		if (Value.contains(Batesvalue)) {
 			base.passedStep("Batesrange is value is verified");
 		} else {

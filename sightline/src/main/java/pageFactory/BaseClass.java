@@ -223,12 +223,12 @@ public class BaseClass {
 		return driver.FindElementById("btnsubmit");
 	}
 
-	public Element selectSecurityGroup(String SecurityGrp) {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='" + SecurityGrp + "']");
+	public Element selectSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSg']");
 	}
 
 	public Element selectDefaultSecurityGroup() {
-		return driver.FindElementByXPath("//select[@id='ddlSg']//option[text()='Default Security Group']");
+		return driver.FindElementByXPath("//select[@id='ddlSg']");
 	}
 
 	// Added by Jeevitha
@@ -2576,10 +2576,9 @@ public class BaseClass {
 		waitTillElemetToBeClickable(getEditButton(Input.projectName));
 		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		selectSecurityGroup(SecurityGrp).ScrollTo();
-		selectSecurityGroup(SecurityGrp).isDisplayed();
-		waitTillElemetToBeClickable(selectSecurityGroup(SecurityGrp));
-		selectSecurityGroup(SecurityGrp).Click();
+		selectSecurityGroup().isDisplayed();
+		waitTillElemetToBeClickable(selectSecurityGroup());
+		selectSecurityGroup().selectFromDropdown().selectByVisibleText(SecurityGrp);
 		getSaveBtn().waitAndClick(5);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();
@@ -2593,10 +2592,9 @@ public class BaseClass {
 		waitTillElemetToBeClickable(getEditButton(Input.projectName));
 		getEditButton(Input.projectName).waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		selectDefaultSecurityGroup().ScrollTo();
-		driver.waitForPageToBeReady();
-		selectDefaultSecurityGroup().waitAndClick(5);
-		selectDefaultSecurityGroup().waitAndClick(5);
+		selectDefaultSecurityGroup().isDisplayed();
+		selectDefaultSecurityGroup().isElementAvailable(1);
+		selectDefaultSecurityGroup().selectFromDropdown().selectByVisibleText(Input.securityGroup);
 		getSaveBtn().waitAndClick(10);
 		VerifySuccessMessage("User profile was successfully modified");
 		CloseSuccessMsgpopup();

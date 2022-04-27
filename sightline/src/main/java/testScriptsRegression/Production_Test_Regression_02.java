@@ -197,10 +197,14 @@ public class Production_Test_Regression_02{
 		base.stepInfo("RPMXCON-55949 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that RMU cannot access the Production by copying the Production URL if user is not part of that security group");
-
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		String securityGroup ="Production_Security_Group"+Utility.dynamicNameAppender();
+		sg.createSecurityGroups(securityGroup);
+		
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		page.selectingSecurityGroup(securityGroup);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		driver.waitForPageToBeReady();
@@ -238,10 +242,16 @@ public class Production_Test_Regression_02{
 
 		base.stepInfo("RPMXCON-55950 -Production Sprint 10");
 		base.stepInfo("Verify that RMU cannot access the Production if he is not part of that Project");
+		String securityGroup ="Production_Security_Group"+Utility.dynamicNameAppender();
+
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.createSecurityGroups(securityGroup);
 
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-		page.selectingSecurityGroup(Input.securityGroup_sg47);
+		page.selectingSecurityGroup(securityGroup);
+		driver.waitForPageToBeReady();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		driver.waitForPageToBeReady();
@@ -249,18 +259,18 @@ public class Production_Test_Regression_02{
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		//base.switchProject(Input.regressionConsilio1);
+
 		BaseClass base=new BaseClass(driver);
 		base.selectproject(Input.regressionConsilio1);
 		base.stepInfo("Logined as RMU");
 
 		driver.Navigate().to(currentURL);
 		driver.waitForPageToBeReady();
-		String ErrorMsg = page.getErrorMsgText().getText();
+		String ErrorMsg = page.getErrorMsgHeader().getText();
 		if (ErrorMsg.contains("Error")) {
-			base.passedStep("Error message is displayed as expected");
+		base.passedStep("Error message is displayed as expected");
 		} else {
-			base.failedStep("Error message is not  displayed as expected");
+		base.failedStep("Error message is not displayed as expected");
 		}
 		driver.Navigate().back();
 
@@ -350,11 +360,15 @@ public class Production_Test_Regression_02{
 
 		base.stepInfo("RPMXCON-55951 -Production Sprint 10");
 		base.stepInfo("Verify that PAU cannot access the Production if he is not part of that Project");
+		String securityGroup ="Production_Security_Group"+Utility.dynamicNameAppender();
 
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		sg.createSecurityGroups(securityGroup);
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-		page.selectingSecurityGroup(Input.securityGroup_sg47);
-		//page.selectingSecurityGroup(Input.securityGroup);
+		page.selectingSecurityGroup(securityGroup);
+	
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		driver.waitForPageToBeReady();
@@ -362,7 +376,7 @@ public class Production_Test_Regression_02{
 		String currentURL = driver.getWebDriver().getCurrentUrl();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		//base.switchProject(Input.regressionConsilio1);
+		
 		BaseClass base=new BaseClass(driver);
 		base.selectproject(Input.regressionConsilio1);
 		base.stepInfo("Logined as another PA");
@@ -1225,7 +1239,9 @@ public class Production_Test_Regression_02{
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFFSectionWithRedactionTags(Redactiontag1);
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.burnRedactionWithRedactionTag(Redactiontag1);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);

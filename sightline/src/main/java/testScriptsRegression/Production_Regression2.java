@@ -584,17 +584,24 @@ public class Production_Regression2 {
 	 */
 	@Test(description="RPMXCON-55955",enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyingProductionPageAccessUsingSecurityGroup() throws Exception {
-
-		UtilityLog.info(Input.prodPath);
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-
 		base.stepInfo("RPMXCON-55955 -Production Sprint 10");
 		base.stepInfo(
 				"Verify that RMU can access the Production by copying the Production URL if user is part of that security group/Project");
 
+		UtilityLog.info(Input.prodPath);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		String securityGroup ="Production_Security_Group"+Utility.dynamicNameAppender();
+		sg.createSecurityGroups(securityGroup);
+		System.out.println(securityGroup);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		
 		base = new BaseClass(driver);
-		base.SelectSecurityGrp(Input.rmu1userName,Input.securityGroup_sg47);
+		base.SelectSecurityGrp(Input.rmu1userName,securityGroup);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -2078,6 +2085,7 @@ public class Production_Regression2 {
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
+		driver.waitForPageToBeReady();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -2088,8 +2096,8 @@ public class Production_Regression2 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.getbtnProductionGenerate().waitAndClick(10);
-		page.verifyProductionStatusInGenPage("Pre-Generation Checks Completed");
-		base.waitForElement(page.getExportBatesButton());
+		page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		base.waitTillElemetToBeClickable(page.getExportBatesButton());
 		page.getExportBatesButton().waitAndClick(10);
 		BaseClass base = new BaseClass(driver);
 		driver.waitForPageToBeReady();
@@ -2104,7 +2112,7 @@ public class Production_Regression2 {
 				driver.Navigate().refresh();
 			}
 		}
-
+        base.waitTime(3);
 		base.VerifyingCSVFileDownloadedAndSorted();
 		base.passedStep("verified the exported CSV is sorted by BegBates");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2878,7 +2886,7 @@ public class Production_Regression2 {
 		tagsAndFolderPage.CreateTagwithClassification(tagname, "Select Tag Classification");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.basicContentSearch(Input.comments);
 		driver.waitForPageToBeReady();
 		sessionSearch.ViewInDocList();
 		DocListPage doc = new DocListPage(driver);
@@ -2886,7 +2894,12 @@ public class Production_Regression2 {
 		doc.bulkTagExistingFromDoclist(tagname);
 		driver.waitForPageToBeReady();
 		doc.getSelectDropDown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String ParentDocId=doc.getParentDocumentDocId().getText();
+		System.out.println(ParentDocId);
 		doc.getSelectParentDocument().waitAndClick(10);
+		
+		
 		int DocumentId = base.getIndex(doc.getChildHeader(), "DOCID");
 		doc.getChildTableRow(DocumentId);
 		System.out.println(DocumentId);
@@ -2904,10 +2917,11 @@ public class Production_Regression2 {
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.getIncludeFamilies().waitAndClick(10);
-		String Document = page.navigatingToDocViewPage();
+		page.navigatingToDocViewPage();
 		doc.getSelectParentDocument().isElementAvailable(1);
-		if (doc.getSelectParentDocument().isDisplayed()) {
-			doc.getSelectParentDocument().waitAndClick(10);
+		if (doc.getSelectDocument(ParentDocId).isDisplayed()) {
+			driver.scrollingToBottomofAPage();
+			doc.getSelectDocument(ParentDocId).waitAndClick(10);
 			ArrayList<String> selectedDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
 			if (DocumentIdInDoclist.equals(selectedDocs)) {
 				base.passedStep("Parent And Child document is displayed as expected");
@@ -2921,10 +2935,12 @@ public class Production_Regression2 {
 		page.getBackButton().waitAndClick(10);
 		page.getMarkIncompleteButton().Click();
 		page.getIncludeFamilies().waitAndClick(10);
-		String DocCount = page.navigatingToDocViewPage();
-		if (Integer.valueOf(Document) <= Integer.valueOf(DocCount)) {
+		 page.navigatingToDocViewPage();
+		base.waitTime(1);
+	
 			driver.waitForPageToBeReady();
-			doc.getSelectParentDocument().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			doc.getSelectDocument(ParentDocId).waitAndClick(10);
 			driver.waitForPageToBeReady();
 			ArrayList<String> IncludeFamilyMembDocs = doc.GettingChildDocumentInDocListPage(DocumentId);
 			if (DocumentIdInDoclist.equals(IncludeFamilyMembDocs)) {
@@ -2932,9 +2948,6 @@ public class Production_Regression2 {
 			} else {
 				base.failedStep("Include family member doc is not displayed as expected");
 			}
-		} else {
-			base.failedStep("Document is not displayed as expected");
-		}
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 		loginPage.logout();
