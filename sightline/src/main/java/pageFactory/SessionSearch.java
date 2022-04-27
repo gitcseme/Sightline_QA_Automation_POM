@@ -1731,6 +1731,11 @@ public class SessionSearch {
 	public Element getBullIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
 	}
+	
+	//added by Aathith
+	public Element getThreadedLastCount() {
+		return driver.FindElementByXPath("(//*[@id='002']//count)[last()]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -11264,5 +11269,62 @@ public class SessionSearch {
 		}
 
 		}
+	public void bulkFolderExistingWithoutPureHit(final String folderName) throws InterruptedException {
 
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		
+
+		driver.scrollPageToTop();
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction().waitAndClick(10);
+		driver.Manage().window().fullscreen();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolderExisting(folderName).Visible();
+			}
+		}), Input.wait60);
+
+		getSelectFolderExisting(folderName).waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().waitAndClick(10);
+		driver.Manage().window().maximize();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().waitAndClick(10);
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		// System.out.println("Bulk folder is done, folder is : "+folderName);
+		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
+		// Since page is freezing after bulk actiononly in automation, lets reload page
+		// to avoid it..
+		driver.getWebDriver().navigate().refresh();
+	}
 }
