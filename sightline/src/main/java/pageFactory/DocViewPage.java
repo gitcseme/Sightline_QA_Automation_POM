@@ -3414,6 +3414,12 @@ public class DocViewPage {
 	public Element getDocView_MetaDataPanel_EmailBCCNameAndAddresses() {
 		return driver.FindElementByXPath("//td[text()='EmailBCCNamesAndAddresses']");
 	}
+	public Element getImageTabAllSourcesDataOnDocView() {
+		return driver.FindElementByXPath("//*[@id='AvailableImagesDropDown']//a[text()='B2F9_Automation_AllSources_20211130043120500 2']");
+	}
+	public Element getAllSourcesDatasetImage() {
+		return driver.FindElementById("divDocViewerImage");
+	}
 
 
 	public DocViewPage(Driver driver) {
