@@ -1055,6 +1055,26 @@ public class Regression_Ingestion01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 27/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47590
+	 * Description :Verify Back, Done and Save buttons along with ignore option for the error listed ingested records.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 52)
+	public void verifyOptionsForErrorListedIngestion() throws InterruptedException  {
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47590");
+		baseClass.stepInfo("Verify Back, Done and Save buttons along with ignore option for the error listed ingested records.");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_HHMI,Input.Natives_MMDDYYYY_HHMI);
+		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);	
+		//verify the options in error list ingestion details popup
+		ingestionPage.verifyOptionsInErrorDetailsPopup();
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
 	
 		
 	@AfterMethod(alwaysRun = true)

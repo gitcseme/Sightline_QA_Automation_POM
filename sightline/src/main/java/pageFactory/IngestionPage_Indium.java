@@ -969,6 +969,10 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Copy ']");
 	}
 	
+	public Element backButton() {
+		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -6304,10 +6308,11 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    			getPreviewRun().Visible()  ;}}), Input.wait30); 
 	    	getPreviewRun().waitAndClick(10);
 	    	
+	    	if (getApproveMessageOKButton().isElementAvailable(10)) {
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
 	    	getApproveMessageOKButton().waitAndClick(10);
-	    	
+	    	}
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
 	    	getbtnRunIngestion().waitAndClick(10);
@@ -7905,6 +7910,50 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
 		    	getbtnRunIngestion().waitAndClick(10);
 				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify back,ignore and done option in error detail popup
+			 */
+			public void verifyOptionsInErrorDetailsPopup() {
+				
+				getIngestionDetailPopup(1).waitAndClick(10);
+    			base.waitForElement(errorCountCatalogingStage());
+			    errorCountCatalogingStage().waitAndClick(10);
+			    if(backButton().isElementAvailable(10)) {
+			    	backButton().waitAndClick(5);
+			    	if(!backButton().isElementAvailable(10)) {
+			    		base.passedStep("Back button displayed and working properly");
+			    	}
+			    }
+			    else {
+			    	base.failedStep("back button not displayed in error details popup");
+			    }
+			    base.waitTime(1);
+			    errorCountCatalogingStage().waitAndClick(10);
+			    base.waitForElement(getIgnoreOptionSelection());
+			    getIgnoreOptionSelection().waitAndClick(5);
+			    base.waitTime(3);
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    		  doneButton().Enabled()  ;}}), Input.wait30); 
+			    doneButton().waitAndClick(10);
+			     
+			  	base.VerifySuccessMessage("Action done successfully");
+			  	errorCountCatalogingStage().waitAndClick(10);
+			  	base.waitTime(2);
+			  	String status = getIgnoreOptionSelection().GetAttribute("checked");
+			  	if(status.equalsIgnoreCase("checked")) {
+			  		base.passedStep("Error ignore checkbox, done button working properly and changes made in error list saved");
+			  	}
+			  	else {
+			  		base.failedStep("Error ignore checkbox, done button working properly and changes made in error list not saved");
+			  	}
+			  		
+			  	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+				  	getCloseButton().waitAndClick(10);
+
 			}
 			
 			
