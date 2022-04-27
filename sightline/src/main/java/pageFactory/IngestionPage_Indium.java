@@ -1022,7 +1022,7 @@ public class IngestionPage_Indium {
 		return driver.FindElementById("publish");
 	}
 	public Element savedSearch(String savedSearch) {
-		return driver.FindElementByXPath("//a[@data-content = '"+savedSearch+"']//i");
+		return driver.FindElementByXPath("//div[@id='treeFolder']/ul/li/ul/li//a[text()='"+savedSearch+"']");
 	}
 	public Element unPublishButton() {
 		return driver.FindElementById("Analyze");
@@ -7227,16 +7227,16 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					driver.waitForPageToBeReady();
 					base.waitTime(2);
 					savedSearch(savedSearch).isElementAvailable(15);
-					savedSearch(savedSearch).Click();
+					savedSearch(savedSearch).waitAndClick(10);
 					unPublishButton().isElementAvailable(15);
-					unPublishButton().Click();
+					unPublishButton().waitAndClick(10);
 					driver.scrollingToBottomofAPage();
 					List<WebElement> totalPages = totalPages().FindWebElements();
 					int totalPagesCount = totalPages.size()-2;
 					for(int i=0;i<totalPagesCount+1;i++) {
 						driver.scrollingToBottomofAPage();
 						nextButton().isElementAvailable(10);
-						nextButton().Click();
+						nextButton().waitAndClick(10);
 						if(disabledNextButton().isDisplayed())
 						{
 							base.waitTime(3);
@@ -7252,7 +7252,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					for(int i=0;i<1000;i++) {
 						driver.scrollingToBottomofAPage();
 						nextButton().isElementAvailable(10);
-						nextButton().Click();
+						nextButton().waitAndClick(10);
 						if(disabledNextButton().isDisplayed())
 						{
 							base.waitTime(3);
