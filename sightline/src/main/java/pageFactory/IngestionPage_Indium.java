@@ -4658,20 +4658,22 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	}
 	
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date: 28/04/2022
 	 * @description: To roll back an Ingestion
 	 */
 	public void rollBackIngestion() {
 		
-		base.waitTime(5);
 		getRefreshButton().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		base.waitForElement(getIngestionSettingGearIcon());
+		base.waitTime(5);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getIngestionSettingGearIcon().Visible()  ;}}), Input.wait30); 
 		getIngestionSettingGearIcon().waitAndClick(10);
 		
-		base.waitForElement(getIngestionRollbackbutton());
-		getIngestionRollbackbutton().waitAndClick(5);
-		base.waitTime(2);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getIngestionRollbackbutton().Visible()  ;}}), Input.wait30); 
+		getIngestionRollbackbutton().waitAndClick(10);
+		base.waitTime(3);
 		if(getApproveMessageOKButton().isElementAvailable(5)) {
 		getApproveMessageOKButton().waitAndClick(5);
 		}
@@ -6207,7 +6209,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			
-			for(int i=0;i<40;i++) {
+			for(int i=0;i<60;i++) {
+				base.waitTime(2);
 				String status = getStatus(1).getText().trim();
 				
 	    		if(status.contains("Draft")) {
@@ -6215,7 +6218,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    			break;
 	    		}
 	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(10);
+	    			base.waitTime(5);
 	    			getRefreshButton().waitAndClick(10);
 	    		}
 	    		else {
