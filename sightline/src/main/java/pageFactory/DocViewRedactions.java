@@ -3677,7 +3677,7 @@ public void popOutCodingFormChildWindow() {
 		wait.until(ExpectedConditions.elementToBeClickable(getMaximizePanel().getWebElement()));
 		Thread.sleep(4000);
 		// Thread sleep added for the page to maximize
-		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(800, 80).release().build()
+		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(200, 20).release().build()
 				.perform();
 		base.stepInfo("Middle panel of the doc view page is successfully maximized");
 		base.waitForElement(getDocViewPanel());
@@ -4060,6 +4060,12 @@ public void popOutCodingFormChildWindow() {
 	 *              Thumbnailspanel is displayed.
 	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
 	 */
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description verify different type of Documents in minidocList on
+	 *              Thumbnailspanel is displayed.
+	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
+	 */
 	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId, String xlsExcelDocId, String tiffDocId,
 			String pptDocId, String messageDocId) throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -4068,7 +4074,7 @@ public void popOutCodingFormChildWindow() {
 		DocViewPage docView = new DocViewPage(driver);
 		base = new BaseClass(driver);
 		base.stepInfo("bascic contant search on DocView");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
 		docViewRedact.verifyThumbNailsPanelDisplayed();
@@ -4104,5 +4110,6 @@ public void popOutCodingFormChildWindow() {
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
 
 	}
+
 
 }
