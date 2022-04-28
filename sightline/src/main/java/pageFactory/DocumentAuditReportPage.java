@@ -156,7 +156,7 @@ public class DocumentAuditReportPage {
 			}), Input.wait60);
 			Thread.sleep(2000);
 
-			if (getwaitDialogue().isElementPresent()) {
+			if (getwaitDialogue().isElementAvailable(10)) {
 				getwaitOkBtn().waitAndClick(10);
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
@@ -165,7 +165,7 @@ public class DocumentAuditReportPage {
 						return getDocAuditTable().Visible();
 					}
 				}), Input.wait120);
-			} else if (getDocAuditTable().isElementPresent()) {
+			} else if (getDocAuditTable().isElementAvailable(10)) {
 				System.out.println("It is Displayed");
 			} else {
 
