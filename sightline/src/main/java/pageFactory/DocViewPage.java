@@ -2746,6 +2746,12 @@ public class DocViewPage {
 	public Element audioPlayPauseIcon() {
 		return driver.FindElementByXPath("//i[@id='btnPlayPause']");
 	}
+	public Element getKeywordHighlight(int i) {
+		return driver.FindElementByXPath("//div[@class='toggletText light-bg']//following-sibling::div['"+i+"']");
+	}
+	public ElementCollection getTotalKeywordHighlight() {
+		return driver.FindElementsByXPath("//div[@class='toggletText light-bg']//following-sibling::div");
+	}
 
 	// Added by Vijaya.Rani
 	public Element docViewReviewerPage() {
@@ -27724,4 +27730,36 @@ public class DocViewPage {
 			}
 		}
 	} 
+	
+	/**
+	 * @author Arunkumar  Modify Date: 28/04/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method verify keyword highlight in docview
+	 * 
+	 */
+	public void verifyHighlightedKeywordInDocView() {
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getTotalKeywordHighlight().FindWebElements();
+			int number = keyword.size();
+			for(int i=1;i<number;i++) {
+				String colorCode = getKeywordHighlight(i).GetAttribute("style");
+				System.out.println(colorCode);
+				
+				if ((colorCode.contains("rgb(255, 215, 0)")) ||(colorCode.contains("rgb(0, 255, 255)")) || colorCode.contains("#00FFFF")) {
+					base.passedStep("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view with expected colour");
+					break;
+				}
+				else {
+					System.out.println("need to check next highlighted keyword");
+				}
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occcured while checking keyword highlight color." + e.getMessage());
+	
+			}
+	}
+	
 }
