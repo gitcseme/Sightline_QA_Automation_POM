@@ -2441,10 +2441,8 @@ public class Production_Regression2 {
 
 
 		driver.waitForPageToBeReady();
-		File file = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".docx");
-		File Textfile = new File(
-				home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+		File file = new File(home + "/Downloads/VOL0001/Natives/0001/");
+		File Textfile = new File(home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
 		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Load Files/" + name + "_TIFF.OPT");
 		System.out.println("BATES" + prefixID + beginningBates + suffixID);
 
