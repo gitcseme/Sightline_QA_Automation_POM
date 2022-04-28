@@ -1871,10 +1871,10 @@ public class UserManagement {
 		getAssignUserButton().waitAndClick(10);
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		bc.waitTime(1);
-		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
 		getLeftArrow().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
 		getrightBtndomainuser().waitAndClick(10);
 		getProjectBtn().waitAndClick(10);
 		String ActualText=getBellyBandMsg().getText();
