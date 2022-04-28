@@ -3295,7 +3295,7 @@ public class DocViewPage {
 
 	// add by Aathith
 	public Element getSelectDocument(int i) {
-		return driver.FindElementByXPath("(//label[@class='checkbox'])[" + i + "]");
+		return driver.FindElementByXPath("(//label[@class='checkbox']/i)[" + i + "]");
 	}
 
 	// Added by Gopinath - 01/04/2022
@@ -26752,12 +26752,13 @@ public class DocViewPage {
 	 */
 	public void documentSelection(int noOfDocuments) throws InterruptedException {
 		try {
-			for (int row = 0; row < noOfDocuments; row++) {
+			for (int row = 1; row <=noOfDocuments; row++) {
 
 				driver.waitForPageToBeReady();
-				base.waitForElement(getSelectDocument(row + 1));
-				getSelectDocument(row + 1).waitAndClick(10);
+				base.waitForElement(getSelectDocument(row));
+				getSelectDocument(row).waitAndClick(10);
 				base.stepInfo("Document is selected in doc view");
+				driver.waitForPageToBeReady();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27744,4 +27745,25 @@ public class DocViewPage {
 
 	}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param count
+	 * @param value
+	 * @Description verify the value in theadMap
+	 */
+	public void verifyTheadMapValue(int count, String value) {
+		driver.waitForPageToBeReady();
+		for(int i=0;i<count;i++) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(base.text(value).isElementAvailable(2)) {
+				base.passedStep(value+" is displayed");
+				break;
+			}else {
+				driver.scrollPageToTop();
+				getDocView_Next().waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
+		}
+	} 
 }
