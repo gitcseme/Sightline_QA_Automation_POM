@@ -112,6 +112,8 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
 		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 		ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
+		//rollback
+		ingestionPage.rollBackIngestion();
 		
 		}
 	
@@ -848,14 +850,19 @@ public class Regression_Ingestion01 {
 	/** 
      *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47258
 	 * Description :To Verify Contents of Ingestion Tiles On Ingestions Home.
+	 * @throws InterruptedException 
 	 */
 	@Test(enabled = true,  groups = {"regression" },priority = 40)
-	public void verifyIngestionTileContentInHomePage() {
+	public void verifyIngestionTileContentInHomePage() throws InterruptedException {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47258");
 		baseClass.stepInfo("To Verify Contents of Ingestion Tiles On Ingestions Home.");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ingestionCatalogging();
 		ingestionPage.verifyContentOnIngestionTiles();
+		//rollback
+		ingestionPage.rollBackIngestion();
 		
 	}
 	
