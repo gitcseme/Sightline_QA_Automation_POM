@@ -1643,7 +1643,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		// click eye icon and verify the highlighting of search term
 		docView.getPersistentHit(Input.testData1);
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login as reviewer and verify keyword highlighting
@@ -1654,7 +1654,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();
 		// click eye icon and verify the highlighting of search term
 		docView.getPersistentHit(Input.testData1);
-		docView.verifyKeywordHighlightedOnDocView();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 	}
 
