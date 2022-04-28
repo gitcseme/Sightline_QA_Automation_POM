@@ -2203,6 +2203,9 @@ public class DocViewMetaDataPage {
 	public void verifyPrintOnDocView() {
 		try {
 			String status = null;
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getDocView_Print().isElementAvailable(15);
 			base.waitForElement(getDocView_Print());
 			base.waitTillElemetToBeClickable(getDocView_Print());
 			getDocView_Print().Click();

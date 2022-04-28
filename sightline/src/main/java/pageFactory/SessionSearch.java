@@ -3142,12 +3142,16 @@ public class SessionSearch {
 		}), Input.wait60);
 		getBulkRelease_ButtonRelease().waitAndClick(20);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFinalizeButton().Visible();
-			}
-		}), Input.wait60);
-		getFinalizeButton().waitAndClick(20);
+		
+		if(getFinalizeButton().isDisplayed()) {
+		
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalizeButton().Visible();
+				}
+			}), Input.wait60);
+			getFinalizeButton().waitAndClick(20);
+		}
 
 		base.VerifySuccessMessageB("Records saved successfully");
 
@@ -4081,12 +4085,34 @@ public class SessionSearch {
 	 */
 	public void addDocsMetCriteriaToActionBoard() {
 		try {
-			base.waitForElement(getDocsMetYourCriteriaLabel());
-			base.dragAndDrop(getDocsMetYourCriteriaLabel(), getActionPad());
+			if (getPureHitAddButton().isDisplayed()) {
+				getPureHitAddButton().waitAndClick(5);
+			} else {
+				System.out.println("Pure hit block already moved to action panel");
+				UtilityLog.info("Pure hit block already moved to action panel");
+			}
+
 			driver.scrollPageToTop();
-			Thread.sleep(3000);
-			base.waitForElement(getActionDropDownButton());
-			docViewMetaDataPage.selectValueFromDropDown(getActionDropDownButton(), getDocViewFromDropDown());
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getBulkActionButton().Visible();
+				}
+			}), Input.wait30);
+			base.waitTime(2); // App synch
+			getBulkActionButton().waitAndClick(5);
+			base.waitTime(2); // App Synch
+
+			if (getDocViewAction().isDisplayed()) {
+				getDocViewAction().Click();
+			} else {
+				Actions ac = new Actions(driver.getWebDriver());
+				ac.moveToElement(getViewOn().getWebElement()).build().perform();
+				base.waitTime(2);
+				getViewInDocViewLat().isElementAvailable(15);
+				getViewInDocViewLat().Click();
+			}
+			System.out.println("Navigated to docView to view docs");
+			UtilityLog.info("Navigated to docView to view docs");
 
 		} catch (Exception e) {
 			UtilityLog.info("Failed to Perform advanced Search With Content And MetaData Option");
