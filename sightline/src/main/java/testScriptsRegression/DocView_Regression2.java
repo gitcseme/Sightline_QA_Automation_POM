@@ -685,7 +685,7 @@ public class DocView_Regression2 {
 		assignmentsPage.selectAssignmentToViewinDocview(assname);
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.checkingPersistentHitPanel();
-		if (docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
+		if (docViewRedact.getKeywordInPersistentHitPanel().isDisplayed()) {
 			baseClass.passedStep("Keyword assigned to security group is present in the persistent hit panel");
 		} else {
 			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
@@ -3377,7 +3377,7 @@ public class DocView_Regression2 {
 		
 		actions.moveToElement(docViewRedact.hiddenInfoIcon().getWebElement()).build().perform();
 		baseClass.waitForElement(docViewRedact.hiddenInfoIcon());
-		String text = docViewRedact.hiddenInfoIcon().GetAttribute("title");
+		String text = docViewRedact.hiddenInfoIconToolTip().GetAttribute("title");
 		System.out.println(text);
 		if(text.equalsIgnoreCase("Hidden properties")) {
 			baseClass.passedStep("The mouse hover is on hidden info icon and disply Hidden Properties");
@@ -3637,7 +3637,7 @@ public class DocView_Regression2 {
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Workbook";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51951");
 		baseClass.stepInfo("Verify that when viewing the document having the 'Hidden Properties' value should provide indicator in viewer to convey that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3650,6 +3650,7 @@ public class DocView_Regression2 {
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
 		driver.waitForPageToBeReady();
+		baseClass.selectproject(Input.additionalDataProject);
 
 //Selecting Doc with excel protected worksheet		
 		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
@@ -3661,7 +3662,6 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 	}
-	
 	/**
 	 * Author :Vijaya.Rani date: 17/02/2022  Modified date: NA Modified by: NA Description
 	 * :Verify user after impersonation user can see the keywords highlighted in doc
@@ -4386,7 +4386,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 91)
+	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 91)
 	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4395,7 +4395,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("###Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content####");
 		
 		baseClass.stepInfo("Log in as user");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
 		
 		baseClass.stepInfo("basic content search");
 		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);

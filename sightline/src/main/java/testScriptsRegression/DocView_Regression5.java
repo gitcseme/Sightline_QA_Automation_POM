@@ -104,7 +104,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.sourceDocId1);
+		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
 		assignmentspage.assignmentDistributingToReviewer();
@@ -148,9 +148,9 @@ public class DocView_Regression5 {
 			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
 
 		}
-		baseClass.waitForElement(docViewRedact.nextKeywordTest());
-		docViewRedact.nextKeywordTest().Click();
-		if (docViewRedact.nextKeywordTest().Enabled() == true) {
+		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
+		docViewRedact.getKeywordInPersistentHitPanel().Click();
+		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
 			baseClass.passedStep("next button clickable");
 		} else {
 			baseClass.failedStep("next button not clickable");
@@ -189,9 +189,9 @@ public class DocView_Regression5 {
 			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
 
 		}
-		baseClass.waitForElement(docViewRedact.nextKeywordTest());
+		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
 		docViewRedact.nextKeywordTest().Click();
-		if (docViewRedact.nextKeywordTest().Enabled() == true) {
+		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
 			baseClass.passedStep("next btn clickable");
 		} else {
 			baseClass.failedStep("next btn not clickable");
@@ -213,9 +213,9 @@ public class DocView_Regression5 {
 			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
 
 		}
-		baseClass.waitForElement(docViewRedact.nextKeywordTest());
-		docViewRedact.nextKeywordTest().Click();
-		if (docViewRedact.nextKeywordTest().Enabled() == true) {
+		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
+		docViewRedact.getKeywordInPersistentHitPanel().Click();
+		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
 			baseClass.passedStep("next btn clickable");
 		} else {
 			baseClass.failedStep("next btn not clickable");

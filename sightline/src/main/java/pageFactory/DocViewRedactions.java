@@ -1288,6 +1288,14 @@ public class DocViewRedactions {
 		return driver.FindElementById("rotateLeft_divDocViewerImage");
 	}
 
+	public Element getKeywordInPersistentHitPanel() {
+		return driver.FindElementByXPath("//p[starts-with(@id,\"PHitCount\")]");
+	}
+
+public Element hiddenInfoIconToolTip() {
+		return driver.FindElementByXPath("//li[@id='hiddenProperty']/a");
+	}
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
