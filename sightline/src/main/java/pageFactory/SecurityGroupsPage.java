@@ -304,8 +304,9 @@ public class SecurityGroupsPage {
 				return getSecurityGroupCreateButton().Visible();
 			}
 		}), Input.wait60);
+		getSecurityGroupCreateButton().isElementAvailable(15);
 		getSecurityGroupCreateButton().waitAndClick(5);
-
+		bc.waitTime(2);
 		Actions action = new Actions(driver.getWebDriver());
 		action.moveToElement(driver.getWebDriver().findElement(By.xpath("//button[text()='Create']"))).click()
 				.perform();
@@ -315,8 +316,10 @@ public class SecurityGroupsPage {
 				return getSecurityGroupName().Visible();
 			}
 		}), Input.wait30);
+		getSecurityGroupName().isElementAvailable(15);
 		getSecurityGroupName().SendKeys(securitygroupname);
-
+		bc.waitTime(2);
+		getSecurityGroupSaveButton().isElementAvailable(15);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSecurityGroupSaveButton().Visible();

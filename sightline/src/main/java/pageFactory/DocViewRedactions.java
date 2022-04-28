@@ -1386,6 +1386,7 @@ public class DocViewRedactions {
 				return redactionSave().Visible() && redactionSave().Enabled();
 			}
 		}), Input.wait30);
+		redactionSave().isElementAvailable(15);
 		redactionSave().waitAndClick(20);
 		
 	}
@@ -1748,6 +1749,7 @@ public void popOutCodingFormChildWindow() {
 			thisPageRedaction().waitAndClick(5);
 			base.waitForElement(getSelectReductionTagDropDown());
 			getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
+			getSaveButton().isElementAvailable(15);
 			base.waitForElement(getSaveButton());
 			getSaveButton().Click();
 			base.VerifySuccessMessage("Redaction tags saved successfully.");
@@ -1769,6 +1771,8 @@ public void popOutCodingFormChildWindow() {
 			base = new BaseClass(driver);
 			base.waitForElement(totalNoOfPagesInDocument());
 			base.waitTillElemetToBeClickable(totalNoOfPagesInDocument());
+			base.waitTime(2);
+			totalNoOfPagesInDocument().isElementAvailable(15);
 			String totalPagesInDoc = totalNoOfPagesInDocument().getText().trim();
 			String pages = totalPagesInDoc.replaceAll("[^0-9]+", "");
 			System.out.println("Total number of pages in selected document : " + pages);
@@ -1782,6 +1786,7 @@ public void popOutCodingFormChildWindow() {
 			base.waitTillElemetToBeClickable(multiPageInputTextbox());
 			multiPageInputTextbox().SendKeys("1-" + pages);
 			redactionSaveBtn().Click();
+			base.waitTime(3);
 			base.VerifySuccessMessage("Redaction tags saved successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2487,24 +2492,27 @@ public void popOutCodingFormChildWindow() {
 		actions.build().perform();
 		actions.moveToElement(userFiletersBtn().getWebElement());
 		actions.click().build().perform();
-		Thread.sleep(Input.wait3);
 		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		wait.until(ExpectedConditions.elementToBeClickable(userEditBtn().getWebElement()));
 		actions.moveToElement(userEditBtn().getWebElement());
 		actions.click();
 		actions.build().perform();
-		Thread.sleep(Input.wait3);
 		driver.scrollingToBottomofAPage();
+		base.waitTime(3);
 		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
 		Robot robot = new Robot();
+		base.waitTime(2);
 		robot.keyPress(KeyEvent.VK_CONTROL);
+		base.waitTime(2);
 		selectSG.selectByVisibleText(securityGroup1);
+		base.waitTime(3);
 		selectSG.selectByVisibleText(securityGroup2);
 		robot.keyRelease(KeyEvent.VK_CONTROL);
-		Thread.sleep(2000); // needed for selecting 2 SGs simultaniously
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-		Thread.sleep(3000);
+		base.waitTime(3);
+		userSelectSGSaveBtn().isElementAvailable(15);
+		userSelectSGSaveBtn().Click();
+		base.waitTime(3);
 		base.passedStep(
 				"Given access for these SG's " + securityGroup1 + " " + securityGroup2 + "  for this user" + user);
 	}
@@ -3908,7 +3916,9 @@ public void popOutCodingFormChildWindow() {
 		String xAxis, yAxis;
 		HashMap<String, String> xyMap = new HashMap<String, String>();
 
+		redactionIcon().isElementAvailable(15);
 		redactionIcon().waitAndClick(30);
+		textSelectionRedactionIcon().isElementAvailable(15);
 		textSelectionRedactionIcon().waitAndClick(10);
 		driver.waitForPageToBeReady();
 

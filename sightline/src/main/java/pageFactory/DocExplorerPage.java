@@ -472,6 +472,19 @@ public class DocExplorerPage {
 		
 	}
 	
+
+	// Added by Gopinath - 08/04/2022
+		public Element getViewOn() {
+			return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
+		}
+		public Element getViewInDocViewLat() {
+			return driver.FindElementByXPath("//a[text()='View in DocView']");
+		}
+		public Element getViewInDocListLat() {
+			return driver.FindElementByXPath("//a[text()='View in DocList']");
+		}
+
+
 	public Element getPageNextButtonDisabled() {
 		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']");
 	}
@@ -484,6 +497,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 	return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
 					+ folderName + "']/../ul/descendant::li[@class='jstree-node  jstree-leaf jstree-last']");
 }
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -1845,24 +1859,33 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		bc.waitTime(3);
 		getDocExp_actionButton().isElementAvailable(10);
 		getDocExp_actionButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocListAction().Visible();
+		bc.waitTime(3);
+		if(getDocListAction().isDisplayed()) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocListAction().Visible();
+				}
+			}), Input.wait60);
+			bc.waitTime(2);
+			getDocListAction().isElementAvailable(10);
+			getDocListAction().waitAndClick(20);
+			try {
+				if (bc.getYesBtn().isDisplayed()) {
+					bc.getYesBtn().waitAndClick(10);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
-		}), Input.wait60);
-		bc.waitTime(2);
-		getDocListAction().isElementAvailable(10);
-		getDocListAction().waitAndClick(20);
-		try {
-			if (bc.getYesBtn().isDisplayed()) {
-				bc.getYesBtn().waitAndClick(10);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Navigated to doclist, to view docslist");
+			UtilityLog.info("Navigated to doclist, to view docslist");
+		}else {
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getViewOn().getWebElement()).build().perform();
+			bc.waitTime(2);
+			getViewInDocViewLat().isElementAvailable(15);
+			getViewInDocViewLat().Click();
 		}
-		System.out.println("Navigated to doclist, to view docslist");
-		UtilityLog.info("Navigated to doclist, to view docslist");
+				
 
 	}
 

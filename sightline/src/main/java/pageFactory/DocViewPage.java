@@ -2348,7 +2348,7 @@ public class DocViewPage {
 	}
 
 	public ElementCollection getAnnotations() {
-		return driver.FindElementsByCssSelector("rect[height*='842'][style*='fill']");
+		return driver.FindElementsByCssSelector("rect[style*='fill']");
 	}
 
 //		Added by baskar
