@@ -99,7 +99,7 @@ public class DocView_Regression3 {
 	 * security groups and redaction added in both security groups with different
 	 * annotation layer.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyDocumentPrintsRedactionBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -120,6 +120,10 @@ public class DocView_Regression3 {
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.AddSecurityGroup(namesg2);
 		baseClass.CloseSuccessMsgpopup();
 		driver.scrollPageToTop();
@@ -128,7 +132,10 @@ public class DocView_Regression3 {
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		baseClass.CloseSuccessMsgpopup();
@@ -197,7 +204,7 @@ public class DocView_Regression3 {
 	 * security group only with different annotation layer and shared redaction
 	 * tags.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyDocumentPrintsDifferentRedactionsBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -220,6 +227,10 @@ public class DocView_Regression3 {
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.AddSecurityGroup(namesg2);
 		baseClass.CloseSuccessMsgpopup();
 		driver.scrollPageToTop();
@@ -228,7 +239,10 @@ public class DocView_Regression3 {
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		baseClass.CloseSuccessMsgpopup();
@@ -303,7 +317,7 @@ public class DocView_Regression3 {
 	 * and redaction added in first security group only with shared annotation
 	 * layer.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyDocumentPrintsRedactionsReleasedToSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -324,6 +338,10 @@ public class DocView_Regression3 {
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.AddSecurityGroup(namesg2);
 		baseClass.CloseSuccessMsgpopup();
 		driver.scrollPageToTop();
@@ -332,7 +350,10 @@ public class DocView_Regression3 {
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		baseClass.CloseSuccessMsgpopup();
@@ -361,7 +382,10 @@ public class DocView_Regression3 {
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docViewRedact.clickingRedactionIcon();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
-		sessionsearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Navigate to session search url");
+		sessionsearch.navigateToSessionSearchPageURL();
+		
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		// Print is not working properly
 		docViewMetaDataPage.verifyPrintOnDocView();
@@ -388,7 +412,7 @@ public class DocView_Regression3 {
 	 * security groups and redaction added in both security groups with shared
 	 * annotation layer and redaction tags.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyPrintsRedactionsReleasedToDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -411,15 +435,25 @@ public class DocView_Regression3 {
 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.AddSecurityGroup(namesg2);
 		baseClass.CloseSuccessMsgpopup();
 		driver.scrollPageToTop();
+		
+		driver.Navigate().refresh();
+		
 		securityGroupsPage.AddSecurityGroup(namesg3);
 
 		// Creating annotation layer and assigning to newly created SGs
 		docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		securityGroupsPage = new SecurityGroupsPage(driver);
+		
+		baseClass.stepInfo("Navigate to security groups page");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 		baseClass.CloseSuccessMsgpopup();
@@ -442,6 +476,10 @@ public class DocView_Regression3 {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		RedactionPage redactionpage = new RedactionPage(driver);
+		
+		baseClass.stepInfo("Navigate To Redactions Page URL");
+		redactionpage.navigateToRedactionsPageURL();
+		
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 		redactionpage.manageRedactionTagsPage(Redactiontag2);
 
@@ -486,7 +524,7 @@ public class DocView_Regression3 {
 	 * two different security groups and redaction added in both security groups
 	 * with different annotation layer.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifPrintDocumentWithoutRedactionAsPA() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -587,7 +625,7 @@ public class DocView_Regression3 {
 	 * redaction added in first security group only with different annotation layer
 	 * and shared redaction tags.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifPrintDocumentPARedactionForFirstSecurityGroup() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -683,7 +721,7 @@ public class DocView_Regression3 {
 	 * with shared redaction tags in security groups and all propagated documents
 	 * are not released to security groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyRedactionForTwoSecurityGroupsWithDupDocuments() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -779,7 +817,7 @@ public class DocView_Regression3 {
 	 * Description : Verify that after editing the remark should be saved for the
 	 * document when same annotation layer is mapped to different security groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithSameAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -875,7 +913,7 @@ public class DocView_Regression3 {
 	 * under different security group with different annotation layer
 	 * adds/edit/delete reviewer remark to the same record successfully.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithDiffAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew2 = Input.randomText + Utility.dynamicNameAppender();
@@ -988,7 +1026,7 @@ public class DocView_Regression3 {
 	 * different security group with different annotation layer adds highlighting to
 	 * the same record successfully.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void verifyHighlightAddedInSGsGWithDiffAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1089,7 +1127,7 @@ public class DocView_Regression3 {
 	 * Verify that annotation should be saved for the document when same annotation
 	 * layer is mapped to different security groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1183,7 +1221,7 @@ public class DocView_Regression3 {
 	 * the document when same annotation layer is mapped to different security
 	 * groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifyEditAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1231,7 +1269,7 @@ public class DocView_Regression3 {
 
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString1);
 
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
@@ -1243,17 +1281,17 @@ public class DocView_Regression3 {
 		// Switch To SG1
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView = new DocViewPage(driver);
 
-		baseClass.stepInfo("Highlighting document text");
-		docViewRedact.clickingHighlitingIcon();
+		baseClass.stepInfo("Perfrom non audio annotation");
+		docView.performNonAudioAnnotation();
 
 		// Switch To SG2
 		docViewRedact.selectsecuritygroup(namesg3);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 
 		baseClass.stepInfo("Editing annotation layer of current document.");
@@ -1267,12 +1305,13 @@ public class DocView_Regression3 {
 
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:NA TestCase
-	 * id : 51451 -Verify that after moving the annotation should be saved for the
+	 * id : 
+ -Verify that after moving the annotation should be saved for the
 	 * document when same annotation layer is mapped to different security groups.
 	 * Description : Verify that after moving the annotation should be saved for the
 	 * document when same annotation layer is mapped to different security groups
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifyAnnotationbyMovingByDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1320,7 +1359,7 @@ public class DocView_Regression3 {
 
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.familyMembersDocId);
+		sessionsearch.basicContentSearch(Input.searchString1);
 
 		sessionsearch.bulkRelease(namesg2);
 		sessionsearch.bulkRelease(namesg3);
@@ -1333,7 +1372,7 @@ public class DocView_Regression3 {
 		// Switch To SG1
 		docViewRedact.selectsecuritygroup(namesg2);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.familyMembersDocId);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 		docView = new DocViewPage(driver);
 
@@ -1343,7 +1382,7 @@ public class DocView_Regression3 {
 		// Switch To SG2
 		docViewRedact.selectsecuritygroup(namesg3);
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.familyMembersDocId);
+		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
 
 		baseClass.stepInfo("Move Annotation By Rectangle");
@@ -1363,7 +1402,7 @@ public class DocView_Regression3 {
 	 * deleting the annotation layer by PA user under 'AllSecurityGroups' should not
 	 * present respective redactions/annotations/remarks on documents.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void verifyRemarkOnSecucityGroupByAnnotationlayerDeleted() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1441,7 +1480,7 @@ public class DocView_Regression3 {
 		Reporter.log("Logged in as User: " + Input.pa2userName);
 
 		AnnotationLayer annotation = new AnnotationLayer(driver);
-		annotation.deleteAnnotation(AnnotationLayerNew);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -1465,7 +1504,7 @@ public class DocView_Regression3 {
 	 * tags and history) shown in the doc in 2nd sec group
 	 * stabilization done
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyRedactionInfoAcrossSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -1557,7 +1596,7 @@ public class DocView_Regression3 {
 	 * icons on doc view after deleting the annotation layer
 	 * stabilization done
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyRedactionInfoAfterDletingAnnotationLayer() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1694,7 +1733,7 @@ public class DocView_Regression3 {
 	 *              under specific SecurityGroup should not present respective
 	 *              redactions/annotations/remarks.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyRedactionAnnoationtRemarkByAnnotationlayerDeleted() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1807,7 +1846,7 @@ public class DocView_Regression3 {
 	 * @Description : Verify that after deleting the annotation layer by RMU user
 	 *              should not present respective redactions/annotations/remarks.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyRedactionAnnoationtRemarkByAnnotlayerDeletedByRMU() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1914,7 +1953,7 @@ public class DocView_Regression3 {
 	public void verifyFunctionAvailabilityWhenAnnotationLayerNotAdded() throws Exception {
 
 		String securityGroupName = "Security Group" + Utility.dynamicNameAppender();
-
+		namesg2 = securityGroupName;
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -1930,9 +1969,8 @@ public class DocView_Regression3 {
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(securityGroupName);
-		securityGroupsPage.navigateToSecurityGropusPageURL();
-		securityGroupsPage.selectSecurityGroup(securityGroupName);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
+		driver.Navigate().refresh();
+		
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(securityGroupName);
 		driver.waitForPageToBeReady();
@@ -1971,7 +2009,7 @@ public class DocView_Regression3 {
 	 *             doc view page in different security group when different
 	 *             annotation layer is mapped to different security groups
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyAnnatationAcrossDifferentSecurityGroupSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -2072,25 +2110,34 @@ public class DocView_Regression3 {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyMultiPageRedationApplyRedationPageDocument() throws Exception {
-
+		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47032");
 		baseClass.stepInfo(
 				"Verify that multi-page redactions should be applied on top of the individual redactions in the page of document.");
 		baseClass = new BaseClass(driver);
+		softAssertion = new SoftAssert();
 		bacth = new BatchRedactionPage(driver);
 		sessionsearch = new SessionSearch(driver);
-		softAssertion = new SoftAssert();
 		docView = new DocViewPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		String searchName = "Test" + Utility.dynamicNameAppender();
 		String redactiontag = "Tag" + Utility.dynamicNameAppender();
+		
+		
+		RedactionPage redactionpage = new RedactionPage(driver);
 
+		baseClass.stepInfo("Navigate To Redactions Page URL");
+		redactionpage.navigateToRedactionsPageURL();
+
+		baseClass.stepInfo("Manage Redaction Tags Page");
+		redactionpage.manageRedactionTagsPage(redactiontag);
+		
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
 
 		// Create saved search
-		sessionsearch.basicContentSearch(Input.TallySearch);
+		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.saveSearch(searchName);
 
 		// perform Batch redaction
@@ -2105,15 +2152,24 @@ public class DocView_Regression3 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 
+		sessionsearch.basicContentSearch(Input.testData1);
+		
 		sessionsearch.ViewInDocView();
 
-		// click the Rectangleredaction icon
-		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 50);
-		docViewRedact.selectingRectangleRedactionTag();
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		
+		baseClass.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
 
-		// click the text redaction icon
-		docViewRedact.doTextRedactWithXYPoints();
-
+		baseClass.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15,redactiontag);
+		
+		driver.Navigate().refresh();
+		
+		driver.scrollPageToTop();
+		docViewMetaDataPage.getRedactIcon().isElementAvailable(15);
+		docViewMetaDataPage.getRedactIcon().waitAndClick(15);
+		
 		// click the this page Redaction icon
 		docViewRedact.performThisPageRedaction(redactiontag);
 
@@ -2135,7 +2191,7 @@ public class DocView_Regression3 {
 	 * different security groups
 	 * stabilization done
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -2212,7 +2268,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		docView.verifyAnnotationAddedToDocument(0);
+		docView.verifyAddedAnnotationToDocument(0);
 		loginPage.logout();
 
 		baseClass.stepInfo(
@@ -2222,7 +2278,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		docView.verifyAnnotationAddedToDocument(0);
+		docView.verifyAddedAnnotationToDocument(0);
 		loginPage.logout();
 
 		baseClass.stepInfo(
@@ -2232,7 +2288,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		docView.verifyAnnotationAddedToDocument(0);
+		docView.verifyAddedAnnotationToDocument(0);
 		loginPage.logout();
 
 		baseClass.stepInfo(
@@ -2242,7 +2298,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
-		docView.verifyAnnotationAddedToDocument(0);
+		docView.verifyAddedAnnotationToDocument(0);
 		loginPage.logout();
 	}
 
@@ -2255,7 +2311,7 @@ public class DocView_Regression3 {
 	 *             keyword groups are released to security group and mapped to the
 	 *             security group.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyKeywordHighlightingReleasedToDifferentSecurityGroup() throws Exception {
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
 		namesg3 = Input.randomText + Utility.dynamicNameAppender();
@@ -2293,9 +2349,6 @@ public class DocView_Regression3 {
 		driver.Navigate().refresh();
 
 		securityGroupsPage.AddSecurityGroup(namesg3);
-
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
 
 		sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Navigate to session search");
@@ -2428,7 +2481,7 @@ public class DocView_Regression3 {
 	 *              group sharing annotation layer adds/edit/delete reviewer remarks
 	 *              to the same record successfully.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyRemarkDiffSecurityGroupsWhnSameAnnotationLayer() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -2516,8 +2569,8 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Getting : " + currentUrl + " url in second tab");
 		driver.getWebDriver().get(currentUrl);
 
-		baseClass.stepInfo("Adding remark to document");
-		docView.addRemarkToNonAudioDocument(56, 134, remark);
+		baseClass.stepInfo("Perfrom non audio remark");
+		docView.addRemarkToNonAudioDocument(10, 20, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -2559,7 +2612,7 @@ public class DocView_Regression3 {
 	 *           XML nodes are all properly created/reflected in the XML
 	 *           stabilization done
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyRemarkPanelRemarkDetailsAfterAddingHighlightingBetweenTwoUsers() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -2674,7 +2727,7 @@ public class DocView_Regression3 {
 	 *              groups and all propagated documents are not released to security
 	 *              groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifySharedAnnotationLayerWithUnsharedRedactionTag() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -2784,7 +2837,7 @@ public class DocView_Regression3 {
 	 * @TestCase id : 51448 -Verify that remark should be saved for the document when same annotation layer is mapped to different security groups.
 	 * @Description : Verify that remark should be saved for the document when same annotation layer is mapped to different security groups.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyRemarkDiffSecurityGroupsSameAnnotationLayer() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -2898,7 +2951,9 @@ public class DocView_Regression3 {
 			loginPage.logout();
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			securityGroupsPage = new SecurityGroupsPage(driver);
+			if (!(namesg2== null)) {
 			securityGroupsPage.deleteSecurityGroups(namesg2);
+			}
 			if (!(namesg3== null)) {
 				securityGroupsPage.deleteSecurityGroups(namesg3);
 			}
