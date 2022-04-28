@@ -420,6 +420,32 @@ public class Ingestion_Regression01 {
 		ingestionPage.unpublish(BasicSearchName);
 	}
 	
+	/** 
+     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47369
+	 * Description :To verify 'Ingestion Details' pop up display
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 14)
+	public void verifyIngestionDetailsPopupDisplay() {
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47369");
+		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
+		ingestionPage.verifyIngestionDetails();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47362
+	 * Description :To verify that on Ingestion Home page, user is able to access all page by navigation controls.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 15)
+	public void verifyIngestionHomePageNavigation() {
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47362");
+		baseClass.stepInfo("To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
+		ingestionPage.verifyHomePageNavigationControl();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

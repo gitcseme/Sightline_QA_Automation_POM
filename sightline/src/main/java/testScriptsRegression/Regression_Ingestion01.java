@@ -790,24 +790,11 @@ public class Regression_Ingestion01 {
 		}
 	
 	/** 
-     *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47369
-	 * Description :To verify 'Ingestion Details' pop up display
-	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 37)
-	public void verifyIngestionDetailsPopupDisplay() {
-		
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-47369");
-		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
-		ingestionPage.verifyIngestionDetails();
-	}
-	
-	/** 
      *Author :Arunkumar date: 04/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47593
 	 * Description :As a project admin I will be able to rollback an ingestion - new approach
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 38)
+	@Test(enabled = true,  groups = {"regression" },priority = 37)
 	public void verifyRollbackOptionAtDifferentIngestionStages() throws InterruptedException   {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -835,24 +822,11 @@ public class Regression_Ingestion01 {
 	}
 	
 	/** 
-     *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47362
-	 * Description :To verify that on Ingestion Home page, user is able to access all page by navigation controls.
-	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 39)
-	public void verifyIngestionHomePageNavigation() {
-		
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-47362");
-		baseClass.stepInfo("To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
-		ingestionPage.verifyHomePageNavigationControl();
-	}
-	
-	/** 
      *Author :Arunkumar date: 05/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47258
 	 * Description :To Verify Contents of Ingestion Tiles On Ingestions Home.
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 40)
+	@Test(enabled = true,  groups = {"regression" },priority = 38)
 	public void verifyIngestionTileContentInHomePage() throws InterruptedException {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -870,7 +844,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 06/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47589
 	 * Description :Ingestion error list changes for  ignore fields in UI
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 41)
+	@Test(enabled = true,  groups = {"regression" },priority = 39)
 	public void verifyIgnoreOptionInErrorList() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -890,7 +864,7 @@ public class Regression_Ingestion01 {
 	 * Description :Verify when user selects date & time format 'YYYY/MM/DD HH:MI:SS' for ingestion which is same as in the DAT file
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 42)
+	@Test(enabled = true,  groups = {"regression" },priority = 40)
 	public void verifyDateFormatYYYYMMDDHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -907,7 +881,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 13/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50764
 	 * Description :Verify that after resize browser Ingestion grid does not resize
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 43)
+	@Test(enabled = true,  groups = {"regression" },priority = 41)
 	public void verifyIngestionGridAfterResizeBrowser()  {
 		loginPage.logout();
 		// Resize browser
@@ -928,7 +902,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49732
 	 * Description :Verify 'Stitching TIFFs' count in Ingestion details popup after rollback the ingestion
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 44)
+	@Test(enabled = true,  groups = {"regression" },priority = 42)
 	public void verifyStitchedTiffDocCountAfterRollback() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -946,7 +920,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49497
 	 * Description :Verify that in Copying stage, error count should be display for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 45)
+	@Test(enabled = true,  groups = {"regression" },priority = 43)
 	public void verifyGeneratedSearchablePDFsErrorCountForTiff() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -964,7 +938,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 19/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49496
 	 * Description :Verify that in Copying stage, document count should be displayed for Generated Searchable PDFs for TIFFs on Ingestion Execution details pop up
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 46)
+	@Test(enabled = true,  groups = {"regression" },priority = 44)
 	public void verifyGeneratedSearchablePDFsDocumentCountForTiff() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -982,7 +956,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 20/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-59385
 	 * Description :Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 47)
+	@Test(enabled = true,  groups = {"regression" },priority = 45)
 	public void verifyErrorStatusWhenPdfPathInDatOption() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -995,7 +969,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47296
 	 * Description :Ingestion with draft mode.
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 48)
+	@Test(enabled = true,  groups = {"regression" },priority = 46)
 	public void verifyIngestionWithDraftMode() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1011,7 +985,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47299
 	 * Description :Verify Successful ingestion with ingestion details display with the help of Valid data and DAT file.
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 49)
+	@Test(enabled = true,  groups = {"regression" },priority = 47)
 	public void verifyIngestionDetailWithValidData() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1027,7 +1001,7 @@ public class Regression_Ingestion01 {
      *Author :Arunkumar date: 21/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47406
 	 * Description :To verify indexing for the Text file from Ingestion details pop up.
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 50)
+	@Test(enabled = true,  groups = {"regression" },priority = 48)
 	public void verifyIndexingForTextFile() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1047,7 +1021,7 @@ public class Regression_Ingestion01 {
 	 * Description :Verify when user selects date & time format 'MM/DD/YYYY HH:MI:SS' for ingestion which is same as in the DAT file
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 51)
+	@Test(enabled = true,  groups = {"regression" },priority = 49)
 	public void verifyDateFormatMMDDYYYYHHMISSInIngestionSameAsInDATFile() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1067,7 +1041,7 @@ public class Regression_Ingestion01 {
 	 * Description :Verify Back, Done and Save buttons along with ignore option for the error listed ingested records.
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 52)
+	@Test(enabled = true,  groups = {"regression" },priority = 50)
 	public void verifyOptionsForErrorListedIngestion() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
