@@ -39,18 +39,18 @@ public class WorkFlow_IndiumRegression {
 	TagsAndFoldersPage page;
 	SessionSearch search;
 	AssignmentsPage assignmentPage;
-	
-	String actionQuery="Define What Actions To Take On Candidate Documents That Meet Your Family Options";
-    String pageQuery="On this page you can define what action the application will take on eac h candidate "
-    		        + "document that also meets the selected Family Option rules. When the Workflow runs, "
-    		        + "it will evaluate whether each document in the Source Universe meets the Filter "
-    		        + "Criteria. Those that do are considered \"candidate documents\". "
-    		        + "If you have Family Option rules set up, the applicaiton will further evaluate"
-    		        + " whether all selected Family Option rules are met. If they are met, the Action "
-    		        + "specified below will be taken on the family unit if Family Option rules are specified,"
-    		        + " or on the candidate document if the document is not part of a family unit, or if no Family "
-    		        + "Options are configured. You can either action documents to an Assignment or into a Folder.";
-	
+
+	String actionQuery = "Define What Actions To Take On Candidate Documents That Meet Your Family Options";
+	String pageQuery = "On this page you can define what action the application will take on eac h candidate "
+			+ "document that also meets the selected Family Option rules. When the Workflow runs, "
+			+ "it will evaluate whether each document in the Source Universe meets the Filter "
+			+ "Criteria. Those that do are considered \"candidate documents\". "
+			+ "If you have Family Option rules set up, the applicaiton will further evaluate"
+			+ " whether all selected Family Option rules are met. If they are met, the Action "
+			+ "specified below will be taken on the family unit if Family Option rules are specified,"
+			+ " or on the candidate document if the document is not part of a family unit, or if no Family "
+			+ "Options are configured. You can either action documents to an Assignment or into a Folder.";
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -362,22 +362,21 @@ public class WorkFlow_IndiumRegression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52630");
 		baseClass.stepInfo("To verify that workflow should be deleted if clicks on Yes.");
 
-		workflow = new WorkflowPage(driver);
+		softAssertion = new SoftAssert();
 		int Id;
 		String folderName = "folder" + Utility.dynamicNameAppender();
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
-		String assgn = "Assgn" + Utility.dynamicNameAppender();
-		assignmentPage = new AssignmentsPage(driver);
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
 		// Search for any string
 		search = new SessionSearch(driver);
-		int count = search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName);
@@ -385,22 +384,30 @@ public class WorkFlow_IndiumRegression {
 		ss.getSaveSearchID(SearchName);
 		Thread.sleep(2000);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
-		System.out.println(Id);
 		UtilityLog.info(Id);
-
-		// assignment creation
-		search.bulkAssign();
-		assignmentPage.assignmentCreation(assgn, Input.codingFormName);
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
-		baseClass.stepInfo("Creating workflow using save search,assignmnet and first family options");
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, true, folderName, false, assgn, true, 1);
-		workflow.selectWorkFlowUsingPagination(wfName);
-		// Running workflow
-		int workFlowId = workflow.gettingWorkFlowId(wfName);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		driver.waitForPageToBeReady();
+		workflow.editWorkFlow(wfName);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		workflow.nextButton();
+		workflow.actionTabToSelectFolder(folderName, true);
+		workflow.nextButton();
+		workflow.schedulesTab(1);
+		workflow.nextButton();
+		workflow.notificationTab();
+		workflow.nextButton();
+		workflow.saveButton();
 
 		// Selecet DropDown And Delete
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		workflow.selectWorkFlowUsingPagination(wfName);
 		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
 		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
 		baseClass.stepInfo("Action DropDown is selected");
@@ -411,14 +418,6 @@ public class WorkFlow_IndiumRegression {
 		baseClass.waitForElement(workflow.getWorkFlow_RunWorkflowNow_YesButton());
 		workflow.getWorkFlow_RunWorkflowNow_YesButton().waitAndClick(10);
 		baseClass.stepInfo("workFlow Docs Deleted Successfully");
-
-		// validating count in workflow list
-		workflow.workFlowIdPassing(workFlowId);
-		workflow.applyFilter();
-
-		// verify Deleted Docs
-		boolean workFlowid = workflow.getWorkFlowIdPassing().Displayed();
-		softAssertion.assertFalse(workFlowid);
 		baseClass.passedStep("Deleted Work Flow Document is Not Displayed");
 		// logout
 		loginPage.logout();
@@ -655,7 +654,6 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
 	 * Description:To verify that all details displayed on history.
@@ -671,23 +669,23 @@ public class WorkFlow_IndiumRegression {
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
 		workflow.createNewWorkFlow();
-		workflow.descriptionTab(wfName,wfDesc);
+		workflow.descriptionTab(wfName, wfDesc);
 		baseClass.waitForElement(workflow.getSaveLinkButton());
 		workflow.getSaveLinkButton().waitAndClick(10);
 		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		workflow.selectWorkFlowUsingPagination(wfName);
-		
+
 		// action to viewhistory
 		baseClass.waitForElement(workflow.getWorkFlow_ActionDropdown());
 		workflow.getWorkFlow_ActionDropdown().waitAndClick(10);
 		baseClass.waitForElement(workflow.getHistoryButton());
 		workflow.getHistoryButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
+
 		// validating header count
-		String expectedHeader="Workflow ID,Workflow Name,Run Start,Run End,Action,Status,Total Object Promoted";
+		String expectedHeader = "Workflow ID,Workflow Name,Run Start,Run End,Action,Status,Total Object Promoted";
 		List<String> allHeader = new ArrayList<String>();
-		List<WebElement> persistantNames =workflow.getActionHeader().FindWebElements();
+		List<WebElement> persistantNames = workflow.getActionHeader().FindWebElements();
 		for (int i = 0; i < persistantNames.size(); i++) {
 			allHeader.add(persistantNames.get(i).getText());
 		}
@@ -699,7 +697,7 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void validatestatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52655");
@@ -713,15 +711,14 @@ public class WorkFlow_IndiumRegression {
 		String assgn = "Assgn" + Utility.dynamicNameAppender();
 
 		String wfDesc_Draft = "Desc" + Utility.dynamicNameAppender();
-		String wfName_Draft  = "work" + Utility.dynamicNameAppender();
-
+		String wfName_Draft = "work" + Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		 
-	    page = new TagsAndFoldersPage(driver);
-		page.CreateFolder(folderName,Input.securityGroup);
+
+		page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(folderName, Input.securityGroup);
 
 		// Search for any string
 		search = new SessionSearch(driver);
@@ -736,22 +733,22 @@ public class WorkFlow_IndiumRegression {
 		UtilityLog.info(Id);
 
 		// creating new work flow
-		workflow = new WorkflowPage(driver); 
-		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false,3);
-		
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 3);
+
 		// creating new work flow in draft state
 		workflow.getWorkFlowPage();
 		workflow.workFlow_Draft(wfName_Draft, wfDesc_Draft);
-		
+
 		String folderName_Complete = "WF" + Utility.dynamicNameAppender();
 		String SearchName_Complete = "WF" + Utility.dynamicNameAppender();
 		String wfName_Complete = "work" + Utility.dynamicNameAppender();
 		String wfDesc_Complete = "Desc" + Utility.dynamicNameAppender();
 		String assgn_Complete = "WF" + Utility.dynamicNameAppender();
 
-		baseClass.selectproject();	
+		baseClass.selectproject();
 		page.CreateFolder(folderName_Complete, Input.securityGroup);
-	     search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName_Complete);
@@ -762,42 +759,45 @@ public class WorkFlow_IndiumRegression {
 
 		// creating new work flow Completed status
 		workflow.getWorkFlowPage();
-		workflow.newWorkFlowCreation(wfName_Complete, wfDesc_Complete, Id1, false, folderName_Complete, true, assgn_Complete, false,3);
+		workflow.newWorkFlowCreation(wfName_Complete, wfDesc_Complete, Id1, false, folderName_Complete, true,
+				assgn_Complete, false, 3);
 		workflow.selectWorkFlowUsingPagination(wfName_Complete);
-		
+
 		// Running workflow
 		workflow.actionToRunWorkFlow();
 		// Page refresh
 		workflow.refreshingThePage();
 		baseClass.waitTime(10);
-		String[] status= {"Completed","Configured","Draft"};
-		
-		  this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		  List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
-			int occurence_Comp = baseClass.findNoOfOccurences(listStatus, "Completed");
-			int occurence_Conf= baseClass.findNoOfOccurences(listStatus, "Configured");
-			int occurence_Draft= baseClass.findNoOfOccurences(listStatus, "Draft");
-			int[] statusCount= {occurence_Comp,occurence_Conf,occurence_Draft};
-			
-		for(int i=0;i<status.length;i++) {	
+		String[] status = { "Completed", "Configured", "Draft" };
+
+		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
+		int occurence_Comp = baseClass.findNoOfOccurences(listStatus, "Completed");
+		int occurence_Conf = baseClass.findNoOfOccurences(listStatus, "Configured");
+		int occurence_Draft = baseClass.findNoOfOccurences(listStatus, "Draft");
+		int[] statusCount = { occurence_Comp, occurence_Conf, occurence_Draft };
+
+		for (int i = 0; i < status.length; i++) {
 			this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 			workflow.filterByStatus(status[i]);
-			baseClass.stepInfo("Work flow Filter for status "+status[i]+" is apllied.");
+			baseClass.stepInfo("Work flow Filter for status " + status[i] + " is apllied.");
 			driver.waitForPageToBeReady();
 			baseClass.waitTime(2);
-			List<String> WfStatus_AfterFilter=workflow.getTableHeaderValuesPagination("STATUS", false);
+			List<String> WfStatus_AfterFilter = workflow.getTableHeaderValuesPagination("STATUS", false);
 			System.out.println(WfStatus_AfterFilter);
-			if(WfStatus_AfterFilter.size()==statusCount[i]) {
-				for(int j=0;j<WfStatus_AfterFilter.size();j++) {
-				if( WfStatus_AfterFilter.get(j).equals(status[i])) {
-					if(j==(WfStatus_AfterFilter.size()-1))
-				baseClass.passedStep("Work flow filter for 'status' functionality working properly when we apply status as"+status[i]);
-				}else {
-					baseClass.failedStep("Work flow filter displayed different statud "+WfStatus_AfterFilter.get(i)+" which is not applied in filter");
+			if (WfStatus_AfterFilter.size() == statusCount[i]) {
+				for (int j = 0; j < WfStatus_AfterFilter.size(); j++) {
+					if (WfStatus_AfterFilter.get(j).equals(status[i])) {
+						if (j == (WfStatus_AfterFilter.size() - 1))
+							baseClass.passedStep(
+									"Work flow filter for 'status' functionality working properly when we apply status as"
+											+ status[i]);
+					} else {
+						baseClass.failedStep("Work flow filter displayed different statud "
+								+ WfStatus_AfterFilter.get(i) + " which is not applied in filter");
+					}
 				}
-				}
-			}
-			else {
+			} else {
 				baseClass.failedStep("work flow filter for status not working as expected.");
 			}
 		}
@@ -805,49 +805,51 @@ public class WorkFlow_IndiumRegression {
 		// logout
 		loginPage.logout();
 	}
-/**
- * @author Jayanthi.ganesan
- * @throws InterruptedException
- */
-@Test(enabled = true, groups = { "regression" }, priority = 15)
-public void verifyHistoryBtnEnabled() throws InterruptedException {
-	baseClass.stepInfo("Test case Id: RPMXCON-52646");
-	baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
-	
-	String wfName = "work" + Utility.dynamicNameAppender();
-	String wfDesc = "work" + Utility.dynamicNameAppender();
-	// Login as Reviewer Manager
-	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
-	workflow=new WorkflowPage(driver);
-	workflow.workFlow_Draft(wfName,wfDesc);
-	baseClass.stepInfo("Draft Work Flow Created with name "+wfName);
-	//selecting workflow
-	workflow.selectWorkFlowUsingPagination(wfName);
-	workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
-	baseClass.stepInfo("Clicked on Action button.");
-	//validation for display of enabled History button
-	if(workflow.getEnabledHistoryBtn().isDisplayed()) {
-		baseClass.passedStep("Sucessfully verified that RMU can view the action Enabled "
-				+ "'View History' Button if we select any work flow.");
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyHistoryBtnEnabled() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52646");
+		baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
+
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "work" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		workflow = new WorkflowPage(driver);
+		workflow.workFlow_Draft(wfName, wfDesc);
+		baseClass.stepInfo("Draft Work Flow Created with name " + wfName);
+		// selecting workflow
+		workflow.selectWorkFlowUsingPagination(wfName);
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+		baseClass.stepInfo("Clicked on Action button.");
+		// validation for display of enabled History button
+		if (workflow.getEnabledHistoryBtn().isDisplayed()) {
+			baseClass.passedStep("Sucessfully verified that RMU can view the action Enabled "
+					+ "'View History' Button if we select any work flow.");
+		} else {
+			baseClass.failedStep("Enabled View History Button not displayed.");
+		}
+		// validation for display of disabled history button if we dint select any work
+		// flow.
+
+		workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
+		baseClass.stepInfo("Clicked on Action button.");
+		// here we are validating display of disabled History button with absence of
+		// enabled history button.
+		if (!workflow.getEnabledHistoryBtn().isDisplayed()) {
+			baseClass.passedStep("History button is in disabled state if we dint select any work flow");
+		} else {
+			baseClass.failedStep(
+					"History button is in ensabled state if we dint select any work flow which is not expected.");
+		}
+		loginPage.logout();
 	}
-	else {
-		baseClass.failedStep("Enabled View History Button not displayed.");
-	}
-	//validation for display of disabled history button if we dint select any work flow.
-	
-	workflow.getWorkFlow_ActionDropdown().waitAndClick(5);
-	baseClass.stepInfo("Clicked on Action button.");
-	//here we are validating display of disabled History button with absence of enabled history button.
-	if(!workflow.getEnabledHistoryBtn().isDisplayed()) {
-		baseClass.passedStep("History button is in disabled state if we dint select any work flow");
-	}
-	else {
-		baseClass.failedStep("History button is in ensabled state if we dint select any work flow which is not expected.");
-	}
-	loginPage.logout();
-}
 
 	/**
 	 * @author Jayanthi.Ganesan
@@ -864,64 +866,64 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		workflow = new WorkflowPage(driver);
-		
-		//verifying Enabled state column sorting
+
+		// verifying Enabled state column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
 		workflow.applySorting(true, false, true, "ENABLED STATE");
 		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Ascending");
 		workflow.applySorting(false, true, true, "ENABLED STATE");
 		workflow.verifyHeaderSort("ENABLED STATE", true, listEnabled, "Descending");
-		
-		//verifying status column sorting
+
+		// verifying status column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listStatus = workflow.getTableHeaderValuesPagination("STATUS", false);
 		workflow.applySorting(true, false, true, "STATUS");
 		workflow.verifyHeaderSort("STATUS", false, listStatus, "Ascending");
 		workflow.applySorting(false, true, true, "STATUS");
 		workflow.verifyHeaderSort("STATUS", false, listStatus, "Descending");
-		
-		//verifying  Workflow ID column sorting
+
+		// verifying Workflow ID column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listWFID = workflow.getTableHeaderValuesPagination("Workflow ID", false);
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Ascending");
 		workflow.applySorting(false, true, true, "Workflow ID");
 		workflow.verifyHeaderSort("Workflow ID", false, listWFID, "Descending");
-		
-		//verifying  Last Modified Date column sorting
+
+		// verifying Last Modified Date column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listLMF = workflow.getTableHeaderValuesPagination("LAST MODIFIED DATE", false);
 		workflow.applySorting(true, false, true, "LAST MODIFIED DATE");
 		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Ascending");
 		workflow.applySorting(false, true, true, "LAST MODIFIED DATE");
 		workflow.verifyHeaderSort("LAST MODIFIED DATE", false, listLMF, "Descending");
-		
-		//verifying  Workflow Name column sorting
+
+		// verifying Workflow Name column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listWFName = workflow.getTableHeaderValuesPagination("Workflow Name", false);
 		workflow.applySorting(true, false, true, "Workflow Name");
 		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Ascending");
 		workflow.applySorting(false, true, true, "Workflow Name");
 		workflow.verifyHeaderSort("Workflow Name", false, listWFName, "Descending");
-		
-		//verifying Next Triggered Date column sorting
+
+		// verifying Next Triggered Date column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listTrigger = workflow.getTableHeaderValuesPagination("NEXT TRIGGER DATE", false);
 		workflow.applySorting(true, false, true, "NEXT TRIGGER DATE");
 		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Ascending");
 		workflow.applySorting(false, true, true, "NEXT TRIGGER DATE");
 		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Descending");
-		
-		//verifying Last run actioned doc count  column sorting
+
+		// verifying Last run actioned doc count column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listRunCount = workflow.getTableHeaderValuesPagination("LAST RUN ACTIONED DOC COUNT", false);
 		workflow.applySorting(true, false, true, "LAST RUN ACTIONED DOC COUNT");
 		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Ascending");
 		workflow.applySorting(false, true, true, "LAST RUN ACTIONED DOC COUNT");
 		workflow.verifyHeaderSort("LAST RUN ACTIONED DOC COUNT", false, listRunCount, "Descending");
-		
-		//verifying  Created by user column sorting
+
+		// verifying Created by user column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listCreatedBy = workflow.getTableHeaderValuesPagination("Created By", false);
 		workflow.applySorting(true, false, true, "Created By");
@@ -932,12 +934,13 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 	}
-/**
- * @author Jayanthi.Ganesan
- * @throws InterruptedException
- * @throws ParseException
- * @throws AWTException
- */
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws AWTException
+	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52656");
@@ -958,14 +961,13 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 
 		// Search for any string
 		search = new SessionSearch(driver);
-	    search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName);
 		SavedSearch ss = new SavedSearch(driver);
 		ss.getSaveSearchID(SearchName);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
-		
 
 		// creating new work flow wirh enabled state.
 		workflow = new WorkflowPage(driver);
@@ -977,36 +979,37 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// Page refresh
 		workflow.refreshingThePage();
 		baseClass.waitTime(10);
-		
+
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		//getting List Of Enabled state column before applying filter using Pagination.
+		// getting List Of Enabled state column before applying filter using Pagination.
 		List<String> listEnabled = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
-		//taking count of Enabled state work flows
+		// taking count of Enabled state work flows
 		int occurence = baseClass.findNoOfOccurences(listEnabled, "ENABLED");
-		//applying filter for  EnabledState.
+		// applying filter for EnabledState.
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		workflow.filterByState("Enabled");
-		//taking count of Enabled state work flows after applying enabled state filter.
+		// taking count of Enabled state work flows after applying enabled state filter.
 		List<String> listEnabledAfterFilter = workflow.getTableHeaderValuesPagination("ENABLED STATE", true);
-		SoftAssert assertion=new SoftAssert();
-		
-		//Validation part 
-		//Verifying filtered list Count
+		SoftAssert assertion = new SoftAssert();
+
+		// Validation part
+		// Verifying filtered list Count
 		if (listEnabledAfterFilter.size() == occurence) {
-			//Verifying filtered list contains  only enabled state
-			for(int i=0;i<listEnabledAfterFilter.size();i++) {
-				assertion.assertTrue( listEnabledAfterFilter.get(i).equalsIgnoreCase("ENABLED")) ;
+			// Verifying filtered list contains only enabled state
+			for (int i = 0; i < listEnabledAfterFilter.size(); i++) {
+				assertion.assertTrue(listEnabledAfterFilter.get(i).equalsIgnoreCase("ENABLED"));
 			}
 			assertion.assertAll();
-			baseClass.passedStep("Sucessfully verified that Workflow details  filtered as per the selected 'Enabled State'.");
+			baseClass.passedStep(
+					"Sucessfully verified that Workflow details  filtered as per the selected 'Enabled State'.");
 		} else {
 			baseClass.failedStep(" Workflow details not filtered as per the selected 'Enabled State'.");
 		}
 
 		// logout
 		loginPage.logout();
-		}
-	
+	}
+
 	/**
 	 * Author :Vijaya.Rani date: 24/03/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that Status list should be displayed as Complete or
@@ -1079,6 +1082,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * Author :jayanthi
 	 */
@@ -1092,7 +1096,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1100,7 +1104,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		page.CreateFolder(folderName, Input.securityGroup);
 		// Search for any string
 		search = new SessionSearch(driver);
-		 search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName);
@@ -1108,7 +1112,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		ss.getSaveSearchID(SearchName);
 		Thread.sleep(2000);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
-		UtilityLog.info(Id);	
+		UtilityLog.info(Id);
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
@@ -1131,21 +1135,22 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF name and description");
 		baseClass.waitForElement(workflow.getSummaryTab_WFName());
-		softAssertion.assertEquals(workflow.getSummaryTab_WFName().getText(),wfName);
-		softAssertion.assertEquals(workflow.getSummaryTab_WFDesc().getText(),wfDesc);
+		softAssertion.assertEquals(workflow.getSummaryTab_WFName().getText(), wfName);
+		softAssertion.assertEquals(workflow.getSummaryTab_WFDesc().getText(), wfDesc);
 		softAssertion.assertAll();
-		
-		baseClass.passedStep(" WF Name and Description is Displayed as expected in SummaryTab WFName- "
-		+ ""+workflow.getSummaryTab_WFName().getText()+" WFDescription"+workflow.getSummaryTab_WFDesc().getText()+"");
+
+		baseClass.passedStep(" WF Name and Description is Displayed as expected in SummaryTab WFName- " + ""
+				+ workflow.getSummaryTab_WFName().getText() + " WFDescription"
+				+ workflow.getSummaryTab_WFDesc().getText() + "");
 		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		page.deleteAllFolders(folderName);
-	
+
 	}
-	
+
 	/**
 	 * Author :Vijaya.Rani date: 14/04/2022 Modified date: NA Modified by: NA
-	 * Description:To verify that selected Source details is displayed in Summary tab.
-	 * 'RPMXCON-52613' Sprint-14
+	 * Description:To verify that selected Source details is displayed in Summary
+	 * tab. 'RPMXCON-52613' Sprint-14
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifySourceInSummaryTab() throws InterruptedException, ParseException {
@@ -1158,7 +1163,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1166,7 +1171,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		page.CreateFolder(folderName, Input.securityGroup);
 		// Search for any string
 		search = new SessionSearch(driver);
-		 search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName);
@@ -1174,7 +1179,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		ss.getSaveSearchID(SearchName);
 		Thread.sleep(2000);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
-		UtilityLog.info(Id);	
+		UtilityLog.info(Id);
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
@@ -1195,24 +1200,27 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		workflow.nextButton();
 		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
-		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF Source and description");
+		baseClass
+				.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF Source and description");
 		baseClass.waitForElement(workflow.getSummeryTabSource());
 		workflow.getSummeryTabSource().waitAndClick(5);
 		baseClass.waitForElement(workflow.getSummaryTab_SourceAssignment());
 		softAssertion.assertTrue(workflow.getSummaryTab_SourceAssignment().Displayed());
-		String SSName =workflow.getSummaryTab_SourceSavedSearch().getText();
-		if(SSName.equals(Id)){
+		String SSName = workflow.getSummaryTab_SourceSavedSearch().getText();
+		if (SSName.equals(Id)) {
 			baseClass.stepInfo("Source Saved Search Name is Displayed");
 		}
 		softAssertion.assertAll();
-		
-		baseClass.passedStep(" SourceSavedSearch and Assignment is Displayed as expected in SummaryTab SourceSavedSearch- "
-		+ ""+workflow.getSummaryTab_SourceSavedSearch().getText()+" Source Assignment"+workflow.getSummaryTab_SourceAssignment().getText()+"");
+
+		baseClass.passedStep(
+				" SourceSavedSearch and Assignment is Displayed as expected in SummaryTab SourceSavedSearch- " + ""
+						+ workflow.getSummaryTab_SourceSavedSearch().getText() + " Source Assignment"
+						+ workflow.getSummaryTab_SourceAssignment().getText() + "");
 		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		page.deleteAllFolders(folderName);
-	
+
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date: /04/2022 Modified by: Baskar
 	 * Description:To verify that RMU can veiw the Action tab details on Workflow.
@@ -1225,7 +1233,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
-	    search = new SessionSearch(driver);
+		search = new SessionSearch(driver);
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1254,12 +1262,12 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		workflow.nextButton();
 		workflow.familyOptions(true);
 		workflow.nextButton();
-		
+
 		// validating action tab message
-		String actualActionQuery=workflow.getActionTab_QueryMessage().getText();
+		String actualActionQuery = workflow.getActionTab_QueryMessage().getText();
 		softAssertion.assertEquals(actualActionQuery, actionQuery);
-		
-		String actualPageQuery=workflow.getActionTab_PageMessage().getText();
+
+		String actualPageQuery = workflow.getActionTab_PageMessage().getText();
 		softAssertion.assertEquals(actualPageQuery, pageQuery);
 		softAssertion.assertAll();
 		baseClass.passedStep("Action tab help query as per the expected one");
@@ -1267,11 +1275,11 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author :Vijaya.Rani date: 21/04/2022 Modified date: NA Modified by: NA
-	 * Description:To verify that selected Family options details is displayed in Summary tab.
-	 * 'RPMXCON-52615' Sprint-14
+	 * Description:To verify that selected Family options details is displayed in
+	 * Summary tab. 'RPMXCON-52615' Sprint-14
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyFamilyOptionInSummaryTab() throws InterruptedException, ParseException {
@@ -1284,7 +1292,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		String SearchName = "WF" + Utility.dynamicNameAppender();
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1292,7 +1300,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		page.CreateFolder(folderName, Input.securityGroup);
 		// Search for any string
 		search = new SessionSearch(driver);
-		 search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString1);
 
 		// Save the search
 		search.saveSearch(SearchName);
@@ -1300,7 +1308,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		ss.getSaveSearchID(SearchName);
 		Thread.sleep(2000);
 		Id = Integer.parseInt(ss.getSavedSearchID().getText());
-		UtilityLog.info(Id);	
+		UtilityLog.info(Id);
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
@@ -1321,22 +1329,23 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		workflow.nextButton();
 		softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
-		baseClass.stepInfo(" Entered all mandatory fields and Gone to summary tab  to verify WF Family Option and description");
+		baseClass.stepInfo(
+				" Entered all mandatory fields and Gone to summary tab  to verify WF Family Option and description");
 		baseClass.waitForElement(workflow.getSummeryTabFamilyOption());
 		workflow.getSummeryTabFamilyOption().waitAndClick(5);
 		baseClass.waitForElement(workflow.getSummaryTab_FamilyOptionAssignment());
 		softAssertion.assertTrue(workflow.getSummaryTab_FamilyOptionAssignment().Displayed());
-		String getFamilyOption =workflow.getSummaryTab_FamilyOptionAssignment().getText();
+		String getFamilyOption = workflow.getSummaryTab_FamilyOptionAssignment().getText();
 		System.out.println(getFamilyOption);
 		softAssertion.assertAll();
-		
-		baseClass.passedStep("Family Option is Displayed as expected in SummaryTab FamilyOption- "
-		+ ""+workflow.getSummaryTab_FamilyOptionAssignment().getText()+"");
+
+		baseClass.passedStep("Family Option is Displayed as expected in SummaryTab FamilyOption- " + ""
+				+ workflow.getSummaryTab_FamilyOptionAssignment().getText() + "");
 		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		page.deleteAllFolders(folderName);
-	
+
 	}
-	
+
 	/**
 	 * Author :Vijaya.Rani date: 21/04/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can view the Family Option tab.
@@ -1398,7 +1407,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 	 * Description:Create/Edit/Delete workflow with Folder destination.
 	 * 'RPMXCON-52726' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void createEditDeleteTheWorkFlow() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52726");
 		baseClass.stepInfo("Create/Edit/Delete workflow with Folder destination.");
@@ -1410,7 +1419,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
 		String assgn = "Assgn" + Utility.dynamicNameAppender();
 
-		// Login as Reviewer Manager
+		// Login as Reviewer Mananger
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
@@ -1438,7 +1447,7 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// Edit WorkFlow
 		workflow.selectWorkFlowUsingPagination(wfName);
 		workflow.editWorkFlow(wfName);
-		
+
 		baseClass.passedStep(" WorkFlow Is Edited Successfully");
 
 		// Selecet DropDown And Delete
@@ -1458,19 +1467,20 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		// logout
 		loginPage.logout();
 	}
+
 	/**
-	 * Author : Aathith date: NA Modified date: 25/04/2022 Modified by: 
-	 * Description: To verify that RMU can view the Workflow details.
+	 * Author : Aathith date: NA Modified date: 25/04/2022 Modified by: Description:
+	 * To verify that RMU can view the Workflow details.
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyRmuWorkflowDetails() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52617");
 		baseClass.stepInfo("To verify that RMU can view the Workflow details.");
-		
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'"); 
-		 
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
 		baseClass.visibleCheck("Workflow ID");
@@ -1481,13 +1491,13 @@ public void verifyHistoryBtnEnabled() throws InterruptedException {
 		baseClass.visibleCheck("Reset");
 		baseClass.visibleCheck("Create New Workflow");
 		baseClass.visibleCheck("Action");
-		
+
 		baseClass.stepInfo("Following details is displayed->  Filter criteria  List of the available of workflow,  "
 				+ "Reset and Apply Filters buttons,  Create New Workflow button and Action");
 		baseClass.passedStep("verified that RMU can view the Workflow details.");
 		loginPage.logout();
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

@@ -419,7 +419,7 @@ public class DomainManagement_IndiumRegression {
 	 * :Validate notification alert and clickable link for Doc View and DocList for
 	 * Reviewer(impersonate from DAU). 'RPMXCON-53094' Sprint-14
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyAlertClickableLinkDocViewForReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53094");
@@ -431,7 +431,6 @@ public class DomainManagement_IndiumRegression {
 
 		// Login As RMU
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject("Automation_NonDomain");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(TagName, "Select Tag Classification");
 		loginPage.logout();
@@ -449,14 +448,6 @@ public class DomainManagement_IndiumRegression {
 		search.verifyingBackGrounTaskInBullHornIcon();
 		loginPage.logout();
 
-		// Login as Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		search.basicContentSearch(Input.searchString1);
-		search.ViewInDocList();
-		doc.documentSelection(3);
-		doc.bulkTagExisting(TagName);
-		search.verifyingBackGrounTaskInBullHornIcon();
-		loginPage.logout();
 	}
 
 	/**
@@ -547,110 +538,113 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 
 	}
-	/**
 
-	* @Author :Aathith date: NA Modified date: Modified by:
-	* @Description :To verify that System Admin can assign Domain Admin to Domain successfully
-	*/
+	/**
+	 * 
+	 * @Author :Aathith date: NA Modified date: Modified by:
+	 * @Description :To verify that System Admin can assign Domain Admin to Domain
+	 *              successfully
+	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifySaCanAssignDaToDomain() throws Exception {
-	baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver);
 
-	baseClass.stepInfo("Test case Id: RPMXCON-53044");
-	utility = new Utility(driver);
-	baseClass.stepInfo("To verify that System Admin can assign Domain Admin to Domain successfully");
-	userManage = new UserManagement(driver);
-	
-	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-	Reporter.log("Logged in as User: " + Input.sa1userName);
-	
-	userManage.passingUserName(Input.da1userName);
-	userManage.applyFilter();
-	String firstName = userManage.getTableData("FIRST NAME", 1);
-	String lastName =  userManage.getTableData("LAST NAME", 1);
-	String dominName = userManage.getTableData("DOMAIN", 1);
-	String userName = firstName+" "+lastName;
-	String isBillable = " || IsBillable: false";
-	
-	userManage.unAssignUserToDomain(dominName, userName+isBillable);
-	baseClass.CloseSuccessMsgpopup();
-	baseClass.stepInfo("Select Domains  Select User from Unassigned User list  Click on arrow ");
-	userManage.AssignUserToDomain(dominName, userName);
-	
-	loginPage.logout();
-	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-	Reporter.log("Logged in as User: " + Input.da1userName);
-	DomainDashboard domain = new DomainDashboard(driver);
-	if(domain.availableDomains(dominName).isElementPresent()) {
-		baseClass.passedStep(domain+" domain is available");
-		System.out.println("passed");
-	}else {
-		baseClass.failedStep("verification failed");
-		System.out.println("failed");
+		baseClass.stepInfo("Test case Id: RPMXCON-53044");
+		utility = new Utility(driver);
+		baseClass.stepInfo("To verify that System Admin can assign Domain Admin to Domain successfully");
+		userManage = new UserManagement(driver);
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		String lastName = userManage.getTableData("LAST NAME", 1);
+		String dominName = userManage.getTableData("DOMAIN", 1);
+		String userName = firstName + " " + lastName;
+		String isBillable = " || IsBillable: false";
+
+		userManage.unAssignUserToDomain(dominName, userName + isBillable);
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.stepInfo("Select Domains  Select User from Unassigned User list  Click on arrow ");
+		userManage.AssignUserToDomain(dominName, userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+		DomainDashboard domain = new DomainDashboard(driver);
+		if (domain.availableDomains(dominName).isElementPresent()) {
+			baseClass.passedStep(domain + " domain is available");
+			System.out.println("passed");
+		} else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+
+		baseClass.passedStep("verified that System Admin can assign Domain Admin to Domain successfully");
+
+		loginPage.logout();
 	}
-	
-	baseClass.passedStep("verified that System Admin can assign Domain Admin to Domain successfully");
-	
-	loginPage.logout();
-	}
-  
+
 	/**
-	* @Author :Aathith date: NA Modified date: Modified by:
-	* @Description :To verify that if System Admin has made changes in Domain tab and 
-	* tries to navigate to the Project tab without saving the changes, it should display the  confirmation message
-	*/
+	 * @Author :Aathith date: NA Modified date: Modified by:
+	 * @Description :To verify that if System Admin has made changes in Domain tab
+	 *              and tries to navigate to the Project tab without saving the
+	 *              changes, it should display the confirmation message
+	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void verifyBellyBandMessageOnDomainTab() throws Exception {
-	baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver);
 
-	baseClass.stepInfo("Test case Id: RPMXCON-53033");
-	utility = new Utility(driver);
-	baseClass.stepInfo("To verify that if System Admin has made changes in Domain tab and"
-			+ " tries to navigate to the Project tab without saving the changes, it should display the  confirmation message");
-	userManage = new UserManagement(driver);
-	
-	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-	Reporter.log("Logged in as User: " + Input.sa1userName);
-	
-	userManage.passingUserName(Input.da1userName);
-	userManage.applyFilter();
-	String firstName = userManage.getTableData("FIRST NAME", 1);
-	String lastName =  userManage.getTableData("LAST NAME", 1);
-	String dominName = userManage.getTableData("DOMAIN", 1);
-	String userName = firstName+" "+lastName;
-	String isBillable = " || IsBillable: false";
-	
-	userManage.unAssignUserToDomain(dominName, userName+isBillable);
-	baseClass.CloseSuccessMsgpopup();
-	baseClass.stepInfo("Select Domains  Select User from Unassigned User list  Click on arrow ");
-	userManage.verifyUnAssignUserToAssignUserBellyBandYes(dominName, userName);
-	
-	loginPage.logout();
-	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-	Reporter.log("Logged in as User: " + Input.da1userName);
-	DomainDashboard domain = new DomainDashboard(driver);
-	if(domain.availableDomains(dominName).isElementPresent()) {
-		baseClass.passedStep(domain+" domain is available");
-		System.out.println("passed");
-	}else {
-		baseClass.failedStep("verification failed");
-		System.out.println("failed");
-	}
-	loginPage.logout();
-	
-	loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-	userManage.unAssignUserToDomain(dominName, userName+isBillable);
-	baseClass.CloseSuccessMsgpopup();
-	userManage.verifyUnAssignUserToAssignUserBellyBandNo(dominName, userName);
-	userManage.getPopUpCloseBtn().waitAndClick(10);
-	driver.waitForPageToBeReady();
-	
-	userManage.AssignUserToDomain(dominName, userName);
-	
-	baseClass.passedStep("verified that if System Admin has made changes in Domain tab and"
-			+ " tries to navigate to the Project tab without saving the changes, it should display the  confirmation message");
-	
-	loginPage.logout();
+		baseClass.stepInfo("Test case Id: RPMXCON-53033");
+		utility = new Utility(driver);
+		baseClass.stepInfo("To verify that if System Admin has made changes in Domain tab and"
+				+ " tries to navigate to the Project tab without saving the changes, it should display the  confirmation message");
+		userManage = new UserManagement(driver);
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		Reporter.log("Logged in as User: " + Input.sa1userName);
+
+		userManage.passingUserName(Input.da1userName);
+		userManage.applyFilter();
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		String lastName = userManage.getTableData("LAST NAME", 1);
+		String dominName = userManage.getTableData("DOMAIN", 1);
+		String userName = firstName + " " + lastName;
+		String isBillable = " || IsBillable: false";
+
+		userManage.unAssignUserToDomain(dominName, userName + isBillable);
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.stepInfo("Select Domains  Select User from Unassigned User list  Click on arrow ");
+		userManage.verifyUnAssignUserToAssignUserBellyBandYes(dominName, userName);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+		DomainDashboard domain = new DomainDashboard(driver);
+		if (domain.availableDomains(dominName).isElementPresent()) {
+			baseClass.passedStep(domain + " domain is available");
+			System.out.println("passed");
+		} else {
+			baseClass.failedStep("verification failed");
+			System.out.println("failed");
+		}
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManage.unAssignUserToDomain(dominName, userName + isBillable);
+		baseClass.CloseSuccessMsgpopup();
+		userManage.verifyUnAssignUserToAssignUserBellyBandNo(dominName, userName);
+		userManage.getPopUpCloseBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		userManage.AssignUserToDomain(dominName, userName);
+
+		baseClass.passedStep("verified that if System Admin has made changes in Domain tab and"
+				+ " tries to navigate to the Project tab without saving the changes, it should display the  confirmation message");
+
+		loginPage.logout();
 	}
 
 	/**
@@ -659,7 +653,7 @@ public class DomainManagement_IndiumRegression {
 	 * the Project tab without saving the changes, it should display the
 	 * confirmation message
 	 */
-  	
+
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyBellyBandMessageInSAUser() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -674,16 +668,17 @@ public class DomainManagement_IndiumRegression {
 		userManage.passingUserName(Input.da1userName);
 		userManage.applyFilter();
 		String firstName = userManage.getTableData("FIRST NAME", 1);
-		String lastName =  userManage.getTableData("LAST NAME", 1);
-		String Billable=" || IsBillable: false";
-		String userName=firstName+" "+lastName+Billable;
-		String userName1=firstName+" "+lastName;
-		
-		userManage.verifyingBellyBandMessageInAssignUser(Input.domainName,userName,userName1);
+		String lastName = userManage.getTableData("LAST NAME", 1);
+		String Billable = " || IsBillable: false";
+		String userName = firstName + " " + lastName + Billable;
+		String userName1 = firstName + " " + lastName;
+
+		userManage.verifyingBellyBandMessageInAssignUser(Input.domainName, userName, userName1);
 		userManage.selectingConfirmButtonToUnAssignTheAssignedUser(Input.domainName, userName);
 		loginPage.logout();
-		
+
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
