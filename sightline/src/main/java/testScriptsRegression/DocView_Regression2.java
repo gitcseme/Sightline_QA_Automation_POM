@@ -3778,7 +3778,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51036",enabled = true, groups = { "regression" }, priority = 79)
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
 	public void verifyImpersonationKeyWordsHighLightingAssignmentDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51036 sprint 12");
@@ -3789,6 +3789,8 @@ public class DocView_Regression2 {
 		String keyword = Input.randomText + Utility.dynamicNameAppender();
 		KeywordPage keywordPage = new KeywordPage(driver);
 		docView = new DocViewPage(driver);
+		String rgbCode = "rgb(255, 215, 0)";
+		String HaxCode = "#ffd700";
 
 		baseClass.stepInfo(
 				"Verify user after impersonation can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment in context of assignment");
@@ -3816,7 +3818,8 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
 		loginPage.logout();
 
 		// login As PA
@@ -3827,7 +3830,8 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
 		loginPage.logout();
 
 		// login As RMU
@@ -3840,7 +3844,8 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Persistent Hit With search string");
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
-		docView.verifyKeywordHighlightedOnDocView();
+		baseClass.stepInfo("verify highlight keyword in document");
+		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
