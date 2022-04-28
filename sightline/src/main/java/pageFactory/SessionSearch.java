@@ -369,6 +369,11 @@ public class SessionSearch {
 	}
 
 	// Added by Raghuram A - 9/30
+	public Element getSavedSearchExpandStatsC() {
+		return driver.FindElementByXPath(
+				"//li[@role='treeitem']//a[text()='All']//..//..//li[@class='jstree-node  jstree-closed jstree-last']//i[@class='jstree-icon jstree-ocl']");
+	}
+	
 	public Element getSaveSearchPopupFolderName_Expand(String name) {
 		return driver.FindElementByXPath(
 				"(// a[contains(text(),'" + name + "')])[last()]//parent::li[contains(@class,'closed')]");
