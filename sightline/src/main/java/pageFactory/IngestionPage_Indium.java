@@ -5167,6 +5167,9 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
     	else {
     		base.failedStep(term+"is not displayed in the copying table column");
     	}
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+    	getCloseButton().waitAndClick(10);
     	
 		
 	}
@@ -5191,16 +5194,16 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     	getFilterByCATALOGED().waitAndClick(10);
     	
     	//catlogging
-    	for(int i=0;i<40;i++) {
+    	for(int i=0;i<60;i++) {
+    		base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-			getRefreshButton().waitAndClick(10);
 			
     		if(status.contains("Cataloged")) {
     			base.passedStep("Cataloged completed");
     			break;
     		}
     		else if (status.contains("In Progress")) {
-    			base.waitTime(10);
+    			base.waitTime(5);
     			getRefreshButton().waitAndClick(10);
     		}
     		else if (status.contains("Failed")){
@@ -5234,7 +5237,7 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     	getFilterByCOPIED().waitAndClick(10);
     	
     	getRefreshButton().waitAndClick(10);
-    	for(int i=0;i<40;i++) {
+    	for(int i=0;i<70;i++) {
     		base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 		
@@ -5243,7 +5246,7 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
     			break;
     		}
     		else if (status.contains("In Progress")) {
-    			base.waitTime(10);
+    			base.waitTime(5);
     			getRefreshButton().waitAndClick(5);
     		}
     		else if (status.contains("Failed")){
@@ -5515,13 +5518,16 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				
 				if(ingestionErrorNote(i).getText().contains(Input.differentDateFormatError)) {
 					base.passedStep("Cataloging Error displayed when selected date format different than in DAT");
+					break;
 				}
 				else {
 					System.out.println("Error not belonged to date format");
 				}
 			}
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+			  	getCloseButton().waitAndClick(10);
 			
-			getCloseButton().waitAndClick(10);
 	}
 		else if(getCatalogedIngestionStatus().isElementAvailable(5)) {
 			base.failedStep("No Errors and Selected Date format is same as in DAT");
@@ -6784,25 +6790,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		 */
 		
 		public void verifyContentOnIngestionTiles() {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
 			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
-			getFilterByINPROGRESS().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-			getFilterByFAILED().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByPUBLISHED().waitAndClick(10);
-	    	
 	    	getRefreshButton().waitAndClick(5);
 	    	
 	    	if(getIngestionDetailPopup(1).isElementAvailable(5)) {
@@ -6810,13 +6798,13 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    		int ingestedCount =Integer.parseInt(getIngestedCount().getText());
 	    		int errorCount =Integer.parseInt(errorCountStatus().getText());
 	    		String status = getStatus(1).getText().trim();
-	    		if(sourceCount>0 && ingestedCount>0 && errorCount>=0) {
+	    		if(sourceCount>0 && ingestedCount>=0 && errorCount>=0) {
 	    			base.passedStep("Source , Ingested and Error count details displayed");
 	    		}
 	    		else {
 	    			base.failedStep("Source,Ingested and Error count details not displayed");
 	    		}
-	    		if(status.contains("Published") || status.contains("Failed") ) {
+	    		if(status.contains("Cataloged") || status.contains("Failed") ) {
 	    			base.passedStep("Ingestion Status details are displayed");	
 	    		}
 	    		else {
@@ -6830,7 +6818,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    		}
 	    	}
 	    	else {
-	    		base.failedMessage("No ingestion is present in Failed/Published state");
+	    		base.failedMessage("No ingestion is present in Failed/Cataloged state");
 	    	}
 		}
 		
