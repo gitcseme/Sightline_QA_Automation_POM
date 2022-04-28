@@ -7918,20 +7918,26 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			    else {
 			    	base.failedStep("back button not displayed in error details popup");
 			    }
-			    base.waitTime(1);
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    		errorCountCatalogingStage().Enabled()  ;}}), Input.wait30); 
 			    errorCountCatalogingStage().waitAndClick(10);
+			    base.waitTime(3);
 			    base.waitForElement(getIgnoreOptionSelection());
 			    getIgnoreOptionSelection().waitAndClick(5);
-			    base.waitTime(3);
+			    
 			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			    		  doneButton().Enabled()  ;}}), Input.wait30); 
 			    doneButton().waitAndClick(10);
 			     
 			  	base.VerifySuccessMessage("Action done successfully");
-			  	errorCountCatalogingStage().waitAndClick(10);
-			  	base.waitTime(2);
+			  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    		errorCountCatalogingStage().Enabled()  ;}}), Input.wait30); 
+			    errorCountCatalogingStage().waitAndClick(10);
+			  	
+			  	base.waitTime(5);
 			  	String status = getIgnoreOptionSelection().GetAttribute("checked");
-			  	if(status.equalsIgnoreCase("checked")) {
+			  	System.out.println(status);
+			  	if(status.equalsIgnoreCase("true")) {
 			  		base.passedStep("Error ignore checkbox, done button working properly and changes made in error list saved");
 			  	}
 			  	else {
