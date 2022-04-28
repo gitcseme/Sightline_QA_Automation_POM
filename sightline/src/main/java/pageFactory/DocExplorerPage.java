@@ -480,6 +480,10 @@ public Element getAllFoldersExpandButton() {
 		return driver.FindElementByXPath("//a[@id='-1_anchor']/preceding-sibling::i");
 	}
 	
+public Element getDocExpSubfolderExpandButtonLast(String folderName) {
+	return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
+					+ folderName + "']/../ul/descendant::li[@class='jstree-node  jstree-leaf jstree-last']");
+}
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -2521,6 +2525,39 @@ public int docCountInTable() {
 
 	}
 	return numberOfDocumentsInTable;
+}
+
+/**
+ * @author 
+ * @Description:Method to verify arrow button is not displayed for the folder which are not having sub folders
+ * @param folderName
+ */
+public void verifyArrowButtonNotDisplayed(String folderName) {
+	bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+	getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+	int folderNumer=0;
+	String folder="";;
+	boolean flag=true;
+	while(true) {
+		folderNumer=folderNumer+1;
+		bc.waitForElement(getDoxExpSubFoldarExpandbutton(folderName, folderNumer));
+		getDoxExpSubFoldarExpandbutton(folderName, folderNumer).waitAndClick(5);
+		bc.waitTime(2);
+		if(!getDocExpSubfolderExpandButtonLast(folderName).isElementAvailable(3)) {
+			if(!getDocExpSubFolderName(folderName, folderNumer+1).isElementAvailable(5)) {
+				 folder =folder+ getDocExpSubFolderName(folderName, folderNumer).getText();
+				flag=false;
+				break;
+			}
+		}else {
+			break;
+		}
+	}
+	if(flag==true) {
+		bc.passedStep("Arror button is not displayed for the  folder which is not having sub folders");
+	}else {
+		bc.failedStep("Arror button is   displayed for the folder '"+folder+"' which is not having sub folders");
+	}
 }
 
 }
