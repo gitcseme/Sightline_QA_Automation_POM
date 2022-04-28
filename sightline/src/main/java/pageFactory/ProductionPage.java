@@ -885,8 +885,21 @@ public class ProductionPage {
 	public Element getRemoveBtnInSlipSheet() {
 		return driver.FindElementByXPath("//a[@class='link remove-modal remove-item pull-right text-danger']");
 	}
-
+	
+	public Element getSelectCloseBtn() {
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[@class='close delete-logic']");
+		}
+	
 	// added by sowndariya
+	
+	public Element getSecondSelectTagBtn() {
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_1']");
+	}
+	
+	public Element getNativePlaceholderLink() {
+		return driver.FindElementByXPath("//label[@class='col-md-12 box']//a[contains(text(),'Specify placeholder')]");
+	}
+	
 	public Element getPageNum(int num) {
 		return driver.FindElementByXPath("//div[@id='customTemplatesDatatable_paginate']//li[@class='paginate_button ']//a[text()='" + num + "']");
 	}
@@ -5285,42 +5298,47 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorIndium-Sowndarya.Velraj
-	 * @param tagname
-	 * @param This    method selects TIFF component and disables "Enable for
-	 *                privileged tags" toggle.Then "Enables Natively placeholder
-	 *                Tags" toggle and select the particular tag.
-	 */
+	* @authorIndium-Sowndarya.Velraj
+	* @param tagname
+	* @param This method selects TIFF component and disables "Enable for
+	* privileged tags" toggle.Then "Enables Natively placeholder
+	* Tags" toggle and select the particular tag.
+	*/
 	public void fillingTIFFSectionwithNativelyPlaceholder(String tagname) throws InterruptedException {
 
-		base.waitForElement(getTIFFChkBox());
-		getTIFFChkBox().Click();
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().Click();
 
-		driver.scrollingToBottomofAPage();
+	driver.scrollingToBottomofAPage();
 
-		base.waitForElement(getTIFFTab());
-		getTIFFTab().Click();
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
 
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+	getTIFF_EnableforPrivilegedDocs().ScrollTo();
 
-		// disabling enable for priviledged docs
+	// disabling enable for priviledged docs
 
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	getTIFF_EnableforPrivilegedDocs().Enabled();
+	getTIFF_EnableforPrivilegedDocs().Click();
 
-		// clicking enable for natively placeholder
-		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().Click();
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
-		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).Click();
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		Thread.sleep(Input.wait30 / 10);
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
+	// clicking enable for natively placeholder
+
+	driver.waitForPageToBeReady();
+	base.waitForElement(getSelectCloseBtn());
+	getSelectCloseBtn().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	base.waitForElement(getTiff_NativeDoc());
+	getTiff_NativeDoc().waitAndClick(5);
+	base.waitForElement(getclkSelectTag());
+	getclkSelectTag().Click();
+	base.waitForElement(getPriveldged_TagTree(tagname));
+	getPriveldged_TagTree(tagname).Click();
+	base.waitForElement(getClkSelect());
+	getClkSelect().Click();
+	Thread.sleep(Input.wait30 / 10);
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().SendKeys(tagname);
 
 	}
 
@@ -5881,6 +5899,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 04/28/2022(modified scripts as per new pt deployment)
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingPDFSectionwithNativelyPlaceholder(String tagname) throws InterruptedException {
@@ -5906,14 +5925,18 @@ public class ProductionPage {
 		base.clickButton(getTIFF_EnableforPrivilegedDocs());
 
 		// clicking enable for natively placeholder
-		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().Click();
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
+//		base.waitForElement(getTiff_NativeDoc());
+//		getTiff_NativeDoc().Click();
+		base.waitForElement(getNativePlaceholderLink());
+		getNativePlaceholderLink().waitAndClick(10);
+		
+		base.waitForElement(getSecondSelectTagBtn());
+		getSecondSelectTagBtn().waitAndClick(10);
+		
 		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).Click();
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
+		getClkSelect().waitAndClick(10);
 		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname);
@@ -15902,19 +15925,22 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	}
 
 	/**
+	 * Modified on 04/28/2022
 	 * @authorBrundha
 	 * @param Tag
 	 * @description :method for filling native placeholder
 	 */
 	public void fillingNativeDocsPlaceholder(String Tag) {
-		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().Click();
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
+		
+		base.waitForElement(getNativePlaceholderLink());
+		getNativePlaceholderLink().waitAndClick(10);
+		
+		base.waitForElement(getSecondSelectTagBtn());
+		getSecondSelectTagBtn().waitAndClick(10);
 		base.waitForElement(getPriveldged_TagTree(Tag));
-		getPriveldged_TagTree(Tag).Click();
+		getPriveldged_TagTree(Tag).waitAndClick(10);
 		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
+		getClkSelect().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(Input.technicalIssue);
