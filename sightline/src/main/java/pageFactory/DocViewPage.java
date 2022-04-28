@@ -17552,16 +17552,25 @@ public class DocViewPage {
 	 * @Description : Method for click on image tag.
 	 */
 	public void clickOnImageTab() {
-		try {
-			driver.scrollPageToTop();
-			getDocView_ImagesTab().isElementAvailable(10);
-			getDocView_ImagesTab().Click();
-			base.passedStep("Clicked on image tab");
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
+		
+			try {
+				for(int i=0;i<4;i++) {
+				driver.scrollPageToTop();
+				if(getDocView_ImagesTab().isDisplayed()) {
+				base.waitTillElemetToBeClickable(getDocView_ImagesTab());
+				getDocView_ImagesTab().isElementAvailable(10);
+				getDocView_ImagesTab().waitAndClick(10);
+				base.passedStep("Clicked on image tab");
+				break;
+				}else {
+				driver.waitForPageToBeReady();	
+				}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
+			}
 		}
-	}
 
 	/**
 	 * @author Aathith.Senthilkumar

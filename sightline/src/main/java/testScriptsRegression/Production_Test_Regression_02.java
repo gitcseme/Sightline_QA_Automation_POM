@@ -266,7 +266,7 @@ public class Production_Test_Regression_02{
 
 		driver.Navigate().to(currentURL);
 		driver.waitForPageToBeReady();
-		String ErrorMsg = page.getErrorMsgHeader().getText();
+		String ErrorMsg = page.getErrorMsgText().getText();
 		if (ErrorMsg.contains("Error")) {
 		base.passedStep("Error message is displayed as expected");
 		} else {
