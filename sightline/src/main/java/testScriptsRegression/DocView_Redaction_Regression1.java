@@ -733,7 +733,7 @@ public class DocView_Redaction_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52212");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.docIdRemarks2);
+		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Documents viewd in DocView");

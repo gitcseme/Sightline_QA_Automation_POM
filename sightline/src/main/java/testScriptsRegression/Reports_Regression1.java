@@ -61,8 +61,8 @@ public class Reports_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -80,60 +80,56 @@ public class Reports_Regression1 {
 	}
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyDocCount_ABM() throws Exception {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		softAssertion = new SoftAssert();
-		DocViewPage docViewPage = new DocViewPage(driver);
-		ReusableDocViewPage reusableDocViewPage = new ReusableDocViewPage(driver);
-		String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
-
-		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
-		baseClass.stepInfo("Test case Id:RPMXCON-48789");
-		baseClass.stepInfo("Validate data on Advanced batch management report when Domain and Project"
-				+ " Admin associated to Assignments of a project");
-
-		// Basic Search and Bulk Assign
-		sessionsearch.basicContentSearch(Input.testData1);
-		baseClass.stepInfo("Search for text input completed");
-		String Hits = sessionsearch.verifyPureHitsCount();
-		sessionsearch.saveSearch(SaveSaerchName);
-		sessionsearch.bulkAssign();
-
-		// create Assignment and disturbute docs
-		assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
-		assignmentsPage.add4ReviewerAndDistribute();
-		baseClass.stepInfo(assignmentName1 + "  Assignment Created and distributed to DA/PA/RMU/Rev");
-		baseClass.impersonateRMUtoReviewer();
-		docViewPage.selectAssignmentfromDashborad(assignmentName1);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully fro RMU User.");
-		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.impersonatePAtoReviewer();
-		docViewPage.selectAssignmentfromDashborad(assignmentName1);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully for PA user");
-		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-		baseClass.impersonateDAtoReviewer();
-		docViewPage.selectAssignmentfromDashborad(assignmentName1);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully for DA user.");
-		reusableDocViewPage.editTextBoxInCodingFormWithCompleteButton("Completing and editing");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		ABMReportPage AbmReportPage = new ABMReportPage(driver);
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, true);
-		int ToDoDocs = AbmReportPage.validateReport(AbmReportPage.getListToDo_Text(assignmentName1));
-		int completedDocs = AbmReportPage.validateReport(AbmReportPage.getListCompletedDocs_Text(assignmentName1));
-		int ActualTotalDocs = ToDoDocs + completedDocs;
-		softAssertion.assertEquals(Integer.parseInt(Hits), ActualTotalDocs);
-		softAssertion.assertEquals(3, completedDocs);
-		softAssertion.assertAll();
-		AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, true);
-		baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
-		loginPage.logout();
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
+	SessionSearch sessionsearch = new SessionSearch(driver);
+	AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+	softAssertion = new SoftAssert();
+	DocViewPage docViewPage = new DocViewPage(driver);
+	String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
+	UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+	baseClass.stepInfo("Test case Id:RPMXCON-48789");
+	baseClass.stepInfo("Validate data on Advanced batch management report when Domain and Project"
+	+ " Admin associated to Assignments of a project");
+	// Basic Search and Bulk Assign
+	sessionsearch.basicContentSearch(Input.testData1);
+	baseClass.stepInfo("Search for text input completed");
+	String Hits = sessionsearch.verifyPureHitsCount();
+	sessionsearch.saveSearch(SaveSaerchName);
+	sessionsearch.bulkAssign();
+	// create Assignment and disturbute docs
+	assignmentsPage.assignmentCreation(assignmentName1, Input.codeFormName);
+	assignmentsPage.add4ReviewerAndDistribute();
+	baseClass.stepInfo(assignmentName1 + " Assignment Created and distributed to DA/PA/RMU/Rev");
+	baseClass.impersonateRMUtoReviewer();
+	docViewPage.selectAssignmentfromDashborad(assignmentName1);
+	baseClass.stepInfo("Doc is viewed in the docView Successfully fro RMU User.");
+	docViewPage.editCodingFormComplete();
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	baseClass.impersonatePAtoReviewer();
+	docViewPage.selectAssignmentfromDashborad(assignmentName1);
+	baseClass.stepInfo("Doc is viewed in the docView Successfully for PA user");
+	docViewPage.editCodingFormComplete();
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+	baseClass.impersonateDAtoReviewer();
+	docViewPage.selectAssignmentfromDashborad(assignmentName1);
+	baseClass.stepInfo("Doc is viewed in the docView Successfully for DA user.");
+	docViewPage.editCodingFormComplete();
+	loginPage.logout();
+	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	ABMReportPage AbmReportPage = new ABMReportPage(driver);
+	AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, false, true);
+	int ToDoDocs = AbmReportPage.validateReport(AbmReportPage.getListToDo_Text(assignmentName1));
+	int completedDocs = AbmReportPage.validateReport(AbmReportPage.getListCompletedDocs_Text(assignmentName1));
+	int ActualTotalDocs = ToDoDocs + completedDocs;
+	softAssertion.assertEquals(Integer.parseInt(Hits), ActualTotalDocs);
+	softAssertion.assertEquals(3, completedDocs);
+	softAssertion.assertAll();
+	AbmReportPage.validateRevListAndgenerateABM_Report(SaveSaerchName, assignmentName1, true, true);
+	baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
+	loginPage.logout();
 	}
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyABM_BG_Notification() throws Exception {
@@ -167,18 +163,18 @@ public class Reports_Regression1 {
 		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
 		sessionsearch.saveSearch(SaveSaerch_docLevel);
 		baseClass.stepInfo("Search with text input "+Input.TallyCN); 
-		sessionsearch.bulkAssign();
 		// create Assignment and distrubute docs
 		sessionsearch.bulkAssign();
 		assignmentsPage.FinalizeAssignmentAfterBulkAssign();
 		assignmentsPage.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 		assignmentsPage.getAssignmentSaveButton().waitAndClick(5);
 		baseClass.stepInfo("Created a assignment " + assignmentName); 
-
+		driver.waitForPageToBeReady();
 		baseClass.selectproject(Input.highVolumeProject);
 		//  Search and saving the saerch
 		search.navigateToSessionSearchPageURL();
 		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(search.getAdvancedSearchLinkCurrent());
 		search.getAdvancedSearchLinkCurrent().Click();
 		driver.waitForPageToBeReady();
 		search.advancedContentBGSearch(Input.SearchString_HighVolume, 1, false);

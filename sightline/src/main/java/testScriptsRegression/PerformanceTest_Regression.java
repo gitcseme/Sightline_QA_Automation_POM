@@ -56,12 +56,8 @@ public class PerformanceTest_Regression {
 
 		// Open browser
 		softAssertion = new SoftAssert();
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
-		driver = new Driver();
-		base = new BaseClass(driver);
-		session = new SessionSearch(driver);
-		saveSearch = new SavedSearch(driver);
+		Input in = new Input();
+		in.loadEnvConfig();
 	}
 
 	@DataProvider(name = "reserveWords")
@@ -92,8 +88,10 @@ public class PerformanceTest_Regression {
 	 */
 	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 2)
 	public void basicSearch4(String data1, String data2, String TC_Id) throws InterruptedException {
-		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } };
+		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } 
+				};
 
 		for (int i = 0; i < dataSet.length; i++) {
 			int j = 0;
@@ -111,12 +109,14 @@ public class PerformanceTest_Regression {
 			// Create saved search for first First Query
 			driver.getWebDriver().get(Input.url + "Search/Searches");
 			int pureHit1 = session.basicContentSearch(data1);
+			
 			session.saveSearchInNewNode(search1, null);
 			System.out.println(pureHit1);
 
 			// Add Operator and Search Second query
 			session.selectOperatorInBasicSearch("OR");
 			int pureHit2 = session.basicContentSearchWithSaveChanges(data2, "Yes", "Third");
+			
 			session.saveSearchInNewNode(search2, null);
 			System.out.println(pureHit2);
 
@@ -213,28 +213,36 @@ public class PerformanceTest_Regression {
 	}
 
 	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
+	public void beforeTestMethod(Method testMethod) throws Exception, InterruptedException, IOException {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
+		// Open browser
+		softAssertion = new SoftAssert();
+		Input in = new Input();
+		in.loadEnvConfig();
+		driver = new Driver();
+		base = new BaseClass(driver);
+		session = new SessionSearch(driver);
+		saveSearch = new SavedSearch(driver);
+
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				lp.logout();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+			lp.logoutWithoutAssert();
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
+		try {
+			lp.quitBrowser();
+		} catch (Exception e) {
+			lp.quitBrowser();
+		}
 	}
 
-	@AfterClass(alwaysRun = true)
+//	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
 			lp.closeBrowser();

@@ -3,8 +3,13 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -24,6 +29,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.MiniDocListPage;
 import pageFactory.ReusableDocViewPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -47,6 +53,7 @@ public class UsersAndRoleManagement_Regression {
 	SessionSearch sessionSearch;
 	DocViewPage docViewPage;
 	SoftAssert softAssertion;
+	MiniDocListPage miniDocListPage;
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -73,7 +80,7 @@ public class UsersAndRoleManagement_Regression {
 	 * different role of existing project. Description : To verify when assigns user
 	 * to different project with different role of existing project.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void createUserWithDifferentProjectAndRole() throws Exception {
 		baseClass = new BaseClass(driver);
 		String firstName = Input.randomText + Utility.dynamicNameAppender();
@@ -112,12 +119,12 @@ public class UsersAndRoleManagement_Regression {
 
 	/**
 	 * @author Gopinath
-	 * @TestCase Id:52454 To verify users authentication session, from same machine
+	 * //@TestCase Id:52454 To verify users authentication session, from same machine
 	 *           in browsers new window/new tab
 	 * @Description:To To verify users authentication session, from same machine in
 	 *                 browsers new window/new tab
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyuserAuthenticationSession() {
 		String userName = Input.rmu1userName;
 		String password = Input.rmu1password;
@@ -195,7 +202,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "combinationRole", groups = { "regression" }, priority = 3)
+	//@Test(alwaysRun = true, dataProvider = "combinationRole", groups = { "regression" }, priority = 3)
 	public void validatingNativeDownload(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52699");
@@ -278,7 +285,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 4)
+	//@Test(alwaysRun = true, dataProvider = "saAndPa", groups = { "regression" }, priority = 4)
 	public void validatingIngestionIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52696");
@@ -361,7 +368,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.rmu2userName, Input.rmu2password, Input.rmu1userName, Input.rmu1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 5)
+	//@Test(alwaysRun = true, dataProvider = "differentRole", groups = { "regression" }, priority = 5)
 	public void validatingManageIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52694");
@@ -441,7 +448,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "pa", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 6)
+	//@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 6)
 	public void validatingCategorizeIcon(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52692");
@@ -512,7 +519,7 @@ public class UsersAndRoleManagement_Regression {
 	 * Description :To Verify User can not access to 'RunAnalytics' and 'Unpublish'
 	 * even though 'INGESTIONS' right is unchecked. 'RPMXCON-52689' sprint-13
 	 */
-	@Test(alwaysRun = true, dataProvider = "saImpPa", groups = { "regression" }, priority = 7)
+	//@Test(alwaysRun = true, dataProvider = "saImpPa", groups = { "regression" }, priority = 7)
 	public void validatingIngestionInLeftMenu(String roll, String userName, String password, String userNameTwo,
 			String passWordTwo) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52689");
@@ -589,6 +596,7 @@ public class UsersAndRoleManagement_Regression {
 		// logout
 		loginPage.logout();
 	}
+	
 
 	/**
 	 * Author : Vijaya.Rani date: 09/03/2022 Modified date:NA Modified by:NA
@@ -596,15 +604,17 @@ public class UsersAndRoleManagement_Regression {
 	 * name' text box and hits enter key. 'RPMXCON-53179' sprint-13
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void validatingEnterFirstNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53179");
 		baseClass.stepInfo(
 				"Verify when user enters First Name to search in 'Filter by user name' text box and hits enter key.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String firstName = "Automation";
-
+		String fullName = Input.pa1FullName;
+	    String[] splittingFullName=fullName.split(" ");
+	    String firstName=splittingFullName[0];
+		
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -632,42 +642,49 @@ public class UsersAndRoleManagement_Regression {
 	 * name' text box and clicks to Apply. 'RPMXCON-53178' sprint-13
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void validatingEnterLastNameSearchFilterByUserName() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53178");
 		baseClass.stepInfo(
 				"Verify when user enters Last Name to search in 'Filter by user name' text box and clicks to Apply.");
 		userManage = new UserManagement(driver);
 		softAssertion = new SoftAssert();
-		String lastName = "Indium";
+		String str = Input.pa1FullName;
+		int index = str.lastIndexOf(" ");
+		String lastString = str.substring(index +1);
 
 		// Login As SA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 
-		userManage.passingUserName(lastName);
+		userManage.passingUserName(lastString);
 		userManage.applyFilter();
 		baseClass.stepInfo("Apply Filter Button in clicked successfully");
 
 		driver.waitForPageToBeReady();
 		String AfterfilterUserLastName = userManage.getLastNameTab().getText().trim();
-		System.out.println(AfterfilterUserLastName);
+		int indexTwo = AfterfilterUserLastName.lastIndexOf(" ");
+		String lastAfterFilter = AfterfilterUserLastName.substring(indexTwo +1);
+		if (lastString.contains(lastAfterFilter)) {
+			baseClass.passedStep(
+					"Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
+		}
+		else {
+			baseClass.failedStep("after applying the filter for last name is not displayed");
+		}
 
-		softAssertion.assertEquals(lastName, AfterfilterUserLastName);
-		baseClass.passedStep(
-				"Users containing the entered Last name is searched and listed under the lastName user list is Displayed Successfully");
-		softAssertion.assertAll();
 
 		// logout
 		loginPage.logout();
 	}
+
 
 	/**
 	 * Author : Baskar date: NA Modified date:10/03/2022 Modified by: Baskar
 	 * Description :Verify RMU can edit the user within his security group
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void validatingRmuUser() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52680");
 		baseClass.stepInfo("Verify RMU can edit the user within his security group");
@@ -707,7 +724,7 @@ public class UsersAndRoleManagement_Regression {
 	 * user pop up for RMU and Reviewer
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void validatingForRmuUserSecurityGroupListBox() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52660");
 		baseClass.stepInfo(
@@ -769,7 +786,7 @@ public class UsersAndRoleManagement_Regression {
 						Input.rev1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkSearch", groups = { "regression" }, priority = 12)
+	//@Test(alwaysRun = true, dataProvider = "bulkSearch", groups = { "regression" }, priority = 12)
 	public void validatingBulkuserSearchIcon(String roll, String loginuser, String loginPass, String rollUser,
 			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52690");
@@ -840,7 +857,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "threeRole", groups = { "regression" }, priority = 13)
+	//@Test(alwaysRun = true, dataProvider = "threeRole", groups = { "regression" }, priority = 13)
 	public void validatingSearchIcon(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52691");
@@ -906,7 +923,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkCategorize", groups = { "regression" }, priority = 14)
+	//@Test(alwaysRun = true, dataProvider = "bulkCategorize", groups = { "regression" }, priority = 14)
 	public void validatingBulkUserCategorizeIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52693");
@@ -1030,7 +1047,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkManage", groups = { "regression" }, priority = 15)
+	//@Test(alwaysRun = true, dataProvider = "bulkManage", groups = { "regression" }, priority = 15)
 	public void validatingBulkUserManageIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52695");
@@ -1148,7 +1165,7 @@ public class UsersAndRoleManagement_Regression {
 						Input.pa1password, "da", Input.pa1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkIngestion", groups = { "regression" }, priority = 16)
+	//@Test(alwaysRun = true, dataProvider = "bulkIngestion", groups = { "regression" }, priority = 16)
 	public void validatingBulkUserIngestionIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52697");
@@ -1264,7 +1281,7 @@ public class UsersAndRoleManagement_Regression {
 						"da", Input.rmu1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkAllReport", groups = { "regression" }, priority = 17)
+	//@Test(alwaysRun = true, dataProvider = "bulkAllReport", groups = { "regression" }, priority = 17)
 	public void validatingBulkUserAllReportIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52700");
@@ -1394,7 +1411,7 @@ public class UsersAndRoleManagement_Regression {
 						Input.rev1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "bulkDwNative", groups = { "regression" }, priority = 18)
+	//@Test(alwaysRun = true, dataProvider = "bulkDwNative", groups = { "regression" }, priority = 18)
 	public void validatingBulkUserDownloadNativeIcon(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52701");
@@ -1509,6 +1526,1020 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :To verify landing page for User when 'Search' is Checked from
+	 * Edit User > functionality tab
+	 */
+
+	@DataProvider(name = "impersonateRmu")
+	public Object[][] impersonateRmu() {
+		return new Object[][] { { "rmu", Input.sa1userName, Input.sa1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.sa1userName, Input.sa1password, Input.rev1userName, Input.rev1password },
+				{ "rmu", Input.da1userName, Input.da1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.da1userName, Input.da1password, Input.rev1userName, Input.rev1password },
+				{ "rmu", Input.pa1userName, Input.pa1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
+	}
+
+	//@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
+	public void validatingRmuFunctionTab(String roll, String loginuser, String loginPass, String assignUser,
+			String assignPass) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53322");
+		baseClass.stepInfo("Validate impersonated RMU has access to Functionality tab and able to modify permissions");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		baseClass.impersonateSAtoRMU();
+		baseClass.selectproject(Input.projectName);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		List<String> rmuRevCount = userManage.getTableCoumnValue("Role");
+		if (rmuRevCount.contains("Project Administrator")) {
+			baseClass.failedStep("Project admin user also displayed after impersonate to rmu");
+		} else {
+			baseClass.passedStep("Rmu and Rev user only displayed after impersonate to rmu");
+
+		}
+		userManage.passingUserName(assignUser);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		if (roll == "rmu") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusCategorize("false");
+			baseClass.stepInfo("Categorize checkbox unselected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifyCategorizeIcon(false, false);
+			baseClass.passedStep("After impersoante for rmu user unselected checkbox is not displaying in left menu");
+
+			// logout
+			loginPage.logout();
+		}
+		if (roll == "rev") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusSearch("true");
+			baseClass.stepInfo("Search checkbox selected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifySearchIcon(true, true, roll);
+			baseClass.passedStep("After impersoante for rev user selected checkbox is displaying in left menu");
+
+			// logout
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Validate RMU has access to Functionality tab and able to modify
+	 * permissions
+	 */
+
+	@DataProvider(name = "rmuRev")
+	public Object[][] rmuRev() {
+		return new Object[][] {
+				{ "rmu", Input.rmu1userName, Input.rmu1password, Input.rmu1userName, Input.rmu1password },
+				{ "rev", Input.rmu1userName, Input.rmu1password, Input.rev1userName, Input.rev1password }, };
+	}
+
+	//@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
+	public void validatingRmuFunctionToModify(String roll, String loginuser, String loginPass, String assignUser,
+			String assignPass) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53321");
+		baseClass.stepInfo("Validate RMU has access to Functionality tab and able to modify permissions");
+		userManage = new UserManagement(driver);
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		baseClass.selectproject(Input.projectName);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(assignUser);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		if (roll == "rmu") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusCategorize("false");
+			baseClass.stepInfo("Categorize checkbox unselected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifyCategorizeIcon(false, false);
+			baseClass.stepInfo("Unselected checkbox is not displaying in left menu");
+			baseClass.passedStep("Rmu user can modify permissions for reviewer manager user ");
+
+			// logout
+			loginPage.logout();
+		}
+		if (roll == "rev") {
+			userManage.getFunctionalityTab().waitAndClick(5);
+			userManage.verifyStatusSearch("true");
+			baseClass.stepInfo("Search checkbox selected for " + roll + " user");
+
+			// verifying access permission r not for unselected one
+			// logout
+			loginPage.logout();
+			loginPage.loginToSightLine(assignUser, assignPass);
+			baseClass.selectproject(Input.projectName);
+
+			// validating Categorize icon
+			userManage.verifySearchIcon(true, true, roll);
+			baseClass.stepInfo("selected Search icon is displaying in left menu");
+			baseClass.passedStep("Rmu user can modify permissions for reviewer user");
+
+			// logout
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Verify if SAU impersonate as Reviewer, he should able to
+	 * impersonate back as PAU
+	 */
+
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	public void validatingSAImpRevBackToPau() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53288");
+		baseClass.stepInfo("Verify if SAU impersonate as Reviewer, he should able to impersonate back as PAU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// sa impersonating to reviewer
+		baseClass.impersonateSAtoReviewer();
+
+		// validating reviewer dashboard page
+		Boolean revDashboard = userManage.getDashBoardReviewer().isElementAvailable(2);
+		softAssertion.assertTrue(revDashboard);
+		baseClass.passedStep("Successfully impersonated to SA to Reviewer user");
+
+		// Reviewer impersonating to Pa user
+		baseClass.impersonateSAtoPA();
+
+		// validating Pa home page
+		baseClass.waitForElement(loginPage.getSignoutMenu());
+		loginPage.getSignoutMenu().waitAndClick(10);
+		Boolean paHomePage = userManage.getPaHomePage().isElementAvailable(2);
+		softAssertion.assertTrue(paHomePage);
+		baseClass.passedStep("Successfully impersonated to Reviewer to project admin user");
+
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:22/04/2022 Modified by: Baskar
+	 * Description :Verify for the "Filter by User Name" field from Manage Users
+	 * page
+	 */
+
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	public void validatingUserNameMyEmail() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53175");
+		baseClass.stepInfo("Verify for the Filter by User Name field from Manage Users page");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		String fullName = Input.pa1FullName;
+		String[] splittingFullName = fullName.split(" ");
+		String firstName = splittingFullName[0];
+
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// applying filter by using email
+		userManage.passingUserName(Input.pa1userName);
+		userManage.applyFilter();
+		baseClass.stepInfo("Apply Filter Button in clicked successfully");
+
+		driver.waitForPageToBeReady();
+		String AfterfilterUserName = userManage.getFirstNameTab().getText().trim();
+		System.out.println(AfterfilterUserName);
+
+		softAssertion.assertEquals(firstName, AfterfilterUserName);
+		baseClass.stepInfo("Filter action done by email address");
+		baseClass.passedStep("After email filter done firstname displayed successfully as expecteds");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:25/04/2022 Modified by: Baskar
+	 * Description :To verify for Project Admin when 'Redactions' is
+	 * Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "PaUser")
+	public Object[][] PaUser() {
+		return new Object[][] { { "pa", Input.pa1userName, Input.pa1password, Input.pa1userName, Input.pa1password,
+				"Project Administrator", "pa", Input.pa1FullName }, };
+	}
+
+    @Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 23)
+	public void validatingBulkUserForPa(String roll, String loginuser, String loginPass, String rollUser,
+			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52702");
+		baseClass.stepInfo("To verify for Project Admin when 'Redactions' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		softAssertion=new SoftAssert();
+		sessionSearch=new SessionSearch(driver);
+
+		// login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, false, true, true, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Redaction tag is disabled");
+        
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+		
+		// validating redaction tab
+		boolean redactionNotpresent=userManage.getRedaction().isElementAvailable(2);
+		softAssertion.assertFalse(redactionNotpresent);
+		baseClass.passedStep("Redaction tag not displayed in docview page");
+
+		// logout
+		loginPage.logout();
+		
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, false, true, true, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Redaction tag is Enabled");
+
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// validating redaction tab
+		baseClass.waitForElement(userManage.getRedaction());
+		boolean redactiontpresent = userManage.getRedaction().isElementAvailable(2);
+		softAssertion.assertTrue(redactiontpresent);
+		baseClass.passedStep("Redaction tag  displayed in docview page");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+     
+     /**
+ 	 * Author : Baskar date: NA Modified date:25/04/2022 Modified by: Baskar
+ 	 * Description :To verify landing page for User when 'All Repors' is Checekd/Unchecked 
+ 	 *              from Edit User > functionality tab
+ 	 */
+
+ 	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 24)
+ 	public void validatingAllReportIcon(String roll, String userName, String password, String userNameTwo,
+ 			String passWordTwo) throws Exception {
+ 		baseClass.stepInfo("Test case Id: RPMXCON-52698");
+ 		baseClass.stepInfo("To verify landing page for User when 'All Repors' is Checekd/Unchecked "
+ 				+ "from Edit User > functionality tab");
+ 		userManage = new UserManagement(driver);
+
+ 		// login
+ 		loginPage.loginToSightLine(userName, password);
+ 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+ 		userManage.passingUserName(userNameTwo);
+ 		userManage.applyFilter();
+ 		if (roll == "sa") {
+ 			userManage.editFunctionality(Input.projectName);
+ 		}
+ 		if (roll == "pa") {
+ 			userManage.editLoginUser();
+ 		}
+
+ 		// AllReport uncheckbox
+ 		userManage.getFunctionalityTab().waitAndClick(5);
+ 		userManage.verifyCheckboxStatusBasedOnCondition(userManage.getAllReportStatusCheck(),userManage.getAllReportIconCheck(),
+ 				"All Report","false");
+
+ 		// logout
+ 		loginPage.logout();
+
+ 		// login
+ 		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+ 		// validating AllReport icon
+ 		userManage.verifyLeftIcon(userManage.getAllReportTab(),"All report",false,false);
+
+ 		// logout
+ 		loginPage.logout();
+
+ 		// login
+ 		loginPage.loginToSightLine(userName, password);
+ 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+ 		userManage.passingUserName(userNameTwo);
+ 		userManage.applyFilter();
+ 		if (roll == "sa") {
+ 			userManage.editFunctionality(Input.projectName);
+ 		}
+ 		if (roll == "pa") {
+ 			userManage.editLoginUser();
+ 		}
+
+ 		// AllReport checkbox applying
+ 		userManage.getFunctionalityTab().waitAndClick(5);
+ 		userManage.verifyCheckboxStatusBasedOnCondition(userManage.getAllReportStatusCheck(),userManage.getAllReportIconCheck(),
+ 				"All Report","true");
+
+ 		// logout
+ 		loginPage.logout();
+
+ 		// login
+ 		loginPage.loginToSightLine(userNameTwo, passWordTwo);
+
+ 		// validating AllReport icon
+ 		userManage.verifyLeftIcon(userManage.getAllReportTab(),"All report",true,true);
+
+ 		// logout
+ 		loginPage.logout();
+
+ 	}
+ 	/**
+ 	 * Author : Aathith date: NA Modified date: /04/2022 Modified by: 
+ 	 * Description :To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role
+ 	 */
+ 	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
+ 	public void verifySysAdminEditRoleOfRmu() throws Exception {
+ 		baseClass.stepInfo("Test case Id: RPMXCON-52480");
+ 		baseClass.stepInfo("To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role");
+ 		userManage = new UserManagement(driver);
+
+ 		// login
+ 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+ 		Reporter.log("Logged in as User: " + Input.sa1userName);
+ 		
+ 		userManage.passingUserName(Input.rmu1userName);
+ 		userManage.applyFilter();
+ 		userManage.verifyUserHasMoreThanOneProject();
+ 		
+ 		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusDataSet("true");
+		
+		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		if(userManage.getDataSetStatus().isElementAvailable(3)) {
+			baseClass.passedStep("user rights is saved in database for the respective project.");
+		}else {
+			baseClass.failedStep("not saved in database for the respective project");
+		}
+		userManage.getCancel().waitAndClick(10);
+		
+		userManage.editFunctionality(Input.additionalDataProject);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		if(!userManage.getDataSetStatus().isElementAvailable(1)) {
+			baseClass.passedStep("User rights saved for the user for Project1 is not be overwrite for Project2.");
+		}else {
+			baseClass.failedStep("verification failed");
+		}
+		userManage.getCancel().waitAndClick(10);
+		baseClass.passedStep("verified when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role");
+		
+		userManage.editFunctionality(Input.projectName);
+		userManage.getFunctionalityTab().waitAndClick(5);
+		userManage.verifyStatusDataSet("false");
+		
+		loginPage.logout();
+ 	}
+ 	
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify that Bulk User Access Control button is not displayed
+	 * on Manage User when logged in as an RMU
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
+	public void validatingBulkUserTabPresence() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52712");
+		baseClass.stepInfo("To verify that Bulk User Access Control button is not "
+				+ "displayed on Manage User when logged in as an RMU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// validating bulk user tab presence
+		driver.waitForPageToBeReady();
+		Boolean bulkFlagfalse = userManage.getBulkUserAccessTab().isElementAvailable(2);
+		softAssertion.assertFalse(bulkFlagfalse);
+		softAssertion.assertAll();
+		baseClass.passedStep("Bulk user tab icon not available for rmu user");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify when 'Analytics Panels' is Checekd/Unchecked from Bulk
+	 * User Access Control
+	 */
+
+	@DataProvider(name = "analyticalPanel")
+	public Object[][] analyticalPanel() {
+		return new Object[][] {
+				{ "pa", Input.sa1userName, Input.sa1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "sa", Input.pa1FullName },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, "Reviewer", Input.rev1userName, Input.rev1password, "sa",
+						Input.rev1FullName },
+				{ "pa", Input.pa2userName, Input.pa2password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "pa", Input.pa1FullName },
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
+						Input.rev1FullName, },
+				{ "pa", Input.da1userName, Input.da1password, "Project Administrator", Input.pa1userName,
+						Input.pa1password, "da", Input.pa1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
+						Input.rev1FullName }, };
+	}
+
+	@Test(alwaysRun = true, dataProvider = "analyticalPanel", groups = { "regression" }, priority = 27)
+	public void validatingAnalyticalPanel(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52707");
+		baseClass.stepInfo("To verify when 'Analytics Panels' is Checekd/Unchecked from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, true, true, true, false);
+		}
+		baseClass.stepInfo("Disable the radio btn for Analytical panel checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Analytical panel
+		docViewPage.verifyElementNameBasedOnParameterDocView(false, false, "Analytical panel",
+				docViewPage.getDocView_ChildWindow_ActionButton());
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, true, true, true, false);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, true, true, true, false);
+		}
+		baseClass.stepInfo("Enable the radio btn for Analytical panel checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Analytical panel
+		docViewPage.verifyElementNameBasedOnParameterDocView(true, true, "Analytical panel",
+				docViewPage.getDocView_ChildWindow_ActionButton());
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :Verify security group from edit user pop up when user changes
+	 * security group from header
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+	public void validatingRmuCanRemoveSG() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52679");
+		baseClass.stepInfo(
+				"Verify security group from edit user pop up when user " + "changes security group from header");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		security = new SecurityGroupsPage(driver);
+		String securityGroup = "sGName" + Utility.dynamicNameAppender();
+
+		// Login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating new sg
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		security.AddSecurityGroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.addingSGToUser(Input.securityGroup, securityGroup);
+
+		// logout
+		loginPage.logout();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectsecuritygroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		Select selectSG = new Select(userManage.userSelectSecurityGroup().getWebElement());
+		int count = selectSG.getOptions().size();
+		List<String> allSG = new ArrayList<String>();
+		for (int j = 0; j < selectSG.getOptions().size(); j++) {
+			if (count <= 1) {
+				baseClass.passedStep("When user change the Sg from header changed sg displaying in edit user detailss");
+			}
+			allSG.add(selectSG.getOptions().get(j).getText());
+		}
+		baseClass.waitForElement(userManage.getEditCancel());
+		userManage.getEditCancel().waitAndClick(5);
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		softAssertion.assertEquals(securityGroup, String.join(" ", allSG));
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :Verify after removing the security group user assigned security
+	 * group should be updated
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 29)
+	public void validatingAfterdeletingSGFromSA() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52675");
+		baseClass.stepInfo(
+				"Verify after removing the security group user " + "assigned security group should be updated");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		security = new SecurityGroupsPage(driver);
+		String securityGroup = "sGName" + Utility.dynamicNameAppender();
+
+		// Login As pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating new sg
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		security.AddSecurityGroup(securityGroup);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		userManage.editLoginUser();
+		userManage.addingSGToUser(Input.securityGroup, securityGroup);
+
+		// Deleting the security group
+		security.deleteSecurityGroups(securityGroup);
+		baseClass.stepInfo("Deleting the security group which created new");
+
+		// logout
+		loginPage.logout();
+
+		// Login As sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.waitForElement(userManage.getAssignUserButton());
+		userManage.getAssignUserButton().waitAndClick(5);
+		baseClass.waitForElement(userManage.getProjectTab());
+		userManage.getProjectTab().waitAndClick(5);
+		baseClass.waitForElement(userManage.getAssignUserProjectDrp_Dwn());
+		userManage.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getSelectDropProject(Input.projectName));
+		userManage.getSelectDropProject(Input.projectName).waitAndClick(5);
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(Input.rmu1FullName));
+		String assignedUserStatus=userManage.getCheckingAssignedUserSG(Input.rmu1FullName).getText();
+		if (assignedUserStatus.contains(securityGroup)) {
+			baseClass.failedStep("Deleted Sg displaying in assigned user window");
+		}
+		else {
+			baseClass.passedStep("Deleted Sg not displaying in assigned user from SA");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:26/04/2022 Modified by: Baskar
+	 * Description :To verify for Project Admin when 'Reviewer Remarks' is Checekd/Unchecked 
+	 *              from Bulk User Access Control
+	 */
+
+
+	@Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 30)
+	public void validatingBulkUserReviewerRemarksForPa(String roll, String loginuser, String loginPass, String rollUser,
+			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52706");
+		baseClass.stepInfo("To verify for Project Admin when 'Reviewer Remarks' is Checekd/Unchecked "
+				+ "from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		sessionSearch = new SessionSearch(driver);
+
+		// login
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, false, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Reviewer Remarks tag is disabled");
+
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// validating redaction tab
+		boolean remarksNotpresent = userManage.getAdvancedSearchAudioRemarkIcon().isElementAvailable(2);
+		softAssertion.assertFalse(remarksNotpresent);
+		baseClass.passedStep("Reviewer Remarks tag not displayed in docview page");
+
+		// logout
+		loginPage.logout();
+
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, true, true, false, true);
+		}
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(fullName));
+		userManage.getSelectBulkUser(fullName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		baseClass.CloseSuccessMsgpopup();
+		userManage.getBulkUserCancelBtn().waitAndClick(5);
+		baseClass.stepInfo("Reviewer Remarks tag is Enabled");
+
+		// impersonate to pa user
+		baseClass.impersonatePAtoRMUAfterbulk();
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// validating redaction tab
+		baseClass.waitForElement(userManage.getAdvancedSearchAudioRemarkIcon());
+		boolean remarkspresent = userManage.getAdvancedSearchAudioRemarkIcon().isElementAvailable(2);
+		softAssertion.assertTrue(remarkspresent);
+		baseClass.passedStep("Reviewer Remarks tag  displayed in docview page");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+
+	}
+
+
+	@DataProvider(name = "Users")
+	public Object[][] Users() {
+		return new Object[][] {
+				{  Input.rmu1userName, Input.rmu1password},
+				{  Input.pa1userName, Input.pa1password},
+				{Input.da1userName, Input.da1password },
+				{Input.sa1userName, Input.sa1password}};
+	}
+	/**
+	 * Author : Brundha date: NA Modified date:
+	 * Description :Verify when user enters value in more than 3 fields 1) Filter By
+	 * User Name 2) Filter By Role 3) Created on or After, search should return
+	 * results which are an INTERSECTION of all the entered filter criteria
+	 */
+	@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 31)
+	public void verifyingFilterTabInManageUser(String username,String Password) throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53193");
+		baseClass.stepInfo(
+				"Verify when user enters value in more than 3 fields 1) Filter By User Name 2) Filter By Role 3) Created on or After, search should return results which are an INTERSECTION of all the entered filter criteria ");
+						
+		userManage = new UserManagement(driver);
+		loginPage.loginToSightLine(username,Password);
+		userManage.passingUserName(Input.rmu1userName);
+		userManage.applyFilter();
+		driver.waitForPageToBeReady();
+		String firstName = userManage.getTableData("FIRST NAME", 1);
+		System.out.println(firstName);
+		driver.waitForPageToBeReady();
+		userManage.verifyingFilterOptionInManageUser(Input.pageCount);
+		
+		baseClass.stepInfo("Validating user role in applied filter");
+		userManage.validateFilterOptionInUserManage("ROLE",Input.userRole);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Validating username in applied filter");
+		userManage.validateFilterOptionInUserManage("FIRST NAME",firstName);
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:27/04/2022 Modified by: Baskar
+	 * Description :Verify that option to check/uncheck the option will be available
+	 * only if the non-billable user is creating/editing a user
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 32)
+	public void validatingBilliableCheckBox() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53204");
+		baseClass.stepInfo("Verify that option to check/uncheck the option will be available "
+				+ "only if the non-billable user is creating/editing a user");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+
+		// validating billable user checkbox available from non-billable user
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(userManage.getAddUserBtn());
+		userManage.getAddUserBtn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getAddNewUserPopUpWindow());
+		boolean userWindow = userManage.getAddNewUserPopUpWindow().isElementAvailable(2);
+		softAssertion.assertTrue(userWindow);
+		baseClass.stepInfo("Add user popup window opened successfully");
+		baseClass.waitForElement(userManage.getBilliableUserText());
+		String billiableName = userManage.getBilliableUserText().getText();
+		softAssertion.assertEquals("Billable User:", billiableName);
+		baseClass.waitForElement(userManage.getBilliableUserCheckBox());
+		boolean billiableCheckBox = userManage.getBilliableUserCheckBox().isElementAvailable(2);
+		softAssertion.assertTrue(billiableCheckBox);
+		baseClass.passedStep("Billiable user checkbox available in add user popup window");
+
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Baskar date: NA Modified date:27/04/2022 Modified by: Baskar
+	 * Description :Verify functionalities by PAU post impersonate as a RMU
+	 */
+
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 33)
+	public void validatingAssignmentPaToRmuImp() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53166");
+		baseClass.stepInfo("Verify functionalities by PAU post impersonate as a RMU");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		agnmt = new AssignmentsPage(driver);
+		sessionSearch=new SessionSearch(driver);
+		miniDocListPage=new MiniDocListPage(driver);
+		docViewPage=new DocViewPage(driver);
+		String assignmentName = "AssName" + Utility.dynamicNameAppender();
+		String remarks = "remark" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String headerName = "RedactionTags";
+		Map<String, String> datas = new HashMap<String, String>();
+		int iteration = 1;
+		int index;
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
+		sessionSearch.bulkAssign();
+		agnmt.assignmentCreation(assignmentName, Input.codingFormName);
+		agnmt.toggleSaveButton();
+		agnmt.assignmentDistributeToPa();
+
+		// logout
+		loginPage.logout();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		// impersonate pa to rmu
+		baseClass.impersonatePAtoRMU();
+		miniDocListPage.chooseAnAssignmentFromDashBoard(assignmentName);
+		
+		// adding remarks
+		datas = docViewPage.addRemarkToDocumentsT(iteration, remarks, true, "Success");
+		baseClass.stepInfo("Remarks added successfully when Pa Impersonate To Rmu");
+		
+		// adding Redaction
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(Input.defaultRedactionTag);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+
+		// AfterSave Default Selection
+		String defautTagSelection = docViewPage.getAudioRedactionColumnValue(index).getText();
+		baseClass.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"After Save : â€˜Default Redaction Tagâ€™ is displayed", "After Save : invalid redaction tag selected");
+        baseClass.passedStep("Redaction added successfully when Pa Impersonate To Rmu");
+        
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+		driver.scrollPageToTop();
+		String prnDoc=docViewPage.getVerifyPrincipalDocument().getText();
+		
+		// validating save button
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		docViewPage.verifyingComments(comment);
+		baseClass.passedStep("Document saved with some loaded value using save button when Pa Impersonate To Rmu ");
+		
+		// validating uncomplete button
+        docViewPage.completeButton();
+        docViewPage.getDociD(prnDoc).waitAndClick(5);
+        boolean uncompleteBtn=docViewPage.getUnCompleteButton().isElementAvailable(2);
+        softAssertion.assertTrue(uncompleteBtn);
+		baseClass.passedStep("Document completed using complete button and tick mark displaying when Pa Impersonate To Rmu ");
+		for (int i = 2; i <=3; i++) {
+			docViewPage.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		docViewPage.clickCodeSameAs();
+		baseClass.passedStep("Code same as action  performed when Pa Impersonate To Rmu ");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
 	
 	@DataProvider(name = "saImpPa")
 	public Object[][] saImpPa() {

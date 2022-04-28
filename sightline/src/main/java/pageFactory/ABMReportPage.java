@@ -142,8 +142,8 @@ public class ABMReportPage {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[contains(@class,'badge')]");
 	}
 	public Element getRedBullHornIcon_CC() {
-		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[@class='badge bg-color-red bounceIn animated']");
-	}
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']//following::b[contains(@class,'bg-color-red')]");
+		}
 	public Element getBullHornIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
 	}
@@ -504,12 +504,13 @@ public class ABMReportPage {
 		getABM_Reviewer_SelectAll().Click();
 		getABM_ReviewerExpandbutton().ScrollTo();
 		getABM_ReviewerExpandbutton().Click();
+		bc.waitTime(5);
 		bc.waitForElement(getABM_SelectAssignment());
 		getABM_SelectAssignment().waitAndClick(10);
-		bc.waitTime(1);
+		bc.waitTime(5);
 		getABM_SelectAssgn(assgnname).ScrollTo();
 		getABM_SelectAssgn(assgnname).waitAndClick(10);
-		bc.waitTime(1);
+		bc.waitTime(5);
 		getABM_SelectAssgn(assignmentName1).ScrollTo();
 		getABM_SelectAssgn(assignmentName1).waitAndClick(10);
 		driver.scrollPageToTop();

@@ -785,13 +785,13 @@ public class SavedSearchAudio_Regresssion {
 		session.saveSearchInNewNode(saveSearch2, newNodeREV);
 
 //		impersonate as RMU
-		Thread.sleep(2000);
+		base.waitTime(2);
 		base.impersonatePAtoRMU();
 		DocumentAuditReportPage documentAuditReport = new DocumentAuditReportPage(driver);
 		documentAuditReport.verifySource(saveSearch1, saveSearch2);
 
 //		impersonate As PA
-		Thread.sleep(5000);
+		base.waitTime(5);
 		base.impersonateSAtoPA();
 
 //		create new searchgroup
@@ -801,7 +801,7 @@ public class SavedSearchAudio_Regresssion {
 		session.saveSearchInNewNode(newNodePA, newNodePA);
 
 //		impersonate As PA
-		Thread.sleep(3000);
+		base.waitTime(3);
 		base.impersonateSAtoPA();
 
 		documentAuditReport.verifySource(saveSearch1, saveSearch2);

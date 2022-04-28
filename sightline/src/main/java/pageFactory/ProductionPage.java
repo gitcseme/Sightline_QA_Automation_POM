@@ -432,7 +432,7 @@ public class ProductionPage {
 	}
 
 	public Element getPriveldged_TagTree(String tag) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'"+tag+"')]");
 	}
 
 	public Element getPriveldge_PDFTagTree(String tag) {
@@ -2040,8 +2040,8 @@ public class ProductionPage {
 	}
 
 	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
-		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
-				+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+				
 	}
 
 	public Element redactionTagInBurnRedaction2CheckBox(String RedactionTag2) {
@@ -2432,7 +2432,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//div[@id='content']//h2");
+		return driver.FindElementByXPath("//span//h1");
 	}
 
 	public Element getDocList() {
@@ -2826,7 +2826,29 @@ public class ProductionPage {
 	public Element sortByTagsRadioButton() {
 		return driver.FindElementByXPath("//span[text()='Sort by Selected Tags: ']//.//..//i");
 	}
+	public Element getclkSelectTags() {
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_1']");
+	}
 	
+	public Element getErrorMsgHeader() {
+		return driver.FindElementByXPath("//h1");
+	}
+
+	public Element getRdbOcr() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']/following-sibling::i");
+	}
+	public Element getBellyBandText() {
+		return driver.FindElementByXPath("//p[@class='pText']");
+	}
+	public Element getBellyBangMsg() {
+		return driver.FindElementByXPath("//p[@class='pText']/following-sibling::p");
+	}
+	public Element getTextRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']");
+	}
+	public Element getYesBtn() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16546,7 +16568,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getSecurityGroupDropDown().waitAndClick(10);
 		base.waitForElement(getSecurityGroup(securityGroup));
 		getSecurityGroup(securityGroup).waitAndClick(10);
-
+		driver.waitForPageToBeReady();
 	}
 
 
@@ -17370,14 +17392,14 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		// clicking enable for natively placeholder
 		base.waitForElement(getTiff_NativeDoc());
 		getTiff_NativeDoc().ScrollTo();
-		clickElementNthtime(getTiff_NativeDoc(), 3);
+		clickElementNthtime(getTiff_NativeDoc(), 2);
 
 		base.waitForElement(getclkSelectTag());
 		getclkSelectTag().ScrollTo();
 		getclkSelectTag().Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(Input.tagNamePrev));
-		getPriveldged_TagTree(Input.tagNamePrev).waitAndClick(10);
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		base.waitForElement(getNativeDocsPlaceholder());
@@ -17388,24 +17410,24 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getclkSelectTag(1).ScrollTo();
 		getclkSelectTag(1).Click();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).waitAndClick(10);
-		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
-		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
-
-		driver.waitForPageToBeReady();
-		base.waitForElement(getclkSelectTag(2));
-		getclkSelectTag(2).ScrollTo();
-		getclkSelectTag(2).Click();
-		driver.waitForPageToBeReady();
 		base.waitForElement(getPriveldged_TagTree(tagname1));
 		getPriveldged_TagTree(tagname1).waitAndClick(10);
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname1);
+//
+//		driver.waitForPageToBeReady();
+//		base.waitForElement(getclkSelectTag(2));
+//		getclkSelectTag(2).ScrollTo();
+//		getclkSelectTag(2).Click();
+//		driver.waitForPageToBeReady();
+//		base.waitForElement(getPriveldged_TagTree(tagname1));
+//		getPriveldged_TagTree(tagname1).waitAndClick(10);
+//		base.waitForElement(getClkSelect());
+//		getClkSelect().Click();
+//		base.waitForElement(getNativeDocsPlaceholder());
+//		getNativeDocsPlaceholder().SendKeys(tagname1);
 
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
@@ -17795,7 +17817,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		driver.waitForPageToBeReady();
 		String Value = getBatesRange().getText();
 		System.out.println(Value);
-
+base.waitTime(2);
 		if (Value.contains(Batesvalue)) {
 			base.passedStep("Batesrange is value is verified");
 		} else {
@@ -18622,33 +18644,26 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @throws InterruptedException
 	 */
 	public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
-		int i;
-		for (i = 0; i < Count; i++) {
-			driver.waitForPageToBeReady();
-			getQC_backbutton().waitAndClick(10);
-		}
+		clickElementNthtime(getBackButton(), Count);
+
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		getMarkInCompleteBtn().waitAndClick(10);
 		base.waitForElement(getTIFFTab());
 		getTIFFTab().Click();
-		getTIFF_EnableforPrivilegedDocs().ScrollTo();
-		// disabling enable for priviledged docs
-		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
 		base.waitForElement(getTiff_NativeDoc());
 		getTiff_NativeDoc().Click();
-		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
+		base.waitForElement(getclkSelectTags());
+		getclkSelectTags().waitAndClick(10);
 		base.waitForElement(getPriveldged_TagTree(tagname));
 		getPriveldged_TagTree(tagname).Click();
 		base.waitForElement(getClkSelect());
 		getClkSelect().Click();
 		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
-		getNativeDocsPlaceholder().SendKeys(tagname);
+		getNativeDocsPlaceholder().SendKeys(Input.tagNameTechnical);
 	}
+
 
 	/**
 	 * @authorAathith.Senthilkumar
@@ -19335,7 +19350,6 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		            base.passedStep(file+" file is Exists in pointed directory");
 		            break;
 				}else {
-					base.wait(1);
 					driver.waitForPageToBeReady();
 				}
 			}
@@ -19616,4 +19630,38 @@ if(getbtnContinueGenerate().isDisplayed()) {
 					getPageNum(totalPage).waitAndClick(5);
 					driver.waitForPageToBeReady();
 		}
+		/**
+		 * @Author Brundha
+		 * Description:Method to verify Text Component
+		 */
+		public void textComponentVerification() {
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			boolean flag;
+			flag = getTextRadioBtn().GetAttribute("value").contains("True");
+
+			if (flag) {
+				base.passedStep("only export file option is selected by default as expected");
+			} else {
+				base.failedStep("only export file option is not  selected by default as expected");
+			}
+			base.waitForElement(getRdbOcr());
+			getRdbOcr().waitAndClick(5);
+			base.waitTime(1);
+			String ExpectedText="OCR can take a long time to perform if there are a lot of documents - that can slow down your production delivery."
+					+" Plus, its likely that these non-redacted docs failed OCR earlier in processing - which may be why no text exists for these records in the Sightline workspace."
+					+" That could complicate your production delivery timelines.";
+			String ActualText=getBellyBandText().getText();
+			base.compareTextViaContains(ActualText,ExpectedText, "Belly band message is displayed as expected", "Belly Band message is not displayed as expected");
+			String BellyBandMsg="Are you sure you want to OCR these non-redacted documents that have no text already in the workspace?";
+			String ExpText=getBellyBangMsg().getText();
+			base.compareTextViaContains(BellyBandMsg,ExpText, "Belly band message is displayed as expected", "Belly Band message is not displayed as expected");
+			base.getNOBtn().waitAndClick(10);
+			base.waitForElement(getRdbOcr());
+			getRdbOcr().waitAndClick(5);
+			getYesBtn().waitAndClick(5);
+		
+		}
+
+
 }

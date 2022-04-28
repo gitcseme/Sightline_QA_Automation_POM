@@ -2290,6 +2290,7 @@ public class MiniDocListPage {
 	 *         Modified date: N/A Modified by: N/A
 	 * @return
 	 * @throws InterruptedException
+	 * 
 	 */
 	public List<String> bulkDocumentToComplete(int sizeofList, int numbersToComplete) {
 		List<String> completedDoc = new ArrayList<>();
@@ -2298,6 +2299,7 @@ public class MiniDocListPage {
 			System.out.println(docToChoose);
 			String name = docIDlist.get(docToChoose);
 			getDociD(name).waitAndClick(5);
+			driver.waitForPageToBeReady();
 			CompleteDocsButton();
 			System.out.println("Completed Document : " + name);
 			baseClass.stepInfo("Completed Document : " + name);
@@ -2306,7 +2308,6 @@ public class MiniDocListPage {
 		}
 		return completedDoc;
 	}
-
 	/**
 	 * @author Indium Raghuram Description : Method to click gearIcon Date: 9/13/21
 	 *         Modified date: NA Modified by: N/A

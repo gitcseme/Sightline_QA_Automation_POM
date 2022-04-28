@@ -20,6 +20,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
@@ -368,6 +369,11 @@ public class SessionSearch {
 	}
 
 	// Added by Raghuram A - 9/30
+	public Element getSavedSearchExpandStatsC() {
+		return driver.FindElementByXPath(
+				"//li[@role='treeitem']//a[text()='All']//..//..//li[@class='jstree-node  jstree-closed jstree-last']//i[@class='jstree-icon jstree-ocl']");
+	}
+	
 	public Element getSaveSearchPopupFolderName_Expand(String name) {
 		return driver.FindElementByXPath(
 				"(// a[contains(text(),'" + name + "')])[last()]//parent::li[contains(@class,'closed')]");
@@ -1720,6 +1726,25 @@ public class SessionSearch {
 	public Element getCurrentTabClosedExpand() {
 		return driver.FindElementByXPath(
 				"//li[@aria-selected='true' and contains(@class,'closed')]//i[@class='jstree-icon jstree-ocl']");
+	}
+
+	public Element getBackGroundTask() {
+		return driver.FindElementByXPath("//div[@id='bgTask']//em/following-sibling::span");
+
+	}
+
+	public Element getBullIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
+	}
+
+	public Element getSavedSearch_SharedWithPA() {
+		return driver.FindElementById("-2_anchor");
+	}
+
+	// added by Aathith
+	public Element getThreadedLastCount() {
+		return driver.FindElementByXPath("(//*[@id='002']//count)[last()]");
+
 	}
 
 	public SessionSearch(Driver driver) {
@@ -9961,7 +9986,14 @@ public class SessionSearch {
 		UtilityLog.info("Pure hit block already moved to action panel");
 
 		getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000);
+		base.waitTime(2);
+		if (getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+		} else {
+			System.out.println("View is not found");
+		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -10427,7 +10459,8 @@ public class SessionSearch {
 				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
-
+		getPureHitsCount().isElementAvailable(10);
+		base.waitTime(5);
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
 		System.out.println("Audio Search is done for " + SearchString1 + SearchString2 + SearchString3
 				+ " and PureHit is : " + pureHit);
@@ -10568,46 +10601,46 @@ public class SessionSearch {
 	 * @param searchName
 	 * @param nodeName
 	 * @throws InterruptedException
-	 * @throws AWTException 
+	 * @throws AWTException
 	 */
 	public void saveSearchInNodeUnderGroup(String searchName, String nodeName, String groupName)
 			throws InterruptedException, AWTException {
 		// SaveSearch
-				saveSearchAction();
+		saveSearchAction();
 
-				try {
-					getSaveAsNewSearchRadioButton().waitAndClick(5);
-				} catch (Exception e) {
-					System.out.println("Radio button already selected");
-					UtilityLog.info("Radio button already selected");
-				}
+		try {
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} catch (Exception e) {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
 
-				if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
-					base.stepInfo(groupName + " : is present");
-					getSaveSearchPopupFolderName(groupName).waitAndClick(10);
-				} else {
-					base.stepInfo(groupName + " : is not present");
-				}
+		if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+			base.stepInfo(groupName + " : is present");
+			getSaveSearchPopupFolderName(groupName).waitAndClick(10);
+		} else {
+			base.stepInfo(groupName + " : is not present");
+		}
 
-				if (getCreatedNode(nodeName).isElementAvailable(7)) {
-					System.out.println("On");
-					getCreatedNode(nodeName).waitAndClick(5);
-				} else {
-					System.out.println("To Expand");
-					Robot robot = new Robot();
-					robot.mouseMove(200, 200);
-					base.waitForElement(getExpandCurrentNode());
-					getExpandCurrentNode().waitAndClick(20);
-					base.waitForElement(getCreatedNode(nodeName));
-					getCreatedNode(nodeName).waitAndClick(3);
-				}
+		if (getCreatedNode(nodeName).isElementAvailable(7)) {
+			System.out.println("On");
+			getCreatedNode(nodeName).waitAndClick(5);
+		} else {
+			System.out.println("To Expand");
+			Robot robot = new Robot();
+			robot.mouseMove(200, 200);
+			base.waitForElement(getExpandCurrentNode());
+			getExpandCurrentNode().waitAndClick(20);
+			base.waitForElement(getCreatedNode(nodeName));
+			getCreatedNode(nodeName).waitAndClick(3);
+		}
 
-				driver.waitForPageToBeReady();
-				getSaveSearch_Name().SendKeys(searchName);
-				getSaveSearch_SaveButton().waitAndClick(5);
-				base.VerifySuccessMessage("Saved search saved successfully");
-				Reporter.log("Saved the search with name '" + searchName + "'", true);
-				UtilityLog.info("Saved search with name - " + searchName);
+		driver.waitForPageToBeReady();
+		getSaveSearch_Name().SendKeys(searchName);
+		getSaveSearch_SaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Saved search saved successfully");
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
 	}
 
 	/**
@@ -11160,6 +11193,7 @@ public class SessionSearch {
 		return pureHit;
 
 	}
+
 	/**
 	 * @author Brundha
 	 * @description : Method to verify the document count in metadata
@@ -11167,18 +11201,218 @@ public class SessionSearch {
 	public void verifyTheCountOfDocumentForMetaData() {
 		driver.waitForPageToBeReady();
 		getPureHitsCount().isElementAvailable(2);
-		String PurehitCount=getPureHitsCount().getText();
-		if(Integer.valueOf(PurehitCount)!=0) {
+		String PurehitCount = getPureHitsCount().getText();
+		if (Integer.valueOf(PurehitCount) != 0) {
 			base.passedStep("Document is displayed as expected");
-		}else {
+		} else {
 			base.failedStep("Document count is not displayed as expected");
 		}
 		getTDHitsCount().isElementAvailable(1);
-		String DocCount=getTDHitsCount().getText();
-		if(Integer.valueOf(DocCount)!=0) {
+		String DocCount = getTDHitsCount().getText();
+		if (Integer.valueOf(DocCount) != 0) {
 			base.passedStep("Document is displayed as expected");
-		}else {
+		} else {
 			base.failedStep("Document count is not displayed as expected");
 		}
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify Precision Sensitivity Of Conceptual Search
+	 * @param conceptualBtn
+	 * @param ConceptSearch
+	 * @return
+	 */
+	public String verifyingPrecisionValue(boolean conceptualBtn, String ConceptSearch, boolean DefaultValue,
+			boolean MoveSlider) {
+
+		if (conceptualBtn) {
+			advancedSearchConceptual(ConceptSearch);
+		}
+
+		if (DefaultValue) {
+			base.waitForElement(gettingThresholdValue());
+			String defSliderValueInPer = gettingThresholdValue().getText();
+			base.stepInfo("Default precision slider value : " + defSliderValueInPer);
+			System.out.println("Default precision slider value : " + defSliderValueInPer);
+
+			String defPrecisionTbValue = driver
+					.findAttributeValueViaJS("return document.querySelector('.form-control').value");
+			base.stepInfo("Default precision textbox value  : " + defPrecisionTbValue);
+			System.out.println("Default precision textbox value  : " + defPrecisionTbValue);
+
+			String[] defSliderValue = defSliderValueInPer.split(" ");
+			String passMsg = "Default Slider and Textbox Value is Same";
+			String failMsg = "Default Slider and Textbox Value is Not Same";
+			base.textCompareEquals(defSliderValue[0], defPrecisionTbValue, passMsg, failMsg);
+
+			softAssert.assertEquals(defSliderValue[0], "70");
+		}
+
+		if (MoveSlider) {
+			driver.waitForPageToBeReady();
+			getConceptualRight().waitAndClick(10);
+			base.passedStep("Precision Slider is Flexible to Move");
+		}
+
+		driver.waitForPageToBeReady();
+		String sliderValueAfterInPer = gettingThresholdValue().getText();
+		base.stepInfo("precision slider value after moving : " + sliderValueAfterInPer);
+		System.out.println("precision slider value after moving : " + sliderValueAfterInPer);
+
+		String precisionTbValue = driver
+				.findAttributeValueViaJS("return document.querySelector('.form-control').value");
+		base.stepInfo("precision textbox value  : " + precisionTbValue);
+		System.out.println("precision textbox value : " + precisionTbValue);
+
+		String[] sliderChangeValue = sliderValueAfterInPer.split(" ");
+		String passMsg2 = "Slider and Textbox Value is Same After Changing Moving Slider";
+		String failMsg2 = "Slider and Textbox Value is Not Same";
+		base.textCompareEquals(sliderChangeValue[0], precisionTbValue, passMsg2, failMsg2);
+
+		softAssert.assertAll();
+		return precisionTbValue;
+	}
+
+	/**
+	 * @author Brundha
+	 */
+	public void verifyingBackGrounTaskInBullHornIcon() {
+
+		getBullHornIcon().isElementAvailable(30);
+		base.waitForElement(getBullHornIcon());
+		String color = getBullIcon().getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#e74735";
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("BullHorn icon is highlighted red as expected");
+		} else {
+			base.failedStep("Bullhorn icon is not red as expected");
+		}
+		getBullHornIcon().waitAndClick(20);
+		getBackGroundTask().isDisplayed();
+		String BackGroundText = getBackGroundTask().getText();
+		System.out.println(BackGroundText);
+		String[] Tag = BackGroundText.split("-");
+		String output = Tag[1];
+		System.out.println(output);
+		if (output.equals("Tag with Bulkaction")) {
+			base.passedStep("Related task is displayed in the background task");
+		} else {
+			base.failedStep("Related task is not displayed in the backgroundtask");
+		}
+
+	}
+
+	public void bulkFolderExistingWithoutPureHit(final String folderName) throws InterruptedException {
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		driver.scrollPageToTop();
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkFolderAction().Visible();
+			}
+		}), Input.wait60);
+
+		getBulkFolderAction().waitAndClick(10);
+		driver.Manage().window().fullscreen();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolderExisting(folderName).Visible();
+			}
+		}), Input.wait60);
+
+		getSelectFolderExisting(folderName).waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().waitAndClick(10);
+		driver.Manage().window().maximize();
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().waitAndClick(10);
+
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		// System.out.println("Bulk folder is done, folder is : "+folderName);
+		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
+		// Since page is freezing after bulk actiononly in automation, lets reload page
+		// to avoid it..
+		driver.getWebDriver().navigate().refresh();
+	}
+
+	/**
+	 * @author Vijaya.Rani modifiedOn : 27/4/22 by modified by :NA
+	 * @param searchName Shared With Project Administrator
+	 */
+	public void saveSearchSharedWithPA(String searchName) {
+		// Save Search
+		saveSearchAction();
+
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+				}
+			}), Input.wait30);
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+		} else {
+			System.out.println("Radio button already selected");
+			UtilityLog.info("Radio button already selected");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+				return getSavedSearch_SharedWithPA().Visible() && getSavedSearch_SharedWithPA().Enabled();
+			}
+		}), Input.wait30);
+		getSavedSearch_SharedWithPA().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+			}
+		}), Input.wait30);
+		getSaveSearch_Name().SendKeys(searchName);
+//		driver.Manage().window().fullscreen();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+			}
+		}), Input.wait30);
+		getSaveSearch_SaveButton().Click();
+//		driver.Manage().window().maximize();
+		driver.waitForPageToBeReady();
+
+		base.VerifySuccessMessage("Saved search saved successfully");
+
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
+	}
+
 }

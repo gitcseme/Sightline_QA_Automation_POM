@@ -113,7 +113,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-51229",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 1)
 	public void removeCodeSameAsForThreadMapDocsAfterImpersonate(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -173,7 +173,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-51230",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 2)
 	public void removeCodeSameAsForConceputalDocsAfterImpersonate(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -235,7 +235,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-51426",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyAnalyticsTabAfterSelectingDocsFromHistoryIconInMiniDoclist(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -291,7 +291,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
+	@Test(description="RPMXCON-51427",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void verifyAnalyticsTabAfterSelectingDocsFromAnalyticsPanel(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -348,7 +348,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done [Test Data updated]
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-51704",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
 	public void verifyResetZoomIconInNearDupeComparisonWindow(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -412,7 +412,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done [Test Data updated]
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-51705",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
 	public void verifyZoomInZoomOutIconInNearDupeComparisonWindow(String fullName, String userName, String password)
 			throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -466,7 +466,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 7)
+	@Test(description="RPMXCON-51221",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 7)
 	public void removeCodeSameAsForFamilyMemberDocsAfterImpersonate(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -532,7 +532,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-51219",enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyMultiDocsInConceptAndActionAsRemoveCodeAsSame() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -618,7 +618,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws Exception
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "specificUsers", groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-51128",enabled = true, dataProvider = "specificUsers", groups = { "regression" }, priority = 9)
 	public void verifyFolderActionInAnalyticsFamilyMemberTab(String fullName, String userName, String password)
 			throws Exception {
 
@@ -687,7 +687,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws Exception
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-51126",enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName,
 			String password) throws Exception {
 
@@ -753,7 +753,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-51060",enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember()
 			throws InterruptedException {
 
@@ -855,7 +855,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - not done [Docs need to be ingested]
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-51061",enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 
 		loginPage = new LoginPage(driver);
@@ -945,7 +945,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @Stabilization - done1
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-50903",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 13)
 	public void verifyThreadedMapTabWhenNoDocsToDisplay(String roll, String userName, String password,
 			String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -1007,7 +1007,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * @throws InterruptedException
 	 * @Stabilization - not done [We need doc with highlighted]
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be
+	@Test(description="RPMXCON-51709",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be
 																									// ingested
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password)
 			throws InterruptedException {
@@ -1108,7 +1108,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetailAsRev", groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-50815",enabled = true, dataProvider = "userDetailAsRev", groups = { "regression" }, priority = 15)
 	public void verifyFamilyMemberTabWhenNoDocsToDisplay(String roll, String userName, String password)
 			throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -1145,7 +1145,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-50816",enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyFamilyMemberTabWhenNoDocsToDisplayForPAUser() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);

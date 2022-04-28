@@ -66,7 +66,7 @@ public class TagAndFolder {
 		return data;
 	}
 
-	@Test(enabled = true, priority = 1, groups = { "smoke", "regression" })
+	@Test(enabled = false, priority = 1, groups = { "smoke", "regression" })
 	public void deleteTagSAasPA() throws ParseException, InterruptedException, IOException {
 
 		driver = new Driver();
@@ -136,9 +136,8 @@ public class TagAndFolder {
 		}
 
 	}
-
 	// added by Narendra
-	@Test(enabled = true, priority = 2, groups = { "smoke", "regression" })
+	@Test(enabled = false, priority = 2, groups = { "smoke", "regression" })
 	public void OperationOnTag() throws ParseException, IOException, InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -162,7 +161,7 @@ public class TagAndFolder {
 
 	}
 
-	@Test(enabled = true, priority = 3, groups = { "smoke", "regression" })
+	@Test(enabled = false, priority = 3, groups = { "smoke", "regression" })
 	public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -293,6 +292,7 @@ public class TagAndFolder {
 		lp.logout();
 	}
 
+	
 	/**
 	 * @author Raghuram A Date: 01/18/21 Modified date:N/A Modified by: Description
 	 *         : Verify that after Impersonation af SA User - can edit/delete folder
@@ -1022,7 +1022,7 @@ public class TagAndFolder {
 		tagAndFolderPage.editFolder(Input.securityGroup, folder1, renamedFolder, "Success", null);
 
 		// delete renamed folder
-		tagAndFolderPage.DeleteFolder(renamedFolder, Input.securityGroup);
+		tagAndFolderPage.DeleteFolderWithSecurityGroupInRMU(renamedFolder);
 
 		// logout
 		lp.logout();
@@ -1037,6 +1037,7 @@ public class TagAndFolder {
 		driver.waitForPageToBeReady();
 		tagAndFolderPage.selectallFolderRoot();
 		tagAndFolderPage.verifyNodePresent(folder2, true, "Folder");
+		driver.scrollPageToTop();
 		tagAndFolderPage.bulkReleaseFolder(securityGroup);
 		bc.stepInfo("Folder Released to Security Group");
 
@@ -1053,7 +1054,7 @@ public class TagAndFolder {
 		tagAndFolderPage.editFolder(Input.securityGroup, folder2, renamedFolder, "Success", null);
 
 		// delete renamed folder set02
-		tagAndFolderPage.DeleteFolder(renamedFolder, Input.securityGroup);
+		tagAndFolderPage.DeleteFolderWithSecurityGroupInRMU(renamedFolder);
 
 		// logout
 		lp.logout();
@@ -1107,6 +1108,7 @@ public class TagAndFolder {
 		driver.waitForPageToBeReady();
 		tagAndFolderPage.selectallTagRoot();
 		tagAndFolderPage.verifyNodePresent(tag2, true, "Tag");
+		driver.scrollPageToTop();
 		tagAndFolderPage.bulkReleaseTag(securityGroup);
 		bc.stepInfo("Tag Released to Security Group");
 
@@ -1123,7 +1125,7 @@ public class TagAndFolder {
 		tagAndFolderPage.editTag(Input.securityGroup, tag2, renamedTag, "Success", null);
 
 		// delete edited tag set02
-		tagAndFolderPage.DeleteTag(renamedTag, Input.securityGroup);
+		tagAndFolderPage.DeleteTagWithClassificationInRMU(renamedTag);
 
 		// logout
 		lp.logout();

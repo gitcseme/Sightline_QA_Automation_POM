@@ -3369,9 +3369,13 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 		search.saveSearchAction();
-
-		base.waitForElement(search.getExpandAllTab());
-		search.getExpandAllTab().waitAndClick(5);
+		  driver.waitForPageToBeReady();
+		  
+	        if (search.getSavedSearchExpandStatsC().isElementAvailable(6)) {
+//	            base.waitForElement(search.getExpandAllTab());
+//	            search.getExpandAllTab().waitAndClick(5);
+	        	search.getSavedSearchExpandStatsC().waitAndClick(5);
+	        }
 
 		base.waitForElement(search.getExpandSecurityGroupOw());
 		search.getExpandSecurityGroupOw().waitAndClick(5);
@@ -4973,9 +4977,8 @@ public class SavedSearch {
 	 *         : SG creation and return nodeName
 	 */
 	public String createASearchGroupandReturnName(String searchName) {
-		createNewSearchGrp(searchName);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		String new_node = getSavedSearchNewNode().getText();
+		String new_node = 	createNewSearchGrp(searchName);
+		
 		base.stepInfo("Search and saveSearch in the created node");
 		return new_node;
 	}

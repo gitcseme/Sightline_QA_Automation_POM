@@ -112,6 +112,8 @@ public class TestData {
 	public String sourceDocId10;
 	public String sourceDocId11;
 	public String sourceDocId12;
+	public String projectName01;
+	public String projectName02;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
@@ -429,6 +431,7 @@ public class TestData {
 	public String pdfDataSet;
 	public String dbFile;
 	public String sourceDocIdDB992;
+	public String NonDomainProject;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;
@@ -446,6 +449,9 @@ public class TestData {
 	public String fileGroup;
 	public String document;
 	public String fileTypeInNativeDocs;
+	public String filterMonth;
+	public String filterYear;
+	public String userRole;
 
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
@@ -546,6 +552,11 @@ public class TestData {
 	public String prodBeg;
 	public String tiffFile2;
 	public String generateSearchablePDF;
+	public String DATFile4;
+	public String AK_NativeFolder;
+	public String duplicateIngestionError;
+	public String datLoadFile1;
+	public String textFile1;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;

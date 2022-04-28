@@ -135,6 +135,10 @@ public class Categorization {
 	}
 
 	// Added By Jeevitha
+	public Element selectionTable() {
+		return driver.FindElementByXPath("//div[@class='panel-body']");
+	}
+	
 	public Element getViewAllBtn() {
 		return driver.FindElementByXPath("//div[contains(@style,'block')]//button[@id='btnViewAll']");
 	}
@@ -418,6 +422,10 @@ public class Categorization {
 
 			getSelectIdentifyByTags().Click();
 			driver.scrollingToBottomofAPage();
+
+			Actions action = new Actions(driver.driver);
+			action.moveToElement(selectionTable().getWebElement()).build().perform();
+			base.waitTime(4);
 
 //		getSelectTag(tagName).ScrollTo();
 			getSelectTag(tagNameORSG).Click();

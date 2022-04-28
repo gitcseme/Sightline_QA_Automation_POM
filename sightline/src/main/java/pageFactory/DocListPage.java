@@ -396,6 +396,10 @@ public class DocListPage {
 	public Element getViewInDocView() {
 		return driver.FindElementById("ViewInDocView");
 	}
+	
+	public Element getMasterDateTableValue() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']//tr[@class='odd']//following-sibling::td[contains(text(),':')]");
+	}
 
 	// Added by Gopinath
 	public Element getSelectAllDocCheckBox() {
@@ -1200,7 +1204,12 @@ public class DocListPage {
 		public Element getParentDocumentID(int i) {
 			return driver.FindElementByXPath("//td[@class=' details-control']/..//td["+i+"]");
 		}
-		
+		public Element getParentDocumentDocId() {
+			return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td[contains(@class,'sorting')]");
+		}
+		public Element getSelectDocument(String DocID) {
+			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
+		}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4635,5 +4644,57 @@ public List<String> gettingAllDocIDs(){
 		int index = base.getIndex(getTableRowHeader(), "DOCID");
 		String docId = getParentDocumentID(index).getText().trim();
 		return docId;
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal created date: 23/04/2022
+	 * @description: To verify MasterDate in Doclist
+	 * 
+	 */
+	public void verifyMasterDateColumnValue() {
+		try {
+			driver.waitForPageToBeReady();
+			if (getMasterDateTableValue().isElementAvailable(5)) {
+				
+				String fieldValue = getMasterDateTableValue().getText();
+				System.out.println("For MasterDate the fieldvalue is "+fieldValue+"");
+				base.stepInfo("For MasterDate the fieldvalue is "+fieldValue+" displayed");
+				base.passedStep("Metadata with Datetime is displayed with the sightline standard Date Format successfully");
+				
+			}else {
+				base.failedStep("The Datetime is not displayed in the DocList");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param eleValue
+	 */
+	public void SelectColumnDisplayByRemovingExistingOnes(String[] eleValue) {
+
+		try {
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			
+			int metadatasCount = getAvailableRemoveButtonCount().size();
+			for (int i = 0; i < metadatasCount; i++) {
+				getRemoveBtn().Click();
+				System.out.println(i);
+			}
+			for(int j=0;j<eleValue.length;j++) {
+			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+			getSelectAvailMetadata(eleValue[j]).ScrollTo();
+			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -50,7 +50,7 @@ public class Proview_Regression {
 
 	}
 
-	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(enabled = false, dataProvider = "Users_PARMU", groups = { "smoke , regression" }, priority = 1)
 	public void validateCategorization(String username, String password, String role) throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
@@ -275,7 +275,7 @@ public class Proview_Regression {
 	 * @Description :To verify that RMU can view the Categorization page.[RPMXCON-54103]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyCategorizePage() throws InterruptedException {
 		Categorization categorize = new Categorization(driver);
 		sessionSearch = new SessionSearch(driver);

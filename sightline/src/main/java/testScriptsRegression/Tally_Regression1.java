@@ -55,8 +55,8 @@ public class Tally_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -279,7 +279,7 @@ public class Tally_Regression1 {
 				tp.tallyActions();
 				bc.waitTime(2);
 				tp.getTally_actionSubTally().Click();
-				tp.selectMetaData_SubTally(Input.docFileName);
+				tp.selectMetaData_SubTally(Input.docFileName,1);
 				driver.waitForPageToBeReady();
 				bc.stepInfo("Created SubTally Report");
 				tp.subTallyActions();
@@ -392,7 +392,7 @@ public class Tally_Regression1 {
 				for (int j = 1; j < subTally[i].length; j++) {
 					bc.stepInfo("**To Verify Sub Tally Report Table  if Tally By Metadata as " + metadataTally
 							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
-					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.selectMetaData_SubTally(subTally[i][j],j);
 					tp.verifyDocCountSubTally(hitsCount);
 				}
 				bc.selectproject();
@@ -431,7 +431,7 @@ public class Tally_Regression1 {
 				for (int j = 1; j < subTally[i].length; j++) {
 					bc.stepInfo("**To Verify Sub Tally Report Table for searches-- if Tally By Metadata as " + metadataTally
 							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
-					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.selectMetaData_SubTally(subTally[i][j],j);
 					tp.verifyDocCountSubTally(hitsCount);
 				}
 				bc.selectproject();
@@ -444,7 +444,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 12)
+		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 11)
 		public void verifySubTally_SavedSearchToTally(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56227");
 			bc.stepInfo("To Verify Admin/RMU will be able to go to Tally from Saved Search");
@@ -470,7 +470,7 @@ public class Tally_Regression1 {
 				for (int j = 1; j < subTally[i].length; j++) {
 					bc.stepInfo("**To Verify Sub Tally Report Table from saved search-- if Tally By Metadata as " + metadataTally
 							+ " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
-					tp.selectMetaData_SubTally(subTally[i][j]);
+					tp.selectMetaData_SubTally(subTally[i][j],j);
 					tp.verifyDocCountSubTally(hitsCount);
 				}
 				bc.selectproject();
@@ -482,7 +482,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
 		public void verifySubTally_docview(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56213");
 			bc.stepInfo("To verify Admin/RMU can view all the documents tallied in a doc view (SubTally)");
@@ -527,7 +527,7 @@ public class Tally_Regression1 {
 						bc.waitTime(2);
 						tp.getTally_actionSubTally().Click();
 						driver.waitForPageToBeReady();
-						tp.selectMetaData_SubTally(subTally[i][j]);
+						tp.selectMetaData_SubTally(subTally[i][j],1);
 						int subTallyDocCount=tp.getDocCountSubTally();
 						bc.stepInfo("Doc Count selected in subtally to view in doc view--"+subTallyDocCount);
 						tp.subTallyActions();
@@ -553,7 +553,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13)
 		public void verifyFilterDocumentsBy(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56221");
 			bc.stepInfo("To Verify Admin/RMU on the Tally report page will be able to filter on multiple "
@@ -591,6 +591,7 @@ public class Tally_Regression1 {
 					tp.verifyTallyChartAfterApplyingFilter(FilterType, ApplyFilterMetaData); //validating 'Include' filters functionality
 					tp.clearingActiveFiltersInTallyBy().waitAndClick(7);
 					tp.getTally_btnTallyApply().Click();
+					driver.waitForPageToBeReady();
 					tp.tallyActions();
 					bc.waitTime(2);
 					tp.getTally_actionSubTally().Click();
@@ -599,7 +600,7 @@ public class Tally_Regression1 {
 						bc.stepInfo(
 								"**To Verify Sub Tally Report filter documents by functionality  if Tally By Metadata as "
 										+ metadataTally + " and Sub Tally By subMetaData as-" + subTally[i][j] + "**");
-						tp.selectMetaData_SubTally(subTally[i][j]);
+						tp.selectMetaData_SubTally(subTally[i][j],j);
 						tp.applyFilterToSubTallyBy(ListOfMetaData, metadataTally, FilterType); //Applying filter 'Include'
 						tp.verifySubTallyResultTableAfterApplyingFilter(FilterType, ApplyFilterMetaData); //validating 'Include' filters functionality
 						tp.clearingActiveFiltersInTallyBy().waitAndClick(7);
@@ -612,7 +613,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 15)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14)
 		public void verifyTallyReportSourceAsSearch(String username, String password, String role)
 				throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56964");
@@ -650,7 +651,7 @@ public class Tally_Regression1 {
 			bc.waitTime(2);
 			tp.getTally_actionSubTally().Click();
 			bc.stepInfo("**To Verify Sub Tally Report Table**");
-			tp.selectMetaData_SubTally(Input.docFileType);
+			tp.selectMetaData_SubTally(Input.docFileType,1);
 			tp.verifyDocCountSubTally(pureHitTwoStrings);
 			softAssertion.assertAll();
 		}
@@ -660,7 +661,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 16)
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 15)
 		public void verifyExport(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-48705");
 			bc.stepInfo("To Verify User will be able to export data in an excel format from Subtally.");
@@ -691,7 +692,7 @@ public class Tally_Regression1 {
 				bc.waitTime(2);
 				tp.getTally_actionSubTally().Click();
 				bc.stepInfo("**Generating  Sub Tally Report Table**");
-				tp.selectMetaData_SubTally(Input.docFileType);
+				tp.selectMetaData_SubTally(Input.docFileType,1);
 				int docsSelected = tp.getSelectedColumnDocCountSubTally(2);
 				tp.subTallyActionsWithOutTallyAllSelection();
 				bc.stepInfo("**Exporting selected data from  Sub Tally Report Table**");
@@ -749,7 +750,8 @@ public class Tally_Regression1 {
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.pa1userName, Input.pa1password, "PA" } };
+				{ Input.pa1userName, Input.pa1password, "PA" } 
+		};
 		return users;
 	}
 	
