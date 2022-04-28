@@ -2445,7 +2445,7 @@ public class ProductionPage {
 	}
 
 	public Element getErrorMsgText() {
-		return driver.FindElementByXPath("//span//h1");
+		return driver.FindElementByXPath("//div[@id='content']//h2");
 	}
 
 	public Element getDocList() {
@@ -5185,13 +5185,6 @@ public class ProductionPage {
 	 */
 	public void fillingNativeSection() throws InterruptedException {
 		SoftAssert softAssertion = new SoftAssert();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNativeChkBox().Enabled();
-			}
-		}), Input.wait30);
-		getNativeChkBox().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -17396,6 +17389,7 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @Description :Natively placeholder selecting tags Type in different Native
 	 *              docsa
 	 */
+	
 	public void fillingTIFFSectionwithNativelyPlaceholderWithTagTypeAndTags(String tagname, String tagname1)
 			throws InterruptedException {
 
@@ -17415,6 +17409,8 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getTIFF_EnableforPrivilegedDocs().Enabled();
 		getTIFF_EnableforPrivilegedDocs().Click();
 
+		base.waitForElement(getSelectCloseBtn());
+                getSelectCloseBtn().waitAndClick(10);
 		// clicking enable for natively placeholder
 		base.waitForElement(getTiff_NativeDoc());
 		getTiff_NativeDoc().ScrollTo();
@@ -17442,22 +17438,12 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		getClkSelect().Click();
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname1);
-//
-//		driver.waitForPageToBeReady();
-//		base.waitForElement(getclkSelectTag(2));
-//		getclkSelectTag(2).ScrollTo();
-//		getclkSelectTag(2).Click();
-//		driver.waitForPageToBeReady();
-//		base.waitForElement(getPriveldged_TagTree(tagname1));
-//		getPriveldged_TagTree(tagname1).waitAndClick(10);
-//		base.waitForElement(getClkSelect());
-//		getClkSelect().Click();
-//		base.waitForElement(getNativeDocsPlaceholder());
-//		getNativeDocsPlaceholder().SendKeys(tagname1);
+
 
 		base.stepInfo("Tiff Section is fillied with Natively Placeholder selecting tags and tag type");
 
 	}
+
 
 	/**
 	 * @authorBrundha 
