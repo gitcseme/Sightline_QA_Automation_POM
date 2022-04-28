@@ -141,7 +141,7 @@ public class DocView_Regression3 {
 		baseClass.CloseSuccessMsgpopup();
 		securityGroupsPage.selectSecurityGroup(namesg3);
 		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-		baseClass.CloseSuccessMsgpopup();
+		baseClass.CloseSuccessMsgpopup(); 
 		securityGroupsPage.selectSecurityGroup(namesg2);
 		securityGroupsPage.clickOnReductionTagAndSelectReduction(Input.defaultRedactionTag);
 		baseClass.CloseSuccessMsgpopup();
