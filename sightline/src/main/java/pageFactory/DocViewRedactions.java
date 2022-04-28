@@ -1923,7 +1923,7 @@ public void popOutCodingFormChildWindow() {
 			base.waitForElement(getAudioRedactDropdown());
 			base.waitTillElemetToBeClickable(getAudioRedactDropdown());
 			getAudioRedactDropdown().selectFromDropdown().selectByVisibleText(redactionTag);
-			getAudioRedactSave().Click();
+			getAudioRedactSave().waitAndFind(10);
 			base.waitForElement(base.getSuccessMsg());
 			base.getSuccessMsg().waitAndFind(10);
 			Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,

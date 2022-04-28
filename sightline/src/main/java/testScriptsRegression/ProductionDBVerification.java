@@ -189,7 +189,7 @@ public class ProductionDBVerification {
 	 *         No:RPMXCON-56081
 	 * @Description: To Verify in production if selects DAT,Native ,TIFF AND Text (ingested) then it will not skip the page count.
 	 */
-	@Test(description="RPMXCON-56081",enabled = false, groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-56081",enabled = true, groups = { "regression" }, priority = 3)
 	public void getProductionPageCountWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56081 -Production Sprint 06");

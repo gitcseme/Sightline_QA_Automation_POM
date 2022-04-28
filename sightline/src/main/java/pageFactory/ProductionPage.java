@@ -1542,7 +1542,7 @@ public class ProductionPage {
 	}
 
 	public Element gettextRedactionPlaceHolder() {
-		return driver.FindElementByXPath("//div[@class='redactor-editor']");
+		return driver.FindElementByXPath("(//div[@class='redactor-editor'])[last()]");
 	}
 
 	public Element getPriviledgedPopOverContent() {
@@ -6883,8 +6883,9 @@ public class ProductionPage {
 			}
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
-
-		getbtnContinueGeneration().isElementAvailable(320);
+		
+		getVerifyGenStatus("Reserving Bates").isElementAvailable(150);
+		getbtnContinueGeneration().isElementAvailable(60);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
 			getbtnContinueGeneration().waitAndClick(10);
@@ -15924,14 +15925,15 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	 * @description :method for filling native placeholder
 	 */
 	public void fillingNativeDocsPlaceholder(String Tag) {
-		
-		base.waitForElement(getNativePlaceholderLink());
-		getNativePlaceholderLink().waitAndClick(10);
-		
-		base.waitForElement(getSecondSelectTagBtn());
-		getSecondSelectTagBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectCloseBtn().waitAndClick(10);
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().waitAndClick(10);
+
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().waitAndClick(10);
 		base.waitForElement(getPriveldged_TagTree(Tag));
-		getPriveldged_TagTree(Tag).waitAndClick(10);
+		getPriveldged_TagTree(Tag).Click();
 		base.waitForElement(getClkSelect());
 		getClkSelect().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -16143,14 +16145,16 @@ if(getbtnContinueGenerate().isDisplayed()) {
 	}
 
 	public void selectTechIssueDoc(String Tag) {
+		driver.waitForPageToBeReady();
+		getTechissue_toggle().ScrollTo();
 		base.waitForElement(getTechissue_toggle());
-		getTechissue_toggle().Click();
+		getTechissue_toggle().waitAndClick(10);
 		base.waitForElement(getTechissue_SelectTagButton());
-		getTechissue_SelectTagButton().Click();
+		getTechissue_SelectTagButton().waitAndClick(10);
 		base.waitForElement(getTechIssueCheckbox(Tag));
-		getTechIssueCheckbox(Tag).Click();
+		getTechIssueCheckbox(Tag).waitAndClick(10);
 		base.waitForElement(getClk_selectBtn());
-		getClk_selectBtn().Click();
+		getClk_selectBtn().waitAndClick(10);
 		base.waitForElement(getTechissue_TextArea());
 		getTechissue_TextArea().SendKeys(tagNameTechnical);
 		base.stepInfo("TechIssue Enabled With techissue doc is selected");
@@ -16790,8 +16794,6 @@ if(getbtnContinueGenerate().isDisplayed()) {
 		SoftAssert softAssertion = new SoftAssert();
 
 		visibleCheck("Native");
-		base.waitForElement(getNativeChkBox());
-		getNativeChkBox().Click();
 
 		base.waitForElement(getNativeTab());
 		getNativeTab().Click();
