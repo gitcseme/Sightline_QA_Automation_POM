@@ -104,7 +104,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
+		sessionsearch.basicContentSearch(Input.sourceDocId1);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
 		assignmentspage.assignmentDistributingToReviewer();
@@ -300,7 +300,7 @@ public class DocView_Regression5 {
 				"Verify when user is selecting a document to view after scrolling down the mini doc list child window when 'Loading..' displays in DocView, the entry for the same document must always present fully in the visible area of the mini-DocList child window");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -381,7 +381,7 @@ public class DocView_Regression5 {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -463,7 +463,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -561,7 +561,7 @@ public class DocView_Regression5 {
 				"Verify that when user is selecting a document to view after scrolling down/up the mini doc list and in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList (to the user)");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
 		docView.scrollUntilloadingTextDisplay(false);
@@ -616,7 +616,7 @@ public class DocView_Regression5 {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
 		docView.scrollUntilloadingTextDisplay(false);
@@ -669,7 +669,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
 		docView.scrollUntilloadingTextDisplay(false);
@@ -722,11 +722,72 @@ public class DocView_Regression5 {
 
 	/**
 	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51404 Verify all hits of the document should be highlighted
+	 * without clicking the eye icon when user redirects to doc view from Saved
+	 * Search > doc list Stabilization done
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case id : RPMXCON-51404");
+		baseClass.stepInfo(
+				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Saved Search > doc list");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+		sessionSearch.viewInDocView_redactions();
+		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+		savedSearch.savedSearchToDocList(searchName);
+		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
+		sessionSearch.viewInDocView_redactions();
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51398 Verify highlighted keywords should be displayed on click of
 	 * the eye icon when redirected to doc view from session search when documents
 	 * searched with work product Stabilization done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -748,6 +809,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().Click();
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
@@ -763,7 +825,7 @@ public class DocView_Regression5 {
 	 * done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyDocInMiniDocListChildWindowsAfterPerformCodeSameAsLast() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -775,7 +837,7 @@ public class DocView_Regression5 {
 				"Verify that when completing the documents same as last the entry for the navigated document in mini-DocList child window must always present fully in the visible area of mini doc list child window");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -848,7 +910,7 @@ public class DocView_Regression5 {
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchText);
-		sessionSearch.ViewInDocViews();
+		sessionSearch.ViewInDocView();
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -916,67 +978,6 @@ public class DocView_Regression5 {
 		softAssertion.assertAll();
 		loginPage.logout();
 
-	}
-
-	/**
-	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51404 Verify all hits of the document should be highlighted
-	 * without clicking the eye icon when user redirects to doc view from Saved
-	 * Search > doc list Stabilization done
-	 */
-
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
-	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
-		baseClass = new BaseClass(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		SavedSearch savedSearch = new SavedSearch(driver);
-		docViewRedact = new DocViewRedactions(driver);
-		docView = new DocViewPage(driver);
-		loginPage = new LoginPage(driver);
-		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case id : RPMXCON-51404");
-		baseClass.stepInfo(
-				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Saved Search > doc list");
-
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
-		driver.waitForPageToBeReady();
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
-		driver.waitForPageToBeReady();
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		loginPage.logout();
 	}
 
 	/**
@@ -1402,7 +1403,9 @@ public class DocView_Regression5 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -1413,7 +1416,9 @@ public class DocView_Regression5 {
 		SessionSearch sessionsearch1 = new SessionSearch(driver);
 		sessionsearch1.basicContentSearch(Input.searchString1);
 		sessionsearch1.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -1434,7 +1439,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Search the non audio documents and go to docview");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1443,7 +1450,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Search the non audio documents and go to docview");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1452,7 +1461,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Search the non audio documents and go to docview");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -1475,7 +1486,9 @@ public class DocView_Regression5 {
 
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		// Login as REV
@@ -1483,7 +1496,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Logged in using Reviewer account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		// Login as PA
@@ -1491,7 +1506,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Logged in using PA account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
+		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -1585,8 +1602,9 @@ public class DocView_Regression5 {
 			docView.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(10);
 		}
 		miniDocList.configureMiniDocListToShowCompletedDocs();
-		baseClass.stepInfo("Mini doc list is not be configured to show completed documents");
+		driver.Navigate().refresh();
 		baseClass.handleAlert();
+		baseClass.stepInfo("Mini doc list is not be configured to show completed documents");
 
 		// verify to select docs and remove code as same
 		driver.waitForPageToBeReady();
@@ -1610,24 +1628,34 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from other than assignment page");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String pdfDocId = null ;
+		String TIFFDocId = null;
+		String pptDocID = null;
+		String messageDocId = null;
+		if (Input.url.contains("pt")) {
+			 pdfDocId = "ID00001283";
+			 TIFFDocId = "ID00000945";
+			 pptDocID = "ID00001165";
+			 messageDocId = "ID00000290";
+		}
 
 		baseClass.stepInfo("Logged in using RMU account");
-		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
-				Input.pptDocId, Input.messageDocId);
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, Input.xlsExcelDocId, TIFFDocId, pptDocID,
+				messageDocId);
 		loginPage.logout();
 
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in using REV account");
-		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
-				Input.pptDocId, Input.messageDocId);
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, Input.xlsExcelDocId, TIFFDocId, pptDocID,
+				messageDocId);
 		loginPage.logout();
 
 		// Login As PA.
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in using PA account");
-		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(Input.pdfDocId, Input.xlsExcelDocId, Input.tiffDocId1,
-				Input.pptDocId, Input.messageDocId);
+		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, Input.xlsExcelDocId, TIFFDocId, pptDocID,
+				messageDocId);
 	}
 
 	/**
@@ -1665,7 +1693,7 @@ public class DocView_Regression5 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.StitchedTiffSourceDocID);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -1700,7 +1728,7 @@ public class DocView_Regression5 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeImageDoc);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -1841,13 +1869,12 @@ public class DocView_Regression5 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51977 Verify that DocView should be able to load the stitched TIFF
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyDocViewStichedTIFFIsLoad() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51977");
@@ -1888,6 +1915,7 @@ public class DocView_Regression5 {
 		}
 		softassertion.assertAll();
 	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
