@@ -961,7 +961,7 @@ public class DocView_Regression3 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		
 		sessionsearch.ViewInDocView();
- 
+  
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		
 		baseClass.stepInfo("Click on reduction button ");

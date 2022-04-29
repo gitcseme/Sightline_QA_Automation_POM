@@ -22,7 +22,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SecurityGroupsPage {
- 
+  
 	Driver driver;
 	BaseClass bc;
 

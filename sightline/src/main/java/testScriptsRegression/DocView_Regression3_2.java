@@ -1032,7 +1032,7 @@ public class DocView_Regression3_2 {
 		utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 		securityGroupsPage = new SecurityGroupsPage(driver);
- 
+  
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
