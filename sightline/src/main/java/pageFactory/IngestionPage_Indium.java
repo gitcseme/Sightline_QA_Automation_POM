@@ -7963,6 +7963,68 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				  	getCloseButton().waitAndClick(10);
 
 			}
+			 /**
+			 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: NA Modified Date: NA
+			 * @description: verify Ingestion publish
+			 */
+			public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
+				
 			
+				base.stepInfo("Validating whether the ingestion is done for particular project");
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFilterByButton().Visible();
+					}
+				}), Input.wait30);
+				getFilterByButton().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFilterByPUBLISHED().Visible();
+					}
+				}), Input.wait30);
+				getFilterByPUBLISHED().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIngestion_GridView().Visible();
+					}
+				}), Input.wait30);
+				getIngestion_GridView().waitAndClick(10);
+
+				driver.waitForPageToBeReady();
+				base.stepInfo("Searching for Datasets");
+				driver.scrollingToBottomofAPage();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIngestionPaginationCount().Visible();
+					}
+				}), Input.wait30);
+				int count = ((getIngestionPaginationCount().size()) - 2);
+				Boolean status = false;
+				for (int i = 0; i < count; i++) {
+					// driver.waitForPageToBeReady();
+					if (getAllIngestionName(dataset).isElementAvailable(5)) {
+						String publishedDataSet = getAllIngestionName(dataset).getText();
+						if (publishedDataSet.contains(dataset)) {
+							status = true;
+							base.passedStep("The Ingestion " + dataset + " is already done for this project");
+						}
+						break;
+					} else {
+						status = false;
+						driver.scrollingToBottomofAPage();
+						getIngestionPaginationNextButton().waitAndClick(3);
+						base.stepInfo("Expected Ingestion not found in the page " + i);
+
+					}
+
+				}	
+				return status;
+
+
+
+			}		
 			
 }
