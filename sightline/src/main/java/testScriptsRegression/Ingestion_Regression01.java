@@ -485,6 +485,55 @@ public class Ingestion_Regression01 {
 		docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
 		}
 	
+	/** 
+     *Author :Arunkumar date: 29/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48175
+	 * Description :To Verify Rollback In Ingestion for Files having Read Only Attributes.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 17)
+	public void verifyRollbackReadOnlyAttribute()  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48175");
+		baseClass.stepInfo("To Verify Rollback In Ingestion for Files having Read Only Attributes.");
+		ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+		// Rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 29/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47566
+	 * Description :To Verify status update in cataloging, copying, and Indexing Section in Ingestion Details Page
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 18)
+	public void verifyStatusUpdateInPopup() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47566");
+		baseClass.stepInfo("To Verify status update in cataloging, copying, and Indexing Section in Ingestion Details Page");
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Catalogingblock");
+		ingestionPage.ingestionCopying();
+		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Copyingblock");
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Indexingblock");
+		//rollback
+		ingestionPage.rollBackIngestion();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

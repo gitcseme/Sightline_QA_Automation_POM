@@ -8025,6 +8025,100 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 
 
 
-			}		
+			}	
+			
+			/**
+			 * @author: Arun Created Date: 28/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify back,ignore and done option in error detail popup
+			 */
+			public void performAKNativeFolderIngestion(String datFile) {
+				
+				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.AK_NativeFolder);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				base.stepInfo("Selecting Dat file");
+				selectDATSource(datFile,Input.prodBeg);
+				base.stepInfo("Selecting Native file");
+				selectNativeSource(Input.NativeFile,false);
+				base.stepInfo("Selecting Text file");
+				selectTextSource(Input.TextFile,false);
+				base.stepInfo("Selecting Pdf file");
+				selectPDFSource(Input.PDFFile,false);
+				base.stepInfo("Selecting Mp3 file");
+				selectMP3VarientSource(Input.MP3File,false);
+				base.stepInfo("Selecting Transcript file");
+				selectAudioTranscriptSource(Input.TranscriptFile,false);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				base.waitTime(2);
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
+				clickOnPreviewAndRunButton();
+				base.stepInfo("Ingestion started");
+				
+			}
+			
+			
+			/**
+			 * @author: Arun Created Date: 29/04/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify back,ignore and done option in error detail popup
+			 */
+			public void verifyStatusUpdatenInIngestionDetailPopup(String ingestionStage) {
+				
+				driver.waitForPageToBeReady();
+				getIngestionDetailPopup(1).waitAndClick(10);
+				
+				base.waitTime(2);
+				
+				if(ingestionStage.equalsIgnoreCase("Catalogingblock")) {
+					String catalogData = catalogSectionDetails().getText();
+					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+					if(status.contains("Cataloged") && !catalogData.isBlank()) {
+						base.passedStep("Cataloging section details are present in ingestion details popup");
+					}
+					else {
+						base.failedStep("details not present in cataloging section");
+					}
+				}
+				else if (ingestionStage.equalsIgnoreCase("Copyingblock")) {
+					driver.scrollingToElementofAPage(getRunCopying());
+					String copyData = copyingSectionDetails().getText();
+					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+					if(status.contains("Copied") && !copyData.isBlank()) {
+						base.passedStep("Copying section details are present in ingestion details popup");
+					}
+					else {
+						base.failedStep("details not present in copying section");
+					}
+				}
+				else if(ingestionStage.equalsIgnoreCase("Indexingblock")) {
+					driver.scrollingToElementofAPage(getRunIndexing());
+					String indexData = indexingSectionDetails().getText();
+					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+					if(status.contains("Indexed") && !indexData.isBlank()) {
+						base.passedStep("Indexing section details are present in ingestion details popup");
+					}
+					else {
+						base.failedStep("details not present in indexing section");
+					}
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  			getCloseButton().Enabled()  ;}}), Input.wait30); 
+			  	getCloseButton().waitAndClick(10);
+		
+			}
 			
 }
