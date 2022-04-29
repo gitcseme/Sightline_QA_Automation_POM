@@ -38,8 +38,8 @@ public class ReviewerProductiviytReport_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 
 	}
 /**

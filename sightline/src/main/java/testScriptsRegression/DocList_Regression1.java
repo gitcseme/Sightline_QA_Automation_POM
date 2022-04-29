@@ -1514,7 +1514,7 @@ public class DocList_Regression1 {
  	 * @Description To To verify that parent child hierarchical presentation in DocList is shown properly
  	 * @throws InterruptedException
  	 */
- 	@Test(groups={"regression"},priority = 1)
+ 	@Test(groups={"regression"},priority = 36)
  	public void verifychildHierarchicalPresentationDocList() throws InterruptedException {
  		
  		String folderName="Folder"+Utility.dynamicNameAppender();
@@ -1556,7 +1556,7 @@ public class DocList_Regression1 {
 	 * @Description:To To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed
 	 * @throws InterruptedException
 	 */
-  	 @Test	(groups={"regression"},priority = 2)
+  	 @Test	(groups={"regression"},priority = 37)
   	 public void verifyDocListTallyActionNoPopUP() throws InterruptedException {
 			baseClass = new BaseClass(driver);
 			String testData1 = Input.testData1;
@@ -1586,7 +1586,7 @@ public class DocList_Regression1 {
   	 * @Description:To Verify 3 play counter readouts are displayed on preview document from doc list
   	 * @throws InterruptedException
   	 */
-  	@Test(alwaysRun = true,groups={"regression"},priority = 2)
+  	@Test(alwaysRun = true,groups={"regression"},priority = 38)
   	public void verifyPlayCounterReadOutsDisplayed() throws InterruptedException {
   		baseClass = new BaseClass(driver);
  		baseClass.stepInfo("Test case Id: RPMXCON-54285");

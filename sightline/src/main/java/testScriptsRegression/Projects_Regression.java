@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -37,7 +39,7 @@ public class Projects_Regression {
 	SecurityGroupsPage security;
 	UserManagement userManage;
 
-	@BeforeMethod(alwaysRun = true)
+	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -84,34 +86,29 @@ public class Projects_Regression {
 		
 		baseClass.stepInfo("Add Non Domain Project");
 		project.AddNonDomainProject(projectnamenondomain, hcode);
+		loginPage.logout();
 	}
 	
 	
 	
 	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result) {
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+		}
+	}
+	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.logout();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
-		} 
-	}
-	
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		 
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		try{ //if any tc failed and dint logout!
- 		loginPage.logout();
- 		}catch (Exception e) {
-			// TODO: handle exception
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+	}
  
 }

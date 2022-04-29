@@ -52,6 +52,7 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
+
 	<indexingWarningMessage>As part of indexing step, index for metadata,
 		text and audio have already been updated. The searches run in the
 		project will reflect these changes. Rolling back will not roll back
@@ -59,13 +60,14 @@
 		project. Do you want to continue with Rollback?
 	</indexingWarningMessage>
 
+	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
+
+
 
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
-	</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
-	</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -94,8 +96,7 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<threadDocumentForReviewer>H16135-0188-002339
-	</threadDocumentForReviewer>
+	<threadDocumentForReviewer>H16135-0188-002339</threadDocumentForReviewer>
 	<nearDupeCompletedDocIdReviewer>T2393D</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>ICE010058-9-00000006</newNearDupeDocId>
 	<warningDocId>H16135-0188-002241</warningDocId>
@@ -129,6 +130,8 @@
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
+	<projectName01>AutomationAdditionalDataProject</projectName01>
+	<projectName02>Indium_Regressionrun</projectName02>
 
 
 	<!-- DocView Coding Form -->
@@ -183,9 +186,9 @@
 	<testData1>crammer</testData1>
 	<tagNamePrev>Privileged</tagNamePrev>
 	<tagNameTechnical>Technical_Issue</tagNameTechnical>
-	<documentID>H136960002001018</documentID>
-	<orphanDocument>H16135-0188-001009</orphanDocument>
-	<parentDocument>H16135-0188-002479</parentDocument>
+	<documentID>ID00004969</documentID>
+	<orphanDocument>ID00001344</orphanDocument>
+	<parentDocument>ID00002780</parentDocument>
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>
@@ -196,8 +199,8 @@
 	<pageRange>1-2</pageRange>
 	<fullPageRange>1-4</fullPageRange>
 	<iconColor>#E64634</iconColor>
-	<testSecondDocId>H16135-0188-001007</testSecondDocId>
-	<testTenthDocId>H16135-0188-001570</testTenthDocId>
+	<testSecondDocId>ID00000104</testSecondDocId>
+	<testTenthDocId>ID00000665</testTenthDocId>
 	<docNearDupeDocId>H16135-0188-002266</docNearDupeDocId>
 	<TiffDocId>H16135-0188-001997</TiffDocId>
 	<UniCodeDocId>ID00005206</UniCodeDocId>
@@ -213,8 +216,8 @@
 	<sourceDocIdSearch>SourceDocID</sourceDocIdSearch>
 	<HiddenIngestionDocId>ID00000100</HiddenIngestionDocId>
 	<HiddenIngestionName>HiddenPropertiesDragDrop1</HiddenIngestionName>
-	<HiddenLinkDocId>ID00000068</HiddenLinkDocId>
-	<pdfDocId>ID00001389</pdfDocId>
+	<HiddenLinkDocId>ID00000196</HiddenLinkDocId>
+	<pdfDocId>ICE010032-14-00000004</pdfDocId>
 	<xlsExcelDocId>ID00000536</xlsExcelDocId>
 	<tiffDocId1>ID00001069</tiffDocId1>
 	<pptDocId>ID00001338</pptDocId>
@@ -253,9 +256,7 @@
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
-	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
-		in progress, you cannot overwrite it. Please wait until SavedSearch is
-		completed.</errMsgSinceExecutionInProgress>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
 	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
 	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
@@ -357,8 +358,8 @@
 	<translationDocument>H136960002001035</translationDocument>
 
 	<!-- Added by Krishna Created -->
-	<docIdKeyWordTest>H136960002001004</docIdKeyWordTest>
-	<keyWordHexCode>#00ffff</keyWordHexCode>
+	<docIdKeyWordTest>ID00000206</docIdKeyWordTest>
+	<keyWordHexCode>#ffd700</keyWordHexCode>
 	<docIdThumbnails>H136960002001012</docIdThumbnails>
 
 	<!-- Added by Gopinath Created date - 16/11/2021 -->
@@ -389,9 +390,7 @@
 	<docBasic>Doc Basic</docBasic>
 
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and
-		production generated text, and not to ingested text.
-	</exText>
+	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>H16135-0188-001099</paginationDocId>
@@ -432,6 +431,7 @@
 	<pdfDataSet>B2F9_27Mar_SinglePageTIFF_20211214121006023</pdfDataSet>
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
+	<NonDomainProject>Automation_NonDomain</NonDomainProject>
 
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
@@ -439,12 +439,15 @@
 	<docFile>H16135-0188-002430</docFile>
 	<stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
-	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009
-		STC4_00001016
-	</fileGroup>
+
+	
+	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
+
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
-
+   <filterMonth>Dec</filterMonth>
+	<filterYear>2021</filterYear>
+	<userRole>Review Manager</userRole>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 
@@ -452,9 +455,7 @@
 	<thankyouText>thank you</thankyouText>
 
 	<!-- Added by Gopinath Created date - 08/12/2021 -->
-	<anotherRemarkMessage>Another user has applied redactions, annotations
-		or Reviewer Remarks to this document since you presented it in
-		DocView.</anotherRemarkMessage>
+	<anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
 
 	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>H16135-0188-002188</familyMembersDocId>
@@ -514,11 +515,9 @@
 
 	<hiddenDocId>ICE010044-18-00000035</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000053</excelProtectedHiddenDocId>
-	<warningMessage>Another user has applied redactions, annotations or
-		Reviewer Remarks to this document since you presented it in DocView.
-		You may not apply markup because that would overwrite the markup work
-		done by the other user. Please reload the document.
-	</warningMessage>
+
+	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView. You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
+
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>
 	<conceptualDocId03>ID00000015</conceptualDocId03>
@@ -562,14 +561,14 @@
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 
 	<DATFile>RegressionAllDataset.dat</DATFile>
-	<TextFile>RegressionAllDatasetText.lst</TextFile>
-	<NativeFile>RegressionAllDatasetNatives.lst</NativeFile>
+	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
+	<NativeFile>Natives.lst</NativeFile>
 	<TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
 	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
-	<TranslationFile>RegressionAllDatasetTranslation.lst</TranslationFile>
-	<PDFFile>RegressionAllDatasetPDFs.lst</PDFFile>
-	<TranscriptFile>RegressionAllDatasetTranscript.lst</TranscriptFile>
-	<MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.lst</MP3File>
+	<TranslationFile>Translation.lst</TranslationFile>
+	<PDFFile>PDFs.lst</PDFFile>
+	<TranscriptFile>Transcript.lst</TranscriptFile>
+	<MP3File>MP3.lst</MP3File>
 
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
@@ -606,14 +605,18 @@
 	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
-	<differentDateFormatError>Date format selected in the ingestion is not
-		matching with the date format of the dates in the DAT file. Please
-		provide the matching date format.
-	</differentDateFormatError>
+
+	<differentDateFormatError>Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format.</differentDateFormatError>
+
 	<prodBeg>ProdBeg</prodBeg>
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
+	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
+	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
+	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
+	<textFile1>DAT4_STC_Text.lst</textFile1>
 
 	<!-- Ingestion Related data END -->
 

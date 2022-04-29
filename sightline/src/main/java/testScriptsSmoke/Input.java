@@ -207,6 +207,8 @@ public class Input {
 	public static String sourceDocId10;
 	public static String sourceDocId11;
 	public static String sourceDocId12;
+	public static String projectName01;
+	public static String projectName02; 
 
 	// DocView codingform Baskar Indium
 
@@ -508,6 +510,7 @@ public class Input {
 	public static String pdfDataSet;
 	public static String dbFile;
 	public static String sourceDocIdDB992;
+	public static String NonDomainProject;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -518,7 +521,9 @@ public class Input {
 	public static String fileGroup;
 	public static String document;
 	public static String fileTypeInNativeDocs;
-
+	public static String filterMonth;
+	public static String filterYear;
+	public static String userRole;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -630,6 +635,11 @@ public class Input {
 	public static String prodBeg;
 	public static String tiffFile2;
 	public static String generateSearchablePDF;
+	public static String DATFile4;
+	public static String AK_NativeFolder;
+	public static String duplicateIngestionError;
+	public static String datLoadFile1;
+	public static String textFile1;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -905,6 +915,8 @@ public class Input {
 		sourceDocId10 = testData.getSourceDocId10();
 		sourceDocId11 = testData.getSourceDocId11();
 		sourceDocId12 = testData.getSourceDocId12();
+		projectName01= testData.getProjectName01();
+		projectName02=testData.getProjectName02();
 		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -960,6 +972,7 @@ public class Input {
 		pdfDataSet = testData.getPdfDataSet();
 		dbFile = testData.getDbFile();
 		sourceDocIdDB992 = testData.getSourceDocIdDB992();
+		NonDomainProject = testData.getNonDomainProject();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1264,6 +1277,9 @@ public class Input {
 		fileGroup = testData.getFileGroup();
 		document = testData.getDocument();
 		fileTypeInNativeDocs = testData.getFileTypeInNativeDocs();
+		filterMonth=testData.getFilterMonth();
+		filterYear=testData.getFilterYear();
+		userRole=testData.getUserRole();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
@@ -1379,6 +1395,11 @@ public class Input {
 		prodBeg = testData.getProdBeg();
 		tiffFile2 = testData.getTiffFile2();
 		generateSearchablePDF = testData.getGenerateSearchablePDF();
+		DATFile4 = testData.getDATFile4();
+		AK_NativeFolder = testData.getAK_NativeFolder();
+		duplicateIngestionError = testData.getDuplicateIngestionError();
+		datLoadFile1 = testData.getDatLoadFile1();
+		textFile1 = testData.getTextFile1();
 
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();

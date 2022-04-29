@@ -472,6 +472,7 @@ public class DocExplorerPage {
 		
 	}
 	
+
 	// Added by Gopinath - 08/04/2022
 		public Element getViewOn() {
 			return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
@@ -483,7 +484,20 @@ public class DocExplorerPage {
 			return driver.FindElementByXPath("//a[text()='View in DocList']");
 		}
 
+
+	public Element getPageNextButtonDisabled() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']");
+	}
+
+public Element getAllFoldersExpandButton() {
+		return driver.FindElementByXPath("//a[@id='-1_anchor']/preceding-sibling::i");
+	}
 	
+public Element getDocExpSubfolderExpandButtonLast(String folderName) {
+	return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
+					+ folderName + "']/../ul/descendant::li[@class='jstree-node  jstree-leaf jstree-last']");
+}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -2455,6 +2469,118 @@ public void docExpToExport() {
 	bc.waitForElement(exportDataFromActionDropdown());
 	exportDataFromActionDropdown().waitAndClick(10);
 	driver.waitForPageToBeReady();
+}
+
+/**
+ * @author 
+ * @description: method to verify subfolders are displayed in doc explorer tree
+ */
+public void verifySubFoldersDisplayed() {
+	bc.waitForElement(getAllFoldersExpandButton());
+	if (getAllFoldersExpandButton().isElementAvailable(5)) {
+		bc.passedStep("All folders littele Arrow button is displayed to indicating they have su folders");
+	} else {
+		bc.failedStep("All folders little Arrow button is not displayed");
+	}
+	bc.waitForElement(getFolderExpandButton("1"));
+	getFolderExpandButton("1").waitAndClick(5);
+	bc.waitForElement(getDocExplorerSubFolder());
+	if (getDocExplorerSubFolder().isDisplayed()) {
+		bc.passedStep("After click on arrow button subfolders are displayed");
+	} else {
+		bc.failedStep("Afetr click on arrow button subfolders are not displayed");
+	}
+
+}
+
+
+/**
+ * @author
+ * @Description:method to verify count of selected multiple folders in table
+ * @param numberOfFolders
+ */
+public void verifyMultiFoldersCount(int numberOfFolders) {
+	bc.waitForElement(getfolderFromTreeByNumber("2"));
+	int numberOfDocumentInFolders = 0;
+	for (int i = 3; i <= numberOfFolders + 1; i++) {
+		bc.waitForElement(getfolderFromTreeByNumber(String.valueOf(i)));
+		String CustodianNameInTree = getfolderFromTreeByNumber(String.valueOf(i)).getText();
+		String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,
+				CustodianNameInTree.indexOf(")"));
+		if (numberOfDocumentInFolder.contains(",")) {
+			numberOfDocumentInFolder = numberOfDocumentInFolder.replace(",", "");
+		}
+		numberOfDocumentInFolders = numberOfDocumentInFolders + Integer.parseInt(numberOfDocumentInFolder);
+	}
+
+	int docCountIntable = docCountInTable();
+	if (docCountIntable == numberOfDocumentInFolders) {
+		bc.stepInfo(
+				"Document count from the right side is same as the count displayed for the selected multiple folders in tree view");
+	} else {
+		bc.failedStep(
+				"Document count from the right is not equal to the count displayed for the selected multiple folders in tree view");
+	}
+}
+
+
+
+/**
+ * @author 
+ * @Description:method to get the count of documents in a table
+ * @return (number of documents in table)
+ */
+public int docCountInTable() {
+	
+	bc.waitForElementCollection(getDocListInPage());
+	int numberOfDocumentsInTable = getDocListInPage().FindWebElements().size();
+
+	while (true) {
+		if (getPageNextButtonDisabled().isElementAvailable(3)) {
+			break;
+		} else {
+			bc.waitForElement(getDocLictPaginationNextButton());
+			getDocLictPaginationNextButton().waitAndClick(3);
+			driver.waitForPageToBeReady();
+			int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
+			numberOfDocumentsInTable = numberOfDocumentsInTable + numberOfDocumentsInNextPage;
+		}
+
+	}
+	return numberOfDocumentsInTable;
+}
+
+/**
+ * @author 
+ * @Description:Method to verify arrow button is not displayed for the folder which are not having sub folders
+ * @param folderName
+ */
+public void verifyArrowButtonNotDisplayed(String folderName) {
+	bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+	getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+	int folderNumer=0;
+	String folder="";;
+	boolean flag=true;
+	while(true) {
+		folderNumer=folderNumer+1;
+		bc.waitForElement(getDoxExpSubFoldarExpandbutton(folderName, folderNumer));
+		getDoxExpSubFoldarExpandbutton(folderName, folderNumer).waitAndClick(5);
+		bc.waitTime(2);
+		if(!getDocExpSubfolderExpandButtonLast(folderName).isElementAvailable(3)) {
+			if(!getDocExpSubFolderName(folderName, folderNumer+1).isElementAvailable(5)) {
+				 folder =folder+ getDocExpSubFolderName(folderName, folderNumer).getText();
+				flag=false;
+				break;
+			}
+		}else {
+			break;
+		}
+	}
+	if(flag==true) {
+		bc.passedStep("Arror button is not displayed for the  folder which is not having sub folders");
+	}else {
+		bc.failedStep("Arror button is   displayed for the folder '"+folder+"' which is not having sub folders");
+	}
 }
 
 }

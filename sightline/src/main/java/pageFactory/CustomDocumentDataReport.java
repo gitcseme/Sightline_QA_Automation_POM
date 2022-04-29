@@ -160,7 +160,7 @@ public class CustomDocumentDataReport {
 	}
 
 	public Element getWrkProductHeaders(String eleValue) {
-		return driver.FindElementByXPath("tree//a[text()='"+eleValue+"']/parent::li");
+		return driver.FindElementByXPath("//a[text()='"+eleValue+"']/parent::li");
 	}
 	public Element getSelectedSourceName() {
 		return driver.FindElementByXPath("//ul[@id='bitlist-sources']/li");
@@ -362,6 +362,8 @@ public class CustomDocumentDataReport {
 	}
 
 	public void selectMetaDataFields(String[] Mfields) {
+		driver.scrollPageToTop();
+		bc.waitTillElemetToBeClickable(getMetadataTab());
 		getMetadataTab().Click();
 		for (int i = 0; i < Mfields.length; i++) {
 			getMetdataField(Mfields[i]).ScrollTo();
@@ -372,15 +374,20 @@ public class CustomDocumentDataReport {
 	}
 
 	public void selectWorkProductFields(String[] Wfields) {
+		driver.scrollPageToTop();
+		bc.waitTime(10);
 		getWorkProductTab().ScrollTo();
+		bc.waitTillElemetToBeClickable(getWorkProductTab());
 		getWorkProductTab().Click();
+		bc.waitTime(2);
 		for (int i = 0; i < Wfields.length; i++) {
-			getWorkProductField(Wfields[i]).ScrollTo();
-			getWorkProductField(Wfields[i]).waitAndClick(10);
+		bc.waitTime(2);
+		//getWorkProductField(Wfields[i]).ScrollTo();
+		getWorkProductField(Wfields[i]).Click();
 		}
 		getAddToSelectedBtn().waitAndClick(2);
 		driver.scrollPageToTop();
-	}
+		}
 
 	/**
 	 * @author Jayanthi.ganesan

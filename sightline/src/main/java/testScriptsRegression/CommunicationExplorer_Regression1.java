@@ -330,7 +330,6 @@ public class CommunicationExplorer_Regression1 {
 		comExpPage.generateReportusingDefaultSG();
 		bc.stepInfo("Report Generated.");
 		comExpPage.clickReport();
-		driver.scrollPageToTop();
 		bc.waitForElement(comExpPage.getMailCountOFSelectedReport());
 		String DocCountInreportsPage = comExpPage.getMailCountOFSelectedReport().getText();
 		bc.stepInfo(DocCountInreportsPage + "  Doc Count in report page that is selected to view in doc view.");

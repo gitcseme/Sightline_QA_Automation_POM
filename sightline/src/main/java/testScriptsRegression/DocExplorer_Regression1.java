@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -771,6 +774,101 @@ public class DocExplorer_Regression1 {
 				docexp.verifyDocExpFolderLevel(folderName,folderLevel );
 				
 				
+			}
+			
+			
+			/**
+			 * @author ChandraMadmin
+			 * @TestCase Id:63482 check that on DocExplorer screen-Lower folders from the Tree View should be visible
+			 * @Description:To check that on DocExplorer screen-Lower folders from the Tree View should be visible
+			 */
+			@Test(enabled = true)
+			public void verifyDocExpLowerFolderVisible() {
+				baseClass = new BaseClass(driver);
+				loginPage = new LoginPage(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-63482");
+				baseClass.stepInfo("To check that on DocExplorer screen-Lower folders from the Tree View should be visible");
+				int numberOfFolders = 3;
+
+				Map<String, String> credentials = new HashMap<String, String>();
+				credentials.put("PA", Input.pa1userName + ":" + Input.pa1password);
+				credentials.put("RMU", Input.rmu1userName + ":" + Input.rmu1password);
+				Set<String> users = credentials.keySet();
+				for (String user : users) {
+					String userName = credentials.get(user).split(":")[0];
+					String password = credentials.get(user).split(":")[1];
+					loginPage.logout();
+					baseClass.stepInfo("Login as " + user);
+					loginPage.loginToSightLine(userName, password);
+
+					docexp = new DocExplorerPage(driver);
+
+					baseClass.stepInfo("Navigating to docExplorer page");
+					docexp.navigateToDocExplorerPage();
+
+					baseClass.stepInfo("Step:3&4 verify arrow button and sub folders");
+					docexp.verifySubFoldersDisplayed();
+
+					baseClass.stepInfo("Step:5 verify selected folder docs displayed in the right panal");
+					docexp.verifyDocList("1");
+
+					baseClass.stepInfo("select multiple folders");
+					docexp.selectMultipleFoldersOfTree(numberOfFolders);
+
+					baseClass.stepInfo("Step:6 verify multiple folders count");
+					docexp.verifyMultiFoldersCount(numberOfFolders);
+				}
+
+			}
+			
+			/**
+			 * @author 
+			 * @TestCase Id:63456 To check that on DocExplorer screen - Application should not show little arrow if the subfolder that don’t have any subfolder(s).
+			 * @Description:To To check that on DocExplorer screen - Application should not show little arrow if the subfolder that don’t have any subfolder(s).
+			 */
+			@Test(enabled = true)
+			public void verifyDocExpLowerArrowButtonNotDisplayed() {
+				baseClass = new BaseClass(driver);
+				loginPage = new LoginPage(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-63456");
+				baseClass.stepInfo("To check that on DocExplorer screen - Application should not show little arrow if the subfolder that don’t have any subfolder(s).");
+				int numberOfFolders = 3;
+				String folderName="Amit (1)";
+				String folderNumber="1";
+
+				Map<String, String> credentials = new HashMap<String, String>();
+				credentials.put("PA", Input.pa1userName + ":" + Input.pa1password);
+				credentials.put("RMU", Input.rmu1userName + ":" + Input.rmu1password);
+				Set<String> users = credentials.keySet();
+				for (String user : users) {
+					String userName = credentials.get(user).split(":")[0];
+					String password = credentials.get(user).split(":")[1];
+					loginPage.logout();
+					baseClass.stepInfo("Login as " + user);
+					loginPage.loginToSightLine(userName, password);
+
+					docexp = new DocExplorerPage(driver);
+
+					baseClass.stepInfo("Navigating to docExplorer page");
+					docexp.navigateToDocExplorerPage();
+
+					baseClass.stepInfo("Step:3&4 verify arrow button and sub folders");
+					docexp.verifySubFoldersDisplayed();
+
+					baseClass.stepInfo("Step:5 verify arrow button is not displayed for folder not having any subfolder");
+					driver.Navigate().refresh();
+					docexp.verifyArrowButtonNotDisplayed(folderName);
+					
+					baseClass.stepInfo("Step:6 verify selected folder docs displayed in the right panal");
+					docexp.verifyDocList(folderNumber);
+
+					baseClass.stepInfo("select multiple folders");
+					docexp.selectMultipleFoldersOfTree(numberOfFolders);
+
+					baseClass.stepInfo("Step:6 verify multiple folders count");
+					docexp.verifyMultiFoldersCount(numberOfFolders);
+				}
+
 			}
 			
 	/**@AfterMethod(alwaysRun = true)

@@ -86,6 +86,24 @@ public class DataSets {
 		public ElementCollection getPublishedCount() {
 		return driver.FindElementsByXPath("//input[contains(@value,'View Set' )]/../../../..//span[contains(text(),'Auto')]/..//div[@class='ingestCt col-md-4 txt-color-green']//span");
 		}
+		
+		public Element getSelectDocView() {
+			return driver.FindElementByXPath("//a[@id='idBulkFolder']");
+		}
+		public Element getSelectDataSetMenu(String name ,String menu) {
+			return driver.FindElementByXPath("//*[@title='"+name+"']//..//..//ul//li//a[text()='"+menu+"']");
+		}
+		public Element getSelectDatasetsAndActionButton(String name) {
+			return driver.FindElementByXPath("//*[@title='"+name+"']//..//..//button");
+		}
+		
+		//added by Aatith
+		public Element getDataSetName(String DataSet) {
+			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]");
+		}
+		public Element getDataSetViewInDocView(String DataSet) {
+			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocView']");
+		}
 	
 	public DataSets(Driver driver) {
 
@@ -326,7 +344,149 @@ public class DataSets {
 			
 		}
 	}
-}
+	
+	
+	/*	
+	 * @author Sakthivel
+	 * @description : Method to select a uploaded dataset in dropDown.
+	 */
+	public void SelectingUploadedDataSets() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText("Only Uploaded Sets");
+		base.stepInfo("uploaded dataset is selected on a dropdown successfully");
+	}
+	/**
+	 * @author Sakthivel
+	 * @description : Method to select a datasets in dropDown.
+	 */
+	public void SelectingDataSets(String Set) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDataSetTypeList());
+		getDataSetTypeList().selectFromDropdown().selectByVisibleText(Set);
+		base.stepInfo(Set+" is selected on a dropdown successfully");
+		
+	}
 
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a search dataset and go to doclist
+	 */
+	public void SearchDataSetsInDocList(String dataset) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSearchTheFile().Enabled();
+			}
+		}), Input.wait30);
+		getSearchTheFile().waitAndClick(5);
+		getSearchTheFile().SendKeys(dataset);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getClkSearch().Enabled();
+			}
+		}), Input.wait30);
+		getClkSearch().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAction());
+		getSelectAction().waitAndClick(10);
+		base.waitForElement(getSelectDocList());
+		getSelectDocList().waitAndClick(10);
+	}
+
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a search dataset and go to docview.
+	 */
+	public void SearchDataSetsInDocView(String dataset) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSearchTheFile().Enabled();
+			}
+		}), Input.wait30);
+		getSearchTheFile().waitAndClick(5);
+		getSearchTheFile().SendKeys(dataset);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getClkSearch().Enabled();
+			}
+		}), Input.wait30);
+		getClkSearch().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectAction());
+		getSelectAction().waitAndClick(10);
+		base.waitForElement(getSelectDocView());
+		getSelectDocView().waitAndClick(10);
+	}
+	/**
+	 * @author Sakthivel
+	 * @description : Method to selected a automationallSourcesData and go to docview.
+	 */
+	public void getAutomationAllSourcesData(String AllSourceData, String name) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		base.waitTime(3);
+		driver.scrollingToBottomofAPage();
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getSelectDatasetsAndActionButton(AllSourceData));
+		getSelectDatasetsAndActionButton(AllSourceData).waitAndClick(2);
+		driver.waitForPageToBeReady();
+		getSelectDataSetMenu(AllSourceData, name).waitAndClick(5);		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param DataSet
+	 * @return
+	 * @Description check weather data is there or not 
+	 */
+	public String isDataSetisAvailable(String DataSet) {
+		navigateToDataSetsPage();
+		String datasetName = null;
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++)
+		if(getDataSetName(DataSet).isElementAvailable(2)) {
+			base.passedStep(DataSet+" is available in this project");
+			datasetName = getDataSetName(DataSet).GetAttribute("title");
+			break;
+		}else if(i==9){
+			base.stepInfo("Dataset is not in the project, we need to ingest it");
+		}else {
+			driver.scrollingToBottomofAPage();
+		}
+		return datasetName;
+	}
+	/**
+	 * @author Sakthivel
+	 * @param DataSet
+	 */
+	public void selectDataSetWithNameInDocView(String DataSet) {
+		driver.waitForPageToBeReady();
+		int i = 1;
+		try {
+		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(i==10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			i++;
+		}
+		getDataSetActionBtn(DataSet).ScrollTo();
+		driver.waitForPageToBeReady();
+		getDataSetActionBtn(DataSet).waitAndClick(10);
+		base.waitForElement(getDataSetViewInDocView(DataSet));
+		getDataSetViewInDocView(DataSet).waitAndClick(10);
+		base.stepInfo("DataSet is selected and viewed in DocList.");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("failed"+e.getMessage());
+		}
+	}
+}
 
 

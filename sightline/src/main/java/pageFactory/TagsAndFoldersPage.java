@@ -1151,7 +1151,7 @@ public class TagsAndFoldersPage {
 			}
 		}), Input.wait30);
 		getFolderName(strFolder).waitAndClick(10);
-
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFolderActionDropDownArrow().Visible();
@@ -2660,5 +2660,25 @@ public class TagsAndFoldersPage {
 			base.CloseSuccessMsgpopup();
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param strFolder
+	 */
+	public void selectFolderViewInDocList(String strFolder) {
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
 
+		driver.scrollingToBottomofAPage();
+		getFolderName(strFolder).ScrollTo();
+		base.waitForElement(getFolderName(strFolder));
+		getFolderName(strFolder).waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		driver.scrollPageToTop();
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(10);
+		getFolderViewDoclist().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
 }

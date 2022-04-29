@@ -3006,12 +3006,15 @@ public class DocViewAudio_IndiumRegression {
 		// viewing the Documents in DocView from SavedSearch page
 		savedSearch.selectNodeUnderSpecificSearchGroup(Input.securityGroup, nodeName);
 		driver.scrollPageToTop();
+		baseClass.waitForElement(savedSearch.getToDocView());
 		savedSearch.getToDocView().waitAndClick(5);
 
 		// verifying the AudioPersistantHitPanel for document having only searchString1
 		baseClass.stepInfo(
 				"verifying the AudioPersistantHitPanel for document having audio search term '" + searchString1 + "'");
+		baseClass.waitForElement(docViewPage.getDociD(UniqueSearchString1.get(1)));
 		docViewPage.getDociD(UniqueSearchString1.get(1)).waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocIDSearchString1 = docViewPage.getSelectedDocIdMiniDocList().getText();
 		softAssertion.assertEquals(DocIDSearchString1, UniqueSearchString1.get(1));
 		baseClass.stepInfo(
@@ -3020,9 +3023,13 @@ public class DocViewAudio_IndiumRegression {
 
 		// verifying the AudioPersistantHitPanel for document having only searchString2
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.stepInfo(
 				"verifying the AudioPersistantHitPanel for document having audio search term '" + searchString2 + "'");
+		baseClass.waitForElement(docViewPage.getDociD(UniqueSearchString2.get(1)));
 		docViewPage.getDociD(UniqueSearchString2.get(1)).waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocIDSearchString2 = docViewPage.getSelectedDocIdMiniDocList().getText();
 		softAssertion.assertEquals(DocIDSearchString2, UniqueSearchString2.get(1));
 		baseClass.stepInfo(
@@ -3032,8 +3039,11 @@ public class DocViewAudio_IndiumRegression {
 		// verifying the AudioPersistantHitPanel for document having both audio
 		// searchString
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.stepInfo("verifying the AudioPersistantHitPanel for document having both audio search term '"
 				+ searchString1 + "' and '" + searchString2 + "'");
+		baseClass.waitForElement(docViewPage.getDociD(DocIdsWithBothSearchTerm.get(1)));
 		docViewPage.getDociD(DocIdsWithBothSearchTerm.get(1)).waitAndClick(10);
 		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
@@ -3046,8 +3056,10 @@ public class DocViewAudio_IndiumRegression {
 		// verifying the AudioPersistantHitPanel for random document selected using the
 		// NumTextBox
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.stepInfo("verifying the AudioPersistantHitPanel for random document selected using the NumTextBox");
-		docViewPage.searchDocumentBasedOnId(5);
+		docViewPage.searchDocumentBasedOnId(4);
 		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewPage.getSelectedDocIdMiniDocList());
 		String DocId1 = docViewPage.getSelectedDocIdMiniDocList().getText();
@@ -3059,6 +3071,8 @@ public class DocViewAudio_IndiumRegression {
 		// verifying the AudioPersistantHitPanel for random document selected using the
 		// navigation option
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		baseClass.stepInfo(
 				"verifying the AudioPersistantHitPanel for random document selected by using the navigation Arrow symbol");
 		docViewPage.performNextNavigation(2);
@@ -3466,6 +3480,7 @@ public class DocViewAudio_IndiumRegression {
 		docViewPage.editCodingForm(comment);
 		docViewPage.codingStampButton();
 		docViewPage.popUpAction(stampName, Input.stampSelection);
+		baseClass.waitTime(3);
 		long start = System.currentTimeMillis();
 		docViewPage.lastAppliedStamp(Input.stampSelection);
 		long finish = System.currentTimeMillis();
@@ -4236,6 +4251,9 @@ public class DocViewAudio_IndiumRegression {
 		assgnPage.getAssignmentSaveButton().waitAndClick(5);
 		baseClass.stepInfo("Created Assignment name : " + assignmentName);
 		assgnPage.navigateToAssignmentsPage();
+		baseClass.waitTime(10);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
 		assgnPage.viewSelectedAssgnUsingPagination(assignmentName);
 		assgnPage.Checkclickedstatus(assignmentName);
@@ -4273,6 +4291,9 @@ public class DocViewAudio_IndiumRegression {
 		assgnPage.getAssignmentSaveButton().waitAndClick(5);
 		baseClass.stepInfo("Created Assignment name : " + assignmentName1);
 		assgnPage.navigateToAssignmentsPage();
+		baseClass.waitTime(10);
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 
 		assgnPage.viewSelectedAssgnUsingPagination(assignmentName1);
 		assgnPage.Checkclickedstatus(assignmentName1);

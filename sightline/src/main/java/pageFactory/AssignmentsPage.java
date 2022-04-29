@@ -1392,7 +1392,7 @@ public class AssignmentsPage {
 
 	public Element getBatchAssignmentBar(String assignmentName) {
 		return driver.FindElementByXPath("//strong[text()='" + assignmentName
-				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']/div[@class='progress-bar bg-color-green']");
+				+ "']/ancestor::tr[@role='row']//following::td/div[@class='progress-lg']");
 	}
 
 	public ElementCollection getKeywordNames() {
@@ -5389,6 +5389,56 @@ public Element getFamilyMembersCount() {
 	public void selectAssignmentToViewinDocview(final String assignmentName) {
 		try {
 			bc.selectproject();
+			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+
+			bc.waitForElement(getNumberOfAssignmentsToBeShown());
+
+			getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAssgnPaginationCount().Visible();
+				}
+			}), Input.wait30);
+			int count = ((getAssgnPaginationCount().size()) - 2);
+			for (int i = 0; i < count; i++) {
+				// driver.waitForPageToBeReady();
+				Boolean status = getSelectAssignment(assignmentName).isDisplayed();
+				if (status == true) {
+					getSelectAssignment(assignmentName).ScrollTo();
+					Boolean status1 = getSelectAssignmentRow(assignmentName).isDisplayed();
+					if (!status1) {
+						getSelectAssignment(assignmentName).waitAndClick(3);
+					}
+					driver.scrollPageToTop();
+					getAssignmentActionDropdown().waitAndClick(4);
+					bc.stepInfo("Expected assignment found in the page " + i);
+					break;
+				} else {
+					driver.scrollingToBottomofAPage();
+					getAssgnPaginationNextButton().waitAndClick(3);
+					bc.stepInfo("Expected assignment not found in the page " + i);
+				}
+			}
+			bc.waitForElement(getAssignmentAction_ViewinDocView());
+			getAssignmentAction_ViewinDocView().waitAndClick(3);
+			bc.stepInfo("View on Doc view option is clicked");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while selecting assignment to view in Doc view" + e.getMessage());
+
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @param assignmentName : (assignmentName is string value that name of
+	 *                       assignment ).
+	 * @description This method for selecting assignment to view in doc view.
+	 */
+	public void selectAssignmentToViewinDocview(final String assignmentName,String ProjectName) {
+		try {
+			bc.selectproject(ProjectName);
 			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 
 			bc.waitForElement(getNumberOfAssignmentsToBeShown());

@@ -909,10 +909,6 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//i[@class='fa fa-eye']");
 	}
 
-	public Element getVisiableText() {
-		return driver.FindElementById("PHitCount_Get");
-	}
-
 	public Element getNextArrowBtn() {
 		return driver.FindElementById("PrevHit_key1279552");
 	}
@@ -1290,6 +1286,14 @@ public class DocViewRedactions {
 
 	public Element ImagesTabLeftRotate() {
 		return driver.FindElementById("rotateLeft_divDocViewerImage");
+	}
+
+	public Element getKeywordInPersistentHitPanel() {
+		return driver.FindElementByXPath("//p[starts-with(@id,\"PHitCount\")]");
+	}
+
+public Element hiddenInfoIconToolTip() {
+		return driver.FindElementByXPath("//li[@id='hiddenProperty']/a");
 	}
 
 	public DocViewRedactions(Driver driver) {
@@ -1858,7 +1862,7 @@ public void popOutCodingFormChildWindow() {
 			driver.waitForPageToBeReady();
 			base.waitForElement(audioDocRedactionadd());
 			base.waitTillElemetToBeClickable(audioDocRedactionadd());
-			audioDocRedactionadd().Click();
+			audioDocRedactionadd().waitAndClick(10);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occcured while clicking on add audio redaction button" + e.getMessage());
@@ -1919,7 +1923,7 @@ public void popOutCodingFormChildWindow() {
 			base.waitForElement(getAudioRedactDropdown());
 			base.waitTillElemetToBeClickable(getAudioRedactDropdown());
 			getAudioRedactDropdown().selectFromDropdown().selectByVisibleText(redactionTag);
-			getAudioRedactSave().Click();
+			getAudioRedactSave().waitAndFind(10);
 			base.waitForElement(base.getSuccessMsg());
 			base.getSuccessMsg().waitAndFind(10);
 			Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,
@@ -2948,12 +2952,13 @@ public void popOutCodingFormChildWindow() {
 
 		base.stepInfo("docView Eye Icon Clicked Successfully");
 
-		if (getVisiableText().isElementPresent() == true) {
-			base.passedStep("verified The Visiable Text is Displayed");
-		} else {
-			base.failedStep("The Visiable Text is Not Displayed");
-		}
+		if (docViewEyeSearchTerm().Displayed()) {
 
+			base.passedStep("HighLighting Text is Displayed");
+		} else {
+
+			base.failedStep("HighLighting Text  is Not Displayed");
+		}
 		driver.waitForPageToBeReady();
 		if (getNextArrowBtn().Displayed()) {
 
@@ -3688,7 +3693,7 @@ public void popOutCodingFormChildWindow() {
 		wait.until(ExpectedConditions.elementToBeClickable(getMaximizePanel().getWebElement()));
 		Thread.sleep(4000);
 		// Thread sleep added for the page to maximize
-		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(800, 80).release().build()
+		actions.moveToElement(getMaximizePanel().getWebElement()).clickAndHold().moveByOffset(200, 20).release().build()
 				.perform();
 		base.stepInfo("Middle panel of the doc view page is successfully maximized");
 		base.waitForElement(getDocViewPanel());
@@ -4073,6 +4078,12 @@ public void popOutCodingFormChildWindow() {
 	 *              Thumbnailspanel is displayed.
 	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
 	 */
+	/**
+	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
+	 * @description verify different type of Documents in minidocList on
+	 *              Thumbnailspanel is displayed.
+	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
+	 */
 	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId, String xlsExcelDocId, String tiffDocId,
 			String pptDocId, String messageDocId) throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -4081,7 +4092,7 @@ public void popOutCodingFormChildWindow() {
 		DocViewPage docView = new DocViewPage(driver);
 		base = new BaseClass(driver);
 		base.stepInfo("bascic contant search on DocView");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
 		docViewRedact.verifyThumbNailsPanelDisplayed();

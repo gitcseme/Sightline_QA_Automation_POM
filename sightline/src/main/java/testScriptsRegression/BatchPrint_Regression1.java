@@ -118,7 +118,7 @@ public class BatchPrint_Regression1 {
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Verify PDF file should be generated for the selected production set");
-		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType, true,"P4332316",false,false);
+		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType, true,productionname,false,false);
 		loginPage.logout();
 
 	}

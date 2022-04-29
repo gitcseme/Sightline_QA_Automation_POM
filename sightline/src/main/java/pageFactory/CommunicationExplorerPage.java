@@ -177,8 +177,8 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node']");
 	}
 	public Element getVisualizedSelectedReportDisplay() {
-		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node node-active']");
-	}
+		return driver.FindElementByCssSelector("g[class='graph']>g[Class*='node-active']");
+		}
 	public Element getIncludeRadioBtn() {
 		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[1])");
 	}
@@ -199,7 +199,7 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[contains(text(),'in DocView')]");
 	}
 	public Element getMailCountOFSelectedReport() {
-		return driver.FindElementByCssSelector("g>[class='node normal-node node-active']>text>tspan[class='mail-count']");
+		return driver.FindElementByCssSelector("g>[Class*='node-active']>text>tspan[class='mail-count']");
 	}
 	public ElementCollection metaDataslist_reviewerPg() {
 		return driver.FindElementsByXPath("//div[@id='SearchDataTable_wrapper']//tr[@role='row']/td[position()=2]");
@@ -495,9 +495,10 @@ public class CommunicationExplorerPage {
 		base.waitForElement(getVisualizedReportDisplay());
 		getVisualizedReportDisplay().ScrollTo();
 		getVisualizedReportDisplay().waitAndClick(10);
-		if(getVisualizedSelectedReportDisplay().isElementAvailable(1)) {
-			base.stepInfo("Clicked on visualized Communications exp report");
-		}else {
+		for (int i = 0; i < 5; i++) {
+			if (getVisualizedSelectedReportDisplay().isElementAvailable(1)) {
+				break;
+			}
 			base.stepInfo("Not clicked on visualized Communications exp report");
 			getVisualizedReportDisplay().waitAndClick(30);
 		}
@@ -508,10 +509,12 @@ public class CommunicationExplorerPage {
 	 */
 	public void viewinDoclist() {
 		driver.waitForPageToBeReady();
-		driver.scrollPageToTop();
 		base.waitForElement(getActionBtn());
+		getActionBtn().ScrollTo();
 		getActionBtn().waitAndClick(10);
-		if(getViewBtn().isElementAvailable(2)) {
+		if(getViewBtn().isElementAvailable(5)) {
+			getViewBtn().ScrollTo();
+			base.waitTime(1);
 			getViewBtn().ScrollTo();
 		}
 		base.waitForElement(getAction_ViewInDoclistButton());
@@ -535,8 +538,8 @@ public class CommunicationExplorerPage {
 			base.waitForElement(getActionBtn());
 			getActionBtn().ScrollTo();
 			getActionBtn().waitAndClick(10);
-			base.waitForElement(getViewInDocView());
-			if(getViewBtn().isElementAvailable(2)) {
+			base.waitForElement(getViewBtn());
+			if(getViewBtn().isElementAvailable(5)) {
 				getViewBtn().ScrollTo();
 			}
 			if (getViewInDocView().isElementPresent()) {
