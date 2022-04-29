@@ -3442,6 +3442,10 @@ public class DocViewPage {
 	public Element getAllSourcesDatasetImage() {
 		return driver.FindElementById("divDocViewerImage");
 	}
+	
+	public Element getImageTabAllSourcesDataOnDocView(String name) {
+		return driver.FindElementByXPath("//*[@id='AvailableImagesDropDown']/li/a[contains(text(),'"+name+"')]");
+	}
 
 	public DocViewPage(Driver driver) {
 

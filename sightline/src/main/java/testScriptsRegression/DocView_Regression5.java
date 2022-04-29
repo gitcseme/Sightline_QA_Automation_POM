@@ -1486,9 +1486,7 @@ public class DocView_Regression5 {
 
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
-		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		// Login as REV
@@ -1496,9 +1494,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Logged in using Reviewer account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
-		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 		// Login as PA
@@ -1506,12 +1502,10 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Logged in using PA account");
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
-		driver.waitForPageToBeReady();
 		docViewRedact.verifyMaximizetheMiddlePanel();
-		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
-
+	
 	/**
 	 * @author Sakthivel TestCase Id:51881 C3B: Verify that Action > Folder works
 	 *         fine when all records in the reviewers batch are in mixed state but
@@ -1628,16 +1622,10 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from other than assignment page");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		String pdfDocId = null ;
-		String TIFFDocId = null;
-		String pptDocID = null;
-		String messageDocId = null;
-		if (Input.url.contains("pt")) {
-			 pdfDocId = "ID00001283";
-			 TIFFDocId = "ID00000945";
-			 pptDocID = "ID00001165";
-			 messageDocId = "ID00000290";
-		}
+		String pdfDocId = "ID00001283";
+		String TIFFDocId = "ID00000945";
+		String pptDocID = "ID00001144";
+		String messageDocId = "ID00000290";
 
 		baseClass.stepInfo("Logged in using RMU account");
 		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, Input.xlsExcelDocId, TIFFDocId, pptDocID,
@@ -1798,6 +1786,7 @@ public class DocView_Regression5 {
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String filedText = "Stamp" + Utility.dynamicNameAppender();
+		String StampText = "Newcolor" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1847,11 +1836,13 @@ public class DocView_Regression5 {
 		baseClass.waitForElement(docView.getHitPanelCount());
 		String beforeComplete = docView.getHitPanelCount().getText();
 		System.out.println(beforeComplete);
-		docView.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		docView.editCodingForm(filedText);
+		driver.scrollPageToTop();
+		docView.stampColourSelection(StampText, Input.stampColour);
 		String getAttribute = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
 		docView.lastAppliedStamp(Input.stampColour);
-		softAssert.assertEquals("Saving with Stamp", getAttribute);
-		if (getAttribute.equals("Saving with Stamp")) {
+		softAssert.assertEquals(filedText, getAttribute);
+		if (getAttribute.equals(filedText)) {
 			baseClass.passedStep("Expected Message -StamplastIcon is clicked scuessfully..");
 		} else {
 			baseClass.failedStep("Expected Message - StamplastIcon is not clicked");
@@ -1859,6 +1850,7 @@ public class DocView_Regression5 {
 		baseClass.waitForElement(docView.getCompleteDocBtn());
 		docView.getCompleteDocBtn().waitAndClick(10);
 		baseClass.stepInfo("Document completed successfully");
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getHitPanelCount());
 		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
 		System.out.println(afterComplete);
@@ -1867,8 +1859,8 @@ public class DocView_Regression5 {
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 		softAssert.assertAll();
 		loginPage.logout();
+		
 	}
-
 	/**
 	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51977 Verify that DocView should be able to load the stitched TIFF
@@ -1883,8 +1875,7 @@ public class DocView_Regression5 {
 		SoftAssert softassertion = new SoftAssert();
 		DataSets dataset = new DataSets(driver);
 		String datasets = "Only Mapped Sets";
-		String AllSourceData = "B2F9_Automation_AllSources_20211130043120500";
-		String name = "DocView";
+		String AllSourceData = "Automation_AllSources";
 
 		// login as PA
 		loginPage.logout();
@@ -1896,16 +1887,17 @@ public class DocView_Regression5 {
 		// verify selected a automationallSourcesData and go to docview.
 		dataset.SelectingDataSets(datasets);
 		baseClass.passedStep("Dataset is successfully published");
-		dataset.getAutomationAllSourcesData(AllSourceData, name);
+		dataset.selectDataSetWithNameInDocView(AllSourceData);
 		baseClass.passedStep(AllSourceData + "..data is selected and go to docviewpage");
+		baseClass.waitTime(2);
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 
 		// verify click on image tag.
 		docView.clickOnImageTab();
-		softassertion.assertTrue((docView.getImageTabAllSourcesDataOnDocView().isDisplayed()));
+		softassertion.assertTrue((docView.getImageTabAllSourcesDataOnDocView(AllSourceData).isDisplayed()));
 		softassertion.assertAll();
-		baseClass.waitForElement(docView.getImageTabAllSourcesDataOnDocView());
-		docView.getImageTabAllSourcesDataOnDocView().waitAndClick(2);
+		baseClass.waitForElement(docView.getImageTabAllSourcesDataOnDocView(AllSourceData));
+		docView.getImageTabAllSourcesDataOnDocView(AllSourceData).waitAndClick(2);
 		softassertion.assertTrue((docView.getAllSourcesDatasetImage().isDisplayed()));
 		baseClass.stepInfo("AutomationAllsources dataset view in imagetab");
 		if (docView.getAllSourcesDatasetImage().isDisplayed()) {
