@@ -26650,6 +26650,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		String ActualValue = getDocView_IconFileType().getText();
 		System.out.println("default value:" + ActualValue);
+		base.waitTillElemetToBeClickable(getDocView_IconFileType());
 		if (getDocView_IconFileType().isDisplayed()) {
 			base.passedStep("Default " + ActualValue + " value  is displayed");
 		} else {
