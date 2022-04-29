@@ -34,11 +34,7 @@ public class ClientsPage_Regression {
 		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		driver = new Driver();
-
-		loginPage = new LoginPage(driver);
-		baseClass = new BaseClass(driver);
-		clientsPage = new ClientsPage(driver);
+		
 	}
 
 	@Test(groups = { "regression" }, priority = 1)
@@ -69,6 +65,11 @@ public class ClientsPage_Regression {
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
+		driver = new Driver();
+
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		clientsPage = new ClientsPage(driver);
 
 	}
 
@@ -89,9 +90,8 @@ public class ClientsPage_Regression {
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		
-			UtilityLog.info("Executed Clients regression class.");
+	public void close() {		
+		System.out.println("Executed the clients regression class");
 			
 	}
 

@@ -799,7 +799,7 @@ public class DocExplorer_Regression1 {
 					String password = credentials.get(user).split(":")[1];
 					loginPage.logout();
 					baseClass.stepInfo("Login as " + user);
-					loginPage.loginToSightLine(userName, password);
+					loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 
 					docexp = new DocExplorerPage(driver);
 
@@ -845,7 +845,7 @@ public class DocExplorer_Regression1 {
 					String password = credentials.get(user).split(":")[1];
 					loginPage.logout();
 					baseClass.stepInfo("Login as " + user);
-					loginPage.loginToSightLine(userName, password);
+					loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 
 					docexp = new DocExplorerPage(driver);
 
