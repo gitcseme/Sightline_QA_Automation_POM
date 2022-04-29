@@ -1151,7 +1151,7 @@ public class TagsAndFoldersPage {
 			}
 		}), Input.wait30);
 		getFolderName(strFolder).waitAndClick(10);
-
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFolderActionDropDownArrow().Visible();

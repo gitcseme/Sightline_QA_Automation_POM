@@ -117,26 +117,21 @@ public class BulkActions_Regression {
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			//loginPage.quitBrowser();
-		} finally {
-			loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
 	}
 	
