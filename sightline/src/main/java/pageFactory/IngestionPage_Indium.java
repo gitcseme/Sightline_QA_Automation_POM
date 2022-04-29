@@ -5884,7 +5884,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 
 		 getIngestionDetailPopup(1).waitAndClick(Input.wait30);
 
-		driver.scrollingToElementofAPage(getMP3Count());
+		driver.scrollingToElementofAPage(getRunIndexing());
 
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
 
@@ -5949,13 +5949,14 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
+		driver.scrollingToBottomofAPage();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getRunIndexing().Visible();
 			}
 		}), Input.wait60);
 		getRunIndexing().waitAndClick(10);
-
+		base.waitTime(1);
 		base.VerifySuccessMessage("Ingestion Indexing has Started.");		
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -7437,8 +7438,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			    			driver.scrollingToElementofAPage(copyingErrorCount());
 			    			copyingErrorCount().waitAndClick(10);
 			    			base.waitTime(1);
-						    base.waitForElement(ignoreAllButton());
-						    ignoreAllButton().waitAndClick(10);
+			    			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    					 ignoreAllButton().Enabled()  ;}}), Input.wait30); 
+			    			 ignoreAllButton().waitAndClick(10);
 						    if (getApproveMessageOKButton().isElementAvailable(5)) {
 									getApproveMessageOKButton().waitAndClick(10);
 									base.passedStep("Clicked on OK button to ignore all errors");
@@ -7461,7 +7463,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					    			getCloseButton().Enabled()  ;}}), Input.wait30); 
 					    	getCloseButton().waitAndClick(10);
-					    	base.waitTime(5);
+					    	base.waitTime(10);
 					    	getRefreshButton().waitAndClick(10);
 						  
 			    		}
@@ -7952,6 +7954,5 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				  	getCloseButton().waitAndClick(10);
 
 			}
-			
-			
+					
 }
