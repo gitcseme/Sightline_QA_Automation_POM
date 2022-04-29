@@ -710,6 +710,8 @@ public class DocView_Regression5 {
 		savedSearch.savedSearchToDocList(searchName);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
@@ -724,6 +726,7 @@ public class DocView_Regression5 {
 		savedSearch.savedSearchToDocList(searchName);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -738,6 +741,7 @@ public class DocView_Regression5 {
 		savedSearch.savedSearchToDocList(searchName);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1019,6 +1023,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1033,6 +1038,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1048,6 +1054,7 @@ public class DocView_Regression5 {
 		savedSearch.savedSearchToDocList(searchName);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1064,6 +1071,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1078,6 +1086,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1091,8 +1100,11 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		sessionSearch.advancedContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1110,6 +1122,8 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
@@ -1124,6 +1138,8 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
@@ -1136,6 +1152,7 @@ public class DocView_Regression5 {
 		savedSearch.savedSearchToDocList(searchName);
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1152,6 +1169,8 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
@@ -1166,6 +1185,8 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
