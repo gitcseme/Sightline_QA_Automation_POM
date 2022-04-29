@@ -24,7 +24,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 
 public class Input {
-	Driver driver;  
+	Driver driver;   
 	LoginPage lp;
 
 	BaseClass bc;
