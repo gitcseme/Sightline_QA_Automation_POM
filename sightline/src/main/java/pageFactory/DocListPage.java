@@ -1210,6 +1210,8 @@ public class DocListPage {
 		public Element getSelectDocument(String DocID) {
 			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
 		}
+		
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -4693,6 +4695,41 @@ public List<String> gettingAllDocIDs(){
 			getAddToSelect().waitAndClick(10);
 			base.waitForElement(getUpdateColumnBtn());
 			getUpdateColumnBtn().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @param  Select Column Display By Removing Existing Ones add Multiple
+	 */
+	public void SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns() {
+
+		try {
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			
+			int metadatasCount = getAvailableRemoveButtonCount().size();
+			for (int i = 0; i < metadatasCount; i++) {
+				getRemoveBtn().Click();
+				System.out.println(i);
+			}
+			String[] eleValue= {"LastAccessDate","LastModifiedDate","LastSaveDate","MasterDate","EmailSentDate","EmailReceivedDate","DocDate","AppointmentStartDate","AppointmentEndDate",Input.MetaDataEAName ,Input.docFileType,Input.metaDataName};
+			for(int j=0;j<eleValue.length;j++) {
+			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+			getSelectAvailMetadata(eleValue[j]).ScrollTo();
+			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+			for(String metadata : eleValue) {
+				base.visibleCheck(metadata);
+				base.stepInfo(metadata);
+			}
+			base.stepInfo("Email metadata is display correctly in doc list");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

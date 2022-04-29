@@ -454,6 +454,36 @@ public class Ingestion_Regression01 {
 		ingestionPage.verifyHomePageNavigationControl();
 	}
 	
+	/** 
+     *Author :Vijaya.Rani date: 29/04/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49545
+	 * Description :Verify that value for all the metadata fields having DATETIME/DATE data type.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 16)
+	public void verifyMetaDataFieldsDateTimeInDataType() throws InterruptedException  {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49545");
+		baseClass.stepInfo("Verify that value for all the metadata fields having DATETIME/DATE data type.");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocListPage docList=new DocListPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
+		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",Input.DAT_MMDDYYYY,Input.Natives_MMDDYYYY);
+		ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
+		ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
+		}
+		baseClass.stepInfo("Search the documents and Save");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		//Remove selected Colunm Add new Column
+		docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
+		}
 	
 	
 	@AfterMethod(alwaysRun = true)
