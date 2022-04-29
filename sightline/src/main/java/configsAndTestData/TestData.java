@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+   
 @Getter
 @Setter
 //@Builder(toBuilder = true)
@@ -640,4 +640,7 @@ public class TestData {
 	//Added by Gopinath - 08/04/2022
 	public String warningMsgDocId;
 	public String externalLinkDocId;
+	
+	//Added by Gopinath -28/09/2022
+		public String telecom;
 }

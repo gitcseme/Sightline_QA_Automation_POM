@@ -26,7 +26,7 @@ import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
 public class DocExplorerPage {
-
+    
 	Driver driver;
 	Element element;
 	BaseClass bc;
@@ -1882,8 +1882,8 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 			Actions ac = new Actions(driver.getWebDriver());
 			ac.moveToElement(getViewOn().getWebElement()).build().perform();
 			bc.waitTime(2);
-			getViewInDocViewLat().isElementAvailable(15);
-			getViewInDocViewLat().Click();
+			getViewInDocListLat().isElementAvailable(15);
+			getViewInDocListLat().Click();
 		}
 				
 
