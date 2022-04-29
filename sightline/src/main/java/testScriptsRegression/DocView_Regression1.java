@@ -6529,7 +6529,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51979 - Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 * @Description : Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 */
-	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
+	@Test(alwaysRun = true,groups={"regression"},priority = 1,enabled=true)
 	public void verifySearchTermAndKeywordHighlightedOnDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String keyword = "es";
@@ -6552,7 +6552,7 @@ public class DocView_Regression1 {
 		keywordPage.navigateToKeywordPage();
 
 		baseClass.stepInfo("Add keyword one");
-		keywordPage.addKeywordWithoutFullScreen(keywordName1, keyword, colour1);
+		keywordPage.addKeyword(keywordName1, keyword, colour1);
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
@@ -6582,6 +6582,8 @@ public class DocView_Regression1 {
 		keywordPage.deleteKeywordByName(keywordName1);
 		loginPage.logout();
 	}
+
+
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
 	 * @TestCase id : 51648 - Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
@@ -6891,7 +6893,12 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51650 - Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view.
 	 * @Description : Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view
 	 **/
-	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
+	/**
+	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+	 * @TestCase id : 51650 - Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view.
+	 * @Description : Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view
+	 **/
+	@Test(alwaysRun = true,groups={"regression"},priority = 1,enabled=true)
 	public void verifyDocPagesLoadedProperlyForLessThan500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51650 Sprint 13");
@@ -6901,13 +6908,14 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view ####");
 		
-		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.selectproject("AutomationRegressionBackup");
 	
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic Basic content search");
-		session.basicContentSearch(lessThan500PagesDocId);
+		//session.basicContentSearch(lessThan500PagesDocId);
+		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, lessThan500PagesDocId, null);
 
 		baseClass.stepInfo("Navigate to  DocView page");
 		session.ViewInDocView();
@@ -6922,12 +6930,13 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51649 - Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 * @Description : Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 **/
-	@Test(alwaysRun = false,groups={"regression"},priority = 1,enabled=false)
+	@Test(alwaysRun = true,groups={"regression"},priority = 1,enabled=true)
 	public void verifyDocPagesLoadedProperlyForLessThanOrEqual500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51649 Sprint 13");
 		utility = new Utility(driver);
-		String d500PagesDocId = Input.d500PagesDocId;
+		//String d500PagesDocId = Input.d500PagesDocId;
+		String d500PagesDocId ="ID00001785";
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view ####");
@@ -6947,6 +6956,7 @@ public class DocView_Regression1 {
 		docView.verifyTotalPagesOfDocumentCountLessThanOrEqualTo500();
 		loginPage.logout();
 	}
+
 	
 	/**
 	 * @author Gopinath
