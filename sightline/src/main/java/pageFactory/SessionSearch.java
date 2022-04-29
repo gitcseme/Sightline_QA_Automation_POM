@@ -1754,6 +1754,9 @@ public class SessionSearch {
 	public Element getNewSelectMetaData() {
 		return driver.FindElementByXPath("(//*[@id='metatagSelect'])[last()]");
 	}
+	public Element getBatchPrintBG() {
+		return driver.FindElementByXPath("(//div[@id='bgTask']//child::span[contains(text(),' Your Batch Print')])[position()=1]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -11472,5 +11475,44 @@ public class SessionSearch {
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
+	
+	
+
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public int verifyingBullIconAndGetingIDValue() {
+
+		getBullHornIcon().isElementAvailable(30);
+		base.waitForElement(getBullHornIcon());
+		String color = getBullIcon().getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#e74735";
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("BullHorn icon is highlighted red as expected");
+		} else {
+			base.failedStep("Bullhorn icon is not red as expected");
+		}
+		base.waitTime(5);
+		base.waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(20);
+		getBatchPrintBG().isDisplayed();
+		String backGroundText = getBatchPrintBG().getText();
+		System.out.println(backGroundText);
+		String afterRemovingChar = backGroundText.replaceAll("[^\\d]", "");
+	    int idValue=Integer.parseInt(afterRemovingChar); 
+		System.out.println(idValue);
+		if (backGroundText.contains("Batch Print")) {
+			base.passedStep("Related task is displayed in the background task");
+		} else {
+			base.failedStep("Related task is not displayed in the backgroundtask");
+		}
+		return idValue;
+
+	}
+
 
 }

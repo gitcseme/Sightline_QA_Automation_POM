@@ -399,6 +399,10 @@ public class BatchPrintPage {
 		return driver.FindElementByXPath(
 				"//div[@id='mediaFilePlaceHolderHtml']/div/p[contains(text(),'docs are media files. These will be skipped, as they are not printable')]");
 	}
+	public Element getDownloadBatchFile(int id) {
+		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//td[text()[normalize-space()='"+id+"']]//following-sibling::td[8]");
+	}
+
 
 	public BatchPrintPage(Driver driver) {
 
@@ -2335,6 +2339,94 @@ public class BatchPrintPage {
 			}
 		}
 		softAssert.assertAll();
+	}
+	
+	/**
+	 * @Author Baskar
+	 * @Description :filling and generate the batch print
+	 * @param exportFile   :export Filen Name
+	 * @param sortBy       : sort by DropDown
+	 * @param onePdfForAll : checkBox One pdf for all doc
+	 */
+	public void generateBatchPrint(String exportFile, String sortBy, boolean onePdfForAll) {
+		base.waitForElement(getSelectExportFileName());
+		getSelectExportFileName().selectFromDropdown().selectByVisibleText(exportFile);
+
+		base.waitForElement(getSelectExportFileSortBy());
+		getSelectExportFileSortBy().selectFromDropdown().selectByVisibleText(sortBy);
+		base.stepInfo("Selected Export File Name : " + exportFile + "  Selected Sort By : " + sortBy);
+
+		if (onePdfForAll) {
+			base.waitForElement(getPDFCreationforAllButton());
+			getPDFCreationforAllButton().waitAndClick(10);
+			base.stepInfo("One PDF for all documents is CHECKED");
+		}
+
+		base.waitForElement(getGenerateButton());
+		getGenerateButton().waitAndClick(5);
+
+		base.VerifySuccessMessage(
+				"Successfully initiated the batch print. You will be prompted with notification once completed.");
+	}
+	
+	/**
+	 * @Author Baskar
+	 * @Description :refreshing untill batch print
+	 * @param refreshCount   :export Filen Name
+	 */
+	public void refreshUntillComplete(int refreshCount) {
+		// verifying In Background ask PAge
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBgPageDD());
+		String expURL = Input.url + "Background/BackgroundTask";
+		String currentUrl = driver.getUrl();
+		base.textCompareEquals(expURL, currentUrl, "Navigated to My backgroud task page.", "");
+
+		for (int i = 0; i < refreshCount; i++) {
+
+			if (getbackgroundDownLoadLink().isDisplayed()) {
+				base.stepInfo("DOWNLOAD link is Available");
+				break;
+			} else {
+				driver.Navigate().refresh();
+				System.out.println("Refresh");
+				driver.waitForPageToBeReady();
+			}
+
+		}
+		base.waitForElement(getBatchPrintStatus());
+		String status = getBatchPrintStatus().getText();
+		base.textCompareEquals("COMPLETED", status, "Batch Print Status IS Updated As COMPLETED",
+				"Batch Print Status Is Not As Expected");
+
+	}
+	
+	
+	/**
+	 * @Author Indium-Baskar
+	 * @Description : Downloaded latest batch print file
+	 * @return : retruns file name
+	 */
+	public String DownloadBatchPrintFileBG(int Id) {
+		base.waitForElement(getDownloadBatchFile(Id));
+		getDownloadBatchFile(Id).waitAndClick(10);
+
+		base.waitTime(25);
+		File ab = new File(Input.fileDownloadLocation);
+		String testPath = ab.toString() + "\\";
+
+		// base.csvReader();
+		ReportsPage report = new ReportsPage(driver);
+		File a = report.getLatestFilefromDir(testPath);
+		System.out.println(a.getName());
+		base.stepInfo(a.getName());
+
+		String fileName = a.getName();
+
+		String fielPath = testPath + fileName;
+		System.out.println(fileName);
+		base.stepInfo("Downloade File  : " + fielPath);
+		return fileName;
 	}
 
 }

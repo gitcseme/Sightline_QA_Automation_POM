@@ -2,6 +2,7 @@ package testScriptsRegression;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -10,11 +11,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
@@ -32,6 +35,8 @@ public class DomainManagement_IndiumRegression {
 	BaseClass baseClass;
 	Utility utility;
 	UserManagement userManage;
+	SoftAssert softAssertion;
+	BatchPrintPage batchPrint;
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -677,6 +682,222 @@ public class DomainManagement_IndiumRegression {
 		userManage.selectingConfirmButtonToUnAssignTheAssignedUser(Input.domainName, userName);
 		loginPage.logout();
 
+	}
+	
+
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:
+	 * @Description :Validate notification alert for bulk
+	 *              actions(Folder/Tag/Assign/Export) as RMU(impersonate from DAU)
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	public void verifyingBulkActionImpToRmu() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53092");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Validate notification alert for bulk actions(Folder/Tag/Assign/Export) "
+				+ "as RMU(impersonate from DAU)");
+		userManage = new UserManagement(driver);
+		SessionSearch search = new SessionSearch(driver);
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+
+		// login as pa and creating tag
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(TagName, "Select Tag Classification");
+
+		loginPage.logout();
+		// login as Da user
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+		baseClass.impersonateBasedOnCondition("Review Manager", Input.domainName, Input.projectName);
+		baseClass.stepInfo("Impersonated as Reviewer Manager in domain project");
+
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		search.verifyingBackGrounTaskInBullHornIcon();
+		loginPage.logout();
+
+		// login as non-domain project
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		Reporter.log("Logged in as User: " + Input.rmu1userName);
+		baseClass.selectproject(Input.NonDomainProject);
+		baseClass.stepInfo("Performing action for non-domain project");
+		tagsAndFolderPage.createNewTagwithClassification(TagName, "Select Tag Classification");
+		search.basicContentSearch(Input.testData1);
+		search.bulkTagExisting(TagName);
+		search.verifyingBackGrounTaskInBullHornIcon();
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
+	 * @Description :To verify that Domain Admin can assign Project Admin
+	 *              ((non-domain Admin user) to Domain Project
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	public void verifyingDomainAdminToPa() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52951");
+		baseClass.stepInfo(
+				"To verify that Domain Admin can assign Project Admin " + "((non-domain Admin user) to Domain Project");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login as Da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.domainProjectuser(Input.projectName, Input.pa1FullName, "Project Administration", "", false, false);
+
+		// logout
+		loginPage.logout();
+
+		// login as Pa
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.waitForElement(baseClass.getProjectNames());
+		baseClass.getProjectNames().waitAndClick(10);
+		List<String> projectName = baseClass.availableListofElements(userManage.getProjectCollection());
+		if (projectName.contains(Input.projectName)) {
+			baseClass.passedStep("Assigned user project displayed in project administration");
+		} else {
+			baseClass.failedStep("Assigned project not displayed");
+		}
+		baseClass.getSignoutMenu().waitAndClick(10);
+		String rollName = userManage.getRoleAccess("Project Administrator").getText();
+		softAssertion.assertEquals(rollName, "Project Administrator");
+		baseClass.passedStep("Project admin role displayed as expected for assigned project");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
+	 * @Description :Validate client name filter is not available for Domain Admin impersonate from System A
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	public void verifyingClientFilterNameSAToDA() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53078");
+		baseClass.stepInfo(
+				"Validate client name filter is not available for Domain Admin impersonate from System A");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login as Da
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Impersonating to Sa to Da user");
+		baseClass.impersonateSAtoDA(Input.domainName);
+		this.driver.getWebDriver().get(Input.url + "Project/Project");
+		boolean filterStatus=userManage.getClientNameTextBox().Displayed();
+		softAssertion.assertFalse(filterStatus);
+		baseClass.passedStep("Client filter name tab not available when Sa impersonate to Da");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
+	 * @Description :Validate client name filter is not available when logged in as Domain Admin
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 18)
+	public void verifyingClientFilterNameDA() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53077");
+		baseClass.stepInfo(
+				"Validate client name filter is not available when logged in as Domain Admin");
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+
+		// login as Da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Navigating to project page");
+		this.driver.getWebDriver().get(Input.url + "Project/Project");
+		boolean filterStatus=userManage.getClientNameTextBox().Displayed();
+		softAssertion.assertFalse(filterStatus);
+		baseClass.passedStep("Client filter name tab not available for Da user");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:29/4/2022 Modified by:
+	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	public void verifyingBatchPrintImpToRmu() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53091");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Validate notification alert for BatchPrint as RMU(impersonate from DAU)");
+		userManage = new UserManagement(driver);
+		SessionSearch search = new SessionSearch(driver);
+		batchPrint=new BatchPrintPage(driver);
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+
+
+		// login as Da user
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+		baseClass.impersonateBasedOnCondition("Review Manager", Input.domainName, Input.projectName);
+		baseClass.stepInfo("Impersonated as Reviewer Manager in domain project");
+
+		// Bulk Tag
+		search.basicMetaDataSearch(Input.docFileName, null, "crammer", null);
+		search.bulkTag(tagName);
+
+		// Select TAG
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(2);
+
+		// filling SlipSheet WIth metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DocFileName', select Sort by 'DocID'
+		batchPrint.generateBatchPrint(Input.docFileName, Input.documentKey, true);
+		
+		int idValue=search.verifyingBullIconAndGetingIDValue();
+		
+		// Download ABtch Print File
+		String fileName = batchPrint.DownloadBatchPrintFileBG(idValue);
+		baseClass.stepInfo("Batch Print file downloaded filename : " +fileName+"");
+		
+		loginPage.logout();
+		
+		// login as rmu user
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("performing task for non-domain project");
+		baseClass.selectproject(Input.NonDomainProject);
+
+		// Bulk Tag
+		search.basicMetaDataSearch(Input.docFileName, null, "crammer", null);
+		search.bulkTag(tagName);
+
+		// Select TAG
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(2);
+
+		// filling SlipSheet WIth metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DocFileName', select Sort by 'DocID'
+		batchPrint.generateBatchPrint(Input.docFileName, Input.documentKey, true);
+
+		int idValueTwo = search.verifyingBullIconAndGetingIDValue();
+
+		// Download ABtch Print File
+		String fileNameNon = batchPrint.DownloadBatchPrintFileBG(idValueTwo);
+		baseClass.stepInfo("Batch Print file downloaded filename : " + fileNameNon + "");
+		
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

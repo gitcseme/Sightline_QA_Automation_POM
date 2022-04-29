@@ -3254,6 +3254,54 @@ public class BaseClass {
 				// TODO: handle exception
 			}
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 * 
+	 */
 
+	public void impersonateBasedOnCondition(String role,String domainName,String nonDomainProject) {
+		try {
+			waitForElement(getSignoutMenu());
+			getSignoutMenu().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait60);
+			getChangeRole().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait60);
+			getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			Thread.sleep(3000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAvlDomain().Visible();
+				}
+			}), Input.wait30);
+			getAvlDomain().selectFromDropdown().selectByVisibleText(domainName);
+			Thread.sleep(3000);
+			getAvlProject().selectFromDropdown().selectByVisibleText(nonDomainProject);
+			Thread.sleep(3000);
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			getSaveChangeRole().waitAndClick(10);
+			System.out.println("Impersnated  to : " +role+"");
+			UtilityLog.info("Impersnated  to : " +role+"");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
 	}
 }
