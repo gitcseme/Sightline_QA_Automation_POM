@@ -1508,6 +1508,7 @@ public class DocView_Regression5 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
+		String folderName = "AnalyticalPanel" + Utility.dynamicNameAppender();
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -1519,18 +1520,21 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Create assignment With allow user to save with complete option");
 		assignmentPage.toggleCodingStampEnabled();
 		assignmentPage.add2ReviewerAndDistribute();
-		loginPage.logout();
-
-		// Login As Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-
 		// selecting the assignment
 		baseClass.stepInfo("select the assignment and view in docview");
-		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assignmentName);
 		miniDocList.configureMiniDocListToShowCompletedDocs();
 
 		// To perform Folder MiniDocList
-		docView.performFloderMiniDocListForReviewer();
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			docView.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(10);
+		}
+		baseClass.waitForElement(docView.getDocView_Mini_ActionButton());
+		docView.getDocView_Mini_ActionButton().waitAndClick(5);
+		docView.getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
+		docView.createNewFolderInAnalytical(folderName);
 	}
 
 	/**
@@ -1809,7 +1813,9 @@ public class DocView_Regression5 {
 		// verify PeristantHitEyeIcon is Displayed
 		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
-		docView.getPersistantHitEyeIcon().Click();
+		docView.getPersistantHitEyeIcon().waitAndClick(5);;
+		docView.getPersistantHitEyeIcon().waitAndClick(5);;
+		docView.getPersistantHitEyeIcon().waitAndClick(5);;
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
 		if (docView.getHitPanel().isDisplayed()) {
 			baseClass.passedStep("Persistent hit panels are displayed");
@@ -1826,7 +1832,6 @@ public class DocView_Regression5 {
 		docView.stampColourSelection(StampText, Input.stampColour);
 		String getAttribute = docView.getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
 		docView.lastAppliedStamp(Input.stampColour);
-		softAssert.assertEquals(filedText, getAttribute);
 		if (getAttribute.equals(filedText)) {
 			baseClass.passedStep("Expected Message -StamplastIcon is clicked scuessfully..");
 		} else {
@@ -1837,6 +1842,9 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Document completed successfully");
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docView.getHitPanelCount());
+		driver.getPageSource();
+		baseClass.waitTime(10); //Adding to handle loading issue
+		baseClass.waitTillElemetToBeClickable(docView.getHitPanelCount());
 		String afterComplete = docView.getHitPanelCount().WaitUntilPresent().getText();
 		System.out.println(afterComplete);
 		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
