@@ -112,16 +112,7 @@ public class DocView_Regression5 {
 
 // Checking persistent hits and keywords in DocView		
 		docViewRedact.checkingPersistentHitPanel();
-		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
-		String color2 = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color2).asHex();
-		System.out.println(hex2);
-		if (hex2.equalsIgnoreCase(Input.keyWordHexCode)) {
-			baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
-		} else {
-			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
-
-		}
+		docView.verifyHighlightedKeywordInDocView();
 		baseClass.waitForElement(docViewRedact.nextKeywordTest());
 		docViewRedact.nextKeywordTest().Click();
 		if (docViewRedact.nextKeywordTest().Enabled() == true) {
@@ -138,16 +129,7 @@ public class DocView_Regression5 {
 
 		// Checking persistent hits and keywords in DocView
 		docViewRedact.checkingPersistentHitPanel();
-		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
-		String color3 = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex3 = Color.fromString(color3).asHex();
-		System.out.println(hex3);
-		if (hex3.equalsIgnoreCase(Input.keyWordHexCode)) {
-			baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
-		} else {
-			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
-
-		}
+		docView.verifyHighlightedKeywordInDocView();
 		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
 		docViewRedact.getKeywordInPersistentHitPanel().Click();
 		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
@@ -179,16 +161,7 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
-		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
-		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex = Color.fromString(color).asHex();
-		System.out.println(hex);
-		if (hex.equalsIgnoreCase(Input.keyWordHexCode)) {
-			baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
-		} else {
-			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
-
-		}
+		docView.verifyHighlightedKeywordInDocView();
 		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
 		docViewRedact.nextKeywordTest().Click();
 		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
@@ -203,16 +176,7 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
-		baseClass.waitForElement(docViewRedact.get_textHighlightedColor());
-		String color2 = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
-		String hex2 = Color.fromString(color2).asHex();
-		System.out.println(hex);
-		if (hex2.equalsIgnoreCase(Input.keyWordHexCode)) {
-			baseClass.passedStep("The color for the Highlighted text is verfied- Successfully");
-		} else {
-			baseClass.failedStep("The color for the Highlighted text is not-verfied - Failed");
-
-		}
+		docView.verifyHighlightedKeywordInDocView();
 		baseClass.waitForElement(docViewRedact.getKeywordInPersistentHitPanel());
 		docViewRedact.getKeywordInPersistentHitPanel().Click();
 		if (docViewRedact.getKeywordInPersistentHitPanel().Enabled() == true) {
