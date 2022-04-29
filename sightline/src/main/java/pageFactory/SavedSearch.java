@@ -387,7 +387,7 @@ public class SavedSearch {
 
 	// Added by Raghuram
 	public Element getCreatedNodeName(String nodeName) {
-		return driver.FindElementByXPath("//a[@data-content='My Saved Search']//..//li//a[text()='" + nodeName + "']");
+		return driver.FindElementByXPath("//a[text()='My Saved Search']//..//li//a[text()='" + nodeName + "']");
 	}
 
 	public Element getCreatedNodeName(String nodeName, String rtFolder) {
@@ -2231,9 +2231,7 @@ public class SavedSearch {
 	 * @author Raghuram Date : 9/03/21 Description: creates new search group
 	 */
 	public String createSearchGroupAndReturn(String searchName, String role) {
-		createNewSearchGrp(searchName);
-		getSavedSearchNewGroupExpand().waitAndClick(20);
-		String newNode = getSavedSearchNewNode().getText();
+		String newNode =createNewSearchGrp(searchName);
 		System.out.println("Via : " + role + " Created new node : " + newNode);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
 		return newNode;
@@ -3380,8 +3378,13 @@ public class SavedSearch {
 		base.waitForElement(search.getExpandSecurityGroupOw());
 		search.getExpandSecurityGroupOw().waitAndClick(5);
 
+		if(search.getNodeOfSG(newNode).isElementAvailable(10)) {
+			search.getNodeOfSG(newNode).waitAndClick(5);
+
+		}else {
 		base.waitForElement(search.getSecurityGroupNewNode(newNode));
 		search.getSecurityGroupNewNode(newNode).waitAndClick(5);
+		}
 
 		Actions ac = new Actions(driver.getWebDriver());
 //		ac.moveToElement(search.getNodeToOw(newNode).getWebElement()).build().perform();
@@ -5068,6 +5071,7 @@ public class SavedSearch {
 			moveNodeToNode(newNode, newNode2);
 
 			// Move Search from My Search to another
+			selectRootGroupTab(Input.mySavedSearch);
 			savedSearch_Searchandclick(search1);
 			moveSearchToanotherGroup(newNode2, search1);
 			driver.getWebDriver().navigate().refresh();
@@ -6426,8 +6430,10 @@ public class SavedSearch {
 
 		try {
 			this.driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-			base.waitForElement(getSavedSearchNewGroupExpand());
-			getSavedSearchNewGroupExpand().Click();
+			selectRootGroupTab(Input.mySavedSearch);
+			rootGroupExpansion();
+//			base.waitForElement(getSavedSearchNewGroupExpand());
+//			getSavedSearchNewGroupExpand().Click();
 
 			base.waitForElement(getSavedSearchSharedWithProjectLastChildNode());
 			getSavedSearchSharedWithProjectLastChildNode().Click();

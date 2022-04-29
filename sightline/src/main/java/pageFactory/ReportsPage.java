@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
@@ -345,6 +347,8 @@ public class ReportsPage {
 	 */
 	public void customDataReportMethodExport(String folderName, Boolean selectMySavedSearch) {
 
+		base.waitForElement(getAddToSelectedBtn());
+
 		try {
 			if (selectMySavedSearch) {
 				base.waitForElement(getNodeMySavedSearchCheckBox());
@@ -359,6 +363,8 @@ public class ReportsPage {
 			driver.scrollingToElementofAPage(getMetaDataChoose(Input.sortDataBy));
 			getMetaDataChoose(Input.sortDataBy).waitAndClick(10);
 			System.out.println(Input.sortDataBy + "clicked");
+
+			getAvailableObjectsTab("WORKPRODUCT").ScrollTo();
 
 			if (!folderName.equalsIgnoreCase("")) {
 				base.waitForElement(getAvailableObjectsTab("WORKPRODUCT"));
@@ -375,7 +381,6 @@ public class ReportsPage {
 			driver.scrollingToElementofAPage(getAddToSelectedBtn());
 			getAddToSelectedBtn().waitAndClick(3);
 
-			driver.scrollPageToTop();
 			base.waitForElement(getRunReport());
 			getRunReport().Click();
 		} catch (Exception e) {

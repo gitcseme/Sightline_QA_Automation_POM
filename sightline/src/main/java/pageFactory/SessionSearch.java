@@ -1106,6 +1106,10 @@ public class SessionSearch {
 	}
 
 	// Added by jeevitha
+	public Element getNodeOfSG(String nodeName) {
+		return driver.FindElementByXPath("//a[text()='" + nodeName + "' and @class='jstree-anchor  jstree-disabled']");
+	}
+	
 	public Element getAutoSuggest() {
 		return driver.FindElementByXPath("//li[@class='ui-menu-item']//div");
 	}
