@@ -228,7 +228,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD",Input.DAT_YYYYMMDD_Slash,Input.Natives_YYYYMMDD_Slash);
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyDateFormateInIngestionField();
+		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
 		
