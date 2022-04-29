@@ -26,7 +26,7 @@ import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
 public class DocExplorerPage {
-
+ 
 	Driver driver;
 	Element element;
 	BaseClass bc;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- REGRESSION TEST DATA -->
-
+ 
 <TestData>
 	<!-- Serach strings and expected pure hit counts -->
 	<searchString1>test</searchString1>
