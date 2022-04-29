@@ -972,6 +972,10 @@ public class IngestionPage_Indium {
 	public Element backButton() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
 	}
+	public Element getIngestionStatusInPopup(String ingestionStage) {
+		return driver.FindElementByXPath("//div[@id=' "+ingestionStage+" ']//div//div//label[contains(.,'% Complete :')]//following-sibling::div[1]");
+		
+	}
 	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -4702,7 +4706,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
     	getFilterByCATALOGED().waitAndClick(10);
     	
     	//catlogging
-    	for (int i = 0; i < 10; i++) {
+    	for (int i = 0; i < 30; i++) {
     		base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Cataloged")) {
@@ -5506,7 +5510,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	public void verifyCatalogingErrorIfDateFormatIsDifferentThanDAT() {
 		
 		driver.waitForPageToBeReady();
-		if (getFailedIngestionStatus().isElementAvailable(5)) {
+		
+		String status = getStatus(1).getText().trim();
+		if (status.contains("Failed")) {
 			int numberOfErrors= Integer.parseInt(errorCountStatus().getText());
 			
 			 getIngestionDetailPopup(1).waitAndClick(10);
@@ -5531,7 +5537,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			  	getCloseButton().waitAndClick(10);
 			
 	}
-		else if(getCatalogedIngestionStatus().isElementAvailable(5)) {
+		else if(status.contains("Cataloged")) {
 			base.failedStep("No Errors and Selected Date format is same as in DAT");
 			
 		}
@@ -6022,7 +6028,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		
-		for(int i=0;i<40;i++) {
+		for(int i=0;i<60;i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			
     		if(status.contains("Draft")) {
@@ -6030,7 +6037,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
     			break;
     		}
     		else if (status.contains("In Progress")) {
-    			base.waitTime(10);
+    			base.waitTime(5);
     			getRefreshButton().waitAndClick(10);
     		}
     		else {
@@ -6092,7 +6099,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		
-		for(int i=0;i<40;i++) {
+		for(int i=0;i<60;i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			
     		if(status.contains("Draft")) {
@@ -6100,7 +6108,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
     			break;
     		}
     		else if (status.contains("In Progress")) {
-    			base.waitTime(10);
+    			base.waitTime(5);
     			getRefreshButton().waitAndClick(10);
     		}
     		else {
@@ -6266,7 +6274,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
 			
-			for(int i=0;i<40;i++) {
+			for(int i=0;i<60;i++) {
+				base.waitTime(2);
 				String status = getStatus(1).getText().trim();
 				
 	    		if(status.contains("Draft")) {
@@ -6274,7 +6283,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 	    			break;
 	    		}
 	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(10);
+	    			base.waitTime(5);
 	    			getRefreshButton().waitAndClick(10);
 	    		}
 	    		else {
@@ -7954,5 +7963,6 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				  	getCloseButton().waitAndClick(10);
 
 			}
-					
+			
+			
 }
