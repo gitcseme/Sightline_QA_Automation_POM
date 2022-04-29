@@ -3209,12 +3209,11 @@ public class DocView_Regression2 {
 	 * properly created/reflected in the XML
 	 * stabilization done
 	 */
-	//@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 68)
+	@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 68)
 	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
 			String firstUserPassword, String secondUserName, String secondUserPassword) throws Exception {
 
 		String remark = Input.randomText + Utility.dynamicNameAppender();
-		String remark1 = Input.randomText + "1" + Utility.dynamicNameAppender();
 
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3231,15 +3230,12 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString2);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
+		baseClass.waitTime(5);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(10, 20, remark);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		baseClass.stepInfo("Perfrom non audio remark");
-		docViewMetaDataPage.performRemarkWithSaveOperation(30, 40, remark1);
+		docView.addRemarkByText(remark);
 		loginPage.logout();
 		baseClass.stepInfo("Prerequisites creation completed");
 
@@ -3247,7 +3243,7 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(firstUserName, firstUserPassword);
 		baseClass.stepInfo("logged in as" + firstUserName);
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString2);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		String firstUserWindow = driver.CurrentWindowHandle();
@@ -3261,7 +3257,7 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(secondUserName, secondUserPassword);
 		baseClass.stepInfo("logged in as" + secondUserName);
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.searchString2);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		String secondUserWindow = driver.CurrentWindowHandle();
@@ -3288,7 +3284,6 @@ public class DocView_Regression2 {
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		docView.verifyReviewRemarkActionPanel("Remark", remark);
-		docView.deleteReamark(remark1);
 
 
 	}
