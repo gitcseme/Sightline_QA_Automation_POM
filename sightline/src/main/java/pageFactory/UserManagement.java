@@ -628,6 +628,32 @@ public class UserManagement {
 		return driver.FindElementByXPath("//input[@id='IsBillableCheckbox']//..//i");
 	}
 	
+
+public Element getUnAssignedDomainUser() {
+	return driver.FindElementByXPath("//select[@id='UnAssignedUser']");
+}
+public Element getDomainRole() {
+	return driver.FindElementByXPath("//select[@id='lstRoles']");
+}
+public Element getDomainSG() {
+	return driver.FindElementByXPath("//select[@id='lstSecurityGroup']");
+}
+public Element getDomainUserRightArrow() {
+	return driver.FindElementByXPath("//a[@id='btnRightUserMaapping']");
+}
+public Element getDomainUserCancelButton() {
+	return driver.FindElementById("btnCancel");
+}
+public ElementCollection getProjectCollection() {
+	return driver.FindElementsByXPath("//ul[@id='ddlProject11']//a");
+}
+public Element getRoleAccess(String roll) {
+	return driver.FindElementByXPath("//li[@class='username']//span[text()='"+roll+"']");
+}
+public Element getClientNameTextBox() {
+	return driver.FindElementByXPath("//input[@id='txtClientEntityLabel']");
+}
+
 	
 	public UserManagement(Driver driver) {
 
@@ -2272,8 +2298,47 @@ public void validateFilterOptionInUserManage(String Header,String ValidatingText
 		System.out.println(getRole);
 		bc.compareTextViaContains(getRole, ValidatingText, "Filter is applied successfully in manage user page for '"+Header+"'", "Filter is not applied successfully");
 	}
+}
+
+/**
+ * @author Indium-Baskar
+ * @Description:Methods to domain project admin user
+ * @param selectProject for selecting project
+ * @param fullName   pass fullname as user
+ * @param roll   account role as login user
+ * @param account selecting sg
+ * @param status 
+ * @param rollStatus
+ */
+
+public void domainProjectuser(String selectProject,String fullName,String roll,String account,boolean status,boolean rollStatus) {
+	bc.waitForElement(getAssignUserButton());
+	getAssignUserButton().waitAndClick(5);
+	bc.waitForElement(getAssignUserProjectDrp_Dwn());
+	getAssignUserProjectDrp_Dwn().waitAndClick(5);
+	bc.waitForElement(getSelectDropProject(selectProject));
+	getSelectDropProject(selectProject).waitAndClick(5);
+	boolean projectStatus=getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+	if (projectStatus==true) {
+		bc.waitForElement(getDomainUserCancelButton());
+		getDomainUserCancelButton().waitAndClick(5);
+		bc.stepInfo("User already assigned to project");
+	}
+	if (projectStatus==false && status==false) {
+		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
+		getDomainRole().selectFromDropdown().selectByVisibleText(roll);
+		if (rollStatus==true) {
+			getDomainRole().selectFromDropdown().selectByVisibleText(account);
+		}
+		getDomainUserRightArrow().waitAndClick(5);
+		bc.waitForElement(getsavedomainuser());
+		getsavedomainuser().waitAndClick(5);
+		bc.stepInfo("User successfullt added into the project");
+	}
+	
 	
 }
+
 
 }
 
