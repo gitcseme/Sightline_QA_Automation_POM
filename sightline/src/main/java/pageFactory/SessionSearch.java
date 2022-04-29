@@ -1746,6 +1746,14 @@ public class SessionSearch {
 		return driver.FindElementByXPath("(//*[@id='002']//count)[last()]");
 
 	}
+	
+	public Element getNewSearch_MetadataBtn() {
+		return driver.FindElementByXPath("(//*[@id='metadataHelper'])[last()]");
+	}
+	
+	public Element getNewSelectMetaData() {
+		return driver.FindElementByXPath("(//*[@id='metatagSelect'])[last()]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -11422,6 +11430,47 @@ public class SessionSearch {
 
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param metaDataField
+	 * @param val1
+	 * @return
+	 * @Description new metadata basic search
+	 */
+	public int newMetaDataSearchInBasicSearch(String metaDataField, String val1) {
+		// To make sure we are in basic search page
+		driver.waitForPageToBeReady();
+		// Enter search string
+		base.waitForElement(getNewSearch_MetadataBtn());
+		getNewSearch_MetadataBtn().waitAndClick(10);
+		base.waitForElement(getNewSelectMetaData());
+		// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		base.waitForElement(getNewSelectMetaData());
+		getNewSelectMetaData().waitAndClick(10);
+		base.waitForElement(SelectFromDropDown(metaDataField));
+		SelectFromDropDown(metaDataField).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(3);
+		// Click on Search button
+		base.waitForElement(getSecondSearchBtn());
+		getSecondSearchBtn().waitAndClick(3);
+		if(base.getYesBtn().isElementAvailable(2)) {
+			base.getYesBtn().waitAndClick(10);
+		}
+		base.waitForElement(getPureHitsCount2ndSearch());
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait30);
+		getPureHitsCount2ndSearch().waitAndClick(15);
+		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
+		return pureHit;
 	}
 
 }

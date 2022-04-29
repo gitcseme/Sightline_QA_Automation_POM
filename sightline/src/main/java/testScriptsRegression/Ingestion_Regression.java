@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -644,6 +645,45 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	public void verifyEmailDataNotCalculateAsDistintValue() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		SoftAssert sofassertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49802");
+		baseClass.stepInfo("To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
+		
+		baseClass.selectproject(Input.regressionConsilio1);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
+		if(ingestionFullName!=null) {
+			baseClass.stepInfo(ingestionFullName +"Ingestion alredy published this project");
+			int count = sessionsearch.MetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @consilio.com");
+			sessionsearch.addNewSearch();
+			int count1 = sessionsearch.newMetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @ consilio.com");
+			if(count!=0) {
+				if(count==count1) {
+					sofassertion.assertEquals(count1, count);
+					baseClass.passedStep("It displays result correctly if Email data contained space before '@' sign . Also  if Email data contained space before and after the '@' sign , it not calculate two distinct values, it displays result correctly  ");
+				}else {
+					baseClass.failedStep("count is not equal");
+				}
+			}else {
+				baseClass.failedStep("try another, project this project is not mapped domain values");
+			}
+		}
+		baseClass.passedStep("verified that if Email data contained space before the '@' sign , it should not calculate two distinct values");
+		loginPage.logout();
+		
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

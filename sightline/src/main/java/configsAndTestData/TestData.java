@@ -432,6 +432,7 @@ public class TestData {
 	public String dbFile;
 	public String sourceDocIdDB992;
 	public String NonDomainProject;
+	public String emailAuthorDomain;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;
