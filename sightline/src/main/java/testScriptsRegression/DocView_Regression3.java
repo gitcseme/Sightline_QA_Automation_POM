@@ -553,7 +553,7 @@ public class DocView_Regression3 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		baseClass.stepInfo(
 				"#### Verify that after deleting the annotation layer by PA user under specific SecurityGroup should not present respective redactions/annotations/remarks ####");
-
+ 
 		// creating two new security groups and adding annotation layer
 		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();

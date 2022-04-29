@@ -111,7 +111,7 @@ public class DocView_Regression3_2 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52236");
 		utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
-		
+		 
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		Reporter.log("Logged in as User: " + Input.pa2userName);
