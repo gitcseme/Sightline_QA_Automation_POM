@@ -2247,6 +2247,7 @@ public class DocView_Regression2 {
 	}
 
 
+	
 	/**
 	 * @Author : Krishna date: 31/01/2021 Modified date: NA Modified by:
 	 * @Description:Verify assignment progress bar refresh after completing the
@@ -2255,7 +2256,7 @@ public class DocView_Regression2 {
 	 *                     this action
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 49)
+	@Test(enabled = true, groups = { "regression" }, priority = 49)
 	public void verifyAssignmentProgressBarRefreshApplying() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51278");
 		baseClass.stepInfo(
@@ -2270,13 +2271,15 @@ public class DocView_Regression2 {
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String filedText = "Stamp" + Utility.dynamicNameAppender();
+		String StampText = "Newcolor" + Utility.dynamicNameAppender();
 		String colour = "RED";
 
 		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// Basic Search and select the pure hit count
-		baseClass.stepInfo("StSearching documents based on search string and Navigate to DocView");
+		baseClass.stepInfo("Searching documents based on search string and Navigate to DocView");
 		sessionsearch.basicContentSearch(searchString);
 		sessionsearch.bulkAssign();
 
@@ -2322,7 +2325,9 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Selected document in minidoclist");
 
 		// click to apply coding in selected doc
-		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.editCodingForm(filedText);
+		driver.scrollPageToTop();
+		docView.stampColourSelection(StampText, Input.stampColour);
 		docView.completeButton();
 		baseClass.waitTime(1);
 		docView.clickCodeSameAsLast();
@@ -2361,6 +2366,7 @@ public class DocView_Regression2 {
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String filedText = "Stamp" + Utility.dynamicNameAppender();
+		String StampText = "Newcolor" + Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -2383,7 +2389,9 @@ public class DocView_Regression2 {
 		docView.getSelectedDocIdInMiniDocList();
 		baseClass.waitForElement(docView.getDocView_MiniDoc_SelectRow(1));
 		docView.getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
-		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.editCodingForm(filedText);
+		driver.scrollPageToTop();
+		docView.stampColourSelection(StampText, Input.stampColour);
 		docView.completeButton();
 		baseClass.waitTime(1);
 		docView.clickCodeSameAsLast();
@@ -2399,14 +2407,14 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Selected document in minidoclist");
 
 		// click to apply coding in selected doc
-		docView.stampColourSelection(filedText, Input.stampColour);
+		docView.editCodingForm(filedText);
+		driver.scrollPageToTop();
+		docView.stampColourSelection(StampText, Input.stampColour);
 		docView.completeButton();
 		baseClass.waitTime(1);
 		docView.clickCodeSameAsLast();
 		docViewRedact.verifyAssignmentBarInSelectedDocs(assname);
-
 	}
-
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51961
@@ -3437,7 +3445,7 @@ public class DocView_Regression2 {
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Hidden Rows;Protected Workbook";
 		String expectedMessage3 = "Protected Excel Workbook";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51960");
 		baseClass.stepInfo("Verify that on tabs navigation if document loads with hidden content then should display the warning message to indicate that document is having hidden content");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3653,7 +3661,7 @@ public class DocView_Regression2 {
 		baseClass.selectproject(Input.additionalDataProject);
 
 //Selecting Doc with excel protected worksheet		
-		String expectedMessage4 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
+		String expectedMessage4 = "Hidden Columns;Protected Sheets";
 		String expectedMessage5 = "Protected Excel Sheets";
 		sessionsearch.basicContentSearch(Input.HiddenContentExcelSheet);
 		sessionsearch.ViewInDocView();
@@ -3904,7 +3912,7 @@ public class DocView_Regression2 {
 	 *                     for audio file in context of an assignment.
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51056",enabled = true, groups = { "regression" }, priority = 82)
+	@Test(description = "RPMXCON-51056", enabled = true, groups = { "regression" }, priority = 82)
 	public void verifyCanSeePersistentSearchOnDocViewAudioFile() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51056");
 		baseClass.stepInfo(
@@ -3919,11 +3927,14 @@ public class DocView_Regression2 {
 		String assignmentname = "assgnment" + Utility.dynamicNameAppender();
 
 		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// search to Assignment creation on audio
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
-		sessionsearch.bulkAssign();
+		sessionsearch.addPureHit();
+		driver.scrollPageToTop();
+		sessionsearch.bulkAssignWithOutPureHit();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 		baseClass.passedStep("persistent hits is enabled while creating the assignment");
 		loginPage.logout();
@@ -3936,7 +3947,9 @@ public class DocView_Regression2 {
 
 		// search to Assignment creation on audio
 		sessionsearch.audioSearch(Input.audioSearchString1, Input.language);
-		sessionsearch.bulkAssign();
+		sessionsearch.addPureHit();
+		driver.scrollPageToTop();
+		sessionsearch.bulkAssignWithOutPureHit();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentname, codingForm, SessionSearch.pureHit);
 		baseClass.stepInfo("persistent hits is enabled while creating the assignment");
 		driver.waitForPageToBeReady();
@@ -3965,18 +3978,18 @@ public class DocView_Regression2 {
 		}
 
 	}
-	
+
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51994
 	 * 
 	 */
-	//@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 83)
+	@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 83)
 	public void verifyHiddenContentContainsComments(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
 		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Sheets";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51994");
 		baseClass.stepInfo("Verify that for hidden property \"contains comments\", the message should be modified that should ask the user to \"download the native\" to review");
 		docViewRedact = new DocViewRedactions(driver);
@@ -3985,7 +3998,7 @@ public class DocView_Regression2 {
 		sessionsearch.ViewInDocView();
 		DocViewPage docviewpage = new DocViewPage(driver);	
 //Selecting Doc that contains comments
-		docviewpage.selectDocIdInMiniDocList(Input.DocIdWithComments);
+		docviewpage.selectDocIdInMiniDocList("ID00000173");
 		baseClass.stepInfo("Document with hidden content -Contains comments selected from mini doclist");
 		driver.waitForPageToBeReady();	
 		baseClass.VerifyWarningMessageAdditionalLine(expectedMessage1, expectedMessage2, expectedMessage3);
@@ -3993,19 +4006,18 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 	}
-	
 	/**
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51993
 	 * 
 	 */
 	
 	
-	//@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 84)
+	@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 84)
 	public void verifyHiddenContentContainsTrackChanges(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
 		String expectedMessage2 = "Track Changes;Contains Comments;Hidden Text";
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51993");
 		baseClass.stepInfo("Verify that for hidden property \"track changes\", the message should be modified that should not ask the user to download the native to review");
 		docViewRedact = new DocViewRedactions(driver);
@@ -4356,33 +4368,39 @@ public class DocView_Regression2 {
 	
 
 	/**
-	 * @author 
-	 * @TestCase Id:51963 Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
-	 * @Description:To Verify that document having any of the field value "Hidden Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message
+	 * @author
+	 * @TestCase Id:51963 Verify that document having any of the field value "Hidden
+	 *           Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook viewed
+	 *           from analytics panel child window should display alert message
+	 * @Description:To Verify that document having any of the field value "Hidden
+	 *                 Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook
+	 *                 viewed from analytics panel child window should display alert
+	 *                 message
 	 * @throws InterruptedException
 	 */
-	//@Test(description ="RPMXCON-51963",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 90)
+	@Test(description = "RPMXCON-51963", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 90)
 	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51963");
-		baseClass.stepInfo("###Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message####");
-		
+		String hiddenText = "ID00000159";
+		baseClass.stepInfo(
+				"###Verify that document having any of the field value \"Hidden Properties\" \"ExcelProtectedSheets\" ExcelProtectedWorkbook viewed from analytics panel child window should display alert message####");
+
 		baseClass.stepInfo("Log in as user");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.additionalDataProject);
-		
+
 		baseClass.stepInfo("basic content search");
-		sessionsearch.basicContentSearch(Input.HiddenLinkDocId);
-		
+		sessionsearch.basicContentSearch(hiddenText);
+
 		baseClass.stepInfo("view in docView");
 		sessionsearch.ViewInDocView();
-		
+
 		baseClass.stepInfo("verify warning message for hidden properties document");
-		docView.verifyhiddenPropertiesDOcWaringMessage(Input.HiddenLinkDocId);
-		
+		docView.verifyhiddenPropertiesDOcWaringMessage(hiddenText);
+
 	}
-	
 	
 	
 	/**
