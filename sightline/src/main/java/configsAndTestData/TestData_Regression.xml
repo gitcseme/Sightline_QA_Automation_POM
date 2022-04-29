@@ -684,4 +684,6 @@
 	<warningMsgDocId>ID00002019</warningMsgDocId>
 	<externalLinkDocId>ID00000168</externalLinkDocId>
 
+<!-- Added by Gopinath Created date - 28/04/2022 -->
+	<telecom>telecom</telecom>
 </TestData>

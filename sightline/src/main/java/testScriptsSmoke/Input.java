@@ -714,6 +714,9 @@ public class Input {
 	public static String warningMsgDocId;
 	public static String externalLinkDocId;
 	
+	//Added by Gopinath -28/09/2022
+	public static String telecom;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1433,6 +1436,9 @@ public class Input {
 		 //Added by Gopinath - 08/04/2022
 		 warningMsgDocId =testData.getWarningMsgDocId();
 		 externalLinkDocId =testData.getExternalLinkDocId();
+		 
+		 //Added by Gopinath - 28/09/2022
+		 telecom =testData.getTelecom();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

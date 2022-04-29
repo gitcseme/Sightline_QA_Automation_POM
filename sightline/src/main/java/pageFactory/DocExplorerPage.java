@@ -1868,8 +1868,8 @@ public class DocExplorerPage {
 			Actions ac = new Actions(driver.getWebDriver());
 			ac.moveToElement(getViewOn().getWebElement()).build().perform();
 			bc.waitTime(2);
-			getViewInDocViewLat().isElementAvailable(15);
-			getViewInDocViewLat().Click();
+			getViewInDocListLat().isElementAvailable(15);
+			getViewInDocListLat().Click();
 		}
 				
 

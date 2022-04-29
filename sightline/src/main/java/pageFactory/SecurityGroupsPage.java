@@ -955,7 +955,7 @@ public class SecurityGroupsPage {
 			getKeywordBoard().Click();
 			for (int i = 0; i < 20; i++) {
 				try {
-					bc.waitTime(2);
+					bc.waitTime(3);
 					getKeywordCheckBox(keyword).isElementAvailable(10);
 					getKeywordCheckBox(keyword).getWebElement().click();
 					break;
