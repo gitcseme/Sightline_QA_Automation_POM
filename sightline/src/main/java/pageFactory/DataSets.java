@@ -101,6 +101,9 @@ public class DataSets {
 		public Element getDataSetName(String DataSet) {
 			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]");
 		}
+		public Element getDataSetViewInDocView(String DataSet) {
+			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocView']");
+		}
 	
 	public DataSets(Driver driver) {
 
@@ -454,6 +457,35 @@ public class DataSets {
 			driver.scrollingToBottomofAPage();
 		}
 		return datasetName;
+	}
+	/**
+	 * @author Sakthivel
+	 * @param DataSet
+	 */
+	public void selectDataSetWithNameInDocView(String DataSet) {
+		driver.waitForPageToBeReady();
+		int i = 1;
+		try {
+		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(i==10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			i++;
+		}
+		getDataSetActionBtn(DataSet).ScrollTo();
+		driver.waitForPageToBeReady();
+		getDataSetActionBtn(DataSet).waitAndClick(10);
+		base.waitForElement(getDataSetViewInDocView(DataSet));
+		getDataSetViewInDocView(DataSet).waitAndClick(10);
+		base.stepInfo("DataSet is selected and viewed in DocList.");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("failed"+e.getMessage());
+		}
 	}
 }
 
