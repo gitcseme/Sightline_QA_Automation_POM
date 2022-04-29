@@ -511,6 +511,7 @@ public class Input {
 	public static String dbFile;
 	public static String sourceDocIdDB992;
 	public static String NonDomainProject;
+	public static String emailAuthorDomain;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -973,6 +974,7 @@ public class Input {
 		dbFile = testData.getDbFile();
 		sourceDocIdDB992 = testData.getSourceDocIdDB992();
 		NonDomainProject = testData.getNonDomainProject();
+		emailAuthorDomain = testData.getEmailAuthorDomain();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

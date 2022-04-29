@@ -432,6 +432,7 @@
 	<dbFile>Database Files (.mdb, .mdf, etc.)</dbFile>
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>
+	<emailAuthorDomain>EmailAuthorDomain</emailAuthorDomain>
 
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
