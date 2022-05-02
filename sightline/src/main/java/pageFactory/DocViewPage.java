@@ -3304,6 +3304,12 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getDocViewDefaultViewText() {
+		return driver
+				.FindElementByXPath("//div[@id='divViewerText']//div");
+	}
+	
 	public Element getMetadataFieldValueText(String fieldName) {
 		return driver
 				.FindElementByXPath("//*[@id='MetaDataDT']//td[text()='" + fieldName + "']//following-sibling::td");

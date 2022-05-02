@@ -84,15 +84,14 @@ public class IngestionCreationClass01 {
 			driver.waitForPageToBeReady();
 			baseClass.waitForElement(docViewPage.getDocView_TextTab());
 			docViewPage.getDocView_TextTab().waitAndClick(5);
-			if (docViewPage.getDocView_textArea().isElementAvailable(5)) {
-				String text = docViewPage.getDocView_textArea().getText();
+				String text = docViewPage.getDocViewDefaultViewText().getText();
 				if (text.contains("There is no file")) {
 					baseClass.passedStep("In text tab it displayed as 'There is no file associated with this document on text view'");
 				}else {
-					baseClass.failedMessage("There is no such message");
+					baseClass.failedStep("There is no such message");
 				}
 				
-			}
+			
 			
 			loginPage.logout();
 			
