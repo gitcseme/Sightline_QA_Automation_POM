@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- REGRESSION TEST DATA -->
-   
+
 <TestData>
 	<!-- Serach strings and expected pure hit counts -->
 	<searchString1>test</searchString1>
@@ -21,8 +21,7 @@
 	<totalNumberOfDocsincludeadvoption>103
 	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -52,18 +51,9 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
-
-	<indexingWarningMessage>As part of indexing step, index for metadata,
-		text and audio have already been updated. The searches run in the
-		project will reflect these changes. Rolling back will not roll back
-		the updates to the index, so you MUST rerun indexing for the entire
-		project. Do you want to continue with Rollback?
-	</indexingWarningMessage>
-
 	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
 
-
-
+   
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -119,14 +109,11 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ICE010058-13-00000001</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183
-	</ingestionQuery>
-	<ingestionDocIdFamilyMember>H16135-0188-002093
-	</ingestionDocIdFamilyMember>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
+	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
-	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610
-	</ingestionQuery01>
+	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
@@ -154,8 +141,7 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>S22936960011001028</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
-	</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -292,8 +278,7 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded
-		document</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -379,8 +364,7 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains
-	</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -442,10 +426,7 @@
 	<docFile>H16135-0188-002430</docFile>
 	<stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
-
-	
 	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
-
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
    <filterMonth>Dec</filterMonth>
@@ -518,14 +499,11 @@
 
 	<hiddenDocId>ICE010044-18-00000035</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000053</excelProtectedHiddenDocId>
-
 	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView. You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
-
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>
 	<conceptualDocId03>ID00000015</conceptualDocId03>
-	<conceptualDocIdForReviewer01>331ID00000014
-	</conceptualDocIdForReviewer01>
+	<conceptualDocIdForReviewer01>331ID00000014</conceptualDocIdForReviewer01>
 	<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
 	<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
 	<familyDocId01>T486D</familyDocId01>
@@ -537,8 +515,7 @@
 	<nearDupeDocId01>T1796D</nearDupeDocId01>
 	<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
 	<nearDupeDocId03>T1862D</nearDupeDocId03>
-	<nearDupeDocIdForReviewer01>ICE010058-9-00000007
-	</nearDupeDocIdForReviewer01>
+	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
 	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
 	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
@@ -608,9 +585,7 @@
 	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
-
 	<differentDateFormatError>Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format.</differentDateFormatError>
-
 	<prodBeg>ProdBeg</prodBeg>
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
@@ -620,6 +595,11 @@
 	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
 	<textFile1>DAT4_STC_Text.lst</textFile1>
+	<PP_PDFGen_10Docs>PP_PDFGen_10Docs</PP_PDFGen_10Docs>
+	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</DATPPPDF10Docs>
+	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
+	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
+	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
 
 	<!-- Ingestion Related data END -->
 
@@ -661,8 +641,7 @@
 
 	<!-- Added by Gopinath Created date - 21/03/2022 -->
 	<iceSourceSystem>ICE</iceSourceSystem>
-	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF
-	</multiPageTIFFSourceFolder>
+	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
 	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
 	<documentKeyBNum>BNum</documentKeyBNum>
 	<documentKeyDSource>DSource</documentKeyDSource>

@@ -521,6 +521,10 @@ public class TestData {
 	public String YYYYMMDDHHMISSDat;
 	public String YYYYMMDDHHMISSLst;
 	public String DATFile1;
+	public String DATPPPDF10Docs;
+	public String TextPPPDF10Docs;
+	public String ImagePPPDF10docs;
+	public String sourceDocIDPPPDF10Docs;
 
 //		public String query;
 //		public String miniDocListID;
@@ -558,6 +562,7 @@ public class TestData {
 	public String duplicateIngestionError;
 	public String datLoadFile1;
 	public String textFile1;
+	public String PP_PDFGen_10Docs;
 
 	// Added by Gopinath - 02/03/2022
 	public String ingestionProjectName;
