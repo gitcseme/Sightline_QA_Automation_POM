@@ -1897,10 +1897,10 @@ public Element getClientNameTextBox() {
 		getAssignUserButton().waitAndClick(10);
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		bc.waitTime(1);
-		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
+		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
 		getLeftArrow().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
 		getrightBtndomainuser().waitAndClick(10);
 		getProjectBtn().waitAndClick(10);
 		String ActualText=getBellyBandMsg().getText();
