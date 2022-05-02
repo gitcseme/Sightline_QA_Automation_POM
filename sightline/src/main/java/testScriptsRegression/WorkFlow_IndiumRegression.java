@@ -470,7 +470,7 @@ public class WorkFlow_IndiumRegression {
 		baseClass.waitTime(2);
 		baseClass.stepInfo("Work flow Filter for WorkflowID " + wfID + " is apllied.");
 		List<String> WfID_AfterFilter = workflow.getTableCoumnValue("Workflow ID");
-		if (WfID_AfterFilter.size() == 1 && WfID_AfterFilter.get(0).equals(wfID)) {
+		if (WfID_AfterFilter.size() == 1 && WfID_AfterFilter.get(0).equals(WF_id)) {
 			baseClass.passedStep("Work flow filter functionality working properly "
 					+ "if RMU apllied Work flow filter for WorkflowID.");
 		} else {
@@ -517,7 +517,7 @@ public class WorkFlow_IndiumRegression {
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
-		workflow.newWorkFlowCreation(wfName, wfDesc, 2, false, folderName, true, assgn, false, 3);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 3);
 		workflow.selectWorkFlowUsingPagination(wfName);
 
 		// validation configured status after saving the workflow
@@ -665,6 +665,10 @@ public class WorkFlow_IndiumRegression {
 		String wfName = "work" + Utility.dynamicNameAppender();
 		String wfDesc = "Desc" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		// creating new work flow
 		workflow = new WorkflowPage(driver);
