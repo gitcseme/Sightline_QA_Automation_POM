@@ -76,6 +76,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.validateDateAndTimeFormateWhenIngestionIsSaveAsDraft(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS");
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		loginPage.logout();
 		
 	}
 	
@@ -96,6 +97,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.ingestionAtCatlogState(Input.HiddenPropertiesFolder);
 		ingestionPage.rollBackIngestion();
 		ingestionPage.verifyDateFormateInCatalogeAndDraft();
+		loginPage.logout();
 		
 	}
 	
@@ -114,6 +116,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDataPresentInCopyColumn(Input.StitchedTIFF);
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 		}
 	
@@ -134,6 +137,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogigErrorForDatSelectDateFormate();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -154,6 +158,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -174,6 +179,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/**
@@ -193,6 +199,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/**
@@ -212,6 +219,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDateFormateInIngestionField();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/**
@@ -231,6 +239,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -247,6 +256,7 @@ public class Regression_Ingestion01 {
 		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.VerifyNextButtonStatusBasedOnDateTimeFormatSelection();
+		loginPage.logout();
 		
 	}
 	
@@ -266,6 +276,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyMissedDocValuePresentInCopyTableColumn(Input.StitchedTIFF);
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	
 		}
 	
@@ -286,6 +297,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -306,6 +318,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -326,6 +339,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -346,6 +360,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -367,6 +382,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -387,6 +403,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -407,6 +424,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -427,6 +445,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -447,6 +466,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -467,6 +487,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -488,6 +509,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -508,6 +530,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -528,6 +551,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -548,7 +572,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
-		
+		loginPage.logout();
 	}
 	
 	/** 
@@ -568,6 +592,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyCatalogingErrorIfDateFormatIsDifferentThanDAT();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -590,6 +615,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyIgnoringErrorsAndContinueIngestion();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -625,6 +651,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 		// Rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 		}
 	
@@ -644,6 +671,7 @@ public class Regression_Ingestion01 {
 		// Rollback and verify ingestion details
 		ingestionPage.rollBackIngestion();
 		ingestionPage.verifyIngestionDetailsTillIndexingAfterRollback();
+		loginPage.logout();
 		}
 	
 	/** 
@@ -672,6 +700,7 @@ public class Regression_Ingestion01 {
 		//save as draft and delete
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder, Input.DAT_MMDDYYYY_HHMI);
 		ingestionPage.verifyIngestionSaveAsDraftAndDelete();
+		loginPage.logout();
 		
 		}
 	
@@ -688,6 +717,7 @@ public class Regression_Ingestion01 {
 		baseClass.stepInfo("If 'Add Only' option is selected,Verify Mapping and navigation upon selection of 'Go Back' option");
 		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);	
 		ingestionPage.verifyMappingFiledPriorSelection(Input.docId,Input.dataSource,Input.custodian);
+		loginPage.logout();
 		
 	}
 	
@@ -717,7 +747,8 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionFromDraftMode();
 		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();		
+		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();	
+		loginPage.logout();
 		
 	}
 	
@@ -739,6 +770,7 @@ public class Regression_Ingestion01 {
 		// Perform catalog,copy and indexing for two ingestion
 		ingestionPage.multipleIngestionCopying(2);
 		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		loginPage.logout();
 		
 	}
 	
@@ -760,6 +792,7 @@ public class Regression_Ingestion01 {
 		// Perform Copying and indexing for two ingestion
 		ingestionPage.multipleIngestionCopying(2);
 		ingestionPage.multipleIngestionIndexing(dataset, 2);
+		loginPage.logout();
 		
 	}
 	
@@ -786,6 +819,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
 		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyWarningMessageAndRollbackAddOnlyIngestion();
+		loginPage.logout();
 
 		}
 	
@@ -819,6 +853,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 		ingestionPage.verifyRollbackOptionStatus();	
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -837,6 +872,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyContentOnIngestionTiles();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -857,6 +893,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyIgnoreOptionAndCheckbox();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -875,6 +912,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -896,6 +934,7 @@ public class Regression_Ingestion01 {
 		baseClass.stepInfo("Verify that after resize browser Ingestion grid does not resize");
 		// verify size of the grid after resize browser
 		ingestionPage.verifySizeOfIngestionGrid();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -914,6 +953,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDataPresentInCopyTableColumn(Input.StitchedTIFF, "source");
 		ingestionPage.verifyDraftModeStatusAfterRollbackIngestion();
 		ingestionPage.verifyValueInCopyingSectionAfterRollback(Input.StitchedTIFF);
+		loginPage.logout();
 		}
 	
 	/** 
@@ -932,6 +972,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "error");
 		// Rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -950,6 +991,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyDataPresentInCopyTableColumn(Input.generateSearchablePDF, "source");
 		// Rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -963,6 +1005,7 @@ public class Regression_Ingestion01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-59385");
 		baseClass.stepInfo("Verify that error should not be displayed while saving Ingestion when PDF option is selected with Is Path in DAT option");
 		ingestionPage.selectPdfInPathFileAndSaveAsDraft(Input.AK_NativeFolder,Input.DATFile1,Input.documentKey,Input.prodBeg);
+		loginPage.logout();
 	}
 	
 	/** 
@@ -979,6 +1022,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// verify options available for ingestion in draft state
 		ingestionPage.verifyOptionsAvailableForDraftStageIngestion();
+		loginPage.logout();
 	}
 	
 	/** 
@@ -994,6 +1038,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
 		// verify ingestion details after ingestion started
 		ingestionPage.verifyDetailsAfterStartedIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -1013,6 +1058,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.ingestionCatalogging();
 		// rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 	
 	
@@ -1033,6 +1079,7 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyExpectedDateFormatAfterCatalogingStage();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 	
@@ -1053,31 +1100,28 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyOptionsInErrorDetailsPopup();
 		//rollback
 		ingestionPage.rollBackIngestion();
-		
+		loginPage.logout();
 	}
 	
 	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
-		Reporter.setCurrentTestResult(result);
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-		}
-		try {
-			loginPage.logout();
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-		}
+	baseClass = new BaseClass(driver);
+	loginPage = new LoginPage(driver);
+	Reporter.setCurrentTestResult(result);
+	if (ITestResult.FAILURE == result.getStatus()) {
+	Utility baseClass = new Utility(driver);
+	baseClass.screenShot(result);
+	}
+	loginPage.quitBrowser();
+
 	}
 
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
+		System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
 
 	}
 
