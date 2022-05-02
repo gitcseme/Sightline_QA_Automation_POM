@@ -6,7 +6,9 @@ import java.text.ParseException;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -65,29 +67,23 @@ public class DocView_Regression3 {
 	String namesg3 = null;
 	String AnnotationLayerNew = null;
 
-	@BeforeMethod(alwaysRun = true)
-	public void preConditions() throws InterruptedException, ParseException, IOException {
+	@BeforeClass(alwaysRun = true)
+	public void preCondition() throws ParseException, InterruptedException, IOException {
+
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("Started Execution for prerequisite");
-
-		Input input = new Input();
-		input.loadEnvConfig();
-
-		driver = new Driver();
-		loginPage = new LoginPage(driver);
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-//		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.info(testMethod.getName());
+		System.out.println("Executing method : " + testMethod.getName());
+		driver = new Driver();
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
+		softAssertion = new SoftAssert();
 	}
 
 	
@@ -188,8 +184,28 @@ public class DocView_Regression3 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	
@@ -292,8 +308,28 @@ public class DocView_Regression3 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	
@@ -384,8 +420,28 @@ public class DocView_Regression3 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 
@@ -522,8 +578,28 @@ public class DocView_Regression3 {
 		}
 
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -635,8 +711,28 @@ public class DocView_Regression3 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -738,8 +834,28 @@ public class DocView_Regression3 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -799,8 +915,28 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -901,8 +1037,28 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -989,8 +1145,27 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 
@@ -1162,8 +1337,28 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 
 	}
 
@@ -1295,8 +1490,28 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 
 	}
 
@@ -1416,8 +1631,28 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -1528,8 +1763,28 @@ public class DocView_Regression3 {
 		docView.verifyFirstOptionOfRedactionFromDropdown(Input.defaultRedactionTag);
 
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	/** 
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:NA 
@@ -1621,63 +1876,49 @@ public class DocView_Regression3 {
 		
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
-	}
-	
-	
-	@AfterMethod(alwaysRun = true)
-	public void close() throws ParseException, InterruptedException, IOException {
-		try {
-			Input in = new Input();
-			in.loadEnvConfig();
-			baseClass = new BaseClass(driver);
-			driver = new Driver();
-			driver.Navigate().refresh();
-			driver.scrollPageToTop();
-			loginPage = new LoginPage(driver);
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-			baseClass.stepInfo("Select security group for RMU");
-			docViewRedact.selectsecuritygroup("Default Security Group");
-			baseClass.stepInfo("RMU2 Assigned to Default Security Group");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-			baseClass.stepInfo("Select security group for REVIEWER");
-			docViewRedact.selectsecuritygroup("Default Security Group");
-			baseClass.stepInfo("Reviewer Assigned to Default Security Group");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			securityGroupsPage = new SecurityGroupsPage(driver);
-			if (!(namesg2== null)) {
-			securityGroupsPage.deleteSecurityGroups(namesg2);
-			}
-			if (!(namesg3== null)) {
-				securityGroupsPage.deleteSecurityGroups(namesg3);
-			}
-			driver.Navigate().refresh();
-			driver.scrollPageToTop();
-			loginPage.logout();
-		} finally {
-			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
 		}
-
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
-
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logout();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
+		try {			
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
+	}
 
+	@AfterClass(alwaysRun = true)
+	public void close() {	
+	UtilityLog.info("Executed Assignment Regression2 class.");		
 	}
 }
