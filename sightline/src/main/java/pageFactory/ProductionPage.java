@@ -891,7 +891,9 @@ public class ProductionPage {
 		}
 	
 	// added by sowndariya
-	
+	public Element getEnableForNativelyToggle() {
+		return driver.FindElementByXPath("//input[@id='chkEnabledforNativeDocs']//..//i");
+	}
 	public Element getSecondSelectTagBtn() {
 		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_1']");
 	}
@@ -8943,8 +8945,12 @@ public class ProductionPage {
 				return getConfirmProductionCommit().Enabled();
 			}
 		}), Input.wait30);
-		Thread.sleep(1000);
+		
+		base.waitTime(1);
 		getConfirmProductionCommit().waitAndClick(10);
+		if(base.getCloseSucessmsg().isElementAvailable(5)) {
+			base.CloseSuccessMsgpopup();
+			}
 
 		String PDocCount = getProductionDocCount().getText();
 		int Doc = Integer.parseInt(PDocCount);
@@ -10409,7 +10415,7 @@ public class ProductionPage {
 	 * @param Text
 	 * @throws InterruptedException
 	 */
-	public void fillingTiffSectionTechIssueWithEnteringText(String Text, String tagname) throws InterruptedException {
+	public void fillingTiffSectionTechIssueWithEnteringText(String tagname, String Text) throws InterruptedException {
 
 		base.waitForElement(getTIFFChkBox());
 		getTIFFChkBox().waitAndClick(5);
@@ -10426,6 +10432,9 @@ public class ProductionPage {
 
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
+		
+		base.waitForElement(getSelectCloseBtn());
+		getSelectCloseBtn().waitAndClick(10);
 
 		base.waitForElement(getTechissue_toggle());
 		getTechissue_toggle().ScrollTo();
@@ -10436,15 +10445,13 @@ public class ProductionPage {
 		getTechissue_SelectTagButton().ScrollTo();
 		getTechissue_SelectTagButton().waitAndClick(10);
 
-
 		driver.waitForPageToBeReady();
-
-		driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
-		base.waitForElement(getPriveldge_TagTree(tagname));
-		getPriveldge_TagTree(tagname).Enabled();
-		getPriveldge_TagTree(tagname).Click();
 		
-		base.waitTillElemetToBeClickable(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree(tagname).ScrollTo();
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+		
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
@@ -10453,6 +10460,7 @@ public class ProductionPage {
 		getTechIssuePlaceHolder().Click();
 		getTechIssuePlaceHolder().SendKeys(Text);
 
+		getEnableForNativelyToggle().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 	}

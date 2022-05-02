@@ -1386,6 +1386,8 @@ public class ProductionNew_Regression {
 		loginPage.logout();
 	}
 	
+	//30 cases
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
