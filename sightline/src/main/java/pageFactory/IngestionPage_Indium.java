@@ -977,6 +977,17 @@ public class IngestionPage_Indium {
 		
 	}
 	
+	public Element mappingWarningMessage() {
+		return driver.FindElementByXPath("//div[@id='Msg1']//p");
+	}
+	public Element warningMessageCancelButton() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+			
+		public Element getNextColumnTerm(String term) {
+		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term + "')]//..//following-sibling::tr//td[1]");
+	}
+	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
 		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
@@ -8124,6 +8135,165 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			  			getCloseButton().Enabled()  ;}}), Input.wait30); 
 			  	getCloseButton().waitAndClick(10);
 		
+			}
+			
+			/**
+			 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will check whether stitched Tiff displayed before generate searchable pdf in copying table
+			 */
+			public void verifyTermPositionInCopyColumn(String term) {
+				 getIngestionDetailPopup(1).waitAndClick(10);
+				 driver.scrollingToElementofAPage(getRunIndexing());
+				 base.waitTime(1);
+				String afterTerm =getNextColumnTerm(term).getText();
+				if(afterTerm.equalsIgnoreCase(Input.generateSearchablePDF)) {
+					base.passedStep("Stitching TIFFs details displayed before the Generate Searchable PDFs row on Ingestion details pop up");
+				}
+				else {
+					base.failedStep("Stitching TIFFs details not displayed before the Generate Searchable PDFs row on Ingestion details pop up");
+				}
+				getCloseButton().waitAndClick(10); 
+			}
+	
+			
+			
+			/**
+			 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform ingestion with media and transcript selection
+			 */
+			public void mediaAndTranscriptIngestion(String sourceFolder,String datFile) {
+				
+				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,sourceFolder);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				base.stepInfo("Selecting Dat file");
+				selectDATSource(datFile,Input.prodBeg);
+				base.stepInfo("Selecting Native file");
+				selectNativeSource(Input.NativeFile,false);
+				base.stepInfo("Selecting Text file");
+				selectTextSource(Input.TextFile,false);
+				base.stepInfo("Selecting Mp3 file");
+				selectMP3VarientSource(Input.MP3File,false);
+				base.stepInfo("Selecting Transcript file");
+				selectAudioTranscriptSource(Input.TranscriptFile,false);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				base.waitTime(2);
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
+				clickOnPreviewAndRunButton();
+				base.stepInfo("Ingestion started");
+				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify warning message for different document key selection
+			 */
+			
+			public void verifyWarningMessageForConfigureMappingSection(String sourceFolder,String datFile,String textFile,String docKey1,String docKey2) {
+				driver.waitForPageToBeReady();
+				
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(getActionDropdownArrow());
+				getActionDropdownArrow().waitAndClick(5);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getActionCopy().Visible();
+					}
+				}), Input.wait30);
+				
+				getActionCopy().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+				base.waitTime(2);
+				
+				selectDATSource(datFile,docKey1);
+				
+				base.waitForElement(getSourceSelectionText());
+				getSourceSelectionText().waitAndClick(20);
+				base.waitForElement(getSourceSelectionTextLoadFile());
+				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+				
+				driver.scrollPageToTop();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getNextButton().Visible()  ;}}), Input.wait30); 
+				getNextButton().waitAndClick(10);
+				base.passedStep("Clicked on Next button");
+
+				String warningMessage = mappingWarningMessage().getText();
+				if(warningMessage.contains(Input.mappingWarningMessage)) {
+					base.passedStep("warning message displayed if configure mapping is not matched");
+				}
+				else {
+					base.failedStep("warning message not displayed if configure mapping is not matched");
+				}
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						warningMessageCancelButton().Enabled()  ;}}), Input.wait30);
+				warningMessageCancelButton().waitAndClick(10);
+				
+				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(docKey2);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getNextButton().Visible()  ;}}), Input.wait30); 
+				getNextButton().waitAndClick(10);
+				base.passedStep("Clicked on Next button");
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getPreviewRun().Visible();
+					}
+				}), Input.wait30);
+				getPreviewRun().waitAndClick(10);
+				if (getApproveMessageOKButton().isElementAvailable(10)) {
+					getApproveMessageOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to preview and run ingestion");
+				}
+				
+				if(getbtnRunIngestion().isElementAvailable(15)) {
+					base.passedStep("As per selection , admin can proceed and start the ingestion");
+				}
+				else {
+					base.passedStep("As per selection , admin can't proceed and start the ingestion");
+				}
+				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify warning message for different document key selection
+			 */
+			
+			public void verifyUnselectedSourceCountInCopySection(String term) {
+				getRefreshButton().waitAndClick(10);	
+			     getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+			    
+			 	driver.scrollingToElementofAPage(getRunIndexing());
+			 	base.waitForElement(getRunIndexing());
+			 	
+			 	int sourceCount =Integer.parseInt(copyTableDataValue(term,1).getText());
+		 		if(sourceCount==0 && copyTableDataValue(term,1).isElementAvailable(5)) {
+			 		base.passedStep(term+ " unselected source docs count is not present in the copying table column");
+			 	}
+			 	else {
+			 		base.failedMessage(term+" unselected source docs count is present in the copying table column");
+			 	}
+			 	
+		 		getCloseButton().waitAndClick(10);	
+			 		
 			}
 			
 }

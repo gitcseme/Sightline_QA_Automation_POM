@@ -335,6 +335,7 @@ public class Input {
 	public static String miniDocListID;
 	public static String DATFile3;
 	public static String indexingWarningMessage;
+	public static String mappingWarningMessage;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1037,6 +1038,7 @@ public class Input {
 		miniDocListID = testData.getMiniDocListID();
 		DATFile3 = testData.getDATFile3();
 		indexingWarningMessage = testData.getIndexingWarningMessage();
+		mappingWarningMessage = testData.getMappingWarningMessage();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

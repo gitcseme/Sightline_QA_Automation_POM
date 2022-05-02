@@ -218,6 +218,7 @@ public class TestData {
 	public String miniDocListID;
 	public String DATFile3;
 	public String indexingWarningMessage;
+	public String mappingWarningMessage;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

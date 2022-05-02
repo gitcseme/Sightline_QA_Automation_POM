@@ -534,6 +534,81 @@ public class Ingestion_Regression01 {
 		
 	}
 	
+	/** 
+     *Author :Arunkumar date: 02/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49703
+	 * Description :Verify if 'Generate Searchable PDFs' is True for TIFF image and document has multi-page TIFF's then in the Copying section,
+	 *  Stitching TIFFs details should display before the "Generate Searchable PDFs" row on Ingestion details pop up
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 19)
+	public void verifyStitchedTiffBeforeGeneratedSearchablePDFs() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49703");
+		baseClass.stepInfo("Verify if 'Generate Searchable PDFs' is True Stitching TIFFs details should display before the Generate Searchable PDFs row on Ingestion details pop up");
+		ingestionPage.tiffImagesIngestion(Input.DATFile4,Input.tiffLoadFile,"true");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyTermPositionInCopyColumn(Input.StitchedTIFF);
+		// Rollback Ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 02/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48194
+	 * Description :To Verify In Ingestions the pop-up Details Window for media ;audio & Transcript Count.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 20)
+	public void verifyMediaAndTranscriptDetailInPopup() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		String[] selectedTerm= {"Native","Text","MP3 Variant","Audio Transcript"};
+		String[] unselectedTerm = {"PDF",Input.StitchedTIFF,Input.generateSearchablePDF};
+
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48194");
+		baseClass.stepInfo("To Verify In Ingestions the pop-up Details Window for media ;audio & Transcript Count.");
+		ingestionPage.mediaAndTranscriptIngestion(Input.AllSourcesFolder,Input.DATFile1);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		for(int i=0;i<=selectedTerm.length-1;i++) {
+			ingestionPage.verifyDataPresentInCopyTableColumn(selectedTerm[i],"source");
+		}
+		for(int i=0;i<=unselectedTerm.length-1;i++) {
+			ingestionPage.verifyUnselectedSourceCountInCopySection(unselectedTerm[i]);
+		}
+		// Rollback Ingestion
+		ingestionPage.rollBackIngestion();
+	}
+	
+	/** 
+     *Author :Arunkumar date: 02/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47404
+	 * Description :To verify that if configure mapping is not matched the warning message is displayed and as per selection, admin can proceed.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 21)
+	public void verifyConfigureMappingWarningMessage() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47404");
+		baseClass.stepInfo("verify that if configure mapping is not matched the warning message is displayed and as per selection, admin can proceed.");
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.verifyWarningMessageForConfigureMappingSection(Input.UniCodeFilesFolder,Input.datLoadFile1,Input.textFile1,Input.prodBeg,Input.documentKey);
+		
+	}
+	
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
