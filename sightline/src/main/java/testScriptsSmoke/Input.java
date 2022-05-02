@@ -642,6 +642,11 @@ public class Input {
 	public static String duplicateIngestionError;
 	public static String datLoadFile1;
 	public static String textFile1;
+	public static String DATPPPDF10Docs;
+	public static String PP_PDFGen_10Docs;
+	public static String TextPPPDF10Docs;
+	public static String ImagePPPDF10docs;
+	public static String sourceDocIDPPPDF10Docs;
 
 	// Added by Gopinath - 02/03/2022
 	public static String ingestionProjectName;
@@ -1404,7 +1409,12 @@ public class Input {
 		duplicateIngestionError = testData.getDuplicateIngestionError();
 		datLoadFile1 = testData.getDatLoadFile1();
 		textFile1 = testData.getTextFile1();
-
+		DATPPPDF10Docs= testData.getDATPPPDF10Docs();
+		PP_PDFGen_10Docs=testData.getPP_PDFGen_10Docs();
+		TextPPPDF10Docs=testData.getTextPPPDF10Docs();	
+		ImagePPPDF10docs=testData.getImagePPPDF10docs();
+		sourceDocIDPPPDF10Docs=testData.getSourceDocIDPPPDF10Docs();
+		
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();

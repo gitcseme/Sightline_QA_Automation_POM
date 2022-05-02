@@ -53,6 +53,8 @@
 	<miniDocListID>H16135-0188-002287</miniDocListID>
 	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
 	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
+
+
    
 
 	<!-- Production path for redaction master doc -->
@@ -595,6 +597,11 @@
 	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
 	<textFile1>DAT4_STC_Text.lst</textFile1>
+	<PP_PDFGen_10Docs>PP_PDFGen_10Docs</PP_PDFGen_10Docs>
+	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</DATPPPDF10Docs>
+	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
+	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
+	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
 
 	<!-- Ingestion Related data END -->
 

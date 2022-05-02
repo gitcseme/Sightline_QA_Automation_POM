@@ -595,6 +595,11 @@
 	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
 	<textFile1>DAT4_STC_Text.lst</textFile1>
+	<PP_PDFGen_10Docs>PP_PDFGen_10Docs</PP_PDFGen_10Docs>
+	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</DATPPPDF10Docs>
+	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
+	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
+	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
 
 	<!-- Ingestion Related data END -->
 
