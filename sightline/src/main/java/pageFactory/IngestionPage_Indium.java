@@ -973,7 +973,7 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
 	}
 	public Element getIngestionStatusInPopup(String ingestionStage) {
-		return driver.FindElementByXPath("//div[@id=' "+ingestionStage+" ']//div//div//label[contains(.,'% Complete :')]//following-sibling::div[1]");
+		return driver.FindElementByXPath("//div[@id='"+ingestionStage+"']//div//div//label[contains(.,'% Complete :')]//following-sibling::div[1]");
 		
 	}
 	
@@ -4855,8 +4855,15 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
-
-		base.waitForElement(getMappingSOURCEFIELD2());
+		base.waitTime(2);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getMappingSOURCEFIELD2().Visible();
+			}
+		}), Input.wait30);
+		
+		
 		if (dataset.contains("Collection1K_Tally")) {
 			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
 			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
@@ -5889,7 +5896,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		getRefreshButton().waitAndClick(10);
 
 		 getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-
+		 base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
 
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
@@ -5955,14 +5962,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
-		driver.scrollingToBottomofAPage();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getRunIndexing().Visible();
-			}
-		}), Input.wait60);
+		
 		getRunIndexing().waitAndClick(10);
-		base.waitTime(1);
+		base.waitTime(2);
 		base.VerifySuccessMessage("Ingestion Indexing has Started.");		
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -5971,7 +5973,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}
 		}), Input.wait30);
 		getCloseButton().waitAndClick(10);
-
+		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFilterByButton().Visible();
@@ -6029,7 +6031,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		driver.waitForPageToBeReady();
 		
 		for(int i=0;i<60;i++) {
-			base.waitTime(2);
+			base.waitTime(3);
 			String status = getStatus(1).getText().trim();
 			
     		if(status.contains("Draft")) {
@@ -7430,7 +7432,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 
 			    	getRefreshButton().waitAndClick(10);
 			    	for(int i=0;i<40;i++) {
-			    		getRefreshButton().waitAndClick(10);
+			    		getRefreshButton().waitAndClick(15);
 			    		base.waitTime(2);
 						String status = getStatus(1).getText().trim();
 					
@@ -7464,10 +7466,13 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 						  			getCloseButton().Enabled()  ;}}), Input.wait30); 
 						  	getCloseButton().waitAndClick(10);
 						  	getRefreshButton().waitAndClick(5);
+						  	base.waitTime(2);
 						  	getIngestionDetailPopup(1).waitAndClick(10);
-						 	
+						 	base.waitTime(2);
 					    	driver.scrollingToElementofAPage(getRunCopying());
-					    	base.waitForElement(getRunCopying());
+					    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    			 getRunCopying().Enabled()  ;}}), Input.wait30); 
+						    
 					        getRunCopying().waitAndClick(10);
 					        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					    			getCloseButton().Enabled()  ;}}), Input.wait30); 
