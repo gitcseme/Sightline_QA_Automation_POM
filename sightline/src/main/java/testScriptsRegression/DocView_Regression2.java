@@ -4485,7 +4485,7 @@ public class DocView_Regression2 {
 	 * on DocView
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 94)
 	public void verifyEmailMetaDataPresentOnDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52211");
@@ -4551,7 +4551,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51565 Verify when enteres the long text to search in a document
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
 	public void verifyEntersLongTextToSearchDocument() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51565");
@@ -4572,7 +4572,87 @@ public class DocView_Regression2 {
 		docView.verifyEnterLongTextInScrollLeft();
 	}
 
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-52240 Verify that for the document PDF generated with exception
+	 * without hidden content should not show the icon for hidden properties and
+	 * also the warning message
+	 */
 
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
+	public void verifyDocWithHiddenContentIconNotShowForHiddenProperties() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52240");
+		baseClass.stepInfo(
+				"Verify that for the document PDF generated with exception without hidden content should not show the icon for hidden properties and also the warning message");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String withoutHiddenDocId = "\"Native Review\"";
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.projectName01);
+		baseClass.stepInfo("Login as RMU");
+		sessionsearch.basicContentSearch(withoutHiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_MiniDocListIds(2));
+		docView.getDocView_MiniDocListIds(2).waitAndClick(5);
+
+		// verify Hidden info icon is not visible on DocView
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == false) {
+			baseClass.passedStep("Hidden info icon is not visible for document with hidden content");
+		} else {
+			baseClass.failedStep("Hidden info Icon is visible for document without hidden content");
+		}
+		baseClass.VerifyWarningMessage(
+				"This document does not contain a PDF rendering. Please download the native to review.");
+		baseClass.passedStep("Icon for hidden properties is not displayed ");
+	}
+
+	/**
+	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-52242 Verify that for the document with "Native Review Required"
+	 * exception and with no hidden content then hidden properties icon should not
+	 * appear on doc view
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 97)
+	public void verifyDocWithNativeReviewRequiredAndNoHiddenContent() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52242");
+		baseClass.stepInfo(
+				"Verify that for the document with \"Native Review Required\" exception and with no hidden content then hidden properties icon should not appear on doc view");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert softassertion = new SoftAssert();
+		String withoutHiddenDocId = "\"Native Review Required\"";
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.projectName01);
+		baseClass.stepInfo("Login as RMU");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(withoutHiddenDocId);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+
+		// verify Hidden info icon is not visible on DocView
+		softassertion.assertFalse((docViewRedact.hiddenInfoIcon().isDisplayed()));
+		if (docViewRedact.hiddenInfoIcon().isDisplayed() == false) {
+			baseClass.passedStep("Hidden info icon is not visible for document with hidden content");
+		} else {
+			baseClass.failedStep("Hidden info Icon is visible for document without hidden content");
+		}
+		baseClass.VerifyWarningMessage(
+				"This document does not contain a PDF rendering. Please download the native to review.");
+		baseClass.passedStep("Hidden Properties icon not appear in docview page");
+		softassertion.assertAll();
+		loginPage.logout();
+	}
 	
 
 	@AfterMethod(alwaysRun = true)
