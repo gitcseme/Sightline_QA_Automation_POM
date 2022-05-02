@@ -11518,5 +11518,23 @@ public class SessionSearch {
 
 	}
 
+	/**
+	 * @author Jeevitha 
+	 * @Description  :verifies Session saerch page Url
+	 */
+	public void verifySessionSearchPage() {
+
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		String BsUrl = Input.url + "Search/Searches";
+		
+			if (currentUrl.equals(BsUrl)) {
+				base.passedStep("Navigated to Basic Search Page : " + currentUrl);
+			} else if (currentUrl.contains("Search/Searches")) {
+				base.passedStep("Navigated to Basic Search Page : " + currentUrl);
+			} else {
+				base.failedStep("Navigated to Page : " + currentUrl);
+			}
+	}
+
 
 }
