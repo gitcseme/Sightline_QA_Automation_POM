@@ -526,6 +526,14 @@ public class Input {
 	public static String filterMonth;
 	public static String filterYear;
 	public static String userRole;
+	public static String nativeFileName;
+	public static String audioPlayerReady;
+	public static String datFormatFile;
+	public static String nativeMp3FileFormat;
+	public static String DocCount;
+	public static String emailAllDomain;
+	public static String validationData;
+	public static String ingestionPrjt;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1289,7 +1297,14 @@ public class Input {
 		filterMonth=testData.getFilterMonth();
 		filterYear=testData.getFilterYear();
 		userRole=testData.getUserRole();
-
+		nativeFileName=testData.getNativeFileName();
+		audioPlayerReady=testData.getAudioPlayerReady();
+		datFormatFile=testData.getDatFormatFile();
+		nativeMp3FileFormat=testData.getNativeMp3FileFormat();
+		DocCount=testData.getDocCount();
+		emailAllDomain=testData.getEmailAllDomain();
+		validationData=testData.getValidationData();
+		ingestionPrjt=testData.getIngestionPrjt();
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 

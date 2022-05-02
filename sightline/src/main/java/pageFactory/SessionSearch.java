@@ -11536,5 +11536,18 @@ public class SessionSearch {
 			}
 	}
 
-
+	/**
+	 * @author Brundha
+	 * @description : Method to verify audio document count
+	 */
+	public void verifyDocCountForAudioPlayerReady() {
+		driver.waitForPageToBeReady();
+		getPureHitsCount().isElementAvailable(2);
+		String PurehitCount = getPureHitsCount().getText();
+		if (Integer.valueOf(PurehitCount) != 0) {
+			base.passedStep("Document is displayed as expected");
+		} else {
+			base.failedStep("Document count is not displayed as expected");
+		}
+	}
 }

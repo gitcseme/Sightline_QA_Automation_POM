@@ -1210,7 +1210,13 @@ public class DocListPage {
 		public Element getSelectDocument(String DocID) {
 			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
 		}
-		
+		public ElementCollection GetColumnData(int i) {
+			return driver.FindElementsByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td["+i+"]");
+		}
+
+public ElementCollection  getHeaderText() {
+			return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
+		}	
 	
 	public DocListPage(Driver driver) {
 
@@ -4734,4 +4740,24 @@ public List<String> gettingAllDocIDs(){
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @author Brundha.T
+	 * Method To verify the email meta data
+	 * 
+	 */
+	public ArrayList<String>  verifyingEmailMetaData(int Metadata) {
+		ArrayList<String> arList = null;
+		      int j;
+		      arList = new ArrayList<String>();
+			  List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
+				for (j = 0; j < RowCount.size(); j++) {
+					driver.waitForPageToBeReady();
+					String row = RowCount.get(j).getText();
+					arList.add(row);
+				}
+				System.out.println(arList);
+				 return arList;
+}
+
 }
