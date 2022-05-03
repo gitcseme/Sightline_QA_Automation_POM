@@ -216,6 +216,7 @@ public class DomainManagement_IndiumRegression {
 
 		userManage.passingUserName(Input.sa1userName);
 		userManage.applyFilter();
+		driver.waitForPageToBeReady();
 		String firstName = userManage.getUserFirstName(1).getText();
 		String lastName = userManage.getUserLastName(1).getText();
 		String userName = firstName + " " + lastName;
@@ -424,7 +425,7 @@ public class DomainManagement_IndiumRegression {
 	 * :Validate notification alert and clickable link for Doc View and DocList for
 	 * Reviewer(impersonate from DAU). 'RPMXCON-53094' Sprint-14
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyAlertClickableLinkDocViewForReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53094");
