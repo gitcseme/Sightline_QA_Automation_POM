@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -1543,7 +1544,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	//@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
+	@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
 	public void validatingRmuFunctionTab(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53322");
@@ -1617,7 +1618,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.rmu1userName, Input.rmu1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	//@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
+	@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
 	public void validatingRmuFunctionToModify(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53321");
@@ -1678,7 +1679,7 @@ public class UsersAndRoleManagement_Regression {
 	 * impersonate back as PAU
 	 */
 
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void validatingSAImpRevBackToPau() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53288");
 		baseClass.stepInfo("Verify if SAU impersonate as Reviewer, he should able to impersonate back as PAU");
@@ -1719,7 +1720,7 @@ public class UsersAndRoleManagement_Regression {
 	 * page
 	 */
 
-	//@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void validatingUserNameMyEmail() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53175");
 		baseClass.stepInfo("Verify for the Filter by User Name field from Manage Users page");
@@ -1806,7 +1807,8 @@ public class UsersAndRoleManagement_Regression {
 		baseClass.passedStep("launched DocVIew via Search");
 		
 		// validating redaction tab
-		boolean redactionNotpresent=userManage.getRedaction().isElementAvailable(2);
+		baseClass.waitForElement(userManage.getRedaction());
+		boolean redactionNotpresent=userManage.getRedaction().isDisplayed();
 		softAssertion.assertFalse(redactionNotpresent);
 		baseClass.passedStep("Redaction tag not displayed in docview page");
 
@@ -1847,7 +1849,7 @@ public class UsersAndRoleManagement_Regression {
 
 		// validating redaction tab
 		baseClass.waitForElement(userManage.getRedaction());
-		boolean redactiontpresent = userManage.getRedaction().isElementAvailable(2);
+		boolean redactiontpresent = userManage.getRedaction().isDisplayed();
 		softAssertion.assertTrue(redactiontpresent);
 		baseClass.passedStep("Redaction tag  displayed in docview page");
 
@@ -1943,17 +1945,15 @@ public class UsersAndRoleManagement_Regression {
  		// login
  		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
  		Reporter.log("Logged in as User: " + Input.sa1userName);
- 		
+ 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
  		userManage.passingUserName(Input.rmu1userName);
  		userManage.applyFilter();
  		userManage.verifyUserHasMoreThanOneProject();
- 		
+ 		baseClass.waitTime(3);
  		userManage.editFunctionality(Input.projectName);
 		userManage.getFunctionalityTab().waitAndClick(5);
 		userManage.verifyStatusDataSet("true");
-		
-		userManage.editFunctionality(Input.projectName);
-		userManage.getFunctionalityTab().waitAndClick(5);
+		baseClass.waitTime(3);
 		if(userManage.getDataSetStatus().isElementAvailable(3)) {
 			baseClass.passedStep("user rights is saved in database for the respective project.");
 		}else {
@@ -1963,6 +1963,7 @@ public class UsersAndRoleManagement_Regression {
 		
 		userManage.editFunctionality(Input.additionalDataProject);
 		userManage.getFunctionalityTab().waitAndClick(5);
+		baseClass.waitTime(3);
 		if(!userManage.getDataSetStatus().isElementAvailable(1)) {
 			baseClass.passedStep("User rights saved for the user for Project1 is not be overwrite for Project2.");
 		}else {
@@ -2179,7 +2180,7 @@ public class UsersAndRoleManagement_Regression {
 		driver.waitForPageToBeReady();
 		security.AddSecurityGroup(securityGroup);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
-
+		driver.waitForPageToBeReady();
 		userManage.passingUserName(Input.rmu1userName);
 		userManage.applyFilter();
 		userManage.editLoginUser();
@@ -2192,9 +2193,11 @@ public class UsersAndRoleManagement_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectsecuritygroup(securityGroup);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
 		userManage.passingUserName(Input.rmu1userName);
 		userManage.applyFilter();
 		userManage.editLoginUser();
+		baseClass.waitTime(5);
 		Select selectSG = new Select(userManage.userSelectSecurityGroup().getWebElement());
 		int count = selectSG.getOptions().size();
 		List<String> allSG = new ArrayList<String>();
@@ -2398,6 +2401,7 @@ public class UsersAndRoleManagement_Regression {
 						
 		userManage = new UserManagement(driver);
 		loginPage.loginToSightLine(username,Password);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.passingUserName(Input.rmu1userName);
 		userManage.applyFilter();
 		driver.waitForPageToBeReady();

@@ -4167,27 +4167,39 @@ public class SessionSearch {
 
 	public void ViewInDocViews() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitAddBtn().Visible();
-			}
-		}), Input.wait30);
-		getPureHitAddBtn().waitAndClick(5);
+
+		if (getPureHitAddBtn().isElementAvailable(2)) {
+			getPureHitAddBtn().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBulkActionButton().Visible();
 			}
 		}), Input.wait30);
-		Thread.sleep(2000);// required
+		Thread.sleep(2000); // App synch
 		getBulkActionButton().waitAndClick(5);
-		Thread.sleep(2000);// // required
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocViewAction().Visible();
-			}
-		}), Input.wait30);
-		getDocViewAction().waitAndClick(10);
+		Thread.sleep(2000); // App Synch
+
+		if (getViewBtn().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
+			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
+
+			base.waitForElement(getDocViewFromDropDown());
+			getDocViewFromDropDown().waitAndClick(10);
+		} else {
+			getDocViewAction().waitAndClick(10);
+			base.waitTime(3); // added for stabilization
+		}
+
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 
