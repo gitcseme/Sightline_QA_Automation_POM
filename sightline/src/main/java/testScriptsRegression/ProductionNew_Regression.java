@@ -546,8 +546,9 @@ public class ProductionNew_Regression {
 				+ " the redaction tags for which you want redactions burned in the production.";
 		base.stepInfo("Test case Id: RPMXCON-56108-production Sprint 04");
 	    UtilityLog.info(Input.prodPath);
-	    this.driver.getWebDriver().get(Input.url + "Production/Home");
+
 	    ProductionPage page = new ProductionPage(driver);
+	    page.navigateToProductionPage();
         productionname = "p" + Utility.dynamicNameAppender();
         page.selectingDefaultSecurityGroup();
         page.addANewProduction(productionname);
@@ -585,7 +586,7 @@ public class ProductionNew_Regression {
 				+ "please specify the redaction tags for which you want redactions burned in the production.";
 		base.stepInfo("Test case Id: RPMXCON-56106-production Sprint 04");
 	    UtilityLog.info(Input.prodPath);
-	    this.driver.getWebDriver().get(Input.url + "Production/Home");
+	    page.navigateToProductionPage();
 	    ProductionPage page = new ProductionPage(driver);
         productionname = "p" + Utility.dynamicNameAppender();
         page.selectingDefaultSecurityGroup();
@@ -627,7 +628,7 @@ public class ProductionNew_Regression {
 		String message="Technical Issue tags or corresponding placeholder text is missing in the Technical Issue Placeholdering of the TIFF/PDF section.";
 		base.stepInfo("Test case Id: RPMXCON-56102-production Sprint 04");
 	    UtilityLog.info(Input.prodPath);
-	    this.driver.getWebDriver().get(Input.url + "Production/Home");
+	    page.navigateToProductionPage();
 	    ProductionPage page = new ProductionPage(driver);
         productionname = "p" + Utility.dynamicNameAppender();
         page.selectingDefaultSecurityGroup();

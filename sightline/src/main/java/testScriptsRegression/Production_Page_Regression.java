@@ -134,7 +134,7 @@ public class Production_Page_Regression {
 		
 
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.verifyProductionStatusInHomePage("Preparing Data", productionname);
@@ -153,7 +153,7 @@ public class Production_Page_Regression {
 		page.getbtnContinueGeneration().waitAndClick(10);
 
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.verifyProductionStatusInHomePage("Prod Generation ", productionname);
@@ -162,7 +162,7 @@ public class Production_Page_Regression {
 		page.verifyProductionStatusInHomePage("Creating Archive", productionname);
 		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -691,7 +691,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
@@ -761,7 +761,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Going to Home Page");
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks", productionname);
 		baseClass.passedStep(
@@ -829,7 +829,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Going to Home Page");
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Reserving Bates Range", productionname);
 		baseClass.passedStep(" 'Reserving Bates Range' status on Grid View on Production Home page");
@@ -885,14 +885,20 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getbtnProductionGenerate());
 		page.getbtnProductionGenerate().waitAndClick(10);
 		page.getbtnProductionGenerate().waitAndFind(540);
+		
+		page.getbtnContinueGeneration().isElementAvailable(60);
+		if (page.getbtnContinueGeneration().isDisplayed()) {
+			baseClass.waitForElement(page.getbtnContinueGeneration());
+			page.getbtnContinueGeneration().waitAndClick(10);
+		}
+
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Going to Home Page");
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep(" verified 'Pre-Gen Checks Complete 'status on Grid View on Production Home page");
@@ -916,10 +922,10 @@ public class Production_Page_Regression {
 
 		// Pre-requisites
 		// create tag and folder
-		this.driver.getWebDriver().get(Input.url + " TagsAndFoldersTagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, " Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -949,16 +955,11 @@ public class Production_Page_Regression {
 		// Starting the generation
 		baseClass.waitForElement(page.getbtnProductionGenerate());
 		page.getbtnProductionGenerate().waitAndClick(10);
-		page.getbtnProductionGenerate().waitAndFind(120);
-		Reporter.log("Wait for generate to complete, true");
-		System.out.println("Wait for generate to complete");
-		UtilityLog.info("Wait for generate to complete");
-
+		
 		driver.waitForPageToBeReady();
-
 		baseClass.stepInfo("Going to Home Page");
-		this.driver.getWebDriver().get(Input.url + " ProductionHome");
-		driver.Navigate().refresh();
+		page.navigateToProductionPage();
+		
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep("verified 'Pre-Gen Checks Complete 'status on  Production Home page");
 		loginPage.logout();
@@ -982,9 +983,9 @@ public class Production_Page_Regression {
 
 		// Pre-requisites
 		// create tag and folder
-		this.driver.getWebDriver().get(Input.url + " TagsAndFoldersTagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, " Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
 		// search for folder
@@ -1019,9 +1020,12 @@ public class Production_Page_Regression {
 		Reporter.log("Wait for generate to complete, true");
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
-		baseClass.waitForElement(page.getbtnContinueGeneration());
-		page.getbtnContinueGeneration().waitAndClick(10);
+		
+		page.getbtnContinueGeneration().isElementAvailable(60);
+		if (page.getbtnContinueGeneration().isDisplayed()) {
+			baseClass.waitForElement(page.getbtnContinueGeneration());
+			page.getbtnContinueGeneration().waitAndClick(10);
+		}
 
 		page.verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
 		baseClass.passedStep(
@@ -1036,7 +1040,7 @@ public class Production_Page_Regression {
 	 *                     displays status on Production Progress bar ,Tile View as
 	 *                     'Post-Gen QC Checks In Progress'
 	 */
-	@Test(description="RPMXCON-55984",enabled = true, dataProvider = "Users", groups = { " regression" }, priority = 18)
+	@Test(description="RPMXCON-55984",enabled = true,groups = { " regression" }, priority = 18)
 	public void verifyPostGenQCchecksInProgressInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55984- Production Sprint 07");
@@ -1047,9 +1051,8 @@ public class Production_Page_Regression {
 
 		// Pre-requisites
 		// create tag and folder
-		this.driver.getWebDriver().get(Input.url + " TagsAndFoldersTagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateFolder(foldername, " Default Security Group");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
 		// search for folder
@@ -1083,14 +1086,16 @@ public class Production_Page_Regression {
 		Reporter.log("Wait for generate to complete, true");
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-
-		baseClass.waitForElement(page.getbtnContinueGeneration());
-		page.getbtnContinueGeneration().waitAndClick(10);
-
+		
+		page.getbtnContinueGeneration().isElementAvailable(60);
+		if (page.getbtnContinueGeneration().isDisplayed()) {
+			baseClass.waitForElement(page.getbtnContinueGeneration());
+			page.getbtnContinueGeneration().waitAndClick(10);
+		}
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Going to Home Page");
-		this.driver.getWebDriver().get(Input.url + "ProductionHome");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.verifyProductionStatusInHomePage("Post-Generation QC Checks In Progress", productionname);
 		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
@@ -1116,7 +1121,6 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
@@ -1171,7 +1175,6 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
@@ -1226,7 +1229,6 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
@@ -1266,7 +1268,6 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
@@ -1307,7 +1308,6 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -1360,7 +1360,7 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -1415,7 +1415,7 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		// search for folder
@@ -1435,7 +1435,7 @@ public class Production_Page_Regression {
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
 				beginningBates);
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -1460,7 +1460,7 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -1507,7 +1507,7 @@ public class Production_Page_Regression {
 		String redactedDocs = page.getValueRedactedDocs().getText();
 		baseClass.passedStep("Count Of Redacted Documents:" + redactedDocs);
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -1531,7 +1531,6 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		baseClass.stepInfo("Searching for a content and performing bulk folder action");
@@ -1555,7 +1554,6 @@ public class Production_Page_Regression {
 				beginningBates);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
@@ -1577,7 +1575,7 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		baseClass.stepInfo("Searching for a content and performing bulk folder action");
@@ -1601,7 +1599,7 @@ public class Production_Page_Regression {
 				beginningBates);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
@@ -1697,7 +1695,7 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -1734,7 +1732,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
@@ -1793,7 +1791,7 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
 
@@ -1847,9 +1845,9 @@ public class Production_Page_Regression {
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 
 		// search for the created folder and check the pure hit count
 		sessionSearch = new SessionSearch(driver);
@@ -1880,7 +1878,7 @@ public class Production_Page_Regression {
 		// To delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -1981,7 +1979,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.prodGenerationInProgressStatus();
@@ -1991,9 +1989,8 @@ public class Production_Page_Regression {
 		baseClass.waitTime(3);
 		String name = page.getProduction().getText().trim();
 		System.out.println(name);
-		//String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
 		String home = System.getProperty("user.home");
-		String downloadsHome = home + "/Downloads";
 		page.isFileDownloaded(downloadsHome, name);
 		baseClass.passedStep(
 				"Verified that user can download the production by using the Shareable link for 'DAT Only'");
@@ -2047,7 +2044,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.prodGenerationInProgressStatus();
@@ -2103,7 +2100,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
@@ -2158,7 +2155,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
@@ -2289,7 +2286,7 @@ public class Production_Page_Regression {
 			baseClass.passedStep("Generate Button is enabled");
 		}
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2349,7 +2346,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2410,7 +2407,7 @@ public class Production_Page_Regression {
 			baseClass.passedStep("Recated count is not zero as per the pre requisite");
 		}
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2466,7 +2463,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2491,7 +2488,7 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
 
 		baseClass.stepInfo("Searching for a content and performing bulk folder action");
@@ -2513,13 +2510,13 @@ public class Production_Page_Regression {
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
 				beginningBates);
 
-		driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.navigateToProductionPageByNewProductionSet(productionSet);
 		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, templateName);
 
 		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
@@ -2548,7 +2545,7 @@ public class Production_Page_Regression {
 		driver.waitForPageToBeReady();
 		page.addANewProduction(productionname);
 		driver.waitForPageToBeReady();
-		driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.navigateToProductionPageByNewProductionSet(productionSet);
 		driver.waitForPageToBeReady();
@@ -2608,7 +2605,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2696,7 +2693,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2757,7 +2754,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2816,7 +2813,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2873,7 +2870,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -2929,7 +2926,7 @@ public class Production_Page_Regression {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		driver.waitForPageToBeReady();
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 
 		page.prodGenerationInProgressStatus();
@@ -2952,7 +2949,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		baseClass.stepInfo("Production generated successfully by overwritting documents");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -3008,7 +3005,7 @@ public class Production_Page_Regression {
 		page.getProd_BatesRange().isDisplayed();
 		baseClass.passedStep("Bates Range is displayed in generate page");
 
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
@@ -3062,7 +3059,7 @@ public class Production_Page_Regression {
 			baseClass.failedMessage(
 					"Total Documents selected is not displayed on the self production wizard For Folder");
 		}
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
@@ -3248,7 +3245,7 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		// Go To Production Home Page
-		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus();
 		driver.waitForPageToBeReady();
@@ -3264,9 +3261,7 @@ public class Production_Page_Regression {
 			baseClass.passedStep("Native section is selected by default");
 		}
 		page.getComponentsMarkComplete().waitAndClick(10);
-		baseClass.VerifySuccessMessage("Mark Complete successful");
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		// To delete tag and folder
+
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
@@ -3323,9 +3318,12 @@ public class Production_Page_Regression {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
-		baseClass.waitTime(4);
+		baseClass.waitTime(3);
 		String name = page.getProduction().getText().trim();
-		page.isFileDownloaded(Input.fileDownloadLocation, name);
+		System.out.println(name);
+		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+		String home = System.getProperty("user.home");
+		page.isFileDownloaded(downloadsHome, name);
 
 		// Delete Tag and folder
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
@@ -3378,6 +3376,9 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSelectDocumentUsingTags(tagname);
 		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 
@@ -3385,7 +3386,6 @@ public class Production_Page_Regression {
 		String name = page.getProduction().getText().trim();
 		page.isFileDownloaded(Input.fileDownloadLocation, name);
 
-		// To delete tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
@@ -3414,7 +3414,7 @@ public class Production_Page_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);

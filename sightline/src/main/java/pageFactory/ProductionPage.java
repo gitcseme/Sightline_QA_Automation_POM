@@ -657,7 +657,7 @@ public class ProductionPage {
 
 	public Element getFilterByButton() {
 		return driver
-				.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']");
+				.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']");
 	}
 
 	public Element getFilterByDRAFT() {
@@ -681,7 +681,7 @@ public class ProductionPage {
 	}
 
 	public Element getRefreshButton() {
-		return driver.FindElementById("refresh");
+		return driver.FindElementByXPath("//a[@id='refresh']");
 	}
 
 	public Element gettxtProdGenerationFailed() {
@@ -1521,7 +1521,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[3]");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -5338,6 +5338,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 03/05/2022
 	 * @authorIndium-Sowndarya.Velraj
 	 * @param tagname
 	 * @param This    method selects TIFF component and disables "Enable for
@@ -5362,6 +5363,10 @@ public class ProductionPage {
 		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().Enabled();
 		getTIFF_EnableforPrivilegedDocs().Click();
+		
+		//diabling enable for natively placeholder
+		base.waitForElement(getEnableForNativelyToggle());
+		getEnableForNativelyToggle().waitAndClick(10);
 
 		getClk_burnReductiontoggle().ScrollTo();
 
@@ -5375,22 +5380,25 @@ public class ProductionPage {
 		getClkRadioBtn_selectRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+		
+		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
 		getClkCheckBox_defaultRedactionTag().isDisplayed();
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 
+		getClkLink_selectingRedactionTags().ScrollTo();
 		base.waitForElement(getClkLink_selectingRedactionTags());
 		getClkLink_selectingRedactionTags().isDisplayed();
 		getClkLink_selectingRedactionTags().waitAndClick(10);
 
+		getClkBtn_selectingRedactionTags().ScrollTo();
 		base.waitForElement(getClkBtn_selectingRedactionTags());
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
+		getClkCheckBox_selectingRedactionTags().ScrollTo();
 		base.waitForElement(getClkCheckBox_selectingRedactionTags());
-		getClkCheckBox_selectingRedactionTags().isDisplayed();
-		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
@@ -6541,22 +6549,14 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingSummaryAndPreview() {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnProductionSummaryMarkComplete().Enabled();
-			}
-		}), Input.wait30);
-		getbtnProductionSummaryMarkComplete().Click();
+		base.waitForElement(getbtnProductionSummaryMarkComplete());
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
 		base.getCloseSucessmsg();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnProductionSummaryNext().Enabled();
-			}
-		}), Input.wait30);
-		getbtnProductionSummaryNext().Click();
+		base.waitForElement(getbtnProductionSummaryNext());
+		getbtnProductionSummaryNext().waitAndClick(10);
 		base.stepInfo("summary and preview section is filled");
 
 	}
@@ -7657,8 +7657,8 @@ public class ProductionPage {
 	public void prodGenerationInProgressStatus() throws InterruptedException {
 
 		base.stepInfo("Filtering IN progress status production");
-		base.waitForElement(getFilterByButton());
-		getFilterByButton().waitAndClick(10);
+		base.waitForElement(getFilterDropDown());
+		getFilterDropDown().waitAndClick(10);
 
 		base.waitForElement(getFilterByDRAFT());
 		getFilterByDRAFT().waitAndClick(5);
@@ -12772,6 +12772,7 @@ for (int i = 0; i < 6; i++) {
 
 		// Verifying status of the production from home page
 		for (int i = 0; i < 500; i++) {
+			driver.waitForPageToBeReady();
 			getProductionFromHomePage(productionname).isElementAvailable(180);
 			productionFromHomePage = getProductionFromHomePage(productionname).getText();
 			if (productionFromHomePage.contains(statusMsg)) {
@@ -13287,8 +13288,7 @@ for (int i = 0; i < 6; i++) {
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
-		getClkCheckBox_defaultRedactionTag().isDisplayed();
-		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+		getClkCheckBox_defaultRedactionTag().Click();
 
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().Click();
