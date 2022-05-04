@@ -2864,6 +2864,11 @@ public class ProductionPage {
 	public Element getYesBtn() {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
+	//Add by Aathith
+	public Element getFirstImageFile(String presufix ,String subBates) {
+		return driver.FindElementByXPath("//a[text()='"+presufix+".000"+subBates+".tiff']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -19684,6 +19689,62 @@ base.waitTime(2);
 			getYesBtn().waitAndClick(5);
 		
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @Description go to export Image file
+		 */
+		public void goToImageFiles() {
+			driver.waitForPageToBeReady();
+			getFileDir("VOL0001").waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getFileDir("Images/").waitAndClick(10);
+	        driver.waitForPageToBeReady();
+	        getFileDir("0001/").waitAndClick(10);
+	        driver.waitForPageToBeReady();
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param file
+		 * @param expectedWord
+		 * @Description verify the text in generated image file
+		 */
+		public void OCR_Verification_In_Generated_Tiff_tess4j(File file,String expectedWord) {
+		         ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		         File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		         instance.setDatapath(tessDataFolder.getPath());
 
+		        try {
+		            String result = instance.doOCR(file);
+		            System.out.println(result);
+		            if (result.contains(expectedWord)) {
+						base.passedStep("Document is produced as expect");
+					} else {
+						base.failedStep("document validation failed");
+					}
+		        } catch (TesseractException e) {
+		            System.err.println(e.getMessage());
+		        }
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param prefixId
+		 * @param suffixId
+		 * @param subBates
+		 * @throws InterruptedException
+		 * @Description export filling number and sorting page
+		 */
+		public void fillingExportNumberingAndSortingPage(String prefixId, String suffixId, String subBates) throws InterruptedException {
+
+			base.waitForElement(getBeginningSubBatesNumber());
+			getBeginningSubBatesNumber().SendKeys(subBates);
+
+			base.waitForElement(getExportPrefixId());
+			getExportPrefixId().SendKeys(prefixId);
+
+			base.waitForElement(getExportSuffixId());
+			getExportSuffixId().SendKeys(suffixId);
+
+			base.stepInfo("Export Numbering and sorting section is filled");
+		}
 
 }
