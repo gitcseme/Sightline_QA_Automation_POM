@@ -221,13 +221,13 @@ public class DocListPage {
 
 	// added by sowndariya
 	public Element getSelectExistingTag(String tagname) {
-		return driver.FindElementByXPath(
-				"//div[@id='divBulkTagJSTree']//a[text()='" + tagname + "']");
+		return driver.FindElementByXPath("//div[@id='divBulkTagJSTree']//a[text()='" + tagname + "']");
 	}
+
 	public Element getExistingTagOption() {
 		return driver.FindElementByXPath("//a[@id='tabExiting']");
 	}
-	
+
 	public Element getDocList_Checkbox() {
 		return driver.FindElementByXPath("//input[@id='chkDoc_1192']//following-sibling::i");
 	}
@@ -396,9 +396,10 @@ public class DocListPage {
 	public Element getViewInDocView() {
 		return driver.FindElementById("ViewInDocView");
 	}
-	
+
 	public Element getMasterDateTableValue() {
-		return driver.FindElementByXPath("//*[@id='dtDocList']//tr[@class='odd']//following-sibling::td[contains(text(),':')]");
+		return driver.FindElementByXPath(
+				"//*[@id='dtDocList']//tr[@class='odd']//following-sibling::td[contains(text(),':')]");
 	}
 
 	// Added by Gopinath
@@ -1119,119 +1120,135 @@ public class DocListPage {
 	public ElementCollection getNextColumnCountAfterSuffle() {
 		return driver.FindElementsByXPath("//th[text()='CustodianName']/following::tr//td[7]");
 	}
-	
-	//Added by Gopinath - 29/12/2021
+
+	// Added by Gopinath - 29/12/2021
 	public Element getPersistantHitCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkPersistSerachHits']//..//i");
 	}
+
 	public Element getSelectAssignmentExisting(String assignmentName) {
 		return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[contains(.,'" + assignmentName + "')]");
 	}
-	
-	//Added by Gopinath- 11/01/2022
+
+	// Added by Gopinath- 11/01/2022
 	public Element getFilterHeaderCollapsedIcon() {
 		return driver.FindElementByXPath("//i[@id='collapseDown1']");
 	}
+
 	public Element getFilterDocHeaderCollapsed() {
 		return driver.FindElementByXPath("//a[@id='lnk_collapsID' and @class='collapsed']");
 	}
+
 	public Element getFilterHeaderExpandIcon() {
 		return driver.FindElementByXPath("//a[@id='lnk_collapsID']");
 	}
-	//added by jayanthi
+
+	// added by jayanthi
 	public ElementCollection getAvailableRemoveButtonCount() {
 		return driver.FindElementsByXPath("//a[text()='Remove']");
 	}
+
 	public Element getRemoveBtn() {
 		return driver.FindElementByXPath("//a[text()='Remove']");
 	}
+
 	public Element getSelectAvailMetadata(String eleValue) {
-		return driver.FindElementByXPath("//li//Strong[text()='"+eleValue+"']");
+		return driver.FindElementByXPath("//li//Strong[text()='" + eleValue + "']");
 	}
-	
+
 	public ElementCollection getTableHeaders() {
 		return driver.FindElementsByXPath("//table[@id='dtDocList']//tr//th");
 	}
-	
+
 	public ElementCollection getTableRowText(int i) {
-		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr/td["+i+"]");
-		
-	}
-	public Element getEmailAllDomainsOption(String value) {
-		return driver.FindElementByXPath("//ul[@id='select2-EmailAllDomains-results']//li[text()='"+value+"']");
+		return driver.FindElementsByXPath("//table[@id='dtDocList']//tbody//tr/td[" + i + "]");
+
 	}
 
-	//Added by Gopinath - 17/02/2022
+	public Element getEmailAllDomainsOption(String value) {
+		return driver.FindElementByXPath("//ul[@id='select2-EmailAllDomains-results']//li[text()='" + value + "']");
+	}
+
+	// Added by Gopinath - 17/02/2022
 	public Element getDocListPageHeader() {
 		return driver.FindElementByXPath("//h1[@class='page-title' and contains(text(),'DocList')]");
 	}
-	
-	
-	//Added by Brundha
+
+	// Added by Brundha
 	public ElementCollection getChildTableRow(int i) {
-		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tbody//tr/td["+i+"]");
+		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tbody//tr/td[" + i + "]");
 	}
-	
+
 	public ElementCollection getChildHeader() {
 		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]//tr/th");
-		
+
 	}
-	
-	//Added by Gopinath - 21/03/2022
+
+	// Added by Gopinath - 21/03/2022
 	public ElementCollection getChildByRowId() {
 		return driver.FindElementsByXPath("//table[contains(@id,'childlist')]/tbody/tr/td[3]");
 	}
+
 	public Element getDocList_TallyButton() {
 		return driver.FindElementById("idTally");
 	}
-	
-	//Added by Gopinath - 04/04/2022
+
+	// Added by Gopinath - 04/04/2022
 	public Element getDocListPreview_AudioStartTime() {
 		return driver.FindElementByXPath("//div[@class='jp-current-time start']");
-		}
-		public Element getDocList_Preview_AudioEndTime() {
+	}
+
+	public Element getDocList_Preview_AudioEndTime() {
 		return driver.FindElementByXPath("//div[@class='jp-duration end']");
 
-		}
-		
-		//added by Aathith
-		public Element getParentDocumentCheckBox() {
-			return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td//i");
-		}
-		public ElementCollection getTableRowHeader() {
-			return driver.FindElementsByXPath("//tr[@role='row']/th");
-		}
-		public Element getParentDocumentID(int i) {
-			return driver.FindElementByXPath("//td[@class=' details-control']/..//td["+i+"]");
-		}
-		public Element getParentDocumentDocId() {
-			return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td[contains(@class,'sorting')]");
-		}
-		public Element getSelectDocument(String DocID) {
-			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
-		}
+	}
 
-		
-		public Element getDocList_FolderCancel() {
-			return driver.FindElementById("btnFolderCancel");
-		}
-		public Element getDocList_TagCancel() {
-			return driver.FindElementById("btnTagCancel");
-		}
-		public Element getDocList_Bulktag() {
-			return driver.FindElementById("idBulkTag");
-		}
-		
+	// added by Aathith
+	public Element getParentDocumentCheckBox() {
+		return driver.FindElementByXPath("//td[@class=' details-control']/following-sibling::td//i");
+	}
 
-		public ElementCollection GetColumnData(int i) {
-			return driver.FindElementsByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td["+i+"]");
-		}
+	public ElementCollection getTableRowHeader() {
+		return driver.FindElementsByXPath("//tr[@role='row']/th");
+	}
 
-public ElementCollection  getHeaderText() {
-			return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
-		}	
+	public Element getParentDocumentID(int i) {
+		return driver.FindElementByXPath("//td[@class=' details-control']/..//td[" + i + "]");
+	}
 
-	
+	public Element getParentDocumentDocId() {
+		return driver.FindElementByXPath(
+				"//td[@class=' details-control']/following-sibling::td[contains(@class,'sorting')]");
+	}
+
+	public Element getSelectDocument(String DocID) {
+		return driver.FindElementByXPath("//td[text()='" + DocID + "']/..//td");
+	}
+
+	public Element getDocList_FolderCancel() {
+		return driver.FindElementById("btnFolderCancel");
+	}
+
+	public Element getDocList_TagCancel() {
+		return driver.FindElementById("btnTagCancel");
+	}
+
+	public Element getDocList_Bulktag() {
+		return driver.FindElementById("idBulkTag");
+	}
+
+	public ElementCollection GetColumnData(int i) {
+		return driver.FindElementsByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td[" + i + "]");
+	}
+
+	public ElementCollection getHeaderText() {
+		return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
+	}
+
+	public Element getDocList_EmailName() {
+		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[4]");
+	}
+
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -1685,10 +1702,10 @@ public ElementCollection  getHeaderText() {
 
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
 
-		if(getPureHitAddButton().isDisplayed()) {
+		if (getPureHitAddButton().isDisplayed()) {
 			getPureHitAddButton().waitAndClick(10);
-		}else {
-	driver.waitForPageToBeReady();
+		} else {
+			driver.waitForPageToBeReady();
 			// System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 			Reporter.log("Pure hit block already moved to action panel", true);
@@ -1775,9 +1792,9 @@ public ElementCollection  getHeaderText() {
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
 	}
-	
+
 	/**
-	 * @Author:Indium-Sowndarya 
+	 * @Author:Indium-Sowndarya
 	 * @param tagname
 	 */
 	public void bulkTagExistingFromDoclist(final String tagname) throws AWTException, InterruptedException {
@@ -1839,7 +1856,7 @@ public ElementCollection  getHeaderText() {
 	 */
 	public void addNewBulkTag(String tagname) throws InterruptedException, AWTException {
 
-		if(getPureHitAddButton().isElementAvailable(5)) {
+		if (getPureHitAddButton().isElementAvailable(5)) {
 			getPureHitAddButton().waitAndClick(10);
 		} else {
 			// System.out.println("Pure hit block already moved to action panel");
@@ -2113,7 +2130,7 @@ public ElementCollection  getHeaderText() {
 			base.waitForElement(getSelectWithName(searchName));
 			getSelectWithName(searchName).waitAndClick(10);
 			getToDocList().waitAndClick(10);
-			if(base.getYesBtn().isElementAvailable(3)) {
+			if (base.getYesBtn().isElementAvailable(3)) {
 				base.getYesBtn().waitAndClick(10);
 			} else {
 				System.out.println("Pop up message does not appear");
@@ -2580,9 +2597,9 @@ public ElementCollection  getHeaderText() {
 	 */
 	public void unTagDocmuments(String tagName) {
 		try {
-			if(getPureHitAddButton().isElementAvailable(5)) {
+			if (getPureHitAddButton().isElementAvailable(5)) {
 				getPureHitAddButton().waitAndClick(10);
-			}else {
+			} else {
 				// System.out.println("Pure hit block already moved to action panel");
 				UtilityLog.info("Pure hit block already moved to action panel");
 				Reporter.log("Pure hit block already moved to action panel", true);
@@ -2709,11 +2726,10 @@ public ElementCollection  getHeaderText() {
 				base.waitForElement(getselectDoc(row + 1));
 				getselectDoc(row + 1).waitAndClick(10);
 				base.stepInfo("Document is selected in doc list");
-				if(getPopUpOkBtn().isElementAvailable(2))
-				{
+				if (getPopUpOkBtn().isElementAvailable(2)) {
 					getPopUpOkBtn().Click();
 				}
-				
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3866,7 +3882,6 @@ public ElementCollection  getHeaderText() {
 		}
 	}
 
-
 	/**
 	 * @author Gopinath
 	 * @Description :Selecting Child document
@@ -4222,31 +4237,31 @@ public ElementCollection  getHeaderText() {
 			base.failedStep("Exception is occured while selecting doc file size of document" + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Brundha
-	 * @Description  : Method for verifying doccount
+	 * @Description : Method for verifying doccount
 	 */
-	
+
 	public String verifyingDocCount() {
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getTableFooterDocListCount());
-	    String DocListCount=getTableFooterDocListCount().getText();
-		
-	    driver.waitForPageToBeReady();
+		String DocListCount = getTableFooterDocListCount().getText();
+
+		driver.waitForPageToBeReady();
 		String[] doccount = DocListCount.split(" ");
 		String DocumentCount = doccount[5];
-		System.out.println("doclist page document count is"+DocumentCount);
-		
+		System.out.println("doclist page document count is" + DocumentCount);
+
 		driver.scrollPageToTop();
 		base.waitForElement(getBackToSourceBtn());
 		getBackToSourceBtn().Click();
 		driver.waitForPageToBeReady();
 		return DocumentCount;
-		
-		
+
 	}
-	
+
 	/**
 	 * @author Gopinath,Modified by: Gopinath,Modified date :: 01/10/2021
 	 * @Description :Method for bulk assign with persistant.
@@ -4267,7 +4282,7 @@ public ElementCollection  getHeaderText() {
 			driver.waitForPageToBeReady();
 			UtilityLog.info("performing bulk assign");
 			driver.waitForPageToBeReady();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSelectAssignmentExisting(assignmentName).Visible();
@@ -4294,7 +4309,7 @@ public ElementCollection  getHeaderText() {
 		}
 
 	}
-	
+
 	/**
 	 * @author Gopinath,Modified by: Gopinath,Modified date :: NA
 	 * @Description :Method for verifying doclist headers expand collapse.
@@ -4305,17 +4320,19 @@ public ElementCollection  getHeaderText() {
 			base.waitForElement(getFilterHeaderCollapsedIcon());
 			getFilterHeaderCollapsedIcon().waitAndClick(5);
 			base.waitForElement(getFilterDocHeaderCollapsed());
-			if(getFilterDocHeaderCollapsed().isElementAvailable(5)) {
+			if (getFilterDocHeaderCollapsed().isElementAvailable(5)) {
 				base.waitForElement(getFilterHeaderExpandIcon());
-				if(getFilterHeaderExpandIcon().isElementAvailable(5)) {
-					System.out.println("The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
-					base.passedStep("The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
-				}else {
+				if (getFilterHeaderExpandIcon().isElementAvailable(5)) {
+					System.out.println(
+							"The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
+					base.passedStep(
+							"The user is able to click on the icon and the header is collapse (be hidden) and the expand icon is present on the top right");
+				} else {
 					System.out.println("failed to collapsed the  header");
 					base.failedStep("failed to collapsed the  header");
 				}
-				
-			}else {
+
+			} else {
 				System.out.println("the header expandan/collapsed icon not visible");
 				base.failedStep("the header expandan/collapsed icon not visible");
 			}
@@ -4325,7 +4342,7 @@ public ElementCollection  getHeaderText() {
 		}
 
 	}
-	
+
 	public String duplicateCheckList1(List<String> listToVerify) {
 		String result = "Selected fields displayed more than once";
 		Set<String> hash_Set = new HashSet<String>();
@@ -4339,14 +4356,11 @@ public ElementCollection  getHeaderText() {
 			}
 		}
 		System.out.println(result_List);
-Collections.sort(result_List);
-		
-		
+		Collections.sort(result_List);
+
 		return result_List.toString();
 	}
-	
-	
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param ele
@@ -4356,17 +4370,17 @@ Collections.sort(result_List);
 		try {
 			base.waitForElement(SelectColumnBtn());
 			SelectColumnBtn().waitAndClick(10);
-			
+
 			int metadatasCount = getAvailableRemoveButtonCount().size();
 			for (int i = 0; i < metadatasCount; i++) {
 				getRemoveBtn().Click();
 				System.out.println(i);
 			}
-			String[] eleValue= {"EmailAuthorAddress",Input.MetaDataEAName ,Input.docFileType,Input.metaDataName};
-			for(int j=0;j<eleValue.length;j++) {
-			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
-			getSelectAvailMetadata(eleValue[j]).ScrollTo();
-			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			String[] eleValue = { "EmailAuthorAddress", Input.MetaDataEAName, Input.docFileType, Input.metaDataName };
+			for (int j = 0; j < eleValue.length; j++) {
+				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+				getSelectAvailMetadata(eleValue[j]).ScrollTo();
+				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
 			}
 			base.waitForElement(getAddToSelect());
 			getAddToSelect().waitAndClick(10);
@@ -4376,6 +4390,7 @@ Collections.sort(result_List);
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param IndexElement
@@ -4392,7 +4407,7 @@ Collections.sort(result_List);
 	 * @param IndexElement
 	 * @return
 	 */
-	public List<String> getColumnValue(String IndexElement,boolean lowerCase) {
+	public List<String> getColumnValue(String IndexElement, boolean lowerCase) {
 		base.waitForElement(getSelectDropDown());
 		base.waitTillElemetToBeClickable(getSelectDropDown());
 		getSelectDropDown().Click();
@@ -4405,17 +4420,18 @@ Collections.sort(result_List);
 		elementList = getTableRowText(i).FindWebElements();
 		for (WebElement webElementNames : elementList) {
 			String elementName = webElementNames.getText();
-			if(lowerCase) {
-			elementNames.add(elementName.toLowerCase());
-			}else {
+			if (lowerCase) {
+				elementNames.add(elementName.toLowerCase());
+			} else {
 				elementNames.add(elementName);
 			}
 		}
 		System.out.println(elementNames);
 		Collections.sort(elementNames);
-		
+
 		return elementNames;
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
@@ -4427,7 +4443,7 @@ Collections.sort(result_List);
 		base.waitForElement(getViewInDocView());
 		getViewInDocView().waitAndClick(5);
 	}
-	
+
 	public void getIncludeFilterEmailAllDomain(String Domain) {
 		base.waitForElement(getEmailAllDomainsBtn());
 		base.waitTillElemetToBeClickable(getEmailAllDomainsBtn());
@@ -4456,24 +4472,26 @@ Collections.sort(result_List);
 			base.passedStep(
 					"Active filter for email all domains by name: " + emailDomainName + " is Present as Expected");
 		} else {
-			base.failedStep("Active filter for email all domains by name: " + emailDomainName
-					+ " is not Present as Expected");
+			base.failedStep(
+					"Active filter for email all domains by name: " + emailDomainName + " is not Present as Expected");
 		}
 
 	}
-/**
- * @author Jayanthi.ganesan
- * This method will return the doc id's of all doc displayed.
- * @return
- */
-public List<String> gettingAllDocIDs(){
+
+	/**
+	 * @author Jayanthi.ganesan This method will return the doc id's of all doc
+	 *         displayed.
+	 * @return
+	 */
+	public List<String> gettingAllDocIDs() {
 		driver.waitForPageToBeReady();
-		List<String>docIDs = new ArrayList<String>();
+		List<String> docIDs = new ArrayList<String>();
 		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
 		base.waitTime(2);
 		docIDs = base.availableListofElements(getDocIds());
 		return docIDs;
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -4483,6 +4501,7 @@ public List<String> gettingAllDocIDs(){
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(10);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param noOfDocuments
@@ -4496,7 +4515,7 @@ public List<String> gettingAllDocIDs(){
 				driver.waitForPageToBeReady();
 				base.waitForElement(getselectDoc(row + 1));
 				getselectDoc(row + 1).waitAndClick(10);
-				if(getPopUpOkBtn().isElementAvailable(1)) {
+				if (getPopUpOkBtn().isElementAvailable(1)) {
 					getPopUpOkBtn().waitAndClick(5);
 				}
 				base.stepInfo("Document is selected in doc list");
@@ -4506,33 +4525,29 @@ public List<String> gettingAllDocIDs(){
 			base.failedStep("Failed to download selection documents" + e.getMessage());
 		}
 	}
-	
-	
-	
+
 	/**
-	 * @author Brundha.T
-	 * Method for getting child document in doclist page 
+	 * @author Brundha.T Method for getting child document in doclist page
 	 * 
 	 */
 	public ArrayList<String> GettingChildDocumentInDocListPage(int doc) {
 		ArrayList<String> arList = null;
 		int j;
-		
-			 arList = new ArrayList<String>();
-			 List<WebElement> RowCount = getChildTableRow(doc).FindWebElements();
-				for (j = 0; j < RowCount.size(); j++) {
-					driver.waitForPageToBeReady();
-					String row = RowCount.get(j).getText();
-					arList.add(row);
-					System.out.println(row);
-				}
-			 return arList;
+
+		arList = new ArrayList<String>();
+		List<WebElement> RowCount = getChildTableRow(doc).FindWebElements();
+		for (j = 0; j < RowCount.size(); j++) {
+			driver.waitForPageToBeReady();
+			String row = RowCount.get(j).getText();
+			arList.add(row);
+			System.out.println(row);
+		}
+		return arList;
 	}
-	
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description: method to verify sequence of parent and child docs 
+	 * @Description: method to verify sequence of parent and child docs
 	 */
 	public void verifySequenceOrderOfchildDocsInDocList() {
 		try {
@@ -4545,7 +4560,7 @@ public List<String> gettingAllDocIDs(){
 			for (int row = 0; row < rows.size(); row++) {
 				String rowChar = getParentRow(row).GetAttribute("class").trim();
 				if (rowChar.equalsIgnoreCase((" details-control").trim())) {
-					rowNum = row ;
+					rowNum = row;
 					break;
 				}
 			}
@@ -4563,27 +4578,26 @@ public List<String> gettingAllDocIDs(){
 				}
 			}
 			String docText = getDocIds().FindWebElements().get(rowNum).getText();
-			int parentDocId =Integer.parseInt( docText.replace("ID", ""));
+			int parentDocId = Integer.parseInt(docText.replace("ID", ""));
 			String childDoc = getChildByRowId().FindWebElements().get(0).getText();
-			int firstChildDoc=Integer.parseInt(childDoc.replace("ID",""));
-			if(parentDocId+1==firstChildDoc) {
+			int firstChildDoc = Integer.parseInt(childDoc.replace("ID", ""));
+			if (parentDocId + 1 == firstChildDoc) {
 				base.passedStep("parent and child docs displayed in sequence order");
-			}else{
+			} else {
 				base.failedStep("in correct sequence order of parent and child docs");
-				
+
 			}
-			for(int i=0;i<getChildByRowId().size()-1;i++) {
+			for (int i = 0; i < getChildByRowId().size() - 1; i++) {
 				String child = getChildByRowId().FindWebElements().get(i).getText();
-				int currentChildDocId=Integer.parseInt(child.replace("ID", ""));
-				String child2 = getChildByRowId().FindWebElements().get(i+1).getText();
-				int nextChildDocId=Integer.parseInt(child2.replace("ID", ""));
-				if(currentChildDocId+1!=nextChildDocId) {
+				int currentChildDocId = Integer.parseInt(child.replace("ID", ""));
+				String child2 = getChildByRowId().FindWebElements().get(i + 1).getText();
+				int nextChildDocId = Integer.parseInt(child2.replace("ID", ""));
+				if (currentChildDocId + 1 != nextChildDocId) {
 					base.failedStep("incorrect sequence order of child docs");
 					break;
 				}
 			}
 			base.passedStep("All child docs are displayed in sequence order");
-		  
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -4592,12 +4606,12 @@ public List<String> gettingAllDocIDs(){
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description:methoad to perform tally to navigate to tally page
 	 */
-	public void performTallyAction() {	
+	public void performTallyAction() {
 		base.waitTime(2);
 		base.waitForElement(getDocList_actionButton());
 		base.waitTillElemetToBeClickable(getDocList_actionButton());
@@ -4609,44 +4623,46 @@ public List<String> gettingAllDocIDs(){
 			base.waitTime(2);
 			driver.switchTo().alert();
 			base.failedStep("Pop up is appeared while perform tally");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			base.passedStep("No popup is  displayed");
 		}
 		TallyPage tallyPage = new TallyPage(driver);
 		base.waitForElement(tallyPage.getTallyPageHeader());
-		if(tallyPage.getTallyPageHeader().isElementAvailable(5)) {
+		if (tallyPage.getTallyPageHeader().isElementAvailable(5)) {
 			base.passedStep("Navigated to tally page");
-		}else {
+		} else {
 			base.failedStep("failed to navigate to tally");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description:method to verify 3 play counters are displayed in preview document 
+	 * @Description:method to verify 3 play counters are displayed in preview
+	 *                     document
 	 */
 	public void verifyPlayCountersDisplay() {
 		base.waitForElement(getColumnText(1, 8));
 		getColumnText(1, 8).waitAndClick(10);
 		base.waitForElement(getDocListPreview_AudioStartTime());
-		if(getDocListPreview_AudioStartTime().getWebElement().isDisplayed()) {
+		if (getDocListPreview_AudioStartTime().getWebElement().isDisplayed()) {
 			base.waitForElement(getDocList_Preview_AudioEndTime());
-			if(getDocList_Preview_AudioEndTime().getWebElement().isDisplayed()) {
+			if (getDocList_Preview_AudioEndTime().getWebElement().isDisplayed()) {
 				base.passedStep("Audio start and end counter are displayed in preview document");
-			}else {
+			} else {
 				base.failedStep("Audio end counter is not displayed in preview document");
 			}
-		}else {
+		} else {
 			base.failedStep("Audio Start counter is not displayed in preview document");
 		}
 		base.waitForElement(getDocList_Preview_AudioDuration());
-		if(getDocList_Preview_AudioDuration().getWebElement().isDisplayed()) {
+		if (getDocList_Preview_AudioDuration().getWebElement().isDisplayed()) {
 			base.passedStep("Audio play header is displayed in preview document");
-		}else {
+		} else {
 			base.failedStep("Audio play header is not displayed in preview document");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description selecting the first parent document
@@ -4657,6 +4673,7 @@ public List<String> gettingAllDocIDs(){
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(10);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @return
@@ -4667,8 +4684,7 @@ public List<String> gettingAllDocIDs(){
 		String docId = getParentDocumentID(index).getText().trim();
 		return docId;
 	}
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal created date: 23/04/2022
 	 * @description: To verify MasterDate in Doclist
@@ -4678,19 +4694,21 @@ public List<String> gettingAllDocIDs(){
 		try {
 			driver.waitForPageToBeReady();
 			if (getMasterDateTableValue().isElementAvailable(5)) {
-				
+
 				String fieldValue = getMasterDateTableValue().getText();
-				System.out.println("For MasterDate the fieldvalue is "+fieldValue+"");
-				base.stepInfo("For MasterDate the fieldvalue is "+fieldValue+" displayed");
-				base.passedStep("Metadata with Datetime is displayed with the sightline standard Date Format successfully");
-				
-			}else {
+				System.out.println("For MasterDate the fieldvalue is " + fieldValue + "");
+				base.stepInfo("For MasterDate the fieldvalue is " + fieldValue + " displayed");
+				base.passedStep(
+						"Metadata with Datetime is displayed with the sightline standard Date Format successfully");
+
+			} else {
 				base.failedStep("The Datetime is not displayed in the DocList");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param eleValue
@@ -4700,16 +4718,16 @@ public List<String> gettingAllDocIDs(){
 		try {
 			base.waitForElement(SelectColumnBtn());
 			SelectColumnBtn().waitAndClick(10);
-			
+
 			int metadatasCount = getAvailableRemoveButtonCount().size();
 			for (int i = 0; i < metadatasCount; i++) {
 				getRemoveBtn().Click();
 				System.out.println(i);
 			}
-			for(int j=0;j<eleValue.length;j++) {
-			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
-			getSelectAvailMetadata(eleValue[j]).ScrollTo();
-			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			for (int j = 0; j < eleValue.length; j++) {
+				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+				getSelectAvailMetadata(eleValue[j]).ScrollTo();
+				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
 			}
 			base.waitForElement(getAddToSelect());
 			getAddToSelect().waitAndClick(10);
@@ -4719,33 +4737,35 @@ public List<String> gettingAllDocIDs(){
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
-	 * @param  Select Column Display By Removing Existing Ones add Multiple
+	 * @param Select Column Display By Removing Existing Ones add Multiple
 	 */
 	public void SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns() {
 
 		try {
 			base.waitForElement(SelectColumnBtn());
 			SelectColumnBtn().waitAndClick(10);
-			
+
 			int metadatasCount = getAvailableRemoveButtonCount().size();
 			for (int i = 0; i < metadatasCount; i++) {
 				getRemoveBtn().Click();
 				System.out.println(i);
 			}
-			String[] eleValue= {"LastAccessDate","LastModifiedDate","LastSaveDate","MasterDate","EmailSentDate","EmailReceivedDate","DocDate","AppointmentStartDate","AppointmentEndDate",Input.MetaDataEAName ,Input.docFileType,Input.metaDataName};
-			for(int j=0;j<eleValue.length;j++) {
-			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
-			getSelectAvailMetadata(eleValue[j]).ScrollTo();
-			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			String[] eleValue = { "LastAccessDate", "LastModifiedDate", "LastSaveDate", "MasterDate", "EmailSentDate",
+					"EmailReceivedDate", "DocDate", "AppointmentStartDate", "AppointmentEndDate", Input.MetaDataEAName,
+					Input.docFileType, Input.metaDataName };
+			for (int j = 0; j < eleValue.length; j++) {
+				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+				getSelectAvailMetadata(eleValue[j]).ScrollTo();
+				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
 			}
 			base.waitForElement(getAddToSelect());
 			getAddToSelect().waitAndClick(10);
 			base.waitForElement(getUpdateColumnBtn());
 			getUpdateColumnBtn().waitAndClick(10);
-			for(String metadata : eleValue) {
+			for (String metadata : eleValue) {
 				base.visibleCheck(metadata);
 				base.stepInfo(metadata);
 			}
@@ -4754,32 +4774,28 @@ public List<String> gettingAllDocIDs(){
 			e.printStackTrace();
 		}
 	}
-	
 
-	
 	/**
 	 * @author Malayala.Seenivasan
 	 * @description method for validating the deleted tag
 	 * @param tag
 	 */
-	
+
 	public void validatingTagExisting(String tag) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocList_actionButton());
 		getDocList_actionButton().waitAndClick(5);
 		base.waitForElement(getDocList_Bulktag());
 		getDocList_Bulktag().waitAndClick(5);
-		boolean tagfalse=getSelectExistingTag(tag).isElementAvailable(3);
-		if (tagfalse==false) {
+		boolean tagfalse = getSelectExistingTag(tag).isElementAvailable(3);
+		if (tagfalse == false) {
 			base.passedStep("Deleted tag not present in existing tag");
-		}
-		else {
+		} else {
 			base.failedStep("Deleted tag present in existing tag");
 		}
 		getDocList_TagCancel().waitAndClick(5);
 	}
-	
-	
+
 	/**
 	 * @author Malayala.Seenivasan
 	 * @description method for validating the deleted folder
@@ -4791,34 +4807,31 @@ public List<String> gettingAllDocIDs(){
 		getDocList_actionButton().waitAndClick(5);
 		base.waitForElement(getDocList_BulkFolder());
 		getDocList_BulkFolder().waitAndClick(5);
-		boolean tagfalse=getSelectFolderExisting(folder).isElementAvailable(3);
-		if (tagfalse==false) {
+		boolean tagfalse = getSelectFolderExisting(folder).isElementAvailable(3);
+		if (tagfalse == false) {
 			base.passedStep("Deleted folder not present in existing folder");
-		}
-		else {
+		} else {
 			base.failedStep("Deleted folder present in existing folder");
 		}
 		getDocList_FolderCancel().waitAndClick(5);
 	}
 
 	/**
-	 * @author Brundha.T
-	 * Method To verify the email meta data
+	 * @author Brundha.T Method To verify the email meta data
 	 * 
 	 */
-	public ArrayList<String>  verifyingEmailMetaData(int Metadata) {
+	public ArrayList<String> verifyingEmailMetaData(int Metadata) {
 		ArrayList<String> arList = null;
-		      int j;
-		      arList = new ArrayList<String>();
-			  List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
-				for (j = 0; j < RowCount.size(); j++) {
-					driver.waitForPageToBeReady();
-					String row = RowCount.get(j).getText();
-					arList.add(row);
-				}
-				System.out.println(arList);
-				 return arList;
-}
-
+		int j;
+		arList = new ArrayList<String>();
+		List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
+		for (j = 0; j < RowCount.size(); j++) {
+			driver.waitForPageToBeReady();
+			String row = RowCount.get(j).getText();
+			arList.add(row);
+		}
+		System.out.println(arList);
+		return arList;
+	}
 
 }
