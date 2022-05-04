@@ -565,6 +565,7 @@ public class DomainManagement_IndiumRegression {
 
 		userManage.passingUserName(Input.da1userName);
 		userManage.applyFilter();
+		baseClass.waitTime(3);
 		String firstName = userManage.getTableData("FIRST NAME", 1);
 		String lastName = userManage.getTableData("LAST NAME", 1);
 		String dominName = userManage.getTableData("DOMAIN", 1);
@@ -614,6 +615,7 @@ public class DomainManagement_IndiumRegression {
 
 		userManage.passingUserName(Input.da1userName);
 		userManage.applyFilter();
+		baseClass.waitTime(3);
 		String firstName = userManage.getTableData("FIRST NAME", 1);
 		String lastName = userManage.getTableData("LAST NAME", 1);
 		String dominName = userManage.getTableData("DOMAIN", 1);
@@ -673,6 +675,7 @@ public class DomainManagement_IndiumRegression {
 		userManage = new UserManagement(driver);
 		userManage.passingUserName(Input.da1userName);
 		userManage.applyFilter();
+		baseClass.waitTime(3);
 		String firstName = userManage.getTableData("FIRST NAME", 1);
 		String lastName = userManage.getTableData("LAST NAME", 1);
 		String Billable = " || IsBillable: false";
@@ -827,6 +830,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:29/4/2022 Modified by:
 	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
 	 */
+	
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyingBatchPrintImpToRmu() throws Exception {
 		baseClass = new BaseClass(driver);
