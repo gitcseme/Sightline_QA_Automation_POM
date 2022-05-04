@@ -432,6 +432,14 @@
    <filterMonth>Dec</filterMonth>
 	<filterYear>2021</filterYear>
 	<userRole>Review Manager</userRole>
+	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596</nativeFileName>
+	<audioPlayerReady>AudioPlayerReady</audioPlayerReady>
+	<datFormatFile>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datFormatFile>
+	<nativeMp3FileFormat>F10A_AK_Native_PDF_MP3_Transcript_ForProduction_20220502105322190</nativeMp3FileFormat>
+	<DocCount>2</DocCount>
+	<emailAllDomain>EmailAllDomains</emailAllDomain>
+	<validationData>/o=enron/ou=na/cn=recipients/cn=notesaddr/cn=a3a4cb81-65db1a4f-862569e7-6cfe2f</validationData>
+	<ingestionPrjt>Indium_IngestionFix</ingestionPrjt>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 

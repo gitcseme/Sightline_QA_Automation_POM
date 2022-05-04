@@ -454,7 +454,14 @@ public class TestData {
 	public String filterMonth;
 	public String filterYear;
 	public String userRole;
-
+	public String nativeFileName;
+	public String audioPlayerReady;
+	public String datFormatFile;
+	public String nativeMp3FileFormat;
+	public String DocCount;
+	public String emailAllDomain;
+	public String validationData;
+	public String ingestionPrjt;
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
 

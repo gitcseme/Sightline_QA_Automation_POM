@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
@@ -608,7 +609,144 @@ public class Ingestion_Regression01 {
 		
 	}
 	
+	/** 
+     *Author :Brundha Test Case Id:RPMXCON-50083
+	 * Description :verify Ingestion should published successfully if Email metadata is having only Address
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 19)
+	public void verifyEmailAddressInDocListPage() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-50083");
+		baseClass.stepInfo("verify Ingestion should published successfully if Email metadata is having only Address");
+		
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.selectproject(Input.ingestionPrjt);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeFileName);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null);
+		}
+		String[] addEmailColumn = {"EmailAuthorName", "EmailAuthorAddress"};
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData(Input.metadataIngestion,Input.nativeFileName);
+		sessionSearch.ViewInDocList();
+		
+		DocListPage doc= new DocListPage(driver);
+		baseClass.stepInfo("Verifying Email Metadata in DocList page");
+		doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+		for(String metadata : addEmailColumn) {
+			baseClass.visibleCheck(metadata);
+		}
+		int EmailData = baseClass.getIndex(doc.getHeaderText(),Input.MetaDataEAName);
+		doc.GetColumnData(EmailData);
+		baseClass.stepInfo("verifying field value in Email Metadata");
+		ArrayList<String> selectedDocs = doc.verifyingEmailMetaData(EmailData);
+		if(selectedDocs.contains("")) {
+			baseClass.passedStep("email author name is blank as expected");
+		}else {
+			baseClass.failedStep("email author name is not blank as expected");
+		}
+		int EmailMetaData = baseClass.getIndex(doc.getHeaderText(), "EmailAuthorAddress");
+		doc.GetColumnData(EmailMetaData);
+		ArrayList<String> selectedDoc = doc.verifyingEmailMetaData(EmailMetaData);
+		if(selectedDoc.contains(Input.validationData)) {
+			baseClass.passedStep("email author address is displayed with the expected text");
+		}else {
+			baseClass.failedStep("email author address is not displayed with expected text");
+		}
+		loginPage.logout();
+		
+		
+		
+		
+	}
+	
 
+
+/** 
+     *Author :Brundha Test Case Id:RPMXCON-49804
+	 * Description :To verify that if Email data contained space after the '@' sign , it should not calculate two distinct values
+	 *
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 21)
+	public void verifyEmailAllDomainDistinctData() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		SessionSearch	sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49804");
+		baseClass.stepInfo("To verify that if Email data contained space after the '@' sign , it should not calculate two distinct values");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeFileName);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null);
+		}
+			
+			int count = sessionsearch.MetaDataSearchInBasicSearch(Input.emailAllDomain,"hotmail.com");
+			sessionsearch.addNewSearch();
+			int count1 = sessionsearch.newMetaDataSearchInBasicSearch(Input.emailAllDomain,"aol.com");
+			int DocCount=Integer. parseInt(Input.DocCount);
+			if(count!=0 && count==DocCount) {
+				baseClass.passedStep("Email MetaData count is displayed as expected");
+		}else {
+			baseClass.failedStep("The count is not displayed as expected");
+		}
+			int DocumentCount=Integer. parseInt(Input.DocCount);
+			int doc=DocumentCount+1;
+					
+			if(count1!=0 && count1==doc) {
+				baseClass.passedStep("Email MetaData count is displayed as expected");
+		}else {
+			baseClass.failedStep("The count is not displayed as expected");
+		}
+		baseClass.passedStep("verified that if Email data contained space before the '@' sign , it should not calculate two distinct values");
+		loginPage.logout();
+	}
+	
+	
+	
+	/** 
+     *Author :Brundha Test Case Id:RPMXCON-48173
+	 * Description :To Verify for AudioPlayer ready are Nexidia indexed.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 20)
+	public void verifyDocumentInAudioPlayerReady() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48173");
+		baseClass.stepInfo("To Verify for AudioPlayer ready are Nexidia indexed.");
+		
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.selectproject(Input.ingestionPrjt);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
+		}
+		SessionSearch	sessionsearch = new SessionSearch(driver);
+		sessionsearch.SearchMetaData(Input.audioPlayerReady,Input.pageCount);
+		sessionsearch.verifyDocCountForAudioPlayerReady();
+		loginPage.logout();
+		
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
