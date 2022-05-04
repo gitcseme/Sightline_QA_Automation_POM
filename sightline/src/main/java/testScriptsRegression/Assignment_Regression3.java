@@ -68,10 +68,10 @@ public class Assignment_Regression3 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		//Input in = new Input();
-     	//in.loadEnvConfig();
-		 ingestionDataName=Input.IngestionName_PT;
-		 ingestionMetaData= Input.metadataIngestion;
+//		Input in = new Input();
+//		in.loadEnvConfig();
+		ingestionDataName = Input.IngestionName_PT;
+		ingestionMetaData = Input.metadataIngestion;
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -83,7 +83,7 @@ public class Assignment_Regression3 {
 		softAssertion = new SoftAssert();
 	}
 
-	@Test(description ="RPMXCON-54431",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-54431", enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyDocCounts() throws Exception {
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -123,7 +123,7 @@ public class Assignment_Regression3 {
 	 * Documents tab
 	 */
 
-	@Test(description ="RPMXCON-54432",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54432", enabled = true, groups = { "regression" }, priority = 2)
 	public void VerifyDocsCount_DistributeTab() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -173,7 +173,7 @@ public class Assignment_Regression3 {
 	 * distribute all documents to Reviewer in assignment, then 'DISTRIBUTED to
 	 * User' count displays correct count on Manage Reviewers tab
 	 */
-	@Test(description ="RPMXCON-54433",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-54433", enabled = true, groups = { "regression" }, priority = 3)
 
 	public void VerifyDocsCount_ReviewerTab() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -223,7 +223,7 @@ public class Assignment_Regression3 {
 	 * in context of an assignment
 	 */
 
-	@Test(description ="RPMXCON-54434",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-54434", enabled = true, groups = { "regression" }, priority = 4)
 	public void VerifyDocsCount_DocView() throws Exception {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
@@ -264,7 +264,7 @@ public class Assignment_Regression3 {
 	 * @Description-Verify that 'Show Default View Tab' enabled by default with
 	 *                     cascading settings not enabled
 	 */
-	@Test(description ="RPMXCON-54513",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-54513", enabled = true, groups = { "regression" }, priority = 5)
 
 	public void VerifyToggleEnabled() throws Exception {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -306,7 +306,7 @@ public class Assignment_Regression3 {
 	 * @description: Delete keywords - Assignment should not display the deleted
 	 *               keyword
 	 */
-	@Test(description ="RPMXCON-54756",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-54756", enabled = true, groups = { "regression" }, priority = 6)
 	public void validateKeywordsInAssignment() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Delete keywords - Assignment should not display the deleted keyword");
@@ -352,7 +352,7 @@ public class Assignment_Regression3 {
 	 * @description:Verifying the Default Live Sequence while creating a new
 	 *                        assignment group
 	 */
-	@Test(description ="RPMXCON-54493",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-54493", enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyLivesequence() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verifying the Default Live Sequence while creating a new assignment group");
@@ -390,7 +390,7 @@ public class Assignment_Regression3 {
 	 *                     settings incl. Max Draw Count as 100 when creating
 	 *                     assignment group
 	 */
-	@Test(description ="RPMXCON-60049",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-60049", enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyToggle_AssgnGrp() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verify default settings for toggles as well as Draw from Pool settings"
@@ -430,7 +430,7 @@ public class Assignment_Regression3 {
 	 *                     incl. Max Draw Count as 100 when creating new assignment
 	 *                     from manage assignment
 	 */
-	@Test(description ="RPMXCON-60048",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-60048", enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyToggle_Assignments() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo(
@@ -467,7 +467,7 @@ public class Assignment_Regression3 {
 	 *              settings incl. Max Draw Count as 100 when creating assignment
 	 *              with Quick Batch
 	 */
-	@Test(description ="RPMXCON-60046",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-60046", enabled = true, groups = { "regression" }, priority = 10)
 	public void VerifyToggle_QuickBatch() throws InterruptedException, ParseException, IOException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -506,7 +506,7 @@ public class Assignment_Regression3 {
 	 *                     with Bulk Assign
 	 */
 
-	@Test(description ="RPMXCON-60047",enabled= true,groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-60047", enabled = true, groups = { "regression" }, priority = 11)
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -553,7 +553,7 @@ public class Assignment_Regression3 {
 	 * @description:
 	 */
 
-	@Test(description ="RPMXCON-54497",enabled = true,groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-54497", enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyDrawPoolToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -604,7 +604,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59178]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59178",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-59178", enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyDrawLinkWhenFamiliesToggleDisabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -666,7 +666,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59201]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59201",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-59201", enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyAfterEditingAssignGroup() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -682,61 +682,62 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo(
 				"Verify that after editing assignment group with cascading, changes should reflect in its respective assignment");
 
-		//create Assignmnet group with Draw Toggle Disabled
+		// create Assignmnet group with Draw Toggle Disabled
 		agnmt.navigateToAssignmentsPage();
 		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", true);
 
-		//Create Assignment in Assignment Group 
+		// Create Assignment in Assignment Group
 		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
 		agnmt.createAssignmentFromAssgnGroup(assignment, Input.codeFormName);
 
-		//Enable Draw Toggle in Assign Group
+		// Enable Draw Toggle in Assign Group
 		agnmt.editAssgnGrp(cascadeAsgnGrpName, "Yes");
 		driver.waitForPageToBeReady();
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", true);
 
-		//verify Draw Toggle is Enabled in Assignment
+		// verify Draw Toggle is Enabled in Assignment
 		agnmt.selectAssignmentToView(assignment);
 		baseClass.waitForElement(agnmt.getAssignmentActionDropdown());
 		agnmt.getAssignmentAction_EditAssignment().waitAndClick(3);
 		agnmt.VerifyDrawPoolToggleEnabled();
 
-		//Delete Assign group and assign
+		// Delete Assign group and assign
 		agnmt.navigateToAssignmentsPage();
 		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59179",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-59179", enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyDrawLinkWhenEmailThreadToggleEnabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59179 ");
 		baseClass.stepInfo("Verify that when Email Threads Together is enabled,"
 				+ " the draw will keep the entire email thread together irrespective of the size of the batch");
 
-		//Getting the ingested docs to assign to assignment
-		search.MetaDataSearchInAdvancedSearch(ingestionMetaData,ingestionDataName);
+		// Getting the ingested docs to assign to assignment
+		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 
 		// assignment Creation
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -744,44 +745,44 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-		
+
 		baseClass.stepInfo("Created Assignment name : " + assignmentName);
 		agnmt.dragAndDropLiveSequence(" Email Threads");
 		baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
-    	baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Family Members");
-    	driver.waitForPageToBeReady();
-    	//Draw pool toggle enable and setting draw limit as 20.
+		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
+		baseClass.waitTime(2);
+		agnmt.dragAndDropLiveSequence(" Family Members");
+		driver.waitForPageToBeReady();
+		// Draw pool toggle enable and setting draw limit as 20.
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
-    	// email Thread Toggles Enable
+		// email Thread Toggles Enable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		// Distribute 33 Docs to  REV
+		// Distribute 33 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.distributeTheGivenDocCountToReviewer("33");
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-		
+
 		// Completing the 23 documents
 		driver.waitForPageToBeReady();
 		docViewPage.CompleteTheDocumentInMiniDocList(23);
-		//docViewPage.completeDocsBasedOnDocID(Input.docIDs+"3740");
+		// docViewPage.completeDocsBasedOnDocID(Input.docIDs+"3740");
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
@@ -793,55 +794,55 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==35) {
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == 35) {
 				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing "
-						+ "23 docs and clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified that when Email Threads Together is enabled, the draw will keep"
-						+ " the entire email thread together irrespective of the size of the batch");
-				
-			}
-			else {
+						+ "23 docs and clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified that when Email Threads Together is enabled, the draw will keep"
+								+ " the entire email thread together irrespective of the size of the batch");
+
+			} else {
 				baseClass.failedStep("Doc Count displayed in ToDo Column after completing "
-							+ "23 docs and clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+						+ "23 docs and clicking Draw Pool link is " + docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59177",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-59177", enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyDrawLinkWhenFamilyToggleEnabled() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59177");
 		baseClass.stepInfo("Verify that when Keep Families Together is enabled, the draw will keep the "
 				+ "entire family together irrespective of the size of the batch");
 
 		// assignment Creation
-		search.MetaDataSearchInAdvancedSearch(ingestionMetaData,ingestionDataName);
+		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -849,30 +850,30 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-		
+
 		agnmt.dragAndDropLiveSequence(" Email Threads");
 		baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
-    	baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Family Members");
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Enable and making draw limit as 20
+		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
+		baseClass.waitTime(2);
+		agnmt.dragAndDropLiveSequence(" Family Members");
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Enable and making draw limit as 20
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
-    	// email Thread Toggles Enable
+		// email Thread Toggles Enable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		// Keep family Toggles Enable
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		// Distribute 33 Docs to  REV
+		// Distribute 33 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.distributeTheGivenDocCountToReviewer("31");
 
@@ -880,13 +881,13 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-		
+
 		// Completing the 24 documents
 		driver.waitForPageToBeReady();
-		List<String>DocID1 = docViewPage.CompleteTheDocumentInMiniDocList(24);
+		List<String> DocID1 = docViewPage.CompleteTheDocumentInMiniDocList(24);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
@@ -898,51 +899,53 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==35) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing "+DocID1.size()+ " docs and clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified that when Email Threads Together is enabled, the draw will keep"
-						+ " the entire email thread together irrespective of the size of the batch");
-				
-			}
-			else {
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == 35) {
+				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing " + DocID1.size()
+						+ " docs and clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified that when Email Threads Together is enabled, the draw will keep"
+								+ " the entire email thread together irrespective of the size of the batch");
+
+			} else {
 				baseClass.failedStep("Doc Count displayed in ToDo Column after completing "
-							+ "23 docs and clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+						+ "23 docs and clicking Draw Pool link is " + docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59197",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-59197", enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyDrawaLimit_BothToggleOFF() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59197");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles OFF");
 
-	    search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion,Input.IngestionName_PT);
+		search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, Input.IngestionName_PT);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -950,31 +953,31 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Disable
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		
-		//Edit Assignment
+
+		// Edit Assignment
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		// Draw pool Toggle Enable and making draw limit as 20
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
-    	// email Thread Toggles  disable
+		// email Thread Toggles disable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		// Keep family Toggles disable
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
-		//distributing docs 
+		// distributing docs
 		agnmt.distributeTheGivenDocCountToReviewer("2");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
@@ -984,18 +987,18 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.selectAssignmentfromDashborad(assignmentName);
 		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-		
-		// Completing  2 documents
+
+		// Completing 2 documents
 		driver.waitForPageToBeReady();
-		List<String>DocID1 = docViewPage.CompleteTheDocumentInMiniDocList(2);
+		List<String> DocID1 = docViewPage.CompleteTheDocumentInMiniDocList(2);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		//Validation as per test step-7.Verification of draw limit.
+		// Validation as per test step-7.Verification of draw limit.
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			baseClass.passedStep("Draw pool link is displayed");
 			baseClass.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
@@ -1003,59 +1006,60 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==20) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing "+DocID1.size()+ " docs and after clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified  draw from pool after editing the assignment with both the toggles OFF ");
-				
-			}
-			else {
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == 20) {
+				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing " + DocID1.size()
+						+ " docs and after clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified  draw from pool after editing the assignment with both the toggles OFF ");
+
+			} else {
 				baseClass.failedStep("Doc Count displayed in ToDo Column after completing "
-							+ "2 docs and clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+						+ "2 docs and clicking Draw Pool link is " + docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59196",enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-59196", enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyDrawaLimit_BothToggleON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59196");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles ON ");
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
-		search.advancedMetaDataForDraft(Input.metadataIngestion,null,Input.IngestionName_PT,null);
+		search.advancedMetaDataForDraft(Input.metadataIngestion, null, Input.IngestionName_PT, null);
 		search.selectOperator("AND");
 		baseClass.waitForElement(search.getAdvanceSearch_MetadataBtn());
 		search.getAdvanceSearch_MetadataBtn().Click();
 		search.getSelectMetaData().selectFromDropdown().selectByVisibleText("FamilyID");
 		search.getMetaDataSearchText1().SendKeys(Input.sameFamilyDocs_FamilyID + Keys.TAB);
 		search.getMetaDataInserQuery().Click();
-	    int count= search.serarchWP();
+		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -1063,31 +1067,31 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Disable
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		
-		//Edit Assignment
+
+		// Edit Assignment
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		// Draw pool Toggle Enable and making draw limit as 20
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
-    	// email Thread Toggles  enable
+		// email Thread Toggles enable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		// Keep family Toggles enable
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
-		//distributing docs 
+		// distributing docs
 		agnmt.distributeTheGivenDocCountToReviewer("2");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
@@ -1097,12 +1101,12 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		//Validation as per test step-7.Verification of draw limit.
+		// Validation as per test step-7.Verification of draw limit.
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			baseClass.passedStep("Draw pool link is displayed");
 			baseClass.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
@@ -1110,31 +1114,33 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==count) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified  draw from pool after editing the assignment with both the toggles ON ");
-				
-			}
-			else {
-				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == count) {
+				baseClass.stepInfo(
+						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified  draw from pool after editing the assignment with both the toggles ON ");
+
+			} else {
+				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "
+						+ docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
 	 */
-	
+
 	@Test(description = "RPMXCON-59202", enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyAfterEditingAssignGroup_FamilyON_EmailThreadOFF() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
@@ -1156,8 +1162,7 @@ public class Assignment_Regression3 {
 		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", true);
-		baseClass.stepInfo(
-				"Created a assignment group with Draw Pool Toggle setting as ON");
+		baseClass.stepInfo("Created a assignment group with Draw Pool Toggle setting as ON");
 		// Create Assignment in Assignment Group
 		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
 		agnmt.createAssignmentFromAssgnGroup(assignment, Input.codeFormName);
@@ -1183,11 +1188,14 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("**Check for the Draw from pool settings for the assignment "
 				+ "after making changes in assignment group**");
 		SoftAssert assertion = new SoftAssert();
-		boolean status3 = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgnGrp_Create_DrawPooltoggle(),"Draw Pool Toggle");
+		boolean status3 = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw Pool Toggle");
 		assertion.assertTrue(status3, "Draw Pool Toggle is Not Enabled");
-		boolean status = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepFamiliesTogetherToggle(),"Keep Family together");
+		boolean status = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepFamiliesTogetherToggle(),
+				"Keep Family together");
 		assertion.assertTrue(status, "keep family together Toggle is Not  Enabled");
-		boolean status1 = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepEmailThreadTogetherToggle(),"Keep Email Threads Together");
+		boolean status1 = agnmt.verifyToggleEnableORDisabled(agnmt.getAssgn_keepEmailThreadTogetherToggle(),
+				"Keep Email Threads Together");
 		assertion.assertFalse(status1, "KeepEmailThreads Together Toggle is not Disabled");
 		// Delete Assign group and assign
 		agnmt.navigateToAssignmentsPage();
@@ -1277,6 +1285,7 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
@@ -1307,9 +1316,9 @@ public class Assignment_Regression3 {
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		// Keep family Toggles enabled
-    	String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
+		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
-						true);
+				true);
 		baseClass.stepInfo(
 				"Created a assignment group with keep family together toggle ON" + " and threads together toggle OFF");
 		// Create Assignment in Assignment Group
@@ -1356,6 +1365,7 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
@@ -1372,7 +1382,7 @@ public class Assignment_Regression3 {
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59176");
-		
+
 		baseClass.stepInfo("UI: Verify that option to keep families together and option to keep "
 				+ "threads together should be displayed while creating/editing assignment group and assignment");
 
@@ -1381,54 +1391,53 @@ public class Assignment_Regression3 {
 		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
-		baseClass.stepInfo("Check for the toggle under the 'Draw from pool'"
-				+ " section of the new assignment group page");
+		baseClass.stepInfo(
+				"Check for the toggle under the 'Draw from pool'" + " section of the new assignment group page");
 		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
 		agnmt.createAssignment_withoutSave(assignment, Input.codeFormName);
-		baseClass.stepInfo("Check for the toggle under the 'Draw from pool'"
-				+ " section of the new assignment page");
+		baseClass.stepInfo("Check for the toggle under the 'Draw from pool'" + " section of the new assignment page");
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
-		
+
 		baseClass.passedStep("Sucessfully Verified that option to keep families together and option to keep "
 				+ "threads together should be displayed while creating assignment group and assignment");
 
 		loginPage.logout();
 
 	}
-	
 
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59199",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-59199", enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyDrawaLimitEditAssgn_ThreadON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59199");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families together as OFF &"
 				+ " keep email threads as ON");
 		// search with Metadata & Operator and verify purehit
-		search.metadataSearchesUsingOperators(Input.metadataIngestion,Input.IngestionName_PT,"AND","EmailThreadID",Input.sameThreadDocs_EmailThreadID,true);
-	    int count= search.serarchWP();
+		search.metadataSearchesUsingOperators(Input.metadataIngestion, Input.IngestionName_PT, "AND", "EmailThreadID",
+				Input.sameThreadDocs_EmailThreadID, true);
+		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -1436,32 +1445,32 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Disable
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		baseClass.stepInfo("Created a Assignment " + assignmentName+" with draw pool toggle disabled");
-		
-		//Edit Assignment
+		baseClass.stepInfo("Created a Assignment " + assignmentName + " with draw pool toggle disabled");
+
+		// Edit Assignment
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		// Draw pool Toggle Enable and making draw limit as 20
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
-    	// email Thread Toggles  enable
+		// email Thread Toggles enable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		// Keep family Toggles disable
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
-		//distributing docs 
+		// distributing docs
 		agnmt.distributeTheGivenDocCountToReviewer("2");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
@@ -1471,12 +1480,12 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		//Validation as per test step-7.Verification of draw limit.
+		// Validation as per test step-7.Verification of draw limit.
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			baseClass.passedStep("Draw pool link is displayed");
 			baseClass.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
@@ -1484,20 +1493,22 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==count) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified  draw from pool after editing the assignment with keep email thread "
-						+ "toggles ON and keep families togle OFF.");
-				
-			}
-			else {
-				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == count) {
+				baseClass.stepInfo(
+						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified  draw from pool after editing the assignment with keep email thread "
+								+ "toggles ON and keep families togle OFF.");
+
+			} else {
+				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "
+						+ docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
-		}		
+		}
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
@@ -1508,28 +1519,29 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59198",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description = "RPMXCON-59198", enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyDrawLimitEditAssgn_FamilyON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59198");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families "
 				+ "together as ON & keep email threads as OFF ");
 		// search with Metadata & Operator and verify purehit
-		search.metadataSearchesUsingOperators(Input.metadataIngestion,Input.IngestionName_PT,"AND","FamilyID",Input.sameFamilyDocs_FamilyID,true);
-	    int count= search.serarchWP();
+		search.metadataSearchesUsingOperators(Input.metadataIngestion, Input.IngestionName_PT, "AND", "FamilyID",
+				Input.sameFamilyDocs_FamilyID, true);
+		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -1537,32 +1549,32 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Disable
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		baseClass.stepInfo("Created a Assignment " + assignmentName+" with draw pool toggle disabled");
-		
-		//Edit Assignment
+		baseClass.stepInfo("Created a Assignment " + assignmentName + " with draw pool toggle disabled");
+
+		// Edit Assignment
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		// Draw pool Toggle Enable and making draw limit as 20
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
-    	// email Thread Toggles  disable
+		// email Thread Toggles disable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
 		// Keep family Toggles enable
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
-		//distributing docs 
+		// distributing docs
 		agnmt.distributeTheGivenDocCountToReviewer("2");
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
@@ -1572,12 +1584,12 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		//Validation as per test step-7.Verification of draw limit.
+		// Validation as per test step-7.Verification of draw limit.
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			baseClass.passedStep("Draw pool link is displayed");
 			baseClass.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
@@ -1585,59 +1597,62 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==count) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified  draw from pool after editing the assignment with keep families together "
-						+ " toggles ON and kep email threads toggle OFF.");
-				
-			}
-			else {
-				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == count) {
+				baseClass.stepInfo(
+						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified  draw from pool after editing the assignment with keep families together "
+								+ " toggles ON and kep email threads toggle OFF.");
+
+			} else {
+				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "
+						+ docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59216",enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-59216", enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyDrawPoolToggle_existingAssgn() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
-		//Getting the ingested docs to assign to assignment
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
+		// Getting the ingested docs to assign to assignment
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59216");
 		baseClass.stepInfo("Verify that for existing assignment, keep families together as enabled and keep "
 				+ "threads together as disabled toggle should be displayed");
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
-		search.advancedMetaDataForDraft(Input.metadataIngestion,null,Input.IngestionName_PT,null);
+		search.advancedMetaDataForDraft(Input.metadataIngestion, null, Input.IngestionName_PT, null);
 		search.selectOperator("AND");
 		baseClass.waitForElement(search.getAdvanceSearch_MetadataBtn());
 		search.getAdvanceSearch_MetadataBtn().Click();
 		search.getSelectMetaData().selectFromDropdown().selectByVisibleText("FamilyID");
 		search.getMetaDataSearchText1().SendKeys(Input.sameFamilyDocs_FamilyID + Keys.TAB);
 		search.getMetaDataInserQuery().Click();
-	    int count= search.serarchWP();
+		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 		// assignment Creation with draw pool toggle OFF
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -1645,24 +1660,24 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-    	driver.waitForPageToBeReady();
-    	// Draw pool Toggle Disable
+		driver.waitForPageToBeReady();
+		// Draw pool Toggle Disable
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		
-		//Edit Assignment
+
+		// Edit Assignment
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
-		//check for Draw pool  toggles enabled state in existing  assignment.
+		// check for Draw pool toggles enabled state in existing assignment.
 		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
 		baseClass.passedStep("Sucessfully verified that for existing assignment, keep families together as enabled and"
 				+ " keep threads together as enabled toggle should be displayed");
-		//distributing docs 
+		// distributing docs
 		driver.scrollPageToTop();
 		agnmt.distributeTheGivenDocCountToReviewer("2");
 		driver.scrollPageToTop();
@@ -1673,12 +1688,12 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		//Validation as per test step-7.Verification of draw limit.
+		// Validation as per test step-7.Verification of draw limit.
 		if (agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isElementPresent() == true) {
 			baseClass.passedStep("Draw pool link is displayed");
 			baseClass.waitTillElemetToBeClickable(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
@@ -1686,85 +1701,95 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==count) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified  draw from pool after editing the assignment with both the toggles ON ");
-				
-			}
-			else {
-				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == count) {
+				baseClass.stepInfo(
+						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified  draw from pool after editing the assignment with both the toggles ON ");
+
+			} else {
+				baseClass.failedStep("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "
+						+ docCountInTODO + " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @description: Verify that help text pop does not appear when the user just hovers the "?" icon on "Create Client" page.
+	 * @description: Verify that help text pop does not appear when the user just
+	 *               hovers the "?" icon on "Create Client" page.
 	 */
-	@Test(description ="RPMXCON-54960",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-54960", enabled = true, groups = { "regression" }, priority = 26)
 	public void validateHelpPopUpWhenHoveringInClientPg() throws InterruptedException, ParseException, IOException {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		clientsPage = new ClientsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54960");
-		baseClass.stepInfo("Verify that help text pop does not appear when the user just hovers the \"?\" icon on \"Create Client\" page.");
+		baseClass.stepInfo(
+				"Verify that help text pop does not appear when the user just hovers the \"?\" icon on \"Create Client\" page.");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA user");
 		clientsPage.verifyHelpTextPopUpWhenHovering();
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @description: Verify that when user clicks on the "?" icon against "Initial Size of Project Database" then help text appears on "Create Client" page.
+	 * @description: Verify that when user clicks on the "?" icon against "Initial
+	 *               Size of Project Database" then help text appears on "Create
+	 *               Client" page.
 	 */
-	@Test(description ="RPMXCON-54958",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-54958", enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyHelpTextPopUpWhenClickingInClientPg() throws InterruptedException, ParseException, IOException {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		clientsPage = new ClientsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54958, RPMXCON-54959");
-		baseClass.stepInfo("Verify that when user clicks on the \"?\" icon against \"Initial Size of Project Database\" then help text appears on \"Create Client\" page.");
-		baseClass.stepInfo("Verify that help text pop up disappear when the user clicks on elsewhere in the application on \"Create Client\" page.");
+		baseClass.stepInfo(
+				"Verify that when user clicks on the \"?\" icon against \"Initial Size of Project Database\" then help text appears on \"Create Client\" page.");
+		baseClass.stepInfo(
+				"Verify that help text pop up disappear when the user clicks on elsewhere in the application on \"Create Client\" page.");
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("Logged in as SA user");
 		clientsPage.verifyHelpTextPopUpWhenClicking();
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-59180",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-59180", enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyDrawLinkWhenEmailThreadToggleDisabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
 		loginPage = new LoginPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		search = new SessionSearch(driver);
-		String SearchName1= "emailConcat"+Utility.dynamicNameAppender();
+		String SearchName1 = "emailConcat" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59180 ");
 		baseClass.stepInfo("Verify that when Email Threads Together is disabled, keep families enabled the "
 				+ "draw will keep the entire family together irrespective of the size of the batch");
 
-		//Getting the ingested docs to assign to assignment
-		search.MetaDataSearchInAdvancedSearch(ingestionMetaData,ingestionDataName);
+		// Getting the ingested docs to assign to assignment
+		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
 
 		// assignment Creation
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		SavedSearch savedSearch= new SavedSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
@@ -1772,38 +1797,38 @@ public class Assignment_Regression3 {
 		savedSearch.getSavedSearchToBulkAssign().Click();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
-		
+
 		baseClass.stepInfo("Created Assignment name : " + assignmentName);
 		agnmt.dragAndDropLiveSequence(" Email Threads");
 		baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
-    	baseClass.waitTime(2);
-    	agnmt.dragAndDropLiveSequence(" Family Members");
-    	driver.waitForPageToBeReady();
-    	//Draw pool toggle enable and setting draw limit as 20.
+		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
+		baseClass.waitTime(2);
+		agnmt.dragAndDropLiveSequence(" Family Members");
+		driver.waitForPageToBeReady();
+		// Draw pool toggle enable and setting draw limit as 20.
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", false);
-    	// email Thread Toggles disable
+		// email Thread Toggles disable
 		agnmt.getKeepEmailThreadTogether_Text().ScrollTo();
 		String emailThread = agnmt.getKeepEmailThreadTogether_Text().getText();
 		agnmt.toggleEnableOrDisableOfAssignPage(false, true, agnmt.getAssgn_keepEmailThreadTogetherToggle(),
 				emailThread, false);
-		//keeep family toggle enabled
+		// keeep family toggle enabled
 		String familyMem = agnmt.getKeepFamilyTogetther_Text().getText();
-		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(),
-				familyMem, false);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgn_keepFamiliesTogetherToggle(), familyMem,
+				false);
 		driver.scrollPageToTop();
 		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
-		// Distribute 12 Docs to  REV
+		// Distribute 12 Docs to REV
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.distributeTheGivenDocCountToReviewer("12");
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as reviewer user");
 		// navigating from Dashboard to DocView
-		DocViewPage docViewPage=new DocViewPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewPage.getDashboardButton().waitAndClick(5);
 		baseClass.waitForElement(agnmt.getAssignmentsInreviewerPg());
 		agnmt.getAssignmentsInreviewerPg().waitAndClick(5);
@@ -1816,32 +1841,35 @@ public class Assignment_Regression3 {
 			agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
-			String docCountInTODO=agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if(Integer.parseInt(docCountInTODO)==33) {
-				baseClass.stepInfo("Doc Count displayed in ToDo Column after  clicking Draw Pool link is "+docCountInTODO);
-				baseClass.passedStep("Sucessfully Verified that when Email Threads Together is disabled and keep family together denabled"
-				+ ", the draw will keep the entire family docs thread together irrespective of the size of the batch");
-				
-			}
-			else {
-				baseClass.failedStep("Doc Count displayed in ToDo Column  clicking Draw Pool link is "+docCountInTODO+" Which is not expected.");
-				
+			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
+			if (Integer.parseInt(docCountInTODO) == 33) {
+				baseClass.stepInfo(
+						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
+				baseClass.passedStep(
+						"Sucessfully Verified that when Email Threads Together is disabled and keep family together denabled"
+								+ ", the draw will keep the entire family docs thread together irrespective of the size of the batch");
+
+			} else {
+				baseClass.failedStep("Doc Count displayed in ToDo Column  clicking Draw Pool link is " + docCountInTODO
+						+ " Which is not expected.");
+
 			}
 		} else {
 			baseClass.failedStep("Draw pool link is not displayed");
 		}
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
 		loginPage.logout();
 	}
+
 	/**
 	 * @Author Jayanthi
-	 * @Description : 
+	 * @Description :
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56825",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-56825", enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyCascadeAssignGroup() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1857,23 +1885,23 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify the \"Draw from pool\" field changes done in Assignment group"
 				+ " reflecting in the Assignment while Creating a new assignment");
 
-		//create Cascade Assignment group with Draw Toggle Enabled
+		// create Cascade Assignment group with Draw Toggle Enabled
 		agnmt.navigateToAssignmentsPage();
 		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(cascadeAsgnGrpName, cascadeSettings_yes);
 		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
 				"Draw From Pool", true);
 
-		//Create Assignment from cascade Assignment Group 
-		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);		
+		// Create Assignment from cascade Assignment Group
+		agnmt.selectAssignmentGroup(cascadeAsgnGrpName);
 		agnmt.NavigateToNewEditAssignmentPage("new");
 		agnmt.createAssignment_fromAssignUnassignPopup(assignment, Input.codeFormName);
 		agnmt.validateCascadeSettings();
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepFamiliesTogetherToggle());
 		agnmt.checkForToggleEnable(agnmt.getAssgn_keepEmailThreadTogetherToggle());
-		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());	
+		agnmt.checkForToggleEnable(agnmt.getAssgnGrp_Create_DrawPooltoggle());
 		driver.scrollPageToTop();
 		agnmt.SaveButton().Click();
-		//Delete Assign group and assignment
+		// Delete Assign group and assignment
 		agnmt.navigateToAssignmentsPage();
 		agnmt.deleteAssignmentFromSingleAssgnGrp(cascadeAsgnGrpName, assignment);
 		agnmt.DeleteAssgnGroup(cascadeAsgnGrpName);
@@ -1882,6 +1910,68 @@ public class Assignment_Regression3 {
 		loginPage.logout();
 
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that Application disallow special characters in Edit
+	 *              Assignments screen when user performed COPY and PASTE (Special
+	 *              Characters) from Notepad. [RPMXCON-54444]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54444", enabled = true, groups = { "regression" }, priority = 28)
+	public void verifyDrawLinkWhenFamiliesToggleDisabled1() throws InterruptedException {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-54444 Assignments");
+		baseClass.stepInfo(
+				"Verify that Application disallow special characters in Edit Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+
+		// assignment Creation
+		int count = search.basicContentSearch(Input.TallySearch);
+		search.bulkAssign();
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment name : " + assignmentName);
+
+		agnmt.verifyErrorMSgForSpclChar(assignmentName);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :To verify that Category name are displayed with toggle control
+	 *              on Assign Like Document pop up. [RPMXCON-53942]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-53942", enabled = true, groups = { "regression" }, priority = 29)
+	public void VerifyDocAssignedfromcategory() throws InterruptedException, ParseException, IOException {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+
+		softAssertion = new SoftAssert();
+		loginPage = new LoginPage(driver);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53942 Assignments");
+		baseClass.stepInfo(
+				"To verify that Category name are displayed with toggle control on Assign Like Document pop up.");
+
+		agnmt.createAssignment(assignmentName, Input.codeFormName);
+		int PureHits = search.advancedContentSearch(Input.searchString2);
+		search.bulkAssign();
+
+		agnmt.assignDocstoExisting(assignmentName);
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

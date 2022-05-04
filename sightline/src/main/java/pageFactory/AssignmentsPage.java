@@ -854,7 +854,7 @@ public class AssignmentsPage {
 
 	/// Elements to be drag and drop under live Sequence
 	public Element dragElement(String text) {
-		return driver.FindElementByXPath("//div/span[contains(text(),'"+text+"')]/i");
+		return driver.FindElementByXPath("//div/span[contains(text(),'" + text + "')]/i");
 	}
 
 	public Element dropElement() {
@@ -1256,8 +1256,10 @@ public class AssignmentsPage {
 
 	public Element getPresentationControlToggles(String eleName) {
 		return driver.FindElementByXPath(
-				"(//div[@class='col-md-4']//div[@class='smart-form']//label[text()[normalize-space() = '"+eleName+"']]/i)");
+				"(//div[@class='col-md-4']//div[@class='smart-form']//label[text()[normalize-space() = '" + eleName
+						+ "']]/i)");
 	}
+
 	public ElementCollection getPresentationControlTogglesRowCount() {
 		return driver
 				.FindElementsByXPath("(//div[@class='col-md-4']//div[@class='smart-form']//label[@class='toggle']/i)");
@@ -1420,9 +1422,9 @@ public class AssignmentsPage {
 				".//*[@id='dt_basic']//td[contains(.,'" + userNAme + "')]/following-sibling::td[" + index + "]");
 	}
 
-public Element getFamilyMembersCount() {
-	return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
-}
+	public Element getFamilyMembersCount() {
+		return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -3265,9 +3267,10 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @Author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified by:Baskar
+	 * @Author Indium-Baskar date: 10/8/2021 Modified date: 24/8/2021 Modified
+	 *         by:Baskar
 	 * @Description:Method created for create new assignment coding stamp applied
-	 *              toggle should off
+	 *                     toggle should off
 	 * @param assignmentName
 	 * @param codingForm
 	 * @throws InterruptedException
@@ -3421,7 +3424,8 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @author Indium-Baskar date: 18/8/2021 Modified date:30/9/2021 Modified by:Baskar	 * 
+	 * @author Indium-Baskar date: 18/8/2021 Modified date:30/9/2021 Modified
+	 *         by:Baskar *
 	 * @Description: Assignment creation
 	 * @param assignmentName
 	 * @param codingForm
@@ -3530,7 +3534,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Indium-Baskar date: 18/8/2021 Modified date: NA <a>
-	 * @description: Toggle  Enabled for CodingStamp and Save without complete
+	 * @description: Toggle Enabled for CodingStamp and Save without complete
 	 */
 
 	public void toggleCodingStampEnabled() {
@@ -3678,7 +3682,7 @@ public Element getFamilyMembersCount() {
 	 * @param cascadeSettings ---"Yes" for cascade group creation,"No" for non
 	 *                        cascade group creation.
 	 * @description This method will create cascade and non cascade assignment group
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	public void createCascadeNonCascadeAssgnGroup(String assgngrpName, String cascadeSettings)
 			throws InterruptedException {
@@ -3907,8 +3911,8 @@ public Element getFamilyMembersCount() {
 				getSelectAssignment(assignmentName).ScrollTo();
 				if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
 					getSelectAssignment(assignmentName).waitAndClick(3);
-					//getSelectAssignment(assignmentName).waitAndClick(5);
-				} 
+					// getSelectAssignment(assignmentName).waitAndClick(5);
+				}
 				driver.scrollPageToTop();
 				bc.waitForElement(getAssignmentActionDropdown());
 				getAssignmentActionDropdown().Click();
@@ -3927,12 +3931,13 @@ public Element getFamilyMembersCount() {
 		bc.VerifySuccessMessage("Assignment deleted successfully");
 
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param assignmentName
 	 * @throws InterruptedException
-	 * @description this method will edit assignment.Here I used pagination
-	 *              handling concept.
+	 * @description this method will edit assignment.Here I used pagination handling
+	 *              concept.
 	 */
 	public void editAssignmentUsingPaginationConcept(final String assignmentName) throws InterruptedException {
 		bc.selectproject();
@@ -4287,7 +4292,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * Author : Raghuram A date: 8/25/21 NA Modified date:N/A Modified by:N/A A
-	 * Description : Sort by Metadata Sequence	 * 
+	 * Description : Sort by Metadata Sequence *
+	 * 
 	 * @throws InterruptedException
 	 * @param sortBy
 	 * @param sortType
@@ -4308,7 +4314,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @Author : Mohan date: 28/8/2021 Modified date:N/A Modified by:N/A
-	 * @Description : After creating assignment distributing to Two reviewer account	 * 
+	 * @Description : After creating assignment distributing to Two reviewer account
+	 *              *
 	 */
 
 	public void add2ReviewerAndDistribute() {
@@ -4681,7 +4688,7 @@ public Element getFamilyMembersCount() {
 	 * @description this method will verify DocCountdisplay in Assignments grid view
 	 *              display in manage assignments page.
 	 * @throws InterruptedException
-	 * @return this method returns the document count of assignment 
+	 * @return this method returns the document count of assignment
 	 */
 
 	public String verifydocsCountInAssgnPage(String assignmentName) throws InterruptedException {
@@ -4783,7 +4790,7 @@ public Element getFamilyMembersCount() {
 	 *              instruction popup when we click on configure button in create
 	 *              assignment/edit assignment page.
 	 * @param optionTocheckElements
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
 	public void verifyFormattingToolBar_InstructionPopUp(String optionTocheckElements)
@@ -4953,7 +4960,7 @@ public Element getFamilyMembersCount() {
 	 * @param Reviewer username
 	 * @Description :This method will return available Pending Assigned user to
 	 *              redistribute documents.
-	 * @return It returns the reviwer in redistributed popup            
+	 * @return It returns the reviwer in redistributed popup
 	 * 
 	 */
 	public String VerifyUserNotInListAfterRedistributedDocs() throws InterruptedException {
@@ -5106,7 +5113,7 @@ public Element getFamilyMembersCount() {
 	 * @param sortType - Ascending/Descending
 	 * @description This method validate the metadata and their sort type as
 	 *              expected.
-	 * @throws InterruptedException              
+	 * @throws InterruptedException
 	 */
 	public void validatedTheSortByAndSortType(String sortBy, String sortType) throws InterruptedException {
 		driver.scrollingToBottomofAPage();
@@ -5152,7 +5159,7 @@ public Element getFamilyMembersCount() {
 	 * @author Jayanthi.ganesan
 	 * @Description-This method will verify display of sample methods drop down
 	 *                   options in in assign/unassign pop up in advanced search
-	 *                   page                   
+	 *                   page
 	 */
 	public void VerifySampleMethodDDOptions() {
 		String[] optionsArray = new String[] { "Count of Selected Docs", "Percent of Selected Docs",
@@ -5292,7 +5299,7 @@ public Element getFamilyMembersCount() {
 	 * @param codingForm
 	 * @description This method for creating new assignment for bulk assign
 	 *              operation
-	 * @throws InterruptedException             
+	 * @throws InterruptedException
 	 */
 
 	public void createAssignmentByBulkAssignOperation(String assignmentName, String codingForm)
@@ -5328,7 +5335,7 @@ public Element getFamilyMembersCount() {
 	 * @param flag : (flag is a boolean value that weather redactions to enable or
 	 *             not).
 	 * @description This method for enabling redactions toogle in assignments page.
-	 *  @throws InterruptedException
+	 * @throws InterruptedException
 	 */
 
 	public void enableToogleToEnableRedactions(boolean flag) throws InterruptedException {
@@ -5429,14 +5436,14 @@ public Element getFamilyMembersCount() {
 
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @param assignmentName : (assignmentName is string value that name of
 	 *                       assignment ).
 	 * @description This method for selecting assignment to view in doc view.
 	 */
-	public void selectAssignmentToViewinDocview(final String assignmentName,String ProjectName) {
+	public void selectAssignmentToViewinDocview(final String assignmentName, String ProjectName) {
 		try {
 			bc.selectproject(ProjectName);
 			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
@@ -5629,8 +5636,9 @@ public Element getFamilyMembersCount() {
 
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 	}
+
 	/**
-	 * @author Krishna 
+	 * @author Krishna
 	 * @Description: Go to doc view from assignments
 	 * @param assignmentName
 	 */
@@ -5926,7 +5934,7 @@ public Element getFamilyMembersCount() {
 	 * @Author : Mohan date: 01/10/2021 Modified date:25/10/2021 Modified by:Mohan
 	 * @Description : After creating assignment with Coding stamp enable
 	 *              distributing to Two reviewer account
-	 * @param assignmentName             
+	 * @param assignmentName
 	 * @param codingForm
 	 * @param purehits
 	 */
@@ -6162,7 +6170,7 @@ public Element getFamilyMembersCount() {
 	 * @description this method will verify whether the pop up is displaying or not
 	 *              when we hover near the help icon near manage assignment in
 	 *              assignments page.
-	 * @throws InterruptedException             
+	 * @throws InterruptedException
 	 */
 	public void verifyHelpTextPopUpWhenHovering() throws InterruptedException {
 		bc.waitForElement(manageAssignmentHelpIcon());
@@ -6181,7 +6189,7 @@ public Element getFamilyMembersCount() {
 	 * @description This method will verifies whether Help text PopUp is appeared or
 	 *              not when we click on the help icon near manage assignment in
 	 *              assignments page
-	 * @throws InterruptedException             
+	 * @throws InterruptedException
 	 */
 	public void verifyHelpTextPopUpWhenClicking() throws InterruptedException {
 		bc.waitForElement(manageAssignmentHelpIcon());
@@ -6658,7 +6666,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description to verify the keyword popup. 
+	 * @description to verify the keyword popup.
 	 */
 	public void verifyKeywordPopUp() {
 		// verify keywords PopUp
@@ -6743,8 +6751,10 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @author Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified by:Raghuram A 
-	 * @description To select an assignment from manage assignment and navigate to docview
+	 * @author Raghuram A date: 10/12/21 NA Modified date:19/1/2022 Modified
+	 *         by:Raghuram A
+	 * @description To select an assignment from manage assignment and navigate to
+	 *              docview
 	 * @param assignmentName
 	 * @return document counts of an assignment
 	 */
@@ -6792,7 +6802,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan Modified date-18/10/21
-	 * @description To finalize the assignment after bulk assigning the documents to assignment
+	 * @description To finalize the assignment after bulk assigning the documents to
+	 *              assignment
 	 */
 	public void FinalizeAssignmentAfterBulkAssign() {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -7348,7 +7359,7 @@ public Element getFamilyMembersCount() {
 	 * @param count - pureHits
 	 * @description this method distribute half the count of docs to reviewer.
 	 * @throws InterruptedException
-	 * @return it returns the unassigned document count 
+	 * @return it returns the unassigned document count
 	 */
 	public int distributeHalfTheDocsToReviewer(int count) throws InterruptedException {
 
@@ -7610,7 +7621,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @param  assignmentName
+	 * @param assignmentName
 	 * @description to verify the page navigated docview successfully
 	 */
 	public void validateNavigationOfDocViewPg(String assignmentName) {
@@ -7758,7 +7769,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description To validate the toggles are enabled 
+	 * @description To validate the toggles are enabled
 	 */
 	public void verifyCascadeFunctionality_OFF() {
 		try {
@@ -7782,7 +7793,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description  To validate the toggles are disabled 
+	 * @description To validate the toggles are disabled
 	 */
 	public void VerifyCascadefunctionality_ON() {
 		try {
@@ -7845,7 +7856,8 @@ public Element getFamilyMembersCount() {
 	 * @author Jayanthi.ganesan
 	 * @param noOfElements
 	 * @param index
-	 * @description to verify the all toggle buttons under presentation control is enabled
+	 * @description to verify the all toggle buttons under presentation control is
+	 *              enabled
 	 */
 	public void ValidateEnabledToggleBtn_PresentationControl(int noOfElements, int index) {
 		for (int i = 1; i <= noOfElements; i++) {
@@ -7868,8 +7880,8 @@ public Element getFamilyMembersCount() {
 	/**
 	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
 	 * @description to add reviewer and distribute documents to that reviewer
-	 * @param 	assignmentName
-	 * @throws InterruptedException 
+	 * @param assignmentName
+	 * @throws InterruptedException
 	 */
 	public void addReviewerAndDistributeDocsT(String assignmentName) throws InterruptedException {
 
@@ -7934,7 +7946,7 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Raghuram A date: 10/18/21 NA Modified date:N/A Modified by:N/A A
-	 * @description To create an assignment 
+	 * @description To create an assignment
 	 * @param assignmentName
 	 * @param codingForm
 	 */
@@ -7961,8 +7973,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author : Raghuram A date: 10/18/21 Description : Modified date: 11/15/21
-	 * Modified by: Raghuram A getAssgn_OverrideOptimizedSortToggle( due to update
-	 * in the application
+	 *         Modified by: Raghuram A getAssgn_OverrideOptimizedSortToggle( due to
+	 *         update in the application
 	 * @param docHistorytoogle
 	 * @param withoutSaveCompToggle
 	 * @param completeCoddingStamtoggle
@@ -8035,7 +8047,7 @@ public Element getFamilyMembersCount() {
 	 * @description this method will verify the display of DrawPool in Action column
 	 *              in reviewer page
 	 * @param assignmentName
-	 * @param type             
+	 * @param type
 	 */
 	public void verifyDrawPoolToggledisplay(String assignmentName, String type) {
 		if (type.equalsIgnoreCase("enabled")) {
@@ -8101,7 +8113,8 @@ public Element getFamilyMembersCount() {
 		bc.stepInfo("Removed all the assigned document from the RMU reviewer.");
 		bc.passedStep("Documents are removed successfully for the reviewer");
 		bc.CloseSuccessMsgpopup();
-		}
+	}
+
 	/**
 	 * @author Steffy
 	 * @description this method will the reassign docs to the specific user.
@@ -8122,7 +8135,8 @@ public Element getFamilyMembersCount() {
 		bc.stepInfo("Documents are distributed to reviewer successfully");
 		bc.passedStep("Documents are reassigned successfully for the reviewer");
 		bc.CloseSuccessMsgpopup();
-		}
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description To delete an assignment from single assignment group
@@ -8263,7 +8277,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description This method verifies the todo count in manage redistributed documents
+	 * @description This method verifies the todo count in manage redistributed
+	 *              documents
 	 */
 	public void VerifyTodocountinManageRevTab_RedistributeDocs() {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -8449,8 +8464,8 @@ public Element getFamilyMembersCount() {
 	 * @author Jayanthi.ganesan
 	 * @param ele
 	 * @description This method will check wether the toggle btn under control the
-	 *            presentaion of doc view for reviewers while in this assignment is
-	 *            in enabled state
+	 *              presentaion of doc view for reviewers while in this assignment
+	 *              is in enabled state
 	 */
 
 	public void checkForToggleEnable(Element ele) {
@@ -8468,7 +8483,8 @@ public Element getFamilyMembersCount() {
 	 * @param KeywordName
 	 * @param list1
 	 * @param listToverify
-	 * @description This method verifies the keywords are displayed before and after deletion
+	 * @description This method verifies the keywords are displayed before and after
+	 *              deletion
 	 */
 	public void verifyKeywordsBeforeAndAfterDelete(String KeywordName, List<String> listToverify,
 			boolean verifyBeforeDelete) {
@@ -8569,8 +8585,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description Verify Draw Pool Toggle is ON and Draw pool count is
-	 *         "100" by default.
+	 * @description Verify Draw Pool Toggle is ON and Draw pool count is "100" by
+	 *              default.
 	 */
 	public void VerifyDrawPoolToggleEnabled() {
 		driver.scrollingToElementofAPage(getAssgnGrp_Create_DrawPooltoggle());
@@ -8590,25 +8606,26 @@ public Element getFamilyMembersCount() {
 		bc.stepInfo(s);
 		assertion.assertTrue("true".contentEquals(s));
 	}
+
 	/**
-	 * @author Jayanthi.ganesan 
-	 * @description This method verify whether all toggles under
-	 *         Presentation Control Block are Enabled and Disabled by default.
+	 * @author Jayanthi.ganesan
+	 * @description This method verify whether all toggles under Presentation
+	 *              Control Block are Enabled and Disabled by default.
 	 */
 	public void verifyPresentationControlTogglesEnabledDisabled() {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
-		String[] elementNamesEnabled= {"Display Mini DocList","Allow reviewers to pop out panels",
-			                   "Allow reviewers to folder documents","Allow reviewers to edit Reviewer Remarks",
-				               "Show Default View Tab","Enable Highlighting","Allow reviewers to override Optimized Sort",
-				               "Allow reviewers to print docs to PDF","Allow reviewers to download natives",
-				               "Allow access to full DocList","Display Analytics Panel",
-	    	                   "Display the Email Thread Map Tab of Analytics Panel","Display the Near Dupes Tab of Analytics Panel",
-				               "Display Folders Tab","Allow access to Coding Stamps","Display Assignment Progress Bar",
-				               "Allow reviewers to see productions/images","Allow reviewers to apply redactions",
-				               "Display the Family Members Tab of Analytics Panel",
-				               "Display the Conceptually Similar Tab of Analytics Panel","Allow presentation of Metadata Panel"};                                                                  
-				                      
+		String[] elementNamesEnabled = { "Display Mini DocList", "Allow reviewers to pop out panels",
+				"Allow reviewers to folder documents", "Allow reviewers to edit Reviewer Remarks",
+				"Show Default View Tab", "Enable Highlighting", "Allow reviewers to override Optimized Sort",
+				"Allow reviewers to print docs to PDF", "Allow reviewers to download natives",
+				"Allow access to full DocList", "Display Analytics Panel",
+				"Display the Email Thread Map Tab of Analytics Panel", "Display the Near Dupes Tab of Analytics Panel",
+				"Display Folders Tab", "Allow access to Coding Stamps", "Display Assignment Progress Bar",
+				"Allow reviewers to see productions/images", "Allow reviewers to apply redactions",
+				"Display the Family Members Tab of Analytics Panel",
+				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel" };
+
 		String[] elementNamesDisabled = { "Display Document History Tab", "Allow users to save without completing",
 				"Complete When Coding Stamp Applied" };
 		// verify default toggles enabled
@@ -8663,7 +8680,8 @@ public Element getFamilyMembersCount() {
 
 	/**
 	 * @author Aathith.Senthilkumar
-	 * @description This method is used to verify the allow reviewers to code enabled within assignment
+	 * @description This method is used to verify the allow reviewers to code
+	 *              enabled within assignment
 	 */
 	public void allowReviewer() {
 		SoftAssert softAssertion = new SoftAssert();
@@ -8689,7 +8707,7 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA 
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA
 	 * @description : Toggle disable Code Outside Reviewer's Batch
 	 */
 
@@ -8711,7 +8729,7 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA 
+	 * @author Indium-Mohan date: 20/12/2021 Modified date: NA
 	 * @description Toggle disable Code Outside Reviewer's Batch
 	 */
 
@@ -8731,6 +8749,7 @@ public Element getFamilyMembersCount() {
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.CloseSuccessMsgpopup();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param comment
@@ -9054,8 +9073,8 @@ public Element getFamilyMembersCount() {
 	 * @param ele
 	 * @param EnableorDisable
 	 * @param name
-	 * @description boolean value should be true if we want to enable the
-	 *                        toggle and false if we want to disable
+	 * @description boolean value should be true if we want to enable the toggle and
+	 *              false if we want to disable
 	 */
 	public void toggleEnable_Disable(Element ele, boolean EnableorDisable, String name) {
 		boolean status = false;
@@ -9089,9 +9108,9 @@ public Element getFamilyMembersCount() {
 	}
 
 	/**
-	 * @author Gopinath 
-	 * @description this mehtod will create new assignment with
-	 *         allow user to save without complete
+	 * @author Gopinath
+	 * @description this mehtod will create new assignment with allow user to save
+	 *              without complete
 	 * @param assignmentName
 	 * @param codingForm
 	 */
@@ -9677,20 +9696,20 @@ public Element getFamilyMembersCount() {
 					"LEFT TO DO count matches : " + totalLeftToDo, "LEFT TO DO count is wrong");
 		}
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @return
 	 */
-	public int  docCountViewinDocView() {
+	public int docCountViewinDocView() {
 		bc.waitForElement(getAssg_DocView_DocCOunt());
 		String resultValue = getAssg_DocView_DocCOunt().getText();
 		ArrayList<String> result = new ArrayList<String>(Arrays.asList(resultValue.split(" ")));
-		int docCount=Integer.parseInt(result.get(1));
+		int docCount = Integer.parseInt(result.get(1));
 		bc.stepInfo("Doc Count reflected in doc view page");
 		return docCount;
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @throws InterruptedException
@@ -9728,13 +9747,15 @@ public Element getFamilyMembersCount() {
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.passedStep("Keywords unmapped from the assignment successfully");
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @param user [user to which the completed docs  need to be un completed].
-	 * Thia method will uncomplete the completed documents for a particular user via edit assignment page
+	 * @param user [user to which the completed docs need to be un completed]. Thia
+	 *             method will uncomplete the completed documents for a particular
+	 *             user via edit assignment page
 	 */
-public void UnCompleteDocs(String user) {
-		
+	public void UnCompleteDocs(String user) {
+
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		getAssgn_ManageRev_selectReviewer(user).waitAndClick(20);
@@ -9746,163 +9767,192 @@ public void UnCompleteDocs(String user) {
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Documents successfully un-completed for user.");
 		bc.passedStep("Documents are un-completed successfully for the " + user);
-		
+
 	}
-/**
- * @author Jayanthi
- * @param count - NO of Docs to assigned to user
- * @description This method will distribute the given count of docs to reviewer.
- */
-public String distributeTheGivenDocCountToReviewer(String count) throws InterruptedException {
 
-	bc.waitForElement(getAssignment_ManageReviewersTab());
-	getAssignment_ManageReviewersTab().waitAndClick(10);
-	bc.waitForElement(getAddReviewersBtn());
-	getAddReviewersBtn().waitAndClick(10);
-	getSelect2ndUserToAssign().ScrollTo();
-	bc.waitForElement(getSelect2ndUserToAssign());
-	getSelect2ndUserToAssign().waitAndClick(5);
-	bc.waitForElement(getAdduserBtn());
-	getAdduserBtn().waitAndClick(5);
-	bc.VerifySuccessMessage("Record saved successfully");
-	bc.waitForElement(getDistributeTab());
-	getDistributeTab().waitAndClick(5);
-	bc.waitForElement(getSelect2ndUserInDistributeTab());
-	getSelect2ndUserInDistributeTab().waitAndClick(5);
-	bc.CloseSuccessMsgpopup();	
-	getAssgn_docsToDistribute().SendKeys(count);
-	getDistributeBtn().waitAndClick(3);
-	bc.stepInfo(count+" Documents are distributed to reviewer successfully");
-	bc.CloseSuccessMsgpopup();
-	bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
-	bc.getCloseSucessmsg().waitAndClick(10);
-	bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
+	/**
+	 * @author Jayanthi
+	 * @param count - NO of Docs to assigned to user
+	 * @description This method will distribute the given count of docs to reviewer.
+	 */
+	public String distributeTheGivenDocCountToReviewer(String count) throws InterruptedException {
 
-	return count;
-}
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		getSelect2ndUserToAssign().ScrollTo();
+		bc.waitForElement(getSelect2ndUserToAssign());
+		getSelect2ndUserToAssign().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Record saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelect2ndUserInDistributeTab());
+		getSelect2ndUserInDistributeTab().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+		getAssgn_docsToDistribute().SendKeys(count);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
+		bc.CloseSuccessMsgpopup();
+		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
+		bc.getCloseSucessmsg().waitAndClick(10);
+		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
 
-
-/**
- * @author Indium-Baskar
- * @param assignmentName passing to create assignmnet
- * @param codingForm 
- * Thia method will uncomplete the completed documents for a particular user via edit assignment page
- */
-
-public int assignmentCreationFamilyCount(String assignmentName, String codingForm) {
-	bc.waitForElement(getAssgn_NewAssignmnet());
-	bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
-	getAssgn_NewAssignmnet().waitAndClick(5);
-	bc.waitForElement(getbulkassgnpopup());
-	assertion.assertTrue(getbulkassgnpopup().isDisplayed());
-	try {
-		bc.waitForElement(getContinueBulkAssign());
-		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-		getContinueBulkAssign().waitAndClick(10);
-	} catch (Exception e) {
-		bc.waitForElement(getContinueBulkAssign());
-		bc.waitTillElemetToBeClickable(getContinueBulkAssign());
-		getContinueBulkAssign().waitAndClick(10);
+		return count;
 	}
-	bc.waitForElement(getFamilyMembersCount());
-	int familyCount = Integer.parseInt(getFamilyMembersCount().getText());
-	bc.waitForElement(getAssgn_TotalCount());
-	bc.waitForElement(getFinalizeButton());
-	bc.waitTillElemetToBeClickable(getFinalizeButton());
-	getFinalizeButton().waitAndClick(10);
-	driver.waitForPageToBeReady();
-	try {
-		bc.waitForElement(getAssignmentName());
-		getAssignmentName().SendKeys(assignmentName);
-	} catch (Exception e) {
-		bc.waitForElement(getAssignmentName());
-		getAssignmentName().Clear();
-		getAssignmentName().SendKeys(assignmentName);
-	}
-	getParentAssignmentGroupName().isDisplayed();
-	bc.waitForElement(getSelectedClassification());
-	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-	bc.waitForElement(getAssignmentCodingFormDropDown());
-	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-	bc.waitForElement(getAssignmentSaveButton());
-	bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
-	getAssignmentSaveButton().waitAndClick(5);
-	try {
-		if (getAssignmentErrorText().isElementAvailable(5)) {
-			driver.waitForPageToBeReady();
+
+	/**
+	 * @author Indium-Baskar
+	 * @param assignmentName passing to create assignmnet
+	 * @param codingForm     Thia method will uncomplete the completed documents for
+	 *                       a particular user via edit assignment page
+	 */
+
+	public int assignmentCreationFamilyCount(String assignmentName, String codingForm) {
+		bc.waitForElement(getAssgn_NewAssignmnet());
+		bc.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+		getAssgn_NewAssignmnet().waitAndClick(5);
+		bc.waitForElement(getbulkassgnpopup());
+		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+		try {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(10);
+		} catch (Exception e) {
+			bc.waitForElement(getContinueBulkAssign());
+			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
+			getContinueBulkAssign().waitAndClick(10);
+		}
+		bc.waitForElement(getFamilyMembersCount());
+		int familyCount = Integer.parseInt(getFamilyMembersCount().getText());
+		bc.waitForElement(getAssgn_TotalCount());
+		bc.waitForElement(getFinalizeButton());
+		bc.waitTillElemetToBeClickable(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		try {
 			bc.waitForElement(getAssignmentName());
 			getAssignmentName().SendKeys(assignmentName);
+		} catch (Exception e) {
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().Clear();
+			getAssignmentName().SendKeys(assignmentName);
+		}
+		getParentAssignmentGroupName().isDisplayed();
+		bc.waitForElement(getSelectedClassification());
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		bc.waitForElement(getAssignmentCodingFormDropDown());
+		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		bc.waitForElement(getAssignmentSaveButton());
+		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		try {
+			if (getAssignmentErrorText().isElementAvailable(5)) {
+				driver.waitForPageToBeReady();
+				bc.waitForElement(getAssignmentName());
+				getAssignmentName().SendKeys(assignmentName);
+				bc.waitForElement(getAssignmentSaveButton());
+				getAssignmentSaveButton().waitAndClick(5);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
+
+		}
+		return familyCount;
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @description This method return boolean value as 'true' if toggle is enabled
+	 *              and 'false' if given toggle is disabled
+	 * @param Element to which enabled or disabled state needs to checked
+	 */
+	public boolean verifyToggleEnableORDisabled(Element ele, String elementInfo) {
+		String s = ele.GetAttribute("Class");
+		boolean status;
+		if (s.equals("true")) {
+			status = true;
+			bc.stepInfo(elementInfo + "Toggle is enabled*");
+		} else {
+			status = false;
+			bc.stepInfo(elementInfo + "Toggle is disabled*");
+		}
+		return status;
+	}
+
+	/**
+	 * @author Indium-Baskar date: 31/03/2021 Modified date: NA
+	 * @Description: Add DA user and distributed docs to them
+	 */
+	public void assignmentDistributeToDa() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		driver.scrollingToElementofAPage(getSelectUserToAssignDA());
+		getSelectUserToAssignDA().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(getSelectUserInDistributeDA());
+		getSelectUserInDistributeDA().waitAndClick(5);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to DA user successfully");
+
+	}
+
+	/**
+	 * @author Indium-Baskar date: 31/03/2021 Modified date: NA
+	 * @Description: Add Pa user and distributed docs to them
+	 */
+	public void assignmentDistributeToPa() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+		getSelectUserToAssignPA().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		getSelectUserInDistributeTabsPA().waitAndClick(5);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to PA user successfully");
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verifying error message for Assignmentname with special character
+	 * @param assignmnetName
+	 */
+	public void verifyErrorMSgForSpclChar(String assignmnetName) {
+		String dataSet[][] = { { "<" }, { "(" }, { ")" }, { "[" }, { "]" }, { "{" }, { "}" }, { ":" }, { " ' " },
+				{ "~" }, { "*" }, { "?" }, { "&" }, { "$" }, { "#" }, { "@" }, { "!" }, { "-" }, { "_" } };
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+
+			String renameAssign = dataSet[i][j] +assignmnetName;
+			
+			bc.waitForElement(getAssignmentName());
+			getAssignmentName().SendKeys(renameAssign);
+			driver.scrollPageToTop();
 			bc.waitForElement(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
+
+			if (getAssignmentErrorText().isElementAvailable(5)) {
+				String errorMsg = getAssignmentErrorText().getText();
+				System.out.println("Error Msg "+errorMsg+"for specialchar : " +dataSet[i][j]);
+				bc.passedStep("Error Msg "+errorMsg+"for specialchar : " +dataSet[i][j]);
+			} else {
+				bc.failedStep("Application is allowing assignment name with special character");
+			}
 		}
-	} catch (org.openqa.selenium.NoSuchElementException e) {
-		e.printStackTrace();
-
 	}
-	return familyCount;
-}
-/**
- * @author Jayanthi.ganesan
- * @description This method return boolean value as 'true' if toggle is enabled and 
- * 'false' if given toggle is disabled
- * @param Element to which enabled or disabled state needs to checked
- */
-public boolean verifyToggleEnableORDisabled(Element ele,String elementInfo) {
-	String s = ele.GetAttribute("Class");
-	boolean status;
-	if(s.equals("true")) {
-		status=true;
-		bc.stepInfo(elementInfo+"Toggle is enabled*");
-	}
-	else {
-		status=false;
-		bc.stepInfo(elementInfo+"Toggle is disabled*");
-	}
-	return status;
-}
-
-/**
- * @author Indium-Baskar date: 31/03/2021 Modified date: NA
- * @Description: Add DA user and distributed docs to them
- */
-public void assignmentDistributeToDa() {
-	bc.waitForElement(getAssignment_ManageReviewersTab());
-	getAssignment_ManageReviewersTab().waitAndClick(10);
-	bc.waitForElement(getAddReviewersBtn());
-	getAddReviewersBtn().waitAndClick(10);
-	driver.scrollingToElementofAPage(getSelectUserToAssignDA());
-	getSelectUserToAssignDA().waitAndClick(5);
-	bc.waitForElement(getAdduserBtn());
-	getAdduserBtn().waitAndClick(5);
-	bc.waitForElement(getDistributeTab());
-	getDistributeTab().waitAndClick(5);
-	bc.waitForElement(getSelectUserInDistributeDA());
-	getSelectUserInDistributeDA().waitAndClick(5);
-	getDistributeBtn().waitAndClick(3);
-	bc.stepInfo("Documents are distributed to DA user successfully");
-
-}
-
-/**
- * @author Indium-Baskar date: 31/03/2021 Modified date: NA
- * @Description: Add Pa user and distributed docs to them
- */
-public void assignmentDistributeToPa() {
-	bc.waitForElement(getAssignment_ManageReviewersTab());
-	getAssignment_ManageReviewersTab().waitAndClick(10);
-	bc.waitForElement(getAddReviewersBtn());
-	getAddReviewersBtn().waitAndClick(10);
-	driver.scrollingToElementofAPage(getSelectUserToAssignPA());
-	getSelectUserToAssignPA().waitAndClick(5);
-	bc.waitForElement(getAdduserBtn());
-	getAdduserBtn().waitAndClick(5);
-	bc.waitForElement(getDistributeTab());
-	getDistributeTab().waitAndClick(5);
-	getSelectUserInDistributeTabsPA().waitAndClick(5);
-	getDistributeBtn().waitAndClick(3);
-	bc.stepInfo("Documents are distributed to PA user successfully");
-
-}
-
 
 }
