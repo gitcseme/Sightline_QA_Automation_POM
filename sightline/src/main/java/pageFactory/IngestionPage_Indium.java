@@ -8784,4 +8784,169 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 
 			}
 			
+			/**
+			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will enter overlay ingestion data without enabling mapping field and DAT field
+			 */
+			
+			public void OverlayIngestionWithoutDat(String ingestionName,String type,String file) {
+				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return datCheckboxStatus().Visible();
+					}
+				}), Input.wait30);
+				datCheckboxStatus().waitAndClick(5);
+				
+				if(type.equalsIgnoreCase("Native")) {
+				selectNativeSource(file,false);
+				}
+				if(type.equalsIgnoreCase("Tiff")) {
+					base.stepInfo("Selecting Tiff file");
+					selectTIFFSource(file,false,false);
+				}
+				
+				if(type.equalsIgnoreCase("pdf")) {
+					base.stepInfo("Selecting Pdf file");
+					selectPDFSource(file,false);
+				}
+				if(type.equalsIgnoreCase("mp3")) {
+					base.stepInfo("Selecting Mp3 file");
+					selectMP3VarientSource(file,false);
+				}
+				if(type.equalsIgnoreCase("Transcript")) {
+					base.stepInfo("Selecting Transcript file");
+					selectAudioTranscriptSource(file,false);
+				}
+				if(type.equalsIgnoreCase("Translation")) {
+					base.stepInfo("Selecting Translation file");
+					selectOtherSource(type,file,false);
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				base.waitTime(2);
+				clickOnPreviewAndRunButton();
+				
+			}
+			
+			/**
+			 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify the status of overlay ingestion till approving stage
+			 */
+			public void verifyApprovedStatusForOverlayIngestion() {
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByFAILED().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByCATALOGED().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByCOPIED().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByINDEXED().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByAPPROVED().waitAndClick(10);
+		    	
+		    	getRefreshButton().waitAndClick(5);
+		    	
+		    	for(int i=0;i<120;i++) {
+		    		base.waitTime(5);
+		    		getRefreshButton().waitAndClick(5);
+		    		base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+					
+		    		if(status.contains("Cataloged")) {
+		    			base.passedStep("Cataloged completed");
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(5);
+		    			
+		    		}
+		    		else if(status.contains("Copied")) {
+		    			base.passedStep("Copied completed");
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(5);
+		    			
+		    		}
+		    		else if(status.contains("Indexed")) {
+		    			base.passedStep("Indexed completed");
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(5);
+		    			
+		    		}
+		    		else if(status.contains("Approved")) {
+		    			base.passedStep("Approved completed");
+		    			break;
+		    			
+		    		}
+		    		else if (status.contains("In Progress")) {
+		    			base.waitTime(5);
+		    			getRefreshButton().waitAndClick(5);
+		    		}
+		    		else if (status.contains("Failed")){
+		    			base.failedStep("Failed");
+		    		}
+		    	}
+			}
+			
+			/**
+			 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify the status of overlay ingestion till approving stage
+			 */
+			public void verifyDocAvailability() {
+				driver.getWebDriver().get(Input.url + "Ingestion/Home");
+				driver.waitForPageToBeReady();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByPUBLISHED().waitAndClick(10);
+		    	
+		    	getRefreshButton().waitAndClick(5);
+		    	base.waitTime(1);
+		    	 String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
+		    	 int ingestedCount = Integer.parseInt(getIngestedCount().getText());
+				  System.out.println(ingestedCount);
+				  SessionSearch search = new SessionSearch(driver);
+				  int purehitCount=search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, ingestionName);
+				  System.out.println(purehitCount);
+				  if(ingestedCount==purehitCount) {
+				    	base.passedStep("Document ingested in overlay available for user in application");
+				    }
+				  else {
+				    	base.failedStep("Document ingested in overlay not available for user in application");
+				    }
+		    	
+			}
+			
 }
