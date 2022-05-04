@@ -614,7 +614,7 @@ public class Ingestion_Regression01 {
 	 * Description :verify Ingestion should published successfully if Email metadata is having only Address
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 19)
+	@Test(enabled = true,  groups = {"regression" },priority = 22)
 	public void verifyEmailAddressInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50083");
 		baseClass.stepInfo("verify Ingestion should published successfully if Email metadata is having only Address");
@@ -661,20 +661,16 @@ public class Ingestion_Regression01 {
 			baseClass.failedStep("email author address is not displayed with expected text");
 		}
 		loginPage.logout();
-		
-		
-		
-		
+			
 	}
 	
-
 
 /** 
      *Author :Brundha Test Case Id:RPMXCON-49804
 	 * Description :To verify that if Email data contained space after the '@' sign , it should not calculate two distinct values
 	 *
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 21)
+	@Test(enabled = true,  groups = {"regression" },priority = 23)
 	public void verifyEmailAllDomainDistinctData() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -722,7 +718,7 @@ public class Ingestion_Regression01 {
 	 * Description :To Verify for AudioPlayer ready are Nexidia indexed.
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 20)
+	@Test(enabled = true,  groups = {"regression" },priority = 24)
 	public void verifyDocumentInAudioPlayerReady() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48173");
 		baseClass.stepInfo("To Verify for AudioPlayer ready are Nexidia indexed.");
@@ -745,6 +741,219 @@ public class Ingestion_Regression01 {
 		sessionsearch.verifyDocCountForAudioPlayerReady();
 		loginPage.logout();
 		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48267
+	 * Description :To Verify Ingestion Overlay Without DAT for Translation.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 25)
+	public void verifyIngestionOverlayWithoutDatForTranslation() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48267");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Translation.");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for translation without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Translation", Input.TranslationFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48266
+	 * Description :To Verify Ingestion Overlay Without DAT for Transcript.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 26)
+	public void verifyIngestionOverlayWithoutDatForTranscript() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48266");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Transcript.");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for transcript without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Transcript", Input.TranscriptFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48265
+	 * Description :To Verify Ingestion Overlay Without DAT for MP3 Variant.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 27)
+	public void verifyIngestionOverlayWithoutDatForMp3() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48265");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for MP3 Variant.");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for mp3 without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48264
+	 * Description :To Verify Ingestion Overlay Without DAT for TIFF.
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 28)
+	public void verifyIngestionOverlayWithoutDatForTiff() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48264");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for TIFF.");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for Tiff without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Tiff", Input.TIFFFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48263
+	 * Description :To Verify Ingestion Overlay Without DAT for PDF.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 29)
+	public void verifyIngestionOverlayWithoutDatForPdf() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48263");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for PDF");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for Pdf without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Pdf", Input.PDFFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 04/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48262
+	 * Description :To Verify Ingestion Overlay Without DAT for Native.
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 30)
+	public void verifyIngestionOverlayWithoutDatForNative() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48262");
+		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for Native.");
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+		ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Perform overlay ingestion for Native without DAT
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Native", Input.NativeFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyDocAvailability();
+		loginPage.logout();
 		
 	}
 	/**

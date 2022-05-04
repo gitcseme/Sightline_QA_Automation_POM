@@ -551,7 +551,7 @@
 	<DATFile>RegressionAllDataset.dat</DATFile>
 	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
 	<NativeFile>Natives.lst</NativeFile>
-	<TIFFFile>RegressionAllDatasetTIFFImages.lst</TIFFFile>
+	<TIFFFile>Images.lst</TIFFFile>
 	<TIFFFile1> RegressionAllDatasetTIFFImages.OPT</TIFFFile1>
 	<TranslationFile>Translation.lst</TranslationFile>
 	<PDFFile>PDFs.lst</PDFFile>
