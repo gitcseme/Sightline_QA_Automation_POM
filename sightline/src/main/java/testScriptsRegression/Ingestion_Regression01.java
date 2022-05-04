@@ -747,6 +747,11 @@ public class Ingestion_Regression01 {
 		
 		
 	}
+	/**
+	*Author :Brundha Test Case Id:RPMXCON-48171
+	* Description :Verify that 'AudioPlayerReady' should set to '1' when MP3 file variant are ingested with .MP3 files
+	* @throws InterruptedException
+	*/
 	@Test(enabled = true,  groups = {"regression" },priority =21)
 	public void verifyDocumentInAudioPlayerReadyValue() throws InterruptedException  {
 		baseClass.stepInfo("Test case Id: RPMXCON-48171");
