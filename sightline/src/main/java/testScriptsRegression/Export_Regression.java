@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -1242,6 +1243,88 @@ public class Export_Regression {
 		base.passedStep("Componenet tab completed without any error");
 		loginPage.logout();
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-48068
+	 * @Description To Verify placeholders of the docs of the selected file types are produced in Export.
+	 * 
+	 */
+		@Test(description="RPMXCON-48068",enabled = true,groups = { "regression" }, priority = 11)
+		public void verifyPlaceHolderOfExportDocuments() throws Exception {
+			
+			base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48068 -Production");
+		base.stepInfo("To Verify placeholders of the docs of the selected file types are produced in Export.");
+		
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		//Verify 
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getCopyPath().waitAndClick(10);
+		
+        String actualCopedText = page.getCopiedTextFromClipBoard();
+		String parentTab = page.openNewTab(actualCopedText);
+		page.goToImageFiles();
+		page.getFirstImageFile(prefixID+suffixID,subBates).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		
+		File imageFile = new File(Input.fileDownloadLocation+prefixID+suffixID+".000"+subBates+".tiff");
+        page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile,tagname);
+		
+        driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
+		base.passedStep("Verified placeholders of the docs of the selected file types are produced in Export.");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		loginPage.logout();
+		
+	 }
 	
 	
 	@AfterMethod(alwaysRun = true)
