@@ -3452,7 +3452,11 @@ public class DocViewPage {
 	public Element getImageTabAllSourcesDataOnDocView(String name) {
 		return driver.FindElementByXPath("//*[@id='AvailableImagesDropDown']/li/a[contains(text(),'"+name+"')]");
 	}
-
+	
+	public Element getDocview_DefaultTextArea() {
+		return driver.FindElementByXPath("//*[contains(@id,'surface')]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
