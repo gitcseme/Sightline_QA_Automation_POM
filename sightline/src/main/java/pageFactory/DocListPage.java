@@ -1210,6 +1210,19 @@ public class DocListPage {
 		public Element getSelectDocument(String DocID) {
 			return driver.FindElementByXPath("//td[text()='"+DocID+"']/..//td");
 		}
+
+		
+		public Element getDocList_FolderCancel() {
+			return driver.FindElementById("btnFolderCancel");
+		}
+		public Element getDocList_TagCancel() {
+			return driver.FindElementById("btnTagCancel");
+		}
+		public Element getDocList_Bulktag() {
+			return driver.FindElementById("idBulkTag");
+		}
+		
+
 		public ElementCollection GetColumnData(int i) {
 			return driver.FindElementsByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td["+i+"]");
 		}
@@ -1217,6 +1230,7 @@ public class DocListPage {
 public ElementCollection  getHeaderText() {
 			return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
 		}	
+
 	
 	public DocListPage(Driver driver) {
 
@@ -4741,6 +4755,52 @@ public List<String> gettingAllDocIDs(){
 		}
 	}
 	
+
+	
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for validating the deleted tag
+	 * @param tag
+	 */
+	
+	public void validatingTagExisting(String tag) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(5);
+		base.waitForElement(getDocList_Bulktag());
+		getDocList_Bulktag().waitAndClick(5);
+		boolean tagfalse=getSelectExistingTag(tag).isElementAvailable(3);
+		if (tagfalse==false) {
+			base.passedStep("Deleted tag not present in existing tag");
+		}
+		else {
+			base.failedStep("Deleted tag present in existing tag");
+		}
+		getDocList_TagCancel().waitAndClick(5);
+	}
+	
+	
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for validating the deleted folder
+	 * @param tag
+	 */
+	public void validatingFolderExisting(String folder) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(5);
+		base.waitForElement(getDocList_BulkFolder());
+		getDocList_BulkFolder().waitAndClick(5);
+		boolean tagfalse=getSelectFolderExisting(folder).isElementAvailable(3);
+		if (tagfalse==false) {
+			base.passedStep("Deleted folder not present in existing folder");
+		}
+		else {
+			base.failedStep("Deleted folder present in existing folder");
+		}
+		getDocList_FolderCancel().waitAndClick(5);
+	}
+
 	/**
 	 * @author Brundha.T
 	 * Method To verify the email meta data
@@ -4759,5 +4819,6 @@ public List<String> gettingAllDocIDs(){
 				System.out.println(arList);
 				 return arList;
 }
+
 
 }

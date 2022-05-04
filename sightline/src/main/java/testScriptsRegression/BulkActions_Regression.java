@@ -1,27 +1,37 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -39,7 +49,14 @@ public class BulkActions_Regression {
 	DocViewRedactions redact;
 	SecurityGroupsPage security;
 	DocExplorerPage docexp;
-
+	SessionSearch sessionSearch;
+	TagsAndFoldersPage tagsAndFoldersPage;
+	SoftAssert softAssertion;
+	DocListPage doclist;
+	
+	
+	String AssignmentOne = "AssignmentOne" + Utility.dynamicNameAppender();
+	String AssignmentTwo = "AssignmentTwo" + Utility.dynamicNameAppender();
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -52,9 +69,6 @@ public class BulkActions_Regression {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 	}
 
@@ -83,6 +97,9 @@ public class BulkActions_Regression {
 		baseClass.stepInfo("#### Verify Total Email Threaded Count when bulk foldering ####");
 	
 		docexp = new DocExplorerPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.selectproject("AutomationAdditionalDataProject");
 		
@@ -115,15 +132,142 @@ public class BulkActions_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : Baskar date: NA Modified date: 04/05/2022 Modified by: Baskar
+	 * Description:To verify that if the documents are being assigned to multiple assignments, 
+	 * the same "sample documents representative like documents" are being assigned to each of the selected assignments.
+	 * @return 
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-54300",enabled = true, groups = { "regression" }, priority = 6)
+	public void validatingBulkAssignAssignmentCount() throws InterruptedException  {
+		baseClass.stepInfo("Test case Id: RPMXCON-54300");
+		baseClass.stepInfo("To verify that if the documents are being assigned to multiple assignments,"
+				+ " the same \"sample documents + representative like documents\" are being assigned to "
+				+ "each of the selected assignments.");
+		AssignmentsPage agnmt=new AssignmentsPage(driver);
+		sessionSearch=new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		String assignCountOne="";
+		String assignCountTwo="";
+		int size=2;
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		// creating multiple assignment
+		for (int i = 1; i <= size; i++) {
+			if (i == 1) {
+				agnmt.createAssignment(AssignmentOne, Input.codeFormName);
+				System.out.println("inside loop:" + AssignmentOne);
+			}
+			if (i == 2) {
+				agnmt.createAssignment(AssignmentTwo, Input.codeFormName);
+			}
+
+		}
+
+		// Session search to bulk assign to multiple assignment
+		int pureHitAssignCount=sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		agnmt.getSelectAssignmentToBulkAssign(AssignmentOne).waitAndClick(5);
+		agnmt.getSelectAssignmentToBulkAssign(AssignmentTwo).waitAndClick(5);
+		baseClass.waitForElement(agnmt.getContinueBulkAssign());
+		agnmt.getContinueBulkAssign().waitAndClick(30);
+		baseClass.waitForElement(agnmt.getAssgn_TotalCount());
+		baseClass.waitForElement(agnmt.getFinalizeButton());
+		agnmt.getFinalizeButton().waitAndClick(10);
+		baseClass.stepInfo("Selected document for bulk assign are added to multiple assignment");
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		baseClass.waitTime(5);
+		baseClass.waitForElement(agnmt.getNumberOfAssignmentsToBeShown());
+		agnmt.getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(agnmt.getAssgn_Pagination());
+		int count = ((agnmt.getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+				Boolean status = agnmt.getSelectAssignment(AssignmentOne).isDisplayed();
+				Boolean statusTwo = agnmt.getSelectAssignment(AssignmentTwo).isDisplayed();
+				if (status == true&&statusTwo==true) {
+					driver.scrollingToElementofAPage(agnmt.getSelectAssignment(AssignmentOne));
+					assignCountOne=agnmt.getSelectAssignmentDocCount(AssignmentOne).getText();
+					assignCountTwo=agnmt.getSelectAssignmentDocCount(AssignmentTwo).getText();
+				}
+			
+			else {
+				driver.scrollingToBottomofAPage();
+				baseClass.waitForElement(agnmt.getAssgnPaginationNextButton());
+				agnmt.getAssgnPaginationNextButton().Click();
+				baseClass.stepInfo("Expected assignment not found in the page " + i);
+			}
+			}
+		System.out.println(assignCountOne);
+		softAssertion.assertEquals(Integer.parseInt(assignCountOne), pureHitAssignCount);
+		softAssertion.assertEquals(Integer.parseInt(assignCountTwo), pureHitAssignCount);
+		softAssertion.assertAll();
+		baseClass.passedStep("Assigned document to different assignmnet are displaying with document "
+				+ "count as expected action done using bulk action");
+		loginPage.logout();
+
+	}
+
+	
+	/**
+	 * @author Baskar  Date: 04/05/22 Modified date:N/A Modified by: 
+	 * @Description:To verify that if user delete the Tag/Folder,
+	 *               it should not displayed Bulk Tag/Folder modal
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	public void verifyRMUfolderEditDelete() throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-54265");
+		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
+		sessionSearch=new SessionSearch(driver);
+		DocListPage doclist=new DocListPage(driver);
+		String tag = "newTag" + Utility.dynamicNameAppender();
+		String folder = "newFolder" + Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"To verify that if user delete the Tag/Folder, it should not "
+				+ "displayed Bulk Tag/Folder modal");
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create tag and folder
+		tagAndFolderPage.CreateTag(tag, Input.securityGroup);
+		tagAndFolderPage.CreateFolder(folder, Input.securityGroup);
+		baseClass.stepInfo("New tag and folder created");
+		
+		// deleting the tag and folder
+		tagAndFolderPage.DeleteTag(tag, Input.securityGroup);
+		tagAndFolderPage.DeleteFolder(folder, Input.securityGroup);
+        baseClass.stepInfo("Deleting the tag and folder which created");
+        
+		// Session search to bulk assign to multiple assignment
+		int pureHitAssignCount = sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocList();
+		
+		// selecting doc from doclist
+		doclist.selectingAllDocuments();
+		doclist.validatingTagExisting(tag);
+		doclist.validatingFolderExisting(folder);
+		baseClass.passedStep("Deleted tag and folder are not displaying in existing");
+        
+		// logout
+		loginPage.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
-		loginPage = new LoginPage(driver);
-		baseClass = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 			System.out.println("Executed :" + result.getMethod().getMethodName());
+		}
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
 		}
 	}
 	@AfterClass(alwaysRun = true)
