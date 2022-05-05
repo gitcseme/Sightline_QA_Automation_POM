@@ -654,6 +654,19 @@ public class IngestionPage_Indium {
 	}
 
 	// Added by Mohan
+	
+	public Element getIngestion_GenerateSearchablePDFsCheckbox() {
+		return driver.FindElementByXPath("//div[@id='TIFFfile']//label[contains(normalize-space(.),'Generate')]//i");
+	}
+	
+	
+	public Element getIngestion_DraftTable() {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']");
+	}
+	
+	public Element getIngestion_DraftCount() {
+		return driver.FindElementByXPath("//div[@id='cardCanvas']/input[@id='hddtotalIngestionCount']");
+	} 
 
 	public Element getAllIngestionName(String dataSets) {
 		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable']//td[contains(text(),'" + dataSets + "')]");
@@ -8948,5 +8961,60 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				    }
 		    	
 			}
+			
+			/**
+			 * @author Mohan.Venugopal 
+			 * @description Clean up all the created ingestion in the draft Level
+			 * 
+			 */
+			public void deleteMultipleIngestion() {
+
+				driver.waitForPageToBeReady();
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFilterByButton().Visible();
+					}
+				}), Input.wait30);
+				getFilterByButton().waitAndClick(10);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFilterByDRAFT().Visible();
+					}
+				}), Input.wait30);
+				getFilterByDRAFT().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getFilterByINPROGRESS().Visible();
+					}
+				}), Input.wait30);
+				getFilterByINPROGRESS().waitAndClick(10);
+				
+				if (getIngestion_DraftTable().isElementAvailable(5)) {
+					getRefreshButton().waitAndClick(10);
+					base.waitTime(5);
+					String getAttribute = getIngestion_DraftCount().GetAttribute("value");
+					System.out.println(getAttribute);
+					int parseInt = Integer.parseInt(getAttribute);
+					for (int i = 1; i <=parseInt; i++) {
+						base.waitTime(2);
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								getIngestionSettingGearIcon().Visible()  ;}}), Input.wait30); 
+						getIngestionSettingGearIcon().waitAndClick(10);
+						
+						base.waitForElement(getIngestionDeleteButton());
+						getIngestionDeleteButton().waitAndClick(5);
+						base.waitForElement(getApproveMessageOKButton());
+						getApproveMessageOKButton().isElementAvailable(5);
+							getApproveMessageOKButton().waitAndClick(5);
+							
+						
+						base.stepInfo("Ingestion is deleted successfully");
+						
+					}}else {
+						base.stepInfo("There is no Ingestions to delete");
+					}
+				}
 			
 }
