@@ -1212,6 +1212,16 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//tr[@role='row']/th");
 	}
 
+
+		public ElementCollection  getHeaderText() {
+			return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
+		}	
+		
+		public Element getDocCount(int i) {
+			return driver.FindElementByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td[text()="+i+"]");
+		}
+	
+
 	public Element getParentDocumentID(int i) {
 		return driver.FindElementByXPath("//td[@class=' details-control']/..//td[" + i + "]");
 	}
@@ -4822,6 +4832,57 @@ public class DocListPage {
 	 */
 	public ArrayList<String> verifyingEmailMetaData(int Metadata) {
 		ArrayList<String> arList = null;
+
+		      int j;
+		      arList = new ArrayList<String>();
+			  List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
+				for (j = 0; j < RowCount.size(); j++) {
+					driver.waitForPageToBeReady();
+					String row = RowCount.get(j).getText();
+					arList.add(row);
+				}
+				System.out.println(arList);
+				 return arList;
+}
+	/**
+	* @author Brundha.T
+	* @param docCount
+	* Description:Validating mp3 file count.
+	*/
+	public void verifyingTheMp3FileAndOtherFile(int docCount) {
+	if(getDocCount(docCount).isElementAvailable(10)) {
+	base.passedStep("Document count is displayed as expected");
+	}else {
+	base.failedStep("Document count is not displayed as expected");
+	}
+	}
+	/**
+	* @authorBrundha
+	* @param ele
+	* Description:Removing some columns and adding particular column in doclist page
+	*/
+	public void selectingSingleValueInCoumnAndRemovingExistingOne(String AudioPlayer) {
+
+	base.waitForElement(SelectColumnBtn());
+	SelectColumnBtn().waitAndClick(10);
+
+	int metadatasCount = getAvailableRemoveButtonCount().size();
+	for (int i = 0; i < metadatasCount; i++) {
+	getRemoveBtn().Click();
+	System.out.println(i);
+	}
+
+	getSelectAvailMetadata(AudioPlayer).ScrollTo();
+	getSelectAvailMetadata(AudioPlayer).waitAndClick(10);
+
+	base.waitForElement(getAddToSelect());
+	getAddToSelect().waitAndClick(10);
+	base.waitForElement(getUpdateColumnBtn());
+	getUpdateColumnBtn().waitAndClick(10);
+
+	}
+
+
 		int j;
 		arList = new ArrayList<String>();
 		List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
@@ -4833,5 +4894,6 @@ public class DocListPage {
 		System.out.println(arList);
 		return arList;
 	}
+1
 
 }

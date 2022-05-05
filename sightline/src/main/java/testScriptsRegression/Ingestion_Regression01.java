@@ -956,6 +956,40 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 		
 	}
+	/**
+	*Author :Brundha Test Case Id:RPMXCON-48171
+	* Description :Verify that 'AudioPlayerReady' should set to '1' when MP3 file variant are ingested with .MP3 files
+	* @throws InterruptedException
+	*/
+	@Test(enabled = true,  groups = {"regression" },priority =21)
+	public void verifyDocumentInAudioPlayerReadyValue() throws InterruptedException  {
+		baseClass.stepInfo("Test case Id: RPMXCON-48171");
+		baseClass.stepInfo("Verify that 'AudioPlayerReady' should set to '1' when MP3 file variant are ingested with .MP3 files"); loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		System.out.println(status);
+		
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch(Input.nativeMp3FileFormat);
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		baseClass.waitForElement(doc.getSelectDropDown());
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.audioPlayerReady);
+		doc.verifyingTheMp3FileAndOtherFile(0);
+		int count=Integer.valueOf(Input.pageCount);
+		doc.verifyingTheMp3FileAndOtherFile(count);
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
