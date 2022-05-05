@@ -3374,7 +3374,7 @@ public class DocView_Regression2 {
 		baseClass.stepInfo("Verify that tool tip should be displayed on mouse hover of the hidden icon");
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.hiddenDocId);
+		sessionsearch.basicContentSearch(Input.HiddenContentExcelBook);
 		sessionsearch.ViewInDocView();
 		baseClass.waitTillElemetToBeClickable(docViewRedact.hiddenInfoIcon());
 		
