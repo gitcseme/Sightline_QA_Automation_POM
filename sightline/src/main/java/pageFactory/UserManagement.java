@@ -653,6 +653,9 @@ public Element getRoleAccess(String roll) {
 public Element getClientNameTextBox() {
 	return driver.FindElementByXPath("//input[@id='txtClientEntityLabel']");
 }
+public Element getAssignedDomain(String domain) {
+	return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+domain+"')]");
+}
 
 	
 	public UserManagement(Driver driver) {
@@ -1426,7 +1429,7 @@ public Element getClientNameTextBox() {
 	public void editFunctionality(String project) throws Exception {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectUserToEdit(project));
-		getSelectUserToEdit(project).waitAndClick(5);
+		getSelectUserToEdit(project).waitAndClick(10);
 	}
 
 	/**
@@ -1884,6 +1887,7 @@ public Element getClientNameTextBox() {
 
 	}
 	
+	
 	/**
 	 * @author Brundha
 	 * @param projectName
@@ -1895,10 +1899,13 @@ public Element getClientNameTextBox() {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
+		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		bc.waitTime(1);
-		getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
-		getLeftArrow().waitAndClick(10);
+		if (getAssignedDomain(UserName).isElementAvailable(3)) {
+			getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(UserName);
+			getLeftArrow().waitAndClick(10);
+		}
 		driver.waitForPageToBeReady();
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
 		getrightBtndomainuser().waitAndClick(10);
@@ -1981,10 +1988,11 @@ public Element getClientNameTextBox() {
 
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
-
-		bc.waitForElement(getSelectAssignedUserDomain());
-		getSelectAssignedUserDomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
-		getLeftBtndomainuser().waitAndClick(10);
+		
+		if (getAssignedDomain(AssigedUserName).isElementAvailable(3)) {
+			getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
+			getLeftBtndomainuser().waitAndClick(10);
+		}
 
 		getsavedomainuser().waitAndClick(10);
 		bc.VerifySuccessMessage("User Mapping Successful");
