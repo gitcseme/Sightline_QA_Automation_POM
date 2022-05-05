@@ -288,7 +288,7 @@
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
 	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
-	<SearchBatchFile>\BatchFiles\SearchBatchFile</SearchBatchFile>
+	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
