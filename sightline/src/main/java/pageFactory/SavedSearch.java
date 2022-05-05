@@ -2231,7 +2231,7 @@ public class SavedSearch {
 	 * @author Raghuram Date : 9/03/21 Description: creates new search group
 	 */
 	public String createSearchGroupAndReturn(String searchName, String role) {
-		String newNode =createNewSearchGrp(searchName);
+		String newNode = createNewSearchGrp(searchName);
 		System.out.println("Via : " + role + " Created new node : " + newNode);
 		base.stepInfo("Via : " + role + " Created new node : " + newNode);
 		return newNode;
@@ -3367,23 +3367,23 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 		search.saveSearchAction();
-		  driver.waitForPageToBeReady();
-		  
-	        if (search.getSavedSearchExpandStatsC().isElementAvailable(6)) {
+		driver.waitForPageToBeReady();
+
+		if (search.getSavedSearchExpandStatsC().isElementAvailable(6)) {
 //	            base.waitForElement(search.getExpandAllTab());
 //	            search.getExpandAllTab().waitAndClick(5);
-	        	search.getSavedSearchExpandStatsC().waitAndClick(5);
-	        }
+			search.getSavedSearchExpandStatsC().waitAndClick(5);
+		}
 
 		base.waitForElement(search.getExpandSecurityGroupOw());
 		search.getExpandSecurityGroupOw().waitAndClick(5);
 
-		if(search.getNodeOfSG(newNode).isElementAvailable(10)) {
+		if (search.getNodeOfSG(newNode).isElementAvailable(10)) {
 			search.getNodeOfSG(newNode).waitAndClick(5);
 
-		}else {
-		base.waitForElement(search.getSecurityGroupNewNode(newNode));
-		search.getSecurityGroupNewNode(newNode).waitAndClick(5);
+		} else {
+			base.waitForElement(search.getSecurityGroupNewNode(newNode));
+			search.getSecurityGroupNewNode(newNode).waitAndClick(5);
 		}
 
 		Actions ac = new Actions(driver.getWebDriver());
@@ -4980,8 +4980,8 @@ public class SavedSearch {
 	 *         : SG creation and return nodeName
 	 */
 	public String createASearchGroupandReturnName(String searchName) {
-		String new_node = 	createNewSearchGrp(searchName);
-		
+		String new_node = createNewSearchGrp(searchName);
+
 		base.stepInfo("Search and saveSearch in the created node");
 		return new_node;
 	}
@@ -6836,6 +6836,7 @@ public class SavedSearch {
 		base.stepInfo(specificHeaderName + "  : " + Count);
 		System.out.println(specificHeaderName + " : " + Count);
 		return Count;
+
 	}
 
 	/**
@@ -7842,5 +7843,30 @@ public class SavedSearch {
 			System.out.println(action);
 			getToDocViewAction(action).waitAndClick(3);
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param specificHeaderName
+	 * @throws InterruptedException
+	 */
+	public void checkHideandShowFunction(String specificHeaderName) throws InterruptedException {
+
+		verifyHeaderIsPresent(specificHeaderName);
+		getHideSHowBtn().waitAndClick(5);
+		try {
+			base.waitForElement(getFieldoptions(specificHeaderName));
+			getFieldoptions(specificHeaderName).waitAndClick(5);
+			base.stepInfo("Unchecked Search Name Field");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		base.waitForElement(getbackGroundFilm());
+		getbackGroundFilm().waitAndClick(5);
+
+		base.waitTime(4);
+		verifyHeaderIsPresent(specificHeaderName);
+		softAssertion.assertTrue(getFieldHeader(specificHeaderName).isElementPresent());
+		softAssertion.assertAll();
 	}
 }

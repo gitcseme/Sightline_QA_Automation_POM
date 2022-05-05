@@ -101,6 +101,20 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getConceptualCount_last() {
+		return driver.FindElementByXPath("(.//*[@id='005']/span/count)[last()]");
+	}
+	public Element getConceptualCountPlayButton() {
+		return driver.FindElementByXPath("(//i[@Class='fa fa-play-circle-o playButton'])[last()]");
+	}
+	
+	public Element getConceptualCountDisplayed() {
+		return driver.FindElementByXPath("(.//*[@id='005']/span/count)[last()]/../preceding-sibling::i[@style='display: block;']");
+	}
+	
+	public Element getModifyASearch_Current() {
+		return driver.FindElementByXPath("//div[@style='display: block;']//a[@id='qModifySearch']");
+	}
 
 	public Element getViewBtn() {
 		return driver.FindElementByXPath("//a[text()='View']");
@@ -373,7 +387,7 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//li[@role='treeitem']//a[text()='All']//..//..//li[@class='jstree-node  jstree-closed jstree-last']//i[@class='jstree-icon jstree-ocl']");
 	}
-	
+
 	public Element getSaveSearchPopupFolderName_Expand(String name) {
 		return driver.FindElementByXPath(
 				"(// a[contains(text(),'" + name + "')])[last()]//parent::li[contains(@class,'closed')]");
@@ -1109,7 +1123,7 @@ public class SessionSearch {
 	public Element getNodeOfSG(String nodeName) {
 		return driver.FindElementByXPath("//a[text()='" + nodeName + "' and @class='jstree-anchor  jstree-disabled']");
 	}
-	
+
 	public Element getAutoSuggest() {
 		return driver.FindElementByXPath("//li[@class='ui-menu-item']//div");
 	}
@@ -1750,16 +1764,18 @@ public class SessionSearch {
 		return driver.FindElementByXPath("(//*[@id='002']//count)[last()]");
 
 	}
-	
+
 	public Element getNewSearch_MetadataBtn() {
 		return driver.FindElementByXPath("(//*[@id='metadataHelper'])[last()]");
 	}
-	
+
 	public Element getNewSelectMetaData() {
 		return driver.FindElementByXPath("(//*[@id='metatagSelect'])[last()]");
 	}
+
 	public Element getBatchPrintBG() {
-		return driver.FindElementByXPath("(//div[@id='bgTask']//child::span[contains(text(),' Your Batch Print')])[position()=1]");
+		return driver.FindElementByXPath(
+				"(//div[@id='bgTask']//child::span[contains(text(),' Your Batch Print')])[position()=1]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -3182,9 +3198,8 @@ public class SessionSearch {
 		}), Input.wait60);
 		getBulkRelease_ButtonRelease().waitAndClick(20);
 
-		
-		if(getFinalizeButton().isDisplayed()) {
-		
+		if (getFinalizeButton().isDisplayed()) {
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getFinalizeButton().Visible();
@@ -6245,6 +6260,7 @@ public class SessionSearch {
 		UtilityLog.info("Navigated to docView to view docs");
 
 	}
+
 	/**
 	 * @author Indium-Baskar date: 10/4/2021 Modified date: NA
 	 * @Description: Assign near dupe document to assignment
@@ -7358,6 +7374,7 @@ public class SessionSearch {
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(assignMentName)) {
 
+				base.waitTime(4);
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				System.out.println(iterable_element.getText());
@@ -11450,6 +11467,7 @@ public class SessionSearch {
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param metaDataField
@@ -11476,7 +11494,7 @@ public class SessionSearch {
 		// Click on Search button
 		base.waitForElement(getSecondSearchBtn());
 		getSecondSearchBtn().waitAndClick(3);
-		if(base.getYesBtn().isElementAvailable(2)) {
+		if (base.getYesBtn().isElementAvailable(2)) {
 			base.getYesBtn().waitAndClick(10);
 		}
 		base.waitForElement(getPureHitsCount2ndSearch());
@@ -11491,10 +11509,7 @@ public class SessionSearch {
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
-	
-	
 
-	
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -11519,7 +11534,7 @@ public class SessionSearch {
 		String backGroundText = getBatchPrintBG().getText();
 		System.out.println(backGroundText);
 		String afterRemovingChar = backGroundText.replaceAll("[^\\d]", "");
-	    int idValue=Integer.parseInt(afterRemovingChar); 
+		int idValue = Integer.parseInt(afterRemovingChar);
 		System.out.println(idValue);
 		if (backGroundText.contains("Batch Print")) {
 			base.passedStep("Related task is displayed in the background task");
@@ -11531,21 +11546,21 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jeevitha 
-	 * @Description  :verifies Session saerch page Url
+	 * @author Jeevitha
+	 * @Description :verifies Session saerch page Url
 	 */
 	public void verifySessionSearchPage() {
 
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
 		String BsUrl = Input.url + "Search/Searches";
-		
-			if (currentUrl.equals(BsUrl)) {
-				base.passedStep("Navigated to Basic Search Page : " + currentUrl);
-			} else if (currentUrl.contains("Search/Searches")) {
-				base.passedStep("Navigated to Basic Search Page : " + currentUrl);
-			} else {
-				base.failedStep("Navigated to Page : " + currentUrl);
-			}
+
+		if (currentUrl.equals(BsUrl)) {
+			base.passedStep("Navigated to Basic Search Page : " + currentUrl);
+		} else if (currentUrl.contains("Search/Searches")) {
+			base.passedStep("Navigated to Basic Search Page : " + currentUrl);
+		} else {
+			base.failedStep("Navigated to Page : " + currentUrl);
+		}
 	}
 
 	/**
@@ -11560,6 +11575,54 @@ public class SessionSearch {
 			base.passedStep("Document is displayed as expected");
 		} else {
 			base.failedStep("Document count is not displayed as expected");
+		}
+	}
+
+	
+	/**
+	 * @Author Jeevitha
+	 * @param SearchNamelist
+	 * @param conceptuallySimilarCountList
+	 * @throws InterruptedException
+	 */
+	public void verifyingConceptuallySimilarCountInSessionSearcheWithCountInSavedSearch(List<String> SearchNamelist,
+			List<String> conceptuallySimilarCountList) throws InterruptedException {
+		for (int i = 0; i < SearchNamelist.size(); i++) {
+			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+			String concept =conceptuallySimilarCountList.get(i);
+			driver.waitForPageToBeReady();
+			SavedSearch savedSearch = new SavedSearch(driver);
+			savedSearch.selectSavedSearch(SearchNamelist.get(i));
+			savedSearch.getSavedSearchEditButton().waitAndClick(5);
+			System.out.println("Edit icon Clicked from SavedSearch");
+			driver.waitForPageToBeReady();
+			getModifyASearch_Current().waitAndClick(5);
+
+			System.out.println("Modify search button Clicked");
+			getQuerySearchBtn().waitAndClick(5);
+			System.out.println("Search button Clicked");
+			if (base.getYesBtn().isElementAvailable(3)) {
+				base.getYesBtn().waitAndClick(5);
+			}
+			base.waitForElement(getConceptualCountPlayButton());
+			getConceptualCountPlayButton().waitAndClick(5);
+
+			base.waitForElement(getConceptualCountDisplayed());
+			base.VerifySuccessMessage("Conceptual Similar search started successfully.");
+			System.out.println("Clicked ConceptualCount button");
+			driver.waitForPageToBeReady();
+
+			String conceptualCount = getConceptualCount_last().getText();
+			System.out.println("Conceptual Similar Count for SavedSearch '" + SearchNamelist.get(i)
+					+ "' from SessionSearch : " + conceptualCount);
+			base.stepInfo("Conceptual Similar Count for SavedSearch '" + SearchNamelist.get(i)
+					+ "' from SessionSearch : " + conceptualCount);
+			System.out.println("Conceptual Similar Count for SavedSearch '" + SearchNamelist.get(i)
+					+ "' from SavedSearch :" + conceptuallySimilarCountList.get(i));
+			base.stepInfo("Conceptual Similar Count for SavedSearch '" + SearchNamelist.get(i) + "' from SavedSearch :"
+					+ conceptuallySimilarCountList.get(i));
+			softAssert.assertEquals(conceptualCount, conceptuallySimilarCountList.get(i));
+			softAssert.assertAll();
 		}
 	}
 }

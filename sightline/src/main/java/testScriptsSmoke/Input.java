@@ -384,6 +384,7 @@ public class Input {
 	public static String bullHornIconColor;
 	public static String progresBarColor;
 	public static String BatchFileduplicateHeader;
+	public static String SearchBatchFile;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -1100,6 +1101,7 @@ public class Input {
 		progresBarColor = testData.getProgresBarColor();
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
 		metaDataCNcount = testData.getMetaDataCNcount();
+		SearchBatchFile = testData.getSearchBatchFile();
 
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();

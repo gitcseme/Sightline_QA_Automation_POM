@@ -266,6 +266,7 @@ public class TestData {
 	public String bullHornIconColor;
 	public String progresBarColor;
 	public String BatchFileduplicateHeader;
+	public String SearchBatchFile;
 
 	/**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified

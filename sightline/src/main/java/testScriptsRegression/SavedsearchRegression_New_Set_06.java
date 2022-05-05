@@ -80,10 +80,8 @@ public class SavedsearchRegression_New_Set_06 {
 
 	@DataProvider(name = "SwitchUsers")
 	public Object[][] SavedSearchwithUsers() {
-		Object[][] users = {
-				{ Input.sa1userName, Input.sa1password,"SA" },
-				{ Input.da1userName, Input.da1password,"DA"},
-				{ Input.pa1userName, Input.pa1password, "PA" } };
+		Object[][] users = { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.da1userName, Input.da1password, "DA" }, { Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
 
@@ -294,6 +292,147 @@ public class SavedsearchRegression_New_Set_06 {
 		tally.verifyTallyChart();
 
 		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : TC05_Verify that When PAU runs a RMU created search
+	 *              (WorkProduct(Tags/Folder/Assignment)) in PAU role then search
+	 *              returns documents Under \"Count of Results\" column on \"Saved
+	 *              Search Screen\" [RPMXCON-49836] 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifySearchDocOfRmu() throws Exception {
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+		String tagName = "TagName" + Utility.dynamicNameAppender();
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String savedsearcTaghName = "SavedSearchTag" + Utility.dynamicNameAppender();
+		String savedSearchFolderName = "SavedSearchFolder" + Utility.dynamicNameAppender();
+		String savedSearchAssignmentName = "SavedSearchAssignment" + Utility.dynamicNameAppender();
+
+		AssignmentsPage assign = new AssignmentsPage(driver);
+
+		// login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-49836 Saved Search");
+		base.stepInfo(
+				"TC05_Verify that When PAU runs a RMU created search (WorkProduct(Tags/Folder/Assignment)) in PAU role then search returns documents Under \"Count of Results\" column on \"Saved Search Screen\" ");
+
+		// Create Search Group
+		String newNodeRMU = saveSearch.createNewSearchGrp(Input.mySavedSearch);
+
+		// creating tag ,folder
+		session.basicContentSearch(Input.searchString1);
+		session.bulkTag(tagName);
+		session.bulkFolderWithOutHitADD(folderName);
+
+		// creating the assignment
+		session.Removedocsfromresults();
+		session.addNewSearch();
+		session.multipleBasicContentSearch(Input.TallySearch);
+		session.bulkAssign();
+		assign.assignmentCreation(assignmentName, Input.codeFormName);
+
+		// creating the savedSearch containing tag
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.selectTagInASwp(tagName);
+		int tagPureHitCount = session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearchInNewNode(savedsearcTaghName, newNodeRMU);
+
+		// creating the savedSerach containing folder
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.selectFolderInASwp(folderName);
+		int folderPureHitCount = session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearchInNewNode(savedSearchFolderName, newNodeRMU);
+
+		// creating the savedSerach containing assignment
+		base.selectproject();
+		session.switchToWorkproduct();
+		int assignmentPureHitCount = session.selectAssignmentInWPSWs(assignmentName);
+		driver.scrollPageToTop();
+		session.saveSearchInNewNode(savedSearchAssignmentName, newNodeRMU);
+
+		// sharing the savedSearch with security group
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNodeRMU);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNodeRMU, Input.shareSearchDefaultSG);
+
+		// logout
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// verifying the count of results for savedSearch containing the tag
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.shareSearchDefaultSG, newNodeRMU);
+		saveSearch.performExecute();
+
+		// Verify Search Status And Count in all nodes
+		List<String> newNodeList = new ArrayList<>();
+		newNodeList.add(newNodeRMU);
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		nodeSearchpair.put(newNodeRMU, savedsearcTaghName);
+
+		saveSearch.verifyStatusAndCountInAllChildNode(Input.shareSearchDefaultSG, newNodeList, 0, nodeSearchpair);
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Batch Upload : Verify that conceptually similar counts match
+	 *              with expected counts post modify and run. [RPMXCON-49264]
+	 * @param UserName
+	 * @param PassWord
+	 * @param fullName
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, dataProvider = "AllTheUsers", priority = 5)
+	public void batchUploadAndVerifyConceptCount(String UserName, String PassWord, String fullName)
+			throws InterruptedException {
+
+		String headername_1 = "Search Name";
+		String headername_2 = "Conceptually Similar Count";
+
+		// login as user
+		login.loginToSightLine(UserName, PassWord);
+		base.stepInfo("Loggedin As : " + fullName);
+
+		base.stepInfo("Test case id: RPMXCON-49264 Savedsearch");
+		base.stepInfo(
+				"Batch Upload : Verify that conceptually similar counts match with expected counts post modify and run.");
+
+		// performing batch upload functionality using attached excel file
+		saveSearch.navigateToSSPage();
+		saveSearch.uploadWPBatchFile(saveSearch.renameFile(Input.WPbatchFile));
+		base.stepInfo("Successfully uploaded the BAtch file");
+
+		// collecting list of search name from SavedSearch DataTable
+		List<String> SearchNamelist = saveSearch.getListFromSavedSearchTable(headername_1);
+
+		// enabling the conceptually similar count in savedsearch datatable
+		saveSearch.checkHideandShowFunction(headername_2);
+		saveSearch.getFieldHeader(headername_2).ScrollTo();
+		driver.waitForPageToBeReady();
+
+		// collecting list of conceptually similar count from SavedSearch DataTable
+		List<String> conceptuallySimilarCountList = saveSearch.getListFromSavedSearchTable(headername_2);
+		driver.waitForPageToBeReady();
+
+		// verifying Conceptually Similar Count In SessionSearche With Count In
+		// SavedSearch for all the SavedSearch Terms
+		session.verifyingConceptuallySimilarCountInSessionSearcheWithCountInSavedSearch(SearchNamelist,
+				conceptuallySimilarCountList);
+
 		login.logout();
 	}
 
