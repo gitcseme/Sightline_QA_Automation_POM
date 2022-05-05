@@ -3438,7 +3438,7 @@ public class DocView_Regression2 {
 	public void verifyHiddenContentDocswhileSwitchingViews(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
-		String expectedMessage2 = "Hidden Rows;Protected Workbook";
+		String expectedMessage2 = "Contains Comments;Hidden Columns;Hidden Rows;Hidden Sheets;Pr...";
 		String expectedMessage3 = "Protected Excel Workbook";
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51960");
@@ -3593,7 +3593,7 @@ public class DocView_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-51107");
 		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
