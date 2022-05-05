@@ -1084,8 +1084,7 @@ public class DocView_Regression3 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		String searchName = "Test" + Utility.dynamicNameAppender();
 		String redactiontag = "Tag" + Utility.dynamicNameAppender();
-		
-		
+
 		RedactionPage redactionpage = new RedactionPage(driver);
 
 		baseClass.stepInfo("Navigate To Redactions Page URL");
@@ -1093,7 +1092,7 @@ public class DocView_Regression3 {
 
 		baseClass.stepInfo("Manage Redaction Tags Page");
 		redactionpage.manageRedactionTagsPage(redactiontag);
-		
+
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -1101,13 +1100,7 @@ public class DocView_Regression3 {
 		// Create saved search
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.saveSearch(searchName);
-
-		// perform Batch redaction
-		bacth.VerifyBatchRedaction_ElementsDisplay(searchName, true);
-		bacth.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
-
-		// verify History status
-		bacth.verifyBatchHistoryStatus(searchName);
+		
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with Reviewer Manager");
@@ -1115,26 +1108,17 @@ public class DocView_Regression3 {
 		Reporter.log("Logged in as User: " + Input.rmu1userName);
 
 		sessionsearch.basicContentSearch(Input.testData1);
-		
+
 		sessionsearch.ViewInDocView();
-   
+
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		
+
 		baseClass.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
 
 		baseClass.stepInfo("Set rectangle reduct in doc");
-		docViewMetaDataPage.redactbyrectangle(10, 15,redactiontag);
+		docViewMetaDataPage.redactbyrectangle(10, 15, redactiontag);
 		
-		driver.Navigate().refresh();
-		
-		driver.scrollPageToTop();
-		docViewMetaDataPage.getRedactIcon().isElementAvailable(15);
-		docViewMetaDataPage.getRedactIcon().waitAndClick(15);
-		
-		// click the this page Redaction icon
-		docViewRedact.performThisPageRedaction(redactiontag);
-
 		String beforeCount = docViewRedact.getDocViewAllRedation().getText();
 		System.out.println(beforeCount);
 
@@ -1142,31 +1126,11 @@ public class DocView_Regression3 {
 		System.out.println(afterCount);
 		softAssertion.assertNotEquals(beforeCount, afterCount);
 		baseClass.passedStep("count of 'All Redactions'are increased");
+
 		
-		baseClass.stepInfo("Log out");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Select security group for RMU");
-		docViewRedact.selectsecuritygroup("Default Security Group");
-		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Select security group for REVIEWER");
-		docViewRedact.selectsecuritygroup("Default Security Group");
-		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		securityGroupsPage = new SecurityGroupsPage(driver);
-		if (!(namesg2== null)) {
-		securityGroupsPage.deleteSecurityGroups(namesg2);
-		}
-		if (!(namesg3== null)) {
-			securityGroupsPage.deleteSecurityGroups(namesg3);
-		}
-		driver.Navigate().refresh();
-		driver.scrollPageToTop();
-		loginPage.logout();
 	}
+	
+
 
 
 
