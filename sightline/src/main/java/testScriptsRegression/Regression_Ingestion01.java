@@ -57,7 +57,6 @@ public class Regression_Ingestion01 {
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		baseClass.selectproject(Input.ingestDataProject);
 	}
 	
 	
@@ -1100,6 +1099,21 @@ public class Regression_Ingestion01 {
 		ingestionPage.verifyOptionsInErrorDetailsPopup();
 		//rollback
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
+	}
+	
+	//Clean-Up Activity
+	/**
+	 * @author Mohan.Venugopal 
+	 * @description Clean up all the created ingestion in the draft Level
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 51)
+	public void deleteMultipleIngestionAtDraftLevel() throws InterruptedException  {
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("CleanUp Activity");
+		ingestionPage.deleteMultipleIngestion();
 		loginPage.logout();
 	}
 	
