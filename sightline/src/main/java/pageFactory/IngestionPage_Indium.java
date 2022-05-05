@@ -1000,6 +1000,14 @@ public class IngestionPage_Indium {
 		public Element getNextColumnTerm(String term) {
 		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term + "')]//..//following-sibling::tr//td[1]");
 	}
+		
+	public Element getTotalIngestedCount() {
+		return driver.FindElementByXPath("//p[@id='totalIngestionDocuments']");
+	}
+		
+	public Element getApproveMessageSecondOKButton() {
+		return driver.FindElementById("bot1-Msg2");
+	}
 	
   	//Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -9016,5 +9024,138 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 						base.stepInfo("There is no Ingestions to delete");
 					}
 				}
+			
+			
+			/**
+			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform add only ingestion for unicodefiles folder
+			 */
+			public void unicodeFilesIngestionWithDifferentSourceSystem(String source,String datFile,String textFile,String datKey) {
+				selectIngestionTypeAndSpecifySourceLocation("Add Only",source,Input.sourceLocation,Input.UniCodeFilesFolder);
+				base.waitForElement(getDATDelimitersFieldSeparator());
+				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+				base.waitForElement(getDATDelimitersTextQualifier());
+				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+				base.waitForElement(getDATDelimitersNewLine());
+				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+				
+				selectDATSource(datFile,datKey);
+				base.stepInfo("*******Selecing text files***************");
+				base.waitForElement(getSourceSelectionText());
+				getSourceSelectionText().waitAndClick(20);
+				base.waitForElement(getSourceSelectionTextLoadFile());
+				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getDateFormat().Visible();
+					}
+				}), Input.wait30);
+				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+				
+				clickOnNextButton();
+				base.waitTime(2);
+				selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
+				clickOnPreviewAndRunButton();
+				base.stepInfo("Ingestion started");
+			}
+			
+			/**
+			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will verify total ingested count with pure hit count
+			 */
+			public void verifyTotalDocsIngestedWithPurehitCount() {
+				
+				driver.getWebDriver().get(Input.url + "Ingestion/Home");
+				driver.waitForPageToBeReady();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+		    	getFilterByButton().waitAndClick(10);
+		    	
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+		    	getFilterByPUBLISHED().waitAndClick(10);
+		    	
+		    	getRefreshButton().waitAndClick(5);
+		    	base.waitTime(2);
+		    	
+		    	int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
+				SessionSearch search = new SessionSearch(driver);
+				int purehitCount=search.basicContentSearch(Input.searchStringStar);
+				System.out.println(purehitCount);
+				  if(totalDocsIngestedCount==purehitCount) {
+				    	base.passedStep("Pure hit count showed the total number of documents ingested");
+				    }
+				  else {
+				    	base.failedStep("Pure hit count not showed the total number of documents ingested");
+				    }
+			}
+			
+			/**
+			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+			 * @description: this method will perform a new add only ingestion using copy option
+			 */
+			public void performNewAddOnlyIngestionUsingCopyOption(String sourceSystem,String sourceFolder,String datFile,String docKey) {
+				driver.waitForPageToBeReady();
+				getIngestionDetailPopup(1).waitAndClick(5);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getActionDropdownArrow().Visible();
+					}
+				}), Input.wait30);
+				getActionDropdownArrow().waitAndClick(5);
+				
+				if(getActionCopy().Displayed() && getActionApprove().Displayed() && getActionOpenWizard().Displayed() && rollbackOptionInPopup().Displayed()) {
+					base.passedStep("All available options displayed in action drop down");
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getActionCopy().Visible();
+					}
+				}), Input.wait30);
+				
+				getActionCopy().waitAndClick(5);
+				base.waitTime(3);
+				base.stepInfo("performing new ingestion using copy option");
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
+				getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getSpecifySourceFolder().Visible()  ;}}), Input.wait30);
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+				
+				base.stepInfo("Selected source system and source folder");
+				base.waitTime(2);
+				
+				selectDATSource(datFile,docKey);
+				
+				driver.scrollPageToTop();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getNextButton().Visible()  ;}}), Input.wait30); 
+				getNextButton().waitAndClick(10);
+				base.passedStep("Clicked on Next button");
+
+				base.stepInfo("Pop up message for Ingestion without text file");
+				if (getApproveMessageOKButton().isElementAvailable(10)) {
+					getApproveMessageOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to continue without text files");
+				}
+				
+				if (getApproveMessageSecondOKButton().isElementAvailable(10)) {
+					getApproveMessageSecondOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to continue ingestion with different mapping field selection");
+				}
+				
+				clickOnPreviewAndRunButton();
+		    	base.waitTime(3);
+		    	base.passedStep("Ingestion performed successfully");
+			}
 			
 }

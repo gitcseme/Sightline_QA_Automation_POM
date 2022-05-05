@@ -991,6 +991,57 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 	
+	
+	/** 
+     *Author :Arunkumar date: 05/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-47402
+	 * Description :To verify "Copy Ingestion" with ingestion wizard (Using link "Add Ingestion(New approach)")
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 33)
+	public void verifyCopyIngestionUsingNewApproach() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47402");
+		baseClass.stepInfo("To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1,Input.textFile1, Input.documentKey);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data",Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat,Input.sourceDocIdSearch);
+		loginPage.logout();
+		
+	}
+	
+	/** 
+     *Author :Arunkumar date: 05/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49282
+	 * Description :To Verify Ingestion Add Only end to End Flow with Source System as Mapped Data
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 34)
+	public void verifyAddonlyIngestionWithMappedData() throws InterruptedException  {
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49282");
+		baseClass.stepInfo("To Verify Ingestion Add Only end to End Flow with Source System as Mapped Data");
+		// perform add only ingestion with source system as Mapped data
+		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data",Input.datLoadFile1,Input.textFile1, Input.documentKey);
+		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		ingestionPage.verifyTotalDocsIngestedWithPurehitCount();
+		loginPage.logout();
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
