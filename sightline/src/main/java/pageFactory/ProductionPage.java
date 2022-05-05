@@ -1243,7 +1243,7 @@ public class ProductionPage {
 
 	public Element getProductionFromHomePage(String productionName) {
 		return driver
-				.FindElementByXPath("//a[@title='"+ productionName +"']//..//..//span[@class='progressBarText']");
+				.FindElementByXPath("//a[text()='"+ productionName +"']/../..//span[@class='progressBarText']");
 	}
 
 	public Element gettxtPreGenChecks() {
@@ -1521,9 +1521,13 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[3]");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
+	public Element getDefaultTag() {
+		return driver
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[3]");
+	}
 	public Element getClkLink_selectingRedactionTags() {
 		return driver.FindElementByXPath("//a[contains(text(),'Specify Redaction Text by Selecting Redaction Tags')]");
 	}
@@ -1535,7 +1539,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_selectingRedactionTags() {
 		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[text()='Default Redaction Tag']");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClk_selectBtn() {
@@ -5402,9 +5406,9 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
-		getClkCheckBox_selectingRedactionTags().ScrollTo();
-		base.waitForElement(getClkCheckBox_selectingRedactionTags());
-		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+		base.waitForElement(getDefaultTag());
+		getDefaultTag().isDisplayed();
+		getDefaultTag().waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
@@ -12772,21 +12776,19 @@ for (int i = 0; i < 6; i++) {
 	 * @param Status: Status is String value that name of Production status on
 	 *                progress bar.
 	 */
-	public void verifyProductionStatusInHomePage(String statusMsg, String productionname) {
+	public void verifyProductionStatusInHomePage(String statusMsg,String productionname) {
 		String productionFromHomePage = null;
 
 		// Verifying status of the production from home page
 		for (int i = 0; i < 500; i++) {
 			driver.waitForPageToBeReady();
-			getProductionFromHomePage(productionname).isElementAvailable(180);
+			getProductionFromHomePage(productionname).isElementAvailable(10);
 			productionFromHomePage = getProductionFromHomePage(productionname).getText();
 			if (productionFromHomePage.contains(statusMsg)) {
 				base.passedStep(statusMsg + "status displayed");
 				break;
-			} else if (i == 499) {
-				base.failedStep(statusMsg + "status not displayed");
-				driver.waitForPageToBeReady();
-			} else {
+			
+			}else {
 				driver.waitForPageToBeReady();
 				getRefreshButton().waitAndClick(5);
 			}
@@ -12911,80 +12913,30 @@ for (int i = 0; i < 6; i++) {
 
 		base.waitForElement(getbtnRegenerateContinue());
 		getbtnRegenerateContinue().waitAndClick(5);
-		base.stepInfo("Regenerating the production");
-		getVerifyGenStatus("Preparing Data Complete").isElementAvailable(20);
-		// StatusVerification
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Preparing Data Complete").isDisplayed();
-			}
-		}), Input.wait120);
-		verifyProductionStatusInGenPage("Preparing Data Complete");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Pre-Generation Checks In Progress").isDisplayed();
-			}
-		}), Input.wait120);
+		
+       driver.waitForPageToBeReady();		
 		verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Reserving Bates Range Complete").isDisplayed();
-			}
-		}), Input.wait120);
+		
 		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
-
-		// continue Genaration button click
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getbtnContinueGeneration().Enabled() && getbtnContinueGeneration().isDisplayed();
 			}
 		}), Input.wait120);
-
 		getbtnContinueGeneration().waitAndClick(10);
 
-		// after continue button status verification
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Production Generation In Progress").isDisplayed();
-			}
-		}), Input.wait120);
+	
 		verifyProductionStatusInGenPage("Production Generation In Progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Load File Generation In Progress").isDisplayed();
-			}
-		}), Input.wait120);
+	
 		verifyProductionStatusInGenPage("Load File Generation In Progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Exporting Files In Progress").isDisplayed();
-			}
-		}), Input.wait120);
+	
 		verifyProductionStatusInGenPage("Exporting Files In Progress");
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Creating Archive In Progress").isDisplayed();
-			}
-		}), Input.wait120);
 		verifyProductionStatusInGenPage("Creating Archive In Progress");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Creating Archive Complete/Skipped").isDisplayed();
-			}
-		}), Input.wait120);
+		
 		verifyProductionStatusInGenPage("Creating Archive Complete/Skipped");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getVerifyGenStatus("Post-Generation QC Checks In Progress").isDisplayed();
-			}
-		}), Input.wait120);
+		
 		verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
 
 	}
