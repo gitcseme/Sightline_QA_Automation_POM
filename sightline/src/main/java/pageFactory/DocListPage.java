@@ -1212,10 +1212,7 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//tr[@role='row']/th");
 	}
 
-
-		public ElementCollection  getHeaderText() {
-			return driver.FindElementsByXPath("//div[@id='dtDocList_wrapper']//table//tr//th");
-		}	
+	
 		
 		public Element getDocCount(int i) {
 			return driver.FindElementByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td[text()="+i+"]");
@@ -4882,18 +4879,5 @@ public class DocListPage {
 
 	}
 
-
-		int j;
-		arList = new ArrayList<String>();
-		List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
-		for (j = 0; j < RowCount.size(); j++) {
-			driver.waitForPageToBeReady();
-			String row = RowCount.get(j).getText();
-			arList.add(row);
-		}
-		System.out.println(arList);
-		return arList;
-	}
-1
 
 }
