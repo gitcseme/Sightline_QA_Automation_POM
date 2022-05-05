@@ -685,4 +685,5 @@
 
 <!-- Added by Gopinath Created date - 28/04/2022 -->
 	<telecom>telecom</telecom>
+	<regressionRun>Indium_Regressionrun</regressionRun>
 </TestData>
