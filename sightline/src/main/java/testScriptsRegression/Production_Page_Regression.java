@@ -881,26 +881,11 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 
-		// Starting the generation
 		baseClass.waitForElement(page.getbtnProductionGenerate());
 		page.getbtnProductionGenerate().waitAndClick(10);
-		page.getbtnProductionGenerate().waitAndFind(540);
 		
-		page.getbtnContinueGeneration().isElementAvailable(60);
-		if (page.getbtnContinueGeneration().isDisplayed()) {
-			baseClass.waitForElement(page.getbtnContinueGeneration());
-			page.getbtnContinueGeneration().waitAndClick(10);
-		}
-
-		Reporter.log("Wait for generate to complete", true);
-		System.out.println("Wait for generate to complete");
-		UtilityLog.info("Wait for generate to complete");
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Going to Home Page");
-		page.navigateToProductionPage();
-		driver.Navigate().refresh();
-		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
+		page.goToProductionGridView();
+		page.verifyProductionStatusInHomePageGridView("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep(" verified 'Pre-Gen Checks Complete 'status on Grid View on Production Home page");
 		loginPage.logout();
 	}
@@ -936,11 +921,12 @@ public class Production_Page_Regression {
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
-		productionname = " p" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -956,9 +942,8 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getbtnProductionGenerate());
 		page.getbtnProductionGenerate().waitAndClick(10);
 		
-		driver.waitForPageToBeReady();
-		baseClass.stepInfo("Going to Home Page");
-		page.navigateToProductionPage();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
 		
 		page.verifyProductionStatusInHomePage("Pre-Gen Checks Complete", productionname);
 		baseClass.passedStep("verified 'Pre-Gen Checks Complete 'status on  Production Home page");
@@ -1053,7 +1038,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1064,11 +1049,12 @@ public class Production_Page_Regression {
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
-		productionname = " p" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
+		page.fillingTIFFSection(tagname);
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
@@ -1082,23 +1068,17 @@ public class Production_Page_Regression {
 		// Starting the generation
 		baseClass.waitForElement(page.getbtnProductionGenerate());
 		page.getbtnProductionGenerate().waitAndClick(10);
-		page.getbtnProductionGenerate().waitAndFind(120);
-		Reporter.log("Wait for generate to complete, true");
-		System.out.println("Wait for generate to complete");
-		UtilityLog.info("Wait for generate to complete");
-		
-		page.getbtnContinueGeneration().isElementAvailable(60);
+		page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		baseClass.waitTime(1);
 		if (page.getbtnContinueGeneration().isDisplayed()) {
 			baseClass.waitForElement(page.getbtnContinueGeneration());
 			page.getbtnContinueGeneration().waitAndClick(10);
 		}
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Going to Home Page");
-		page.navigateToProductionPage();
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
-		page.verifyProductionStatusInHomePage("Post-Generation QC Checks In Progress", productionname);
-		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete", productionname);
+		page.verifyProductionStatusInHomePage("Post-Gen QC Checks In Progress", productionname);
+		page.verifyProductionStatusInHomePage("Post-Gen QC Checks Complete",productionname);
 		baseClass.passedStep(
 				" Post Generation is in progress, it will displays status on Production Progress bar ,Tile View as 'Post-Gen QC Checks In Progress'");
 		loginPage.logout();
@@ -1206,7 +1186,7 @@ public class Production_Page_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
 		baseClass.passedStep(
 				"Production generated  by selecting components like DAT,TIFF,NATIVE and with selection of multiple tags with audio files");
 		loginPage.logout();
@@ -3316,19 +3296,13 @@ public class Production_Page_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopup();
-
-		baseClass.waitTime(3);
-		String name = page.getProduction().getText().trim();
-		System.out.println(name);
-		String downloadsHome = "C:\\BatchPrintFiles\\downloads";
-		String home = System.getProperty("user.home");
-		page.isFileDownloaded(downloadsHome, name);
+		page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
+		baseClass.waitTime(2);
+        page.extractFile();
 
 		// Delete Tag and folder
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
 		loginPage.logout();
 
 	}
@@ -3434,8 +3408,11 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		
 		baseClass.stepInfo("Checking availability of In progress status production ");
-		page.prodGenerationInProgressStatus();
 		if (page.productionNameInHomePage().Displayed()) {
 			baseClass.passedStep("production in In Progress Status Displayed");
 		} else {
@@ -3445,7 +3422,6 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 
 		baseClass.stepInfo("Checking availability of Completed status production ");
-		page.prodGenerationInCompletedStatus(productionname);
 		if (page.productionNameInHomePage().Displayed()) {
 			baseClass.passedStep("production in Completed Status Displayed");
 		} else {

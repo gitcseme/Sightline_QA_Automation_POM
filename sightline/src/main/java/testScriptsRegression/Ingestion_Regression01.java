@@ -629,7 +629,7 @@ public class Ingestion_Regression01 {
 		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeFileName);
 		System.out.println(status);
 		if(status==false) {
-		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null);
 		}
 		String[] addEmailColumn = {"EmailAuthorName", "EmailAuthorAddress"};
@@ -686,7 +686,7 @@ public class Ingestion_Regression01 {
 		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeFileName);
 		System.out.println(status);
 		if(status==false) {
-		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null);
 		}
 			
@@ -733,7 +733,7 @@ public class Ingestion_Regression01 {
 		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
 		System.out.println(status);
 		if(status==false) {
-		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
 		}
 		SessionSearch	sessionsearch = new SessionSearch(driver);
@@ -973,7 +973,7 @@ public class Ingestion_Regression01 {
 		
 		System.out.println(status);
 		if(status==false) {
-		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
