@@ -100,6 +100,7 @@ public class DocView_Regression5 {
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
+		DocViewPage docView = new DocViewPage(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51444");
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
@@ -154,6 +155,7 @@ public class DocView_Regression5 {
 				"Verify that after impersonation > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view from basic search");
 		loginPage = new LoginPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		DocViewPage docView = new DocViewPage(driver);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
@@ -1459,7 +1461,7 @@ public class DocView_Regression5 {
 	 * Assignment/Manage Reviewers.
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, alwaysRun = true, priority = 13)
 	public void verifyMaximizeTheMiddlePanelInDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1472,6 +1474,7 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as REV
@@ -1480,6 +1483,7 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as PA
@@ -1488,6 +1492,7 @@ public class DocView_Regression5 {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 		docViewRedact.verifyMaximizetheMiddlePanel();
+		driver.Navigate().refresh();
 		loginPage.logout();
 	}
 	
@@ -1738,7 +1743,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Create new assignment");
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.docIdThumbnails);
+		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codingFormName);
 		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
