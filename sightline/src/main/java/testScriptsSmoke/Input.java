@@ -513,6 +513,11 @@ public class Input {
 	public static String sourceDocIdDB992;
 	public static String NonDomainProject;
 	public static String emailAuthorDomain;
+	public static String overlayOnly;
+	public static String PDFGen_10Docs;
+	public static String PDF5DocsLst;
+	public static String Images5DocsLst;
+	public static String newdateformat_5Docs;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -989,6 +994,11 @@ public class Input {
 		sourceDocIdDB992 = testData.getSourceDocIdDB992();
 		NonDomainProject = testData.getNonDomainProject();
 		emailAuthorDomain = testData.getEmailAuthorDomain();
+		overlayOnly = testData.getOverlayOnly();
+		PDFGen_10Docs = testData.getPDFGen_10Docs();
+		PDF5DocsLst = testData.getPDF5DocsLst();
+		Images5DocsLst = testData.getImages5DocsLst();
+		newdateformat_5Docs = testData.getNewdateformat_5Docs();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
