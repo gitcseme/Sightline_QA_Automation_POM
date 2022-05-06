@@ -2037,34 +2037,13 @@ public void popOutCodingFormChildWindow() {
 	 * @Author Sowndarya.Velraj
 	 */
 	public void selectingRedactionTag2(String redactiontagname) throws Exception {
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return rectangleRedactionTagSelect().Visible() && rectangleRedactionTagSelect().Enabled();
-				}
-			}), Input.wait60);
-//        rectangleRedactionTagSelect().waitAndFind(10);
-		} catch (Exception e1) {
-		}
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
-		Thread.sleep(3000);
+		driver.waitForPageToBeReady();
 		redactionTag.selectByVisibleText(redactiontagname);
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return redactionSaveBtn().Visible() && redactionSaveBtn().Enabled();
-				}
-			}), Input.wait30);
-			redactionSaveBtn().waitAndClick(5);
+		base.waitForElement(redactionSaveBtn());
+			redactionSaveBtn().waitAndClick(10);
 			base.CloseSuccessMsgpopup();
-		} catch (Exception e) {
-			Robot robot = new Robot();
-			Thread.sleep(2000);
-			robot.keyPress(KeyEvent.VK_ENTER);
-			robot.keyRelease(KeyEvent.VK_ENTER);
-			Thread.sleep(2000);
-		}
 	}
 
 	/**
