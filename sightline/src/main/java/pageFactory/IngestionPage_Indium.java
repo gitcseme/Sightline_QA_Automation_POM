@@ -9419,16 +9419,30 @@ public class IngestionPage_Indium {
 		getFilterByPUBLISHED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
-		base.waitTime(2);
+		base.waitTime(3);
 
-		int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
+		String totalDocsIngestedCount = getTotalIngestedCount().getText();		
 		SessionSearch search = new SessionSearch(driver);
 		int purehitCount = search.basicContentSearch(Input.searchStringStar);
 		System.out.println(purehitCount);
-		if (totalDocsIngestedCount == purehitCount) {
-			base.passedStep("Pure hit count showed the total number of documents ingested");
+		if ((String.valueOf(totalDocsIngestedCount)).contains(",")) {
+			totalDocsIngestedCount = totalDocsIngestedCount.replace(",", "");
+			int ingestedCount = Integer.parseInt(totalDocsIngestedCount);
+			System.out.println(ingestedCount);
+			 if(ingestedCount==purehitCount) {
+			    	base.passedStep("Pure hit count showed the total number of documents ingested");
+			    }
+			  else {
+			    	base.failedStep("Pure hit count not showed the total number of documents ingested");
+			    }
 		} else {
-			base.failedStep("Pure hit count not showed the total number of documents ingested");
+			int finalCount = Integer.parseInt(totalDocsIngestedCount);
+			 if(finalCount==purehitCount) {
+			    	base.passedStep("Pure hit count showed the total number of documents ingested");
+			    }
+			  else {
+			    	base.failedStep("Pure hit count not showed the total number of documents ingested");
+			    }
 		}
 	}
 

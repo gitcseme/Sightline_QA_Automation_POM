@@ -1028,7 +1028,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyDocumentInAudioPlayerReadyValue() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48171");
 		baseClass.stepInfo(
@@ -1068,7 +1068,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyCopyIngestionUsingNewApproach() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1077,12 +1077,10 @@ public class Ingestion_Regression01 {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47402");
-		baseClass.stepInfo(
-				"To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
+		baseClass.stepInfo("To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.ingestionCatalogging();
-		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
-				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		loginPage.logout();
 
 	}
@@ -1094,7 +1092,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyAddonlyIngestionWithMappedData() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1105,13 +1103,16 @@ public class Ingestion_Regression01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49282");
 		baseClass.stepInfo("To Verify Ingestion Add Only end to End Flow with Source System as Mapped Data");
 		// perform add only ingestion with source system as Mapped data
-		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data", Input.datLoadFile1, Input.textFile1,
-				Input.documentKey);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data", Input.datLoadFile1, Input.textFile1,Input.documentKey);
 		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
 		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 		ingestionPage.approveIngestion(1);
 		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
+		}
 		ingestionPage.verifyTotalDocsIngestedWithPurehitCount();
 		loginPage.logout();
 	}
@@ -1122,7 +1123,7 @@ public class Ingestion_Regression01 {
 	 * Errors at Cataloge Stage, Should work.
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyIngestionOverlayIngareAllErrorsAndCatalogStage() throws InterruptedException {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
