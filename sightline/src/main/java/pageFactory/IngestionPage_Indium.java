@@ -1044,6 +1044,10 @@ public class IngestionPage_Indium {
 	public Element getApproveMessageSecondOKButton() {
 		return driver.FindElementById("bot1-Msg2");
 	}
+	
+	public Element getTotalPageCount() {
+		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_next']//preceding-sibling::li[@class='paginate_button ']//a");
+	}
 
 	// Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -8310,8 +8314,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: NA Modified Date:
-	 *          NA
+	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: Arunkumar Modified Date: 05/06/2022
 	 * @description: verify Ingestion publish
 	 */
 	public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
@@ -8344,21 +8347,25 @@ public class IngestionPage_Indium {
 		driver.scrollingToBottomofAPage();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getIngestionPaginationCount().Visible();
+				return getTotalPageCount().Visible();
 			}
 		}), Input.wait30);
-		int count = ((getIngestionPaginationCount().size()) - 2);
-		Boolean status = false;
-		for (int i = 0; i < count; i++) {
+		int count = Integer.parseInt(getTotalPageCount().getText());
+		boolean status = false;
+		for (int i = 1; i <= count; i++) {
 			// driver.waitForPageToBeReady();
+			String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
+			
 			if (getAllIngestionName(dataset).isElementAvailable(5)) {
-				String publishedDataSet = getAllIngestionName(dataset).getText();
-				if (publishedDataSet.contains(dataset)) {
-					status = true;
-					base.passedStep("The Ingestion " + dataset + " is already done for this project");
-				}
+				status = true;
+				base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				break;
-			} else {
+			} else if(!getAllIngestionName(dataset).isElementAvailable(5) && nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")) {
+				base.stepInfo("Ingestion not found");
+				break;	
+			}
+			
+			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
 				getIngestionPaginationNextButton().waitAndClick(3);
@@ -9709,6 +9716,64 @@ public class IngestionPage_Indium {
 		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
 		clickOnPreviewAndRunButton();
 		base.stepInfo("Ingestion started");
+
+	}
+	
+	/**
+	 * @author: Arun Created Date:05/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify error message for doc id not available in database
+	 */
+	public void verifyNonExistingDatasetErrorMessage() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		for (int i = 0; i < 50; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+			if (status.contains("Cataloged")) {
+				base.failedMessage("Ingestion is already published using add only");
+				break;
+			} else if (status.contains("Failed")) {
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(errorCountCatalogingStage());
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitTime(3);
+				String errorMessage1 = ingestionErrorNote(1).getText();
+				String errorMessage2 = ingestionErrorNote(2).getText();
+				if (errorMessage1.contains(Input.nonExistingDataError)
+						|| errorMessage2.contains(Input.nonExistingDataError)) {
+					base.passedStep("Cataloging Error displayed when doc id not available in the database");
+				} else {
+					System.out.println("Error not belonged to doc id in database");
+				}
+				break;
+			} else {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			}
+		}
+		getCloseButton().waitAndClick(10);
 
 	}
 
