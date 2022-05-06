@@ -654,19 +654,18 @@ public class IngestionPage_Indium {
 	}
 
 	// Added by Mohan
-	
+
 	public Element getIngestion_GenerateSearchablePDFsCheckbox() {
 		return driver.FindElementByXPath("//div[@id='TIFFfile']//label[contains(normalize-space(.),'Generate')]//i");
 	}
-	
-	
+
 	public Element getIngestion_DraftTable() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']");
 	}
-	
+
 	public Element getIngestion_DraftCount() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']/input[@id='hddtotalIngestionCount']");
-	} 
+	}
 
 	public Element getAllIngestionName(String dataSets) {
 		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable']//td[contains(text(),'" + dataSets + "')]");
@@ -695,7 +694,7 @@ public class IngestionPage_Indium {
 	public Element getInprogressIngestionStatus() {
 		return driver.FindElementByXPath("//strong[contains(.,'In Progress')]");
 	}
-	
+
 	public Element getIngestionErrorNumber() {
 		return driver.FindElementByXPath("//div[@class='col-md-7 form-group']//a[@data-toggle='tab']");
 	}
@@ -705,72 +704,94 @@ public class IngestionPage_Indium {
 				"//*[@id='myDataTable']//td[contains(text(),'Date format selected in the ingestion is not matching')]");
 	}
 
-
-	//Added by Gopinath - 23/02/2022
+	// Added by Gopinath - 23/02/2022
 	public Element getNativeLoadFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkNative']//..//i");
 	}
+
 	public Element getNativePathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadNativeFileDAT']//..//i");
 	}
+
 	public Element getTextPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadTextFileDAT']//..//i");
 	}
+
 	public Element getPDFPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadPDFFileDAT']//..//i");
 	}
+
 	public Element getTIFFPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadTIFFfileDAT']//..//i");
 	}
+
 	public Element getTIFFSearchablePDFCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkGenerateSearchablePDFforTIFFs']//..//i");
 	}
+
 	public Element getMP3PathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadMP3VariantfileDAT']//..//i");
 	}
+
 	public Element getAudioTransistPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadTranscriptfileDAT']/following-sibling::i");
 	}
+
 	public Element getOtherPathInDATFileCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkLoadOtherfileDAT']/following-sibling::i");
 	}
+
 	public Element getEnabledFirstDropDown() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[2]//td[1]//select");
 	}
+
 	public Element getEnabledSecondDropDown() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[3]//td[1]//select");
 	}
+
 	public Element getEnabledThirdDropDown() {
 		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//tr[4]//td[1]//select");
 	}
+
 	public Element getFilterINPROGRESS() {
 		return driver.FindElementByXPath(
 				".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']//..//..//..//..//li[2]");
 	}
+
 	public Element getStatus() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[1]//strong[contains(text(),'Status')]");
 	}
+
 	public Element getIngestionTitle() {
 		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[1]//a//span");
 	}
+
 	public Element getFieldCatagoryBySourceDat(String sourceDATField) {
-		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='"+sourceDATField+"' and @selected='selected']//../self::select//..//following-sibling::td[1]//select[not(contains(@disabled,'disabled'))]");
+		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='" + sourceDATField
+				+ "' and @selected='selected']//../self::select//..//following-sibling::td[1]//select[not(contains(@disabled,'disabled'))]");
 	}
+
 	public Element getDestinationFieldBySourceDat(String sourceDATField) {
-		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='"+sourceDATField+"' and @selected='selected']//../self::select//..//following-sibling::td[2]//select[not(contains(@disabled,'disabled'))]");
+		return driver.FindElementByXPath("//tbody[@id='tblBody']//option[text()='" + sourceDATField
+				+ "' and @selected='selected']//../self::select//..//following-sibling::td[2]//select[not(contains(@disabled,'disabled'))]");
 	}
+
 	public Element getIngestionTitle(int row) {
-		return driver.FindElementByXPath("//div[@id='cardCanvas']//li["+row+"]//a//span");
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[" + row + "]//a//span");
 	}
+
 	public Element getStatus(int row) {
-		return driver.FindElementByXPath("//div[@id='cardCanvas']//li["+row+"]//strong[contains(text(),'Status')]");
+		return driver.FindElementByXPath("//div[@id='cardCanvas']//li[" + row + "]//strong[contains(text(),'Status')]");
 	}
+
 	public Element getStatusByingestionName(String ingestionName) {
-		return driver.FindElementByXPath("//span[@title='"+ingestionName+"']//..//..//div[2]//strong[1]");
+		return driver.FindElementByXPath("//span[@title='" + ingestionName + "']//..//..//div[2]//strong[1]");
 	}
+
 	public Element getIngestionLinkByName(String ingestionName) {
-		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']");
+		return driver.FindElementByXPath("//a//span[@title='" + ingestionName + "']");
 	}
+
 	public Element getStartCopy() {
 		return driver.FindElementByXPath("//strong[text()='Copying']//..//..//..//i[@class='fa fa-play-circle-o']");
 	}
@@ -794,141 +815,145 @@ public class IngestionPage_Indium {
 	public Element getIngestionRollbackbutton() {
 		return driver.FindElementByXPath("//dt[contains(.,'Rollback')]");
 	}
-	
+
 	public Element copyTableDataName(String term) {
 		return driver.FindElementByXPath("//*[@id='Copyingblock']//td[contains(text(),'" + term + "')]");
 
 	}
-	
+
 	public Element errorCountCatalogingStage() {
 		return driver.FindElementByXPath("//*[@id='Catalogingblock']//tbody//tr//td//a");
 	}
-	
+
 	public Element ignoreAllButton() {
 		return driver.FindElementById("btnignoreall");
 	}
-	
-	public Element copyTableDataValue(String term,int row) {
-		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term + "')]/following-sibling::td["+row+"]");
+
+	public Element copyTableDataValue(String term, int row) {
+		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term
+				+ "')]/following-sibling::td[" + row + "]");
 	}
-	
+
 	public Element doneButton() {
 		return driver.FindElementById("Catalogdone");
 	}
-	
+
 	public Element errorMessageMissingDate() {
 		return driver.FindElementById("errorMsgDateFormat");
 	}
-	
+
 	public Element ingestionErrorNote(int row) {
-		return driver.FindElementByXPath("//*[@id='myDataTable']//tbody//tr["+row+"]//td[3]");
+		return driver.FindElementByXPath("//*[@id='myDataTable']//tbody//tr[" + row + "]//td[3]");
 	}
-	
+
 	public Element errorCountStatus() {
 		return driver.FindElementById("errcount");
 	}
-	
+
 	public ElementCollection mappedSourceFields(int row) {
-		return driver.FindElementsByXPath("//*[@id='formMapping']//table//tbody//td["+row+"]");
+		return driver.FindElementsByXPath("//*[@id='formMapping']//table//tbody//td[" + row + "]");
 	}
-	
+
 	public ElementCollection previewRecordPopupHeaderFields() {
 		return driver.FindElementsByXPath("//*[@id='popupdiv']//th");
 	}
-	
+
 	public Element ingestionDetailActionDropdown() {
 		return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']");
 	}
-	
+
 	public Element deleteActionButton() {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Delete')]");
 	}
-	
+
 	public Element copyingSectionDetails() {
 		return driver.FindElementByXPath("//div[@id='Copyingblock']//div//div//div//span");
 	}
-	
+
 	public Element catalogSectionDetails() {
 		return driver.FindElementByXPath("//div[@id='Catalogingblock']//div//div//div//span");
 	}
-	
+
 	public Element indexingSectionDetails() {
 		return driver.FindElementByXPath("//div[@id='Indexingblock']//div//div//div//span");
 	}
-	
+
 	public Element goBackButton() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Go Back']");
 	}
-	
+
 	public Element rollbackOption() {
 		return driver.FindElementByXPath("//dt[contains(.,'Rollback')]//a");
 	}
-	
+
 	public Element getIngestionOpenWizardbutton() {
 		return driver.FindElementByXPath("//dt[contains(.,'Wizard')]");
 	}
-	
+
 	public Element getIngestionDetailPopup(int ingestionNumber) {
-		return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li["+ingestionNumber+"]//a//span");
+		return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[" + ingestionNumber + "]//a//span");
 	}
-	
+
 	public Element getRollbackWarningMessage() {
 		return driver.FindElementByXPath("//*[@id='MsgBoxBack']//p");
 	}
-	
+
 	public Element rollbackOptionInPopup() {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]");
 	}
-	
+
 	public Element getIngestion_TileView() {
 		return driver.FindElementById("TileView");
 	}
-	
+
 	public Element getSourceCount() {
 		return driver.FindElementByXPath("//div[text()='Source']//span");
 	}
-	
+
 	public Element getIngestedCount() {
 		return driver.FindElementByCssSelector("[class*='ingestCt'] span");
 	}
-	
+
 	public Element getProjectNameInPopup() {
 		return driver.FindElementByXPath("//label[text()='Project Name :']/following-sibling::div");
 	}
-	
+
 	public Element getIngestionStatusInPopup() {
 		return driver.FindElementByXPath("//label[text()='% Complete :']/following-sibling::div");
 	}
-	
+
 	public Element getTimeStampInPopup() {
 		return driver.FindElementByXPath("//label[text()='End Date :']/following-sibling::div");
 	}
-	
+
 	public Element getApproveMessageCancelButton() {
 		return driver.FindElementById("bot2-Msg1");
 	}
-	
-	public Element ingestionNextButton(){
+
+	public Element ingestionNextButton() {
 		return driver.FindElementByXPath("//li[@id='IngestionGridViewtable_next']//a");
 	}
 
-	public Element ingestionPreviousButton(){
+	public Element ingestionPreviousButton() {
 		return driver.FindElementByXPath("//li[@id='IngestionGridViewtable_previous']//a");
 	}
-	public Element ingestionPaginationNext(){
+
+	public Element ingestionPaginationNext() {
 		return driver.FindElementById("IngestionGridViewtable_next");
 	}
 
-	public Element ingestionPaginationPrevious(){
+	public Element ingestionPaginationPrevious() {
 		return driver.FindElementById("IngestionGridViewtable_previous");
 	}
+
 	public Element moveToNextPage() {
 		return driver.FindElementByXPath("//li[@class='paginate_button ']//a");
 	}
-	
+
 	public Element showAllIngestion() {
-	return driver.FindElementByXPath("//label[@class='checkbox']//i");
+		return driver.FindElementByXPath("//label[@class='checkbox']//i");
 	}
+
 	public Element currentActivePage() {
 		return driver.FindElementByXPath("//li[@class='paginate_button active']");
 	}
@@ -936,166 +961,204 @@ public class IngestionPage_Indium {
 	public Element ingestionModifiedUser() {
 		return driver.FindElementByXPath("//div[@class='bottomStamps row']//span");
 	}
+
 	public Element ingestionCompletedDate() {
 		return driver.FindElementByXPath("//strong[contains(text(),'Status')]/following-sibling::div");
 	}
+
 	public Element ingestionProgressBar() {
 		return driver.FindElementByXPath("//div[@role='progressbar']");
 	}
-	
+
 	public Element getIgnoreOptionSelection() {
 		return driver.FindElementByXPath("//input[@id='rbignore']");
 	}
-	
+
 	public Element ignoreOptionInErrorList() {
 		return driver.FindElementByXPath("//tr[@role='row']//label[text()='Ignore']");
 	}
-	
+
 	public Element rollbackButtonStatus() {
 		return driver.FindElementByXPath("//ul[@role='menu']//li[contains(.,'Rollback')]//a");
 	}
+
 	public Element gridTable() {
 		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']/table[@role='grid']");
 	}
+
 	public Element copyingErrorCount() {
 		return driver.FindElementByXPath("//label[contains(.,'Document Files Copied :')]//..//div//span//a");
 	}
+
 	public Element pdfCheckboxStatus() {
 		return driver.FindElementByXPath("//*[@id='PDFFile']");
 	}
-	
+
 	public Element getIngestionCopyButton() {
 		return driver.FindElementByXPath("//dt[contains(.,'Copy')]");
 	}
-	
+
 	public Element getIngestionDeleteButton() {
 		return driver.FindElementByXPath("//dt[contains(.,'Delete')]");
 	}
+
 	public Element getActionOpenWizard() {
 		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Open in Wizard ']");
 	}
-	
+
 	public Element datCheckboxStatus() {
 		return driver.FindElementByXPath("//*[@id='chkDAT']//..//i");
 	}
+
 	public Element getActionCopy() {
 		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Copy ']");
 	}
-	
+
 	public Element backButton() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
 	}
+
 	public Element getIngestionStatusInPopup(String ingestionStage) {
-		return driver.FindElementByXPath("//div[@id='"+ingestionStage+"']//div//div//label[contains(.,'% Complete :')]//following-sibling::div[1]");
-		
+		return driver.FindElementByXPath("//div[@id='" + ingestionStage
+				+ "']//div//div//label[contains(.,'% Complete :')]//following-sibling::div[1]");
+
 	}
-	
+
 	public Element mappingWarningMessage() {
 		return driver.FindElementByXPath("//div[@id='Msg1']//p");
 	}
+
 	public Element warningMessageCancelButton() {
 		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
 	}
-			
-		public Element getNextColumnTerm(String term) {
-		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term + "')]//..//following-sibling::tr//td[1]");
+
+	public Element getNextColumnTerm(String term) {
+		return driver.FindElementByXPath("//*[@id='Copyingblock']//table//td[contains(text(),'" + term
+				+ "')]//..//following-sibling::tr//td[1]");
 	}
-		
+
 	public Element getTotalIngestedCount() {
 		return driver.FindElementByXPath("//p[@id='totalIngestionDocuments']");
 	}
-		
+
 	public Element getApproveMessageSecondOKButton() {
 		return driver.FindElementById("bot1-Msg2");
 	}
-	
-  	//Added by Gopinath - 28/02/2022
+
+	// Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
-		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[text()='Rollback']");
+		return driver.FindElementByXPath("//a//span[@title='" + ingestionName + "']//..//..//a[text()='Rollback']");
 	}
+
 	public Element getIngestionGearIcon(String ingestionName) {
-		return driver.FindElementByXPath("//a//span[@title='"+ingestionName+"']//..//..//a[@class='dropdown-toggle']//i");
+		return driver.FindElementByXPath(
+				"//a//span[@title='" + ingestionName + "']//..//..//a[@class='dropdown-toggle']//i");
 	}
-	
-	//Added by Gopinath - 12/04/2022
+
+	// Added by Gopinath - 12/04/2022
 	public Element firstTileTitle() {
 		return driver.FindElementByXPath("(//div[@id='cardCanvas']//li//a//span)[1]");
 	}
+
 	public Element errorsCount() {
 		return driver.FindElementByXPath("//span[contains(text(),'Errors')]//a");
 	}
+
 	public Element ignoreAllButon() {
 		return driver.FindElementByXPath("//button[@id='btnignoreall'] | //button[contains(text(),'Ignore All')]");
 	}
+
 	public Element catalogDone() {
 		return driver.FindElementByXPath("//button[@id='Catalogdone'] | //button[text()='Done']");
 	}
+
 	public Element startCoping() {
 		return driver.FindElementByXPath("//a[@id='RunCopying']//i");
 	}
+
 	public Element statusOfIngestion(String ingestionName) {
-		return driver.FindElementByXPath("(//span[@title='"+ingestionName+"']//..//..//strong)[2]");
+		return driver.FindElementByXPath("(//span[@title='" + ingestionName + "']//..//..//strong)[2]");
 	}
+
 	public Element startIndexing() {
 		return driver.FindElementByXPath("//a[@id='RunIndexing']//i");
 	}
+
 	public Element actionDropDown() {
-		return driver.FindElementByXPath("//div[@class='btn-group select-actions']//button[@class='btn btn-defualt dropdown-toggle']");
+		return driver.FindElementByXPath(
+				"//div[@class='btn-group select-actions']//button[@class='btn btn-defualt dropdown-toggle']");
 	}
+
 	public Element approveOption() {
 		return driver.FindElementByXPath("//a[text()='Approve']");
 	}
+
 	public Element fullAnalysisRadioButton() {
 		return driver.FindElementByXPath("(//h6[text()='Project Level Analytics and Indexing']//..//div//i)[1]");
 	}
+
 	public Element runButton() {
 		return driver.FindElementById("run");
 	}
+
 	public Element endTime() {
 		return driver.FindElementByXPath("//table[@id='ProjectFieldsDataTable']//tbody//td[4]");
 	}
+
 	public Element publishButton() {
 		return driver.FindElementById("publish");
 	}
+
 	public Element savedSearch(String savedSearch) {
-		return driver.FindElementByXPath("//div[@id='treeFolder']/ul/li/ul/li//a[text()='"+savedSearch+"']");
+		return driver.FindElementByXPath("//div[@id='treeFolder']/ul/li/ul/li//a[text()='" + savedSearch + "']");
 	}
+
 	public Element unPublishButton() {
 		return driver.FindElementById("Analyze");
 	}
+
 	public ElementCollection totalPages() {
 		return driver.FindElementsByXPath("//ul[@class='pagination pagination-sm']//li//a");
 	}
+
 	public Element disabledNextButton() {
 		return driver.FindElementByXPath("//ul[@class='pagination pagination-sm']//li[contains(@class,'disabled')]");
 	}
+
 	public ElementCollection totalRowsUnpublishTable() {
 		return driver.FindElementsByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr");
 	}
+
 	public Element nextButton() {
 		return driver.FindElementByXPath("//li//a[text()='Next']");
 	}
+
 	public Element unPunlishSearch(String savedSearch) {
-		return driver.FindElementByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr//td[text()='"+savedSearch+"']/following-sibling::td//a[text()='Inprogress']");
+		return driver.FindElementByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr//td[text()='"
+				+ savedSearch + "']/following-sibling::td//a[text()='Inprogress']");
 	}
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getRefeshBtn() {
 		return driver.FindElementByXPath("//a[@id='refresh']");
 	}
+
 	public Element getIngestions() {
 		return driver.FindElementByXPath("//a[@title='Ingestions']");
 	}
+
 	public Element generateSearchablePdfSourceDoc() {
 		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[9]/td[2]");
 	}
+
 	public Element generateSearchablePdfCopiedDoc() {
 		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[9]/td[3]");
 	}
+
 	public Element getInestionPage() {
 		return driver.FindElementByXPath("//a[@name='Ingestion']");
 	}
-	
-	
+
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -3271,17 +3334,20 @@ public class IngestionPage_Indium {
 			base.passedStep("'Source System' is disabled on add new Ingestion");
 		}
 	}
-	
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select ingestion type and specify source loaction.
-	 * @param ingestionType : ingestionType is String value need to select type of ingestion need to perform.
-	 * @param sourceSystem : sourceSystem is String value that name of source system.
-	 * @param sourceLocation : sourceLocation is String value that location of source.
-	 * @param sourceFolder : sourceFolder is String value that folder of source.
+	 * @param ingestionType  : ingestionType is String value need to select type of
+	 *                       ingestion need to perform.
+	 * @param sourceSystem   : sourceSystem is String value that name of source
+	 *                       system.
+	 * @param sourceLocation : sourceLocation is String value that location of
+	 *                       source.
+	 * @param sourceFolder   : sourceFolder is String value that folder of source.
 	 */
-	public void selectIngestionTypeAndSpecifySourceLocation(String ingestionType,String sourceSystem,String sourceLocation,String sourceFolder) {
+	public void selectIngestionTypeAndSpecifySourceLocation(String ingestionType, String sourceSystem,
+			String sourceLocation, String sourceFolder) {
 		try {
 			driver.getWebDriver().get(Input.url + "Ingestion/Home");
 			driver.waitForPageToBeReady();
@@ -3291,7 +3357,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getIngestion_IngestionType());
 			getIngestion_IngestionType().isElementAvailable(10);
 			getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(ingestionType);
-			if(!ingestionType.trim().equalsIgnoreCase("Overlay Only")) {
+			if (!ingestionType.trim().equalsIgnoreCase("Overlay Only")) {
 				base.waitForElement(getSpecifySourceSystem());
 				getSpecifySourceSystem().isElementAvailable(10);
 				getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
@@ -3316,20 +3382,22 @@ public class IngestionPage_Indium {
 					base.waitTime(1);
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting ingestion type and specify source loaction"+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting ingestion type and specify source loaction"
+					+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select DAT delimiters.
 	 * @param fieldSeperator : fieldSeperator is String value that field seperator .
-	 * @param textQualifier : textQualifier is String value that name of text qualifier.
-	 * @param multiValue : multiValue is String value that multi value.
+	 * @param textQualifier  : textQualifier is String value that name of text
+	 *                       qualifier.
+	 * @param multiValue     : multiValue is String value that multi value.
 	 */
-	public void addDelimitersInIngestionWizard(String fieldSeperator,String textQualifier,String multiValue) {
+	public void addDelimitersInIngestionWizard(String fieldSeperator, String textQualifier, String multiValue) {
 		try {
 			driver.scrollPageToTop();
 			base.waitForElement(getDATDelimitersFieldSeparator());
@@ -3348,19 +3416,19 @@ public class IngestionPage_Indium {
 			base.waitForElement(getDATDelimitersNewLine());
 			getDATDelimitersNewLine().isElementAvailable(15);
 			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(multiValue);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting DAT delimiters."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting DAT delimiters." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select DAT source.
-	 * @param loadFile : loadFile is String value that load file value.
+	 * @param loadFile    : loadFile is String value that load file value.
 	 * @param documentKey : documentKey is String value that document key.
 	 */
-	public void selectDATSource(String loadFile,String documentKey) {
+	public void selectDATSource(String loadFile, String documentKey) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3373,19 +3441,20 @@ public class IngestionPage_Indium {
 			base.waitForElement(getSourceSelectionDATKey());
 			getSourceSelectionDATKey().isElementAvailable(15);
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(documentKey);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting DAT source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting DAT source." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select native source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
 	 */
-	public void selectNativeSource(String loadFile,boolean pathInDATFileflag) {
+	public void selectNativeSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3396,22 +3465,24 @@ public class IngestionPage_Indium {
 			base.waitForElement(getNativeLST());
 			getNativeLST().isElementAvailable(15);
 			getNativeLST().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getNativePathInDATFileCheckBox().isElementAvailable(10);
 				getNativePathInDATFileCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting Native source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting Native source." + e.getLocalizedMessage());
 		}
 	}
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select text source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
 	 */
-	public void selectTextSource(String loadFile,boolean pathInDATFileflag) {
+	public void selectTextSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3422,22 +3493,24 @@ public class IngestionPage_Indium {
 			base.waitForElement(getSourceSelectionTextLoadFile());
 			getSourceSelectionTextLoadFile().isElementAvailable(15);
 			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getTextPathInDATFileCheckBox().isElementAvailable(10);
 				getTextPathInDATFileCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting text source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting text source." + e.getLocalizedMessage());
 		}
 	}
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select PDF source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
 	 */
-	public void selectPDFSource(String loadFile,boolean pathInDATFileflag) {
+	public void selectPDFSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3448,24 +3521,29 @@ public class IngestionPage_Indium {
 			base.waitForElement(getPDFLST());
 			getPDFLST().isElementAvailable(15);
 			getPDFLST().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getPDFPathInDATFileCheckBox().isElementAvailable(10);
 				getPDFPathInDATFileCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting PDF source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting PDF source." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select TIFF source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
-	 * @param genSearchPDFCheckBoxFlag : genSearchPDFCheckBoxFlag is boolean value that weather generate searchable pdf check box need to enable or not.
+	 * @param loadFile                 : loadFile is String value that load file
+	 *                                 value.
+	 * @param pathInDATFileflag        : pathInDATFileflag is boolean value that
+	 *                                 weather path in DAT file check box need to
+	 *                                 enable or not.
+	 * @param genSearchPDFCheckBoxFlag : genSearchPDFCheckBoxFlag is boolean value
+	 *                                 that weather generate searchable pdf check
+	 *                                 box need to enable or not.
 	 */
-	public void selectTIFFSource(String loadFile,boolean pathInDATFileflag,boolean genSearchPDFCheckBoxFlag) {
+	public void selectTIFFSource(String loadFile, boolean pathInDATFileflag, boolean genSearchPDFCheckBoxFlag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3476,54 +3554,56 @@ public class IngestionPage_Indium {
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
 			getTIFFLST().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getTIFFPathInDATFileCheckBox().isElementAvailable(10);
 				getTIFFPathInDATFileCheckBox().Click();
 			}
-			if(genSearchPDFCheckBoxFlag) {
+			if (genSearchPDFCheckBoxFlag) {
 				getTIFFSearchablePDFCheckBox().isElementAvailable(10);
 				getTIFFSearchablePDFCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting TIFF source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting TIFF source." + e.getLocalizedMessage());
 		}
 	}
-	
-/**
- * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
- * @description: Method to select MP3 varient source.
- * @param loadFile : loadFile is String value that load file value.
- * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
- */
-public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
-	try {
-		driver.scrollingToBottomofAPage();
-		driver.waitForPageToBeReady();
-		getMP3CheckBoxButton().ScrollTo();
-		getMP3CheckBoxButton().isElementAvailable(15);
-		getMP3CheckBoxButton().Click();
-		getMP3LST().ScrollTo();
-		base.waitForElement(getMP3LST());
-		getMP3LST().isElementAvailable(15);
-		getMP3LST().selectFromDropdown().selectByVisibleText(loadFile);
-		if(pathInDATFileflag) {
-			getMP3PathInDATFileCheckBox().isElementAvailable(10);
-			getMP3PathInDATFileCheckBox().Click();
+
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to select MP3 varient source.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
+	 */
+	public void selectMP3VarientSource(String loadFile, boolean pathInDATFileflag) {
+		try {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getMP3CheckBoxButton().ScrollTo();
+			getMP3CheckBoxButton().isElementAvailable(15);
+			getMP3CheckBoxButton().Click();
+			getMP3LST().ScrollTo();
+			base.waitForElement(getMP3LST());
+			getMP3LST().isElementAvailable(15);
+			getMP3LST().selectFromDropdown().selectByVisibleText(loadFile);
+			if (pathInDATFileflag) {
+				getMP3PathInDATFileCheckBox().isElementAvailable(10);
+				getMP3PathInDATFileCheckBox().Click();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting MP3 varient source." + e.getLocalizedMessage());
 		}
-	}catch(Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occured while selecting MP3 varient source."+e.getLocalizedMessage());
 	}
-}
 
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select Audio Transcript source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
 	 */
-	public void selectAudioTranscriptSource(String loadFile,boolean pathInDATFileflag) {
+	public void selectAudioTranscriptSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3534,25 +3614,25 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			base.waitForElement(getAudioTranscriptLST());
 			getAudioTranscriptLST().isElementAvailable(15);
 			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getAudioTransistPathInDATFileCheckBox().isElementAvailable(10);
 				getAudioTransistPathInDATFileCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting Audio Transcript source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting Audio Transcript source." + e.getLocalizedMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select Other source.
-	 * @param loadFile : loadFile is String value that load file value.
-	 * @param linkType : linkType is String value that link type value.
-	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather path in DAT file check box need to enable or not.
+	 * @param loadFile          : loadFile is String value that load file value.
+	 * @param linkType          : linkType is String value that link type value.
+	 * @param pathInDATFileflag : pathInDATFileflag is boolean value that weather
+	 *                          path in DAT file check box need to enable or not.
 	 */
-	public void selectOtherSource(String linkType,String loadFile,boolean pathInDATFileflag) {
+	public void selectOtherSource(String linkType, String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3565,16 +3645,16 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getOtherLinkType().selectFromDropdown().selectByVisibleText(linkType);
 			driver.waitForPageToBeReady();
 			getOtherLoadFile().selectFromDropdown().selectByVisibleText(loadFile);
-			if(pathInDATFileflag) {
+			if (pathInDATFileflag) {
 				getOtherPathInDATFileCheckBox().isElementAvailable(10);
 				getOtherPathInDATFileCheckBox().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting other source."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting other source." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select Date and Time format.
@@ -3586,12 +3666,12 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			driver.waitForPageToBeReady();
 			getDateFormat().isElementAvailable(15);
 			getDateFormat().selectFromDropdown().selectByVisibleText(format);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting Date and Time format."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while selecting Date and Time format." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to click on next button.
@@ -3603,21 +3683,22 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getNextButton().isElementAvailable(15);
 			getNextButton().Click();
 			driver.waitForPageToBeReady();
-			if(getApproveMessageOKButton().isDisplayed()) {
+			if (getApproveMessageOKButton().isDisplayed()) {
 				getApproveMessageOKButton().isElementAvailable(15);
 				getApproveMessageOKButton().Click();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while click on next button."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while click on next button." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select value from first three source DAT fields
 	 */
-	public void selectValueFromEnabledFirstThreeSourceDATFields(String firstDropDown,String secondDropDown,String thirdDropDown) {
+	public void selectValueFromEnabledFirstThreeSourceDATFields(String firstDropDown, String secondDropDown,
+			String thirdDropDown) {
 		try {
 			driver.scrollPageToTop();
 			driver.waitForPageToBeReady();
@@ -3627,12 +3708,13 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getEnabledSecondDropDown().selectFromDropdown().selectByVisibleText(secondDropDown);
 			getEnabledThirdDropDown().isElementAvailable(15);
 			getEnabledThirdDropDown().selectFromDropdown().selectByVisibleText(thirdDropDown);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while select value from first three source DAT fields."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while select value from first three source DAT fields."
+					+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to click on preview and run button.
@@ -3649,12 +3731,12 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			driver.waitForPageToBeReady();
 			getbtnRunIngestion().isElementAvailable(15);
 			getbtnRunIngestion().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while click on preview and run button."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while click on preview and run button." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to select all options from filter by dropdown.
@@ -3671,7 +3753,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getFilterByFAILED().isElementAvailable(10);
 			getFilterByFAILED().Click();
 			getFilterINPROGRESS().isElementAvailable(10);
-			if(!getFilterINPROGRESS().GetAttribute("class").contains("active")) {
+			if (!getFilterINPROGRESS().GetAttribute("class").contains("active")) {
 				getFilterByINPROGRESS().isElementAvailable(10);
 				getFilterByINPROGRESS().Click();
 			}
@@ -3685,11 +3767,13 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getFilterByAPPROVED().Click();
 			getFilterByPUBLISHED().isElementAvailable(10);
 			getFilterByPUBLISHED().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting all options from filter by dropdown."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while selecting all options from filter by dropdown." + e.getLocalizedMessage());
 		}
 	}
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to navigate to ingestion page.
@@ -3697,12 +3781,12 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 	public void navigateToIngestionPage() {
 		try {
 			driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while navigating to ingestion page."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while navigating to ingestion page." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Method to create ingestion to cataloged stage
@@ -3714,52 +3798,57 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			int count = 0;
 			driver.waitForPageToBeReady();
 			base.waitForElement(getStatus());
-			for(int i=1;i<500;i++) {
+			for (int i = 1; i < 500; i++) {
 				driver.waitForPageToBeReady();
-				getIngestionTitle(count+1).ScrollTo();
-				getIngestionTitle(count+1).isElementAvailable(15);
-				title = getIngestionTitle(count+1).GetAttribute("title").trim();
-				getStatus(count+1).isElementAvailable(15);
-				String status = getStatus(count+1).getText().trim();
+				getIngestionTitle(count + 1).ScrollTo();
+				getIngestionTitle(count + 1).isElementAvailable(15);
+				title = getIngestionTitle(count + 1).GetAttribute("title").trim();
+				getStatus(count + 1).isElementAvailable(15);
+				String status = getStatus(count + 1).getText().trim();
 				driver.waitForPageToBeReady();
-				for(int j=1;j<50;j++) {
+				for (int j = 1; j < 50; j++) {
 					titleCar = getIngestionTitle(j).GetAttribute("title").trim();
 					getIngestionTitle(j).ScrollTo();
-					if(titleCar.equalsIgnoreCase(title)) {
-						if(j!=1) {
-							count=j-1;
+					if (titleCar.equalsIgnoreCase(title)) {
+						if (j != 1) {
+							count = j - 1;
 						}
 						break;
-					}else {
+					} else {
 						driver.scrollingToBottomofAPage();
 					}
 				}
-				if(status.contains("In Progress")) {
+				if (status.contains("In Progress")) {
 					driver.scrollPageToTop();
 					getRefreshButton().isElementAvailable(15);
 					getRefreshButton().Click();
 				}
-				if(status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
+				if (status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
 					base.passedStep("Ingestion completed till cataloged stage");
 					break;
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while navigating to ingestion page."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while navigating to ingestion page." + e.getLocalizedMessage());
 		}
 		return title;
 	}
-	
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
-	 * @description: Method to select field catagory and destination field by using source DAT field.
-	 * @param sourceDATField : sourceDATField is String value that source DAT field selected in drop down.
-	 * @param fieldCatagory : fieldCatagory is String value that field catagory need to select sibling drop down of sourceDATField.
-	 * @param destinationField : destinationField is String value that destination Field need to select sibling drop down of sourceDATField.
+	 * @description: Method to select field catagory and destination field by using
+	 *               source DAT field.
+	 * @param sourceDATField   : sourceDATField is String value that source DAT
+	 *                         field selected in drop down.
+	 * @param fieldCatagory    : fieldCatagory is String value that field catagory
+	 *                         need to select sibling drop down of sourceDATField.
+	 * @param destinationField : destinationField is String value that destination
+	 *                         Field need to select sibling drop down of
+	 *                         sourceDATField.
 	 */
-	public void selectFieldCatagoryDestinationFields(String sourceDATField,String fieldCatagory,String destinationField) {
+	public void selectFieldCatagoryDestinationFields(String sourceDATField, String fieldCatagory,
+			String destinationField) {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
@@ -3770,31 +3859,33 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getDestinationFieldBySourceDat(sourceDATField).ScrollTo();
 			getDestinationFieldBySourceDat(sourceDATField).isElementAvailable(15);
 			getDestinationFieldBySourceDat(sourceDATField).selectFromDropdown().selectByVisibleText(destinationField);
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while selecting field catagory and destination field by using source DAT field."
+							+ e.getLocalizedMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
-	 * @description: Method to process to click on copied state without ignoring errors.
+	 * @description: Method to process to click on copied state without ignoring
+	 *               errors.
 	 */
 	public void clickOnCopiedStateWithoutIgnoringErrors(String ingestionName) {
 		try {
 			driver.scrollPageToTop();
 			String status = null;
-			for(int i=0;i<30;i++) {
-				if(getStatusByingestionName(ingestionName).isDisplayed()) {
+			for (int i = 0; i < 30; i++) {
+				if (getStatusByingestionName(ingestionName).isDisplayed()) {
 					status = getStatusByingestionName(ingestionName).getText().trim();
 					break;
-				}else {
+				} else {
 					driver.scrollingToBottomofAPage();
 				}
 			}
-			if(status.contains("Cataloged")) {
+			if (status.contains("Cataloged")) {
 				driver.waitForPageToBeReady();
 				getIngestionLinkByName(ingestionName).isElementAvailable(15);
 				getIngestionLinkByName(ingestionName).Click();
@@ -3808,32 +3899,35 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 				getRefreshButton().isElementAvailable(15);
 				getRefreshButton().Click();
 			}
-			
-			for(int i=0;i<2000;i++) {
-				for(int j=0;j<30;j++) {
-					if(getStatusByingestionName(ingestionName).isDisplayed()) {
+
+			for (int i = 0; i < 2000; i++) {
+				for (int j = 0; j < 30; j++) {
+					if (getStatusByingestionName(ingestionName).isDisplayed()) {
 						status = getStatusByingestionName(ingestionName).getText().trim();
 						break;
-					}else {
+					} else {
 						driver.scrollingToBottomofAPage();
 					}
 				}
-				if(status.contains("In Progress")) {
+				if (status.contains("In Progress")) {
 					driver.scrollPageToTop();
 					getRefreshButton().isElementAvailable(15);
 					getRefreshButton().Click();
 				}
-				if(status.contains("Failed")) {
+				if (status.contains("Failed")) {
 					base.passedStep("Ingestion entered to failed state if copied state starts without ignoring errors");
 					break;
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while selecting field catagory and destination field by using source DAT field."
+							+ e.getLocalizedMessage());
 		}
 	}
-/**
+
+	/**
 	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
 	 * @description: verify Source System tobe disabled when we add overlay in the
 	 *               Ingestion
@@ -4143,7 +4237,7 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		}
 
 	}
-	
+
 	/**
 	 * @author: Mohan Created Date: 24/02/2022 Modified by: NA Modified Date: NA
 	 * @description: Add new ingestion with selecting Date Formate
@@ -4710,77 +4804,93 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		base.passedStep("Run Ingestion done successfully");
 
 	}
-	
+
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date: 28/04/2022
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date:
+	 *          28/04/2022
 	 * @description: To roll back an Ingestion
 	 */
 	public void rollBackIngestion() {
-		
+
 		getRefreshButton().waitAndClick(10);
 		base.waitTime(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getIngestionSettingGearIcon().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIngestionSettingGearIcon().Visible();
+			}
+		}), Input.wait30);
 		getIngestionSettingGearIcon().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getIngestionRollbackbutton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIngestionRollbackbutton().Visible();
+			}
+		}), Input.wait30);
 		getIngestionRollbackbutton().waitAndClick(10);
 		base.waitTime(3);
-		if(getApproveMessageOKButton().isElementAvailable(5)) {
-		getApproveMessageOKButton().waitAndClick(5);
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(5);
 		}
-		
-		base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+
+		base.VerifySuccessMessage(
+				"Rollback of this ingestion has been started. Refresh the page to view for updated status.");
 		base.passedStep("Rollback Done Successfully");
-		}
-	
-	
+	}
+
 	/**
-	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date: 06/04/2022
+	 * @author: Mohan Created Date: 24/02/2022 Modified by: Arunkumar Modified Date:
+	 *          06/04/2022
 	 * @description: Verify ingestion at catalog status
 	 */
 	public void ingestionAtCatlogState(String dataset) {
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCATALOGED().waitAndClick(10);
-    	
-    	//catlogging
-    	for (int i = 0; i < 30; i++) {
-    		base.waitTime(2);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 30; i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Cataloged")) {
 				base.passedStep("Cataloged completed");
 				break;
-			}else if (status.contains("Failed")) {
+			} else if (status.contains("Failed")) {
 				System.out.println("Execution aborted!");
 				UtilityLog.info("Execution aborted!");
-				System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
-				UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
+				System.out.println(dataset + " is failed in catalog stage. Take a look and continue!");
+				UtilityLog.info(dataset + " is failed in catalog stage. Take a look and continue!");
 				break;
-			}else{
+			} else {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
 			}
 		}
-    }
-	
-	
+	}
+
 	/**
 	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform ingestion with Dat file
 	 */
-	public void IngestionOnlyForDatFile(String dataset,String DATFile) throws InterruptedException {
+	public void IngestionOnlyForDatFile(String dataset, String DATFile) throws InterruptedException {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
@@ -4812,30 +4922,24 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 		} else if (dataset.contains("27MarSinglePageTIFF")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
 		} else if (dataset.contains("CJK_FrenchAudioTestData")) {
-			getSpecifySourceFolder().selectFromDropdown()
-					.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
 		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-			getSpecifySourceFolder().selectFromDropdown()
-					.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
 		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
 		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-			getSpecifySourceFolder().selectFromDropdown()
-					.selectByVisibleText(Input.GD994NativeTextForProductionFolder);
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.GD994NativeTextForProductionFolder);
 		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
-			getSpecifySourceFolder().selectFromDropdown()
-					.selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.GNonsearchablePDFLoadfileFolder);
 		} else if (dataset.contains("HiddenProperties_IngestionData")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.HiddenPropertiesFolder);
 		} else if (dataset.contains("UniCodeFiles")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
 		} else if (dataset.contains("IngestionEmailData")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
-		} else if (dataset.contains("CJK_GermanAudioTestData")
-				|| dataset.contains("CJK_JapaneseAudioTestData")) {
-			getSpecifySourceFolder().selectFromDropdown()
-					.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
-		} 
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+		}
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
@@ -4906,14 +5010,13 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
 		base.waitTime(2);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getMappingSOURCEFIELD2().Visible();
 			}
 		}), Input.wait30);
-		
-		
+
 		if (dataset.contains("Collection1K_Tally")) {
 			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
 			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
@@ -5190,132 +5293,156 @@ public void selectMP3VarientSource(String loadFile,boolean pathInDATFileflag) {
 			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 
-		}else if (dataset.contains("Tiff_Images")) {
+		} else if (dataset.contains("Tiff_Images")) {
 
 			base.waitForElement(getMappingSOURCEFIELD2());
 			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
 			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
 			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
 		}
-		
+
 		driver.scrollPageToTop();
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-    	getPreviewRun().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-    	getApproveMessageOKButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-    	getbtnRunIngestion().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnRunIngestion().Visible();
+			}
+		}), Input.wait30);
+		getbtnRunIngestion().waitAndClick(10);
 
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will validate the term which present in the copying table column
+	 * @description: this method will validate the term which present in the copying
+	 *               table column
 	 */
 	public void verifyDataPresentInCopyColumn(String term) {
-		getRefreshButton().waitAndClick(10);	
-         getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-       
-    	driver.scrollingToElementofAPage(getRunIndexing());
-    	base.waitForElement(getRunIndexing());
-    	if(copyTableDataName(term).isDisplayed()) {
-    		base.passedStep(term+ " is displayed in the copying table column");
-    	}
-    	else {
-    		base.failedStep(term+"is not displayed in the copying table column");
-    	}
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-    	getCloseButton().waitAndClick(10);
-    	
-		
+		getRefreshButton().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitForElement(getRunIndexing());
+		if (copyTableDataName(term).isDisplayed()) {
+			base.passedStep(term + " is displayed in the copying table column");
+		} else {
+			base.failedStep(term + "is not displayed in the copying table column");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
 	}
 
-/**
+	/**
 	 * @author: Arunkumar Created Date: 23/02/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will perform the ingestion process of catalog ad copying
+	 * @description: this method will perform the ingestion process of catalog ad
+	 *               copying
 	 */
-public void IngestionCatlogtoCopying(String dataset) throws InterruptedException {
-    	
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCATALOGED().waitAndClick(10);
-    	
-    	//catlogging
-    	for(int i=0;i<60;i++) {
-    		base.waitTime(2);
+	public void IngestionCatlogtoCopying(String dataset) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 60; i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-			
-    		if(status.contains("Cataloged")) {
-    			base.passedStep("Cataloged completed");
-    			break;
-    		}
-    		else if (status.contains("In Progress")) {
-    			base.waitTime(5);
-    			getRefreshButton().waitAndClick(10);
-    		}
-    		else if (status.contains("Failed")){
-    			base.failedStep("Ingestion Failed");
-    		}
-    	}
-    	
-    	//copy
-    	getRefreshButton().waitAndClick(10);
-    	    		
-         getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-       
-       
-    	driver.scrollingToElementofAPage(getRunCopying());
-    	base.waitForElement(getRunCopying());
-        getRunCopying().waitAndClick(10);
-        
-        base.VerifySuccessMessage("Ingestion copy has Started.");
-        UtilityLog.info(dataset+"'s copying is started.");
-    	driver.waitForPageToBeReady();
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-    	getCloseButton().waitAndClick(10);	
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCOPIED().waitAndClick(10);
-    	
-    	getRefreshButton().waitAndClick(10);
-    	for(int i=0;i<70;i++) {
-    		base.waitTime(2);
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Ingestion Failed");
+			}
+		}
+
+		// copy
+		getRefreshButton().waitAndClick(10);
+
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+
+		base.VerifySuccessMessage("Ingestion copy has Started.");
+		UtilityLog.info(dataset + "'s copying is started.");
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOPIED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(10);
+		for (int i = 0; i < 70; i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-		
-    		if(status.contains("Copied")) {
-    			base.passedStep("Copied completed");
-    			break;
-    		}
-    		else if (status.contains("In Progress")) {
-    			base.waitTime(5);
-    			getRefreshButton().waitAndClick(5);
-    		}
-    		else if (status.contains("Failed")){
-    			base.failedStep("Ingestion Failed");
-    		}
-    	}
+
+			if (status.contains("Copied")) {
+				base.passedStep("Copied completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Ingestion Failed");
+			}
+		}
 	}
 
 	/**
@@ -5326,7 +5453,7 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
 
 		driver.waitForPageToBeReady();
 
-		 getIngestionDetailPopup(1).waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getIngestionErrorNumber());
 		getIngestionErrorNumber().waitAndClick(5);
 
@@ -5340,14 +5467,14 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
 		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(5);
 
-}
-	
+	}
+
 	/**
 	 * @author: Mohan Created Date: 25/02/2022 Modified by: NA Modified Date: NA
 	 * @description: To verify Dateformate in the Ingestion wizard
 	 */
 	public void verifyDateFormateInIngestionField() {
-		
+
 		driver.waitForPageToBeReady();
 		String dateFormate1 = getIngestionWizardDateFormat().getText();
 		System.out.println(dateFormate1);
@@ -5357,113 +5484,120 @@ public void IngestionCatlogtoCopying(String dataset) throws InterruptedException
 		} else {
 			base.failedStep("Date & time formate is not valid");
 		}
-		
+
 	}
-  /**
- * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
- * @description: Method to process to click on copied state without ignoring errors by over lay.
- */
-public void clickOnCopiedStateWithoutIgnoringErrorsByOverlay(String ingestionName) {
-	try {
-		driver.scrollPageToTop();
-		String status = null;
-		for(int i=0;i<30;i++) {
-			if(getStatusByingestionName(ingestionName).isDisplayed()) {
-				status = getStatusByingestionName(ingestionName).getText().trim();
-				break;
-			}else {
-				driver.scrollingToBottomofAPage();
-			}
-		}
-		if(status.contains("Cataloged")) {
-			driver.waitForPageToBeReady();
-			getIngestionLinkByName(ingestionName).isElementAvailable(15);
-			getIngestionLinkByName(ingestionName).Click();
-			driver.waitForPageToBeReady();
-			getStartCopy().ScrollTo();
-			getStartCopy().isElementAvailable(15);
-			getStartCopy().Click();
+
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to process to click on copied state without ignoring
+	 *               errors by over lay.
+	 */
+	public void clickOnCopiedStateWithoutIgnoringErrorsByOverlay(String ingestionName) {
+		try {
 			driver.scrollPageToTop();
-			getCloseButton().isElementAvailable(15);
-			getCloseButton().Click();
-			getRefreshButton().isElementAvailable(15);
-			getRefreshButton().Click();
-		}
-		
-		for(int i=0;i<2000;i++) {
-			for(int j=0;j<30;j++) {
-				if(getStatusByingestionName(ingestionName).isDisplayed()) {
+			String status = null;
+			for (int i = 0; i < 30; i++) {
+				if (getStatusByingestionName(ingestionName).isDisplayed()) {
 					status = getStatusByingestionName(ingestionName).getText().trim();
 					break;
-				}else {
+				} else {
 					driver.scrollingToBottomofAPage();
 				}
 			}
-			if(status.contains("In Progress")) {
+			if (status.contains("Cataloged")) {
+				driver.waitForPageToBeReady();
+				getIngestionLinkByName(ingestionName).isElementAvailable(15);
+				getIngestionLinkByName(ingestionName).Click();
+				driver.waitForPageToBeReady();
+				getStartCopy().ScrollTo();
+				getStartCopy().isElementAvailable(15);
+				getStartCopy().Click();
+				driver.scrollPageToTop();
+				getCloseButton().isElementAvailable(15);
+				getCloseButton().Click();
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
+			}
+
+			for (int i = 0; i < 2000; i++) {
+				for (int j = 0; j < 30; j++) {
+					if (getStatusByingestionName(ingestionName).isDisplayed()) {
+						status = getStatusByingestionName(ingestionName).getText().trim();
+						break;
+					} else {
+						driver.scrollingToBottomofAPage();
+					}
+				}
+				if (status.contains("In Progress")) {
+					driver.scrollPageToTop();
+					getRefreshButton().isElementAvailable(15);
+					getRefreshButton().Click();
+				}
+				if (status.contains("Passed")) {
+					base.passedStep("Ingestion entered to failed state if copied state starts without ignoring errors");
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while selecting field catagory and destination field by using source DAT field."
+							+ e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @description: Method to process to click on roll back from catalog stage and
+	 *               verify status changed is inprogress.
+	 */
+	public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
+		try {
+			driver.scrollPageToTop();
+			String status = null;
+			for (int i = 0; i < 30; i++) {
+				if (getStatusByingestionName(ingestionName).isDisplayed()) {
+					status = getStatusByingestionName(ingestionName).getText().trim();
+					break;
+				} else {
+					driver.scrollingToBottomofAPage();
+				}
+			}
+
+			if (status.contains("Cataloged")) {
+				driver.waitForPageToBeReady();
+				getIngestionLinkByName(ingestionName).isElementAvailable(15);
+				driver.waitForPageToBeReady();
+				getIngestionGearIcon(ingestionName).isElementAvailable(15);
+				getIngestionGearIcon(ingestionName).Click();
+				driver.waitForPageToBeReady();
+				getRollBack(ingestionName).isElementAvailable(15);
+				getRollBack(ingestionName).Click();
+				driver.waitForPageToBeReady();
+				getApproveMessageOKButton().isElementAvailable(10);
+				getApproveMessageOKButton().Click();
 				driver.scrollPageToTop();
 				getRefreshButton().isElementAvailable(15);
 				getRefreshButton().Click();
 			}
-			if(status.contains("Passed")) {
-				base.passedStep("Ingestion entered to failed state if copied state starts without ignoring errors");
-				break;
+			status = getStatusByingestionName(ingestionName).getText().trim();
+			if (status.contains("In Progress")) {
+				base.passedStep(" Got Ingestion : " + ingestionName + " status is in progess successfully");
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while process to click on roll back from catalog stage and verify status changed is inprogress.."
+							+ e.getLocalizedMessage());
 		}
-	}catch(Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occured while selecting field catagory and destination field by using source DAT field."+e.getLocalizedMessage());
 	}
-}
-
-
-/**
- * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
- * @description: Method to process to click on roll back from catalog stage and verify status changed is inprogress.
- */
-public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
-	try {
-		driver.scrollPageToTop();
-		String status = null;
-		for(int i=0;i<30;i++) {
-			if(getStatusByingestionName(ingestionName).isDisplayed()) {
-				status = getStatusByingestionName(ingestionName).getText().trim();
-				break;
-			}else {
-				driver.scrollingToBottomofAPage();
-			}
-		}
-		
-		if(status.contains("Cataloged")) {
-			driver.waitForPageToBeReady();
-			getIngestionLinkByName(ingestionName).isElementAvailable(15);
-			driver.waitForPageToBeReady();
-			getIngestionGearIcon(ingestionName).isElementAvailable(15);
-			getIngestionGearIcon(ingestionName).Click();
-			driver.waitForPageToBeReady();
-			getRollBack(ingestionName).isElementAvailable(15);
-			getRollBack(ingestionName).Click();
-			driver.waitForPageToBeReady();
-			getApproveMessageOKButton().isElementAvailable(10);
-			getApproveMessageOKButton().Click();
-			driver.scrollPageToTop();
-			getRefreshButton().isElementAvailable(15);
-			getRefreshButton().Click();
-		}
-		status = getStatusByingestionName(ingestionName).getText().trim();
-		if(status.contains("In Progress")) {
-			base.passedStep( " Got Ingestion : "+ingestionName+" status is in progess successfully");
-		}
-	}catch(Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occured while process to click on roll back from catalog stage and verify status changed is inprogress.."+e.getLocalizedMessage());
-	}
-}
 
 	/**
 	 * @author: Arunkumar Created Date: 16/03/2022 Modified by: NA Modified Date: NA
-	 * @description: Method to check next button status when date is selected and not selected
+	 * @description: Method to check next button status when date is selected and
+	 *               not selected
 	 */
-	
+
 	public void VerifyNextButtonStatusBasedOnDateTimeFormatSelection() {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
@@ -5476,26 +5610,25 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
 		base.waitForElement(getSpecifySourceFolder());
 		base.stepInfo("Select Folder");
-	
+
 		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.TiffImagesFolder);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-	
+
 		base.waitForElement(getDATDelimitersTextQualifier());
 		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-	
+
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-	
+
 		base.waitForElement(getSourceSelectionDATKey());
-		
+
 		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 		getNextButton().waitAndClick(20);
 		driver.scrollingToBottomofAPage();
-		if(errorMessageMissingDate().isDisplayed()) {
+		if (errorMessageMissingDate().isDisplayed()) {
 			base.passedStep("Next button is disabled if date format is not selected");
-		}
-		else {
+		} else {
 			base.passedStep("Next button is enabled if date format is not selected");
 		}
 		base.stepInfo("Select Date Format");
@@ -5505,103 +5638,106 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}
 		}), Input.wait30);
 		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-	
+
 		driver.scrollPageToTop();
 		base.waitForElement(getNextButton());
 		getNextButton().waitAndClick(20);
-		
-		if(getApproveMessageOKButton().isDisplayed()) {
+
+		if (getApproveMessageOKButton().isDisplayed()) {
 			base.passedStep("Next button is enabled if date format is selected");
-		}
-		else {
+		} else {
 			base.passedStep("Next button is not enabled if date format is selected");
 		}
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 16/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will validate the term which present in the copying table column
-	 * @return: will return the missed doc value of term which displayed in copy table columns
+	 * @description: this method will validate the term which present in the copying
+	 *               table column
+	 * @return: will return the missed doc value of term which displayed in copy
+	 *          table columns
 	 */
 	public int verifyMissedDocValuePresentInCopyTableColumn(String term) {
-		 getRefreshButton().waitAndClick(10);	
-	      getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-	    
-	 	driver.scrollingToElementofAPage(getRunIndexing());
-	 	base.waitForElement(getRunIndexing());
-	 	
-	 	if(copyTableDataValue(term,4).isDisplayed()) {
-	 		base.passedStep(term+ "count is displayed in the copying table column");
-	 	}
-	 	else {
-	 		base.failedStep(term+"count is not displayed in the copying table column");
-	 	}
-	 	int value = Integer.parseInt(copyTableDataValue(term,4).getText());
-	 	getCloseButton().waitAndClick(10);
-	 	return value;	
+		getRefreshButton().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitForElement(getRunIndexing());
+
+		if (copyTableDataValue(term, 4).isDisplayed()) {
+			base.passedStep(term + "count is displayed in the copying table column");
+		} else {
+			base.failedStep(term + "count is not displayed in the copying table column");
+		}
+		int value = Integer.parseInt(copyTableDataValue(term, 4).getText());
+		getCloseButton().waitAndClick(10);
+		return value;
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 17/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will validate the date format in ingestion field cataloging stage
+	 * @description: this method will validate the date format in ingestion field
+	 *               cataloging stage
 	 */
 	public void verifyExpectedDateFormatAfterCatalogingStage() {
-		
+
 		driver.waitForPageToBeReady();
 		String dateFormat = getIngestionWizardDateFormat().getText();
 		String firstSectionInDateFormat[] = dateFormat.split("/");
-		int firstsectionLength= firstSectionInDateFormat[0].length();
+		int firstsectionLength = firstSectionInDateFormat[0].length();
 		int dateFormatTotalLength = dateFormat.length();
-		
-		if (dateFormatTotalLength==19 && firstsectionLength==4) {
+
+		if (dateFormatTotalLength == 19 && firstsectionLength == 4) {
 			base.passedStep(" ingestion converted the provided data into the Sightline desired/expected date format ");
 		} else {
-			base.failedStep("ingestion not converted the provided data into the Sightline desired/expected date format");
-		}	
+			base.failedStep(
+					"ingestion not converted the provided data into the Sightline desired/expected date format");
+		}
 	}
-	
+
 	/**
 	 * @author: Arunkumar Created Date: 18/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the error when selected date format is different than in DAT.
+	 * @description: this method will verify the error when selected date format is
+	 *               different than in DAT.
 	 */
 	public void verifyCatalogingErrorIfDateFormatIsDifferentThanDAT() {
-		
+
 		driver.waitForPageToBeReady();
-		
+
 		String status = getStatus(1).getText().trim();
 		if (status.contains("Failed")) {
-			int numberOfErrors= Integer.parseInt(errorCountStatus().getText());
-			
-			 getIngestionDetailPopup(1).waitAndClick(10);
-			
+			int numberOfErrors = Integer.parseInt(errorCountStatus().getText());
+
+			getIngestionDetailPopup(1).waitAndClick(10);
+
 			base.waitForElement(errorCountCatalogingStage());
-		    errorCountCatalogingStage().waitAndClick(10);
-		    base.waitTime(5);
-		    base.waitForElement(ignoreAllButton());
-		
-			for(int i=1;i<=numberOfErrors;i++) {
-				
-				if(ingestionErrorNote(i).getText().contains(Input.differentDateFormatError)) {
+			errorCountCatalogingStage().waitAndClick(10);
+			base.waitTime(5);
+			base.waitForElement(ignoreAllButton());
+
+			for (int i = 1; i <= numberOfErrors; i++) {
+
+				if (ingestionErrorNote(i).getText().contains(Input.differentDateFormatError)) {
 					base.passedStep("Cataloging Error displayed when selected date format different than in DAT");
 					break;
-				}
-				else {
+				} else {
 					System.out.println("Error not belonged to date format");
 				}
 			}
-			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-			  	getCloseButton().waitAndClick(10);
-			
-	}
-		else if(status.contains("Cataloged")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(10);
+
+		} else if (status.contains("Cataloged")) {
 			base.failedStep("No Errors and Selected Date format is same as in DAT");
-			
+
 		}
-			
+
 	}
-	
-	
+
 	/**
 	 * @author: Gopinath Created Date: NA Modified by: NA Modified Date: NA
 	 * @description: Method to create ingestion to failed stage
@@ -5613,96 +5749,102 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			int count = 0;
 			driver.waitForPageToBeReady();
 			base.waitForElement(getStatus());
-			for(int i=1;i<500;i++) {
+			for (int i = 1; i < 500; i++) {
 				driver.waitForPageToBeReady();
-				getIngestionTitle(count+1).ScrollTo();
-				getIngestionTitle(count+1).isElementAvailable(15);
-				title = getIngestionTitle(count+1).GetAttribute("title").trim();
-				getStatus(count+1).isElementAvailable(15);
-				String status = getStatus(count+1).getText().trim();
+				getIngestionTitle(count + 1).ScrollTo();
+				getIngestionTitle(count + 1).isElementAvailable(15);
+				title = getIngestionTitle(count + 1).GetAttribute("title").trim();
+				getStatus(count + 1).isElementAvailable(15);
+				String status = getStatus(count + 1).getText().trim();
 				driver.waitForPageToBeReady();
-				for(int j=1;j<50;j++) {
+				for (int j = 1; j < 50; j++) {
 					titleCar = getIngestionTitle(j).GetAttribute("title").trim();
 					getIngestionTitle(j).ScrollTo();
-					if(titleCar.equalsIgnoreCase(title)) {
-						if(j!=1) {
-							count=j-1;
+					if (titleCar.equalsIgnoreCase(title)) {
+						if (j != 1) {
+							count = j - 1;
 						}
-						break;  
-					}else {
+						break;
+					} else {
 						driver.scrollingToBottomofAPage();
 					}
 				}
-				if(status.contains("In Progress")) {
+				if (status.contains("In Progress")) {
 					driver.scrollPageToTop();
 					getRefreshButton().isElementAvailable(15);
 					getRefreshButton().Click();
 				}
-				if(status.contains("Failed") && titleCar.equalsIgnoreCase(title)) {
+				if (status.contains("Failed") && titleCar.equalsIgnoreCase(title)) {
 					base.passedStep("Ingestion is failed as per expected.");
 					break;
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while creating ingestion to failed stage."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while creating ingestion to failed stage." + e.getLocalizedMessage());
 		}
 		return title;
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 22/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify ingestion status after ignoring all the errors
+	 * @description: this method will verify ingestion status after ignoring all the
+	 *               errors
 	 */
-	
+
 	public void verifyIgnoringErrorsAndContinueIngestion() {
-	
-			  getIngestionDetailPopup(1).waitAndClick(10);
-			  
-		      base.waitForElement(errorCountCatalogingStage());
-		      errorCountCatalogingStage().waitAndClick(10);
-		      base.waitForElement(ignoreAllButton());
-		      ignoreAllButton().waitAndClick(10);
-		      if (getApproveMessageOKButton().isElementAvailable(5)) {
-					getApproveMessageOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to ignore all errors");
-				}
-		      
-		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    		  doneButton().Enabled()  ;}}), Input.wait30); 
-		      doneButton().waitAndClick(10);
-		      
-		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-		  	getCloseButton().waitAndClick(10);
-		  	base.VerifySuccessMessage("Action done successfully");
-		  	base.waitTime(2);
-		  	getRefreshButton().waitAndClick(10);
-		
-    	//catlogging
-    	for(int i=0;i<20;i++) {
-    		getRefreshButton().waitAndClick(10);
-    		if(getCatalogedIngestionStatus().isElementAvailable(5)) {
-    			base.passedStep("Cataloged completed");
-    			base.passedStep("Ingestion Continued successfully after ignoring errors");
-    			break;
-    		}
-    		else if (getInprogressIngestionStatus().isElementAvailable(5)) {
-    			base.waitTime(20);
-    			getRefreshButton().waitAndClick(10);
-    		}
-    		else if (getFailedIngestionStatus().isElementAvailable(5)) {
-    			base.passedStep("Ingestion not continued successfully after ignoring errors");
-    		}
-    	}
+
+		getIngestionDetailPopup(1).waitAndClick(10);
+
+		base.waitForElement(errorCountCatalogingStage());
+		errorCountCatalogingStage().waitAndClick(10);
+		base.waitForElement(ignoreAllButton());
+		ignoreAllButton().waitAndClick(10);
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to ignore all errors");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doneButton().Enabled();
+			}
+		}), Input.wait30);
+		doneButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+		base.VerifySuccessMessage("Action done successfully");
+		base.waitTime(2);
+		getRefreshButton().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 20; i++) {
+			getRefreshButton().waitAndClick(10);
+			if (getCatalogedIngestionStatus().isElementAvailable(5)) {
+				base.passedStep("Cataloged completed");
+				base.passedStep("Ingestion Continued successfully after ignoring errors");
+				break;
+			} else if (getInprogressIngestionStatus().isElementAvailable(5)) {
+				base.waitTime(20);
+				getRefreshButton().waitAndClick(10);
+			} else if (getFailedIngestionStatus().isElementAvailable(5)) {
+				base.passedStep("Ingestion not continued successfully after ignoring errors");
+			}
+		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will enter source selection and ingestion type section
+	 * @description: this method will enter source selection and ingestion type
+	 *               section
 	 */
-	public void sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(String dataset,String DATFile) {
-		
+	public void sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(String dataset, String DATFile) {
+
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
@@ -5734,11 +5876,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			} else if (dataset.contains("27MarSinglePageTIFF")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SinglePageTIFFFolder);
 			} else if (dataset.contains("CJK_FrenchAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
 			} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.EmailConcatenatedDataFolder);
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.EmailConcatenatedDataFolder);
 			} else if (dataset.contains("SSAudioSpeech_Transcript")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.SSAudioSpeechFolder);
 			} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
@@ -5753,10 +5893,8 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.UniCodeFilesFolder);
 			} else if (dataset.contains("IngestionEmailData")) {
 				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
-			} else if (dataset.contains("CJK_GermanAudioTestData")
-					|| dataset.contains("CJK_JapaneseAudioTestData")) {
-				getSpecifySourceFolder().selectFromDropdown()
-						.selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
 			}
 		}
 		base.waitTime(2);
@@ -5772,9 +5910,9 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		driver.scrollingToBottomofAPage();
 
 		base.waitForElement(getSourceSelectionDATLoadFile());
-		
+
 		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(DATFile);
-		
+
 		base.waitForElement(getSourceSelectionDATKey());
 		base.waitTime(1);
 
@@ -5827,58 +5965,59 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the source selection and ingestion type section after clicking next button
+	 * @description: this method will verify the source selection and ingestion type
+	 *               section after clicking next button
 	 */
-	
+
 	public void verifySourceSectionStatusAfterClickingNextButton() {
-		
+
 		driver.waitForPageToBeReady();
 		base.waitTime(2);
 		String sourceSystemStatus = getSpecifySourceSystem().GetAttribute("disabled");
-		String ingestionTypeStatus =getIngestion_IngestionType().GetAttribute("disabled");
+		String ingestionTypeStatus = getIngestion_IngestionType().GetAttribute("disabled");
 		String nextButtonStatus = getNextButton().GetAttribute("disabled");
-		
-		
-		if(getPreviewRun().Enabled()) {
+
+		if (getPreviewRun().Enabled()) {
 			base.passedStep("Configure mapping section enabled");
-		}
-		else {
+		} else {
 			base.failedStep("Configure mapping section not enabled");
 		}
-		
-		if(sourceSystemStatus.equalsIgnoreCase("true") && ingestionTypeStatus.equalsIgnoreCase("true")) {
+
+		if (sourceSystemStatus.equalsIgnoreCase("true") && ingestionTypeStatus.equalsIgnoreCase("true")) {
 			base.passedStep("Source and overwrite setting page disabled");
-		}
-		else {
+		} else {
 			base.failedStep("Source and overwrite setting page not disabled");
 		}
-		
-		if(nextButtonStatus.equalsIgnoreCase("true")) {
+
+		if (nextButtonStatus.equalsIgnoreCase("true")) {
 			base.passedStep("Next button in source section is disabled and in non editable state");
-		}
-		else {
+		} else {
 			base.failedStep("Next button is enabled");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the count matching in header section pop up with mapping section
+	 * @description: this method will verify the count matching in header section
+	 *               pop up with mapping section
 	 */
 	public void verifyHeaderCountInPreviewRecordPopupPage() {
 		driver.waitForPageToBeReady();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-    	getPreviewRun().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getApproveMessageOKButton().Visible();
 			}
@@ -5886,67 +6025,75 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		getApproveMessageOKButton().waitAndClick(10);
 
 		base.stepInfo("'Preview Documents' pop up is opened successfully");
-		
-		int headerSectionCount =previewRecordPopupHeaderFields().size();
-		
+
+		int headerSectionCount = previewRecordPopupHeaderFields().size();
+
 		int mappedFieldCount = mappedSourceFields(1).size();
-		
-		if(mappedFieldCount==headerSectionCount) {
-			base.passedStep("Headers in preview record popup page count matched with mapped field in configuring section");
+
+		if (mappedFieldCount == headerSectionCount) {
+			base.passedStep(
+					"Headers in preview record popup page count matched with mapped field in configuring section");
+		} else {
+			base.failedStep(
+					"Headers in preview record popup page count not matched with mapped field in configuring section");
 		}
-		else {
-			base.failedStep("Headers in preview record popup page count not matched with mapped field in configuring section");
-		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 25/03/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform catalogging
 	 */
 	public void ingestionCatalogging() {
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCATALOGED().waitAndClick(10);
-    	
-    	//catlogging
-    	for(int i=0;i<40;i++) {
-    		base.waitTime(2);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 40; i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-			
-    		if(status.contains("Cataloged")) {
-    			base.passedStep("Cataloged completed");
-    			break;
-    		}
-    		else if (status.contains("In Progress")) {
-    			base.waitTime(10);
-    			getRefreshButton().waitAndClick(5);
-    		}
-    		else if (status.contains("Failed")){
-    			base.failedStep("Failed");
-    		}
-    	}
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(10);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Failed");
+			}
+		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 24/03/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform indexing
 	 */
 	public void ingestionIndexing(String dataset) {
-		
+
 		getRefreshButton().waitAndClick(10);
 
-		 getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-		 base.waitTime(2);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
 
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
@@ -6012,11 +6159,11 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
-		
+
 		getRunIndexing().waitAndClick(10);
 		base.waitTime(2);
-		base.VerifySuccessMessage("Ingestion Indexing has Started.");		
-		
+		base.VerifySuccessMessage("Ingestion Indexing has Started.");
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCloseButton().Enabled();
@@ -6038,31 +6185,30 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		}), Input.wait30);
 		getFilterByINDEXED().waitAndClick(10);
 		getRefreshButton().waitAndClick(5);
-		for(int i=0;i<50;i++) {
+		for (int i = 0; i < 50; i++) {
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-    		if(status.contains("Indexed")) {
-    			base.passedStep("Indexing completed");
-    			break;
-    		}
-    		else if (status.contains("failed")) {
-    			base.failedStep("Ingestion failed");
-    		}
-    		else{
-    			base.waitTime(10);
-    			getRefreshButton().waitAndClick(5);
-    		}
-    	}
-		
+			if (status.contains("Indexed")) {
+				base.passedStep("Indexing completed");
+				break;
+			} else if (status.contains("failed")) {
+				base.failedStep("Ingestion failed");
+			} else {
+				base.waitTime(10);
+				getRefreshButton().waitAndClick(5);
+			}
+		}
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 24/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method willverify ingestion details status after rollback the ingestion at indexing stage
+	 * @description: this method willverify ingestion details status after rollback
+	 *               the ingestion at indexing stage
 	 */
-	
+
 	public void verifyIngestionDetailsTillIndexingAfterRollback() {
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFilterByButton().Visible();
@@ -6076,64 +6222,61 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}
 		}), Input.wait30);
 		getFilterByDRAFT().waitAndClick(10);
-		
+
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
-		for(int i=0;i<60;i++) {
+
+		for (int i = 0; i < 60; i++) {
 			base.waitTime(3);
 			String status = getStatus(1).getText().trim();
-			
-    		if(status.contains("Draft")) {
-    			base.passedStep("Draft completed");
-    			break;
-    		}
-    		else if (status.contains("In Progress")) {
-    			base.waitTime(5);
-    			getRefreshButton().waitAndClick(10);
-    		}
-    		else {
-    			base.failedStep("rollback failed");
-    		}
-    	}
-		 getIngestionDetailPopup(1).waitAndClick(10);
-		
+
+			if (status.contains("Draft")) {
+				base.passedStep("Draft completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else {
+				base.failedStep("rollback failed");
+			}
+		}
+		getIngestionDetailPopup(1).waitAndClick(10);
+
 		driver.waitForPageToBeReady();
-		
+
 		String catalogData = catalogSectionDetails().getText();
 		String copyData = catalogSectionDetails().getText();
 		String indexData = indexingSectionDetails().getText();
-		
-		
-		if(catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+
+		if (catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
 			base.passedStep("Cataloging,Copying and Indexing field is blank");
-		}
-		else {
+		} else {
 			base.failedStep("Cataloging,Copying and Indexing field is not blank");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 25/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify deletion of ingestion after saving as draft
+	 * @description: this method will verify deletion of ingestion after saving as
+	 *               draft
 	 */
-	
+
 	public void verifyIngestionSaveAsDraftAndDelete() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getIngestion_SaveAsDraft());
 		getIngestion_SaveAsDraft().waitAndClick(5);
-		
+
 		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to save as draft");
 		}
-		
+
 		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
 		navigateToIngestionPage();
-		
+
 		driver.waitForPageToBeReady();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getFilterByButton().Visible();
@@ -6147,348 +6290,372 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}
 		}), Input.wait30);
 		getFilterByDRAFT().waitAndClick(10);
-		
+
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
-		for(int i=0;i<60;i++) {
+
+		for (int i = 0; i < 60; i++) {
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
-			
-    		if(status.contains("Draft")) {
-    			base.passedStep("Draft completed");
-    			break;
-    		}
-    		else if (status.contains("In Progress")) {
-    			base.waitTime(5);
-    			getRefreshButton().waitAndClick(10);
-    		}
-    		else {
-    			base.failedStep("Draft failed");
-    		}
-    	}
-		 getIngestionDetailPopup(1).waitAndClick(10);
-		
+
+			if (status.contains("Draft")) {
+				base.passedStep("Draft completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else {
+				base.failedStep("Draft failed");
+			}
+		}
+		getIngestionDetailPopup(1).waitAndClick(10);
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return ingestionDetailActionDropdown().Visible();
 			}
 		}), Input.wait30);
 		ingestionDetailActionDropdown().waitAndClick(10);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return deleteActionButton().Visible();
 			}
 		}), Input.wait30);
 		deleteActionButton().waitAndClick(10);
-		
+
 		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to Delete the ingestion");
 		}
-		
+
 		base.VerifySuccessMessage("Ingestion deleted successfully.");
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 28/03/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify mapping field selection after clicking back button
+	 * @description: this method will verify mapping field selection after clicking
+	 *               back button
 	 */
-	
-		public void verifyMappingFiledPriorSelection(String Field1,String Field2,String Field3) {
-		
+
+	public void verifyMappingFiledPriorSelection(String Field1, String Field2, String Field3) {
+
 		driver.waitForPageToBeReady();
 		getPreviewRun().waitAndClick(10);
 		base.VerifyErrorMessage("Please specify a mapping for the mandatory fields.");
-		
+
 		getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Field1);
 		getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Field2);
 		getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(Field3);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-    	getPreviewRun().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getApproveMessageOKButton().Visible();
 			}
 		}), Input.wait30);
 		getApproveMessageOKButton().waitAndClick(10);
-		
+
 		goBackButton().waitAndClick(5);
-		
-		String mappedParentDocID= getMappingSOURCEFIELD2().selectFromDropdown().getFirstSelectedOption().getText();
-		String mappedDataSource =getMappingSOURCEFIELD3().selectFromDropdown().getFirstSelectedOption().getText();
-		String mappedCustodian=getMappingSOURCEFIELD4().selectFromDropdown().getFirstSelectedOption().getText();
-		
-		if(mappedParentDocID.equalsIgnoreCase(Field1) && mappedDataSource.equalsIgnoreCase(Field2) && mappedCustodian.equalsIgnoreCase(Field3)) {
+
+		String mappedParentDocID = getMappingSOURCEFIELD2().selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedDataSource = getMappingSOURCEFIELD3().selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedCustodian = getMappingSOURCEFIELD4().selectFromDropdown().getFirstSelectedOption().getText();
+
+		if (mappedParentDocID.equalsIgnoreCase(Field1) && mappedDataSource.equalsIgnoreCase(Field2)
+				&& mappedCustodian.equalsIgnoreCase(Field3)) {
 			base.passedStep("Mapped fields displayed with prior selection");
-		}
-		else {
+		} else {
 			base.failedStep("Mapped fields not displayed with prior selection");
-		}			
+		}
 	}
-		
-		/**
-		 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify ingestion status after saving as draft
-		 */
-		
-		public void verifyIngestionStatusAfterSaveAsDraft() {
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			base.waitForElement(getIngestion_SaveAsDraft());
-			getIngestion_SaveAsDraft().waitAndClick(5);
-			
-			if (getApproveMessageOKButton().isElementAvailable(5)) {
-				getApproveMessageOKButton().waitAndClick(10);
-				base.passedStep("Clicked on OK button to save as draft");
-			}
-			
-			base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
-			navigateToIngestionPage();
-			
-			driver.waitForPageToBeReady();
-			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
 
+	/**
+	 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify ingestion status after saving as draft
+	 */
+
+	public void verifyIngestionStatusAfterSaveAsDraft() {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getIngestion_SaveAsDraft());
+		getIngestion_SaveAsDraft().waitAndClick(5);
+
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to save as draft");
+		}
+
+		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		navigateToIngestionPage();
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < 60; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Draft")) {
+				base.passedStep("Draft completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else {
+				base.failedStep("Draft failed");
+			}
+		}
+		getIngestionSettingGearIcon().waitAndClick(10);
+
+		String rollbackButtonStatus = rollbackOption().GetAttribute("class");
+		System.out.println(rollbackButtonStatus);
+		if (rollbackButtonStatus.equalsIgnoreCase("disable")) {
+			base.passedStep("Rollback button is disabled in draft mode");
+		} else {
+			base.failedMessage("Rollback button not disabled in draft mode");
+		}
+		getIngestionSettingGearIcon().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify ingestion status after saving as draft
+	 */
+
+	public void verifyDraftModeStatusAfterRollbackIngestion() {
+
+		rollBackIngestion();
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		for (int i = 0; i < 60; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Draft")) {
+				base.passedStep("After Rollback ,ingestion moved to Draft mode");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else {
+				base.failedStep("After Rollback ,ingestion not moved to Draft mode");
+			}
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform ingestion again from draft mode
+	 */
+
+	public void IngestionFromDraftMode() {
+
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(5);
+		base.waitForElement(getActionDropdownArrow());
+		getActionDropdownArrow().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionOpenWizard().Visible();
+			}
+		}), Input.wait30);
+
+		getActionOpenWizard().waitAndClick(5);
+		base.waitTime(3);
+		base.stepInfo("Starting ingestion again from draft mode");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNextButton().Visible();
+			}
+		}), Input.wait30);
+		getNextButton().waitAndClick(10);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
-					return getFilterByDRAFT().Visible();
+					return getApproveMessageOKButton().Visible();
 				}
 			}), Input.wait30);
-			getFilterByDRAFT().waitAndClick(10);
-			
-			getRefreshButton().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			
-			for(int i=0;i<60;i++) {
+			getApproveMessageOKButton().waitAndClick(10);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnRunIngestion().Visible();
+			}
+		}), Input.wait30);
+		getbtnRunIngestion().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform catalogging and copying for two
+	 *               ingestion
+	 */
+
+	public void multipleIngestionCopying(int numberOfIngestion) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int j = 1; j <= numberOfIngestion; j++) {
+			for (int i = 0; i < 60; i++) {
 				base.waitTime(2);
-				String status = getStatus(1).getText().trim();
-				
-	    		if(status.contains("Draft")) {
-	    			base.passedStep("Draft completed");
-	    			break;
-	    		}
-	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(5);
-	    			getRefreshButton().waitAndClick(10);
-	    		}
-	    		else {
-	    			base.failedStep("Draft failed");
-	    		}
-	    	}
-			getIngestionSettingGearIcon().waitAndClick(10);
-			
-			String rollbackButtonStatus =rollbackOption().GetAttribute("class");
-			System.out.println(rollbackButtonStatus);
-			if(rollbackButtonStatus.equalsIgnoreCase("disable")) {
-				base.passedStep("Rollback button is disabled in draft mode");
+				String status = getStatus(j).getText().trim();
+
+				if (status.contains("Cataloged")) {
+					base.passedStep("Cataloged completed for ingestion - " + j + "");
+					break;
+				} else if (status.contains("In Progress")) {
+					base.waitTime(5);
+					getRefreshButton().waitAndClick(5);
+				} else if (status.contains("Failed")) {
+					base.failedStep("Cataloged Failed for ingestion - " + j + "");
+				}
 			}
-			else {
-				base.failedMessage("Rollback button not disabled in draft mode");
-			}
-			getIngestionSettingGearIcon().waitAndClick(5);
-	
 		}
 
-		/**
-		 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify ingestion status after saving as draft
-		 */
-		
-		public void verifyDraftModeStatusAfterRollbackIngestion() {
-			
-			rollBackIngestion();
-			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
+		// copy
+		for (int j = 1; j <= numberOfIngestion; j++) {
 
+			getIngestionDetailPopup(j).waitAndClick(Input.wait30);
+
+			driver.scrollingToElementofAPage(getRunCopying());
+			base.waitForElement(getRunCopying());
+			getRunCopying().waitAndClick(10);
+
+			base.VerifySuccessMessage("Ingestion copy has Started.");
+
+			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
-					return getFilterByDRAFT().Visible();
+					return getCloseButton().Enabled();
 				}
 			}), Input.wait30);
-			getFilterByDRAFT().waitAndClick(10);
-			
-			getRefreshButton().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			
-			for(int i=0;i<60;i++) {
+			getCloseButton().waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOPIED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(10);
+		for (int k = 1; k <= numberOfIngestion; k++) {
+			for (int i = 0; i < 40; i++) {
 				base.waitTime(2);
-				String status = getStatus(1).getText().trim();
-				
-	    		if(status.contains("Draft")) {
-	    			base.passedStep("After Rollback ,ingestion moved to Draft mode");
-	    			break;
-	    		}
-	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(5);
-	    			getRefreshButton().waitAndClick(10);
-	    		}
-	    		else {
-	    			base.failedStep("After Rollback ,ingestion not moved to Draft mode");
-	    		}
-	    	}
-		}
-		
-		/**
-		 * @author: Arun Created Date: 29/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will perform ingestion again from draft mode
-		 */
-		
-		public void IngestionFromDraftMode() {
-			
-			driver.waitForPageToBeReady();
-			getIngestionDetailPopup(1).waitAndClick(5);
-			base.waitForElement(getActionDropdownArrow());
-			getActionDropdownArrow().waitAndClick(5);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getActionOpenWizard().Visible();
-				}
-			}), Input.wait30);
-			
-			getActionOpenWizard().waitAndClick(5);
-			base.waitTime(3);
-			base.stepInfo("Starting ingestion again from draft mode");
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getNextButton().Visible()  ;}}), Input.wait30); 
-			getNextButton().waitAndClick(10);
-			base.passedStep("Clicked on Next button");
-
-			base.stepInfo("Pop up messgae for Ingestion without text file");
-			if (getApproveMessageOKButton().isElementAvailable(10)) {
-				getApproveMessageOKButton().waitAndClick(10);
-				base.passedStep("Clicked on OK button to continue without text files");
-			}
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-	    	getPreviewRun().waitAndClick(10);
-	    	
-	    	if (getApproveMessageOKButton().isElementAvailable(10)) {
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	    	getApproveMessageOKButton().waitAndClick(10);
-	    	}
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-	    	getbtnRunIngestion().waitAndClick(10);
-			
-		}
-		
-		/**
-		 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will perform catalogging and copying for two ingestion
-		 */
-		
-		public void multipleIngestionCopying(int numberOfIngestion) {
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByFAILED().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByCATALOGED().waitAndClick(10);
-	    	
-	    	//catlogging
-	    	for(int j=1;j<=numberOfIngestion;j++) {
-	    		for(int i=0;i<60;i++) {
-	    			base.waitTime(2);
-					String status = getStatus(j).getText().trim();
-					
-		    		if(status.contains("Cataloged")) {
-		    			base.passedStep("Cataloged completed for ingestion - "+j+"");
-		    			break;
-		    		}
-		    		else if (status.contains("In Progress")) {
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(5);
-		    		}
-		    		else if (status.contains("Failed")){
-		    			base.failedStep("Cataloged Failed for ingestion - "+j+"");
-		    		}
-	    		}
-	    	}
-	    	
-	    	//copy
-	    	for(int j=1;j<=numberOfIngestion;j++) {
-		    	    		
-		    	getIngestionDetailPopup(j).waitAndClick(Input.wait30);
-		    
-		    	driver.scrollingToElementofAPage(getRunCopying());
-		    	base.waitForElement(getRunCopying());
-		        getRunCopying().waitAndClick(10);
-		        
-		        base.VerifySuccessMessage("Ingestion copy has Started.");
-		       
-		    	driver.waitForPageToBeReady();
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-		    	getCloseButton().waitAndClick(10);	
-		}
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByCOPIED().waitAndClick(10);
-	    	
-	    	getRefreshButton().waitAndClick(10);
-	    for(int k=1;k<=numberOfIngestion;k++) {
-	    	for(int i=0;i<40;i++) {
-	    		base.waitTime(2);
 				String status = getStatus(k).getText().trim();
-			
-	    		if(status.contains("Copied")) {
-	    			base.passedStep("Copied completed for ingestion - "+k+"");
-	    			break;
-	    		}
-	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(10);
-	    			getRefreshButton().waitAndClick(5);
-	    		}
-	    		else if (status.contains("Failed")){
-	    			base.failedStep("copied Failed for ingestion - "+k+"");
-	    		}
-	    	}
-		 }
+
+				if (status.contains("Copied")) {
+					base.passedStep("Copied completed for ingestion - " + k + "");
+					break;
+				} else if (status.contains("In Progress")) {
+					base.waitTime(10);
+					getRefreshButton().waitAndClick(5);
+				} else if (status.contains("Failed")) {
+					base.failedStep("copied Failed for ingestion - " + k + "");
+				}
+			}
 		}
-		
-		/**
-		 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will perform indexing for more than one ingestion
-		 */
-		public void multipleIngestionIndexing(String dataset[],int numberOfIngestion) {
-			
-	    	getRefreshButton().waitAndClick(5);
-	   
-			for(int i=1;i<=numberOfIngestion;i++) {
+	}
+
+	/**
+	 * @author: Arun Created Date: 30/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform indexing for more than one ingestion
+	 */
+	public void multipleIngestionIndexing(String dataset[], int numberOfIngestion) {
+
+		getRefreshButton().waitAndClick(5);
+
+		for (int i = 1; i <= numberOfIngestion; i++) {
 			getIngestionDetailPopup(i).waitAndClick(Input.wait30);
 
 			driver.scrollingToElementofAPage(getMP3Count());
-			
-			if (dataset[i-1].contains("AllSources") || dataset[i-1].contains("SSAudioSpeech_Transcript")) {
+
+			if (dataset[i - 1].contains("AllSources") || dataset[i - 1].contains("SSAudioSpeech_Transcript")) {
 
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
@@ -6503,7 +6670,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					}
 				}), Input.wait60);
 				getLanguage().selectFromDropdown().selectByVisibleText("North American English");
-			} else if (dataset[i-1].contains("CJK_GermanAudioTestData")) {
+			} else if (dataset[i - 1].contains("CJK_GermanAudioTestData")) {
 
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
@@ -6518,7 +6685,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					}
 				}), Input.wait60);
 				getLanguage().selectFromDropdown().selectByVisibleText("German");
-			} else if (dataset[i-1].contains("CJK_JapaneseAudioTestData")) {
+			} else if (dataset[i - 1].contains("CJK_JapaneseAudioTestData")) {
 
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
@@ -6533,7 +6700,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 					}
 				}), Input.wait60);
 				getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
-			} else if (dataset[i-1].contains("0002_H13696_1_Latest")) {
+			} else if (dataset[i - 1].contains("0002_H13696_1_Latest")) {
 
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
@@ -6558,2769 +6725,2977 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 			}), Input.wait60);
 			getRunIndexing().waitAndClick(10);
 
-			base.VerifySuccessMessage("Ingestion Indexing has Started.");		
-			
+			base.VerifySuccessMessage("Ingestion Indexing has Started.");
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getCloseButton().Enabled();
 				}
 			}), Input.wait30);
 			getCloseButton().waitAndClick(10);
-			}
-	    
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
+		}
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByINDEXED().Visible();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINDEXED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+		getRefreshButton().waitAndClick(5);
+		for (int j = 1; j <= numberOfIngestion; j++) {
+			for (int i = 0; i < 50; i++) {
+				base.waitTime(2);
+				String status = getStatus(j).getText().trim();
+				if (status.contains("Indexed")) {
+					base.passedStep("Indexing completed for ingestion - " + j + "");
+					break;
+				} else if (status.contains("failed")) {
+					base.failedStep("Indexing failed for ingestion - " + j + "");
+				} else {
+					base.waitTime(10);
+					getRefreshButton().waitAndClick(5);
 				}
-			}), Input.wait30);
-			getFilterByINDEXED().waitAndClick(10);
-			getRefreshButton().waitAndClick(5);
-			for(int j=1;j<=numberOfIngestion;j++) {
-				for(int i=0;i<50;i++) {
-					base.waitTime(2);
-					String status = getStatus(j).getText().trim();
-		    		if(status.contains("Indexed")) {
-		    			base.passedStep("Indexing completed for ingestion - "+j+"");
-		    			break;
-		    		}
-		    		else if (status.contains("failed")) {
-		    			base.failedStep("Indexing failed for ingestion - "+j+"");
-		    		}
-		    		else{
-		    			base.waitTime(10);
-		    			getRefreshButton().waitAndClick(5);
-		    		}
-		    	}
 			}
 		}
-		
-		/**
-		 * @author: Arun Created Date: 31/03/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the indexing warning message and rollback
-		 */
-		public void verifyWarningMessageAndRollbackAddOnlyIngestion() {
-			
-			getRefreshButton().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return ingestionDetailActionDropdown().Visible();
-				}
-			}), Input.wait30);
-			ingestionDetailActionDropdown().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return rollbackOptionInPopup().Visible();
-				}
-			}), Input.wait30);
-			rollbackOptionInPopup().waitAndClick(10);
-			base.waitTime(2);
-			String warningMessage = getRollbackWarningMessage().getText();
-			
-			if(warningMessage.equalsIgnoreCase(Input.indexingWarningMessage)) {
-				base.failedStep("Indexing warning message prompted when rollingback add only ingestion");
+	}
+
+	/**
+	 * @author: Arun Created Date: 31/03/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the indexing warning message and
+	 *               rollback
+	 */
+	public void verifyWarningMessageAndRollbackAddOnlyIngestion() {
+
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionDetailActionDropdown().Visible();
 			}
-			else {
-				base.passedStep("Indexing warning message not prompted when rollingback add only ingestion");
+		}), Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return rollbackOptionInPopup().Visible();
 			}
-			if(getApproveMessageOKButton().isElementAvailable(5)) {
+		}), Input.wait30);
+		rollbackOptionInPopup().waitAndClick(10);
+		base.waitTime(2);
+		String warningMessage = getRollbackWarningMessage().getText();
+
+		if (warningMessage.equalsIgnoreCase(Input.indexingWarningMessage)) {
+			base.failedStep("Indexing warning message prompted when rollingback add only ingestion");
+		} else {
+			base.passedStep("Indexing warning message not prompted when rollingback add only ingestion");
+		}
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
 			getApproveMessageOKButton().waitAndClick(5);
-			}
-			
-			base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
-			base.passedStep("Rollback Done Successfully");
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getCloseButton().Enabled();
-				}
-			}), Input.wait30);
-			getCloseButton().waitAndClick(5);
-			
 		}
-		
-		/**
-		 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the details in ingestion pop up
-		 */
-		public void verifyIngestionDetails() {
-			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
-			getFilterByINPROGRESS().waitAndClick(10);
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-			getFilterByINDEXED().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-			getFilterByAPPROVED().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByPUBLISHED().waitAndClick(10);
-	    	
-	    	getRefreshButton().waitAndClick(5);
-	    	
-	    	String viewStatus =getIngestion_TileView().GetAttribute("class");
-	    	if(viewStatus.equalsIgnoreCase("active")) {
-	    		base.passedStep("Information displayed on Tiles view");
-	    	}
-	    	else {
-	    		base.failedMessage("Information displayed on grid view");
-	    		
-	    	}
-	    	
-	    	if(getStatus(1).isElementPresent()) {
-	    		int sourceCount =Integer.parseInt(getSourceCount().getText());
-	    		int ingestedCount =Integer.parseInt(getIngestedCount().getText());
-	    		int errorCount =Integer.parseInt(errorCountStatus().getText());
-	    		if(sourceCount>0 && ingestedCount>0 && errorCount==0) {
-	    			base.passedStep("Source , Ingested and Error count details displayed");
-	    		}
-	    		else {
-	    			base.failedStep("Source,Ingested and Error count details not displayed");
-	    		}
-	    		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-	    		base.waitTime(2);
-	    		
-	    		String projectName =getProjectNameInPopup().getText();
-	    		String ingestionStatus = getIngestionStatusInPopup().getText();
-	    		String timeStamp = getTimeStampInPopup().getText();
-	    		
-	    		if(projectName.isBlank() && ingestionStatus.isBlank() && timeStamp.isBlank()) {
-	    			base.failedStep("project name, ingestion Status and Time stamp details are blank");
-	    		}
-	    		else {
-	    			base.passedStep("Project name, ingestion Status and Time stamp details are present");
-	    		}
-	    		
-	    		String catalogData = catalogSectionDetails().getText();
-	    		String copyData = catalogSectionDetails().getText();
-	    		String indexData = indexingSectionDetails().getText();
-	    		
-	    		if(catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
-	    			base.failedStep("Cataloging,Copying and Indexing field details are blank");
-	    		}
-	    		else {
-	    			base.passedStep("Cataloging,Copying and Indexing field details are present");
-	    		}
-	    		
-	    	}
-	    	else {
-	    		base.failedStep("Ingestion details not present");
-	    	}
+		base.VerifySuccessMessage(
+				"Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+		base.passedStep("Rollback Done Successfully");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the details in ingestion pop up
+	 */
+	public void verifyIngestionDetails() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByAPPROVED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByAPPROVED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByAPPROVED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		String viewStatus = getIngestion_TileView().GetAttribute("class");
+		if (viewStatus.equalsIgnoreCase("active")) {
+			base.passedStep("Information displayed on Tiles view");
+		} else {
+			base.failedMessage("Information displayed on grid view");
+
 		}
-		
-		/**
-		 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the availability of rollback option
-		 */
-		public void verifyRollbackOptionStatus() {
-			
-			getRefreshButton().waitAndClick(10);
-			driver.waitForPageToBeReady();
+
+		if (getStatus(1).isElementPresent()) {
+			int sourceCount = Integer.parseInt(getSourceCount().getText());
+			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
+			int errorCount = Integer.parseInt(errorCountStatus().getText());
+			if (sourceCount > 0 && ingestedCount > 0 && errorCount == 0) {
+				base.passedStep("Source , Ingested and Error count details displayed");
+			} else {
+				base.failedStep("Source,Ingested and Error count details not displayed");
+			}
 			getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return ingestionDetailActionDropdown().Visible();
-				}
-			}), Input.wait30);
-			ingestionDetailActionDropdown().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return rollbackOptionInPopup().Visible();
-				}
-			}), Input.wait30);
-			rollbackOptionInPopup().waitAndClick(10);
 			base.waitTime(2);
-			if(getRollbackWarningMessage().isElementAvailable(5)) {
-				base.passedStep("Rollback option is displayed and available to perform rollback action");
+
+			String projectName = getProjectNameInPopup().getText();
+			String ingestionStatus = getIngestionStatusInPopup().getText();
+			String timeStamp = getTimeStampInPopup().getText();
+
+			if (projectName.isBlank() && ingestionStatus.isBlank() && timeStamp.isBlank()) {
+				base.failedStep("project name, ingestion Status and Time stamp details are blank");
+			} else {
+				base.passedStep("Project name, ingestion Status and Time stamp details are present");
 			}
-			else {
-				base.failedStep("Rollback option is not available");
+
+			String catalogData = catalogSectionDetails().getText();
+			String copyData = catalogSectionDetails().getText();
+			String indexData = indexingSectionDetails().getText();
+
+			if (catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+				base.failedStep("Cataloging,Copying and Indexing field details are blank");
+			} else {
+				base.passedStep("Cataloging,Copying and Indexing field details are present");
 			}
-			if(getApproveMessageCancelButton().isElementAvailable(5)) {
-				getApproveMessageCancelButton().waitAndClick(5);
-				}
-			base.waitForElement(getCloseButton());
-			getCloseButton().waitAndClick(5);
-			
+
+		} else {
+			base.failedStep("Ingestion details not present");
 		}
-		
-		/**
-		 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the Navigation control in ingestion home page
-		 */
-		public void verifyHomePageNavigationControl() {
+	}
+
+	/**
+	 * @author: Arun Created Date: 04/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the availability of rollback option
+	 */
+	public void verifyRollbackOptionStatus() {
+
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionDetailActionDropdown().Visible();
+			}
+		}), Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return rollbackOptionInPopup().Visible();
+			}
+		}), Input.wait30);
+		rollbackOptionInPopup().waitAndClick(10);
+		base.waitTime(2);
+		if (getRollbackWarningMessage().isElementAvailable(5)) {
+			base.passedStep("Rollback option is displayed and available to perform rollback action");
+		} else {
+			base.failedStep("Rollback option is not available");
+		}
+		if (getApproveMessageCancelButton().isElementAvailable(5)) {
+			getApproveMessageCancelButton().waitAndClick(5);
+		}
+		base.waitForElement(getCloseButton());
+		getCloseButton().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the Navigation control in ingestion
+	 *               home page
+	 */
+	public void verifyHomePageNavigationControl() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(showAllIngestion());
+		showAllIngestion().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByAPPROVED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByAPPROVED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByAPPROVED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		getIngestion_GridView().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+
+		try {
+			String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
+			String previousbuttonStatus = ingestionPaginationPrevious().GetAttribute("class").trim();
+			if (nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")
+					&& previousbuttonStatus.equalsIgnoreCase("paginate_button previous disabled")) {
+				base.passedStep("only one page available in ingestion home page");
+			} else {
+				int currentPageNumber = Integer.parseInt(currentActivePage().getText());
+				ingestionNextButton().waitAndClick(5);
+				base.stepInfo("Clicked Next button");
+				base.waitTime(2);
+				int currentPageNumberAfterNext = Integer.parseInt(currentActivePage().getText());
+				if (currentPageNumberAfterNext > currentPageNumber) {
+					base.passedStep("After clicking next button it displays next page");
+				} else {
+					base.failedStep("After clicking next button , next page not displayed");
+				}
+				ingestionPreviousButton().waitAndClick(5);
+				base.stepInfo("Clicked Previous button");
+				base.waitTime(2);
+				int currentPageNumberAfterPrevious = Integer.parseInt(currentActivePage().getText());
+				if (currentPageNumberAfterPrevious == currentPageNumber) {
+					base.passedStep("After clicking previous button it displays previous page");
+				} else {
+					base.failedStep("After clicking previous button , previous page not displayed");
+				}
+				moveToNextPage().waitAndClick(5);
+				base.stepInfo("Clicked Next available page number");
+				base.waitTime(2);
+				int currentPageAfterPagination = Integer.parseInt(currentActivePage().getText());
+				if (currentPageAfterPagination > currentPageNumber) {
+					base.passedStep("After clicking next available page number , it displays particular page");
+				} else {
+					base.failedStep("After clicking page number ,particular page not displayed");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating page in ingestion home page");
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the contents present in the ingestion
+	 *               tiles
+	 */
+
+	public void verifyContentOnIngestionTiles() {
+
+		getRefreshButton().waitAndClick(5);
+
+		if (getIngestionDetailPopup(1).isElementAvailable(5)) {
+			int sourceCount = Integer.parseInt(getSourceCount().getText());
+			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
+			int errorCount = Integer.parseInt(errorCountStatus().getText());
+			String status = getStatus(1).getText().trim();
+			if (sourceCount > 0 && ingestedCount >= 0 && errorCount >= 0) {
+				base.passedStep("Source , Ingested and Error count details displayed");
+			} else {
+				base.failedStep("Source,Ingested and Error count details not displayed");
+			}
+			if (status.contains("Cataloged") || status.contains("Failed")) {
+				base.passedStep("Ingestion Status details are displayed");
+			} else {
+				base.failedStep("Ingestion Status details are not displayed");
+			}
+			if (ingestionCompletedDate().isDisplayed() && ingestionProgressBar().isDisplayed()
+					&& ingestionModifiedUser().isDisplayed()) {
+				base.passedStep("Latest time stamp.modified admin name and progress bar present");
+			} else {
+				base.failedStep("Latest time stamp.modified admin name  and progress bar not present");
+			}
+		} else {
+			base.failedMessage("No ingestion is present in Failed/Cataloged state");
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform Copying stage ingestion
+	 */
+	public void ingestionCopying() {
+
+		base.waitTime(2);
+		getIngestionDetailPopup(1).waitAndClick(10);
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+
+		// copying
+		for (int i = 0; i < 50; i++) {
+			getRefreshButton().Click();
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Copied")) {
+				base.passedStep("Copied completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(10);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Failed");
+			}
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify ignore option and checkbox in ingestion
+	 *               error list
+	 */
+	public void verifyIgnoreOptionAndCheckbox() {
+		getIngestionDetailPopup(1).waitAndClick(5);
+		base.waitTime(1);
+		driver.scrollingToElementofAPage(errorCountCatalogingStage());
+		base.waitForElement(errorCountCatalogingStage());
+		errorCountCatalogingStage().waitAndClick(10);
+		base.waitForElement(ignoreOptionInErrorList());
+		String type = getIgnoreOptionSelection().GetAttribute("type").trim();
+
+		if (ignoreOptionInErrorList().isDisplayed() && type.equalsIgnoreCase("checkbox")) {
+			base.passedStep("Ignore option displayed with checkbox in error list");
+		} else {
+			base.failedStep("Ignore option not displayed with check box in error list");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+	}
+
+	/**
+	 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify perform the approval stage ingestion
+	 */
+	public void approveIngestion(int numberofingestion) {
+
+		driver.waitForPageToBeReady();
+		int j = numberofingestion;
+		getIngestionDetailPopup(j).waitAndClick(Input.wait30);
+		base.waitTime(1);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionDetailActionDropdown().Visible();
+			}
+		}), Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionApprove().Visible();
+			}
+		}), Input.wait30);
+		getActionApprove().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getApproveMessageOKButton().Visible();
+			}
+		}), Input.wait30);
+		getApproveMessageOKButton().waitAndClick(10);
+
+		base.VerifySuccessMessage("Approve started successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOPIED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByAPPROVED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(10);
+
+		for (int i = 0; i < 40; i++) {
+			base.waitTime(2);
+			String status = getStatus(j).getText().trim();
+
+			if (status.contains("Approved")) {
+				base.passedStep("Approve completed for ingestion");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(10);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Approve Failed for ingestion");
+			}
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify rollback status for approved ingestion
+	 */
+	public void verifyRollbackOptionForApprovedIngestion() {
+
+		getRefreshButton().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionDetailActionDropdown().Visible();
+			}
+		}), Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+
+		String status = rollbackButtonStatus().GetAttribute("class").trim();
+		if (status.contains("disable")) {
+			base.passedStep("Rollback option not available for approved ingestion");
+		} else {
+			base.failedStep("Rollback option available for approved ingestion");
+		}
+
+	}
+
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to get name of ingestion created.
+	 * @return createdIngestionName : createdIngestionName is String value that
+	 *         returns created ingestion name.
+	 */
+	public String getNameOfIngestionCreated() {
+		String createdIngestionName = null;
+		try {
 			driver.waitForPageToBeReady();
-			base.waitForElement(showAllIngestion());
-	    	showAllIngestion().waitAndClick(5);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByButton().Visible();
-				}
-			}), Input.wait30);
-			getFilterByButton().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
-			getFilterByDRAFT().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-			getFilterByINDEXED().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-			getFilterByAPPROVED().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByPUBLISHED().waitAndClick(10);
-	    	
-	    	getRefreshButton().waitAndClick(5);
-	    	
-	    	getIngestion_GridView().waitAndClick(5);
-	    	driver.waitForPageToBeReady();
-	    	driver.scrollingToBottomofAPage();
-	    	
-	    	try {
-	    		String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
-	    		String previousbuttonStatus = ingestionPaginationPrevious().GetAttribute("class").trim();
-				if(nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled") && previousbuttonStatus.equalsIgnoreCase("paginate_button previous disabled")) {
-					base.passedStep("only one page available in ingestion home page");
-				}
-				else {
-					int currentPageNumber = Integer.parseInt(currentActivePage().getText());
-					ingestionNextButton().waitAndClick(5);
-					base.stepInfo("Clicked Next button");
-					base.waitTime(2);
-					int currentPageNumberAfterNext = Integer.parseInt(currentActivePage().getText());
-					if(currentPageNumberAfterNext>currentPageNumber) {
-						base.passedStep("After clicking next button it displays next page");
-					}
-					else {
-						base.failedStep("After clicking next button , next page not displayed");
-					}
-					ingestionPreviousButton().waitAndClick(5);
-					base.stepInfo("Clicked Previous button");
-					base.waitTime(2);
-					int currentPageNumberAfterPrevious = Integer.parseInt(currentActivePage().getText());
-					if(currentPageNumberAfterPrevious==currentPageNumber) {
-						base.passedStep("After clicking previous button it displays previous page");
-					}
-					else {
-						base.failedStep("After clicking previous button , previous page not displayed");
-					}
-					moveToNextPage().waitAndClick(5);
-					base.stepInfo("Clicked Next available page number");
-					base.waitTime(2);
-					int currentPageAfterPagination = Integer.parseInt(currentActivePage().getText());
-					if(currentPageAfterPagination>currentPageNumber) {
-						base.passedStep("After clicking next available page number , it displays particular page");
-					}
-					else {
-						base.failedStep("After clicking page number ,particular page not displayed");
-					}
-				}
-		
-			}catch(Exception e) {
-				e.printStackTrace();
-				base.failedStep("Exception occured while navigating page in ingestion home page");
-			}
-	    	
-		}
-		
-		/**
-		 * @author: Arun Created Date: 05/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify the contents present in the ingestion tiles
-		 */
-		
-		public void verifyContentOnIngestionTiles() {
-			
-	    	getRefreshButton().waitAndClick(5);
-	    	
-	    	if(getIngestionDetailPopup(1).isElementAvailable(5)) {
-	    		int sourceCount =Integer.parseInt(getSourceCount().getText());
-	    		int ingestedCount =Integer.parseInt(getIngestedCount().getText());
-	    		int errorCount =Integer.parseInt(errorCountStatus().getText());
-	    		String status = getStatus(1).getText().trim();
-	    		if(sourceCount>0 && ingestedCount>=0 && errorCount>=0) {
-	    			base.passedStep("Source , Ingested and Error count details displayed");
-	    		}
-	    		else {
-	    			base.failedStep("Source,Ingested and Error count details not displayed");
-	    		}
-	    		if(status.contains("Cataloged") || status.contains("Failed") ) {
-	    			base.passedStep("Ingestion Status details are displayed");	
-	    		}
-	    		else {
-	    			base.failedStep("Ingestion Status details are not displayed");
-	    		}
-	    		if(ingestionCompletedDate().isDisplayed() && ingestionProgressBar().isDisplayed() && ingestionModifiedUser().isDisplayed()) {
-	    			base.passedStep("Latest time stamp.modified admin name and progress bar present");
-	    		}
-	    		else {
-	    			base.failedStep("Latest time stamp.modified admin name  and progress bar not present");
-	    		}
-	    	}
-	    	else {
-	    		base.failedMessage("No ingestion is present in Failed/Cataloged state");
-	    	}
-		}
-		
-		/**
-		 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will perform Copying stage ingestion
-		 */
-		public void ingestionCopying() {
-			
 			base.waitTime(2);
-	        getIngestionDetailPopup(1).waitAndClick(10);
-	        driver.scrollingToElementofAPage(getRunCopying());
-	    	base.waitForElement(getRunCopying());
-	        getRunCopying().waitAndClick(10);
-
-	        driver.waitForPageToBeReady();
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-	    	getCloseButton().waitAndClick(10);
-	    	
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-	    	getFilterByButton().waitAndClick(10);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-	    	getFilterByCOPIED().waitAndClick(10);
-	    	
-	    	//copying
-	    	for(int i=0;i<50;i++) {
-	    		getRefreshButton().Click();
-	    		base.waitTime(2);
-				String status = getStatus(1).getText().trim();
-				
-	    		if(status.contains("Copied")) {
-	    			base.passedStep("Copied completed");
-	    			break;
-	    		}
-	    		else if (status.contains("In Progress")) {
-	    			base.waitTime(10);
-	    			getRefreshButton().waitAndClick(5);
-	    		}
-	    		else if (status.contains("Failed")){
-	    			base.failedStep("Failed");
-	    		}
-	    	}
+			firstTileTitle().isElementAvailable(15);
+			createdIngestionName = firstTileTitle().GetAttribute("title").trim();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while getting name of ingestion created." + e.getLocalizedMessage());
 		}
-		
-		/**
-		 * @author: Arun Created Date: 06/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify ignore option and checkbox in ingestion error list
-		 */
-		public void verifyIgnoreOptionAndCheckbox() {
-			  getIngestionDetailPopup(1).waitAndClick(5);
-			  base.waitTime(1);
-			  driver.scrollingToElementofAPage(errorCountCatalogingStage());
-		      base.waitForElement(errorCountCatalogingStage());
-		      errorCountCatalogingStage().waitAndClick(10);
-		      base.waitForElement(ignoreOptionInErrorList());
-		      String type = getIgnoreOptionSelection().GetAttribute("type").trim();
-		      
-		      if(ignoreOptionInErrorList().isDisplayed() && type.equalsIgnoreCase("checkbox")) {
-		    	  base.passedStep("Ignore option displayed with checkbox in error list");
-		      }
-		      else {
-		    	  base.failedStep("Ignore option not displayed with check box in error list");
-		      }
-		      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-		    	getCloseButton().waitAndClick(10);
-		}
-		
-		/**
-		 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will verify perform the approval stage ingestion
-		 */
-		public void approveIngestion(int numberofingestion) {
-			
-			    driver.waitForPageToBeReady();
-			    int j= numberofingestion;
-		    	getIngestionDetailPopup(j).waitAndClick(Input.wait30);
-		    	base.waitTime(1);
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			ingestionDetailActionDropdown().Visible()  ;}}), Input.wait30); 
-		    	ingestionDetailActionDropdown().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getActionApprove().Visible()  ;}}), Input.wait30); 
-		    	getActionApprove().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getApproveMessageOKButton().Visible();
-					}
-				}), Input.wait30);
-				getApproveMessageOKButton().waitAndClick(10);
-		    		
-		    	base.VerifySuccessMessage("Approve started successfully");
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-		    	getCloseButton().waitAndClick(10);
-		    	 
-		    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-			    getFilterByButton().waitAndClick(10);
-			    	
-			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-			    getFilterByAPPROVED().waitAndClick(10);
-			    	
-			    getRefreshButton().waitAndClick(10);
-			    
-			    	for(int i=0;i<40;i++) {
-			    		base.waitTime(2);
-						String status = getStatus(j).getText().trim();
-					
-			    		if(status.contains("Approved")) {
-			    			base.passedStep("Approve completed for ingestion");
-			    			break;
-			    		}
-			    		else if (status.contains("In Progress")) {
-			    			base.waitTime(10);
-			    			getRefreshButton().waitAndClick(5);
-			    		}
-			    		else if (status.contains("Failed")){
-			    			base.failedStep("Approve Failed for ingestion");
-			    		}
-			    	}
-		}
+		return createdIngestionName;
+	}
 
-			/**
-			 * @author: Arun Created Date: 08/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify rollback status for approved ingestion
-			 */
-			public void verifyRollbackOptionForApprovedIngestion() {
-		    
-		    getRefreshButton().waitAndClick(10);
-		    getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return ingestionDetailActionDropdown().Visible();
-				}
-			}), Input.wait30);
-			ingestionDetailActionDropdown().waitAndClick(10);
-			
-			String status = rollbackButtonStatus().GetAttribute("class").trim();
-			if(status.contains("disable")) {
-				base.passedStep("Rollback option not available for approved ingestion");
-			}
-			else {
-				base.failedStep("Rollback option available for approved ingestion");
-			}		
-
-			}
-
-		
-	
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to get name of ingestion created.
-			 * @return createdIngestionName : createdIngestionName is String value that returns created ingestion name.
-			 */
-			public String getNameOfIngestionCreated() {
-				String createdIngestionName = null;
-				try {
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					firstTileTitle().isElementAvailable(15);
-					createdIngestionName = firstTileTitle().GetAttribute("title").trim();
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while getting name of ingestion created."+e.getLocalizedMessage());
-				}
-				return createdIngestionName;
-			}
-		
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to ignore erros in catalog stage and continue to copied state.
-			 * @param ingestionName : ingestionName is String value that name of ingestion created.
-			 */
-			public void ignoreErrorsInCatalogStageAndContinueToCopiedState(String ingestionName) {
-				try {
-					String status = null;
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					getIngestionLinkByName(ingestionName).isElementAvailable(15);
-					getIngestionLinkByName(ingestionName).Click();
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					errorsCount().ScrollTo();
-					errorsCount().isElementAvailable(15);
-					errorsCount().Click();
-					ignoreAllButon().isElementAvailable(15);
-					ignoreAllButon().Click();
-					base.waitTime(2);
-					getApproveMessageOKButton().isElementAvailable(10);
-					getApproveMessageOKButton().Click();
-					driver.waitForPageToBeReady();
-					catalogDone().isElementAvailable(15);
-					catalogDone().Click();
-					base.VerifySuccessMessage("Action done successfully");
-					base.waitTime(2);
-					driver.waitForPageToBeReady();
-					startCoping().ScrollTo();
-					startCoping().isElementAvailable(10);
-					startCoping().Click();
-					driver.scrollPageToTop();
-					getCloseButton().isElementAvailable(15);
-					getCloseButton().Click();
-					base.waitTime(2);
-					for(int i=0;i<8000;i++) {
-						driver.scrollPageToTop();
-						getRefreshButton().isElementAvailable(15);
-						getRefreshButton().Click();
-						driver.waitForPageToBeReady();
-						statusOfIngestion(ingestionName).isElementAvailable(15);
-						status = statusOfIngestion(ingestionName).getText();
-						if(status.contains("Copied")) {
-							base.passedStep("Errors are ignored and shifted to copied state successfully");
-							break;
-						}
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while ignoring erros in catalog stage and continue to copied state."+e.getLocalizedMessage());
-				}
-			}
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to shift copied stage to indexed stage by without marking audio optional
-			 * @param ingestionName : ingestionName is String value that name of ingestion created.
-			 */
-			public void copiedStageToIndexedStateByWithoutAudioOptional(String ingestionName) {
-				try {
-					String status = null;
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					getIngestionLinkByName(ingestionName).isElementAvailable(15);
-					getIngestionLinkByName(ingestionName).Click();
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					startIndexing().ScrollTo();
-					startIndexing().isElementAvailable(15);
-					startIndexing().Click();
-					driver.waitForPageToBeReady();
-					driver.scrollPageToTop();
-					getCloseButton().isElementAvailable(15);
-					getCloseButton().Click();
-					base.waitTime(2);
-					for(int i=0;i<8000;i++) {
-						driver.scrollPageToTop();
-						getRefreshButton().isElementAvailable(15);
-						getRefreshButton().Click();
-						driver.waitForPageToBeReady();
-						statusOfIngestion(ingestionName).isElementAvailable(15);
-						status = statusOfIngestion(ingestionName).getText();
-						if(status.contains("Indexed")) {
-							base.passedStep("Copied stage to indexed stage shifted successfully");
-							break;
-						}
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while shifting copied stage to indexed stage by without marking audio optional"+e.getLocalizedMessage());
-				}
-			}
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to approved indexed ingestion.
-			 * @param ingestionName : ingestionName is String value that name of ingestion created.
-			 */
-			public void approveIndexedIngestion(String ingestionName) {
-				try {
-					String status = null;
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					getIngestionLinkByName(ingestionName).isElementAvailable(15);
-					getIngestionLinkByName(ingestionName).Click();
-					driver.waitForPageToBeReady();
-					driver.scrollPageToTop();
-					base.waitTime(2);
-					actionDropDown().isElementAvailable(15);
-					actionDropDown().Click();
-					driver.waitForPageToBeReady();
-					driver.scrollPageToTop();
-					base.waitTime(2);
-					approveOption().isElementAvailable(15);
-					approveOption().Click();
-					getApproveMessageOKButton().isElementAvailable(10);
-					if(getApproveMessageOKButton().isDisplayed()) {
-						getApproveMessageOKButton().Click();
-					}
-					driver.waitForPageToBeReady();
-					driver.scrollPageToTop();
-					getCloseButton().isElementAvailable(15);
-					getCloseButton().Click();
-					base.waitTime(2);
-					for(int i=0;i<8000;i++) {
-						driver.scrollPageToTop();
-						getRefreshButton().isElementAvailable(15);
-						getRefreshButton().Click();
-						driver.waitForPageToBeReady();
-						statusOfIngestion(ingestionName).isElementAvailable(15);
-						status = statusOfIngestion(ingestionName).getText();
-						if(status.contains("Approved")) {
-							base.passedStep("Approved ingestion successfully");
-							break;
-						}
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while Approving ingestion"+e.getLocalizedMessage());
-				}
-			}
-			
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to navigate analytics page.
-			 */
-			public void navigateToAnalyticsPage() {
-				try {
-					driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while navigating analytics page."+e.getLocalizedMessage());
-				}
-			}
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to run full analysis and publish.
-			 */
-			public void runFullAnalysisAndPublish() {
-				try {
-					driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					fullAnalysisRadioButton().isElementAvailable(15);
-					fullAnalysisRadioButton().Click();
-					driver.waitForPageToBeReady();
-					runButton().isElementAvailable(10);
-					if(runButton().getWebElement().isEnabled()) {
-						runButton().Click();
-					}
-					for(int i=0;i<10000;i++) {
-						driver.Navigate().refresh();
-						endTime().ScrollTo();
-						String endTime = endTime().getText();
-						publishButton().isElementAvailable(15);
-						if((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
-							driver.waitForPageToBeReady();
-							publishButton().ScrollTo();
-							publishButton().Click();
-							break;
-						}
-					}
-					driver.Navigate().refresh();
-					publishButton().isElementAvailable(10);
-					if(publishButton().getWebElement().isEnabled()) {
-						driver.waitForPageToBeReady();
-						base.passedStep("Published ingested documents successfully");
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while running full analysis and publish."+e.getLocalizedMessage());
-				}
-			}
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to navigate unpublish.
-			 */
-			public void navigateToUnPublishPage() {
-				try {
-					driver.getWebDriver().get(Input.url + "Ingestion/UnPublish");
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while navigating unpublish page."+e.getLocalizedMessage());
-				}
-			}
-			
-			/**
-			 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method is used to unpublish saved search.
-			 */
-			public void unpublish(String savedSearch) {
-				try {
-					driver.waitForPageToBeReady();
-					base.waitTime(2);
-					savedSearch(savedSearch).isElementAvailable(15);
-					savedSearch(savedSearch).waitAndClick(10);
-					unPublishButton().isElementAvailable(15);
-					unPublishButton().waitAndClick(10);
-					driver.scrollingToBottomofAPage();
-					List<WebElement> totalPages = totalPages().FindWebElements();
-					int totalPagesCount = totalPages.size()-2;
-					for(int i=0;i<totalPagesCount+1;i++) {
-						driver.scrollingToBottomofAPage();
-						nextButton().isElementAvailable(10);
-						nextButton().waitAndClick(10);
-						if(disabledNextButton().isDisplayed())
-						{
-							base.waitTime(3);
-							unPunlishSearch(savedSearch).isElementAvailable(10);
-							if(unPunlishSearch(savedSearch).isDisplayed()){
-								base.passedStep("Unpublish of '"+savedSearch+"' is in progess");
-							}
-							break;
-						}
-						 
-					}
-					driver.Navigate().refresh();
-					for(int i=0;i<1000;i++) {
-						driver.scrollingToBottomofAPage();
-						nextButton().isElementAvailable(10);
-						nextButton().waitAndClick(10);
-						if(disabledNextButton().isDisplayed())
-						{
-							base.waitTime(3);
-							if(!unPunlishSearch(savedSearch).isDisplayed()){
-								base.passedStep("Unpublish of '"+savedSearch+"' is completed");
-								break;
-							}else {
-								driver.Navigate().refresh();
-							}
-							
-						}
-						
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while unpublish saved search."+e.getLocalizedMessage());
-				}
-			}
-
-			
-			/**
-			 * @author: Arun Created Date: 13/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify size of ingestion grid after resize browser
-			 */
-			
-			public void verifySizeOfIngestionGrid() {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByPUBLISHED().waitAndClick(10);
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
-		    	getFilterByDRAFT().waitAndClick(10);
-		    	getIngestion_GridView().Click();
-		    	driver.waitForPageToBeReady();
-		    	base.waitTime(2);
-		    	String gridsizeBefore =gridTable().GetAttribute("style");
-		    	System.out.println(gridsizeBefore);
-		    	
-		    	driver.Manage().window().maximize();
-		    	base.waitTime(2);
-		    	String gridsizeAfter=gridTable().GetAttribute("style");
-		    	System.out.println(gridsizeAfter);
-		    	if(gridsizeBefore.equalsIgnoreCase(gridsizeAfter)) {
-		    		base.passedStep("Size of the grid not resized");
-		    	}
-		    	else {
-		    		base.failedStep("Size of the grid resized");
-		    	}
-		    	
-		    	
-			}
-			/**
-			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform add only ingestion for TIFF images folder
-			 */
-			public void tiffImagesIngestion(String DATfile,String TIFFfile,String genSearchPDFCheckBox) {
-				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.TiffImagesFolder);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
-				selectDATSource(DATfile,"ProdBeg");
-				getTIFFLST().ScrollTo();
-				base.waitForElement(getTIFFLST());
-				getTIFFLST().isElementAvailable(15);
-				getTIFFLST().selectFromDropdown().selectByVisibleText(TIFFfile);
-				
-				if(genSearchPDFCheckBox.contains("true")) {
-					getTIFFSearchablePDFCheckBox().isElementAvailable(10);
-					getTIFFSearchablePDFCheckBox().Click();
-				}
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
-				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
-				clickOnPreviewAndRunButton();
-			}
-			
-			/**
-			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will ignore errors and perform catlogging
-			 */
-			
-			public void ignoreErrorsAndCatlogging() {
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByFAILED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByCATALOGED().waitAndClick(10);
-		    	
-		    	//catlogging
-		    	for(int i=0;i<70;i++) {
-		    		base.waitTime(2);
-					String status = getStatus(1).getText().trim();
-					
-		    		if(status.contains("Cataloged")) {
-		    			base.passedStep("Cataloged completed");
-		    			break;
-		    		}
-		    		else if (status.contains("In Progress")) {
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(10);
-		    		}
-		    		else if (status.contains("Failed")){
-		    			getIngestionDetailPopup(1).waitAndClick(10);
-		    			base.waitForElement(errorCountCatalogingStage());
-					    errorCountCatalogingStage().waitAndClick(10);
-					    base.waitForElement(ignoreAllButton());
-					    ignoreAllButton().waitAndClick(10);
-					    if (getApproveMessageOKButton().isElementAvailable(5)) {
-								getApproveMessageOKButton().waitAndClick(10);
-								base.passedStep("Clicked on OK button to ignore all errors");
-							}
-					      
-					    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					    		  doneButton().Enabled()  ;}}), Input.wait30); 
-					    doneButton().waitAndClick(10);
-					      
-					    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-					  	getCloseButton().waitAndClick(10);
-					  	base.VerifySuccessMessage("Action done successfully");
-					  	base.waitTime(2);
-					  	getRefreshButton().waitAndClick(10);
-		    		}
-		    	}
-			
-			}
-			/**
-			 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will ignore errors and perform copying
-			 */
-			public void ignoreErrorsAndCopying() {
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByCOPIED().waitAndClick(10);
-				 	getIngestionDetailPopup(1).waitAndClick(10);
-				 	base.waitTime(2);
-			    	driver.scrollingToElementofAPage(getRunCopying());
-			    	base.waitForElement(getRunCopying());
-			        getRunCopying().waitAndClick(10);
-			        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-			    	getCloseButton().waitAndClick(10);
-			    	base.waitTime(2);
-			        base.VerifySuccessMessage("Ingestion copy has Started.");
-
-			    	getRefreshButton().waitAndClick(10);
-			    	for(int i=0;i<40;i++) {
-			    		getRefreshButton().waitAndClick(15);
-			    		base.waitTime(2);
-						String status = getStatus(1).getText().trim();
-					
-			    		if(status.contains("Copied")) {
-			    			base.passedStep("Copied completed");
-			    			break;
-			    		}
-			    		else if (status.contains("In Progress")) {
-			    			base.waitTime(5);
-			    			getRefreshButton().waitAndClick(5);
-			    		}
-			    		else if (status.contains("Failed")){
-			    			getIngestionDetailPopup(1).waitAndClick(10);
-			    			driver.scrollingToElementofAPage(copyingErrorCount());
-			    			copyingErrorCount().waitAndClick(10);
-			    			base.waitTime(1);
-			    			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    					 ignoreAllButton().Enabled()  ;}}), Input.wait30); 
-			    			 ignoreAllButton().waitAndClick(10);
-						    if (getApproveMessageOKButton().isElementAvailable(5)) {
-									getApproveMessageOKButton().waitAndClick(10);
-									base.passedStep("Clicked on OK button to ignore all errors");
-								}
-						      
-						    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						    		  doneButton().Enabled()  ;}}), Input.wait30); 
-						    doneButton().waitAndClick(10);
-							base.waitTime(2);
-						  	base.VerifySuccessMessage("Action done successfully");
-						  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-						  	getCloseButton().waitAndClick(10);
-						  	getRefreshButton().waitAndClick(5);
-						  	base.waitTime(2);
-						  	getIngestionDetailPopup(1).waitAndClick(10);
-						 	base.waitTime(2);
-					    	driver.scrollingToElementofAPage(getRunCopying());
-					    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					    			 getRunCopying().Enabled()  ;}}), Input.wait30); 
-						    
-					        getRunCopying().waitAndClick(10);
-					        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-					    	getCloseButton().waitAndClick(10);
-					    	base.waitTime(10);
-					    	getRefreshButton().waitAndClick(10);
-						  
-			    		}
-			    	}
-			    	
-			}
-			
-			/**
-			 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will validate the value and term which present in the copying table column
-			 */
-			public void verifyDataPresentInCopyTableColumn(String term,String type) {
-				 getRefreshButton().waitAndClick(10);	
-			     getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-			    
-			 	driver.scrollingToElementofAPage(getRunIndexing());
-			 	base.waitForElement(getRunIndexing());
-			 	if(type.equalsIgnoreCase("source")) {
-			 		int sourceCount =Integer.parseInt(copyTableDataValue(term,1).getText());
-			 		if(sourceCount>0 && copyTableDataValue(term,1).isElementAvailable(5)) {
-				 		base.passedStep(term+ " source docs count is present in the copying table column");
-				 	}
-				 	else {
-				 		base.failedMessage(term+"source docs count in the copying table column is 0");
-				 	}
-			 	}
-			 	if(type.equalsIgnoreCase("copied")) {
-			 		int copiedCount =Integer.parseInt(copyTableDataValue(term,2).getText());
-			 		if(copiedCount>0 && copyTableDataValue(term,2).isElementAvailable(5)) {
-				 		base.passedStep(term+ "Copied docs count present in the copying table column");
-				 	}
-				 	else {
-				 		base.failedMessage(term+"Copied count in the copying table column is 0");
-				 	}
-			 	}
-			 	if(type.equalsIgnoreCase("error")) {
-			 		int errorCount =Integer.parseInt(copyTableDataValue(term,3).getText());
-			 		if(errorCount>0 && copyTableDataValue(term,3).isElementAvailable(5)) {
-				 		base.passedStep(term+ "Errors count present in the copying table column");
-				 	}
-				 	else {
-				 		base.failedMessage(term+"Errors count in the copying table column is 0");
-				 	}
-			 	}
-			 	if(type.equalsIgnoreCase("missed")) {
-			 		int missedCount =Integer.parseInt(copyTableDataValue(term,4).getText());
-			 		if(missedCount>0 && copyTableDataValue(term,4).isElementAvailable(5)) {
-				 		base.passedStep(term+ "Missed docs count present in the copying table column");
-				 	}
-				 	else {
-				 		base.failedMessage(term+"Missed docs count in the copying table column is 0");
-				 	}
-			 	}
-			 	getCloseButton().waitAndClick(10);	
-			}
-			/**
-			 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will check the value in copying section after performing rollback
-			 */
-			public void verifyValueInCopyingSectionAfterRollback(String term) {
-				 getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-				    
-				 	driver.scrollingToElementofAPage(getRunIndexing());
-				 	base.waitTime(1);
-				 	int count = Integer.parseInt(copyTableDataValue(term,1).getText());
-				 	
-				 	if(count>0) {
-				 		base.failedStep(term+ "count not set to 0 in the copying table column after rolling back Ingestion");
-				 	}
-				 	else {
-				 		base.passedStep(term+"count set to 0 in the copying table column after rolling back ingestion");
-				 	}
-				 	getCloseButton().waitAndClick(10); 
-			}
-			
-			/**
-			 * @author: Arun Created Date: 20/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform add only ingestion and select pdf in path file to save as draft
-			 */
-			public void selectPdfInPathFileAndSaveAsDraft(String ingestionName,String datFile,String datKey,String pdfKey) {
-				
-				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,ingestionName);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				base.stepInfo("Selecting DAT source");
-				selectDATSource(datFile,datKey);
-				
-				driver.scrollingToBottomofAPage();
-				base.stepInfo("Selecting PDF source");
-				String checkboxStatus = pdfCheckboxStatus().GetAttribute("style");
-				try {
-				if(checkboxStatus.contains("block")) {
-					getPDFPathInDATFileCheckBox().waitAndClick(5);
-					getPDFFilePathFieldinDAT().Click();
-					getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(pdfKey);
-				}
-				else {
-					getPDFCheckBoxButton().waitAndClick(5);
-					getPDFPathInDATFileCheckBox().waitAndClick(10);
-					getPDFFilePathFieldinDAT().waitAndClick(5);
-					getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(pdfKey);
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				base.failedStep("Exception occured while selecting PDF source."+e.getLocalizedMessage());
-			}
-			
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to ignore erros in catalog stage and
+	 *               continue to copied state.
+	 * @param ingestionName : ingestionName is String value that name of ingestion
+	 *                      created.
+	 */
+	public void ignoreErrorsInCatalogStageAndContinueToCopiedState(String ingestionName) {
+		try {
+			String status = null;
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			getIngestionLinkByName(ingestionName).isElementAvailable(15);
+			getIngestionLinkByName(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			errorsCount().ScrollTo();
+			errorsCount().isElementAvailable(15);
+			errorsCount().Click();
+			ignoreAllButon().isElementAvailable(15);
+			ignoreAllButon().Click();
+			base.waitTime(2);
+			getApproveMessageOKButton().isElementAvailable(10);
+			getApproveMessageOKButton().Click();
+			driver.waitForPageToBeReady();
+			catalogDone().isElementAvailable(15);
+			catalogDone().Click();
+			base.VerifySuccessMessage("Action done successfully");
+			base.waitTime(2);
+			driver.waitForPageToBeReady();
+			startCoping().ScrollTo();
+			startCoping().isElementAvailable(10);
+			startCoping().Click();
+			driver.scrollPageToTop();
+			getCloseButton().isElementAvailable(15);
+			getCloseButton().Click();
+			base.waitTime(2);
+			for (int i = 0; i < 8000; i++) {
 				driver.scrollPageToTop();
-
-				base.waitForElement(getIngestion_SaveAsDraft());
-				getIngestion_SaveAsDraft().waitAndClick(5);
-				base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
-				base.passedStep("Ingestion successfully saved as draft");
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 20/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify error message for duplicate ingestion
-			 */
-			public void verifyDuplicateIngestionErrorMessage() {
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
 				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByFAILED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByCATALOGED().waitAndClick(10);
-		    	
-		    	getRefreshButton().waitAndClick(5);
-		    	
-		    	for (int i = 0; i < 50; i++) {
-		    		base.waitTime(2);
-					String status = getStatus(1).getText().trim();
-					if (status.contains("Cataloged")) {
-						base.failedMessage("Ingestion is not present in published state");
-						break;
-					}else if (status.contains("Failed")) {
-						getIngestionDetailPopup(1).waitAndClick(5);
-						base.waitForElement(errorCountCatalogingStage());
-					    errorCountCatalogingStage().waitAndClick(10);
-					    base.waitTime(3);
-					    String errorMessage1 =ingestionErrorNote(1).getText();
-					    String errorMessage2 =ingestionErrorNote(2).getText();
-					    if(errorMessage1.contains(Input.duplicateIngestionError) || errorMessage2.contains(Input.duplicateIngestionError) ) {
-							base.passedStep("Cataloging Error displayed when ingesting duplicate files");
-						}
-						else {
-							System.out.println("Error not belonged to duplicate ingestion");
-						}
-						break;
-					}else{
-						base.waitTime(5);
-						getRefreshButton().waitAndClick(10);
-					}	
-			}
-		    getCloseButton().waitAndClick(10);
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the options available for ingestion in draft state
-			 */
-			public void verifyOptionsAvailableForDraftStageIngestion() {
-				try {
-				getIngestionSettingGearIcon().waitAndClick(10);
-				if(getIngestionOpenWizardbutton().isElementAvailable(5) && getIngestionCopyButton().isElementAvailable(5) && getIngestionDeleteButton().isElementAvailable(5) ) {
-					base.passedStep("Ingestion in draft state have Edit,Copy and Delete option available");
+				statusOfIngestion(ingestionName).isElementAvailable(15);
+				status = statusOfIngestion(ingestionName).getText();
+				if (status.contains("Copied")) {
+					base.passedStep("Errors are ignored and shifted to copied state successfully");
+					break;
 				}
-				else {
-					base.failedStep("Ingestion in draft state have no option available");
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				base.failedStep("Exception occured while checking available option in draft state."+e.getLocalizedMessage());
 			}
-				
-			}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while ignoring erros in catalog stage and continue to copied state."
+					+ e.getLocalizedMessage());
+		}
+	}
 
-			/**
-			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the ingestion details after started ingestion
-			 */
-			public void verifyDetailsAfterStartedIngestion() {
-				base.waitTime(5);
-				driver.waitForPageToBeReady();
-				String currentPageUrl =driver.getUrl();
-				if(currentPageUrl.contains("Ingestion/Home")) {
-					base.passedStep("User directed to home page after ingestion started");
-				}
-				else {
-					base.failedStep("User not directed to home page after ingestion started");
-				}
-				
-				if(getIngestionDetailPopup(1).isElementAvailable(5) && getIngestionWizardDateFormat().isElementAvailable(5)) {
-					base.passedStep("ingestion tile and time stamp present in homepage after started ingestion");
-				}
-				else {
-					base.failedStep("ingestion tile and time stamp not present in homepage after started ingestion");
-				}
-				getIngestionDetailPopup(1).waitAndClick(5);
-				
-				if(catalogSectionDetails().isDisplayed() && getCloseButton().isElementAvailable(5)) {
-					base.passedStep("Ingestion details and popup displayed");
-				}
-				else {
-					base.failedStep("Ingestion details popup not displayed");
-				}
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform add only ingestion for unicodefiles folder
-			 */
-			public void unicodeFilesIngestion(String datFile,String textFile,String datKey) {
-				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.UniCodeFilesFolder);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
-				selectDATSource(datFile,datKey);
-				base.stepInfo("*******Selecing text files***************");
-				base.waitForElement(getSourceSelectionText());
-				getSourceSelectionText().waitAndClick(20);
-				base.waitForElement(getSourceSelectionTextLoadFile());
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
-				base.waitTime(2);
-				selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
-				clickOnPreviewAndRunButton();
-				base.stepInfo("Ingestion started");
-			}
-			/**
-			 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the copy,index and approve option status during the ingestion inprogress
-			 */
-			
-			public void verifyStatusDuringInProgress() {
-				base.waitTime(3);
-				driver.waitForPageToBeReady();
-				getIngestionDetailPopup(1).waitAndClick(5);
-				
-				String copyingStatus =  getRunCopying().GetAttribute("class");
-				String indexingStatus = getRunIndexing().GetAttribute("class");
-				
-				base.waitForElement(getActionDropdownArrow());
-				getActionDropdownArrow().waitAndClick(5);
-				String approveStatus = getActionApprove().GetAttribute("class");
-				
-				if(copyingStatus.contains("disable") && indexingStatus.contains("disable") && approveStatus.contains("disable")) {
-					base.passedStep("Copying and Indexing option not enabled and approve option disabled during inprogress ingestion");
-				}
-				else {
-					base.failedStep("copying,indexing and approve option enabled during inprogress ingestion");
-				}
-				getCloseButton().waitAndClick(5);
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will enter overlay ingestion data without enabling mapping field
-			 */
-			
-			public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName,String datFile, String datKey) {
-				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
-				selectDATSource(datFile,datKey);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-			}
-			/**
-			 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will enter overlay ingestion data with enabling mapping field
-			 */
-			
-			public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName,String datFile, String datKey) {
-				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
-				selectDATSource(datFile,datKey);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				clickOnNextButton();
-				base.waitTime(2);
-				base.stepInfo("mapping field section enabled");
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 26/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will enter overlay ingestion data without enabling mapping field and DAT field
-			 */
-			
-			public void OverlayForNativeWithoutIngestion(String ingestionName,String nativeFile) {
-				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				datCheckboxStatus().waitAndClick(5);
-				selectNativeSource(nativeFile,false);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform ingestion using copy action for Native from draft mode
-			 */
-			
-			public void IngestionOverlayUsingCopyFromDraftMode(String fileType,String sourceFolder,String nativeFile,String datFile,String docKey) {
-				
-				driver.waitForPageToBeReady();
-				getIngestionDetailPopup(1).waitAndClick(5);
-				base.waitForElement(getActionDropdownArrow());
-				getActionDropdownArrow().waitAndClick(5);
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getActionCopy().Visible();
-					}
-				}), Input.wait30);
-				
-				getActionCopy().waitAndClick(5);
-				base.waitTime(3);
-				base.stepInfo("Starting ingestion again from draft mode using copy option");
-				
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
-				base.waitTime(2);
-				
-				try {
-					
-				if(fileType.equalsIgnoreCase("native")) {
-				base.waitForElement(datCheckboxStatus());
-				datCheckboxStatus().waitAndClick(5);
-				
-				selectNativeSource(nativeFile,false);
-				}
-				else if(fileType.equalsIgnoreCase("dat")) {
-					selectDATSource(datFile,docKey);
-				}
-				}
-				catch(Exception e) {
-					e.printStackTrace();	
-				}
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to shift copied stage to indexed stage by
+	 *               without marking audio optional
+	 * @param ingestionName : ingestionName is String value that name of ingestion
+	 *                      created.
+	 */
+	public void copiedStageToIndexedStateByWithoutAudioOptional(String ingestionName) {
+		try {
+			String status = null;
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			getIngestionLinkByName(ingestionName).isElementAvailable(15);
+			getIngestionLinkByName(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			startIndexing().ScrollTo();
+			startIndexing().isElementAvailable(15);
+			startIndexing().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getCloseButton().isElementAvailable(15);
+			getCloseButton().Click();
+			base.waitTime(2);
+			for (int i = 0; i < 8000; i++) {
 				driver.scrollPageToTop();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getNextButton().Visible()  ;}}), Input.wait30); 
-				getNextButton().waitAndClick(10);
-				base.passedStep("Clicked on Next button");
-
-				base.stepInfo("Pop up messgae for Ingestion without text file");
-				if (getApproveMessageOKButton().isElementAvailable(10)) {
-					getApproveMessageOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to continue without text files");
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
+				driver.waitForPageToBeReady();
+				statusOfIngestion(ingestionName).isElementAvailable(15);
+				status = statusOfIngestion(ingestionName).getText();
+				if (status.contains("Indexed")) {
+					base.passedStep("Copied stage to indexed stage shifted successfully");
+					break;
 				}
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getPreviewRun().Visible()  ;}}), Input.wait30); 
-		    	getPreviewRun().waitAndClick(10);
-		    	
-		    	if(getApproveMessageOKButton().isElementAvailable(10)) {
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-		    	getApproveMessageOKButton().waitAndClick(10);
-		    	}
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-		    	getbtnRunIngestion().waitAndClick(10);
-				
 			}
-			
-			/**
-			 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify back,ignore and done option in error detail popup
-			 */
-			public void verifyOptionsInErrorDetailsPopup() {
-				
-				getIngestionDetailPopup(1).waitAndClick(10);
-    			base.waitForElement(errorCountCatalogingStage());
-			    errorCountCatalogingStage().waitAndClick(10);
-			    if(backButton().isElementAvailable(10)) {
-			    	backButton().waitAndClick(5);
-			    	if(!backButton().isElementAvailable(10)) {
-			    		base.passedStep("Back button displayed and working properly");
-			    	}
-			    }
-			    else {
-			    	base.failedStep("back button not displayed in error details popup");
-			    }
-			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    		errorCountCatalogingStage().Enabled()  ;}}), Input.wait30); 
-			    errorCountCatalogingStage().waitAndClick(10);
-			    base.waitTime(3);
-			    base.waitForElement(getIgnoreOptionSelection());
-			    getIgnoreOptionSelection().waitAndClick(5);
-			    
-			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    		  doneButton().Enabled()  ;}}), Input.wait30); 
-			    doneButton().waitAndClick(10);
-			     
-			  	base.VerifySuccessMessage("Action done successfully");
-			  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    		errorCountCatalogingStage().Enabled()  ;}}), Input.wait30); 
-			    errorCountCatalogingStage().waitAndClick(10);
-			  	
-			  	base.waitTime(5);
-			  	String status = getIgnoreOptionSelection().GetAttribute("checked");
-			  	System.out.println(status);
-			  	if(status.equalsIgnoreCase("true")) {
-			  		base.passedStep("Error ignore checkbox, done button working properly and changes made in error list saved");
-			  	}
-			  	else {
-			  		base.failedStep("Error ignore checkbox, done button working properly and changes made in error list not saved");
-			  	}
-			  		
-			  	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-				  	getCloseButton().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while shifting copied stage to indexed stage by without marking audio optional"
+							+ e.getLocalizedMessage());
+		}
+	}
 
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to approved indexed ingestion.
+	 * @param ingestionName : ingestionName is String value that name of ingestion
+	 *                      created.
+	 */
+	public void approveIndexedIngestion(String ingestionName) {
+		try {
+			String status = null;
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			getIngestionLinkByName(ingestionName).isElementAvailable(15);
+			getIngestionLinkByName(ingestionName).Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitTime(2);
+			actionDropDown().isElementAvailable(15);
+			actionDropDown().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitTime(2);
+			approveOption().isElementAvailable(15);
+			approveOption().Click();
+			getApproveMessageOKButton().isElementAvailable(10);
+			if (getApproveMessageOKButton().isDisplayed()) {
+				getApproveMessageOKButton().Click();
 			}
-			 /**
-			 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: NA Modified Date: NA
-			 * @description: verify Ingestion publish
-			 */
-			public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
-				
-			
-				base.stepInfo("Validating whether the ingestion is done for particular project");
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getCloseButton().isElementAvailable(15);
+			getCloseButton().Click();
+			base.waitTime(2);
+			for (int i = 0; i < 8000; i++) {
+				driver.scrollPageToTop();
+				getRefreshButton().isElementAvailable(15);
+				getRefreshButton().Click();
 				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getFilterByButton().Visible();
-					}
-				}), Input.wait30);
-				getFilterByButton().waitAndClick(10);
+				statusOfIngestion(ingestionName).isElementAvailable(15);
+				status = statusOfIngestion(ingestionName).getText();
+				if (status.contains("Approved")) {
+					base.passedStep("Approved ingestion successfully");
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Approving ingestion" + e.getLocalizedMessage());
+		}
+	}
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getFilterByPUBLISHED().Visible();
-					}
-				}), Input.wait30);
-				getFilterByPUBLISHED().waitAndClick(10);
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to navigate analytics page.
+	 */
+	public void navigateToAnalyticsPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating analytics page." + e.getLocalizedMessage());
+		}
+	}
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIngestion_GridView().Visible();
-					}
-				}), Input.wait30);
-				getIngestion_GridView().waitAndClick(10);
-
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to run full analysis and publish.
+	 */
+	public void runFullAnalysisAndPublish() {
+		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			fullAnalysisRadioButton().isElementAvailable(15);
+			fullAnalysisRadioButton().Click();
+			driver.waitForPageToBeReady();
+			runButton().isElementAvailable(10);
+			if (runButton().getWebElement().isEnabled()) {
+				runButton().Click();
+			}
+			for (int i = 0; i < 10000; i++) {
+				driver.Navigate().refresh();
+				endTime().ScrollTo();
+				String endTime = endTime().getText();
+				publishButton().isElementAvailable(15);
+				if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
+					driver.waitForPageToBeReady();
+					publishButton().ScrollTo();
+					publishButton().Click();
+					break;
+				}
+			}
+			driver.Navigate().refresh();
+			publishButton().isElementAvailable(10);
+			if (publishButton().getWebElement().isEnabled()) {
 				driver.waitForPageToBeReady();
-				base.stepInfo("Searching for Datasets");
+				base.passedStep("Published ingested documents successfully");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while running full analysis and publish." + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to navigate unpublish.
+	 */
+	public void navigateToUnPublishPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/UnPublish");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating unpublish page." + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author: Gopinath Created Date: 12/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method is used to unpublish saved search.
+	 */
+	public void unpublish(String savedSearch) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			savedSearch(savedSearch).isElementAvailable(15);
+			savedSearch(savedSearch).waitAndClick(10);
+			unPublishButton().isElementAvailable(15);
+			unPublishButton().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			List<WebElement> totalPages = totalPages().FindWebElements();
+			int totalPagesCount = totalPages.size() - 2;
+			for (int i = 0; i < totalPagesCount + 1; i++) {
 				driver.scrollingToBottomofAPage();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIngestionPaginationCount().Visible();
+				nextButton().isElementAvailable(10);
+				nextButton().waitAndClick(10);
+				if (disabledNextButton().isDisplayed()) {
+					base.waitTime(3);
+					unPunlishSearch(savedSearch).isElementAvailable(10);
+					if (unPunlishSearch(savedSearch).isDisplayed()) {
+						base.passedStep("Unpublish of '" + savedSearch + "' is in progess");
 					}
-				}), Input.wait30);
-				int count = ((getIngestionPaginationCount().size()) - 2);
-				Boolean status = false;
-				for (int i = 0; i < count; i++) {
-					// driver.waitForPageToBeReady();
-					if (getAllIngestionName(dataset).isElementAvailable(5)) {
-						String publishedDataSet = getAllIngestionName(dataset).getText();
-						if (publishedDataSet.contains(dataset)) {
-							status = true;
-							base.passedStep("The Ingestion " + dataset + " is already done for this project");
-						}
+					break;
+				}
+
+			}
+			driver.Navigate().refresh();
+			for (int i = 0; i < 1000; i++) {
+				driver.scrollingToBottomofAPage();
+				nextButton().isElementAvailable(10);
+				nextButton().waitAndClick(10);
+				if (disabledNextButton().isDisplayed()) {
+					base.waitTime(3);
+					if (!unPunlishSearch(savedSearch).isDisplayed()) {
+						base.passedStep("Unpublish of '" + savedSearch + "' is completed");
 						break;
 					} else {
-						status = false;
-						driver.scrollingToBottomofAPage();
-						getIngestionPaginationNextButton().waitAndClick(3);
-						base.stepInfo("Expected Ingestion not found in the page " + i);
-
+						driver.Navigate().refresh();
 					}
 
-				}	
-				return status;
+				}
 
-
-
-			}	
-			
-			/**
-			 * @author: Arun Created Date: 28/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify back,ignore and done option in error detail popup
-			 */
-			public void performAKNativeFolderIngestion(String datFile) {
-				
-				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,Input.AK_NativeFolder);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				base.stepInfo("Selecting Dat file");
-				selectDATSource(datFile,Input.prodBeg);
-				base.stepInfo("Selecting Native file");
-				selectNativeSource(Input.NativeFile,false);
-				base.stepInfo("Selecting Text file");
-				selectTextSource(Input.TextFile,false);
-				base.stepInfo("Selecting Pdf file");
-				selectPDFSource(Input.PDFFile,false);
-				base.stepInfo("Selecting Mp3 file");
-				selectMP3VarientSource(Input.MP3File,false);
-				base.stepInfo("Selecting Transcript file");
-				selectAudioTranscriptSource(Input.TranscriptFile,false);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
-				base.waitTime(2);
-				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
-				clickOnPreviewAndRunButton();
-				base.stepInfo("Ingestion started");
-				
 			}
-			
-			
-			/**
-			 * @author: Arun Created Date: 29/04/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify back,ignore and done option in error detail popup
-			 */
-			public void verifyStatusUpdatenInIngestionDetailPopup(String ingestionStage) {
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while unpublish saved search." + e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 13/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify size of ingestion grid after resize
+	 *               browser
+	 */
+
+	public void verifySizeOfIngestionGrid() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+		getIngestion_GridView().Click();
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		String gridsizeBefore = gridTable().GetAttribute("style");
+		System.out.println(gridsizeBefore);
+
+		driver.Manage().window().maximize();
+		base.waitTime(2);
+		String gridsizeAfter = gridTable().GetAttribute("style");
+		System.out.println(gridsizeAfter);
+		if (gridsizeBefore.equalsIgnoreCase(gridsizeAfter)) {
+			base.passedStep("Size of the grid not resized");
+		} else {
+			base.failedStep("Size of the grid resized");
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform add only ingestion for TIFF images
+	 *               folder
+	 */
+	public void tiffImagesIngestion(String DATfile, String TIFFfile, String genSearchPDFCheckBox) {
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.TiffImagesFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		selectDATSource(DATfile, "ProdBeg");
+		getTIFFLST().ScrollTo();
+		base.waitForElement(getTIFFLST());
+		getTIFFLST().isElementAvailable(15);
+		getTIFFLST().selectFromDropdown().selectByVisibleText(TIFFfile);
+
+		if (genSearchPDFCheckBox.contains("true")) {
+			getTIFFSearchablePDFCheckBox().isElementAvailable(10);
+			getTIFFSearchablePDFCheckBox().Click();
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+		clickOnPreviewAndRunButton();
+	}
+
+	/**
+	 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will ignore errors and perform catlogging
+	 */
+
+	public void ignoreErrorsAndCatlogging() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		// catlogging
+		for (int i = 0; i < 70; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			} else if (status.contains("Failed")) {
 				
-				driver.waitForPageToBeReady();
+				driver.Manage().window().fullscreen();
 				getIngestionDetailPopup(1).waitAndClick(10);
-				
-				base.waitTime(2);
-				
-				if(ingestionStage.equalsIgnoreCase("Catalogingblock")) {
-					String catalogData = catalogSectionDetails().getText();
-					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-					if(status.contains("Cataloged") && !catalogData.isBlank()) {
-						base.passedStep("Cataloging section details are present in ingestion details popup");
-					}
-					else {
-						base.failedStep("details not present in cataloging section");
-					}
-				}
-				else if (ingestionStage.equalsIgnoreCase("Copyingblock")) {
-					driver.scrollingToElementofAPage(getRunCopying());
-					String copyData = copyingSectionDetails().getText();
-					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-					if(status.contains("Copied") && !copyData.isBlank()) {
-						base.passedStep("Copying section details are present in ingestion details popup");
-					}
-					else {
-						base.failedStep("details not present in copying section");
-					}
-				}
-				else if(ingestionStage.equalsIgnoreCase("Indexingblock")) {
-					driver.scrollingToElementofAPage(getRunIndexing());
-					String indexData = indexingSectionDetails().getText();
-					String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-					if(status.contains("Indexed") && !indexData.isBlank()) {
-						base.passedStep("Indexing section details are present in ingestion details popup");
-					}
-					else {
-						base.failedStep("details not present in indexing section");
-					}
-				}
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			  			getCloseButton().Enabled()  ;}}), Input.wait30); 
-			  	getCloseButton().waitAndClick(10);
-		
-			}
-			
-			/**
-			 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will check whether stitched Tiff displayed before generate searchable pdf in copying table
-			 */
-			public void verifyTermPositionInCopyColumn(String term) {
-				 getIngestionDetailPopup(1).waitAndClick(10);
-				 driver.scrollingToElementofAPage(getRunIndexing());
-				 base.waitTime(1);
-				String afterTerm =getNextColumnTerm(term).getText();
-				if(afterTerm.equalsIgnoreCase(Input.generateSearchablePDF)) {
-					base.passedStep("Stitching TIFFs details displayed before the Generate Searchable PDFs row on Ingestion details pop up");
-				}
-				else {
-					base.failedStep("Stitching TIFFs details not displayed before the Generate Searchable PDFs row on Ingestion details pop up");
-				}
-				getCloseButton().waitAndClick(10); 
-			}
-	
-			
-			
-			/**
-			 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform ingestion with media and transcript selection
-			 */
-			public void mediaAndTranscriptIngestion(String sourceFolder,String datFile) {
-				
-				selectIngestionTypeAndSpecifySourceLocation("Add Only","TRUE",Input.sourceLocation,sourceFolder);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				base.stepInfo("Selecting Dat file");
-				selectDATSource(datFile,Input.prodBeg);
-				base.stepInfo("Selecting Native file");
-				selectNativeSource(Input.NativeFile,false);
-				base.stepInfo("Selecting Text file");
-				selectTextSource(Input.TextFile,false);
-				base.stepInfo("Selecting Mp3 file");
-				selectMP3VarientSource(Input.MP3File,false);
-				base.stepInfo("Selecting Transcript file");
-				selectAudioTranscriptSource(Input.TranscriptFile,false);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
-				base.waitTime(2);
-				selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
-				clickOnPreviewAndRunButton();
-				base.stepInfo("Ingestion started");
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify warning message for different document key selection
-			 */
-			
-			public void verifyWarningMessageForConfigureMappingSection(String sourceFolder,String datFile,String textFile,String docKey1,String docKey2) {
-				driver.waitForPageToBeReady();
-				
-				getIngestionDetailPopup(1).waitAndClick(5);
-				base.waitForElement(getActionDropdownArrow());
-				getActionDropdownArrow().waitAndClick(5);
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getActionCopy().Visible();
-					}
-				}), Input.wait30);
-				
-				getActionCopy().waitAndClick(5);
-				driver.waitForPageToBeReady();
-				
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
-				base.waitTime(2);
-				
-				selectDATSource(datFile,docKey1);
-				
-				base.waitForElement(getSourceSelectionText());
-				getSourceSelectionText().waitAndClick(20);
-				base.waitForElement(getSourceSelectionTextLoadFile());
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
-				
-				driver.scrollPageToTop();
-
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getNextButton().Visible()  ;}}), Input.wait30); 
-				getNextButton().waitAndClick(10);
-				base.passedStep("Clicked on Next button");
-
-				String warningMessage = mappingWarningMessage().getText();
-				if(warningMessage.contains(Input.mappingWarningMessage)) {
-					base.passedStep("warning message displayed if configure mapping is not matched");
-				}
-				else {
-					base.failedStep("warning message not displayed if configure mapping is not matched");
-				}
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						warningMessageCancelButton().Enabled()  ;}}), Input.wait30);
-				warningMessageCancelButton().waitAndClick(10);
-				
-				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(docKey2);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getNextButton().Visible()  ;}}), Input.wait30); 
-				getNextButton().waitAndClick(10);
-				base.passedStep("Clicked on Next button");
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getPreviewRun().Visible();
-					}
-				}), Input.wait30);
-				getPreviewRun().waitAndClick(10);
-				if (getApproveMessageOKButton().isElementAvailable(10)) {
+				base.waitForElement(errorCountCatalogingStage());
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitForElement(ignoreAllButton());
+				ignoreAllButton().waitAndClick(10);
+				if (getApproveMessageOKButton().isElementAvailable(5)) {
 					getApproveMessageOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to preview and run ingestion");
+					base.passedStep("Clicked on OK button to ignore all errors");
 				}
-				
-				if(getbtnRunIngestion().isElementAvailable(15)) {
-					base.passedStep("As per selection , admin can proceed and start the ingestion");
-				}
-				else {
-					base.passedStep("As per selection , admin can't proceed and start the ingestion");
-				}
-				
-			}
-			
-			/**
-			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify warning message for different document key selection
-			 */
-			
-			public void verifyUnselectedSourceCountInCopySection(String term) {
-				getRefreshButton().waitAndClick(10);	
-			     getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-			    
-			 	driver.scrollingToElementofAPage(getRunIndexing());
-			 	base.waitForElement(getRunIndexing());
-			 	
-			 	int sourceCount =Integer.parseInt(copyTableDataValue(term,1).getText());
-		 		if(sourceCount==0 && copyTableDataValue(term,1).isElementAvailable(5)) {
-			 		base.passedStep(term+ " unselected source docs count is not present in the copying table column");
-			 	}
-			 	else {
-			 		base.failedMessage(term+" unselected source docs count is present in the copying table column");
-			 	}
-			 	
-		 		getCloseButton().waitAndClick(10);	
-			 		
-      }
-  
-     /**
-			 * @author: Mohan Created Date: 29/04/2022
-			 * @param dataset
-			 * @param sourceSystem
-			 * @param Dat
-			 * @param text
-			 * @param nativeFile
-			 * @param PDF
-			 * @param tiffImage
-			 * @param mp3Variant
-			 * @param audioTranscript
-			 * @param other
-			 * @throws InterruptedException
-			 */
-			public void IngestionRegressionForDifferentDAT(String dataset,String sourceSystem ,String Dat,String nativeFile ,String text,String PDF,String tiffImage,String mp3Variant,String audioTranscript,String other) throws InterruptedException {
-				
-					driver.waitForPageToBeReady();
-					base.stepInfo("Click on add new ingestion button");
-					base.waitForElement(getAddanewIngestionButton());
-					getAddanewIngestionButton().waitAndClick(10);
 
-					base.stepInfo("Select Source system");
-					base.waitForElement(getSpecifySourceSystem());
-					getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
-
-					base.stepInfo("Select Location");
-					base.waitForElement(getSpecifyLocation());
-					base.waitTime(2);
-					getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
-
-					base.waitForElement(getSpecifySourceFolder());
-					base.waitTime(2);
-					base.stepInfo("Select Folder");
-					base.waitForElement(getSpecifySourceFolder());			
-					getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(dataset);
-					base.waitTime(2);
-					base.waitForElement(getDATDelimitersFieldSeparator());
-					getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-					base.waitForElement(getDATDelimitersTextQualifier());
-					getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-					base.waitForElement(getDATDelimitersNewLine());
-					getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
-					driver.scrollingToBottomofAPage();
-
-					base.stepInfo("*******Selecing DAT files***************");
-					base.waitForElement(getSourceSelectionDATLoadFile());
-					getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Dat);
-					
-					base.waitForElement(getSourceSelectionDATKey());
-					base.waitTime(2);
-
-					if (dataset.contains("Collection1K_Tally")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					} else if (dataset.contains("20Family_20Threaded")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					} else if (dataset.contains("AllSources")||dataset.contains("PP_PDFGen_10Docs")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
-					} else if (dataset.contains("0002_H13696_1_Latest")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
-					} else if (dataset.contains("16JanMultiPTIFF")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-					} else if (dataset.contains("27MarSinglePageTIFF")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
-					} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
-					} else if (dataset.contains("SSAudioSpeech_Transcript")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-					} else if (dataset.contains("HiddenProperties_IngestionData")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
-					} else if (dataset.contains("UniCodeFiles")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					} else if (dataset.contains("IngestionEmailData")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
-					} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
-						getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-					}
-
-					
-						
-						base.stepInfo("*******Selecing Native files***************");
-						if (nativeFile==null) {
-							System.out.println("This Dataset doesn't requries Native files");
-							base.stepInfo("This Dataset doesn't requries Native files");
-						}else {
-							base.waitForElement(getNativeCheckBox());
-							getNativeCheckBox().waitAndClick(10);
-							base.waitForElement(getNativeLST());
-							getNativeLST().selectFromDropdown().selectByVisibleText(nativeFile);
-						}
-						base.stepInfo("*******Selecing Text files***************");
-						if (text==null) {
-							System.out.println("This Dataset doesn't requries Text files");
-							base.stepInfo("This Dataset doesn't requries Text files");
-						}else {
-							base.waitForElement(getSourceSelectionText());
-							getSourceSelectionText().waitAndClick(20);
-							base.waitForElement(getSourceSelectionTextLoadFile());
-							getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(text);
-						}
-						
-						base.stepInfo("*******Selecing PDF files***************");
-						if (PDF==null) {
-							System.out.println("This Dataset doesn't requries PDF files");
-							base.stepInfo("This Dataset doesn't requries PDF files");
-						}else {
-							base.waitForElement(getPDFCheckBoxButton());
-							getPDFCheckBoxButton().waitAndClick(20);
-							base.waitForElement(getPDFLST());
-							getPDFLST().selectFromDropdown().selectByVisibleText(PDF);
-						}
-
-					driver.scrollingToBottomofAPage();
-					base.stepInfo("*******Selecing TIFF files***************");
-					if (tiffImage==null) {
-						System.out.println("This Dataset doesn't requries Tiff files");
-						base.stepInfo("This Dataset doesn't requries Tiff files");
-					}else {
-						base.waitForElement(getTIFFCheckBox());
-						getTIFFCheckBox().waitAndClick(20);
-						base.waitForElement(getSourceSelectionTextLoadFile());
-						getTIFFLST().selectFromDropdown().selectByVisibleText(tiffImage);
-					}
-					
-					
-					driver.scrollingToBottomofAPage();
-					base.stepInfo("*******Selecing MP3 files***************");
-					if (mp3Variant==null) {
-						System.out.println("This Dataset doesn't requries MP3 files");
-						base.stepInfo("This Dataset doesn't requries MP3 files");
-					}else {
-						
-						base.waitForElement(getMP3CheckBoxButton());
-						getMP3CheckBoxButton().waitAndClick(15);
-						base.waitForElement(getMP3LST());
-						getMP3LST().selectFromDropdown().selectByVisibleText(mp3Variant);
-					}
-
-					
-
-					base.stepInfo("*******Selecing Audio Transcript files***************");
-					if (audioTranscript==null) {
-						System.out.println("This Dataset doesn't requries Audio Transcript files");
-						base.stepInfo("This Dataset doesn't requries Audio Transcript files");
-					}else {
-						
-						
-						base.waitForElement(getAudioTranscriptCheckBoxstionButton());
-						getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
-						base.waitForElement(getAudioTranscriptLST());
-						getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(audioTranscript);
-					}
-
-					
-					driver.scrollingToBottomofAPage();
-					base.stepInfo("*******Selecing Other files***************");
-					if (audioTranscript==null) {
-						System.out.println("This Dataset doesn't requries Other files");
-						base.stepInfo("This Dataset doesn't requries Other files");
-					}else {
-						
-						base.waitForElement(getOtherCheckBox());
-						getOtherCheckBox().waitAndClick(15);
-						base.waitForElement(getOtherLoadFile());
-						getOtherLoadFile().selectFromDropdown().selectByVisibleText(other);
-					}
-
-					base.stepInfo("Select Date Format");
-					driver.WaitUntil((new Callable<Boolean>() {
-						public Boolean call() {
-							return getDateFormat().Visible();
-						}
-					}), Input.wait30);
-					getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-
-					driver.scrollPageToTop();
-
-					base.waitForElement(getNextButton());
-					getNextButton().waitAndClick(20);
-					base.passedStep("Clicked on Next button");
-
-					base.stepInfo("Pop up messgae for Ingestion without text file");
-					if (getApproveMessageOKButton().isElementAvailable(5)) {
-						getApproveMessageOKButton().waitAndClick(10);
-						base.passedStep("Clicked on OK button to continue without text files");
-					}
-
-					base.waitForElement(getMappingSOURCEFIELD2());
-					if (dataset.contains("Collection1K_Tally")) {
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-					}
-
-					else if (dataset.contains("20Family_20Threaded")) {
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT9());
-						getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-						base.waitForElement(getMappingFIELDCAT10());
-						getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-
-						base.waitForElement(getMappingFIELDCAT13());
-						getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT29());
-						getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
-
-						base.waitForElement(getMappingFIELDCAT31());
-						getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-						getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
-
-						base.waitForElement(getMappingFIELDCAT49());
-						getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
-
-						base.waitForElement(getMappingFIELDCAT51());
-						getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-					}
-
-					else if (dataset.contains("AllSources")) {
-
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-					}
-					else if(dataset.contains("PP_PDFGen_10Docs")){
-						
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-						
-					}
-
-					else if (dataset.contains("0002_H13696_1_Latest")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
-					} else if (dataset.contains("16JanMultiPTIFF")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-					}
-
-					else if (dataset.contains("27MarSinglePageTIFF")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-						getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-						getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-					}
-
-					else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
-
-					}
-
-					else if (dataset.contains("SSAudioSpeech_Transcript")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-
-					}
-
-					else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
-
-						base.waitForElement(getMappingFIELDCAT5());
-						getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-						getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-						getAddButton().waitAndClick(15);
-						base.waitTime(2);
-
-						base.waitForElement(getMappingFIELDCAT6());
-						getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-						getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-
-						getAddButton().waitAndClick(15);
-						base.waitTime(2);
-
-						base.waitForElement(getMappingFIELDCAT7());
-						getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-						getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-
-						getAddButton().waitAndClick(15);
-						base.waitTime(2);
-
-						base.waitForElement(getMappingFIELDCAT8());
-						getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-						getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-						getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-					}
-
-					else if (dataset.contains("GNon searchable PDF Load file")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
-					}
-
-					else if (dataset.contains("HiddenProperties_IngestionData")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
-					}
-
-					else if (dataset.contains("UniCodeFiles")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-					}
-
-					else if (dataset.contains("IngestionEmailData")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
-
-						base.waitForElement(getMappingFIELDCAT76());
-						getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT73());
-						getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT75());
-						getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
-					} else if (dataset.contains("CJK_GermanAudioTestData")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-
-					} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
-
-						base.waitForElement(getMappingSOURCEFIELD2());
-						getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-						getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-						getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-						base.waitForElement(getMappingFIELDCAT25());
-						getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-						base.waitForElement(getMappingFIELDCAT26());
-						getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-						base.waitForElement(getMappingFIELDCAT27());
-						getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-						base.waitForElement(getMappingFIELDCAT28());
-						getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-						getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-
-					}
-					// Below called function handles all the stages of ingestion from catalog to
-					// publish!
-					IngestionCatlogtoIndexing(dataset);
-					approveAndPublishIngestion(dataset);
-
-				
-
-
-			}
-			
-			/**
-			 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will enter overlay ingestion data without enabling mapping field and DAT field
-			 */
-			
-			public void OverlayIngestionWithoutDat(String ingestionName,String type,String file) {
-				selectIngestionTypeAndSpecifySourceLocation("Overlay Only","TRUE",Input.sourceLocation,ingestionName);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
-						return datCheckboxStatus().Visible();
+						return doneButton().Enabled();
 					}
 				}), Input.wait30);
-				datCheckboxStatus().waitAndClick(5);
-				
-				if(type.equalsIgnoreCase("Native")) {
-				selectNativeSource(file,false);
-				}
-				if(type.equalsIgnoreCase("Tiff")) {
-					base.stepInfo("Selecting Tiff file");
-					selectTIFFSource(file,false,false);
-				}
-				
-				if(type.equalsIgnoreCase("pdf")) {
-					base.stepInfo("Selecting Pdf file");
-					selectPDFSource(file,false);
-				}
-				if(type.equalsIgnoreCase("mp3")) {
-					base.stepInfo("Selecting Mp3 file");
-					selectMP3VarientSource(file,false);
-				}
-				if(type.equalsIgnoreCase("Transcript")) {
-					base.stepInfo("Selecting Transcript file");
-					selectAudioTranscriptSource(file,false);
-				}
-				if(type.equalsIgnoreCase("Translation")) {
-					base.stepInfo("Selecting Translation file");
-					selectOtherSource(type,file,false);
-				}
-				
+				doneButton().waitAndClick(10);
+
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
-						return getDateFormat().Visible();
+						return getCloseButton().Enabled();
 					}
 				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
+				getCloseButton().waitAndClick(10);
+				base.VerifySuccessMessage("Action done successfully");
 				base.waitTime(2);
-				clickOnPreviewAndRunButton();
-				
+				getRefreshButton().waitAndClick(10);
 			}
-			
-			/**
-			 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the status of overlay ingestion till approving stage
-			 */
-			public void verifyApprovedStatusForOverlayIngestion() {
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByFAILED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByCATALOGED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByCOPIED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByINDEXED().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByAPPROVED().waitAndClick(10);
-		    	
-		    	getRefreshButton().waitAndClick(5);
-		    	
-		    	for(int i=0;i<120;i++) {
-		    		base.waitTime(5);
-		    		getRefreshButton().waitAndClick(5);
-		    		base.waitTime(2);
-					String status = getStatus(1).getText().trim();
-					
-		    		if(status.contains("Cataloged")) {
-		    			base.passedStep("Cataloged completed");
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(5);
-		    			
-		    		}
-		    		else if(status.contains("Copied")) {
-		    			base.passedStep("Copied completed");
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(5);
-		    			
-		    		}
-		    		else if(status.contains("Indexed")) {
-		    			base.passedStep("Indexed completed");
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(5);
-		    			
-		    		}
-		    		else if(status.contains("Approved")) {
-		    			base.passedStep("Approved completed");
-		    			break;
-		    			
-		    		}
-		    		else if (status.contains("In Progress")) {
-		    			base.waitTime(5);
-		    			getRefreshButton().waitAndClick(5);
-		    		}
-		    		else if (status.contains("Failed")){
-		    			base.failedStep("Failed");
-		    		}
-		    	}
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will ignore errors and perform copying
+	 */
+	public void ignoreErrorsAndCopying() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
 			}
-			
-			/**
-			 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify the status of overlay ingestion till approving stage
-			 */
-			public void verifyDocAvailability() {
-				driver.getWebDriver().get(Input.url + "Ingestion/Home");
-				driver.waitForPageToBeReady();
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByPUBLISHED().waitAndClick(10);
-		    	
-		    	getRefreshButton().waitAndClick(5);
-		    	base.waitTime(1);
-		    	 String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
-		    	 int ingestedCount = Integer.parseInt(getIngestedCount().getText());
-				  System.out.println(ingestedCount);
-				  SessionSearch search = new SessionSearch(driver);
-				  int purehitCount=search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, ingestionName);
-				  System.out.println(purehitCount);
-				  if(ingestedCount==purehitCount) {
-				    	base.passedStep("Document ingested in overlay available for user in application");
-				    }
-				  else {
-				    	base.failedStep("Document ingested in overlay not available for user in application");
-				    }
-		    	
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOPIED().Visible();
 			}
-			
-			/**
-			 * @author Mohan.Venugopal 
-			 * @description Clean up all the created ingestion in the draft Level
-			 * 
-			 */
-			public void deleteMultipleIngestion() {
-
-				driver.waitForPageToBeReady();
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getFilterByButton().Visible();
-					}
-				}), Input.wait30);
-				getFilterByButton().waitAndClick(10);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getFilterByDRAFT().Visible();
-					}
-				}), Input.wait30);
-				getFilterByDRAFT().waitAndClick(10);
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getFilterByINPROGRESS().Visible();
-					}
-				}), Input.wait30);
-				getFilterByINPROGRESS().waitAndClick(10);
-				
-				if (getIngestion_DraftTable().isElementAvailable(5)) {
-					getRefreshButton().waitAndClick(10);
-					base.waitTime(5);
-					String getAttribute = getIngestion_DraftCount().GetAttribute("value");
-					System.out.println(getAttribute);
-					int parseInt = Integer.parseInt(getAttribute);
-					for (int i = 1; i <=parseInt; i++) {
-						base.waitTime(2);
-						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								getIngestionSettingGearIcon().Visible()  ;}}), Input.wait30); 
-						getIngestionSettingGearIcon().waitAndClick(10);
-						
-						base.waitForElement(getIngestionDeleteButton());
-						getIngestionDeleteButton().waitAndClick(5);
-						base.waitForElement(getApproveMessageOKButton());
-						getApproveMessageOKButton().isElementAvailable(5);
-							getApproveMessageOKButton().waitAndClick(5);
-							
-						
-						base.stepInfo("Ingestion is deleted successfully");
-						
-					}}else {
-						base.stepInfo("There is no Ingestions to delete");
-					}
-				}
-
-			
-			
-			/**
-			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform add only ingestion for unicodefiles folder
-			 */
-			public void unicodeFilesIngestionWithDifferentSourceSystem(String source,String datFile,String textFile,String datKey) {
-				selectIngestionTypeAndSpecifySourceLocation("Add Only",source,Input.sourceLocation,Input.UniCodeFilesFolder);
-				base.waitForElement(getDATDelimitersFieldSeparator());
-				getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-
-				base.waitForElement(getDATDelimitersTextQualifier());
-				getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-				base.waitForElement(getDATDelimitersNewLine());
-				getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-				
-				selectDATSource(datFile,datKey);
-				base.stepInfo("*******Selecing text files***************");
-				base.waitForElement(getSourceSelectionText());
-				getSourceSelectionText().waitAndClick(20);
-				base.waitForElement(getSourceSelectionTextLoadFile());
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getDateFormat().Visible();
-					}
-				}), Input.wait30);
-				getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-				
-				clickOnNextButton();
-				base.waitTime(2);
-				selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
-				clickOnPreviewAndRunButton();
-				base.stepInfo("Ingestion started");
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
 			}
-			
-			/**
-			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will verify total ingested count with pure hit count
-			 */
-			public void verifyTotalDocsIngestedWithPurehitCount() {
-				
-				driver.getWebDriver().get(Input.url + "Ingestion/Home");
-				driver.waitForPageToBeReady();
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-		    	getFilterByButton().waitAndClick(10);
-		    	
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-		    	getFilterByPUBLISHED().waitAndClick(10);
-		    	
-		    	getRefreshButton().waitAndClick(5);
-		    	base.waitTime(2);
-		    	
-		    	int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
-				SessionSearch search = new SessionSearch(driver);
-				int purehitCount=search.basicContentSearch(Input.searchStringStar);
-				System.out.println(purehitCount);
-				  if(totalDocsIngestedCount==purehitCount) {
-				    	base.passedStep("Pure hit count showed the total number of documents ingested");
-				    }
-				  else {
-				    	base.failedStep("Pure hit count not showed the total number of documents ingested");
-				    }
-			}
-			
-			/**
-			 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
-			 * @description: this method will perform a new add only ingestion using copy option
-			 */
-			public void performNewAddOnlyIngestionUsingCopyOption(String sourceSystem,String sourceFolder,String datFile,String docKey) {
-				driver.waitForPageToBeReady();
-				getIngestionDetailPopup(1).waitAndClick(5);
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getActionDropdownArrow().Visible();
-					}
-				}), Input.wait30);
-				getActionDropdownArrow().waitAndClick(5);
-				
-				if(getActionCopy().Displayed() && getActionApprove().Displayed() && getActionOpenWizard().Displayed() && rollbackOptionInPopup().Displayed()) {
-					base.passedStep("All available options displayed in action drop down");
-				}
-				
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getActionCopy().Visible();
-					}
-				}), Input.wait30);
-				
-				getActionCopy().waitAndClick(5);
-				base.waitTime(3);
-				base.stepInfo("performing new ingestion using copy option");
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
-				getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getSpecifySourceFolder().Visible()  ;}}), Input.wait30);
-				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
-				
-				base.stepInfo("Selected source system and source folder");
-				base.waitTime(2);
-				
-				selectDATSource(datFile,docKey);
-				
-				driver.scrollPageToTop();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getNextButton().Visible()  ;}}), Input.wait30); 
-				getNextButton().waitAndClick(10);
-				base.passedStep("Clicked on Next button");
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+		base.waitTime(2);
+		base.VerifySuccessMessage("Ingestion copy has Started.");
 
-				base.stepInfo("Pop up message for Ingestion without text file");
-				if (getApproveMessageOKButton().isElementAvailable(10)) {
+		getRefreshButton().waitAndClick(10);
+		for (int i = 0; i < 40; i++) {
+			getRefreshButton().waitAndClick(15);
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Copied")) {
+				base.passedStep("Copied completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				getIngestionDetailPopup(1).waitAndClick(10);
+				driver.scrollingToElementofAPage(copyingErrorCount());
+				copyingErrorCount().waitAndClick(10);
+				base.waitTime(1);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return ignoreAllButton().Enabled();
+					}
+				}), Input.wait30);
+				ignoreAllButton().waitAndClick(10);
+				if (getApproveMessageOKButton().isElementAvailable(5)) {
 					getApproveMessageOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to continue without text files");
+					base.passedStep("Clicked on OK button to ignore all errors");
 				}
-				
-				if (getApproveMessageSecondOKButton().isElementAvailable(10)) {
-					getApproveMessageSecondOKButton().waitAndClick(10);
-					base.passedStep("Clicked on OK button to continue ingestion with different mapping field selection");
-				}
-				
-				clickOnPreviewAndRunButton();
-		    	base.waitTime(3);
-		    	base.passedStep("Ingestion performed successfully");
-			}
-			
 
-			/**
-			 * @author Aathith.Senthilkumar
-			 * @return
-			 * @throws InterruptedException
-			 * @Description perform action ingestion to cataloge to copied stage
-			 */
-			public String overlayIngestionCreationToCatalogedtoCopiedorIndex() throws InterruptedException {
-				String title = null;
-					String titleCar = null;
-					int count = 0;
-					driver.waitForPageToBeReady();
-					base.waitForElement(getStatus());
-					for(int i=1;i<500;i++) {
-						driver.waitForPageToBeReady();
-						getIngestionTitle(count+1).ScrollTo();
-						getIngestionTitle(count+1).isElementAvailable(15);
-						title = getIngestionTitle(count+1).GetAttribute("title").trim();
-						getStatus(count+1).isElementAvailable(15);
-						String status = getStatus(count+1).getText().trim();
-						driver.waitForPageToBeReady();
-						for(int j=1;j<50;j++) {
-							titleCar = getIngestionTitle(j).GetAttribute("title").trim();
-							getIngestionTitle(j).ScrollTo();
-							if(titleCar.equalsIgnoreCase(title)) {
-								if(j!=1) {
-									count=j-1;
-								}
-								break;
-							}else {
-								driver.scrollingToBottomofAPage();
-							}
-						}
-						if(status.contains("In Progress")) {
-							driver.scrollPageToTop();
-							getRefeshBtn().isElementAvailable(15);
-							driver.waitForPageToBeReady();
-							driver.waitForPageToBeReady();
-							getRefeshBtn().waitAndClick(10);
-							driver.waitForPageToBeReady();
-						}
-						if(status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
-							base.passedStep("Ingestion completed till cataloged stage");
-							IngestionCatlogtoCopyingOrIndex(title);
-							break;
-						}
-						if(status.contains("Copied") && titleCar.equalsIgnoreCase(title)) {
-							base.passedStep("Ingestion completed till cataloged stage");
-							break;
-						}
-						if(status.contains("Indexed") && titleCar.equalsIgnoreCase(title)) {
-							base.passedStep("Ingestion completed till cataloged stage");
-							break;
-						}
-						if(status.contains("Approved") && titleCar.equalsIgnoreCase(title)) {
-							base.passedStep("Ingestion completed till cataloged stage");
-							break;
-						}
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return doneButton().Enabled();
 					}
-				return title;
-			}
-			/**
-			 * @author Aathith.Senthilkumar
-			 * @param dataset
-			 * @throws InterruptedException
-			 * @Description perform action catalog to copied stage
-			 */
-			public void IngestionCatlogtoCopyingOrIndex(String dataset) throws InterruptedException {
-				
-				
-				//catlogging
-				for(int i=0;i<60;i++) {
-					base.waitTime(2);
-					String status = getStatus(1).getText().trim();
-					
-					if(status.contains("Cataloged")) {
-						base.passedStep("Cataloged completed");
-						break;
+				}), Input.wait30);
+				doneButton().waitAndClick(10);
+				base.waitTime(2);
+				base.VerifySuccessMessage("Action done successfully");
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getCloseButton().Enabled();
 					}
-					else if (status.contains("In Progress")) {
-						base.waitTime(5);
-						getRefeshBtn().waitAndClick(10);
-					}
-					else if (status.contains("Failed")){
-						base.failedStep("Ingestion Failed");
-					}
-				}
-				
-				//copy
-				getRefeshBtn().waitAndClick(10);
-			    getIngestionDetailPopup(1).waitAndClick(10);
-			    driver.Manage().window().fullscreen();
+				}), Input.wait30);
+				getCloseButton().waitAndClick(10);
+				getRefreshButton().waitAndClick(5);
+				base.waitTime(2);
+				getIngestionDetailPopup(1).waitAndClick(10);
+				base.waitTime(2);
 				driver.scrollingToElementofAPage(getRunCopying());
-				base.waitForElement(getRunCopying());
-			    getRunCopying().waitAndClick(10);
-			    
-			    if(getCloseButton().isElementAvailable(2)) {
-			    getCloseButton().waitAndClick(10);}
-			    UtilityLog.info(dataset+"'s copying is started.");
-				
-			    driver.waitForPageToBeReady();
-			    getRefeshBtn().waitAndClick(10);
-				for(int i=0;i<70;i++) {
-					base.waitTime(2);
-					String status = getStatus(1).getText().trim();
-				
-					if(status.contains("Copied")) {
-						base.passedStep("Copied completed");
-						break;
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getRunCopying().Enabled();
 					}
-					else if (status.contains("In Progress")) {
-						base.waitTime(5);
-						getRefeshBtn().waitAndClick(5);
+				}), Input.wait30);
+
+				getRunCopying().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getCloseButton().Enabled();
 					}
-					else if (status.contains("Indexed")){
-						base.passedStep("Indexed completed");
+				}), Input.wait30);
+				getCloseButton().waitAndClick(10);
+				base.waitTime(10);
+				getRefreshButton().waitAndClick(10);
+
+			}
+		}
+
+	}
+
+	/**
+	 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will validate the value and term which present in
+	 *               the copying table column
+	 */
+	public void verifyDataPresentInCopyTableColumn(String term, String type) {
+		getRefreshButton().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitForElement(getRunIndexing());
+		if (type.equalsIgnoreCase("source")) {
+			int sourceCount = Integer.parseInt(copyTableDataValue(term, 1).getText());
+			if (sourceCount > 0 && copyTableDataValue(term, 1).isElementAvailable(5)) {
+				base.passedStep(term + " source docs count is present in the copying table column");
+			} else {
+				base.failedMessage(term + "source docs count in the copying table column is 0");
+			}
+		}
+		if (type.equalsIgnoreCase("copied")) {
+			int copiedCount = Integer.parseInt(copyTableDataValue(term, 2).getText());
+			if (copiedCount > 0 && copyTableDataValue(term, 2).isElementAvailable(5)) {
+				base.passedStep(term + "Copied docs count present in the copying table column");
+			} else {
+				base.failedMessage(term + "Copied count in the copying table column is 0");
+			}
+		}
+		if (type.equalsIgnoreCase("error")) {
+			int errorCount = Integer.parseInt(copyTableDataValue(term, 3).getText());
+			if (errorCount > 0 && copyTableDataValue(term, 3).isElementAvailable(5)) {
+				base.passedStep(term + "Errors count present in the copying table column");
+			} else {
+				base.failedMessage(term + "Errors count in the copying table column is 0");
+			}
+		}
+		if (type.equalsIgnoreCase("missed")) {
+			int missedCount = Integer.parseInt(copyTableDataValue(term, 4).getText());
+			if (missedCount > 0 && copyTableDataValue(term, 4).isElementAvailable(5)) {
+				base.passedStep(term + "Missed docs count present in the copying table column");
+			} else {
+				base.failedMessage(term + "Missed docs count in the copying table column is 0");
+			}
+		}
+		getCloseButton().waitAndClick(10);
+	}
+
+	/**
+	 * @author: Arunkumar Created Date: 18/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the value in copying section after
+	 *               performing rollback
+	 */
+	public void verifyValueInCopyingSectionAfterRollback(String term) {
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitTime(1);
+		int count = Integer.parseInt(copyTableDataValue(term, 1).getText());
+
+		if (count > 0) {
+			base.failedStep(term + "count not set to 0 in the copying table column after rolling back Ingestion");
+		} else {
+			base.passedStep(term + "count set to 0 in the copying table column after rolling back ingestion");
+		}
+		getCloseButton().waitAndClick(10);
+	}
+
+	/**
+	 * @author: Arun Created Date: 20/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform add only ingestion and select pdf in
+	 *               path file to save as draft
+	 */
+	public void selectPdfInPathFileAndSaveAsDraft(String ingestionName, String datFile, String datKey, String pdfKey) {
+
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.stepInfo("Selecting DAT source");
+		selectDATSource(datFile, datKey);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("Selecting PDF source");
+		String checkboxStatus = pdfCheckboxStatus().GetAttribute("style");
+		try {
+			if (checkboxStatus.contains("block")) {
+				getPDFPathInDATFileCheckBox().waitAndClick(5);
+				getPDFFilePathFieldinDAT().Click();
+				getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(pdfKey);
+			} else {
+				getPDFCheckBoxButton().waitAndClick(5);
+				getPDFPathInDATFileCheckBox().waitAndClick(10);
+				getPDFFilePathFieldinDAT().waitAndClick(5);
+				getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(pdfKey);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while selecting PDF source." + e.getLocalizedMessage());
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		driver.scrollPageToTop();
+
+		base.waitForElement(getIngestion_SaveAsDraft());
+		getIngestion_SaveAsDraft().waitAndClick(5);
+		base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+		base.passedStep("Ingestion successfully saved as draft");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 20/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify error message for duplicate ingestion
+	 */
+	public void verifyDuplicateIngestionErrorMessage() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		for (int i = 0; i < 50; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+			if (status.contains("Cataloged")) {
+				base.failedMessage("Ingestion is not present in published state");
+				break;
+			} else if (status.contains("Failed")) {
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(errorCountCatalogingStage());
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitTime(3);
+				String errorMessage1 = ingestionErrorNote(1).getText();
+				String errorMessage2 = ingestionErrorNote(2).getText();
+				if (errorMessage1.contains(Input.duplicateIngestionError)
+						|| errorMessage2.contains(Input.duplicateIngestionError)) {
+					base.passedStep("Cataloging Error displayed when ingesting duplicate files");
+				} else {
+					System.out.println("Error not belonged to duplicate ingestion");
+				}
+				break;
+			} else {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			}
+		}
+		getCloseButton().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the options available for ingestion in
+	 *               draft state
+	 */
+	public void verifyOptionsAvailableForDraftStageIngestion() {
+		try {
+			getIngestionSettingGearIcon().waitAndClick(10);
+			if (getIngestionOpenWizardbutton().isElementAvailable(5) && getIngestionCopyButton().isElementAvailable(5)
+					&& getIngestionDeleteButton().isElementAvailable(5)) {
+				base.passedStep("Ingestion in draft state have Edit,Copy and Delete option available");
+			} else {
+				base.failedStep("Ingestion in draft state have no option available");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while checking available option in draft state." + e.getLocalizedMessage());
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the ingestion details after started
+	 *               ingestion
+	 */
+	public void verifyDetailsAfterStartedIngestion() {
+		base.waitTime(5);
+		driver.waitForPageToBeReady();
+		String currentPageUrl = driver.getUrl();
+		if (currentPageUrl.contains("Ingestion/Home")) {
+			base.passedStep("User directed to home page after ingestion started");
+		} else {
+			base.failedStep("User not directed to home page after ingestion started");
+		}
+
+		if (getIngestionDetailPopup(1).isElementAvailable(5) && getIngestionWizardDateFormat().isElementAvailable(5)) {
+			base.passedStep("ingestion tile and time stamp present in homepage after started ingestion");
+		} else {
+			base.failedStep("ingestion tile and time stamp not present in homepage after started ingestion");
+		}
+		getIngestionDetailPopup(1).waitAndClick(5);
+
+		if (catalogSectionDetails().isDisplayed() && getCloseButton().isElementAvailable(5)) {
+			base.passedStep("Ingestion details and popup displayed");
+		} else {
+			base.failedStep("Ingestion details popup not displayed");
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform add only ingestion for unicodefiles
+	 *               folder
+	 */
+	public void unicodeFilesIngestion(String datFile, String textFile, String datKey) {
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.UniCodeFilesFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		selectDATSource(datFile, datKey);
+		base.stepInfo("*******Selecing text files***************");
+		base.waitForElement(getSourceSelectionText());
+		getSourceSelectionText().waitAndClick(20);
+		base.waitForElement(getSourceSelectionTextLoadFile());
+		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.custodian);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
+	}
+
+	/**
+	 * @author: Arun Created Date: 21/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the copy,index and approve option
+	 *               status during the ingestion inprogress
+	 */
+
+	public void verifyStatusDuringInProgress() {
+		base.waitTime(3);
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(5);
+
+		String copyingStatus = getRunCopying().GetAttribute("class");
+		String indexingStatus = getRunIndexing().GetAttribute("class");
+
+		base.waitForElement(getActionDropdownArrow());
+		getActionDropdownArrow().waitAndClick(5);
+		String approveStatus = getActionApprove().GetAttribute("class");
+
+		if (copyingStatus.contains("disable") && indexingStatus.contains("disable")
+				&& approveStatus.contains("disable")) {
+			base.passedStep(
+					"Copying and Indexing option not enabled and approve option disabled during inprogress ingestion");
+		} else {
+			base.failedStep("copying,indexing and approve option enabled during inprogress ingestion");
+		}
+		getCloseButton().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will enter overlay ingestion data without enabling
+	 *               mapping field
+	 */
+
+	public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName, String datFile, String datKey) {
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		selectDATSource(datFile, datKey);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 22/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will enter overlay ingestion data with enabling
+	 *               mapping field
+	 */
+
+	public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName, String datFile, String datKey) {
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		selectDATSource(datFile, datKey);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+		clickOnNextButton();
+		base.waitTime(2);
+		base.stepInfo("mapping field section enabled");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 26/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will enter overlay ingestion data without enabling
+	 *               mapping field and DAT field
+	 */
+
+	public void OverlayForNativeWithoutIngestion(String ingestionName, String nativeFile) {
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		datCheckboxStatus().waitAndClick(5);
+		selectNativeSource(nativeFile, false);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform ingestion using copy action for Native
+	 *               from draft mode
+	 */
+
+	public void IngestionOverlayUsingCopyFromDraftMode(String fileType, String sourceFolder, String nativeFile,
+			String datFile, String docKey) {
+
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(5);
+		base.waitForElement(getActionDropdownArrow());
+		getActionDropdownArrow().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionCopy().Visible();
+			}
+		}), Input.wait30);
+
+		getActionCopy().waitAndClick(5);
+		base.waitTime(3);
+		base.stepInfo("Starting ingestion again from draft mode using copy option");
+
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+		base.waitTime(2);
+
+		try {
+
+			if (fileType.equalsIgnoreCase("native")) {
+				base.waitForElement(datCheckboxStatus());
+				datCheckboxStatus().waitAndClick(5);
+
+				selectNativeSource(nativeFile, false);
+			} else if (fileType.equalsIgnoreCase("dat")) {
+				selectDATSource(datFile, docKey);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNextButton().Visible();
+			}
+		}), Input.wait30);
+		getNextButton().waitAndClick(10);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getApproveMessageOKButton().Visible();
+				}
+			}), Input.wait30);
+			getApproveMessageOKButton().waitAndClick(10);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnRunIngestion().Visible();
+			}
+		}), Input.wait30);
+		getbtnRunIngestion().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 27/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify back,ignore and done option in error
+	 *               detail popup
+	 */
+	public void verifyOptionsInErrorDetailsPopup() {
+
+		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitForElement(errorCountCatalogingStage());
+		errorCountCatalogingStage().waitAndClick(10);
+		if (backButton().isElementAvailable(10)) {
+			backButton().waitAndClick(5);
+			if (!backButton().isElementAvailable(10)) {
+				base.passedStep("Back button displayed and working properly");
+			}
+		} else {
+			base.failedStep("back button not displayed in error details popup");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return errorCountCatalogingStage().Enabled();
+			}
+		}), Input.wait30);
+		errorCountCatalogingStage().waitAndClick(10);
+		base.waitTime(3);
+		base.waitForElement(getIgnoreOptionSelection());
+		getIgnoreOptionSelection().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doneButton().Enabled();
+			}
+		}), Input.wait30);
+		doneButton().waitAndClick(10);
+
+		base.VerifySuccessMessage("Action done successfully");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return errorCountCatalogingStage().Enabled();
+			}
+		}), Input.wait30);
+		errorCountCatalogingStage().waitAndClick(10);
+
+		base.waitTime(5);
+		String status = getIgnoreOptionSelection().GetAttribute("checked");
+		System.out.println(status);
+		if (status.equalsIgnoreCase("true")) {
+			base.passedStep("Error ignore checkbox, done button working properly and changes made in error list saved");
+		} else {
+			base.failedStep(
+					"Error ignore checkbox, done button working properly and changes made in error list not saved");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: verify Ingestion publish
+	 */
+	public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
+
+		base.stepInfo("Validating whether the ingestion is done for particular project");
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIngestion_GridView().Visible();
+			}
+		}), Input.wait30);
+		getIngestion_GridView().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.stepInfo("Searching for Datasets");
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIngestionPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getIngestionPaginationCount().size()) - 2);
+		Boolean status = false;
+		for (int i = 0; i < count; i++) {
+			// driver.waitForPageToBeReady();
+			if (getAllIngestionName(dataset).isElementAvailable(5)) {
+				String publishedDataSet = getAllIngestionName(dataset).getText();
+				if (publishedDataSet.contains(dataset)) {
+					status = true;
+					base.passedStep("The Ingestion " + dataset + " is already done for this project");
+				}
+				break;
+			} else {
+				status = false;
+				driver.scrollingToBottomofAPage();
+				getIngestionPaginationNextButton().waitAndClick(3);
+				base.stepInfo("Expected Ingestion not found in the page " + i);
+
+			}
+
+		}
+		return status;
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 28/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify back,ignore and done option in error
+	 *               detail popup
+	 */
+	public void performAKNativeFolderIngestion(String datFile) {
+
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AK_NativeFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.stepInfo("Selecting Dat file");
+		selectDATSource(datFile, Input.prodBeg);
+		base.stepInfo("Selecting Native file");
+		selectNativeSource(Input.NativeFile, false);
+		base.stepInfo("Selecting Text file");
+		selectTextSource(Input.TextFile, false);
+		base.stepInfo("Selecting Pdf file");
+		selectPDFSource(Input.PDFFile, false);
+		base.stepInfo("Selecting Mp3 file");
+		selectMP3VarientSource(Input.MP3File, false);
+		base.stepInfo("Selecting Transcript file");
+		selectAudioTranscriptSource(Input.TranscriptFile, false);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 29/04/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify back,ignore and done option in error
+	 *               detail popup
+	 */
+	public void verifyStatusUpdatenInIngestionDetailPopup(String ingestionStage) {
+
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(10);
+
+		base.waitTime(2);
+
+		if (ingestionStage.equalsIgnoreCase("Catalogingblock")) {
+			String catalogData = catalogSectionDetails().getText();
+			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+			if (status.contains("Cataloged") && !catalogData.isBlank()) {
+				base.passedStep("Cataloging section details are present in ingestion details popup");
+			} else {
+				base.failedStep("details not present in cataloging section");
+			}
+		} else if (ingestionStage.equalsIgnoreCase("Copyingblock")) {
+			driver.scrollingToElementofAPage(getRunCopying());
+			String copyData = copyingSectionDetails().getText();
+			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+			if (status.contains("Copied") && !copyData.isBlank()) {
+				base.passedStep("Copying section details are present in ingestion details popup");
+			} else {
+				base.failedStep("details not present in copying section");
+			}
+		} else if (ingestionStage.equalsIgnoreCase("Indexingblock")) {
+			driver.scrollingToElementofAPage(getRunIndexing());
+			String indexData = indexingSectionDetails().getText();
+			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
+			if (status.contains("Indexed") && !indexData.isBlank()) {
+				base.passedStep("Indexing section details are present in ingestion details popup");
+			} else {
+				base.failedStep("details not present in indexing section");
+			}
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check whether stitched Tiff displayed before
+	 *               generate searchable pdf in copying table
+	 */
+	public void verifyTermPositionInCopyColumn(String term) {
+		getIngestionDetailPopup(1).waitAndClick(10);
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitTime(1);
+		String afterTerm = getNextColumnTerm(term).getText();
+		if (afterTerm.equalsIgnoreCase(Input.generateSearchablePDF)) {
+			base.passedStep(
+					"Stitching TIFFs details displayed before the Generate Searchable PDFs row on Ingestion details pop up");
+		} else {
+			base.failedStep(
+					"Stitching TIFFs details not displayed before the Generate Searchable PDFs row on Ingestion details pop up");
+		}
+		getCloseButton().waitAndClick(10);
+	}
+
+	/**
+	 * @author: Arunkumar Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform ingestion with media and transcript
+	 *               selection
+	 */
+	public void mediaAndTranscriptIngestion(String sourceFolder, String datFile) {
+
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, sourceFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.stepInfo("Selecting Dat file");
+		selectDATSource(datFile, Input.prodBeg);
+		base.stepInfo("Selecting Native file");
+		selectNativeSource(Input.NativeFile, false);
+		base.stepInfo("Selecting Text file");
+		selectTextSource(Input.TextFile, false);
+		base.stepInfo("Selecting Mp3 file");
+		selectMP3VarientSource(Input.MP3File, false);
+		base.stepInfo("Selecting Transcript file");
+		selectAudioTranscriptSource(Input.TranscriptFile, false);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify warning message for different document
+	 *               key selection
+	 */
+
+	public void verifyWarningMessageForConfigureMappingSection(String sourceFolder, String datFile, String textFile,
+			String docKey1, String docKey2) {
+		driver.waitForPageToBeReady();
+
+		getIngestionDetailPopup(1).waitAndClick(5);
+		base.waitForElement(getActionDropdownArrow());
+		getActionDropdownArrow().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionCopy().Visible();
+			}
+		}), Input.wait30);
+
+		getActionCopy().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+		base.waitTime(2);
+
+		selectDATSource(datFile, docKey1);
+
+		base.waitForElement(getSourceSelectionText());
+		getSourceSelectionText().waitAndClick(20);
+		base.waitForElement(getSourceSelectionTextLoadFile());
+		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNextButton().Visible();
+			}
+		}), Input.wait30);
+		getNextButton().waitAndClick(10);
+		base.passedStep("Clicked on Next button");
+
+		String warningMessage = mappingWarningMessage().getText();
+		if (warningMessage.contains(Input.mappingWarningMessage)) {
+			base.passedStep("warning message displayed if configure mapping is not matched");
+		} else {
+			base.failedStep("warning message not displayed if configure mapping is not matched");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return warningMessageCancelButton().Enabled();
+			}
+		}), Input.wait30);
+		warningMessageCancelButton().waitAndClick(10);
+
+		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(docKey2);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNextButton().Visible();
+			}
+		}), Input.wait30);
+		getNextButton().waitAndClick(10);
+		base.passedStep("Clicked on Next button");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewRun().Visible();
+			}
+		}), Input.wait30);
+		getPreviewRun().waitAndClick(10);
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to preview and run ingestion");
+		}
+
+		if (getbtnRunIngestion().isElementAvailable(15)) {
+			base.passedStep("As per selection , admin can proceed and start the ingestion");
+		} else {
+			base.passedStep("As per selection , admin can't proceed and start the ingestion");
+		}
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify warning message for different document
+	 *               key selection
+	 */
+
+	public void verifyUnselectedSourceCountInCopySection(String term) {
+		getRefreshButton().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+
+		driver.scrollingToElementofAPage(getRunIndexing());
+		base.waitForElement(getRunIndexing());
+
+		int sourceCount = Integer.parseInt(copyTableDataValue(term, 1).getText());
+		if (sourceCount == 0 && copyTableDataValue(term, 1).isElementAvailable(5)) {
+			base.passedStep(term + " unselected source docs count is not present in the copying table column");
+		} else {
+			base.failedMessage(term + " unselected source docs count is present in the copying table column");
+		}
+
+		getCloseButton().waitAndClick(10);
+
+	}
+
+	/**
+	 * @author: Mohan Created Date: 29/04/2022
+	 * @param dataset
+	 * @param sourceSystem
+	 * @param Dat
+	 * @param text
+	 * @param nativeFile
+	 * @param PDF
+	 * @param tiffImage
+	 * @param mp3Variant
+	 * @param audioTranscript
+	 * @param other
+	 * @throws InterruptedException
+	 */
+	public void IngestionRegressionForDifferentDAT(String dataset, String sourceSystem, String Dat, String nativeFile,
+			String text, String PDF, String tiffImage, String mp3Variant, String audioTranscript, String other)
+			throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.stepInfo("Click on add new ingestion button");
+		base.waitForElement(getAddanewIngestionButton());
+		getAddanewIngestionButton().waitAndClick(10);
+
+		base.stepInfo("Select Source system");
+		base.waitForElement(getSpecifySourceSystem());
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
+
+		base.stepInfo("Select Location");
+		base.waitForElement(getSpecifyLocation());
+		base.waitTime(2);
+		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+
+		base.waitForElement(getSpecifySourceFolder());
+		base.waitTime(2);
+		base.stepInfo("Select Folder");
+		base.waitForElement(getSpecifySourceFolder());
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(dataset);
+		base.waitTime(2);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.scrollingToBottomofAPage();
+
+		base.stepInfo("*******Selecing DAT files***************");
+		base.waitForElement(getSourceSelectionDATLoadFile());
+		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Dat);
+
+		base.waitForElement(getSourceSelectionDATKey());
+		base.waitTime(2);
+
+		if (dataset.contains("Collection1K_Tally")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("20Family_20Threaded")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("AllSources") || dataset.contains("PP_PDFGen_10Docs")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
+		} else if (dataset.contains("0002_H13696_1_Latest")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("27MarSinglePageTIFF")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BNum");
+		} else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("BatesNumber");
+		} else if (dataset.contains("SSAudioSpeech_Transcript")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("GNon_searchable_PDF_Load_file")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("HiddenProperties_IngestionData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("UniCodeFiles")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		} else if (dataset.contains("IngestionEmailData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocumentID");
+		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
+		}
+
+		base.stepInfo("*******Selecing Native files***************");
+		if (nativeFile == null) {
+			System.out.println("This Dataset doesn't requries Native files");
+			base.stepInfo("This Dataset doesn't requries Native files");
+		} else {
+			base.waitForElement(getNativeCheckBox());
+			getNativeCheckBox().waitAndClick(10);
+			base.waitForElement(getNativeLST());
+			getNativeLST().selectFromDropdown().selectByVisibleText(nativeFile);
+		}
+		base.stepInfo("*******Selecing Text files***************");
+		if (text == null) {
+			System.out.println("This Dataset doesn't requries Text files");
+			base.stepInfo("This Dataset doesn't requries Text files");
+		} else {
+			base.waitForElement(getSourceSelectionText());
+			getSourceSelectionText().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(text);
+		}
+
+		base.stepInfo("*******Selecing PDF files***************");
+		if (PDF == null) {
+			System.out.println("This Dataset doesn't requries PDF files");
+			base.stepInfo("This Dataset doesn't requries PDF files");
+		} else {
+			base.waitForElement(getPDFCheckBoxButton());
+			getPDFCheckBoxButton().waitAndClick(20);
+			base.waitForElement(getPDFLST());
+			getPDFLST().selectFromDropdown().selectByVisibleText(PDF);
+		}
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("*******Selecing TIFF files***************");
+		if (tiffImage == null) {
+			System.out.println("This Dataset doesn't requries Tiff files");
+			base.stepInfo("This Dataset doesn't requries Tiff files");
+		} else {
+			base.waitForElement(getTIFFCheckBox());
+			getTIFFCheckBox().waitAndClick(20);
+			base.waitForElement(getSourceSelectionTextLoadFile());
+			getTIFFLST().selectFromDropdown().selectByVisibleText(tiffImage);
+		}
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("*******Selecing MP3 files***************");
+		if (mp3Variant == null) {
+			System.out.println("This Dataset doesn't requries MP3 files");
+			base.stepInfo("This Dataset doesn't requries MP3 files");
+		} else {
+
+			base.waitForElement(getMP3CheckBoxButton());
+			getMP3CheckBoxButton().waitAndClick(15);
+			base.waitForElement(getMP3LST());
+			getMP3LST().selectFromDropdown().selectByVisibleText(mp3Variant);
+		}
+
+		base.stepInfo("*******Selecing Audio Transcript files***************");
+		if (audioTranscript == null) {
+			System.out.println("This Dataset doesn't requries Audio Transcript files");
+			base.stepInfo("This Dataset doesn't requries Audio Transcript files");
+		} else {
+
+			base.waitForElement(getAudioTranscriptCheckBoxstionButton());
+			getAudioTranscriptCheckBoxstionButton().waitAndClick(15);
+			base.waitForElement(getAudioTranscriptLST());
+			getAudioTranscriptLST().selectFromDropdown().selectByVisibleText(audioTranscript);
+		}
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("*******Selecing Other files***************");
+		if (audioTranscript == null) {
+			System.out.println("This Dataset doesn't requries Other files");
+			base.stepInfo("This Dataset doesn't requries Other files");
+		} else {
+
+			base.waitForElement(getOtherCheckBox());
+			getOtherCheckBox().waitAndClick(15);
+			base.waitForElement(getOtherLoadFile());
+			getOtherLoadFile().selectFromDropdown().selectByVisibleText(other);
+		}
+
+		base.stepInfo("Select Date Format");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getNextButton());
+		getNextButton().waitAndClick(20);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up messgae for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(5)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+
+		base.waitForElement(getMappingSOURCEFIELD2());
+		if (dataset.contains("Collection1K_Tally")) {
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		}
+
+		else if (dataset.contains("20Family_20Threaded")) {
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT9());
+			getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			base.waitForElement(getMappingFIELDCAT10());
+			getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT13());
+			getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT29());
+			getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+
+			base.waitForElement(getMappingFIELDCAT31());
+			getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+
+			base.waitForElement(getMappingFIELDCAT49());
+			getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+
+			base.waitForElement(getMappingFIELDCAT51());
+			getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("AllSources")) {
+
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+		} else if (dataset.contains("PP_PDFGen_10Docs")) {
+
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+		}
+
+		else if (dataset.contains("0002_H13696_1_Latest")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+		} else if (dataset.contains("16JanMultiPTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+		}
+
+		else if (dataset.contains("27MarSinglePageTIFF")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+		}
+
+		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		}
+
+		else if (dataset.contains("SSAudioSpeech_Transcript")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		}
+
+		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+
+			base.waitForElement(getMappingFIELDCAT5());
+			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+
+			getAddButton().waitAndClick(15);
+			base.waitTime(2);
+
+			base.waitForElement(getMappingFIELDCAT6());
+			getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			base.waitTime(2);
+
+			base.waitForElement(getMappingFIELDCAT7());
+			getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			base.waitTime(2);
+
+			base.waitForElement(getMappingFIELDCAT8());
+			getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+			getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+		}
+
+		else if (dataset.contains("GNon searchable PDF Load file")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("HiddenProperties_IngestionData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+		}
+
+		else if (dataset.contains("UniCodeFiles")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+		}
+
+		else if (dataset.contains("IngestionEmailData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+
+			base.waitForElement(getMappingFIELDCAT76());
+			getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT73());
+			getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT75());
+			getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+		} else if (dataset.contains("CJK_GermanAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
+
+			base.waitForElement(getMappingSOURCEFIELD2());
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+			base.waitForElement(getMappingFIELDCAT25());
+			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+
+			base.waitForElement(getMappingFIELDCAT26());
+			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+
+			base.waitForElement(getMappingFIELDCAT27());
+			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+
+			base.waitForElement(getMappingFIELDCAT28());
+			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+
+		}
+		// Below called function handles all the stages of ingestion from catalog to
+		// publish!
+		IngestionCatlogtoIndexing(dataset);
+		approveAndPublishIngestion(dataset);
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 02/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will enter overlay ingestion data without enabling
+	 *               mapping field and DAT field
+	 */
+
+	public void OverlayIngestionWithoutDat(String ingestionName, String type, String file) {
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return datCheckboxStatus().Visible();
+			}
+		}), Input.wait30);
+		datCheckboxStatus().waitAndClick(5);
+
+		if (type.equalsIgnoreCase("Native")) {
+			selectNativeSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Tiff")) {
+			base.stepInfo("Selecting Tiff file");
+			selectTIFFSource(file, false, false);
+		}
+
+		if (type.equalsIgnoreCase("pdf")) {
+			base.stepInfo("Selecting Pdf file");
+			selectPDFSource(file, false);
+		}
+		if (type.equalsIgnoreCase("mp3")) {
+			base.stepInfo("Selecting Mp3 file");
+			selectMP3VarientSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Transcript")) {
+			base.stepInfo("Selecting Transcript file");
+			selectAudioTranscriptSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Translation")) {
+			base.stepInfo("Selecting Translation file");
+			selectOtherSource(type, file, false);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		clickOnPreviewAndRunButton();
+
+	}
+
+	/**
+	 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the status of overlay ingestion till
+	 *               approving stage
+	 */
+	public void verifyApprovedStatusForOverlayIngestion() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOPIED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINDEXED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByAPPROVED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		for (int i = 0; i < 120; i++) {
+			base.waitTime(5);
+			getRefreshButton().waitAndClick(5);
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+
+			} else if (status.contains("Copied")) {
+				base.passedStep("Copied completed");
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+
+			} else if (status.contains("Indexed")) {
+				base.passedStep("Indexed completed");
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+
+			} else if (status.contains("Approved")) {
+				base.passedStep("Approved completed");
+				break;
+
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Failed");
+			}
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 03/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the status of overlay ingestion till
+	 *               approving stage
+	 */
+	public void verifyDocAvailability() {
+		driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+		base.waitTime(1);
+		String ingestionName = getIngestionDetailPopup(1).GetAttribute("title");
+		int ingestedCount = Integer.parseInt(getIngestedCount().getText());
+		System.out.println(ingestedCount);
+		SessionSearch search = new SessionSearch(driver);
+		int purehitCount = search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, ingestionName);
+		System.out.println(purehitCount);
+		if (ingestedCount == purehitCount) {
+			base.passedStep("Document ingested in overlay available for user in application");
+		} else {
+			base.failedStep("Document ingested in overlay not available for user in application");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description Clean up all the created ingestion in the draft Level
+	 * 
+	 */
+	public void deleteMultipleIngestion() {
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().waitAndClick(10);
+
+		if (getIngestion_DraftTable().isElementAvailable(5)) {
+			getRefreshButton().waitAndClick(10);
+			base.waitTime(5);
+			String getAttribute = getIngestion_DraftCount().GetAttribute("value");
+			System.out.println(getAttribute);
+			int parseInt = Integer.parseInt(getAttribute);
+			for (int i = 1; i <= parseInt; i++) {
+				base.waitTime(2);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getIngestionSettingGearIcon().Visible();
 					}
-					else if (status.contains("Failed")){
-						base.failedStep("Ingestion Failed");
+				}), Input.wait30);
+				getIngestionSettingGearIcon().waitAndClick(10);
+
+				base.waitForElement(getIngestionDeleteButton());
+				getIngestionDeleteButton().waitAndClick(5);
+				base.waitForElement(getApproveMessageOKButton());
+				getApproveMessageOKButton().isElementAvailable(5);
+				getApproveMessageOKButton().waitAndClick(5);
+
+				base.stepInfo("Ingestion is deleted successfully");
+
+			}
+		} else {
+			base.stepInfo("There is no Ingestions to delete");
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform add only ingestion for unicodefiles
+	 *               folder
+	 */
+	public void unicodeFilesIngestionWithDifferentSourceSystem(String source, String datFile, String textFile,
+			String datKey) {
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.sourceLocation, Input.UniCodeFilesFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+
+		selectDATSource(datFile, datKey);
+		base.stepInfo("*******Selecing text files***************");
+		base.waitForElement(getSourceSelectionText());
+		getSourceSelectionText().waitAndClick(20);
+		base.waitForElement(getSourceSelectionTextLoadFile());
+		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.custodian);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
+	}
+
+	/**
+	 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify total ingested count with pure hit
+	 *               count
+	 */
+	public void verifyTotalDocsIngestedWithPurehitCount() {
+
+		driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+		base.waitTime(2);
+
+		int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
+		SessionSearch search = new SessionSearch(driver);
+		int purehitCount = search.basicContentSearch(Input.searchStringStar);
+		System.out.println(purehitCount);
+		if (totalDocsIngestedCount == purehitCount) {
+			base.passedStep("Pure hit count showed the total number of documents ingested");
+		} else {
+			base.failedStep("Pure hit count not showed the total number of documents ingested");
+		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform a new add only ingestion using copy
+	 *               option
+	 */
+	public void performNewAddOnlyIngestionUsingCopyOption(String sourceSystem, String sourceFolder, String datFile,
+			String docKey) {
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionDropdownArrow().Visible();
+			}
+		}), Input.wait30);
+		getActionDropdownArrow().waitAndClick(5);
+
+		if (getActionCopy().Displayed() && getActionApprove().Displayed() && getActionOpenWizard().Displayed()
+				&& rollbackOptionInPopup().Displayed()) {
+			base.passedStep("All available options displayed in action drop down");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getActionCopy().Visible();
+			}
+		}), Input.wait30);
+
+		getActionCopy().waitAndClick(5);
+		base.waitTime(3);
+		base.stepInfo("performing new ingestion using copy option");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSpecifySourceSystem().Visible();
+			}
+		}), Input.wait30);
+		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText(sourceSystem);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSpecifySourceFolder().Visible();
+			}
+		}), Input.wait30);
+		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+
+		base.stepInfo("Selected source system and source folder");
+		base.waitTime(2);
+
+		selectDATSource(datFile, docKey);
+
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNextButton().Visible();
+			}
+		}), Input.wait30);
+		getNextButton().waitAndClick(10);
+		base.passedStep("Clicked on Next button");
+
+		base.stepInfo("Pop up message for Ingestion without text file");
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			getApproveMessageOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue without text files");
+		}
+
+		if (getApproveMessageSecondOKButton().isElementAvailable(10)) {
+			getApproveMessageSecondOKButton().waitAndClick(10);
+			base.passedStep("Clicked on OK button to continue ingestion with different mapping field selection");
+		}
+
+		clickOnPreviewAndRunButton();
+		base.waitTime(3);
+		base.passedStep("Ingestion performed successfully");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return
+	 * @throws InterruptedException
+	 * @Description perform action ingestion to cataloge to copied stage
+	 */
+	public String overlayIngestionCreationToCatalogedtoCopiedorIndex() throws InterruptedException {
+		String title = null;
+		String titleCar = null;
+		int count = 0;
+		driver.waitForPageToBeReady();
+		base.waitForElement(getStatus());
+		for (int i = 1; i < 500; i++) {
+			driver.waitForPageToBeReady();
+			getIngestionTitle(count + 1).ScrollTo();
+			getIngestionTitle(count + 1).isElementAvailable(15);
+			title = getIngestionTitle(count + 1).GetAttribute("title").trim();
+			getStatus(count + 1).isElementAvailable(15);
+			String status = getStatus(count + 1).getText().trim();
+			driver.waitForPageToBeReady();
+			for (int j = 1; j < 50; j++) {
+				titleCar = getIngestionTitle(j).GetAttribute("title").trim();
+				getIngestionTitle(j).ScrollTo();
+				if (titleCar.equalsIgnoreCase(title)) {
+					if (j != 1) {
+						count = j - 1;
 					}
+					break;
+				} else {
+					driver.scrollingToBottomofAPage();
 				}
 			}
-			/**
-			 * @author Aathith.Senthilkumar
-			 * @Description Nativigate Ingestion page using button
-			 */
-			public void nativigateToIngestionViaButton() {
+			if (status.contains("In Progress")) {
+				driver.scrollPageToTop();
+				getRefeshBtn().isElementAvailable(15);
 				driver.waitForPageToBeReady();
-				getIngestions().waitAndClick(10);
 				driver.waitForPageToBeReady();
-				getInestionPage().waitAndClick(10);
+				getRefeshBtn().waitAndClick(10);
 				driver.waitForPageToBeReady();
 			}
-			/**
-			 * @author Aathith.Senthilkumar
-			 * @Description Searchable pdf count verification
-			 */
-			public void searchablePdfCountCheck() {
-				driver.waitForPageToBeReady();
-				getIngestionDetailPopup(1).waitAndClick(10);
-				driver.waitForPageToBeReady();
-				String source=generateSearchablePdfSourceDoc().getText().trim();
-				String copied =generateSearchablePdfCopiedDoc().getText().trim();
-				base.compareTextViaContains(source, copied, "Both count is consider on Ingestion Execution detail pop up", "verification failed");
+			if (status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
+				base.passedStep("Ingestion completed till cataloged stage");
+				IngestionCatlogtoCopyingOrIndex(title);
+				break;
 			}
+			if (status.contains("Copied") && titleCar.equalsIgnoreCase(title)) {
+				base.passedStep("Ingestion completed till cataloged stage");
+				break;
+			}
+			if (status.contains("Indexed") && titleCar.equalsIgnoreCase(title)) {
+				base.passedStep("Ingestion completed till cataloged stage");
+				break;
+			}
+			if (status.contains("Approved") && titleCar.equalsIgnoreCase(title)) {
+				base.passedStep("Ingestion completed till cataloged stage");
+				break;
+			}
+		}
+		return title;
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param dataset
+	 * @throws InterruptedException
+	 * @Description perform action catalog to copied stage
+	 */
+	public void IngestionCatlogtoCopyingOrIndex(String dataset) throws InterruptedException {
+
+		// catlogging
+		for (int i = 0; i < 60; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefeshBtn().waitAndClick(10);
+			} else if (status.contains("Failed")) {
+				base.failedStep("Ingestion Failed");
+			}
+		}
+
+		// copy
+		getRefeshBtn().waitAndClick(10);
+		getIngestionDetailPopup(1).waitAndClick(10);
+		driver.Manage().window().fullscreen();
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+
+		if (getCloseButton().isElementAvailable(2)) {
+			getCloseButton().waitAndClick(10);
+		}
+		UtilityLog.info(dataset + "'s copying is started.");
+
+		driver.waitForPageToBeReady();
+		getRefeshBtn().waitAndClick(10);
+		for (int i = 0; i < 70; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Copied")) {
+				base.passedStep("Copied completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefeshBtn().waitAndClick(5);
+			} else if (status.contains("Indexed")) {
+				base.passedStep("Indexed completed");
+			} else if (status.contains("Failed")) {
+				base.failedStep("Ingestion Failed");
+			}
+		}
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Nativigate Ingestion page using button
+	 */
+	public void nativigateToIngestionViaButton() {
+		driver.waitForPageToBeReady();
+		getIngestions().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getInestionPage().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Searchable pdf count verification
+	 */
+	public void searchablePdfCountCheck() {
+		driver.waitForPageToBeReady();
+		getIngestionDetailPopup(1).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String source = generateSearchablePdfSourceDoc().getText().trim();
+		String copied = generateSearchablePdfCopiedDoc().getText().trim();
+		base.compareTextViaContains(source, copied, "Both count is consider on Ingestion Execution detail pop up",
+				"verification failed");
+	}
+
+	/**
+	 * @author: Vijaya.Rani Created Date: 5/05/2022 Modified by: NA Modified Date:
+	 *          NA
+	 * @description: this method will verify back,ignore and done option in error
+	 *               detail popup in overlay
+	 */
+	public void performAKNativeFolderIngestionInOverlay(String datFile) {
+
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation,
+				Input.AK_NativeFolder);
+		base.waitForElement(getDATDelimitersFieldSeparator());
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+
+		base.waitForElement(getDATDelimitersTextQualifier());
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+
+		base.waitForElement(getDATDelimitersNewLine());
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.stepInfo("Selecting Dat file");
+		selectDATSource(datFile, Input.prodBeg);
+		base.stepInfo("Selecting Native file");
+		selectNativeSource(Input.NativeFile, false);
+		base.stepInfo("Selecting Text file");
+		selectTextSource(Input.TextFile, false);
+		base.stepInfo("Selecting Pdf file");
+		selectPDFSource(Input.PDFFile, false);
+		base.stepInfo("Selecting Mp3 file");
+		selectMP3VarientSource(Input.MP3File, false);
+		base.stepInfo("Selecting Transcript file");
+		selectAudioTranscriptSource(Input.TranscriptFile, false);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
+
+	}
 
 }
