@@ -1629,6 +1629,7 @@ public class DocView_Regression2 {
 		assignPage.getAssgn_Keywordokbutton().isElementAvailable(10);
 		assignPage.getAssgn_Keywordokbutton().Click();
 		keywordPage.getYesButton().Click();
+		driver.scrollPageToTop();;
 		driver.waitForPageToBeReady();
 		assignPage.addReviewerAndDistributeDocs();
 		baseClass.stepInfo("Added reviewer and distributed docs");
@@ -3615,7 +3616,7 @@ public class DocView_Regression2 {
 		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.verifyDocumentDownloadInPdfFormat();
@@ -3623,7 +3624,7 @@ public class DocView_Regression2 {
 		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as Reviewer");
-		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.verifyDocumentDownloadInPdfFormat();	
