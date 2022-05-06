@@ -51,6 +51,15 @@ public class WorkFlow_IndiumRegression {
 			+ "specified below will be taken on the family unit if Family Option rules are specified,"
 			+ " or on the candidate document if the document is not part of a family unit, or if no Family "
 			+ "Options are configured. You can either action documents to an Assignment or into a Folder.";
+	String secondFamily="Only act upon a candidate document if all of its family members are either (1) "
+			+ "in the specified Source Universe OR (2) are already present in the target Assignment/Folder. "
+			+ "This option will act upon all of the family members in the Source Universe"
+			+ " (not those already in the target Assignment/Folder) in order to unite the"
+			+ " whole family unit in the target Assignment/Folder.";
+	String firstFamily="Only act upon a candidate document if all of its family members are also present "
+			+ "in the selected Source Universe. If this condition is met, then action the entire family"
+			+ " unit along with the candidate document. If the condition is not met, do not action the"
+			+ " family unit and do not action the candidate document.";
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -78,7 +87,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that workflow should run and displays doc count, if
 	 * Source is 'Save Search Selector' and action is'Folder Selector'.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 01)
+	//@Test(enabled = true, groups = { "regression" }, priority = 01)
 	public void validationDocsCountSaveSearchAndFolder() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52633");
 		baseClass.stepInfo("To verify that workflow should run and displays doc count, if Source is 'Save "
@@ -150,7 +159,7 @@ public class WorkFlow_IndiumRegression {
 	 * Source is 'Save Search Selector' and action is'Assignment' and select 'First
 	 * family option'.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 02)
+	//@Test(enabled = true, groups = { "regression" }, priority = 02)
 	public void validationDocsCountSaveAssgnAndFirstFamily() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52632");
 		baseClass.stepInfo("To verify that workflow should run and displays doc count, if Source "
@@ -225,7 +234,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that confirmation message is displayed if user select
 	 * action as Delete
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 03)
+	//@Test(enabled = true, groups = { "regression" }, priority = 03)
 	public void validatingPopUpMessageForDelete() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52629");
 		baseClass.stepInfo("To verify that confirmation message is displayed if user select action as Delete");
@@ -263,7 +272,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author : Baskar date: NA Modified date: 24/02/2022 Modified by: Baskar
 	 * Description:To verify that Reset will displayed all the workflow details.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 04)
+	//@Test(enabled = true, groups = { "regression" }, priority = 04)
 	public void validatingResetOption() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52658");
 		baseClass.stepInfo("To verify that Reset will displayed all the workflow details.");
@@ -297,7 +306,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that COMPLETE status is displayed in the list if
 	 * workflow process is completed.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 05)
+	//@Test(enabled = true, groups = { "regression" }, priority = 05)
 	public void validationDocsCountFolderAction() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52622");
 		baseClass.stepInfo("To verify that COMPLETE status is displayed in the list if workflow process is completed.");
@@ -358,7 +367,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that workflow should be deleted if clicks on Yes.
 	 * 'RPMXCON-52630' Sprint-13
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 06)
+	//@Test(enabled = true, groups = { "regression" }, priority = 06)
 	public void verifyWorkFlowDeleteClickOnYes() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52630");
 		baseClass.stepInfo("To verify that workflow should be deleted if clicks on Yes.");
@@ -429,7 +438,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author :Vijaya.Rani date: 25/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can sort all coulmn. 'RPMXCON-52648' Sprint-13
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 07)
+	//@Test(enabled = true, groups = { "regression" }, priority = 07)
 	public void verifyRMUCanSortAllCoulmn() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52648");
 		baseClass.stepInfo("To verify that RMU can sort all coulmn.");
@@ -450,7 +459,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	//@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyFilter_WorkflowID() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52650");
 		baseClass.stepInfo("To verify that RMU can filter by Workflow ID");
@@ -486,7 +495,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that CONFIGURED status is displayed in the list if user
 	 * save the workflow.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	//@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void validateConfiguredStatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52620");
 		baseClass.stepInfo("To verify that CONFIGURED status is displayed in the list " + "if user save the workflow.");
@@ -538,7 +547,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	//@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyHistoryBtn() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52645");
 		baseClass.stepInfo("To verify that RMU can view the action 'View History'.");
@@ -568,7 +577,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	//@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyFilter_CreatedUser() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52657");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Created By' user.");
@@ -608,7 +617,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author :Vijaya.Rani date: 28/02/2022 Modified date: NA Modified by: NA
 	 * Description:To verify that RMU can save the record. 'RPMXCON-52591' Sprint-13
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	//@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyRMUCanSaveTheReport() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52591");
 		baseClass.stepInfo("To verify that RMU can save the record.");
@@ -659,7 +668,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author : Baskar date: NA Modified date: 28/02/2022 Modified by: Baskar
 	 * Description:To verify that all details displayed on history.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	//@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void validationActionHederValues() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52647");
 		baseClass.stepInfo("To verify that all details displayed on history.");
@@ -703,7 +712,7 @@ public class WorkFlow_IndiumRegression {
 		loginPage.logout();
 	}
 
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	//@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void validatestatus() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52655");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected Status.");
@@ -815,7 +824,7 @@ public class WorkFlow_IndiumRegression {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyHistoryBtnEnabled() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52646");
 		baseClass.stepInfo("To verify that 'View History' action should be enabled only if Workflow is selected.");
@@ -862,7 +871,7 @@ public class WorkFlow_IndiumRegression {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	//@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyAllColumnSorting() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52618");
 		baseClass.stepInfo("To verify that RMU can sort by ascending and descending on all columns");
@@ -946,7 +955,7 @@ public class WorkFlow_IndiumRegression {
 	 * @throws ParseException
 	 * @throws AWTException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyEnabledStateFilter() throws InterruptedException, ParseException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52656");
 		baseClass.stepInfo("To verify that Workflow details should be filtered as per the selected 'Enabled State'.");
@@ -1020,7 +1029,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that Status list should be displayed as Complete or
 	 * Assigned. 'RPMXCON-52605' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	//@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyRMUStatusListCompleteOptionDisplay() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52605");
 		baseClass.stepInfo("To verify that Status list should be displayed as Complete or Assigned.");
@@ -1043,7 +1052,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that Summary tab will displays all the details.
 	 * 'RPMXCON-52611' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	//@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifySummaryTabWillDisplayAllDetails() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52611");
@@ -1091,7 +1100,7 @@ public class WorkFlow_IndiumRegression {
 	/**
 	 * Author :jayanthi
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	//@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifySummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52612");
@@ -1157,7 +1166,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that selected Source details is displayed in Summary
 	 * tab. 'RPMXCON-52613' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	//@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifySourceInSummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52613");
@@ -1230,7 +1239,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author : Baskar date: NA Modified date: /04/2022 Modified by: Baskar
 	 * Description:To verify that RMU can veiw the Action tab details on Workflow.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	//@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void validatingActionTabMessage() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52554");
 		baseClass.stepInfo("To verify that RMU can veiw the Action tab details on Workflow.");
@@ -1286,7 +1295,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that selected Family options details is displayed in
 	 * Summary tab. 'RPMXCON-52615' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	//@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyFamilyOptionInSummaryTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52615");
@@ -1356,7 +1365,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:To verify that RMU can view the Family Option tab.
 	 * 'RPMXCON-52575' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	//@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyRMUInFamilyOptionTab() throws InterruptedException, ParseException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52575");
@@ -1412,7 +1421,7 @@ public class WorkFlow_IndiumRegression {
 	 * Description:Create/Edit/Delete workflow with Folder destination.
 	 * 'RPMXCON-52726' Sprint-14
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	//@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void createEditDeleteTheWorkFlow() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52726");
 		baseClass.stepInfo("Create/Edit/Delete workflow with Folder destination.");
@@ -1477,7 +1486,7 @@ public class WorkFlow_IndiumRegression {
 	 * Author : Aathith date: NA Modified date: 25/04/2022 Modified by: Description:
 	 * To verify that RMU can view the Workflow details.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	//@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyRmuWorkflowDetails() throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52617");
 		baseClass.stepInfo("To verify that RMU can view the Workflow details.");
@@ -1502,6 +1511,115 @@ public class WorkFlow_IndiumRegression {
 		baseClass.passedStep("verified that RMU can view the Workflow details.");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 06/05/2022 Modified by: Baskar
+	 * Description:To verify the text on Family Option, if source is selected as 
+	 *             'Save Search Selector' and 'Second Family Option' is selected.
+	 */
+    @Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void validatingSecondFamilyOptionText() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52580");
+		baseClass.stepInfo("To verify the text on Family Option, if source is selected as "
+				+ "'Save Search Selector' and 'Second Family Option' is selected.");
+		int Id;
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		search = new SessionSearch(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// Creating workflow upto action tab
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("validating action tab query message");
+		workflow.createNewWorkFlow();
+		workflow.descriptionTab(wfName, wfDesc);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.secondFamilyOptions(true);
+		baseClass.stepInfo("Second family option checkbox selected");
+
+		// validating second family option message
+		String actualSecondFamily = workflow.getFamilyOption_Second().getText();
+		softAssertion.assertEquals(actualSecondFamily, secondFamily);
+		softAssertion.assertAll();
+		baseClass.passedStep("Family option tab, second family option text are expected");
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 06/05/2022 Modified by: Baskar
+	 * Description:To verify the text on Family Option, if source is selected as 
+	 *             'Save Search Selector' and 'Frist Family Option' is selected.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	public void validatingFirstFamilyOptionText() throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52579");
+		baseClass.stepInfo("To verify the text on Family Option, if source is selected as "
+				+ "'Save Search Selector' and 'Frist Family Option' is selected.");
+		int Id;
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		search = new SessionSearch(driver);
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// Creating workflow upto action tab
+		workflow = new WorkflowPage(driver);
+		baseClass.stepInfo("validating action tab query message");
+		workflow.createNewWorkFlow();
+		workflow.descriptionTab(wfName, wfDesc);
+		workflow.nextButton();
+		workflow.sourcesTab(Id);
+		workflow.nextButton();
+		workflow.nextButton();
+		workflow.familyOptions(true);
+		baseClass.stepInfo("First family option checkbox selected");
+
+		// validating second family option message
+		String actualFirstFamily = workflow.getFamilyOption_First().getText();
+		softAssertion.assertEquals(actualFirstFamily, firstFamily);
+		softAssertion.assertAll();
+		baseClass.passedStep("Family option tab, first family option text are expected");
+
+		// logout
+		loginPage.logout();
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
