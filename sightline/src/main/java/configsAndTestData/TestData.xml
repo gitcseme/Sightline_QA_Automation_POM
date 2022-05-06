@@ -554,7 +554,7 @@
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 
-	<DATFile>RegressionAllDataset.dat</DATFile>
+	<DATFile>DAT4_STC_09172014.dat</DATFile>
 	<TextFile>DAT4_STC_09172014_Text.lst</TextFile>
 	<NativeFile>Natives.lst</NativeFile>
 	<TIFFFile>Images.lst</TIFFFile>
@@ -614,6 +614,7 @@
 	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
 	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
 	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
+	<nonExistingDataError>SourceDocID provided in the overlay for this doc is not available in the database.</nonExistingDataError>
 
 	<!-- Ingestion Related data END -->
 

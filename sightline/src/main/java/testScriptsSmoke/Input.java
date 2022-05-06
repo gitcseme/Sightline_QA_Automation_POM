@@ -336,6 +336,7 @@ public class Input {
 	public static String DATFile3;
 	public static String indexingWarningMessage;
 	public static String mappingWarningMessage;
+	public static String nonExistingDataError;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1065,6 +1066,7 @@ public class Input {
 		DATFile3 = testData.getDATFile3();
 		indexingWarningMessage = testData.getIndexingWarningMessage();
 		mappingWarningMessage = testData.getMappingWarningMessage();
+		nonExistingDataError = testData.getNonExistingDataError();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
