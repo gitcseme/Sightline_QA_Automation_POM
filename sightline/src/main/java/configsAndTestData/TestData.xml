@@ -288,6 +288,7 @@
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
 	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
+	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -419,6 +420,11 @@
 	<sourceDocIdDB992>STC4_00000992</sourceDocIdDB992>
 	<NonDomainProject>Automation_NonDomain</NonDomainProject>
 	<emailAuthorDomain>EmailAuthorDomain</emailAuthorDomain>
+	<overlayOnly>Overlay Only</overlayOnly>
+	<PDFGen_10Docs>PP_PDFGen_10Docs</PDFGen_10Docs>
+	<PDF5DocsLst>PDFs - 5Docs.lst</PDF5DocsLst>
+	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
+	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>

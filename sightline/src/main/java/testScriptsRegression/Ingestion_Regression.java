@@ -682,7 +682,82 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
-	
+	/**  
+	 * @author Aathith
+	 * @throws InterruptedException 
+	 * //@TestCase id: 49547 : Verify Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	public void verifySearchablePdfCount() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		String projectName = Input.ingestionProjectName;
+		String ingestionType = Input.overlayOnly;
+		String sourceSystem = Input.sourceSystem;
+		String sourceLocation =  Input.sourceLocation;
+		String sourceFolder =  Input.PDFGen_10Docs;
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String datLoadFile = Input.newdateformat_5Docs;
+		String documentKey = Input.prodBeg;
+		String pdfLoadFile = Input.PDF5DocsLst;
+		String tiffLoadFile = Input.Images5DocsLst;
+		String dateFormat = Input.dateFormat;
+		
+		baseClass.stepInfo("Select project");
+		baseClass.selectproject(projectName);
+		driver.waitForPageToBeReady();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49547 ");
+		baseClass.stepInfo("###  Verify Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE ###");
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.nativigateToIngestionViaButton();
+		
+		boolean status= ingetion.verifyIngestionpublish(sourceFolder);
+		if(status) {
+		
+		baseClass.stepInfo("Select ingestion type and specify source loaction.");
+		ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,sourceFolder);
+		
+		baseClass.stepInfo("Select DAT delimiters.");
+		ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		
+		baseClass.stepInfo("Select DAT source.");
+		ingetion.selectDATSource(datLoadFile, documentKey);
+		
+		baseClass.stepInfo("Select MP3 varient source.");
+		ingetion.selectPDFSource(pdfLoadFile, false);
+		
+		ingetion.selectTIFFSource(tiffLoadFile, false, true);
+		
+		baseClass.stepInfo("Select Date and Time format.");
+		ingetion.selectDateAndTimeForamt(dateFormat);
+		
+		baseClass.stepInfo("Click on next button.");
+		ingetion.clickOnNextButton();
+						
+		baseClass.stepInfo("Click on preview and run button.");
+		ingetion.clickOnPreviewAndRunButton();
+		
+		baseClass.stepInfo("Select all options from filter by dropdown.");
+		ingetion.selectAllOptionsFromFilterByDropdown();
+		
+		baseClass.stepInfo("Create ingestion to cataloged stage");
+		ingetion.ingestionCreationToCatalogedStage();
+		
+		baseClass.stepInfo("cataloged stage to Copied stage");
+		ingetion.IngestionCatlogtoCopyingOrIndex(dateFormat);
+		
+		baseClass.stepInfo("Verify count of searchable pdf");
+		ingetion.searchablePdfCountCheck();
+		}
+		
+		baseClass.passedStep("Verified Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE");
+		loginPage.logout();
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

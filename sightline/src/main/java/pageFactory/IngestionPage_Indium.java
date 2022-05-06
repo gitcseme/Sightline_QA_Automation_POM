@@ -1078,6 +1078,24 @@ public class IngestionPage_Indium {
 	public Element unPunlishSearch(String savedSearch) {
 		return driver.FindElementByXPath("//table[@id='UnpublishHistoryDatatable']//tbody//tr//td[text()='"+savedSearch+"']/following-sibling::td//a[text()='Inprogress']");
 	}
+	//Add by Aathith
+	public Element getRefeshBtn() {
+		return driver.FindElementByXPath("//a[@id='refresh']");
+	}
+	public Element getIngestions() {
+		return driver.FindElementByXPath("//a[@title='Ingestions']");
+	}
+	public Element generateSearchablePdfSourceDoc() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[9]/td[2]");
+	}
+	public Element generateSearchablePdfCopiedDoc() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[9]/td[3]");
+	}
+	public Element getInestionPage() {
+		return driver.FindElementByXPath("//a[@name='Ingestion']");
+	}
+	
+	
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -9024,6 +9042,7 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 						base.stepInfo("There is no Ingestions to delete");
 					}
 				}
+
 			
 			
 			/**
@@ -9158,4 +9177,150 @@ public void verifyInprogressStatusByclickOnRollback(String ingestionName) {
 		    	base.passedStep("Ingestion performed successfully");
 			}
 			
+
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @return
+			 * @throws InterruptedException
+			 * @Description perform action ingestion to cataloge to copied stage
+			 */
+			public String overlayIngestionCreationToCatalogedtoCopiedorIndex() throws InterruptedException {
+				String title = null;
+					String titleCar = null;
+					int count = 0;
+					driver.waitForPageToBeReady();
+					base.waitForElement(getStatus());
+					for(int i=1;i<500;i++) {
+						driver.waitForPageToBeReady();
+						getIngestionTitle(count+1).ScrollTo();
+						getIngestionTitle(count+1).isElementAvailable(15);
+						title = getIngestionTitle(count+1).GetAttribute("title").trim();
+						getStatus(count+1).isElementAvailable(15);
+						String status = getStatus(count+1).getText().trim();
+						driver.waitForPageToBeReady();
+						for(int j=1;j<50;j++) {
+							titleCar = getIngestionTitle(j).GetAttribute("title").trim();
+							getIngestionTitle(j).ScrollTo();
+							if(titleCar.equalsIgnoreCase(title)) {
+								if(j!=1) {
+									count=j-1;
+								}
+								break;
+							}else {
+								driver.scrollingToBottomofAPage();
+							}
+						}
+						if(status.contains("In Progress")) {
+							driver.scrollPageToTop();
+							getRefeshBtn().isElementAvailable(15);
+							driver.waitForPageToBeReady();
+							driver.waitForPageToBeReady();
+							getRefeshBtn().waitAndClick(10);
+							driver.waitForPageToBeReady();
+						}
+						if(status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
+							base.passedStep("Ingestion completed till cataloged stage");
+							IngestionCatlogtoCopyingOrIndex(title);
+							break;
+						}
+						if(status.contains("Copied") && titleCar.equalsIgnoreCase(title)) {
+							base.passedStep("Ingestion completed till cataloged stage");
+							break;
+						}
+						if(status.contains("Indexed") && titleCar.equalsIgnoreCase(title)) {
+							base.passedStep("Ingestion completed till cataloged stage");
+							break;
+						}
+						if(status.contains("Approved") && titleCar.equalsIgnoreCase(title)) {
+							base.passedStep("Ingestion completed till cataloged stage");
+							break;
+						}
+					}
+				return title;
+			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @param dataset
+			 * @throws InterruptedException
+			 * @Description perform action catalog to copied stage
+			 */
+			public void IngestionCatlogtoCopyingOrIndex(String dataset) throws InterruptedException {
+				
+				
+				//catlogging
+				for(int i=0;i<60;i++) {
+					base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+					
+					if(status.contains("Cataloged")) {
+						base.passedStep("Cataloged completed");
+						break;
+					}
+					else if (status.contains("In Progress")) {
+						base.waitTime(5);
+						getRefeshBtn().waitAndClick(10);
+					}
+					else if (status.contains("Failed")){
+						base.failedStep("Ingestion Failed");
+					}
+				}
+				
+				//copy
+				getRefeshBtn().waitAndClick(10);
+			    getIngestionDetailPopup(1).waitAndClick(10);
+			    driver.Manage().window().fullscreen();
+				driver.scrollingToElementofAPage(getRunCopying());
+				base.waitForElement(getRunCopying());
+			    getRunCopying().waitAndClick(10);
+			    
+			    if(getCloseButton().isElementAvailable(2)) {
+			    getCloseButton().waitAndClick(10);}
+			    UtilityLog.info(dataset+"'s copying is started.");
+				
+			    driver.waitForPageToBeReady();
+			    getRefeshBtn().waitAndClick(10);
+				for(int i=0;i<70;i++) {
+					base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+				
+					if(status.contains("Copied")) {
+						base.passedStep("Copied completed");
+						break;
+					}
+					else if (status.contains("In Progress")) {
+						base.waitTime(5);
+						getRefeshBtn().waitAndClick(5);
+					}
+					else if (status.contains("Indexed")){
+						base.passedStep("Indexed completed");
+					}
+					else if (status.contains("Failed")){
+						base.failedStep("Ingestion Failed");
+					}
+				}
+			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @Description Nativigate Ingestion page using button
+			 */
+			public void nativigateToIngestionViaButton() {
+				driver.waitForPageToBeReady();
+				getIngestions().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				getInestionPage().waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * @Description Searchable pdf count verification
+			 */
+			public void searchablePdfCountCheck() {
+				driver.waitForPageToBeReady();
+				getIngestionDetailPopup(1).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				String source=generateSearchablePdfSourceDoc().getText().trim();
+				String copied =generateSearchablePdfCopiedDoc().getText().trim();
+				base.compareTextViaContains(source, copied, "Both count is consider on Ingestion Execution detail pop up", "verification failed");
+			}
+
 }

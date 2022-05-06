@@ -3450,8 +3450,7 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To Verify OCRing of Text component of the production, only for Redacted Documents when \"OCR non-redacted docs... \" option is selected in Production-text component");
 		UtilityLog.info(Input.prodPath);
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
 		tagname = "Tag" + Utility.dynamicNameAppender();
         foldername="Folder"+Utility.dynamicNameAppender();
         String prefixID = "A_" + Utility.dynamicNameAppender();
@@ -3466,7 +3465,11 @@ public class Production_Page_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
-		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		baseClass.waitTime(2);
+		BaseClass baseClass=new BaseClass(driver);
+		baseClass.impersonatePAtoRMU();
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.ViewInDocViewWithoutPureHit();
 		
