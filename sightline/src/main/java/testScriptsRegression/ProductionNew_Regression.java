@@ -586,8 +586,8 @@ public class ProductionNew_Regression {
 				+ "please specify the redaction tags for which you want redactions burned in the production.";
 		base.stepInfo("Test case Id: RPMXCON-56106-production Sprint 04");
 	    UtilityLog.info(Input.prodPath);
-	    page.navigateToProductionPage();
 	    ProductionPage page = new ProductionPage(driver);
+	    page.navigateToProductionPage();
         productionname = "p" + Utility.dynamicNameAppender();
         page.selectingDefaultSecurityGroup();
         page.addANewProduction(productionname);
@@ -603,6 +603,8 @@ public class ProductionNew_Regression {
         base.clickButton(page.getclklinkSpecifyRedactionText());
         base.waitForElement(page.gettextRedactionPlaceHolder());
 		page.gettextRedactionPlaceHolder().SendKeys("");
+		page.getSelectCloseBtn().waitAndClick(10);
+		page.getEnableForNativelyToggle().waitAndClick(10);
 		driver.scrollPageToTop();
 		page.getComponentsMarkComplete().waitAndClick(5);
 		try {
@@ -628,8 +630,8 @@ public class ProductionNew_Regression {
 		String message="Technical Issue tags or corresponding placeholder text is missing in the Technical Issue Placeholdering of the TIFF/PDF section.";
 		base.stepInfo("Test case Id: RPMXCON-56102-production Sprint 04");
 	    UtilityLog.info(Input.prodPath);
-	    page.navigateToProductionPage();
 	    ProductionPage page = new ProductionPage(driver);
+	    page.navigateToProductionPage();
         productionname = "p" + Utility.dynamicNameAppender();
         page.selectingDefaultSecurityGroup();
         page.addANewProduction(productionname);
@@ -640,7 +642,9 @@ public class ProductionNew_Regression {
         page.getTIFF_EnableforPrivilegedDocs().Enabled();
         page.getTIFF_EnableforPrivilegedDocs().waitAndClick(5);	
         page.getbtnEnableForTechIssue().ScrollTo();
-		page.getbtnEnableForTechIssue().waitAndClick(5);			
+		page.getbtnEnableForTechIssue().waitAndClick(5);
+		page.getSelectCloseBtn().waitAndClick(10);
+		page.getEnableForNativelyToggle().waitAndClick(10);
     	driver.scrollPageToTop();
 		page.getComponentsMarkComplete().waitAndClick(5);
 		try {
@@ -1237,6 +1241,8 @@ public class ProductionNew_Regression {
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithMultiPage(tagname);
+		page.getSelectCloseBtn().waitAndClick(10);
+		page.getEnableForNativelyToggle().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
 		base.clickButton(page.getAdvancedTabInTIFF());
 		driver.waitForPageToBeReady();

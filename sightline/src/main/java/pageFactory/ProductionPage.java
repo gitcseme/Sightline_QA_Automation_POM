@@ -891,6 +891,10 @@ public class ProductionPage {
 		}
 	
 	// added by sowndariya
+		public Element getChkBoxNative_Multimedia() {
+			return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[5]");
+		}
+
 	public Element getEnableForNativelyToggle() {
 		return driver.FindElementByXPath("//input[@id='chkEnabledforNativeDocs']//..//i");
 	}
@@ -1521,7 +1525,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver
-				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[1]");
 	}
 
 	public Element getDefaultTag() {
@@ -6919,7 +6923,7 @@ public class ProductionPage {
 		getConfirmProductionCommit().ScrollTo();
 		getConfirmProductionCommit().waitAndClick(10);
 
-//		base.CloseSuccessMsgpopup();
+		base.CloseSuccessMsgpopup();
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
@@ -6951,6 +6955,7 @@ public class ProductionPage {
 		
 		return Doc;
 	}
+
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj.Modified on 03/08/2022
@@ -9809,41 +9814,33 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingNativeSectionWithoutSelectingTag() throws InterruptedException {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNativeChkBox().Enabled();
-			}
-		}), Input.wait30);
-		getNativeChkBox().Click();
+		
+//		base.waitForElement(getNativeChkBox());
+//		getNativeChkBox().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNativeTab().Enabled();
-			}
-		}), Input.wait30);
-		getNativeTab().Click();
+		base.waitForElement(getNativeTab());
+		getNativeTab().waitAndClick(10);
+		
+		getChkBoxNative_SpreadSheets().waitAndClick(10);
+		getChkBoxNative_Multimedia().waitAndClick(10);
 
+		getSelectCloseBtn().waitAndClick(10);
+		getEnableForNativelyToggle().waitAndClick(10);
 		driver.scrollPageToTop();
-		base.waitTillElemetToBeClickable(getMarkCompleteLink());
-		getMarkCompleteLink().Enabled();
+		base.waitForElement(getMarkCompleteLink());
 		getMarkCompleteLink().waitAndClick(10);
 
-		Thread.sleep(5000);
-
+		driver.scrollingToBottomofAPage();
 		String ExpectedMsg = "To export natives, you must select at least a file group type or a tag in the Native section.";
+		base.waitForElement(getErrorMsgPopup());
 		String ActualMsg = getErrorMsgPopup().getText();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getErrorMsgPopup().Visible();
-			}
-		}), Input.wait30);
 		Assert.assertEquals(ActualMsg, ExpectedMsg);
 
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
 
 	}
-
+	
 	/**
 	 * @authorSowndarya.velraj.Modified on 01/19/22
 	 * @Description : Method to save a production as template and verifying it in
