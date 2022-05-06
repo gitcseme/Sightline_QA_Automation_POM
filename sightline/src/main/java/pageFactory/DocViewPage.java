@@ -3456,6 +3456,9 @@ public class DocViewPage {
 	public Element getDocview_DefaultTextArea() {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]");
 	}
+	public Element getDefaultViewerFileType() {
+		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*");
+	}
 	
 	public DocViewPage(Driver driver) {
 
