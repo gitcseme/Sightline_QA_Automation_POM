@@ -1138,7 +1138,77 @@ public class Ingestion_Regression01 {
 		// Rollback Ingestion
 		ingestionPage.rollBackIngestion();
 	}
-
+	/**
+	*Author :Brundha Test Case Id:RPMXCON-48170
+	* Description :Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files
+	* @throws InterruptedException
+	*/
+	@Test(enabled = true,  groups = {"regression" },priority =38)
+	public void verifyingMp3FileDocumentCount() throws InterruptedException  {
+		baseClass.stepInfo("Test case Id: RPMXCON-48170");
+		baseClass.stepInfo("Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files"); 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		System.out.println(status);
+		
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo("addonly  ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,Input.sourceSystem,Input.DATFile1,Input.NativeFile, null,null,null,null,null,null);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch(Input.AutomationAllSources);
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		baseClass.waitForElement(doc.getSelectDropDown());
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.audioPlayerReady);
+		doc.verifyingTheMp3FileAndOtherFile(0);
+		int Doc=Integer.valueOf(Input.pageCount);
+		if(!doc.getDocCount(Doc).isDisplayed()) {
+			baseClass.passedStep("Document count is displayed as expected");
+			}else {
+			baseClass.failedStep("Document Count is not displayed as expecetd");
+			}
+		loginPage.logout();
+	}
+	
+	/**
+	*Author :Brundha Test Case Id:RPMXCON-49489
+	* Description :Verify error message when user tried to do Ingestion overlay for non-existing dataset
+	* @throws InterruptedException
+	*/
+	@Test(enabled = true,  groups = {"regression" },priority =39)
+	public void verfyingErrorMsgInIngestionPage() throws InterruptedException  {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49489");
+		baseClass.stepInfo("Verify error message when user tried to do Ingestion overlay for non-existing dataset"); 
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		System.out.println(status);
+		
+		System.out.println(status);
+		if(status==false) {
+		baseClass.stepInfo(" addonly ingestion with mapping field selection");
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
+		}
+			
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.verifyingErrorMsgInOverLayMethod();
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

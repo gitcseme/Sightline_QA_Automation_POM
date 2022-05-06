@@ -541,6 +541,7 @@ public class Input {
 	public static String emailAllDomain;
 	public static String validationData;
 	public static String ingestionPrjt;
+	public static String AutomationAllSources;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1321,6 +1322,7 @@ public class Input {
 		emailAllDomain=testData.getEmailAllDomain();
 		validationData=testData.getValidationData();
 		ingestionPrjt=testData.getIngestionPrjt();
+		AutomationAllSources=testData.getAutomationAllSources();
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 

@@ -9776,5 +9776,52 @@ public class IngestionPage_Indium {
 		getCloseButton().waitAndClick(10);
 
 	}
-
+	/**
+	 * @author:Brundha
+	 * @description: this method will verify error message for duplicate ingestion
+	 */
+	public void verifyingErrorMsgInOverLayMethod() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+    	getFilterByFAILED().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCATALOGED().waitAndClick(10);
+    	
+    	getRefreshButton().waitAndClick(5);
+    	
+    	for (int i = 0; i < 50; i++) {
+    		base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+			if (status.contains("Cataloged")) {
+				base.failedMessage("Ingestion is not present in published state");
+				break;
+			}else if (status.contains("Failed")) {
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(errorCountCatalogingStage());
+			    errorCountCatalogingStage().waitAndClick(10);
+			    base.waitTime(3);
+			    String ErrorMsg =ingestionErrorNote(1).getText();
+			   String ExpectedText="SourceDocID provided in the overlay for this doc is not available in the database.";
+			    if(ErrorMsg.contains(ExpectedText) ) {
+					base.passedStep("Error Message is displayed as expected");
+				}
+				else {
+					System.out.println("Error Message is not displayed as expecetd");
+				}
+				break;
+			}else{
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(10);
+			}	
+	}
+    getCloseButton().waitAndClick(10);
+		
+	}
 }
