@@ -22,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import net.lingala.zip4j.ZipFile;
@@ -252,6 +253,35 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+
+	public Element getAnalysSkipDocFolder_DD() {
+		return driver.FindElementByXPath("//li[contains(@class,' jstree-closed')]//i[@class='jstree-icon jstree-ocl']");
+	}
+
+	public ElementCollection getAnalysSkipDocFolder_List() {
+		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li");
+	}
+
+	public Element getAnalysisTransTextOfNaive() {
+		return driver.FindElementByXPath("//div[@id='nativeDiv']//p");
+	}
+
+	public Element getAnalysisIgnoreBtn() {
+		return driver.FindElementByXPath("//input[@id='ignoreRadioButton']//parent::label");
+	}
+
+	public Element getAnalysisSkipDocBtn() {
+		return driver.FindElementByXPath("//input[@id='skipDocumentsRadioButton']//parent::label");
+	}
+
+	public Element getAnalysisPrintTranBtn() {
+		return driver.FindElementByXPath("//input[@id='printTransRadioButton']//parent::label");
+	}
+
+	public Element getAnalysisNativeBtn() {
+		return driver.FindElementByXPath("//input[@id='printNativeRadioButton']//parent::label");
+	}
+
 	public Element getToggleButton() {
 		return driver.FindElementByXPath("(//i[@class='pull-left'])[last()]");
 	}
@@ -399,10 +429,11 @@ public class BatchPrintPage {
 		return driver.FindElementByXPath(
 				"//div[@id='mediaFilePlaceHolderHtml']/div/p[contains(text(),'docs are media files. These will be skipped, as they are not printable')]");
 	}
-	public Element getDownloadBatchFile(int id) {
-		return driver.FindElementByXPath("//table[@id='dt_basic']//tbody//td[text()[normalize-space()='"+id+"']]//following-sibling::td[8]");
-	}
 
+	public Element getDownloadBatchFile(int id) {
+		return driver.FindElementByXPath(
+				"//table[@id='dt_basic']//tbody//td[text()[normalize-space()='" + id + "']]//following-sibling::td[8]");
+	}
 
 	public BatchPrintPage(Driver driver) {
 
@@ -1177,17 +1208,17 @@ public class BatchPrintPage {
 
 	/**
 	 * @Modified By Jeevitha
-	 * @param searchname  : Search Name of Source Selection
+	 * @param searchname             : Search Name of Source Selection
 	 * @param orderCriteria
 	 * @param orderType
-	 * @param production  : If Production to be Selected
-	 * @param prodName  : Production Name FOr Selection
-	 * @param DisableSlipSheetToggle  :  If Sip Sheet Toggle to be Disabled
-	 * @param randomProd  : Random Production To be Selected 
+	 * @param production             : If Production to be Selected
+	 * @param prodName               : Production Name FOr Selection
+	 * @param DisableSlipSheetToggle : If Sip Sheet Toggle to be Disabled
+	 * @param randomProd             : Random Production To be Selected
 	 * @throws InterruptedException
 	 */
 	public void BatchPrintWithProduction(String searchname, String orderCriteria, String orderType, boolean production,
-			String prodName, boolean DisableSlipSheetToggle,boolean randomProd) throws InterruptedException {
+			String prodName, boolean DisableSlipSheetToggle, boolean randomProd) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1222,13 +1253,13 @@ public class BatchPrintPage {
 			}), Input.wait30);
 			getProductionRadioButton().waitAndClick(5);
 
-			if(randomProd) {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectProduction().Enabled();
-				}
-			}), Input.wait30);
-			getSelectProduction().selectFromDropdown().selectByIndex(1);
+			if (randomProd) {
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSelectProduction().Enabled();
+					}
+				}), Input.wait30);
+				getSelectProduction().selectFromDropdown().selectByIndex(1);
 			}
 
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -1237,7 +1268,7 @@ public class BatchPrintPage {
 				}
 			}), Input.wait30);
 			getSelectProduction().selectFromDropdown().selectByVisibleText(prodName);
-			
+
 		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2340,7 +2371,7 @@ public class BatchPrintPage {
 		}
 		softAssert.assertAll();
 	}
-	
+
 	/**
 	 * @Author Baskar
 	 * @Description :filling and generate the batch print
@@ -2368,11 +2399,11 @@ public class BatchPrintPage {
 		base.VerifySuccessMessage(
 				"Successfully initiated the batch print. You will be prompted with notification once completed.");
 	}
-	
+
 	/**
 	 * @Author Baskar
 	 * @Description :refreshing untill batch print
-	 * @param refreshCount   :export Filen Name
+	 * @param refreshCount :export Filen Name
 	 */
 	public void refreshUntillComplete(int refreshCount) {
 		// verifying In Background ask PAge
@@ -2400,8 +2431,7 @@ public class BatchPrintPage {
 				"Batch Print Status Is Not As Expected");
 
 	}
-	
-	
+
 	/**
 	 * @Author Indium-Baskar
 	 * @Description : Downloaded latest batch print file
@@ -2429,4 +2459,100 @@ public class BatchPrintPage {
 		return fileName;
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description  : Filling Analysis Tab
+	 * @param clickNative
+	 * @param clickPrintTran
+	 * @param clickSkipDoc
+	 * @param clickIgnore
+	 */
+	public void fillingAnalysisTab(boolean clickNative, boolean clickPrintTran, boolean clickSkipDoc,
+			boolean clickIgnore) {
+		SoftAssert softassert = new SoftAssert();
+
+		base.waitForElement(getPageHeader());
+		String Header = getPageHeader().getText();
+		softassert.assertEquals(Header, "Analysis");
+
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+
+		if (getAnalysisTransTextOfNaive().isElementAvailable(15)) {
+			String actualMsg = getAnalysisTransTextOfNaive().getText();
+			String expectedMsg = " documents that have one or more translated text of the natives. You must select what you want to do with these ";
+
+			String passMsg = "Displayed message : " + actualMsg;
+			String failMsg = "Expected message is Not Displayed";
+			base.compareTextViaContains(actualMsg, expectedMsg, passMsg, failMsg);
+		}
+
+		boolean nativeBtn = getAnalysisNativeBtn().isElementPresent();
+		if (nativeBtn) {
+			String nativeRadioBtn = getAnalysisNativeBtn().getText();
+			System.out.println(nativeRadioBtn + " : RadioBtn is Present");
+			base.passedStep(nativeRadioBtn + " : RadioBtn is Present");
+
+			if (clickNative) {
+				getAnalysisNativeBtn().waitAndClick(10);
+				base.stepInfo(nativeRadioBtn + " : RadioBtn is Clicked");
+			}
+		} else {
+			base.failedStep("NAtive Radio Button is Not Dispalyed");
+		}
+
+		boolean printTranBtn = getAnalysisPrintTranBtn().isElementPresent();
+		if (printTranBtn) {
+			String printTranRadioBtn = getAnalysisPrintTranBtn().getText();
+			System.out.println(printTranRadioBtn + " : RadioBtn is Present");
+			base.passedStep(printTranRadioBtn + " : RadioBtn is Present");
+
+			if (clickPrintTran) {
+				getAnalysisPrintTranBtn().waitAndClick(10);
+				base.stepInfo(printTranRadioBtn + " : RadioBtn is Clicked");
+			}
+		} else {
+			base.failedStep("print translated text Radio Button is Not Dispalyed");
+		}
+
+		boolean ignoreBtn = getAnalysisIgnoreBtn().isElementPresent();
+		if (ignoreBtn) {
+			String ignoreRadioBtn = getAnalysisIgnoreBtn().getText();
+			System.out.println(ignoreRadioBtn + " : RadioBtn is Present");
+			base.passedStep(ignoreRadioBtn + " : RadioBtn is Present");
+
+			if (clickIgnore) {
+				getAnalysisIgnoreBtn().waitAndClick(10);
+				base.stepInfo(ignoreRadioBtn + " : RadioBtn is Clicked");
+			}
+		}
+
+		boolean skipDocBtn = getAnalysisSkipDocBtn().isElementPresent();
+		if (skipDocBtn) {
+			String skipDocRadioBtn = getAnalysisSkipDocBtn().getText();
+			System.out.println(skipDocRadioBtn + " : RadioBtn is Present");
+			base.passedStep(skipDocRadioBtn + " : RadioBtn is Present");
+
+			if (clickSkipDoc) {
+				getAnalysisSkipDocBtn().waitAndClick(10);
+				base.stepInfo(skipDocRadioBtn + " : RadioBtn is Clicked");
+				driver.waitForPageToBeReady();
+
+				if (getAnalysSkipDocFolder_DD().isElementAvailable(15)) {
+					getAnalysSkipDocFolder_DD().waitAndClick(10);
+				}
+					if (getAnalysSkipDocFolder_List().isElementAvailable(10)) {
+						base.passedStep("All Created Folders is Displayed");
+					} else {
+						base.failedStep("All Created Folders is Not Displayed");
+					}
+				
+			}
+		} else {
+			base.failedStep("Skip document Radio Button is Not Dispalyed");
+		}
+
+		softassert.assertAll();
+
+	}
 }

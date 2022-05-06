@@ -100,7 +100,7 @@ public class BatchPrint_Regression1 {
 
 		baseClass.stepInfo("Save searched content");
 		search.saveSearch(searchname);
-		
+
 		search.bulkFolderExisting(foldername);
 
 		// Generate Production
@@ -118,7 +118,8 @@ public class BatchPrint_Regression1 {
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Verify PDF file should be generated for the selected production set");
-		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType, true,productionname,false,false);
+		batchPrint.BatchPrintWithProduction(searchname, Input.orderCriteria, Input.orderType, true, productionname,
+				false, false);
 		loginPage.logout();
 
 	}
@@ -153,7 +154,8 @@ public class BatchPrint_Regression1 {
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Perform batch print by saved search");
-		batchPrint.BatchPrintWithProduction(searchnamePA, Input.orderCriteria, Input.orderType, false,null,true,false);
+		batchPrint.BatchPrintWithProduction(searchnamePA, Input.orderCriteria, Input.orderType, false, null, true,
+				false);
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -168,7 +170,8 @@ public class BatchPrint_Regression1 {
 		batchPrint = new BatchPrintPage(driver);
 
 		baseClass.stepInfo("Perform batch print by saved search");
-		batchPrint.BatchPrintWithProduction(searchnameRMU, Input.orderCriteria, Input.orderType, false,null,true,false);
+		batchPrint.BatchPrintWithProduction(searchnameRMU, Input.orderCriteria, Input.orderType, false, null, true,
+				false);
 
 		loginPage.logout();
 
@@ -632,6 +635,42 @@ public class BatchPrint_Regression1 {
 		// navigating through Batch Print Tabs
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.navigateAndVerifyBackBtn("tag", tagName, false);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that user can view the details of Basis for
+	 *              Printing.[RPMXCON-47795]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-47795", enabled = true, dataProvider = "Users", groups = {
+			"regression" }, priority = 11)
+	public void verifyAnalysisTab() throws InterruptedException {
+		String searchName = "Saerch" + utility.dynamicNameAppender();
+
+		SessionSearch search = new SessionSearch(driver);
+		batchPrint = new BatchPrintPage(driver);
+
+		// login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47795 BatchPrint");
+		baseClass.stepInfo("To verify that user can view the details of Basis for Printing.");
+
+		// creating tag
+		search.basicContentSearch(Input.searchString1);
+		search.saveSearch(searchName);
+
+		// Select Search 
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search", searchName, false);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+
+		//verify Analysis Tab
+		batchPrint.fillingAnalysisTab(false, false, true, false);
 
 		// logout
 		loginPage.logout();
