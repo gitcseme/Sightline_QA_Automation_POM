@@ -747,6 +747,8 @@ public class Input {
 	
 	//Added by Gopinath -28/09/2022
 	public static String telecom;
+	public static String regressionRun;
+	
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1501,6 +1503,7 @@ public class Input {
 		 
 		 //Added by Gopinath - 28/09/2022
 		 telecom =testData.getTelecom();
+		 regressionRun=testData.getRegressionRun();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

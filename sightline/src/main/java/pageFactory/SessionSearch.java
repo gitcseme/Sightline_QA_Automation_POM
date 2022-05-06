@@ -1777,6 +1777,13 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"(//div[@id='bgTask']//child::span[contains(text(),' Your Batch Print')])[position()=1]");
 	}
+	
+	public Element getMouseOver_ToTextBoxString(String inputString) {
+		return driver.FindElementByXPath("//span[text()='"+inputString+"']");
+	}
+	public Element getDeletePreviousSearch() {
+		return driver.FindElementByXPath("//a[@class='textboxlist-bit-box-deletebutton']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -11624,5 +11631,43 @@ public class SessionSearch {
 			softAssert.assertEquals(conceptualCount, conceptuallySimilarCountList.get(i));
 			softAssert.assertAll();
 		}
+	}
+	
+	/**
+	 * @Author Baskar
+	 * @Description: To Create Metadata basic search
+	 * @param metaDataField
+	 * @param val1--metadata value
+	 * @return
+	 */
+	public int metaDataSearchInBasicSearch(String metaDataField, String val1) {
+		// To make sure we are in basic search page
+		// Enter search string
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		getBasicSearch_MetadataBtn().waitAndClick(3);
+		base.waitForElement(getSelectMetaData());
+		// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().waitAndClick(3);
+		base.waitForElement(SelectFromDropDown(metaDataField));
+		SelectFromDropDown(metaDataField).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(3);
+		// Click on Search button
+		base.waitForElement(getSearchButton());
+		getSearchButton().waitAndClick(3);
+		base.waitForElement(getPureHitsCount());
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		getPureHitsCount().waitAndClick(15);
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
+		return pureHit;
 	}
 }

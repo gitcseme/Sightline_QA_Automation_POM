@@ -1011,5 +1011,30 @@ public class SecurityGroupsPage {
 		}
 		return securitygroupname;
 	}
+	
+	/**
+	 * @author Indium-Baskar date:5/05/2021 Modified date: 23/8/2021 Modified
+	 *         by:Baskar.
+	 * @Description:project field assign to security group
+	 */
+
+	public void addProjectFieldtoSG(String securityGroup,String projectTag) {
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		bc.waitForElement(getSecurityGroupList());
+		getSecurityGroupList().selectFromDropdown().selectByVisibleText(securityGroup);
+		bc.waitForElement(getProjectFieldLabel());
+		bc.waitTillElemetToBeClickable(getProjectFieldLabel());
+		getProjectFieldLabel().waitAndClick(10);
+		bc.waitForElement(getSG_ProjectField(projectTag));
+		bc.waitTillElemetToBeClickable(getSG_ProjectField(projectTag));
+		getSG_ProjectField(projectTag).waitAndClick(10);
+		bc.waitForElement(getSG_ProjectField_Right());
+		bc.waitTillElemetToBeClickable(getSG_ProjectField_Right());
+		getSG_ProjectField_Right().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getSG_ProjectFieldButton());
+		bc.waitTillElemetToBeClickable(getSG_ProjectFieldButton());
+		getSG_ProjectFieldButton().waitAndClick(10);
+	}
 
 }

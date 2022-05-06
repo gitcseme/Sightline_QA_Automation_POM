@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -1254,6 +1255,12 @@ public class DocListPage {
 
 	public Element getDocList_EmailName() {
 		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[4]");
+	}
+	public ElementCollection getAvailable_MetaData() {
+		return driver.FindElementsByXPath("//div[@class='listContainer']//strong");
+	}
+	public Element getDocList_CancelButton() {
+		return driver.FindElementById("btnColumnsCancel");
 	}
 
 	public DocListPage(Driver driver) {
@@ -4879,5 +4886,34 @@ public class DocListPage {
 
 	}
 
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for validating the email metadata
+	 * @param tag
+	 */
+	public void verifyTheMetaDataPresences() {
+			driver.waitForPageToBeReady();
+			List<String> metadataName = Arrays.asList("EmailAuthorNameAndAddress","EmailBCCNamesAndAddresses","EmailCCNamesAndAddresses","EmailToNamesAndAddresses");
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
+			System.out.println(availableMetaData.size());
+			int j;
+			String counts;
+			List<String> value = new ArrayList<String>();
+			for (j = 0; j < availableMetaData.size(); j++) {
+				System.out.println(availableMetaData.get(j).getText());
+				counts = availableMetaData.get(j).getText();
+				value.add(availableMetaData.get(j).getText());
+			}
+			value.retainAll(metadataName);
+			String availablevalue=String.join(",", value);
+			if (availablevalue.contentEquals(String.join(",", metadataName))) {
+				base.passedStep("Email metadata fields are available as per the assigned one in doclist page");
 
+			} else {
+				base.failedStep("email metadata fields not available");
+			}
+			getDocList_CancelButton().waitAndClick(5);
+	}
 }
