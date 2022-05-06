@@ -758,6 +758,69 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify that if "Generate Searchable PDF " check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49491");
+		baseClass.stepInfo("Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable("Tiff_Images");
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView("Tiff_Images");
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(docview.getDocview_DefaultTextArea().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file only displayed");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep("Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify that if PA ingested both Text's and TIFF's file,and the "Generate Searchable PDFs" option is set to False, then it should display TIFF in default viewer
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void VerifyTiffImageInDefautViewer() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		SoftAssert sofassertion = new SoftAssert();
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49511");
+		baseClass.stepInfo("Verify that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
+			String name =docview.getDefaultViewerFileType().GetAttribute("xlink:href");
+			System.out.println(name);
+			if(name.contains("image")) {
+				baseClass.passedStep("Tiff file only displayed in default viewer");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep("Verified that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
+		loginPage.logout();
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

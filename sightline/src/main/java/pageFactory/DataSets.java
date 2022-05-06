@@ -481,7 +481,7 @@ public class DataSets {
 		getDataSetActionBtn(DataSet).waitAndClick(10);
 		base.waitForElement(getDataSetViewInDocView(DataSet));
 		getDataSetViewInDocView(DataSet).waitAndClick(10);
-		base.stepInfo("DataSet is selected and viewed in DocList.");
+		base.stepInfo("DataSet is selected and viewed in docView.");
 		}catch(Exception e) {
 			e.printStackTrace();
 			base.failedStep("failed"+e.getMessage());
