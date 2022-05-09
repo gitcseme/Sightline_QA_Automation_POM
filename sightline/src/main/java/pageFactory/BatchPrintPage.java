@@ -23,6 +23,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import courgette.runtime.utils.FileUtils;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import net.lingala.zip4j.ZipFile;
@@ -2252,10 +2253,13 @@ public class BatchPrintPage {
 		base.waitForElement(getDownLoadLink());
 		getDownLoadLink().waitAndClick(10);
 
-		base.waitTime(25);
+//		base.waitTime(25);
 		File ab = new File(Input.fileDownloadLocation);
 		String testPath = ab.toString() + "\\";
 
+		//wait untill file download is complete
+		base.waitUntilFileDownload();
+		
 		// base.csvReader();
 		ReportsPage report = new ReportsPage(driver);
 		File a = report.getLatestFilefromDir(testPath);
@@ -2555,4 +2559,21 @@ public class BatchPrintPage {
 		softassert.assertAll();
 
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Disable slipsheet toggle 
+	 * @param Next
+	 */
+	public void disableSlipSheet(boolean Next) {
+		base.waitForElement(getToggleButton());
+		getToggleButton().waitAndClick(5);
+		
+		base.passedStep("Disables Slipsheet Toggle");
+
+		if (Next) {
+			navigateToNextPage(1);
+		}
+	}
+	
 }
