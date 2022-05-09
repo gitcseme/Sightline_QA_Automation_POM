@@ -520,6 +520,7 @@ public class Input {
 	public static String PDF5DocsLst;
 	public static String Images5DocsLst;
 	public static String newdateformat_5Docs;
+	public static String JanMultiPTIFF;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -1005,6 +1006,7 @@ public class Input {
 		PDF5DocsLst = testData.getPDF5DocsLst();
 		Images5DocsLst = testData.getImages5DocsLst();
 		newdateformat_5Docs = testData.getNewdateformat_5Docs();
+		JanMultiPTIFF = testData.getJanMultiPTIFF();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

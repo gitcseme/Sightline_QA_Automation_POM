@@ -1046,7 +1046,7 @@ public class IngestionPage_Indium {
 	}
 	
 	public Element getTotalPageCount() {
-		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_next']//preceding-sibling::li[@class='paginate_button ']//a");
+		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_info']//span[@class='text-primary']");
 	}
 
 	// Added by Gopinath - 28/02/2022
@@ -8314,7 +8314,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: Arunkumar Modified Date: 05/06/2022
+	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: Arunkumar Modified Date: 09/05/2022
 	 * @description: verify Ingestion publish
 	 */
 	public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
@@ -8350,17 +8350,28 @@ public class IngestionPage_Indium {
 				return getTotalPageCount().Visible();
 			}
 		}), Input.wait30);
-		int count = Integer.parseInt(getTotalPageCount().getText());
+		String totalCount = getTotalPageCount().getText();
+		int pageCount =Integer.parseInt(getTotalPageCount().getText());
+		int count;
+		if ((String.valueOf(totalCount)).contains("0")) {
+			 count =Integer.parseInt(totalCount)/10;
+		}
+		else if(pageCount<10) {
+			count=1;
+		}
+		else {
+			count =(Integer.parseInt(totalCount)/10)+1;
+		}
+		System.out.println(count);
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
-			// driver.waitForPageToBeReady();
-			String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
 			
 			if (getAllIngestionName(dataset).isElementAvailable(5)) {
 				status = true;
 				base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				break;
-			} else if(!getAllIngestionName(dataset).isElementAvailable(5) && nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")) {
+			} else if(!getAllIngestionName(dataset).isElementAvailable(5) && count==i) {
+				status = false;
 				base.stepInfo("Ingestion not found");
 				break;	
 			}
