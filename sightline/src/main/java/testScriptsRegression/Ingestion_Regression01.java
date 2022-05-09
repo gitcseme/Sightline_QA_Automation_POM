@@ -1077,10 +1077,12 @@ public class Ingestion_Regression01 {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47402");
-		baseClass.stepInfo("To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
+		baseClass.stepInfo(
+				"To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.ingestionCatalogging();
-		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		loginPage.logout();
 
 	}
@@ -1106,12 +1108,13 @@ public class Ingestion_Regression01 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data", Input.datLoadFile1, Input.textFile1,Input.documentKey);
-		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-		ingestionPage.approveIngestion(1);
-		ingestionPage.navigateToAnalyticsPage();
-		ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("Mapped Data", Input.datLoadFile1,
+					Input.textFile1, Input.documentKey);
+			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		ingestionPage.verifyTotalDocsIngestedWithPurehitCount();
 		loginPage.logout();
@@ -1139,11 +1142,11 @@ public class Ingestion_Regression01 {
 		ingestionPage.rollBackIngestion();
 	}
 
-	
-	
 	/**
-	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49466 
-	 * Description :Verify error message if the source system is matching and if the doc ID is not available in the database 
+	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test
+	 * Case Id:RPMXCON-49466 Description :Verify error message if the source system
+	 * is matching and if the doc ID is not available in the database
+	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 35)
@@ -1155,31 +1158,36 @@ public class Ingestion_Regression01 {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49466");
-		baseClass.stepInfo("Verify error message if the source system is matching and if the doc ID is not available in the database");
+		baseClass.stepInfo(
+				"Verify error message if the source system is matching and if the doc ID is not available in the database");
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("TRUE", Input.datLoadFile1, Input.textFile1,Input.documentKey);
-		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-		ingestionPage.approveIngestion(1);
-		ingestionPage.navigateToAnalyticsPage();
-		ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("TRUE", Input.datLoadFile1, Input.textFile1,
+					Input.documentKey);
+			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid not available
-		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.verifyNonExistingDatasetErrorMessage();
-		// Rollback 
+		// Rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49467 
-	 * Description :Verify error message displays if adding same source Doc ID which is already exists in the DB 
+	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test
+	 * Case Id:RPMXCON-49467 Description :Verify error message displays if adding
+	 * same source Doc ID which is already exists in the DB
+	 * 
 	 * @throws InterruptedException
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 36)
@@ -1191,48 +1199,53 @@ public class Ingestion_Regression01 {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49467");
-		baseClass.stepInfo("Verify error message displays if adding same source Doc ID which is already exists in the DB");
-		// perform add only ingestion 
+		baseClass.stepInfo(
+				"Verify error message displays if adding same source Doc ID which is already exists in the DB");
+		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
 		if (status == false) {
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
-		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
-		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
-		ingestionPage.approveIngestion(1);
-		ingestionPage.navigateToAnalyticsPage();
-		ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid is already available
-		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.verifyDuplicateIngestionErrorMessage();
-		// Rollback 
+		// Rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
 
 	}
 
 	/**
-	*Author :Brundha Test Case Id:RPMXCON-48170
-	* Description :Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files
-	* @throws InterruptedException
-	*/
-	@Test(enabled = true,  groups = {"regression" },priority =37)
-	public void verifyingMp3FileDocumentCount() throws InterruptedException  {
+	 * Author :Brundha Test Case Id:RPMXCON-48170 Description :Verify that
+	 * 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3
+	 * files
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 37)
+	public void verifyingMp3FileDocumentCount() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48170");
-		baseClass.stepInfo("Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files"); 
+		baseClass
+				.stepInfo("Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		
+
 		baseClass.selectproject(Input.ingestionProjectName);
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status= ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
 		System.out.println(status);
-		
+
 		System.out.println(status);
-		if(status==false) {
-		baseClass.stepInfo("addonly  ingestion with mapping field selection");
-		ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,Input.sourceSystem,Input.DATFile1,Input.NativeFile, null,null,null,null,null,null);
+		if (status == false) {
+			baseClass.stepInfo("addonly  ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder, Input.sourceSystem, Input.DATFile1,
+					Input.NativeFile, null, null, null, null, null, null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
@@ -1244,45 +1257,49 @@ public class Ingestion_Regression01 {
 		doc.getSelectDropDown().waitAndClick(10);
 		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.audioPlayerReady);
 		doc.verifyingTheMp3FileAndOtherFile(0);
-		int Doc=Integer.valueOf(Input.pageCount);
-		if(!doc.getDocCount(Doc).isDisplayed()) {
+		int Doc = Integer.valueOf(Input.pageCount);
+		if (!doc.getDocCount(Doc).isDisplayed()) {
 			baseClass.passedStep("Document count is displayed as expected");
-			}else {
+		} else {
 			baseClass.failedStep("Document Count is not displayed as expecetd");
-			}
+		}
 		loginPage.logout();
 	}
-	
+
 	/**
-	*Author :Brundha Test Case Id:RPMXCON-49489
-	* Description :Verify error message when user tried to do Ingestion overlay for non-existing dataset
-	* @throws InterruptedException
-	*/
-	@Test(enabled = true,  groups = {"regression" },priority =38)
-	public void verfyingErrorMsgInIngestionPage() throws InterruptedException  {
-		
+	 * Author :Brundha Test Case Id:RPMXCON-49489 Description :Verify error message
+	 * when user tried to do Ingestion overlay for non-existing dataset
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 38)
+	public void verfyingErrorMsgInIngestionPage() throws InterruptedException {
+
 		baseClass.stepInfo("Test case Id: RPMXCON-49489");
-		baseClass.stepInfo("Verify error message when user tried to do Ingestion overlay for non-existing dataset"); 
-		
+		baseClass.stepInfo("Verify error message when user tried to do Ingestion overlay for non-existing dataset");
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		
+
 		baseClass.selectproject(Input.ingestionPrjt);
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status= ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
 		System.out.println(status);
-		
+
 		System.out.println(status);
-		if(status==false) {
-		baseClass.stepInfo(" addonly ingestion with mapping field selection");
-		ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,Input.sourceSystem,Input.DATFile1,null, null,null,null,Input.MP3File,null,null);
+		if (status == false) {
+			baseClass.stepInfo(" addonly ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
+					null, null, null, null, Input.MP3File, null, null);
 		}
-			
-		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.verifyingErrorMsgInOverLayMethod();
 		loginPage.logout();
 	}
+
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-49507 Description :Verify in DocView,
 	 * the Default tab displays Searchable PDF generated from TIFF and Image tab
@@ -1314,7 +1331,8 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.TiffImagesFolder);
 			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
@@ -1375,7 +1393,8 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.TiffImagesFolder);
 			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
@@ -1392,7 +1411,46 @@ public class Ingestion_Regression01 {
 		DocViewPage doc = new DocViewPage(driver);
 		doc.verifyingDefaultTextInDocView();
 		loginPage.logout();
-}
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 06/05/2022 Modified date: NA Modified by: NA Test
+	 * Case Id:RPMXCON-48189 Description :To Verify Unpublish for Already published
+	 * Documents after Ingestion.
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 42)
+	public void verifyUnpublishForAlreadyPublishedDocsIngestion() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		savedSearch = new SavedSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48189");
+		baseClass.stepInfo("To Verify Unpublish for Already published Documents after Ingestion.");
+		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+
+		// Search ingestionName And bulkRelease
+		sessionSearch.basicSearchWithMetaDataQuery(Input.nativeMp3FileFormat,"IngestionName");
+	
+		// Saved the My SavedSearch
+		sessionSearch.saveSearch(BasicSearchName);
+		sessionSearch.bulkRelease(Input.securityGroup);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		
+		ingestionPage.navigteToUnpublished(BasicSearchName);
+		// verify Document Count is 0
+		int index = baseClass.getIndex(ingestionPage.getUnpublishTableHeader(), "DOC COUNT");
+		String docCount = ingestionPage.getUnpublishtableValues(BasicSearchName,index).getText();
+		System.out.println(docCount);
+		baseClass.stepInfo("After Unpublish DocCount : " + docCount);
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

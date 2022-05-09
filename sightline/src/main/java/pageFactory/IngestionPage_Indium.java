@@ -1044,7 +1044,7 @@ public class IngestionPage_Indium {
 	public Element getApproveMessageSecondOKButton() {
 		return driver.FindElementById("bot1-Msg2");
 	}
-	
+
 	public Element getTotalPageCount() {
 		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_info']//span[@class='text-primary']");
 	}
@@ -1161,6 +1161,16 @@ public class IngestionPage_Indium {
 
 	public Element getInestionPage() {
 		return driver.FindElementByXPath("//a[@name='Ingestion']");
+	}
+
+	// Added by Vijaya.Rani
+	public ElementCollection getUnpublishTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='UnpublishHistoryDatatable']/thead/tr/th");
+	}
+
+	public Element getUnpublishtableValues(String searchName, int coulumNumber) {
+		return driver.FindElementByXPath("//*[@id='UnpublishHistoryDatatable']/tbody/tr/td[text()='" + searchName
+				+ "']/../td[" + coulumNumber + "]");
 	}
 
 	public IngestionPage_Indium(Driver driver) {
@@ -7657,7 +7667,7 @@ public class IngestionPage_Indium {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
 			} else if (status.contains("Failed")) {
-				
+
 				driver.Manage().window().fullscreen();
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(errorCountCatalogingStage());
@@ -8314,7 +8324,8 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: Arunkumar Modified Date: 09/05/2022
+	 * @author: Vijaya.Rani Created Date: 29/04/2022 Modified by: Arunkumar Modified
+	 *          Date: 09/05/2022
 	 * @description: verify Ingestion publish
 	 */
 	public boolean verifyIngestionpublish(String dataset) throws InterruptedException {
@@ -8351,31 +8362,29 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		String totalCount = getTotalPageCount().getText();
-		int pageCount =Integer.parseInt(getTotalPageCount().getText());
+		int pageCount = Integer.parseInt(getTotalPageCount().getText());
 		int count;
 		if ((String.valueOf(totalCount)).contains("0")) {
-			 count =Integer.parseInt(totalCount)/10;
-		}
-		else if(pageCount<10) {
-			count=1;
-		}
-		else {
-			count =(Integer.parseInt(totalCount)/10)+1;
+			count = Integer.parseInt(totalCount) / 10;
+		} else if (pageCount < 10) {
+			count = 1;
+		} else {
+			count = (Integer.parseInt(totalCount) / 10) + 1;
 		}
 		System.out.println(count);
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
-			
+
 			if (getAllIngestionName(dataset).isElementAvailable(5)) {
 				status = true;
 				base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				break;
-			} else if(!getAllIngestionName(dataset).isElementAvailable(5) && count==i) {
+			} else if (!getAllIngestionName(dataset).isElementAvailable(5) && count == i) {
 				status = false;
 				base.stepInfo("Ingestion not found");
-				break;	
+				break;
 			}
-			
+
 			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
@@ -9439,7 +9448,7 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(5);
 		base.waitTime(3);
 
-		String totalDocsIngestedCount = getTotalIngestedCount().getText();		
+		String totalDocsIngestedCount = getTotalIngestedCount().getText();
 		SessionSearch search = new SessionSearch(driver);
 		int purehitCount = search.basicContentSearch(Input.searchStringStar);
 		System.out.println(purehitCount);
@@ -9447,20 +9456,18 @@ public class IngestionPage_Indium {
 			totalDocsIngestedCount = totalDocsIngestedCount.replace(",", "");
 			int ingestedCount = Integer.parseInt(totalDocsIngestedCount);
 			System.out.println(ingestedCount);
-			 if(ingestedCount==purehitCount) {
-			    	base.passedStep("Pure hit count showed the total number of documents ingested");
-			    }
-			  else {
-			    	base.failedStep("Pure hit count not showed the total number of documents ingested");
-			    }
+			if (ingestedCount == purehitCount) {
+				base.passedStep("Pure hit count showed the total number of documents ingested");
+			} else {
+				base.failedStep("Pure hit count not showed the total number of documents ingested");
+			}
 		} else {
 			int finalCount = Integer.parseInt(totalDocsIngestedCount);
-			 if(finalCount==purehitCount) {
-			    	base.passedStep("Pure hit count showed the total number of documents ingested");
-			    }
-			  else {
-			    	base.failedStep("Pure hit count not showed the total number of documents ingested");
-			    }
+			if (finalCount == purehitCount) {
+				base.passedStep("Pure hit count showed the total number of documents ingested");
+			} else {
+				base.failedStep("Pure hit count not showed the total number of documents ingested");
+			}
 		}
 	}
 
@@ -9729,10 +9736,11 @@ public class IngestionPage_Indium {
 		base.stepInfo("Ingestion started");
 
 	}
-	
+
 	/**
 	 * @author: Arun Created Date:05/05/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify error message for doc id not available in database
+	 * @description: this method will verify error message for doc id not available
+	 *               in database
 	 */
 	public void verifyNonExistingDatasetErrorMessage() {
 		driver.waitForPageToBeReady();
@@ -9787,52 +9795,85 @@ public class IngestionPage_Indium {
 		getCloseButton().waitAndClick(10);
 
 	}
+
 	/**
 	 * @author:Brundha
 	 * @description: this method will verify error message for duplicate ingestion
 	 */
 	public void verifyingErrorMsgInOverLayMethod() {
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCATALOGED().waitAndClick(10);
-    	
-    	getRefreshButton().waitAndClick(5);
-    	
-    	for (int i = 0; i < 50; i++) {
-    		base.waitTime(2);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCATALOGED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCATALOGED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+
+		for (int i = 0; i < 50; i++) {
+			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Cataloged")) {
 				base.failedMessage("Ingestion is not present in published state");
 				break;
-			}else if (status.contains("Failed")) {
+			} else if (status.contains("Failed")) {
 				getIngestionDetailPopup(1).waitAndClick(5);
 				base.waitForElement(errorCountCatalogingStage());
-			    errorCountCatalogingStage().waitAndClick(10);
-			    base.waitTime(3);
-			    String ErrorMsg =ingestionErrorNote(1).getText();
-			   String ExpectedText="SourceDocID provided in the overlay for this doc is not available in the database.";
-			    if(ErrorMsg.contains(ExpectedText) ) {
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitTime(3);
+				String ErrorMsg = ingestionErrorNote(1).getText();
+				String ExpectedText = "SourceDocID provided in the overlay for this doc is not available in the database.";
+				if (ErrorMsg.contains(ExpectedText)) {
 					base.passedStep("Error Message is displayed as expected");
-				}
-				else {
+				} else {
 					System.out.println("Error Message is not displayed as expecetd");
 				}
 				break;
-			}else{
+			} else {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
-			}	
+			}
+		}
+		getCloseButton().waitAndClick(10);
+
 	}
-    getCloseButton().waitAndClick(10);
-		
+	
+	/**
+	 * @author:Vijaya.Rani
+	 * @description: this method Pagination In Unpublishpage
+	 */
+	public void navigteToUnpublished(String savedSearch) {
+		List<WebElement> totalPages = totalPages().FindWebElements();
+		int totalPagesCount = totalPages.size() - 2;
+		for (int i = 0; i < totalPagesCount + 1; i++) {
+			driver.scrollingToBottomofAPage();
+			nextButton().isElementAvailable(10);
+			nextButton().waitAndClick(10);
+			if (disabledNextButton().isDisplayed()) {
+				base.waitTime(3);
+				unPunlishSearch(savedSearch).isElementAvailable(10);
+				if (unPunlishSearch(savedSearch).isDisplayed()) {
+					base.passedStep("Unpublish of '" + savedSearch + "' is in progess");
+				}
+				break;
+			}
+
+		}
+
 	}
 }
