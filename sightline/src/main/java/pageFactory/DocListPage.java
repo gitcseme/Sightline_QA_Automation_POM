@@ -1292,7 +1292,12 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//table[contains(@class,'table_Scroll table table-striped smart-form has-tickbox data-table-alt d')]//th");
 
 	}
-
+	public ElementCollection getColumValues(int colum) {
+		return driver.FindElementsByXPath("//*[@id='dtDocList']/tbody/tr/td["+colum+"]");
+		}
+	public ElementCollection getTableRowHeaderInDocList() {
+		return driver.FindElementsByXPath("//tr[@role='row']/th");
+		}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -5088,4 +5093,41 @@ public class DocListPage {
 		base.passedStep("only parent level document are finalize for assignment");
 		assertion.assertAll();
 	}
+	
+	/**
+	 * @author Brundha
+	 * @Description verifying email author address value
+	 */
+	public void emailAuthorAddressParentheses(String EmailAuthorAddress) {
+		int index = base.getIndex(getTableRowHeaderInDocList(),EmailAuthorAddress);
+		List<WebElement> element =getColumValues(index).FindWebElements();
+		for(WebElement ele:element) {
+		String text = ele.getText().trim();
+		if(text.contains("(")) {
+		base.failedStep(""+EmailAuthorAddress+" is with closed parentheses");
+		}
+		else {
+			System.out.println(""+EmailAuthorAddress+" is not with closed parentheses as expected");
+		}
+		}
+		base.passedStep(""+EmailAuthorAddress+" is not with closed parentheses as expected");
+		
+		}
+	/**
+	 * @author Brundha
+	 * 
+	 */
+	public void verifyingEmailMetadataInDocListPage(String EmailMetaData) {
+		int index = base.getIndex(getTableRowHeaderInDocList(),EmailMetaData);
+		List<WebElement> element =getColumValues(index).FindWebElements();
+		for(WebElement ele:element) {
+		String text = ele.getText().trim();
+		if(text.contains("(")) {
+		base.passedStep(""+EmailMetaData+" is with parentheses");
+		break;
+		}
+		}
+		
+		
+		}
 }
