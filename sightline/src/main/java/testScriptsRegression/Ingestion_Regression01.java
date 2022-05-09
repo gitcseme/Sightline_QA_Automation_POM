@@ -1283,7 +1283,116 @@ public class Ingestion_Regression01 {
 		ingestionPage.verifyingErrorMsgInOverLayMethod();
 		loginPage.logout();
 	}
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-49507 Description :Verify in DocView,
+	 * the Default tab displays Searchable PDF generated from TIFF and Image tab
+	 * should displays TIFF file
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 40)
+	public void verifyingTiffImageTabInDocViewPage() throws InterruptedException {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-49507");
+		baseClass.stepInfo(
+				"Verify in DocView, the Default tab displays Searchable PDF generated from TIFF and Image tab should displays TIFF file");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+
+		String ingestionType = "Add Only";
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String dateFormat = Input.dateFormat;
+
+		System.out.println(status);
+		if (status == false) {
+
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
+			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		}
+
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.TiffImages);
+		search.viewInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		doc.verifyingDefaultTextInDocView();
+		doc.clickOnImageTab();
+		for (int i = 0; i < 5; i++) {
+			doc.getImageTabOption(Input.TiffImagesFolder).isElementAvailable(10);
+			if (doc.getImageTabOption(Input.TiffImagesFolder).isDisplayed()) {
+				baseClass.passedStep("Tiff image is displayed as expected");
+				break;
+			} else {
+				baseClass.failedStep("Tiff image is not displayed as expected");
+			}
+
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-49704 Description :Verify if 'Generate
+	 * Searchable PDFs' is True for TIFF image and document has multi-page TIFF's
+	 * then searchable PDF's should be created successfully for any stitched TIFF's
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 41)
+	public void verifyingMultipleTiffImageTabInDocViewPage() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49704");
+		baseClass.stepInfo(
+				"Verify if 'Generate Searchable PDFs' is True for TIFF image and document has multi-page TIFF's then searchable PDF's should be created successfully for any stitched TIFF's");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+
+		String ingestionType = "Add Only";
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String dateFormat = Input.dateFormat;
+
+		System.out.println(status);
+		if (status == false) {
+
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
+			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		}
+
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.TiffImages);
+		search.viewInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		doc.verifyingDefaultTextInDocView();
+		loginPage.logout();
+}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
