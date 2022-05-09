@@ -1696,7 +1696,6 @@ public class Ingestion_Regression01 {
 
 	}
 
-
 	/**
 	 * Author :Vijaya.Rani date: 9/5/2022 Modified date: Modified by: Description
 	 * :To verify that total unique ingested document count displays unique count if
@@ -1738,15 +1737,25 @@ public class Ingestion_Regression01 {
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		boolean status1 = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status1);
-		// Perform overlay ingestion 
+		// Perform overlay ingestion
 		if (status1 == false) {
-    }
-	
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
+					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
+					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
+		}
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
+		baseClass.passedStep("Only Unique count should be displayed successfully");
+	}
+
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48188 Description :To Verify
 	 * AudioPlayerReady is set to 1 only if the document has an MP3 File Variant.
-	 * @throws InterruptedException
 	 * 
+	 * @throws InterruptedException
+	 *
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 50)
 	public void verifyingAudioPlayerReadyDocumentCount() throws InterruptedException {
@@ -1784,10 +1793,11 @@ public class Ingestion_Regression01 {
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-49566 Description :Verify Ingestion with
 	 * Email metadata if 'Email Name and Address' is in incorrect format
-	 *  @throws InterruptedException
+	 * 
+	 * @throws InterruptedException
 	 *
 	 */
-	 @Test(enabled = true, groups = { "regression" }, priority = 51)
+	@Test(enabled = true, groups = { "regression" }, priority = 51)
 	public void verifyingMetadataInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-49566");
 		baseClass.stepInfo("Verify Ingestion with Email metadata if 'Email Name and Address' is in incorrect format");
@@ -1801,21 +1811,12 @@ public class Ingestion_Regression01 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
-
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
 					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
 		}
-
-		// getting unique ingested count after overlay
-		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
-		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
-		baseClass.passedStep("Only Unique count should be displayed successfully");
-	}
-
-
-		String[] addEmailColumn = {"EmailAuthorName","EmailAuthorAddress"};
+		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.SearchMetaData(Input.metadataIngestion, Input.nativeFileName);
 		sessionSearch.ViewInDocList();
@@ -1827,8 +1828,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 
 	}
-
-	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
