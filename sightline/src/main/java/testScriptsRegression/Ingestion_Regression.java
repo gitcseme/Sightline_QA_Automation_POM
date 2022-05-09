@@ -1033,6 +1033,81 @@ public class Ingestion_Regression {
 		loginPage.logout();
 
 	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify that if "Generate Searchable PDFs" is TRUE, then Ingestion should generate successfully for Single page TIFF images.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	public void verifyMarTiffPdfandTiffInDocView() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49501");
+		baseClass.stepInfo("Verify that if \"Generate Searchable PDFs\" is TRUE, then Ingestion should generate successfully for Single page TIFF images.");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.SinglePageTIFFFolder);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.SinglePageTIFFFolder);
+			driver.waitForPageToBeReady();
+			docview.waitforFileType();
+			String filetype=docview.getFileType().getText().trim();
+			System.out.println(filetype);
+			if(filetype.contains("PDF")) {
+				baseClass.passedStep("PDF file only displayed in default viewer");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(docview.getDocViewImage().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file displayed in Tiff Tab");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep("Verified that if \"Generate Searchable PDFs\" is TRUE, then Ingestion should generate successfully for Single page TIFF images.");
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : To verify that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true', 
+	 * by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 20)
+	public void verifyMetaDataRequiredPDFGenereationIsTrue() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49364");
+		baseClass.stepInfo("To verify that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true',"
+				+ " by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.GNon_searchable_PDF_Load_file);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.GNon_searchable_PDF_Load_file);
+			driver.waitForPageToBeReady();
+			String value = docview.getMetadataFieldValueText("RequirePDFGeneration").getText().trim();
+			if(value.equals("1")) {
+				baseClass.passedStep("Meta data is displayed in Doc View 'RequirePDFGeneration' as set to 'true',");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+			
+		}
+		baseClass.passedStep("verified that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true',"
+				+ " by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View");
+		loginPage.logout();
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
