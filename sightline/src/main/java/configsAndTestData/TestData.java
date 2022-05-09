@@ -677,4 +677,6 @@ public class TestData {
 		public String regressionRun;
 		public String sourceBlank;
 		public String sourceParentBlank;
+		public String ingestionOneHour;
+		public String ingestionLessThanHour;
 }
