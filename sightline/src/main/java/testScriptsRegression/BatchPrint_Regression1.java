@@ -729,6 +729,7 @@ public class BatchPrint_Regression1 {
 		if (fileList.size() > 1) {
 			baseClass.passedStep("Second PDF file is generated since total page count is more than 250 pages.");
 		}
+		
 		// logout
 		loginPage.logout();
 	}
@@ -789,6 +790,7 @@ public class BatchPrint_Regression1 {
 
 		// logout
 		loginPage.logout();
+		
 	}
 
 	@DataProvider(name = "Users")

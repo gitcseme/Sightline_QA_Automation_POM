@@ -3304,4 +3304,27 @@ public class BaseClass {
 			UtilityLog.info(sw.toString());
 		}
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Wait until file download is complete
+	 */
+	public void waitUntilFileDownload() {
+		File dir = new File(Input.fileDownloadLocation);
+		long size , resize;
+		for(int i =0 ;i<1000;i++) {
+		size=org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
+		System.out.println("Initial Size : "+size);
+		waitTime(6);
+		resize=org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
+		System.out.println("Resized size: "+resize);
+
+		if(size == resize) {
+			System.out.println("File Downloaded Successfully");
+			stepInfo("File Downloaded Successfully");
+			break;			
+		}
+
+	}
+	}
 }

@@ -2253,11 +2253,11 @@ public class BatchPrintPage {
 		base.waitForElement(getDownLoadLink());
 		getDownLoadLink().waitAndClick(10);
 
-//		base.waitTime(25);
+		base.waitTime(5);
 		File ab = new File(Input.fileDownloadLocation);
 		String testPath = ab.toString() + "\\";
 
-		//wait untill file download is complete
+		//wait until file download is complete
 		base.waitUntilFileDownload();
 		
 		// base.csvReader();
@@ -2272,6 +2272,7 @@ public class BatchPrintPage {
 		System.out.println(fileName);
 		base.stepInfo("Downloade File  : " + fielPath);
 		return fileName;
+		
 	}
 
 	/**
