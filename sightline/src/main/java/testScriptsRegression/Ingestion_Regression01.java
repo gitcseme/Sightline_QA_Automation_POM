@@ -1696,6 +1696,7 @@ public class Ingestion_Regression01 {
 
 	}
 
+
 	/**
 	 * Author :Vijaya.Rani date: 9/5/2022 Modified date: Modified by: Description
 	 * :To verify that total unique ingested document count displays unique count if
@@ -1739,16 +1740,95 @@ public class Ingestion_Regression01 {
 		System.out.println(status1);
 		// Perform overlay ingestion 
 		if (status1 == false) {
+    }
+	
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48188 Description :To Verify
+	 * AudioPlayerReady is set to 1 only if the document has an MP3 File Variant.
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 50)
+	public void verifyingAudioPlayerReadyDocumentCount() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48188");
+		baseClass.stepInfo("To Verify AudioPlayerReady is set to 1 only if the document has an MP3 File Variant.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
+					null, null, null, null, Input.MP3File, null, null);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch(Input.searchStringStar);
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		baseClass.waitForElement(doc.getSelectDropDown());
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.audioPlayerReady);
+		int count = Integer.valueOf(Input.pageCount);
+		doc.verifyingTheMp3FileAndOtherFile(count);
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-49566 Description :Verify Ingestion with
+	 * Email metadata if 'Email Name and Address' is in incorrect format
+	 *  @throws InterruptedException
+	 *
+	 */
+	 @Test(enabled = true, groups = { "regression" }, priority = 51)
+	public void verifyingMetadataInDocListPage() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-49566");
+		baseClass.stepInfo("Verify Ingestion with Email metadata if 'Email Name and Address' is in incorrect format");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionPrjt);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		System.out.println(status);
+		if (status == false) {
+
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
 					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
 		}
+
 		// getting unique ingested count after overlay
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
 		baseClass.passedStep("Only Unique count should be displayed successfully");
 	}
+
+
+		String[] addEmailColumn = {"EmailAuthorName","EmailAuthorAddress"};
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData(Input.metadataIngestion, Input.nativeFileName);
+		sessionSearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+		doc.emailAuthorAddressParentheses("EMAILAUTHORADDRESS");
+		doc.verifyingEmailMetadataInDocListPage("EMAILAUTHORNAME");
+		loginPage.logout();
+
+	}
+
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
