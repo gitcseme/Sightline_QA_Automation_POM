@@ -668,4 +668,6 @@ public class TestData {
 	//Added by Gopinath -28/09/2022
 		public String telecom;
 		public String regressionRun;
+		public String sourceBlank;
+		public String sourceParentBlank;
 }

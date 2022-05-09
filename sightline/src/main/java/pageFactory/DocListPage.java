@@ -1262,6 +1262,36 @@ public class DocListPage {
 	public Element getDocList_CancelButton() {
 		return driver.FindElementById("btnColumnsCancel");
 	}
+	
+
+	public Element getDocList_BlankSource(String docBlank,int size) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='"+docBlank+"']//following-sibling::td[string-length()=0]//parent::tr/td['"+size+"']//label");
+
+	}
+	public Element getDocList_PlusIcon() {
+		return driver.FindElementByXPath("//td[@class=' details-control']");
+
+	}
+	public ElementCollection getDocList_ChildDocCount(int tableSize) {
+		return driver.FindElementsByXPath("(//div[@class='dataTables_wrapper form-inline no-footer'])[last()]//tr/td["+tableSize+"]");
+
+	}
+	public Element getDocList_NewAssgnDocCount() {
+		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+
+	}
+	public Element getDocList_FamilyMemberCount() {
+		return driver.FindElementById("CountTextFamilyMem");
+
+	}
+	public Element getDocList_Drp_DwnParentLevel() {
+		return driver.FindElementByXPath("//select[@id='sampleMethodNewAssignment']");
+
+	}
+	public ElementCollection getDocList_ChildHeader() {
+		return driver.FindElementsByXPath("//table[contains(@class,'table_Scroll table table-striped smart-form has-tickbox data-table-alt d')]//th");
+
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -4915,5 +4945,147 @@ public class DocListPage {
 				base.failedStep("email metadata fields not available");
 			}
 			getDocList_CancelButton().waitAndClick(5);
+	}
+	
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for validating the email metadata
+	 */
+	public void selectColumnMetaDataSelection() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
+			System.out.println(availableMetaData.size());
+			String[] eleValue = { "SourceParentDocID","SourceDocID"};
+			for (int j = 0; j < eleValue.length; j++) {
+				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+				getSelectAvailMetadata(eleValue[j]).ScrollTo();
+				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+	}
+	
+	
+	
+
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for selecting blank docs
+	 * @param docId
+	 * @param parentdocId
+	 * @param size
+	 * @param pureHit
+	 */
+	
+	public void selectingBlankDocs(String docId,String parentdocId,int size,int pureHit) {
+		SoftAssert assertion =new SoftAssert();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_BlankSource(docId,size));
+		getDocList_BlankSource(docId,size).waitAndClick(5);
+		base.waitForElement(getDocList_PlusIcon());
+		getDocList_PlusIcon().waitAndClick(5);
+		int tableSize=base.getIndex(getDocList_ChildHeader(),"DOCID");
+		int childDocCount=getDocList_ChildDocCount(tableSize).FindWebElements().size();
+		base.stepInfo("Parent child document count :" + childDocCount);
+		base.waitForElement(getDocList_BlankSource(parentdocId,size));
+		getDocList_BlankSource(parentdocId,size).waitAndClick(5);
+		base.waitForElement(getPopUpOkBtn());
+		getPopUpOkBtn().waitAndClick(5);
+		base.stepInfo("both child and parent document selected");
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(5);
+		base.waitForElement(getDocList_action_BulkAssignButton());
+		getDocList_action_BulkAssignButton().waitAndClick(5);
+		base.waitForElement(getNewFolderBtn());
+		getNewFolderBtn().waitAndClick(5);
+		base.waitForElement(getDocList_NewAssgnDocCount());
+		String docTotalCount=getDocList_NewAssgnDocCount().getText();
+		if (Integer.parseInt(docTotalCount)==pureHit) {
+			base.passedStep("Blank document for sourceparentdocid count and child are expected ones");
+		}
+		else {
+			base.failedStep("count are not same");
+		}
+		base.stepInfo("selecting parent level only docs");
+		base.waitForElement(getDocList_Drp_DwnParentLevel());
+		getDocList_Drp_DwnParentLevel().selectFromDropdown().selectByVisibleText("Parent Level Docs Only");
+		base.waitForElement(getContinueBtn());
+		getContinueBtn().waitAndClick(5);
+		base.waitForElement(getDocList_FamilyMemberCount());
+		String familyCount=getDocList_FamilyMemberCount().getText();
+		if (Integer.parseInt(familyCount)==childDocCount) {
+			base.passedStep("Child document count are same in family member");
+		}
+		else {
+			base.failedStep("count are not same");
+		}
+		base.waitForElement(getFinalCount());
+		String finalcount=getFinalCount().getText();
+		int totalDocsCount=pureHit-childDocCount;
+		assertion.assertEquals(totalDocsCount, Integer.parseInt(finalcount));
+		base.passedStep("only parent level document are finalize for assignment");
+		assertion.assertAll();
+	}
+	
+
+	/**
+	 * @author Malayala.Seenivasan
+	 * @description method for selecting blank docs based on source doc id
+	 * @param parentdocId
+	 * @param size
+	 * @param pureHit
+	 */
+	
+	public void selectingDocsBasedOnSources(String parentdocId,int size,int pureHit) {
+		SoftAssert assertion =new SoftAssert();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocList_BlankSource(parentdocId,size));
+		getDocList_BlankSource(parentdocId,size).waitAndClick(5);
+		base.waitForElement(getCancelButton());
+		getCancelButton().waitAndClick(5);
+		base.waitForElement(getDocList_PlusIcon());
+		getDocList_PlusIcon().waitAndClick(5);
+		int tableSize=base.getIndex(getDocList_ChildHeader(),"DOCID");
+		int childDocCount=getDocList_ChildDocCount(tableSize).FindWebElements().size();
+		base.stepInfo("Parent child document count :" + childDocCount);
+		base.waitForElement(getDocList_actionButton());
+		getDocList_actionButton().waitAndClick(5);
+		base.waitForElement(getDocList_action_BulkAssignButton());
+		getDocList_action_BulkAssignButton().waitAndClick(5);
+		base.waitForElement(getNewFolderBtn());
+		getNewFolderBtn().waitAndClick(5);
+		base.waitForElement(getDocList_NewAssgnDocCount());
+		String docTotalCount=getDocList_NewAssgnDocCount().getText();
+		int removingChild=pureHit-childDocCount;
+		if (Integer.parseInt(docTotalCount)==removingChild) {
+			base.passedStep("popup window count are same");
+		}
+		else {
+			base.failedStep("count are not same");
+		}
+		base.stepInfo("selecting parent level only docs");
+		base.waitForElement(getDocList_Drp_DwnParentLevel());
+		getDocList_Drp_DwnParentLevel().selectFromDropdown().selectByVisibleText("Parent Level Docs Only");
+		base.waitForElement(getContinueBtn());
+		getContinueBtn().waitAndClick(5);
+		base.waitForElement(getDocList_FamilyMemberCount());
+		String familyCount=getDocList_FamilyMemberCount().getText();
+		if (Integer.parseInt(familyCount)==childDocCount) {
+			base.passedStep("Child document count are same in family member");
+		}
+		else {
+			base.failedStep("count are not same");
+		}
+		base.stepInfo("Child document not selected,only parent doc selected");
+		base.waitForElement(getFinalCount());
+		String finalcount=getFinalCount().getText();
+		int totalDocsCount=pureHit-childDocCount;
+		assertion.assertEquals(totalDocsCount, Integer.parseInt(finalcount));
+		base.passedStep("only parent level document are finalize for assignment");
+		assertion.assertAll();
 	}
 }
