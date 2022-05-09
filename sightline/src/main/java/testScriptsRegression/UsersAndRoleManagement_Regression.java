@@ -2570,7 +2570,7 @@ public class UsersAndRoleManagement_Regression {
 	}
 
 	@Test(alwaysRun = true, dataProvider = "bulkDw", groups = { "regression" }, priority = 34)
-	public void last(String roll, String loginuser, String loginPass, String rollId,
+	public void bulkAssignDownload(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52703");
 		baseClass.stepInfo("To verify for user when 'Download Native' is Checekd/Unchecked from Bulk User Access Control");
