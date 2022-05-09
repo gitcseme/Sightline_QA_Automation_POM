@@ -6681,7 +6681,7 @@ public class DocView_Sprint2_Regression {
 		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
-		Utility utility = new Utility(driver);
+		
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.logout();
@@ -6716,7 +6716,7 @@ public class DocView_Sprint2_Regression {
 
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		Reporter.log("Logged in as User: " + Input.rmu2userName);
-		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.selectproject("Indium_Regressionrun");
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
@@ -6743,9 +6743,7 @@ public class DocView_Sprint2_Regression {
 
 		baseClass = new BaseClass(driver);
 		String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
-		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
-		Utility utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		loginPage.logout();
@@ -6778,7 +6776,7 @@ public class DocView_Sprint2_Regression {
 
 		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		Reporter.log("Logged in as User: " + Input.rmu2userName);
-		baseClass.selectproject("AutomationAdditionalDataProject");
+		baseClass.selectproject("Indium_Regressionrun");
 		baseClass.stepInfo("Succesfully Selected Project1");
 		sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.searchString1);
