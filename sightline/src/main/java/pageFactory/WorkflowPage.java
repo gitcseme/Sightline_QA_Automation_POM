@@ -389,6 +389,12 @@ public class WorkflowPage {
 	public Element getSecondFamilyOptions() {
 		return driver.FindElementByXPath("//input[@id='SecondFamily']//parent::label");
 	}
+	public Element getFamilyOption_Second() {
+		return driver.FindElementByXPath("//span[normalize-space(.)='Only act upon a candidate document if all of its family members are either (1) in the specified Source Universe OR (2) are already present in the target Assignment/Folder. This option will act upon all of the family members in the Source Universe (not those already in the target Assignment/Folder) in order to unite the whole family unit in the target Assignment/Folder.']");
+	}
+	public Element getFamilyOption_First() {
+		return driver.FindElementByXPath("//span[normalize-space(.)='Only act upon a candidate document if all of its family members are also present in the selected Source Universe. If this condition is met, then action the entire family unit along with the candidate document. If the condition is not met, do not action the family unit and do not action the candidate document.']");
+	}
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
