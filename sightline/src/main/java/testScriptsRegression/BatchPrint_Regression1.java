@@ -3,6 +3,8 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -648,14 +650,14 @@ public class BatchPrint_Regression1 {
 	 */
 	@Test(description = "RPMXCON-47795", enabled = true, dataProvider = "Users", groups = {
 			"regression" }, priority = 11)
-	public void verifyAnalysisTab() throws InterruptedException {
+	public void verifyAnalysisTab(String username, String password) throws InterruptedException {
 		String searchName = "Saerch" + utility.dynamicNameAppender();
 
 		SessionSearch search = new SessionSearch(driver);
 		batchPrint = new BatchPrintPage(driver);
 
-		// login as PAU
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// login as USER
+		loginPage.loginToSightLine(username, password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47795 BatchPrint");
 		baseClass.stepInfo("To verify that user can view the details of Basis for Printing.");
@@ -664,16 +666,131 @@ public class BatchPrint_Regression1 {
 		search.basicContentSearch(Input.searchString1);
 		search.saveSearch(searchName);
 
-		// Select Search 
+		// Select Search
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab("Search", searchName, false);
 		batchPrint.fillingBasisForPrinting(true, true, null);
 
-		//verify Analysis Tab
+		// verify Analysis Tab
 		batchPrint.fillingAnalysisTab(false, false, true, false);
 
 		// logout
 		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Validate BatchPrint - Generating single PDF file for corpus
+	 *              containing multiple files with same name but have different file
+	 *              extension[RPMXCON-50040]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-50040", enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 12)
+	public void generateSinglePdfForMultipleFile(String username, String password) throws InterruptedException, ZipException {
+		String tagName = "TAG" + utility.dynamicNameAppender();
+
+		SessionSearch search = new SessionSearch(driver);
+		batchPrint = new BatchPrintPage(driver);
+
+		// login as PAU
+		loginPage.loginToSightLine(username, password);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50040 BatchPrint");
+		baseClass.stepInfo(
+				"Validate BatchPrint - Generating single PDF file for corpus containing multiple files with same name but have different file extension");
+
+		// creating tag
+		search.newMetaDataSearchInBasicSearch(Input.docFileName, "SM134 Proforma");
+		search.bulkTag(tagName);
+
+		// Select Search
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Tag", tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+
+		batchPrint.navigateToNextPage(2);
+		batchPrint.disableSlipSheet(true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'  
+		//one pdf for all doc
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.masterDateText, true, 30);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		List<String> fileList = new ArrayList<>();
+		fileList = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		if (fileList.size() > 1) {
+			baseClass.passedStep("Second PDF file is generated since total page count is more than 250 pages.");
+		}
+		
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Validate BatchPrint - Generating individual PDF file for
+	 *              corpus containing multiple files(document with more than 250
+	 *              page) with same name but have different file
+	 *              extension[RPMXCON-50041]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-50041", enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 13)
+	public void generateSepeartePdfForMultipleFile(String username, String password) throws InterruptedException, ZipException {
+		String tagName = "TAG" + utility.dynamicNameAppender();
+
+		SessionSearch search = new SessionSearch(driver);
+		batchPrint = new BatchPrintPage(driver);
+
+		// login as PAU
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50041 BatchPrint");
+		baseClass.stepInfo(
+				"Validate BatchPrint - Generating individual PDF file for corpus containing multiple files(document with more than 250 page) with same name but have different file extension");
+
+		// creating tag
+		search.navigateToSessionSearchPageURL();
+		search.newMetaDataSearchInBasicSearch(Input.docFileName, "SM134 Proforma");
+		search.bulkTag(tagName);
+
+		// Select Search
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Tag", tagName, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+
+		batchPrint.navigateToNextPage(2);
+		batchPrint.disableSlipSheet(true);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		//one pdf for each doc
+		batchPrint.fillingExportFormatPage(Input.docFileName, Input.masterDateText, false, 30);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		List<String> fileList = new ArrayList<>();
+		fileList = batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		if (fileList.size() > 1) {
+			baseClass.passedStep("Seperate PDF is generated for every individual file");
+		}
+
+		// logout
+		loginPage.logout();
+		
 	}
 
 	@DataProvider(name = "Users")
