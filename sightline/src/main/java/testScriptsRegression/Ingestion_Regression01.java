@@ -1138,6 +1138,7 @@ public class Ingestion_Regression01 {
 		// Rollback Ingestion
 		ingestionPage.rollBackIngestion();
 	}
+
 	/**
 	*Author :Brundha Test Case Id:RPMXCON-48170
 	* Description :Verify that 'AudioPlayerReady' should set to '0' when natives are ingested with .MP3 files
@@ -1209,6 +1210,80 @@ public class Ingestion_Regression01 {
 		ingestionPage.verifyingErrorMsgInOverLayMethod();
 		loginPage.logout();
 	}
+=======
+	
+	/**
+	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49466 
+	 * Description :Verify error message if the source system is matching and if the doc ID is not available in the database 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	public void verifyErrorMessageIfDocIdNotAvailable() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49466");
+		baseClass.stepInfo("Verify error message if the source system is matching and if the doc ID is not available in the database");
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestionWithDifferentSourceSystem("TRUE", Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify error message for overlay ingestion if docid not available
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.verifyNonExistingDatasetErrorMessage();
+		// Rollback 
+		ingestionPage.rollBackIngestion();
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Arunkumar date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49467 
+	 * Description :Verify error message displays if adding same source Doc ID which is already exists in the DB 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	public void verifyErrorMessageIfDocidExists() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49467");
+		baseClass.stepInfo("Verify error message displays if adding same source Doc ID which is already exists in the DB");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify error message for overlay ingestion if docid is already available
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.verifyDuplicateIngestionErrorMessage();
+		// Rollback 
+		ingestionPage.rollBackIngestion();
+		loginPage.logout();
+
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

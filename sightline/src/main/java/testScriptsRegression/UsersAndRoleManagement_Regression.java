@@ -1544,7 +1544,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.pa1userName, Input.pa1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
+	//@Test(alwaysRun = true, dataProvider = "impersonateRmu", groups = { "regression" }, priority = 19)
 	public void validatingRmuFunctionTab(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53322");
@@ -1618,7 +1618,7 @@ public class UsersAndRoleManagement_Regression {
 				{ "rev", Input.rmu1userName, Input.rmu1password, Input.rev1userName, Input.rev1password }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
+	//@Test(alwaysRun = true, dataProvider = "rmuRev", groups = { "regression" }, priority = 20)
 	public void validatingRmuFunctionToModify(String roll, String loginuser, String loginPass, String assignUser,
 			String assignPass) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53321");
@@ -1679,7 +1679,7 @@ public class UsersAndRoleManagement_Regression {
 	 * impersonate back as PAU
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void validatingSAImpRevBackToPau() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53288");
 		baseClass.stepInfo("Verify if SAU impersonate as Reviewer, he should able to impersonate back as PAU");
@@ -1720,7 +1720,7 @@ public class UsersAndRoleManagement_Regression {
 	 * page
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void validatingUserNameMyEmail() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53175");
 		baseClass.stepInfo("Verify for the Filter by User Name field from Manage Users page");
@@ -1764,7 +1764,7 @@ public class UsersAndRoleManagement_Regression {
 				"Project Administrator", "pa", Input.pa1FullName }, };
 	}
 
-    @Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 23)
+    //@Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 23)
 	public void validatingBulkUserForPa(String roll, String loginuser, String loginPass, String rollUser,
 			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52702");
@@ -1865,7 +1865,7 @@ public class UsersAndRoleManagement_Regression {
  	 *              from Edit User > functionality tab
  	 */
 
- 	@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 24)
+ 	//@Test(alwaysRun = true, dataProvider = "fourRole", groups = { "regression" }, priority = 24)
  	public void validatingAllReportIcon(String roll, String userName, String password, String userNameTwo,
  			String passWordTwo) throws Exception {
  		baseClass.stepInfo("Test case Id: RPMXCON-52698");
@@ -1937,7 +1937,7 @@ public class UsersAndRoleManagement_Regression {
  	 * Description :To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role
  	 */
  	
- 	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
+ 	//@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
  	public void verifySysAdminEditRoleOfRmu() throws Exception {
  		baseClass.stepInfo("Test case Id: RPMXCON-52480");
  		baseClass.stepInfo("To verify when Sys Admin edits the user rights of user assigned to more than one domain/non-domain project with RMU role");
@@ -1988,7 +1988,7 @@ public class UsersAndRoleManagement_Regression {
 	 * on Manage User when logged in as an RMU
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void validatingBulkUserTabPresence() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52712");
 		baseClass.stepInfo("To verify that Bulk User Access Control button is not "
@@ -2040,7 +2040,7 @@ public class UsersAndRoleManagement_Regression {
 						Input.rev1FullName }, };
 	}
 
-	@Test(alwaysRun = true, dataProvider = "analyticalPanel", groups = { "regression" }, priority = 27)
+	//@Test(alwaysRun = true, dataProvider = "analyticalPanel", groups = { "regression" }, priority = 27)
 	public void validatingAnalyticalPanel(String roll, String loginuser, String loginPass, String rollId,
 			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52707");
@@ -2164,7 +2164,7 @@ public class UsersAndRoleManagement_Regression {
 	 * security group from header
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void validatingRmuCanRemoveSG() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52679");
 		baseClass.stepInfo(
@@ -2225,7 +2225,7 @@ public class UsersAndRoleManagement_Regression {
 	 * group should be updated
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 29)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void validatingAfterdeletingSGFromSA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52675");
 		baseClass.stepInfo(
@@ -2285,7 +2285,7 @@ public class UsersAndRoleManagement_Regression {
 	 */
 
 
-	@Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 30)
+	//@Test(alwaysRun = true, dataProvider = "PaUser", groups = { "regression" }, priority = 30)
 	public void validatingBulkUserReviewerRemarksForPa(String roll, String loginuser, String loginPass, String rollUser,
 			String rollPass, String rollId, String assignRole, String fullName) throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52706");
@@ -2394,7 +2394,7 @@ public class UsersAndRoleManagement_Regression {
 	 * User Name 2) Filter By Role 3) Created on or After, search should return
 	 * results which are an INTERSECTION of all the entered filter criteria
 	 */
-	@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 31)
+	//@Test(alwaysRun = true, dataProvider = "Users", groups = { "regression" }, priority = 31)
 	public void verifyingFilterTabInManageUser(String username,String Password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53193");
@@ -2427,7 +2427,7 @@ public class UsersAndRoleManagement_Regression {
 	 * only if the non-billable user is creating/editing a user
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 32)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 32)
 	public void validatingBilliableCheckBox() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53204");
 		baseClass.stepInfo("Verify that option to check/uncheck the option will be available "
@@ -2466,7 +2466,7 @@ public class UsersAndRoleManagement_Regression {
 	 * Description :Verify functionalities by PAU post impersonate as a RMU
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 33)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 33)
 	public void validatingAssignmentPaToRmuImp() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53166");
 		baseClass.stepInfo("Verify functionalities by PAU post impersonate as a RMU");
@@ -2544,6 +2544,147 @@ public class UsersAndRoleManagement_Regression {
 
 		// logout
 		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:06/05/2022 Modified by: Baskar
+	 * Description :To verify for user when 'Download Native' is Checekd/Unchecked from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkDw")
+	public Object[][] bulkDw() {
+		return new Object[][] {
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
+						Input.rev1FullName, },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, "Reviewer", Input.rev1userName, Input.rev1password, "sa",
+						Input.rev1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
+						Input.rev1FullName }, 
+				};
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkDw", groups = { "regression" }, priority = 34)
+	public void bulkAssignDownload(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52703");
+		baseClass.stepInfo("To verify for user when 'Download Native' is Checekd/Unchecked from Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		if (assignRole == "da") {
+			baseClass.selectproject(Input.domainName);
+		}
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, false, true, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Download native checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Download native icon
+		docViewPage.verifyBulkUserNativeFile(false, false, rollUser);
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					false, true, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, false, false,
+					false, false, true, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for Download native checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewInDocView();
+		// validating Download native icon
+		docViewPage.verifyBulkUserNativeFile(true, true, rollUser);
+		// logout
+		loginPage.logout();
+
 	}
 
 	
