@@ -527,6 +527,7 @@ public class Input {
 	public static String Images5DocsLst;
 	public static String newdateformat_5Docs;
 	public static String JanMultiPTIFF;
+	public static String GNon_searchable_PDF_Load_file;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -1016,6 +1017,7 @@ public class Input {
 		Images5DocsLst = testData.getImages5DocsLst();
 		newdateformat_5Docs = testData.getNewdateformat_5Docs();
 		JanMultiPTIFF = testData.getJanMultiPTIFF();
+		GNon_searchable_PDF_Load_file = testData.getGNon_searchable_PDF_Load_file();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
