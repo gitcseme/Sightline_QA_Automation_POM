@@ -2687,6 +2687,156 @@ public class UsersAndRoleManagement_Regression {
 
 	}
 
+	/**
+	 * Author : Baskar date: NA Modified date:06/05/2022 Modified by: Baskar
+	 * Description :To verify for user when 'Redaction' is Checekd/Unchecked
+	 *                from Bulk User Access Control
+	 */
+
+	@DataProvider(name = "bulkRedaction")
+	public Object[][] bulkRedaction() {
+		return new Object[][] {
+				{ "rmu", Input.pa1userName, Input.pa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"pa", Input.rmu1FullName },
+				{ "rev", Input.pa1userName, Input.pa1password, "Reviewer", Input.rev1userName, Input.rev1password, "pa",
+						Input.rev1FullName, },
+				{ "rmu", Input.sa1userName, Input.sa1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"sa", Input.rmu1FullName },
+				{ "rev", Input.sa1userName, Input.sa1password, "Reviewer", Input.rev1userName, Input.rev1password, "sa",
+						Input.rev1FullName },
+				{ "rmu", Input.da1userName, Input.da1password, "Review Manager", Input.rmu1userName, Input.rmu1password,
+						"da", Input.rmu1FullName },
+				{ "rev", Input.da1userName, Input.da1password, "Reviewer", Input.rev1userName, Input.rev1password, "da",
+						Input.rev1FullName }, 
+				};
+	}
+
+	@Test(alwaysRun = true, dataProvider = "bulkRedaction", groups = { "regression" }, priority = 35)
+	public void bulkAssignRedaction(String roll, String loginuser, String loginPass, String rollId,
+			String rollUser, String rollPass, String assignRole, String firstName) throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-52704");
+		baseClass.stepInfo("To verify for user when 'Redaction' is Checekd/Unchecked from "
+				+ "Bulk User Access Control");
+		userManage = new UserManagement(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion=new SoftAssert();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		if (assignRole == "da") {
+			baseClass.selectproject(Input.domainName);
+		}
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, false, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, false, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, false, true, true, true);
+		}
+		baseClass.stepInfo("Disable the radio btn for Redaction checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
+			userManage.getDisableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
+		sessionSearch.ViewInDocView();
+		// validating redaction tab
+//		baseClass.waitForElement(userManage.getRedaction());
+		boolean redactionNotpresent = userManage.getRedaction().isDisplayed();
+		softAssertion.assertFalse(redactionNotpresent);
+		baseClass.passedStep("Redaction tag not displayed in docview page");
+		// logout
+		loginPage.logout();
+		// login
+		loginPage.loginToSightLine(loginuser, loginPass);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		userManage.getBulkUserAccessTab().waitAndClick(5);
+		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
+		if (roll == "pa") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
+					true, false, true, true, true);
+		}
+		if (roll == "rmu") {
+			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, false, false, true,
+					true, false, true, true, true);
+		}
+		if (roll == "rev") {
+			userManage.defaultSelectionCheckboxForAllRole(false, false, false, true, false, false, false, false, false,
+					false, true, false, true, true, true);
+		}
+		baseClass.stepInfo("Enable the radio btn for Redaction checkbox");
+		if (assignRole == "pa") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		if (assignRole == "sa" || assignRole == "da") {
+			driver.scrollingToElementofAPage(userManage.getEnableRadioBtn());
+			userManage.getEnableRadioBtn().waitAndClick(5);
+			userManage.getSelectingProject().waitAndClick(5);
+			userManage.getSelectDropProject(Input.projectName).waitAndClick(10);
+			if (roll == "rmu" || roll == "rev") {
+				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
+			}
+		}
+		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		userManage.getSelectBulkUser(firstName).waitAndClick(5);
+		userManage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Access rights applied successfully");
+		// logout
+		loginPage.logout();
+		// login as userassigned for validation
+		loginPage.loginToSightLine(rollUser, rollPass);
+		// session search to docview
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
+		sessionSearch.ViewInDocView();
+		// validating redaction tab
+		baseClass.waitForElement(userManage.getRedaction());
+		boolean redactiontpresent = userManage.getRedaction().isDisplayed();
+		softAssertion.assertTrue(redactiontpresent);
+		baseClass.passedStep("Redaction tag  displayed in docview page");
+		// logout
+		loginPage.logout();
+
+	}
+
 	
 	@DataProvider(name = "saImpPa")
 	public Object[][] saImpPa() {

@@ -139,7 +139,7 @@ public class BulkActions_Regression {
 	 * @return 
 	 * @throws InterruptedException 
 	 */
-	@Test(description = "RPMXCON-54300",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-54300",enabled = true, groups = { "regression" }, priority = 2)
 	public void validatingBulkAssignAssignmentCount() throws InterruptedException  {
 		baseClass.stepInfo("Test case Id: RPMXCON-54300");
 		baseClass.stepInfo("To verify that if the documents are being assigned to multiple assignments,"
@@ -217,7 +217,7 @@ public class BulkActions_Regression {
 	 * @Description:To verify that if user delete the Tag/Folder,
 	 *               it should not displayed Bulk Tag/Folder modal
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyRMUfolderEditDelete() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54265");
 		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
@@ -250,6 +250,66 @@ public class BulkActions_Regression {
 		doclist.validatingTagExisting(tag);
 		doclist.validatingFolderExisting(folder);
 		baseClass.passedStep("Deleted tag and folder are not displaying in existing");
+        
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Baskar  Date: 09/05/22 Modified date:N/A Modified by: 
+	 * @Description:Verify that bulk assign with 'Parent Level Docs' 
+	 *               sample method displays correct count if 'SourceParentDocID' is blank
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyBulkAssignBlankSourceParentDocID() throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-54512");
+		sessionSearch=new SessionSearch(driver);
+		DocListPage doclist=new DocListPage(driver);
+		baseClass.stepInfo(
+				"Verify that bulk assign with 'Parent Level Docs' sample method "
+				+ "displays correct count if 'SourceParentDocID' is blank");
+		// login as PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Session search to doclist
+		int totalCount=sessionSearch.basicContentSearchForTwoItems(Input.sourceBlank,Input.sourceParentBlank);
+		sessionSearch.ViewInDocList();
+		
+		// selecting doc from doclist
+		doclist.selectColumnMetaDataSelection();
+		
+		// main method validation for parent level docss
+		doclist.selectingBlankDocs(Input.sourceBlank,Input.sourceParentBlank,2,totalCount);
+        
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Baskar  Date: 09/05/22 Modified date:N/A Modified by: 
+	 * @Description:Verify when "Parent Level Only" sample method is selected to 
+	 *              bulk assign when SourceParentDocID is not same as SourceDocID 
+	 *              and no child for the child document
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyBulkAssignBlankWithNoChild() throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-54511");
+		sessionSearch=new SessionSearch(driver);
+		DocListPage doclist=new DocListPage(driver);
+		baseClass.stepInfo(
+				"Verify when \"Parent Level Only\" sample method is selected to bulk assign when "
+				+ "SourceParentDocID is not same as SourceDocID and no child for the child document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Session search to doclist
+		int totalCount=sessionSearch.basicContentSearch(Input.sourceParentBlank);
+		sessionSearch.ViewInDocList();
+		
+		// selecting doc from doclist
+		doclist.selectColumnMetaDataSelection();
+		
+		// main method validation for parent level docss
+		doclist.selectingDocsBasedOnSources(Input.sourceParentBlank,2,totalCount);
         
 		// logout
 		loginPage.logout();
