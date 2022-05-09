@@ -5284,7 +5284,7 @@ public class SavedSearch {
 	public void selectChildNodeOfSharedWithDefault() throws InterruptedException {
 
 		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
+//		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 
 		try {
@@ -5292,7 +5292,7 @@ public class SavedSearch {
 			Thread.sleep(3000);// to handle wait for observing the text
 			getSavedSearchSharedWithExpandLastButton().waitAndClick(10);
 			Thread.sleep(3000);// to handle wait for observing the text
-			getSavedSearchSharedWithExpandLastButton().waitAndClick(10);
+//			getSavedSearchSharedWithExpandLastButton().waitAndClick(10);
 
 			base.waitForElement(getSavedSearchSharedWithProjectLastChildNode());
 			getSavedSearchSharedWithProjectLastChildNode().waitAndClick(10);

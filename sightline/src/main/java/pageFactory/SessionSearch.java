@@ -1898,6 +1898,10 @@ public class SessionSearch {
 		// Save Search
 		saveSearchAction();
 
+		if (getYesQueryAlert().isElementAvailable(6)) {
+			getYesQueryAlert().waitAndClick(5);
+		}
+
 		if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
