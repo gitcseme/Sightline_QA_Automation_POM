@@ -425,7 +425,8 @@
 	<PDF5DocsLst>PDFs - 5Docs.lst</PDF5DocsLst>
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
-
+	<JanMultiPTIFF>JanMultiPTIFF</JanMultiPTIFF>
+	
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
 	<telecaSearchString>teleca</telecaSearchString>

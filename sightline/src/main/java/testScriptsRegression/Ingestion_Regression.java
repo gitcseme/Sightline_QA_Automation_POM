@@ -821,6 +821,91 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's only
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	public void verifyPdfandTiffInDocView() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49498");
+		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
+			driver.waitForPageToBeReady();
+			if(docview.getFileType().isElementAvailable(10)) {
+			driver.waitForPageToBeReady();
+			docview.waitforFileType();
+			String filetype=docview.getFileType().getText();
+			System.out.println(filetype);
+			if(filetype.contains("PDF")) {
+				baseClass.passedStep("PDF file only displayed in default viewer");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+			}else {
+				baseClass.failedStep("file type is  not displayed");
+			}
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(docview.getDocViewImage().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file displayed in Tiff Tab");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep("Verified that if PA ingested both native's and TIFF's file,"
+				+ "and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: 
+	 * Description : Verify that if PA ingested both PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	public void verifyJanTiffPdfandTiffInDocView() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49499");
+		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file"
+				+ " and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's");
+		
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
+			String filetype=docview.getDocView_TextFileType().getText().trim();
+			if(filetype.isEmpty()) {
+				baseClass.passedStep("PDF file in native formate displayed in default viewer");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(docview.getDocview_DefaultTextArea().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file displayed in Tiff Tab");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep("Verified that if PA ingested both PDF and TIFF's file"
+				+ " and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's");
+		loginPage.logout();
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
