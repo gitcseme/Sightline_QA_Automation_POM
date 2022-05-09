@@ -27827,6 +27827,21 @@ public class DocViewPage {
 	}
 	}
 	/**
+	 * @author Brundha.T
+	 * @description:verifying Default text in docview page
+	 */
+	public void verifyingDefaultTextInDocView() {
+		for (int i = 0; i < 5; i++) {
+			if (getDocView_TextFileType().isDisplayed()) {
+				String DocFileType = getDocView_TextFileType().getText().toString();
+				base.textCompareEquals(DocFileType, "PDF", "Document file type is displayed as expected",
+						"Document file type is not dispalyed as expected");
+				break;
+			} else {
+				driver.waitForPageToBeReady();
+			}
+		}
+/**
 	 * @author Aathith.Senthilkumar
 	 * @Description wait file type load in docview
 	 */
@@ -27844,5 +27859,6 @@ public class DocViewPage {
 			}
 		}
 		
+
 	}
 }
