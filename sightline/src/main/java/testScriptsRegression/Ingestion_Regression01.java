@@ -1451,6 +1451,240 @@ public class Ingestion_Regression01 {
 		System.out.println(docCount);
 		baseClass.stepInfo("After Unpublish DocCount : " + docCount);
 	}
+	
+	/**
+	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-46868
+	 * Description :Add only ingestion with only .mp3 audio files with MP3 Variant file types.
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	public void verifyAddOnlyIngestionForAudioFiles() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-46868");
+		baseClass.stepInfo("Add only ingestion with only .mp3 audio files with MP3 Variant file types.");
+		
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		if (status == false) {
+		ingestionPage.performAudio96DocsIngestion(Input.audioDatFile,Input.docIdKey);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49258
+	 * Description :To verify that total unique ingested document count displays unique count if user perform only PDF overlay
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	public void verifyUniqueCountForOnlyPdfOverlay() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49258");
+		baseClass.stepInfo("To verify that total unique ingested document count displays unique count if user perform only PDF overlay");
+		
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();	
+		}
+		// getting unique ingested count before overlay
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountBefore +"'");
+		//perform pdf overlay
+		baseClass.stepInfo("Performing overlay ingestion with PDF");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Pdf", Input.PDFFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountAfter +"'");
+		if(uniqueCountBefore==uniqueCountAfter) {
+			baseClass.passedStep("Only unique ingested count displayed after performing Pdf overlay");
+		}
+		else {
+			baseClass.failedStep("Unique ingested count not displayed after performing Pdf overlay");
+		}	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49259
+	 * Description :To verify that total unique ingested document count displays unique count if user perform only Native overlay
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	public void verifyUniqueCountForOnlyNativeOverlay() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49259");
+		baseClass.stepInfo("To verify that total unique ingested document count displays unique count if user perform only Native overlay");
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();	
+		}
+		// getting unique ingested count before overlay
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountBefore +"'");
+		//perform Native overlay
+		baseClass.stepInfo("Performing overlay ingestion with Native");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Native", Input.NativeFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountAfter +"'");
+		if(uniqueCountBefore==uniqueCountAfter) {
+			baseClass.passedStep("Only unique ingested count displayed after performing Native overlay");
+		}
+		else {
+			baseClass.failedStep("Unique ingested count not displayed after performing Native overlay");
+		}	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49261
+	 * Description :To verify that total unique ingested document count displays unique count if user perform only MP3 overlay
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	public void verifyUniqueCountForOnlyMp3Overlay() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49261");
+		baseClass.stepInfo("To verify that total unique ingested document count displays unique count if user perform only MP3 overlay");
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();	
+		}
+		// getting unique ingested count before overlay
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountBefore +"'");
+		//perform Mp3 overlay
+		baseClass.stepInfo("Performing overlay ingestion with Native");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "mp3", Input.MP3File);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountAfter +"'");
+		if(uniqueCountBefore==uniqueCountAfter) {
+			baseClass.passedStep("Only unique ingested count displayed after performing Mp3 overlay");
+		}
+		else {
+			baseClass.failedStep("Unique ingested count not displayed after performing Mp3 overlay");
+		}	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 08/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49260
+	 * Description :To verify that total unique ingested document count displays unique count if user perform only TIFF overlay
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	public void verifyUniqueCountForOnlyTiffOverlay() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49260");
+		baseClass.stepInfo("To verify that total unique ingested document count displays unique count if user perform only TIFF overlay");
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile2,Input.tiffLoadFile,"false");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();	
+		}
+		// getting unique ingested count before overlay
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountBefore +"'");
+		//perform Tiff overlay
+		baseClass.stepInfo("Performing overlay ingestion with Native");
+		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing overlay : '"+ uniqueCountAfter +"'");
+		if(uniqueCountBefore==uniqueCountAfter) {
+			baseClass.passedStep("Only unique ingested count displayed after performing Tiff overlay");
+		}
+		else {
+			baseClass.failedStep("Unique ingested count not displayed after performing Tiff overlay");
+		}	
+	}
+	
+	
+	/**
+	 * Author :Arunkumar date: 09/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48147
+	 * Description :To Verify User is able to Ingest MP3  File Variant along with native
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 48)
+	public void verifyAddOnlyIngestionForMp3WithNative() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48147");
+		baseClass.stepInfo("To Verify User is able to Ingest MP3  File Variant along with native");
+		
+		// perform add only ingestion for mp3 along with native
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		if (status == false) {
+		ingestionPage.performAudio96DocsIngestion(Input.audioDatFile,Input.docIdKey);
+		ingestionPage.ingestionCatalogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

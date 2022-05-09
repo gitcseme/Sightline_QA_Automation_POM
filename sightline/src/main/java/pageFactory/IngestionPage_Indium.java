@@ -9281,7 +9281,9 @@ public class IngestionPage_Indium {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(5);
 			} else if (status.contains("Failed")) {
-				base.failedStep("Failed");
+				base.waitTime(5);
+				getRefreshButton().waitAndClick(5);
+				System.out.println("Ingestion Failed, will re-run after ignoring errors");
 			}
 		}
 	}
@@ -9875,5 +9877,82 @@ public class IngestionPage_Indium {
 
 		}
 
+	}
+	
+	/**
+	 * @author: Arun Created Date:09/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will get the total unique ingested document count
+	 */
+	public int getIngestedUniqueCount() {
+
+		driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+
+		getRefreshButton().waitAndClick(5);
+		base.waitTime(3);
+
+		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
+		int ingestedCount;
+		
+		if ((String.valueOf(totalDocsIngestedCount)).contains(",")) {
+			totalDocsIngestedCount = totalDocsIngestedCount.replace(",", "");
+			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
+			System.out.println(ingestedCount);
+			 
+		} else {
+			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
+			
+		}
+		return ingestedCount;
+	}
+	
+	/**
+	 * @author: Arunkumar Created Date: 09/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform audio96docs ingestion 
+	 */
+	public void performAudio96DocsIngestion(String datFile, String docKey) {
+		
+		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.audio96DocsFolder);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATDelimitersNewLine().Visible();
+			}
+		}), Input.wait30);
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		base.stepInfo("Selecting Dat file");
+		selectDATSource(datFile,docKey );
+		base.stepInfo("Selecting Native file");
+		selectNativeSource(Input.selectNativeFile, false);
+		base.stepInfo("Selecting Text file");
+		selectTextSource(Input.selectTextFile, false);
+		base.stepInfo("Selecting Mp3 file");
+		selectMP3VarientSource(Input.selectMp3File, false);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+
+		clickOnNextButton();
+		base.waitTime(2);
+		selectValueFromEnabledFirstThreeSourceDATFields(docKey, docKey, docKey);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Ingestion started");
 	}
 }

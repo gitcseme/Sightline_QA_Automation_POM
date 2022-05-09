@@ -220,6 +220,12 @@ public class TestData {
 	public String indexingWarningMessage;
 	public String mappingWarningMessage;
 	public String nonExistingDataError;
+	public String audio96DocsFolder;
+	public String docIdKey;
+	public String selectNativeFile;
+	public String selectTextFile;
+	public String selectMp3File;
+	public String audioDatFile;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

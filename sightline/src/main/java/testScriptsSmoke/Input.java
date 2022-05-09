@@ -337,6 +337,12 @@ public class Input {
 	public static String indexingWarningMessage;
 	public static String mappingWarningMessage;
 	public static String nonExistingDataError;
+	public static String audio96DocsFolder;
+	public static String docIdKey;
+	public static String selectNativeFile;
+	public static String selectTextFile;
+	public static String selectMp3File;
+	public static String audioDatFile;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1074,6 +1080,12 @@ public class Input {
 		indexingWarningMessage = testData.getIndexingWarningMessage();
 		mappingWarningMessage = testData.getMappingWarningMessage();
 		nonExistingDataError = testData.getNonExistingDataError();
+		audio96DocsFolder = testData.getAudio96DocsFolder();
+		docIdKey = testData.getDocIdKey();
+		selectNativeFile = testData.getSelectNativeFile();
+		selectTextFile = testData.getSelectTextFile();
+		selectMp3File = testData.getSelectMp3File();
+		audioDatFile = testData.getAudioDatFile();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
