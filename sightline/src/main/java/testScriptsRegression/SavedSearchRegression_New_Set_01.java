@@ -378,7 +378,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		// Multiple Node Creation
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
 		base.stepInfo("Node creation is done followed by adding searches to the created nodes");
@@ -433,7 +433,7 @@ public class SavedSearchRegression_New_Set_01 {
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -447,8 +447,8 @@ public class SavedSearchRegression_New_Set_01 {
 		// Search ID collection
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
-		saveSearch.rootGroupExpansion(); // added my sampath
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
+		saveSearch.rootGroupExpansion(); 
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String reviewerNode = newNodeList.get(0);
 
@@ -538,7 +538,7 @@ public class SavedSearchRegression_New_Set_01 {
 		base.stepInfo("Verifying whether the search saved by PA role is not available for RMU user");
 		try {
 
-			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {// sampath modified
+			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for RMU user");
 			}
 		} catch (Exception e) {
@@ -571,7 +571,7 @@ public class SavedSearchRegression_New_Set_01 {
 
 		base.stepInfo("Verifying whether the search saved by PA role is not available for Reviewer user");
 		try {
-			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {// sampath modified
+			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for Reviewer user");
 			}
 		} catch (Exception e) {
@@ -600,7 +600,7 @@ public class SavedSearchRegression_New_Set_01 {
 
 		base.stepInfo("Verifying whether the search saved by PA role is not available for RMU user");
 		try {
-			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {// sampath modified
+			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for RMU user");
 			}
 		} catch (Exception e) {
@@ -663,7 +663,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the search saved by PA role is not available for RMU user");
 		try {
-			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {// sampath modified
+			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for RMU user");
 			}
 		} catch (Exception e) {
@@ -681,7 +681,6 @@ public class SavedSearchRegression_New_Set_01 {
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
 		saveSearch.verifySharedNode(newNodeList.get(0));
 
-		// modified my sampath
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ : " + newNodeList.get(0));
 		driver.waitForPageToBeReady();
 		saveSearch.selectRootGroupTab(Input.shareSearchDefaultSG);
@@ -689,7 +688,7 @@ public class SavedSearchRegression_New_Set_01 {
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
 		// Landed on Saved Search
-		base.selectproject(); // sampath modified
+		base.selectproject(); 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		// Multiple Node Creation
@@ -720,7 +719,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the search saved by PA role is not available for Reviewer user");
 		try {
-			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {// sampath modified
+			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for Reviewer user");
 			}
 		} catch (Exception e) {
@@ -1284,7 +1283,6 @@ public class SavedSearchRegression_New_Set_01 {
 	 */
 	@Test(enabled = true, dataProvider = "SavedSearchwithoutReviewer", groups = { "regression" }, priority = 11)
 	public void validateTagThroughBatchFile(String username, String password) throws Exception {
-		// modified my sampath
 		String tag = "WPTag";
 		String File = saveSearch.renameFile(Input.WPbatchFile);
 
@@ -1493,7 +1491,7 @@ public class SavedSearchRegression_New_Set_01 {
 		base.stepInfo("Search and saveSearch in the created node");
 		int purehit = session.basicContentSearch(Input.searchString1);
 //		session.saveSearchInNode(SearchName);
-		session.saveSearchInNewNode(SearchName, new_node); // added my sampath
+		session.saveSearchInNewNode(SearchName, new_node); 
 		driver.waitForPageToBeReady();
 		base.selectproject();
 
@@ -1574,7 +1572,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		// session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); // added my sampath
+		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -1584,7 +1582,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
 		// session.saveSearchInNode(searchName1);
-		session.saveSearchInNewNode(searchName1, newNodeFromRev); // added my sampath
+		session.saveSearchInNewNode(searchName1, newNodeFromRev); 
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU
@@ -1754,6 +1752,8 @@ public class SavedSearchRegression_New_Set_01 {
 		saveSearch.getSavedSearchTreeNode(nodeName).waitAndClick(10);
 		saveSearch.selectChildNodeOfSharedWithProjectAdmin();
 		saveSearch.executeChildNodeOfProjectAdmin(rowNo, countNo);
+		saveSearch.selectRootGroupTab(Input.shareSearchDefaultSG);
+		saveSearch.rootGroupExpansion();
 		saveSearch.selectChildNodeOfSharedWithDefault();
 		saveSearch.executeAnySpecficSearch(rowNo, countNo);
 
@@ -1766,7 +1766,8 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.selectChildNodeOfSharedWithProjectAdmin();
 		saveSearch.verifyChildNodeCount(countNo);
-
+		saveSearch.selectRootGroupTab(Input.shareSearchDefaultSG);
+		saveSearch.rootGroupExpansion();
 		saveSearch.selectChildNodeOfSharedWithDefault();
 		saveSearch.verifyChildNodeCount(countNo);
 
@@ -2192,7 +2193,7 @@ public class SavedSearchRegression_New_Set_01 {
 		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName2);
 		// session.saveSearchInNode(searchName2);
-		session.saveSearchInNewNode(searchName2, newNodeFromPA); // added my sampath
+		session.saveSearchInNewNode(searchName2, newNodeFromPA);
 
 		// Impersonate As RMU via PA and create new searchgroup
 		base.rolesToImp("PA", "RMU");
@@ -2202,7 +2203,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 //		session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); // added my sampath
+		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -2212,7 +2213,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
 //		session.saveSearchInNode(searchName1);
-		session.saveSearchInNewNode(searchName1, newNodeFromRev); // added my sampath
+		session.saveSearchInNewNode(searchName1, newNodeFromRev); 
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU
@@ -2257,7 +2258,7 @@ public class SavedSearchRegression_New_Set_01 {
 		int purehit = session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName2);
 //		session.saveSearchInNode(searchName2);
-		session.saveSearchInNewNode(searchName2, newNodeFromPA); // added my sampath
+		session.saveSearchInNewNode(searchName2, newNodeFromPA);
 
 		// Impersonate As RMU via PA and create new searchgroup
 		base.rolesToImp("PA", "RMU");
@@ -2267,7 +2268,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName);
 		// session.saveSearchInNode(searchName);
-		session.saveSearchInNewNode(searchName, newNodeFromRMU); // added my sampath
+		session.saveSearchInNewNode(searchName, newNodeFromRMU); 
 
 		// impersonate As REV and create new searchgroup
 		base.rolesToImp("RMU", "REV");
@@ -2277,7 +2278,7 @@ public class SavedSearchRegression_New_Set_01 {
 		session.basicContentSearch(Input.searchString1);
 		session.saveSearch(searchName1);
 		// session.saveSearchInNode(searchName1);
-		session.saveSearchInNewNode(searchName1, newNodeFromRev); // added my sampath
+		session.saveSearchInNewNode(searchName1, newNodeFromRev);
 		driver.waitForPageToBeReady();
 
 		// impersonate As Reviewer to RMU

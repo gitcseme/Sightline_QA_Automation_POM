@@ -2902,8 +2902,7 @@ public class SavedSearchRegression_New_Set_03 {
 		base.textCompareEquals(actualName, username, passMsg, failMsg);
 
 		// verify Last Submiited For node After execute operation [Security Group]
-		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(10);
-		saveSearch.selectNode1(node);
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.shareSearchDefaultSG, node);
 		saveSearch.savedSearchExecute_SearchGRoup(SearchName, purehit);
 		driver.Navigate().refresh();
 		saveSearch.selectNode1(node);
