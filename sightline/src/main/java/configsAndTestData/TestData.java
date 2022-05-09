@@ -469,6 +469,7 @@ public class TestData {
 	public String emailAllDomain;
 	public String validationData;
 	public String ingestionPrjt;
+	public String AutomationAllSources;
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
 
