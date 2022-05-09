@@ -1108,6 +1108,50 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 9/5/2022 Modified date: Modified by: Description :
+	 * Verify that if "Generate Searchable PDFs" is TRUE, then Ingestion should
+	 * generate successfully for Multi-page TIFF images.'RPMXCON-49502'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	public void verifyJanMultiTiffPdfandTiffInDocView() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		DocViewPage docview = new DocViewPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49502");
+		baseClass.stepInfo(
+				"Verify that if 'Generate Searchable PDFs' is TRUE, then Ingestion should generate successfully for Multi-page TIFF images.");
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
+		if (ingestionFullName != null) {
+			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
+			driver.waitForPageToBeReady();
+			docview.getFileType().isElementAvailable(3);
+			driver.waitForPageToBeReady();
+			String filetype = docview.getDocView_TextFileType().getText().trim();
+			if (filetype.isEmpty()) {
+				baseClass.passedStep("PDF file only displayed in default viewer");
+			} else {
+				baseClass.failedStep("verification failed");
+			}
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if (docview.getDocViewImage().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file displayed in Tiff Tab");
+			} else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep(
+				"Verify that if 'Generate Searchable PDFs' is TRUE, then Ingestion should generate successfully for Multi-page TIFF images.");
+		loginPage.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
