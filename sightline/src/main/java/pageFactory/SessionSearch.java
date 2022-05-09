@@ -8653,6 +8653,7 @@ public class SessionSearch {
 	}
 
 	public int basicContentSearchForTwoItems(String SearchString, String SearchString2) {
+		int pureHit=0;
 		try {
 			// To make sure we are in basic search page
 			driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -8688,7 +8689,7 @@ public class SessionSearch {
 				}
 			}), Input.wait120);
 
-			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			pureHit = Integer.parseInt(getPureHitsCount().getText());
 
 			// System.out.println("Search is done for "+SearchString+" and PureHit is :
 			// "+pureHit);

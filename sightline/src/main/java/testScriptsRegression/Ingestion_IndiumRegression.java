@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.testng.asserts.SoftAssert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -28,6 +29,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
@@ -60,6 +62,8 @@ public class Ingestion_IndiumRegression {
 	IngestionPage_Indium ingestionPage;
 	UserManagement user;
 	DocListPage doclist;
+	DataSets dataSets;
+	DocViewPage docview;
 
 	String projectFieldINT = "DataINT" + Utility.dynamicNameAppender();
 
@@ -176,6 +180,107 @@ public class Ingestion_IndiumRegression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Baskar date: 09/05/2022 Modified date: NA Modified by: NA
+	 * Description:To Verify for Audio longer than 1 hour, in Docview, "Zoom In/Zoom Out" 
+	 * should be available so user could switch between the short and long wave forms.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionSearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		String audioDocsIngestionName="41AD_SSAudioSpeech_Transcript_20220321085634270";
+		String moreThanHour=Input.ingestionOneHour;
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-48241");
+		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
+				+ "available so user could switch between the short and long wave forms.");
+		
+		baseClass.selectproject("Indium_Regressionrun");
+		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
+		if(ingestionFullName!=null) {
+			driver.waitForPageToBeReady();
+			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
+			sessionSearch.viewInDocView();
+			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
+			docview.getDocumentByid(moreThanHour).waitAndClick(5);
+			
+			// verifying more than one hour audio docs
+			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
+			String[] splitData = overAllAudioTime.split(":");
+			String data = splitData[0].toString();
+			System.out.println(data);
+			if (Integer.parseInt(data) >= 01) {
+				baseClass.stepInfo("Audio docs have more than:" + overAllAudioTime + " hour to check zoom function");
+			} else {
+				baseClass.failedMessage("Lesser than one hour");
+			}
+			
+			// checking zoom in function working for more than one hour audio docs
+			docview.getAudioDocZoom().waitAndClick(5);
+			boolean zoomBar = docview.getAudioZoomBar().Displayed();
+			softAssertion.assertTrue(zoomBar);
+			baseClass.passedStep("Zoom functionality working for more than one hour of document");
+		}
+		else {
+			baseClass.failedStep("Ingestion not available, Need to ingest for this project");
+		}
+		softAssertion.assertAll();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Baskar date: 09/05/2022 Modified date: NA Modified by: NA
+	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom Out" is disabled or hidden.
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	public void verifyLessThanHourAudioDocs() throws InterruptedException {
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionSearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		String audioDocsIngestionName="41AD_SSAudioSpeech_Transcript_20220321085634270";
+		String moreThanHour=Input.ingestionLessThanHour;
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-48239");
+		baseClass.stepInfo("To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
+		
+		baseClass.selectproject("Indium_Regressionrun");
+		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
+		if(ingestionFullName!=null) {
+			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
+			sessionSearch.viewInDocView();
+			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
+			docview.getDocumentByid(moreThanHour).waitAndClick(5);
+			
+			// verifying less than one hour audio docs
+			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
+			String[] splitData = overAllAudioTime.split(":");
+			String data = splitData[0].toString();
+			System.out.println(data);
+			if (Integer.parseInt(data) >= 01) {
+				baseClass.failedStep("more than one hour docs selected");
+			} else {
+				baseClass.stepInfo("Audio docs have less than:" + overAllAudioTime + " hour to check zoom function");
+			}
+			
+			// checking zoom in function working for less than one hour audio docs
+			boolean zoomBar = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector(\"div.col-md-2.disabledbutton div:nth-child(3) > div\").hidden;");
+			softAssertion.assertFalse(zoomBar);
+			baseClass.passedStep("Zoom functionality not working for less than one hour of document,Zoom is hidden");
+		}
+		else {
+			baseClass.failedStep("Ingestion not available, Need to ingest for this project");
+		}
+		softAssertion.assertAll();
+		loginPage.logout();
+		
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
