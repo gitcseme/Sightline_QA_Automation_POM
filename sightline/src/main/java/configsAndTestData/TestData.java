@@ -441,6 +441,7 @@ public class TestData {
 	public String PDF5DocsLst;
 	public String Images5DocsLst;
 	public String newdateformat_5Docs;
+	public String JanMultiPTIFF;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;

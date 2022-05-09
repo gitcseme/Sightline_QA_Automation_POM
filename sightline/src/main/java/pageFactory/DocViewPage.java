@@ -3460,6 +3460,14 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*");
 	}
 	
+	public Element getDocViewImage() {
+		return driver.FindElementByXPath("//*[contains(@id,'ig')]");
+	}
+	
+	public Element getFileType() {
+		return driver.FindElementByXPath("//*[contains(@id,'txtspanfileType')]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -27817,5 +27825,24 @@ public class DocViewPage {
 	base.failedStep(tabName + " icon not available in DocView page + ");
 	}
 	}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description wait file type load in docview
+	 */
+	public void waitforFileType() {
+		int i = 1;
+		String filetype=getFileType().getText().trim();
+		while(filetype.isEmpty()) {
+			driver.waitForPageToBeReady();
+			filetype=getFileType().getText().trim();
+			System.out.println(filetype);
+			i++;
+			if(i==10) {
+				base.stepInfo("file type is non");
+				break;
+			}
+		}
+		
 	}
 }
