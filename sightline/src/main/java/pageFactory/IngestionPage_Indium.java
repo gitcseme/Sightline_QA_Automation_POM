@@ -654,6 +654,11 @@ public class IngestionPage_Indium {
 	}
 
 	// Added by Mohan
+	
+
+	public Element getIngestion_CopyingTableValue(int row , int value) {
+		return driver.FindElementByXPath("//div[@id='Copyingblock']//table//tbody//tr["+row+"]//td[contains(text(),'"+value+"')]");
+	}
 
 	public Element getIngestion_GenerateSearchablePDFsCheckbox() {
 		return driver.FindElementByXPath("//div[@id='TIFFfile']//label[contains(normalize-space(.),'Generate')]//i");
@@ -10011,5 +10016,61 @@ public class IngestionPage_Indium {
 		selectValueFromEnabledFirstThreeSourceDATFields(docKey, docKey, docKey);
 		clickOnPreviewAndRunButton();
 		base.stepInfo("Ingestion started");
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To Select published docs from filter and get Ingestion name from the viewed overall Ingestion 
+	 * @param dataset
+	 * @return
+	 */
+	public String selectPublishedFromFilterDropDown(String dataset) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Visible();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().waitAndClick(10);
+		
+		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByPUBLISHED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByPUBLISHED().waitAndClick(10);
+		
+		getRefreshButton().waitAndClick(10);
+		getIngestion_DraftTable().isElementAvailable(5);
+			String getAttribute = getIngestion_DraftCount().GetAttribute("value");
+			System.out.println(getAttribute);
+			int parseInt = Integer.parseInt(getAttribute);
+			String ingestionName = firstTileTitle().GetAttribute("title");
+			System.out.println(ingestionName);
+			for (int i = 1; i <=parseInt; i++) {
+				base.waitTime(2);
+				if (ingestionName.contains(dataset)) {
+					base.passedStep("Expected Ingestion is found successfully");
+					break;
+					
+					
+				}else {
+					base.stepInfo("The Ingestion Name is not there in this project");
+				}
+					
+				}
+			
+		
+	return ingestionName;
 	}
 }

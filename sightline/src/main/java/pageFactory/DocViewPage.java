@@ -3305,6 +3305,11 @@ public class DocViewPage {
 
 	// Added by Mohan
 	
+	public Element getDocViewDefaultViewPDF() {
+		return driver
+				.FindElementByXPath("//li[@id='liDocumentDefaultView']//a//span[@id='txtspanfileType']");
+	}
+	
 	public Element getDocViewDefaultViewText() {
 		return driver
 				.FindElementByXPath("//div[@id='divViewerText']//div");
@@ -27841,6 +27846,7 @@ public class DocViewPage {
 				driver.waitForPageToBeReady();
 			}
 		}
+	}
 /**
 	 * @author Aathith.Senthilkumar
 	 * @Description wait file type load in docview
