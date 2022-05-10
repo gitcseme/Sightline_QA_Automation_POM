@@ -9147,27 +9147,30 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionWithoutDat(String ingestionName, String type, String file) {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATDelimitersNewLine().Visible();
+			}
+		}), Input.wait30);
 
-		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(1);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return datCheckboxStatus().Visible();
 			}
 		}), Input.wait30);
 		datCheckboxStatus().waitAndClick(5);
-
+		
+		base.waitTime(2);
 		if (type.equalsIgnoreCase("Native")) {
 			selectNativeSource(file, false);
 		}
 		if (type.equalsIgnoreCase("Tiff")) {
 			base.stepInfo("Selecting Tiff file");
+			getTIFFCheckBox().Click();
+			base.waitTime(1);
 			selectTIFFSource(file, false, false);
 		}
 
@@ -9187,7 +9190,7 @@ public class IngestionPage_Indium {
 			base.stepInfo("Selecting Translation file");
 			selectOtherSource(type, file, false);
 		}
-
+		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDateFormat().Visible();
