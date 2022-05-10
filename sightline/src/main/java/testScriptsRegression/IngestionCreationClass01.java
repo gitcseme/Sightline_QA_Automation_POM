@@ -64,7 +64,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(enabled = true, groups = { "regression" }, priority = 1)
+    @Test(enabled = false, groups = { "regression" }, priority = 1)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -109,7 +109,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -155,7 +155,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyIngestMetaDataMessageDisplayDefaultAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -215,7 +215,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = false, groups = { "regression" }, priority = 4)
 	public void verifyIngestMetaDataMessageDisplayIMAGEAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -273,7 +273,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = false, groups = { "regression" }, priority = 5)
 	public void verifyIngestMetaDataDATFileIsIngested() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -318,7 +318,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -333,12 +333,10 @@ public class IngestionCreationClass01 {
 
 
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-		String ingestionType = "Add Only";
+		
 		System.out.println(status);
 
 
-		if(status==false) {
-		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null,null);
 
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
@@ -464,6 +462,83 @@ public class IngestionCreationClass01 {
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
+
+		loginPage.logout();
+	}
+	
+	/** 
+     *Author: Mohan date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50377
+	 * Description :Verify that if PA ingested Native, PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 9)
+	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
+		
+	
+		ingestionPage = new IngestionPage_Indium(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-50377");
+		baseClass.stepInfo("Verify that if PA ingested Native, PDF and TIFF's file and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's");
+		String ingestionType="Add Only";
+		boolean status = ingestionPage.verifyIngestionpublishWithAdditionalOptions(Input.PP_PDFGen_10Docs,"50");
+		System.out.println(status);
+
+		if(status==false) {
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", "DAT4_STC_09172014_newdateformat_50Docs.dat", "Natives_50Docs.lst",
+					null,"PDFs_50Docs.lst" , "Images.lst","Select", null, null, null);
+		}
+		
+			driver.Navigate().refresh();
+			String ingestionFullName = ingestionPage.isDataSetisAvailable(Input.PP_PDFGen_10Docs,"50");
+		if (ingestionFullName != null) {
+			ingestionPage.selectDataSetWithNameInDocView(Input.PP_PDFGen_10Docs);
+			String name = docViewPage.getDefaultViewerFileType().GetAttribute("xlink:href");
+			System.out.println(name);
+			if (name.contains("image")) {
+				baseClass.passedStep("Tiff file only displayed in default viewer");
+			} else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+
+			loginPage.logout();
+	}
+	
+	/** 
+     *Author: Mohan date: 06/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49509
+	 * Description :Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to false then it should display TIFF in default viewer
+     * @throws InterruptedException 
+	 */
+	@Test(enabled = true,  groups = {"regression" },priority = 10)
+	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
+		
+	
+		ingestionPage = new IngestionPage_Indium(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49509");
+		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to false then it should display TIFF in default viewer");
+		String ingestionType="Overlay Only";
+		
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
+					null,null , Input.ImagePPPDF10docs,null, null, null, null);
+			ingestionPage.navigateToAnalyticsPage();
+			ingestionPage.runFullAnalysisAndPublish();
+			ingestionPage.navigateToIngestionPage();
+		
+		
+		driver.Navigate().refresh();
+		driver.Navigate().refresh();
+		String ingestionFullName = ingestionPage.isDataSetisAvailable(Input.PP_PDFGen_10Docs,"5");
+	if (ingestionFullName != null) {
+		ingestionPage.selectDataSetWithNameInDocView(Input.PP_PDFGen_10Docs);
+		String name = docViewPage.getDefaultViewerFileType().GetAttribute("xlink:href");
+		System.out.println(name);
+		if (name.contains("image")) {
+			baseClass.passedStep("Application displays 'TIFF file' in default viewer");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+	}
 
 		loginPage.logout();
 	}
