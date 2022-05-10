@@ -681,9 +681,10 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
+					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
 		sessionSearch = new SessionSearch(driver);
@@ -740,10 +741,11 @@ public class Ingestion_Regression01 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeFileName);
 		System.out.println(status);
 		if (status == false) {
+			String ingestionType="Add Only";
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
+					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
 
 		int count = sessionsearch.MetaDataSearchInBasicSearch(Input.emailAllDomain, "hotmail.com");
@@ -789,8 +791,9 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
-					null, null, null, null, Input.MP3File, null, null);
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					null, null, null, null,null, Input.MP3File, null, null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.SearchMetaData(Input.audioPlayerReady, Input.pageCount);
@@ -1040,13 +1043,13 @@ public class Ingestion_Regression01 {
 		baseClass.selectproject(Input.ingestionPrjt);
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
-		System.out.println(status);
 
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
-					null, null, null, null, Input.MP3File, null, null);
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					null, null, null, null, null,Input.MP3File, null, null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
@@ -1246,8 +1249,9 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("addonly  ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder, Input.sourceSystem, Input.DATFile1,
-					Input.NativeFile, null, null, null, null, null, null);
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					Input.NativeFile, null,null, null, null, null, null, null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
@@ -1290,9 +1294,10 @@ public class Ingestion_Regression01 {
 
 		System.out.println(status);
 		if (status == false) {
+			String ingestionType="Add Only";
 			baseClass.stepInfo(" addonly ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
-					null, null, null, null, Input.MP3File, null, null);
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType,Input.sourceSystem, Input.DATFile1,
+					null, null, null, null,null, Input.MP3File, null, null);
 		}
 
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
@@ -1724,8 +1729,9 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 
 		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, null, null, null);
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
 		// Saved the My SavedSearch
@@ -1735,15 +1741,13 @@ public class Ingestion_Regression01 {
 		ingestionPage.unpublish(BasicSearchName);
 		// perform add only ingestion with source system as Mapped data
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		boolean status1 = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-		System.out.println(status1);
-		// Perform overlay ingestion
-		if (status1 == false) {
+		
+			String ingestionType="Overlay Only";
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
-		}
+					"DAT4_STC_TextEmailData NEWID.lst", null,null, null, null, null, null);
+		
 		// getting unique ingested count after overlay
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
@@ -1767,12 +1771,12 @@ public class Ingestion_Regression01 {
 		baseClass.selectproject(Input.ingestionPrjt);
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
-
+		String ingestionType="Add Only";	
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder, Input.sourceSystem, Input.DATFile1,
-					null, null, null, null, Input.MP3File, null, null);
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					null, null, null, null,null, Input.MP3File, null, null);
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
@@ -1811,10 +1815,11 @@ public class Ingestion_Regression01 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
+			String ingestionType="Add Only";
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null);
+					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
 		sessionSearch = new SessionSearch(driver);
