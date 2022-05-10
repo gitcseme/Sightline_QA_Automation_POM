@@ -5130,4 +5130,20 @@ public class DocListPage {
 		
 		
 		}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param EmailAuthorAddress
+	 */
+	public void emailAuthorNameParentheses(String EmailAuthorAddress) {
+		int index = base.getIndex(getTableRowHeaderInDocList(),EmailAuthorAddress);
+		List<WebElement> element =getColumValues(index).FindWebElements();
+		for(WebElement ele:element) {
+		String text = ele.getText().trim();
+		if(!text.contains("(")) {
+		base.passedStep(""+EmailAuthorAddress+" is not contains open closed parentheses");
+		break;
+		}
+		}
+		
+		}
 }

@@ -10133,4 +10133,75 @@ public class IngestionPage_Indium {
 		base.stepInfo("Overlay ingestion started");
 
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @throws InterruptedException
+	 */
+	public void getIngestionSatatusAndPerform() throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		getRefeshBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String status = getStatus(1).getText().trim();
+		
+		if(status.contains("In Progress")){
+			base.waitTime(5);
+			getRefeshBtn().waitAndClick(5);
+			getIngestionSatatusAndPerform();
+		}else if(status.contains("failed")) {
+			base.failedStep("ingestion failed");
+		}else if(status.contains("Cataloged")) {
+			base.stepInfo("cataloged stage is reached");
+			clickCopied();
+			getIngestionSatatusAndPerform();
+		}else if(status.contains("Copied")) {
+			base.stepInfo("copied stage is reached");
+			clickIndex();
+			getIngestionSatatusAndPerform();
+		}else if(status.contains("Indexed")) {
+			base.stepInfo("Indexed stage is reached");
+			clickApprove();
+			getIngestionSatatusAndPerform();
+		}else if(status.contains("Approved")) {
+			runFullAnalysisAndPublish();
+		}
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void clickCopied() {
+		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		getRunCopying().waitAndClick(10);
+		getCloseButton().waitAndClick(10);
+		base.stepInfo("copied button is clicked");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void clickIndex() {
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getRunIndexing());
+		getRunIndexing().waitAndClick(10);
+		getCloseButton().waitAndClick(10);
+		base.stepInfo("Ingdex button is clicked");
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void clickApprove() {
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		ingestionDetailActionDropdown().waitAndClick(10);
+		if(getActionApprove().isDisplayed()) {
+		getActionApprove().waitAndClick(10);
+		if(getApproveMessageOKButton().isDisplayed()) {
+		getApproveMessageOKButton().waitAndClick(10);}}
+		getCloseButton().waitAndClick(10);
+		base.stepInfo("Ingestion is approved");
+	}
 }
