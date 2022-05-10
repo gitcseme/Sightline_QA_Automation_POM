@@ -18,6 +18,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -93,7 +94,7 @@ public class DocView_Regression5 {
 	 * DocView as RMU and REV
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-51444", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyPersistentHitNavigation2() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -147,7 +148,7 @@ public class DocView_Regression5 {
 	 * from persistent hit panel from basic search
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-51445", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyPersistentHitNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
@@ -197,7 +198,7 @@ public class DocView_Regression5 {
 	 * remarks/comments stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-51403", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyHighlightedKeywordsForDocsSearchWithCommentsRemarks() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -233,7 +234,7 @@ public class DocView_Regression5 {
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().waitAndClick(5);
 		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
-		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
+		docView.verifyHighlightedKeywordInDocView();
 		baseClass.impersonateReviewertoRMU();
 		assignmentsPage.deleteAssignment(assignmentName);
 		baseClass.stepInfo("Deleting Prerequisite");
@@ -515,7 +516,7 @@ public class DocView_Regression5 {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-51939", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyDocInMiniDocListAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -530,7 +531,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
-		docView.scrollUntilloadingTextDisplay(false);
+		docView.scrollUntilloadingTextDisplay(true);
 
 		baseClass.waitForElement(docView.getDocView_MiniDocListIds(1));
 		docView.getDocView_MiniDocListIds(1).waitAndClick(5);
@@ -585,7 +586,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
-		docView.scrollUntilloadingTextDisplay(false);
+		docView.scrollUntilloadingTextDisplay(true);
 		driver.waitForPageToBeReady();
 
 		baseClass.waitForElement(docView.getDocView_MiniDocListIds(1));
@@ -638,7 +639,7 @@ public class DocView_Regression5 {
 		sessionSearch.ViewInDocView();
 
 		baseClass.waitForElement(docView.getDocumetId());
-		docView.scrollUntilloadingTextDisplay(false);
+		docView.scrollUntilloadingTextDisplay(true);
 		driver.waitForPageToBeReady();
 
 		baseClass.waitForElement(docView.getDocView_MiniDocListIds(1));
@@ -693,7 +694,7 @@ public class DocView_Regression5 {
 	 * Search > doc list Stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-51404", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -716,7 +717,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
@@ -732,7 +733,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo(
@@ -747,7 +748,7 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 	}
 
@@ -757,7 +758,7 @@ public class DocView_Regression5 {
 	 * the eye icon when redirected to doc view from session search when documents
 	 * searched with work product Stabilization done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-51398", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -777,9 +778,7 @@ public class DocView_Regression5 {
 		sessionSearch.getMetaDataInserQuery().waitAndClick(5);
 		sessionSearch.serarchWP();
 		sessionSearch.ViewInDocView();
-		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docView.getPersistantHitEyeIcon());
 		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
 		docView.getPersistantHitEyeIcon().Click();
 		docViewRedact.validatePersistentPanelHitCountAgainstDocHighlightedCount(keywordsArrayPT[0]);
@@ -795,7 +794,7 @@ public class DocView_Regression5 {
 	 * done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-51934", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyDocInMiniDocListChildWindowsAfterPerformCodeSameAsLast() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -956,7 +955,7 @@ public class DocView_Regression5 {
 	 * stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-51332", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyReviewModeTextContextOfAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1004,7 +1003,7 @@ public class DocView_Regression5 {
 	 * from doc list
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-51330", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1012,6 +1011,7 @@ public class DocView_Regression5 {
 		docView = new DocViewPage(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String sourceDocId = "SourceDocID";
 		baseClass.stepInfo("Test case id : RPMXCON-51330");
 		baseClass.stepInfo(
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from doc list");
@@ -1027,10 +1027,13 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -1042,10 +1045,14 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		baseClass.waitTime(2);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -1058,9 +1065,14 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.waitTime(2);
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as SA
@@ -1075,10 +1087,15 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
@@ -1090,10 +1107,15 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
@@ -1108,9 +1130,14 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as SA
@@ -1126,10 +1153,14 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(3);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
-		driver.waitForPageToBeReady();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();	
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
@@ -1142,10 +1173,15 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		driver.waitForPageToBeReady();
@@ -1156,9 +1192,14 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as SA
@@ -1173,10 +1214,14 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -1189,10 +1234,13 @@ public class DocView_Regression5 {
 		sessionSearch.viewInDocView_redactions();
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -1201,9 +1249,14 @@ public class DocView_Regression5 {
 		sessionSearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as PA
@@ -1216,9 +1269,14 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1229,9 +1287,14 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1241,9 +1304,14 @@ public class DocView_Regression5 {
 		sessionSearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		docView.verifyHighlightedKeywordInDocView();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 
 		// Login as PA
@@ -1256,9 +1324,14 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1269,10 +1342,15 @@ public class DocView_Regression5 {
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoReviewer();
@@ -1282,12 +1360,16 @@ public class DocView_Regression5 {
 		sessionSearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocView(searchName);
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(Input.sourceDocId1);
+		docView.selectSourceDocIdInAvailableField(sourceDocId);
+		driver.Navigate().refresh();
+		docView.selectDocInMiniDocList(Input.sourceDocId1);
+		baseClass.waitTime(2);
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.waitTime(2);
+		driver.Navigate().refresh();
 		loginPage.logout();
 	}
-
 	/**
 	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51923 Verify that when user in on Images tab and view document from
@@ -1295,7 +1377,7 @@ public class DocView_Regression5 {
 	 * document
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-51923", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyImageTabViewDocAnalyticalPanelChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1377,7 +1459,7 @@ public class DocView_Regression5 {
 	 * of the doc view
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-51044", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifyAfterImpersonationMiddlePanelInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1461,7 +1543,7 @@ public class DocView_Regression5 {
 	 * Assignment/Manage Reviewers.
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, priority = 13)
+	@Test(description = "RPMXCON-51043", enabled = true, alwaysRun = true, priority = 13)
 	public void verifyMaximizeTheMiddlePanelInDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1504,7 +1586,7 @@ public class DocView_Regression5 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-51881", alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyFolderWorksFineInCompleteAndUnCompleteSateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51881");
 		baseClass.stepInfo(
@@ -1514,6 +1596,7 @@ public class DocView_Regression5 {
 		DocViewPage docView = new DocViewPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		String folderName = "AnalyticalPanel" + Utility.dynamicNameAppender();
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -1541,7 +1624,6 @@ public class DocView_Regression5 {
 		docView.getDocView__ChildWindow_Mini_FolderAction().waitAndClick(10);
 		docView.createNewFolderInAnalytical(folderName);
 	}
-
 	/**
 	 * @author Sakthivel TestCase Id:51880 C2B: Verify that Action > Remove Code
 	 *         Same works fine when all records in the reviewer's batch are in mixed
@@ -1549,7 +1631,7 @@ public class DocView_Regression5 {
 	 *         with records in an Uncompleted state in Mini DocList
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-51880", alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyRemoveCodeSameInCompleteandUncompleteStateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51880");
 		baseClass.stepInfo(
@@ -1559,6 +1641,7 @@ public class DocView_Regression5 {
 		DocViewPage docView = new DocViewPage(driver);
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		SoftAssert softAssert = new SoftAssert();
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -1610,7 +1693,7 @@ public class DocView_Regression5 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-51006", alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51006");
 		baseClass.stepInfo(
@@ -1647,7 +1730,7 @@ public class DocView_Regression5 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-51925", enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyImageTabRetainOnDocsNavigation() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51925");
@@ -1710,7 +1793,7 @@ public class DocView_Regression5 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.newNearDupeDocId);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -1764,7 +1847,7 @@ public class DocView_Regression5 {
 	 * previously viewed hits for the document on completing the document after
 	 * applying the coding stamp.
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-51851", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1864,7 +1947,7 @@ public class DocView_Regression5 {
 	 * Id:RPMXCON-51977 Verify that DocView should be able to load the stitched TIFF
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-51977", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyDocViewStichedTIFFIsLoad() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51977");
@@ -1920,7 +2003,7 @@ public class DocView_Regression5 {
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
+		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
 
 	}
 
