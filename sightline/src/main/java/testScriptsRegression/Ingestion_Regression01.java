@@ -1985,7 +1985,124 @@ public class Ingestion_Regression01 {
 		ingestionPage.runFullAnalysisAndPublish();
 	}
 	
-	
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48195 Description :To Very the Family
+	 * Member Counts After Ingestion completed successfully.
+	 * 
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 57)
+	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48195");
+		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		String ingestionType = "Add Only";
+		String familyMemberCount = "FamilyMemberCount";
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, null, Input.ImagePPPDF10docs, null, null,
+					null);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch("ID00002731");
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		baseClass.waitForElement(doc.getSelectDropDown());
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(familyMemberCount);
+		String FamilyMemberCount=doc.getDocList_EmailName().getText();
+		int DocCount=Integer.valueOf(FamilyMemberCount);
+		if(DocCount!=0) {
+			baseClass.passedStep("Family Members count is displayed as expected");
+		}else {
+			baseClass.failedStep("Family Members Count is not displayed as expected");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48202 Description :To Verify Ingestion
+	 * overlay of TIFF without Unpublish
+	 * 
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 58)
+	public void verifyTiffImageInDocViewPage() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48202");
+		baseClass.stepInfo("To Verify Ingestion overlay of TIFF without Unpublish");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.selectproject(Input.ingestionPrjt);
+		ingestionPage = new IngestionPage_Indium(driver);
+		 boolean status=ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+
+		String ingestionType = "Add Only";
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String dateFormat = Input.dateFormat;
+
+		System.out.println(status);
+		if (status == false) {
+
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		}
+
+		String ingestionOverlay=Input.overlayOnly;
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionOverlay, Input.sourceSystem,
+				Input.sourceLocation, Input.TiffImagesFolder);
+		ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+		ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+		ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
+		ingestionPage.selectDateAndTimeForamt(dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.TiffImages);
+		search.viewInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		doc.clickOnImageTab();
+		for (int i = 0; i < 5; i++) {
+			doc.getImageTabOption(Input.TiffImagesFolder).isElementAvailable(10);
+			if (doc.getImageTabOption(Input.TiffImagesFolder).isDisplayed()) {
+				baseClass.passedStep("Tiff image file is displayed as expected");
+				break;
+			} else {
+				baseClass.failedStep("Tiff image file is not displayed as expected");
+			}
+
+		}
+		loginPage.logout();
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
