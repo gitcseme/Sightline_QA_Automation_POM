@@ -2103,6 +2103,165 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
+	 * :To verify that the total unique count should not include the docs that have
+	 * been unpublished. 'RPMXCON-49263'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 59)
+	public void verifyTotalUniqueCountAfterUnpublished() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49263");
+		baseClass.stepInfo(
+				"To verify that the total unique count should not include the docs that have been unpublished.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.nativigateToIngestionViaButton();
+		// getting before unique count
+    	int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
+
+		// Search ingestionName
+		sessionSearch.basicSearchWithMetaDataQuery("8B61_PP_PDFGen_10Docs_20220510125758506", "IngestionName");
+		sessionSearch.getPureHitAddButton().isElementAvailable(2);
+		sessionSearch.getPureHitAddButton().waitAndClick(5);
+		// Saved the My SavedSearch
+		sessionSearch.saveSearch(BasicSearchName);
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountAfter + "'");
+
+		if (uniqueCountBefore != uniqueCountAfter) {
+			baseClass.passedStep("Total Unique Count is not include the document that have been unpublished ");
+		} else {
+			baseClass.failedStep("Total Unique Count is include the document that have been unpublished ");
+		}
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
+	 * :To Verify Full Analytics run successfully in Ingestion for Overlays Mode and
+	 * all the Metadata Updated in Overlays should get displayed after Overlay's
+	 * Successful. 'RPMXCON-48084'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 60)
+	public void verifyFullAnalyticsRunIngestionForOverlay() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String BasicSearchName = "Test" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48084");
+		baseClass.stepInfo(
+				"To Verify Full Analytics run successfully in Ingestion for Overlays Mode and all the Metadata Updated in Overlays should get displayed after Overlay's Successful.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		ingestionPage.nativigateToIngestionViaButton();
+		
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		System.out.println(status);
+		if (status == false) {
+			String ingestionType = "Add Only";
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
+					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
+					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null, null);
+		}
+		// Search ingestionName And bulkRelease
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		String beforeStringCount = sessionSearch.getPureHitsCount().getText();
+		System.out.println(beforeStringCount);
+		baseClass.stepInfo("First String persistent hit count is : " + beforeStringCount);
+
+		// Saved the My SavedSearch
+		sessionSearch.bulkRelease(Input.securityGroup);
+		sessionSearch.saveSearch(BasicSearchName);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+	
+		// Go to Sessionsearch page
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.addNewSearch();
+		sessionSearch.basicSearchWithMetaDataQuery(Input.searchString1);
+		String afterStringCount = sessionSearch.getPureHitsCount().getText();
+		System.out.println(afterStringCount);
+		baseClass.stepInfo("First String persistent hit count is : " + afterStringCount);
+		if (beforeStringCount != afterStringCount) {
+			baseClass.passedStep("Metadata Updated in Overlays displayed after Overlay's Successfully");
+		} else {
+			baseClass.failedStep(" Metadata Updated in Overlays not displayed after Overlay's");
+		}
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description:
+	 * To Verify Ingestion Overlays of PDF without unpublish. 'RPMXCON-46875'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 61)
+	public void verifyingestionOverlayWithoutUnpublish() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-46875");
+		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",
+					Input.DAT_MMDDYYYY, Input.Natives_MMDDYYYY);
+			ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
+		}
+		ingestionPage.nativigateToIngestionViaButton();
+		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
+		System.out.println(ingestionName);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
+		sessionSearch.viewInDocView();
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocIdInMiniDocList(Input.HiddenPropertiesFolder);
+		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
+		docViewPage.getDocView_DefaultViewTab().waitAndClick(5);
+		String text = docViewPage.getDocViewDefaultViewPDF().getText();
+		if (text.contains("PDF")) {
+			baseClass.passedStep("PDF is displays in PDF viewer");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
