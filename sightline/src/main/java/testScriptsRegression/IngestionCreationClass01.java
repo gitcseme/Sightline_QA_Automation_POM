@@ -76,8 +76,10 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 
 		if (status == false) {
+
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+			
 		}
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
@@ -115,6 +117,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51236");
 		baseClass.stepInfo(
 				"Verify when user ingest only metadata, message like 'No files associated with this document' should be displayed on text/Images/Translations view");
+
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
@@ -122,6 +125,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select",null, null, null);
 		}
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
@@ -159,6 +163,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-51235");
 		baseClass.stepInfo(
 				"Verify when user ingest only metadata, 'No files associated with this document' message should be displayed on default view");
+
 		String ingestionType="Add Only";
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
@@ -167,6 +172,8 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
+
+
 		
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
@@ -214,6 +221,7 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51237");
 		baseClass.stepInfo("Verify when user ingest only metadata, error PDF should be displayed on Images view");
+
 		String ingestionType="Add Only";
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
@@ -222,6 +230,8 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
+
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
@@ -269,6 +279,7 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51238");
 		baseClass.stepInfo("Verify when user ingest only dat file, only metadata should get ingested.");
+
 		String ingestionType="Add Only";
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
@@ -277,6 +288,9 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
+
+		
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
@@ -313,13 +327,24 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49569");
 		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
 		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
+
 		String ingestionType="Add Only";
 		
+
+
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		String ingestionType = "Add Only";
 		System.out.println(status);
+
 
 		if(status==false) {
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,Input.sourceSystem,Input.datFormatFile,"DAT4_STC_NativesEmailData NEWID.lst","DAT4_STC_TextEmailData NEWID.lst",null,null,null,null,null,null);
+
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
+					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
+
 		}
 		
 		baseClass.stepInfo("Search the documents and Save");
