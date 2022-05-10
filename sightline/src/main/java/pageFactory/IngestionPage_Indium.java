@@ -10073,4 +10073,64 @@ public class IngestionPage_Indium {
 		
 	return ingestionName;
 	}
+	
+	/**
+	 * @author: Arun Created Date: 10/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform overlay ingestion with dat along with any type 
+	 */
+
+	public void OverlayIngestionWithDat(String ingestionName,String datFile,String datKey,String type,String file) {
+		
+		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATDelimitersNewLine().Visible();
+			}
+		}), Input.wait30);
+
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		base.waitTime(1);
+		selectDATSource(datFile, datKey);
+		
+		base.waitTime(2);
+		if (type.equalsIgnoreCase("Native")) {
+			selectNativeSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Tiff")) {
+			base.stepInfo("Selecting Tiff file");
+			getTIFFCheckBox().Click();
+			base.waitTime(1);
+			selectTIFFSource(file, false, false);
+		}
+
+		if (type.equalsIgnoreCase("pdf")) {
+			base.stepInfo("Selecting Pdf file");
+			selectPDFSource(file, false);
+		}
+		if (type.equalsIgnoreCase("mp3")) {
+			base.stepInfo("Selecting Mp3 file");
+			selectMP3VarientSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Transcript")) {
+			base.stepInfo("Selecting Transcript file");
+			selectAudioTranscriptSource(file, false);
+		}
+		if (type.equalsIgnoreCase("Translation")) {
+			base.stepInfo("Selecting Translation file");
+			selectOtherSource(type, file, false);
+		}
+		base.waitTime(2);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+
+		clickOnNextButton();
+		base.waitTime(2);
+		clickOnPreviewAndRunButton();
+		base.stepInfo("Overlay ingestion started");
+
+	}
 }

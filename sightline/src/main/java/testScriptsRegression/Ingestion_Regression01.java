@@ -1833,6 +1833,159 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-48292
+	 * Description :To verify In Ingestion, with another New Line delimiter other than ASCII(59)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 52)
+	public void verifyAddOnlyIngestionWithAnotherNewLineDelimiter() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48292");
+		baseClass.stepInfo("To verify In Ingestion, with another New Line delimiter other than ASCII(59)");
+
+		// perform add only ingestion with new line delimiter 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			baseClass.passedStep("Ingestion already performed in this project successfully with New Line delimiter other than ASCII(59)");
+		}
+
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-47842 
+	 * Description :Add only ingestion with only .mp3 audio files with MP3 Variant file types. 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 53)
+	public void verifyAddOnlyIngestionForMp3VariantFileTypes() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47842");
+		baseClass.stepInfo("Add only ingestion with only .mp3 audio files with MP3 Variant file types.");
+
+		// perform add only ingestion for mp3 variant file type
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		if (status == false) {
+			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.audio96DocsFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-47587 
+	 * Description :Ingestion with Overlay mode with only DAT file along with PDF or TIFF or Native file type 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 54)
+	public void verifyOverlayIngestionWithDatAlongWithNative() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47587");
+		baseClass.stepInfo("Ingestion with Overlay mode with only DAT file along with PDF or TIFF or Native file type");
+
+		// perform add only ingestion for mp3 variant file type
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// perform overlay ingestion with dat along with native
+		baseClass.stepInfo("Performing overlay ingestion with Dat along with Native");
+		ingestionPage.OverlayIngestionWithDat(Input.AK_NativeFolder,Input.DATFile1,Input.prodBeg,"Native",Input.NativeFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-47588 
+	 * Description :Ingestion with Overlay mode with only load files for PDF or TIFF or Native file type
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 55)
+	public void verifyOverlayIngestionWithOnlyLoadFiles() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-47588");
+		baseClass.stepInfo("Ingestion with Overlay mode with only load files for PDF or TIFF or Native file type");
+
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// perform pdf overlay
+		baseClass.stepInfo("Performing overlay ingestion with PDF");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Pdf", Input.PDFFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-48203 
+	 * Description :To Verify Ingestion overlay of Others without Unpublish
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 56)
+	public void verifyOverlayIngestionWithOthers() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48203");
+		baseClass.stepInfo("To Verify Ingestion overlay of Others without Unpublish");
+
+		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.prodBeg);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// perform other overlay
+		baseClass.stepInfo("Performing overlay ingestion with Others");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Translation", Input.TranslationFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+	}
+	
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
