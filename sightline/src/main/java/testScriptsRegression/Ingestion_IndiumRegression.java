@@ -38,6 +38,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ManageUsersPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ProjectPage;
 import pageFactory.ReusableDocViewPage;
@@ -95,6 +96,7 @@ public class Ingestion_IndiumRegression {
 	/**
 	 * Author :Baskar date: 04/05/2022 Modified date: NA Modified by: NA
 	 * Description:Verify Email metadata automatically released to Security Group
+	 * 
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 01)
@@ -167,7 +169,7 @@ public class Ingestion_IndiumRegression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectsecuritygroup(newSg);
-		
+
 		// navigating to doclist
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		baseClass.waitForElement(sessionSearch.getSaveSearchPopupFolderName(securityTab));
@@ -175,16 +177,17 @@ public class Ingestion_IndiumRegression {
 		savedSearch.savedSearchToDocList(toDocList);
 		doclist.verifyTheMetaDataPresences();
 		baseClass.selectsecuritygroup(Input.securityGroup);
-		
+
 		// logout as rmu
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author :Baskar date: 09/05/2022 Modified date: NA Modified by: NA
-	 * Description:To Verify for Audio longer than 1 hour, in Docview, "Zoom In/Zoom Out" 
-	 * should be available so user could switch between the short and long wave forms.
+	 * Description:To Verify for Audio longer than 1 hour, in Docview, "Zoom In/Zoom
+	 * Out" should be available so user could switch between the short and long wave
+	 * forms.
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
@@ -192,22 +195,22 @@ public class Ingestion_IndiumRegression {
 		dataSets = new DataSets(driver);
 		sessionSearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-		String audioDocsIngestionName="41AD_SSAudioSpeech_Transcript_20220321085634270";
-		String moreThanHour=Input.ingestionOneHour;
+		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
+		String moreThanHour = Input.ingestionOneHour;
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
-		
+
 		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
-		if(ingestionFullName!=null) {
+		if (ingestionFullName != null) {
 			driver.waitForPageToBeReady();
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
 			sessionSearch.viewInDocView();
 			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
 			docview.getDocumentByid(moreThanHour).waitAndClick(5);
-			
+
 			// verifying more than one hour audio docs
 			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
 			String[] splitData = overAllAudioTime.split(":");
@@ -218,24 +221,24 @@ public class Ingestion_IndiumRegression {
 			} else {
 				baseClass.failedMessage("Lesser than one hour");
 			}
-			
+
 			// checking zoom in function working for more than one hour audio docs
 			docview.getAudioDocZoom().waitAndClick(5);
 			boolean zoomBar = docview.getAudioZoomBar().Displayed();
 			softAssertion.assertTrue(zoomBar);
 			baseClass.passedStep("Zoom functionality working for more than one hour of document");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Ingestion not available, Need to ingest for this project");
 		}
 		softAssertion.assertAll();
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * Author :Baskar date: 09/05/2022 Modified date: NA Modified by: NA
-	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom Out" is disabled or hidden.
+	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
+	 * Out" is disabled or hidden.
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
@@ -243,20 +246,21 @@ public class Ingestion_IndiumRegression {
 		dataSets = new DataSets(driver);
 		sessionSearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-		String audioDocsIngestionName="41AD_SSAudioSpeech_Transcript_20220321085634270";
-		String moreThanHour=Input.ingestionLessThanHour;
+		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
+		String moreThanHour = Input.ingestionLessThanHour;
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
-		baseClass.stepInfo("To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
-		
+		baseClass.stepInfo(
+				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
+
 		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
-		if(ingestionFullName!=null) {
+		if (ingestionFullName != null) {
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
 			sessionSearch.viewInDocView();
 			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
 			docview.getDocumentByid(moreThanHour).waitAndClick(5);
-			
+
 			// verifying less than one hour audio docs
 			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
 			String[] splitData = overAllAudioTime.split(":");
@@ -267,20 +271,216 @@ public class Ingestion_IndiumRegression {
 			} else {
 				baseClass.stepInfo("Audio docs have less than:" + overAllAudioTime + " hour to check zoom function");
 			}
-			
+
 			// checking zoom in function working for less than one hour audio docs
-			boolean zoomBar = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector(\"div.col-md-2.disabledbutton div:nth-child(3) > div\").hidden;");
+			boolean zoomBar = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript(
+					"return document.querySelector(\"div.col-md-2.disabledbutton div:nth-child(3) > div\").hidden;");
 			softAssertion.assertFalse(zoomBar);
 			baseClass.passedStep("Zoom functionality not working for less than one hour of document,Zoom is hidden");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Ingestion not available, Need to ingest for this project");
 		}
 		softAssertion.assertAll();
 		loginPage.logout();
-		
+
 	}
-	
+
+	/**
+	 * @Author jeevitha
+	 * @Descripyion : Validate exporting dataset details at project level for
+	 *              impersonating as RMU [RPMXCON-50752]
+	 * @param userName
+	 * @param password
+	 * @param fromRole
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority = 4)
+	public void verifyingTheExportIconWithDiffUsers(String userName, String password, String fromRole)
+			throws Exception {
+		String status = "true";
+
+		ManageUsersPage manage = new ManageUsersPage(driver);
+		UserManagement user = new UserManagement(driver);
+		DataSets data = new DataSets(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Logged in as : " + fromRole);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50752  Ingestion");
+		baseClass.stepInfo("Validate exporting dataset details at project level for impersonating as RMU");
+
+		// navigate to user page
+		user.navigateToUsersPAge();
+
+		// verify Dataset Checkbox
+		user.passingUserName(userName);
+		user.applyFilter();
+		user.editLoginUser();
+		user.getFunctionalityTab().waitAndClick(5);
+		user.verifyStatusDataSet(status);
+		user.saveButtonOfFunctionTab();
+		baseClass.stepInfo("DataSet Check Box is Verified");
+
+		// Imp to RMU
+		user.navigateToUsersPAge();
+		baseClass.rolesToImp(fromRole, "RMU");
+
+		// Navigate to dataset Page & verify Export Icon
+		data.navigateToDataSetsPage();
+		baseClass.ValidateElement_Presence(data.getExportIconButton(), "Export Icon");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author: Mohan date: 06/05/2022 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50749 Description :Validate exporting dataset details at project
+	 * level for Project Admin
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority =5)
+	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		DataSets datasets = new DataSets(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-50749");
+		baseClass.stepInfo("Validate exporting dataset details at project level for Project Admin");
+
+		ingestionPage.navigateToDataSetsPage();
+		ingestionPage.verifyToolTipOfExportIcon();
+		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
+		int bgCountBefore = baseClass.initialBgCount();
+
+		baseClass.waitForElement(datasets.getExportIconButton());
+		datasets.getExportIconButton().waitAndClick(10);
+		baseClass.VerifySuccessMessage(expectedMsg);
+		String exportFile = datasets.downloadExportFile(bgCountBefore);
+		String sheetName1 = baseClass.readExcelDataSheetNameOnly(exportFile, 0);
+		String sheetName2 = baseClass.readExcelDataSheetNameOnly(exportFile, 1);
+		String sheetName3 = baseClass.readExcelDataSheetNameOnly(exportFile, 2);
+
+		if (sheetName1.equalsIgnoreCase("Summary") && sheetName2.equalsIgnoreCase("Not Processed and Not Loaded")
+				&& sheetName3.equalsIgnoreCase("Loaded with Errors")) {
+			baseClass.passedStep("The Excel contains all mentioned tabs");
+
+		} else {
+			baseClass.failedStep("The excel file doesn't contains any metioned tabs");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author: Mohan date: 06/05/2022 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50750 Description :Validate exporting dataset details at security
+	 * group level for RMU
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		DataSets datasets = new DataSets(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-50750");
+		baseClass.stepInfo("Validate exporting dataset details at security group level for RMU");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		ingestionPage.navigateToDataSetsPage();
+		ingestionPage.verifyToolTipOfExportIcon();
+		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
+		int bgCountBefore = baseClass.initialBgCount();
+
+		baseClass.waitForElement(datasets.getExportIconButton());
+		datasets.getExportIconButton().waitAndClick(10);
+		baseClass.VerifySuccessMessage(expectedMsg);
+		String exportFile = datasets.downloadExportFile(bgCountBefore);
+		String sheetName1 = baseClass.readExcelDataSheetNameOnly(exportFile, 0);
+		String sheetName2 = baseClass.readExcelDataSheetNameOnly(exportFile, 1);
+		String sheetName3 = baseClass.readExcelDataSheetNameOnly(exportFile, 2);
+
+		if (sheetName1.equalsIgnoreCase("Summary") && sheetName2.equalsIgnoreCase("Not Processed and Not Loaded")
+				&& sheetName3.equalsIgnoreCase("Loaded with Errors")) {
+			baseClass.passedStep("The Excel contains all mentioned tabs");
+
+		} else {
+			baseClass.failedStep("The excel file doesn't contains any metioned tabs");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author: Jeevitha
+	 * 
+	 * @Description :Validate exporting dataset details at project level for
+	 *              impersonating as Project Admin
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority = 7)
+	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
+			throws InterruptedException, IOException {
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		DataSets datasets = new DataSets(driver);
+
+		// login as user
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-50751 Ingestion");
+		baseClass.stepInfo("Validate exporting dataset details at project level for impersonating as Project Admin");
+
+		//imp to PA
+		baseClass.rolesToImp(fromRole, "PA");
+
+		// verify tooltip of export icon
+		ingestionPage.navigateToDataSetsPage();
+		ingestionPage.verifyToolTipOfExportIcon();
+		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
+		int bgCountBefore = baseClass.initialBgCount();
+
+		// download export file
+		baseClass.waitForElement(datasets.getExportIconButton());
+		datasets.getExportIconButton().waitAndClick(10);
+		baseClass.VerifySuccessMessage(expectedMsg);
+		String exportFile = datasets.downloadExportFile(bgCountBefore);
+
+		// verify sheetnames
+		String sheetName1 = baseClass.readExcelDataSheetNameOnly(exportFile, 0);
+		String sheetName2 = baseClass.readExcelDataSheetNameOnly(exportFile, 1);
+		String sheetName3 = baseClass.readExcelDataSheetNameOnly(exportFile, 2);
+
+		if (sheetName1.equalsIgnoreCase("Summary") && sheetName2.equalsIgnoreCase("Not Processed and Not Loaded")
+				&& sheetName3.equalsIgnoreCase("Loaded with Errors")) {
+			baseClass.passedStep(
+					"The Excel contains all mentioned tabs : " + sheetName1 + " , " + sheetName2 + " , " + sheetName3);
+
+		} else {
+			baseClass.failedStep("The excel file doesn't contains any metioned tabs");
+		}
+
+		loginPage.logout();
+
+	}
+
+	@DataProvider(name = "userDataSets")
+	public Object[][] userDataSet() {
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.da1userName, Input.da1password, "DA" }, { Input.pa1userName, Input.pa1password, "PA" } };
+	}
+
+	@DataProvider(name = "userDataSetsSAAndDA")
+	public Object[][] userDataSetsSAAndDA() {
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.da1userName, Input.da1password, "DA" } };
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

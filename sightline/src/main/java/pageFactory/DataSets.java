@@ -105,6 +105,14 @@ public class DataSets {
 			return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocView']");
 		}
 	
+		// Jeevitha
+		public Element getBullHornIcon() {
+			return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+		}
+
+		public Element getNotificationMsg() {
+			return driver.FindElementByXPath("(//ul[@class='notification-body']//a)[1]");
+		}
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -488,6 +496,52 @@ public class DataSets {
 			base.failedStep("failed"+e.getMessage());
 		}
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param bgCountBefore
+	 * @return
+	 */
+	public String downloadExportFile(int bgCountBefore) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCountBefore + 1;
+			}
+		}), Input.wait60);
+		final int bgCountAfter = base.initialBgCount();
+
+		String filePath = null;
+		if (bgCountAfter > bgCountBefore) {
+			getBullHornIcon().waitAndClick(10);
+
+			String downloadMsg = getNotificationMsg().getText();
+			String expected = "Your dataset summary report is ready. Please click here to download.";
+			String failMsg = "Download Notification is not As Expected";
+			base.textCompareEquals(downloadMsg, expected, downloadMsg, failMsg);
+
+			base.waitForElement(getNotificationMsg());
+			getNotificationMsg().waitAndClick(10);
+
+			File ab = new File(Input.fileDownloadLocation);
+			String testPath = ab.toString() + "\\";
+
+			// wait until file download is complete
+			base.waitUntilFileDownload();
+
+			// base.csvReader();
+			ReportsPage report = new ReportsPage(driver);
+			File a = report.getLatestFilefromDir(testPath);
+			System.out.println(a.getName());
+			base.stepInfo(a.getName());
+			String fileName = a.getName();
+			filePath = testPath + fileName;
+			System.out.println( "File path : "+filePath);
+			base.stepInfo("Downloaded File : " + filePath);
+
+		}
+		return filePath;
+	}
+	
 }
 
 

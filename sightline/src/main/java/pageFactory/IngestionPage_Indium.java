@@ -654,7 +654,10 @@ public class IngestionPage_Indium {
 	}
 
 	// Added by Mohan
-	
+	public Element getExportIconButton() {
+		return driver.FindElementByXPath("//a[@id='ExportDatasetExceptions']");
+
+		}	
 
 	public Element getIngestion_CopyingTableValue(int row , int value) {
 		return driver.FindElementByXPath("//div[@id='Copyingblock']//table//tbody//tr["+row+"]//td[contains(text(),'"+value+"')]");
@@ -10627,5 +10630,26 @@ public class IngestionPage_Indium {
 
 		}
 			
+		/**
+		* @author Mohan.Venugopal
+		* @description : To verify tool tip of Export Botton
+		*
+		*/
+		public void verifyToolTipOfExportIcon() {
+		driver.waitForPageToBeReady();
+		try {
+		Actions act = new Actions(driver.getWebDriver());
+		base.waitForElement(getExportIconButton());
+		act.moveToElement(getExportIconButton().getWebElement());
+		act.build().perform();
+		String export = getExportIconButton().GetAttribute("title");
+		System.out.println(export);
+		base.stepInfo(export);
+		base.passedStep("Export Dataset Exceptions tooltip is available.");
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		}
+		
 		
 }
