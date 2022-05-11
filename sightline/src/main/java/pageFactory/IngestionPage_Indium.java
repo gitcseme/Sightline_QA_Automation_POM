@@ -1198,7 +1198,9 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//*[@id='UnpublishHistoryDatatable']/tbody/tr/td[text()='" + searchName
 				+ "']/../td[" + coulumNumber + "]");
 	}
-
+	public Element indexingErrorCount() {
+		return driver.FindElementByXPath("//label[contains(.,'Document Data Indexed')]//..//div//span//a");
+	}
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -10464,5 +10466,71 @@ public class IngestionPage_Indium {
 				base.failedStep("Exception occured while checking analytics status." + e.getLocalizedMessage());
 			}
 		}
+		/**
+		 * @author: Brundha
+		 * @description: filling indexing stage in ingestion 
+		 */
+		public void IgnoreErrorAndIndexing() {
+			
+			getRefreshButton().waitAndClick(10);
+			getIngestionName().waitAndClick(Input.wait30);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(10);
+			base.waitForElement(getLanguage());
+			getLanguage().selectFromDropdown().selectByVisibleText(Input.language);
+			getRunIndexing().waitAndClick(10);
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByINDEXED());
+			getFilterByINDEXED().waitAndClick(10);
+			
+				for (int i = 0; i < 120; i++) {
+					getRefreshButton().waitAndClick(15);
+					base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+
+					if (status.contains("Indexed")) {
+						base.passedStep("Indexed completed");
+						break;
+					} else if (status.contains("In Progress")) {
+						base.waitTime(5);
+						getRefreshButton().waitAndClick(5);
+					} else if (status.contains("Failed")) {
+						getIngestionDetailPopup(1).waitAndClick(10);
+						driver.scrollingToElementofAPage(indexingErrorCount());
+						indexingErrorCount().waitAndClick(5);
+						base.waitTime(1);
+						ignoreAllButton().waitAndClick(5);
+						doneButton().waitAndClick(10);
+						base.VerifySuccessMessage("Action done successfully");
+						getCloseButton().waitAndClick(10);
+						getRefreshButton().waitAndClick(5);
+						getIngestionDetailPopup(1).waitAndClick(10);
+						base.waitTime(2);
+						driver.scrollingToElementofAPage(getRunIndexing());
+						getRunIndexing().waitAndClick(5);
+						getCloseButton().waitAndClick(5);
+						getRefreshButton().waitAndClick(5);
+
+					}
+				}
+		}
+	
+		/**
+		 * @author: Brundha
+		 * @description: filling source field
+		 */
+		public void fillingSourceField() {
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+		}
+			
 		
 }
