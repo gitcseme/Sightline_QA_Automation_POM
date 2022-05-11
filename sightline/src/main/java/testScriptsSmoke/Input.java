@@ -343,6 +343,8 @@ public class Input {
 	public static String selectTextFile;
 	public static String selectMp3File;
 	public static String audioDatFile;
+	public static String skippedAnalyticMessage;
+	public static String completedAnalyticMessage;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1088,6 +1090,8 @@ public class Input {
 		selectTextFile = testData.getSelectTextFile();
 		selectMp3File = testData.getSelectMp3File();
 		audioDatFile = testData.getAudioDatFile();
+		skippedAnalyticMessage = testData.getSkippedAnalyticMessage();
+		completedAnalyticMessage = testData.getCompletedAnalyticMessage();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

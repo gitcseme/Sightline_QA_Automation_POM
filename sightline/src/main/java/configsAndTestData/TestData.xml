@@ -59,6 +59,8 @@
    	<selectTextFile>text.lst</selectTextFile>
    	<selectMp3File>MP3 Files.LST</selectMp3File>
    	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
+   	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED</skippedAnalyticMessage>
+	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_STAGING_COMPLETED</completedAnalyticMessage>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

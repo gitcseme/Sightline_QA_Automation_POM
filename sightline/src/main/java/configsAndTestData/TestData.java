@@ -226,6 +226,8 @@ public class TestData {
 	public String selectTextFile;
 	public String selectMp3File;
 	public String audioDatFile;
+	public String skippedAnalyticMessage;
+	public String completedAnalyticMessage;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
