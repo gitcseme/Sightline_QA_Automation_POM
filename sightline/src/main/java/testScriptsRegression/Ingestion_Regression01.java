@@ -2106,7 +2106,7 @@ public class Ingestion_Regression01 {
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
 	 * :To verify that the total unique count should not include the docs that have
-	 * been unpublished. 'RPMXCON-49262'
+	 * been unpublished. 'RPMXCON-49263'
 	 * 
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 59)
@@ -2118,7 +2118,7 @@ public class Ingestion_Regression01 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
-		baseClass.stepInfo("Test case Id: RPMXCON-49262");
+		baseClass.stepInfo("Test case Id: RPMXCON-49263");
 		baseClass.stepInfo(
 				"To verify that the total unique count should not include the docs that have been unpublished.");
 
