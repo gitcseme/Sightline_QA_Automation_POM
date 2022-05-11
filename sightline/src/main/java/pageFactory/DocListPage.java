@@ -1298,6 +1298,11 @@ public class DocListPage {
 	public ElementCollection getTableRowHeaderInDocList() {
 		return driver.FindElementsByXPath("//tr[@role='row']/th");
 		}
+	
+	public Element getColumValue(int colum) {
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr[1]/td["+colum+"]");
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -5146,4 +5151,15 @@ public class DocListPage {
 		}
 		
 		}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return
+	 * @Description Get Document Id
+	 */
+	public String getDocumetId() {
+		driver.waitForPageToBeReady();
+		int index = base.getIndex(getTableRowHeader(), "DOCID");
+		String docId = getColumValue(index).getText().trim();
+		return docId;
+	}
 }
