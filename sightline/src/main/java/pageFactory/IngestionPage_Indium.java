@@ -1148,6 +1148,23 @@ public class IngestionPage_Indium {
 	}
 
 	// Add by Aathith
+	
+	public Element getDatasetMappedCount(String ingestionCount) {
+		return driver.FindElementByXPath("//div[contains(@class,'sourceCt')]//span[contains(normalize-space(.),'"+ingestionCount+"')]");
+	}
+	
+	
+	public Element getDataSetViewInDocView(String DataSet) {
+		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//a[text()='DocView']");
+	}
+	
+	public Element getDataSetActionBtn(String DataSet) {
+		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]/../..//button");
+	}
+	
+	public Element getDataSetName(String DataSet) {
+		return driver.FindElementByXPath("//a[contains(@title,'"+DataSet+"')]");
+	}
 	public Element getRefeshBtn() {
 		return driver.FindElementByXPath("//a[@id='refresh']");
 	}
@@ -10133,4 +10150,150 @@ public class IngestionPage_Indium {
 		base.stepInfo("Overlay ingestion started");
 
 	}
+	
+	/**
+	*@author Gopinath
+	*@description : Method to navigate data sets page.
+	*/
+	public void navigateToDataSetsPage() {
+		try {
+			driver.getWebDriver().get(Input.url+ "ICE/Datasets");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while navigating data sets page."+e.getMessage());
+			
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param DataSet
+	 * @return
+	 * @Description check weather data is there or not 
+	 */
+	public String isDataSetisAvailable(String DataSet, String ingestionCount) {
+		
+		navigateToDataSetsPage();
+		String datasetName = null;
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++)
+		if(getDataSetName(DataSet).isElementAvailable(2)&& getDatasetMappedCount(ingestionCount).isElementAvailable(10)) {
+			base.passedStep(DataSet+" is available in this project");
+			datasetName = getDataSetName(DataSet).GetAttribute("title");
+			break;
+		}else if(datasetName==null){
+			base.stepInfo("Dataset is not in the project, we need to ingest it");
+			driver.scrollingToBottomofAPage();
+			
+		}else {
+			driver.scrollingToBottomofAPage();
+		}
+		return datasetName;
+	}
+	
+	/**
+	 * @author Sakthivel
+	 * @param DataSet
+	 */
+	public void selectDataSetWithNameInDocView(String DataSet) {
+		driver.waitForPageToBeReady();
+		int i = 1;
+		try {
+		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			if(i==10) {
+				System.out.println("DataSet not in the project");
+				base.failedStep("DataSet is not in project");
+				break;
+			}
+			i++;
+		}
+		getDataSetActionBtn(DataSet).ScrollTo();
+		driver.waitForPageToBeReady();
+		getDataSetActionBtn(DataSet).waitAndClick(10);
+		base.waitForElement(getDataSetViewInDocView(DataSet));
+		getDataSetViewInDocView(DataSet).waitAndClick(10);
+		base.stepInfo("DataSet is selected and viewed in docView.");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("failed"+e.getMessage());
+		}
+	}
+	
+	
+	
+	 /**
+		 * @author: Mohan Created Date: 05/05/2022 Modified by: NA Modified Date: NA
+		 * @description: verify Ingestion publish
+		 */
+		public boolean verifyIngestionpublishWithAdditionalOptions(String dataset, String ingestionType) throws InterruptedException {
+			
+		
+			base.stepInfo("Validating whether the ingestion is done for particular project");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByPUBLISHED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByPUBLISHED().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestion_GridView().Visible();
+				}
+			}), Input.wait30);
+			getIngestion_GridView().waitAndClick(10);
+			
+
+			
+			driver.waitForPageToBeReady();
+			base.stepInfo("Searching for Datasets");
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestionPaginationCount().Visible();
+				}
+			}), Input.wait30);
+			int count = ((getIngestionPaginationCount().size()) - 2);
+			Boolean status = false;
+			for (int i = 0; i < count; i++) {
+				// driver.waitForPageToBeReady();
+				Boolean var1 = getAllIngestionName(dataset).isElementAvailable(10);
+				System.out.println(var1+"Variable 1");
+				
+				Boolean var2 = getAllIngestionName(ingestionType).isElementAvailable(10);
+				System.out.println(var2+"Variable 2");
+				
+				if (var1 && var2) {
+					String publishedDataSet = getAllIngestionName(dataset).getText();
+					if (publishedDataSet.contains(dataset)) {
+						status = true;
+						base.passedStep("The Ingestion " + dataset + " is already done for this project");
+					}
+					break;
+				} else if (status = false) {
+					status = false;
+					driver.scrollingToBottomofAPage();
+					getIngestionPaginationNextButton().waitAndClick(3);
+					base.stepInfo("Expected Ingestion not found in the page " + i);
+				}else{
+					base.stepInfo("The Ingestion is not found in this project");
+
+				}
+
+			}	
+			return status;
+
+
+
+		}
 }
