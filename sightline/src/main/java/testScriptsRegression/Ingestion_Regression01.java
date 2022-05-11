@@ -2106,7 +2106,7 @@ public class Ingestion_Regression01 {
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
 	 * :To verify that the total unique count should not include the docs that have
-	 * been unpublished. 'RPMXCON-49263'
+	 * been unpublished. 'RPMXCON-49262'
 	 * 
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 59)
@@ -2116,9 +2116,9 @@ public class Ingestion_Regression01 {
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
-		baseClass.stepInfo("Test case Id: RPMXCON-49263");
+		baseClass.stepInfo("Test case Id: RPMXCON-49262");
 		baseClass.stepInfo(
 				"To verify that the total unique count should not include the docs that have been unpublished.");
 
@@ -2128,11 +2128,11 @@ public class Ingestion_Regression01 {
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.nativigateToIngestionViaButton();
 		// getting before unique count
-    	int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
 
 		// Search ingestionName
-		sessionSearch.basicSearchWithMetaDataQuery("8B61_PP_PDFGen_10Docs_20220510125758506", "IngestionName");
+		sessionSearch.basicSearchWithMetaDataQuery("8B61_27Mar_MultiPageTIFF_20220321153205930", "IngestionName");
 		sessionSearch.getPureHitAddButton().isElementAvailable(2);
 		sessionSearch.getPureHitAddButton().waitAndClick(5);
 		// Saved the My SavedSearch
@@ -2144,7 +2144,7 @@ public class Ingestion_Regression01 {
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountAfter + "'");
 
-		if (uniqueCountBefore != uniqueCountAfter) {
+		if (uniqueCountBefore == uniqueCountAfter) {
 			baseClass.passedStep("Total Unique Count is not include the document that have been unpublished ");
 		} else {
 			baseClass.failedStep("Total Unique Count is include the document that have been unpublished ");
@@ -2176,7 +2176,7 @@ public class Ingestion_Regression01 {
 
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.nativigateToIngestionViaButton();
-		
+
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
@@ -2199,7 +2199,7 @@ public class Ingestion_Regression01 {
 		// Go to UnpublishPage
 		ingestionPage.navigateToUnPublishPage();
 		ingestionPage.unpublish(BasicSearchName);
-	
+
 		// Go to Sessionsearch page
 		this.driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.addNewSearch();
@@ -2225,8 +2225,8 @@ public class Ingestion_Regression01 {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
+		DocViewPage docview = new DocViewPage(driver);
+	
 		baseClass.stepInfo("Test case Id: RPMXCON-46875");
 		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
 
@@ -2243,24 +2243,21 @@ public class Ingestion_Regression01 {
 			ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
 		}
-		ingestionPage.nativigateToIngestionViaButton();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
-		System.out.println(ingestionName);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.viewInDocView();
-		DocViewPage docViewPage = new DocViewPage(driver);
-
-		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.HiddenPropertiesFolder);
-		baseClass.waitForElement(docViewPage.getDocView_DefaultViewTab());
-		docViewPage.getDocView_DefaultViewTab().waitAndClick(5);
-		String text = docViewPage.getDocViewDefaultViewPDF().getText();
-		if (text.contains("PDF")) {
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
+		if (ingestionFullName != null) {
+			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
+			driver.waitForPageToBeReady();
+			docview.getFileType().isElementAvailable(3);
+			driver.waitForPageToBeReady();
+			String filetype = docview.getDocView_TextFileType().getText().trim();
+			if (filetype.isEmpty()) {
 			baseClass.passedStep("PDF is displays in PDF viewer");
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
 	}
+}
+
 
 
 	@AfterMethod(alwaysRun = true)
