@@ -2258,168 +2258,9 @@ public class Ingestion_Regression01 {
 	}
 }
 	
-	/**
-	 * Author :Vijaya.Rani date: 11/5/2022 Modified date: Modified by: Description
-	 * :To verify that after Text overlay, if there are no other file variants ,
-	 * then DocView uses that text as the default viewer file for that document.
-	 * 'RPMXCON-48606'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 54)
-	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		DocListPage docList = new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocViewPage docView = new DocViewPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48606");
-		baseClass.stepInfo(
-				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-
-		String ingestionType = "Add Only";
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
-
-		if (status == false) {
-
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
-					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
-					null, null);
-
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		baseClass = new BaseClass(driver);
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		driver.scrollPageToTop();
-		ingestionPage.nativigateToIngestionViaButton();
-
-		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if (status1) {
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestionPage.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestionPage.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingestionPage.selectAllOptionsFromFilterByDropdown();
-
-			ingestionPage.removeCatalogError();
-			ingestionPage.getIngestionSatatusAndPerform();
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId1 = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
-		sessionSearch.viewInDocView();
-		driver.waitForPageToBeReady();
-		docView.waitforFileType();
-		docView.getDocView_TextTab().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		if (docView.getDocViewDefaultViewText().isElementAvailable(10)) {
-			baseClass.passedStep(
-					"There are no other file variants ,then Doc View is  displays the text as the default viewer");
-		} else {
-			baseClass.failedStep("verification failed");
-		}
-
-	}
 	
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
-	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
-	 * 'RPMXCON-48606'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 55)
-	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
-		
-		baseClass = new BaseClass(driver);
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
-		baseClass.stepInfo(
-				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingetion.nativigateToIngestionViaButton();
-
-		boolean status = ingetion.verifyIngestionpublish(Input.ingestionAutomationAllSource);
-		if (status) {
-			baseClass.stepInfo("Ingestion Add only is already done this project");
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.ingestionAutomationAllSource);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
-
-			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingetion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingetion.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingetion.selectAllOptionsFromFilterByDropdown();
-
-			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
-
-			ingetion.verifyLanguageIsSelectable("International English");
-
-		}
-
-		baseClass.passedStep(
-				"Verified the overlay Ingestion for Audio Documents against International English language pack");
-
-	}
-
+	
+	
 	
 	/**
 	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48591 
@@ -2605,7 +2446,167 @@ public class Ingestion_Regression01 {
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		
 	}
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
+	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
+	 * 'RPMXCON-48526'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionSearch = new SessionSearch(driver);
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
+		baseClass.stepInfo(
+				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
 
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.nativigateToIngestionViaButton();
+
+		boolean status = ingetion.verifyIngestionpublish(Input.ingestionAutomationAllSource);
+		if (status) {
+			baseClass.stepInfo("Ingestion Add only is already done this project");
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.ingestionAutomationAllSource);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
+
+			baseClass.stepInfo("Select MP3 varient source.");
+			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingetion.selectDateAndTimeForamt(Input.dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingetion.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingetion.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingetion.selectAllOptionsFromFilterByDropdown();
+
+			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
+
+			ingetion.verifyLanguageIsSelectable("International English");
+
+		}
+
+		baseClass.passedStep(
+				"Verified the overlay Ingestion for Audio Documents against International English language pack");
+
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 11/5/2022 Modified date: Modified by: Description
+	 * :To verify that after Text overlay, if there are no other file variants ,
+	 * then DocView uses that text as the default viewer file for that document.
+	 * 'RPMXCON-48606'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 68)
+	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48606");
+		baseClass.stepInfo(
+				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		String ingestionType = "Add Only";
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		System.out.println(status);
+
+		if (status == false) {
+
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
+					null, null);
+
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
+		sessionSearch.saveSearch(BasicSearchName);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+
+		baseClass = new BaseClass(driver);
+
+		baseClass.stepInfo("Navigate to ingestion page.");
+		driver.scrollPageToTop();
+		ingestionPage.nativigateToIngestionViaButton();
+
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if (status1) {
+
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.PDFGen_10Docs);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
+
+			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingestionPage.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingestionPage.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingestionPage.selectAllOptionsFromFilterByDropdown();
+
+			ingestionPage.removeCatalogError();
+			ingestionPage.getIngestionSatatusAndPerform();
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId1 = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		docView.waitforFileType();
+		docView.getDocView_TextTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (docView.getDocViewDefaultViewText().isElementAvailable(10)) {
+			baseClass.passedStep(
+					"There are no other file variants ,then Doc View is  displays the text as the default viewer");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+
+	}
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48201 
 	 * Description :To Verify Ingestion overlay of Native without Unpublish
@@ -2645,7 +2646,7 @@ public class Ingestion_Regression01 {
 		ingestionPage.runFullAnalysisAndPublish();
 		
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.nativeFileName);
+		search.basicContentSearch("8B61_GD_994_Native_Text_ForProduction_20220511061509400");
 		search.viewInDocView();
 		DocViewPage doc = new DocViewPage(driver);
 		for (int i = 0; i < 5; i++) {
