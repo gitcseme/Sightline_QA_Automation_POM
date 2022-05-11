@@ -50,7 +50,7 @@ public class Proview_Regression {
 
 	}
 
-	@Test(enabled = false, dataProvider = "Users_PARMU", groups = { "smoke , regression" }, priority = 1)
+	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "smoke , regression" }, priority = 1)
 	public void validateCategorization(String username, String password, String role) throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);

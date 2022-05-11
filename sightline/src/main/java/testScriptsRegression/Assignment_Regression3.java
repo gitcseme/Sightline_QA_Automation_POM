@@ -1919,7 +1919,7 @@ public class Assignment_Regression3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-54444", enabled = true, groups = { "regression" }, priority = 28)
-	public void verifyDrawLinkWhenFamiliesToggleDisabled1() throws InterruptedException {
+	public void verifyErrorMsgForSpclChar() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 
 		softAssertion = new SoftAssert();

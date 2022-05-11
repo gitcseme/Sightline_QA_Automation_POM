@@ -728,7 +728,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * @throws InterruptedException
 	 * @Stablization - done
 	 */
-	@Test(enabled = false, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 10)
+	@Test(enabled = true, dataProvider = "SAwithAllroles", groups = { "regression" }, priority = 10)
 	public void metaDataCombinationSharedSGExecutionwithSAimpAllRoles(String username, String password, String userRole,
 			String saveFlow, String impToRole) throws InterruptedException, ParseException {
 
@@ -767,7 +767,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         documents (RPMXCON-57384) Sprint 06
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "DAUwithAllroles", groups = { "regression" }, priority = 11)
+	@Test(enabled = true, dataProvider = "DAUwithAllroles", groups = { "regression" }, priority = 11)
 	public void metaDataCombinationSharedSGExecutionwithDAimpAllRoles(String username, String password, String userRole,
 			String saveFlow, String impToRole) throws InterruptedException, ParseException {
 
@@ -807,7 +807,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         saved under MY Saved Searches(RPMXCON-57382) Sprint 06
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "DAUimpRMUandREV", groups = { "regression" }, priority = 12)
+	@Test(enabled = true, dataProvider = "DAUimpRMUandREV", groups = { "regression" }, priority = 12)
 	public void metaDataCombinationSharedSGExecutionwithDAimpRMUandREV(String username, String password,
 			String userRole, String saveFlow, String impToRole) throws InterruptedException, ParseException {
 

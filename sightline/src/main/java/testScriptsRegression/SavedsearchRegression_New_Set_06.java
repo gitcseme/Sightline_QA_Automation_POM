@@ -112,7 +112,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 2)
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 1)
 	public void verifyingPrecisionSensitivityValueWhileConfiguringWithrecisionSensitivityValueWhileEditing(
 			String username, String password, String fullName) throws Exception {
 
@@ -163,7 +163,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              [RPMXCON-47154]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" }, priority = 1)
+	@Test(enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" }, priority = 2)
 	public void validateEditingOrExecutingNonaudioSearches(String username, String password, String fullname,
 			String rootGroup) throws Exception {
 		String search1 = "Search" + Utility.dynamicNameAppender();
@@ -396,12 +396,13 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, dataProvider = "AllTheUsers", priority = 5)
+	@Test(enabled = true,groups = { "regression" }, dataProvider = "AllTheUsers", priority = 5)
 	public void batchUploadAndVerifyConceptCount(String UserName, String PassWord, String fullName)
 			throws InterruptedException {
 
 		String headername_1 = "Search Name";
 		String headername_2 = "Conceptually Similar Count";
+		String file = saveSearch.renameFile(Input.SearchBatchFile);
 
 		// login as user
 		login.loginToSightLine(UserName, PassWord);
@@ -413,7 +414,7 @@ public class SavedsearchRegression_New_Set_06 {
 
 		// performing batch upload functionality using attached excel file
 		saveSearch.navigateToSSPage();
-		saveSearch.uploadWPBatchFile(saveSearch.renameFile(Input.WPbatchFile));
+		saveSearch.uploadWPBatchFile_New(file,Input.SearchBatchFile);
 		base.stepInfo("Successfully uploaded the BAtch file");
 
 		// collecting list of search name from SavedSearch DataTable

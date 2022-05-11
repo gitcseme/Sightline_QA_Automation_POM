@@ -2173,15 +2173,25 @@ public class BatchPrintPage {
 	 * @param metadata : Metadata to select
 	 * @param Next     : Next Button
 	 */
-	public void fillingSlipSheetWithMetadata(String metadata, boolean Next) {
+	public void fillingSlipSheetWithMetadata(String metadata, boolean Next ,String[] listofMetadata) {
 		driver.scrollingToBottomofAPage();
+		if(metadata != null) {
 		base.waitForElement(getMetaDataCheckbox(metadata));
 		getMetaDataCheckbox(metadata).waitAndClick(5);
+		System.out.println("Selected METADATA : " + metadata);
+		base.stepInfo("Selected METADATA from SlipSheets Is : " + metadata);
+		}else {
+			for(String meta :listofMetadata ) {
+				base.waitForElement(getMetaDataCheckbox(meta));
+				getMetaDataCheckbox(meta).waitAndClick(5);	
+				System.out.println("Selected METADATA : " + meta);
+				base.stepInfo("Selected METADATA from SlipSheets Is : " + meta);
+			}
+		}
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getAddToSelectedButton());
 		getAddToSelectedButton().waitAndClick(5);
-		System.out.println("Selected METADATA : " + metadata);
-		base.stepInfo("Selected METADATA from SlipSheets Is : " + metadata);
+		
 
 		if (Next) {
 			navigateToNextPage(1);
@@ -2257,9 +2267,9 @@ public class BatchPrintPage {
 		File ab = new File(Input.fileDownloadLocation);
 		String testPath = ab.toString() + "\\";
 
-		//wait until file download is complete
+		// wait until file download is complete
 		base.waitUntilFileDownload();
-		
+
 		// base.csvReader();
 		ReportsPage report = new ReportsPage(driver);
 		File a = report.getLatestFilefromDir(testPath);
@@ -2272,7 +2282,7 @@ public class BatchPrintPage {
 		System.out.println(fileName);
 		base.stepInfo("Downloade File  : " + fielPath);
 		return fileName;
-		
+
 	}
 
 	/**
@@ -2466,7 +2476,7 @@ public class BatchPrintPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description  : Filling Analysis Tab
+	 * @Description : Filling Analysis Tab
 	 * @param clickNative
 	 * @param clickPrintTran
 	 * @param clickSkipDoc
@@ -2546,12 +2556,12 @@ public class BatchPrintPage {
 				if (getAnalysSkipDocFolder_DD().isElementAvailable(15)) {
 					getAnalysSkipDocFolder_DD().waitAndClick(10);
 				}
-					if (getAnalysSkipDocFolder_List().isElementAvailable(10)) {
-						base.passedStep("All Created Folders is Displayed");
-					} else {
-						base.failedStep("All Created Folders is Not Displayed");
-					}
-				
+				if (getAnalysSkipDocFolder_List().isElementAvailable(10)) {
+					base.passedStep("All Created Folders is Displayed");
+				} else {
+					base.failedStep("All Created Folders is Not Displayed");
+				}
+
 			}
 		} else {
 			base.failedStep("Skip document Radio Button is Not Dispalyed");
@@ -2560,21 +2570,60 @@ public class BatchPrintPage {
 		softassert.assertAll();
 
 	}
-	
+
 	/**
 	 * @Author Jeevitha
-	 * @Description : Disable slipsheet toggle 
+	 * @Description : Disable slipsheet toggle
 	 * @param Next
 	 */
 	public void disableSlipSheet(boolean Next) {
 		base.waitForElement(getToggleButton());
 		getToggleButton().waitAndClick(5);
-		
+
 		base.passedStep("Disables Slipsheet Toggle");
 
 		if (Next) {
 			navigateToNextPage(1);
 		}
 	}
-	
+
+	public void fillingExceptioanlFileTypeTab(Boolean skipExcel, String Metadata, String[] listOfMetadata,Boolean Next) {
+		if (skipExcel) {
+			base.waitForElement(getAnalysis_SkipExcelFiles_RadioButton());
+			getAnalysis_SkipExcelFiles_RadioButton().waitAndClick(5);
+		}
+
+		driver.scrollingToBottomofAPage();
+
+		if (getExceptionFileTypeException().isElementAvailable(10)) {
+
+			if (Metadata != null) {
+				getOther_InsertMetadata().waitAndClick(5);
+				base.waitForElement(getselectMetadataFields_Other());
+				getselectMetadataFields_Other().selectFromDropdown().selectByVisibleText(Metadata);
+				getOkButton_Other().waitAndClick(5);
+				System.out.println("Selected Metdata : " + Metadata);
+				base.stepInfo("Selected Metdata : " + Metadata);
+			} else {
+				for (String meta : listOfMetadata) {
+					getOther_InsertMetadata().waitAndClick(5);
+					base.waitForElement(getselectMetadataFields_Other());
+					getselectMetadataFields_Other().selectFromDropdown().selectByVisibleText(meta);
+					getOkButton_Other().waitAndClick(5);
+
+					System.out.println("Selected Metdata : " + meta);
+					base.stepInfo("Selected Metdata : " + meta);
+				}
+			}
+
+		} else {
+			System.out.println("No Exceptional file displayed");
+			base.stepInfo("No Exceptional file displayed");
+
+		}
+		
+		if (Next) {
+			navigateToNextPage(1);
+		}
+	}
 }

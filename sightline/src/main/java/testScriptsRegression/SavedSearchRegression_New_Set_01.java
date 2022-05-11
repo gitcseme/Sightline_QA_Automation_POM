@@ -183,12 +183,12 @@ public class SavedSearchRegression_New_Set_01 {
 	 *         validateDAviaPASharingSavedSearchImpersonateAsRMUAndReviewer()
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void validateSAviaPASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
-		String SGtoShare = "Shared with Default Security Group"; // Input.shareSearchDefaultSG
+		String SGtoShare = Input.shareSearchDefaultSG;
 		String PAtoShare = Input.shareSearchPA;
 		Boolean inputValue = true;
 		String mySavedSearch = Input.mySavedSearch;
@@ -368,9 +368,9 @@ public class SavedSearchRegression_New_Set_01 {
 		saveSearch.verifySharedGroupSearch1(mySavedSearch, PANodeSearchName, false);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		saveSearch.selectRootGroupTab(Input.mySavedSearch);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(newNodeList.get(0));
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
@@ -378,7 +378,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		// Multiple Node Creation
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
 		base.stepInfo("Node creation is done followed by adding searches to the created nodes");
@@ -393,8 +393,8 @@ public class SavedSearchRegression_New_Set_01 {
 		// Search ID collection
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
-		saveSearch.rootGroupExpansion();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);    
+		saveSearch.rootGroupExpansion();     
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String RMUNode = newNodeList.get(0);
 
@@ -421,12 +421,14 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(PANode);
 		saveSearch.verifySharedGroupSearch1(PANode, PANodeSearchName, true);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search by RMU is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(RMUNode);
 		saveSearch.verifySharedGroupSearch1(RMUNode, nodeSearchpair.get(RMUNode), true);
 		String RMUNodeSearchName = nodeSearchpair.get(RMUNode);
@@ -447,8 +449,8 @@ public class SavedSearchRegression_New_Set_01 {
 		// Search ID collection
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); 
-		saveSearch.rootGroupExpansion(); 
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);    
+		saveSearch.rootGroupExpansion();     
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
 		String reviewerNode = newNodeList.get(0);
 
@@ -490,12 +492,12 @@ public class SavedSearchRegression_New_Set_01 {
 	 *                   RPMXCON-49898 Sprint 5
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void validateDAviaPASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
-		String SGtoShare = "Shared with Default Security Group"; // Input.shareSearchDefaultSG;
+		String SGtoShare = Input.shareSearchDefaultSG;
 		String PAtoShare = Input.shareSearchPA;
 		Boolean inputValue = true;
 		String mySavedSearch = Input.mySavedSearch;
@@ -537,10 +539,10 @@ public class SavedSearchRegression_New_Set_01 {
 
 		base.stepInfo("Verifying whether the search saved by PA role is not available for RMU user");
 		try {
-
+			
 			if (saveSearch.getSGTab(PAtoShare).isElementAvailable(5)) {
 				base.failedStep("Shared with project adminitrator security group is available for RMU user");
-			}
+			}                                                                                             
 		} catch (Exception e) {
 			base.passedStep("Shared with project adminitrator security group is not available for RMU user");
 			UtilityLog.info("Shared with project adminitrator security group is not available for RMU user");
@@ -633,7 +635,6 @@ public class SavedSearchRegression_New_Set_01 {
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -651,7 +652,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0),SGtoShare);
 		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), PAtoShare);
 		String PANode = newNodeList.get(0);
 
@@ -679,16 +680,12 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(newNodeList.get(0));
-
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ : " + newNodeList.get(0));
-		driver.waitForPageToBeReady();
-		saveSearch.selectRootGroupTab(Input.shareSearchDefaultSG);
-		saveSearch.rootGroupExpansion();
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
 		// Landed on Saved Search
-		base.selectproject(); 
+		base.selectproject();  
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		// Multiple Node Creation
@@ -708,7 +705,7 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.waitForPageToBeReady();
 		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
-		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0), SGtoShare);
+		saveSearch.shareSavedNodeWithDesiredGroup(newNodeList.get(0),SGtoShare);
 		String RMUNode = newNodeList.get(0);
 
 		// Impersonate RMU User to Reviewer
@@ -734,21 +731,21 @@ public class SavedSearchRegression_New_Set_01 {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(PANode);
 		saveSearch.verifySharedGroupSearch1(PANode, PANodeSearchName, true);
 
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search by RMU is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(10);
 		saveSearch.verifySharedNode(RMUNode);
 		saveSearch.verifySharedGroupSearch1(RMUNode, nodeSearchpair.get(RMUNode), true);
 		String RMUNodeSearchName = nodeSearchpair.get(RMUNode);
-
 		// Landed on Saved Search
 		base.selectproject();
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
-
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -783,7 +780,6 @@ public class SavedSearchRegression_New_Set_01 {
 		saveSearch.selectNode1(reviewerNode);
 		saveSearch.verifySharedGroupSearch1(reviewerNode, nodeSearchpair.get(reviewerNode), true);
 		String reviewerSearchName = nodeSearchpair.get(reviewerNode);
-
 		// Impersonate PA User to RMU
 		base.stepInfo("Impersonating SA user as PA");
 		base.impersonateSAtoPA();

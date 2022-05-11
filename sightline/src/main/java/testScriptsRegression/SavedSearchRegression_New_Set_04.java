@@ -155,7 +155,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup()
 			throws Exception {
 
@@ -221,6 +221,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.modifyExistingSearchName(newNodeList, nodeSearchpair, 1);
 
 		List<String> newNodeList_1 = new ArrayList<String>();
+		base.waitTime(3);
 		newNodeList_1 = base.listOfRandomIndexToAdd(newNodeList, listTOSelect);
 
 		HashMap<String, String> nodeSearchpair_1 = new HashMap<String, String>();
@@ -231,6 +232,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(2);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
 
+        saveSearch.rootGroupExpansion();
 		searchGroupSearchpIDpair_1 = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList_1,
 				nodeSearchpair_1, searchGroupSearchpIDpair_1);
 
@@ -245,7 +247,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		saveSearch.verifyImpactsInSharedChildNodes(SGtoShare, newNodeList_1, selectIndex, nodeSearchpair_1,
 				searchGroupSearchpIDpair_1);
 
@@ -262,7 +264,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		saveSearch.verifyImpactsInSharedChildNodes(SGtoShare, newNodeList_1, selectIndex, nodeSearchpair_1,
 				searchGroupSearchpIDpair_1);
 
@@ -276,7 +278,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		saveSearch.verifyImpactsInSharedChildNodes(SGtoShare, newNodeList_1, selectIndex, nodeSearchpair_1,
 				searchGroupSearchpIDpair_1);
 
@@ -287,6 +289,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
+
 	/**
 	 * @author Jeevitha Date: 12/21/21 Modified date:N/A Modified by:N/A
 	 * @Description : [RPMXCON-49865] Validate sharing modified search group to
@@ -295,7 +298,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void modificationsInMiddleOfHierarchyWithSecurityGroupAsPA() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -352,6 +355,7 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// modify existing search Name
 		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
 		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
 		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
 		saveSearch.modifyExistingSearchName(newNodeList, nodeSearchpair, 1);
@@ -365,7 +369,7 @@ public class SavedSearchRegression_New_Set_04 {
 		// collecting search ID from 3th hierarchy level node
 		saveSearch.navigateToSSPage();
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		searchGroupSearchpIDpair_1 = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList_1,
 				nodeSearchpair_1, searchGroupSearchpIDpair_1);
 
@@ -379,7 +383,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		saveSearch.verifyImpactsInSharedChildNodes(SGtoShare, newNodeList_1, selectIndex, nodeSearchpair_1,
 				searchGroupSearchpIDpair_1);
 
@@ -396,7 +400,7 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.navigateToSSPage();
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		node = saveSearch.childNodeSelectionToShare(1, newNodeList);
-
+		saveSearch.rootGroupExpansion();
 		saveSearch.verifyImpactsInSharedChildNodes(SGtoShare, newNodeList_1, selectIndex, nodeSearchpair_1,
 				searchGroupSearchpIDpair_1);
 
@@ -406,6 +410,7 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
+
 
 	/**
 	 * @Author Jeevitha
@@ -3833,7 +3838,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              12
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 59)
+	@Test(enabled = true, groups = { "regression" }, priority = 59)
 	public void verifyErrorMsgOfSearchGroup() throws Exception {
 		String Search = "Search" + Utility.dynamicNameAppender();
 		String Search2 = "Search" + Utility.dynamicNameAppender();

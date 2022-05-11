@@ -331,7 +331,7 @@ public class BatchPrint_Regression1 {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DocID', select Sort by 'DocFileName'
@@ -373,7 +373,7 @@ public class BatchPrint_Regression1 {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DocFileName', select Sort by 'DocID'
@@ -423,7 +423,7 @@ public class BatchPrint_Regression1 {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DOCID', select Sort by 'DOCFileName'
@@ -467,7 +467,7 @@ public class BatchPrint_Regression1 {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
@@ -700,6 +700,7 @@ public class BatchPrint_Regression1 {
 				"Validate BatchPrint - Generating single PDF file for corpus containing multiple files with same name but have different file extension");
 
 		// creating tag
+		search.navigateToSessionSearchPageURL();
 		search.newMetaDataSearchInBasicSearch(Input.docFileName, "SM134 Proforma");
 		search.bulkTag(tagName);
 

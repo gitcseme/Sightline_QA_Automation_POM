@@ -77,13 +77,16 @@ public class BatchRedaction_Production {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
+		Object[][] users = { { Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password }, 
+				};
 		return users;
 	}
 
 	@DataProvider(name = "reserveWords")
 	public Object[][] dataMethod() {
-		return new Object[][] { { "\"##[0-9]{5}-[0-9]{4}\"", "RPMXCON-53377" },
+		return new Object[][] { 
+			    { "\"##[0-9]{5}-[0-9]{4}\"", "RPMXCON-53377" },
 				{ "\"##[5-9]{5}-[1-4]{4}\"", "RPMXCON-53376" },
 				{ " \"##[0-9]{3}-[0-1]{2}-[1-4]{4}\"", "RPMXCON-53374" },
 				{ "\"##[0-9]{3}-[0-9]{3}-[0-9]{4}\"", "RPMXCON-53373" }, };
@@ -105,6 +108,7 @@ public class BatchRedaction_Production {
 
 		// Test Case Description
 		if (testCaseId.contentEquals("RPMXCON-53377")) {
+			base.selectproject(Input.additionalDataProject);
 			base.stepInfo(
 					"Verify that batch redaction with saved search for zip code with format like \"##[0-9]{5}-[0-9]{4}\"");
 		} else if (testCaseId.contentEquals("RPMXCON-53376")) {
@@ -114,6 +118,7 @@ public class BatchRedaction_Production {
 			base.stepInfo(
 					"Verify that Batch Redaction when Saved search is with regular expression including SSN like \"##[0-9]{3}-[0-1]{2}-[1-4]{4}\" /SSN starting with charactersfrom Batch Redaction Home page");
 		} else if (testCaseId.contentEquals("RPMXCON-53373")) {
+			base.selectproject(Input.additionalDataProject);
 			base.stepInfo(
 					"Verify that Batch Redaction when Saved search is with regular expression with phone number format like \"##[0-9]{3}-[0-9]{3}-[0-9]{4}\" from Batch Redaction Home page");
 		}
@@ -152,6 +157,8 @@ public class BatchRedaction_Production {
 
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.selectproject(Input.additionalDataProject);
+		
 		base.stepInfo("Testcase ID : RPMXCON-53348  Bacth Redaction");
 		// Test Case Description
 		base.stepInfo(
@@ -208,7 +215,8 @@ public class BatchRedaction_Production {
 
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
+		base.selectproject(Input.additionalDataProject);
+		
 		// Test Case Description
 		base.stepInfo("Testcase ID : RPMXCON-53375   Bacth Redaction  Sprint-7");
 		base.stepInfo("Verify that batch redaction when saved search with pattern \"simple\" email - 99% coverage");
@@ -361,7 +369,7 @@ public class BatchRedaction_Production {
 	 *              redacted documents.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyModifiedPlaceholdertext() throws InterruptedException {
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -384,7 +392,7 @@ public class BatchRedaction_Production {
 		// create export with PDF
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates1 = page.getRandomNumber(2);
 
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -393,40 +401,49 @@ public class BatchRedaction_Production {
 		page.fillingTextSection();
 		page.navigateToNextSection();
 		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
+				beginningBates1);
+		
+		page.navigateToProductionPage();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String beginningBates2 = page.getRandomNumber(2);
+
+		page.addANewProduction(productionname1);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname1,
+				beginningBates2);
 		login.logout();
+		
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
+		page.navigateToProductionPage();
+		String productionname3 = "p" + Utility.dynamicNameAppender();
+		String beginningBates3 = page.getRandomNumber(2);
+
+		page.addANewProduction(productionname3);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
-		page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.addANewProduction(productionname);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname3,
+				beginningBates3);
+		
+		page.navigateToProductionPage();
+		String productionname4 = "p" + Utility.dynamicNameAppender();
+		String beginningBates4 = page.getRandomNumber(2);
+
+		page.addANewProduction(productionname4);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingPDFSectionwithBurnRedaction(Input.defaultRedactionTag);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
-				beginningBates);
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname4,
+				beginningBates4);
 		base.passedStep(
 				"Verified that production should generated with modified Redaction placeholder text for batch redacted documents");
 
@@ -493,7 +510,7 @@ public class BatchRedaction_Production {
 	 *         Metadata should not be displayed on DAT(RPMXCON-53460 )
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 8)
+	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 8)
 	public void verifyAnnotationLayer(String username, String password) throws InterruptedException {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
@@ -518,9 +535,10 @@ public class BatchRedaction_Production {
 
 		// create production using dat/ingested text
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		productionname = "p" + Utility.dynamicNameAppender();
-
 		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		base.waitForElement(page.getDATRedactionsCBox());
@@ -528,7 +546,7 @@ public class BatchRedaction_Production {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -536,7 +554,7 @@ public class BatchRedaction_Production {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		login.logout();
 	}
@@ -548,14 +566,13 @@ public class BatchRedaction_Production {
 	 *         specified(RPMXCON-53458 )
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 9)
+	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 9)
 	public void verifyRedactionStyle(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
-		;
 		String SuffixID = "_P" + Utility.dynamicNameAppender();
-		;
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		login.loginToSightLine(username, password);
 		base.stepInfo("Test case Id:RPMXCON-53458    Batch Redaction");
@@ -572,15 +589,16 @@ public class BatchRedaction_Production {
 
 		// create production using dat/ingested text
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		productionname = "p" + Utility.dynamicNameAppender();
-
 		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(redactionStyle, "layer", null);
 		page.navigateToNextSection();
-//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -588,7 +606,7 @@ public class BatchRedaction_Production {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		login.logout();
 
@@ -599,7 +617,7 @@ public class BatchRedaction_Production {
 	 *         redactions burned on the TIFFs(RPMXCON-53457 )
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 10)
+	@Test(enabled = true,groups = { "regression" }, priority = 10)
 	public void verifyRedactionText() throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -626,12 +644,14 @@ public class BatchRedaction_Production {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -639,7 +659,7 @@ public class BatchRedaction_Production {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		login.logout();
 
@@ -651,7 +671,7 @@ public class BatchRedaction_Production {
 	 * @throws InterruptedException
 	 */
 
-	@Test(dataProvider = "Users", groups = { "regression" }, priority = 11)
+	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 11)
 	public void verifyRedactionText2(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -676,6 +696,7 @@ public class BatchRedaction_Production {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
 
 		// generate TIFF file
 		page.addANewProduction(productionname);
@@ -683,7 +704,7 @@ public class BatchRedaction_Production {
 		page.fillingNativeSection();
 		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
 		page.navigateToNextSection();
-//		page.fillingNumberingAndSortingPage(PrefixID, SuffixID);
+		page.fillingNumberingAndSortingPage(PrefixID, SuffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -691,7 +712,7 @@ public class BatchRedaction_Production {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		// Generate PDF File
 		page.uncommitFunction();
@@ -707,7 +728,7 @@ public class BatchRedaction_Production {
 		page.clickMArkCompleteMutipleTimes(3);
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
-		page.fillingGeneratePage();
+		page.fillingGeneratePageWithContinueGenerationPopup();
 
 		login.logout();
 	}
@@ -751,7 +772,7 @@ public class BatchRedaction_Production {
 		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
 
 		// Download Pre-Redaction Report
-		String fileName =batch.verifyPreRedactionReport();
+		String fileName = batch.verifyPreRedactionReport();
 
 		// Select Tag and verify history
 		batch.loadBatchRedactionPage(Input.mySavedSearch);
@@ -780,8 +801,8 @@ public class BatchRedaction_Production {
 	public void checkWhetherCanCompleteBrUponTextRedaction() throws Exception {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
-        DocViewRedactions dcRedact = new DocViewRedactions(driver);
-        
+		DocViewRedactions dcRedact = new DocViewRedactions(driver);
+
 		// will login as RMU
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Tescase ID :RPMXCON-61151  Bacth Redaction ");
