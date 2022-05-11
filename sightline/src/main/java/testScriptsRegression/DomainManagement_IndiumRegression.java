@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -61,7 +62,7 @@ public class DomainManagement_IndiumRegression {
 	 * Author : Baskar date: NA Modified date:21/01/2021 Modified by: Baskar
 	 * Description :Verify that System Admin can create user with Domain Admin role
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void createNewUserForDomain() throws Exception {
 		baseClass = new BaseClass(driver);
 		String firstName = Input.randomText + Utility.dynamicNameAppender();
@@ -93,7 +94,7 @@ public class DomainManagement_IndiumRegression {
 	 * when Domain Admin impersonates as PA in domain project and then changes the
 	 * project from header drop down
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyDaImpersateAndChangeProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -127,7 +128,7 @@ public class DomainManagement_IndiumRegression {
 	 * when Domain Admin impersonates as RMU in domain project and then changes the
 	 * project from header drop down
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyDaImpersateRmuAndChangeProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -161,7 +162,7 @@ public class DomainManagement_IndiumRegression {
 	 * when user impersonate from SA to DA,Project name hyperlink should be
 	 * displayed on dashboard page
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifySaImporsonateDAtoPa() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -200,7 +201,7 @@ public class DomainManagement_IndiumRegression {
 	 * that For Domain, Unassigned user list should not contain any user who is a
 	 * System Admin in the system.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyUnassignUsernotContainSaUser() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -235,7 +236,7 @@ public class DomainManagement_IndiumRegression {
 	 * modify the rights for one domain, the modified rights should be saved and
 	 * persisted accordingly for the domain selected
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyModifiedUserRightPersistAccordingly() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -291,7 +292,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Hint : this cases is run under uat environment need "Automation_NonDomain"
 	 *       project allocation the users pa and reviewer
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyingBulkActionsInNonDomainProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -347,7 +348,7 @@ public class DomainManagement_IndiumRegression {
 	 * admin.'RPMXCON-53149' Sprint-14
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyAfterSavingRightsForUserDomainAdmin() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -425,7 +426,7 @@ public class DomainManagement_IndiumRegression {
 	 * :Validate notification alert and clickable link for Doc View and DocList for
 	 * Reviewer(impersonate from DAU). 'RPMXCON-53094' Sprint-14
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyAlertClickableLinkDocViewForReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53094");
@@ -460,7 +461,7 @@ public class DomainManagement_IndiumRegression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Validate
 	 * notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void verifyingBackGroungTaskInBullIcon() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -511,7 +512,7 @@ public class DomainManagement_IndiumRegression {
 	 * not set and link to set password is expired and active. 'RPMXCON-52839'
 	 * Sprint-14
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void createNewUserForDomainAdmin() throws Exception {
 		baseClass = new BaseClass(driver);
 		String firstName = "Test";
@@ -551,7 +552,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :To verify that System Admin can assign Domain Admin to Domain
 	 *              successfully
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifySaCanAssignDaToDomain() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -600,7 +601,7 @@ public class DomainManagement_IndiumRegression {
 	 *              and tries to navigate to the Project tab without saving the
 	 *              changes, it should display the confirmation message
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void verifyBellyBandMessageOnDomainTab() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -662,7 +663,7 @@ public class DomainManagement_IndiumRegression {
 	 * confirmation message
 	 */
 
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyBellyBandMessageInSAUser() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -688,13 +689,15 @@ public class DomainManagement_IndiumRegression {
 
 	}
 	
+	
+	/// after sign off cases
 
 	/**
 	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:
 	 * @Description :Validate notification alert for bulk
 	 *              actions(Folder/Tag/Assign/Export) as RMU(impersonate from DAU)
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyingBulkActionImpToRmu() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53092");
@@ -739,7 +742,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :To verify that Domain Admin can assign Project Admin
 	 *              ((non-domain Admin user) to Domain Project
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyingDomainAdminToPa() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52951");
 		baseClass.stepInfo(
@@ -779,7 +782,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
 	 * @Description :Validate client name filter is not available for Domain Admin impersonate from System A
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyingClientFilterNameSAToDA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53078");
 		baseClass.stepInfo(
@@ -805,7 +808,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
 	 * @Description :Validate client name filter is not available when logged in as Domain Admin
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 18)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void verifyingClientFilterNameDA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53077");
 		baseClass.stepInfo(
@@ -831,7 +834,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
 	 */
 	
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	//@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifyingBatchPrintImpToRmu() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53091");
@@ -903,6 +906,81 @@ public class DomainManagement_IndiumRegression {
 		baseClass.stepInfo("Batch Print file downloaded filename : " + fileNameNon + "");
 		
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:10/5/2022 Modified by:
+	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
+	 */
+	@Test(description = "RPMXCON-53089",enabled = true, groups = {"regression" }, priority = 20)
+	public void verifyBG_CountAdvancesearchToDocList() throws InterruptedException {
+		SessionSearch search = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53089");
+		baseClass.stepInfo("Validate notification alert and clickable link for Doc View"
+				+ " and DocList as RMU(impersonate from DAU)");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectproject(Input.highVolumeProject);
+		String searchText1 = Input.SearchString_HighVolume;
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+		// Content search in advanced search page
+		search.advancedContentBGSearch(searchText1, 1, false);
+		baseClass.stepInfo("performed a content search in advanced search pagae and it goes to back ground. ");
+		// checking for notification for BG search completed status.
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120);
+		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
+		search.ViewInDocList();
+		String backGroundTask_ID = search.pushingBulkNavigationToBackGround();
+		search.verifyNotificationAndNavigateToDocList(Bgcount + 1,backGroundTask_ID);
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @Author :Indium-Baskar date: NA Modified date:10/5/2022 Modified by:
+	 * @Description :Validate notification alert for Search/Batch Upload as RMU(impersonate from DAU)
+	 */
+	@Test(description = "RPMXCON-53090",enabled = true, groups = {"regression" }, priority = 21)
+	public void verifyBGTaskFromSearch() throws InterruptedException {
+		SessionSearch search = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53090");
+		baseClass.stepInfo("Validate notification alert for Search/Batch Upload as RMU(impersonate from DAU)");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectproject(Input.highVolumeProject);
+		String searchText1 = Input.SearchString_HighVolume;
+		String maxDocCountViewedinDocList = Input.DocCount_BG_Page;
+		search.navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		search.getAdvancedSearchLinkCurrent().Click();
+		driver.waitForPageToBeReady();
+		int Bgcount = baseClass.initialBgCount();
+		// Content search in advanced search page
+		search.advancedContentBGSearch(searchText1, 1, false);
+		baseClass.stepInfo("performed a content search in advanced search pagae and it goes to back ground. ");
+		// checking for notification for BG search completed status.
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return baseClass.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120);
+		baseClass.stepInfo("Notifications are notified after BackGround Search completion.");
+		search.ViewInDocList();
+		String backGroundTask_ID = search.pushingBulkNavigationToBackGround();
+		search.verifyNotificationAndNavigateBackGroundTaskPg(Bgcount + 1);
+		String actualDocs = search.getRowData_BGT_Page("Actual Docs", backGroundTask_ID);
+		SoftAssert softassert = new SoftAssert();
+		softassert.assertEquals(actualDocs, maxDocCountViewedinDocList);
+		softassert.assertAll();
+		baseClass.passedStep(actualDocs + " is the doc count displayed in my back ground task page.");
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

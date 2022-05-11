@@ -4381,5 +4381,40 @@ public class MiniDocListPage {
 		softAssertion.assertAll();
 		baseClass.passedStep("Configure mini doc list pop up Window open Successfully");
 	}
+	
+	/**
+	 * Indium-Baskar
+	 * 
+	 */
+	public void configureMinidoclistAudio() {
+		driver.waitForPageToBeReady();
+		getChildWindowGearIcons().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String valueOne = "FamilyMemberCount";
+		String valuetwo = "FamilyRelationship";
+		String valuethree = "DocFileType";
+		driver.waitForPageToBeReady();
+		baseClass.passedStep("Optimized mode is selected");
+		getValueToRemoveFromSelectedWebFields(valueOne).waitAndClick(3);
+		getValueToRemoveFromSelectedWebFields(valuetwo).waitAndClick(3);
+		getValueToRemoveFromSelectedWebFields(valuethree).waitAndClick(3);
+		// configure as per test case
+		String dragone = "FamilyRelationship";
+		String dragtwo = "VideoPlayerReady";
+		String dragthree = "SourceDocID";
+		driver.waitForPageToBeReady();
+		Element sourcefromPickColumDisplay = getFromAvailableFieldPickColumnDisplay(dragone);
+		Element destinationfromPickColumDisplay = getToSelectedField();
+		dragAndDropAction(sourcefromPickColumDisplay, destinationfromPickColumDisplay);
+		Element sourcefromPickColumDisplays = getFromAvailableFieldPickColumnDisplay(dragtwo);
+		Element destinationfromPickColumDisplays = getToSelectedField();
+		dragAndDropAction(sourcefromPickColumDisplays, destinationfromPickColumDisplays);
+		Element sourcefromPickColumDisplayed = getFromAvailableFieldPickColumnDisplay(dragthree);
+		Element destinationfromPickColumDisplayed = getToSelectedField();
+		dragAndDropAction(sourcefromPickColumDisplayed, destinationfromPickColumDisplayed);
+		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
+		getMiniDocListConfirmationButton("Save").waitAndClick(5);
+		
+	}
 
 }
