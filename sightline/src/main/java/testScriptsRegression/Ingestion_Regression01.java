@@ -2257,8 +2257,467 @@ public class Ingestion_Regression01 {
 		}
 	}
 }
+	
+	/**
+	 * Author :Vijaya.Rani date: 11/5/2022 Modified date: Modified by: Description
+	 * :To verify that after Text overlay, if there are no other file variants ,
+	 * then DocView uses that text as the default viewer file for that document.
+	 * 'RPMXCON-48606'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 67)
+	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48606");
+		baseClass.stepInfo(
+				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		String ingestionType = "Add Only";
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		System.out.println(status);
+
+		if (status == false) {
+
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
+					null, null);
+
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
+		sessionSearch.saveSearch(BasicSearchName);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+
+		baseClass = new BaseClass(driver);
+		String ingestionOverlay = Input.overlayOnly;
+		String sourceSystem = Input.sourceSystem;
+		String sourceLocation = Input.sourceLocation;
+		String sourceFolder = Input.PDFGen_10Docs;
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String datLoadFile = Input.newdateformat_5Docs;
+		String documentKey = Input.prodBeg;
+		String textLoadFile = "Text_5Docs.lst";
+		String dateFormat = Input.dateFormat;
+
+		baseClass.stepInfo("Navigate to ingestion page.");
+		driver.scrollPageToTop();
+		ingestionPage.nativigateToIngestionViaButton();
+
+		boolean status1 = ingestionPage.verifyIngestionpublish(sourceFolder);
+		if (status1) {
+
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionOverlay, sourceSystem, sourceLocation,
+					sourceFolder);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingestionPage.selectDATSource(datLoadFile, documentKey);
+
+			ingestionPage.selectTextSource(textLoadFile, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingestionPage.selectDateAndTimeForamt(dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingestionPage.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingestionPage.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingestionPage.selectAllOptionsFromFilterByDropdown();
+
+			ingestionPage.removeCatalogError();
+			ingestionPage.getIngestionSatatusAndPerform();
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId1 = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		docView.waitforFileType();
+		docView.getDocView_TextTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (docView.getDocViewDefaultViewText().isElementAvailable(10)) {
+			baseClass.passedStep(
+					"There are no other file variants ,then Doc View is  displays the text as the default viewer");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+
+	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
+	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
+	 * 'RPMXCON-48606'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 68)
+	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		String ingestionType = Input.overlayOnly;
+		String sourceSystem = Input.sourceSystem;
+		String sourceLocation = Input.sourceLocation;
+		String sourceFolder = "Automation_AllSources";
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String datLoadFile = "00 16BEbom.dat";
+		String documentKey = Input.prodBeg;
+		String mp3LoadFile = "MP3_Overlay.lst";
+		String dateFormat = Input.dateFormat;
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
 
 
+		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
+		baseClass.stepInfo(
+				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionSearch = new SessionSearch(driver);
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingetion.nativigateToIngestionViaButton();
+
+		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
+		if (status) {
+			baseClass.stepInfo("Ingestion Add only is already done this project");
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
+					sourceFolder);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingetion.selectDATSource(datLoadFile, documentKey);
+
+			baseClass.stepInfo("Select MP3 varient source.");
+			ingetion.selectMP3VarientSource(mp3LoadFile, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingetion.selectDateAndTimeForamt(dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingetion.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingetion.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingetion.selectAllOptionsFromFilterByDropdown();
+
+			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
+
+			ingetion.verifyLanguageIsSelectable("International English");
+
+		}
+
+		baseClass.passedStep(
+				"Verified the overlay Ingestion for Audio Documents against International English language pack");
+
+	}
+
+	
+
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48591 
+	 * Description :Verify the Analytics process should be skipped when Text files are not overlayed .
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyAnalyticsStatusWhenOverlayDatWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48591");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when Text files are not overlayed .");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when overlay without text
+		baseClass.stepInfo("Perform overlay ingestion without text file");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, "source", Input.sourceLocation, Input.UniCodeFilesFolder);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getDATDelimitersNewLine().Visible();
+			}
+		}), Input.wait30);
+		ingestionPage.getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		ingestionPage.selectDATSource(Input.datLoadFile1, Input.documentKey);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		ingestionPage.getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48593 
+	 * Description :Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed.
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	public void verifyAnalyticsStatusWhenOverlayPdfWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48593");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed .");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when pdf overlay without text
+		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithDat(Input.AK_NativeFolder,Input.DATFile1,Input.prodBeg,"pdf",Input.PDFFile);
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48597 
+	 * Description :Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 64)
+	public void verifyAnalyticsStatusWhenOverlayTiffWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48597");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when Tiff overlay without text
+		baseClass.stepInfo("Perform Tiff overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48592 
+	 * Description :Verify the Analytics process should take places when Text files are overlayed .
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifyAnalyticsStatusWhenOverlayWithText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48592");
+		baseClass.stepInfo("Verify the Analytics process should take places when Text files are overlayed.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when overlay with text
+		baseClass.stepInfo("Perform overlay ingestion with text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.UniCodeFilesFolder, "text", Input.textFile1);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48594
+	 * Description :Verify the Analytics process should be skipped when we overlay Audio Files without Text File
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	public void verifyAnalyticsStatusWhenOverlayMp3WithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48594");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when we overlay Audio Files without Text File.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		//Verify analytic status when pdf overlay without text
+		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder,"mp3",Input.MP3File);
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48201 
+	 * Description :To Verify Ingestion overlay of Native without Unpublish
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyUnPublishOfNativeDocument() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48201");
+		baseClass.stepInfo("To Verify Ingestion overlay of Native without Unpublish");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo(" addonly ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,"Add Only",
+					Input.sourceSystem, Input.datFormatFile,null,null,null, null, null, null, null, null);
+					
+		}
+		
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard( Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFormatFile,Input.docId);
+		ingestionPage.selectNativeSource("DAT4_STC_NativesEmailData NEWID.lst",false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.nativeFileName);
+		search.viewInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		for (int i = 0; i < 5; i++) {
+			if (doc.getDocView_TextFileType().isDisplayed()) {
+				String FileType=doc.getDocView_TextFileType().getText();
+				baseClass.textCompareEquals(FileType,"NATIVE",""+FileType+" file is displayed as expected",""+FileType+" file is not displayed as expected");
+				break;
+			} else {
+				driver.waitForPageToBeReady();
+			}
+		}
+		
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48237 
+	 * Description :To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority =70 )
+	public void verifyAudioPlayerReadyLanguage() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48237");
+		baseClass.stepInfo("To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo(" addonly ingestion with mapping field selection");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
+		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.fillingSourceField();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.IgnoreErrorAndIndexing();
+		loginPage.logout();
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

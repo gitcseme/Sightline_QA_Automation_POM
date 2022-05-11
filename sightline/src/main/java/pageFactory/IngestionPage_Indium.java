@@ -1053,6 +1053,10 @@ public class IngestionPage_Indium {
 	public Element getTotalPageCount() {
 		return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_info']//span[@class='text-primary']");
 	}
+	
+	public Element getAnalyticsStatus(int analyticRow,int dataColumn) {
+		return driver.FindElementByXPath("//table[@id='ProjectFieldsDataTable']//tbody//tr["+ analyticRow +"]//td["+ dataColumn +"]");
+	}
 
 	// Added by Gopinath - 28/02/2022
 	public Element getRollBack(String ingestionName) {
@@ -1194,7 +1198,9 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath("//*[@id='UnpublishHistoryDatatable']/tbody/tr/td[text()='" + searchName
 				+ "']/../td[" + coulumNumber + "]");
 	}
-
+	public Element indexingErrorCount() {
+		return driver.FindElementByXPath("//label[contains(.,'Document Data Indexed')]//..//div//span//a");
+	}
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -9231,7 +9237,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-		base.waitTime(1);
+		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return datCheckboxStatus().Visible();
@@ -9248,6 +9254,11 @@ public class IngestionPage_Indium {
 			getTIFFCheckBox().Click();
 			base.waitTime(1);
 			selectTIFFSource(file, false, false);
+		}
+		
+		if (type.equalsIgnoreCase("text")) {
+			base.stepInfo("Selecting text file");
+			selectTextSource(file, false);
 		}
 
 		if (type.equalsIgnoreCase("pdf")) {
@@ -10369,6 +10380,7 @@ public class IngestionPage_Indium {
 
 
 		}
+
 		/**
 		 * @author Aathith.Senthilkumar
 		 * @throws InterruptedException
@@ -10463,4 +10475,157 @@ public class IngestionPage_Indium {
 		}
 	}
 
+		
+		
+		/**
+		 * @author: Arunkumar Created Date: 11/05/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of analytics without text files 
+		 */
+		public void runAnalyticsAndVerifySkippedStatus() {
+			try {
+				driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+				driver.waitForPageToBeReady();
+				base.waitTime(2);
+				fullAnalysisRadioButton().isElementAvailable(15);
+				fullAnalysisRadioButton().Click();
+				driver.waitForPageToBeReady();
+				runButton().isElementAvailable(10);
+				if (runButton().getWebElement().isEnabled()) {
+					runButton().Click();
+				}
+				for (int i = 0; i < 1000; i++) {
+					driver.Navigate().refresh();
+					endTime().ScrollTo();
+					String endTime = endTime().getText();
+					String status = getAnalyticsStatus(1,5).getText();
+					System.out.println(status);
+					
+					if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
+						driver.waitForPageToBeReady();
+						if(status.contains(Input.skippedAnalyticMessage)) {
+							base.passedStep("Analytics process skipped when perform overlay ingestion without text files");
+							
+						}
+						else {
+							base.failedStep("Analytics process not skipped when perform overlay ingestion without text files");
+						}
+						publishButton().ScrollTo();
+						publishButton().Click();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while checking analytics status." + e.getLocalizedMessage());
+			}
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 11/05/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of analytics with text files 
+		 */
+		public void runAnalyticsAndVerifyAnalyticStatus() {
+			try {
+				driver.getWebDriver().get(Input.url + "Ingestion/Analytics");
+				driver.waitForPageToBeReady();
+				base.waitTime(2);
+				fullAnalysisRadioButton().isElementAvailable(15);
+				fullAnalysisRadioButton().Click();
+				driver.waitForPageToBeReady();
+				runButton().isElementAvailable(10);
+				if (runButton().getWebElement().isEnabled()) {
+					runButton().Click();
+				}
+				for (int i = 0; i < 10000; i++) {
+					driver.Navigate().refresh();
+					endTime().ScrollTo();
+					String endTime = endTime().getText();
+					String status = getAnalyticsStatus(1,5).getText();
+					
+					if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
+						driver.waitForPageToBeReady();
+						if(status.contains(Input.completedAnalyticMessage)) {
+							base.passedStep("Analytics process takes place when perform overlay ingestion with text files");
+							
+						}
+						else {
+							base.failedStep("Analytics process skipped when perform overlay ingestion with text files");
+						}
+						publishButton().ScrollTo();
+						publishButton().Click();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while checking analytics status." + e.getLocalizedMessage());
+			}
+		}
+		/**
+		 * @author: Brundha
+		 * @description: filling indexing stage in ingestion 
+		 */
+		public void IgnoreErrorAndIndexing() {
+			
+			getRefreshButton().waitAndClick(10);
+			getIngestionName().waitAndClick(Input.wait30);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(10);
+			base.waitForElement(getLanguage());
+			getLanguage().selectFromDropdown().selectByVisibleText(Input.language);
+			getRunIndexing().waitAndClick(10);
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByINDEXED());
+			getFilterByINDEXED().waitAndClick(10);
+			
+				for (int i = 0; i < 120; i++) {
+					getRefreshButton().waitAndClick(15);
+					base.waitTime(2);
+					String status = getStatus(1).getText().trim();
+
+					if (status.contains("Indexed")) {
+						base.passedStep("Indexed completed");
+						break;
+					} else if (status.contains("In Progress")) {
+						base.waitTime(5);
+						getRefreshButton().waitAndClick(5);
+					} else if (status.contains("Failed")) {
+						getIngestionDetailPopup(1).waitAndClick(10);
+						driver.scrollingToElementofAPage(indexingErrorCount());
+						indexingErrorCount().waitAndClick(5);
+						base.waitTime(1);
+						ignoreAllButton().waitAndClick(5);
+						doneButton().waitAndClick(10);
+						base.VerifySuccessMessage("Action done successfully");
+						getCloseButton().waitAndClick(10);
+						getRefreshButton().waitAndClick(5);
+						getIngestionDetailPopup(1).waitAndClick(10);
+						base.waitTime(2);
+						driver.scrollingToElementofAPage(getRunIndexing());
+						getRunIndexing().waitAndClick(5);
+						getCloseButton().waitAndClick(5);
+						getRefreshButton().waitAndClick(5);
+
+					}
+				}
+		}
+	
+		/**
+		 * @author: Brundha
+		 * @description: filling source field
+		 */
+		public void fillingSourceField() {
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+
+		}
+			
+		
 }
