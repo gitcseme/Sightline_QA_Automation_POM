@@ -2258,6 +2258,191 @@ public class Ingestion_Regression01 {
 	}
 }
 
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48591 
+	 * Description :Verify the Analytics process should be skipped when Text files are not overlayed .
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	public void verifyAnalyticsStatusWhenOverlayDatWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48591");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when Text files are not overlayed .");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1,Input.documentKey);
+		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when overlay without text
+		baseClass.stepInfo("Perform overlay ingestion without text file");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, "source", Input.sourceLocation, Input.UniCodeFilesFolder);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getDATDelimitersNewLine().Visible();
+			}
+		}), Input.wait30);
+		ingestionPage.getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		ingestionPage.selectDATSource(Input.datLoadFile1, Input.documentKey);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		ingestionPage.getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48593 
+	 * Description :Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed.
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	public void verifyAnalyticsStatusWhenOverlayPdfWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48593");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed .");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when pdf overlay without text
+		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithDat(Input.AK_NativeFolder,Input.DATFile1,Input.prodBeg,"pdf",Input.PDFFile);
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48597 
+	 * Description :Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 64)
+	public void verifyAnalyticsStatusWhenOverlayTiffWithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48597");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when Tiff overlay without text
+		baseClass.stepInfo("Perform Tiff overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48592 
+	 * Description :Verify the Analytics process should take places when Text files are overlayed .
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	public void verifyAnalyticsStatusWhenOverlayWithText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48592");
+		baseClass.stepInfo("Verify the Analytics process should take places when Text files are overlayed.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// Verify analytic status when overlay with text
+		baseClass.stepInfo("Perform overlay ingestion with text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.UniCodeFilesFolder, "text", Input.textFile1);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-48594
+	 * Description :Verify the Analytics process should be skipped when we overlay Audio Files without Text File
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	public void verifyAnalyticsStatusWhenOverlayMp3WithoutText() throws InterruptedException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestDataProject);
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48594");
+		baseClass.stepInfo("Verify the Analytics process should be skipped when we overlay Audio Files without Text File.");
+		// perform add only ingestion 
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.ingestionCatalogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		//Verify analytic status when pdf overlay without text
+		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder,"mp3",Input.MP3File);
+		baseClass.stepInfo("Ingestion started");
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		
+	}
 
 
 	@AfterMethod(alwaysRun = true)
