@@ -1212,7 +1212,7 @@ public class SavedSearchRegression_New {
 	 * 
 	 */
 
-	@Test(enabled = false, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void validatePASharingSavedSearchImpersonateAsRMUAndReviewer() throws Exception {
 
 		List<String> newNodeList = new ArrayList<>();
@@ -1232,8 +1232,8 @@ public class SavedSearchRegression_New {
 
 		// Login as RMU
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("User successfully logged into slightline webpage as PA with" + Input.pa1userName);
-
+		base.stepInfo("User successfully logged into slightline webpage as PA with" + Input.pa2userName);
+		
 		// Searching documents based on search string and saving the search
 
 		base.stepInfo("Searching documents based on search string and saving the search");
@@ -1401,12 +1401,15 @@ public class SavedSearchRegression_New {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5);     // added my sampath
 		saveSearch.verifySharedNode(newNodeList.get(0));
 		saveSearch.verifySharedGroupSearch1(newNodeList.get(0), nodeSearchpair.get(newNodeList.get(0)), true);
 
 		// Landed on Saved Search
+//		base.selectproject();
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -1452,6 +1455,7 @@ public class SavedSearchRegression_New {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
 		base.stepInfo("Verifying whether the shared saved search is available in security group");
+		saveSearch.getCollapsedSharedWithDefaultSecurityGroup().waitAndClick(5);     // added my sampath
 		saveSearch.verifySharedNode(PANode);
 		saveSearch.verifySharedGroupSearch1(PANode, PANodeSearchName, true);
 
@@ -1464,6 +1468,7 @@ public class SavedSearchRegression_New {
 		// Landed on Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		driver.waitForPageToBeReady();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5); // added my sampath
 		// Multiple Node Creation
 		newNodeList = saveSearch.createSGAndReturn("PA", "No", 1);
 		System.out.println("Node creation is done followed by adding searches to the created nodes");
@@ -1512,6 +1517,7 @@ public class SavedSearchRegression_New {
 		login.logout();
 
 	}
+
 
 	/**
 	 * @author Mohan A Date: 10/18/21 Modified date:N/A Modified by: Description :

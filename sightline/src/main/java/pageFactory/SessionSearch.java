@@ -2622,9 +2622,10 @@ public class SessionSearch {
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
+			 base.waitTime(2);
 			if (iterable_element.getText().contains(SaveName)) {
-				base.waitTime(3);
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				 base.waitTime(2);
+				 new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
 				iterable_element.click();
@@ -11196,6 +11197,7 @@ public class SessionSearch {
 			System.out.println("Already Expanded");
 		}
 
+		base.waitForElement(getCreatedNode(rootNode));
 		getCreatedNode(rootNode).waitAndClick(3);
 		if (getCurrentTabClosed().isElementAvailable(2)) {
 			getCurrentTabClosedExpand().waitAndClick(5);

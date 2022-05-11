@@ -1418,7 +1418,7 @@ public class SavedSearch {
 		// Thread sleep added to Execute in cosolidation
 		Thread.sleep(2000);
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectWithName(searchName).Visible();
@@ -3663,6 +3663,7 @@ public class SavedSearch {
 					savedSearch_SearchandSelect(nodeSearchpair.get(node), "No");
 					driver.waitForPageToBeReady();
 					// get Search ID
+					base.waitTime(3);
 					searchiD = GetSearchID(nodeSearchpair.get(node));
 					base.stepInfo("Search ID after Share : " + searchiD);
 					base.stepInfo(searchGroupSearchpIDpair.get(nodeSearchpair.get(node)));
@@ -5400,11 +5401,18 @@ public class SavedSearch {
 			base.stepInfo("--- Within My Saved Search - Node - sub node ---");
 
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
+			
+//			selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
+			base.selectproject();
+			navigateToSavedSearchPage();
+		    rootGroupExpansion();
+			
 			String subNodeName = createNewSearchGrp(newNode, 1);
 
 			// Save Search within MySearch
 			pureHits = search.basicMetaDataSearch(Input.metaDataName, null, custodianName, null); // check handle E
-			search.saveSearchInRootNode(SearchName, newNode, subNodeName);
+//			search.saveSearchInRootNode(SearchName, newNode, subNodeName);
+			search.saveSearchInNodewithChildNode(SearchName, subNodeName);
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 			selectNode1(newNode);
 			selectNode1(subNodeName);

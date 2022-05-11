@@ -115,7 +115,7 @@ public class BasicSearch_Regression1 {
 	 *         [#3]RPMXCON-57451,RPMXCON-57449,RPMXCON-57447
 	 * 
 	 */
-//	@Test(dataProvider = "reservedWords", groups = { "regression" }, priority = 1)
+	@Test(dataProvider = "reservedWords", groups = { "regression" }, priority = 1)
 	public void verifyBasicSearch(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -151,7 +151,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-//	@Test(groups = { "regression" }, priority = 2)
+	@Test(groups = { "regression" }, priority = 2)
 	public void verifyCountOfSearch() throws ParseException, InterruptedException, IOException {
 		// login as PA
 		lp = new LoginPage(driver);
@@ -182,7 +182,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-//	@Test(groups = { "regression" }, priority = 3)
+	@Test(groups = { "regression" }, priority = 3)
 	public void verifyPinSearch() throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -230,7 +230,7 @@ public class BasicSearch_Regression1 {
 		return new Object[][] { { "DocFileType", "oth" }, { "DocFileName", "tes" } };
 	}
 
-//	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
+	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
 	public void verifyAutoSuggest(String data1, String data2) throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -317,7 +317,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-//	@Test(dataProvider = "reserve", groups = { "regression" }, priority = 5)
+	@Test(dataProvider = "reserve", groups = { "regression" }, priority = 5)
 	public void verifyAutoSugges(String data1, String data2, String data3, String data4) throws InterruptedException {
 
 		lp = new LoginPage(driver);
@@ -376,7 +376,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-//	@Test(dataProvider = "query", groups = { "regression" }, priority = 6)
+	@Test(dataProvider = "query", groups = { "regression" }, priority = 6)
 	public void verifyBasicSearch2(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -411,7 +411,7 @@ public class BasicSearch_Regression1 {
 	 *         corresponding value gets wrapped in double quotes. (RPMXCON-46993)
 	 * @throws InterruptedException
 	 */
-//	@Test(groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" }, priority = 7)
 	public void verifyCompoundQuery() throws InterruptedException {
 		String tag = "TAGX" + Utility.dynamicNameAppender();
 		String metadataFieldLabel = "DocFileName";

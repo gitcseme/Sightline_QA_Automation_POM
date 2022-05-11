@@ -137,6 +137,7 @@ public class AdvancedSearch_Regression4 {
 		lp.logout();
 	}
 
+	
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
