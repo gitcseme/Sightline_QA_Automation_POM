@@ -451,6 +451,9 @@ public class TestData {
 	public String newdateformat_5Docs;
 	public String JanMultiPTIFF;
 	public String GNon_searchable_PDF_Load_file;
+	public String BEbomDat;
+	public String MP3_OverlayLst;
+	public String ingestionAutomationAllSource;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;

@@ -530,6 +530,9 @@ public class Input {
 	public static String newdateformat_5Docs;
 	public static String JanMultiPTIFF;
 	public static String GNon_searchable_PDF_Load_file;
+	public static String BEbomDat;
+	public static String MP3_OverlayLst;
+	public static String ingestionAutomationAllSource;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -1020,6 +1023,9 @@ public class Input {
 		newdateformat_5Docs = testData.getNewdateformat_5Docs();
 		JanMultiPTIFF = testData.getJanMultiPTIFF();
 		GNon_searchable_PDF_Load_file = testData.getGNon_searchable_PDF_Load_file();
+		BEbomDat = testData.getBEbomDat();
+		MP3_OverlayLst = testData.getMP3_OverlayLst();
+		ingestionAutomationAllSource = testData.getIngestionAutomationAllSource();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

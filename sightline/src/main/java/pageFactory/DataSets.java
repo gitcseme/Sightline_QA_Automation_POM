@@ -300,6 +300,7 @@ public class DataSets {
 	 * @param DataSet
 	 */
 	public void selectDataSetWithName(String DataSet) {
+		navigateToDataSetsPage();
 		driver.waitForPageToBeReady();
 		int i = 1;
 		try {

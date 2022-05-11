@@ -10380,6 +10380,101 @@ public class IngestionPage_Indium {
 
 
 		}
+
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @throws InterruptedException
+		 * @Description perform ingestion upto copied stage
+		 */
+		public void getIngestionSatatusAndPerformUptoCopiedStage() throws InterruptedException {
+			
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getRefeshBtn().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			String status = getStatus(1).getText().trim();
+			
+			if(status.contains("In Progress")){
+				base.waitTime(5);
+				getRefeshBtn().waitAndClick(5);
+				getIngestionSatatusAndPerformUptoCopiedStage();
+			}else if(status.contains("failed")) {
+				base.failedStep("ingestion failed");
+			}else if(status.contains("Cataloged")) {
+				base.stepInfo("cataloged stage is reached");
+				clickCopied();
+				getIngestionSatatusAndPerformUptoCopiedStage();
+			}else if(status.contains("Copied")) {
+				base.stepInfo("copied stage is reached");
+			}
+			
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param Language
+		 * @Description verify audio language is selectable
+		 */
+	public void verifyLanguageIsSelectable(String Language) {
+		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getIsAudioCheckbox());
+		getIsAudioCheckbox().waitAndClick(10);
+		
+		String disabled=getLanguage().GetAttribute("disabled");
+		if(disabled==null) {
+			base.stepInfo("language seleter is selectable");
+			getLanguage().selectFromDropdown().selectByVisibleText(Language);
+			base.stepInfo("user abled to selectable "+Language);
+		}
+		getCloseButton().waitAndClick(10);
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description ignore cataloge stage errors
+	 */
+	public void removeCatalogError() {
+		for (int i = 0; i < 70; i++) {
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+
+			if (status.contains("Cataloged")) {
+				base.passedStep("Cataloged completed");
+				break;
+			} else if (status.contains("In Progress")) {
+				base.waitTime(5);
+				getRefeshBtn().waitAndClick(10);
+			} else if (status.contains("Failed")) {
+
+				driver.Manage().window().fullscreen();
+				getIngestionDetailPopup(1).waitAndClick(10);
+				base.waitForElement(errorCountCatalogingStage());
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitForElement(ignoreAllButton());
+				ignoreAllButton().waitAndClick(10);
+				if (getApproveMessageOKButton().isElementAvailable(5)) {
+					getApproveMessageOKButton().waitAndClick(10);
+					base.passedStep("Clicked on OK button to ignore all errors");
+				}
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return doneButton().Enabled();
+					}
+				}), Input.wait30);
+				doneButton().waitAndClick(10);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getCloseButton().Enabled();
+					}
+				}), Input.wait30);
+				getCloseButton().waitAndClick(10);
+				base.waitTime(2);
+				getRefeshBtn().waitAndClick(10);
+			}
+		}
+	}
+
 		
 		
 		/**

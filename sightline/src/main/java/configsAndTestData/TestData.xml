@@ -434,6 +434,9 @@
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 	<JanMultiPTIFF>JanMultiPTIFF</JanMultiPTIFF>
 	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
+	<BEbomDat>00 16BEbom.dat</BEbomDat>
+	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
+	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
 	
 	<!-- Added by Brundha -->
 	<documentID>H16135-0188-002270</documentID>
