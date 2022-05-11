@@ -1256,6 +1256,9 @@ public class CodingForm {
 	public Element getCodingForm_MetaDataUsingIndex(int index) {
 		return driver.FindElementByXPath("//*[@id='lstMetadata']/li["+index+"]/label/i");
 	}
+	public Element getCF_PreviewTagNameHidden(String tagName) {
+		return driver.FindElementByXPath("(//span[text()='"+tagName+"'])[last()]");
+	}
 	
 
 	// projectfiledWithData

@@ -1784,6 +1784,10 @@ public class SessionSearch {
 	public Element getDeletePreviousSearch() {
 		return driver.FindElementByXPath("//a[@class='textboxlist-bit-box-deletebutton']");
 	}
+	
+	public Element getTaskBackGround(String id) {
+		return driver.FindElementByXPath("//a[text()='Your Navigation execution with Notification Id. " + id+ " is COMPLETED']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -11677,4 +11681,44 @@ public class SessionSearch {
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
+	
+	/**
+	 * this method will verify whether the notification count in bull horn icon and
+	 * navigate to doclist page
+	 * 
+	 * @author Baskar
+	 * @param bgCount[Initial back ground count]
+	 */
+	public void verifyNotificationAndNavigateToDocList(int bgCount,String bgId) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCount + 1;
+			}
+		}), Input.wait60);
+		String color = getBullIcon().getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#e74735";
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("BullHorn icon is highlighted red as expected");
+		} else {
+			base.failedStep("Bullhorn icon is not red as expected");
+		}
+		base.waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTaskBackGround(bgId));
+		getTaskBackGround(bgId).waitAndClick(20);
+		String doclistUrl = Input.url + "Document/DocList";
+		driver.waitForPageToBeReady();
+		if (driver.getUrl().equalsIgnoreCase(doclistUrl)) {
+			base.passedStep("User navigate to doclist when clicked from bull icon task");
+		}
+		else {
+			base.failedMessage("user not navigated to doclist page");
+		}
+	}
+	
 }

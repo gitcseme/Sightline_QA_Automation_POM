@@ -1,6 +1,8 @@
 package testScriptsRegression;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -5454,6 +5456,75 @@ public class DocViewAudio_IndiumRegression {
 
 			loginPage.logout();
 
+		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 11/05/2022 Modified by: Baskar
+		 * Description:Verify that Video files 'Full Screen' functionality is working properly inside Doc view screen
+		 * @throws AWTException 
+		 * 
+		 */
+
+		@Test(enabled = true,groups = { "regression" }, priority = 75)
+		public void validatingDocviewAudioScreen() throws InterruptedException, AWTException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59961");
+			baseClass.stepInfo("Verify that Video files 'Full Screen' functionality is working properly inside Doc view screen");
+			// Logi
+			loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+			baseClass.selectproject("AutomationAdditionalDataProject");
+
+			docViewPage = new DocViewPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			// search to docview
+			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+			sessionSearch.ViewInDocViews();
+			baseClass.waitTime(2);
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').webkitEnterFullScreen()");
+			boolean fullScreentrue = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').webkitDisplayingFullscreen;");
+			softAssertion.assertTrue(fullScreentrue);
+			baseClass.passedStep("Audio docview full scren is displaying");
+			Robot robot=new Robot();
+			robot.keyPress(KeyEvent.VK_ESCAPE);
+			robot.keyRelease(KeyEvent.VK_ESCAPE);
+			baseClass.waitTime(2);
+			boolean notfullScreentrue = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').webkitDisplayingFullscreen;");
+			softAssertion.assertTrue(notfullScreentrue);
+			baseClass.passedStep("Audio docview full scren is displaying not displaying when escape button pressed");
+			// logout
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author : Baskar date: NA Modified date: 11/05/2022 Modified by: Baskar
+		 * Description:Verify that when document is not audio player enabled and native is a video file should display video player without an audio player
+		 * @throws AWTException 
+		 * 
+		 */
+
+		@Test(enabled = true,groups = { "regression" }, priority = 76)
+		public void validatingOnlyVideoDocument() throws InterruptedException, AWTException {
+			baseClass.stepInfo("Test case Id: RPMXCON-59968");
+			baseClass.stepInfo("Verify that when document is not audio player enabled and native is a video file should display video player without an audio player");
+			// Login 
+			loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+			baseClass.selectproject("AutomationAdditionalDataProject");
+
+			docViewPage = new DocViewPage(driver);
+			sessionSearch = new SessionSearch(driver);
+			miniDocListpage=new MiniDocListPage(driver);
+			// search to docview;
+			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
+			sessionSearch.ViewInDocViews();
+			
+			miniDocListpage.configureMinidoclistAudio();
+			driver.waitForPageToBeReady();
+			boolean flagfalse=docViewPage.getTranscriptsTab().isDisplayed();
+			softAssertion.assertFalse(flagfalse);
+			baseClass.passedStep("Only vido document displaying audio document not displaying");
+			softAssertion.assertAll();
+			// logout
+			loginPage.logout();
 		}
 		
 	@DataProvider(name = "userDetails")
