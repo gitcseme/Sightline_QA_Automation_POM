@@ -881,7 +881,7 @@ public class BaseClass {
 	}
 
 	public void impersonateSAtoRMU() throws InterruptedException {
-		getSignoutMenu().Click();
+		getSignoutMenu().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getChangeRole().Visible();
@@ -3327,4 +3327,23 @@ public class BaseClass {
 
 	}
 	}
+	
+	/**
+	 * @throws IOException 
+	 * @Author Mohan Modified date: 18/11/2021 Description : Read Excel Data and
+	 *         return the value
+	 */
+	public String readExcelDataSheetNameOnly(String filename, int sheetNameNum) throws IOException {
+		
+			String sheetName = null;
+			try {
+				File file = new File(filename);
+				FileInputStream xlFile = new FileInputStream(file);
+				Workbook xlwb = new XSSFWorkbook(xlFile);
+				sheetName = xlwb.getSheetName(sheetNameNum);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} 
+			return sheetName;
+	   }
 }
