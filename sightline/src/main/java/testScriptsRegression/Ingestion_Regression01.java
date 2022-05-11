@@ -2444,6 +2444,92 @@ public class Ingestion_Regression01 {
 		
 	}
 
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48201 
+	 * Description :To Verify Ingestion overlay of Native without Unpublish
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 69)
+	public void verifyUnPublishOfNativeDocument() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48201");
+		baseClass.stepInfo("To Verify Ingestion overlay of Native without Unpublish");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo(" addonly ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,"Add Only",
+					Input.sourceSystem, Input.datFormatFile,null,null,null, null, null, null, null, null);
+					
+		}
+		
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+		ingestionPage.addDelimitersInIngestionWizard( Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFormatFile,Input.docId);
+		ingestionPage.selectNativeSource("DAT4_STC_NativesEmailData NEWID.lst",false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.nativeFileName);
+		search.viewInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		for (int i = 0; i < 5; i++) {
+			if (doc.getDocView_TextFileType().isDisplayed()) {
+				String FileType=doc.getDocView_TextFileType().getText();
+				baseClass.textCompareEquals(FileType,"NATIVE",""+FileType+" file is displayed as expected",""+FileType+" file is not displayed as expected");
+				break;
+			} else {
+				driver.waitForPageToBeReady();
+			}
+		}
+		
+		loginPage.logout();
+		
+	}
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48237 
+	 * Description :To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority =70 )
+	public void verifyAudioPlayerReadyLanguage() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48237");
+		baseClass.stepInfo("To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo(" addonly ingestion with mapping field selection");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
+		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.fillingSourceField();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.IgnoreErrorAndIndexing();
+		loginPage.logout();
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
