@@ -1328,23 +1328,10 @@ public class Ingestion_Regression {
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void verifyUnpublishOverLayIngestion() throws InterruptedException {
+		
 		baseClass = new BaseClass(driver);
-		String projectName = Input.ingestionProjectName;
-		String ingestionType = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = Input.PDFGen_10Docs;
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.newdateformat_5Docs;
-		String documentKey = Input.prodBeg;
-		String pdfLoadFile = Input.PDF5DocsLst;
-		String tiffLoadFile = Input.Images5DocsLst;
-		String dateFormat = Input.dateFormat;
-
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
+		baseClass.selectproject(Input.ingestionProjectName);
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48277 ");
@@ -1359,27 +1346,33 @@ public class Ingestion_Regression {
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
-
-		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
+		
+		//Input.PDFGen_10Docs is used for Ingestion Name
+		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
 		if (status) {
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
-					sourceFolder);
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
+					Input.PDFGen_10Docs);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(datLoadFile, documentKey);
+			//Input.newdateformat_5Docs, Input.prodBeg used for dat file name and Document Key
+			ingetion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
 
-			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectPDFSource(pdfLoadFile, false);
-
-			ingetion.selectTIFFSource(tiffLoadFile, false, true);
+			baseClass.stepInfo("Select Pdf varient source.");
+			//Input.PDF5DocsLst is used for pdf file Name
+			ingetion.selectPDFSource(Input.PDF5DocsLst, false);
+			
+			baseClass.stepInfo("Select Tiff varient source.");
+			//Input.Images5DocsLst used for Image loadfile name 
+			ingetion.selectTIFFSource(Input.Images5DocsLst, false, true);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(dateFormat);
+			//Input.dateFormat used for choosing the stranded data format
+			ingetion.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingetion.clickOnNextButton();
@@ -1393,7 +1386,7 @@ public class Ingestion_Regression {
 			ingetion.getIngestionSatatusAndPerform();
 
 		}
-		String ingestionFullName = dataSets.isDataSetisAvailable(sourceFolder);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
 		if(ingestionFullName!=null) {
 			// Search ingestionName
 			sessionsearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
@@ -1418,22 +1411,10 @@ public class Ingestion_Regression {
 	 */
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
+		
 		baseClass = new BaseClass(driver);
-		String projectName = Input.ingestionProjectName;
-		String ingestionType = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = "Automation_AllSources";
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.BEbomDat;
-		String documentKey = Input.prodBeg;
-		String mp3LoadFile = Input.MP3_OverlayLst;
-		String dateFormat = Input.dateFormat;
-
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
+		baseClass.selectproject(Input.ingestionProjectName);
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46894 ");
@@ -1448,23 +1429,24 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
 
-		
-
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
-					sourceFolder);
+			//Input.overlayOnly, null, Input.sourceLocation,Input.ingestionAutomationAllSource used for ingestionType, sourceLoaction ,Ingestion name
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
+					Input.ingestionAutomationAllSource);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(datLoadFile, documentKey);
+			//Input.BEbomDat, Input.prodBeg used for dat file name and document key
+			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
 
 			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectMP3VarientSource(mp3LoadFile, false);
+			//Input.MP3_OverlayLst is used mp3 load file name
+			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
 			
 			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(dateFormat);
+			ingetion.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingetion.clickOnNextButton();
@@ -1477,7 +1459,7 @@ public class Ingestion_Regression {
 			
 			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
 			
-			ingetion.verifyLanguageIsSelectable("International English");
+			ingetion.verifyLanguageIsSelectable(Input.audioLanguage);
 
 		
 		
@@ -1502,19 +1484,6 @@ public class Ingestion_Regression {
 		DocViewPage docView=new DocViewPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 		
-		baseClass = new BaseClass(driver);
-		String ingestionOverlay = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = Input.PDFGen_10Docs;
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.newdateformat_5Docs;
-		String documentKey = Input.prodBeg;
-		String textLoadFile = Input.TextPPPDF10Docs;
-		String dateFormat = Input.dateFormat;
-
 		baseClass.stepInfo("Test case Id: RPMXCON-48607");
 		baseClass.stepInfo(
 				"To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and Text will reflect the overlaid text.");
@@ -1545,23 +1514,23 @@ public class Ingestion_Regression {
 		driver.scrollPageToTop();
 		ingestionPage.nativigateToIngestionViaButton();
 
-		boolean status1 = ingestionPage.verifyIngestionpublish(sourceFolder);
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
 		if (status1) {
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionOverlay, sourceSystem, sourceLocation,
-					sourceFolder);
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
+					Input.PDFGen_10Docs);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingestionPage.selectDATSource(datLoadFile, documentKey);
+			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
 
-			ingestionPage.selectTextSource(textLoadFile, false);
+			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingestionPage.clickOnNextButton();
