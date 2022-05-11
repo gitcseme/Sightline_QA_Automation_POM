@@ -2265,7 +2265,7 @@ public class Ingestion_Regression01 {
 	 * 'RPMXCON-48606'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 54)
 	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -2305,39 +2305,28 @@ public class Ingestion_Regression01 {
 		ingestionPage.unpublish(BasicSearchName);
 
 		baseClass = new BaseClass(driver);
-		String ingestionOverlay = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = Input.PDFGen_10Docs;
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.newdateformat_5Docs;
-		String documentKey = Input.prodBeg;
-		String textLoadFile = "Text_5Docs.lst";
-		String dateFormat = Input.dateFormat;
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		driver.scrollPageToTop();
 		ingestionPage.nativigateToIngestionViaButton();
 
-		boolean status1 = ingestionPage.verifyIngestionpublish(sourceFolder);
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
 		if (status1) {
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionOverlay, sourceSystem, sourceLocation,
-					sourceFolder);
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.PDFGen_10Docs);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingestionPage.selectDATSource(datLoadFile, documentKey);
+			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
 
-			ingestionPage.selectTextSource(textLoadFile, false);
+			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingestionPage.clickOnNextButton();
@@ -2374,55 +2363,42 @@ public class Ingestion_Regression01 {
 	 * 'RPMXCON-48606'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 68)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 55)
 	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
-		String ingestionType = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = "Automation_AllSources";
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = "00 16BEbom.dat";
-		String documentKey = Input.prodBeg;
-		String mp3LoadFile = "MP3_Overlay.lst";
-		String dateFormat = Input.dateFormat;
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
-		baseClass.stepInfo(
-				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		sessionSearch = new SessionSearch(driver);
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
+		baseClass.stepInfo(
+				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
 
-		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
+		boolean status = ingetion.verifyIngestionpublish(Input.ingestionAutomationAllSource);
 		if (status) {
 			baseClass.stepInfo("Ingestion Add only is already done this project");
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
-					sourceFolder);
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.ingestionAutomationAllSource);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(datLoadFile, documentKey);
+			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
 
 			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectMP3VarientSource(mp3LoadFile, false);
+			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(dateFormat);
+			ingetion.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingetion.clickOnNextButton();
@@ -2443,8 +2419,6 @@ public class Ingestion_Regression01 {
 				"Verified the overlay Ingestion for Audio Documents against International English language pack");
 
 	}
-
-	
 
 	
 	/**
