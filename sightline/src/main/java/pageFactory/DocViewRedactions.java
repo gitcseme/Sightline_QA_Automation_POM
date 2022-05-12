@@ -2034,11 +2034,13 @@ public void popOutCodingFormChildWindow() {
 	}
 
 	/**
+	 * Modified on 05/12/22
 	 * @Author Sowndarya.Velraj
 	 */
 	public void selectingRedactionTag2(String redactiontagname) throws Exception {
-		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		driver.waitForPageToBeReady();
+		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
+		base.waitTime(2);
 		redactionTag.selectByVisibleText(redactiontagname);
 
 		base.waitForElement(redactionSaveBtn());
