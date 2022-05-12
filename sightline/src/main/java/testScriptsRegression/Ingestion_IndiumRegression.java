@@ -99,7 +99,7 @@ public class Ingestion_IndiumRegression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 01)
+	@Test(enabled = false, groups = { "regression" }, priority = 01)
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -189,7 +189,7 @@ public class Ingestion_IndiumRegression {
 	 * Out" should be available so user could switch between the short and long wave
 	 * forms.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = false, groups = { "regression" }, priority = 2)
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -240,7 +240,7 @@ public class Ingestion_IndiumRegression {
 	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
 	 * Out" is disabled or hidden.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = false, groups = { "regression" }, priority = 3)
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -343,6 +343,8 @@ public class Ingestion_IndiumRegression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority =5)
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
