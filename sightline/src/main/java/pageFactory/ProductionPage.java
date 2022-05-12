@@ -13251,8 +13251,8 @@ public class ProductionPage {
 		getClkBtn_selectingRedactionTags().isDisplayed();
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
-		base.waitForElement(getClkCheckBox_defaultRedactionTag());
-		getClkCheckBox_defaultRedactionTag().Click();
+		base.waitForElement(getDefaultRedacTag_BurnRedact());
+		getDefaultRedacTag_BurnRedact().waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().Click();

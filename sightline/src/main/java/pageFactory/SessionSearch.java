@@ -2833,7 +2833,9 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-	/**
+
+/**
+	 * * Modified on 05/12/22
 	 * @modifiedOn : 3/8/2022 (added wait time)
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
 	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to
@@ -2843,7 +2845,7 @@ public class SessionSearch {
 	 */
 	// Function to perform bulk tag with existing tag
 	public void bulkTagExisting(final String tagName) throws InterruptedException {
-		driver.getWebDriver().get(Input.url + "Search/Searches");
+		
 		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
@@ -2852,24 +2854,14 @@ public class SessionSearch {
 		}
 
 		driver.waitForPageToBeReady();
-		getBulkActionButton().Click();
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getBulkTagAction().Visible();
-			}
-		}), Input.wait60);
-
+		base.waitForElement(getBulkTagAction());
 		getBulkTagAction().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectTagExisting(tagName).Visible();
-			}
-		}), Input.wait60);
-
+		base.waitForElement(getSelectTagExisting(tagName));
 		driver.waitForPageToBeReady();
-
 		getSelectTagExisting(tagName).waitAndClick(5);
 
 		driver.Manage().window().fullscreen();
@@ -2914,7 +2906,7 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
-
+		
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
 		// driver.getWebDriver().get(Input.url+"Search/Searches");
