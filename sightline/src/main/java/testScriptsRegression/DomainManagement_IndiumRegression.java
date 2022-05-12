@@ -863,7 +863,7 @@ public class DomainManagement_IndiumRegression {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DocFileName', select Sort by 'DocID'
@@ -893,7 +893,7 @@ public class DomainManagement_IndiumRegression {
 		batchPrint.navigateToNextPage(2);
 
 		// filling SlipSheet WIth metadata
-		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true,null);
 		batchPrint.navigateToNextPage(1);
 
 		// Filling Export File Name as 'DocFileName', select Sort by 'DocID'
