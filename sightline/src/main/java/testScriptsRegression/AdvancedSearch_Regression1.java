@@ -865,7 +865,7 @@ public class AdvancedSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-47957", enabled = true, groups = { "regression" }, priority = 23)
 	public void TallyResult() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47957 - Saved Search Sprint 05");
