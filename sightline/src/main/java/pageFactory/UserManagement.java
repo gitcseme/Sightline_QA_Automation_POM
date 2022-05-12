@@ -371,18 +371,19 @@ public class UserManagement {
 	public ElementCollection getSecurityGroupList() {
 		return driver.FindElementsByXPath("//select[@id='ddlSg']//option");
 	}
-	
+
 	public Element getCategorizeStatusCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanProview'][@checked='checked']");
 	}
+
 	public Element getSelectUserToSaUserEdit() {
-		return driver.FindElementByXPath(
-				"//table[@id='dtUserList']//tr//td//..//a[contains(text(),'Edit')]");
+		return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td//..//a[contains(text(),'Edit')]");
 	}
+
 	public Element getIngestionStatus() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanIngestions'][@checked='checked']");
 	}
-	
+
 	public Element getSearchCheck() {
 		return driver.FindElementByXPath("(//input[@id='UserRights_CanSearching'][position()=1])");
 	}
@@ -490,31 +491,37 @@ public class UserManagement {
 	public Element getSelectDropSG(String sgName) {
 		return driver.FindElementByXPath("//option[.='" + sgName + "']");
 	}
+
 	public Element getAllReportTab() {
 		return driver.FindElementByXPath("//label[text()='Reports']//parent::a");
 	}
-	
-	//add by Aathith
+
+	// add by Aathith
 	public ElementCollection unAssigneduserlist() {
 		return driver.FindElementsByXPath("//select[@id='UnAssignedUsersForDomain']//option");
 	}
 
 	public Element VerifyingAssignedUser(String UserName) {
-		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+UserName+"')]");
+		return driver.FindElementByXPath(
+				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + UserName + "')]");
 	}
-	
+
 	public Element getProjectBtn() {
 		return driver.FindElementByXPath("//a[text()='Projects']");
 	}
+
 	public Element gettDomainBtn() {
 		return driver.FindElementByXPath("//a[text()='Domains']");
 	}
+
 	public Element getBellyBandMsg() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 	}
+
 	public Element getLeftArrow() {
 		return driver.FindElementById("btnLeftUserMaappingForDomain");
 	}
+
 	public Element getSelectuserassignindomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
@@ -522,83 +529,105 @@ public class UserManagement {
 	public Element getSelectAssignedUserDomain() {
 		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']");
 	}
+
 	public ElementCollection userDetailsTableHeader() {
 		return driver.FindElementsByXPath("//*[@id='dtUserList_wrapper']/div/div/div/table/thead/tr/th");
 	}
+
 	public Element tableValue(int row, int colum) {
-		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+row+"]/td["+colum+"]");
+		return driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[" + row + "]/td[" + colum + "]");
 	}
+
 	public Element getbellyBandMsg() {
 		return driver.FindElementByXPath("//p[@class='pText']");
 	}
+
 	public ElementCollection getAssignedUserName(String userName) {
-		return driver.FindElementsByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+userName+"')]");
+		return driver.FindElementsByXPath(
+				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + userName + "')]");
 	}
+
 	public Element getDomaintab() {
 		return driver.FindElementByXPath("//a[@id='tabExiting']");
 	}
+
 	public Element getProjectTab() {
 		return driver.FindElementByXPath("//a[@id='tabNew']");
 	}
+
 	public Element getPopUpCloseBtn() {
 		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
 	}
+
 	public Element getLeftBtndomainuser() {
 		return driver.FindElementByXPath("//a[@id='btnLeftUserMaappingForDomain']");
 	}
+
 	public ElementCollection getUserManageTab() {
 		return driver.FindElementsByXPath("//table[@class='table dataTable no-footer']//tr//th");
 	}
+
 	public ElementCollection getTableColumnData(int i) {
 		return driver.FindElementsByXPath("//table[@id='dtUserList']//tbody//tr//td[" + i + "]");
 
 	}
-	
+
 	public Element getSearchIconCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanSearching']//parent::label//i");
 	}
+
 	public Element getSearchStatusCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanSearching'][@checked='checked']");
 	}
-	
+
 	public Element getDashBoardReviewer() {
 		return driver.FindElementByXPath("//h1[text()[normalize-space()='My Dashboard']]");
 	}
+
 	public Element getPaHomePage() {
 		return driver.FindElementByXPath("//li//span[text()='Project Administrator']");
 	}
+
 	public Element getRedaction() {
 		return driver.FindElementByXPath("//a//span[text()='REDACTIONS']");
 	}
+
 	public Element getBulkUserCancelBtn() {
 		return driver.FindElementById("btnCancelBulkAccessControls");
 	}
-	
+
 	public Element getAllReportIconCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanAllReports']//parent::label//i");
 	}
+
 	public Element getAllReportStatusCheck() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanAllReports'][@checked='checked']");
 	}
+
 	public Element getDataSetStatus() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanDatasets'][@checked='checked']");
 	}
+
 	public Element getDataSet() {
 		return driver.FindElementByXPath("//input[@id='UserRights_CanDatasets']//parent::label//i");
 	}
+
 	public ElementCollection getRowValues(int rowNum) {
-		return driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td["+rowNum+"]");
+		return driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td[" + rowNum + "]");
 	}
-	
+
 	public Element getEditCancel() {
 		return driver.FindElementByXPath("//input[@value='Cancel']");
 	}
+
 	public Element getCheckingAssignedUserSG(String FullName) {
-		return driver.FindElementByXPath("//select[@id='AssignedUser']//option[contains(text(),'"+FullName+"')]");
+		return driver.FindElementByXPath("//select[@id='AssignedUser']//option[contains(text(),'" + FullName + "')]");
 	}
+
 	public Element getAssignUserProjectDrp_Dwn() {
 		return driver.FindElementById("lstProjects");
 	}
+
 	public Element getAdvancedSearchAudioRemarkIcon() {
 		return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]");
 	}
@@ -606,58 +635,68 @@ public class UserManagement {
 	public Element getCalendarOption() {
 		return driver.FindElementByXPath("//i[@class='icon-append fa fa-calendar']");
 	}
+
 	public Element getYearDropDown() {
 		return driver.FindElementByXPath("//select[@class='ui-datepicker-year']");
 	}
+
 	public Element getMonthDropDown() {
 		return driver.FindElementByXPath("//select[@class='ui-datepicker-month']");
 	}
 
-	
 	public Element getSlectDate(String SendValue) {
-		return driver.FindElementByXPath("//a[@class='ui-state-default'][text()="+SendValue+"]");
+		return driver.FindElementByXPath("//a[@class='ui-state-default'][text()=" + SendValue + "]");
 	}
-	
+
 	public Element getAddNewUserPopUpWindow() {
 		return driver.FindElementByXPath("//span[@id='ui-id-1']");
 	}
+
 	public Element getBilliableUserText() {
 		return driver.FindElementByXPath("//label[normalize-space(.)='Billable User:']");
 	}
+
 	public Element getBilliableUserCheckBox() {
 		return driver.FindElementByXPath("//input[@id='IsBillableCheckbox']//..//i");
 	}
-	
 
-public Element getUnAssignedDomainUser() {
-	return driver.FindElementByXPath("//select[@id='UnAssignedUser']");
-}
-public Element getDomainRole() {
-	return driver.FindElementByXPath("//select[@id='lstRoles']");
-}
-public Element getDomainSG() {
-	return driver.FindElementByXPath("//select[@id='lstSecurityGroup']");
-}
-public Element getDomainUserRightArrow() {
-	return driver.FindElementByXPath("//a[@id='btnRightUserMaapping']");
-}
-public Element getDomainUserCancelButton() {
-	return driver.FindElementById("btnCancel");
-}
-public ElementCollection getProjectCollection() {
-	return driver.FindElementsByXPath("//ul[@id='ddlProject11']//a");
-}
-public Element getRoleAccess(String roll) {
-	return driver.FindElementByXPath("//li[@class='username']//span[text()='"+roll+"']");
-}
-public Element getClientNameTextBox() {
-	return driver.FindElementByXPath("//input[@id='txtClientEntityLabel']");
-}
-public Element getAssignedDomain(String domain) {
-	return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'"+domain+"')]");
-}
+	public Element getUnAssignedDomainUser() {
+		return driver.FindElementByXPath("//select[@id='UnAssignedUser']");
+	}
 
-	
+	public Element getDomainRole() {
+		return driver.FindElementByXPath("//select[@id='lstRoles']");
+	}
+
+	public Element getDomainSG() {
+		return driver.FindElementByXPath("//select[@id='lstSecurityGroup']");
+	}
+
+	public Element getDomainUserRightArrow() {
+		return driver.FindElementByXPath("//a[@id='btnRightUserMaapping']");
+	}
+
+	public Element getDomainUserCancelButton() {
+		return driver.FindElementById("btnCancel");
+	}
+
+	public ElementCollection getProjectCollection() {
+		return driver.FindElementsByXPath("//ul[@id='ddlProject11']//a");
+	}
+
+	public Element getRoleAccess(String roll) {
+		return driver.FindElementByXPath("//li[@class='username']//span[text()='" + roll + "']");
+	}
+
+	public Element getClientNameTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtClientEntityLabel']");
+	}
+
+	public Element getAssignedDomain(String domain) {
+		return driver.FindElementByXPath(
+				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + domain + "')]");
+	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -1291,7 +1330,7 @@ public Element getAssignedDomain(String domain) {
 		Thread.sleep(2000);
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
-		
+
 		if (getSavePassword().isElementAvailable(3)) {
 			getSavePassword().waitAndClick(3);
 			driver.waitForPageToBeReady();
@@ -1611,7 +1650,6 @@ public Element getAssignedDomain(String domain) {
 		}
 	}
 
-	
 	public void defaultSelectionCheckboxForAllRole(boolean manage, boolean ingestion, boolean production,
 			boolean search, boolean explorer, boolean comExplorer, boolean catagories, boolean dataSet,
 			boolean collection, boolean report, boolean downloadNative, boolean redaction, boolean highlighted,
@@ -1712,8 +1750,6 @@ public Element getAssignedDomain(String domain) {
 		}
 	}
 
-	
-
 	/**
 	 * @author Indium-Baskar date: 21/03/2022 Modified date: 21/03/2022
 	 * @Description:Methods for All report validation icon
@@ -1746,67 +1782,70 @@ public Element getAssignedDomain(String domain) {
 			if (getSavePassword().isElementAvailable(3)) {
 				getSavePassword().waitAndClick(3);
 				driver.waitForPageToBeReady();
+			} else {
+				System.out.println("No Btn");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
 	 * @Description:Methods Ingestion status checkbox
 	 */
 	public void verifyStatusIngestion(String status) throws Exception {
 		driver.waitForPageToBeReady();
-		
-	    boolean flagChecked=getIngestionStatus().isElementAvailable(3);
-	    System.out.println(flagChecked);
-	    if (flagChecked==false) {
-	    	bc.stepInfo("Ingestion checkbox is unchecked");
+
+		boolean flagChecked = getIngestionStatus().isElementAvailable(3);
+		System.out.println(flagChecked);
+		if (flagChecked == false) {
+			bc.stepInfo("Ingestion checkbox is unchecked");
 		}
-	    if (flagChecked==true&& status=="false") {
-	    	bc.waitForElement(getIngestion());
+		if (flagChecked == true && status == "false") {
+			bc.waitForElement(getIngestion());
 			getIngestion().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 		}
-	    if (flagChecked==false&& status=="true") {
-	    	bc.waitForElement(getIngestion());
+		if (flagChecked == false && status == "true") {
+			bc.waitForElement(getIngestion());
 			getIngestion().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo("Ingestion checkbox is checked");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
 	 * @Description:Methods Categorize status checkbox
 	 */
 	public void verifyStatusCategorize(String status) throws Exception {
 		driver.waitForPageToBeReady();
-		
-	    boolean flagChecked=getCategorizeStatusCheck().isElementAvailable(3);
-	    System.out.println(flagChecked);
-	    if (flagChecked==false) {
-	    	bc.stepInfo("Ingestion checkbox is unchecked");
+
+		boolean flagChecked = getCategorizeStatusCheck().isElementAvailable(3);
+		System.out.println(flagChecked);
+		if (flagChecked == false) {
+			bc.stepInfo("Ingestion checkbox is unchecked");
 		}
-	    if (flagChecked==true&& status=="false") {
-	    	bc.waitForElement(getCategorizeCheck());
+		if (flagChecked == true && status == "false") {
+			bc.waitForElement(getCategorizeCheck());
 			getCategorizeCheck().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 		}
-	    if (flagChecked==false&& status=="true") {
-	    	bc.waitForElement(getIngestion());
-	    	getCategorizeCheck().waitAndClick(5);
+		if (flagChecked == false && status == "true") {
+			bc.waitForElement(getIngestion());
+			getCategorizeCheck().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo("Ingestion checkbox is checked");
 		}
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param saUser
@@ -1817,22 +1856,22 @@ public Element getAssignedDomain(String domain) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		
-		List<WebElement> elementList = null;
-		
-			elementList = unAssigneduserlist().FindWebElements();
-			for (WebElement unassign : elementList) {
 
-				String userName = unassign.getText().trim();
-				
-				if (userName.equalsIgnoreCase(saUser)) {
-					bc.failedStep("verification failed");
-					break;
-				} 
+		List<WebElement> elementList = null;
+
+		elementList = unAssigneduserlist().FindWebElements();
+		for (WebElement unassign : elementList) {
+
+			String userName = unassign.getText().trim();
+
+			if (userName.equalsIgnoreCase(saUser)) {
+				bc.failedStep("verification failed");
+				break;
 			}
-			bc.passedStep("unAssigned user not contain System Admin user");
-}
-	
+		}
+		bc.passedStep("unAssigned user not contain System Admin user");
+	}
+
 	/**
 	 * @author Vijaya.Rani
 	 * @Description : Method for creating Exiting user.
@@ -1886,16 +1925,15 @@ public Element getAssignedDomain(String domain) {
 		bc.VerifyErrorMessage("20001000021 : user cannot be created at this level");
 
 	}
-	
-	
+
 	/**
 	 * @author Brundha
 	 * @param projectName
 	 * @param UserName
 	 * @param UserName1
-	 * @Description verifying the belly band message and assign the user 
+	 * @Description verifying the belly band message and assign the user
 	 */
-	public void verifyingBellyBandMessageInAssignUser(String DomainName,String UserName,String UserName1) {
+	public void verifyingBellyBandMessageInAssignUser(String DomainName, String UserName, String UserName1) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
@@ -1910,29 +1948,31 @@ public Element getAssignedDomain(String domain) {
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(UserName1);
 		getrightBtndomainuser().waitAndClick(10);
 		getProjectBtn().waitAndClick(10);
-		String ActualText=getBellyBandMsg().getText();
-		String bandMsg="You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
-		bc.textCompareEquals(bandMsg, ActualText,"Belly band message is displayed as expected", "Belly band message is not displayed as expected");
+		String ActualText = getBellyBandMsg().getText();
+		String bandMsg = "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
+		bc.textCompareEquals(bandMsg, ActualText, "Belly band message is displayed as expected",
+				"Belly band message is not displayed as expected");
 		bc.getYesBtn().waitAndClick(10);
 		gettDomainBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
-		if(VerifyingAssignedUser(UserName).isDisplayed()) {
+		if (VerifyingAssignedUser(UserName).isDisplayed()) {
 			bc.passedStep("The changes made on the user is  modified as expected");
-		}else {
+		} else {
 			bc.failedStep("The changes made on user is not  modified");
-			
+
 		}
-		
+
 	}
+
 	/**
 	 * @author Brundha
 	 * 
 	 * @param projectName
 	 * @param UserName
-	 * @Description verifying the belly band message and un assign the user 
+	 * @Description verifying the belly band message and un assign the user
 	 */
-	public void selectingConfirmButtonToUnAssignTheAssignedUser(String DomainName,String UserName) {
+	public void selectingConfirmButtonToUnAssignTheAssignedUser(String DomainName, String UserName) {
 		driver.waitForPageToBeReady();
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
 		bc.waitTime(2);
@@ -1944,16 +1984,14 @@ public Element getAssignedDomain(String domain) {
 		gettDomainBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(DomainName);
-		if(VerifyingAssignedUser(UserName).isDisplayed()) {
+		if (VerifyingAssignedUser(UserName).isDisplayed()) {
 			bc.passedStep("The changes made on the user is not  modified as expected");
-		}else {
+		} else {
 			bc.failedStep("The changes made on user is modified");
-			
+
 		}
-		
+
 	}
-	
-	
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -1961,7 +1999,7 @@ public Element getAssignedDomain(String domain) {
 	 * @param unAssigedUserName
 	 * @Description Assign domain to domain user
 	 */
-	public void AssignUserToDomain(String domainName, String unAssigedUserName ) {
+	public void AssignUserToDomain(String domainName, String unAssigedUserName) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().Click();
 
@@ -1976,19 +2014,20 @@ public Element getAssignedDomain(String domain) {
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo("Domain user Assiged succesfully");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param domainName
 	 * @param AssigedUserName
-	 * @Description unassign domain to domain user 
+	 * @Description unassign domain to domain user
 	 */
-	public void unAssignUserToDomain(String domainName, String AssigedUserName ) {
+	public void unAssignUserToDomain(String domainName, String AssigedUserName) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
 
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
-		
+
 		if (getAssignedDomain(AssigedUserName).isElementAvailable(3)) {
 			getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
 			getLeftBtndomainuser().waitAndClick(10);
@@ -1999,6 +2038,7 @@ public Element getAssignedDomain(String domain) {
 		bc.stepInfo("Domain user unAssiged succesfully");
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param ColumName
@@ -2011,13 +2051,14 @@ public Element getAssignedDomain(String domain) {
 		String data = tableValue(row, colum).getText().trim();
 		return data;
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param domainName
 	 * @param AssigedUserName
 	 * @Description verify status of belly band message yes
 	 */
-	public void verifyUnAssignUserToAssignUserBellyBandYes(String domainName, String AssigedUserName ) {
+	public void verifyUnAssignUserToAssignUserBellyBandYes(String domainName, String AssigedUserName) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
 
@@ -2028,38 +2069,38 @@ public Element getAssignedDomain(String domain) {
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
 		driver.waitForPageToBeReady();
 		getrightBtndomainuser().waitAndClick(10);
-		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+		if (getAssignedUserName(AssigedUserName).isElementPresent()) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
-		}else {
+		} else {
 			bc.failedStep("verification failed");
 		}
 		getProjectTab().waitAndClick(10);
 		bc.waitForElement(getbellyBandMsg());
 		String msg = getbellyBandMsg().getText();
 		String expectedText = "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
-		
-		bc.textCompareEquals(msg, expectedText, 
-				"Bully Band message is displayed as expect", "verification failed");
+
+		bc.textCompareEquals(msg, expectedText, "Bully Band message is displayed as expect", "verification failed");
 		bc.getYesBtn().waitAndClick(10);
 		bc.stepInfo("clicked yes");
-		
+
 		getDomaintab().waitAndClick(10);
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
-		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+		if (getAssignedUserName(AssigedUserName).isElementPresent()) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
-		}else {
+		} else {
 			bc.failedStep("verification failed");
 		}
 
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param domainName
 	 * @param AssigedUserName
 	 * @Description verify belly Band msg if no
 	 */
-	public void verifyUnAssignUserToAssignUserBellyBandNo(String domainName, String AssigedUserName ) {
+	public void verifyUnAssignUserToAssignUserBellyBandNo(String domainName, String AssigedUserName) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(10);
 
@@ -2070,36 +2111,34 @@ public Element getAssignedDomain(String domain) {
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
 		driver.waitForPageToBeReady();
 		getrightBtndomainuser().waitAndClick(10);
-		if(getAssignedUserName(AssigedUserName).isElementPresent()) {
+		if (getAssignedUserName(AssigedUserName).isElementPresent()) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
-		}else {
+		} else {
 			bc.failedStep("verification failed");
 		}
 		getProjectTab().waitAndClick(10);
 		bc.waitForElement(getbellyBandMsg());
 		String msg = getbellyBandMsg().getText();
 		String expectedText = "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?";
-		
-		bc.textCompareEquals(msg, expectedText, 
-				"Bully Band message is displayed as expect", "verification failed");
+
+		bc.textCompareEquals(msg, expectedText, "Bully Band message is displayed as expect", "verification failed");
 		getConfirmDelete().waitAndClick(10);
 		bc.stepInfo("clicked No");
-		
+
 		getDomaintab().waitAndClick(10);
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
-		if(!getAssignedUserName(AssigedUserName).isElementAvailable(1)) {
+		if (!getAssignedUserName(AssigedUserName).isElementAvailable(1)) {
 			bc.passedStep("Selected User is displayed in the Assign user list");
-		}else {
+		} else {
 			bc.failedStep("verification failed");
 		}
 
 	}
-	
 
 	/**
-	 * @author Indium-Baskar This method will get Values from user table
-	 *         particular column based on index passed.
+	 * @author Indium-Baskar This method will get Values from user table particular
+	 *         column based on index passed.
 	 * @param eleName[Name of coulmn from which value needs to be extracted.]
 	 * @return
 	 */
@@ -2108,99 +2147,102 @@ public Element getAssignedDomain(String domain) {
 		List<String> tableValue = bc.availableListofElements(getTableColumnData(index));
 		return tableValue;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 07/03/2022 Modified date: 07/03/2022
 	 * @Description:Methods Search status checkbox
 	 */
 	public void verifyStatusSearch(String status) throws Exception {
 		driver.waitForPageToBeReady();
-		
-	    boolean flagChecked=getSearchStatusCheck().isElementAvailable(3);
-	    System.out.println(flagChecked);
-	    if (flagChecked==false) {
-	    	bc.stepInfo("Search checkbox is unchecked");
+
+		boolean flagChecked = getSearchStatusCheck().isElementAvailable(3);
+		System.out.println(flagChecked);
+		if (flagChecked == false) {
+			bc.stepInfo("Search checkbox is unchecked");
 		}
-	    if (flagChecked==true) {
-	    	bc.stepInfo("Search checkbox is checked");
+		if (flagChecked == true) {
+			bc.stepInfo("Search checkbox is checked");
 		}
-	    if (flagChecked==true&& status=="false") {
-	    	bc.waitForElement(getSearchIconCheck());
-	    	getSearchIconCheck().waitAndClick(5);
+		if (flagChecked == true && status == "false") {
+			bc.waitForElement(getSearchIconCheck());
+			getSearchIconCheck().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 		}
-	    if (flagChecked==false&& status=="true") {
-	    	bc.waitForElement(getSearchIconCheck());
-	    	getSearchIconCheck().waitAndClick(5);
+		if (flagChecked == false && status == "true") {
+			bc.waitForElement(getSearchIconCheck());
+			getSearchIconCheck().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo("Search checkbox is checked");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 24/43/2022 Modified date:24/43/2022
 	 * @Description:Methods for validating the left icon based on parameter passing
-	 * @param elementName [Element name for checking and unchecking the checkbox]
-	 * @param menuName [leftmenu name passing inside passed step]
-	 * @param downloadFalse [False will return  icon not present]
-	 * @param downloadTrue  [True will return  icon present]
+	 * @param elementName   [Element name for checking and unchecking the checkbox]
+	 * @param menuName      [leftmenu name passing inside passed step]
+	 * @param downloadFalse [False will return icon not present]
+	 * @param downloadTrue  [True will return icon present]
 	 */
 
-	public void verifyLeftIcon(Element elementName,String menuName,boolean downloadFalse, boolean downloadTrue) {
+	public void verifyLeftIcon(Element elementName, String menuName, boolean downloadFalse, boolean downloadTrue) {
 		driver.waitForPageToBeReady();
 		if (downloadFalse == false) {
 			if (elementName.isElementAvailable(4)) {
-				bc.failedStep(menuName + " tab icon available after unchecking the " + menuName +"");
+				bc.failedStep(menuName + " tab icon available after unchecking the " + menuName + "");
 			} else {
-				bc.passedStep(menuName + "tab icon not present in left of the menu after unchecking the " + menuName +"");
+				bc.passedStep(
+						menuName + "tab icon not present in left of the menu after unchecking the " + menuName + "");
 			}
 		} else if (downloadTrue == true) {
 			if (elementName.isElementAvailable(4)) {
-				bc.passedStep(menuName + "tab icon present in left of the menu after checking the " + menuName +"");
+				bc.passedStep(menuName + "tab icon present in left of the menu after checking the " + menuName + "");
 			} else {
-				bc.failedStep(menuName + " tab icon not available after checking the " + menuName +"");
+				bc.failedStep(menuName + " tab icon not available after checking the " + menuName + "");
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar date: 25/04/2022 Modified date: 25/04/2022
 	 * @Description:Methods for checking the checkedbox is checked or not
-	 * @param elementName 
+	 * @param elementName
 	 * @param elementStatus
-	 * @param menuName [leftmenu name passing inside step info]
-	 * @param status [based on the status we can check and uncheck the checkbox True will check and false will uncheck]
+	 * @param menuName      [leftmenu name passing inside step info]
+	 * @param status        [based on the status we can check and uncheck the
+	 *                      checkbox True will check and false will uncheck]
 	 */
-	public void verifyCheckboxStatusBasedOnCondition(Element elementStatus,Element elementName,String menuName,String status) throws Exception {
+	public void verifyCheckboxStatusBasedOnCondition(Element elementStatus, Element elementName, String menuName,
+			String status) throws Exception {
 		driver.waitForPageToBeReady();
-		
-	    boolean flagChecked=elementStatus.isElementAvailable(3);
-	    System.out.println(flagChecked);
-	    if (flagChecked==false) {
-	    	bc.stepInfo(menuName + " checkbox is unchecked");
+
+		boolean flagChecked = elementStatus.isElementAvailable(3);
+		System.out.println(flagChecked);
+		if (flagChecked == false) {
+			bc.stepInfo(menuName + " checkbox is unchecked");
 		}
-	    if (flagChecked==true) {
-	    	bc.stepInfo(menuName + " checkbox is checked");
+		if (flagChecked == true) {
+			bc.stepInfo(menuName + " checkbox is checked");
 		}
-	    if (flagChecked==true&& status=="false") {
-	    	bc.waitForElement(elementName);
+		if (flagChecked == true && status == "false") {
+			bc.waitForElement(elementName);
 			elementName.waitAndClick(10);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo(menuName + " checkbox is unchecked");
 		}
-	    if (flagChecked==false&& status=="true") {
-	    	bc.waitForElement(elementName);
-	    	elementName.waitAndClick(5);
-	    	bc.waitForElement(getSaveEditUser());
+		if (flagChecked == false && status == "true") {
+			bc.waitForElement(elementName);
+			elementName.waitAndClick(5);
+			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo(menuName + " checkbox is checked");
 		}
-		
+
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param status
@@ -2209,51 +2251,52 @@ public Element getAssignedDomain(String domain) {
 	 */
 	public void verifyStatusDataSet(String status) throws Exception {
 		driver.waitForPageToBeReady();
-		
-	    boolean flagChecked=getDataSetStatus().isElementAvailable(3);
-	    System.out.println(flagChecked);
-	    if (flagChecked==false) {
-	    	bc.stepInfo("DataSet checkbox is unchecked");
+
+		boolean flagChecked = getDataSetStatus().isElementAvailable(3);
+		System.out.println(flagChecked);
+		if (flagChecked == false) {
+			bc.stepInfo("DataSet checkbox is unchecked");
 		}
-	    if (flagChecked==true&& status=="false") {
-	    	bc.waitForElement(getDataSet());
-	    	getDataSet().waitAndClick(5);
+		if (flagChecked == true && status == "false") {
+			bc.waitForElement(getDataSet());
+			getDataSet().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 		}
-	    if (flagChecked==false&& status=="true") {
-	    	bc.waitForElement(getDataSet());
-	    	getDataSet().waitAndClick(5);
+		if (flagChecked == false && status == "true") {
+			bc.waitForElement(getDataSet());
+			getDataSet().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
 			bc.stepInfo("DataSet checkbox is checked");
 		}
-		
+
 	}
+
 	/**
 	 * 
 	 * @author Aathith.Senthilkumar
 	 * @Description verify user has more than one project availabe
 	 */
 	public void verifyUserHasMoreThanOneProject() {
-		
+
 		List<WebElement> projects = getRowValues(bc.getIndex(userDetailsTableHeader(), "PROJECT")).FindWebElements();
 		int projectAvailable = projects.size();
 		System.out.println(projectAvailable);
-		if(projectAvailable>1) {
+		if (projectAvailable > 1) {
 			bc.stepInfo("this user has more than one project");
-		}else {
+		} else {
 			bc.failedStep("please use a multi project rmu user");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 26/04/2022 Modified date: 26/04/2022
-	 * @throws AWTException 
+	 * @throws AWTException
 	 * @Description:Methods for adding sg to user
 	 */
-	
-	public void addingSGToUser(String defaultName,String newSG) throws InterruptedException, AWTException {
+
+	public void addingSGToUser(String defaultName, String newSG) throws InterruptedException, AWTException {
 		Select selectSG = new Select(userSelectSecurityGroup().getWebElement());
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_CONTROL);
@@ -2265,18 +2308,16 @@ public Element getAssignedDomain(String domain) {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Thread.sleep(3000);
-		bc.passedStep(
-				"Given access for these SG's " + defaultName + " " + newSG + "  for this user" + " Rmu user");
+		bc.passedStep("Given access for these SG's " + defaultName + " " + newSG + "  for this user" + " Rmu user");
 	}
-	
-	
 
-    /** @author Brundha
+	/**
+	 * @author Brundha
 	 * @Description:Methods to apply filter
-	 * @param Value 
+	 * @param Value
 	 */
 	public void verifyingFilterOptionInManageUser(String Value) {
-		this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(Input.rmu1userName);
 		bc.waitForElement(getSelectRoleToFilter());
@@ -2289,67 +2330,84 @@ public Element getAssignedDomain(String domain) {
 		getMonthDropDown().selectFromDropdown().selectByVisibleText(Input.filterMonth);
 		getSlectDate(Value).waitAndClick(10);
 		getFilerApplyBtn().waitAndClick(10);
-		
-		
+
 	}
+
 	/**
 	 * @author Brundha
 	 * @Description:Methods to validate the applied filter
-	 * @param Value 
+	 * @param Value
 	 */
-public void validateFilterOptionInUserManage(String Header,String ValidatingText) {
-	driver.waitForPageToBeReady();
-	List<WebElement> Role = getRowValues(bc.getIndex(userDetailsTableHeader(), Header)).FindWebElements();
-	
-	for(WebElement RowData:Role) {
-		String getRole=RowData.getText();
-		System.out.println(getRole);
-		bc.compareTextViaContains(getRole, ValidatingText, "Filter is applied successfully in manage user page for '"+Header+"'", "Filter is not applied successfully");
-	}
-}
+	public void validateFilterOptionInUserManage(String Header, String ValidatingText) {
+		driver.waitForPageToBeReady();
+		List<WebElement> Role = getRowValues(bc.getIndex(userDetailsTableHeader(), Header)).FindWebElements();
 
-/**
- * @author Indium-Baskar
- * @Description:Methods to domain project admin user
- * @param selectProject for selecting project
- * @param fullName   pass fullname as user
- * @param roll   account role as login user
- * @param account selecting sg
- * @param status 
- * @param rollStatus
- */
-
-public void domainProjectuser(String selectProject,String fullName,String roll,String account,boolean status,boolean rollStatus) {
-	bc.waitForElement(getAssignUserButton());
-	getAssignUserButton().waitAndClick(5);
-	bc.waitForElement(getAssignUserProjectDrp_Dwn());
-	getAssignUserProjectDrp_Dwn().waitAndClick(5);
-	bc.waitForElement(getSelectDropProject(selectProject));
-	getSelectDropProject(selectProject).waitAndClick(5);
-	boolean projectStatus=getCheckingAssignedUserSG(fullName).isElementAvailable(3);
-	if (projectStatus==true) {
-		bc.waitForElement(getDomainUserCancelButton());
-		getDomainUserCancelButton().waitAndClick(5);
-		bc.stepInfo("User already assigned to project");
-	}
-	if (projectStatus==false && status==false) {
-		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
-		getDomainRole().selectFromDropdown().selectByVisibleText(roll);
-		if (rollStatus==true) {
-			getDomainRole().selectFromDropdown().selectByVisibleText(account);
+		for (WebElement RowData : Role) {
+			String getRole = RowData.getText();
+			System.out.println(getRole);
+			bc.compareTextViaContains(getRole, ValidatingText,
+					"Filter is applied successfully in manage user page for '" + Header + "'",
+					"Filter is not applied successfully");
 		}
-		getDomainUserRightArrow().waitAndClick(5);
-		bc.waitForElement(getsavedomainuser());
-		getsavedomainuser().waitAndClick(5);
-		bc.stepInfo("User successfullt added into the project");
 	}
-	
-	
+
+	/**
+	 * @author Indium-Baskar
+	 * @Description:Methods to domain project admin user
+	 * @param selectProject for selecting project
+	 * @param fullName      pass fullname as user
+	 * @param roll          account role as login user
+	 * @param account       selecting sg
+	 * @param status
+	 * @param rollStatus
+	 */
+
+	public void domainProjectuser(String selectProject, String fullName, String roll, String account, boolean status,
+			boolean rollStatus) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(5);
+		bc.waitForElement(getAssignUserProjectDrp_Dwn());
+		getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		bc.waitForElement(getSelectDropProject(selectProject));
+		getSelectDropProject(selectProject).waitAndClick(5);
+		boolean projectStatus = getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		if (projectStatus == true) {
+			bc.waitForElement(getDomainUserCancelButton());
+			getDomainUserCancelButton().waitAndClick(5);
+			bc.stepInfo("User already assigned to project");
+		}
+		if (projectStatus == false && status == false) {
+			getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
+			getDomainRole().selectFromDropdown().selectByVisibleText(roll);
+			if (rollStatus == true) {
+				getDomainRole().selectFromDropdown().selectByVisibleText(account);
+			}
+			getDomainUserRightArrow().waitAndClick(5);
+			bc.waitForElement(getsavedomainuser());
+			getsavedomainuser().waitAndClick(5);
+			bc.stepInfo("User successfullt added into the project");
+		}
+
+	}
+
+	/**
+	 *@Author Jeevitha
+	 */
+	public void navigateToUsersPAge() {
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		driver.waitForPageToBeReady();
+		System.out.println("Navigated to Users Page");
+		bc.stepInfo("Navigated to Users Page");
+
+	}
+
+	/**
+	 *@Author Jeevitha
+	 */
+	public void saveButtonOfFunctionTab() {
+		if (getSaveEditUser().isElementAvailable(3)) {
+			getSaveEditUser().waitAndClick(10);
+		}
+	}
+
 }
-
-
-}
-
-
-
-
