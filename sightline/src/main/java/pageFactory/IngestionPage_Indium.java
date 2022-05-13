@@ -7700,7 +7700,7 @@ public class IngestionPage_Indium {
 				getRefreshButton().waitAndClick(10);
 			} else if (status.contains("Failed")) {
 
-				driver.Manage().window().fullscreen();
+				//driver.Manage().window().fullscreen();
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(errorCountCatalogingStage());
 				errorCountCatalogingStage().waitAndClick(10);
@@ -8388,6 +8388,13 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
+		int count;
+		int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
+		if(totalDocsIngestedCount==0) {
+			base.passedStep("No ingestion is currently present");
+			count =1;
+		}
+		else {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTotalPageCount().Visible();
@@ -8395,7 +8402,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		String totalCount = getTotalPageCount().getText();
 		int pageCount = Integer.parseInt(getTotalPageCount().getText());
-		int count;
+		
 		if ((String.valueOf(totalCount)).contains("0")) {
 			count = Integer.parseInt(totalCount) / 10;
 		} else if (pageCount < 10) {
@@ -8403,7 +8410,9 @@ public class IngestionPage_Indium {
 		} else {
 			count = (Integer.parseInt(totalCount) / 10) + 1;
 		}
+		}
 		System.out.println(count);
+		
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
