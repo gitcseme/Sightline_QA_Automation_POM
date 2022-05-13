@@ -6,8 +6,11 @@ import java.text.ParseException;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -34,6 +37,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+
 
 public class DocView_Regression3_2 {
 
@@ -64,30 +68,25 @@ public class DocView_Regression3_2 {
 	String namesg3 = null;
 	String AnnotationLayerNew = null;
 
-	@BeforeMethod(alwaysRun = true)
-	public void preConditions() throws InterruptedException, ParseException, IOException {
+	@BeforeClass(alwaysRun = true)
+	public void preCondition() throws ParseException, InterruptedException, IOException {
+
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("Started Execution for prerequisite");
 
-		Input input = new Input();
-		input.loadEnvConfig();
+	}
 
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) {
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method : " + testMethod.getName());
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-//		Reporter.log("Logged in as User: " + Input.rmu1password);
-
+		baseClass = new BaseClass(driver);
+		softAssertion = new SoftAssert();
 	}
 
-	@BeforeMethod(alwaysRun = true)
-	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.info(testMethod.getName());
-	}
 
 	/**
 	 * Author : Gopinath Created date: NA Modified date: NA Modified by:NA TestCase
@@ -99,7 +98,7 @@ public class DocView_Regression3_2 {
 	 * redaction added in first security group only with different annotation layer
 	 * and shared redaction tags.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifPrintDocumentPARedactionForFirstSecurityGroup() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -181,8 +180,23 @@ public class DocView_Regression3_2 {
 		docViewMetaDataPage.verifyPrintOnDocView();
 
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -266,7 +280,6 @@ public class DocView_Regression3_2 {
 		driver.waitForPageToBeReady();
 		docViewRedact.performThisPageRedaction(Input.defaultRedactionTag);
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
-
 		loginPage.logout();
 
 		baseClass.stepInfo("Login with project administrator");
@@ -280,8 +293,23 @@ public class DocView_Regression3_2 {
 		docViewMetaDataPage.verifyPrintOnDocView();
 
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 	/**
@@ -291,7 +319,7 @@ public class DocView_Regression3_2 {
 	 * different security groups
 	 * stabilization done
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test( enabled = true,alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -401,8 +429,28 @@ public class DocView_Regression3_2 {
 	
 		baseClass.stepInfo("Log out");
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 
@@ -413,7 +461,7 @@ public class DocView_Regression3_2 {
 	 * Verify that annotation should be saved for the document when same annotation
 	 * layer is mapped to different security groups.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -494,8 +542,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -508,7 +571,7 @@ public class DocView_Regression3_2 {
 	 * security group only with different annotation layer and shared redaction
 	 * tags.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyDocumentPrintsDifferentRedactionsBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -607,8 +670,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	
@@ -621,7 +699,7 @@ public class DocView_Regression3_2 {
 	 * security groups and redaction added in both security groups with different
 	 * annotation layer.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyDocumentPrintsRedactionBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -711,8 +789,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -724,7 +817,7 @@ public class DocView_Regression3_2 {
 	 * and redaction added in first security group only with shared annotation
 	 * layer.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyDocumentPrintsRedactionsReleasedToSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -805,8 +898,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	
@@ -818,7 +926,7 @@ public class DocView_Regression3_2 {
 	 * the document when same annotation layer is mapped to different security
 	 * groups.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 8)
 	public void verifyEditAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -895,8 +1003,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 	
@@ -909,7 +1032,7 @@ public class DocView_Regression3_2 {
 	 * security groups and redaction added in both security groups with shared
 	 * annotation layer and redaction tags.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyPrintsRedactionsReleasedToDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1007,8 +1130,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 	
@@ -1019,7 +1157,7 @@ public class DocView_Regression3_2 {
 	 * tags and history) shown in the doc in 2nd sec group
 	 * stabilization done
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test( enabled = true,alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void verifyRedactionInfoAcrossSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -1102,8 +1240,28 @@ public class DocView_Regression3_2 {
 		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
 		annotation.deleteAnnotationByPagination(AnnotationLayerNew1);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Select security group for REVIEWER");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("Reviewer Assigned to Default Security Group");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	/**
@@ -1114,7 +1272,7 @@ public class DocView_Regression3_2 {
 	 * under different security group with different annotation layer
 	 * adds/edit/delete reviewer remark to the same record successfully.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithDiffAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1184,8 +1342,8 @@ public class DocView_Regression3_2 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkToNonAudioDocument(5,55, remark);
-		docView.verifyRemarkIsAdded(remark);
+		docView.addRemarkToNonAudioDocument(5,5, remark);
+		docView.verifyRemarkIsAdded(remark); 
 
 		// Switch To SG2
 		docViewRedact.selectsecuritygroup(namesg3);
@@ -1214,8 +1372,23 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 	/**
@@ -1225,7 +1398,7 @@ public class DocView_Regression3_2 {
 	 * Description : Verify that after editing the remark should be saved for the
 	 * document when same annotation layer is mapped to different security groups.
 	 */
-	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithSameAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1286,7 +1459,7 @@ public class DocView_Regression3_2 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkToNonAudioDocument(5,55, remark);
+		docView.addRemarkToNonAudioDocument(5,5, remark);
 		docView.verifyRemarkIsAdded(remark);
 
 		// Switch To SG2
@@ -1308,8 +1481,18 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 	
 	
@@ -1411,64 +1594,45 @@ public class DocView_Regression3_2 {
 
 		docViewRedact.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
-		loginPage.quitBrowser();
-		LoginPage.clearBrowserCache();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		if (!(namesg2== null)) {
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		}
+		if (!(namesg3== null)) {
+			securityGroupsPage.deleteSecurityGroups(namesg3);
+		}
+		driver.Navigate().refresh();
+		driver.scrollPageToTop();
+		loginPage.logout();
 	}
 
 	
 	@AfterMethod(alwaysRun = true)
-	public void close() throws ParseException, InterruptedException, IOException {
-		try {
-			Input in = new Input();
-			in.loadEnvConfig();
-			baseClass = new BaseClass(driver);
-			driver = new Driver();
-			driver.Navigate().refresh();
-			driver.scrollPageToTop();
-			loginPage = new LoginPage(driver);
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-			baseClass.stepInfo("Select security group for RMU");
-			docViewRedact.selectsecuritygroup("Default Security Group");
-			baseClass.stepInfo("RMU2 Assigned to Default Security Group");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-			baseClass.stepInfo("Select security group for REVIEWER");
-			docViewRedact.selectsecuritygroup("Default Security Group");
-			baseClass.stepInfo("Reviewer Assigned to Default Security Group");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			securityGroupsPage = new SecurityGroupsPage(driver);
-			if (!(namesg2== null)) {
-			securityGroupsPage.deleteSecurityGroups(namesg2);
-			}
-			if (!(namesg3== null)) {
-				securityGroupsPage.deleteSecurityGroups(namesg3);
-			}
-			driver.Navigate().refresh();
-			driver.scrollPageToTop();
-			loginPage.logout();
-		} finally {
-			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
-		}
-
-	}
-
-	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logout();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
+		try {			
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
+	}
 
+	@AfterClass(alwaysRun = true)
+	public void close() {	
+	UtilityLog.info("Executed Docview Regression 3_2 class successfully");		
 	}
 
 }

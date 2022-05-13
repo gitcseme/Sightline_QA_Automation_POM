@@ -1855,7 +1855,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 				return doclist.getPopUpOkBtn().Visible();
 			}
 		}), Input.wait30);
-		doclist.getPopUpOkBtn().Click();
+		doclist.getPopUpOkBtn().waitAndClick(5);
 		bc.waitTime(3);
 		getDocExp_actionButton().isElementAvailable(10);
 		getDocExp_actionButton().waitAndClick(10);
