@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.pdfbox.contentstream.operator.text.EndText;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriverException;
@@ -10196,6 +10197,8 @@ public class IngestionPage_Indium {
 			clickApprove();
 			getIngestionSatatusAndPerform();
 		}else if(status.contains("Approved")) {
+			driver.Navigate().refresh();
+			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
 		}
 		
@@ -10204,9 +10207,13 @@ public class IngestionPage_Indium {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void clickCopied() {
+		driver.waitForPageToBeReady();
 		getIngestionDetailPopup(1).waitAndClick(10);
+		driver.Manage().window().fullscreen();
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunCopying());
+		base.waitForElement(getRunCopying());
+		driver.waitForPageToBeReady();
 		base.waitForElement(getRunCopying());
 		getRunCopying().waitAndClick(10);
 		getCloseButton().waitAndClick(10);
@@ -10216,9 +10223,13 @@ public class IngestionPage_Indium {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void clickIndex() {
+		driver.waitForPageToBeReady();
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		driver.Manage().window().fullscreen();
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
+		driver.waitForPageToBeReady();
+		base.waitForElement(getRunIndexing());
 		getRunIndexing().waitAndClick(10);
 		getCloseButton().waitAndClick(10);
 		base.stepInfo("Ingdex button is clicked");
@@ -10229,9 +10240,10 @@ public class IngestionPage_Indium {
 	public void clickApprove() {
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
 		ingestionDetailActionDropdown().waitAndClick(10);
-		if(getActionApprove().isDisplayed()) {
+		driver.waitForPageToBeReady();
+		if(getActionApprove().isElementAvailable(2)) {
 		getActionApprove().waitAndClick(10);
-		if(getApproveMessageOKButton().isDisplayed()) {
+		if(getApproveMessageOKButton().isElementAvailable(1)) {
 		getApproveMessageOKButton().waitAndClick(10);}}
 		getCloseButton().waitAndClick(10);
 		base.stepInfo("Ingestion is approved");

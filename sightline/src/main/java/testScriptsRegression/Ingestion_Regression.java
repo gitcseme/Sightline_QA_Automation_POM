@@ -580,7 +580,7 @@ public class Ingestion_Regression {
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
 		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject("AutomationRegressionBackup");
 		String ingestionFullName = dataSets.isDataSetisAvailable("IngestionEmailData");
 		if (ingestionFullName != null) {
 
@@ -630,7 +630,7 @@ public class Ingestion_Regression {
 
 			loginPage.logout();
 			baseClass.stepInfo("perform task for review manager");
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, "AutomationRegressionBackup");
 			tagandfolder.selectFolderViewInDocList(foldername);
 
 			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -688,7 +688,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject("AutomationRegressionBackup");
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
