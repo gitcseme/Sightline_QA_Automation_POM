@@ -14262,7 +14262,7 @@ public class DocViewPage {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSelectRemarkDocArea().isElementAvailable(10);
-				}
+				} 
 			}), Input.wait30);
 			Thread.sleep(Input.wait30 / 10);
 			System.out.println(off1 + "...." + off2);
@@ -14270,7 +14270,7 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
 			WebElement text = getSelectedAreaElement().getWebElement();
-			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(200, 220).release().perform();
+			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(100, 120).release().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -16267,7 +16267,7 @@ public class DocViewPage {
 			}), Input.wait30);
 			driver.waitForPageToBeReady();
 			int annotation = getAnnotations().FindWebElements().size();
-			if (annotation <= alreadyExistsLayers) {
+			if (annotation >= alreadyExistsLayers) {
 				base.passedStep("Annotation is displayed to document successfully");
 			} else {
 				base.failedStep("Annotation is not displayed to document");

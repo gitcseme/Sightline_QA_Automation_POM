@@ -2458,7 +2458,8 @@ public void popOutCodingFormChildWindow() {
 				return getSelectsg(sgname).Visible();
 			}
 		}), 10000);
-		getSelectsg(sgname).waitAndClick(5);
+		base.waitTillElemetToBeClickable(getSelectsg(sgname));
+		getSelectsg(sgname).Click();
 		driver.waitForPageToBeReady();
 		UtilityLog.info("Security Group Selected: " + sgname);
 	}
