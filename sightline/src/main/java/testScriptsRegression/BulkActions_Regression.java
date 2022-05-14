@@ -85,7 +85,7 @@ public class BulkActions_Regression {
 	 * @TestCase id : 48818 - Verify Total Email Threaded Count when bulk foldering.
 	 * @Description : Verify Total Email Threaded Count when bulk foldering.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+    //@Test(alwaysRun = true,groups={"regression"},priority = 1)
 	public void verifyTotalEmailThreadedCountbulkFolderingFromDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String emailSubject = "MID C Question";
