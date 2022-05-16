@@ -7001,14 +7001,14 @@ public class IngestionPage_Indium {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFilterByINPROGRESS().Visible();
+				return getFilterByDRAFT().Visible();
 			}
 		}), Input.wait30);
 		getFilterByDRAFT().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFilterByAPPROVED().Visible();
+				return getFilterByINDEXED().Visible();
 			}
 		}), Input.wait30);
 		getFilterByINDEXED().waitAndClick(10);
@@ -9242,7 +9242,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionWithoutDat(String ingestionName, String type, String file) {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
-		
+		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDATDelimitersNewLine().Visible();
@@ -9258,7 +9258,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		datCheckboxStatus().waitAndClick(5);
 		
-		base.waitTime(2);
+		base.waitTime(3);
 		if (type.equalsIgnoreCase("Native")) {
 			selectNativeSource(file, false);
 		}
@@ -9334,21 +9334,21 @@ public class IngestionPage_Indium {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
+				return getFilterByCOPIED().Visible();
 			}
 		}), Input.wait30);
 		getFilterByCOPIED().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
+				return getFilterByINDEXED().Visible();
 			}
 		}), Input.wait30);
 		getFilterByINDEXED().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
+				return getFilterByAPPROVED().Visible();
 			}
 		}), Input.wait30);
 		getFilterByAPPROVED().waitAndClick(10);
@@ -10672,5 +10672,37 @@ public class IngestionPage_Indium {
 		}
 		}
 		
+		/**
+		 * @author: Arun Created Date: 16/05/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform add only ingestion for TIFF images
+		 *               folder
+		 */
 		
+		public void allSourcesIngestionWithText(String datFile,String docKey) {
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDATDelimitersNewLine().Visible();
+				}
+			}), Input.wait30);
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile,docKey );
+			base.stepInfo("Selecting Text file");
+			selectTextSource(Input.TextFile, false);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDateFormat().Visible();
+				}
+			}), Input.wait30);
+			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+
+			clickOnNextButton();
+			base.waitTime(2);
+			selectValueFromEnabledFirstThreeSourceDATFields(docKey, docKey, Input.custodian);
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started");
+			
+		}
 }
