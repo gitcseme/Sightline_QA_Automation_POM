@@ -817,7 +817,7 @@ public class Ingestion_Regression {
 			dataSets.selectDataSetWithNameInDocView("Tiff_Images");
 			docview.getImageTab().waitAndClick(10);
 			driver.waitForPageToBeReady();
-			if (docview.getDocview_DefaultTextArea().isElementAvailable(10)) {
+			if (docview.getDocViewImage().isElementAvailable(10)) {
 				baseClass.passedStep("Tiff file only displayed");
 			} else {
 				baseClass.failedStep("verification failed");
@@ -840,7 +840,6 @@ public class Ingestion_Regression {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
-		SoftAssert sofassertion = new SoftAssert();
 		docview = new DocViewPage(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49511");
@@ -1161,7 +1160,6 @@ public class Ingestion_Regression {
 	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		DocViewPage docview = new DocViewPage(driver);
 		
 	baseClass.stepInfo("Test case Id: RPMXCON-49567");
 	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
@@ -1576,6 +1574,7 @@ public class Ingestion_Regression {
 			bc.screenShot(result);
 			try { // if any tc failed and dint logout!
 				loginPage.logoutWithoutAssert();
+				loginPage.quitBrowser();
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -1589,7 +1588,7 @@ public class Ingestion_Regression {
 		try {
 			// loginPage.quitBrowser();
 		} finally {
-			loginPage.closeBrowser();
+			//loginPage.closeBrowser();
 			LoginPage.clearBrowserCache();
 		}
 	}

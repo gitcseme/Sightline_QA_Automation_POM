@@ -10197,7 +10197,9 @@ public class IngestionPage_Indium {
 		driver.scrollPageToTop();
 		getRefeshBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		base.waitForElement(getStatus(1));
 		String status = getStatus(1).getText().trim();
+		driver.waitForPageToBeReady();
 		
 		if(status.contains("In Progress")){
 			base.waitTime(5);
@@ -10221,6 +10223,8 @@ public class IngestionPage_Indium {
 			driver.Navigate().refresh();
 			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
+		}else {
+			base.failedStep("Something Wrong");
 		}
 		
 	}
@@ -10260,12 +10264,14 @@ public class IngestionPage_Indium {
 	 */
 	public void clickApprove() {
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		driver.waitForPageToBeReady();
+		base.waitForElement(ingestionDetailActionDropdown());
 		ingestionDetailActionDropdown().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		if(getActionApprove().isElementAvailable(2)) {
-		getActionApprove().waitAndClick(10);
+		getActionApprove().waitAndClick(3);
 		if(getApproveMessageOKButton().isElementAvailable(1)) {
-		getApproveMessageOKButton().waitAndClick(10);}}
+		getApproveMessageOKButton().waitAndClick(3);}}
 		getCloseButton().waitAndClick(10);
 		base.stepInfo("Ingestion is approved");
 	}
