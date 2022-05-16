@@ -72,6 +72,9 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47566");
 		baseClass.stepInfo(
 				"To Verify status update in cataloging, copying, and Indexing Section in Ingestion Details Page");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.verifyStatusUpdatenInIngestionDetailPopup("Catalogingblock");
@@ -82,6 +85,7 @@ public class IngestionCreationClass01 {
 		// rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
+		}
 
 	}
 	
@@ -100,11 +104,15 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47404");
 		baseClass.stepInfo(
 				"verify that if configure mapping is not matched the warning message is displayed and as per selection, admin can proceed.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.verifyWarningMessageForConfigureMappingSection(Input.UniCodeFilesFolder, Input.datLoadFile1,
 				Input.textFile1, Input.prodBeg, Input.documentKey);
 		loginPage.logout();
+		}
 
 	}
 	
@@ -112,13 +120,17 @@ public class IngestionCreationClass01 {
 	 * Author :Arunkumar date: 29/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-48175 Description :To Verify Rollback In Ingestion for Files
 	 * having Read Only Attributes.
+	 * @throws InterruptedException 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 3)
-	public void verifyRollbackReadOnlyAttribute() {
+	public void verifyRollbackReadOnlyAttribute() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48175");
 		baseClass.stepInfo("To Verify Rollback In Ingestion for Files having Read Only Attributes.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -126,6 +138,7 @@ public class IngestionCreationClass01 {
 		// Rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
+		}
 
 	}
 	
@@ -143,6 +156,9 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-49703");
 		baseClass.stepInfo(
 				"Verify if 'Generate Searchable PDFs' is True Stitching TIFFs details should display before the Generate Searchable PDFs row on Ingestion details pop up");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.tiffImagesIngestion(Input.DATFile4, Input.tiffLoadFile, "true");
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -150,6 +166,7 @@ public class IngestionCreationClass01 {
 		// Rollback Ingestion
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
+		}
 	}
 	
 	/**
@@ -166,6 +183,9 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48194");
 		baseClass.stepInfo("To Verify In Ingestions the pop-up Details Window for media ;audio & Transcript Count.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.mediaAndTranscriptIngestion(Input.AllSourcesFolder, Input.DATFile1);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
@@ -178,6 +198,7 @@ public class IngestionCreationClass01 {
 		// Rollback Ingestion
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
+		}
 	}
 	
 	/**
@@ -194,11 +215,15 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47402");
 		baseClass.stepInfo(
 				"To verify 'Copy Ingestion' with ingestion wizard (Using link 'Add Ingestion(New approach)')");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
 		ingestionPage.ingestionCatalogging();
 		ingestionPage.performNewAddOnlyIngestionUsingCopyOption("Mapped Data", Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		loginPage.logout();
+		}
 
 	}
 	
@@ -292,7 +317,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid not available
-		boolean ingestStatus = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		boolean ingestStatus = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		System.out.println(ingestStatus);
 		if (ingestStatus == false) {
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
@@ -324,6 +349,9 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Add only ingestion with only .mp3 audio files with MP3 Variant file types.");
 
 		// perform add only ingestion
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		System.out.println(status);
+		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
 			ingestionPage.ingestionCatalogging();
 			ingestionPage.ignoreErrorsAndCopying();
@@ -331,6 +359,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
 			loginPage.logout();
+		}
 	}
 	
 	/**
@@ -355,6 +384,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
 		}
+		loginPage.logout();
 
 	}
 	
@@ -382,6 +412,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
 		}
+		loginPage.logout();
 
 	}
 	
@@ -410,6 +441,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.verifyDuplicateIngestionErrorMessage();
 		// rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 	}
 
 	
@@ -455,6 +487,7 @@ public class IngestionCreationClass01 {
 		} else {
 			baseClass.failedStep("Unique ingested count not displayed after performing Pdf overlay");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -498,6 +531,7 @@ public class IngestionCreationClass01 {
 		} else {
 			baseClass.failedStep("Unique ingested count not displayed after performing Native overlay");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -531,7 +565,10 @@ public class IngestionCreationClass01 {
 		// perform Mp3 overlay
 		baseClass.stepInfo("Performing overlay ingestion with Native");
 		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "mp3", Input.MP3File);
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+		ingestionPage.approveIngestion(1);
 		ingestionPage.runFullAnalysisAndPublish();
 		// getting unique ingested count after overlay
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
@@ -541,6 +578,7 @@ public class IngestionCreationClass01 {
 		} else {
 			baseClass.failedStep("Unique ingested count not displayed after performing Mp3 overlay");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -570,6 +608,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.OverlayIngestionWithDat(Input.AK_NativeFolder,Input.DATFile1,Input.prodBeg,"Native",Input.NativeFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
+		loginPage.logout();
 		
 	}
 	
@@ -604,6 +643,11 @@ public class IngestionCreationClass01 {
 			}
 		}), Input.wait30);
 		ingestionPage.getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getSourceSelectionDATLoadFile().Visible();
+			}
+		}), Input.wait30);
 		ingestionPage.selectDATSource(Input.datLoadFile1, Input.documentKey);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -616,6 +660,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Ingestion started");
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		loginPage.logout();
 		
 	}
 	
@@ -647,6 +692,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Ingestion started");
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		loginPage.logout();
 		
 	}
 	
@@ -676,6 +722,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.OverlayIngestionWithoutDat(Input.UniCodeFilesFolder, "text", Input.textFile1);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		loginPage.logout();
 		
 	}
 	
@@ -701,7 +748,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
 		}
-		//Verify analytic status when pdf overlay without text
+		//Verify analytic status when mp3 overlay without text
 		baseClass.stepInfo("Perform pdf overlay ingestion without text file");
 		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder,"mp3",Input.MP3File);
 		baseClass.stepInfo("Ingestion started");
@@ -710,6 +757,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
 		ingestionPage.approveIngestion(1);
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		loginPage.logout();
 		
 	}
 	
@@ -732,17 +780,16 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for translation without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Translation", Input.TranslationFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
@@ -766,17 +813,15 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
 			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for transcript without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Transcript", Input.TranscriptFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
@@ -800,17 +845,18 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
 			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for mp3 without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.approveIngestion(1);
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
@@ -834,11 +880,10 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
 			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for Pdf without DAT
@@ -866,11 +911,10 @@ public class IngestionCreationClass01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
 			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for Native without DAT
@@ -900,7 +944,7 @@ public class IngestionCreationClass01 {
 		// perform add only ingestion
 		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		if (status == false) {
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.prodBeg);
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile);
 			ingestionPage.ignoreErrorsAndCatlogging();
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
@@ -912,6 +956,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Translation", Input.TranslationFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
+		loginPage.logout();
 	}
 	
 	
@@ -943,6 +988,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
+		loginPage.logout();
 		
 	}
 	
@@ -989,6 +1035,7 @@ public class IngestionCreationClass01 {
 		} else {
 			baseClass.failedStep("Unique ingested count not displayed after performing Tiff overlay");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -1004,29 +1051,28 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48264");
 		baseClass.stepInfo("To Verify Ingestion Overlay Without DAT for TIFF.");
-		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
 		if (status == false) {
-			baseClass.stepInfo("Performing add only ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+			ingestionPage.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Perform overlay ingestion for Tiff without DAT
-		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Tiff", Input.TIFFFile);
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
+		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+		ingestionPage.approveIngestion(1);
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
 
 	}
 
-	
-	
 	/**
 	 * Author :Arunkumar date: 10/05/2022 Modified date: NA Modified by: NA TestCase Id:RPMXCON-48292
 	 * Description :To verify In Ingestion, with another New Line delimiter other than ASCII(59)
@@ -1047,10 +1093,12 @@ public class IngestionCreationClass01 {
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
+			baseClass.passedStep("Ingestion performed in this project successfully with New Line delimiter other than ASCII(59)");
 		}
 		else {
 			baseClass.passedStep("Ingestion already performed in this project successfully with New Line delimiter other than ASCII(59)");
 		}
+		loginPage.logout();
 
 	}
 	
@@ -1065,6 +1113,15 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47598");
 		baseClass.stepInfo("Edit of saved Overlay ingestion with out mapping field selection.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// perform overlay ingestion without mapping	
 		ingestionPage.OverlayIngestionForDATWithoutMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		baseClass.stepInfo("Saved ingestion as draft without clicking next button and mapping field in disabled state");
@@ -1072,6 +1129,8 @@ public class IngestionCreationClass01 {
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
 		ingestionPage.ingestionCatalogging();
+		loginPage.logout();
+		
 
 	}
 
@@ -1086,6 +1145,15 @@ public class IngestionCreationClass01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47597");
 		baseClass.stepInfo("Edit of Overlay saved ingestion with mapping field selection");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		// perform overlay ingestion with mapping field section
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		baseClass.stepInfo("Saved ingestion as draft after clicking next button and mapping field enabled");
@@ -1093,6 +1161,7 @@ public class IngestionCreationClass01 {
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
 		ingestionPage.ingestionCatalogging();
+		loginPage.logout();
 
 	}
 	
@@ -1101,32 +1170,51 @@ public class IngestionCreationClass01 {
 	 * Author :Arunkumar date: 26/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-47600 Description :Edit of saved Overlay with out ingestion
 	 * with out mapping field selection.
+	 * @throws InterruptedException 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 34)
-	public void verifyEditOverlayIngestionWithoutDatAndIngestionMapping() {
+	public void verifyEditOverlayIngestionWithoutDatAndIngestionMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47600");
 		baseClass.stepInfo("Edit of saved Overlay with out DAT ingestion with out mapping field selection.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
 		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
 		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
 		// click on open in wizard option to edit ingestion
 		ingestionPage.IngestionFromDraftMode();
 		ingestionPage.ingestionCatalogging();
+		loginPage.logout();
 	}
 	
 	/**
 	 * Author :Arunkumar date: 26/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-47596 Description :Copy of Overlay saved ingestion with
 	 * mapping field selection
+	 * @throws InterruptedException 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 35)
-	public void verifyCopyOverlayIngestionWithMapping() {
+	public void verifyCopyOverlayIngestionWithMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47596");
 		baseClass.stepInfo("Copy of Overlay saved ingestion with mapping field selection");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		baseClass.stepInfo("Saved ingestion as draft after clicking next button and mapping field enabled");
@@ -1137,6 +1225,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.ingestionCatalogging();
 		// Rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 		
 	}
 
@@ -1144,13 +1233,22 @@ public class IngestionCreationClass01 {
 	 * Author :Arunkumar date: 27/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-47599 Description :Copy of saved Overlay without DAT
 	 * ingestion with out mapping field selection.
+	 * @throws InterruptedException 
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 36)
-	public void verifyCopyOverlayIngestionWithoutDatAndMapping() {
+	public void verifyCopyOverlayIngestionWithoutDatAndMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47599");
 		baseClass.stepInfo("Copy of saved Overlay without DAT ingestion with out mapping field selection.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
 		ingestionPage.OverlayForNativeWithoutIngestion(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSLst);
 		baseClass.stepInfo("Saved ingestion as draft without Dat selection and mapping field in disabled state");
 		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
@@ -1160,6 +1258,7 @@ public class IngestionCreationClass01 {
 		ingestionPage.ingestionCatalogging();
 		// Rollback ingestion
 		ingestionPage.rollBackIngestion();
+		loginPage.logout();
 
 	}
 
@@ -1176,6 +1275,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-47369");
 		baseClass.stepInfo("To verify 'Ingestion Details' pop up display");
 		ingestionPage.verifyIngestionDetails();
+		loginPage.logout();
 	}
 
 	/**
@@ -1191,6 +1291,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo(
 				"To verify that on Ingestion Home page, user is able to access all page by navigation controls.");
 		ingestionPage.verifyHomePageNavigationControl();
+		loginPage.logout();
 	}
 	
 	/**
@@ -1210,11 +1311,20 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo(
 				"Verify two ingestions with step (Indexing  , Approval ) having ingestion type add only  must run simultaneously");
 		// Verify two add only type ingestion run simultaneously
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		boolean status2 = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		if (status1 == true || status2 == true) {
+			baseClass.passedStep("As Ingestion already present in the published stage, unable to run add only ingestion till approve" );
+		}
+		else if (status1 == false && status2 == false) {
 		ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
 		ingestionPage.IngestionOnlyForDatFile(Input.TiffImagesFolder, Input.DATFile3);
 		ingestionPage.multipleIngestionCopying(2);
 		ingestionPage.multipleIngestionIndexing(dataset, 2);
 		ingestionPage.approveIngestion(2);
+		
+		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -1244,6 +1354,7 @@ public class IngestionCreationClass01 {
 		baseClass.stepInfo("Performing overlay ingestion with PDF");
 		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Pdf", Input.PDFFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		loginPage.logout();
 		
 	}
 
@@ -1280,11 +1391,10 @@ public class IngestionCreationClass01 {
 			ingestionPage.verifyRollbackOptionForApprovedIngestion();
 		} else {
 			baseClass.stepInfo("Need to perform new ingestion");
-			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder, Input.DATFile1);
-			ingestionPage.IngestionCatlogtoCopying(Input.AllSourcesFolder);
-			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-			ingestionPage.approveIngestion(1);
+			ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "Pdf", Input.PDFFile);
+			ingestionPage.verifyApprovedStatusForOverlayIngestion();
 			ingestionPage.verifyRollbackOptionForApprovedIngestion();
+			loginPage.logout();
 
 		}
 	}
@@ -1297,7 +1407,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(enabled = false, groups = { "regression" }, priority = 42)
+    @Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1342,7 +1452,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 43)
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1388,7 +1498,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void verifyIngestMetaDataMessageDisplayDefaultAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1448,7 +1558,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyIngestMetaDataMessageDisplayIMAGEAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1506,7 +1616,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyIngestMetaDataDATFileIsIngested() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1551,7 +1661,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 47)
+	@Test(enabled = true, groups = { "regression" }, priority = 47)
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1777,29 +1887,49 @@ public class IngestionCreationClass01 {
 	}
 	
 	
+//	@AfterMethod(alwaysRun = true)
+//	public void takeScreenShot(ITestResult result, Method testMethod) {
+//		Reporter.setCurrentTestResult(result);
+//		UtilityLog.logafter(testMethod.getName());
+//		if (ITestResult.FAILURE == result.getStatus()) {
+//			Utility baseClass = new Utility(driver);
+//			baseClass.screenShot(result);
+//			try { // if any tc failed and dint logout!
+//				loginPage.logoutWithoutAssert();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
+//	}
+//
+//	@AfterClass(alwaysRun = true)
+//	public void close() {
+//		try {
+//			loginPage.closeBrowser();
+//		} finally {
+//			System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
+//		}
+//
+//	}
+	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+	baseClass = new BaseClass(driver);
+	loginPage = new LoginPage(driver);
+	Reporter.setCurrentTestResult(result);
+	if (ITestResult.FAILURE == result.getStatus()) {
+	Utility baseClass = new Utility(driver);
+	baseClass.screenShot(result);
+	}
+	loginPage.quitBrowser();
+
 	}
 
 	@AfterClass(alwaysRun = true)
+
 	public void close() {
-		try {
-			loginPage.closeBrowser();
-		} finally {
-			System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
-		}
+		System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
 
 	}
 		
