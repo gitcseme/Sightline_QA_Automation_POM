@@ -86,10 +86,6 @@ public class Export_Regression {
      
  		
         TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
- 		
- 		base.stepInfo("Navigate To Tags And Folder Page");
- 		tagsAndFolderPage.navigateToTagsAndFolderPage();
- 		
  		base.stepInfo("Create folder");
      	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
      	
@@ -783,7 +779,8 @@ public class Export_Regression {
 		page.fillingNativeSection();
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+//		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1151,14 +1148,13 @@ public class Export_Regression {
 		base.stepInfo("Add New Export");
 		page.addANewExport(exportname);
 
-		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
-		page.verifyMetaDataDropdownNativeAscendingOrderTiffSec();
-
 		base.stepInfo("Refresh page");
 		driver.Navigate().refresh();
 
 		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
 		page.verifyMetaDataDropdownNativeAscendingOrderPdfSec();
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderTiffSec();
 
 	}
 
@@ -1205,9 +1201,10 @@ public class Export_Regression {
 	 * Native Files and Tags selected in the native components section, then
 	 * Component tab should Complete without any error.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyProductionCreationDateMarkComp() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49360");
 		base.stepInfo("Verify that if PA selects the Export with Production and has Native Files and Tags "
 				+ "selected in the native components section, then Component tab should Complete without any error.");
@@ -1221,9 +1218,9 @@ public class Export_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateTag(AAfolder, "Default Security Group");
-		tagsAndFolderPage.CreateTag(AAAfolder, "Default Security Group");
-		// tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateTag(AAfolder,Input.securityGroup);
+		tagsAndFolderPage.CreateTag(AAAfolder,Input.securityGroup);
+		// tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
@@ -1239,6 +1236,7 @@ public class Export_Regression {
 		page.selectNativeTag(AAfolder, AAAfolder);
 		driver.scrollPageToTop();
 		page.getComponentsMarkComplete().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Mark Complete successful");
 		base.passedStep("Componenet tab completed without any error");
 		loginPage.logout();
@@ -1266,13 +1264,11 @@ public class Export_Regression {
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
@@ -1319,9 +1315,8 @@ public class Export_Regression {
 		
 		//delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername,Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname,Input.securityGroup);
 		loginPage.logout();
 		
 	 }

@@ -433,7 +433,7 @@ public class ProductionPage {
 
 	public Element getPriveldged_TagTree(String tag) {
 		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[contains(text(),'" + tag + "')]");
 	}
 
 	public Element getPriveldge_PDFTagTree(String tag) {
@@ -2815,7 +2815,7 @@ public class ProductionPage {
 	}
 
 	public Element getNativeMetaDataFieldLink() {
-		return driver.FindElementByXPath("//a[@id='LaunchMetaData0']");
+		return driver.FindElementByXPath("//div[@id='divLeftHeaderBranding']//a[@id='Launcheditor_0']");
 	}
 
 	public Element getNativeMetaDataFieldDropdown() {
@@ -2824,7 +2824,7 @@ public class ProductionPage {
 
 	public Element getExceptionMetaDataFieldLink() {
 		return driver.FindElementByXPath(
-				"//input[@id='chkEnabledforExceptionDocs']//..//..//..//../*[@title='Insert Metadata Field']");
+				"//input[@id='chkEnabledforExceptionDocs']//..//..//..//..//a[@title='Insert Metadata Field']");
 	}
 
 	public Element getAddWorkProductSlipSheet(String ProductName) {
@@ -5351,22 +5351,22 @@ public class ProductionPage {
 
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
 
 		// clicking enable for natively placeholder
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getSelectCloseBtn());
-		getSelectCloseBtn().waitAndClick(5);
-		driver.waitForPageToBeReady();
+		getSelectCloseBtn().ScrollTo();
+		getSelectCloseBtn().waitAndClick(10);
 		base.waitForElement(getTiff_NativeDoc());
-		getTiff_NativeDoc().waitAndClick(5);
+		getTiff_NativeDoc().waitAndClick(10);
 		base.waitForElement(getclkSelectTag());
-		getclkSelectTag().Click();
+		getclkSelectTag().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.waitForElement(getPriveldged_TagTree(tagname));
-		getPriveldged_TagTree(tagname).Click();
+		getPriveldged_TagTree(tagname).waitAndClick(10);
 		base.waitForElement(getClkSelect());
-		getClkSelect().Click();
+		getClkSelect().waitAndClick(10);
 		Thread.sleep(Input.wait30 / 10);
 		base.waitForElement(getNativeDocsPlaceholder());
 		getNativeDocsPlaceholder().SendKeys(tagname);
@@ -14933,8 +14933,8 @@ public class ProductionPage {
 	 * @param proudctionName : proudctionName is String value that already completed
 	 *                       committed production name.
 	 */
-	public void enterBasicDetailsStageBySelectingProduction(String exportName, String proudctionName) {
-		try {
+	public void enterBasicDetailsStageBySelectingProduction(String exportName, String productionname) {
+		
 			getProdExport_AddaNewExportSet().isElementAvailable(15);
 			getProdExport_AddaNewExportSet().waitAndClick(10);
 			getProductionName().isElementAvailable(10);
@@ -14942,16 +14942,13 @@ public class ProductionPage {
 			getProductionDesc().SendKeys(exportName);
 			getProdExport_Priorprodtoggle().isElementAvailable(15);
 			getProdExport_Priorprodtoggle().waitAndClick(10);
-			getProdExport_Priorprodtoggle().isElementAvailable(15);
-			getProdExport_SelectProductionSet().selectFromDropdown().selectByVisibleText(proudctionName);
+			getProdExport_SelectProductionSet().ScrollTo();
+			driver.waitForPageToBeReady();
+			getProdExport_SelectProductionSet().selectFromDropdown().selectByVisibleText(productionname);
 			driver.scrollPageToTop();
 			getBasicInfoMarkComplete().isElementAvailable(15);
 			getBasicInfoMarkComplete().waitAndClick(10);
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occured while entering Basic Details Stage By Selecting Production.." + e.getMessage());
-		}
+		
 	}
 
 	/**
@@ -17138,9 +17135,9 @@ public class ProductionPage {
 			getClkRadioBtn_selectRedactionTags().isDisplayed();
 			driver.waitForPageToBeReady();
 			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
-			base.waitForElement(getClkCheckBox_defaultRedactionTag());
-			getClkCheckBox_defaultRedactionTag().isDisplayed();
-			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+			getDefaultRedacTag_BurnRedact().ScrollTo();
+			base.waitForElement(getDefaultRedacTag_BurnRedact());
+			getDefaultRedacTag_BurnRedact().waitAndClick(10);
 			base.waitForElement(getClkLink_selectingRedactionTags());
 			getClkLink_selectingRedactionTags().isDisplayed();
 			getClkLink_selectingRedactionTags().waitAndClick(10);
@@ -18778,15 +18775,15 @@ public class ProductionPage {
 		try {
 			ArrayList<String> metadataList = new ArrayList<String>();
 			getTIFFChkBox().isElementAvailable(15);
-			getTIFFChkBox().Click();
+			getTIFFChkBox().waitAndClick(10);
 			driver.scrollingToBottomofAPage();
 			getTIFFTab().isElementAvailable(15);
-			getTIFFTab().Click();
-			driver.scrollingToBottomofAPage();
-			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
-			getclkNativelyProducedDocumentLnk().Click();
-			getNativeMetaDataFieldLink().isElementAvailable(15);
-			getNativeMetaDataFieldLink().Click();
+			getTIFFTab().waitAndClick(10);
+//			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+//			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().ScrollTo();
+			driver.waitForPageToBeReady();
+			getNativeMetaDataFieldLink().waitAndClick(10);
 			getNativeMetaDataFieldDropdown().isElementAvailable(10);
 			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
 			for (int i = 0; i < slipSheetMetaDataList.size(); i++) {
@@ -18828,9 +18825,10 @@ public class ProductionPage {
 			getPDFGenerateRadioButton().ScrollTo();
 			base.clickButton(getPDFGenerateRadioButton());
 			getTIFF_EnableforPrivilegedDocs().ScrollTo();
-			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
-			getclkNativelyProducedDocumentLnk().Click();
-			getNativeMetaDataFieldLink().isElementAvailable(15);
+//			getclkNativelyProducedDocumentLnk().isElementAvailable(15);
+//			getclkNativelyProducedDocumentLnk().Click();
+			getNativeMetaDataFieldLink().ScrollTo();
+			driver.waitForPageToBeReady();
 			getNativeMetaDataFieldLink().Click();
 			getNativeMetaDataFieldDropdown().isElementAvailable(10);
 			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
@@ -18917,9 +18915,9 @@ public class ProductionPage {
 			driver.scrollingToBottomofAPage();
 			getTechissue_toggle().isElementAvailable(15);
 			base.waitForElement(getTechissue_toggle());
-			getTechissue_toggle().Click();
-			getExceptionMetaDataFieldLink().isElementAvailable(10);
-			getExceptionMetaDataFieldLink().Click();
+			getTechissue_toggle().waitAndClick(10);
+			getExceptionMetaDataFieldLink().ScrollTo();
+			getExceptionMetaDataFieldLink().waitAndClick(10);
 			getNativeMetaDataFieldDropdown().isElementAvailable(10);
 			List<WebElement> slipSheetMetaDataList = getNativeMetaDataFieldDropdown().selectFromDropdown().getOptions();
 			for (int i = 0; i < slipSheetMetaDataList.size(); i++) {
