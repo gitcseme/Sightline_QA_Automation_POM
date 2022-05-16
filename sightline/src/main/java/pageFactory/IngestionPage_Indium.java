@@ -8389,8 +8389,20 @@ public class IngestionPage_Indium {
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
 		int count;
-		int totalDocsIngestedCount = Integer.parseInt(getTotalIngestedCount().getText());
-		if(totalDocsIngestedCount==0) {
+		
+		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
+		int ingestedCount;
+		
+		if ((String.valueOf(totalDocsIngestedCount)).contains(",")) {
+			totalDocsIngestedCount = totalDocsIngestedCount.replace(",", "");
+			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
+			System.out.println(ingestedCount);
+			 
+		} else {
+			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
+			
+		}
+		if(ingestedCount==0) {
 			base.passedStep("No ingestion is currently present");
 			count =1;
 		}
