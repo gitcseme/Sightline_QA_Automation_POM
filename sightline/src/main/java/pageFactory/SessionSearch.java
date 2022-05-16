@@ -11270,13 +11270,7 @@ public class SessionSearch {
 		} else {
 			base.failedStep("Document count is not displayed as expected");
 		}
-		getTDHitsCount().isElementAvailable(1);
-		String DocCount = getTDHitsCount().getText();
-		if (Integer.valueOf(DocCount) != 0) {
-			base.passedStep("Document is displayed as expected");
-		} else {
-			base.failedStep("Document count is not displayed as expected");
-		}
+		
 	}
 
 	/**
