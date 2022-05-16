@@ -3,6 +3,7 @@ package executionMaintenance;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,9 @@ public class TestListener implements ITestListener {
     	{
     		System.out.println("Test Methods :"+i.getDescription());
     		issues.add(i.getDescription());
+    		
     	}
+    	System.out.println(Arrays.asList(issues));
     	
     	Date date = new Date();
     	String modifiedDate= new SimpleDateFormat("yyyyMMddhhmmss").format(date);
@@ -139,7 +142,11 @@ public class TestListener implements ITestListener {
     	final String getExecutionsUri = API_GET_EXECUTIONS.replace("{SERVER}", zephyrBaseUrl) + cycleID + "?projectId="
 				+ projectId + "&versionId=" + versionId;
     	try {
-			executionIds = ZapiScripts.getExecutionsByCycleId(getExecutionsUri, client, accessKey, tcCount);
+    		int offset=0;
+    		for(;offset<=tcCount;) {
+			executionIds.putAll(ZapiScripts.getExecutionsByCycleId(getExecutionsUri, client, accessKey, tcCount,offset));
+			offset=offset+50;
+    		}
 			System.out.println(executionIds);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -167,8 +174,10 @@ public class TestListener implements ITestListener {
         System.out.println("The name of the testcase passed is :"+Result.getName());    
         System.out.println("attribute is :"+Result.getMethod().getDescription());
         String issueID = Result.getMethod().getDescription();
-
-        String execId = executionIds.get(issueID).split(";")[1];
+        String execId = null;
+      
+        
+        execId = executionIds.get(issueID).split(";")[1];
 
         String JIRAissueID = executionIds.get(issueID).split(";")[0];
         String getStatusURI = API_UPDATE_EXECUTION.replace("{SERVER}", zephyrBaseUrl) + execId + "?issueId="+JIRAissueID+"&projectId="+projectId;
@@ -188,7 +197,7 @@ public class TestListener implements ITestListener {
             JSONObject executeTestsObj = new JSONObject();
             executeTestsObj.put("status", statusObj);
             executeTestsObj.put("cycleId", cycleID);
-            executeTestsObj.put("projectId", projectId);
+            executeTestsObj.put("projectId", projectId); 
             executeTestsObj.put("versionId", versionId);
             //executeTestsObj.put("comment", "Executed by ZAPI Cloud");
  

@@ -129,8 +129,8 @@ public class DocViewAudio_IndiumRegression {
 
 	//@Test(description = "RPMXCON-51077", enabled = true, groups = { "regression" }, priority = 01)
 	public void validationCodeSameAsAudioDocs() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-51077");
-		baseClass.stepInfo("Verify user can select and apply code same as this for the audio files");
+		baseClass.stepInfo("Test case Id: RPMXCON-51077"); 
+		baseClass.stepInfo("Verify user can select and apply code same as this for the audio files"); 
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -1885,7 +1885,7 @@ public class DocViewAudio_IndiumRegression {
 	 * re-execute the same query then modified Term does not appear in Persistent
 	 * Search panel in DocView screen.
 	 */
-	//@Test(description = "RPMXCON-51077", alwaysRun = true, groups = { "regression" }, priority = 26)
+	//@Test(description = "RPMXCON-51858", alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void verifyModifiedStringInPersistPanel() throws Exception {
 
 		baseClass = new BaseClass(driver);

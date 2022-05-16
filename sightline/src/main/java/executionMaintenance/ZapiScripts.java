@@ -195,9 +195,10 @@ public class ZapiScripts {
 	}
 	
 	public static Map<String, String> getExecutionsByCycleId(String uriStr, ZFJCloudRestClient client,
-			String accessKey, int TCcount) throws URISyntaxException, JSONException {
+			String accessKey, int TCcount, int offset) throws URISyntaxException, JSONException {
 		Map<String, String> executionIds = new HashMap<String, String>();
-		for(int i = 0; i< TCcount; i++) {
+		uriStr = uriStr+ "&offset=" + offset; 	
+		
 		URI uri = new URI(uriStr);
 		String jwt = getJWT("GET", uriStr,client);
 
@@ -218,7 +219,7 @@ public class ZapiScripts {
 		}
 
 		int statusCode = response.getStatusLine().getStatusCode();
-		System.out.println("Get status line code" + statusCode);
+//		System.out.println("Get status line code" + statusCode);
 
 		if (statusCode >= 200 && statusCode < 300) {
 			HttpEntity entity1 = response.getEntity();
@@ -250,9 +251,7 @@ public class ZapiScripts {
 				}
 //				executionIds.put(issueKey, executionId);
 			}
-		if(IssuesArray.length() == TCcount) {
-			break;}
-		}
+		
 		}
 		return executionIds;
 	}
@@ -442,8 +441,6 @@ public class ZapiScripts {
 		}
 
 		int statusCode = response.getStatusLine().getStatusCode();
-		System.out.println(statusCode);
-		System.out.println(response.toString());
 		String string = null;
 		if (statusCode >= 200 && statusCode < 300) {
 			HttpEntity entity = response.getEntity();			
