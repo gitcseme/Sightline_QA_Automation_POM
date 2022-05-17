@@ -391,8 +391,7 @@ public class Ingestion_IndiumRegression {
 		DataSets datasets = new DataSets(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50750");
 		baseClass.stepInfo("Validate exporting dataset details at security group level for RMU");
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
 		ingestionPage.navigateToDataSetsPage();
 		ingestionPage.verifyToolTipOfExportIcon();
 		String expectedMsg = "A task for Dataset Summary report has been added to the background. You will receive a notification when it completes.";
