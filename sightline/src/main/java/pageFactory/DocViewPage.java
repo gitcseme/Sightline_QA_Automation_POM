@@ -25705,7 +25705,6 @@ public class DocViewPage {
 	 * 
 	 */
 	public void verifyDocumentDownloadInPdfFormat() {
-
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 
 		String currentDocId = getDocView_CurrentDocId().getText();
@@ -25716,11 +25715,12 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		docViewRedact.printIcon().Click();
-		;
+		if(base.getSuccessMsgHeader().isDisplayed()) {
 		base.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		base.stepInfo("Success message has been verified");
-
+		}
+		else {
 		base.waitForElement(docViewRedact.bullhornIconRedColour());
 		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
 			docViewRedact.bullhornIconRedColour().waitAndClick(10);
@@ -25744,13 +25744,14 @@ public class DocViewPage {
 			}
 		}
 		String CurrentPageURL = driver.getUrl();
-		if (CurrentPageURL.contains(currentDocId + ".pdf")) {
+		if (CurrentPageURL.contains(currentDocId +".pdf")) {
 			base.passedStep("Document which required to download is in DocID.pdf format");
 		} else {
 			base.failedStep("Document which required to download is not in DocID.pdf format");
 		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
+		}
 
 	}
 

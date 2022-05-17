@@ -3511,7 +3511,7 @@ public class DocView_Regression2 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		
 		//pre-requisites- Rectangle redaction and current page redaction
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51107");
 		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
 		sessionsearch.basicContentSearch(Input.randomText);
@@ -3534,7 +3534,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		baseClass.stepInfo("Logged in as RMU");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
@@ -3542,7 +3542,7 @@ public class DocView_Regression2 {
 		docView.verifyDocumentDownloadInPdfFormat();
 		loginPage.logout();
 		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password, Input.additionalDataProject);
 		baseClass.stepInfo("Logged in as Reviewer");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
