@@ -6639,54 +6639,7 @@ public class DocView_Regression1 {
 		loginPage.logout();
 	}
 	
-	/**
-	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
-	 * @TestCase id : 52265 - Verify that uploaded documents should be threaded into families.
-	 * @Description : Verify that uploaded documents should be threaded into families.
-	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 106,enabled=true)
-	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {		
-		baseClass=new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
-		String metaDataField = "IngestionName";
-		String ingestionName = "RPMXCON44861";
-		utility = new Utility(driver);
-		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		docView = new DocViewPage(driver);
-		baseClass.stepInfo("#### Verify that uploaded documents should be threaded into families. ####");
-		loginPage.logout();
 
-		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		
-		baseClass.selectproject("AutomationAdditionalDataProject");
-	
-		docView = new DocViewPage(driver);
-		SessionSearch session = new SessionSearch(driver);
-
-		baseClass.stepInfo("Navigate To Session Search Page URL");
-		session.navigateToSessionSearchPageURL();
-		
-		baseClass.stepInfo("Basic meta data search");
-		session.basicMetaDataSearch(metaDataField,null,ingestionName,null);
-
-		baseClass.stepInfo("Navigate to  DocView page");
-		session.ViewInDocView();
-		
-		baseClass.stepInfo("Select email threaded id and family threaded id from mini config.");
-		docView.selectEmailThreadedIdAndFamilyIdFromMiniCofig();
-		
-		baseClass.stepInfo("Get list of same email threaded ids");
-		List<String> emailThreadedIds= docView.getListOfSameEmailThreadedIds();
-		
-		baseClass.stepInfo("Email threaded ids : "+emailThreadedIds);
-		
-		baseClass.stepInfo("Verify thread map ids with email thread ids.");
-		docView.verifyThreadMapIdsWithEmailThreadIds(emailThreadedIds);
-		
-		loginPage.logout();
-	}
-	
 	/**
 	 * @author Gopinath 
 	 * @TestCase Id:51090-Verify on click of the Translations tab, presence of a translated version of the document
