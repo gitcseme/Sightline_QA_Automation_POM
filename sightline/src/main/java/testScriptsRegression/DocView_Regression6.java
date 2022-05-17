@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -15,6 +18,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
@@ -282,6 +286,53 @@ public class DocView_Regression6 {
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
 		loginPage.logout();
 	}
+	
+	@Test(enabled = true, groups={"regression"},priority=4)
+	public void printRedactedDocsAsPA() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52233- DocView- Sprint 2");
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		Actions actions = new Actions(driver.getWebDriver());
+		DocViewPage docView = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+// printing from session search
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchDocId);
+		baseClass.stepInfo("Search with text input --test-- completed");
+		sessionsearch.ViewInDocView();
+		docView.verifyDocumentDownload();
+	    	
+// printing from Doclist 
+		    baseClass.stepInfo("Printing Document from Doc List as PA");
+			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSearchTab().getWebElement()));
+			actions.moveToElement(docViewRedact.gotoSearchTab().getWebElement());
+			actions.click().build().perform();
+			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSessionSearch().getWebElement()));
+			actions.moveToElement(docViewRedact.gotoSessionSearch().getWebElement());
+			actions.click().build().perform();
+			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.actionsDropDown().getWebElement()));
+			docViewRedact.actionsDropDown().getWebElement().click();
+			sessionsearch.viewInDocView();
+			docView.verifyDocumentDownload();
+				        
+// printing from DocExplorer	 
+	       baseClass.stepInfo("#### Go to Doc Explorer and Press Print Icon  ####");
+	       this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+	        docViewRedact.enterDocId("ID00000001");
+	        sessionsearch.viewInDocView();
+	        driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+				}
+			}), Input.wait30);
+	        
+			docViewRedact.printIcon().waitAndClick(25);
+			docView.verifyDocumentDownload();
+}
+	
 	
 
 }
