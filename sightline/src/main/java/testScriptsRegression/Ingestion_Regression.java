@@ -97,6 +97,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate 'Not Processed and Not Loaded' tab details for a project having Uploaded ingestions ###");
 		dataSets = new DataSets(driver);
+		baseClass.selectproject(Input.projectName02);
 
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
@@ -138,7 +139,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate 'Not Processed and Not Loaded' tab details for an existing project having mapped ingestions and uploaded datasets ###");
 		dataSets = new DataSets(driver);
-
+		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
 
@@ -181,7 +182,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate \"Loaded with Error\" tab details for an existing project having mapped and uploaded ingestions ###");
 		dataSets = new DataSets(driver);
-
+		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
 
@@ -214,7 +215,6 @@ public class Ingestion_Regression {
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
 		baseClass = new BaseClass(driver);
-		String projectName = "AutomationIngestionProject";
 		String ingestionType = "Add Only";
 		String sourceSystem = "TRUE";
 		String sourceLocation = "IngestionTestData\\Automation";
@@ -244,7 +244,7 @@ public class Ingestion_Regression {
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
+		baseClass.selectproject(Input.projectName);
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.navigateToIngestionPage();
@@ -414,7 +414,6 @@ public class Ingestion_Regression {
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-		String projectName = "AutomationRegressionBackup";
 		String ingestionType = Input.ingestionType;
 		String sourceSystem = Input.iceSourceSystem;
 		String sourceLocation = Input.sourceLocation;
@@ -435,7 +434,7 @@ public class Ingestion_Regression {
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
+		baseClass.selectproject(Input.ingestDataProject);
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.navigateToIngestionPage();
