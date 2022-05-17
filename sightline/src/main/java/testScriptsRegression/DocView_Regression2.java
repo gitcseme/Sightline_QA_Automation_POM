@@ -3713,8 +3713,6 @@ public class DocView_Regression2 {
 		String keyword = Input.randomText + Utility.dynamicNameAppender();
 		KeywordPage keywordPage = new KeywordPage(driver);
 		docView = new DocViewPage(driver);
-		String rgbCode = "rgb(255, 215, 0)";
-		String HaxCode = "#ffd700";
 
 		baseClass.stepInfo(
 				"Verify user after impersonation can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment in context of assignment");
@@ -3743,7 +3741,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As PA
@@ -3755,7 +3753,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As RMU
@@ -3769,7 +3767,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -3779,6 +3777,7 @@ public class DocView_Regression2 {
 		keywordPage.deleteKeywordByName(keyword);
 
 	}
+	
 	
 	
 	/*  
