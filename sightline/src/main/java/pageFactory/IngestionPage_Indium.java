@@ -7627,6 +7627,7 @@ public class IngestionPage_Indium {
 	 */
 	public void tiffImagesIngestion(String DATfile, String TIFFfile, String genSearchPDFCheckBox) {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.TiffImagesFolder);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -7635,7 +7636,7 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(2);
 		selectDATSource(DATfile, "ProdBeg");
 		getTIFFLST().ScrollTo();
 		base.waitForElement(getTIFFLST());
@@ -8069,6 +8070,7 @@ public class IngestionPage_Indium {
 	 */
 	public void unicodeFilesIngestion(String datFile, String textFile, String datKey) {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.UniCodeFilesFolder);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8077,7 +8079,7 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
 		base.waitForElement(getSourceSelectionText());
@@ -8136,6 +8138,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionForDATWithoutMappingFieldSection(String ingestionName, String datFile, String datKey) {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8144,7 +8147,7 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8164,6 +8167,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayIngestionForDATWithMappingFieldSection(String ingestionName, String datFile, String datKey) {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8172,7 +8176,7 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8195,6 +8199,7 @@ public class IngestionPage_Indium {
 
 	public void OverlayForNativeWithoutIngestion(String ingestionName, String nativeFile) {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8203,7 +8208,14 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return datCheckboxStatus().Visible();
+			}
+		}), Input.wait30);
 		datCheckboxStatus().waitAndClick(5);
+		base.waitTime(2);
 		selectNativeSource(nativeFile, false);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8384,12 +8396,22 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		getIngestion_GridView().waitAndClick(10);
-
+		base.waitTime(3);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
 		int count;
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTotalIngestedCount().Visible();
+			}
+		}), Input.wait30);
 		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTotalPageCount().Visible();
+			}
+		}), Input.wait30);
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
@@ -8459,6 +8481,7 @@ public class IngestionPage_Indium {
 	public void performAKNativeFolderIngestion(String datFile) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AK_NativeFolder);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8467,16 +8490,19 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
 		base.stepInfo("Selecting Native file");
 		selectNativeSource(Input.NativeFile, false);
 		base.stepInfo("Selecting Text file");
 		selectTextSource(Input.TextFile, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Pdf file");
 		selectPDFSource(Input.PDFFile, false);
 		base.stepInfo("Selecting Mp3 file");
 		selectMP3VarientSource(Input.MP3File, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Transcript file");
 		selectAudioTranscriptSource(Input.TranscriptFile, false);
 
@@ -8572,6 +8598,7 @@ public class IngestionPage_Indium {
 	public void mediaAndTranscriptIngestion(String sourceFolder, String datFile) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, sourceFolder);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -8580,14 +8607,18 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
+		base.waitTime(2);
 		base.stepInfo("Selecting Native file");
 		selectNativeSource(Input.NativeFile, false);
 		base.stepInfo("Selecting Text file");
 		selectTextSource(Input.TextFile, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Mp3 file");
 		selectMP3VarientSource(Input.MP3File, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Transcript file");
 		selectAudioTranscriptSource(Input.TranscriptFile, false);
 
@@ -9508,6 +9539,7 @@ public class IngestionPage_Indium {
 	public void unicodeFilesIngestionWithDifferentSourceSystem(String source, String datFile, String textFile,
 			String datKey) {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.sourceLocation, Input.UniCodeFilesFolder);
+		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
 
@@ -9516,11 +9548,12 @@ public class IngestionPage_Indium {
 
 		base.waitForElement(getDATDelimitersNewLine());
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
+		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
+		base.waitTime(2);
 		base.waitForElement(getSourceSelectionText());
-		getSourceSelectionText().waitAndClick(20);
+		getSourceSelectionText().waitAndClick(10);
 		base.waitForElement(getSourceSelectionTextLoadFile());
 		getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(textFile);
 
@@ -10048,12 +10081,15 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile,docKey );
 		base.stepInfo("Selecting Native file");
 		selectNativeSource(Input.selectNativeFile, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Text file");
 		selectTextSource(Input.selectTextFile, false);
+		base.waitTime(2);
 		base.stepInfo("Selecting Mp3 file");
 		selectMP3VarientSource(Input.selectMp3File, false);
 		
@@ -10704,8 +10740,10 @@ public class IngestionPage_Indium {
 				}
 			}), Input.wait30);
 			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile,docKey );
+			base.waitTime(2);
 			base.stepInfo("Selecting Text file");
 			selectTextSource(Input.TextFile, false);
 			

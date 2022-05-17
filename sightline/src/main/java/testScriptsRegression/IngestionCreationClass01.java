@@ -317,6 +317,7 @@ public class IngestionCreationClass01 {
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid not available
+		ingestionPage.navigateToIngestionPage();
 		boolean ingestStatus = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
 		System.out.println(ingestStatus);
 		if (ingestStatus == false) {
@@ -986,7 +987,10 @@ public class IngestionCreationClass01 {
 		// Verify analytic status when Tiff overlay without text
 		baseClass.stepInfo("Perform Tiff overlay ingestion without text file");
 		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+		ingestionPage.approveIngestion(1);
 		ingestionPage.runAnalyticsAndVerifySkippedStatus();
 		loginPage.logout();
 		
@@ -1025,7 +1029,10 @@ public class IngestionCreationClass01 {
 		// perform Tiff overlay
 		baseClass.stepInfo("Performing overlay ingestion with Native");
 		ingestionPage.OverlayIngestionWithoutDat(Input.TiffImagesFolder, "Tiff", Input.tiffLoadFile);
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
+		ingestionPage.approveIngestion(1);
 		ingestionPage.runFullAnalysisAndPublish();
 		// getting unique ingested count after overlay
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
@@ -1223,8 +1230,6 @@ public class IngestionCreationClass01 {
 		ingestionPage.IngestionOverlayUsingCopyFromDraftMode("DAT", Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSLst, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		ingestionPage.ingestionCatalogging();
-		// Rollback ingestion
-		ingestionPage.rollBackIngestion();
 		loginPage.logout();
 		
 	}
@@ -1256,8 +1261,6 @@ public class IngestionCreationClass01 {
 		ingestionPage.IngestionOverlayUsingCopyFromDraftMode("Native", Input.HiddenPropertiesFolder,
 				Input.YYYYMMDDHHMISSLst, Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
 		ingestionPage.ingestionCatalogging();
-		// Rollback ingestion
-		ingestionPage.rollBackIngestion();
 		loginPage.logout();
 
 	}
@@ -1312,6 +1315,7 @@ public class IngestionCreationClass01 {
 				"Verify two ingestions with step (Indexing  , Approval ) having ingestion type add only  must run simultaneously");
 		// Verify two add only type ingestion run simultaneously
 		boolean status1 = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		ingestionPage.navigateToIngestionPage();
 		boolean status2 = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		if (status1 == true || status2 == true) {
 			baseClass.passedStep("As Ingestion already present in the published stage, unable to run add only ingestion till approve" );
@@ -1407,7 +1411,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(enabled = true, groups = { "regression" }, priority = 42)
+    @Test(enabled = false, groups = { "regression" }, priority = 42)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1452,7 +1456,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	@Test(enabled = false, groups = { "regression" }, priority = 43)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1498,7 +1502,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = false, groups = { "regression" }, priority = 44)
 	public void verifyIngestMetaDataMessageDisplayDefaultAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1558,7 +1562,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	@Test(enabled = false, groups = { "regression" }, priority = 45)
 	public void verifyIngestMetaDataMessageDisplayIMAGEAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1616,7 +1620,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = false, groups = { "regression" }, priority = 46)
 	public void verifyIngestMetaDataDATFileIsIngested() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1661,7 +1665,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 47)
+	@Test(enabled = false, groups = { "regression" }, priority = 47)
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1725,7 +1729,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested both PDF and TIFF's file,the "Generate Searchable PDFs"is true and TIFF is missing then it PDF should displays PDF in viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 48)
+	@Test(enabled = false,  groups = {"regression" },priority = 48)
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
@@ -1769,7 +1773,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested both Native and TIFF's file, the "Generate Searchable PDFs"is true and TIFF is missing then searchable PDF's should be generated from the Natives.
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 49)
+	@Test(enabled = false,  groups = {"regression" },priority = 49)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -1814,7 +1818,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested Native, PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 50)
+	@Test(enabled = false,  groups = {"regression" },priority = 50)
 	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -1852,7 +1856,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to false then it should display TIFF in default viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 51)
+	@Test(enabled = false,  groups = {"regression" },priority = 51)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
 		
 	
