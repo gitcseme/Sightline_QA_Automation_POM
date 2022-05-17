@@ -482,6 +482,8 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
+		baseClass.selectproject(Input.ingestionProjectName);
+		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -511,6 +513,8 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
+		baseClass.selectproject(Input.ingestionProjectName);
+		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -1568,28 +1572,22 @@ public class Ingestion_Regression {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			try { // if any tc failed and dint logout!
-				loginPage.logoutWithoutAssert();
-				loginPage.quitBrowser();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
-			// loginPage.quitBrowser();
-		} finally {
-			//loginPage.closeBrowser();
-			LoginPage.clearBrowserCache();
-		}
+
+		System.out.println("******TEST CASES FOR CODINGFORM EXECUTED******");
 	}
 }

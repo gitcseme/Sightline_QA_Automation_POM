@@ -2083,68 +2083,7 @@ public class DocView_Sprint2_Regression {
 
 	}
 
-	/**
-	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
-	 * Description :Verify search term, highlighted keywords should be displayed on
-	 * click of the eye icon when redirected to doc view from session search.
-	 * 'RPMXCON-51395' Sprint : 10
-	 * 
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
-	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-51395");
-		baseClass.stepInfo(
-				"Verify search term, highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search");
-
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		keywordPage = new KeywordPage(driver);
-		String hitTerms = "Test" + Utility.dynamicNameAppender();
-
-		// Login as RMU
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-
-		// Add keywords
-		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
-		keywordPage.AddKeyword(hitTerms, hitTerms);
-
-		// Go to docview via advanced search
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-
-		docView.getPersistentHit(hitTerms);
-		docView.verifyPersistentHitPanelAndCount(hitTerms);
-		loginPage.logout();
-
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
-
-		// Go to docview via advanced search
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-
-		docView.getPersistentHit(hitTerms);
-		docView.verifyPersistentHitPanelAndCount(hitTerms);
-		loginPage.logout();
-
-		// Login as REVU
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
-
-		// Go to docview via advanced search
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-
-		docView.getPersistentHit(hitTerms);
-		docView.verifyPersistentHitPanelAndCount(hitTerms);
-		loginPage.logout();
-	}
 
 	/**
 	 * @author Raghuram.A date: NA Modified date: 01/18/21 Modified by: Raghuram A
