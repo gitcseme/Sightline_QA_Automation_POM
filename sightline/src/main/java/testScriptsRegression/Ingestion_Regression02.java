@@ -628,6 +628,65 @@ public class Ingestion_Regression02 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
+	 * Description :Verify Ingestion should published successfully if Email metadata is having only Name.'RPMXCON-49569'
+	 * 
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
+
+		ingestionPage = new IngestionPage_Indium(driver);
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-49569");
+		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
+		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
+
+		String ingestionType="Add Only";
+		
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
+					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
+
+		}
+		
+		baseClass.stepInfo("Search the documents and Save");
+		sessionSearch.basicSearchWithMetaDataQuery("8B61_GD_994_Native_Text_ForProduction_20220413074025033", "IngestionName");
+		sessionSearch.ViewInDocList();
+		
+		docList.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+		driver.waitForPageToBeReady();
+		for(String metadata : addEmailColumn) {
+			baseClass.visibleCheck(metadata);
+		}
+		baseClass.stepInfo("Email metadata is display correctly in doc list");
+		
+		//verify Emailname is Display
+		String emailName = docList.getDocList_EmailName().getText();
+		System.out.println(emailName);
+		if(docList.getDocList_EmailName().Displayed()) {
+			baseClass.passedStep("Email name is displayed successsfully");
+		}
+		else {
+			baseClass.failedStep("Email name is not displayed");
+		}
+
+		//verify emailAddress Is Blank
+		if(emailName.contains("@")) {
+			baseClass.failedStep("Email Address is displayed");
+		}
+		else {
+			baseClass.passedStep ("Email Address is blank");
+		}
+		loginPage.logout();
+		}
 
 	
 	

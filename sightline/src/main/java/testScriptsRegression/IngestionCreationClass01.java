@@ -278,7 +278,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
 			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid is already available
@@ -313,7 +312,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
 			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for overlay ingestion if docid not available
@@ -434,7 +432,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
 			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify error message for ingesting duplicate files
@@ -469,7 +466,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// getting unique ingested count before overlay
@@ -513,7 +509,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// getting unique ingested count before overlay
@@ -557,7 +552,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// getting unique ingested count before overlay
@@ -632,7 +626,6 @@ public class IngestionCreationClass01 {
 		ingestionPage.IngestionCatlogtoCopying(Input.UniCodeFilesFolder);
 		ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
 		ingestionPage.approveIngestion(1);
-		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
 		}
 		// Verify analytic status when overlay without text
@@ -890,7 +883,6 @@ public class IngestionCreationClass01 {
 		// Perform overlay ingestion for Pdf without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Pdf", Input.PDFFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
@@ -921,7 +913,6 @@ public class IngestionCreationClass01 {
 		// Perform overlay ingestion for Native without DAT
 		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Native", Input.NativeFile);
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.navigateToAnalyticsPage();
 		ingestionPage.runFullAnalysisAndPublish();
 		ingestionPage.verifyDocAvailability();
 		loginPage.logout();
@@ -1020,7 +1011,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.TiffImagesFolder);
 			ingestionPage.approveIngestion(1);
-			ingestionPage.navigateToAnalyticsPage();
 			ingestionPage.runFullAnalysisAndPublish();
 		}
 		// getting unique ingested count before overlay
@@ -1411,7 +1401,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(enabled = false, groups = { "regression" }, priority = 42)
+    @Test(enabled = true, groups = { "regression" }, priority = 42)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1456,7 +1446,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 43)
+	@Test(enabled = true, groups = { "regression" }, priority = 43)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1502,7 +1492,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 44)
 	public void verifyIngestMetaDataMessageDisplayDefaultAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1562,7 +1552,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyIngestMetaDataMessageDisplayIMAGEAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1577,7 +1567,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
-
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
@@ -1620,7 +1609,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 46)
 	public void verifyIngestMetaDataDATFileIsIngested() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1635,8 +1624,6 @@ public class IngestionCreationClass01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
 					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
 		}
-
-		
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("step 1:Search Metadata SourceDocID go to docView ");
@@ -1659,77 +1646,13 @@ public class IngestionCreationClass01 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
-	 * Description :Verify Ingestion should published successfully if Email metadata is having only Name.'RPMXCON-49569'
-	 * 
-	 * @throws InterruptedException
-	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 47)
-	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		DocListPage docList = new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-49569");
-		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
-		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
-
-		String ingestionType="Add Only";
-		
-
-
-		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-		
-		System.out.println(status);
-
-
-
-		if (status == false) {
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
-					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
-
-		}
-		
-		baseClass.stepInfo("Search the documents and Save");
-		sessionSearch.basicSearchWithMetaDataQuery("8B61_GD_994_Native_Text_ForProduction_20220413074025033", "IngestionName");
-		sessionSearch.ViewInDocList();
-		
-		docList.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
-		driver.waitForPageToBeReady();
-		for(String metadata : addEmailColumn) {
-			baseClass.visibleCheck(metadata);
-		}
-		baseClass.stepInfo("Email metadata is display correctly in doc list");
-		
-		//verify Emailname is Display
-		String emailName = docList.getDocList_EmailName().getText();
-		System.out.println(emailName);
-		if(docList.getDocList_EmailName().Displayed()) {
-			baseClass.passedStep("Email name is displayed successsfully");
-		}
-		else {
-			baseClass.failedStep("Email name is not displayed");
-		}
-
-		//verify emailAddress Is Blank
-		if(emailName.contains("@")) {
-			baseClass.failedStep("Email Address is displayed");
-		}
-		else {
-			baseClass.passedStep ("Email Address is blank");
-		}
-		loginPage.logout();
-		}
-	
 	
 	/** 
      *Author: Mohan date: 02/05/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-49520
 	 * Description :Verify that if PA ingested both PDF and TIFF's file,the "Generate Searchable PDFs"is true and TIFF is missing then it PDF should displays PDF in viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = {"regression" },priority = 48)
+	@Test(enabled = true,  groups = {"regression" },priority = 47)
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
@@ -1738,10 +1661,7 @@ public class IngestionCreationClass01 {
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, null,
 					null, "PDFs - 5Docs.lst", Input.ImagePPPDF10docs,"Select", null, null, null);
-			ingestionPage.navigateToAnalyticsPage();
-			ingestionPage.runFullAnalysisAndPublish();
-			this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		
+		ingestionPage.navigateToIngestionPage();
 		
 		driver.Navigate().refresh();
 		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.PP_PDFGen_10Docs);
@@ -1773,7 +1693,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested both Native and TIFF's file, the "Generate Searchable PDFs"is true and TIFF is missing then searchable PDF's should be generated from the Natives.
      * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = {"regression" },priority = 49)
+	@Test(enabled = true,  groups = {"regression" },priority = 48)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -1785,10 +1705,7 @@ public class IngestionCreationClass01 {
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,"Select", null, null, null);
-			ingestionPage.navigateToAnalyticsPage();
-			ingestionPage.runFullAnalysisAndPublish();
-			ingestionPage.navigateToIngestionPage();
-		
+		ingestionPage.navigateToIngestionPage();
 		
 		driver.Navigate().refresh();
 		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.PP_PDFGen_10Docs);
@@ -1818,7 +1735,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested Native, PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
      * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = {"regression" },priority = 50)
+	@Test(enabled = true,  groups = {"regression" },priority = 49)
 	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -1856,10 +1773,9 @@ public class IngestionCreationClass01 {
 	 * Description :Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to false then it should display TIFF in default viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = {"regression" },priority = 51)
+	@Test(enabled = true,  groups = {"regression" },priority = 50)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
 		
-	
 		ingestionPage = new IngestionPage_Indium(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49509");
@@ -1868,10 +1784,7 @@ public class IngestionCreationClass01 {
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,null, null, null, null);
-			ingestionPage.navigateToAnalyticsPage();
-			ingestionPage.runFullAnalysisAndPublish();
-			ingestionPage.navigateToIngestionPage();
-		
+		ingestionPage.navigateToIngestionPage();
 		
 		driver.Navigate().refresh();
 		driver.Navigate().refresh();
@@ -1890,33 +1803,7 @@ public class IngestionCreationClass01 {
 		loginPage.logout();
 	}
 	
-	
-//	@AfterMethod(alwaysRun = true)
-//	public void takeScreenShot(ITestResult result, Method testMethod) {
-//		Reporter.setCurrentTestResult(result);
-//		UtilityLog.logafter(testMethod.getName());
-//		if (ITestResult.FAILURE == result.getStatus()) {
-//			Utility baseClass = new Utility(driver);
-//			baseClass.screenShot(result);
-//			try { // if any tc failed and dint logout!
-//				loginPage.logoutWithoutAssert();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
-//	}
-//
-//	@AfterClass(alwaysRun = true)
-//	public void close() {
-//		try {
-//			loginPage.closeBrowser();
-//		} finally {
-//			System.out.println("******TEST CASES FOR INGESTION EXECUTED******");
-//		}
-//
-//	}
-	
+		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 	baseClass = new BaseClass(driver);
