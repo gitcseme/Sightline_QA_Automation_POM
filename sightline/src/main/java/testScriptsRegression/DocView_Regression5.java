@@ -1743,8 +1743,8 @@ public class DocView_Regression5 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Step 2: Assignment should be created with  'Show Default Tab' toggle as OFF");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssignNearDupeDocuments();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
 
 		assignmentsPage.assignmentCreation(assname, codingForm);
 		assignmentsPage.toggleDisableShowDefaultViewTab();
@@ -1758,7 +1758,7 @@ public class DocView_Regression5 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeCompletedDocId);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
@@ -1793,7 +1793,7 @@ public class DocView_Regression5 {
 
 		baseClass.stepInfo("Step 5: Click on the document navigation options");
 		driver.waitForPageToBeReady();
-		docViewPage.selectDocIdInMiniDocList(Input.newNearDupeDocId);
+		docViewPage.selectDocIdInMiniDocList(Input.nearDupeDoc05);
 		baseClass.waitForElement(docViewPage.getDocView_ImagesTab());
 		docViewPage.getDocView_ImagesTab().waitAndClick(3);
 
