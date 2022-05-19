@@ -2027,7 +2027,7 @@ public class DocViewPage {
 	}
 
 	public Element getHitPanleVerify(String panel) {
-		return driver.FindElementById("PHitCount_" + panel + "");
+		return driver.FindElementByXPath("//div[@id='divPersistentSearch']//p[text()=" + panel + "]");
 	}
 
 	public ElementCollection getInclusiveElamilValueFromToolTip() {
@@ -3304,17 +3304,15 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-	
+
 	public Element getDocViewDefaultViewPDF() {
-		return driver
-				.FindElementByXPath("//li[@id='liDocumentDefaultView']//a//span[@id='txtspanfileType']");
+		return driver.FindElementByXPath("//li[@id='liDocumentDefaultView']//a//span[@id='txtspanfileType']");
 	}
-	
+
 	public Element getDocViewDefaultViewText() {
-		return driver
-				.FindElementByXPath("//div[@id='divViewerText']//div");
+		return driver.FindElementByXPath("//div[@id='divViewerText']//div");
 	}
-	
+
 	public Element getMetadataFieldValueText(String fieldName) {
 		return driver
 				.FindElementByXPath("//*[@id='MetaDataDT']//td[text()='" + fieldName + "']//following-sibling::td");
@@ -3453,26 +3451,27 @@ public class DocViewPage {
 	public Element getAllSourcesDatasetImage() {
 		return driver.FindElementById("divDocViewerImage");
 	}
-	
+
 	public Element getImageTabAllSourcesDataOnDocView(String name) {
-		return driver.FindElementByXPath("//*[@id='AvailableImagesDropDown']/li/a[contains(text(),'"+name+"')]");
+		return driver.FindElementByXPath("//*[@id='AvailableImagesDropDown']/li/a[contains(text(),'" + name + "')]");
 	}
-	
+
 	public Element getDocview_DefaultTextArea() {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]");
 	}
+
 	public Element getDefaultViewerFileType() {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*[last()]");
 	}
-	
+
 	public Element getDocViewImage() {
 		return driver.FindElementByXPath("//*[contains(@id,'ig')]");
 	}
-	
+
 	public Element getFileType() {
 		return driver.FindElementByXPath("//*[contains(@id,'txtspanfileType')]");
 	}
-	
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -14262,7 +14261,7 @@ public class DocViewPage {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSelectRemarkDocArea().isElementAvailable(10);
-				} 
+				}
 			}), Input.wait30);
 			Thread.sleep(Input.wait30 / 10);
 			System.out.println(off1 + "...." + off2);
@@ -17582,25 +17581,25 @@ public class DocViewPage {
 	 * @Description : Method for click on image tag.
 	 */
 	public void clickOnImageTab() {
-		
-			try {
-				for(int i=0;i<4;i++) {
+
+		try {
+			for (int i = 0; i < 4; i++) {
 				driver.scrollPageToTop();
-				if(getDocView_ImagesTab().isDisplayed()) {
-				base.waitTillElemetToBeClickable(getDocView_ImagesTab());
-				getDocView_ImagesTab().isElementAvailable(10);
-				getDocView_ImagesTab().waitAndClick(10);
-				base.passedStep("Clicked on image tab");
-				break;
-				}else {
-				driver.waitForPageToBeReady();	
+				if (getDocView_ImagesTab().isDisplayed()) {
+					base.waitTillElemetToBeClickable(getDocView_ImagesTab());
+					getDocView_ImagesTab().isElementAvailable(10);
+					getDocView_ImagesTab().waitAndClick(10);
+					base.passedStep("Clicked on image tab");
+					break;
+				} else {
+					driver.waitForPageToBeReady();
 				}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
+	}
 
 	/**
 	 * @author Aathith.Senthilkumar
@@ -21210,23 +21209,17 @@ public class DocViewPage {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: 19/05/2022 Modified by:NA
 	 * Description :perform The Eye Icon HighLighting SearchTerm.
 	 *
 	 */
 	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
-		softAssertion.assertTrue(getHitPanleVerify(panel).isDisplayed());
-		if (getHitPanleVerify(panel).Displayed()) {
-			base.passedStep("persistent hit panel displayed in docview panel");
-		} else {
-			base.failedStep("Hit panel not displayed");
-		}
+		base.passedStep("persistent hit panel displayed in docview panel");
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocView_Terms());
 		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
-		softAssertion.assertAll();
 
 	}
 
@@ -25715,42 +25708,41 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		docViewRedact.printIcon().Click();
-		if(base.getSuccessMsgHeader().isDisplayed()) {
-		base.VerifySuccessMessage(
-				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
-		base.stepInfo("Success message has been verified");
-		}
-		else {
-		base.waitForElement(docViewRedact.bullhornIconRedColour());
-		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
-			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		if (base.getSuccessMsgHeader().isDisplayed()) {
+			base.VerifySuccessMessage(
+					"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+			base.stepInfo("Success message has been verified");
 		} else {
+			base.waitForElement(docViewRedact.bullhornIconRedColour());
+			if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+				docViewRedact.bullhornIconRedColour().waitAndClick(10);
+			} else {
 
-			docViewRedact.bullhornIcon().waitAndClick(5);
-		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
+				docViewRedact.bullhornIcon().waitAndClick(5);
 			}
-		}), Input.wait30);
-		docViewRedact.firstTaskInList().waitAndClick(10);
 
-		String parentWindowID = driver.getWebDriver().getWindowHandle();
-		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
-		for (String eachId : allWindowsId) {
-			if (!parentWindowID.equals(eachId)) {
-				driver.switchTo().window(eachId);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
+				}
+			}), Input.wait30);
+			docViewRedact.firstTaskInList().waitAndClick(10);
+
+			String parentWindowID = driver.getWebDriver().getWindowHandle();
+			Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+			for (String eachId : allWindowsId) {
+				if (!parentWindowID.equals(eachId)) {
+					driver.switchTo().window(eachId);
+				}
 			}
-		}
-		String CurrentPageURL = driver.getUrl();
-		if (CurrentPageURL.contains(currentDocId +".pdf")) {
-			base.passedStep("Document which required to download is in DocID.pdf format");
-		} else {
-			base.failedStep("Document which required to download is not in DocID.pdf format");
-		}
-		driver.getWebDriver().close();
-		driver.switchTo().window(parentWindowID);
+			String CurrentPageURL = driver.getUrl();
+			if (CurrentPageURL.contains(currentDocId + ".pdf")) {
+				base.passedStep("Document which required to download is in DocID.pdf format");
+			} else {
+				base.failedStep("Document which required to download is not in DocID.pdf format");
+			}
+			driver.getWebDriver().close();
+			driver.switchTo().window(parentWindowID);
 		}
 
 	}
@@ -26784,7 +26776,7 @@ public class DocViewPage {
 	 */
 	public void documentSelection(int noOfDocuments) throws InterruptedException {
 		try {
-			for (int row = 1; row <=noOfDocuments; row++) {
+			for (int row = 1; row <= noOfDocuments; row++) {
 
 				driver.waitForPageToBeReady();
 				base.waitForElement(getSelectDocument(row));
@@ -27746,37 +27738,38 @@ public class DocViewPage {
 		}
 
 	}
-	
+
 	/**
-	* @author Arunkumar Modify Date: 28/04/22 NA Modified date: NA Modified by:NA
-	* @Description: This method verify keyword highlight in docview
-	*
-	*/
+	 * @author Arunkumar Modify Date: 28/04/22 NA Modified date: NA Modified by:NA
+	 * @Description: This method verify keyword highlight in docview
+	 *
+	 */
 	public void verifyHighlightedKeywordInDocView() {
-	try {
-	driver.scrollPageToTop();
-	driver.waitForPageToBeReady();
-	List<WebElement> keyword = getTotalKeywordHighlight().FindWebElements();
-	int number = keyword.size();
-	for(int i=1;i<number;i++) {
-	String colorCode = getKeywordHighlight(i).GetAttribute("style");
-	System.out.println(colorCode);
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			List<WebElement> keyword = getTotalKeywordHighlight().FindWebElements();
+			int number = keyword.size();
+			for (int i = 1; i < number; i++) {
+				String colorCode = getKeywordHighlight(i).GetAttribute("style");
+				System.out.println(colorCode);
 
-	if ((colorCode.contains("rgb(255, 215, 0)")) ||(colorCode.contains("rgb(0, 255, 255)")) || colorCode.contains("#00FFFF")) {
-	base.passedStep("Keyword highlighted on doc view successfully");
-	base.passedStep("Keyword highlighted on doc view with expected colour");
-	break;
-	}
-	else {
-	System.out.println("need to check next highlighted keyword");
-	}
-	}
-	} catch (Exception e) {
-	e.printStackTrace();
-	base.failedStep("Exception occcured while checking keyword highlight color." + e.getMessage());
+				if ((colorCode.contains("rgb(255, 215, 0)")) || (colorCode.contains("rgb(0, 255, 255)"))
+						|| colorCode.contains("#00FFFF")) {
+					base.passedStep("Keyword highlighted on doc view successfully");
+					base.passedStep("Keyword highlighted on doc view with expected colour");
+					break;
+				} else {
+					System.out.println("need to check next highlighted keyword");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while checking keyword highlight color." + e.getMessage());
 
+		}
 	}
-	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param count
@@ -27785,53 +27778,52 @@ public class DocViewPage {
 	 */
 	public void verifyTheadMapValue(int count, String value) {
 		driver.waitForPageToBeReady();
-		for(int i=0;i<count;i++) {
+		for (int i = 0; i < count; i++) {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			if(base.text(value).isElementAvailable(2)) {
-				base.passedStep(value+" is displayed");
+			if (base.text(value).isElementAvailable(2)) {
+				base.passedStep(value + " is displayed");
 				break;
-			}else {
+			} else {
 				driver.scrollPageToTop();
 				getDocView_Next().waitAndClick(10);
 				driver.waitForPageToBeReady();
 			}
 		}
-	} 
-	
+	}
+
 	/**
-	* @author Indium-Baskar date: 26/04/2022 Modified date: 26/04/2022
-	* @Description:This method used for Analytical panel validation
-	* @param downloadFalse
-	* @param downloadTrue
-	* @param tabName
-	* @param elementName
-	*/
+	 * @author Indium-Baskar date: 26/04/2022 Modified date: 26/04/2022
+	 * @Description:This method used for Analytical panel validation
+	 * @param downloadFalse
+	 * @param downloadTrue
+	 * @param tabName
+	 * @param elementName
+	 */
 
+	public void verifyElementNameBasedOnParameterDocView(boolean downloadFalse, boolean downloadTrue, String tabName,
+			Element elementName) {
+		driver.waitForPageToBeReady();
+		if (downloadFalse == false) {
+			boolean notPresent = elementName.isElementAvailable(2);
+			softAssertion.assertFalse(notPresent);
+			if (notPresent == downloadFalse) {
+				base.passedStep(tabName + " icon not available in DocView page + ");
+			} else {
+				base.failedStep(tabName + " icon available in DocView page + ");
+			}
+		} else if (downloadTrue == true) {
+			base.waitForElement(elementName);
+			boolean present = elementName.isElementAvailable(2);
+			softAssertion.assertFalse(present);
+			if (present == downloadFalse) {
+				base.passedStep(tabName + " icon available in DocView page + ");
+			} else {
+				base.failedStep(tabName + " icon not available in DocView page + ");
+			}
+		}
+	}
 
-
-	public void verifyElementNameBasedOnParameterDocView(boolean downloadFalse, boolean downloadTrue,
-	String tabName,Element elementName) {
-	driver.waitForPageToBeReady();
-	if (downloadFalse == false) {
-	boolean notPresent = elementName.isElementAvailable(2);
-	softAssertion.assertFalse(notPresent);
-	if (notPresent == downloadFalse) {
-	base.passedStep(tabName + " icon not available in DocView page + ");
-	} else {
-	base.failedStep(tabName + " icon available in DocView page + ");
-	}
-	} else if (downloadTrue == true) {
-	base.waitForElement(elementName);
-	boolean present = elementName.isElementAvailable(2);
-	softAssertion.assertFalse(present);
-	if (present == downloadFalse) {
-	base.passedStep(tabName + " icon available in DocView page + ");
-	} else {
-	base.failedStep(tabName + " icon not available in DocView page + ");
-	}
-	}
-	}
 	/**
 	 * @author Brundha.T
 	 * @description:verifying Default text in docview page
@@ -27848,29 +27840,30 @@ public class DocViewPage {
 			}
 		}
 	}
-/**
+
+	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description wait file type load in docview
 	 */
 	public void waitforFileType() {
 		int i = 1;
-		String filetype=getFileType().getText().trim();
-		while(filetype.isEmpty()) {
+		String filetype = getFileType().getText().trim();
+		while (filetype.isEmpty()) {
 			driver.waitForPageToBeReady();
-			filetype=getFileType().getText().trim();
+			filetype = getFileType().getText().trim();
 			System.out.println(filetype);
 			i++;
-			if(i==10) {
+			if (i == 10) {
 				base.stepInfo("file type is non");
 				break;
 			}
 		}
-		
 
 	}
+
 	/**
 	 * @author Krishna
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @Description: This method used to verify whether the download document is in
 	 *               pdf format
 	 * 
@@ -27884,32 +27877,31 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		docViewRedact.printIcon().Click();
-		if(base.getSuccessMsgHeader().isDisplayed()) {
-		base.VerifySuccessMessage(
-				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
-		base.stepInfo("Success message has been verified");
-		}
-		else {
-		base.waitForElement(docViewRedact.bullhornIconRedColour());
-		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
-			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		if (base.getSuccessMsgHeader().isDisplayed()) {
+			base.VerifySuccessMessage(
+					"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+			base.stepInfo("Success message has been verified");
 		} else {
+			base.waitForElement(docViewRedact.bullhornIconRedColour());
+			if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+				docViewRedact.bullhornIconRedColour().waitAndClick(10);
+			} else {
 
-			docViewRedact.bullhornIcon().waitAndClick(5);
-		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return docViewRedact.viewAllBtn().Visible() && docViewRedact.viewAllBtn().Enabled();
+				docViewRedact.bullhornIcon().waitAndClick(5);
 			}
-		}), Input.wait30);
-		docViewRedact.viewAllBtn().waitAndClick(15);
-		// Thread sleep added for the session to move to next page to extract url		
-		Thread.sleep(4000);
-		String urlBackgroundfromdocview = driver.getUrl();
-		if(urlBackgroundfromdocview.contains("Background/BackgroundTask")) {
-			base.passedStep("Navigated to document download page");}
-			else {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return docViewRedact.viewAllBtn().Visible() && docViewRedact.viewAllBtn().Enabled();
+				}
+			}), Input.wait30);
+			docViewRedact.viewAllBtn().waitAndClick(15);
+			// Thread sleep added for the session to move to next page to extract url
+			Thread.sleep(4000);
+			String urlBackgroundfromdocview = driver.getUrl();
+			if (urlBackgroundfromdocview.contains("Background/BackgroundTask")) {
+				base.passedStep("Navigated to document download page");
+			} else {
 				base.failedStep("Not Navigated to document download page");
 			}
 
