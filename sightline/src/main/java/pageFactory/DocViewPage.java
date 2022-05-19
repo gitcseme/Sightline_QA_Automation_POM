@@ -3462,7 +3462,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]");
 	}
 	public Element getDefaultViewerFileType() {
-		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*");
+		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*[last()]");
 	}
 	
 	public Element getDocViewImage() {
