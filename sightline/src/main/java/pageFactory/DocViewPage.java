@@ -2027,7 +2027,7 @@ public class DocViewPage {
 	}
 
 	public Element getHitPanleVerify(String panel) {
-		return driver.FindElementByXPath("//div[@id='divPersistentSearch']//p[text()=" + panel + "]");
+		return driver.FindElementByXPath("//div[@id='divPersistentSearch']//p[text()='" + panel + "']");
 	}
 
 	public ElementCollection getInclusiveElamilValueFromToolTip() {
@@ -21216,11 +21216,16 @@ public class DocViewPage {
 	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
 		driver.waitForPageToBeReady();
 		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).isDisplayed());
+		if (getHitPanleVerify(panel).Displayed()) {
 		base.passedStep("persistent hit panel displayed in docview panel");
+		} else {
+		base.failedStep("Hit panel not displayed");
+		}
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocView_Terms());
 		base.passedStep("The Terms Count is :" + getDocView_Terms().size());
-
+		softAssertion.assertAll();
 	}
 
 	/**
