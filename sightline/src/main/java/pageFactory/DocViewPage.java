@@ -14268,8 +14268,14 @@ public class DocViewPage {
 			Actions actions = new Actions(driver.getWebDriver());
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
-			WebElement text = getSelectedAreaElement().getWebElement();
-			actions.moveToElement(text, off1, off2).clickAndHold().moveByOffset(100, 120).release().perform();
+			getSelectedAreaElement().Click();
+			WebElement text = getPageNumberInputTextField().getWebElement();
+			int x = text.getLocation().getX();
+			int y =text.getLocation().getY();
+			actions.moveToElement(text, off1, off2).clickAndHold();
+			actions.moveToElement(text, off1+10, off2+200);
+			actions.release();
+			actions.build().perform();
 			driver.scrollPageToTop();
 			getAddRemarkbtn().getWebElement().click();
 			driver.WaitUntil((new Callable<Boolean>() {
