@@ -265,6 +265,7 @@ public class RedactionPage {
 			getSaveBtn().isElementAvailable(15);
 			bc.waitForElement(getSaveBtn());
 			getSaveBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
 		} 
 
 	 /** 
