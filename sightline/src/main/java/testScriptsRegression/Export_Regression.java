@@ -779,7 +779,6 @@ public class Export_Regression {
 		page.fillingNativeSection();
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-//		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
 		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		
 		base.stepInfo("Navigate To Next Section");
@@ -817,7 +816,6 @@ public class Export_Regression {
 		
 		//To delete tag and folder 
 		base.stepInfo("Navigate To Tags And Folder Page");
-		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		
 		base.stepInfo("Delete Folder With Security Group");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -907,7 +905,7 @@ public class Export_Regression {
 		page.fillingNativeSection();
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1036,7 +1034,7 @@ public class Export_Regression {
 		page.addDATFieldAtThirdRow(Input.docBasic,Input.docName,Input.documentID);
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFSectionBurnRedaction(redactiontag1,Input.searchString4);
+		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();

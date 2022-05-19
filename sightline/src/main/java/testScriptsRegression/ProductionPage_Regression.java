@@ -646,7 +646,7 @@ public class ProductionPage_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -674,7 +674,9 @@ public class ProductionPage_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.AssertionUnCommitInQCPage();
-		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		baseClass.waitTime(3);
+//		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		page.VerifyinginProductionQCMessage();
 		baseClass.passedStep(
 				"Verify that if Producion is UnCommitted then 'Post Generation QC Checks' status should be display on Production progress status bar");
 
