@@ -11262,15 +11262,17 @@ public class SessionSearch {
 	 * @description : Method to verify the document count in metadata
 	 */
 	public void verifyTheCountOfDocumentForMetaData() {
+		for(int i=0;i<4;i++) {
 		driver.waitForPageToBeReady();
 		getPureHitsCount().isElementAvailable(2);
 		String PurehitCount = getPureHitsCount().getText();
 		if (Integer.valueOf(PurehitCount) != 0) {
 			base.passedStep("Document is displayed as expected");
+			break;
 		} else {
 			base.failedStep("Document count is not displayed as expected");
 		}
-		
+		}
 	}
 
 	/**
