@@ -5478,7 +5478,7 @@ public class DocViewAudio_IndiumRegression {
 			// search to docview
 			sessionSearch.basicMetaDataSearch("VideoPlayerReady", null, "1", "");
 			sessionSearch.ViewInDocViews();
-			baseClass.waitTime(2);
+			baseClass.waitTime(10);
 			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').play()");
 			((JavascriptExecutor) driver.getWebDriver()).executeScript("document.querySelector('#docVideo').webkitEnterFullScreen()");
 			boolean fullScreentrue = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').webkitDisplayingFullscreen;");
@@ -5487,7 +5487,7 @@ public class DocViewAudio_IndiumRegression {
 			Robot robot=new Robot();
 			robot.keyPress(KeyEvent.VK_ESCAPE);
 			robot.keyRelease(KeyEvent.VK_ESCAPE);
-			baseClass.waitTime(2);
+			baseClass.waitTime(10);
 			boolean notfullScreentrue = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript("return document.querySelector('#docVideo').webkitDisplayingFullscreen;");
 			softAssertion.assertTrue(notfullScreentrue);
 			baseClass.passedStep("Audio docview full scren is displaying not displaying when escape button pressed");

@@ -168,6 +168,7 @@ public class DocView_Regression6 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkAssignExisting(assignmentName);
 		assignPage.unmappingKeywordsFromAssignment(assignmentName);
+		driver.scrollPageToTop();	
 		assignPage.addReviewerAndDistributeDocs();
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().Click();
