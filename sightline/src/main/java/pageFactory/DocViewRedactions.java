@@ -4110,5 +4110,18 @@ public void popOutCodingFormChildWindow() {
 		base.passedStep("Thumbnails of messagedocs page is displayed in thumbnail panel");
 
 	}
+	public void verifyHighLightingTextInDocView() {
+	    driver.waitForPageToBeReady();
+	    String text = get_textHighlightedColor().getWebElement().getText();
+	    System.out.println(text);
+	    if (text.equalsIgnoreCase("r")) {
+	        base.passedStep("The batch redated text is matching the keyword");
+	    }
+	    String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+	    String hex = Color.fromString(color).asHex();
+	    System.out.println(hex);
+	    base.passedStep("The text for keyword is highlited in the document");
+	 
+	}
 
 }

@@ -1342,7 +1342,7 @@ public class DocView_Regression3_2 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkToNonAudioDocument(5,5, remark);
+		docView.addRemarkByText(remark);
 		docView.verifyRemarkIsAdded(remark); 
 
 		// Switch To SG2
@@ -1459,7 +1459,7 @@ public class DocView_Regression3_2 {
 		// Add Remark
 		docView = new DocViewPage(driver);
 		docView.navigateToDocViewPageURL();
-		docView.addRemarkToNonAudioDocument(5,5, remark);
+		docView.addRemarkByText(remark);
 		docView.verifyRemarkIsAdded(remark);
 
 		// Switch To SG2
