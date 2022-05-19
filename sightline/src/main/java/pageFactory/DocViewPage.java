@@ -3462,7 +3462,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[contains(@id,'surface')]");
 	}
 	public Element getDefaultViewerFileType() {
-		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*");
+		return driver.FindElementByXPath("//*[contains(@id,'surface')]//*[last()]");
 	}
 	
 	public Element getDocViewImage() {
@@ -25705,7 +25705,6 @@ public class DocViewPage {
 	 * 
 	 */
 	public void verifyDocumentDownloadInPdfFormat() {
-
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 
 		String currentDocId = getDocView_CurrentDocId().getText();
@@ -25716,11 +25715,12 @@ public class DocViewPage {
 			}
 		}), Input.wait30);
 		docViewRedact.printIcon().Click();
-		;
+		if(base.getSuccessMsgHeader().isDisplayed()) {
 		base.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		base.stepInfo("Success message has been verified");
-
+		}
+		else {
 		base.waitForElement(docViewRedact.bullhornIconRedColour());
 		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
 			docViewRedact.bullhornIconRedColour().waitAndClick(10);
@@ -25744,13 +25744,14 @@ public class DocViewPage {
 			}
 		}
 		String CurrentPageURL = driver.getUrl();
-		if (CurrentPageURL.contains(currentDocId + ".pdf")) {
+		if (CurrentPageURL.contains(currentDocId +".pdf")) {
 			base.passedStep("Document which required to download is in DocID.pdf format");
 		} else {
 			base.failedStep("Document which required to download is not in DocID.pdf format");
 		}
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
+		}
 
 	}
 
@@ -27866,5 +27867,52 @@ public class DocViewPage {
 		}
 		
 
+	}
+	/**
+	 * @author Krishna
+	 * @throws InterruptedException 
+	 * @Description: This method used to verify whether the download document is in
+	 *               pdf format
+	 * 
+	 */
+	public void verifyDocumentDownload() throws InterruptedException {
+
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.printIcon().Click();
+		if(base.getSuccessMsgHeader().isDisplayed()) {
+		base.VerifySuccessMessage(
+				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+		base.stepInfo("Success message has been verified");
+		}
+		else {
+		base.waitForElement(docViewRedact.bullhornIconRedColour());
+		if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+			docViewRedact.bullhornIconRedColour().waitAndClick(10);
+		} else {
+
+			docViewRedact.bullhornIcon().waitAndClick(5);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.viewAllBtn().Visible() && docViewRedact.viewAllBtn().Enabled();
+			}
+		}), Input.wait30);
+		docViewRedact.viewAllBtn().waitAndClick(15);
+		// Thread sleep added for the session to move to next page to extract url		
+		Thread.sleep(4000);
+		String urlBackgroundfromdocview = driver.getUrl();
+		if(urlBackgroundfromdocview.contains("Background/BackgroundTask")) {
+			base.passedStep("Navigated to document download page");}
+			else {
+				base.failedStep("Not Navigated to document download page");
+			}
+
+		}
 	}
 }

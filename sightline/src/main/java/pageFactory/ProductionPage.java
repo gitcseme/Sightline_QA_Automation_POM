@@ -862,7 +862,7 @@ public class ProductionPage {
 	}
 
 	public Element getQC_backbutton() {
-		return driver.FindElementByXPath("(//a[contains(text(),'Back')])[2]");
+		return driver.FindElementByXPath("//a[contains(text(),'Back')]");
 	}
 
 	public Element getQC_Download() {
@@ -17808,7 +17808,7 @@ public class ProductionPage {
 		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+				return getDocumentGeneratetext().isElementAvailable(350);
 			}
 		}), Input.wait120);
 		String actualText = getStatusSuccessTxt().getText();
@@ -17878,7 +17878,7 @@ public class ProductionPage {
 		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+				return getDocumentGeneratetext().isElementAvailable(350);
 			}
 		}), Input.wait120);
 		String actualText = getStatusSuccessTxt().getText();
@@ -18081,7 +18081,7 @@ public class ProductionPage {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+				return getDocumentGeneratetext().isElementAvailable(350);
 			}
 		}), Input.wait120);
 		String actualText = getStatusSuccessTxt().getText();

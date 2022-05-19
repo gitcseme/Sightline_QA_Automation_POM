@@ -3511,7 +3511,7 @@ public class DocView_Regression2 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		
 		//pre-requisites- Rectangle redaction and current page redaction
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		baseClass.stepInfo("Test case Id: RPMXCON-51107");
 		baseClass.stepInfo("Verify user can download the redacted document from default view using print icon outside of an assignment");
 		sessionsearch.basicContentSearch(Input.randomText);
@@ -3534,7 +3534,7 @@ public class DocView_Regression2 {
 		loginPage.logout();
 		
 		//Login as RMU and verify the document download is in pdf format for rectangle and current page redaction
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.additionalDataProject);
 		baseClass.stepInfo("Logged in as RMU");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
@@ -3542,7 +3542,7 @@ public class DocView_Regression2 {
 		docView.verifyDocumentDownloadInPdfFormat();
 		loginPage.logout();
 		//Login as Reviewer and verify the document download in pdf format for rectangle and current page redaction
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password, Input.additionalDataProject);
 		baseClass.stepInfo("Logged in as Reviewer");
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
@@ -3713,8 +3713,6 @@ public class DocView_Regression2 {
 		String keyword = Input.randomText + Utility.dynamicNameAppender();
 		KeywordPage keywordPage = new KeywordPage(driver);
 		docView = new DocViewPage(driver);
-		String rgbCode = "rgb(255, 215, 0)";
-		String HaxCode = "#ffd700";
 
 		baseClass.stepInfo(
 				"Verify user after impersonation can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment in context of assignment");
@@ -3743,7 +3741,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As PA
@@ -3755,7 +3753,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		// login As RMU
@@ -3769,7 +3767,7 @@ public class DocView_Regression2 {
 		docView.persistenHitWithSearchString(keyword);
 		baseClass.stepInfo("Verify keyword highlighted on doc view.");
 		baseClass.stepInfo("verify highlight keyword in document");
-		docView.verifyKeywordIsNotHighlightedOnDocView(rgbCode, HaxCode);
+		docView.verifyHighlightedKeywordInDocView();
 		loginPage.logout();
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -3779,6 +3777,7 @@ public class DocView_Regression2 {
 		keywordPage.deleteKeywordByName(keyword);
 
 	}
+	
 	
 	
 	/*  
