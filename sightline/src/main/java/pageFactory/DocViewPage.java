@@ -21209,7 +21209,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: 19/05/2022 Modified by:NA
 	 * Description :perform The Eye Icon HighLighting SearchTerm.
 	 *
 	 */
