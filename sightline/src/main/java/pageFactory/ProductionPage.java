@@ -891,6 +891,11 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	
+	public Element getGenPageStatus(String status) {
+		return driver.FindElementByXPath("//label[@id='prouctionGenerateStatusTxt' and text()='"+ status+"']");
+	}
+	
 	public Element getChkBoxNative_Multimedia() {
 		return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[5]");
 	}
@@ -11269,7 +11274,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getProductionByWizard(productionName));
 		base.waitTillElemetToBeClickable(getProductionByWizard(productionName));
-		getProductionByWizard(productionName).Click();
+		getProductionByWizard(productionName).waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -12961,7 +12966,12 @@ public class ProductionPage {
 		for (int i = 0; i < 500; i++) {
 			driver.waitForPageToBeReady();
 			getVerifyGenStatus(statusMsg).isElementAvailable(180);
-			VerifyGenStatus = getVerifyGenStatus(statusMsg).getText();
+			if(getVerifyGenStatus(statusMsg).isElementAvailable(1)) {
+				VerifyGenStatus = getVerifyGenStatus(statusMsg).getText();
+			}
+			else if (getGenPageStatus(statusMsg).isElementAvailable(5)) {
+				VerifyGenStatus = getGenPageStatus(statusMsg).getText();
+			}
 			if (VerifyGenStatus.contains(statusMsg)) {
 				base.passedStep(statusMsg + "status displayed");
 				break;
@@ -14962,7 +14972,6 @@ public class ProductionPage {
 			getMarkCompleteLink().waitAndClick(10);
 
 			System.out.println("Clicked on Mark Complete Button..");
-			base.VerifySuccessMessage("Mark Complete successful");
 			driver.waitForPageToBeReady();
 
 			base.waitForElement(getNextButton());
@@ -17219,10 +17228,12 @@ public class ProductionPage {
 		base.waitForElement(getClkBtn_selectingRedactionTags());
 		getClkBtn_selectingRedactionTags().waitAndClick(10);
 
-		base.waitForElement(redactionTagInBurnRedactionCheckBox(RedactionTag));
-		driver.waitForPageToBeReady();
-		redactionTagInBurnRedactionCheckBox(RedactionTag).waitAndClick(10);
-		base.stepInfo("Selected Redaction Tag is : " + RedactionTag);
+//		base.waitForElement(redactionTagInBurnRedactionCheckBox(RedactionTag));
+//		driver.waitForPageToBeReady();
+//		redactionTagInBurnRedactionCheckBox(RedactionTag).waitAndClick(10);
+//		base.stepInfo("Selected Redaction Tag is : " + RedactionTag);
+		base.waitForElement(getDefaultRedacTag_BurnRedact());
+		getDefaultRedacTag_BurnRedact().waitAndClick(10);
 
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().waitAndClick(10);
