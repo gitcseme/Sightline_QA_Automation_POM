@@ -529,11 +529,11 @@ public class ProductionPage_Regression {
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.parentDocument);
+		sessionSearch.basicContentSearch(Input.telecaSearchString);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
-		docPage.selectChildDocumentAndSave(Input.parentDocument);
+		docPage.selectingParentDocument();
 		driver.scrollPageToTop();
 		docPage.bulkTagExistingFromDoclist(tagname);
 
@@ -674,7 +674,7 @@ public class ProductionPage_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.AssertionUnCommitInQCPage();
-		page.VerifyinginProductionQCMessage();
+		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
 		baseClass.passedStep(
 				"Verify that if Producion is UnCommitted then 'Post Generation QC Checks' status should be display on Production progress status bar");
 
@@ -2459,6 +2459,7 @@ public class ProductionPage_Regression {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		ProductionPage page = new ProductionPage(driver);
+		SoftAssert softAssertion = new SoftAssert();
 
 		String tagname = "TAG" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
@@ -2483,7 +2484,7 @@ public class ProductionPage_Regression {
 		baseClass = new BaseClass(driver);
 		baseClass.selectproject();
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(Input.parentDocument);
+		sessionSearch.basicContentSearch(Input.telecaSearchString);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
@@ -2630,7 +2631,7 @@ public class ProductionPage_Regression {
 		driver.Navigate().refresh();
 		baseClass.waitForElement(page.getProductionFromHomepage(productionname));
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
-		page.getQC_backbutton().waitAndClick(10);
+		page.getBckBtn().waitAndClick(10);
 		for (int i = 0; i < 4; i++) {
 			page.getBckBtn().waitAndClick(10);
 		}
@@ -3068,6 +3069,8 @@ public class ProductionPage_Regression {
 		page.getDATRedactionsCBox().waitAndClick(10);
 		page.fillingNativeSection();
 		page.fillingPDFSectionwithBurnRedaction();
+		driver.waitForPageToBeReady();
+		page.getClkLink_selectingRedactionTags().ScrollTo();
 		page.specifyRedactionTextAreaInBurnRedact(Input.defaultRedactionTag, Input.searchString4);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);

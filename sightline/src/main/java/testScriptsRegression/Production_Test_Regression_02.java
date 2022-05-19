@@ -2731,7 +2731,6 @@ public class Production_Test_Regression_02{
 		page.fillingSummaryAndPreview();
 
 		base = new BaseClass(driver);
-		base.CloseSuccessMsgpopup();
 		page.clickOnGenerateButton();
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Generation Started Successfully");
