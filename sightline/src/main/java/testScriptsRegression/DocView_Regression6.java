@@ -35,7 +35,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class DocView_Regression6 {
-	
+
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
@@ -59,7 +59,7 @@ public class DocView_Regression6 {
 	String folder2;
 	String tag;
 
-	String random = "Test657394345"+ Utility.dynamicNameAppender();
+	String random = "Test657394345" + Utility.dynamicNameAppender();
 	String random1 = random;
 	String AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 
@@ -83,7 +83,7 @@ public class DocView_Regression6 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -92,9 +92,9 @@ public class DocView_Regression6 {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
 		}
-		
-			loginPage.quitBrowser();
-		
+
+		loginPage.quitBrowser();
+
 	}
 
 	@AfterClass(alwaysRun = true)
@@ -103,15 +103,17 @@ public class DocView_Regression6 {
 		System.out.println("******TEST CASES FOR DOCVIEW/REDACTIONS EXECUTED******");
 
 	}
-	
+
 	/**
 	 * @Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
-	 * @TestCase id : 52265 - Verify that uploaded documents should be threaded into families.
-	 * @Description : Verify that uploaded documents should be threaded into families.
+	 * @TestCase id : 52265 - Verify that uploaded documents should be threaded into
+	 *           families.
+	 * @Description : Verify that uploaded documents should be threaded into
+	 *              families.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1,enabled=true)
-	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {		
-		baseClass=new BaseClass(driver);
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 1, enabled = true)
+	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {
+		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
 		String metaDataField = "IngestionName";
 		String ingestionName = "RPMXCON44861";
@@ -122,35 +124,35 @@ public class DocView_Regression6 {
 
 		baseClass.stepInfo("Login with project administrator");
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		
+
 		baseClass.selectproject("AutomationAdditionalDataProject");
-	
+
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 
 		baseClass.stepInfo("Navigate To Session Search Page URL");
 		session.navigateToSessionSearchPageURL();
-		
+
 		baseClass.stepInfo("Basic meta data search");
-		session.basicMetaDataSearch(metaDataField,null,ingestionName,null);
+		session.basicMetaDataSearch(metaDataField, null, ingestionName, null);
 
 		baseClass.stepInfo("Navigate to  DocView page");
 		session.ViewInDocView();
-		
+
 		baseClass.stepInfo("Select email threaded id and family threaded id from mini config.");
 		docView.selectEmailThreadedIdAndFamilyIdFromMiniCofig();
-		
+
 		baseClass.stepInfo("Get list of same email threaded ids");
-		List<String> emailThreadedIds= docView.getListOfSameEmailThreadedIds();
-		
-		baseClass.stepInfo("Email threaded ids : "+emailThreadedIds);
-		
+		List<String> emailThreadedIds = docView.getListOfSameEmailThreadedIds();
+
+		baseClass.stepInfo("Email threaded ids : " + emailThreadedIds);
+
 		baseClass.stepInfo("Verify thread map ids with email thread ids.");
 		docView.verifyThreadMapIdsWithEmailThreadIds(emailThreadedIds);
-		
+
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-51045 Description :Verify user can not see the keywords
@@ -159,7 +161,7 @@ public class DocView_Regression6 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51045",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-51045", enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -178,7 +180,7 @@ public class DocView_Regression6 {
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkAssignExisting(assignmentName);
 		assignPage.unmappingKeywordsFromAssignment(assignmentName);
-		driver.scrollPageToTop();	
+		driver.scrollPageToTop();
 		assignPage.addReviewerAndDistributeDocs();
 		baseClass.waitForElement(assignPage.getAssignmentSaveButton());
 		assignPage.getAssignmentSaveButton().Click();
@@ -233,7 +235,7 @@ public class DocView_Regression6 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: NA Modified by:NA
 	 * Description :Verify search term, highlighted keywords should be displayed on
@@ -297,8 +299,8 @@ public class DocView_Regression6 {
 		docView.verifyPersistentHitPanelAndCount(hitTerms);
 		loginPage.logout();
 	}
-	
-	@Test(enabled = true, groups={"regression"},priority=4)
+
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void printRedactedDocsAsPA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52233- DocView- Sprint 2");
@@ -315,197 +317,196 @@ public class DocView_Regression6 {
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
 		docView.verifyDocumentDownload();
-	    	
+
 // printing from Doclist 
-		    baseClass.stepInfo("Printing Document from Doc List as PA");
-			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSearchTab().getWebElement()));
-			actions.moveToElement(docViewRedact.gotoSearchTab().getWebElement());
-			actions.click().build().perform();
-			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSessionSearch().getWebElement()));
-			actions.moveToElement(docViewRedact.gotoSessionSearch().getWebElement());
-			actions.click().build().perform();
-			wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.actionsDropDown().getWebElement()));
-			docViewRedact.actionsDropDown().getWebElement().click();
-			sessionsearch.viewInDocView();
-			docView.verifyDocumentDownload();
-				        
+		baseClass.stepInfo("Printing Document from Doc List as PA");
+		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSearchTab().getWebElement()));
+		actions.moveToElement(docViewRedact.gotoSearchTab().getWebElement());
+		actions.click().build().perform();
+		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.gotoSessionSearch().getWebElement()));
+		actions.moveToElement(docViewRedact.gotoSessionSearch().getWebElement());
+		actions.click().build().perform();
+		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.actionsDropDown().getWebElement()));
+		docViewRedact.actionsDropDown().getWebElement().click();
+		sessionsearch.viewInDocView();
+		docView.verifyDocumentDownload();
+
 // printing from DocExplorer	 
-	       baseClass.stepInfo("#### Go to Doc Explorer and Press Print Icon  ####");
-	       this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-	        docViewRedact.enterDocId("ID00000001");
-	        sessionsearch.viewInDocView();
-	        driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
-				}
-			}), Input.wait30);
-	        
-			docViewRedact.printIcon().waitAndClick(25);
-			docView.verifyDocumentDownload();
-}
-	
-/**
- * Author : Gopinath Created date: NA Modified date:08-09-2021 NA Modified by:
- * Krishna TestCase id : 52238 -52239 Verify that Project Admin prints the
- * document without redaction which is released to two different security groups
- * and redaction added in first security group only with shared annotation layer
- * Description : To Verify that Project Admin prints the document without
- * redaction
- */
+		baseClass.stepInfo("#### Go to Doc Explorer and Press Print Icon  ####");
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+		docViewRedact.enterDocId("ID00000001");
+		sessionsearch.viewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.printIcon().Visible() && docViewRedact.printIcon().Enabled();
+			}
+		}), Input.wait30);
 
-@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 5)
-public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
-	baseClass = new BaseClass(driver);
-	baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");
-	utility = new Utility(driver);
-	baseClass.stepInfo("#### To Verify that Project Admin prints the document without redaction ####");
-	loginPage = new LoginPage(driver);
+		docViewRedact.printIcon().waitAndClick(25);
+		docView.verifyDocumentDownload();
+	}
 
-	baseClass.stepInfo("Login with project administrator");
-	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-	Reporter.log("Logged in as User: " + Input.pa1userName);
+	/**
+	 * Author : Gopinath Created date: NA Modified date:08-09-2021 NA Modified by:
+	 * Krishna TestCase id : 52238 -52239 Verify that Project Admin prints the
+	 * document without redaction which is released to two different security groups
+	 * and redaction added in first security group only with shared annotation layer
+	 * Description : To Verify that Project Admin prints the document without
+	 * redaction
+	 */
 
-	securityGroupsPage = new SecurityGroupsPage(driver);
-	docViewRedact = new DocViewRedactions(driver);
-	docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+//@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 5)
+	public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");
+		utility = new Utility(driver);
+		baseClass.stepInfo("#### To Verify that Project Admin prints the document without redaction ####");
+		loginPage = new LoginPage(driver);
 
-	baseClass.stepInfo("Add security group");
-	securityGroupsPage.navigateToSecurityGropusPageURL();
-	securityGroupsPage.AddSecurityGroup(random1);
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 
-	baseClass.stepInfo("Selecting security group");
-	securityGroupsPage.navigateToSecurityGropusPageURL();
-	securityGroupsPage.selectSecurityGroup(random1);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
 
-	baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
-	securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-	securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-	securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		baseClass.stepInfo("Add security group");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(random1);
 
-	baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
-	securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-	securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-	securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+		baseClass.stepInfo("Selecting security group");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.selectSecurityGroup(random1);
 
-	SessionSearch sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Selecting default annotation layer from annotation layer table");
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
 
-	baseClass.stepInfo("Basic search with text input");
-	sessionSearch.basicContentSearch(Input.searchText);
+		baseClass.stepInfo("Selecting default reduction layer from reduction layer table");
+		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
+		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
 
-	baseClass.stepInfo("Bulk release to security group");
-	sessionSearch.bulkRelease(random1);
+		SessionSearch sessionSearch = new SessionSearch(driver);
 
-	baseClass.stepInfo("Edit user by name in Users page");
-	DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-	docViewRedact.assignAccessToSecurityGroups(random1);
+		baseClass.stepInfo("Basic search with text input");
+		sessionSearch.basicContentSearch(Input.searchText);
 
-	loginPage.logout();
+		baseClass.stepInfo("Bulk release to security group");
+		sessionSearch.bulkRelease(random1);
 
-	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	UtilityLog.info("Logged in as User: " + Input.rmu2userName);
+		baseClass.stepInfo("Edit user by name in Users page");
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.assignAccessToSecurityGroups(random1);
 
-	docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		loginPage.logout();
 
-	docViewMetaDataPage.selectSecurityGroup(random1);
-	baseClass.stepInfo("Select security group for RMU");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		UtilityLog.info("Logged in as User: " + Input.rmu2userName);
 
-	sessionSearch = new SessionSearch(driver);
+		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 
-	baseClass.stepInfo("Basic meta data search");
-	sessionSearch.basicContentSearch(Input.searchText);
-	sessionSearch.addDocsMetCriteriaToActionBoard();
+		docViewMetaDataPage.selectSecurityGroup(random1);
+		baseClass.stepInfo("Select security group for RMU");
 
-	baseClass.stepInfo("Click on reduction button ");
-	docViewMetaDataPage.clickOnRedactAndRectangle();
+		sessionSearch = new SessionSearch(driver);
 
-	baseClass.stepInfo("Set rectangle reduct in doc");
-	docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
+		baseClass.stepInfo("Basic meta data search");
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
 
-	loginPage.logout();
+		baseClass.stepInfo("Click on reduction button ");
+		docViewMetaDataPage.clickOnRedactAndRectangle();
 
-	baseClass.stepInfo("Login with project administrator");
-	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-	Reporter.log("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Set rectangle reduct in doc");
+		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
 
-	sessionSearch = new SessionSearch(driver);
+		loginPage.logout();
 
-	baseClass.stepInfo("Basic content search");
-	sessionSearch.basicContentSearch(Input.searchText);
-	sessionSearch.addDocsMetCriteriaToActionBoard();
-	DocViewPage docView = new DocViewPage(driver);
-	baseClass.stepInfo("Verify PDF Document tab opened in new tab");
-	docView.verifyDocumentDownload();
+		baseClass.stepInfo("Login with project administrator");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
+
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Basic content search");
+		sessionSearch.basicContentSearch(Input.searchText);
+		sessionSearch.addDocsMetCriteriaToActionBoard();
+		DocViewPage docView = new DocViewPage(driver);
+		baseClass.stepInfo("Verify PDF Document tab opened in new tab");
+		docView.verifyDocumentDownload();
 //logout as PA		
-	loginPage.logout();
-}
-
-/**
- * Author : Krishna Created date: NA Modified date: NA Modified by: Krishna
- * TestCase id : 51990 Documents released to two different security groups and
- * search with WP To Verify that Persistant hits when same keywords are added to
- * different SG
- */
-
-@Test(description = "RPMXCON-51990", groups={"regression"},priority = 6)
-public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
-	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	folder = "51990Default_" + Utility.dynamicNameAppender();
-	folder2 = "51990DefaultSec_" + Utility.dynamicNameAppender();
-	DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
-	baseClass.stepInfo("Test case Id: RPMXCON 51990");
-	SessionSearch sessionsearch = new SessionSearch(driver);
-	sessionsearch.basicContentSearch(Input.searchText);
-	baseClass.stepInfo("Search with keyword completed");
-	sessionsearch.bulkFolder(folder);
-	baseClass.stepInfo("Search documents released to bulk folder");
-	wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.addNewSearchBtn().getWebElement()));
-	docViewRedact.addNewSearchBtn().waitAndClick(5);
-	wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.clearShoppingCart().getWebElement()));
-	docViewRedact.clearShoppingCart().waitAndClick(5);
-	sessionsearch.switchToWorkproduct();
-	driver.scrollingToBottomofAPage();
-	sessionsearch.selectFolderInASwp(folder);
-	sessionsearch.serarchWP();
-	baseClass.stepInfo("Search with Work product completed");
-	sessionsearch.ViewInDocView();
-	docViewRedact.checkingPersistentHitPanel();
-	if (docViewRedact.persistantHitToggle().Displayed() && docViewRedact.persistantHitToggle().Enabled()) {
-		
-		baseClass.passedStep("The persistent hit panel is visible");
-	} else {
-		baseClass.failedStep("The persistent hit panel is NOT visible");
+		loginPage.logout();
 	}
-	loginPage.logout();
-	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
-	DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
-	docViewMetaDataPage.selectSecurityGroup(random1);
-	baseClass.stepInfo("RMU2 Assigned to new SG");
-	sessionsearch.basicContentSearch(Input.searchText);
-	baseClass.stepInfo("Search with Work product completed with RMU2");
-	sessionsearch.ViewInDocView();
-	docViewRedact.checkingPersistentHitPanel();
-	if (docViewRedact.persistantHitToggle().Displayed() && docViewRedact.persistantHitToggle().Enabled()) {
-		baseClass.passedStep("The persistent hit panel is visible");
-	} else {
-		baseClass.failedStep("The persistent hit panel is NOT visible");
+	/**
+	 * Author : Krishna Created date: NA Modified date: NA Modified by: Krishna
+	 * TestCase id : 51990 Documents released to two different security groups and
+	 * search with WP To Verify that Persistant hits when same keywords are added to
+	 * different SG
+	 */
+
+//@Test(description = "RPMXCON-51990", groups={"regression"},priority = 6)
+	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		folder = "51990Default_" + Utility.dynamicNameAppender();
+		folder2 = "51990DefaultSec_" + Utility.dynamicNameAppender();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+		baseClass.stepInfo("Test case Id: RPMXCON 51990");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchText);
+		baseClass.stepInfo("Search with keyword completed");
+		sessionsearch.bulkFolder(folder);
+		baseClass.stepInfo("Search documents released to bulk folder");
+		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.addNewSearchBtn().getWebElement()));
+		docViewRedact.addNewSearchBtn().waitAndClick(5);
+		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.clearShoppingCart().getWebElement()));
+		docViewRedact.clearShoppingCart().waitAndClick(5);
+		sessionsearch.switchToWorkproduct();
+		driver.scrollingToBottomofAPage();
+		sessionsearch.selectFolderInASwp(folder);
+		sessionsearch.serarchWP();
+		baseClass.stepInfo("Search with Work product completed");
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		if (docViewRedact.persistantHitToggle().Displayed() && docViewRedact.persistantHitToggle().Enabled()) {
+
+			baseClass.passedStep("The persistent hit panel is visible");
+		} else {
+			baseClass.failedStep("The persistent hit panel is NOT visible");
+		}
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		docViewMetaDataPage.selectSecurityGroup(random1);
+		baseClass.stepInfo("RMU2 Assigned to new SG");
+		sessionsearch.basicContentSearch(Input.searchText);
+		baseClass.stepInfo("Search with Work product completed with RMU2");
+		sessionsearch.ViewInDocView();
+		docViewRedact.checkingPersistentHitPanel();
+		if (docViewRedact.persistantHitToggle().Displayed() && docViewRedact.persistantHitToggle().Enabled()) {
+			baseClass.passedStep("The persistent hit panel is visible");
+		} else {
+			baseClass.failedStep("The persistent hit panel is NOT visible");
+		}
+		loginPage.logout();
+
+		// assigning back to default and deleting the created SG
+
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("Select security group for RMU");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		docViewRedact.selectsecuritygroup("Default Security Group");
+		baseClass.stepInfo("RMU2 Assigned to Default Security Group");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.deleteSecurityGroups(random1);
+		loginPage.logout();
 	}
-	loginPage.logout();
-	
-	// assigning back to default and deleting the created SG
-	
-	loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-	baseClass.stepInfo("Select security group for RMU");
-	docViewRedact.selectsecuritygroup("Default Security Group");
-	docViewRedact.selectsecuritygroup("Default Security Group");
-	baseClass.stepInfo("RMU2 Assigned to Default Security Group");
-	loginPage.logout();
-	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-	securityGroupsPage = new SecurityGroupsPage(driver);
-	securityGroupsPage.deleteSecurityGroups(random1);
-	loginPage.logout();
-}
-	
 
 }
