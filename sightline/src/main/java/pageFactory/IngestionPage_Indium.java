@@ -7841,6 +7841,7 @@ public class IngestionPage_Indium {
 	 */
 	public void verifyDataPresentInCopyTableColumn(String term, String type) {
 		getRefreshButton().waitAndClick(10);
+		base.waitTime(2);
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
 
 		driver.scrollingToElementofAPage(getRunIndexing());
@@ -8728,6 +8729,7 @@ public class IngestionPage_Indium {
 
 	public void verifyUnselectedSourceCountInCopySection(String term) {
 		getRefreshButton().waitAndClick(10);
+		base.waitTime(2);
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
 
 		driver.scrollingToElementofAPage(getRunIndexing());
@@ -8879,8 +8881,8 @@ public class IngestionPage_Indium {
 				base.stepInfo("This Dataset doesn't requries Tiff files");
 			}else {
 				base.waitForElement(getTIFFCheckBox());
-				getTIFFCheckBox().waitAndClick(20);
-				base.waitForElement(getSourceSelectionTextLoadFile());
+				getTIFFCheckBox().waitAndClick(10);
+				base.waitForElement(getTIFFLST());
 				getTIFFLST().selectFromDropdown().selectByVisibleText(tiffImage);
 			
 			
@@ -9240,13 +9242,9 @@ public class IngestionPage_Indium {
 				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 				
-				
-				IngestionCatlogtoIndexing(dataset);
-				navigateToAnalyticsPage();
-				runFullAnalysisAndPublish();
-
 			}
-			}else {
+			}
+			
 				base.stepInfo("This "+dataset+" Ingestion is of Overlay type");
 				driver.scrollPageToTop();
 
@@ -9271,10 +9269,18 @@ public class IngestionPage_Indium {
 				}), Input.wait30);
 				getbtnRunIngestion().waitAndClick(10);
 				
+				if(ingestionType=="Overlay Only") {
 				verifyApprovedStatusForOverlayIngestion();
+				runFullAnalysisAndPublish();
 				base.stepInfo("The ingestion started to run automatically");
-				
-			}
+				}
+				else {
+					ignoreErrorsAndCatlogging();
+					ignoreErrorsAndCopying();
+					ingestionIndexing(Input.PP_PDFGen_10Docs);
+					approveIngestion(1);
+					runFullAnalysisAndPublish();
+				}
 	}
 
 	/**
