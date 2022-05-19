@@ -66,9 +66,9 @@ public class Ingestion_Regression {
 
 		Input input = new Input();
 		input.loadEnvConfig();
-		SoftAssert SoftAssert = new SoftAssert();
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -1878,10 +1878,13 @@ public class Ingestion_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority =33)
 	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
 
+		loginPage.logout();
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-50750");
 		baseClass.stepInfo("Validate exporting dataset details at security group level for RMU");
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
 		ingestionPage.navigateToDataSetsPage();
 		ingestionPage.verifyToolTipOfExportIcon();
