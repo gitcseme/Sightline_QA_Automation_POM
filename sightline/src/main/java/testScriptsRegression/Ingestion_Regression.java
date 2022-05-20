@@ -621,11 +621,11 @@ public class Ingestion_Regression {
 		String folderTheadMap = "IngestionFolderTheadMap" + Utility.dynamicNameAppender();
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress", "EmailToNames", "EmailToAddresses",
 				"EmailCCNames", "EmailCCAddresses", "EmailBCCNames", "EmailBCCAddresses" };
-
+		baseClass.selectproject(Input.regressionConsilio1);
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
 		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		
 		String ingestionFullName = dataSets.isDataSetisAvailable("IngestionEmailData");
 		if (ingestionFullName != null) {
 
@@ -1083,13 +1083,7 @@ public class Ingestion_Regression {
 			} else {
 				baseClass.failedStep("verification failed");
 			}
-			String name = docview.getDefaultViewerFileType().GetAttribute("xlink:href");
-			System.out.println(name);
-			if (name == null) {
-				baseClass.passedStep("Tiff file not converted as pdf");
-			} else {
-				baseClass.failedStep("verification failed");
-			}
+			
 		}
 		baseClass.passedStep(
 				"Verify that if PA ingested both PDF and TIFF's file, the 'Generate Searchable PDFs' option is set to true, and if the Generation of the PDF from the TIFF's fails,then pre-existing PDF should be retained as the PDF file variant");
@@ -1203,7 +1197,7 @@ public class Ingestion_Regression {
 			docview.getFileType().isElementAvailable(3);
 			driver.waitForPageToBeReady();
 			String filetype = docview.getDocView_TextFileType().getText().trim();
-			if (filetype.isEmpty()) {
+			if (filetype.contains("TIFF")) {
 				baseClass.passedStep("PDF file only displayed in default viewer");
 			} else {
 				baseClass.failedStep("verification failed");
@@ -1288,7 +1282,7 @@ public class Ingestion_Regression {
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
+		//baseClass.selectproject(projectName);
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49550 ");
