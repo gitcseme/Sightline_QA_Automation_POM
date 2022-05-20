@@ -22,6 +22,11 @@ public class DataSets {
 
 	
 
+	
+	public Element getLoadMore() {return driver.FindElementByXPath("//button[@id='btnLoadDataset']");}
+
+
+
 
 	public Element getDatasetBtn() {
 		return driver.FindElementByXPath("//a[@title='Datasets']");
@@ -313,14 +318,14 @@ public class DataSets {
 		int i = 1;
 		try {
 		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
-			driver.scrollingToBottomofAPage();
-			driver.waitForPageToBeReady();
-			if(i==10) {
-				System.out.println("DataSet not in the project");
-				base.failedStep("DataSet is not in project");
-				break;
-			}
-			i++;
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		if(i==10) {
+		System.out.println("DataSet not in the project");
+		base.failedStep("DataSet is not in project");
+		break;
+		}
+		i++;
 		}
 		getDataSetActionBtn(DataSet).ScrollTo();
 		driver.waitForPageToBeReady();
@@ -329,10 +334,10 @@ public class DataSets {
 		getDataSetViewInDocList(DataSet).waitAndClick(10);
 		base.stepInfo("DataSet is selected and viewed in DocList.");
 		}catch(Exception e) {
-			e.printStackTrace();
-			base.failedStep("failed"+e.getMessage());
+		e.printStackTrace();
+		base.failedStep("failed"+e.getMessage());
 		}
-	}
+		}
 	
 	/**
 	*@author Gopinath

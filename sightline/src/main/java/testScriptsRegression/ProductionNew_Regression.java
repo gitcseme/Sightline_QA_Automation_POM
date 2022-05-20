@@ -1145,6 +1145,7 @@ public class ProductionNew_Regression {
 		page.fillingTIFFSectionwithFontColour(tagname,"Black with white font");
 		page.fillingTextSection();
 		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID,beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
