@@ -541,7 +541,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
@@ -550,14 +550,14 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
