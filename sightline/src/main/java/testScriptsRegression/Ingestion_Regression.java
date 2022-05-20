@@ -70,9 +70,7 @@ public class Ingestion_Regression {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		
 
 	}
 
@@ -105,6 +103,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate 'Not Processed and Not Loaded' tab details for a project having Uploaded ingestions ###");
 		dataSets = new DataSets(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.projectName02);
 
 		baseClass.stepInfo("Navigate data sets page.");
@@ -147,6 +148,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate 'Not Processed and Not Loaded' tab details for an existing project having mapped ingestions and uploaded datasets ###");
 		dataSets = new DataSets(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
@@ -190,6 +194,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"### Project level exported dataset details - Validate \"Loaded with Error\" tab details for an existing project having mapped and uploaded ingestions ###");
 		dataSets = new DataSets(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo("Navigate data sets page.");
 		dataSets.navigateToDataSetsPage();
@@ -251,6 +258,9 @@ public class Ingestion_Regression {
 				"### Verify that after Re-run the copy process without ignoring the errors, copy should continues ###");
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
 		baseClass.selectproject(Input.projectName);
 
@@ -341,6 +351,9 @@ public class Ingestion_Regression {
 				"###  Verify that when rollback is in-progress then error page should not be displayed on Datasets page. ###");
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
 		baseClass.selectproject(projectName);
 
@@ -441,6 +454,9 @@ public class Ingestion_Regression {
 				"### Verify if user ingest documents with ICE as Source System then same dataset cannot ingest with any other Source System ###");
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
 		baseClass.selectproject(Input.ingestDataProject);
 
@@ -488,6 +504,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.regressionConsilio1);
 		
 		SessionSearch search = new SessionSearch(driver);
@@ -521,6 +540,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.regressionConsilio1);
 		
 		SessionSearch search = new SessionSearch(driver);
@@ -559,6 +581,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49563");
 		baseClass.stepInfo("### Verify Email metadata in Manage-Project fields ###");
 		String EmailMetaData = "Email";
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo(" Go to Manage > Project Fields");
 		ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
 		projectFieldsPage.navigateToProjectFieldsPage();
@@ -586,7 +611,9 @@ public class Ingestion_Regression {
 		tagandfolder = new TagsAndFoldersPage(driver);
 		doclist = new DocListPage(driver);
 		docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49558");
 		baseClass.stepInfo("Verify Email metadata in DocList and in DocView");
 
@@ -702,6 +729,9 @@ public class Ingestion_Regression {
 		sessionsearch = new SessionSearch(driver);
 		SoftAssert sofassertion = new SoftAssert();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49802");
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
@@ -754,6 +784,9 @@ public class Ingestion_Regression {
 		String tiffLoadFile = Input.Images5DocsLst;
 		String dateFormat = Input.dateFormat;
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
 		baseClass.selectproject(projectName);
 		driver.waitForPageToBeReady();
@@ -825,6 +858,9 @@ public class Ingestion_Regression {
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49491");
 		baseClass.stepInfo(
 				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
@@ -859,7 +895,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49511");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
@@ -899,7 +937,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49498");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.selectproject(Input.ingestionProjectName);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
 		if (ingestionFullName != null) {
@@ -944,7 +984,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49499");
 		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file"
 				+ " and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's");
@@ -986,7 +1028,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49510");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both TIFF's and Text's file,and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's only.");
@@ -1022,7 +1066,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49500");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' option is set to true, and if the Generation of the PDF from the TIFF's fails,then pre-existing PDF should be retained as the PDF file variant");
@@ -1061,7 +1107,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49501");
 		baseClass.stepInfo("Verify that if \"Generate Searchable PDFs\" is TRUE, then Ingestion should generate successfully for Single page TIFF images.");
 		
@@ -1102,7 +1150,9 @@ public class Ingestion_Regression {
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
-		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49364");
 		baseClass.stepInfo("To verify that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true',"
 				+ " by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View");
@@ -1138,7 +1188,9 @@ public class Ingestion_Regression {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		DocViewPage docview = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49502");
 		baseClass.stepInfo(
 				"Verify that if 'Generate Searchable PDFs' is TRUE, then Ingestion should generate successfully for Multi-page TIFF images.");
@@ -1178,7 +1230,9 @@ public class Ingestion_Regression {
 	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
-		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 	baseClass.stepInfo("Test case Id: RPMXCON-49567");
 	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
 
@@ -1230,6 +1284,9 @@ public class Ingestion_Regression {
 		String documentKey = Input.docId;
 		String dateFormat = Input.dateFormat;
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
 		baseClass.selectproject(projectName);
 		driver.waitForPageToBeReady();
@@ -1316,6 +1373,9 @@ public class Ingestion_Regression {
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
 		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48260");
 		baseClass.stepInfo("To Verify In Ingestions, if the user tries to unpublish non-Nexidia indexed audio files, the unpublish should be successful.");
 		
@@ -1350,6 +1410,9 @@ public class Ingestion_Regression {
 		baseClass.selectproject(Input.ingestionProjectName);
 		driver.waitForPageToBeReady();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48277 ");
 		baseClass.stepInfo(
 				"###  To Verify unpublish for Overlay Ingestion. ###");
@@ -1433,6 +1496,9 @@ public class Ingestion_Regression {
 		baseClass.selectproject(Input.ingestionProjectName);
 		driver.waitForPageToBeReady();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-46894 ");
 		baseClass.stepInfo(
 				"### Verify the overlay Ingestion for Audio Documents against International English language pack. ###");
@@ -1500,6 +1566,9 @@ public class Ingestion_Regression {
 		DocViewPage docView=new DocViewPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48607");
 		baseClass.stepInfo(
 				"To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and Text will reflect the overlaid text.");
@@ -1589,7 +1658,7 @@ public class Ingestion_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1679,7 +1748,7 @@ public class Ingestion_Regression {
 	 * Out" should be available so user could switch between the short and long wave
 	 * forms.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1731,7 +1800,7 @@ public class Ingestion_Regression {
 	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
 	 * Out" is disabled or hidden.
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1840,6 +1909,9 @@ public class Ingestion_Regression {
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50749");
 		baseClass.stepInfo("Validate exporting dataset details at project level for Project Admin");
 
