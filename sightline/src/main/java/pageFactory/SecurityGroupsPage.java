@@ -407,13 +407,10 @@ public class SecurityGroupsPage {
 		wait.until(ExpectedConditions.elementToBeClickable(clickSecurityGroup().getWebElement()));
 		actions.moveToElement(clickSecurityGroup().getWebElement());
 		actions.click().build().perform();
-		securityGroupCreate().Click();
-		securityGroupText().Click();
+		securityGroupCreate().waitAndClick(5);
+		securityGroupText().waitAndClick(5);
 		securityGroupText().SendKeys(securityGroupName);
-		securityGroupSave().Click();
-		securityGroupText().Click();
-		securityGroupText().SendKeys(securityGroupName);
-		securityGroupSave().Click();
+		securityGroupSave().waitAndClick(5);
 	}
 
 	/**

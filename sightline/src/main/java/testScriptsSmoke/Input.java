@@ -1543,6 +1543,7 @@ public class Input {
 		 sourceBlank=testData.getSourceBlank();
 		 sourceBlank=testData.getSourceBlank();
 		 ingestionOneHour=testData.getIngestionOneHour();
+		 ingestionLessThanHour=testData.getIngestionLessThanHour();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
