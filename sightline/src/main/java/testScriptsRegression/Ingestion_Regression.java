@@ -759,84 +759,14 @@ public class Ingestion_Regression {
 
 	}
 
-	/**
-	 * @author Aathith
-	 * @throws InterruptedException //@TestCase id: 49547 : Verify Count of Generate
-	 *                              Searchable PDFs if 'Required PDF Generation' is
-	 *                              TRUE and 'searchable PDF for TIFFs' is TRUE
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
-	public void verifySearchablePdfCount() throws InterruptedException {
-		baseClass = new BaseClass(driver);
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Select project");
-		driver.waitForPageToBeReady();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49547 ");
-		baseClass.stepInfo(
-				"###  Verify Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE ###");
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingetion.nativigateToIngestionViaButton();
-		
-		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectPDFSource(Input.PDF5DocsLst, false);
-
-			ingetion.selectTIFFSource(Input.Images5DocsLst, false, true);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingetion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingetion.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingetion.selectAllOptionsFromFilterByDropdown();
-
-			baseClass.stepInfo("Create ingestion to cataloged stage");
-			ingetion.ingestionCreationToCatalogedStage();
-
-			baseClass.stepInfo("cataloged stage to Copied stage");
-			ingetion.IngestionCatlogtoCopyingOrIndex(Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Verify count of searchable pdf");
-			ingetion.searchablePdfCountCheck();
-
-		baseClass.passedStep(
-				"Verified Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE");
-		loginPage.logout();
-
-	}
+	
 
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
 	 * that if "Generate Searchable PDF " check box is not selected in the TIFF
 	 * section, Ingestion should generate successfully with TIFF images only
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -869,106 +799,14 @@ public class Ingestion_Regression {
 
 	}
 
-	/**
-	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
-	 * that if PA ingested both Text's and TIFF's file,and the "Generate Searchable
-	 * PDFs" option is set to False, then it should display TIFF in default viewer
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
-	public void VerifyTiffImageInDefautViewer() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-49511");
-		baseClass.stepInfo(
-				"Verify that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
-			String name = docview.getDefaultViewerFileType().GetAttribute("xlink:href");
-			System.out.println(name);
-			if (name.contains("image")) {
-				baseClass.passedStep("Tiff file only displayed in default viewer");
-			} else {
-				baseClass.failedStep("verification failed");
-			}
-		
-		baseClass.passedStep(
-				"Verified that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
-		loginPage.logout();
-
-	}
-
-	/**
-	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
-	 * that if PA ingested both native's and TIFF's file,and the "Generate
-	 * Searchable PDFs" option is set to true, then PDF should be generated from the
-	 * TIFF's only
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
-	public void verifyPdfandTiffInDocView() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49498");
-		baseClass.stepInfo(
-				"Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
-			driver.waitForPageToBeReady();
-			if (docview.getFileType().isElementAvailable(10)) {
-				driver.waitForPageToBeReady();
-				docview.waitforFileType();
-				String filetype = docview.getFileType().getText();
-				System.out.println(filetype);
-				if (filetype.contains("PDF")) {
-					baseClass.passedStep("PDF file only displayed in default viewer");
-				} else {
-					baseClass.failedStep("verification failed");
-				}
-			} else {
-				baseClass.failedStep("file type is  not displayed");
-			}
-			docview.getImageTab().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			if (docview.getDocViewImage().isElementAvailable(10)) {
-				baseClass.passedStep("Tiff file displayed in Tiff Tab");
-			} else {
-				baseClass.failedStep("verification failed");
-			}
-		
-		baseClass.passedStep("Verified that if PA ingested both native's and TIFF's file,"
-				+ "and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
-		loginPage.logout();
-
-	}
+	
 
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
 	 * that if PA ingested both PDF and TIFF's file and the "Generate Searchable
 	 * PDFs" option is set to true, then PDF should be generated from the TIFF's
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void verifyJanTiffPdfandTiffInDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1006,54 +844,14 @@ public class Ingestion_Regression {
 
 	}
 
-	/**
-	 * Author :Vijaya.Rani date:8/5/2022 Modified date: Modified by: Description :
-	 * Verify that if PA ingested both TIFF's and Text's file,and the "Generate
-	 * Searchable PDFs" option is set to true, then PDF should be generated from the
-	 * TIFF's only. RPMXCON-49510
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
-	public void VerifySelectSearchablePDFTiffImageInDefautViewer() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-49510");
-		baseClass.stepInfo(
-				"Verify that if PA ingested both TIFF's and Text's file,and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's only.");
-
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
-			String name = docview.getDefaultViewerFileType().GetAttribute("xlink:href");
-			System.out.println(name);
-			if (name.contains("image")) {
-				baseClass.passedStep("Tiff file only displayed in default viewer");
-			} else {
-				baseClass.failedStep("verification failed");
-			}
-		
-		baseClass.passedStep(
-				"Verify that if PA ingested both TIFF's and Text's file,and the 'Generate Searchable PDFs' option is set to true, then PDF is generated from the TIFF's only");
-		loginPage.logout();
-
-	}
-
+	
 	/**
 	 * Author :Vijaya.Rani date: 9/5/2022 Modified date:NA Modified by:NA 
 	 * Description :Verify that if PA ingested both PDF and TIFF's file, the "Generate Searchable
 	 * PDFs" option is set to true, and if the Generation of the PDF from the TIFF's
 	 * fails, then pre-existing PDF should be retained as the PDF file variant
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void verifyJanTiffPdfandnotTiffInDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1088,7 +886,7 @@ public class Ingestion_Regression {
 	 * Author :Aathith date: NA Modified date: Modified by: 
 	 * Description : Verify that if "Generate Searchable PDFs" is TRUE, then Ingestion should generate successfully for Single page TIFF images.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyMarTiffPdfandTiffInDocView() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1131,7 +929,7 @@ public class Ingestion_Regression {
 	 * Description : To verify that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true', 
 	 * by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void verifyMetaDataRequiredPDFGenereationIsTrue() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1170,7 +968,7 @@ public class Ingestion_Regression {
 	 * generate successfully for Multi-page TIFF images.'RPMXCON-49502'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void verifyJanMultiTiffPdfandTiffInDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1214,7 +1012,7 @@ public class Ingestion_Regression {
 	* Description :Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format
 	*
 	*/
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1257,7 +1055,7 @@ public class Ingestion_Regression {
 	 * ////@TestCase id: 49550 : Verify that in Ingestion Overlay if 'Generate Searchable PDFs'
 	 *  is selected in TIFF section, then PDF should be generated from the TIFF's
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifySearchablePdfTiffDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String projectName = Input.ingestionPrjt;
@@ -1351,7 +1149,7 @@ public class Ingestion_Regression {
 	 * Author :Aathith date: NA Modified date: Modified by: 
 	 * Description : To Verify In Ingestions, if the user tries to unpublish non-Nexidia indexed audio files, the unpublish should be successful.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyUnpublishIndexedAudioFile() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1385,99 +1183,13 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		
 	}
-	/**
-	 * @author Aathith
-	 * @throws InterruptedException 
-	 * //@TestCase id: 48277 : To Verify unpublish for Overlay Ingestion.
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
-	public void verifyUnpublishOverLayIngestion() throws InterruptedException {
-		
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Select project");
-		baseClass.selectproject(Input.ingestionProjectName);
-		driver.waitForPageToBeReady();
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-48277 ");
-		baseClass.stepInfo(
-				"###  To Verify unpublish for Overlay Ingestion. ###");
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		String BasicSearchName = "search"+Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingetion.nativigateToIngestionViaButton();
-		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			//Input.newdateformat_5Docs, Input.prodBeg used for dat file name and Document Key
-			ingetion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			baseClass.stepInfo("Select Pdf varient source.");
-			//Input.PDF5DocsLst is used for pdf file Name
-			ingetion.selectPDFSource(Input.PDF5DocsLst, false);
-			
-			baseClass.stepInfo("Select Tiff varient source.");
-			//Input.Images5DocsLst used for Image loadfile name 
-			ingetion.selectTIFFSource(Input.Images5DocsLst, false, true);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			//Input.dateFormat used for choosing the stranded data format
-			ingetion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingetion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingetion.clickOnPreviewAndRunButton();
-			
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingetion.selectAllOptionsFromFilterByDropdown();
-			
-			ingetion.getIngestionSatatusAndPerform();
-
-		
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
-		if(ingestionFullName!=null) {
-			// Search ingestionName
-			sessionsearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
-			sessionsearch.bulkRelease(Input.securityGroup);
-			// Saved the My SavedSearch
-			sessionsearch.saveSearch(BasicSearchName);
-			// Go to UnpublishPage
-			ingetion.navigateToUnPublishPage();
-			ingetion.unpublish(BasicSearchName);
-			
-		}
-
-		baseClass.passedStep(
-				"Verified unpublish for Overlay Ingestion.");
-		loginPage.logout();
-
-	}
+	
 	/**
 	 * @author Aathith
 	 * @throws InterruptedException 
 	 * //@TestCase id: 46894 : Verify the overlay Ingestion for Audio Documents against International English language pack
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1556,7 +1268,7 @@ public class Ingestion_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1646,7 +1358,7 @@ public class Ingestion_Regression {
 	 * Out" should be available so user could switch between the short and long wave
 	 * forms.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1698,7 +1410,7 @@ public class Ingestion_Regression {
 	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
 	 * Out" is disabled or hidden.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1753,7 +1465,7 @@ public class Ingestion_Regression {
 	 * @param fromRole
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority =30)
+	@Test(enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority =25)
 	public void verifyingTheExportIconWithDiffUsers(String userName, String password, String fromRole)
 			throws Exception {
 		String status = "true";
@@ -1800,7 +1512,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =31)
+	@Test(enabled = true, groups = { "regression" }, priority =26)
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
 
 		
@@ -1846,7 +1558,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =32)
+	@Test(enabled = true, groups = { "regression" }, priority =27)
 	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
 
 		loginPage.logout();
@@ -1891,7 +1603,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority =33)
+	@Test(enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority =28)
 	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
 			throws InterruptedException, IOException {
 
