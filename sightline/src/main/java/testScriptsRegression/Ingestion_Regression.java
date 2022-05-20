@@ -624,7 +624,7 @@ public class Ingestion_Regression {
 		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
 		
-		String ingestionFullName = dataSets.isDataSetisAvailable("IngestionEmailData");
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 
 			sessionsearch.MetaDataSearchInBasicSearch(Input.metadataIngestion, ingestionFullName);
@@ -768,25 +768,11 @@ public class Ingestion_Regression {
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
 	public void verifySearchablePdfCount() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-		String projectName = Input.ingestionProjectName;
-		String ingestionType = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = Input.PDFGen_10Docs;
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.newdateformat_5Docs;
-		String documentKey = Input.prodBeg;
-		String pdfLoadFile = Input.PDF5DocsLst;
-		String tiffLoadFile = Input.Images5DocsLst;
-		String dateFormat = Input.dateFormat;
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49547 ");
@@ -796,27 +782,30 @@ public class Ingestion_Regression {
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
-
-		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
-		if (status) {
+		
+		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if(!status) {
+			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
-					sourceFolder);
+			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.PDFGen_10Docs);
 
 			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 
 			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(datLoadFile, documentKey);
+			ingetion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
 
 			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectPDFSource(pdfLoadFile, false);
+			ingetion.selectPDFSource(Input.PDF5DocsLst, false);
 
-			ingetion.selectTIFFSource(tiffLoadFile, false, true);
+			ingetion.selectTIFFSource(Input.Images5DocsLst, false, true);
 
 			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(dateFormat);
+			ingetion.selectDateAndTimeForamt(Input.dateFormat);
 
 			baseClass.stepInfo("Click on next button.");
 			ingetion.clickOnNextButton();
@@ -831,11 +820,10 @@ public class Ingestion_Regression {
 			ingetion.ingestionCreationToCatalogedStage();
 
 			baseClass.stepInfo("cataloged stage to Copied stage");
-			ingetion.IngestionCatlogtoCopyingOrIndex(dateFormat);
+			ingetion.IngestionCatlogtoCopyingOrIndex(Input.PDFGen_10Docs);
 
 			baseClass.stepInfo("Verify count of searchable pdf");
 			ingetion.searchablePdfCountCheck();
-		}
 
 		baseClass.passedStep(
 				"Verified Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE");
@@ -899,10 +887,12 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49511");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
-
-		baseClass.selectproject(Input.ingestionProjectName);
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
-		if (ingestionFullName != null) {
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if(!status) {
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
 			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
 			String name = docview.getDefaultViewerFileType().GetAttribute("xlink:href");
 			System.out.println(name);
@@ -911,7 +901,7 @@ public class Ingestion_Regression {
 			} else {
 				baseClass.failedStep("verification failed");
 			}
-		}
+		
 		baseClass.passedStep(
 				"Verified that if PA ingested both Text's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to False, then it should display TIFF in default viewer");
 		loginPage.logout();
@@ -938,9 +928,12 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
-		if (ingestionFullName != null) {
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if(!status) {
+			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
 			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
 			driver.waitForPageToBeReady();
 			if (docview.getFileType().isElementAvailable(10)) {
@@ -963,7 +956,7 @@ public class Ingestion_Regression {
 			} else {
 				baseClass.failedStep("verification failed");
 			}
-		}
+		
 		baseClass.passedStep("Verified that if PA ingested both native's and TIFF's file,"
 				+ "and the \"Generate Searchable PDFs\" option is set to true, then PDF should be generated from the TIFF's only");
 		loginPage.logout();
@@ -1033,9 +1026,12 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"Verify that if PA ingested both TIFF's and Text's file,and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's only.");
 
-		baseClass.selectproject(Input.ingestionProjectName);
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
-		if (ingestionFullName != null) {
+		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
+		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if(!status) {
+			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
 			dataSets.selectDataSetWithNameInDocView(Input.PDFGen_10Docs);
 			String name = docview.getDefaultViewerFileType().GetAttribute("xlink:href");
 			System.out.println(name);
@@ -1044,7 +1040,7 @@ public class Ingestion_Regression {
 			} else {
 				baseClass.failedStep("verification failed");
 			}
-		}
+		
 		baseClass.passedStep(
 				"Verify that if PA ingested both TIFF's and Text's file,and the 'Generate Searchable PDFs' option is set to true, then PDF is generated from the TIFF's only");
 		loginPage.logout();
@@ -1417,10 +1413,11 @@ public class Ingestion_Regression {
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
-		
-		//Input.PDFGen_10Docs is used for Ingestion Name
 		boolean status = ingetion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if (status) {
+		if(!status) {
+			ingetion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
 			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
@@ -1456,7 +1453,7 @@ public class Ingestion_Regression {
 			
 			ingetion.getIngestionSatatusAndPerform();
 
-		}
+		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.PDFGen_10Docs);
 		if(ingestionFullName!=null) {
 			// Search ingestionName
@@ -1502,6 +1499,16 @@ public class Ingestion_Regression {
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
+		boolean status = ingetion.verifyIngestionpublish(Input.AutomationAllSources);
+		System.out.println(status);
+
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("addonly  ingestion with mapping field selection");
+			String ingestionType="Add Only";
+			ingetion.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					Input.NativeFile, null,null, null, null, null, null, null);
+		}
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
 			//Input.overlayOnly, null, Input.sourceLocation,Input.ingestionAutomationAllSource used for ingestionType, sourceLoaction ,Ingestion name
