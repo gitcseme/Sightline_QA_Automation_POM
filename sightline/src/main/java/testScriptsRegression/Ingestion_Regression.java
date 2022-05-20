@@ -781,7 +781,21 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish("Tiff_Images");
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, "Tiff_Images");
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("DAT4_STC_Image_PDFs.dat", Input.prodBeg);
+			ingestion.getTIFFLST().selectFromDropdown().selectByVisibleText("DAT4_STC_Images - 38577.OPT");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("ProdBegAttach", Input.dataSource, Input.custodian);
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.removeCatalogError();
+			ingestion.getIngestionSatatusAndPerform();
+		}
 		String ingestionFullName = dataSets.isDataSetisAvailable("Tiff_Images");
 		if (ingestionFullName != null) {
 			dataSets.selectDataSetWithNameInDocView("Tiff_Images");
@@ -1060,8 +1074,6 @@ public class Ingestion_Regression {
 	baseClass.stepInfo("Test case Id: RPMXCON-49567");
 	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
 
-	baseClass.selectproject(Input.ingestionProjectName);
-
 	IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 	boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 	System.out.println(status);
@@ -1096,7 +1108,6 @@ public class Ingestion_Regression {
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void verifySearchablePdfTiffDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-		String projectName = Input.ingestionPrjt;
 		String ingestionType = Input.overlayOnly;
 		String sourceSystem = Input.sourceSystem;
 		String sourceLocation = Input.sourceLocation;
@@ -1112,7 +1123,6 @@ public class Ingestion_Regression {
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
-		//baseClass.selectproject(projectName);
 		driver.waitForPageToBeReady();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49550 ");
@@ -1123,9 +1133,8 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
 		
-		//overlay
 		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
-		if (status) {
+		if (!status) {
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
 			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
@@ -1240,7 +1249,6 @@ public class Ingestion_Regression {
 		
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(Input.ingestionProjectName);
 		driver.waitForPageToBeReady();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
