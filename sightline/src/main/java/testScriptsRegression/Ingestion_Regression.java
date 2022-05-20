@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -59,18 +60,14 @@ public class Ingestion_Regression {
 	DocViewPage docview;
 	IngestionPage_Indium ingestionPage;
 
-	@BeforeMethod(alwaysRun = true)
+	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("Started Ex" + "ecution for prerequisite");
+		UtilityLog.info("Started Execution for prerequisite");
 
 		Input input = new Input();
 		input.loadEnvConfig();
-		driver = new Driver();
-		loginPage = new LoginPage(driver);
-		baseClass = new BaseClass(driver);
-		
 
 	}
 
@@ -80,6 +77,10 @@ public class Ingestion_Regression {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
+
+		driver = new Driver();
+		loginPage = new LoginPage(driver);
+		baseClass = new BaseClass(driver);
 	}
 
 	/**
@@ -429,7 +430,7 @@ public class Ingestion_Regression {
 	 * @Description: Verify if user ingest documents with ICE as Source System then
 	 *               same dataset cannot ingest with any other Source System
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = false, groups = { "regression" }, priority = 6)
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String ingestionType = Input.ingestionType;
@@ -494,31 +495,28 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Verify
 	 * Search should work by concatenated email metadata field
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifySearchForSelectedMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject(Input.projectName02);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName02);
 
-		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -537,26 +535,23 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
 
-		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,Input.projectName02);
 
-		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -578,10 +573,9 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49563");
 		baseClass.stepInfo("### Verify Email metadata in Manage-Project fields ###");
 		String EmailMetaData = "Email";
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.projectName02);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo(" Go to Manage > Project Fields");
 		ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
 		projectFieldsPage.navigateToProjectFieldsPage();
@@ -719,7 +713,7 @@ public class Ingestion_Regression {
 	 * that if Email data contained space before the '@' sign , it should not
 	 * calculate two distinct values
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = false, groups = { "regression" }, priority = 11)
 	public void verifyEmailDataNotCalculateAsDistintValue() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -766,7 +760,7 @@ public class Ingestion_Regression {
 	 * that if "Generate Searchable PDF " check box is not selected in the TIFF
 	 * section, Ingestion should generate successfully with TIFF images only
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = false, groups = { "regression" }, priority = 12)
 	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1064,7 +1058,7 @@ public class Ingestion_Regression {
 	* Description :Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format
 	*
 	*/
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = false, groups = { "regression" }, priority = 18)
 	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1105,7 +1099,7 @@ public class Ingestion_Regression {
 	 * ////@TestCase id: 49550 : Verify that in Ingestion Overlay if 'Generate Searchable PDFs'
 	 *  is selected in TIFF section, then PDF should be generated from the TIFF's
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = false, groups = { "regression" }, priority = 19)
 	public void verifySearchablePdfTiffDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String ingestionType = Input.overlayOnly;
@@ -1244,7 +1238,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException 
 	 * //@TestCase id: 46894 : Verify the overlay Ingestion for Audio Documents against International English language pack
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = false, groups = { "regression" }, priority = 21)
 	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1331,7 +1325,7 @@ public class Ingestion_Regression {
 		SessionSearch	sessionSearch = new SessionSearch(driver);
 		UserManagement user = new UserManagement(driver);
 		DocListPage doclist = new DocListPage(driver);
-		baseClass.selectproject("Indium_Regression");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		String newSg = "Sg" + Utility.dynamicNameAppender();
@@ -1387,8 +1381,7 @@ public class Ingestion_Regression {
 
 		// logout as pa
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject("Indium_Regression");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,Input.projectName02);
 		baseClass.selectsecuritygroup(newSg);
 
 		// navigating to doclist
@@ -1419,11 +1412,11 @@ public class Ingestion_Regression {
 		SoftAssert softAssertion = new SoftAssert();
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionOneHour;
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
 
-		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			driver.waitForPageToBeReady();
@@ -1470,11 +1463,11 @@ public class Ingestion_Regression {
 		docview = new DocViewPage(driver);
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionLessThanHour;
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
-		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
@@ -1661,7 +1654,7 @@ public class Ingestion_Regression {
 		DataSets datasets = new DataSets(driver);
 		
 		// login as user
-		loginPage.loginToSightLine(userName, password,fromRole);
+		loginPage.loginToSightLine(userName, password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50751 Ingestion");
 		baseClass.stepInfo("Validate exporting dataset details at project level for impersonating as Project Admin");
 
