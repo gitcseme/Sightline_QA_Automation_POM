@@ -4060,12 +4060,6 @@ public void popOutCodingFormChildWindow() {
 	 *              Thumbnailspanel is displayed.
 	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
 	 */
-	/**
-	 * @author Krishna Date: 03/02/22 Modified date: N/A Modified by: N/A
-	 * @description verify different type of Documents in minidocList on
-	 *              Thumbnailspanel is displayed.
-	 * @Param pdfDocId,xlsExcelDocId,tiffDocId,pptDocId,messageDocId
-	 */
 	public void verifyDifferentTypesOfDocsInThumbNailsPanel(String pdfDocId, String xlsExcelDocId, String tiffDocId,
 			String pptDocId, String messageDocId) throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -4076,6 +4070,9 @@ public void popOutCodingFormChildWindow() {
 		base.stepInfo("bascic contant search on DocView");
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
+		docView.selectSourceDocIdInAvailableField("SourceDocID");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
 		docViewRedact.clickingThumbnailIcon();
 		docViewRedact.verifyThumbNailsPanelDisplayed();
 		base.passedStep("Thumbnails of docs page is displayed in thumbnail panel");
