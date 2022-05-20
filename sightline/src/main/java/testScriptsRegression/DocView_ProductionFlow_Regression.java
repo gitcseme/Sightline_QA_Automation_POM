@@ -88,7 +88,6 @@ public class DocView_ProductionFlow_Regression {
 	public void verifyProductionForHighlitedDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52207");
-		String beginningBates = page.getRandomNumber(2);
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -100,7 +99,8 @@ public class DocView_ProductionFlow_Regression {
 		sessionSearch.bulkFolderExisting(folder);
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
-// Adding and generating new production for selected Doc		
+// Adding and generating new production for selected Doc
+		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSectionwithBurnRedaction(tag);
