@@ -353,7 +353,6 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Select project");
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.navigateToIngestionPage();
@@ -505,7 +504,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
@@ -513,13 +512,13 @@ public class Ingestion_Regression {
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -582,6 +581,7 @@ public class Ingestion_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
+		baseClass.selectproject(Input.projectName02);
 		baseClass.stepInfo(" Go to Manage > Project Fields");
 		ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
 		projectFieldsPage.navigateToProjectFieldsPage();
@@ -734,7 +734,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
@@ -1272,9 +1272,8 @@ public class Ingestion_Regression {
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.regressionRun);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
+		baseClass.selectproject(Input.regressionRun);
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		ProjectPage projectPage = new ProjectPage(driver);
@@ -1561,7 +1560,6 @@ public class Ingestion_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority =27)
 	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
 
-		loginPage.logout();
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
 		
@@ -1607,7 +1605,7 @@ public class Ingestion_Regression {
 	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
 			throws InterruptedException, IOException {
 
-		loginPage.logout();
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
 		
