@@ -196,7 +196,6 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestDataProject);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-58508");
 		baseClass.stepInfo(
@@ -227,7 +226,6 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49902");
 		baseClass.stepInfo("Unpublish documents - Verify Search as source.");
@@ -274,6 +272,7 @@ public class Ingestion_Regression01 {
 		// Remove selected Colunm Add new Column
 		docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
 	}
+
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-50083 Description :verify Ingestion
@@ -482,7 +481,6 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestDataProject);
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48013");
 		baseClass.stepInfo("To Verify In Ingestion Overlays Ignore All Errors at Cataloge Stage, Should work.");
@@ -717,7 +715,7 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestDataProject);
+	
 		ingestionPage = new IngestionPage_Indium(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		savedSearch = new SavedSearch(driver);
@@ -929,7 +927,6 @@ public class Ingestion_Regression01 {
 				"To verify that the total unique count should not include the docs that have been unpublished.");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
 
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.nativigateToIngestionViaButton();
@@ -978,7 +975,6 @@ public class Ingestion_Regression01 {
 				"To Verify Full Analytics run successfully in Ingestion for Overlays Mode and all the Metadata Updated in Overlays should get displayed after Overlay's Successful.");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
 
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.nativigateToIngestionViaButton();
@@ -1088,7 +1084,6 @@ public class Ingestion_Regression01 {
 		sessionSearch = new SessionSearch(driver);
 		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
 		baseClass.stepInfo(
