@@ -322,7 +322,6 @@ public class Ingestion_Regression {
 	@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyRollBackIsInProgressErrorMsgNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-		String projectName = Input.ingestionProjectName;
 		String ingestionType = Input.ingestionType;
 		String sourceSystem = Input.sourceSystem;
 		String sourceLocation = Input.sourceLocation;
@@ -355,7 +354,6 @@ public class Ingestion_Regression {
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Select project");
-		baseClass.selectproject(projectName);
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.navigateToIngestionPage();
