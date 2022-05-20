@@ -10768,4 +10768,16 @@ public class IngestionPage_Indium {
 			base.stepInfo("Ingestion started");
 			
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param map1
+		 * @param map2
+		 * @param map3
+		 * @Description map the datafield
+		 */
+		public void ingestionMapping(String map1,String map2,String map3) {
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(map1);
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(map2);
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(map3);
+		}
 }
