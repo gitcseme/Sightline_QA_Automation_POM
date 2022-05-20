@@ -1544,115 +1544,14 @@ public class Ingestion_Regression {
 		loginPage.logout();
 
 	}
-	/**
-	 * Author :Aathith date: 10/5/2022 Modified date: Modified by: Description
-	 * :To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and 
-	 * Text will reflect the overlaid text. 'RPMXCON-48607'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 27)
-	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		DocListPage docList= new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocViewPage docView=new DocViewPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
-		
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
-		baseClass.stepInfo("Test case Id: RPMXCON-48607");
-		baseClass.stepInfo(
-				"To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and Text will reflect the overlaid text.");
-
-		baseClass.selectproject(Input.ingestionProjectName);
-
-		String ingestionType=Input.ingestionType;
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
-
-		if (status == false) {
-
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-			
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId=docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-		
-		baseClass.stepInfo("Navigate to ingestion page.");
-		driver.scrollPageToTop();
-		ingestionPage.nativigateToIngestionViaButton();
-
-		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if (status1) {
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestionPage.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestionPage.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingestionPage.selectAllOptionsFromFilterByDropdown();
-
-			ingestionPage.removeCatalogError();
-			ingestionPage.getIngestionSatatusAndPerform();
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId1=docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
-		sessionSearch.viewInDocView();
-		driver.waitForPageToBeReady();
-		docView.waitforFileType();
-		String filetype=docView.getFileType().getText().trim();
-		System.out.println(filetype);
-		if(filetype.contains("PDF")) {
-			baseClass.passedStep("PDF file only displayed in default viewer");
-		}else {
-			baseClass.failedStep("verification failed");
-		}
-		docView.getDocView_TextTab().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		if(docView.getDocViewDefaultViewText().isElementAvailable(10)) {
-			baseClass.passedStep("Text file displayed in Text Tab");
-		}else {
-			baseClass.failedStep("verification failed");
-		}
-		baseClass.passedStep("verified that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document");
-		loginPage.logout();
-	}
+	
 	/**
 	 * Author :Baskar date: 04/05/2022 Modified date: NA Modified by: NA
 	 * Description:Verify Email metadata automatically released to Security Group
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1742,7 +1641,7 @@ public class Ingestion_Regression {
 	 * Out" should be available so user could switch between the short and long wave
 	 * forms.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1794,7 +1693,7 @@ public class Ingestion_Regression {
 	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
 	 * Out" is disabled or hidden.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1849,7 +1748,7 @@ public class Ingestion_Regression {
 	 * @param fromRole
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority =31)
+	@Test(enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority =30)
 	public void verifyingTheExportIconWithDiffUsers(String userName, String password, String fromRole)
 			throws Exception {
 		String status = "true";
@@ -1896,7 +1795,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =32)
+	@Test(enabled = true, groups = { "regression" }, priority =31)
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
 
 		
@@ -1942,7 +1841,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =33)
+	@Test(enabled = true, groups = { "regression" }, priority =32)
 	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
 
 		loginPage.logout();
@@ -1987,7 +1886,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority =34)
+	@Test(enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority =33)
 	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
 			throws InterruptedException, IOException {
 

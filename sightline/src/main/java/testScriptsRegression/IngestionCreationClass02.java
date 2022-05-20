@@ -16,9 +16,12 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -31,6 +34,8 @@ public class IngestionCreationClass02 {
 	IngestionPage_Indium ingestionPage;
 	Input ip;
 	SoftAssert softAssertion;
+	DataSets dataSets;
+	SavedSearch savedSearch;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -66,7 +71,7 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(enabled = true, groups = { "regression" }, priority = 42)
+    @Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -111,7 +116,7 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 43)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -157,7 +162,7 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 44)
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyIngestMetaDataMessageDisplayDefaultAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -217,7 +222,7 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 45)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyIngestMetaDataMessageDisplayIMAGEAndTEXTFile() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -274,7 +279,7 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 46)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyIngestMetaDataDATFileIsIngested() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -317,7 +322,7 @@ public class IngestionCreationClass02 {
 	 * Description :Verify that if PA ingested both PDF and TIFF's file,the "Generate Searchable PDFs"is true and TIFF is missing then it PDF should displays PDF in viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 47)
+	@Test(enabled = true,  groups = {"regression" },priority = 6)
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
@@ -358,7 +363,7 @@ public class IngestionCreationClass02 {
 	 * Description :Verify that if PA ingested both Native and TIFF's file, the "Generate Searchable PDFs"is true and TIFF is missing then searchable PDF's should be generated from the Natives.
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 48)
+	@Test(enabled = true,  groups = {"regression" },priority = 7)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -400,7 +405,7 @@ public class IngestionCreationClass02 {
 	 * Description :Verify that if PA ingested Native, PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 49)
+	@Test(enabled = true,  groups = {"regression" },priority = 8)
 	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -438,7 +443,7 @@ public class IngestionCreationClass02 {
 	 * Description :Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to false then it should display TIFF in default viewer
      * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = {"regression" },priority = 50)
+	@Test(enabled = true,  groups = {"regression" },priority = 9)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -467,6 +472,312 @@ public class IngestionCreationClass02 {
 
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Aathith date: 10/5/2022 Modified date: Modified by: Description
+	 * :To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and 
+	 * Text will reflect the overlaid text. 'RPMXCON-48607'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 10)
+	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		DocListPage docList= new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView=new DocViewPage(driver);
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-48607");
+		baseClass.stepInfo(
+				"To verify that after Text overlay, if there are other file variants , then DocView follow the set precedence and Text will reflect the overlaid text.");
+
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		String ingestionType=Input.ingestionType;
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		System.out.println(status);
+
+		if (status == false) {
+
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+			
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId=docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
+		sessionSearch.saveSearch(BasicSearchName);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		driver.scrollPageToTop();
+		ingestionPage.nativigateToIngestionViaButton();
+
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if (status1) {
+
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
+					Input.PDFGen_10Docs);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
+
+			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingestionPage.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingestionPage.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingestionPage.selectAllOptionsFromFilterByDropdown();
+
+			ingestionPage.removeCatalogError();
+			ingestionPage.getIngestionSatatusAndPerform();
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId1=docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		docView.waitforFileType();
+		String filetype=docView.getFileType().getText().trim();
+		System.out.println(filetype);
+		if(filetype.contains("PDF")) {
+			baseClass.passedStep("PDF file only displayed in default viewer");
+		}else {
+			baseClass.failedStep("verification failed");
+		}
+		docView.getDocView_TextTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if(docView.getDocViewDefaultViewText().isElementAvailable(10)) {
+			baseClass.passedStep("Text file displayed in Text Tab");
+		}else {
+			baseClass.failedStep("verification failed");
+		}
+		baseClass.passedStep("verified that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document");
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * Author :Vijaya.Rani date: 9/5/2022 Modified date: Modified by: Description
+	 * :To verify that total unique ingested document count displays unique count if
+	 * user perform only Text overlay.'RPMXCON-49262'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 11)
+	public void verifyUniqueCountNotIncludeUnpublished() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49262");
+		baseClass.stepInfo(
+				"To verify that total unique ingested document count displays unique count if user perform only Text overlay.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		// perform add only ingestion with source system as Mapped data
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		System.out.println(status);
+
+		if (status == false) {
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
+		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
+		// Saved the My SavedSearch
+		sessionSearch.saveSearch(BasicSearchName);
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		// perform add only ingestion with source system as Mapped data
+		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
+		
+			String ingestionType="Overlay Only";
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
+					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
+					"DAT4_STC_TextEmailData NEWID.lst", null,null, null, null, null, null);
+		
+		// getting unique ingested count after overlay
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
+		baseClass.passedStep("Only Unique count should be displayed successfully");
+	}
+	
+
+	/**
+	 * Author :Brundha Test Case Id:RPMXCON-48195 Description :To Very the Family
+	 * Member Counts After Ingestion completed successfully.
+	 * 
+	 * @throws InterruptedException
+	 *
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48195");
+		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+
+		baseClass.selectproject(Input.ingestionProjectName);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		String ingestionType = "Add Only";
+		String familyMemberCount = "FamilyMemberCount";
+		System.out.println(status);
+		if (status == false) {
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, null, Input.ImagePPPDF10docs, null, null,
+					null);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch("ID00002731");
+
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		baseClass.waitForElement(doc.getSelectDropDown());
+		doc.getSelectDropDown().waitAndClick(10);
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(familyMemberCount);
+		String FamilyMemberCount=doc.getDocList_EmailName().getText();
+		int DocCount=Integer.valueOf(FamilyMemberCount);
+		if(DocCount!=0) {
+			baseClass.passedStep("Family Members count is displayed as expected");
+		}else {
+			baseClass.failedStep("Family Members Count is not displayed as expected");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 11/5/2022 Modified date: Modified by: Description
+	 * :To verify that after Text overlay, if there are no other file variants ,
+	 * then DocView uses that text as the default viewer file for that document.
+	 * 'RPMXCON-48606'
+	 * 
+	 */
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 13)
+	public void verifyOverlayDocViewTextWillReflectOverlaidText() throws InterruptedException {
+
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		savedSearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48606");
+		baseClass.stepInfo(
+				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.selectproject(Input.ingestionProjectName);
+
+		String ingestionType = "Add Only";
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
+		System.out.println(status);
+
+		if (status == false) {
+
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
+					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
+					null, null);
+
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
+		sessionSearch.saveSearch(BasicSearchName);
+
+		// Go to UnpublishPage
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+
+		baseClass = new BaseClass(driver);
+
+		baseClass.stepInfo("Navigate to ingestion page.");
+		driver.scrollPageToTop();
+		ingestionPage.nativigateToIngestionViaButton();
+
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if (status1) {
+
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.PDFGen_10Docs);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
+
+			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingestionPage.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingestionPage.clickOnPreviewAndRunButton();
+
+			baseClass.stepInfo("Select all options from filter by dropdown.");
+			ingestionPage.selectAllOptionsFromFilterByDropdown();
+
+			ingestionPage.removeCatalogError();
+			ingestionPage.getIngestionSatatusAndPerform();
+		}
+		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
+		String docId1 = docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
+		sessionSearch.viewInDocView();
+		driver.waitForPageToBeReady();
+		docView.waitforFileType();
+		docView.getDocView_TextTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (docView.getDocViewDefaultViewText().isElementAvailable(10)) {
+			baseClass.passedStep(
+					"There are no other file variants ,then Doc View is  displays the text as the default viewer");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+
+	}
+
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

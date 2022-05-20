@@ -720,58 +720,6 @@ public class Ingestion_Regression01 {
 
 	
 
-	/**
-	 * Author :Vijaya.Rani date: 9/5/2022 Modified date: Modified by: Description
-	 * :To verify that total unique ingested document count displays unique count if
-	 * user perform only Text overlay.'RPMXCON-49262'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 17)
-	public void verifyUniqueCountNotIncludeUnpublished() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49262");
-		baseClass.stepInfo(
-				"To verify that total unique ingested document count displays unique count if user perform only Text overlay.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		// perform add only ingestion with source system as Mapped data
-		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
-
-		if (status == false) {
-			String ingestionType="Add Only";
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-		sessionSearch.basicSearchWithMetaDataQuery(Input.sourceDocIDPPPDF10Docs, "SourceDocID");
-		// Saved the My SavedSearch
-		sessionSearch.saveSearch(BasicSearchName);
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-		// perform add only ingestion with source system as Mapped data
-		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
-		
-			String ingestionType="Overlay Only";
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
-					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null,null, null, null, null, null);
-		
-		// getting unique ingested count after overlay
-		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
-		baseClass.stepInfo("Total unique count After performing overlay : '" + uniqueCountAfter + "'");
-		baseClass.passedStep("Only Unique count should be displayed successfully");
-	}
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48188 Description :To Verify
@@ -780,7 +728,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyingAudioPlayerReadyDocumentCount() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48188");
 		baseClass.stepInfo("To Verify AudioPlayerReady is set to 1 only if the document has an MP3 File Variant.");
@@ -820,7 +768,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyingMetadataInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-49566");
 		baseClass.stepInfo("Verify Ingestion with Email metadata if 'Email Name and Address' is in incorrect format");
@@ -856,60 +804,13 @@ public class Ingestion_Regression01 {
 	
 	
 	/**
-	 * Author :Brundha Test Case Id:RPMXCON-48195 Description :To Very the Family
-	 * Member Counts After Ingestion completed successfully.
-	 * 
-	 * @throws InterruptedException
-	 *
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
-	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-48195");
-		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		baseClass.selectproject(Input.ingestionProjectName);
-		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		String ingestionType = "Add Only";
-		String familyMemberCount = "FamilyMemberCount";
-		System.out.println(status);
-		if (status == false) {
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
-					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, null, Input.ImagePPPDF10docs, null, null,
-					null);
-		}
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("Basic content search");
-		sessionsearch.basicContentSearch("ID00002731");
-
-		baseClass.stepInfo("Navigating to doclist page");
-		sessionsearch.ViewInDocList();
-
-		DocListPage doc = new DocListPage(driver);
-		baseClass.waitForElement(doc.getSelectDropDown());
-		doc.getSelectDropDown().waitAndClick(10);
-		doc.selectingSingleValueInCoumnAndRemovingExistingOne(familyMemberCount);
-		String FamilyMemberCount=doc.getDocList_EmailName().getText();
-		int DocCount=Integer.valueOf(FamilyMemberCount);
-		if(DocCount!=0) {
-			baseClass.passedStep("Family Members count is displayed as expected");
-		}else {
-			baseClass.failedStep("Family Members Count is not displayed as expected");
-		}
-		loginPage.logout();
-	}
-
-	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48202 Description :To Verify Ingestion
 	 * overlay of TIFF without Unpublish
 	 * 
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyTiffImageInDocViewPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48202");
 		baseClass.stepInfo("To Verify Ingestion overlay of TIFF without Unpublish");
@@ -979,7 +880,7 @@ public class Ingestion_Regression01 {
 	 * been unpublished. 'RPMXCON-49263'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void verifyTotalUniqueCountAfterUnpublished() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1028,7 +929,7 @@ public class Ingestion_Regression01 {
 	 * Successful. 'RPMXCON-48084'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void verifyFullAnalyticsRunIngestionForOverlay() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1089,7 +990,7 @@ public class Ingestion_Regression01 {
 	 * To Verify Ingestion Overlays of PDF without unpublish. 'RPMXCON-46875'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyingestionOverlayWithoutUnpublish() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -1129,17 +1030,13 @@ public class Ingestion_Regression01 {
 }
 	
 	
-	
-	
-	
-	
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
 	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
 	 * 'RPMXCON-48526'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
+	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1196,111 +1093,14 @@ public class Ingestion_Regression01 {
 
 	}
 
-	/**
-	 * Author :Vijaya.Rani date: 11/5/2022 Modified date: Modified by: Description
-	 * :To verify that after Text overlay, if there are no other file variants ,
-	 * then DocView uses that text as the default viewer file for that document.
-	 * 'RPMXCON-48606'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
-	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		DocListPage docList = new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocViewPage docView = new DocViewPage(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48606");
-		baseClass.stepInfo(
-				"To verify that after Text overlay, if there are no other file variants , then DocView uses that text as the default viewer file for that document.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
-
-		String ingestionType = "Add Only";
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
-		System.out.println(status);
-
-		if (status == false) {
-
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs, ingestionType, "TRUE",
-					Input.DATPPPDF10Docs, null, Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs, "select", null,
-					null, null);
-
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		baseClass = new BaseClass(driver);
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		driver.scrollPageToTop();
-		ingestionPage.nativigateToIngestionViaButton();
-
-		boolean status1 = ingestionPage.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if (status1) {
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingestionPage.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			ingestionPage.selectTextSource(Input.TextPPPDF10Docs, false);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestionPage.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestionPage.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingestionPage.selectAllOptionsFromFilterByDropdown();
-
-			ingestionPage.removeCatalogError();
-			ingestionPage.getIngestionSatatusAndPerform();
-		}
-		dataSets.selectDataSetWithName(Input.PP_PDFGen_10Docs);
-		String docId1 = docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId1, "DocID");
-		sessionSearch.viewInDocView();
-		driver.waitForPageToBeReady();
-		docView.waitforFileType();
-		docView.getDocView_TextTab().waitAndClick(10);
-		driver.waitForPageToBeReady();
-		if (docView.getDocViewDefaultViewText().isElementAvailable(10)) {
-			baseClass.passedStep(
-					"There are no other file variants ,then Doc View is  displays the text as the default viewer");
-		} else {
-			baseClass.failedStep("verification failed");
-		}
-
-	}
+	
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48201 
 	 * Description :To Verify Ingestion overlay of Native without Unpublish
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyUnPublishOfNativeDocument() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48201");
 		baseClass.stepInfo("To Verify Ingestion overlay of Native without Unpublish");
@@ -1355,7 +1155,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyAudioPlayerReadyLanguage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48237");
 		baseClass.stepInfo("To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion");
@@ -1387,7 +1187,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
