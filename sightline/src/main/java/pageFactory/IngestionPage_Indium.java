@@ -7820,6 +7820,7 @@ public class IngestionPage_Indium {
 				}), Input.wait30);
 
 				getRunCopying().waitAndClick(10);
+				base.waitTime(5);
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
 						return getCloseButton().Enabled();
