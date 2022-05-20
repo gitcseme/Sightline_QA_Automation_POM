@@ -257,7 +257,6 @@ public class Ingestion_Regression01 {
 		DocListPage docList = new DocListPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestDataProject);
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
@@ -276,7 +275,6 @@ public class Ingestion_Regression01 {
 		docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
 	}
 
-	
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-50083 Description :verify Ingestion
 	 * should published successfully if Email metadata is having only Address
@@ -291,10 +289,8 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionPrjt);
-
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeFileName);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
@@ -304,9 +300,10 @@ public class Ingestion_Regression01 {
 					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
-		sessionSearch = new SessionSearch(driver);
-		sessionSearch.SearchMetaData(Input.metadataIngestion, Input.nativeFileName);
-		sessionSearch.ViewInDocList();
+
+        DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
 
 		DocListPage doc = new DocListPage(driver);
 		baseClass.stepInfo("Verifying Email Metadata in DocList page");
@@ -353,9 +350,9 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeFileName);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
 			String ingestionType="Add Only";
@@ -401,16 +398,26 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionPrjt);
-
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		System.out.println(status);
 		if (status == false) {
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			String ingestionType="Add Only";
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
-					null, null, null, null,null, Input.MP3File, null, null);
+			
+			ingestionPage = new IngestionPage_Indium(driver);
+			baseClass.stepInfo(" addonly ingestion with mapping field selection");
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
+			ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.fillingSourceField();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.SearchMetaData(Input.audioPlayerReady, Input.pageCount);
@@ -435,7 +442,7 @@ public class Ingestion_Regression01 {
 				"Verify that 'AudioPlayerReady' should set to '1' when MP3 file variant are ingested with .MP3 files");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
 
@@ -445,6 +452,8 @@ public class Ingestion_Regression01 {
 			String ingestionType="Add Only";
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
 					null, null, null, null, null,Input.MP3File, null, null);
+			
+			
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
@@ -460,7 +469,6 @@ public class Ingestion_Regression01 {
 		doc.verifyingTheMp3FileAndOtherFile(count);
 		loginPage.logout();
 	}
-
 	
 
 	/**
@@ -501,9 +509,9 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionProjectName);
+	
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 
 		System.out.println(status);
@@ -513,11 +521,10 @@ public class Ingestion_Regression01 {
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
 					Input.NativeFile, null,null, null, null, null, null, null);
 		}
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("Basic content search");
-		sessionsearch.basicContentSearch(Input.AutomationAllSources);
-		baseClass.stepInfo("Navigating to doclist page");
-		sessionsearch.ViewInDocList();
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.AllSourcesFolder);
+
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.audioPlayerReady);
@@ -530,6 +537,7 @@ public class Ingestion_Regression01 {
 		}
 		loginPage.logout();
 	}
+
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-49489 Description :Verify error message
@@ -545,18 +553,34 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
+		
+		String ingestionType = "Add Only";
+		String fieldSeperator = Input.fieldSeperator;
+		String textQualifier = Input.textQualifier;
+		String multiValue = Input.multiValue;
+		String dateFormat = Input.dateFormat;
 
 		System.out.println(status);
 		if (status == false) {
-			String ingestionType="Add Only";
-			baseClass.stepInfo(" addonly ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType,Input.sourceSystem, Input.DATFile1,
-					null, null, null, null,null, Input.MP3File, null, null);
+
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
+			ingestionPage.selectDateAndTimeForamt(dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.fillingSourceField();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.IgnoreErrorAndIndexing();
+			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
 		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
@@ -582,8 +606,7 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
@@ -605,13 +628,17 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
 			ingestionPage.selectDateAndTimeForamt(dateFormat);
 			ingestionPage.clickOnNextButton();
-			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.fillingSourceField();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.IgnoreErrorAndIndexing();
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.TiffImages);
-		search.viewInDocView();
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
 		DocViewPage doc = new DocViewPage(driver);
 		doc.verifyingDefaultTextInDocView();
 		doc.clickOnImageTab();
@@ -645,7 +672,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
@@ -671,9 +698,9 @@ public class Ingestion_Regression01 {
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.TiffImages);
-		search.viewInDocView();
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
 		DocViewPage doc = new DocViewPage(driver);
 		doc.verifyingDefaultTextInDocView();
 		loginPage.logout();
@@ -735,9 +762,9 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 		String ingestionType="Add Only";	
 		System.out.println(status);
 		if (status == false) {
@@ -776,8 +803,6 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionPrjt);
-
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
@@ -789,9 +814,9 @@ public class Ingestion_Regression01 {
 					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
-		sessionSearch = new SessionSearch(driver);
-		sessionSearch.SearchMetaData(Input.metadataIngestion, Input.nativeFileName);
-		sessionSearch.ViewInDocList();
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
 
 		DocListPage doc = new DocListPage(driver);
 		doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -800,6 +825,7 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 
 	}
+	
 	
 	
 	
@@ -818,7 +844,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
-		baseClass.selectproject(Input.ingestionPrjt);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		 boolean status=ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
 		System.out.println(status);
@@ -838,7 +864,11 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
 			ingestionPage.selectDateAndTimeForamt(dateFormat);
 			ingestionPage.clickOnNextButton();
-			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.fillingSourceField();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.IgnoreErrorAndIndexing();
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
@@ -856,9 +886,14 @@ public class Ingestion_Regression01 {
 		ingestionPage.ignoreErrorsAndCopying();
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.TiffImages);
-		search.viewInDocView();
+		ingestionPage = new IngestionPage_Indium(driver);
+		driver.Navigate().refresh();
+		
+		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.TiffImagesFolder);
+		System.out.println(ingestionName);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
+		sessionSearch.viewInDocView();
 		DocViewPage doc = new DocViewPage(driver);
 		doc.clickOnImageTab();
 		for (int i = 0; i < 5; i++) {
@@ -948,14 +983,21 @@ public class Ingestion_Regression01 {
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.nativigateToIngestionViaButton();
 
-		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		System.out.println(status);
+		String ingestionType = "Add Only";
+
 		System.out.println(status);
 		if (status == false) {
-			String ingestionType = "Add Only";
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
-					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-					"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null, null);
+
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.TiffImagesFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 		// Search ingestionName And bulkRelease
 		sessionSearch.basicContentSearch(Input.searchStringStar);
@@ -997,12 +1039,11 @@ public class Ingestion_Regression01 {
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
-	
+
 		baseClass.stepInfo("Test case Id: RPMXCON-46875");
 		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.selectproject(Input.ingestionProjectName);
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
@@ -1014,20 +1055,22 @@ public class Ingestion_Regression01 {
 			ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
 		}
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
-		if (ingestionFullName != null) {
-			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
-			driver.waitForPageToBeReady();
-			docview.getFileType().isElementAvailable(3);
-			driver.waitForPageToBeReady();
-			String filetype = docview.getDocView_TextFileType().getText().trim();
-			if (filetype.isEmpty()) {
-			baseClass.passedStep("PDF is displays in PDF viewer");
+		driver.Navigate().refresh();
+		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
+		System.out.println(ingestionName);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
+		sessionSearch.viewInDocView();
+		baseClass.waitForElement(docview.getDocView_DefaultViewTab());
+		docview.getDocView_DefaultViewTab().waitAndClick(5);
+		String text = docview.getDocViewDefaultViewPDF().getText();
+		if (text.contains("PDF")) {
+			baseClass.passedStep(
+					"PDF is displays in PDF viewer");
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
 	}
-}
 	
 	
 	/**
@@ -1067,9 +1110,6 @@ public class Ingestion_Regression01 {
 			baseClass.stepInfo("Select DAT source.");
 			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
 
-			baseClass.stepInfo("Select MP3 varient source.");
-			ingetion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
-
 			baseClass.stepInfo("Select Date and Time format.");
 			ingetion.selectDateAndTimeForamt(Input.dateFormat);
 
@@ -1093,7 +1133,6 @@ public class Ingestion_Regression01 {
 
 	}
 
-	
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48201 
 	 * Description :To Verify Ingestion overlay of Native without Unpublish
@@ -1107,8 +1146,6 @@ public class Ingestion_Regression01 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		baseClass.selectproject(Input.ingestionProjectName);
 		
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
@@ -1132,9 +1169,14 @@ public class Ingestion_Regression01 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
 		
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch("8B61_GD_994_Native_Text_ForProduction_20220511061509400");
-		search.viewInDocView();
+		ingestionPage = new IngestionPage_Indium(driver);
+		driver.Navigate().refresh();
+		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.GD994NativeTextForProductionFolder);
+		System.out.println(ingestionName);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
+		sessionSearch.viewInDocView();
+		
 		DocViewPage doc = new DocViewPage(driver);
 		for (int i = 0; i < 5; i++) {
 			if (doc.getDocView_TextFileType().isDisplayed()) {
@@ -1163,7 +1205,7 @@ public class Ingestion_Regression01 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo(" addonly ingestion with mapping field selection");
 		ingestionPage.selectIngestionTypeAndSpecifySourceLocation("Add Only", Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
@@ -1180,7 +1222,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 		
 	}
-	
 	/**
 	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
 	 * Description :Verify Ingestion should published successfully if Email metadata is having only Name.'RPMXCON-49569'
