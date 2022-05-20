@@ -11,6 +11,7 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -487,7 +488,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49560");
 		baseClass.stepInfo("### Verify Search should work by concatenated email metadata field ###");
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
@@ -495,13 +496,13 @@ public class Ingestion_Regression {
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		
 		search.SearchMetaData("EmailCCNamesAndAddresses", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -520,7 +521,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49565");
 		baseClass.stepInfo("### Verify Search should work by split email metadata field ###");
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		
 		SessionSearch search = new SessionSearch(driver);
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
@@ -529,14 +530,14 @@ public class Ingestion_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		baseClass.selectproject(Input.regressionConsilio1);
 		
 		search.SearchMetaData("EmailCCNames", Input.EmailAuthourName);
 		search.verifyTheCountOfDocumentForMetaData();
@@ -597,7 +598,7 @@ public class Ingestion_Regression {
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
 		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
-		baseClass.selectproject("AutomationRegressionBackup");
+		baseClass.selectproject(Input.regressionConsilio1);
 		String ingestionFullName = dataSets.isDataSetisAvailable("IngestionEmailData");
 		if (ingestionFullName != null) {
 
@@ -647,7 +648,7 @@ public class Ingestion_Regression {
 
 			loginPage.logout();
 			baseClass.stepInfo("perform task for review manager");
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, "AutomationRegressionBackup");
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
 			tagandfolder.selectFolderViewInDocList(foldername);
 
 			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -705,7 +706,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject("AutomationRegressionBackup");
+		baseClass.selectproject(Input.regressionConsilio1);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
@@ -1181,14 +1182,14 @@ public class Ingestion_Regression {
 	baseClass.stepInfo("Test case Id: RPMXCON-49567");
 	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
 
-	baseClass.selectproject(Input.ingestionPrjt);
+	baseClass.selectproject(Input.ingestionProjectName);
 
 	IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 	boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 	System.out.println(status);
 	
 	if (!status) {
-	String ingestionType = Input.ingestionType;
+	String ingestionType = Input.ingestionProjectName;
 	baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 	ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
 	Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
@@ -1197,7 +1198,7 @@ public class Ingestion_Regression {
 	
 	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
 	SessionSearch sessionSearch = new SessionSearch(driver);
-	sessionSearch.SearchMetaData(Input.metadataIngestion, Input.nativeFileName);
+	sessionSearch.SearchMetaData(Input.metadataIngestion,"8D46_GD_994_Native_Text_ForProduction_20220413075857083");
 	sessionSearch.ViewInDocList();
 
 	DocListPage doc = new DocListPage(driver);
@@ -1835,7 +1836,7 @@ public class Ingestion_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority =32)
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
 
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
@@ -1924,11 +1925,12 @@ public class Ingestion_Regression {
 	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
 			throws InterruptedException, IOException {
 
+		loginPage.logout();
 		ingestionPage = new IngestionPage_Indium(driver);
 		DataSets datasets = new DataSets(driver);
-
+		
 		// login as user
-		loginPage.loginToSightLine(userName, password);
+		loginPage.loginToSightLine(userName, password,fromRole);
 		baseClass.stepInfo("Test case Id: RPMXCON-50751 Ingestion");
 		baseClass.stepInfo("Validate exporting dataset details at project level for impersonating as Project Admin");
 
@@ -1961,10 +1963,21 @@ public class Ingestion_Regression {
 			baseClass.failedStep("The excel file doesn't contains any metioned tabs");
 		}
 
-		loginPage.logout();
+		
 
 	}
 
+	@DataProvider(name = "userDataSets")
+	public Object[][] userDataSet() {
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.da1userName, Input.da1password, "DA" }, { Input.pa1userName, Input.pa1password, "PA" } };
+	}
+
+	@DataProvider(name = "userDataSetsSAAndDA")
+	public Object[][] userDataSetsSAAndDA() {
+		return new Object[][] { { Input.sa1userName, Input.sa1password, "SA" },
+				{ Input.da1userName, Input.da1password, "DA" } };
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
