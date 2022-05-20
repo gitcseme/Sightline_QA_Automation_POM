@@ -1316,17 +1316,15 @@ public class Ingestion_Regression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		baseClass.selectproject(Input.regressionRun);
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		baseClass = new BaseClass(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
 		ProjectPage projectPage = new ProjectPage(driver);
 		SecurityGroupsPage securityGroupPage = new SecurityGroupsPage(driver);
 		SessionSearch	sessionSearch = new SessionSearch(driver);
 		UserManagement user = new UserManagement(driver);
 		DocListPage doclist = new DocListPage(driver);
+		baseClass.selectproject("Indium_Regression");
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 
 		String newSg = "Sg" + Utility.dynamicNameAppender();
 		String toDocList = "toDoclist" + Utility.dynamicNameAppender();
@@ -1382,6 +1380,7 @@ public class Ingestion_Regression {
 		// logout as pa
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.selectproject("Indium_Regression");
 		baseClass.selectsecuritygroup(newSg);
 
 		// navigating to doclist
@@ -1412,7 +1411,6 @@ public class Ingestion_Regression {
 		SoftAssert softAssertion = new SoftAssert();
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionOneHour;
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
@@ -1464,7 +1462,6 @@ public class Ingestion_Regression {
 		docview = new DocViewPage(driver);
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionLessThanHour;
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
