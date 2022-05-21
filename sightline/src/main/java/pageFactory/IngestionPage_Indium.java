@@ -8399,6 +8399,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		getIngestion_GridView().waitAndClick(10);
 		base.waitTime(3);
+		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
@@ -10350,7 +10351,8 @@ public class IngestionPage_Indium {
 			base.passedStep(DataSet+" is available in this project");
 			datasetName = getDataSetName(DataSet).GetAttribute("title");
 			break;
-		}else if(datasetName==null){
+		}
+		else if(datasetName==null){
 			base.stepInfo("Dataset is not in the project, we need to ingest it");
 			driver.scrollingToBottomofAPage();
 			
