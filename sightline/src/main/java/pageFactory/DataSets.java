@@ -118,6 +118,12 @@ public class DataSets {
 		public Element getNotificationMsg() {
 			return driver.FindElementByXPath("(//ul[@class='notification-body']//a)[1]");
 		}
+		
+		// Added by Arunkumar
+		public Element loadMoreOption() {
+			return driver.FindElementByXPath("//button[@id='btnLoadDataset']");
+		}
+				
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -320,6 +326,9 @@ public class DataSets {
 		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
+		if(loadMoreOption().isElementAvailable(10)) {
+			loadMoreOption().waitAndClick(5);
+		}
 		if(i==10) {
 		System.out.println("DataSet not in the project");
 		base.failedStep("DataSet is not in project");
@@ -465,8 +474,8 @@ public class DataSets {
 			base.passedStep(DataSet+" is available in this project");
 			datasetName = getDataSetName(DataSet).GetAttribute("title");
 			break;
-		}else if(i==9){
-			base.stepInfo("Dataset is not in the project, we need to ingest it");
+		}else if(loadMoreOption().isElementAvailable(10)) {
+			loadMoreOption().waitAndClick(5);
 		}else {
 			driver.scrollingToBottomofAPage();
 		}
@@ -483,6 +492,9 @@ public class DataSets {
 		while(!getDataSetActionBtn(DataSet).isElementAvailable(1)){
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
+			if(loadMoreOption().isElementAvailable(10)) {
+				loadMoreOption().waitAndClick(5);
+			}
 			if(i==10) {
 				System.out.println("DataSet not in the project");
 				base.failedStep("DataSet is not in project");
