@@ -1205,6 +1205,9 @@ public class IngestionPage_Indium {
 	public Element indexingErrorCount() {
 		return driver.FindElementByXPath("//label[contains(.,'Document Data Indexed')]//..//div//span//a");
 	}
+	public Element getCloseBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-close']");
+	}
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -3593,9 +3596,11 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			getTIFFCheckBox().ScrollTo();
-			getTIFFCheckBox().isElementAvailable(15);
-			getTIFFCheckBox().Click();
+			if(!getTIFFLST().isElementAvailable(3)){
+				getTIFFCheckBox().ScrollTo();
+				getTIFFCheckBox().isElementAvailable(15);
+				getTIFFCheckBox().Click();
+			}
 			getTIFFLST().ScrollTo();
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
@@ -8766,6 +8771,7 @@ public class IngestionPage_Indium {
 	public void IngestionRegressionForDifferentDAT(String dataset,String ingestionType,String sourceSystem ,String Dat,String nativeFile ,String text,String PDF,String tiffImage,String checkbox,String mp3Variant,String audioTranscript,String other) throws InterruptedException {
 		
 			driver.waitForPageToBeReady();
+			this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 			base.stepInfo("Click on add new ingestion button");
 			base.waitForElement(getAddanewIngestionButton());
 			getAddanewIngestionButton().waitAndClick(10);
@@ -9157,6 +9163,17 @@ public class IngestionPage_Indium {
 				getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
 				getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
 				getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				
+				
+				if(getCloseBtn().isDisplayed()) {
+					for(int i=0;i<3;i++) {
+						driver.waitForPageToBeReady();
+						getCloseBtn().waitAndClick(5);
+						getApproveMessageOKButton().waitAndClick(10);
+					}
+				}
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
 			}
 
 			else if (dataset.contains("GNon searchable PDF Load file")) {
@@ -9256,13 +9273,9 @@ public class IngestionPage_Indium {
 				}), Input.wait30);
 				getPreviewRun().waitAndClick(10);
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getApproveMessageOKButton().Visible();
-					}
-				}), Input.wait30);
+				if(getApproveMessageOKButton().isElementAvailable(5)) {
 				getApproveMessageOKButton().waitAndClick(10);
-
+				}
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
 						return getbtnRunIngestion().Visible();
@@ -10267,7 +10280,7 @@ public class IngestionPage_Indium {
 			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
 		}else {
-			base.failedStep("Intermediate failure due to automation script not get the status of the ingestion");
+			base.failedStep("Something Wrong");
 		}
 		
 	}

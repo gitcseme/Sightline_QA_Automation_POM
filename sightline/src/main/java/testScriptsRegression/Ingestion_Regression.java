@@ -610,24 +610,13 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Verify Email metadata in DocList and in DocView");
 
 		String foldername = "IngestionFolder" + Utility.dynamicNameAppender();
+		String folderTheadMap = "IngestionFolderTheadMap" + Utility.dynamicNameAppender();
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress", "EmailToNames", "EmailToAddresses",
 				"EmailCCNames", "EmailCCAddresses", "EmailBCCNames", "EmailBCCAddresses" };
+		baseClass.selectproject(Input.regressionConsilio1);
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
+		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-		boolean status = ingestion.verifyIngestionpublish(Input.IngestionEmailDataFolder);
-		if(!status) {
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.IngestionEmailDataFolder);
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("0188_loadfile.dat", "DocumentID");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("DocumentID", "Document Author", "CustUserID");
-			ingestion.clickOnPreviewAndRunButton();
-			ingestion.selectAllOptionsFromFilterByDropdown();
-			ingestion.removeCatalogError();
-			ingestion.getIngestionSatatusAndPerform();
-		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
@@ -666,11 +655,19 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			docview.verifyTheadMapValue(10, "participant");
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			sessionsearch.Removedocsfromresults();
+			driver.waitForPageToBeReady();
+			int doccount = Integer.parseInt(sessionsearch.getThreadedLastCount().getText().trim());
+			System.out.println(doccount);
+			sessionsearch.getThreadedAddButton().waitAndClick(10);
+			sessionsearch.bulkFolderExistingWithoutPureHit(folderTheadMap);
+			sessionsearch.ViewInDocViewWithoutPureHit();
+			docview.verifyTheadMapValue(doccount, "participant");
 
 			loginPage.logout();
 			baseClass.stepInfo("perform task for review manager");
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
 			tagandfolder.selectFolderViewInDocList(foldername);
 
 			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -701,7 +698,8 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			docview.verifyTheadMapValue(10, "participant");
+			tagandfolder.selectFolderViewInDocView(folderTheadMap);
+			docview.verifyTheadMapValue(doccount, "participant");
 
 		}
 
@@ -730,7 +728,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject(Input.regressionConsilio1);
+		baseClass.selectproject(Input.projectName02);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
@@ -886,8 +884,19 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-49500");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' option is set to true, and if the Generation of the PDF from the TIFF's fails,then pre-existing PDF should be retained as the PDF file variant");
-
-		baseClass.selectproject(Input.ingestionProjectName);
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish(Input.JanMultiPTIFF);
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.JanMultiPTIFF);
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("OLDE9EE8713-E5DD-44B8-BDC5-1466BEE66AB5_DAT.dat", "DId");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("DId", "DSource", "CName");
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.getIngestionSatatusAndPerform();
+		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
 		if (ingestionFullName != null) {
 			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
@@ -1029,7 +1038,19 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"Verify that if 'Generate Searchable PDFs' is TRUE, then Ingestion should generate successfully for Multi-page TIFF images.");
 
-		baseClass.selectproject(Input.ingestionProjectName);
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish(Input.JanMultiPTIFF);
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.JanMultiPTIFF);
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("OLDE9EE8713-E5DD-44B8-BDC5-1466BEE66AB5_DAT.dat", "DId");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("DId", "DSource", "CName");
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.getIngestionSatatusAndPerform();
+		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.JanMultiPTIFF);
 		if (ingestionFullName != null) {
 			dataSets.selectDataSetWithNameInDocView(Input.JanMultiPTIFF);
@@ -1037,7 +1058,7 @@ public class Ingestion_Regression {
 			docview.getFileType().isElementAvailable(3);
 			driver.waitForPageToBeReady();
 			String filetype = docview.getDocView_TextFileType().getText().trim();
-			if (filetype.contains("TIFF")) {
+			if (filetype.isEmpty()) {
 				baseClass.passedStep("PDF file only displayed in default viewer");
 			} else {
 				baseClass.failedStep("verification failed");
@@ -1075,7 +1096,7 @@ public class Ingestion_Regression {
 	System.out.println(status);
 	
 	if (!status) {
-	String ingestionType = Input.ingestionType;
+	String ingestionType = Input.ingestionProjectName;
 	baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 	ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
 	Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
@@ -1083,8 +1104,9 @@ public class Ingestion_Regression {
 	}
 	
 	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
-	DataSets dataset = new DataSets(driver);
-	dataset.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.SearchMetaData(Input.metadataIngestion,"8D46_GD_994_Native_Text_ForProduction_20220413075857083");
+	sessionSearch.ViewInDocList();
 
 	DocListPage doc = new DocListPage(driver);
 	doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -1164,9 +1186,11 @@ public class Ingestion_Regression {
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
 		if(ingestionFullName!=null) {
 			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
+			driver.waitForPageToBeReady();
+			docview.waitforFileType();
 			String filetype=docview.getFileType().getText().trim();
 			System.out.println(filetype);
-			if(filetype.isEmpty()) {
+			if(filetype.contains("PDF")) {
 				baseClass.passedStep("PDF file only displayed in default viewer");
 			}else {
 				baseClass.failedStep("verification failed");
