@@ -261,10 +261,11 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
-			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",
-					Input.DAT_MMDDYYYY, Input.Natives_MMDDYYYY);
-			ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		baseClass.stepInfo("Search the documents and Save");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -354,6 +355,7 @@ public class Ingestion_Regression01 {
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		System.out.println(status);
 		if (status == false) {
+			ingestionPage = new IngestionPage_Indium(driver);
 			String ingestionType="Add Only";
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,ingestionType,
@@ -443,17 +445,22 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		ingestionPage = new IngestionPage_Indium(driver);
-		
-			baseClass.stepInfo("Edit of overlay only saved ingestion with mapping field selection");
-			String ingestionType=Input.overlayOnly;
+		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			String ingestionType="Add Only";
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
 					null, null, null, null, null,Input.MP3File, null, null);
 			
 			
-		
-		DataSets dataSets=new DataSets(driver);
-		dataSets.navigateToDataSetsPage();
-		dataSets.selectDataSetWithName(Input.AK_NativeFolder);
+		}
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Basic content search");
+		sessionsearch.basicContentSearch(Input.nativeMp3FileFormat);
+		baseClass.stepInfo("Navigating to doclist page");
+		sessionsearch.ViewInDocList();
 		DocListPage doc = new DocListPage(driver);
 		baseClass.waitForElement(doc.getSelectDropDown());
 		doc.getSelectDropDown().waitAndClick(10);
@@ -479,7 +486,7 @@ public class Ingestion_Regression01 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-48013");
 		baseClass.stepInfo("To Verify In Ingestion Overlays Ignore All Errors at Cataloge Stage, Should work.");
-		ingestionPage.performAKNativeFolderIngestionInOverlay(Input.DATFile1);
+		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "mp3", Input.MP3File);
 		ingestionPage.ignoreErrorsAndCatlogging();
 
 		// Rollback Ingestion
@@ -629,6 +636,21 @@ public class Ingestion_Regression01 {
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
+		
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.TiffImagesFolder);
+		ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
+		ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+		ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+		ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
+		ingestionPage.selectDateAndTimeForamt(dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.IgnoreErrorAndIndexing();
+		ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		
 		DataSets dataSets=new DataSets(driver);
 		dataSets.navigateToDataSetsPage();
 		dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
@@ -757,13 +779,14 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		ingestionPage = new IngestionPage_Indium(driver);
-		String ingestionType=Input.overlayOnly;	
-		
-		
-			baseClass.stepInfo("Edit of overlay only saved ingestion with mapping field selection");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		String ingestionType="Add Only";	
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.AK_NativeFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
 					null, null, null, null,null, Input.MP3File, null, null);
-		
+		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
 		sessionsearch.basicContentSearch(Input.searchStringStar);
@@ -926,10 +949,11 @@ public class Ingestion_Regression01 {
 		ingestionPage.nativigateToIngestionViaButton();
 		// getting before unique count
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		System.out.println(uniqueCountBefore);
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
 
 		// Search ingestionName
-		sessionSearch.basicSearchWithMetaDataQuery("8B61_27Mar_MultiPageTIFF_20220321153205930", "IngestionName");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.TiffImagesFolder, "IngestionName");
 		sessionSearch.getPureHitAddButton().isElementAvailable(2);
 		sessionSearch.getPureHitAddButton().waitAndClick(5);
 		// Saved the My SavedSearch
@@ -939,6 +963,7 @@ public class Ingestion_Regression01 {
 		ingestionPage.unpublish(BasicSearchName);
 
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		System.out.println(uniqueCountAfter);
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountAfter + "'");
 
 		if (uniqueCountBefore == uniqueCountAfter) {
@@ -1029,6 +1054,7 @@ public class Ingestion_Regression01 {
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46875");
 		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
@@ -1040,15 +1066,15 @@ public class Ingestion_Regression01 {
 		System.out.println(status);
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
-			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "YYYY/MM/DD HH:MM:SS",
-					Input.DAT_MMDDYYYY, Input.Natives_MMDDYYYY);
-			ingestionPage.IngestionCatlogtoIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveAndPublishIngestion(Input.HiddenPropertiesFolder);
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		driver.Navigate().refresh();
 		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
 		System.out.println(ingestionName);
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
 		sessionSearch.viewInDocView();
 		baseClass.waitForElement(docview.getDocView_DefaultViewTab());
@@ -1227,20 +1253,27 @@ public class Ingestion_Regression01 {
 		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
 		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
 
-		String ingestionType="Add Only";
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
+		
+		baseClass.stepInfo("Navigate to ingestion page.");
+		ingestionPage.nativigateToIngestionViaButton();
 		
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		String ingestionType="Add Only";
 		
-		System.out.println(status);
-		if (status == false) {
+		
+		if (status) {
 			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
 					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
 
 		}
 		
-		baseClass.stepInfo("Search the documents and Save");
-		sessionSearch.basicSearchWithMetaDataQuery("8B61_GD_994_Native_Text_ForProduction_20220413074025033", "IngestionName");
+		driver.Navigate().refresh();
+		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.GD994NativeTextForProductionFolder);
+		System.out.println(ingestionName);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
 		sessionSearch.ViewInDocList();
 		
 		docList.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
