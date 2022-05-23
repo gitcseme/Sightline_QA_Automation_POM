@@ -439,7 +439,7 @@ public class DocView_Regression3 {
 	 * icons on doc view after deleting the annotation layer
 	 * stabilization done
 	 */
-	@Test( enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyRedactionInfoAfterDletingAnnotationLayer() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -602,7 +602,7 @@ public class DocView_Regression3 {
 	 *              under specific SecurityGroup should not present respective
 	 *              redactions/annotations/remarks.
 	 */
-	@Test( enabled = true,alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyRedactionAnnoationtRemarkByAnnotationlayerDeleted() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -731,7 +731,7 @@ public class DocView_Regression3 {
 	 * @Description : Verify that after deleting the annotation layer by RMU user
 	 *              should not present respective redactions/annotations/remarks.
 	 */
-	@Test( enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyRedactionAnnoationtRemarkByAnnotlayerDeletedByRMU() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -792,6 +792,7 @@ public class DocView_Regression3 {
 		docView = new DocViewPage(driver);
 
 		docView.navigateToDocViewPageURL();
+		docView.selectDocIdInMiniDocList("H16135-0188-003487");
 
 		baseClass.stepInfo("Perfrompage redaction");
 		docView.nonAudioPageRedaction(Input.defaultRedactionTag);
@@ -810,6 +811,7 @@ public class DocView_Regression3 {
 		sessionsearch.navigateToSessionSearchPageURL();
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.addDocsMetCriteriaToActionBoard();
+		docView.selectDocIdInMiniDocList("H16135-0188-003487");
 
 		baseClass.stepInfo("Verify redaction,annotation and remark buttons are not displayed.");
 		docView.verifyRedactionAnnotaionAndRemarkButtonsAreDisabled();
@@ -1542,7 +1544,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.ViewInDocView();
-		docView.selectDocToViewInDocViewPanal("ID00000181");
+		docView.selectDocIdInMiniDocList("T2490D");
 		driver.waitForPageToBeReady();
 		
 		String firstUserWindow = driver.CurrentWindowHandle();
@@ -1559,7 +1561,7 @@ public class DocView_Regression3 {
 		baseClass.stepInfo("Searching the docs using basic search and viewing in doc view");
 		sessionsearch.basicContentSearch(Input.telecom);
 		sessionsearch.ViewInDocView();
-		docView.selectDocToViewInDocViewPanal("ID00000181");
+		docView.selectDocIdInMiniDocList("T2490D");
 		driver.waitForPageToBeReady();
 		String secondUserWindow = driver.CurrentWindowHandle();
 		baseClass.stepInfo("Switching back to first window to delete remark");
