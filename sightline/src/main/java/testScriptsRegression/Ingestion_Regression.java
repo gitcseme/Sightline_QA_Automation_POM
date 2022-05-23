@@ -1097,7 +1097,7 @@ public class Ingestion_Regression {
 	System.out.println(status);
 	
 	if (!status) {
-	String ingestionType = Input.ingestionProjectName;
+	String ingestionType = Input.ingestionType;
 	baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 	ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
 	Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
