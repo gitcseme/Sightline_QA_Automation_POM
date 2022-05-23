@@ -8816,7 +8816,7 @@ public class IngestionPage_Indium {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 			} else if (dataset.contains("20Family_20Threaded")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-			} else if (dataset.contains("AllSources")||dataset.contains("PP_PDFGen_10Docs")) {
+			} else if (dataset.contains("AllSources")||dataset.contains("PP_PDFGen_10Docs")||dataset.contains(Input.AK_NativeFolder)) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
 			} else if (dataset.contains("0002_H13696_1_Latest")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
@@ -8841,8 +8841,7 @@ public class IngestionPage_Indium {
 			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 			}
-
-			
+		
 				
 				base.stepInfo("*******Selecing Native files***************");
 				if (nativeFile==null) {
@@ -9056,7 +9055,7 @@ public class IngestionPage_Indium {
 				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 			}
-			else if(dataset.contains("PP_PDFGen_10Docs")){
+			else if(dataset.contains("PP_PDFGen_10Docs")||dataset.contains(Input.AK_NativeFolder)){
 				
 				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
 				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
