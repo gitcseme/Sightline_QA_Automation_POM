@@ -10280,7 +10280,7 @@ public class IngestionPage_Indium {
 			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
 		}else {
-			base.failedStep("Something Wrong");
+			base.failedStep("failed to get ingestion status");
 		}
 		
 	}
