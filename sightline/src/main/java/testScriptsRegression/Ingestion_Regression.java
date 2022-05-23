@@ -610,13 +610,24 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Verify Email metadata in DocList and in DocView");
 
 		String foldername = "IngestionFolder" + Utility.dynamicNameAppender();
-		String folderTheadMap = "IngestionFolderTheadMap" + Utility.dynamicNameAppender();
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress", "EmailToNames", "EmailToAddresses",
 				"EmailCCNames", "EmailCCAddresses", "EmailBCCNames", "EmailBCCAddresses" };
-		baseClass.selectproject(Input.regressionConsilio1);
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
-		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish(Input.IngestionEmailDataFolder);
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.IngestionEmailDataFolder);
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("0188_loadfile.dat", "DocumentID");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("DocumentID", "Document Author", "CustUserID");
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.removeCatalogError();
+			ingestion.getIngestionSatatusAndPerform();
+		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
@@ -655,19 +666,11 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			driver.getWebDriver().get(Input.url + "Search/Searches");
-			sessionsearch.Removedocsfromresults();
-			driver.waitForPageToBeReady();
-			int doccount = Integer.parseInt(sessionsearch.getThreadedLastCount().getText().trim());
-			System.out.println(doccount);
-			sessionsearch.getThreadedAddButton().waitAndClick(10);
-			sessionsearch.bulkFolderExistingWithoutPureHit(folderTheadMap);
-			sessionsearch.ViewInDocViewWithoutPureHit();
-			docview.verifyTheadMapValue(doccount, "participant");
+			docview.verifyTheadMapValue(10, "participant");
 
 			loginPage.logout();
 			baseClass.stepInfo("perform task for review manager");
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			tagandfolder.selectFolderViewInDocList(foldername);
 
 			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -698,8 +701,7 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			tagandfolder.selectFolderViewInDocView(folderTheadMap);
-			docview.verifyTheadMapValue(doccount, "participant");
+			docview.verifyTheadMapValue(10, "participant");
 
 		}
 
@@ -728,7 +730,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.regressionConsilio1);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
@@ -1073,7 +1075,7 @@ public class Ingestion_Regression {
 	System.out.println(status);
 	
 	if (!status) {
-	String ingestionType = Input.ingestionProjectName;
+	String ingestionType = Input.ingestionType;
 	baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
 	ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
 	Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
@@ -1081,9 +1083,8 @@ public class Ingestion_Regression {
 	}
 	
 	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
-	SessionSearch sessionSearch = new SessionSearch(driver);
-	sessionSearch.SearchMetaData(Input.metadataIngestion,"8D46_GD_994_Native_Text_ForProduction_20220413075857083");
-	sessionSearch.ViewInDocList();
+	DataSets dataset = new DataSets(driver);
+	dataset.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
 
 	DocListPage doc = new DocListPage(driver);
 	doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -1163,11 +1164,9 @@ public class Ingestion_Regression {
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
 		if(ingestionFullName!=null) {
 			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
-			driver.waitForPageToBeReady();
-			docview.waitforFileType();
 			String filetype=docview.getFileType().getText().trim();
 			System.out.println(filetype);
-			if(filetype.contains("PDF")) {
+			if(filetype.isEmpty()) {
 				baseClass.passedStep("PDF file only displayed in default viewer");
 			}else {
 				baseClass.failedStep("verification failed");

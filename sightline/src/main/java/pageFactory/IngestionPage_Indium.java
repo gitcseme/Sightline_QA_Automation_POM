@@ -10267,7 +10267,7 @@ public class IngestionPage_Indium {
 			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
 		}else {
-			base.failedStep("Something Wrong");
+			base.failedStep("Intermediate failure due to automation script not get the status of the ingestion");
 		}
 		
 	}
