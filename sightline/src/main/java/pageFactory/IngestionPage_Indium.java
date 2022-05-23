@@ -6914,7 +6914,7 @@ public class IngestionPage_Indium {
 			int sourceCount = Integer.parseInt(getSourceCount().getText());
 			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
 			int errorCount = Integer.parseInt(errorCountStatus().getText());
-			if (sourceCount > 0 && ingestedCount > 0 && errorCount == 0) {
+			if (sourceCount >= 0 && ingestedCount >= 0 && errorCount == 0) {
 				base.passedStep("Source , Ingested and Error count details displayed");
 			} else {
 				base.failedStep("Source,Ingested and Error count details not displayed");
