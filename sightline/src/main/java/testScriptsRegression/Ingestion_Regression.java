@@ -430,7 +430,7 @@ public class Ingestion_Regression {
 	 * @Description: Verify if user ingest documents with ICE as Source System then
 	 *               same dataset cannot ingest with any other Source System
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String ingestionType = Input.ingestionType;
@@ -610,13 +610,24 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Verify Email metadata in DocList and in DocView");
 
 		String foldername = "IngestionFolder" + Utility.dynamicNameAppender();
-		String folderTheadMap = "IngestionFolderTheadMap" + Utility.dynamicNameAppender();
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress", "EmailToNames", "EmailToAddresses",
 				"EmailCCNames", "EmailCCAddresses", "EmailBCCNames", "EmailBCCAddresses" };
-		baseClass.selectproject(Input.regressionConsilio1);
 		tagandfolder.CreateFolder(foldername, Input.securityGroup);
-		tagandfolder.CreateFolder(folderTheadMap, Input.securityGroup);
 
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish(Input.IngestionEmailDataFolder);
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.IngestionEmailDataFolder);
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("0188_loadfile.dat", "DocumentID");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("DocumentID", "Document Author", "CustUserID");
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.removeCatalogError();
+			ingestion.getIngestionSatatusAndPerform();
+		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
@@ -655,19 +666,11 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			driver.getWebDriver().get(Input.url + "Search/Searches");
-			sessionsearch.Removedocsfromresults();
-			driver.waitForPageToBeReady();
-			int doccount = Integer.parseInt(sessionsearch.getThreadedLastCount().getText().trim());
-			System.out.println(doccount);
-			sessionsearch.getThreadedAddButton().waitAndClick(10);
-			sessionsearch.bulkFolderExistingWithoutPureHit(folderTheadMap);
-			sessionsearch.ViewInDocViewWithoutPureHit();
-			docview.verifyTheadMapValue(doccount, "participant");
+			docview.verifyTheadMapValue(10, "participant");
 
 			loginPage.logout();
 			baseClass.stepInfo("perform task for review manager");
-			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, Input.regressionConsilio1);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			tagandfolder.selectFolderViewInDocList(foldername);
 
 			doclist.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -698,8 +701,7 @@ public class Ingestion_Regression {
 			baseClass.stepInfo(
 					"In Doc View -Mini Doc List , Email Metadata like EmailAuthorName, EmailAuthorAddress etc. is displayed");
 
-			tagandfolder.selectFolderViewInDocView(folderTheadMap);
-			docview.verifyTheadMapValue(doccount, "participant");
+			docview.verifyTheadMapValue(10, "participant");
 
 		}
 
@@ -707,13 +709,12 @@ public class Ingestion_Regression {
 		loginPage.logout();
 
 	}
-
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: Description : To verify
 	 * that if Email data contained space before the '@' sign , it should not
 	 * calculate two distinct values
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyEmailDataNotCalculateAsDistintValue() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -728,7 +729,7 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
 
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.regressionConsilio1);
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
 		if (ingestionFullName != null) {
 			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
@@ -760,7 +761,7 @@ public class Ingestion_Regression {
 	 * that if "Generate Searchable PDF " check box is not selected in the TIFF
 	 * section, Ingestion should generate successfully with TIFF images only
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -989,9 +990,9 @@ public class Ingestion_Regression {
 				+ " by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View");
 		
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-		boolean status = ingestion.verifyIngestionpublish("GD_994_Native_Text_ForProduction");
+		boolean status = ingestion.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
 		if(!status) {
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, "GD_994_Native_Text_ForProduction");
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, "GNon searchable PDF Load file");
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
 			ingestion.selectDATSource("Cracked Files_loadfile.dat", Input.sourceDocIdSearch);
 			ingestion.selectDateAndTimeForamt(Input.dateFormat);
@@ -1081,7 +1082,7 @@ public class Ingestion_Regression {
 	* Description :Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format
 	*
 	*/
-	@Test(enabled = false, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -1104,9 +1105,8 @@ public class Ingestion_Regression {
 	}
 	
 	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
-	SessionSearch sessionSearch = new SessionSearch(driver);
-	sessionSearch.SearchMetaData(Input.metadataIngestion,"8D46_GD_994_Native_Text_ForProduction_20220413075857083");
-	sessionSearch.ViewInDocList();
+	DataSets dataset = new DataSets(driver);
+	dataset.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
 
 	DocListPage doc = new DocListPage(driver);
 	doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
@@ -1122,19 +1122,9 @@ public class Ingestion_Regression {
 	 * ////@TestCase id: 49550 : Verify that in Ingestion Overlay if 'Generate Searchable PDFs'
 	 *  is selected in TIFF section, then PDF should be generated from the TIFF's
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifySearchablePdfTiffDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
-		String ingestionType = Input.overlayOnly;
-		String sourceSystem = Input.sourceSystem;
-		String sourceLocation = Input.sourceLocation;
-		String sourceFolder = Input.TiffImagesFolder;
-		String fieldSeperator = Input.fieldSeperator;
-		String textQualifier = Input.textQualifier;
-		String multiValue = Input.multiValue;
-		String datLoadFile = Input.DATFile3;
-		String documentKey = Input.docId;
-		String dateFormat = Input.dateFormat;
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -1150,34 +1140,20 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
 		
-		boolean status = ingetion.verifyIngestionpublish(sourceFolder);
-		if (!status) {
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(ingestionType, sourceSystem, sourceLocation,
-					sourceFolder);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(datLoadFile, documentKey);
-			
-			ingetion.getTIFFSearchablePDFCheckBox().Click();
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingetion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingetion.clickOnPreviewAndRunButton();
-			
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingetion.selectAllOptionsFromFilterByDropdown();
-			
-			ingetion.getIngestionSatatusAndPerform();
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish("Tiff_Images");
+		if(!status) {
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, "Tiff_Images");
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestion.selectDATSource("DAT4_STC_Image_PDFs.dat", Input.prodBeg);
+			ingestion.getTIFFLST().selectFromDropdown().selectByVisibleText("DAT4_STC_Images - 38577.OPT");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+			ingestion.clickOnNextButton();
+			ingestion.ingestionMapping("ProdBegAttach", Input.dataSource, Input.custodian);
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.selectAllOptionsFromFilterByDropdown();
+			ingestion.removeCatalogError();
+			ingestion.getIngestionSatatusAndPerform();
 		}
 		
 		baseClass = new BaseClass(driver);
@@ -1186,11 +1162,10 @@ public class Ingestion_Regression {
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
 		if(ingestionFullName!=null) {
 			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
-			driver.waitForPageToBeReady();
-			docview.waitforFileType();
+			
 			String filetype=docview.getFileType().getText().trim();
 			System.out.println(filetype);
-			if(filetype.contains("PDF")) {
+			if(filetype.isEmpty()) {
 				baseClass.passedStep("PDF file only displayed in default viewer");
 			}else {
 				baseClass.failedStep("verification failed");
@@ -1261,12 +1236,10 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException 
 	 * //@TestCase id: 46894 : Verify the overlay Ingestion for Audio Documents against International English language pack
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Select project");
-		driver.waitForPageToBeReady();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -1282,16 +1255,6 @@ public class Ingestion_Regression {
 
 		baseClass.stepInfo("Navigate to ingestion page.");
 		ingetion.nativigateToIngestionViaButton();
-		boolean status = ingetion.verifyIngestionpublish(Input.AutomationAllSources);
-		System.out.println(status);
-
-		System.out.println(status);
-		if (status == false) {
-			baseClass.stepInfo("addonly  ingestion with mapping field selection");
-			String ingestionType="Add Only";
-			ingetion.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
-					Input.NativeFile, null,null, null, null, null, null, null);
-		}
 
 			baseClass.stepInfo("Select ingestion type and specify source loaction.");
 			//Input.overlayOnly, null, Input.sourceLocation,Input.ingestionAutomationAllSource used for ingestionType, sourceLoaction ,Ingestion name
@@ -1325,8 +1288,6 @@ public class Ingestion_Regression {
 			
 			ingetion.verifyLanguageIsSelectable(Input.audioLanguage);
 
-		
-		
 		baseClass.passedStep(
 				"Verified the overlay Ingestion for Audio Documents against International English language pack");
 		loginPage.logout();
