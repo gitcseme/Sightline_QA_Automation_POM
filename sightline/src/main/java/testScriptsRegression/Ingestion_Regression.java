@@ -1120,14 +1120,13 @@ public class Ingestion_Regression {
 	 */
 	@Test(enabled = true,  groups = {"regression" },priority = 20)
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
-		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
 		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it PDF should displays PDF in viewer");
 		String ingestionType="Overlay Only";
-		
+		ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, null,
 					null, "PDFs - 5Docs.lst", Input.ImagePPPDF10docs,"Select", null, null, null);
 		ingestionPage.navigateToIngestionPage();
@@ -1165,14 +1164,13 @@ public class Ingestion_Regression {
 	@Test(enabled = true,  groups = {"regression" },priority = 21)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49519");
 		baseClass.stepInfo("Verify that if PA ingested both Native and TIFF's file, the 'Generate Searchable PDFs' is true and TIFF is missing then searchable PDF's should be generated from the Natives.");
 		String ingestionType="Overlay Only";
-		
+		ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
 					null,null , Input.ImagePPPDF10docs,"Select", null, null, null);
 		ingestionPage.navigateToIngestionPage();
@@ -1208,13 +1206,14 @@ public class Ingestion_Regression {
 	@Test(enabled = true,  groups = {"regression" },priority = 22)
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
 		
-		ingestionPage = new IngestionPage_Indium(driver);
+		
 		DocViewPage docViewPage = new DocViewPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49509");
 		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to false then it should display TIFF in default viewer");
+		ingestionPage = new IngestionPage_Indium(driver);
 		String ingestionType="Overlay Only";
 		
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, "Natives -5Docs.lst",
