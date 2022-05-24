@@ -1655,6 +1655,7 @@ public class DocView_Regression5 {
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
 //		softAssert.assertAll();
+		baseClass.waitTime(3);
 		loginPage.logout();
 		
 	}
