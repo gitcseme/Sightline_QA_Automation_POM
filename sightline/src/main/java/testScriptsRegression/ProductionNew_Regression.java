@@ -831,12 +831,12 @@ public class ProductionNew_Regression {
 		// search for the created folder and check the pure hit count
 		sessionSearch = new SessionSearch(driver);
 
-		sessionSearch.basicContentSearch(Input.documentID);
+		sessionSearch.basicContentSearch(Input.parentDocument);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
 
-		docPage.SelectingParentDocumentFromDocList(Input.documentID);
+		docPage.SelectingParentDocumentFromDocList(Input.parentDocument);
 		System.out.println(foldername);
 
 		docPage.bulkFolderExisting(foldername);
@@ -1122,9 +1122,11 @@ public class ProductionNew_Regression {
 		base.stepInfo("RPMXCON-56153 Production- Sprint 04");
 		base.stepInfo("RPMXCON-56155 Production- Sprint 04");
 		
+		
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		//Pre-requisites
+		
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
