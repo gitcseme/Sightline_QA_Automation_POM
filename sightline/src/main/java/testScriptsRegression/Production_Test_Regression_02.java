@@ -2333,7 +2333,7 @@ public class Production_Test_Regression_02{
 		page.fillingExportLocationPage(exportname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingExportGeneratePageAndVerfyingBatesRangeValue(endingBates1);
+		page.clickOnGenerateButton();
 
 		base.passedStep("Verified Field EndingBates in Production");
 
@@ -2681,7 +2681,7 @@ public class Production_Test_Regression_02{
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
