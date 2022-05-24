@@ -490,6 +490,11 @@ public class DocListPage {
 	public Element getCancelButton() {
 		return driver.FindElementById("bot2-Msg1");
 	}
+	
+	//Added by arun
+	public Element getDataInDoclist(int row,int column) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + row + "]//td[" + column + "]");
+	}
 
 	// Added by Gopinath - 24/09/2021
 	public Element getFirstDocumentButton() {
@@ -4807,9 +4812,8 @@ public class DocListPage {
 				getRemoveBtn().Click();
 				System.out.println(i);
 			}
-			String[] eleValue = { "LastAccessDate", "LastModifiedDate", "LastSaveDate", "MasterDate", "EmailSentDate",
-					"EmailReceivedDate", "DocDate", "AppointmentStartDate", "AppointmentEndDate", Input.MetaDataEAName,
-					Input.docFileType, Input.metaDataName };
+			String[] eleValue = { "LastAccessDate", "LastModifiedDate", "LastSaveDate","LastEditDate", "MasterDate", "EmailSentDate",
+					"EmailReceivedDate", "DocDate", "AppointmentStartDate", "AppointmentEndDate" };
 			for (int j = 0; j < eleValue.length; j++) {
 				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
 				getSelectAvailMetadata(eleValue[j]).ScrollTo();
@@ -4824,9 +4828,35 @@ public class DocListPage {
 				base.stepInfo(metadata);
 			}
 			base.stepInfo("Email metadata is display correctly in doc list");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getUpdateColumnBtn().Visible();
+				}
+			}), Input.wait30);
+			getUpdateColumnBtn().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDataInDoclist(1,13).Visible();
+			}
+		}), Input.wait30);
+		String dateFormat = getDataInDoclist(1,13).getText();
+		String firstSectionInDateFormat[] = dateFormat.split("/");
+		int firstsectionLength = firstSectionInDateFormat[0].length();
+		int dateFormatTotalLength = dateFormat.length();
+
+		if (dateFormatTotalLength == 19 && firstsectionLength == 4) {
+			base.passedStep(" date fields displayed correctly ");
+		} else {
+			base.failedStep(
+					"date fields not displayed correctly ");
+		}
+		
 	}
 
 	/**
