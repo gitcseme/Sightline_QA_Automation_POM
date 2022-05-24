@@ -4250,7 +4250,7 @@ public class DocViewPage {
 				return getDocView_RedactThisPage().Displayed();
 			}
 		}), Input.wait30);
-		getDocView_RedactThisPage().Click();
+		getDocView_RedactThisPage().waitAndClick(10);
 		Thread.sleep(3000);
 
 		driver.WaitUntil((new Callable<Boolean>() {
