@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.imageio.ImageIO;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -2731,11 +2733,16 @@ public class Production_Test_Regression_02{
 		page.fillingSummaryAndPreview();
 
 		base = new BaseClass(driver);
+
+		if (base.getCloseSucessmsg().isElementAvailable(5)) {
+			base.CloseSuccessMsgpopup();
+		}
+		
 		page.clickOnGenerateButton();
 		driver.waitForPageToBeReady();
-		base.VerifySuccessMessage("Generation Started Successfully");
-
-		base.passedStep(
+	    base.VerifySuccessMessage("Generation Started Successfully");
+	
+	    base.passedStep(
 				"To verify that PA creates new production using continue with last bates range of last production, which is completed with only pre-gen check");
 
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
