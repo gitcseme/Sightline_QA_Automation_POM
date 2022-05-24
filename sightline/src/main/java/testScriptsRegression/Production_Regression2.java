@@ -2635,6 +2635,7 @@ public class Production_Regression2 {
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
+		base.selectproject(Input.regressionConsilio1);
 		DataSets dataset = new DataSets(driver);
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
