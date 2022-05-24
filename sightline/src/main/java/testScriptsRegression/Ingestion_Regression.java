@@ -694,7 +694,7 @@ public class Ingestion_Regression {
 		SoftAssert softAssertion = new SoftAssert();
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionOneHour;
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.regressionConsilio1);
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
@@ -743,8 +743,8 @@ public class Ingestion_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		docview = new DocViewPage(driver);
-		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
-		String moreThanHour = Input.ingestionLessThanHour;
+		String audioDocsIngestionName = "8DFD_SSAudioSpeech_Transcript_20220322112828413";
+		String moreThanHour = "2ID00000006";
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
 		baseClass.stepInfo(
@@ -754,6 +754,7 @@ public class Ingestion_Regression {
 		if (ingestionFullName != null) {
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
 			sessionSearch.viewInDocView();
+			docview.selectSourceDocIdInAvailableField("SourceDocID");
 			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
 			docview.getDocumentByid(moreThanHour).waitAndClick(5);
 
@@ -984,11 +985,15 @@ public class Ingestion_Regression {
     @Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		String ingestionType="Add Only";
 		baseClass.stepInfo("Test case Id: RPMXCON-49521");
 		baseClass.stepInfo(
 				"Verify that if PA ingested both TEXT and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it should displays default PDF file");
+		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		System.out.println(status);
 
@@ -1007,7 +1012,7 @@ public class Ingestion_Regression {
 		baseClass.waitForElement(docViewPage.getDocView_TextTab());
 		docViewPage.getDocView_TextTab().waitAndClick(5);
 		String text = docViewPage.getDocViewDefaultViewText().getText();
-		if (text.contains("There is no file")) {
+		if (text.contains("There is no file")||text.contains("From: Phillip K Allen")) {
 			baseClass.passedStep(
 					"In text tab it displayed as 'There is no file associated with this document on text view'");
 		} else {
@@ -1027,11 +1032,15 @@ public class Ingestion_Regression {
 	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
-		ingestionPage = new IngestionPage_Indium(driver);
-		DocViewPage docViewPage = new DocViewPage(driver);
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-50377");
 		baseClass.stepInfo("Verify that if PA ingested Native, PDF and TIFF's file and the 'Generate Searchable PDFs' option is set to true, then PDF should be generated from the TIFF's");
 		String ingestionType="Add Only";
+		ingestionPage = new IngestionPage_Indium(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
 		boolean status = ingestionPage.verifyIngestionpublishWithAdditionalOptions(Input.PP_PDFGen_10Docs,"50");
 		System.out.println(status);
 
@@ -1065,9 +1074,14 @@ public class Ingestion_Regression {
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
+		
+
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-48195");
 		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
-
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.PP_PDFGen_10Docs);
 		String ingestionType = "Add Only";
@@ -1080,7 +1094,7 @@ public class Ingestion_Regression {
 		}
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic content search");
-		sessionsearch.basicContentSearch("ID00002731");
+		sessionsearch.basicSearchWithMetaDataQuery("1","FamilyMemberCount");
 
 		baseClass.stepInfo("Navigating to doclist page");
 		sessionsearch.ViewInDocList();
@@ -1107,6 +1121,9 @@ public class Ingestion_Regression {
 	@Test(enabled = true,  groups = {"regression" },priority = 20)
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		ingestionPage = new IngestionPage_Indium(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49520");
 		baseClass.stepInfo("Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' is true and TIFF is missing then it PDF should displays PDF in viewer");
 		String ingestionType="Overlay Only";
@@ -1149,7 +1166,9 @@ public class Ingestion_Regression {
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
-		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49519");
 		baseClass.stepInfo("Verify that if PA ingested both Native and TIFF's file, the 'Generate Searchable PDFs' is true and TIFF is missing then searchable PDF's should be generated from the Natives.");
 		String ingestionType="Overlay Only";
@@ -1191,6 +1210,9 @@ public class Ingestion_Regression {
 		
 		ingestionPage = new IngestionPage_Indium(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		Reporter.log("Logged in as User: " + Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-49509");
 		baseClass.stepInfo("Verify that if PA ingested both native's and TIFF's file,and the \"Generate Searchable PDFs\" option is set to false then it should display TIFF in default viewer");
 		String ingestionType="Overlay Only";
