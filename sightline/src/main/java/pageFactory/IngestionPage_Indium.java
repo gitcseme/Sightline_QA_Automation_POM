@@ -3596,11 +3596,11 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			if(!getTIFFLST().isElementAvailable(3)){
-				getTIFFCheckBox().ScrollTo();
-				getTIFFCheckBox().isElementAvailable(15);
-				getTIFFCheckBox().Click();
-			}
+			
+			getTIFFCheckBox().ScrollTo();
+			getTIFFCheckBox().isElementAvailable(15);
+			getTIFFCheckBox().Click();
+	
 			getTIFFLST().ScrollTo();
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
@@ -5480,7 +5480,7 @@ public class IngestionPage_Indium {
 		getFilterByCOPIED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(10);
-		for (int i = 0; i < 70; i++) {
+		for (int i = 0; i < 90; i++) {
 			base.waitTime(2);
 			String status = getStatus(1).getText().trim();
 
