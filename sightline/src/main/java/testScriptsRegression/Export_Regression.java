@@ -708,7 +708,7 @@ public class Export_Regression {
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
 	 * 
 	 */
-//	@Test(groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" }, priority = 7)
 	public void verifyTIFFExportWithBurnRedaction() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-50630");
@@ -753,7 +753,7 @@ public class Export_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		base.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViewWithoutPureHit();
 		
 		base.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
@@ -777,12 +777,12 @@ public class Export_Regression {
 		base.stepInfo("Filling DAT Section");
  		page.fillingDATSection();
 		
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
 		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
-		
+		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
+
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
 		
@@ -820,7 +820,7 @@ public class Export_Regression {
 		base.stepInfo("Navigate To Tags And Folder Page");
 		
 		base.stepInfo("Delete Folder With Security Group");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
@@ -834,7 +834,7 @@ public class Export_Regression {
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
 	 * 
 	 */
-//	@Test(groups = { "regression" }, priority = 8)
+	@Test(groups = { "regression" }, priority = 8)
 	public void verifyTIFFExportWithBurnRedactionEnabled() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-50330");
@@ -879,7 +879,7 @@ public class Export_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		base.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViewWithoutPureHit();
 		
 		base.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
@@ -903,11 +903,11 @@ public class Export_Regression {
 		base.stepInfo("Filling DAT Section");
  		page.fillingDATSection();
 		
-		base.stepInfo("Filling Native Section");
-		page.fillingNativeSection();
-		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
+		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
+		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -947,7 +947,7 @@ public class Export_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		
 		base.stepInfo("Delete Folder With Security Group");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
@@ -960,7 +960,7 @@ public class Export_Regression {
 	 * @Description: To Verify in Export TIFFPageCount for placeholders.
 	 * 
 	 */
-//	@Test(groups = { "regression" }, priority = 9)
+	@Test(groups = { "regression" }, priority = 9)
 	public void verifyTIFFPageCountForPlaceholders() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49248");
@@ -1005,7 +1005,7 @@ public class Export_Regression {
 		sessionSearch.bulkFolderExisting(foldername);
 		
 		base.stepInfo("View searched for audio docs in Doc view");
-		sessionSearch.ViewInDocView();
+		sessionSearch.ViewInDocViewWithoutPureHit();
 		
 		base.stepInfo("Click on reduction button ");
 		docViewMetaDataPage.clickOnRedactAndRectangle();
@@ -1031,12 +1031,15 @@ public class Export_Regression {
 		
  		base.stepInfo("Add DAT Field At SecondRow");
 		page.addDATFieldAtSecondRow(Input.productionText, Input.tiffPageCountNam, Input.tiffPageCountText);
-		
+
  		base.stepInfo("Add DAT Field At Third row");
 		page.addDATFieldAtThirdRow(Input.docBasic,Input.docName,Input.documentID);
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
+		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
+		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -1076,7 +1079,7 @@ public class Export_Regression {
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		
 		base.stepInfo("Delete Folder With Security Group");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		
 		base.stepInfo("Delete added redaction tag");
 		redactionpage.DeleteRedaction(redactiontag1);
@@ -1265,7 +1268,7 @@ public class Export_Regression {
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		tagsAndFolderPage.CreateTag(tagname,Input.securityGroup);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1286,7 +1289,6 @@ public class Export_Regression {
 		}
 		page.addANewExport(productionname);
 		page.fillingDATSection();
-		page.fillingNativeSection();
 		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
 		page.navigateToNextSection();
 		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);

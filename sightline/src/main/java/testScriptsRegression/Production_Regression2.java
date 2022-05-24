@@ -2633,7 +2633,7 @@ public class Production_Regression2 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		base.selectproject(Input.regressionConsilio1);
