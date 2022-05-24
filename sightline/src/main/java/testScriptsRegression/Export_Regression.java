@@ -32,7 +32,6 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-@Listeners(CustomTestNGListener.class)
 public class Export_Regression {
 
 	Driver driver;
@@ -73,7 +72,7 @@ public class Export_Regression {
 	 * @TestCase id :  49359 - Verify that if PA selects the Export with Production and has only Native Files selected in the native components section, then Component tab should Complete without any error.
 	 * @Description : Verify that if PA selects the Export with Production and has only Native Files selected in the native components section, then Component tab should Complete without any error.
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(alwaysRun = true,groups={"regression"},priority = 1)
 	public void verifyExportWithProductionNativeComponentsSection() throws Exception {		
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49359 Export Sprint-8");
@@ -179,7 +178,7 @@ public class Export_Regression {
 	 * @Description:To verify In Export DAT, TIFFPageCount for each document should be displayed when export is done with any component.
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 2)
+	@Test(groups = { "regression" }, priority = 2)
 	public void verifyTIFFPageCountAndTiffSectionExport() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("#### To verify In Export DAT, TIFFPageCount for each document should be displayed when export is done with any component ####");
@@ -290,7 +289,7 @@ public class Export_Regression {
 	 * @Description: To verify In Export DAT, provide the TIFFPageCount for each document should be zero when only DAT component is selected
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 3)
+	@Test(groups = { "regression" }, priority = 3)
 	public void verifyTiffPageCountOnDATForExport() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("#### To verify In Export DAT, provide the TIFFPageCount for each document should be zero when only DAT component is selected ####");
@@ -394,7 +393,7 @@ public class Export_Regression {
 	 * @TestCase id :  49220 -To verify that in Production Export, this production will not show up as it was uncommitted.
 	 * @Description : Verify that in Production Export, this production will not show up as it was uncommitted.
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, alwaysRun = true,groups={"regression"},priority = 4)
+	@Test(alwaysRun = true,groups={"regression"},priority = 4)
 	public void verifyProductionNotShownInExportWhenUncommited() throws Exception {		
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49220 Export Sprint-8");
@@ -502,7 +501,7 @@ public class Export_Regression {
 	 * @Description: To verify that when text is for document then it should export the actual text file.
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 5)
+	@Test(groups = { "regression" }, priority = 5)
 	public void verifyTextSecDocument() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("#### To verify that when text is for document then it should export the actual text file ####");
@@ -598,7 +597,7 @@ public class Export_Regression {
 	 * @Description: Verify Add documents option is not getting displayed in Export.
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 6)
+	@Test(groups = { "regression" }, priority = 6)
 	public void verifyDocumentSectionOptionNotDisplayedExport() throws Exception {
 		base=new BaseClass(driver);
 		base=new BaseClass(driver);
@@ -711,7 +710,7 @@ public class Export_Regression {
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
 	 * 
 	 */
-//	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 7)
+//	@Test(groups = { "regression" }, priority = 7)
 	public void verifyTIFFExportWithBurnRedaction() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-50630");
@@ -837,7 +836,7 @@ public class Export_Regression {
 	 * @Description: Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled.
 	 * 
 	 */
-//	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 8)
+//	@Test(groups = { "regression" }, priority = 8)
 	public void verifyTIFFExportWithBurnRedactionEnabled() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-50330");
@@ -963,7 +962,7 @@ public class Export_Regression {
 	 * @Description: To Verify in Export TIFFPageCount for placeholders.
 	 * 
 	 */
-//	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 9)
+//	@Test(groups = { "regression" }, priority = 9)
 	public void verifyTIFFPageCountForPlaceholders() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49248");
@@ -1092,7 +1091,7 @@ public class Export_Regression {
 	 * @Description: Verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" }, priority = 7)
 	public void verifyProductionExportSlipSheetMetaDataSorted() throws Exception {
 		base=new BaseClass(driver);
 
@@ -1131,7 +1130,7 @@ public class Export_Regression {
 	 * @Description: Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 8)
+	@Test(groups = { "regression" }, priority = 8)
 	public void verifyProductionExportNativeMetaDataDropdownSorted() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("#### Verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
@@ -1167,7 +1166,7 @@ public class Export_Regression {
 	 * @Description: Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending.
 	 * 
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = { "regression" }, priority = 9)
+	@Test(groups = { "regression" }, priority = 9)
 	public void verifyProductionExportExceptionMetaDataDropdownSorted() throws Exception {
 		base=new BaseClass(driver);
 		base.stepInfo("#### Verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending. ####");
@@ -1204,7 +1203,7 @@ public class Export_Regression {
 	 * Native Files and Tags selected in the native components section, then
 	 * Component tab should Complete without any error.
 	 */
-	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verifyProductionCreationDateMarkComp() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base=new BaseClass(driver);
@@ -1250,7 +1249,7 @@ public class Export_Regression {
 	 * @Description To Verify placeholders of the docs of the selected file types are produced in Export.
 	 * 
 	 */
-		@Test(retryAnalyzer = RetryAnalyzer.class, description="RPMXCON-48068",enabled = true,groups = { "regression" }, priority = 11)
+		@Test(description="RPMXCON-48068",enabled = true,groups = { "regression" }, priority = 11)
 		public void verifyPlaceHolderOfExportDocuments() throws Exception {
 			
 			base = new BaseClass(driver);
