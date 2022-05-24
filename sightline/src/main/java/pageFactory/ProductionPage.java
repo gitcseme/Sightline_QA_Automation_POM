@@ -5269,11 +5269,11 @@ public class ProductionPage {
 		}), Input.wait30);
 		getNative_GenerateLoadFileLST().waitAndClick(10);
 
-		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
+//		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
 
-		String Actual = getNativeAdvanced_Text().getWebElement().getText();
-
-		softAssertion.assertEquals(Actual, Expect);
+//		String Actual = getNativeAdvanced_Text().getWebElement().getText();
+//
+//		softAssertion.assertEquals(Actual, Expect);
 		driver.scrollingToBottomofAPage();
 
 		base.stepInfo("Native section is filled");
@@ -5784,6 +5784,8 @@ public class ProductionPage {
 		getPriveldge_SelectTagButton().Click();
 
 		base.waitForElement(getPriveldge_TagTree(tagname));
+		driver.waitForPageToBeReady();
+		getPriveldge_TagTree(tagname).ScrollTo();
 		Thread.sleep(3000);
 		getPriveldge_TagTree(tagname).waitAndClick(10);
 
@@ -14704,7 +14706,9 @@ public class ProductionPage {
 			base.waitForElement(getClkBtn_selectingRedactionTags());
 			getClkBtn_selectingRedactionTags().Click();
 			driver.waitForPageToBeReady();
+			BurnRedactionCheckBox(Tag).ScrollTo();
 			base.waitForElement(BurnRedactionCheckBox(Tag));
+			BurnRedactionCheckBox(Tag).ScrollTo();
 			BurnRedactionCheckBox(Tag).waitAndClick(10);
 			driver.waitForPageToBeReady();
 			base.waitForElement(getClk_selectBtn());
@@ -15999,7 +16003,8 @@ public class ProductionPage {
 			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
 
 			base.waitForElement(getPriveldge_TagTree(tagname));
-			Thread.sleep(5000);
+			driver.waitForPageToBeReady();
+			getPriveldge_TagTree(tagname).ScrollTo();
 			getPriveldge_TagTree(tagname).waitAndClick(20);
 
 			base.waitForElement(getPriveldge_TagTree_SelectButton());
@@ -16239,7 +16244,8 @@ public class ProductionPage {
 		getPriveldge_SelectTagButton().Click();
 
 		base.waitForElement(getPriveldge_TagTree(tagname));
-		Thread.sleep(3000);
+		driver.waitForPageToBeReady();
+		getPriveldge_TagTree(tagname).ScrollTo();
 		getPriveldge_TagTree(tagname).waitAndClick(10);
 
 		getPriveldge_TagTree_SelectButton().Click();
