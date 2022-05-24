@@ -7350,6 +7350,7 @@ public class DocViewPage {
 
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+			base.waitTime(2);
 
 			if (getDocView_MiniDoclist_ConfigureMiniDocList_SelectedFields().isElementAvailable(2)
 					|| getDocView_MiniDoclist_ConfigureMiniDocList_FamilyMemberCount().isElementAvailable(2)) {
