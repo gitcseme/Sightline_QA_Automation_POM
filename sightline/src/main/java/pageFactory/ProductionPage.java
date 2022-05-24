@@ -2316,7 +2316,7 @@ public class ProductionPage {
 
 	public Element BurnRedactionCheckBox(String tag) {
 		return driver
-				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+				.FindElementByXPath("//div[@id='RedactionTagsTree']//a[contains(text(),'" + tag + "')]");
 	}
 
 	// Added by Gopinath -16/12/2021
@@ -17838,6 +17838,10 @@ public class ProductionPage {
 		Thread.sleep(2000);
 		getConfirmProductionCommit().waitAndClick(10);
 
+		if (base.getCloseSucessmsg().isElementAvailable(5)) {
+            base.CloseSuccessMsgpopup();
+        }
+		
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(1000);

@@ -831,12 +831,12 @@ public class ProductionNew_Regression {
 		// search for the created folder and check the pure hit count
 		sessionSearch = new SessionSearch(driver);
 
-		sessionSearch.basicContentSearch(Input.documentID);
+		sessionSearch.basicContentSearch(Input.parentDocument);
 		sessionSearch.ViewInDocList();
 
 		docPage = new DocListPage(driver);
 
-		docPage.SelectingParentDocumentFromDocList(Input.documentID);
+		docPage.SelectingParentDocumentFromDocList(Input.parentDocument);
 		System.out.println(foldername);
 
 		docPage.bulkFolderExisting(foldername);

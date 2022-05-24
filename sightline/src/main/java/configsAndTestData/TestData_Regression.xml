@@ -181,7 +181,7 @@
 	<tagNameTechnical>Technical_Issue</tagNameTechnical>
 	<documentID>ID00004969</documentID>
 	<orphanDocument>ID00001344</orphanDocument>
-	<parentDocument>ID00002780</parentDocument>
+	<parentDocument>ID00001053</parentDocument>
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>
@@ -439,7 +439,7 @@
 	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
 	
 	<!-- Added by Brundha -->
-	<documentID>H16135-0188-002270</documentID>
+	<documentID>ID00004969</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>H16135-0188-002430</docFile>
 	<stampRed>RED</stampRed>
