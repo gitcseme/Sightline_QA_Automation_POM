@@ -1654,7 +1654,7 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("persistent hits panel is not retain previously viewed hits");
 
 		softAssert.assertNotEquals(beforeComplete, afterComplete);
-//		softAssert.assertAll();
+		baseClass.waitTime(3);
 		loginPage.logout();
 		
 	}
