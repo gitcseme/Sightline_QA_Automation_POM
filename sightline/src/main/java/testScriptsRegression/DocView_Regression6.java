@@ -36,7 +36,6 @@ import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
-@Listeners(CustomTestNGListener.class)
 public class DocView_Regression6 {
 
 	Driver driver;
@@ -358,7 +357,7 @@ public class DocView_Regression6 {
 	 * redaction
 	 */
 
-@Test(retryAnalyzer = RetryAnalyzer.class, description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 5)
+@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 5)
 	public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");
@@ -451,7 +450,7 @@ public class DocView_Regression6 {
 	 * different SG
 	 */
 
-@Test(retryAnalyzer = RetryAnalyzer.class, description = "RPMXCON-51990", groups={"regression"},priority = 6)
+@Test(description = "RPMXCON-51990", groups={"regression"},priority = 6)
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		folder = "51990Default_" + Utility.dynamicNameAppender();
