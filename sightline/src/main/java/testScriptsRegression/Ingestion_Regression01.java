@@ -235,6 +235,10 @@ public class Ingestion_Regression01 {
 					Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
 					"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
 		}
+		ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder,Input.overlayOnly,
+				Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
+				"DAT4_STC_TextEmailData NEWID.lst",null, null, null, null, null, null);
+		
 		String[] addEmailColumn = { "EmailAuthorName", "EmailAuthorAddress" };
 
         DataSets dataSets=new DataSets(driver);
@@ -267,7 +271,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 
 	}
-
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-49804 Description :To verify that if
 	 * Email data contained space after the '@' sign , it should not calculate two
@@ -381,7 +384,7 @@ public class Ingestion_Regression01 {
 		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
 		
 		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.nativeMp3FileFormat);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
 
 		System.out.println(status);
 		if (status == false) {
@@ -392,11 +395,25 @@ public class Ingestion_Regression01 {
 			
 			
 		}
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		baseClass.stepInfo("Basic content search");
-		sessionsearch.basicContentSearch(Input.nativeMp3FileFormat);
-		baseClass.stepInfo("Navigating to doclist page");
-		sessionsearch.ViewInDocList();
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo(" addonly ingestion with mapping field selection");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,Input.sourceLocation, Input.AK_NativeFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
+		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.AK_NativeFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+	
+        DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.AK_NativeFolder);
+
 		DocListPage doc = new DocListPage(driver);
 		baseClass.waitForElement(doc.getSelectDropDown());
 		doc.getSelectDropDown().waitAndClick(10);
@@ -407,9 +424,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 	
-
-	
-
 	
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48170 Description :Verify that
@@ -587,6 +601,7 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 
+
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-49704 Description :Verify if 'Generate
 	 * Searchable PDFs' is True for TIFF image and document has multi-page TIFF's
@@ -626,7 +641,11 @@ public class Ingestion_Regression01 {
 			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
 			ingestionPage.selectDateAndTimeForamt(dateFormat);
 			ingestionPage.clickOnNextButton();
-			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
+			ingestionPage.fillingSourceField();
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.IgnoreErrorAndIndexing();
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
@@ -637,8 +656,6 @@ public class Ingestion_Regression01 {
 		doc.verifyingDefaultTextInDocView();
 		loginPage.logout();
 	}
-
-
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48188 Description :To Verify
@@ -721,6 +738,7 @@ public class Ingestion_Regression01 {
 	
 	
 	
+
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48202 Description :To Verify Ingestion
 	 * overlay of TIFF without Unpublish
@@ -754,6 +772,8 @@ public class Ingestion_Regression01 {
 					Input.sourceLocation, Input.TiffImagesFolder);
 			ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
 			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
+			ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
+			ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
 			ingestionPage.selectDateAndTimeForamt(dateFormat);
 			ingestionPage.clickOnNextButton();
 			ingestionPage.fillingSourceField();
@@ -776,16 +796,12 @@ public class Ingestion_Regression01 {
 		ingestionPage.clickOnPreviewAndRunButton();
 		ingestionPage.ignoreErrorsAndCatlogging();
 		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.verifyApprovedStatusForOverlayIngestion();
-		ingestionPage.runFullAnalysisAndPublish();
-		ingestionPage = new IngestionPage_Indium(driver);
-		driver.Navigate().refresh();
+		ingestionPage.IgnoreErrorAndIndexing();
+		ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
 		
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.TiffImagesFolder);
-		System.out.println(ingestionName);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.viewInDocView();
 		DocViewPage doc = new DocViewPage(driver);
 		doc.clickOnImageTab();
 		for (int i = 0; i < 5; i++) {
@@ -801,7 +817,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 
-	
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48201 
@@ -839,13 +854,11 @@ public class Ingestion_Regression01 {
 		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runFullAnalysisAndPublish();
 		
-		ingestionPage = new IngestionPage_Indium(driver);
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.GD994NativeTextForProductionFolder);
-		System.out.println(ingestionName);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.viewInDocView();
+		
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(Input.GD994NativeTextForProductionFolder);
+		
 		
 		DocViewPage doc = new DocViewPage(driver);
 		for (int i = 0; i < 5; i++) {
@@ -861,6 +874,7 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 		
 	}
+	
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48237 
 	 * Description :To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion
