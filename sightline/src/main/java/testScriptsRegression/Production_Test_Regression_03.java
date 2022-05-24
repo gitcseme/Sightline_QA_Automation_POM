@@ -1339,7 +1339,7 @@ public class Production_Test_Regression_03 {
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
 		base.stepInfo("Selecting uploadedset and navigating to doclist page");
-		dataset.selectDataSetWithName("B2F9_GD_994_Native_Text_ForProduction_20211205214453140");
+		dataset.selectDataSetWithName("Native_Text_ForProduction");
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 
