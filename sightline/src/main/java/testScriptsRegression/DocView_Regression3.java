@@ -608,7 +608,7 @@ public class DocView_Regression3 {
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 		docExp = new DocExplorerPage(driver);
 		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52257");
+		baseClass.stepInfo("Test case Id: RPMXCON-52257,RPMXCON-52259");
 		utility = new Utility(driver);
 		loginPage = new LoginPage(driver);
 
