@@ -6037,6 +6037,7 @@ public class ProductionPage {
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 
 		getSelectCloseBtn().waitAndClick(10);
+		
 //		base.waitForElement(getClkLink_selectingRedactionTags());
 //		getClkLink_selectingRedactionTags().waitAndClick(10);
 
