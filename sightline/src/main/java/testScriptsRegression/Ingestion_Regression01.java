@@ -200,9 +200,19 @@ public class Ingestion_Regression01 {
 		baseClass.stepInfo("Test case Id: RPMXCON-58508");
 		baseClass.stepInfo(
 				"Verify 'Source System' is disabled if user select Ingestion-Overlay on Ingestion Wizard page");
-		ingestionPage = new IngestionPage_Indium(driver);
 		baseClass.stepInfo("Step 2: Create an new Ingestion");
-		ingestionPage.IngestionRegression(Input.AllSourcesFolder);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
+			String ingestionType="Add Only";
+			ingestionPage.IngestionRegressionForDifferentDAT(Input.AllSourcesFolder,ingestionType, Input.sourceSystem, Input.DATFile1,
+					Input.NativeFile, null,null, null, null, null, null, null);
+			
+			
+		}
 		baseClass.stepInfo(
 				"Step 3&4 : Go to Ingestion Add New Ingestion and Ingestion Type as 'Overlay Only' and Ingestion Type as 'Overlay Only'");
 		ingestionPage.verifySourceSystemDisabledWhenOverylayIsAddedAsIngestionType();
