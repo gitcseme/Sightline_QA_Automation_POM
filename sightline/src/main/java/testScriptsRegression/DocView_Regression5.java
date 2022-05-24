@@ -18,6 +18,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -1010,9 +1011,18 @@ public class DocView_Regression5 {
 	 * be highlighted without clicking the eye icon when user redirects to doc view
 	 * from doc list
 	 */
-
-	@Test(description = "RPMXCON-51330", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
-	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList() throws Exception {
+	@DataProvider(name = "Users")
+	public Object[][] Users() {
+		Object[][] Users = {
+				{ Input.sa1userName, Input.sa1password,"SA","PA" },
+				{ Input.sa1userName, Input.sa1password,"SA","RMU" },
+				{ Input.pa1userName, Input.pa1password,"PA","RMU" },
+				{ Input.rmu1userName, Input.rmu1password ,"RMU","REV"}, 
+				};
+		return Users;
+	}
+	@Test(description = "RPMXCON-51330", enabled = true,dataProvider = "Users",  groups = { "regression" }, priority = 10)
+	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList(String username,String password,String fromRole,String toRole) throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
@@ -1024,9 +1034,13 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from doc list");
 
+		//
+		loginPage.logout();
 		// Login as a RMU
+		loginPage.loginToSightLine(username, password);
+		
 		driver.waitForPageToBeReady();
-		baseClass.impersonateRMUtoReviewer();
+		baseClass.rolesToImp(fromRole, toRole);
 		baseClass.stepInfo("RMU has been impersonated as REV");
 		baseClass.stepInfo("Search the non audio documents and go to docview");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1043,25 +1057,22 @@ public class DocView_Regression5 {
 		driver.waitForPageToBeReady();
 		docViewRedact.verifyHighLightingTextInDocView();
 		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateRMUtoReviewer();
+
+		baseClass.selectproject();
+		
 		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
 		sessionSearch.advancedContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocList();
 		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
 		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		baseClass.waitTime(4);
 		docView.selectSourceDocIdInAvailableField(sourceDocId);
 		baseClass.waitTime(3);
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
 		docView.selectDocInMiniDocList(Input.sourceDocId1);
 		baseClass.waitTime(3);
 		driver.waitForPageToBeReady();
@@ -1069,379 +1080,7 @@ public class DocView_Regression5 {
 		driver.Navigate().refresh();
 		baseClass.waitTime(3);
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateRMUtoReviewer();
-		baseClass.stepInfo("SavedSearch the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(3);
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-
-		// Login as SA
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		baseClass.stepInfo("Logged in as SA user");
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoPA();
-		baseClass.stepInfo("SA has been impersonated as PA");
-		baseClass.stepInfo("Search the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoPA();
-		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoPA();
-		baseClass.stepInfo("SavedSearch the non audio documents and go to docview");
-		driver.waitForPageToBeReady();
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-
-		// Login as SA
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoRMU();
-		baseClass.stepInfo("SA has been impersonated as RMU");
-		baseClass.stepInfo("Search the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoRMU();
-		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		driver.waitForPageToBeReady();
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocList(searchName);
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-
-		// Login as SA
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoReviewer();
-		baseClass.stepInfo("SA has been impersonated as REV");
-		baseClass.stepInfo("Search the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		UtilityLog.info("Logged in as User: " + Input.sa1userName);
-		baseClass.waitTime(2);
-		baseClass.impersonateSAtoReviewer();
-		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		driver.Navigate().refresh();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		driver.waitForPageToBeReady();
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocView(searchName);
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoRMU();
-		baseClass.stepInfo("PA has been impersonated as RMU");
-		baseClass.stepInfo("Search the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoRMU();
-		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoRMU();
-		driver.waitForPageToBeReady();
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocView(searchName);
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docView.verifyHighlightedKeywordInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
-
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoReviewer();
-		baseClass.stepInfo("PA has been impersonated as REV");
-		baseClass.stepInfo("Search the non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		sessionSearch.viewInDocView_redactions();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighLightingTextInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoReviewer();
-		baseClass.stepInfo("AdvancedSearch the non audio documents and go to docview");
-		sessionSearch.advancedContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		driver.waitForPageToBeReady();
-		new DocListPage(driver).selectingAllDocFromAllPagesAndAllChildren();
-		driver.waitForPageToBeReady();
-		sessionSearch.viewInDocView_redactions();
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighLightingTextInDocView();
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		driver.Navigate().refresh();
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.waitTime(2);
-		baseClass.impersonatePAtoReviewer();
-		driver.waitForPageToBeReady();
-		baseClass.stepInfo("SavedSearch on non audio documents and go to docview");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearch(searchName);
-		savedSearch.savedSearchToDocView(searchName);
-		baseClass.waitTime(3);
-		docView.selectSourceDocIdInAvailableField(sourceDocId);
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
-		docView.selectDocInMiniDocList(Input.sourceDocId1);
-		baseClass.waitTime(3);
-		driver.waitForPageToBeReady();
-		docViewRedact.verifyHighLightingTextInDocView();
-		baseClass.waitTime(3);
-		driver.Navigate().refresh();
-		loginPage.logout();
+		
 	}
 	/**
 	 * Author : Sai Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
@@ -1766,8 +1405,17 @@ public class DocView_Regression5 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(description = "RPMXCON-51006", alwaysRun = true, groups = { "regression" }, priority = 16)
-	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel() throws InterruptedException {
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] AllTheUsers = {
+				{ Input.pa1userName, Input.pa1password,Input.pa1FullName},
+				{Input.rev1userName, Input.rev1password,Input.rev1FullName},
+				};
+		return AllTheUsers;
+	}
+
+	@Test(description = "RPMXCON-51006", alwaysRun = true,dataProvider = "AllTheUsers", groups = { "regression" }, priority = 16)
+	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel(String username,String password,String fullname) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51006");
 		baseClass.stepInfo(
 				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from other than assignment page");
@@ -1778,23 +1426,17 @@ public class DocView_Regression5 {
 		String pptDocID = "ID00001354";
 		String messageDocId = "ID00000503";
 
-		baseClass.stepInfo("Logged in using RMU account");
-		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, xlsExcelDocId, TIFFDocId, pptDocID,
-				messageDocId);
+		
 		loginPage.logout();
 
-		// Login As Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("Logged in using REV account");
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged in as : "+fullname);
 		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, xlsExcelDocId, TIFFDocId, pptDocID,
 				messageDocId);
+		baseClass.waitTime(2);
 		loginPage.logout();
 
-		// Login As PA.
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("Logged in using PA account");
-		docViewRedact.verifyDifferentTypesOfDocsInThumbNailsPanel(pdfDocId, xlsExcelDocId, TIFFDocId, pptDocID,
-				messageDocId);
 	}
 
 	/**
