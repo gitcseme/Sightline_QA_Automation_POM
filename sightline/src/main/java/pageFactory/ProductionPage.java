@@ -6036,22 +6036,23 @@ public class ProductionPage {
 		base.waitForElement(getClkCheckBox_defaultRedactionTag());
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 
-		base.waitForElement(getClkLink_selectingRedactionTags());
-		getClkLink_selectingRedactionTags().waitAndClick(10);
+		getSelectCloseBtn().waitAndClick(10);
+//		base.waitForElement(getClkLink_selectingRedactionTags());
+//		getClkLink_selectingRedactionTags().waitAndClick(10);
 
-		base.waitForElement(getClkBtn_selectingRedactionTags());
-		getClkBtn_selectingRedactionTags().waitAndClick(10);
-
-		base.waitForElement(getClkCheckBox_selectingRedactionTags());
-		driver.waitForPageToBeReady();
-		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
-
-		base.waitForElement(getClk_selectBtn());
-		getClk_selectBtn().waitAndClick(10);
-
-		base.waitForElement(gettextRedactionPlaceHolder());
-		gettextRedactionPlaceHolder().waitAndClick(10);
-		gettextRedactionPlaceHolder().SendKeys(searchString4);
+//		base.waitForElement(getClkBtn_selectingRedactionTags());
+//		getClkBtn_selectingRedactionTags().waitAndClick(10);
+//
+//		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+//		driver.waitForPageToBeReady();
+//		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+//
+//		base.waitForElement(getClk_selectBtn());
+//		getClk_selectBtn().waitAndClick(10);
+//
+//		base.waitForElement(gettextRedactionPlaceHolder());
+//		gettextRedactionPlaceHolder().waitAndClick(10);
+//		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
 
 	/**
