@@ -18114,6 +18114,11 @@ public class ProductionPage {
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(2000);
 		getConfirmProductionCommit().waitAndClick(10);
+		
+		if (base.getCloseSucessmsg().isElementAvailable(5)) {
+			base.CloseSuccessMsgpopup();
+		}
+
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch

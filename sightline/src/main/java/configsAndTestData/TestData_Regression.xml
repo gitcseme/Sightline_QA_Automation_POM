@@ -60,7 +60,7 @@
    	<selectMp3File>MP3 Files.LST</selectMp3File>
    	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
    	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED</skippedAnalyticMessage>
-	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_STAGING_COMPLETED</completedAnalyticMessage>
+	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_COMPLETED, ES_INDEXING_COMPLETED</completedAnalyticMessage>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -432,7 +432,7 @@
 	<PDF5DocsLst>PDFs - 5Docs.lst</PDF5DocsLst>
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
-	<JanMultiPTIFF>JanMultiPTIFF</JanMultiPTIFF>
+	<JanMultiPTIFF>16JanMultiPTIFF</JanMultiPTIFF>
 	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>

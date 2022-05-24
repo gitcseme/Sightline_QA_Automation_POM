@@ -2051,7 +2051,19 @@ public class DocViewPage {
 	public Element getHitPanelCount() {
 		return driver.FindElement(By.xpath("//p[contains(@id,'PHitCount')][1]//span"));
 	}
+	//New built
+	public Element getHitPanel_New() {
+		return driver.FindElementByXPath("(//span[contains(@id,'HitCount')])//parent::strong//following-sibling::p");
+	}
 
+	public Element getHitPanelCount_New() {
+		return driver.FindElement(By.xpath("(//span[contains(@id,'HitCount')])[1]"));
+	}
+	
+	public Element getHitTermToggle_New() {
+		return driver.FindElement(By.xpath("//i[@id='EnableSearchTerm' and @data-class='false']"));
+	}
+	
 	// Added by Gopinath - 10/11/2021
 	public Element getAssertOnImage() {
 		return driver.FindElementByCssSelector("g:nth-child(1) svg:nth-child(1)");
@@ -4238,7 +4250,7 @@ public class DocViewPage {
 				return getDocView_RedactThisPage().Displayed();
 			}
 		}), Input.wait30);
-		getDocView_RedactThisPage().Click();
+		getDocView_RedactThisPage().waitAndClick(10);
 		Thread.sleep(3000);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -7357,6 +7369,7 @@ public class DocViewPage {
 				System.out.println("The available field " + filterName + " is already added.");
 			}
 
+			base.waitTime(2);
 			getMiniDocListConfirmationButton("Save").waitAndClick(10);
 			driver.waitForPageToBeReady();
 

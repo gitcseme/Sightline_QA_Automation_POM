@@ -4046,6 +4046,7 @@ public void popOutCodingFormChildWindow() {
 		driver.waitForPageToBeReady();
 		base = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		base.waitTime(2);
 		softAssertion.assertTrue(docViewRedact.thumbNailsPanel().isElementPresent());
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
 			base.passedStep("The thumbnails panel is clicked and menu is visible");

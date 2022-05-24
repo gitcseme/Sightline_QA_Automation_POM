@@ -1205,6 +1205,9 @@ public class IngestionPage_Indium {
 	public Element indexingErrorCount() {
 		return driver.FindElementByXPath("//label[contains(.,'Document Data Indexed')]//..//div//span//a");
 	}
+	public Element getCloseBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-close']");
+	}
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -3593,9 +3596,11 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			getTIFFCheckBox().ScrollTo();
-			getTIFFCheckBox().isElementAvailable(15);
-			getTIFFCheckBox().Click();
+			if(!getTIFFLST().isElementAvailable(3)){
+				getTIFFCheckBox().ScrollTo();
+				getTIFFCheckBox().isElementAvailable(15);
+				getTIFFCheckBox().Click();
+			}
 			getTIFFLST().ScrollTo();
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
@@ -6914,7 +6919,7 @@ public class IngestionPage_Indium {
 			int sourceCount = Integer.parseInt(getSourceCount().getText());
 			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
 			int errorCount = Integer.parseInt(errorCountStatus().getText());
-			if (sourceCount > 0 && ingestedCount > 0 && errorCount == 0) {
+			if (sourceCount >= 0 && ingestedCount >= 0 && errorCount == 0) {
 				base.passedStep("Source , Ingested and Error count details displayed");
 			} else {
 				base.failedStep("Source,Ingested and Error count details not displayed");
@@ -8399,6 +8404,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 		getIngestion_GridView().waitAndClick(10);
 		base.waitTime(3);
+		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
@@ -8765,6 +8771,7 @@ public class IngestionPage_Indium {
 	public void IngestionRegressionForDifferentDAT(String dataset,String ingestionType,String sourceSystem ,String Dat,String nativeFile ,String text,String PDF,String tiffImage,String checkbox,String mp3Variant,String audioTranscript,String other) throws InterruptedException {
 		
 			driver.waitForPageToBeReady();
+			this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 			base.stepInfo("Click on add new ingestion button");
 			base.waitForElement(getAddanewIngestionButton());
 			getAddanewIngestionButton().waitAndClick(10);
@@ -8815,7 +8822,7 @@ public class IngestionPage_Indium {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 			} else if (dataset.contains("20Family_20Threaded")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
-			} else if (dataset.contains("AllSources")||dataset.contains("PP_PDFGen_10Docs")) {
+			} else if (dataset.contains("AllSources")||dataset.contains("PP_PDFGen_10Docs")||dataset.contains(Input.AK_NativeFolder)) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("ProdBeg");
 			} else if (dataset.contains("0002_H13696_1_Latest")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DOCID");
@@ -8840,8 +8847,7 @@ public class IngestionPage_Indium {
 			} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
 				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 			}
-
-			
+		
 				
 				base.stepInfo("*******Selecing Native files***************");
 				if (nativeFile==null) {
@@ -9055,7 +9061,7 @@ public class IngestionPage_Indium {
 				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
 				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
 			}
-			else if(dataset.contains("PP_PDFGen_10Docs")){
+			else if(dataset.contains("PP_PDFGen_10Docs")||dataset.contains(Input.AK_NativeFolder)){
 				
 				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
 				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
@@ -9157,6 +9163,17 @@ public class IngestionPage_Indium {
 				getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
 				getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
 				getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				
+				
+				if(getCloseBtn().isDisplayed()) {
+					for(int i=0;i<3;i++) {
+						driver.waitForPageToBeReady();
+						getCloseBtn().waitAndClick(5);
+						getApproveMessageOKButton().waitAndClick(10);
+					}
+				}
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
 			}
 
 			else if (dataset.contains("GNon searchable PDF Load file")) {
@@ -9256,13 +9273,9 @@ public class IngestionPage_Indium {
 				}), Input.wait30);
 				getPreviewRun().waitAndClick(10);
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getApproveMessageOKButton().Visible();
-					}
-				}), Input.wait30);
+				if(getApproveMessageOKButton().isElementAvailable(5)) {
 				getApproveMessageOKButton().waitAndClick(10);
-
+				}
 				driver.WaitUntil((new Callable<Boolean>() {
 					public Boolean call() {
 						return getbtnRunIngestion().Visible();
@@ -10267,7 +10280,7 @@ public class IngestionPage_Indium {
 			driver.Manage().window().maximize();
 			runFullAnalysisAndPublish();
 		}else {
-			base.failedStep("Something Wrong");
+			base.failedStep("failed to get ingestion status");
 		}
 		
 	}
@@ -10350,7 +10363,8 @@ public class IngestionPage_Indium {
 			base.passedStep(DataSet+" is available in this project");
 			datasetName = getDataSetName(DataSet).GetAttribute("title");
 			break;
-		}else if(datasetName==null){
+		}
+		else if(datasetName==null){
 			base.stepInfo("Dataset is not in the project, we need to ingest it");
 			driver.scrollingToBottomofAPage();
 			
@@ -10767,5 +10781,17 @@ public class IngestionPage_Indium {
 			clickOnPreviewAndRunButton();
 			base.stepInfo("Ingestion started");
 			
+		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param map1
+		 * @param map2
+		 * @param map3
+		 * @Description map the datafield
+		 */
+		public void ingestionMapping(String map1,String map2,String map3) {
+			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(map1);
+			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(map2);
+			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(map3);
 		}
 }

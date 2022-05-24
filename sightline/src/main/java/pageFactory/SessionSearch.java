@@ -303,6 +303,11 @@ public class SessionSearch {
 	public Element getBulkRelease_ButtonRelease() {
 		return driver.FindElementById("btnRelease");
 	}
+	
+	// Added by Arunkumar
+	public Element getBulkRelease_ButtonUnRelease() {
+		return driver.FindElementByXPath("//button[@id='btnUnrelease']");
+	}
 
 	// Metadata
 	public Element getBasicSearch_MetadataBtn() {
@@ -11707,6 +11712,58 @@ public class SessionSearch {
 		else {
 			base.failedMessage("user not navigated to doclist page");
 		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 20/05/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform unrelease docs from security group
+	 */
+	public void unReleaseDocsFromSecuritygroup(final String SecurityGroup) {
+		driver.waitForPageToBeReady();
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		getBulkActionButton().waitAndClick(10);		 
+		driver.waitForPageToBeReady();
+
+		try {
+			getBulkReleaseAction().waitAndClick(10);
+		} catch (Exception e) {
+
+			getBulkReleaseActionDL().waitAndClick(10);
+		}
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelDefaultSecurityGroup_CheckBox(SecurityGroup).Visible();
+			}
+		}), Input.wait60);
+		getBulkRelDefaultSecurityGroup_CheckBox(SecurityGroup).waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelease_ButtonUnRelease().Visible();
+			}
+		}), Input.wait60);
+		getBulkRelease_ButtonUnRelease().waitAndClick(20);
+
+		if (getFinalizeButton().isDisplayed()) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalizeButton().Visible();
+				}
+			}), Input.wait60);
+			getFinalizeButton().waitAndClick(20);
+		}
+		
+		base.passedStep("Successfully unreleased documents from security group");
+
 	}
 	
 }
