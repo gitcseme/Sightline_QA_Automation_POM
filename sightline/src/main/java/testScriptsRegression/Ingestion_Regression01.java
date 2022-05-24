@@ -209,70 +209,6 @@ public class Ingestion_Regression01 {
 
 	}
 
-	
-
-	/**
-	 * Author :Vijaya.Rani date: 27/04/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-49902 Description :Unpublish documents - Verify Search as
-	 * source.
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
-	public void verifyUnpublishDocumentsSource() throws InterruptedException {
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		savedSearch = new SavedSearch(driver);
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-49902");
-		baseClass.stepInfo("Unpublish documents - Verify Search as source.");
-
-		baseClass.stepInfo("Search the documents and Save");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.saveSearchSharedWithPA(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-	}
-
-	
-
-	/**
-	 * Author :Vijaya.Rani date: 29/04/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-49545 Description :Verify that value for all the metadata
-	 * fields having DATETIME/DATE data type.
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
-	public void verifyMetaDataFieldsDateTimeInDataType() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49545");
-		baseClass.stepInfo("Verify that value for all the metadata fields having DATETIME/DATE data type.");
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		DocListPage docList = new DocListPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
-		System.out.println(status);
-		if (status == false) {
-			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
-			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
-		}
-		baseClass.stepInfo("Search the documents and Save");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocList();
-		// Remove selected Colunm Add new Column
-		docList.SelectColumnDisplayByRemovingExistingOnesAddMultiipleColumns();
-	}
 
 
 	/**
@@ -281,7 +217,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyEmailAddressInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50083");
 		baseClass.stepInfo("verify Ingestion should published successfully if Email metadata is having only Address");
@@ -338,7 +274,7 @@ public class Ingestion_Regression01 {
 	 * distinct values
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyEmailAllDomainDistinctData() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -391,7 +327,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyDocumentInAudioPlayerReady() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48173");
 		baseClass.stepInfo("To Verify for AudioPlayer ready are Nexidia indexed.");
@@ -436,7 +372,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyDocumentInAudioPlayerReadyValue() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48171");
 		baseClass.stepInfo(
@@ -472,26 +408,7 @@ public class Ingestion_Regression01 {
 	}
 	
 
-	/**
-	 * Author :Vijaya.Rani date: 05/05/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-48013 Description :To Verify In Ingestion Overlays Ignore All
-	 * Errors at Cataloge Stage, Should work.
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
-	public void verifyIngestionOverlayIngareAllErrorsAndCatalogStage() throws InterruptedException {
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-48013");
-		baseClass.stepInfo("To Verify In Ingestion Overlays Ignore All Errors at Cataloge Stage, Should work.");
-		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "mp3", Input.MP3File);
-		ingestionPage.ignoreErrorsAndCatlogging();
-
-		// Rollback Ingestion
-		ingestionPage.rollBackIngestion();
-	}
+	
 
 	
 	/**
@@ -501,7 +418,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyingMp3FileDocumentCount() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48170");
 		baseClass
@@ -545,7 +462,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void verfyingErrorMsgInIngestionPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49489");
@@ -597,7 +514,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void verifyingTiffImageTabInDocViewPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49507");
@@ -677,7 +594,7 @@ public class Ingestion_Regression01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyingMultipleTiffImageTabInDocViewPage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49704");
@@ -721,46 +638,6 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author :Vijaya.Rani date: 06/05/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-48189 Description :To Verify Unpublish for Already published
-	 * Documents after Ingestion.
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
-	public void verifyUnpublishForAlreadyPublishedDocsIngestion() throws InterruptedException {
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-	
-		ingestionPage = new IngestionPage_Indium(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		savedSearch = new SavedSearch(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48189");
-		baseClass.stepInfo("To Verify Unpublish for Already published Documents after Ingestion.");
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
-
-		// Search ingestionName And bulkRelease
-		sessionSearch.basicSearchWithMetaDataQuery(Input.nativeMp3FileFormat, "IngestionName");
-
-		// Saved the My SavedSearch
-		sessionSearch.saveSearch(BasicSearchName);
-		sessionSearch.bulkRelease(Input.securityGroup);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		ingestionPage.navigteToUnpublished(BasicSearchName);
-		// verify Document Count is 0
-		int index = baseClass.getIndex(ingestionPage.getUnpublishTableHeader(), "DOC COUNT");
-		String docCount = ingestionPage.getUnpublishtableValues(BasicSearchName, index).getText();
-		System.out.println(docCount);
-		baseClass.stepInfo("After Unpublish DocCount : " + docCount);
-	}
-
-	
 
 
 	/**
@@ -770,7 +647,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyingAudioPlayerReadyDocumentCount() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48188");
 		baseClass.stepInfo("To Verify AudioPlayerReady is set to 1 only if the document has an MP3 File Variant.");
@@ -810,7 +687,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyingMetadataInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-49566");
 		baseClass.stepInfo("Verify Ingestion with Email metadata if 'Email Name and Address' is in incorrect format");
@@ -851,7 +728,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyTiffImageInDocViewPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48202");
 		baseClass.stepInfo("To Verify Ingestion overlay of TIFF without Unpublish");
@@ -924,229 +801,7 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 	}
 
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
-	 * :To verify that the total unique count should not include the docs that have
-	 * been unpublished. 'RPMXCON-49263'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 20)
-	public void verifyTotalUniqueCountAfterUnpublished() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49263");
-		baseClass.stepInfo(
-				"To verify that the total unique count should not include the docs that have been unpublished.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
-		// getting before unique count
-		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
-		System.out.println(uniqueCountBefore);
-		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
-
-		// Search ingestionName
-		sessionSearch.basicSearchWithMetaDataQuery(Input.TiffImagesFolder, "IngestionName");
-		sessionSearch.getPureHitAddButton().isElementAvailable(2);
-		sessionSearch.getPureHitAddButton().waitAndClick(5);
-		// Saved the My SavedSearch
-		sessionSearch.saveSearch(BasicSearchName);
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
-		System.out.println(uniqueCountAfter);
-		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountAfter + "'");
-
-		if (uniqueCountBefore == uniqueCountAfter) {
-			baseClass.passedStep("Total Unique Count is not include the document that have been unpublished ");
-		} else {
-			baseClass.failedStep("Total Unique Count is include the document that have been unpublished ");
-		}
-	}
-
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
-	 * :To Verify Full Analytics run successfully in Ingestion for Overlays Mode and
-	 * all the Metadata Updated in Overlays should get displayed after Overlay's
-	 * Successful. 'RPMXCON-48084'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 21)
-	public void verifyFullAnalyticsRunIngestionForOverlay() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		String BasicSearchName = "Test" + Utility.dynamicNameAppender();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48084");
-		baseClass.stepInfo(
-				"To Verify Full Analytics run successfully in Ingestion for Overlays Mode and all the Metadata Updated in Overlays should get displayed after Overlay's Successful.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
-
-		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
-		System.out.println(status);
-		String ingestionType = "Add Only";
-
-		System.out.println(status);
-		if (status == false) {
-
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
-					Input.sourceLocation, Input.TiffImagesFolder);
-			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
-			ingestionPage.clickOnNextButton();
-			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
-		}
-		// Search ingestionName And bulkRelease
-		sessionSearch.basicContentSearch(Input.searchStringStar);
-		String beforeStringCount = sessionSearch.getPureHitsCount().getText();
-		System.out.println(beforeStringCount);
-		baseClass.stepInfo("First String persistent hit count is : " + beforeStringCount);
-
-		// Saved the My SavedSearch
-		sessionSearch.bulkRelease(Input.securityGroup);
-		sessionSearch.saveSearch(BasicSearchName);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		// Go to Sessionsearch page
-		this.driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.addNewSearch();
-		sessionSearch.basicSearchWithMetaDataQuery(Input.searchString1);
-		String afterStringCount = sessionSearch.getPureHitsCount().getText();
-		System.out.println(afterStringCount);
-		baseClass.stepInfo("First String persistent hit count is : " + afterStringCount);
-		if (beforeStringCount != afterStringCount) {
-			baseClass.passedStep("Metadata Updated in Overlays displayed after Overlay's Successfully");
-		} else {
-			baseClass.failedStep(" Metadata Updated in Overlays not displayed after Overlay's");
-		}
-	}
-
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description:
-	 * To Verify Ingestion Overlays of PDF without unpublish. 'RPMXCON-46875'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 22)
-	public void verifyingestionOverlayWithoutUnpublish() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		savedSearch = new SavedSearch(driver);
-		DocViewPage docview = new DocViewPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-46875");
-		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
-		System.out.println(status);
-		if (status == false) {
-			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
-			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
-			ingestionPage.approveIngestion(1);
-			ingestionPage.runFullAnalysisAndPublish();
-		}
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
-		System.out.println(ingestionName);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.viewInDocView();
-		baseClass.waitForElement(docview.getDocView_DefaultViewTab());
-		docview.getDocView_DefaultViewTab().waitAndClick(5);
-		String text = docview.getDocViewDefaultViewPDF().getText();
-		if (text.contains("PDF")) {
-			baseClass.passedStep(
-					"PDF is displays in PDF viewer");
-		} else {
-			baseClass.failedStep("There is no such message");
-		}
-	}
 	
-	
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
-	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
-	 * 'RPMXCON-48526'
-	 * 
-	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
-	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
-		
-		baseClass = new BaseClass(driver);
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionSearch = new SessionSearch(driver);
-		IngestionPage_Indium ingetion = new IngestionPage_Indium(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
-		baseClass.stepInfo(
-				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingetion.nativigateToIngestionViaButton();
-
-		boolean status = ingetion.verifyIngestionpublish(Input.ingestionAutomationAllSource);
-		if (status) {
-			baseClass.stepInfo("Ingestion Add only is already done this project");
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingetion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.ingestionAutomationAllSource);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingetion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingetion.selectDATSource(Input.BEbomDat, Input.prodBeg);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingetion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingetion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingetion.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingetion.selectAllOptionsFromFilterByDropdown();
-
-			ingetion.getIngestionSatatusAndPerformUptoCopiedStage();
-
-			ingetion.verifyLanguageIsSelectable("International English");
-
-		}
-
-		baseClass.passedStep(
-				"Verified the overlay Ingestion for Audio Documents against International English language pack");
-
-	}
 
 	/**
 	 * Author :Brundha Test Case Id:RPMXCON-48201 
@@ -1154,7 +809,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyUnPublishOfNativeDocument() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48201");
 		baseClass.stepInfo("To Verify Ingestion overlay of Native without Unpublish");
@@ -1212,7 +867,7 @@ public class Ingestion_Regression01 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyAudioPlayerReadyLanguage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48237");
 		baseClass.stepInfo("To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion");
@@ -1237,71 +892,7 @@ public class Ingestion_Regression01 {
 		loginPage.logout();
 		
 	}
-	/**
-	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
-	 * Description :Verify Ingestion should published successfully if Email metadata is having only Name.'RPMXCON-49569'
-	 * 
-	 * @throws InterruptedException
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
-	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		DocListPage docList = new DocListPage(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-49569");
-		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
-		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
-
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1FullName);
-		
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingestionPage.nativigateToIngestionViaButton();
-		
-		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-		String ingestionType="Add Only";
-		
-		
-		if (status) {
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
-					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
-
-		}
-		
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.GD994NativeTextForProductionFolder);
-		System.out.println(ingestionName);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.ViewInDocList();
-		
-		docList.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
-		driver.waitForPageToBeReady();
-		for(String metadata : addEmailColumn) {
-			baseClass.visibleCheck(metadata);
-		}
-		baseClass.stepInfo("Email metadata is display correctly in doc list");
-		
-		//verify Emailname is Display
-		String emailName = docList.getDocList_EmailName().getText();
-		System.out.println(emailName);
-		if(docList.getDocList_EmailName().Displayed()) {
-			baseClass.passedStep("Email name is displayed successsfully");
-		}
-		else {
-			baseClass.failedStep("Email name is not displayed");
-		}
-
-		//verify emailAddress Is Blank
-		if(emailName.contains("@")) {
-			baseClass.failedStep("Email Address is displayed");
-		}
-		else {
-			baseClass.passedStep ("Email Address is blank");
-		}
-		loginPage.logout();
-		}
+	
 
 	
 	@AfterMethod(alwaysRun = true)
