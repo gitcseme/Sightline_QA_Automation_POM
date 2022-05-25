@@ -14286,8 +14286,8 @@ public class DocViewPage {
 			WebElement text = getPageNumberInputTextField().getWebElement();
 			int x = text.getLocation().getX();
 			int y =text.getLocation().getY();
-			actions.moveToElement(text, off1, off2).clickAndHold();
-			actions.moveToElement(text, off1+10, off2+200);
+			actions.moveToElement(text, off1, off2+55).clickAndHold();
+			actions.moveToElement(text, off1+10, off2+120);
 			actions.release();
 			actions.build().perform();
 			driver.scrollPageToTop();
