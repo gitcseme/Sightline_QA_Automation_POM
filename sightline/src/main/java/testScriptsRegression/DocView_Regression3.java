@@ -1402,7 +1402,7 @@ public class DocView_Regression3 {
 		driver.getWebDriver().get(currentUrl);
 
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(5,5, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		baseClass.stepInfo("verify visibility of added remark after reload the document in first tab");
 		docView.verifyRemarkIsAdded(remark);
@@ -1529,7 +1529,7 @@ public class DocView_Regression3 {
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Adding new remark to document as a prerequisite one");
 		baseClass.stepInfo("Perfrom non audio remark");
-		docView.addRemarkToNonAudioDocument(5,5, remark);
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 		loginPage.logout();
 
 		baseClass.stepInfo("Login in to sightline using first user " + Input.rmu1userName);
