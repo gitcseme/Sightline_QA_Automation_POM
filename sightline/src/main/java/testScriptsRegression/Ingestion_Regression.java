@@ -785,6 +785,7 @@ public class Ingestion_Regression {
 			}
 
 			// checking zoom in function working for less than one hour audio docs
+			baseClass.waitTime(5);
 			boolean zoomBar = (boolean) ((JavascriptExecutor) driver.getWebDriver()).executeScript(
 					"return document.querySelector(\"div.col-md-2.disabledbutton div:nth-child(3) > div\").hidden;");
 			softAssertion.assertFalse(zoomBar);
@@ -1144,14 +1145,10 @@ public class Ingestion_Regression {
 		ingestionPage = new IngestionPage_Indium(driver);
 		ingestionPage.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,ingestionType, null, Input.DATPPPDF10Docs, null,
 					null, "PDFs - 5Docs.lst", Input.ImagePPPDF10docs,"Select", null, null, null);
-		ingestionPage.navigateToIngestionPage();
 		
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.PP_PDFGen_10Docs);
-		System.out.println(ingestionName);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
-		sessionSearch.viewInDocView();
+		DataSets dataSets=new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(Input.PP_PDFGen_10Docs);
 		DocViewPage docViewPage = new DocViewPage(driver);
 
 		driver.waitForPageToBeReady();

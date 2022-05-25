@@ -779,20 +779,7 @@ public class Ingestion_Regression01 {
 			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
 		}
 
-		String ingestionOverlay=Input.overlayOnly;
-		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionOverlay, Input.sourceSystem,
-				Input.sourceLocation, Input.TiffImagesFolder);
-		ingestionPage.addDelimitersInIngestionWizard(fieldSeperator, textQualifier, multiValue);
-		ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
-		ingestionPage.selectTIFFSource(Input.tiffFile2, false, true);
-		ingestionPage.selectPDFSource("DAT4_STC_PDFs.lst", false);
-		ingestionPage.selectDateAndTimeForamt(dateFormat);
-		ingestionPage.clickOnNextButton();
-		ingestionPage.clickOnPreviewAndRunButton();
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		ingestionPage.IgnoreErrorAndIndexing();
-		ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+		
 		DataSets dataSets=new DataSets(driver);
 		dataSets.navigateToDataSetsPage();
 		dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
