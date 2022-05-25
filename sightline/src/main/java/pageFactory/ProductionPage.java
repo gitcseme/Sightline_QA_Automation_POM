@@ -1886,6 +1886,9 @@ public class ProductionPage {
 	}
 
 	// Added By Jeevitha
+	public Element BurnRedactionCheckBox_Imp(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[contains(text(),'" + tag + "')]");
+	}
 	public Element getDefaultRedacTag_BurnRedact() {
 		return driver.FindElementByXPath(
 				"(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[last()]");
@@ -14486,6 +14489,10 @@ public class ProductionPage {
 		Thread.sleep(2000);
 		getConfirmProductionCommit().waitAndClick(10);
 
+		if (base.getCloseSucessmsg().isElementAvailable(5)) {
+			base.CloseSuccessMsgpopup();
+		}
+		
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(1000);
@@ -14706,10 +14713,17 @@ public class ProductionPage {
 			base.waitForElement(getClkBtn_selectingRedactionTags());
 			getClkBtn_selectingRedactionTags().Click();
 			driver.waitForPageToBeReady();
-			BurnRedactionCheckBox(Tag).ScrollTo();
-			base.waitForElement(BurnRedactionCheckBox(Tag));
-			BurnRedactionCheckBox(Tag).ScrollTo();
-			BurnRedactionCheckBox(Tag).waitAndClick(10);
+			if (BurnRedactionCheckBox(Tag).isDisplayed()) {
+				BurnRedactionCheckBox(Tag).ScrollTo();
+				base.waitForElement(BurnRedactionCheckBox(Tag));
+				BurnRedactionCheckBox(Tag).ScrollTo();
+				BurnRedactionCheckBox(Tag).waitAndClick(10);
+			} else if (BurnRedactionCheckBox_Imp(Tag).isDisplayed()) {
+				BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+				base.waitForElement(BurnRedactionCheckBox_Imp(Tag));
+				BurnRedactionCheckBox_Imp(Tag).ScrollTo();
+				BurnRedactionCheckBox_Imp(Tag).waitAndClick(10);
+			}
 			driver.waitForPageToBeReady();
 			base.waitForElement(getClk_selectBtn());
 			getClk_selectBtn().waitAndClick(10);
