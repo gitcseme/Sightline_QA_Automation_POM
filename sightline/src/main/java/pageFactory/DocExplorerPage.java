@@ -1855,8 +1855,27 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 				return doclist.getPopUpOkBtn().Visible();
 			}
 		}), Input.wait30);
+		if(doclist.getPopUpOkBtn().isElementAvailable(5)) {
 		bc.waitTillElemetToBeClickable(doclist.getPopUpOkBtn());
 		doclist.getPopUpOkBtn().waitAndClick(5);
+		}else {
+			driver.Navigate().refresh();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocExp_SelectAllDocs().Visible();
+				}
+			}), Input.wait30);
+			getDocExp_SelectAllDocs().waitAndClick(10);
+
+			bc.waitTime(2);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return doclist.getPopUpOkBtn().Visible();
+				}
+			}), Input.wait30);
+			bc.waitTillElemetToBeClickable(doclist.getPopUpOkBtn());
+			doclist.getPopUpOkBtn().waitAndClick(5);
+		}
 		bc.waitTime(3);
 		getDocExp_actionButton().isElementAvailable(10);
 		getDocExp_actionButton().waitAndClick(10);
