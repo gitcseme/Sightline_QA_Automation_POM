@@ -692,20 +692,27 @@ public class Ingestion_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docview = new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
-		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
-		String moreThanHour = Input.ingestionOneHour;
+		String audioDocsIngestionName = "SSAudioSpeech";
+		String moreThanHourPT = Input.ingestionLessThanHour;
+		String moreThanHourUAT = "ID00005184";
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
-
+		boolean uatFlag=Input.url.contains("sightlineuat");
+		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
-		if (ingestionFullName != null) {
-			driver.waitForPageToBeReady();
-			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
+		if (ingestionFullName!= null) {
+			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", ingestionFullName);
 			sessionSearch.viewInDocView();
-			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
-			docview.getDocumentByid(moreThanHour).waitAndClick(5);
+			if (ptFlag==true) {
+				baseClass.waitForElement(docview.getDocumentByid(moreThanHourPT));
+				docview.getDocumentByid(moreThanHourPT).waitAndClick(5);
+			}
+			if (uatFlag==true) {
+				baseClass.waitForElement(docview.getDocumentByid(moreThanHourUAT));
+				docview.getDocumentByid(moreThanHourUAT).waitAndClick(5);
+			}
 
 			// verifying more than one hour audio docs
 			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
@@ -743,20 +750,28 @@ public class Ingestion_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		docview = new DocViewPage(driver);
-		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
-		String moreThanHour = Input.ingestionLessThanHour;
+		String audioDocsIngestionName = "SSAudioSpeech";
+		String lessThanHourPT = Input.ingestionLessThanHour;
+		String lessThanHourUAT = "ID00005180";
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
-
+		boolean uatFlag=Input.url.contains("sightlineuat");
+		boolean ptFlag=Input.url.contains("sightlinept");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
-		if (ingestionFullName != null) {
-			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
+		if (ingestionFullName!= null) {
+			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", ingestionFullName);
 			sessionSearch.viewInDocView();
-			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
-			docview.getDocumentByid(moreThanHour).waitAndClick(5);
+			if (ptFlag==true) {
+				baseClass.waitForElement(docview.getDocumentByid(lessThanHourPT));
+				docview.getDocumentByid(lessThanHourPT).waitAndClick(5);
+			}
+			if (uatFlag==true) {
+				baseClass.waitForElement(docview.getDocumentByid(lessThanHourUAT));
+				docview.getDocumentByid(lessThanHourUAT).waitAndClick(5);
+			}
 
 			// verifying less than one hour audio docs
 			String overAllAudioTime = docview.getDocview_Audio_EndTime().getText();
