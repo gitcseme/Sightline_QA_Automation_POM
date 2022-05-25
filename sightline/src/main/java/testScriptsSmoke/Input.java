@@ -345,6 +345,11 @@ public class Input {
 	public static String audioDatFile;
 	public static String skippedAnalyticMessage;
 	public static String completedAnalyticMessage;
+	public static String emailName;
+	public static String emailAddress1;
+	public static String emailAddress2;
+	public static String emailDatFile;
+	public static String nonSearchablePdfLoadFile;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1098,7 +1103,12 @@ public class Input {
 		audioDatFile = testData.getAudioDatFile();
 		skippedAnalyticMessage = testData.getSkippedAnalyticMessage();
 		completedAnalyticMessage = testData.getCompletedAnalyticMessage();
-
+		emailName = testData.getEmailName();
+		emailAddress1 = testData.getEmailAddress1();
+		emailAddress2 = testData.getEmailAddress2();
+		emailDatFile = testData.getEmailDatFile();
+		nonSearchablePdfLoadFile = testData.getNonSearchablePdfLoadFile();
+		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();

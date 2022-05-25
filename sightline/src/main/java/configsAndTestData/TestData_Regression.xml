@@ -629,6 +629,11 @@
 	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
 	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
 	<nonExistingDataError>SourceDocID provided in the overlay for this doc is not available in the database.</nonExistingDataError>
+	<emailName>Phillip K Allen</emailName>
+	<emailAddress1>Gren Sheltr(GrenSheltr@aol.com)</emailAddress1>
+	<emailAddress2>CALXA@aol.com(CALXA@aol.com)</emailAddress2>
+	<emailDatFile>Large_39760.dat</emailDatFile>
+	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat</nonSearchablePdfLoadFile>
 
 	<!-- Ingestion Related data END -->
 
