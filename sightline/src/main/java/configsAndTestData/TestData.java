@@ -228,6 +228,11 @@ public class TestData {
 	public String audioDatFile;
 	public String skippedAnalyticMessage;
 	public String completedAnalyticMessage;
+	public String emailName;
+	public String emailAddress1;
+	public String emailAddress2;
+	public String emailDatFile;
+	public String nonSearchablePdfLoadFile;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

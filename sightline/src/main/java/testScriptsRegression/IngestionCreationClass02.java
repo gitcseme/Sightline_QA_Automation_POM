@@ -3,6 +3,7 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -62,6 +63,7 @@ public class IngestionCreationClass02 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+		
 
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -80,7 +82,7 @@ public class IngestionCreationClass02 {
 	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyIngestMetaDataMessageDisplayTEXTFile() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		String ingestionType="Add Only";
 		baseClass.stepInfo("Test case Id: RPMXCON-51236");
 		baseClass.stepInfo(
@@ -426,6 +428,7 @@ public class IngestionCreationClass02 {
 		} else {
 			baseClass.failedStep("Unique ingested count not displayed after performing  overlay");
 		}
+		loginPage.logout();
 		
 	}
 	
@@ -513,6 +516,7 @@ public class IngestionCreationClass02 {
 		} else {
 			baseClass.failedStep("verification failed");
 		}
+		loginPage.logout();
 
 	}
 	
@@ -727,124 +731,12 @@ public class IngestionCreationClass02 {
 
 	}
 	
-
-	/**
-	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
-	 * that if "Generate Searchable PDF " check box is not selected in the TIFF
-	 * section, Ingestion should generate successfully with TIFF images only
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
-	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
-
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-49491");
-		baseClass.stepInfo(
-				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
-
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-		boolean status = ingestion.verifyIngestionpublish(Input.TiffImagesFolder);
-		if(!status) {
-			ingestion.tiffImagesIngestion("DAT4_STC_NewDateFormat - Copy.dat", Input.tiffLoadFile, "false");
-			ingestion.ignoreErrorsAndCatlogging();
-			ingestion.ignoreErrorsAndCopying();
-			ingestion.ingestionIndexing(Input.TiffImagesFolder);
-			ingestion.approveIngestion(1);
-			ingestion.runFullAnalysisAndPublish();
-			
-		}
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
-		if (ingestionFullName != null) {
-			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
-			docview.getImageTab().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			if (docview.getDocViewImage().isElementAvailable(10)) {
-				baseClass.passedStep("Tiff file only displayed");
-			} else {
-				baseClass.failedStep("verification failed");
-			}
-		}
-		baseClass.passedStep(
-				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
-		loginPage.logout();
-
-	}
-	
-	/**
-	 * @author Aathith
-	 * @throws InterruptedException 
-	 * ////@TestCase id: 49550 : Verify that in Ingestion Overlay if 'Generate Searchable PDFs'
-	 *  is selected in TIFF section, then PDF should be generated from the TIFF's
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
-	public void verifySearchablePdfTiffDocView() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49550 ");
-		baseClass.stepInfo(
-				"###  Verify that in Ingestion Overlay if 'Generate Searchable PDFs' is selected in TIFF section, then PDF should be generated from the TIFF's ###");
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-
-		boolean status = ingestion.verifyIngestionpublish(Input.TiffImagesFolder);
-		if(!status) {
-			ingestion.tiffImagesIngestion("DAT4_STC_NewDateFormat - Copy.dat", Input.tiffLoadFile, "false");
-			ingestion.ignoreErrorsAndCatlogging();
-			ingestion.ignoreErrorsAndCopying();
-			ingestion.ingestionIndexing(Input.TiffImagesFolder);
-			ingestion.approveIngestion(1);
-			ingestion.runFullAnalysisAndPublish();
-			
-		}
-		// Perform overlay ingestion
-		ingestion.selectIngestionTypeAndSpecifySourceLocation("Overlay Only", Input.sourceSystem, Input.sourceLocation, Input.TiffImagesFolder);
-		ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-		ingestion.selectDATSource("DAT4_STC_NewDateFormat - Copy.dat", Input.prodBeg);
-		ingestion.getTIFFLST().selectFromDropdown().selectByVisibleText(Input.tiffLoadFile);
-		ingestion.getTIFFSearchablePDFCheckBox().isElementAvailable(10);
-		ingestion.getTIFFSearchablePDFCheckBox().waitAndClick(5);
-		ingestion.selectDateAndTimeForamt(Input.dateFormat);
-		ingestion.clickOnNextButton();
-		ingestion.clickOnPreviewAndRunButton();
-		ingestion.verifyApprovedStatusForOverlayIngestion();
-		ingestion.runFullAnalysisAndPublish();
-		
-		dataSets = new DataSets(driver);
-		DocViewPage docview = new DocViewPage(driver);
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
-		if(ingestionFullName!=null) {
-			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
-			
-			String filetype=docview.getFileType().getText().trim();
-			System.out.println(filetype);
-			if(filetype.isEmpty()) {
-				baseClass.passedStep("PDF file only displayed in default viewer");
-			}else {
-				baseClass.failedStep("verification failed");
-			}
-			docview.getImageTab().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			if(docview.getDocViewImage().isElementAvailable(10)) {
-				baseClass.passedStep("Tiff file displayed in Tiff Tab");
-			}else {
-				baseClass.failedStep("verification failed");
-			}
-		}
-		
-		baseClass.passedStep(
-				"Verified that in Ingestion Overlay if 'Generate Searchable PDFs' is selected in TIFF section, then PDF should be generated from the TIFF's");
-		loginPage.logout();
-
-	}
-
-	
-
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
 	 * that if PA ingested both PDF and TIFF's file and the "Generate Searchable
 	 * PDFs" option is set to true, then PDF should be generated from the TIFF's
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyJanTiffPdfandTiffInDocView() throws InterruptedException {
 
 		dataSets = new DataSets(driver);
@@ -860,12 +752,12 @@ public class IngestionCreationClass02 {
 		if(!status) {
 			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.JanMultiPTIFF);
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("SearchablePDFGeneration.DAT", "BNum");
+			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectPDFSource("PDF.lst",false);
 			ingestion.selectTIFFSource("Image.lst",false,true);
 			ingestion.selectDateAndTimeForamt(Input.dateFormat);
 			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("BNum", "BNum", "CName");
+			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
 			ingestion.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
 			ingestion.ingestionIndexing(Input.JanMultiPTIFF);
@@ -903,7 +795,7 @@ public class IngestionCreationClass02 {
 	 * PDFs" option is set to true, and if the Generation of the PDF from the TIFF's
 	 * fails, then pre-existing PDF should be retained as the PDF file variant
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = true, groups = { "regression" }, priority = 13)
 	public void verifyJanTiffPdfandnotTiffInDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -916,15 +808,15 @@ public class IngestionCreationClass02 {
 				"Verify that if PA ingested both PDF and TIFF's file,the 'Generate Searchable PDFs' option is set to true, and if the Generation of the PDF from the TIFF's fails,then pre-existing PDF should be retained as the PDF file variant");
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
 		boolean status = ingestion.verifyIngestionpublish(Input.JanMultiPTIFF);
-		if(!status) {
+		if(status == false) {
 			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.JanMultiPTIFF);
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("SearchablePDFGeneration.DAT", "BNum");
+			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectPDFSource("PDF.lst",false);
 			ingestion.selectTIFFSource("Image.lst",false,true);
 			ingestion.selectDateAndTimeForamt(Input.dateFormat);
 			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("BNum", "BNum", "CName");
+			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
 			ingestion.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
 			ingestion.ingestionIndexing(Input.JanMultiPTIFF);
@@ -954,7 +846,7 @@ public class IngestionCreationClass02 {
 	 * generate successfully for Multi-page TIFF images.'RPMXCON-49502'
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyJanMultiTiffPdfandTiffInDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -967,14 +859,14 @@ public class IngestionCreationClass02 {
 
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
 		boolean status = ingestion.verifyIngestionpublish(Input.JanMultiPTIFF);
-		if(!status) {
+		if(status == false) {
 			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.JanMultiPTIFF);
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("SearchablePDFGeneration.DAT", "BNum");
+			ingestion.selectDATSource("SearchablePDFGeneration.DAT", Input.documentKeyBNum);
 			ingestion.selectTIFFSource("Image.lst",false,true);
 			ingestion.selectDateAndTimeForamt(Input.dateFormat);
 			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("BNum", "BNum", "CName");
+			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
 			ingestion.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
 			ingestion.ingestionIndexing(Input.JanMultiPTIFF);
@@ -1010,7 +902,7 @@ public class IngestionCreationClass02 {
 	 * Author :Aathith date: NA Modified date: Modified by: 
 	 * Description : Verify that if "Generate Searchable PDFs" is TRUE, then Ingestion should generate successfully for Single page TIFF images.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyMarTiffPdfandTiffInDocView() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1026,11 +918,11 @@ public class IngestionCreationClass02 {
 		if(!status) {
 			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.SinglePageTIFFFolder);
 			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("C2322695-9767-44C3-A290-B21B12B82A32_DAT.dat", "BNum");
+			ingestion.selectDATSource("C2322695-9767-44C3-A290-B21B12B82A32_DAT.dat", Input.documentKeyBNum);
 			ingestion.getTIFFSearchablePDFCheckBox().waitAndClick(10);
 			ingestion.selectDateAndTimeForamt(Input.dateFormat);
 			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("BNum", "BNum", "CName");
+			ingestion.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
 			ingestion.clickOnPreviewAndRunButton();
 			ingestion.IngestionCatlogtoCopying(Input.JanMultiPTIFF);
 			ingestion.ingestionIndexing(Input.JanMultiPTIFF);
@@ -1069,7 +961,7 @@ public class IngestionCreationClass02 {
 	 * Case Id:RPMXCON-49545 Description :Verify that value for all the metadata
 	 * fields having DATETIME/DATE data type.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyMetaDataFieldsDateTimeInDataType() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49545");
@@ -1085,7 +977,8 @@ public class IngestionCreationClass02 {
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
@@ -1104,7 +997,7 @@ public class IngestionCreationClass02 {
 	 * Case Id:RPMXCON-49902 Description :Unpublish documents - Verify Search as
 	 * source.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 17)
 	public void verifyUnpublishDocumentsSource() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1121,7 +1014,8 @@ public class IngestionCreationClass02 {
 		if (status == false) {
 			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
 			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
 			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
@@ -1136,69 +1030,12 @@ public class IngestionCreationClass02 {
 		ingestionPage.unpublish(BasicSearchName);
 		loginPage.logout();
 	}
-
-	/**
-	 * @author Aathith
-	 * @throws InterruptedException //@TestCase id: 49547 : Verify Count of Generate
-	 *                              Searchable PDFs if 'Required PDF Generation' is
-	 *                              TRUE and 'searchable PDF for TIFFs' is TRUE
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
-	public void verifySearchablePdfCount() throws InterruptedException {
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49547 ");
-		baseClass.stepInfo(
-				"###  Verify Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE ###");
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-		
-		boolean status = ingestion.verifyIngestionpublish(Input.PDFGen_10Docs);
-		if(!status) {
-			ingestion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
-					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
-		}
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.PDFGen_10Docs);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingestion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
-
-			baseClass.stepInfo("Select MP3 varient source.");
-			ingestion.selectPDFSource(Input.PDF5DocsLst, false);
-
-			ingestion.selectTIFFSource(Input.Images5DocsLst, false, true);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestion.clickOnPreviewAndRunButton();
-			ingestion.ignoreErrorsAndCatlogging();
-			ingestion.ignoreErrorsAndCopying();
-			
-			baseClass.stepInfo("Verify count of searchable pdf");
-			ingestion.searchablePdfCountCheck();
-
-		baseClass.passedStep(
-				"Verified Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE");
-		loginPage.logout();
-
-	}
-
-	
 	
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: 
 	 * Description : To Verify In Ingestions, if the user tries to unpublish non-Nexidia indexed audio files, the unpublish should be successful.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
 	public void verifyUnpublishIndexedAudioFile() throws InterruptedException {
 		
 		dataSets = new DataSets(driver);
@@ -1214,7 +1051,7 @@ public class IngestionCreationClass02 {
 		System.out.println(status);
 		if (status == false) {
 			ingestion.performAKNativeFolderIngestion(Input.DATFile1);
-			ingestion.ingestionCatalogging();
+			ingestion.ignoreErrorsAndCatlogging();
 			ingestion.ignoreErrorsAndCopying();
 			ingestion.ingestionIndexing(Input.AK_NativeFolder);
 			ingestion.approveIngestion(1);
@@ -1240,60 +1077,6 @@ public class IngestionCreationClass02 {
 		
 	}
 	
-	/**
-	 * Author :Vijaya.Rani date: 05/05/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-48013 Description :To Verify In Ingestion Overlays Ignore All
-	 * Errors at Cataloge Stage, Should work.
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
-	public void verifyIngestionOverlayIngareAllErrorsAndCatalogStage() throws InterruptedException {
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-48013");
-		baseClass.stepInfo("To Verify In Ingestion Overlays Ignore All Errors at Cataloge Stage, Should work.");
-		ingestionPage.OverlayIngestionWithoutDat(Input.AK_NativeFolder, "mp3", Input.MP3File);
-		ingestionPage.ignoreErrorsAndCatlogging();
-
-		// Rollback Ingestion
-		ingestionPage.rollBackIngestion();
-	}
-	
-	/**
-	 * Author :Vijaya.Rani date: 06/05/2022 Modified date: NA Modified by: NA Test
-	 * Case Id:RPMXCON-48189 Description :To Verify Unpublish for Already published
-	 * Documents after Ingestion.
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
-	public void verifyUnpublishForAlreadyPublishedDocsIngestion() throws InterruptedException {
-
-		ingestionPage = new IngestionPage_Indium(driver);
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		savedSearch = new SavedSearch(driver);
-
-		baseClass.stepInfo("Test case Id: RPMXCON-48189");
-		baseClass.stepInfo("To Verify Unpublish for Already published Documents after Ingestion.");
-		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
-
-		// Search ingestionName And bulkRelease
-		sessionSearch.basicSearchWithMetaDataQuery(Input.nativeMp3FileFormat, "IngestionName");
-
-		// Saved the My SavedSearch
-		sessionSearch.saveSearch(BasicSearchName);
-		sessionSearch.bulkRelease(Input.securityGroup);
-
-		// Go to UnpublishPage
-		ingestionPage.navigateToUnPublishPage();
-		ingestionPage.unpublish(BasicSearchName);
-
-		ingestionPage.navigteToUnpublished(BasicSearchName);
-		// verify Document Count is 0
-		int index = baseClass.getIndex(ingestionPage.getUnpublishTableHeader(), "DOC COUNT");
-		String docCount = ingestionPage.getUnpublishtableValues(BasicSearchName, index).getText();
-		System.out.println(docCount);
-		baseClass.stepInfo("After Unpublish DocCount : " + docCount);
-	}
 	
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description
@@ -1301,13 +1084,13 @@ public class IngestionCreationClass02 {
 	 * been unpublished. 'RPMXCON-49263'
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyTotalUniqueCountAfterUnpublished() throws InterruptedException {
 
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocListPage doclist = new DocListPage(driver);
 		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49263");
@@ -1316,31 +1099,50 @@ public class IngestionCreationClass02 {
 
 		
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
+		
+		boolean status = ingestionPage.verifyIngestionpublish(Input.SinglePageTIFFFolder);
+		if(!status) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.SinglePageTIFFFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+			ingestionPage.selectDATSource("C2322695-9767-44C3-A290-B21B12B82A32_DAT.dat", Input.documentKeyBNum);
+			ingestionPage.getTIFFSearchablePDFCheckBox().waitAndClick(10);
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			ingestionPage.clickOnNextButton();
+			ingestionPage.ingestionMapping(Input.documentKeyBNum, Input.documentKeyBNum, Input.documentKeyCName);
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.JanMultiPTIFF);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+			
+		}
+		
 		// getting before unique count
 		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
 		System.out.println(uniqueCountBefore);
 		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountBefore + "'");
-
-		// Search ingestionName
-		sessionSearch.basicSearchWithMetaDataQuery(Input.TiffImagesFolder, "IngestionName");
-		sessionSearch.getPureHitAddButton().isElementAvailable(2);
-		sessionSearch.getPureHitAddButton().waitAndClick(5);
-		// Saved the My SavedSearch
+		
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.SinglePageTIFFFolder);
+		String docId=doclist.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, "DocID");
 		sessionSearch.saveSearch(BasicSearchName);
+
 		// Go to UnpublishPage
 		ingestionPage.navigateToUnPublishPage();
 		ingestionPage.unpublish(BasicSearchName);
 
 		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
 		System.out.println(uniqueCountAfter);
-		baseClass.stepInfo("Total unique count Before performing overlay : '" + uniqueCountAfter + "'");
+		baseClass.stepInfo("Total unique count after performing overlay : '" + uniqueCountAfter + "'");
 
 		if (uniqueCountBefore == uniqueCountAfter) {
-			baseClass.passedStep("Total Unique Count is not include the document that have been unpublished ");
+			baseClass.failedStep("Total Unique Count included the document that have been unpublished ");
 		} else {
-			baseClass.failedStep("Total Unique Count is include the document that have been unpublished ");
+			baseClass.passedStep("Total Unique Count not included the document that have been unpublished ");
 		}
+		loginPage.logout();
 	}
 
 	/**
@@ -1350,10 +1152,9 @@ public class IngestionCreationClass02 {
 	 * Successful. 'RPMXCON-48084'
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyFullAnalyticsRunIngestionForOverlay() throws InterruptedException {
 
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1365,120 +1166,59 @@ public class IngestionCreationClass02 {
 
 
 		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-		ingestionPage.nativigateToIngestionViaButton();
 
-		boolean status = ingestionPage.verifyIngestionpublish(Input.TiffImagesFolder);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
 		System.out.println(status);
-		String ingestionType = "Add Only";
 
-		System.out.println(status);
 		if (status == false) {
 
-			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(ingestionType, Input.sourceSystem,
-					Input.sourceLocation, Input.TiffImagesFolder);
-			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestionPage.selectDATSource(Input.DATFile3, Input.prodBeg);
-			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
-			ingestionPage.clickOnNextButton();
-			ingestionPage.IngestionCatlogtoIndexing(Input.TiffImagesFolder);
-			ingestionPage.approveAndPublishIngestion(Input.TiffImagesFolder);
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+			
 		}
-		// Search ingestionName And bulkRelease
-		sessionSearch.basicContentSearch(Input.searchStringStar);
-		String beforeStringCount = sessionSearch.getPureHitsCount().getText();
-		System.out.println(beforeStringCount);
-		baseClass.stepInfo("First String persistent hit count is : " + beforeStringCount);
-
+		int beforeOverlayCount = ingestionPage.getIngestedUniqueCount();
+		System.out.println(beforeOverlayCount);
+		
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.UniCodeFilesFolder);
+		// Search ingestionName
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
 		// Saved the My SavedSearch
-		sessionSearch.bulkRelease(Input.securityGroup);
 		sessionSearch.saveSearch(BasicSearchName);
-
+		sessionSearch.unReleaseDocsFromSecuritygroup(Input.securityGroup);
+		
 		// Go to UnpublishPage
 		ingestionPage.navigateToUnPublishPage();
 		ingestionPage.unpublish(BasicSearchName);
-
-		// Go to Sessionsearch page
-		this.driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.addNewSearch();
-		sessionSearch.basicSearchWithMetaDataQuery(Input.searchString1);
-		String afterStringCount = sessionSearch.getPureHitsCount().getText();
-		System.out.println(afterStringCount);
-		baseClass.stepInfo("First String persistent hit count is : " + afterStringCount);
-		if (beforeStringCount != afterStringCount) {
+		// perform overlay with same data
+		ingestionPage.OverlayIngestionWithoutDat(Input.UniCodeFilesFolder, "text", Input.textFile1);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		
+		int afterOverlayCount =ingestionPage.getIngestedUniqueCount();
+		System.out.println(afterOverlayCount);
+		
+		if (beforeOverlayCount == afterOverlayCount) {
 			baseClass.passedStep("Metadata Updated in Overlays displayed after Overlay's Successfully");
 		} else {
 			baseClass.failedStep(" Metadata Updated in Overlays not displayed after Overlay's");
 		}
+		loginPage.logout();
 	}
 	
-	/**
-	 * @author Aathith
-	 * @throws InterruptedException 
-	 * //@TestCase id: 46894 : Verify the overlay Ingestion for Audio Documents against International English language pack
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
-	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
-		
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-46894 ");
-		baseClass.stepInfo(
-				"### Verify the overlay Ingestion for Audio Documents against International English language pack. ###");
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		docview = new DocViewPage(driver);
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingestion.nativigateToIngestionViaButton();
-
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			//Input.overlayOnly, null, Input.sourceLocation,Input.ingestionAutomationAllSource used for ingestionType, sourceLoaction ,Ingestion name
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation,
-					Input.ingestionAutomationAllSource);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			//Input.BEbomDat, Input.prodBeg used for dat file name and document key
-			ingestion.selectDATSource(Input.BEbomDat, Input.prodBeg);
-
-			baseClass.stepInfo("Select MP3 varient source.");
-			//Input.MP3_OverlayLst is used mp3 load file name
-			ingestion.selectMP3VarientSource(Input.MP3_OverlayLst, false);
-			
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestion.clickOnPreviewAndRunButton();
-			
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingestion.selectAllOptionsFromFilterByDropdown();
-			
-			ingestion.getIngestionSatatusAndPerformUptoCopiedStage();
-			
-			ingestion.verifyLanguageIsSelectable(Input.audioLanguage);
-
-		baseClass.passedStep(
-				"Verified the overlay Ingestion for Audio Documents against International English language pack");
-		loginPage.logout();
-
-	}
+	
 
 	/**
 	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: Description:
 	 * To Verify Ingestion Overlays of PDF without unpublish. 'RPMXCON-46875'
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyingestionOverlayWithoutUnpublish() throws InterruptedException {
 
-		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
 		savedSearch = new SavedSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
@@ -1488,19 +1228,24 @@ public class IngestionCreationClass02 {
 		baseClass.stepInfo("To Verify Ingestion Overlays of PDF without unpublish.");
 
 
-		ingestionPage = new IngestionPage_Indium(driver);
-		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
 		System.out.println(status);
 		if (status == false) {
-			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
-			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
-			ingestionPage.IngestionCatlogtoCopying(Input.HiddenPropertiesFolder);
-			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
 			ingestionPage.approveIngestion(1);
 			ingestionPage.runFullAnalysisAndPublish();
 		}
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.HiddenPropertiesFolder);
+		// perform overlay ingestion with pdf
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "Pdf", Input.PDFFile);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		
+		String ingestionName = dataSets.isDataSetisAvailable(Input.AllSourcesFolder);
 		System.out.println(ingestionName);
 		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
 		sessionSearch.viewInDocView();
@@ -1513,67 +1258,9 @@ public class IngestionCreationClass02 {
 		} else {
 			baseClass.failedStep("There is no such message");
 		}
+		loginPage.logout();
 	}
 	
-	
-	/**
-	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
-	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
-	 * 'RPMXCON-48526'
-	 * 
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
-	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
-		
-		baseClass = new BaseClass(driver);
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
-		
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
-		baseClass.stepInfo(
-				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
-
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingestion.nativigateToIngestionViaButton();
-
-		boolean status = ingestion.verifyIngestionpublish(Input.ingestionAutomationAllSource);
-		if (status) {
-			baseClass.stepInfo("Ingestion Add only is already done this project");
-			baseClass.stepInfo("Select ingestion type and specify source loaction.");
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
-					Input.ingestionAutomationAllSource);
-
-			baseClass.stepInfo("Select DAT delimiters.");
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-
-			baseClass.stepInfo("Select DAT source.");
-			ingestion.selectDATSource(Input.BEbomDat, Input.prodBeg);
-
-			baseClass.stepInfo("Select Date and Time format.");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-
-			baseClass.stepInfo("Click on next button.");
-			ingestion.clickOnNextButton();
-
-			baseClass.stepInfo("Click on preview and run button.");
-			ingestion.clickOnPreviewAndRunButton();
-
-			baseClass.stepInfo("Select all options from filter by dropdown.");
-			ingestion.selectAllOptionsFromFilterByDropdown();
-
-			ingestion.getIngestionSatatusAndPerformUptoCopiedStage();
-
-			ingestion.verifyLanguageIsSelectable("International English");
-
-		}
-
-		baseClass.passedStep(
-				"Verified the overlay Ingestion for Audio Documents against International English language pack");
-
-	}
 	
 	/**
 	 * Author: Vijaya.Rani date: 04/05/2022 Modified date: NA Modified by: NA
@@ -1581,33 +1268,30 @@ public class IngestionCreationClass02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
-		ingestionPage = new IngestionPage_Indium(driver);
+		dataSets = new DataSets(driver);
 		DocListPage docList = new DocListPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-49569");
 		baseClass.stepInfo("Verify Ingestion should published successfully if Email metadata is having only Name.");
 		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
-
 		
-		baseClass.stepInfo("Navigate to ingestion page.");
-		ingestionPage.nativigateToIngestionViaButton();
-		
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-		String ingestionType="Add Only";
-		
-		
-		if (status) {
-			baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-			ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType, Input.sourceSystem,
-					Input.DATFile1, null, null, null, null, null, Input.MP3File, null, null);
-
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, Input.datFormatFile);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.GD994NativeTextForProductionFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		
-		driver.Navigate().refresh();
-		String ingestionName = ingestionPage.selectPublishedFromFilterDropDown(Input.GD994NativeTextForProductionFolder);
+		String ingestionName = dataSets.isDataSetisAvailable(Input.GD994NativeTextForProductionFolder);
 		System.out.println(ingestionName);
 		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, "IngestionName");
 		sessionSearch.ViewInDocList();
@@ -1620,33 +1304,126 @@ public class IngestionCreationClass02 {
 		baseClass.stepInfo("Email metadata is display correctly in doc list");
 		
 		//verify Emailname is Display
-		String emailName = docList.getDocList_EmailName().getText();
+		for(int i=1;i<=8;i++) {
+		String emailName = docList.getDataInDoclist(i,4).getText();
 		System.out.println(emailName);
-		if(docList.getDocList_EmailName().Displayed()) {
-			baseClass.passedStep("Email name is displayed successsfully");
+		if(docList.getDataInDoclist(i,4).Displayed() && emailName.equalsIgnoreCase(Input.emailName)) {
+			baseClass.passedStep("Email name displayed and email address is blank");
 		}
 		else {
-			baseClass.failedStep("Email name is not displayed");
+			System.out.println("Email name and address not displayed correctly for this document");
 		}
-
-		//verify emailAddress Is Blank
-		if(emailName.contains("@")) {
-			baseClass.failedStep("Email Address is displayed");
-		}
-		else {
-			baseClass.passedStep ("Email Address is blank");
 		}
 		loginPage.logout();
 		}
 	
 	/**
+	* Author :Aathith Test Case Id:RPMXCON-49567 
+	* Description :Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format
+	*
+	*/
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
+		
+	baseClass.stepInfo("Test case Id: RPMXCON-49567");
+	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
+
+	IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+	
+	boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+	System.out.println(status);
+	if (status == false) {
+		baseClass.stepInfo("Performing add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.GD994NativeTextForProductionFolder, Input.datFormatFile);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.GD994NativeTextForProductionFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+	}
+	
+	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
+	DataSets dataset = new DataSets(driver);
+	dataset.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
+
+	DocListPage docList = new DocListPage(driver);
+	docList.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
+	
+	for(int i=1;i<=8;i++) {
+		String emailName = docList.getDataInDoclist(i,4).getText();
+		System.out.println(emailName);
+		if(docList.getDataInDoclist(i,4).Displayed() && emailName.equalsIgnoreCase(Input.emailAddress1) || emailName.equalsIgnoreCase(Input.emailAddress2) ) {
+			baseClass.passedStep("Email name not displayed with enclosed paranthesis and email address displayed in enclosed paranthesis");
+		}
+		else {
+			System.out.println("Email name and address not displayed correctly for this document");
+		}
+		}
+	
+	baseClass.passedStep("Verified Ingestion with Email metadata if 'NamesAndAddresses' with different format");
+	loginPage.logout();
+	}
+	
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: Description : To verify
+	 * that if Email data contained space before the '@' sign , it should not
+	 * calculate two distinct values
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifyEmailDataNotCalculateAsDistintValue() throws InterruptedException {
+
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		SoftAssert sofassertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49802");
+		baseClass.stepInfo(
+				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.IngestionEmailDataFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.IngestionOnlyForDatFile(Input.IngestionEmailDataFolder, Input.emailDatFile);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.IngestionEmailDataFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
+		if (ingestionFullName != null) {
+			baseClass.stepInfo(ingestionFullName + "Ingestion already published in this project");
+			int count = sessionsearch.MetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @");
+			sessionsearch.addNewSearch();
+			int count1 = sessionsearch.newMetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @ ");
+			if (count != 0) {
+				if (count == count1) {
+					sofassertion.assertEquals(count1, count);
+					baseClass.passedStep(
+							"It displays result correctly if Email data contained space before '@' sign . Also  if Email data contained space before and after the '@' sign , it not calculate two distinct values, it displays result correctly  ");
+				} else {
+					baseClass.failedStep("count is not equal");
+				}
+			} else {
+				baseClass.failedMessage("Documents not present");
+			}
+		}
+		baseClass.passedStep(
+				"verified that if Email data contained space before the '@' sign , it should not calculate two distinct values");
+		loginPage.logout();
+
+	}
+	
+	/**
 	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
 	 * Email metadata in DocList and in DocView
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyingEmailMetaDataInDoclistDocview() throws InterruptedException {
 
-		baseClass = new BaseClass(driver);
+		
 		dataSets = new DataSets(driver);
 		sessionsearch = new SessionSearch(driver);
 		tagandfolder = new TagsAndFoldersPage(driver);
@@ -1663,17 +1440,13 @@ public class IngestionCreationClass02 {
 
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
 		boolean status = ingestion.verifyIngestionpublish(Input.IngestionEmailDataFolder);
-		if(!status) {
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, Input.IngestionEmailDataFolder);
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("0188_loadfile.dat", "DocumentID");
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("DocumentID", "Document Author", "CustUserID");
-			ingestion.clickOnPreviewAndRunButton();
-			ingestion.selectAllOptionsFromFilterByDropdown();
-			ingestion.removeCatalogError();
-			ingestion.getIngestionSatatusAndPerform();
+		if(status ==false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.IngestionEmailDataFolder, Input.emailDatFile);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.IngestionEmailDataFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
 		}
 		
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
@@ -1756,92 +1529,14 @@ public class IngestionCreationClass02 {
 		loginPage.logout();
 
 	}
-	/**
-	 * Author :Aathith date: NA Modified date: Modified by: Description : To verify
-	 * that if Email data contained space before the '@' sign , it should not
-	 * calculate two distinct values
-	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
-	public void verifyEmailDataNotCalculateAsDistintValue() throws InterruptedException {
-
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		sessionsearch = new SessionSearch(driver);
-		SoftAssert sofassertion = new SoftAssert();
-
-		baseClass.stepInfo("Test case Id: RPMXCON-49802");
-		baseClass.stepInfo(
-				"To verify that if Email data contained space before the '@' sign , it should not calculate two distinct values");
-
-		baseClass.selectproject(Input.regressionConsilio1);
-		String ingestionFullName = dataSets.isDataSetisAvailable(Input.IngestionEmailDataFolder);
-		if (ingestionFullName != null) {
-			baseClass.stepInfo(ingestionFullName + "Ingestion alredy published this project");
-			int count = sessionsearch.MetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @consilio.com");
-			sessionsearch.addNewSearch();
-			int count1 = sessionsearch.newMetaDataSearchInBasicSearch(Input.emailAuthorDomain, " @ consilio.com");
-			if (count != 0) {
-				if (count == count1) {
-					sofassertion.assertEquals(count1, count);
-					baseClass.passedStep(
-							"It displays result correctly if Email data contained space before '@' sign . Also  if Email data contained space before and after the '@' sign , it not calculate two distinct values, it displays result correctly  ");
-				} else {
-					baseClass.failedStep("count is not equal");
-				}
-			} else {
-				baseClass.failedStep("try another, project this project is not mapped domain values");
-			}
-		}
-		baseClass.passedStep(
-				"verified that if Email data contained space before the '@' sign , it should not calculate two distinct values");
-		loginPage.logout();
-
-	}
 	
-	/**
-	* Author :Aathith Test Case Id:RPMXCON-49567 
-	* Description :Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format
-	*
-	*/
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
-	public void verifyingNamesAndAddressesMetadataInDocListPage() throws InterruptedException {
-		baseClass = new BaseClass(driver);
-		dataSets = new DataSets(driver);
-		
-	baseClass.stepInfo("Test case Id: RPMXCON-49567");
-	baseClass.stepInfo("Verify Ingestion with Email metadata if 'NamesAndAddresses' with different format");
-
-	IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
-	boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
-	System.out.println(status);
-	
-	if (!status) {
-	String ingestionType = Input.ingestionType;
-	baseClass.stepInfo("Edit of addonly saved ingestion with mapping field selection");
-	ingestionPage.IngestionRegressionForDifferentDAT(Input.GD994NativeTextForProductionFolder, ingestionType,
-	Input.sourceSystem, Input.datFormatFile, "DAT4_STC_NativesEmailData NEWID.lst",
-	"DAT4_STC_TextEmailData NEWID.lst", null, null, null, null, null, null);
-	}
-	
-	String[] addEmailColumn = { "EmailAuthorNameAndAddress"};
-	DataSets dataset = new DataSets(driver);
-	dataset.selectDataSetWithName(Input.GD994NativeTextForProductionFolder);
-
-	DocListPage doc = new DocListPage(driver);
-	doc.SelectColumnDisplayByRemovingExistingOnes(addEmailColumn);
-	doc.emailAuthorNameParentheses("EMAILAUTHORNAMEANDADDRESS");
-	doc.verifyingEmailMetadataInDocListPage("EMAILAUTHORNAMEANDADDRESS");
-	
-	baseClass.passedStep("Verified Ingestion with Email metadata if 'NamesAndAddresses' with different format");
-	loginPage.logout();
-	}
 	
 	/**
 	 * Author :Aathith date: NA Modified date: Modified by: 
 	 * Description : To verify that for image based document Sightline should receive 'RequirePDFGeneration' as set to 'true', 
 	 * by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyMetaDataRequiredPDFGenereationIsTrue() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -1856,15 +1551,14 @@ public class IngestionCreationClass02 {
 		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
 		boolean status = ingestion.verifyIngestionpublish(Input.GNon_searchable_PDF_Load_file);
 		if(!status) {
-			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, Input.sourceLocation, "GNon searchable PDF Load file");
-			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
-			ingestion.selectDATSource("Cracked Files_loadfile.dat", Input.sourceDocIdSearch);
-			ingestion.selectDateAndTimeForamt(Input.dateFormat);
-			ingestion.clickOnNextButton();
-			ingestion.ingestionMapping("SourceParentDocID", "DataSource", "CustodianName");
-			ingestion.clickOnPreviewAndRunButton();
-			ingestion.selectAllOptionsFromFilterByDropdown();
-			ingestion.getIngestionSatatusAndPerform();
+			
+			ingestion.IngestionOnlyForDatFile(Input.GNon_searchable_PDF_Load_file, Input.nonSearchablePdfLoadFile);
+			ingestion.ignoreErrorsAndCatlogging();
+			ingestion.ignoreErrorsAndCopying();
+			ingestion.ingestionIndexing(Input.GNon_searchable_PDF_Load_file);
+			ingestion.approveIngestion(1);
+			ingestion.runFullAnalysisAndPublish();
+			
 		}
 		String ingestionFullName = dataSets.isDataSetisAvailable(Input.GNon_searchable_PDF_Load_file);
 		if(ingestionFullName!=null) {
@@ -1882,6 +1576,361 @@ public class IngestionCreationClass02 {
 				+ " by ICE and 'RequirePDFGeneration' metadata should be displays in Doc View");
 		loginPage.logout();
 		
+	}
+	
+
+	/**
+	 * Author :Vijaya.Rani date: 06/05/2022 Modified date: NA Modified by: NA Test
+	 * Case Id:RPMXCON-48189 Description :To Verify Unpublish for Already published
+	 * Documents after Ingestion.
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void verifyUnpublishForAlreadyPublishedDocsIngestion() throws InterruptedException {
+
+		dataSets = new DataSets(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		savedSearch = new SavedSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48189");
+		baseClass.stepInfo("To Verify Unpublish for Already published Documents after Ingestion.");
+		String BasicSearchName = "Newone" + Utility.dynamicNameAppender();
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		
+		boolean status = ingestion.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if(!status) {
+			
+			ingestion.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestion.ignoreErrorsAndCatlogging();
+			ingestion.ignoreErrorsAndCopying();
+			ingestion.ingestionIndexing(Input.UniCodeFilesFolder);
+			ingestion.approveIngestion(1);
+			ingestion.runFullAnalysisAndPublish();
+			
+		}
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.UniCodeFilesFolder);
+		
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
+		// Saved the My SavedSearch
+		sessionSearch.saveSearch(BasicSearchName);
+		sessionSearch.unReleaseDocsFromSecuritygroup(Input.securityGroup);
+
+		// Go to UnpublishPage
+		ingestion.navigateToUnPublishPage();
+		ingestion.unpublish(BasicSearchName);
+		
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionFullName, "IngestionName");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearch.getPureHitsCount().Visible();
+			}
+		}), Input.wait30);
+		int docCount = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+		if(docCount==0) {
+			baseClass.passedStep("Document count is 0");
+		}
+		else {
+			baseClass.failedStep("Document count is not 0");
+		}
+		loginPage.logout();
+			
+	}
+	
+	/**
+	 * @author Aathith
+	 * @throws InterruptedException 
+	 * //@TestCase id: 46894 : Verify the overlay Ingestion for Audio Documents against International English language pack
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	public void verifyAudioDocumentInternationEnglish() throws InterruptedException {
+		
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-46894 ");
+		baseClass.stepInfo(
+				"### Verify the overlay Ingestion for Audio Documents against International English language pack. ###");
+		
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		//perform overlay with mp3
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyLanguageIsSelectable(Input.audioLanguage);
+		baseClass.passedStep(
+				"Verified the overlay Ingestion for Audio Documents against International English language pack");
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Vijaya.Rani date: 10/5/2022 Modified date: Modified by: 
+	 * Description : Verify the overlay Ingestion for Audio Documents against International English language pack
+	 * 'RPMXCON-48526'
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver);
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48526 ");
+		baseClass.stepInfo(
+				"### Verify the overlay Ingestion for Audio Documents against International English language pack ###");
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.allSourcesIngestionWithText(Input.DATFile, Input.prodBeg);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		//perform overlay with mp3
+		ingestionPage.OverlayIngestionWithoutDat(Input.AllSourcesFolder, "mp3", Input.MP3File);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.verifyLanguageIsSelectable(Input.audioLanguage);
+		baseClass.passedStep(
+				"Verified the overlay Ingestion for Audio Documents against International English language pack");
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Aathith
+	 * @throws InterruptedException 
+	 * ////@TestCase id: 49550 : Verify that in Ingestion Overlay if 'Generate Searchable PDFs'
+	 *  is selected in TIFF section, then PDF should be generated from the TIFF's
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	public void verifySearchablePdfTiffDocView() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49550 ");
+		baseClass.stepInfo(
+				"###  Verify that in Ingestion Overlay if 'Generate Searchable PDFs' is selected in TIFF section, then PDF should be generated from the TIFF's ###");
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+
+		boolean status = ingestion.verifyIngestionpublish(Input.TiffImagesFolder);
+		if(!status) {
+			ingestion.tiffImagesIngestion(Input.DATFile2, Input.tiffLoadFile, "false");
+			ingestion.ignoreErrorsAndCatlogging();
+			ingestion.ignoreErrorsAndCopying();
+			ingestion.ingestionIndexing(Input.TiffImagesFolder);
+			ingestion.approveIngestion(1);
+			ingestion.runFullAnalysisAndPublish();
+			
+		}
+		// Perform overlay ingestion
+		ingestion.selectIngestionTypeAndSpecifySourceLocation("Overlay Only", Input.sourceSystem, Input.sourceLocation, Input.TiffImagesFolder);
+		ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+		ingestion.selectDATSource(Input.DATFile2, Input.prodBeg);
+		ingestion.getTIFFLST().selectFromDropdown().selectByVisibleText(Input.tiffLoadFile);
+		ingestion.getTIFFSearchablePDFCheckBox().isElementAvailable(10);
+		ingestion.getTIFFSearchablePDFCheckBox().waitAndClick(5);
+		ingestion.selectDateAndTimeForamt(Input.dateFormat);
+		ingestion.clickOnNextButton();
+		ingestion.clickOnPreviewAndRunButton();
+		ingestion.verifyApprovedStatusForOverlayIngestion();
+		ingestion.runFullAnalysisAndPublish();
+		
+		dataSets = new DataSets(driver);
+		DocViewPage docview = new DocViewPage(driver);
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
+		if(ingestionFullName!=null) {
+			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
+			
+			String filetype=docview.getFileType().getText().trim();
+			System.out.println(filetype);
+			if(filetype.isEmpty()) {
+				baseClass.passedStep("PDF file only displayed in default viewer");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if(docview.getDocViewImage().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file displayed in Tiff Tab");
+			}else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		
+		baseClass.passedStep(
+				"Verified that in Ingestion Overlay if 'Generate Searchable PDFs' is selected in TIFF section, then PDF should be generated from the TIFF's");
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Aathith date: NA Modified date: Modified by: Description : Verify
+	 * that if "Generate Searchable PDF " check box is not selected in the TIFF
+	 * section, Ingestion should generate successfully with TIFF images only
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	public void verifyTiffImageOnlyDisplayed() throws InterruptedException {
+
+		dataSets = new DataSets(driver);
+		sessionsearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49491");
+		baseClass.stepInfo(
+				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
+
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		boolean status = ingestion.verifyIngestionpublish(Input.TiffImagesFolder);
+		if(!status) {
+			ingestion.tiffImagesIngestion("DAT4_STC_NewDateFormat - Copy.dat", Input.tiffLoadFile, "false");
+			ingestion.ignoreErrorsAndCatlogging();
+			ingestion.ignoreErrorsAndCopying();
+			ingestion.ingestionIndexing(Input.TiffImagesFolder);
+			ingestion.approveIngestion(1);
+			ingestion.runFullAnalysisAndPublish();
+			
+		}
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.TiffImagesFolder);
+		if (ingestionFullName != null) {
+			dataSets.selectDataSetWithNameInDocView(Input.TiffImagesFolder);
+			docview.getImageTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if (docview.getDocViewImage().isElementAvailable(10)) {
+				baseClass.passedStep("Tiff file only displayed");
+			} else {
+				baseClass.failedStep("verification failed");
+			}
+		}
+		baseClass.passedStep(
+				"Verified that if \"Generate Searchable PDF \" check box is not selected in the TIFF section, Ingestion should generate successfully with TIFF images only");
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Aathith
+	 * @throws InterruptedException //@TestCase id: 49547 : Verify Count of Generate
+	 *                              Searchable PDFs if 'Required PDF Generation' is
+	 *                              TRUE and 'searchable PDF for TIFFs' is TRUE
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	public void verifySearchablePdfCount() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49547 ");
+		baseClass.stepInfo(
+				"###  Verify Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE ###");
+		IngestionPage_Indium ingestion = new IngestionPage_Indium(driver);
+		
+		boolean status = ingestion.verifyIngestionpublish(Input.PDFGen_10Docs);
+		if(!status) {
+			ingestion.IngestionRegressionForDifferentDAT(Input.PP_PDFGen_10Docs,Input.ingestionType, "TRUE", Input.DATPPPDF10Docs, null,
+					Input.TextPPPDF10Docs, null, Input.ImagePPPDF10docs,"select", null, null, null);
+		}
+
+			baseClass.stepInfo("Select ingestion type and specify source loaction.");
+			ingestion.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem, Input.sourceLocation,
+					Input.PDFGen_10Docs);
+
+			baseClass.stepInfo("Select DAT delimiters.");
+			ingestion.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+
+			baseClass.stepInfo("Select DAT source.");
+			ingestion.selectDATSource(Input.newdateformat_5Docs, Input.prodBeg);
+
+			baseClass.stepInfo("Select MP3 varient source.");
+			ingestion.selectPDFSource(Input.PDF5DocsLst, false);
+
+			ingestion.selectTIFFSource(Input.Images5DocsLst, false, true);
+
+			baseClass.stepInfo("Select Date and Time format.");
+			ingestion.selectDateAndTimeForamt(Input.dateFormat);
+
+			baseClass.stepInfo("Click on next button.");
+			ingestion.clickOnNextButton();
+
+			baseClass.stepInfo("Click on preview and run button.");
+			ingestion.clickOnPreviewAndRunButton();
+			ingestion.verifyApprovedStatusForOverlayIngestion();
+			
+			baseClass.stepInfo("Verify count of searchable pdf");
+			ingestion.searchablePdfCountCheck();
+
+		baseClass.passedStep(
+				"Verified Count of Generate Searchable PDFs if 'Required PDF Generation' is TRUE and 'searchable PDF for TIFFs' is TRUE");
+		loginPage.logout();
+
+	}
+	
+	/** cannot run in batch run as we need to perform redaction and overlay
+	 * Author :Vijaya.Rani date: 05/05/2022 Modified date: NA Modified by: NA Test
+	 * Case Id:RPMXCON-48013 Description :To Verify In Ingestion Overlays Ignore All
+	 * Errors at Cataloge Stage, Should work.
+	 * 
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 32)
+	public void verifyIngestionOverlayIgnoreAllErrorsAndCatalogStage() throws InterruptedException {
+
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48013");
+		baseClass.stepInfo("To Verify In Ingestion Overlays Ignore All Errors at Cataloge Stage, Should work.");
+		
+		String foldername = "RedactionFolder" + Utility.dynamicNameAppender();
+		String BasicSearchName = "Search" + Utility.dynamicNameAppender();
+		tagandfolder = new TagsAndFoldersPage(driver);
+		tagandfolder.CreateFolder(foldername, Input.securityGroup);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		dataSets = new DataSets(driver);
+		IngestionPage_Indium ingestionPage = new IngestionPage_Indium(driver);
+		
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		System.out.println(status);
+		if (status == false) {
+			baseClass.stepInfo("Addonly saved ingestion with mapping field selection And Publish");
+			ingestionPage.IngestionRegressionForDateFormate(Input.HiddenPropertiesFolder, "MM/DD/YYYY",Input.DAT_MMDDYYYY_Slash,Input.Natives_MMDDYYYY_Slash);
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ingestionIndexing(Input.HiddenPropertiesFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		
+		String ingestionFullName = dataSets.isDataSetisAvailable(Input.HiddenPropertiesFolder);
+		sessionsearch.MetaDataSearchInBasicSearch(Input.metadataIngestion, ingestionFullName);
+		sessionsearch.saveSearch(BasicSearchName);
+		sessionsearch.bulkFolderExisting(foldername);
+		sessionsearch.bulkReleaseIngestions(Input.securityGroup);
+		
+		loginPage.logout();
+		// perform redaction
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tagandfolder.selectFolderViewInDocView(foldername);
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage.nonAudioPageRedaction(Input.defaultRedactionTag);
+		loginPage.logout();
+		//perform unpublish
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		//perform overlay ingestion
+		ingestionPage.OverlayIngestionWithDat(Input.HiddenPropertiesFolder,Input.DAT_MMDDYYYY_Slash,Input.sourceDocIdSearch,"Native",Input.Natives_MMDDYYYY_Slash);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		baseClass.passedStep("In overlay type ingestion,ignored all errors successfully");
+		loginPage.logout();
 	}
 
 	

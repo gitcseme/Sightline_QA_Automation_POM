@@ -5235,7 +5235,7 @@ public class IngestionPage_Indium {
 			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
-			getAddButton().waitAndClick(15);
+			
 			base.waitTime(2);
 
 			base.waitForElement(getMappingFIELDCAT6());
@@ -5243,7 +5243,7 @@ public class IngestionPage_Indium {
 			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-			getAddButton().waitAndClick(15);
+			
 			base.waitTime(2);
 
 			base.waitForElement(getMappingFIELDCAT7());
@@ -5251,7 +5251,7 @@ public class IngestionPage_Indium {
 			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
 			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-			getAddButton().waitAndClick(15);
+			
 			base.waitTime(2);
 
 			base.waitForElement(getMappingFIELDCAT8());
@@ -5366,8 +5366,9 @@ public class IngestionPage_Indium {
 				return getApproveMessageOKButton().Visible();
 			}
 		}), Input.wait30);
+		if(getApproveMessageOKButton().isElementAvailable(5)) {
 		getApproveMessageOKButton().waitAndClick(10);
-
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getbtnRunIngestion().Visible();
@@ -10514,7 +10515,7 @@ public class IngestionPage_Indium {
 		 * @Description verify audio language is selectable
 		 */
 	public void verifyLanguageIsSelectable(String Language) {
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getIsAudioCheckbox());
 		getIsAudioCheckbox().waitAndClick(10);
