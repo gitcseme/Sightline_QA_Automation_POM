@@ -2571,14 +2571,15 @@ public void popOutCodingFormChildWindow() {
 
 	public void checkingForRedaction() throws Exception {
 		base = new BaseClass(driver);
-		base.waitForElement(redactionIcon());
-		if (redactionIcon().isElementPresent() == false) {
+//		base.waitForElement(redactionIcon());
+		driver.waitForPageToBeReady();
+		if (redactionIcon().isDisplayed()) {
+
+			base.failedStep("The delete Icon appears for the clicked rectangle redaction");
+		} else {
 
 			base.passedStep(
 					"The delete Icon does not appear as the Annotation Layer linked to redaction has been deleted");
-		} else {
-			base.failedStep("The delete Icon appears for the clicked rectangle redaction");
-
 		}
 	}
 
