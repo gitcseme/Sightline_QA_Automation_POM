@@ -714,7 +714,7 @@ public class Export_Regression {
 		base.stepInfo("Test case Id: RPMXCON-50630");
 		base.stepInfo("#### Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled ####");
  		
-
+		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		String foldername = Input.randomText + Utility.dynamicNameAppender();
 		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -737,6 +737,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Create Folder");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName, Input.tagNamePrev);
 
 		RedactionPage redactionpage = new RedactionPage(driver);
 
@@ -778,10 +779,13 @@ public class Export_Regression {
  		page.fillingDATSection();
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFWithBurnRedaction(null, "Tags", Input.defaultRedactionTag);
-		page.getTIFF_MultiPage_RadioButton().ScrollTo();
-		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
-		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
+		page.fillingPDFSection(tagName);
+//		page.selectGenerateOption(false);
+//		page.getClk_burnReductiontoggle().waitAndClick(10);
+//		page.burnRedactionWithRedactionTag(redactiontag1);
+//		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+//		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+//		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -840,7 +844,7 @@ public class Export_Regression {
 		base.stepInfo("Test case Id: RPMXCON-50330");
 		base.stepInfo("#### Verify that TIFF should Export with Burned Redaction if Only Burn Redaction is enabled ####");
  		
-
+String tagName=Input.randomText + Utility.dynamicNameAppender();
 		String foldername = Input.randomText + Utility.dynamicNameAppender();
 		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -863,7 +867,7 @@ public class Export_Regression {
 		
 		base.stepInfo("Create Folder");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
+   tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName, Input.tagNamePrev);
 		RedactionPage redactionpage = new RedactionPage(driver);
 
 		base.stepInfo("Creating redaction tag");
@@ -904,10 +908,11 @@ public class Export_Regression {
  		page.fillingDATSection();
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
-		page.getTIFF_MultiPage_RadioButton().ScrollTo();
-		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
-		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
+		page.fillingPDFSection(tagName);
+//		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
+//		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+//		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+//		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -965,8 +970,8 @@ public class Export_Regression {
 		base=new BaseClass(driver);
 		base.stepInfo("Test case Id: RPMXCON-49248");
 		base.stepInfo("#### To Verify in Export TIFFPageCount for placeholders. ####");
- 		
-
+		
+		String tagName = Input.randomText + Utility.dynamicNameAppender();
 		String foldername = Input.randomText + Utility.dynamicNameAppender();
 		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -987,9 +992,10 @@ public class Export_Regression {
 		base.stepInfo("Navigate to security group");
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		
+		tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
 		base.stepInfo("Create Folder");
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-
+		
 		RedactionPage redactionpage = new RedactionPage(driver);
 
 		base.stepInfo("Creating redaction tag");
@@ -1036,10 +1042,11 @@ public class Export_Regression {
 		page.addDATFieldAtThirdRow(Input.docBasic,Input.docName,Input.documentID);
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
-		page.fillingTIFFWithBurnRedaction(null, "Tag", Input.defaultRedactionTag);
-		page.getTIFF_MultiPage_RadioButton().ScrollTo();
-		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
-		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
+		page.fillingPDFSection(tagName);
+//		page.fillingTIFFSection(tagName);
+//		page.getTIFF_MultiPage_RadioButton().ScrollTo();
+//		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
+//		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 		
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();

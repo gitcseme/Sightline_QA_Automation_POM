@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
@@ -36,7 +37,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class VerifyingAnnotationLayerInSG {
+public class DocviewAnnotation {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
@@ -54,24 +55,27 @@ public class VerifyingAnnotationLayerInSG {
 	String namesg3 = "Default_9581" + Utility.dynamicNameAppender();
 	String AnnotationLayerNew = "AnnotationLayerNew1234" + Utility.dynamicNameAppender();
 
-
 	@BeforeClass(alwaysRun = true)
 
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
 
-		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
+
+		// Login as a PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
 
 	/**
@@ -82,90 +86,110 @@ public class VerifyingAnnotationLayerInSG {
 	 *         security groups after resetting the RMU to default
 	 */
 
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(enabled =true,groups = { "regression" }, priority = 1)
 	public void verifyAnnotationLayer() throws Exception {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-
+		AnnotationLayer annotation = new AnnotationLayer(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		DocExplorerPage docExp = new DocExplorerPage(driver);
 		baseClass.stepInfo("Test case id: RPMXCON 52259");
-// creating two new security groups and adding annotation layer
-		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
+
+		// creating two new security groups and adding annotation layer
+		securityGroupsPage = new SecurityGroupsPage(driver);
 		securityGroupsPage.navigateToSecurityGropusPageURL();
 		securityGroupsPage.AddSecurityGroup(namesg2);
-		baseClass.CloseSuccessMsgpopup();
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
+
 		driver.scrollPageToTop();
 		securityGroupsPage.AddSecurityGroup(namesg3);
-		baseClass.CloseSuccessMsgpopup();
-//Creating annotation layer and assigning to newly created SGs
-		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
-		securityGroupsPage.navigateToSecurityGropusPageURL();
-		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-		baseClass.CloseSuccessMsgpopup();
-		securityGroupsPage.navigateToSecurityGropusPageURL();
-		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(AnnotationLayerNew);
-		baseClass.CloseSuccessMsgpopup();
-		securityGroupsPage.navigateToSecurityGropusPageURL();
-		securityGroupsPage.selectSecurityGroup(namesg2);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-		baseClass.CloseSuccessMsgpopup();
-		securityGroupsPage.navigateToSecurityGropusPageURL();
-		securityGroupsPage.selectSecurityGroup(namesg3);
-		securityGroupsPage.clickOnReductionTagAndSelectReduction("Default Redaction Tag");
-		baseClass.CloseSuccessMsgpopup();
-// Releasing Docs to SGs
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		
-		sessionsearch.navigateToSessionSearchPageURL();
-		sessionsearch.basicContentSearch("crammer");
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
 
+		// Creating annotation layer and assigning to newly created SGs
+		docViewRedact.createNewAnnotationLayer(AnnotationLayerNew);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
+
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
+
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.assignAnnotationToSG(AnnotationLayerNew);
+
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
+
+		securityGroupsPage.selectSecurityGroup(namesg2);
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
+
+		securityGroupsPage.selectSecurityGroup(namesg3);
+		securityGroupsPage.assignRedactionTagtoSG(Input.defaultRedactionTag);
+		if (baseClass.getCloseSucessmsg().isElementAvailable(5)) {
+			baseClass.CloseSuccessMsgpopup();
+		}
+
+		// Releasing Docs to SGs
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.bulkRelease(namesg2);
+
+		baseClass.selectproject();
+		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkRelease(namesg3);
-		driver.waitForPageToBeReady();
-		docViewRedact.assignAccesstoSGs(namesg2, namesg3, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(namesg2, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(namesg3, Input.rmu1userName);
+
 		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		try {
 			docViewRedact.selectsecuritygroup(namesg2);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
 			docViewRedact.clickingRedactionIcon();
 			docViewRedact.performThisPageRedaction("Default Redaction Tag");
+		} catch (InterruptedException e1) {
+			driver.waitForPageToBeReady();
+			docViewRedact.selectsecuritygroup(namesg3);
+			docViewRedact.documentSelectionDocExplorer();
+			docExp.docExpViewInDocView();
+			docViewRedact.clickingRedactionIcon();
+			docViewRedact.performThisPageRedaction("Default Redaction Tag");
+		}
+
 		docViewRedact.selectsecuritygroup("Default Security Group");
 		loginPage.logout();
-// deleting newly created annotation layer
+
+		// deleting newly created annotation layer
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		docViewRedact.deleteAnnotationLayer(AnnotationLayerNew);
+		annotation.deleteAnnotationByPagination(AnnotationLayerNew);
 		loginPage.logout();
-// checking for redaction after deleting annotation layer
-		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+
+		// checking for redaction after deleting annotation layer
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		try {
 			docViewRedact.selectsecuritygroup(namesg2);
 			docViewRedact.documentSelectionDocExplorer();
 			docExp.docExpViewInDocView();
 			docViewRedact.checkingForRedaction();
-			baseClass.stepInfo("Select security group for RMU");
-			docViewRedact.selectsecuritygroup(Input.securityGroup);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
-			baseClass.stepInfo("Select security group for RMU");
-			docViewRedact.selectsecuritygroup("Default Security Group");
-			baseClass.stepInfo("RMU2 Assigned to Default Security Group");
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			securityGroupsPage = new SecurityGroupsPage(driver);
-			if (!(namesg2== null)) {
-			securityGroupsPage.deleteSecurityGroups(namesg2);
-			}
-			if (!(namesg3== null)) {
-				securityGroupsPage.deleteSecurityGroups(namesg3);
-			}
-			driver.Navigate().refresh();
-			driver.scrollPageToTop();
-			loginPage.logout();
+		} catch (InterruptedException e) {
+			driver.waitForPageToBeReady();
+			docViewRedact.selectsecuritygroup(namesg3);
+			docViewRedact.documentSelectionDocExplorer();
+			docExp.docExpViewInDocView();
+			docViewRedact.checkingForRedaction();
+
+		}
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
 
 	}
 
@@ -175,14 +199,25 @@ public class VerifyingAnnotationLayerInSG {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 		}
-		
+		try {
 			loginPage.quitBrowser();
-		
+		} finally {
+			LoginPage.clearBrowserCache();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)
 	public void close() throws Exception {
-		
+		Input in = new Input();
+		in.loadEnvConfig();
+		driver = new Driver();
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		securityGroupsPage.deleteSecurityGroups(namesg2);
+		securityGroupsPage.deleteSecurityGroups(namesg3);
+		loginPage.logout();
+		loginPage.quitBrowser();
 	}
 
 }
