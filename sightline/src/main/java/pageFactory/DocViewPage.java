@@ -7347,7 +7347,7 @@ public class DocViewPage {
 
 		try {
 			driver.waitForPageToBeReady();
-
+			driver.scrollPageToTop();
 			base.waitForElement(getDocView_MiniDoclist_GearIcon());
 			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
 			base.waitTime(2);
