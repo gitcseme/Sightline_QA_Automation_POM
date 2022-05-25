@@ -697,8 +697,8 @@ public class Ingestion_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
 
-		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			driver.waitForPageToBeReady();
@@ -749,7 +749,8 @@ public class Ingestion_Regression {
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
-		baseClass.selectproject("Indium_Regressionrun");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
