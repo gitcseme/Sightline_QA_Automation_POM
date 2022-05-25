@@ -694,11 +694,11 @@ public class Ingestion_Regression {
 		SoftAssert softAssertion = new SoftAssert();
 		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
 		String moreThanHour = Input.ingestionOneHour;
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.regressionConsilio1);
 		baseClass.stepInfo("Test case Id: RPMXCON-48241");
 		baseClass.stepInfo("To Verify for Audio longer than 1 hour, in Docview, \"Zoom In/Zoom Out\" should be "
 				+ "available so user could switch between the short and long wave forms.");
 
+		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			driver.waitForPageToBeReady();
@@ -743,18 +743,17 @@ public class Ingestion_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		docview = new DocViewPage(driver);
-		String audioDocsIngestionName = "8DFD_SSAudioSpeech_Transcript_20220322112828413";
-		String moreThanHour = "2ID00000006";
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName02);
+		String audioDocsIngestionName = "41AD_SSAudioSpeech_Transcript_20220321085634270";
+		String moreThanHour = Input.ingestionLessThanHour;
 		baseClass.stepInfo("Test case Id: RPMXCON-48239");
 		baseClass.stepInfo(
 				"To verify for Audio less than 1 hour, in Docview, \"Zoom In/Zoom Out\" is disabled or hidden.");
 
+		baseClass.selectproject("Indium_Regressionrun");
 		String ingestionFullName = dataSets.isDataSetisAvailable(audioDocsIngestionName);
 		if (ingestionFullName != null) {
 			sessionSearch.MetaDataSearchInBasicSearch("IngestionName", audioDocsIngestionName);
 			sessionSearch.viewInDocView();
-			docview.selectSourceDocIdInAvailableField("SourceDocID");
 			baseClass.waitForElement(docview.getDocumentByid(moreThanHour));
 			docview.getDocumentByid(moreThanHour).waitAndClick(5);
 
