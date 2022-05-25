@@ -16018,7 +16018,7 @@ public class ProductionPage {
 
 			driver.scrollingToBottomofAPage();
 			base.stepInfo("TIFF section is filled");
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 
 			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
 
