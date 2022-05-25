@@ -2681,7 +2681,7 @@ public class Production_Test_Regression_02{
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);

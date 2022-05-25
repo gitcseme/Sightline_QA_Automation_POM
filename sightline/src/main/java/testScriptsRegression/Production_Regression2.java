@@ -2618,7 +2618,8 @@ public class Production_Regression2 {
 	@Test(description="RPMXCON-49868",enabled = true, groups = { "regression" }, priority = 45)
 	public void verifyingTheGenerationOfProduction() throws Exception {
 
-		
+		SessionSearch session = new SessionSearch(driver);
+
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2636,13 +2637,11 @@ public class Production_Regression2 {
 		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
-		base.selectproject(Input.regressionConsilio1);
 		
 		DataSets dataset = new DataSets(driver);
-		base.stepInfo("Navigating to dataset page");
-		dataset.navigateToDataSetsPage();
-		dataset.selectDataSetWithName(Input.pdfDataSet);
 		DocListPage doc = new DocListPage(driver);
+		session.basicMetaDataSearch(Input.docFileExt, null, "PDF", null);
+		session.ViewInDocList();
 		driver.waitForPageToBeReady();
 		doc.documentSelection(3);
 		doc.bulkTagExistingFromDoclist(tagname);
@@ -2658,7 +2657,6 @@ public class Production_Regression2 {
 		base = new BaseClass(driver);
 		driver.Navigate().refresh();
 		base.impersonatePAtoRMU();
-		SessionSearch session = new SessionSearch(driver);
 		session.switchToWorkproduct();
 		session.selectTagInASwp(tagname);
 		driver.waitForPageToBeReady();
