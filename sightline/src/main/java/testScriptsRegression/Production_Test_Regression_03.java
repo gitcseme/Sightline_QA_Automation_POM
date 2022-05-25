@@ -572,7 +572,6 @@ public class Production_Test_Regression_03 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		BaseClass base = new BaseClass(driver);
-		base.selectproject(Input.regressionConsilio);
 		
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -581,7 +580,7 @@ public class Production_Test_Regression_03 {
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
-		sessionSearch.SearchMetaData("SourceDocID", "335ID00000005");
+		sessionSearch.SearchMetaData("SourceDocID", "35ID00000169");
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkTagExisting(tagname);
 		// Verify archive status on Grid view
@@ -3075,9 +3074,7 @@ public class Production_Test_Regression_03 {
 				page.fillingDATSection();
 				page.fillingNativeSection();
 				page.fillingPDFSectionwithNativelyPlaceholder(tagname);
-				page.getClk_burnReductiontoggle().ScrollTo();
-				page.getClk_burnReductiontoggle().waitAndClick(10);
-				page.burnRedactionWithRedactionTag(Redactiontag1);
+				page.selectBurnRedaction(Redactiontag1);
 				page.fillingTextSection();
 				page.navigateToNextSection();
 				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);

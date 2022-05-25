@@ -19754,5 +19754,18 @@ public class ProductionPage {
 
 		base.stepInfo("Export Numbering and sorting section is filled");
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param redTagg
+	 * @Description enable burn redaction and select redaction ta
+	 */
+	public void selectBurnRedaction(String redTag) {
+		getClk_burnReductiontoggle().ScrollTo();
+		getClk_burnReductiontoggle().waitAndClick(10);
+		getTIFF_SelectRed_Radiobutton().waitAndClick(10);
+		base.waitForElement(BurnRedactionCheckBox(redTag));
+		BurnRedactionCheckBox(redTag).ScrollTo();
+		BurnRedactionCheckBox(redTag).waitAndClick(10);
+	}
 
 }
