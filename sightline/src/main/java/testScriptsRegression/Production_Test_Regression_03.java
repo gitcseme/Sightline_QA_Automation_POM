@@ -572,7 +572,7 @@ public class Production_Test_Regression_03 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		BaseClass base = new BaseClass(driver);
-		
+		base.selectproject(Input.additionalDataProject);
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -1321,9 +1321,13 @@ public class Production_Test_Regression_03 {
 	public void verifyProdGenSuccussNativePdf() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		base= new BaseClass(driver);
+		
 		base.stepInfo("RPMXCON-48814 -Production Component");
 		base.stepInfo("Verify that Production should generated successfully for Natively PDF documents");
 
+		
+		base.selectproject(Input.additionalDataProject);
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
@@ -3085,7 +3089,7 @@ public class Production_Test_Regression_03 {
 				page.fillingProductionLocationPage(productionname);
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
-				page.fillingGeneratePageWithContinueGenerationPopupHigerWaitTime();
+				page.fillingGeneratePageWithContinueGenerationPopup();
 				page.waitForFileDownload();
 				page.extractFile();
 				
