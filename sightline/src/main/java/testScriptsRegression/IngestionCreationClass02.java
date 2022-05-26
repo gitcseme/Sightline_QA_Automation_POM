@@ -1747,7 +1747,10 @@ public class IngestionCreationClass02 {
 		ingestion.selectDateAndTimeForamt(Input.dateFormat);
 		ingestion.clickOnNextButton();
 		ingestion.clickOnPreviewAndRunButton();
-		ingestion.verifyApprovedStatusForOverlayIngestion();
+		ingestion.ignoreErrorsAndCatlogging();
+		ingestion.ignoreErrorsAndCopying();
+		ingestion.ingestionIndexing(Input.TiffImagesFolder);
+		ingestion.approveIngestion(1);
 		ingestion.runFullAnalysisAndPublish();
 		
 		dataSets = new DataSets(driver);
