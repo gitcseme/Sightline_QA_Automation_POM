@@ -80,7 +80,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *         batch file.(RPMXCON-57483)
 	 * @modified by : Raghuram - changes of new sg creation method
 	 */
-	@Test(groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-57473,RPMXCON-57483",groups = { "regression" }, priority = 15)
 	public void createSearchGroupAndbatchUploadByPA() throws InterruptedException {
 		String SearchNamePA = "PA" + Utility.dynamicNameAppender();
 
@@ -122,7 +122,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *         batch file.(RPMXCON-57483)
 	 * @modified by : Raghuram - changes of new sg creation method
 	 */
-	@Test(groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-57473,RPMXCON-57483",groups = { "regression" }, priority = 16)
 	public void createSearchGroupAndbatchUploadByRmu() throws InterruptedException {
 		String SearchNameRMU = "RMU" + Utility.dynamicNameAppender();
 
@@ -170,7 +170,7 @@ public class SavedSearch_Regression_Set_01 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-57473,RPMXCON-57483",groups = { "regression" }, priority = 17)
 	public void createSearchGroupAndbatchUploadByRev() throws InterruptedException {
 		String saveSearchName = "Rev" + Utility.dynamicNameAppender();
 
@@ -214,7 +214,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                              Modified Schedule functionality is working
 	 *                              proper in Saved searches(RPMXCON-57407 ) As PA
 	 */
-	@Test(groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-57407",groups = { "regression" }, priority = 18)
 	public void verifyScheduleSearchAsPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
 
@@ -260,7 +260,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                              Modified Schedule functionality is working
 	 *                              proper in Saved searches(RPMXCON-57407 ) As RMU
 	 */
-	@Test(groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-57407",groups = { "regression" }, priority = 19)
 	public void verifyScheduleSearchAsRMU() throws ParseException, InterruptedException {
 		String saveSearchName1 = "SearchRMU" + Utility.dynamicNameAppender();
 
@@ -306,7 +306,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                              functionality is working proper in Saved
 	 *                              searches (RPMXCON-57411 )
 	 */
-	@Test(groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-57411",groups = { "regression" }, priority = 20)
 	public void verifyScheduleSearchPA() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
 
@@ -346,7 +346,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                              functionality is working proper in Saved
 	 *                              searches (RPMXCON-57411 ) as RMU
 	 */
-	@Test(groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-57411",groups = { "regression" }, priority = 21)
 	public void verifyScheduleSearchRMU() throws ParseException, InterruptedException {
 		String saveSearchName = "SearchPA" + Utility.dynamicNameAppender();
 
@@ -385,7 +385,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                              Modified Schedule functionality as PA is working
 	 *                              proper in Saved searches(RPMXCON-57412 )
 	 */
-	@Test(groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-57412",groups = { "regression" }, priority = 23)
 	public void verifyScheduleSearchForDefaultTabPA() throws ParseException, InterruptedException {
 		String SearchNamePA = "SearchPA" + Utility.dynamicNameAppender();
 
@@ -433,7 +433,7 @@ public class SavedSearch_Regression_Set_01 {
 	 *                     Modified Schedule functionality as RMU is working proper
 	 *                     in Saved searches(RPMXCON-57412 )
 	 */
-	@Test(groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-57412",groups = { "regression" }, priority = 24)
 	public void verifyScheduleSearchForDefaultTabRMU() throws ParseException, InterruptedException {
 		String SearchNameRMU = "SearchRMU" + Utility.dynamicNameAppender();
 
