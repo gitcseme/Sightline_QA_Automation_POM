@@ -1338,7 +1338,7 @@ public class Production_Test_Regression_03 {
 		base.stepInfo("Navigating to dataset page");
 		dataset.navigateToDataSetsPage();
 		base.stepInfo("Selecting uploadedset and navigating to doclist page");
-		dataset.selectDataSetWithName("Native_Text_ForProduction");
+		dataset.selectDataSetWithName("NativelyPDF");
 		DocListPage doc = new DocListPage(driver);
 		driver.waitForPageToBeReady();
 
