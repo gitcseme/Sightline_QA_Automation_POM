@@ -141,7 +141,7 @@ public class BatchRedactionRegression {
 	 *                     (RPMXCON-53452)
 	 * 
 	 */
-	@Test(description = "RPMXCON-53453",groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-53452,RPMXCON-53453,RPMXCON-53455,RPMXCON-53454",groups = { "regression" }, priority = 2)
 	public void verifyBatchRedactNoPopup() throws InterruptedException {
 
 		// Login as a RMU
@@ -210,7 +210,7 @@ public class BatchRedactionRegression {
 	 * 
 	 * 
 	 */
-	@Test(description = "RPMXCON-48808",groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-48808,RPMXCON-53469",groups = { "regression" }, priority = 4)
 	public void verifySearchRollback() throws InterruptedException {
 
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
@@ -656,7 +656,7 @@ public class BatchRedactionRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-53352",groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-53352,RPMXCON-53353",groups = { "regression" }, priority = 15)
 	public void BatchRedactionWithANDOperator() throws InterruptedException {
 		String search = "Name1" + Utility.dynamicNameAppender();
 
