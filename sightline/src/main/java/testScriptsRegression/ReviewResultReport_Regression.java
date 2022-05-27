@@ -48,7 +48,7 @@ public class ReviewResultReport_Regression{
  * @param role
  * @throws InterruptedException
  */
-	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	 @Test(description ="RPMXCON-56422",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void reviewerResultDisplay(String username, String password, String role)
 			throws InterruptedException{
 		bc.stepInfo("Test case Id: RPMXCON-56422");
@@ -84,7 +84,7 @@ public class ReviewResultReport_Regression{
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-56451",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
 	public void verifyReviewerResultReportShare(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56451");
@@ -118,7 +118,7 @@ public class ReviewResultReport_Regression{
 	 * @throws InterruptedException
 	 * @throws ParseException 
 	 */
-	@Test(groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-56455",groups = { "regression" }, priority = 3)
 	public void verifyReviewerResultReportShedule()
 			throws InterruptedException, ParseException {
 		bc.stepInfo("Test case Id: RPMXCON-56455");

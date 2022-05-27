@@ -87,7 +87,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @param password
 	 * @param role
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 0)
+	@Test(description ="RPMXCON-56390",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 0)
 	public void navigateToExportReport(String username, String password, String role) {
 		bc.stepInfo("Test case Id: RPMXCON-56390");
 		bc.stepInfo("To verify that User is able view Custom Document Data Report");
@@ -122,7 +122,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-58591",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void verifyAndValidateCustomDataReport(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields = { "CustodianName" };
@@ -194,7 +194,7 @@ public class CustomDocumentDataReport_Regression1 {
 		rp.deleteCustomReport(report1);
 	}
 
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-56542",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
 	public void verifyModifyObj(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
@@ -239,7 +239,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 	}
 
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-56544",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
 	public void verifyModifyObj_CustomSaveReport(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
@@ -300,7 +300,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-56580",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4)
 	public void verifyReportGeneration_ToggleON(String username, String password, String role)
 			throws InterruptedException, IOException {
 		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
@@ -341,7 +341,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-56939",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
 	public void verifyRowDisplay_metadataTab(String username, String password, String role)
 			throws InterruptedException, IOException {
 		String[] workproductFields = { "All Comments", "All Folders", "All Tags", "All Redaction Tags", };
@@ -368,7 +368,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-58571",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
 	public void verifyAndValidateCustomDataReport_BasicSearch(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -452,7 +452,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 	}
 
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-58572",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7)
 	public void verifyAndValidateCustomDataReport_AdvancedSearch(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -538,7 +538,7 @@ public class CustomDocumentDataReport_Regression1 {
 
 	}
 
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-58573",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 8)
 	public void verifyAndValidateCustomDataReport_SavedSearch(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -631,7 +631,7 @@ public class CustomDocumentDataReport_Regression1 {
 		rp.deleteCustomReport(report1);
 
 	}
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-58574",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 9)
 	public void verifyAndValidateCustomDataReport_DocList(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -722,7 +722,7 @@ public class CustomDocumentDataReport_Regression1 {
 		rp.deleteCustomReport(report2);
 
 	}
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-58570",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 10)
 	public void verifyAndValidateCustomDataReport_DocExp(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] workProductFields = { tagName };
@@ -817,7 +817,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-58575",dataProvider = "Users_PARMU",groups = { "regression" }, priority = 11)
 	public void verifyExportFromTally(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-58575");
 		bc.stepInfo("Verify saved Document Data Export Report from Tally/Sub-Tally should retain "

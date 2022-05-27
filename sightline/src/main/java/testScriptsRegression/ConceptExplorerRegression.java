@@ -48,7 +48,7 @@ public class ConceptExplorerRegression{
  * @param role
  * @throws InterruptedException
  */
-	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	 @Test(description ="RPMXCON-56386",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void conceptExplorerDisplay(String username, String password, String role)
 			throws InterruptedException{
 		bc.stepInfo("Test case Id: RPMXCON-56386");
