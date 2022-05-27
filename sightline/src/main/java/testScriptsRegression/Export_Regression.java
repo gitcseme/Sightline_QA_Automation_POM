@@ -780,12 +780,6 @@ public class Export_Regression {
 		
 		base.stepInfo("Filling TIFF Section with Burn Redaction");
 		page.fillingPDFSection(tagName);
-//		page.selectGenerateOption(false);
-//		page.getClk_burnReductiontoggle().waitAndClick(10);
-//		page.burnRedactionWithRedactionTag(redactiontag1);
-//		page.getTIFF_MultiPage_RadioButton().ScrollTo();
-//		base.waitForElement(page.getTIFF_MultiPage_RadioButton());
-//		page.getTIFF_MultiPage_RadioButton().waitAndClick(10);
 
 		base.stepInfo("Navigate To Next Section");
 		page.navigateToNextSection();
@@ -820,14 +814,14 @@ public class Export_Regression {
 		base.stepInfo("Filling Generate Page");
 		page.fillingExportGeneratePageWithContinueGenerationPopup();
 		
+		base.stepInfo("Delete added redaction tag");
+		driver.waitForPageToBeReady();
+		redactionpage.DeleteRedaction(redactiontag1);
+		
 		//To delete tag and folder 
 		base.stepInfo("Navigate To Tags And Folder Page");
-		
 		base.stepInfo("Delete Folder With Security Group");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
-		
-		base.stepInfo("Delete added redaction tag");
-		redactionpage.DeleteRedaction(redactiontag1);
 		loginPage.logout();
 	}
 	

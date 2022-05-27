@@ -168,13 +168,13 @@ public class RedactionPage {
          bc.waitForElement(getRedactionDelete());
          getRedactionDelete().waitAndClick(10);
                  
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-                 bc.getYesBtn().Visible()  ;}}),Input.wait30);
+         bc.waitForElement(bc.getYesBtn());
          bc.getYesBtn().waitAndClick(10);
-        
-         bc.VerifySuccessMessage("Redaction label deleted successfully");
-         bc.CloseSuccessMsgpopup();
-        
+       
+         driver.waitForPageToBeReady();
+         if (bc.getCloseSucessmsg().isElementAvailable(5)) {
+        	 bc.VerifySuccessMessage("Redaction label deleted successfully");
+         }
         
           try{
              getSelectredaction(redactName).isDisplayed();
