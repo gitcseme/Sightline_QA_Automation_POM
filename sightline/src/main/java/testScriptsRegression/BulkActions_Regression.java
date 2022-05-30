@@ -85,7 +85,7 @@ public class BulkActions_Regression {
 	 * @TestCase id : 48818 - Verify Total Email Threaded Count when bulk foldering.
 	 * @Description : Verify Total Email Threaded Count when bulk foldering.
 	 */
-    //@Test(alwaysRun = true,groups={"regression"},priority = 1)
+    @Test(description ="RPMXCON-48818",alwaysRun = true,groups={"regression"},priority = 1)
 	public void verifyTotalEmailThreadedCountbulkFolderingFromDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String emailSubject = "MID C Question";
@@ -217,7 +217,7 @@ public class BulkActions_Regression {
 	 * @Description:To verify that if user delete the Tag/Folder,
 	 *               it should not displayed Bulk Tag/Folder modal
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54265",enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyRMUfolderEditDelete() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54265");
 		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
@@ -260,7 +260,7 @@ public class BulkActions_Regression {
 	 * @Description:Verify that bulk assign with 'Parent Level Docs' 
 	 *               sample method displays correct count if 'SourceParentDocID' is blank
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54512",enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyBulkAssignBlankSourceParentDocID() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54512");
 		sessionSearch=new SessionSearch(driver);
@@ -291,7 +291,7 @@ public class BulkActions_Regression {
 	 *              bulk assign when SourceParentDocID is not same as SourceDocID 
 	 *              and no child for the child document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54511",enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyBulkAssignBlankWithNoChild() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54511");
 		sessionSearch=new SessionSearch(driver);

@@ -1083,7 +1083,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	@Test(groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-51760",groups = { "regression" }, priority = 16)
 	public void verifyTwoDifferentAdhocResultsWithTermAndPhrase() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51760 Production-sprint:07");
@@ -1156,7 +1156,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	@Test(groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-52200",groups = { "regression" }, priority = 17)
 	public void verifyThatProducingTiffWithBlockRedaction() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52200 Production-sprint:07");
@@ -1280,7 +1280,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	@Test(groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-52199",groups = { "regression" }, priority = 18)
 	public void verifyThatProducingTiffWithPageRedaction() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52199 Production-sprint:07");
@@ -1400,7 +1400,7 @@ public class DocView_Regression1 {
 	 * :Verify that Producing a PDF with Page Redaction burning properly and not
 	 * eliminate any characters in the produced document.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 19)
+	@Test(description ="RPMXCON-52196",alwaysRun = true,groups={"regression"},priority = 19)
 	public void verifyTheRedactionOfTagInProduction() {
 		try {
 			baseClass = new BaseClass(driver);
@@ -1473,7 +1473,7 @@ public class DocView_Regression1 {
 	 * eliminate any characters in the produced document.
 	 * 
 	 */
-	 @Test(alwaysRun = true,groups={"regression"},priority =20)
+	 @Test(description ="RPMXCON-52197",alwaysRun = true,groups={"regression"},priority =20)
 	public void verifyThRectangleeRedactionOfTagInProduction() {
 		try {
 			baseClass = new BaseClass(driver);
@@ -1551,7 +1551,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	@Test(groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-52195",groups = { "regression" }, priority = 21)
 	public void verifyThatProducingPDFWithTextRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52195 Production-sprint:07");
@@ -1673,7 +1673,7 @@ public class DocView_Regression1 {
 	 *              document.
 	 */
 
-	@Test(groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-52198",groups = { "regression" }, priority = 22)
 	public void verifyThatProducingTiffWithTextRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52198 Production-sprint:07");
@@ -1794,7 +1794,7 @@ public class DocView_Regression1 {
 	 *              same records successfully.
 	 */
 
-	@Test(groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-51542",groups = { "regression" }, priority = 23)
 	public void verifyReamrkByDifferentTabsOnSameBrowser() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51542 Production-sprint:07");
@@ -1892,7 +1892,7 @@ public class DocView_Regression1 {
 	 * To verify documents should be Folder when document outside of the reviewers
 	 * batch is viewed from analytics panel.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 24)
+	@Test(description ="RPMXCON-51446",alwaysRun = true,groups={"regression"},priority = 24)
 	public void verifyDocumentsShouldFolderbyFamilyMembersTab() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
@@ -1934,7 +1934,7 @@ public class DocView_Regression1 {
 	 * in DocView, the entry for the same document in mini-DocList child window must
 	 * always present fully in the visible area of the mini-DocList (to the user)
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 25)
+	@Test(description ="RPMXCON-51931",alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void verifyTheDocIdWithMiniDoclistDocId() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51931 docview-sprint:07");
@@ -1961,7 +1961,7 @@ public class DocView_Regression1 {
 	 * navigation the entry for the same document in mini-DocList child window must
 	 * always present fully in the visible area
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-51932",alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void afterNavigationMiniDocListDocumentDefaultDisplay() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51932 docview-sprint:07");
@@ -1988,7 +1988,7 @@ public class DocView_Regression1 {
 	 * present only content terms, not operators when navigating from basic search
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 27)
+	@Test(description ="RPMXCON-51308",alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void verifyPersistentHitPanelOfDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51308 docview-sprint:07");
@@ -2019,7 +2019,7 @@ public class DocView_Regression1 {
 	 * content terms, not metadata terms when navigating from basic search.
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-51304",alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyPersistentHitPanelOfDocViewByMetaData() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51304 docview-sprint:08");
@@ -2047,7 +2047,7 @@ public class DocView_Regression1 {
 	 * content terms, not Comment/Remark when navigating from basic search.
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-51307",alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void verifyPersistentHitPanelOfDocViewByRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51307 docview-sprint:08");
@@ -2090,7 +2090,7 @@ public class DocView_Regression1 {
 	 * should be on Images tab for next document.
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-51906",alwaysRun = true, groups = { "regression" }, priority = 30)
 	public void verifyImageTabEnabledWhenNavigatesToNextDocument() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51906 docview-sprint:08");
@@ -2132,7 +2132,7 @@ public class DocView_Regression1 {
 	 *              stamp the entry for the navigated document in mini-DocList.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-51930",enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyingCodingStampPostFixColourChildWindowPopUp() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51930");
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
@@ -2171,7 +2171,7 @@ public class DocView_Regression1 {
 	 *         Images tab and folder few documents then on loading of document
 	 *         should be on Images tab of document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-51907",enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyUserOnImagesTabAfterCreatingFolder() throws InterruptedException {
 		String folderName = Input.randomText + Utility.dynamicNameAppender();
 		int RowNumber = 1;
@@ -2207,7 +2207,7 @@ public class DocView_Regression1 {
 	 *              window .
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-51935",enabled = true, groups = { "regression" }, priority = 33)
 	public void verifyCursorNavigatedProperlyBySavedCodingStampApplied() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51935 Sprint 09");
 		baseClass.stepInfo(
@@ -2266,7 +2266,7 @@ public class DocView_Regression1 {
 	 *              navigated document in mini-DocList.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-51928",enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyCursorNavigatedProperlyByComplete() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51928 Sprint 09");
 		baseClass.stepInfo(
@@ -2317,7 +2317,7 @@ public class DocView_Regression1 {
 	 *         the document from Text tab
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-50912",enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyUserNavigateToDocumentFromTextTab() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -2348,7 +2348,7 @@ public class DocView_Regression1 {
 	 *         Description: Verify that when completing the documents the entry for
 	 *         the navigated document in mini-DocList child window.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-51933",enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyMiniDocNavigateTonExtDocAfterDOcComplete() {
 		baseClass.stepInfo("Test case Id: RPMXCON-51933 Sprint-09");
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
@@ -2397,7 +2397,7 @@ public class DocView_Regression1 {
 	 * presented, the "N" icon with the accompanying mouse over tool tip must appear
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-51433",alwaysRun = true, groups = { "regression" }, priority = 37)
 
 	public void verifyNIconAndToolTipInDocView() throws Exception {
 
@@ -2463,7 +2463,7 @@ public class DocView_Regression1 {
 	 * presented, the "P" icon with the accompanying mouse over tool tip must appear
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 38)
+	@Test(description ="RPMXCON-51434",alwaysRun = true, groups = { "regression" }, priority = 38)
 
 	public void verifyPIconAndToolTipInDocView() throws Exception {
 
@@ -2532,7 +2532,7 @@ public class DocView_Regression1 {
 	 *              last.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-51850",enabled = true, groups = { "regression" }, priority = 39)
 	public void verifyPersistentPanelNotRetainPreviouslyViewedHitsByComplete() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51850 Sprint 09");
 		baseClass.stepInfo(
@@ -2593,7 +2593,7 @@ public class DocView_Regression1 {
 	 * : Verify that persistent hits should be highligted when documents are
 	 * assigned to existing assignment from Basic Search.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 40)
+	@Test(description ="RPMXCON-51728",alwaysRun = true, groups = { "regression" }, priority = 40)
 	public void verifyPersistentHitsDisplayedByContextOfAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51728- DocView Sprint 09 ");
@@ -2672,7 +2672,7 @@ public class DocView_Regression1 {
 	 * @Description: To Verify that when user is viewing a document in DocView, the
 	 *               entry for the same document in mini-DocList.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 41)
+	@Test(description ="RPMXCON-51926",alwaysRun = true, groups = { "regression" }, priority = 41)
 	public void verifyDocFullyInVisibleAreaOfMiniDocList() throws InterruptedException {
 		int rowNumber = 2;
 		baseClass = new BaseClass(driver);
@@ -2701,7 +2701,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify that persistent hits should be highligted when
 	 *              documents are assigned to new assignment from Saved Search.
 	 */
-	@Test(groups = { "regression" }, priority = 42)
+	@Test(description ="RPMXCON-51727",groups = { "regression" }, priority = 42)
 	public void verifyPersistantHitByReviewerByCreatingNewAssignment() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51727 spint 09");
@@ -2770,7 +2770,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify that persistent hits should be highligted when
 	 *              documents are assigned to new assignment from Advanced Search
 	 */
-	@Test(groups = { "regression" }, priority = 43)
+	@Test(description ="RPMXCON-51726",groups = { "regression" }, priority = 43)
 	public void verifyPersistantHitPanelByReviewerByAdvanceSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51726 spint 09");
@@ -2829,7 +2829,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify that persistent hits should be highligted when
 	 *              documents are assigned to new assignment from Basic Search.
 	 */
-	@Test(groups = { "regression" }, priority = 44)
+	@Test(description ="RPMXCON-51725",groups = { "regression" }, priority = 44)
 	public void verifyPersistantHitPanelByReviewerByBasicSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51725 spint 09");
@@ -2891,7 +2891,7 @@ public class DocView_Regression1 {
 	 *         persistent hits panel when navigated to doc view.
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 45)
+	@Test(description ="RPMXCON-51757",groups = { "regression" }, priority = 45)
 	public void verifySearchTermDisplayOnPersistentHitPanal() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51757");
@@ -2944,7 +2944,7 @@ public class DocView_Regression1 {
 	 *              > Doc List
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 46)
+	@Test(description ="RPMXCON-51730",groups = { "regression" }, priority = 46)
 	public void verifyPersistentHItAfterAssignedToExistingAssignment() throws InterruptedException {
 		String BasicSearchName = Input.randomText + Utility.dynamicNameAppender();
 		String AssignName = Input.randomText + Utility.dynamicNameAppender();
@@ -3004,7 +3004,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify user can download the redacted document when 'Allow
 	 *              reviewers to print docs to PDF' is on at an assigment level.
 	 */
-	@Test(groups = { "regression" }, priority = 47)
+	@Test(description ="RPMXCON-51117",groups = { "regression" }, priority = 47)
 	public void verifyDownloadDocumentByAllowingToPrintDocumentsAsPDF() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51117 spint 09");
@@ -3075,7 +3075,7 @@ public class DocView_Regression1 {
 	 * Description : Verify user can not download the native files when 'Allow
 	 * reviewers to download natives' is off at an assigment level
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 48)
+	@Test(description ="RPMXCON-51116",alwaysRun = true, groups = { "regression" }, priority = 48)
 	public void verifyNativeDownloadButtonDiabledWhenToogleOFF() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
@@ -3129,7 +3129,7 @@ public class DocView_Regression1 {
 	 *           content terms, not operators when navigating from advance search
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 49)
+	@Test(description ="RPMXCON-51309",alwaysRun = true, groups = { "regression" }, priority = 49)
 	public void verifysearchTermsDisplayOnPHPanelWithoutOperator() throws InterruptedException {
 		String operator = "OR";
 		baseClass = new BaseClass(driver);
@@ -3157,7 +3157,7 @@ public class DocView_Regression1 {
 	 *         the tiff images when 'Allow Production / Images View' is on at an
 	 *         assigment level
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 50)
+	@Test(description ="RPMXCON-51120",alwaysRun = true, groups = { "regression" }, priority = 50)
 	public void verifyImageTabIsDisplayedAOnDocViewPanel() {
 
 		baseClass = new BaseClass(driver);
@@ -3195,7 +3195,7 @@ public class DocView_Regression1 {
 	 *         see the translated document.
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(description ="RPMXCON-51091",alwaysRun = true, groups = { "regression" }, priority = 51)
 	public void verifyTranslationTabOnDocView() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -3229,7 +3229,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify user can see the keywords highlighted in doc view based
 	 *              on the assigned keyword group and color to the assignment.
 	 */
-	@Test(groups = { "regression" }, priority = 52)
+	@Test(description ="RPMXCON-51033",groups = { "regression" }, priority = 52)
 	public void verifyKeywordHighlightedOnDocview() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51033 spint 09");
@@ -3312,7 +3312,7 @@ public class DocView_Regression1 {
 	 * @Description : To verify that remarks can add/edit/delete if document is
 	 *              marked as Completed.
 	 */
-	@Test(groups = { "regression" }, priority = 53)
+	@Test(description ="RPMXCON-51023",groups = { "regression" }, priority = 53)
 	public void verifyRemarkOperationsOfCompletedDocumentOnDocview() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51023 spint 09");
@@ -3389,7 +3389,7 @@ public class DocView_Regression1 {
 	 * level then it should not displayed if user naivgates from Assignment-Doc
 	 * View.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 54)
+	@Test(description ="RPMXCON-51022",alwaysRun = true, groups = { "regression" }, priority = 54)
 	public void verifyReviewerRemarkOffAtAssignmentLevel() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
@@ -3452,7 +3452,7 @@ public class DocView_Regression1 {
 	 *         Description :Verify user can not see the tiff images when 'Allow
 	 *         Production / Images View' is off at an assigment level
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 55)
+	@Test(description ="RPMXCON-51119",alwaysRun = true, groups = { "regression" }, priority = 55)
 	public void verifyImageTabIsDisplayedAOnDocViewPanelByDisableImagesToggle() {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51119");
@@ -3485,7 +3485,7 @@ public class DocView_Regression1 {
 	 *         'Allow reviewers to download natives' is on at an assigment level
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 56)
+	@Test(description ="RPMXCON-51120",alwaysRun = true, groups = { "regression" }, priority = 56)
 	public void verifyUserDownloadNativefiles() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51120");
@@ -3521,7 +3521,7 @@ public class DocView_Regression1 {
 	 * presented, the "T" icon with the accompanying mouse over tool tip must appear
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 57)
+	@Test(description ="RPMXCON-51435",alwaysRun = true, groups = { "regression" }, priority = 57)
 
 	public void verifyTIconAndToolTipInDocView() throws Exception {
 
@@ -3588,7 +3588,7 @@ public class DocView_Regression1 {
 	 * @Description : To verify that Remark can be update and deleted by other
 	 *              reviewers in same security group.
 	 */
-	@Test(groups = { "regression" }, priority = 58)
+	@Test(description ="RPMXCON-51020",groups = { "regression" }, priority = 58)
 	public void verifyRemarkOperationsOfDocumentOnDocview() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51020 spint 09");
@@ -3662,7 +3662,7 @@ public class DocView_Regression1 {
 	 *              characters..
 	 * @Description : To verify that user can add remarks upto 1000 characters.
 	 */
-	@Test(groups = { "regression" }, priority = 59)
+	@Test(description ="RPMXCON-51017",groups = { "regression" }, priority = 59)
 	public void verifyRemarkOfDocumentOnDocview1000Characters() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51017 spint 09");
@@ -3700,7 +3700,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(groups = { "regression" }, priority = 60)
+	@Test(description ="RPMXCON-50906",groups = { "regression" }, priority = 60)
 	public void verifyFamilyDocCodingFormAfterperformCodeSameAs() throws InterruptedException {
 		int rowno = 1;
 		String DOcId = "ID00001135";
@@ -3753,7 +3753,7 @@ public class DocView_Regression1 {
 	 *              present fully.
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 61)
+	@Test(description ="RPMXCON-51929",enabled = true, groups = { "regression" }, priority = 61)
 	public void verifyNavigatingDocumenInMiniDocListtByCompleting() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51929 Sprint 10");
 		baseClass.stepInfo(
@@ -3819,7 +3819,7 @@ public class DocView_Regression1 {
 	 *         expand/collapse
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 62)
+	@Test(description ="RPMXCON-51898",enabled = true, groups = { "regression" }, priority = 62)
 	public void verifyDocListHeader() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -3850,7 +3850,7 @@ public class DocView_Regression1 {
 	 *         show on the left column/header
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 63)
+	@Test(description ="RPMXCON-51896",enabled = true, groups = { "regression" }, priority = 63)
 	public void verifyDOcViewPageVersionFooterRemved() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51896 sprint 10");
@@ -3877,7 +3877,7 @@ public class DocView_Regression1 {
 	 * name has / or \ anywhere in the file name. Description : Verify that DocView
 	 * should render the doc when the file name has / or \ anywhere in the file name
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 64)
+	@Test(description ="RPMXCON-51864",enabled = true, groups = { "regression" }, priority = 64)
 	public void verifyNavigatedToDocViewBySpecailCharInFileName() {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51864- DocExplorer Sprint 10");
@@ -3913,7 +3913,7 @@ public class DocView_Regression1 {
 	 *         present completely in mini doc list, default view.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 65)
+	@Test(description ="RPMXCON-51860",enabled = true, groups = { "regression" }, priority = 65)
 	public void verifyFirstDocumentFullyVisibleByDefault() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51860 sprint 10");
@@ -3961,7 +3961,7 @@ public class DocView_Regression1 {
 	 *         hits panel should show both the terms.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 66)
+	@Test(description ="RPMXCON-51759",enabled = true, groups = { "regression" }, priority = 66)
 	public void verifyPersistantHitPanelByTermAndPhraseUsingAndOr() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51759 sprint 10");
@@ -4024,7 +4024,7 @@ public class DocView_Regression1 {
 	 *         after saving remark create text high light with out saving.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 67)
+	@Test(description ="RPMXCON-51639",enabled = true, groups = { "regression" }, priority = 67)
 	public void verifyTextHighLightByWithoutSavingRemark() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51639 sprint 10");
@@ -4074,7 +4074,7 @@ public class DocView_Regression1 {
 	 * parent window when the user refreshes the DocView page on selecting code
 	 * same.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 68)
+	@Test(description ="RPMXCON-51620",alwaysRun = true, groups = { "regression" }, priority = 68)
 	public void verifyUndockedToDockedByRefreshPageOnCodeSameAs() throws Exception {
 		baseClass = new BaseClass(driver);
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
@@ -4157,7 +4157,7 @@ public class DocView_Regression1 {
 	 *              Persisted Search Hits
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 69)
+	@Test(description ="RPMXCON-51554",alwaysRun = true, groups = { "regression" }, priority = 69)
 	public void verifyAssignmentsBasedPersistantHitsByKeywords() throws InterruptedException {
 
 		String AssignName = Input.randomText + Utility.dynamicNameAppender();
@@ -4242,7 +4242,7 @@ public class DocView_Regression1 {
 	 *         batch are in an Uncompleted state, and the user selects only
 	 *         some/select records
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 70)
+	@Test(description ="RPMXCON-51875",alwaysRun = true, groups = { "regression" }, priority = 70)
 	public void verifyMiniDocSaveConfig() {
 		baseClass.stepInfo("Test case Id: RPMXCON-51875");
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
@@ -4289,7 +4289,7 @@ public class DocView_Regression1 {
 	 *         only some/select records
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 71)
+	@Test(description ="RPMXCON-51873",alwaysRun = true, groups = { "regression" }, priority = 71)
 	public void verifyCodeSameAsMiniDocListAndChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51873");
 		int noOfRows = 3;
@@ -4343,7 +4343,7 @@ public class DocView_Regression1 {
 	 *         text highlighter should not delete selected to add remarks
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 72)
+	@Test(description ="RPMXCON-51483",enabled = true, groups = { "regression" }, priority = 72)
 	public void verifyAlreadyRemarkedTextHighlighted() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51483 sprint 10");
@@ -4382,7 +4382,7 @@ public class DocView_Regression1 {
 	 *         be loaded in DocView in 3 to 4 seconds.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 73)
+	@Test(description ="RPMXCON-51459",enabled = true, groups = { "regression" }, priority = 73)
 	public void verifyDocumentLoadedinDocViewIn3to4Seconds() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51459 sprint 10");
@@ -4412,7 +4412,7 @@ public class DocView_Regression1 {
 	 *         drop down selection Txt, Native from default view
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 74)
+	@Test(description ="RPMXCON-51103",enabled = true, groups = { "regression" }, priority = 74)
 	public void verifydownloadDoc() throws InterruptedException {
 		String docId = Input.testTenthDocId;
 		baseClass = new BaseClass(driver);
@@ -4442,7 +4442,7 @@ public class DocView_Regression1 {
 	 *         document number from document navigation on navigating to documents
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 75)
+	@Test(description ="RPMXCON-51084",enabled = true, groups = { "regression" }, priority = 75)
 	public void verifyDocNavigationafterClicOnNextAndPrevButton() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51084");
@@ -4473,7 +4473,7 @@ public class DocView_Regression1 {
 	 *         panel.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 76)
+	@Test(description ="RPMXCON-51440",enabled = true, groups = { "regression" }, priority = 76)
 	public void verifyiconIndicateAndItsNotClickable() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String nativeDocId = "ID00001351";
@@ -4539,7 +4539,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify that N/P/T/X should not be displayed when default view
 	 *              tab is off at an assignment level in context of an assignment
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 77)
+	@Test(description ="RPMXCON-51439",alwaysRun = true, groups = { "regression" }, priority = 77)
 	public void verifyNPTXIconsOnDefaultTabByOpertionsOnAssignment() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51439 Sprint 10");
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
@@ -4642,7 +4642,7 @@ public class DocView_Regression1 {
 	 *         Txt, Native
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 78)
+	@Test(description ="RPMXCON-51101",alwaysRun = true, groups = { "regression" }, priority = 78)
 	public void verifyAssociatedFileNativeDownloadOption() throws InterruptedException {
 		String docId1 = "ID00001069";
 		baseClass = new BaseClass(driver);
@@ -4679,7 +4679,7 @@ public class DocView_Regression1 {
 	 *         files are ingested
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 79)
+	@Test(description ="RPMXCON-51100",alwaysRun = true, groups = { "regression" }, priority = 79)
 	public void verifyAssociatedFileDownloadOptions() throws InterruptedException {
 		String docId1 = "ID00001069";
 		String docId2 = "ID00001004";// id to download translation 1
@@ -4721,7 +4721,7 @@ public class DocView_Regression1 {
 	 *         Default tab should show the "N", "P", "T", "X" as per the document
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 80)
+	@Test(description ="RPMXCON-51437",alwaysRun = true, groups = { "regression" }, priority = 80)
 	public void verifyDocIconFromDocViewPanal() throws InterruptedException {
 		baseClass.stepInfo("Test case id : RPMXCON-51437");
 		baseClass.stepInfo(
@@ -4766,7 +4766,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 81)
+	@Test(description ="RPMXCON-51046",alwaysRun = true, groups = { "regression" }, priority = 81)
 	public void verifyKeyWordHighlightOnDocView() throws InterruptedException, AWTException {
 		String AssignName = Input.randomText + Utility.dynamicNameAppender();
 		String keywordname = "t";
@@ -4853,7 +4853,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 82)
+	@Test(description ="RPMXCON-51040",alwaysRun = true, groups = { "regression" }, priority = 82)
 	public void verifyKeyWordHighlightofbasicSearchAndAssignmentOnDocView() throws InterruptedException, AWTException {
 		String AssignName = Input.randomText + Utility.dynamicNameAppender();
 		String keywordname = "t";
@@ -4953,7 +4953,7 @@ public class DocView_Regression1 {
 	 *         documents
 	 * @throws AWTException,InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 83)
+	@Test(description ="RPMXCON-51038",alwaysRun = true, groups = { "regression" }, priority = 83)
 	public void verifyKeywordHighlightSameKeywordWithDifferentColor() throws AWTException, InterruptedException {
 		String AssignName1 = Input.randomText + Utility.dynamicNameAppender();
 		String AssignName2 = Input.randomText + Utility.dynamicNameAppender();
