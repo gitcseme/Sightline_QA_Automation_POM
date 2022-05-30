@@ -70,7 +70,7 @@ public class Projects_Regression {
 	 * TestCase id :  55728 - Verify when the project is created, it should send to the background with the appropriate message to the user.
 	 * Description : Verify when the project is created, it should send to the background with the appropriate message to the user.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(description = "RPMXCON-55728", alwaysRun = true,groups={"regression"},priority = 1)
 	public void createUserWithDifferentProjectAndRole() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String projectnamenondomain = Input.randomText + Utility.dynamicNameAppender();
