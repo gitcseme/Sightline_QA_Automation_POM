@@ -5082,7 +5082,7 @@ public class DocView_Regression1 {
 	 *         group.
 	 * @throws AWTException,InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 84)
+	@Test(description ="RPMXCON-51063",alwaysRun = true, groups = { "regression" }, priority = 84)
 	public void verifyKeywordHighlightByDifferentAssignments() throws AWTException, InterruptedException {
 		String AssignName1 = Input.randomText + Utility.dynamicNameAppender();
 		String AssignName2 = Input.randomText + Utility.dynamicNameAppender();
@@ -5212,7 +5212,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 85)
+	@Test(description ="RPMXCON-51541",alwaysRun = true, groups = { "regression" }, priority = 85)
 	public void verifyRemarkOnDifferentTabsOnSameBrowser() throws InterruptedException, AWTException {
 		String remark = "testone";
 		baseClass = new BaseClass(driver);
@@ -5272,7 +5272,7 @@ public class DocView_Regression1 {
 	 *         are set from Manage > Keywords configured within the assignment.
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 86)
+	@Test(description ="RPMXCON-51406",groups = { "regression" }, priority = 86)
 	public void verifyAllKeywordsAreDisplayedOnPersistantHitPanel() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51406 of Sprint 11");
@@ -5351,7 +5351,7 @@ public class DocView_Regression1 {
 	 *         to act up on
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 87)
+	@Test(description ="RPMXCON-51970",enabled = true, groups = { "regression" }, priority = 87)
 	public void verifyDocumentLoadedinDocViewIn4Seconds() throws InterruptedException {
 		String docNum = "4";
 		baseClass = new BaseClass(driver);
@@ -5385,7 +5385,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 88)
+	@Test(description ="RPMXCON-51538",alwaysRun = true, groups = { "regression" }, priority = 88)
 	public void verifyRemarkOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -5460,7 +5460,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 89)
+	@Test(description ="RPMXCON-51539",alwaysRun = true, groups = { "regression" }, priority = 89)
 	public void verifyEditRemarkOnDifferentTabsOnSameBrowserDifferentUsers() throws InterruptedException, AWTException {
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 		String editRemark = Input.randomText + Utility.dynamicNameAppender();
@@ -5542,7 +5542,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 90)
+	@Test(description ="RPMXCON-51532",alwaysRun = true, groups = { "regression" }, priority = 90)
 	public void verifyHighlightingOnDifferentTabsOnSameBrowserDifferentUsers()
 			throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
@@ -5624,7 +5624,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 91)
+	@Test(description ="RPMXCON-51533",alwaysRun = true, groups = { "regression" }, priority = 91)
 	public void verifyEditHighlightingOnDifferentTabsOnSameBrowserDifferentUsers()
 			throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
@@ -5700,7 +5700,7 @@ public class DocView_Regression1 {
 	 * @Testcase id : 52204 - Verify that text redaction is working proper in Batch
 	 * Print.
 	 */
-	@Test(groups = { "regression" }, priority = 92)
+	@Test(description ="RPMXCON-52204",groups = { "regression" }, priority = 92)
 	public void verifyTheBatchSprintGeneration() throws Exception {
 		BaseClass baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52204 from Docview Component");
@@ -5774,7 +5774,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 93)
+	@Test(description ="RPMXCON-51534",alwaysRun = true, groups = { "regression" }, priority = 93)
 	public void verifyDeleteHighlightingOnDifferentTabsOnSameBrowserDiffUsers()
 			throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
@@ -5854,7 +5854,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 94)
+	@Test(description ="RPMXCON-51537",alwaysRun = true, groups = { "regression" }, priority = 94)
 	public void verifyDeleteHighlightingOnDifferentTabsOnSameBrowserSameUser()
 			throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
@@ -5928,7 +5928,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 95)
+	@Test(description ="RPMXCON-51535",alwaysRun = true, groups = { "regression" }, priority = 95)
 	public void verifyHighlightingOnDifferentTabsOfSameBrowser() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51535 sprint 11");
@@ -5996,7 +5996,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 96)
+	@Test(description ="RPMXCON-51536",alwaysRun = true, groups = { "regression" }, priority = 96)
 	public void verifyEditHighlightingOnDifferentTabsOfSameBrowser() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51536 sprint 11");
@@ -6059,7 +6059,7 @@ public class DocView_Regression1 {
 	 * id :RPMXCON- 50959 Description:To verify that after closing child window, it
 	 * should redirect to Parent Window.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 97)
+	@Test(description ="RPMXCON-50959",alwaysRun = true, groups = { "regression" }, priority = 97)
 	public void verifyingNavigationFromChildToParentWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-50959  from Docview Component");
@@ -6112,7 +6112,7 @@ public class DocView_Regression1 {
 	 * id :RPMXCON- 51436 Description: Verify that if the document Text is being
 	 * presented, the "X" icon with the accompanying mouse over tool tip must appear
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 98)
+	@Test(description ="RPMXCON-51436",alwaysRun = true, groups = { "regression" }, priority = 98)
 
 	public void verifyXIconAndToolTipInDocView() throws Exception {
 
@@ -6177,7 +6177,7 @@ public class DocView_Regression1 {
 	 * List->'Back to Source
 	 * stabilization done
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 99)
+	@Test(description ="RPMXCON-50957",alwaysRun = true, groups = { "regression" }, priority = 99)
 	public void verifyBackToSourceBtnRedirectToDocViewPage() throws Exception {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
@@ -6228,7 +6228,7 @@ public class DocView_Regression1 {
 	 * @TESTCASE No:RPMXCON-51268 : User can see the production option in the drop down selection of Images tab when document generated as part of production with/without redaction.
 	 * @Description: User can see the production option in the drop down selection of Images tab when document generated as part of production with/without redaction.
 	 */
-	@Test(groups = { "regression" }, priority = 100)
+	@Test(description ="RPMXCON-51268",groups = { "regression" }, priority = 100)
 	public void verifyProductionOptionFromImageTabDropDown() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		baseClass.stepInfo("RPMXCON-51268 -Production Sprint 12");
@@ -6339,7 +6339,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException 
 	 */
-	@Test(groups = { "regression" }, priority = 101)
+	@Test(description ="RPMXCON-51034",groups = { "regression" }, priority = 101)
 	public void verifySearchTermAndAllKeywordsDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51034");
@@ -6402,7 +6402,7 @@ public class DocView_Regression1 {
 	 * @throws InterruptedException
 	 * @throws AWTException 
 	 */
-	@Test(groups = { "regression" }, priority = 102)
+	@Test(description ="RPMXCON-51552",groups = { "regression" }, priority = 102)
 	public void verifySearchTermAndKeywordDisplayedOnPersistentPanal() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51552");
