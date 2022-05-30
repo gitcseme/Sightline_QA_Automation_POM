@@ -87,7 +87,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * redaction
 	 */
 
-	@Test(groups={"regression"},priority = 0)
+	@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 0)
 	public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");

@@ -50,7 +50,7 @@ public class Proview_Regression {
 
 	}
 
-	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "smoke , regression" }, priority = 1)
+	@Test(description = "RPMXCON-54272", enabled = true, dataProvider = "Users_PARMU", groups = { "smoke , regression" }, priority = 1)
 	public void validateCategorization(String username, String password, String role) throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(username, password);
@@ -94,7 +94,7 @@ public class Proview_Regression {
 	 *              Categorization Page [RPMXCON-54132]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54132", enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyLinkForIdOnBGPage() throws InterruptedException {
 		Categorization categorize = new Categorization(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -132,7 +132,7 @@ public class Proview_Regression {
 	 *              Categorization to doc list. [RPMXCON-54138]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-54138", enabled = true, dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
 	public void verifyDocsFromCategorizeToDoclist(String username, String password, String role)
 			throws InterruptedException {
 		String folderName = "FOLDER" + Utility.dynamicNameAppender();
@@ -185,7 +185,7 @@ public class Proview_Regression {
 	 *              [RPMXCON-54278]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-54278", enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyCategorizatiinSettings() throws InterruptedException {
 		Categorization categorize = new Categorization(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -238,7 +238,7 @@ public class Proview_Regression {
 	 *              Categorization page to lose its settings [RPMXCON-54279]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-54279", enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyCategorizeAfterRefresh() throws InterruptedException {
 		Categorization categorize = new Categorization(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -275,7 +275,7 @@ public class Proview_Regression {
 	 * @Description :To verify that RMU can view the Categorization page.[RPMXCON-54103]
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-54103", enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyCategorizePage() throws InterruptedException {
 		Categorization categorize = new Categorization(driver);
 		sessionSearch = new SessionSearch(driver);
