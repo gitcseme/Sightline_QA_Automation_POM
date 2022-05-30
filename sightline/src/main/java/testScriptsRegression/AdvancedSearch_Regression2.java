@@ -84,7 +84,7 @@ public class AdvancedSearch_Regression2 {
 	 *              basic search Modified on : 10/26/21 - DataProvider name and try
 	 *              block
 	 */
-	 @Test(dataProvider = "UsersWithoutPA", groups = { "regression" }, priority =
+	 @Test(description ="RPMXCON-47779",dataProvider = "UsersWithoutPA", groups = { "regression" }, priority =
 	 1,enabled = true)
 	public void verifyRemarks(String username, String password) throws InterruptedException {
 		String RemarksName = "Remarks" + Utility.dynamicNameAppender();
@@ -701,7 +701,7 @@ public class AdvancedSearch_Regression2 {
 	 * @description Verify modifying saved audio searches and cross check Audio
 	 *              threshold value saved correctly
 	 */
-	 @Test(dataProvider = "AudioSearchwithUsers", groups = { "regression" },
+	 @Test(description ="RPMXCON-46983",dataProvider = "AudioSearchwithUsers", groups = { "regression" },
 	 priority =17,enabled= true)
 	public void VerifyAudio_ModifySavedSearchInMySavedSearch(String username, String password, String ImpersonateOption)
 			throws InterruptedException {
