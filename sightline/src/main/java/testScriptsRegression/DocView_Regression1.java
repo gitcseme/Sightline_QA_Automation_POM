@@ -6457,7 +6457,7 @@ public class DocView_Regression1 {
 	 * @description : Verify that Action > Code Same As works fine when all records in the reviewer's batch are in mixed state but records that are in Completed state are also present.
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 103)
+	@Test(description ="RPMXCON-51878",alwaysRun = true, groups = { "regression" }, priority = 103)
 	public void verifyChainIconDisplayedByCodeSameAsForSelecedDoc() throws InterruptedException {
 		String AssignName = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -6524,7 +6524,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51979 - Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 * @Description : Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 104,enabled=true)
+	@Test(description ="RPMXCON-51979",alwaysRun = true,groups={"regression"},priority = 104,enabled=true)
 	public void verifySearchTermAndKeywordHighlightedOnDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String keyword = "es";
@@ -6582,7 +6582,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51648 - Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
 	 * @Description : Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 105,enabled=true)
+	@Test(description ="RPMXCON-51648",alwaysRun = true,groups={"regression"},priority = 105,enabled=true)
 	public void verifyDocPagesAreNotLoadedProperlyForAbove500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51648 Sprint 12");
@@ -6612,7 +6612,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51647 - Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
 	 * @Description : Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 106,enabled=true)
+	@Test(description ="RPMXCON-51647",alwaysRun = true,groups={"regression"},priority = 106,enabled=true)
 	public void verifyDocPagesAreLoadedProperlyByLessthan10MB() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51647 Sprint 12");
@@ -6646,7 +6646,7 @@ public class DocView_Regression1 {
 	 * @Description :Verify on click of the Translations tab, presence of a translated version of the document.
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 107)
+	@Test(description ="RPMXCON-51090",alwaysRun = true, groups = { "regression" }, priority = 107)
 	public void verifyTranslationTabPresenceOfTranlationVersion() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -6678,7 +6678,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 48796 - Verify Search Term highlighting is working for Searchable PDF.
 	 * @Description : Verify Search Term highlighting is working for Searchable PDF.
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 108)
+	@Test(description ="RPMXCON-48796",alwaysRun = true,groups={"regression"},priority = 108)
 	public void verifySearchTermInPersistatHitPanelOnDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String pdfDocId = "ID00001464";
@@ -6711,7 +6711,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51983 - Verify Keyword highlighting is working for Searchable PDF.
 	 * @Description : Verify Keyword highlighting is working for Searchable PDF
 	 */
-	@Test(alwaysRun = true,groups={"regression"},priority = 109)
+	@Test(description ="RPMXCON-51983",alwaysRun = true,groups={"regression"},priority = 109)
 	public void verifySearchTermAndKeywordHighlightedOnPersistPanel() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String keyword = "es";
@@ -6776,7 +6776,7 @@ public class DocView_Regression1 {
 	 * @TestCase Id:50808 verify when user clicks document pagination option from document view panel of doc view page
 	 * @Description:To To verify when user clicks document pagination option from document view panel of doc view page
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 110)
+	@Test(description ="RPMXCON-50808",alwaysRun = true, groups = { "regression" }, priority = 110)
 	public void verifyDocViewDocPagnation() throws InterruptedException {
 		baseClass=new BaseClass(driver);
 		String rowNumber="2";
@@ -6813,7 +6813,7 @@ public class DocView_Regression1 {
 	 * @Description:To Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window
 	 * @throws InterruptedException
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 111)
+	@Test(description ="RPMXCON-51732",alwaysRun = true, groups = { "regression" }, priority = 111)
 	public void verifyComparisonWindowLoadingStatus() throws InterruptedException {
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("###Verify that the spinning wheel is gone when the two docs having large number of pages being compared are presented in the viewer in near dupe comparison window###");
@@ -6839,7 +6839,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51650 - Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view.
 	 * @Description : Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view
 	 **/
-	@Test(alwaysRun = true,groups={"regression"},priority = 112,enabled=true)
+	@Test(description ="RPMXCON-51650",alwaysRun = true,groups={"regression"},priority = 112,enabled=true)
 	public void verifyDocPagesLoadedProperlyForLessThan500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51650 Sprint 13");
@@ -6853,7 +6853,6 @@ public class DocView_Regression1 {
 		SessionSearch session = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic Basic content search");
-		//session.basicContentSearch(lessThan500PagesDocId);
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, lessThan500PagesDocId, null);
 
 		baseClass.stepInfo("Navigate to  DocView page");
@@ -6869,7 +6868,7 @@ public class DocView_Regression1 {
 	 * @TestCase id : 51649 - Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 * @Description : Verify that if the file size is blank and # of pages <= 500, then set NearNativeReady = 1 and document should be loaded successfully.
 	 **/
-	@Test(alwaysRun = true,groups={"regression"},priority = 113,enabled=true)
+	@Test(description ="RPMXCON-51649",alwaysRun = true,groups={"regression"},priority = 113)
 	public void verifyDocPagesLoadedProperlyForLessThanOrEqual500PagesDoc() throws Exception {		
 		baseClass=new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51649 Sprint 13");
@@ -6902,7 +6901,7 @@ public class DocView_Regression1 {
 	 * @TestCase_Id : 52260 : Verify that on deleting the applied redaction tag message should be displayed to the user.
 	 * @description : Verify that on deleting the applied redaction tag message should be displayed to the user.
 	 */
-	@Test(groups = { "regression" }, priority = 114)
+	@Test(description ="RPMXCON-52260",groups = { "regression" }, priority = 114)
 	public void verifyErrorMsgDisplayedBYDeletingAppliedRedactionTag() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-52260 Production-sprint:13");
@@ -6950,7 +6949,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify when RMU impersonates as Reviewer and complete same as
 	 *              last doc when preceding document is completed
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 115)
+	@Test(description ="RPMXCON-51608",enabled = true, groups = { "regression" }, priority = 115)
 	public void validateAfterImpersonateSameAsLast() throws InterruptedException, AWTException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -6990,7 +6989,7 @@ public class DocView_Regression1 {
 	 * @Description : Verify user can apply coding stamp for the document once
 	 *              marked as un-complete in an assignment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 116)
+	@Test(description ="RPMXCON-51049",enabled = true, groups = { "regression" }, priority = 116)
 	public void afterImpersonateCanSaveStamp() throws InterruptedException, AWTException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -7028,7 +7027,7 @@ public class DocView_Regression1 {
 	 *              document from coding form child window then should be on Images
 	 *              tab for next navigated document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 117)
+	@Test(description ="RPMXCON-51920",enabled = true, groups = { "regression" }, priority = 117)
 	public void verifyImageTabCompleteForNextNavigatedDoc() throws InterruptedException, AWTException {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		SessionSearch 	sessionSearch = new SessionSearch(driver);
@@ -7081,7 +7080,7 @@ public class DocView_Regression1 {
 	 *              document from coding form child window after applying stamp then
 	 *              should be on Images tab for next navigated document
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 118)
+	@Test(description ="RPMXCON-51921",enabled = true, groups = { "regression" }, priority = 118)
 	public void verifyCfSavedStampChildNavigatedDoc() throws InterruptedException, AWTException {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -7138,7 +7137,7 @@ public class DocView_Regression1 {
 	 *                     this action. stabilization done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 119)
+	@Test(description ="RPMXCON-51275",enabled = true, groups = { "regression" }, priority = 119)
 	public void verifyAssignmentProgressBarDocCompleteAfterCodeSameAs() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51275");
 		baseClass.stepInfo(
