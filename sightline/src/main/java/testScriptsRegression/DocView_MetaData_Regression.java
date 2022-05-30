@@ -1394,7 +1394,7 @@ public class DocView_MetaData_Regression {
 	 * @Description:To Verify whether Metadata fields are sorted in ascending order in DocView Page
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 198)
+	@Test(description ="RPMXCON-60556",enabled = true, groups = { "regression" }, priority = 198)
 	public void verifyMetaDataListSortingOrder() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-60556");
@@ -1433,7 +1433,7 @@ public class DocView_MetaData_Regression {
 	 * @Description:To Verify Hidden Property Metadata label warning from Doc view page hidden comments
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-52002",enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyHiddenPropWarningMsgAndValue() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);

@@ -744,7 +744,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:54591 Verify the Tree View is displayed from the left side of the "Doc Explorer" page
 			 * @Description:To Verify the Tree View is displayed from the left side of the "Doc Explorer" page
 			 */  
-			@Test(alwaysRun = true, groups = { "regression" })
+			@Test(description ="RPMXCON-54591",alwaysRun = true, groups = { "regression" })
 			public void verifyDocExplorerTreeView() {
 				String folderName="Enron Data (23)";
 				int folderLevel=5;
@@ -782,7 +782,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:63482 check that on DocExplorer screen-Lower folders from the Tree View should be visible
 			 * @Description:To check that on DocExplorer screen-Lower folders from the Tree View should be visible
 			 */
-			@Test(enabled = true)
+			@Test(description ="RPMXCON-63482",enabled = true)
 			public void verifyDocExpLowerFolderVisible() {
 				baseClass = new BaseClass(driver);
 				loginPage = new LoginPage(driver);
@@ -826,7 +826,7 @@ public class DocExplorer_Regression1 {
 			 * @TestCase Id:63456 To check that on DocExplorer screen - Application should not show little arrow if the subfolder that don’t have any subfolder(s).
 			 * @Description:To To check that on DocExplorer screen - Application should not show little arrow if the subfolder that don’t have any subfolder(s).
 			 */
-			@Test(enabled = true)
+			@Test(description ="RPMXCON-63456",enabled = true)
 			public void verifyDocExpLowerArrowButtonNotDisplayed() {
 				baseClass = new BaseClass(driver);
 				loginPage = new LoginPage(driver);
