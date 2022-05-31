@@ -4041,7 +4041,7 @@ public class DocView_Regression2 {
 	 *         ingest only metadata
 	 *
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 87)
+	@Test(description ="RPMXCON-51234",alwaysRun = true, groups = { "regression" }, priority = 87)
 	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51243");
 		baseClass.stepInfo(
@@ -4113,7 +4113,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
+	@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
 	public void verifyDocHighlightingIsWorkingForSearchablePdf(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4234,7 +4234,7 @@ public class DocView_Regression2 {
 	 *              the accompanying mouse over tool tip must appear.
 	 * @throws InterruptedException stabilization - not done
 	 */
-	@Test(enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 90)
+	@Test(description ="RPMXCON-51438",enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 90)
 	public void verifyDocIdIconOnDocViewPanal(String fullName, String userName, String password, String fromRole,String toRole) throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -4405,7 +4405,7 @@ public class DocView_Regression2 {
 	 * on DocView
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
+	@Test(description ="RPMXCON-52211",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
 	public void verifyEmailMetaDataPresentOnDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52211");
@@ -4471,7 +4471,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51565 Verify when enteres the long text to search in a document
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
+	@Test(description ="RPMXCON-51565",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
 	public void verifyEntersLongTextToSearchDocument() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51565");
@@ -4499,7 +4499,7 @@ public class DocView_Regression2 {
 	 * also the warning message
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 97)
+	@Test(description ="RPMXCON-52240",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 97)
 	public void verifyDocWithHiddenContentIconNotShowForHiddenProperties() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52240");
@@ -4538,7 +4538,7 @@ public class DocView_Regression2 {
 	 * appear on doc view
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 98)
+	@Test(description ="RPMXCON-52242",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 98)
 	public void verifyDocWithNativeReviewRequiredAndNoHiddenContent() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52242");
