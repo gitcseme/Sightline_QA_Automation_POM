@@ -256,7 +256,7 @@ public class DocView_Regression5 {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-51942", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);

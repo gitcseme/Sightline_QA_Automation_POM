@@ -111,7 +111,7 @@ public class DocView_Regression6 {
 	 * @Description : Verify that uploaded documents should be threaded into
 	 *              families.
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description = "RPMXCON-52265", alwaysRun = true, groups = { "regression" }, priority = 1, enabled = true)
 	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
@@ -244,7 +244,7 @@ public class DocView_Regression6 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-51395", enabled = true, groups = { "regression" }, priority = 3)
 	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51395");
@@ -300,7 +300,7 @@ public class DocView_Regression6 {
 		loginPage.logout();
 	}
 
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-52233", enabled = true, groups = { "regression" }, priority = 4)
 	public void printRedactedDocsAsPA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52233- DocView- Sprint 2");
