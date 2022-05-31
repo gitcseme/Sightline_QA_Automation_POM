@@ -977,7 +977,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-49990",enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyRedactionTagSelectionAfterChangingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1055,7 +1055,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-47030",enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyRedactionTagReflectionAfterChanged() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1109,7 +1109,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-47026",enabled = true, groups = { "regression" }, priority = 22)
 	public void VerifyPageSyntaxAgainstMultiPageRedactionsPopup() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1143,7 +1143,7 @@ public class DocView_Redaction_Regression1 {
 	 * @throws Exception
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-46957",enabled = true, groups = { "regression" }, priority = 23)
 	public void verifyAutomaticSelectionOfRedactionTag() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1211,7 +1211,7 @@ public class DocView_Redaction_Regression1 {
 	 * redaction should be applied
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-46955",enabled = true, groups = { "regression" }, priority = 24)
 	public void verifyOnlyPageRangeMultipageRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -1303,7 +1303,7 @@ public class DocView_Redaction_Regression1 {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-46860
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-46860",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void VerifyRectangleRedactionDeletionFromDocExlorer() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
