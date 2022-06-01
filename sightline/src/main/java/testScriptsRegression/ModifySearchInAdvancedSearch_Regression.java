@@ -105,7 +105,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57975)(RPMXCON-57968)(RPMXCON-57958)
 	 */
 
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 1,enabled=true)
+	@Test(description ="RPMXCON-57975,RPMXCON-57968,RPMXCON-57958",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 1,enabled=true)
 	public void verifyEditASearchResultInWPSavedSearch(String operator) throws InterruptedException, ParseException, IOException {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String saveSearchName = "Rel701 "+operator+" Patch" + Utility.dynamicNameAppender();
@@ -161,7 +161,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57977),(RPMXCON-57970),(RPMXCON-57960)
 	 */
 
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 5, enabled=true)
+	@Test(description ="RPMXCON-57977,RPMXCON-57970,RPMXCON-57960",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 5, enabled=true)
 	public void validateEditSearchResults_WPAssignments(String operator) throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57977");}
@@ -224,7 +224,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     itself and tries to search again on search screen.
 	 *                     (RPMXCON-57973),(RPMXCON-57966),(RPMXCON-57956)
 	 */
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 2,enabled=true)
+	@Test(description ="RPMXCON-57973,RPMXCON-57966,RPMXCON-57956",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 2,enabled=true)
 	public void validateEditSearchResults_WPSecurityGroup(String operator) throws InterruptedException {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);	
 		if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57973");}
@@ -286,7 +286,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57976),(RPMXCON-57969)
 	 */
 	
-	//@Test(dataProvider = "WPSearchwithOperators",groups = {"regression"},priority=7,enabled=true )
+	@Test(description ="RPMXCON-57976,RPMXCON-57969,RPMXCON-57959",dataProvider = "WPSearchwithOperators",groups = {"regression"},priority=7,enabled=true )
 		public void validateEditSearchin_AdvnSearchWPproduction(String operator) throws Exception {
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57976");}
@@ -370,7 +370,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57974),(RPMXCON-57967),(RPMXCON-57957)
 	 */
 
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 6,enabled=true)
+	@Test(description ="RPMXCON-57974,RPMXCON-57967,RPMXCON-57957",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 6,enabled=true)
 	public void verifyEditASearchResultInWP_Redactions(String operator) throws InterruptedException {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57974");}
@@ -446,7 +446,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57971),(RPMXCON-57964)(RPMXCON-57951)
 	 */
 
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 3,enabled=true)
+	@Test(description ="RPMXCON-57971,RPMXCON-57964,RPMXCON-57951",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 3,enabled=true)
 	public void verifyEditASearchResultInWPTag(String operator) throws InterruptedException, ParseException, IOException {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57971");}
@@ -504,7 +504,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57972),(RPMXCON-57965),(RPMXCON-57955)
 	 */
 		
-	@Test(dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 4,enabled=true)
+	@Test(description ="RPMXCON-57972,RPMXCON-57965,RPMXCON-57955",dataProvider = "WPSearchwithOperators",groups = { "regression" }, priority = 4,enabled=true)
 	public void verifyEditASearchResultInWPFolder(String operator) throws InterruptedException, ParseException, IOException {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57972");}

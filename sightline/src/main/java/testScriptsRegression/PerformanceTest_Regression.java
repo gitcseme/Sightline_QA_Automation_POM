@@ -86,7 +86,7 @@ public class PerformanceTest_Regression {
 	 * @param TC_Id
 	 * @throws InterruptedException
 	 */
-	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-57467,RPMXCON-57466,RPMXCN-57465,RPMXCON-57464,RPMXCON-57463,RPMXCON-57425,RPMXCON-57424,RPMXCON-57423,RPMXCON-57422",dataProvider = "reserveWords", groups = { "regression" }, priority = 2)
 	public void basicSearch4(String data1, String data2, String TC_Id) throws InterruptedException {
 		String dataSet[][] = { { Input.pa1userName, Input.pa1password }, 
 				{ Input.rmu1userName, Input.rmu1password },
@@ -155,7 +155,7 @@ public class PerformanceTest_Regression {
 	 *              
 	 *   Since Only 5K document is present  , Scripted with available data           
 	 */
-	@Test(enabled = true,dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-57462",enabled = true,dataProvider = "SavedSearchwithUsers", groups = { "regression" }, priority = 2)
 	public void validateBatchFileCount(String username,String password,String fullname) throws Exception {
 		String File = saveSearch.renameFile(Input.performaceBatchFile);
 		boolean batchUpload = true;
