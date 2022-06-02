@@ -252,7 +252,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 *         security groups SG1 and SG2 2. SG1 and SG2 has different sub-set of
 	 *         project documents, around 100 in each
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 0)
+	@Test(description ="RPMXCON-54967", enabled = true, groups = { "regression" }, priority = 0)
 	public void preRequesties() throws InterruptedException {
 
 		List<String> list = new ArrayList<String>();
@@ -303,7 +303,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-54967",enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-57380",enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
 	public void metaDataCombinationSharedSGExecution(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 
