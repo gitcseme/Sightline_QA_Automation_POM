@@ -2208,7 +2208,7 @@ public class DocView_MiniDocList_DataProvider {
 	 * 
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(description ="RPMXCON-51298",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 51)
 	public void verifySelectedDocHistoryIsPresentInMiniDocList(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass = new BaseClass(driver);

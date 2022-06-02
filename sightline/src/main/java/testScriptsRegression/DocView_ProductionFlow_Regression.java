@@ -84,7 +84,7 @@ public class DocView_ProductionFlow_Regression {
 	 * DocView- production flow
 	 */
 
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-52207",groups = { "regression" }, priority = 1)
 	public void verifyProductionForHighlitedDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52207");
@@ -125,7 +125,7 @@ public class DocView_ProductionFlow_Regression {
 	 * DocView- production flow
 	 */
 	
-	@Test(enabled=false, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-52208",enabled=false, groups = { "regression" }, priority = 2)
 	public void verifyProductionForTiffDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52208");
@@ -169,7 +169,7 @@ public class DocView_ProductionFlow_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-51269",enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyProducedDocumentClickingDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51269");
