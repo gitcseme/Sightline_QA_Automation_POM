@@ -3649,7 +3649,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 82)
+	@Test(description ="RPMXCON-59585",enabled = true, groups = { "regression" }, priority = 82)
 	public void verifyNavigateDocViewManageAssignmentFromRMU() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-59585");
 		baseClass.stepInfo(
@@ -3735,7 +3735,7 @@ public class DocView_MiniDocList_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 83)
+	@Test(description ="RPMXCON-59586",enabled = true, groups = { "regression" }, priority = 83)
 	public void verifyManageAssigmentRMUAfterConfiguringInMiniDocList() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-59586");
 		baseClass.stepInfo(
@@ -3819,7 +3819,7 @@ public class DocView_MiniDocList_Regression {
 	 * @Description : Verify user can apply coding stamp for the document once
 	 *              marked as un-complete in an assignment
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 84)
+	@Test(description ="RPMXCON-51049",enabled = true, groups = { "regression" }, priority = 84)
 	public void afterImpersonateCanSaveStamp() throws InterruptedException, AWTException {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -4787,7 +4787,7 @@ public class DocView_MiniDocList_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 100)
+	@Test(description ="RPMXCON-55426",enabled = true, groups = { "regression" }, priority = 100)
 	public void verifyImpersonationConfigureMiniDoclistWindowDisplay() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55426");
@@ -4878,7 +4878,7 @@ public class DocView_MiniDocList_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 101)
+	@Test(description ="RPMXCON-55213",enabled = true, groups = { "regression" }, priority = 101)
 	public void verifyWarningMessgeDispalyInMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55213");
@@ -4929,7 +4929,7 @@ public class DocView_MiniDocList_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 102)
+	@Test(description ="RPMXCON-59591",enabled = true, groups = { "regression" }, priority = 102)
 	public void verifyManageAssigmentAfterImpersonationMiniDocList() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59591");
@@ -5014,7 +5014,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 103)
+	@Test(description ="RPMXCON-59590",enabled = true, groups = { "regression" }, priority = 103)
 	public void verifyManageAssigmentDasboardInMiniDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59590");
@@ -5091,7 +5091,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 104)
+	@Test(description ="RPMXCON-52658",enabled = true, groups = { "regression" }, priority = 104)
 	public void verifyPAImpersonateAsRMUNavigatingManageAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59615");
@@ -5185,7 +5185,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 105)
+	@Test(description ="RPMXCON-59588",enabled = true, groups = { "regression" }, priority = 105)
 	public void verifyReviewerDashboardSelectAssignmentMiniDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59588");
