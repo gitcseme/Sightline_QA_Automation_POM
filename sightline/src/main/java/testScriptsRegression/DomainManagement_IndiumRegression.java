@@ -62,7 +62,7 @@ public class DomainManagement_IndiumRegression {
 	 * Author : Baskar date: NA Modified date:21/01/2021 Modified by: Baskar
 	 * Description :Verify that System Admin can create user with Domain Admin role
 	 */
-	@Test(description ="RPMXCON-52773",alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-52773",alwaysRun = true, groups = { "regression" })
 	public void createNewUserForDomain() throws Exception {
 		baseClass = new BaseClass(driver);
 		String firstName = Input.randomText + Utility.dynamicNameAppender();
@@ -94,7 +94,7 @@ public class DomainManagement_IndiumRegression {
 	 * when Domain Admin impersonates as PA in domain project and then changes the
 	 * project from header drop down
 	 */
-	@Test(description ="RPMXCON-53266",alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-53266",alwaysRun = true, groups = { "regression" })
 	public void verifyDaImpersateAndChangeProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -128,7 +128,7 @@ public class DomainManagement_IndiumRegression {
 	 * when Domain Admin impersonates as RMU in domain project and then changes the
 	 * project from header drop down
 	 */
-	@Test(description ="RPMXCON-53265",alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-53265",alwaysRun = true, groups = { "regression" })
 	public void verifyDaImpersateRmuAndChangeProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -162,7 +162,7 @@ public class DomainManagement_IndiumRegression {
 	 * when user impersonate from SA to DA,Project name hyperlink should be
 	 * displayed on dashboard page
 	 */
-	@Test(description ="RPMXCON-53127",alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-53127",alwaysRun = true, groups = { "regression" })
 	public void verifySaImporsonateDAtoPa() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -201,7 +201,7 @@ public class DomainManagement_IndiumRegression {
 	 * that For Domain, Unassigned user list should not contain any user who is a
 	 * System Admin in the system.
 	 */
-	@Test(description ="RPMXCON-53120",alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-53120",alwaysRun = true, groups = { "regression" })
 	public void verifyUnassignUsernotContainSaUser() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -236,7 +236,7 @@ public class DomainManagement_IndiumRegression {
 	 * modify the rights for one domain, the modified rights should be saved and
 	 * persisted accordingly for the domain selected
 	 */
-	@Test(description ="RPMXCON-53148",alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-53148",alwaysRun = true, groups = { "regression" })
 	public void verifyModifiedUserRightPersistAccordingly() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -292,7 +292,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Hint : this cases is run under uat environment need "Automation_NonDomain"
 	 *       project allocation the users pa and reviewer
 	 */
-	@Test(description ="RPMXCON-53095",alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-53095",alwaysRun = true, groups = { "regression" })
 	public void verifyingBulkActionsInNonDomainProject() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -348,7 +348,7 @@ public class DomainManagement_IndiumRegression {
 	 * admin.'RPMXCON-53149' Sprint-14
 	 * 
 	 */
-	@Test(description ="RPMXCON-53149",alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-53149",alwaysRun = true, groups = { "regression" })
 	public void verifyAfterSavingRightsForUserDomainAdmin() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -426,7 +426,7 @@ public class DomainManagement_IndiumRegression {
 	 * :Validate notification alert and clickable link for Doc View and DocList for
 	 * Reviewer(impersonate from DAU). 'RPMXCON-53094' Sprint-14
 	 */
-	@Test(description ="RPMXCON-53094",alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-53094",alwaysRun = true, groups = { "regression" })
 	public void verifyAlertClickableLinkDocViewForReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53094");
@@ -461,7 +461,7 @@ public class DomainManagement_IndiumRegression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Validate
 	 * notification alert for Search/Batch Upload as Reviewer(impersonate from DAU)
 	 */
-	@Test(description ="RPMXCON-53093",alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-53093",alwaysRun = true, groups = { "regression" })
 	public void verifyingBackGroungTaskInBullIcon() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -512,13 +512,13 @@ public class DomainManagement_IndiumRegression {
 	 * not set and link to set password is expired and active. 'RPMXCON-52839'
 	 * Sprint-14
 	 */
-	@Test(description ="RPMXCON-52839",alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-52839",alwaysRun = true, groups = { "regression" })
 	public void createNewUserForDomainAdmin() throws Exception {
 		baseClass = new BaseClass(driver);
-		String firstName = "Test";
-		String lastName = "Test";
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
 		String role = "Domain Administrator";
-		String emailId = "Test" + "@consilio.com";
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
 		baseClass.stepInfo("Test case Id: RPMXCON-52839");
 		utility = new Utility(driver);
 		baseClass.stepInfo(
@@ -552,7 +552,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :To verify that System Admin can assign Domain Admin to Domain
 	 *              successfully
 	 */
-	@Test(description ="RPMXCON-53044",alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-53044",alwaysRun = true, groups = { "regression" })
 	public void verifySaCanAssignDaToDomain() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -601,7 +601,7 @@ public class DomainManagement_IndiumRegression {
 	 *              and tries to navigate to the Project tab without saving the
 	 *              changes, it should display the confirmation message
 	 */
-	@Test(description ="RPMXCON-53033",alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-53033",alwaysRun = true, groups = { "regression" })
 	public void verifyBellyBandMessageOnDomainTab() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -663,7 +663,7 @@ public class DomainManagement_IndiumRegression {
 	 * confirmation message
 	 */
 
-	@Test(description ="RPMXCON-53034",alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-53034",alwaysRun = true, groups = { "regression" })
 	public void verifyBellyBandMessageInSAUser() throws Exception {
 		baseClass = new BaseClass(driver);
 
@@ -697,7 +697,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :Validate notification alert for bulk
 	 *              actions(Folder/Tag/Assign/Export) as RMU(impersonate from DAU)
 	 */
-	@Test(description ="RPMXCON-53092",alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-53092",alwaysRun = true, groups = { "regression" })
 	public void verifyingBulkActionImpToRmu() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53092");
@@ -742,7 +742,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :To verify that Domain Admin can assign Project Admin
 	 *              ((non-domain Admin user) to Domain Project
 	 */
-	@Test(description ="RPMXCON-52951",alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-52951",alwaysRun = true, groups = { "regression" })
 	public void verifyingDomainAdminToPa() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-52951");
 		baseClass.stepInfo(
@@ -782,7 +782,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
 	 * @Description :Validate client name filter is not available for Domain Admin impersonate from System A
 	 */
-	@Test(description ="RPMXCON-53078",alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-53078",alwaysRun = true, groups = { "regression" })
 	public void verifyingClientFilterNameSAToDA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53078");
 		baseClass.stepInfo(
@@ -808,7 +808,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:29/04/2022 Modified by:29/04/2022
 	 * @Description :Validate client name filter is not available when logged in as Domain Admin
 	 */
-	@Test(description ="RPMXCON-53077",alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-53077",alwaysRun = true, groups = { "regression" })
 	public void verifyingClientFilterNameDA() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53077");
 		baseClass.stepInfo(
@@ -834,7 +834,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
 	 */
 	
-	@Test(description ="RPMXCON-53091",alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-53091",alwaysRun = true, groups = { "regression" })
 	public void verifyingBatchPrintImpToRmu() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53091");
@@ -912,7 +912,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:10/5/2022 Modified by:
 	 * @Description :Validate notification alert for BatchPrint as RMU(impersonate from DAU)
 	 */
-	@Test(description = "RPMXCON-53089",enabled = true, groups = {"regression" }, priority = 20)
+	@Test(description = "RPMXCON-53089",enabled = true, groups = {"regression" })
 	public void verifyBG_CountAdvancesearchToDocList() throws InterruptedException {
 		SessionSearch search = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53089");
@@ -947,7 +947,7 @@ public class DomainManagement_IndiumRegression {
 	 * @Author :Indium-Baskar date: NA Modified date:10/5/2022 Modified by:
 	 * @Description :Validate notification alert for Search/Batch Upload as RMU(impersonate from DAU)
 	 */
-	@Test(description = "RPMXCON-53090",enabled = true, groups = {"regression" }, priority = 21)
+	@Test(description = "RPMXCON-53090",enabled = true, groups = {"regression" })
 	public void verifyBGTaskFromSearch() throws InterruptedException {
 		SessionSearch search = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53090");

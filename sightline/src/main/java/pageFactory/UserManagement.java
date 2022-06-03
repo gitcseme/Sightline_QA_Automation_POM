@@ -2001,14 +2001,15 @@ public class UserManagement {
 	 */
 	public void AssignUserToDomain(String domainName, String unAssigedUserName) {
 		bc.waitForElement(getAssignUserButton());
-		getAssignUserButton().Click();
+		getAssignUserButton().waitAndClick(10);
 
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
 
 		bc.waitForElement(getSelectusertoassignindomain());
+		bc.waitTime(5);
 		getSelectusertoassignindomain().selectFromDropdown().selectByVisibleText(unAssigedUserName);
-
+		bc.waitForElement(getrightBtndomainuser());
 		getrightBtndomainuser().waitAndClick(10);
 		getsavedomainuser().waitAndClick(10);
 		bc.VerifySuccessMessage("User Mapping Successful");
