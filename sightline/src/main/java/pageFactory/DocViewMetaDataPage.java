@@ -896,7 +896,7 @@ public class DocViewMetaDataPage {
 			if (getFolderName(folderNam).Displayed()) {
 				base.passedStep("Folder name is successfully displayed in Folder structure by name :: " + folderNam);
 			}
-			softAssert.assertEquals(getFolderName(folderNam).Displayed(), true,
+			softAssert.assertEquals((boolean)getFolderName(folderNam).Displayed(), true,
 					"Folder name is not displayed in Folder structure by name :: " + folderNam);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1962,7 +1962,7 @@ public class Production_Test_Regression_01 {
 		page.clickOnGenerateButton();
 		String blank = page.getProd_BatesRange().getText();
 		System.out.println("bank text" + blank + "message");
-		if (blank.isBlank()) {
+		if (blank.trim().equals("")) {
 			base.passedStep("Bates Range' is blank before pre-gen check complete");
 		} else {
 			base.failedStep("Bates Range' didn't blank before pre-gen check complete");
