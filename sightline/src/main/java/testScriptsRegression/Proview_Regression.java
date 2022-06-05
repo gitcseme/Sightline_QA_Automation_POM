@@ -262,7 +262,7 @@ public class Proview_Regression {
 
 		// browser refresh
 		driver.Navigate().refresh();
-		softAssert.assertEquals(categorize.getSelectedCorpusToAnalyze(folderName).isDisplayed(), true);
+		softAssert.assertEquals((boolean)categorize.getSelectedCorpusToAnalyze(folderName).isDisplayed(), true);
 		softAssert.assertAll();
 		bc.passedStep(
 				"Browser Refresh didn't cause any changes in Catagorization page. the content of catagorization page remains same even after refershing the page");

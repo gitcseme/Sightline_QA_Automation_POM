@@ -6300,7 +6300,7 @@ public class IngestionPage_Indium {
 		String copyData = catalogSectionDetails().getText();
 		String indexData = indexingSectionDetails().getText();
 
-		if (catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+		if (catalogData.trim().equals("") && copyData.trim().equals("") && indexData.trim().equals("")) {
 			base.passedStep("Cataloging,Copying and Indexing field is blank");
 		} else {
 			base.failedStep("Cataloging,Copying and Indexing field is not blank");
@@ -6932,7 +6932,7 @@ public class IngestionPage_Indium {
 			String ingestionStatus = getIngestionStatusInPopup().getText();
 			String timeStamp = getTimeStampInPopup().getText();
 
-			if (projectName.isBlank() && ingestionStatus.isBlank() && timeStamp.isBlank()) {
+			if (projectName.trim().equals("") && ingestionStatus.trim().equals("") && timeStamp.trim().equals("")) {
 				base.failedStep("project name, ingestion Status and Time stamp details are blank");
 			} else {
 				base.passedStep("Project name, ingestion Status and Time stamp details are present");
@@ -6942,7 +6942,7 @@ public class IngestionPage_Indium {
 			String copyData = catalogSectionDetails().getText();
 			String indexData = indexingSectionDetails().getText();
 
-			if (catalogData.isBlank() && copyData.isBlank() && indexData.isBlank()) {
+			if (catalogData.trim().equals("") && copyData.trim().equals("") && indexData.trim().equals("")) {
 				base.failedStep("Cataloging,Copying and Indexing field details are blank");
 			} else {
 				base.passedStep("Cataloging,Copying and Indexing field details are present");
@@ -8545,16 +8545,15 @@ public class IngestionPage_Indium {
 		if (ingestionStage.equalsIgnoreCase("Catalogingblock")) {
 			String catalogData = catalogSectionDetails().getText();
 			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-			if (status.contains("Cataloged") && !catalogData.isBlank()) {
+			if (status.contains("Cataloged") && !catalogData.trim().equals("")) {
 				base.passedStep("Cataloging section details are present in ingestion details popup");
 			} else {
-				base.failedStep("details not present in cataloging section");
 			}
 		} else if (ingestionStage.equalsIgnoreCase("Copyingblock")) {
 			driver.scrollingToElementofAPage(getRunCopying());
 			String copyData = copyingSectionDetails().getText();
 			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-			if (status.contains("Copied") && !copyData.isBlank()) {
+			if (status.contains("Copied") && !copyData.trim().equals("")) {
 				base.passedStep("Copying section details are present in ingestion details popup");
 			} else {
 				base.failedStep("details not present in copying section");
@@ -8563,7 +8562,7 @@ public class IngestionPage_Indium {
 			driver.scrollingToElementofAPage(getRunIndexing());
 			String indexData = indexingSectionDetails().getText();
 			String status = getIngestionStatusInPopup(ingestionStage).getText().trim();
-			if (status.contains("Indexed") && !indexData.isBlank()) {
+			if (status.contains("Indexed") && !indexData.trim().equals("")) {
 				base.passedStep("Indexing section details are present in ingestion details popup");
 			} else {
 				base.failedStep("details not present in indexing section");

@@ -8417,7 +8417,7 @@ public class DocViewPage {
 			if (j == 15) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
-				softAssertion.assertEquals(getDocumetListLoading().Displayed(), true);
+				softAssertion.assertEquals((boolean)getDocumetListLoading().Displayed(), true);
 				driver.waitForPageToBeReady();
 			} else {
 			}
@@ -9192,7 +9192,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Action performing in parent window");
 		base.waitForElement(getCodingFormCommentDisabled());
-		softAssertion.assertEquals(getCodingFormCommentDisabled().Enabled(), false);
+		softAssertion.assertEquals((boolean)getCodingFormCommentDisabled().Enabled(), false);
 		if (getCodingFormCommentDisabled().Enabled() && getCodingFormCommentDisabled().Displayed()) {
 			base.stepInfo("Comment text box is clickable in docview coding form page");
 		} else {
@@ -9238,7 +9238,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Action performing in parent window");
 		base.waitForElement(getCodingFormCommentVal());
-		softAssertion.assertEquals(getCodingFormCommentVal().Enabled(), true);
+		softAssertion.assertEquals((boolean)getCodingFormCommentVal().Enabled(), true);
 		if (getCodingFormCommentVal().Enabled() && getCodingFormCommentVal().Displayed()) {
 			base.passedStep("Comment text box is under validation text box filed value has to entered");
 		} else {
@@ -13822,7 +13822,7 @@ public class DocViewPage {
 				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
 				if (loadingFlag)
-					softAssertion.assertEquals(getDocumetListLoading().isDisplayed(), true);
+					softAssertion.assertEquals((boolean)getDocumetListLoading().isDisplayed(), true);
 				driver.waitForPageToBeReady();
 			} else {
 				UtilityLog.info("Scroll is not required, Document is displayed");
@@ -20589,9 +20589,9 @@ public class DocViewPage {
 	public void verifyCfAttachCountInDocView() {
 		try {
 			base.waitForElement(getAttachCountTextBox());
-			Boolean actualObjectName = getAttachCountTextBox().Visible() && getAttachCountTextBox().Enabled();
+			Boolean actualObjectName = (boolean)getAttachCountTextBox().Visible() && (boolean)getAttachCountTextBox().Enabled();
 			System.out.println("actual: " + actualObjectName);
-			softAssertion.assertEquals(true, actualObjectName);
+			softAssertion.assertEquals(true, (boolean)actualObjectName);
 			base.passedStep("Object added in the coding form is displayed in docview page as expected");
 		} catch (Exception e) {
 			e.printStackTrace();
