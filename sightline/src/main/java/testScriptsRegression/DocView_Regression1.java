@@ -7225,7 +7225,7 @@ public class DocView_Regression1 {
 	 * @Description :To Verify that when viewing the document with Hidden Properties has "External Link" as well as another hidden property, warning message should not be displayed
 	 *@throws InterruptedException
 	 */ 
-	@Test(enabled = true, groups = { "regression" }, priority = 120)
+	@Test(description ="RPMXCON-51964",enabled = true, groups = { "regression" }, priority = 120)
 	public void verifyNowarningMessageForExternalLinkHiddenProp() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
