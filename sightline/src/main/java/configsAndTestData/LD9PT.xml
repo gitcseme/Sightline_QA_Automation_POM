@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LD9PT>
-        <url>https://sightlinept.consilio.com/</url>
-        <prodpath>Productions PT WorkSpace\Automation</prodpath>
-        <SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
-        <domainName>Automation_Regression_BackUp</domainName>
-        <projectName>AutomationRegressionBackup</projectName>
-        <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
-        <ingestDataProject>AutomationIngestionProject</ingestDataProject>
-        <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
+        <url>https://sightlineuat.consiliotest.com/</url>
+        <prodpath>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation\RegressionAllDatasetConsilio</prodpath>
+        <SourceLocation>IngestionTestData\Automation</SourceLocation>             
+      <domainName>Indium</domainName>
+        <projectName>Indium_Regressionrun</projectName>
+           <ICEProjectName>Automation_Consilio</ICEProjectName>
+		    <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
+     <ingestDataProject>AutomationIngestionProject</ingestDataProject>
+     <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
         
-        <!-- Provide ICE Project Name -->
-        <ICEProjectName>ICETest2</ICEProjectName>
+         <da1userName>qada7@consilio.com</da1userName>
+        <da1password>Q@test_12</da1password>
          
         <!-- User Name : SA QA -->    
-        <sa1userName>qasa1@consilio.com</sa1userName> 
-        <sa1password>TestCons!042021</sa1password> 
+        <sa1userName>shilpi.mangal@consilio.com</sa1userName> 
+        <sa1password>Q@test_13</sa1password> 
+     
+        <!-- Consilio PAU Automation -->
+        <pa1FullName>QA PA28</pa1FullName>
+        <pa1userName>qapau28@consilio.com</pa1userName>
+        <pa1password>Q@test_12</pa1password> 
         
-         <!-- User Name : DA QA -->    
-        <da1userName>qada1@consilio.com</da1userName> 
-        <da1password>TestCons!042021</da1password> 
-                  
-        <!-- Consilio PAU Automation   -->
-        <pa1FullName>Consilio PAU1 Automation</pa1FullName>
-        <pa1userName>qapau1@consilio.com</pa1userName>
-        <pa1password>Q@test_15</pa1password> 
-      
-        
-        <pa2FullName>Consilio PAU2 Automation</pa2FullName>
-        <pa2userName>qapau2@consilio.com</pa2userName>
-        <pa2password>Q@test_15</pa2password>
+        <pa2FullName>QA PA29</pa2FullName>
+        <pa2userName>qapau29@consilio.com</pa2userName>
+        <pa2password>Q@test_12</pa2password>
         
         <!--Consilio RMU Automation  -->
-        <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
-        <rmu1userName>qarmu1@consilio.com</rmu1userName>
-        <rmu1password>Q@test_20</rmu1password>
+        <rmu1FullName>QA RMU28</rmu1FullName>
+        <rmu1userName>qarmu28@consilio.com</rmu1userName>
+        <rmu1password>Q@test_12</rmu1password>
         
-        <rmu2FullName>Consilio RMU2 Automation</rmu2FullName>
-        <rmu2userName>qarmu2@consilio.com</rmu2userName>
-        <rmu2password>Q@test_15</rmu2password>
+        <rmu2FullName>QA RMU29</rmu2FullName>
+        <rmu2userName>qarmu29@consilio.com</rmu2userName>
+        <rmu2password>Q@test_12</rmu2password>
         
         <!-- Consilio REVU Automation -->
-        <rev1FullName>Consilio REVU1 Automation</rev1FullName>
-        <rev1userName>qarev1@consilio.com</rev1userName>
-        <rev1password>Q@test_20</rev1password>
+        <rev1FullName>QA REV28</rev1FullName>
+        <rev1userName>qarev28@consilio.com</rev1userName>
+        <rev1password>Q@test_12</rev1password>
         
-        <rev2FullName>Consilio REVU2 Automation</rev2FullName>
-        <rev2userName>qarev2@consilio.com</rev2userName>
-        <rev2password>Q@test_15</rev2password>
+        <rev2FullName>QA REV29</rev2FullName>
+        <rev2userName>qarev29@consilio.com</rev2userName>
+        <rev2password>Q@test_12</rev2password>
 
 
         <shareTo>PTPA2 PA2</shareTo>

@@ -51,8 +51,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+		
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -105,7 +104,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description: To verify that user can select document in the Threaded map panel and view in the doc list when redirects from Manage Assignment > Doc View.
 	 */
 
-	@Test(description="RPMXCON-50867",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-50867",enabled = true, groups = { "regression" } )
 	public void verifyUserCanSelectDocsFromThreadMapAndViewInDocList() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -161,7 +160,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * or saving 'Code same as this' action from analytics panel > Thread map 'RPMXCON-50917' Sprint 9
 	 */
 
-	@Test(description="RPMXCON-50917",enabled = true, groups = { "regression" }, priority = 2) 
+	@Test(description="RPMXCON-50917",enabled = true, groups = { "regression" } ) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForThreadMap() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -330,7 +329,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel > Family Members 'RPMXCON-50918' Sprint 9
 	 */
 
-	@Test(description="RPMXCON-50918",enabled = true, groups = { "regression" }, priority = 3) 
+	@Test(description="RPMXCON-50918",enabled = true, groups = { "regression" } ) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForFamilyMember() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -503,7 +502,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * saving 'Code same as this' action from analytics panel >Conceptual 'RPMXCON-50919' Sprint 9
 	 */
 
-	@Test(description="RPMXCON-50919",enabled = true, groups = { "regression" }, priority = 4) 
+	@Test(description="RPMXCON-50919",enabled = true, groups = { "regression" } ) 
 	public void verifyWarningMsgWhenUserClicksLeftMenuForConceptual() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -679,7 +678,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50859",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-50859",enabled = true, groups = { "regression" })
 	public void verifyNotViewAnalyticalPanelDocViewOffFromAssigment() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50859");
@@ -728,7 +727,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50813",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-50813",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonatingSelectDocInFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50813");
@@ -774,7 +773,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-    @Test(description="RPMXCON-50814",enabled = true, groups = { "regression" }, priority = 7)
+    @Test(description="RPMXCON-50814",enabled = true, groups = { "regression" })
 	public void verifyProjectNoFamilyMemberTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50814");
@@ -834,7 +833,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50821",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-50821",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifySelectDocsInFolderFromConceptalSimilarTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -874,7 +873,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-51127",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-51127",enabled = true, groups = { "regression" } )
 	public void verifySelectMultipleDocsCodeSameAsThreadMapTab() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51127");
@@ -950,7 +949,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-51129",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-51129",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifySelectDocsInFolderFromNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1005,7 +1004,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50818",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-50818",enabled = true, groups = { "regression" } )
 	public void verifySelectMultipleDocsFolderFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50818");
@@ -1052,7 +1051,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50830",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-50830",enabled = true, groups = { "regression" })
 	public void verifyThereAreNoDocsInConceptualSimilartab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50830");
@@ -1114,7 +1113,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50829",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-50829",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonatingSelectDocsViewConceptualSimilarTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50829");
@@ -1206,7 +1205,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-50812",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-50812",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonatingSelectDocsViewFamilyMemberTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50812");
@@ -1277,7 +1276,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-51255",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-51255",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyPaginationInNearDupeChildWindow(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -1313,7 +1312,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description:Verify that the text difference in the Near Dupe window must always highlight differences from the original. 'RPMXCON-48778' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-48778",enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 16) 
+	@Test(description="RPMXCON-48778",enabled = true,dataProvider = "userDetails", groups = { "regression" }) 
 	public void verifyHighlightingTextInNearDupeComparisonWindowWithBasicSearch(String fullName, String userName, String password) throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1397,7 +1396,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description:Verify user will be able to see the differences in two documents in the near dupe window outside of an assignment 'RPMXCON-51102' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-51102",enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 17) 
+	@Test(description="RPMXCON-51102",enabled = true,dataProvider = "userDetails", groups = { "regression" }) 
 	public void verifyHighlightingTextInNearDupeComparisonWindowWithSavedSearch(String fullName, String userName, String password) throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1489,7 +1488,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @Stabilization - done
 	 */
 	
-	@Test(description="RPMXCON-51121",enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 18)
+	@Test(description="RPMXCON-51121",enabled = true,dataProvider="userDetailss", groups = { "regression" })
 	public void verifyUserAfterImpersonationDifferenceInTwoDocs(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -1601,7 +1600,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description: Verify user will be able to see the differences in two documents in the near dupe window in context of an assignment 'RPMXCON-51122' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-51122",enabled = true, groups = { "regression" }, priority = 19) 
+	@Test(description="RPMXCON-51122",enabled = true, groups = { "regression" }) 
 	public void verifyDifferenceInTwoDocsNearDupeWindowInContextAnAssignment() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1749,7 +1748,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * @description: Verify RMU after impersonation will be able to see the differences in two documents in the near dupe window in context of an assignment 'RPMXCON-51173' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-51173",enabled = true, groups = { "regression" }, priority = 20) 
+	@Test(description="RPMXCON-51173",enabled = true, groups = { "regression" }) 
 	public void verifyDifferenceInTwoDocsNearDupeWindowInContextAnAssignmentAndImpersonate() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1845,7 +1844,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * Reason: DA useris not working in this buid 8.0
 	 */
 
-	//@Test(description="RPMXCON-51322",enabled = true, groups = { "regression" }, priority = 21) 
+	//@Test(description="RPMXCON-51322",enabled = true, groups = { "regression" } 21) 
 	public void verifyViewAllDocsEnabledInAnFamilyNearDupeConceptualChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -2241,7 +2240,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * Near Dupes, Conceptually Similar when more than 20 documents exist'RPMXCON-51320' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-51320",enabled = true, groups = { "regression" }, priority = 22) 
+	@Test(description="RPMXCON-51320",enabled = true, groups = { "regression" }) 
 	public void verifyViewAllDocsEnabledInAnFamilyNearDupeConceptual() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -2436,7 +2435,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
 	 * when more than 20 documents exists 'RPMXCON-51318' Sprint 12
 	 */
 
-	@Test(description="RPMXCON-51318",enabled = true, groups = { "regression" }, priority = 23) 
+	@Test(description="RPMXCON-51318",enabled = true, groups = { "regression" }) 
 	public void verifyViewAllDocsEnabledInNearDupeParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -2573,7 +2572,7 @@ public class DocView_AnalyticsPanel_NewRegression02 {
      *Author :Arunkumar date: 28/02/2022 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51515
 	 * Description :Verify that documents on thread map should be in chronological order (oldest email first) by SentDate.
 	 */
-	@Test(description="RPMXCON-51515",enabled = true, groups = {"regression" },priority = 24)
+	@Test(description="RPMXCON-51515",enabled = true, groups = {"regression" })
 	public void verifyChronologicalOrderBySentDate() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
