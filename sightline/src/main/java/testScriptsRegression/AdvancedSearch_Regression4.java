@@ -57,7 +57,7 @@ public class AdvancedSearch_Regression4 {
 	 *              value remains same after running the searches. [RPMXCON-63568]
 	 */
 	@Test(description = "RPMXCON-63568", dataProvider = "Users", groups = {
-			"regression" }, priority = 17, enabled = true)
+			"regression" })
 	public void verifyConceptualPS(String username, String password) throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 
@@ -92,7 +92,7 @@ public class AdvancedSearch_Regression4 {
 	 *              slider value. [RPMXCON-63566]
 	 */
 	@Test(description = "RPMXCON-63566", dataProvider = "Users", groups = {
-			"regression" }, priority = 18, enabled = true)
+			"regression" })
 	public void verifyConceptualDefaultPS(String username, String password) throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 
@@ -118,7 +118,7 @@ public class AdvancedSearch_Regression4 {
 	 *              i.e,70. [RPMXCON-63556]
 	 */
 	@Test(description = "RPMXCON-63556", dataProvider = "Users", groups = {
-			"regression" }, priority = 19, enabled = true)
+			"regression" })
 	public void verifyConceptualFlexible(String username, String password) throws InterruptedException {
 		String saveSearchName = "resubmit" + Utility.dynamicNameAppender();
 

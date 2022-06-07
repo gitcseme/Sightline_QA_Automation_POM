@@ -85,7 +85,7 @@ public class BulkActions_Regression {
 	 * @TestCase id : 48818 - Verify Total Email Threaded Count when bulk foldering.
 	 * @Description : Verify Total Email Threaded Count when bulk foldering.
 	 */
-    @Test(description ="RPMXCON-48818",alwaysRun = true,groups={"regression"},priority = 1)
+    @Test(description ="RPMXCON-48818",alwaysRun = true,groups={"regression"})
 	public void verifyTotalEmailThreadedCountbulkFolderingFromDocView() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String emailSubject = "MID C Question";
@@ -139,7 +139,7 @@ public class BulkActions_Regression {
 	 * @return 
 	 * @throws InterruptedException 
 	 */
-	@Test(description = "RPMXCON-54300",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54300",enabled = true, groups = { "regression" })
 	public void validatingBulkAssignAssignmentCount() throws InterruptedException  {
 		baseClass.stepInfo("Test case Id: RPMXCON-54300");
 		baseClass.stepInfo("To verify that if the documents are being assigned to multiple assignments,"
@@ -217,7 +217,7 @@ public class BulkActions_Regression {
 	 * @Description:To verify that if user delete the Tag/Folder,
 	 *               it should not displayed Bulk Tag/Folder modal
 	 */
-	@Test(description ="RPMXCON-54265",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54265",enabled = true, groups = { "regression" })
 	public void verifyRMUfolderEditDelete() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54265");
 		TagsAndFoldersPage tagAndFolderPage = new TagsAndFoldersPage(driver);
@@ -260,7 +260,7 @@ public class BulkActions_Regression {
 	 * @Description:Verify that bulk assign with 'Parent Level Docs' 
 	 *               sample method displays correct count if 'SourceParentDocID' is blank
 	 */
-	@Test(description ="RPMXCON-54512",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54512",enabled = true, groups = { "regression" })
 	public void verifyBulkAssignBlankSourceParentDocID() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54512");
 		sessionSearch=new SessionSearch(driver);
@@ -291,7 +291,7 @@ public class BulkActions_Regression {
 	 *              bulk assign when SourceParentDocID is not same as SourceDocID 
 	 *              and no child for the child document
 	 */
-	@Test(description ="RPMXCON-54511",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54511",enabled = true, groups = { "regression" })
 	public void verifyBulkAssignBlankWithNoChild() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54511");
 		sessionSearch=new SessionSearch(driver);

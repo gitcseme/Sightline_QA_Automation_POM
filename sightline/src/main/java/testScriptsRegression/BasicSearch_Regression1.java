@@ -56,8 +56,6 @@ public class BasicSearch_Regression1 {
 		System.out.println("Executing method : " + testMethod.getName());
 		// Open browser
 		softAssertion = new SoftAssert();
-		Input in = new Input();
-		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
@@ -115,7 +113,7 @@ public class BasicSearch_Regression1 {
 	 *         [#3]RPMXCON-57451,RPMXCON-57449,RPMXCON-57447
 	 * 
 	 */
-	@Test(description ="RPMXCON-57470,RPMXCON-57471,RPMXCON-57472,RPMXCON-57452,RPMXCON-57453,RPMXCON-57454,RPMXCON-57469,RPMXCON-57468,RPMXCON-57457,RPMXCON-57461,RPMXCON-57458,RPMXCON-57459",dataProvider = "reservedWords", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-57470,RPMXCON-57471,RPMXCON-57472,RPMXCON-57452,RPMXCON-57453,RPMXCON-57454,RPMXCON-57469,RPMXCON-57468,RPMXCON-57457,RPMXCON-57461,RPMXCON-57458,RPMXCON-57459",dataProvider = "reservedWords", groups = { "regression" })
 	public void verifyBasicSearch(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -151,7 +149,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57001,RPMXCON-57002",groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-57001,RPMXCON-57002",groups = { "regression" })
 	public void verifyCountOfSearch() throws ParseException, InterruptedException, IOException {
 		// login as PA
 		lp = new LoginPage(driver);
@@ -182,7 +180,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-57030,RPMXCON-47255,RPMXCON-47256",groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-57030,RPMXCON-47255,RPMXCON-47256",groups = { "regression" })
 	public void verifyPinSearch() throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -230,7 +228,7 @@ public class BasicSearch_Regression1 {
 		return new Object[][] { { "DocFileType", "oth" }, { "DocFileName", "tes" } };
 	}
 
-	@Test(description ="RPMXCON-46989,RPMXCON-46990",dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-46989,RPMXCON-46990",dataProvider = "reserveWords", groups = { "regression" })
 	public void verifyAutoSuggest(String data1, String data2) throws InterruptedException {
 		// login as Pa
 		lp = new LoginPage(driver);
@@ -253,7 +251,7 @@ public class BasicSearch_Regression1 {
 	 *              Metadata in basic search(RPMXCON-47777)
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47777",groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-47777",groups = { "regression" })
 	public void verifyComments() throws InterruptedException {
         String data=Input.searchString5;
 		// login as Pa
@@ -317,7 +315,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-46984,RPMXCON-46985,RPMXCON-46986,RPMXCON-46988",dataProvider = "reserve", groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-46984,RPMXCON-46985,RPMXCON-46986,RPMXCON-46988",dataProvider = "reserve", groups = { "regression" })
 	public void verifyAutoSugges(String data1, String data2, String data3, String data4) throws InterruptedException {
 
 		lp = new LoginPage(driver);
@@ -376,7 +374,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57446,RPMXCON-57445,RPMXCON-57443,RPMXCON-57442,RPMXCON-57441,RPMXCON-57440,RPMXCON-57439,RPMXCON57438,RPMXCON-57437,RPMXCON-57436,RPMXCON-57433,RPMXCON-57430,RPMXCON-57429,RPMXCON-57427,RPMXCON-57426",dataProvider = "query", groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-57446,RPMXCON-57445,RPMXCON-57443,RPMXCON-57442,RPMXCON-57441,RPMXCON-57440,RPMXCON-57439,RPMXCON57438,RPMXCON-57437,RPMXCON-57436,RPMXCON-57433,RPMXCON-57430,RPMXCON-57429,RPMXCON-57427,RPMXCON-57426",dataProvider = "query", groups = { "regression" })
 	public void verifyBasicSearch2(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -411,7 +409,7 @@ public class BasicSearch_Regression1 {
 	 *         corresponding value gets wrapped in double quotes. (RPMXCON-46993)
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-46993",groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-46993",groups = { "regression" })
 	public void verifyCompoundQuery() throws InterruptedException {
 		String tag = "TAGX" + Utility.dynamicNameAppender();
 		String metadataFieldLabel = "DocFileName";
@@ -451,7 +449,7 @@ public class BasicSearch_Regression1 {
 	 *         double quotes.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-46991`",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-46991`",enabled = true, groups = { "regression" })
 	public void verifyMetadataAutoSuggest() throws InterruptedException {
 		String expectedFileName = "\"Scott Tholan\"";
 		String metaDataField = "EmailToAddresses";
@@ -474,7 +472,7 @@ public class BasicSearch_Regression1 {
 	 * @Description : Verify the basic search for Threaded Documents[RPMXCON-47288]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47288",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-47288",enabled = true, groups = { "regression" })
 	public void verifyThreadedDocs() throws InterruptedException {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -505,7 +503,7 @@ public class BasicSearch_Regression1 {
 	 *              format like \"##PF[0-9]{4}\" [RPMXCON-49637]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49637",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-49637",enabled = true, groups = { "regression" })
 	public void verifySearchResultForComment() throws InterruptedException {
 		String docComment = "PF1231";
 		String searchTerm = "\"##PF[0-9]{4}\"";
@@ -555,7 +553,7 @@ public class BasicSearch_Regression1 {
 	 *         Metadata RPMXCON-47712 Sprint 11
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47712",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-47712",enabled = true, groups = { "regression" })
 	public void basicSearchWithMedtaDataDetails() throws InterruptedException {
 
 		lp = new LoginPage(driver);
@@ -577,7 +575,7 @@ public class BasicSearch_Regression1 {
 	 *         properly with Wildcard Character like * RPMXCON-47278 Sprint 11
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47278",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-47278",enabled = true, groups = { "regression" })
 	public void basicSearchWithMedtaDataEildSearchDetails() throws InterruptedException {
 		String wildcaseString = "An*";
 		String wildcaseCompareString = "An";
@@ -604,7 +602,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57455",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-57455",enabled = true, groups = { "regression" })
 	public void verifyProximityWarning() throws ParseException, InterruptedException, IOException {
 		String searchTerm = "(( \"Hello U~C\"~5 OR \"U~C\" OR ( \"##U~C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*";
 		lp = new LoginPage(driver);
@@ -635,7 +633,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-46880",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-46880",enabled = true, groups = { "regression" })
 	public void VerifyAddedReviewerRemarkForAudioDocInBasicSearch() throws Exception {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -682,7 +680,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-61622",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-61622",enabled = true, groups = { "regression" })
 	public void verifyRightCurlyBracesInSearch() throws Exception {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -733,7 +731,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-61590",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-61590",enabled = true, groups = { "regression" })
 	public void verifyDoubleQuotesInSearch() throws Exception {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -784,7 +782,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-61589",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-61589",enabled = true, groups = { "regression" })
 	public void verifyLeftCurlyBracesInSearch() throws Exception {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -841,7 +839,7 @@ public class BasicSearch_Regression1 {
 		return commentsCF;
 	}
 
-	@Test(description ="RPMXCON-46882",enabled = true, dataProvider = "commentsCF", groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-46882",enabled = true, dataProvider = "commentsCF", groups = { "regression" })
 	public void verifyCommentsForAudioDoc(String username, String password, boolean coding_Form, boolean DefaultCF)
 			throws InterruptedException {
 		String docComment = Input.comments+ Utility.dynamicNameAppender();
