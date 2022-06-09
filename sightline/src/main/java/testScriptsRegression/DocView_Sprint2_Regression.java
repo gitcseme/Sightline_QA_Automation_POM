@@ -99,9 +99,6 @@ public class DocView_Sprint2_Regression {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 
-		// Login as a RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
 	/**
@@ -114,6 +111,8 @@ public class DocView_Sprint2_Regression {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON 52030");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 // Impersonating as Reviewer and searching with text input		
 		baseClass.impersonateRMUtoReviewer();
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -149,6 +148,8 @@ public class DocView_Sprint2_Regression {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON 50779");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
@@ -194,6 +195,8 @@ public class DocView_Sprint2_Regression {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON 51863");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
@@ -244,6 +247,8 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52232, RPMXCON-52230, RPMXCON-52229");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input --test-- completed");
 		sessionsearch.ViewInDocView();
@@ -293,6 +298,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51758");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		docViewRedact.manageBtn().Click();
 		actions.moveToElement(docViewRedact.manageAssignments().getWebElement());
 		actions.click().build().perform();
@@ -341,6 +348,8 @@ public class DocView_Sprint2_Regression {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-52220, RPMXCON-52194");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.duplicateDocId);
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
@@ -380,6 +389,8 @@ public class DocView_Sprint2_Regression {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52303, RPMXCON-52304");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicMetaDataSearch("DocFileType", null, "PDF OR TEXT OR IMAGE OR TIFF", null);
 		baseClass.stepInfo("Searched different files types using meta data");
 		sessionsearch.ViewInDocView();
@@ -404,6 +415,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id:RPMXCON 52231");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input for pdf doc completed");
 		sessionsearch.ViewInDocView();
@@ -465,6 +478,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52202");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.ViewInDocView();
@@ -497,6 +512,8 @@ public class DocView_Sprint2_Regression {
 		Robot robot = new Robot();
 		baseClass.stepInfo("Test case Id: RPMXCON-52192, RPMXCON-52201");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.duplicateDocId);
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
@@ -531,6 +548,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52228");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchBulletDocId);
 		baseClass.stepInfo("Search for document with bullet points completed");
 		sessionsearch.ViewInDocView();
@@ -579,6 +598,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52188");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.quickbatch();
@@ -614,6 +635,8 @@ public class DocView_Sprint2_Regression {
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
@@ -775,6 +798,8 @@ public class DocView_Sprint2_Regression {
 		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51350");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.ViewInDocView();
@@ -796,6 +821,8 @@ public class DocView_Sprint2_Regression {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51626 ");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.docIdRemarks);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -858,6 +885,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
@@ -887,6 +916,8 @@ public class DocView_Sprint2_Regression {
 // Verifying As RMU
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
@@ -933,6 +964,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51655");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.ViewInDocView();
@@ -981,6 +1014,8 @@ public class DocView_Sprint2_Regression {
 				"Verify on click of any of the thumbnail respective page should be displayed in doc view panel");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
@@ -1026,6 +1061,8 @@ public class DocView_Sprint2_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -1107,6 +1144,8 @@ public class DocView_Sprint2_Regression {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -1180,6 +1219,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -1266,6 +1307,8 @@ public class DocView_Sprint2_Regression {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
@@ -1314,6 +1357,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1403,6 +1448,8 @@ public class DocView_Sprint2_Regression {
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1496,7 +1543,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
@@ -1592,6 +1640,8 @@ public class DocView_Sprint2_Regression {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
 		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2: Keywords should be added  Documents searched with the terms should be saved");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1633,6 +1683,8 @@ public class DocView_Sprint2_Regression {
 				"Verify that when user in on Images tab and view document from analytics panel then should be on Images tab of the viewed document");
 		sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo(
 				"Step 2: Search for documents and go to doc view OR Go to doc view in context of an assignment");
@@ -1727,6 +1779,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1774,7 +1828,8 @@ public class DocView_Sprint2_Regression {
 		sessionSearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo(
 				"Step 2: Search for non-audio documents, drag the result to shopping card and select action as 'View in DocView'");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1901,7 +1956,8 @@ public class DocView_Sprint2_Regression {
 		SavedSearch savedSearch = new SavedSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo(
 				"Step 2: Search the documents with search term from basic/advance search and save the search result and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2005,7 +2061,8 @@ public class DocView_Sprint2_Regression {
 				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from basic search");
 		sessionSearch = new SessionSearch(driver);
 		docViewRedact = new DocViewRedactions(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocViews();
@@ -2108,6 +2165,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52302 Sprint 11");
 		baseClass.stepInfo(
 				"Verify that when text redaction added for different file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be shifted when visiting these documents");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// search and View in DocView
 		sessionSearch.basicContentSearch(Input.searchString8);
@@ -2164,10 +2223,10 @@ public class DocView_Sprint2_Regression {
 		softAssertion = new SoftAssert();
 
 		String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
-
-		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Test case Id:RPMXCON-50773");
-		baseClass.stepInfo("To verify RMU can view the Doc View page from Assignment.");
+		baseClass.stepInfo("To verify RMU can view the Doc View page from Assignment.");	
 
 		sessionsearch.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Search for text input completed");
@@ -2217,7 +2276,8 @@ public class DocView_Sprint2_Regression {
 
 		String assignmentName1 = "assgnment" + Utility.dynamicNameAppender();
 
-		UtilityLog.info("Logged in as RMU User: " + Input.rmu1userName);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Test case Id:RPMXCON-51662");
 		baseClass.stepInfo("Validate document count on DocView from ABM report");
 
@@ -2264,6 +2324,8 @@ public class DocView_Sprint2_Regression {
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from advance search");
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
@@ -2407,6 +2469,8 @@ public class DocView_Sprint2_Regression {
 		SavedSearch savedSearch = new SavedSearch(driver);
 		docView = new DocViewPage(driver);
 		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
@@ -2569,7 +2633,8 @@ public class DocView_Sprint2_Regression {
 		DocListPage docListPage = new DocListPage(driver);
 		docView = new DocViewPage(driver);
 		String saveName = "savedSearch0101" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo(
 				"Step 2: Search the documents with search term from basic search and go to doc list  Go to doc view from doc list");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2729,6 +2794,8 @@ public class DocView_Sprint2_Regression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 3: Go to Basic/Advanced Search   Search by term   Go to Doc View ");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2801,6 +2868,8 @@ public class DocView_Sprint2_Regression {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		SoftAssert softAssert = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -2871,6 +2940,8 @@ public class DocView_Sprint2_Regression {
 		docView = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
 		String dropDownValue = "DocFileExtension";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2:  Go to doc view in context of an assignment/outside of an assignment ");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.tiffSearchQuery, dropDownValue);
@@ -2972,6 +3043,8 @@ public class DocView_Sprint2_Regression {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -3078,6 +3151,8 @@ public class DocView_Sprint2_Regression {
 		sessionSearch = new SessionSearch(driver);
 		softAssertion = new SoftAssert();
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		sessionSearch.MetaDataSearchInAdvancedSearch("DocID", "ID00000006");
 		baseClass.stepInfo("'.xls' large file is searched in section search");
@@ -3141,6 +3216,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51568");
 		baseClass.stepInfo(
 				"Verify when user navigates to other document while viewing the search hits and comes back to same document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -3238,6 +3315,9 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50777 Assignments Sprint-12");
 		baseClass.stepInfo("To verify document view panel from doc view page");
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// Assignment group creation
 		agnmt.navigateToAssignmentsPage();
@@ -3306,7 +3386,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case id : RPMXCON-51936");
 		baseClass.stepInfo(
 				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList must always present fully in the visible area of the mini-DocList");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
@@ -3875,6 +3956,8 @@ public class DocView_Sprint2_Regression {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -3947,6 +4030,8 @@ public class DocView_Sprint2_Regression {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Search for the doc and go to DocView");
 		search.basicContentSearch(Input.ThreadQuery);
@@ -4000,6 +4085,8 @@ public class DocView_Sprint2_Regression {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 1: Search for the doc and go to DocView");
 		search.basicContentSearch(Input.searchString1);
@@ -4039,6 +4126,8 @@ public class DocView_Sprint2_Regression {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51995, RPMXCON-51996");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch("ID00000230");
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
@@ -4079,7 +4168,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51998, RPMXCON-51997");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
-		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 		baseClass.stepInfo("PA has been impersonated as RMU");
@@ -4124,6 +4213,8 @@ public class DocView_Sprint2_Regression {
 // search for document
 		baseClass.stepInfo("Test case Id: RPMXCON-52150");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Seach completed with document Id and viewed in DocView");
@@ -4168,6 +4259,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52189");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.audioSearch("Morning", Input.language);
 		baseClass.stepInfo("Search for audio docs completed");
 		sessionsearch.quickbatch();
@@ -4207,7 +4300,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo(
 				"Verify that when performing doc-to-doc navigation after navigating to document on entering the document number the same document in mini-DocList child window must present fully in the visible area of the mini-DocList child window");
 
-		sessionSearch.basicContentSearch(Input.searchText);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -4984,6 +5078,8 @@ public class DocView_Sprint2_Regression {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		docViewRedact = new DocViewRedactions(driver);
 		String codingForm = Input.codeFormName;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -5080,6 +5176,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
 		DocExplorerPage docexp = new DocExplorerPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		docexp.exportData();
 		loginPage.logout();
 	}
@@ -5096,6 +5194,8 @@ public class DocView_Sprint2_Regression {
 		docViewRedact = new DocViewRedactions(driver);
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
 		sessionsearch.basicContentSearch(Input.randomText);
@@ -5116,6 +5216,8 @@ public class DocView_Sprint2_Regression {
 		docViewRedact = new DocViewRedactions(driver);
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
 		sessionsearch.basicContentSearch(Input.randomText);
@@ -5136,6 +5238,8 @@ public class DocView_Sprint2_Regression {
 		docViewRedact = new DocViewRedactions(driver);
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
 		sessionsearch.basicContentSearch(Input.randomText);
@@ -5156,6 +5260,8 @@ public class DocView_Sprint2_Regression {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass.stepInfo("Test case Id: RPMXCON-51989");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.docIdRemarks);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5224,6 +5330,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51558");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5249,6 +5357,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51316");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchBulletDocId);
 		baseClass.stepInfo("Search for document completed");
 		sessionsearch.ViewInDocView();
@@ -5279,6 +5389,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50848");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5306,6 +5418,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51346");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5332,6 +5446,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51345");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5356,6 +5472,8 @@ public class DocView_Sprint2_Regression {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51344");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchText);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -5392,6 +5510,8 @@ public class DocView_Sprint2_Regression {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -5466,6 +5586,8 @@ public class DocView_Sprint2_Regression {
 
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssign();
@@ -5529,6 +5651,8 @@ public class DocView_Sprint2_Regression {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -5630,6 +5754,8 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo("Test case id : RPMXCON-51331");
 		baseClass.stepInfo("Verify text from review mode outside of an assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
@@ -5673,7 +5799,9 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case id : RPMXCON-51940");
 		baseClass.stepInfo(
 				"Verify that when user is selecting a document to view after scrolling down/up the mini doc list child window and in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList child window");
-
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
@@ -5936,6 +6064,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo(
 				"Verify when user enters document number to view when 'Loading..' displays in mini doc list, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList");
 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
@@ -6117,6 +6247,8 @@ public class DocView_Sprint2_Regression {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 
@@ -6238,6 +6370,8 @@ public class DocView_Sprint2_Regression {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 
@@ -6332,6 +6466,8 @@ public class DocView_Sprint2_Regression {
 				"Verify that on document navigation options when hits panel is open then enable/disable should be retained");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
@@ -6380,6 +6516,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52309 Sprint 10");
 		baseClass.stepInfo(
 				"Verify that when page highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) then highlighting should not be shifted when visiting these documents");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// search and View in DocView
 		sessionSearch.basicContentSearch(Input.searchString8);
@@ -6432,6 +6570,8 @@ public class DocView_Sprint2_Regression {
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51567");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchDocId);
 		baseClass.stepInfo("Search with text input is completed");
 		sessionsearch.ViewInDocView();
@@ -6484,6 +6624,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52301 Sprint 10");
 		baseClass.stepInfo(
 				"Verify that when rectangle redaction added for different file types (e.g. XLS, XLSX, CSV, etc...) then redaction should not be shifted when visiting these documents");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// search and View in DocView
 		sessionSearch.basicContentSearch(Input.searchString8);
@@ -6555,6 +6697,8 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52310 Sprint 10");
 		baseClass.stepInfo(
 				"Verify that when highlighting added for different file types (e.g. XLS, XLSX, CSV, etc...) on different pages then highlighting should not be shifted when visiting these documents");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// search and View in DocView
 		sessionSearch.basicContentSearch(Input.searchString8);
@@ -6621,7 +6765,7 @@ public class DocView_Sprint2_Regression {
 		
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		loginPage.logout();
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-52210 sprint 14");
 
 		baseClass.stepInfo(
@@ -6683,7 +6827,7 @@ public class DocView_Sprint2_Regression {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		loginPage.logout();
+		
 		baseClass.stepInfo("Test case Id: RPMXCON-52209 sprint 14");
 
 		baseClass.stepInfo(

@@ -74,8 +74,8 @@ public class DocView_ProductionFlow_Regression {
 
 		// Login as a RMU
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
 	/**
@@ -90,6 +90,8 @@ public class DocView_ProductionFlow_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52207");
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(folder, "Default Security Group");
 		tagsAndFolderPage.CreateTagwithClassification(tag, "Privileged");
@@ -134,6 +136,8 @@ public class DocView_ProductionFlow_Regression {
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage.CreateFolder(folder, "Default Security Group");
 		tagsAndFolderPage.CreateTagwithClassification(tag, "Privileged");
 // search for the doc with highlights and assign to folder
@@ -190,6 +194,8 @@ public class DocView_ProductionFlow_Regression {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
@@ -268,7 +274,6 @@ public class DocView_ProductionFlow_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 //			loginPage.logout();

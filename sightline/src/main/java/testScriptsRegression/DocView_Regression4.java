@@ -87,8 +87,6 @@ public class DocView_Regression4 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		keywordPage = new KeywordPage(driver);
-		// Login as a RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
@@ -112,7 +110,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 
@@ -213,6 +211,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -314,6 +313,7 @@ public class DocView_Regression4 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with metadata");
 
 		String codingForm = Input.codeFormName;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
@@ -360,7 +360,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51402");
 		baseClass.stepInfo(
 				"Verify assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when documents are assinged after searched with work product");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		String codingForm = Input.codeFormName;
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
@@ -409,6 +409,7 @@ public class DocView_Regression4 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with comment/Reviewer Remarks");
 
 		String codingForm = Input.codeFormName;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
@@ -459,7 +460,7 @@ public class DocView_Regression4 {
 				"Verify assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when assinged documents are searched with metadata");
 
 		String codingForm = Input.codeFormName;
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
@@ -504,7 +505,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
@@ -626,6 +627,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		baseClass.stepInfo("Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
 		sessionSearch.bulkAssign();
@@ -671,6 +673,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -742,7 +745,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51944");
 		baseClass.stepInfo(
 				"Verify when user enters document number to view when 'Loading..' displays in mini doc list child window, the entry for the same document must always present fully in the visible area of the mini-DocList child window");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
@@ -908,7 +911,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51941");
 		baseClass.stepInfo(
 				"Verify that when user is selecting a document to view after scrolling down/up the mini doc list and in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList (to the user)");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
@@ -1083,6 +1086,7 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// First audio Search
 		search.audioSearch(Input.audioString1, Input.language);
@@ -1126,6 +1130,7 @@ public class DocView_Regression4 {
 					"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
 
 			String codingForm = Input.codeFormName;
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			baseClass.stepInfo("Create new assignment");
 			assignmentsPage.createAssignment(assignmentName, codingForm);
 			sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
@@ -1213,7 +1218,7 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Add keywords
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
@@ -1262,6 +1267,7 @@ public class DocView_Regression4 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 
@@ -1365,6 +1371,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1446,7 +1453,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id:RPMXCON-50987 Sprint 11");
 		baseClass.stepInfo(
 				"To verify that once user complete the document, count should increased on the Edit Assignment->Manage Reviewers.");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Assignment Creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
@@ -1510,7 +1517,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-50782");
 		baseClass.stepInfo(
 				"To verify assignment progress bar should be displayed on doc view page as per the selected assigment");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// verify assignment ProgressBar on creating assignment
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
@@ -1659,7 +1666,7 @@ public class DocView_Regression4 {
 		SoftAssert softAssertion = new SoftAssert();
 		String keyword = "to" + Utility.dynamicNameAppender();
 		String color = "Gold";
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
 
 		keywordPage.addKeywordWithColor(keyword, color);
@@ -1742,7 +1749,6 @@ public class DocView_Regression4 {
 
 		// login as RMU
 		loginPage = new LoginPage(driver);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
@@ -1825,6 +1831,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52170");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		baseClass.stepInfo("Search with text input for docs completed");
@@ -1889,6 +1896,7 @@ public class DocView_Regression4 {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1936,6 +1944,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -1989,6 +1998,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
@@ -2027,7 +2037,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -2076,6 +2086,7 @@ public class DocView_Regression4 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2159,7 +2170,7 @@ public class DocView_Regression4 {
 		String panelText = "basis)" + Utility.dynamicNameAppender();
 
 		SoftAssert softAssertion = new SoftAssert();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Step1: Add Keyword to the project");
 		keywordPage.navigateToKeywordPage();
 		keywordPage.addKeyword(saveName, panelText, "Blue");
@@ -2257,7 +2268,7 @@ public class DocView_Regression4 {
 		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -2316,6 +2327,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2409,7 +2421,6 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-		loginPage.logout();
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2492,8 +2503,6 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-		loginPage.logout();
-
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.additionalDataProject);
@@ -2571,6 +2580,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2650,6 +2660,7 @@ public class DocView_Regression4 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2719,7 +2730,7 @@ public class DocView_Regression4 {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
 		sessionSearch.basicContentSearch(searchString);
@@ -2768,7 +2779,7 @@ public class DocView_Regression4 {
 		SoftAssert softAssertion = new SoftAssert();
 		String keyword = "to" + Utility.dynamicNameAppender();
 		String color = "Gold";
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo(" Prerequisites: Keyword groups should be created   with different Keywords");
 
 		keywordPage.addKeywordWithColor(keyword, color);
@@ -2815,6 +2826,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -2966,6 +2978,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id: RPMXCON-59583");
 		baseClass.stepInfo("Verify the context on navigating to doc view from RMU dashboard "
 				+ "after configuring the mini doc list should be assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// creating And Distributing the Assignment
 		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();
