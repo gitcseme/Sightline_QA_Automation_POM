@@ -106,7 +106,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, description ="RPMXCON-48732",dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	@Test(enabled = true, description ="RPMXCON-48732",dataProvider = "userDetails", groups = { "regression" })
 	public void verifyViewAllDocumentsInFamilyMember(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -168,7 +168,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true,description ="RPMXCON-50865", dataProvider = "userDetails", groups = { "regression" }, priority = 24)
+	@Test(enabled = true,description ="RPMXCON-50865", dataProvider = "userDetails", groups = { "regression" })
 	public void verifyViewInDocListConceptualSimilarTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -214,7 +214,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails",description ="RPMXCON-50866", groups = { "regression" }, priority = 25)
+	@Test(enabled = true, dataProvider = "userDetails",description ="RPMXCON-50866", groups = { "regression" })
 	public void verifySaveSearchViewInDocListConceptualTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -261,7 +261,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails",description ="RPMXCON-50877", groups = { "regression" }, priority = 26)
+	@Test(enabled = true, dataProvider = "userDetails",description ="RPMXCON-50877", groups = { "regression" })
 	public void verifySaveSearchViewInDocListNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -304,7 +304,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-50876", priority = 27)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-50876")
 	public void verifyViewInDocListNearDupeTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -318,7 +318,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+			"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -348,7 +348,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-51319", priority = 28)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-51319")
 	public void verifyViewAllDocumentsDisplayInConceptualTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -404,7 +404,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 29,description ="RPMXCON-51317")
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-51317")
 	public void verifyViewAllDocumentsDisplayInFamilyMemberTab(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -462,7 +462,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 *              'RPMXCON-50832' stabilization done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 30,description ="RPMXCON-50832")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50832")
 	public void verifyAfterImpersonatingConceptualTabNoDocuments() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -592,7 +592,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 *              done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 31,description ="RPMXCON-50831")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50831")
 	public void verifyProjectAdminConceptualTabNoDocuments() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -637,7 +637,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * 
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 32,description ="RPMXCON-50833")
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-50833")
 	public void verifyConceptualSimilarDocsDisplayedAsPerDocsSelectedFromMiniDocListPanel(String fullName,
 			String userName, String password) throws InterruptedException {
 		loginPage = new LoginPage(driver);
@@ -691,7 +691,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 33,description ="RPMXCON-50827")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50827")
 	public void verifyUserIsAbleToSeeAllConceptualDocsWenMainDocsIsSelected() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -758,7 +758,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 34,description ="RPMXCON-50825")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50825")
 	public void verifyRMUNearDupeTabWithMsgAsNoDocuments() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -808,7 +808,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 35,description ="RPMXCON-50817")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50817")
 	public void verifyAfterImpersonatingFamilyMemberTabNoDocuments() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -1021,7 +1021,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 *              'RPMXCON-50950' Require DA credentials
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 37,description ="RPMXCON-50950")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-50950")
 	public void verifyAfterImpersonatingThreadedDocumentsForSelectedDocsInMiniDocList() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -1145,7 +1145,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 *              'RPMXCON-48693'
 	 * @Stabilization - done
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 38,description ="RPMXCON-48693")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-48693")
 	public void verifyUserCanSelectDocumentFromAnalyticsPanelConceputuallySimilarTab()
 			throws ParseException, InterruptedException, IOException {
 		softAssertion = new SoftAssert();
@@ -1257,7 +1257,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @Description Verify that on thread map tab when the principal document is F1,
 	 *              the thread map should not present any emails. 'RPMXCON-51521'
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 39,description ="RPMXCON-51521")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-51521")
 	public void verifyThreadMapPrincipalDocIsF1NotPresentAnyEmails() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		docView = new DocViewPage(driver);
@@ -1295,7 +1295,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 40,description ="RPMXCON-51071")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-51071")
 	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51071");
@@ -1436,7 +1436,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 41,description ="RPMXCON-51070")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-51070")
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -1576,7 +1576,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 42,description ="RPMXCON-51072")
+	@Test(enabled = true, groups = { "regression" },description ="RPMXCON-51072")
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51072");

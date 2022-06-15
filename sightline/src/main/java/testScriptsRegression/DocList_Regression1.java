@@ -87,7 +87,7 @@ public class DocList_Regression1 {
 	 * working proper in Saved Search >> DocList screen. Description : Verify that
 	 * non audio Preview Document is working correctly.
 	 */
-	@Test(description ="RPMXCON-54566",groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-54566",groups = { "regression" })
 	public void previewDocNonAudioDocBySavedSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54566");
@@ -124,7 +124,7 @@ public class DocList_Regression1 {
 	 * current page only. Description : Verify user can get selected all documents
 	 * from present document only by selecing No option on Doc View.
 	 */
-	@Test(description ="RPMXCON-54086",groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-54086",groups = { "regression" })
 	public void verifyAllDocumentsSelectedForCurrentPageOnly() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54086");
@@ -169,7 +169,7 @@ public class DocList_Regression1 {
 	 * from all pages and select all children of the selected parents are displayed
 	 * in popup.
 	 */
-	@Test(description ="RPMXCON-54086",groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54086",groups = { "regression" })
 	public void verifyAllDocumentsAndAllChildrenOfParentsAreDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54086");
@@ -208,7 +208,7 @@ public class DocList_Regression1 {
 	 * multiple documents selected in doclist page is able to see same documents in
 	 * docview.
 	 */
-	@Test(description ="RPMXCON-53849",groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-53849",groups = { "regression" })
 	public void verifyMultipleDocsSelectedInDocListReflectedToDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53849");
@@ -249,7 +249,7 @@ public class DocList_Regression1 {
 	 * on Doc View page, from View Document action button Description : Verify
 	 * document selected in doclist page is able to see same document in docview.
 	 */
-	@Test(description ="RPMXCON-53846",groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-53846",groups = { "regression" })
 	public void verifySelectedDocInDocListReflectedToDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53846");
@@ -291,7 +291,7 @@ public class DocList_Regression1 {
 	 * button. Description : Verify user navigate to Saved search by clicking back
 	 * to source button on DocList page.
 	 */
-	@Test(description ="RPMXCON-53846",groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-53846",groups = { "regression" })
 	public void verifyUserNaviagtedFromDocListPageToSavedSearchPage() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53846");
@@ -324,7 +324,7 @@ public class DocList_Regression1 {
 	 * non audio Preview Document preview functionality is working correctly by
 	 * basic search.
 	 */
-	@Test(description ="RPMXCON-54564",groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-54564",groups = { "regression" })
 	public void verifyNonAudioDocumentPreviewFunctionalityByBasicSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54564");
@@ -372,7 +372,7 @@ public class DocList_Regression1 {
 	 * again has one more child then it should show properly. Description : Verify
 	 * that parent has child document and child again has another child document.
 	 */
-	@Test(description ="RPMXCON-54563",groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-54563",groups = { "regression" })
 	public void verifyParentDocContainsChildDocAndChildDocContainsChildDoc() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-54563");
@@ -413,7 +413,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-54270",groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-54270",groups = { "regression" })
 	public void verifyBulkFolderIsWorkingProperInDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -452,7 +452,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-54237",groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-54237",groups = { "regression" })
 	public void verifyAlreadyOpenedParentNotClosedByOpeningNewParent() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -484,7 +484,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-54223",groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-54223",groups = { "regression" })
 	public void verifyUserViewChildDocumentOnDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -517,7 +517,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53834",groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-53834",groups = { "regression" })
 	public void verifyUserNavigateToDocListFromSavedSearch() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -550,7 +550,7 @@ public class DocList_Regression1 {
 	 * search
 	 */
 
-	@Test(description ="RPMXCON-53768",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-53768",enabled = true, groups = { "regression" })
 	public void releaseAllDocsToSG() throws Exception {
 		String securityGroup = "DSecurityGroup" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -626,7 +626,7 @@ public class DocList_Regression1 {
 	 * and assign it to some assignment from DocList Page
 	 */
 
-	@Test(description ="RPMXCON-53749",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-53749",enabled = true, groups = { "regression" })
 	public void selectDocsFromDocListAndAssignToAssignment() throws Exception {
 		String assignment = "NewAssignment" + Utility.dynamicNameAppender();
 		String count = "10";
@@ -669,7 +669,7 @@ public class DocList_Regression1 {
 	 *              in Doc list page
 	 */
 
-	@Test(description ="RPMXCON-53739",groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-53739",groups = { "regression" })
 	public void removeTagsInDocsInDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -715,7 +715,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53788",groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-53788",groups = { "regression" })
 	public void verifyUserRemoveAllDocumentsFromTagInDocLlistPage() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -794,7 +794,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-54292",groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-54292",groups = { "regression" })
 	public void verifyExportActionInDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -831,7 +831,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53750",groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-53750",groups = { "regression" })
 	public void verifySelectDocsAndRemoveDocsFromAssignent() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -887,7 +887,7 @@ public class DocList_Regression1 {
 	 * @throws AWTException
 	 */
 
-	@Test(description ="RPMXCON-53676",groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-53676",groups = { "regression" })
 	public void verificationOfApplyFilterDateInDoclistPage() throws InterruptedException, AWTException {
 
 		baseClass = new BaseClass(driver);
@@ -919,7 +919,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53684",groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-53684",groups = { "regression" })
 	public void verificationOfEmailDomainNameInDocListPage() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -953,7 +953,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53708",groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-53708",groups = { "regression" })
 	public void verifyClearAllFunctionalityClearAppliedFilters() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -988,7 +988,7 @@ public class DocList_Regression1 {
 	 * 
 	 * @throws AWTException
 	 */
-	@Test(description ="RPMXCON-53747",groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-53747",groups = { "regression" })
 	public void verifyAssignSingleDocumentOnDocList() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 
@@ -1033,7 +1033,8 @@ public class DocList_Regression1 {
 		 * Description : Verify filtering doc list grid by EmailAlldomain
 		 * @throws AWTException 
 		 */	
-	 @Test(description ="RPMXCON-53683",groups={"regression"},priority = 24)
+
+	 @Test(description ="RPMXCON-53683",groups={"regression"})
 	 public void verificationOfEmailAllDomainInDocListPage() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);
 
@@ -1062,7 +1063,7 @@ public class DocList_Regression1 {
 		 * Description : Verify filtering doc List grid by Author Name
 		 * @throws AWTException 
 		 */	
-	 @Test(description ="RPMXCON-53680",groups={"regression"},priority = 25)
+	 @Test(description ="RPMXCON-53680",groups={"regression"})
 	 public void verificationOfEmailAuthorNameInDocListPage() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);
 
@@ -1092,7 +1093,7 @@ public class DocList_Regression1 {
 		 * Description : Verify user is able to remove all documents from Folder in Doc list page
 		 * @throws AWTException 
 		 */	
-	 @Test(description ="RPMXCON-53783",groups={"regression"},priority = 26)
+	 @Test(description ="RPMXCON-53783",groups={"regression"})
 	 public void verifyRemoveMultipleDocumentsFromFolderDocList() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);
 		String test="Folder"+Utility.dynamicNameAppender();
@@ -1143,7 +1144,7 @@ public class DocList_Regression1 {
 		 * Description :Verify unfold single document from Folder in Doc list page
 		 * @throws AWTException 
 		 */	
-	 @Test(description ="RPMXCON-53728",groups={"regression"},priority = 27)
+	 @Test(description ="RPMXCON-53728",groups={"regression"})
 	 public void verifyRemoveSingleDocumentFromFolderDocList() throws InterruptedException, AWTException {
 		 	baseClass=new BaseClass(driver);
 			String testData1 = Input.testData1;
@@ -1198,7 +1199,7 @@ public class DocList_Regression1 {
 		 * @throws AWTException 
 		 */		 
 	 
-	 @Test(description ="RPMXCON-53665",groups={"regression"},priority = 28)
+	 @Test(description ="RPMXCON-53665",groups={"regression"})
 	 public void verifyingTheCountOfDocFileSize() throws InterruptedException, AWTException {
 		 baseClass=new BaseClass(driver);
 		    String testData1 = Input.testData1;
@@ -1229,7 +1230,7 @@ public class DocList_Regression1 {
 		 * @throws AWTException 
 		 */		 
 	 
-	 @Test(description ="RPMXCON-54269",groups={"regression"},priority = 29)
+	 @Test(description ="RPMXCON-54269",groups={"regression"})
 	 public void verifyFilterWorkingProperlyOrNotInDocList() throws InterruptedException, AWTException {
 		 baseClass=new BaseClass(driver);
 		    String testData1 = Input.testData1;
@@ -1258,7 +1259,7 @@ public class DocList_Regression1 {
 		 * Testcase id : 53770 - release a single document to some security group from DocList page from Saved search.
 		 * Description : Verify PA release a single document to some security group from DocList page from Saved search.
 		 */
-		@Test(description ="RPMXCON-53770",groups = { "regression" }, priority = 30)
+		@Test(description ="RPMXCON-53770",groups = { "regression" })
 		public void verifyAdminReleaseSingleDocToSecurityGroup() throws InterruptedException {
 			baseClass = new BaseClass(driver);
 			baseClass.stepInfo("Test case Id: RPMXCON-53770");
@@ -1296,7 +1297,7 @@ public class DocList_Regression1 {
 			 * Testcase id : 53771 - Un-release a single document from security group from DocList page from Saved search.
 			 * Description : Verify PA Un-release a single document from security group from DocList page from Saved search.
 			 */
-			@Test(description ="RPMXCON-53771",groups = { "regression" }, priority = 31)
+			@Test(description ="RPMXCON-53771",groups = { "regression" })
 			public void verifyAdminUnReleaseSingleDocToSecurityGroup() throws InterruptedException {
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-53771");
@@ -1343,7 +1344,7 @@ public class DocList_Regression1 {
 			 * @throws AWTException 
 			 */		 
 		 
-		 @Test(description ="RPMXCON-53666",groups={"regression"},priority = 32)
+		 @Test(description ="RPMXCON-53666",groups={"regression"})
 		 public void verifySufflingOfColumnInDocListPage() throws InterruptedException, AWTException {
 		 	baseClass=new BaseClass(driver);
 		    String testData1 = Input.testData1;
@@ -1373,7 +1374,7 @@ public class DocList_Regression1 {
 			 * @throws AWTException 
 			 */		 
 		 
-		 @Test(description ="RPMXCON-53663",groups={"regression"},priority = 33)
+		 @Test(description ="RPMXCON-53663",groups={"regression"})
 		 public void verifyUserHideColumn() throws InterruptedException, AWTException {
 		 	baseClass=new BaseClass(driver);
 		    baseClass.stepInfo("Test case Id: RPMXCON-53663- DocList Sprint 04");
@@ -1401,7 +1402,7 @@ public class DocList_Regression1 {
              * @throws AWTException
              */        
         
-        @Test(description ="RPMXCON-54241",groups={"regression"},priority = 34)
+        @Test(description ="RPMXCON-54241",groups={"regression"})
          public void verifyUnreleaseSingleDocFromSecurityGroupOnDocList() throws InterruptedException, AWTException {
              baseClass=new BaseClass(driver);
               
@@ -1437,7 +1438,7 @@ public class DocList_Regression1 {
   		 * @throws AWTException 
   		 */		 
   	 
-  	 @Test(description ="RPMXCON-54529",groups={"regression"},priority = 35)
+  	 @Test(description ="RPMXCON-54529",groups={"regression"})
   	 public void verfyingTheAscendingAndDescendingOrderInColumn() throws InterruptedException, AWTException {
   		 baseClass=new BaseClass(driver);
   		    String testData1 = Input.testData1;
@@ -1507,7 +1508,7 @@ public class DocList_Regression1 {
  	 * @Description To To verify that parent child hierarchical presentation in DocList is shown properly
  	 * @throws InterruptedException
  	 */
- 	@Test(description ="RPMXCON-54456",groups={"regression"},priority = 36)
+ 	@Test(description ="RPMXCON-54456",groups={"regression"})
  	public void verifychildHierarchicalPresentationDocList() throws InterruptedException {
  		
  		String folderName="Folder"+Utility.dynamicNameAppender();
@@ -1549,7 +1550,7 @@ public class DocList_Regression1 {
 	 * @Description:To To Verify that on selecting 'Tally' action from DocList no javascript pop up gets displayed
 	 * @throws InterruptedException
 	 */
-  	 @Test	(description ="RPMXCON-54460",groups={"regression"},priority = 37)
+  	 @Test	(description ="RPMXCON-54460",groups={"regression"})
   	 public void verifyDocListTallyActionNoPopUP() throws InterruptedException {
 			baseClass = new BaseClass(driver);
 			String testData1 = Input.testData1;
@@ -1579,7 +1580,7 @@ public class DocList_Regression1 {
   	 * @Description:To Verify 3 play counter readouts are displayed on preview document from doc list
   	 * @throws InterruptedException
   	 */
-  	@Test(description ="RPMXCON-54285",alwaysRun = true,groups={"regression"},priority = 38)
+  	@Test(description ="RPMXCON-54285",alwaysRun = true,groups={"regression"})
   	public void verifyPlayCounterReadOutsDisplayed() throws InterruptedException {
   		baseClass = new BaseClass(driver);
  		baseClass.stepInfo("Test case Id: RPMXCON-54285");

@@ -113,7 +113,7 @@ public class DocView_Redactions_Regression {
 	 * selected on DocView Screen
 	 * Stabilization done
 	 */
-	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-52214",enabled = true, alwaysRun = true, groups = { "regression" } )
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -221,7 +221,7 @@ public class DocView_Redactions_Regression {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-	@Test(description ="RPMXCON-49372",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-49372",enabled = true, alwaysRun = true, groups = { "regression" } )
 	public void verifyKeyBoardDelActionDisabledForThisRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -311,7 +311,7 @@ public class DocView_Redactions_Regression {
 	 * 'Delete' key from keyboard should be disabled keyboard action
 	 * 
 	 */
-	@Test(description ="RPMXCON-49371",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-49371",enabled = true, alwaysRun = true, groups = { "regression" } )
 	public void verifyKeyBoardDelActionDisabledForRectangleRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -394,7 +394,7 @@ public class DocView_Redactions_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-46958",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-46958",enabled = true, groups = { "regression" })
 	public void verifyEditAndApplyRedactionTag() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46958");
@@ -433,7 +433,7 @@ public class DocView_Redactions_Regression {
 	 *           redaction, last saved redaction tag should be selected
 	 *           automatically from redaction pop up
 	 */
-	@Test(description ="RPMXCON-49988",groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-49988",groups = { "regression" } )
 	public void verifyRedactionTagInPopUpDropDown() throws Exception {
 		BaseClass baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -510,7 +510,7 @@ public class DocView_Redactions_Regression {
 	 *              should be redacted successfully with changed redaction tag from
 	 *              what is presented in pop up.
 	 */
-	 @Test(description ="RPMXCON-47029",groups = { "regression" }, priority = 6)
+	 @Test(description ="RPMXCON-47029",groups = { "regression" })
 	public void verifyMultiplePageRedactionsIncludeWithDiffRedTag() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47029 DocView Sprint 06");
@@ -567,7 +567,7 @@ public class DocView_Redactions_Regression {
 		 *              up, all pages other than pages which are excluded should be
 		 *              redacted successfully.
 		 */
-		@Test(description ="RPMXCON-47028",groups = { "regression" }, priority = 7)
+		@Test(description ="RPMXCON-47028",groups = { "regression" })
 		public void verifyMultiplePageRedactionsByExcludePages() throws InterruptedException {
 			baseClass = new BaseClass(driver);
 			baseClass.stepInfo("Test case Id: RPMXCON-47028 DocView Sprint 06");

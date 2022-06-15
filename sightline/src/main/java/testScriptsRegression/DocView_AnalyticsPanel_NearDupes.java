@@ -65,7 +65,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              Original and NearDupe windows of near dupe comparison window
 	 *              RPMXCON-51707 stabilization done
 	 */
-	@Test(description="RPMXCON-51707",priority = 1, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51707" , enabled = true, groups = { "regression" })
 	public void verifySearchTextboxIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51707");
@@ -181,7 +181,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify whether the DocID is getting displayed in the near
 	 *              dupe comparison window. RPMXCON-51710 stabilization done
 	 */
-	@Test(description="RPMXCON-51710",priority = 2, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51710", enabled = true, groups = { "regression" })
 	public void verifyDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 
@@ -322,7 +322,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify that 'Apply Coding to this Near Dupe' is not be
 	 *              visible for Project Admin user. RPMXCON-51715 stabilization done
 	 */
-	@Test(description="RPMXCON-51715",priority = 3, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51715", enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeNotvisibleForProjectAdminUser()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51715");
@@ -369,7 +369,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @Description : To verify 'View in doc list' action when no document in
 	 *              Threaded Map panel. RPMXCON-50868 stabilization done
 	 */
-	@Test(description="RPMXCON-50868",priority = 4, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-50868" , enabled = true, groups = { "regression" })
 	public void verifyViewInDoclistWhenNoDocumentSelected() {
 
 		String searchString = Input.searchString1;
@@ -424,7 +424,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              from analytics panel parent window 'RPMXCON-51712' stabilization
 	 *              done
 	 */
-	@Test(description="RPMXCON-51712",priority = 5, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51712", enabled = true, groups = { "regression" })
 	public void verifyDocCompletedAndIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		String revDocument = Input.nearDupeDocId01;
@@ -4605,7 +4605,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              stabilization done
 	 * 
 	 */
-	@Test(description="RPMXCON-51711",priority = 33, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51711", enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51711");
@@ -4725,7 +4725,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * 
 	 *              stabilization done
 	 */
-	@Test(description="RPMXCON-51708",priority = 34, enabled = true, groups = { "regression" })
+	@Test(description="RPMXCON-51708", enabled = true, groups = { "regression" })
 	public void verifyNearDupeDocIsSaved() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51708");
 		baseClass.stepInfo(

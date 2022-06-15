@@ -43,7 +43,6 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	DocViewRedactions docViewRedact;
 	SavedSearch savedSearch;
 
-	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, IOException, ParseException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -101,7 +100,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 *               document contains email attachment. 'RPMXCON-51509' Sprint-13
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" })
 	public void verifyThreadMapEmailsInDocViewEmailAttachment()
 			throws ParseException, InterruptedException, IOException {
 
@@ -153,7 +152,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsEmailAttachment()
 			throws ParseException, InterruptedException, IOException {
 
@@ -204,7 +203,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsNonThreadedEmailAttachment() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51511");
@@ -254,7 +253,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsParentThreadedEmail() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51512");
@@ -303,7 +302,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	*
 	*
 	*/
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsDoesnotPresentEmailsdocs() throws ParseException, InterruptedException, IOException {
 
 	baseClass.stepInfo("Test case Id: RPMXCON-51513");
