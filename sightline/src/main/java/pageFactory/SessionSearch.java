@@ -10745,7 +10745,7 @@ public class SessionSearch {
 
 		spinningTileList = base.getAvailableListofElements(gettTileSpinningList());
 		for (String a : spinningTileList) {
-			if (a.isBlank()) {
+			if (a.trim().equals("")) {
 				base.stepInfo(" Yes - one or more related tiles are still spinning ");
 				break;
 			} else {
@@ -10841,7 +10841,7 @@ public class SessionSearch {
 
 		spinningTileList = base.getAvailableListofElements(gettTileSpinningList(searchName, Index));
 		for (String a : spinningTileList) {
-			if (a.isBlank()) {
+			if (a.trim().equals("")) {
 				base.stepInfo(" Yes - one or more related tiles are still spinning ");
 				break;
 			} else {

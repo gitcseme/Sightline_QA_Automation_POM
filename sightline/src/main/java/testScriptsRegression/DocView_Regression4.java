@@ -87,8 +87,6 @@ public class DocView_Regression4 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		keywordPage = new KeywordPage(driver);
-		// Login as a RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
@@ -99,7 +97,7 @@ public class DocView_Regression4 {
 	 * any previously saved persistent search hits in the assignment should be
 	 * displayed in the assignment Stabilization done
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-51763",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
 	public void verifyPersistentHitsAfterReassignDocuments() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -112,7 +110,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 
@@ -198,7 +196,7 @@ public class DocView_Regression4 {
 	 * in the assignment Stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-51762",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearch() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -213,6 +211,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -302,7 +301,7 @@ public class DocView_Regression4 {
 	 * stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-51399",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
 	public void verifyHighlightedKeywordsForDocsSearchWithMetadata() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -314,6 +313,7 @@ public class DocView_Regression4 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with metadata");
 
 		String codingForm = Input.codeFormName;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
@@ -349,7 +349,7 @@ public class DocView_Regression4 {
 	 * STABILIZATION DONE
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-51402",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
 	public void verifyHighlightedKeywordsForDocsSearchWithWorkProduct() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -360,7 +360,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51402");
 		baseClass.stepInfo(
 				"Verify assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when documents are assinged after searched with work product");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		String codingForm = Input.codeFormName;
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
@@ -397,7 +397,7 @@ public class DocView_Regression4 {
 	 * searched with comment/Reviewer Remarks
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-51400",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyHighlightedKeywordsForDocSearchWithCommentsRemarks() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -409,6 +409,7 @@ public class DocView_Regression4 {
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with comment/Reviewer Remarks");
 
 		String codingForm = Input.codeFormName;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
@@ -447,7 +448,7 @@ public class DocView_Regression4 {
 	 * assignment when assinged documents are searched with metadata
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-51401",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyHighlightedKeywordsForDocSearchWithMetadata() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -459,7 +460,7 @@ public class DocView_Regression4 {
 				"Verify assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when assinged documents are searched with metadata");
 
 		String codingForm = Input.codeFormName;
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Create new assignment");
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
@@ -489,7 +490,7 @@ public class DocView_Regression4 {
 	 * from edit assignment stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-51771",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyPersistentHitsAfterCompleteDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -504,7 +505,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
@@ -611,7 +612,7 @@ public class DocView_Regression4 {
 	 * Stabilization done
 	 */
 
-	 @Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority =
+	 @Test(description ="RPMXCON-51408",enabled = true, alwaysRun = true, groups = { "regression" }, priority =
 	 8)
 	public void verifyHighlightedKeywordsForDocSearchWithWorkProduct() throws Exception {
 
@@ -626,6 +627,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		baseClass.stepInfo("Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignmentsPage.createAssignment(assignmentName, codingForm);
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.MiniDocId, null);
 		sessionSearch.bulkAssign();
@@ -656,7 +658,7 @@ public class DocView_Regression4 {
 	 * coding form child window stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-51853",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyPersistentHitsAfterCompletingDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -671,6 +673,7 @@ public class DocView_Regression4 {
 		String codingForm = Input.codeFormName;
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -730,7 +733,7 @@ public class DocView_Regression4 {
 	 * mini-DocList stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-51944",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsFilteredUsingDocId()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -742,7 +745,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51944");
 		baseClass.stepInfo(
 				"Verify when user enters document number to view when 'Loading..' displays in mini doc list child window, the entry for the same document must always present fully in the visible area of the mini-DocList child window");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 		driver.waitForPageToBeReady();
@@ -898,7 +901,7 @@ public class DocView_Regression4 {
 	 * stabilization - done
 	 */
 
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-51941",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void verifyDocInMiniDocListAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -908,7 +911,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-51941");
 		baseClass.stepInfo(
 				"Verify that when user is selecting a document to view after scrolling down/up the mini doc list and in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList (to the user)");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocViews();
 
@@ -1070,7 +1073,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-51613",enabled = true, groups = { "regression" }, priority = 12)
 	public void verifyMultipleTermsSubmittedAndHandled() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51613  sprint 12");
@@ -1083,6 +1086,7 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// First audio Search
 		search.audioSearch(Input.audioString1, Input.language);
@@ -1111,7 +1115,7 @@ public class DocView_Regression4 {
 		 * Search > doc list to doc view
 		 * stabilization done
 		 */
-		@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
+		@Test(description ="RPMXCON-51405",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
 		public void verifyHighlightedKeywordsForDocsAreDisplayedSearchWithAdvancedSearch() throws Exception {
 			baseClass = new BaseClass(driver);
 			SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1126,6 +1130,7 @@ public class DocView_Regression4 {
 					"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Advanced Search > doc list to doc view");
 
 			String codingForm = Input.codeFormName;
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			baseClass.stepInfo("Create new assignment");
 			assignmentsPage.createAssignment(assignmentName, codingForm);
 			sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
@@ -1194,7 +1199,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-51396",enabled = true, groups = { "regression" }, priority = 14)
 	public void verifySearchTermHighlightedInEyeIconFromAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51396");
@@ -1213,7 +1218,7 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Add keywords
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keywordPage.AddKeyword(hitTerms, hitTerms);
@@ -1246,7 +1251,7 @@ public class DocView_Regression4 {
 	 * assignment and documents are distributed again Stabilization done
 	 */
 
-	@Test(enabled = true, alwaysRun = false, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-51773",enabled = true, alwaysRun = false, groups = { "regression" }, priority = 15)
 	public void verifySavedPersistedHitsDisplayedDocDistributedAgainInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1262,6 +1267,7 @@ public class DocView_Regression4 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 
@@ -1348,7 +1354,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-51397",enabled = true, groups = { "regression" }, priority = 16)
 	public void verifyCreateAssignSearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51397");
@@ -1365,6 +1371,7 @@ public class DocView_Regression4 {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1431,7 +1438,7 @@ public class DocView_Regression4 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-50987",enabled = true, groups = { "regression" }, priority = 17)
 	public void VerifyCompleteDocCountViaRevTab() throws Exception {
 
 		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
@@ -1446,7 +1453,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id:RPMXCON-50987 Sprint 11");
 		baseClass.stepInfo(
 				"To verify that once user complete the document, count should increased on the Edit Assignment->Manage Reviewers.");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Assignment Creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
@@ -1496,7 +1503,7 @@ public class DocView_Regression4 {
 	 * view page as per the selected assignment
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-50782",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void verifyAssignmentProgressBarDisplayedOnDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
@@ -1510,7 +1517,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case id : RPMXCON-50782");
 		baseClass.stepInfo(
 				"To verify assignment progress bar should be displayed on doc view page as per the selected assigment");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// verify assignment ProgressBar on creating assignment
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
@@ -1647,7 +1654,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-51981",enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyKeywordHighlightingWorkingForSearchablePDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51981");
@@ -1659,7 +1666,7 @@ public class DocView_Regression4 {
 		SoftAssert softAssertion = new SoftAssert();
 		String keyword = "to" + Utility.dynamicNameAppender();
 		String color = "Gold";
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Step 1: Prerequisites: Keyword groups should be created   with different Keywords");
 
 		keywordPage.addKeywordWithColor(keyword, color);
@@ -1732,7 +1739,7 @@ public class DocView_Regression4 {
 	 * @Stabilization - done
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-51028",enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1742,7 +1749,6 @@ public class DocView_Regression4 {
 
 		// login as RMU
 		loginPage = new LoginPage(driver);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("Logged in as User: " + Input.sa1userName);
 		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
@@ -1825,6 +1831,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52170");
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		baseClass.stepInfo("Search with text input for docs completed");
@@ -1879,7 +1886,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-51441",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void verifyArrowsRedirdctedToDocViewFromBasicSearch() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -1889,6 +1896,7 @@ public class DocView_Regression4 {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -1928,7 +1936,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-51625",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyWithOutAddingRemarkShouldNotSave() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51625");
@@ -1936,6 +1944,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -1989,6 +1998,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
@@ -2017,7 +2027,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description ="RPMXCON-51355",enabled = true, groups = { "regression" }, priority = 25)
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsAanalytics() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51355");
@@ -2027,7 +2037,7 @@ public class DocView_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -2065,7 +2075,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-51354",enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyPersistentHitReviewerRemarksRedactiosHighlightsDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51354");
@@ -2076,6 +2086,7 @@ public class DocView_Regression4 {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		SoftAssert softAssertion = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2146,7 +2157,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description ="RPMXCON-51553",enabled = true, groups = { "regression" }, priority = 27)
 	public void verifyKWGroupAndSavedSeacrhOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51553");
@@ -2159,7 +2170,7 @@ public class DocView_Regression4 {
 		String panelText = "basis)" + Utility.dynamicNameAppender();
 
 		SoftAssert softAssertion = new SoftAssert();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Step1: Add Keyword to the project");
 		keywordPage.navigateToKeywordPage();
 		keywordPage.addKeyword(saveName, panelText, "Blue");
@@ -2241,7 +2252,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-51775",enabled = true, groups = { "regression" }, priority = 28)
 	public void verifyPersistentHitDisplayInUncompleteDocEditAssign() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51775");
@@ -2257,7 +2268,7 @@ public class DocView_Regression4 {
 		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
@@ -2304,7 +2315,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-50923",enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyAfterImpersonationNavigatePageSavingFromDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50923");
@@ -2316,6 +2327,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2395,7 +2407,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-51271",enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyAfterImpersonationProducedDocsByDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51271");
@@ -2409,7 +2421,6 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-		loginPage.logout();
 
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2474,7 +2485,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-51270",enabled = true, groups = { "regression" }, priority = 31)
 	public void verifyAfterImpersonationProducedDocsInImageTabDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51270");
@@ -2492,8 +2503,6 @@ public class DocView_Regression4 {
 		// Login as RMU
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
-		loginPage.logout();
-
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.selectproject(Input.additionalDataProject);
@@ -2557,7 +2566,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-51272",enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyAssignmentProgressBarCompleteDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51272");
@@ -2571,6 +2580,7 @@ public class DocView_Regression4 {
 
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -2642,7 +2652,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-50820",enabled = true, groups = { "regression" }, priority = 33)
 	public void veriyUserCanSeeTheFlodersSecurityGroup() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50820");
@@ -2650,6 +2660,7 @@ public class DocView_Regression4 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.selectproject(Input.additionalDataProject);
 
 		// Login as RMU
@@ -2719,7 +2730,7 @@ public class DocView_Regression4 {
 		String searchString = Input.searchString1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
 		sessionSearch.basicContentSearch(searchString);
@@ -2756,7 +2767,7 @@ public class DocView_Regression4 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-51501",enabled = true, groups = { "regression" }, priority = 35)
 	public void verifyDateRemovalInPersistentSearchPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51501");
@@ -2768,7 +2779,7 @@ public class DocView_Regression4 {
 		SoftAssert softAssertion = new SoftAssert();
 		String keyword = "to" + Utility.dynamicNameAppender();
 		String color = "Gold";
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo(" Prerequisites: Keyword groups should be created   with different Keywords");
 
 		keywordPage.addKeywordWithColor(keyword, color);
@@ -2801,7 +2812,7 @@ public class DocView_Regression4 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-51279",enabled = true, groups = { "regression" }, priority = 36)
 	public void verifyAssignmentProgressBarCompleteDocsCodeSameAs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51279");
@@ -2815,6 +2826,7 @@ public class DocView_Regression4 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// Login as RMU
 		baseClass.stepInfo(
@@ -2966,6 +2978,7 @@ public class DocView_Regression4 {
 		baseClass.stepInfo("Test case Id: RPMXCON-59583");
 		baseClass.stepInfo("Verify the context on navigating to doc view from RMU dashboard "
 				+ "after configuring the mini doc list should be assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		// creating And Distributing the Assignment
 		String assignmentName = "TestAssignmentNo" + Utility.dynamicNameAppender();

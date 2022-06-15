@@ -303,7 +303,7 @@ public class SavedSearchRegression_New_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization - done
 	 */
-	@Test(description ="RPMXCON-54967",enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-57380",enabled = true, dataProvider = "SavedSearchwithRMUandREVwithSave", groups = { "regression" }, priority = 1)
 	public void metaDataCombinationSharedSGExecution(String username, String password, String fullName, String saveFlow)
 			throws InterruptedException, ParseException {
 

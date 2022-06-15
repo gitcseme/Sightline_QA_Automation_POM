@@ -98,7 +98,7 @@ public class BatchRedaction_Production {
 	 *          search for zip code ,phonenumber
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "reserveWords", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-53377,RPMXCON-53376,RPMXCON-53374,RPMXCON-53373", enabled = true, dataProvider = "reserveWords", groups = { "regression" }, priority = 1)
 	public void verifyBatchRedact(String data, String testCaseId) throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 
@@ -149,7 +149,7 @@ public class BatchRedaction_Production {
 	 *              search is with regular expression [Pattern] (RPMXCON-53349)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-53348", enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyBatchRedactWithRegExp() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		String data = "\"##77\"";
@@ -208,7 +208,7 @@ public class BatchRedaction_Production {
 	 *              \"simple\" email - 99% coverage[RPMXCON-53375]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-53375", enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyBrWithPatternEmail() throws Exception {
 		String searchName = "SearchNames" + Utility.dynamicNameAppender();
 		String data = "\"##[a-z0-9._%+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}\"";
@@ -246,7 +246,7 @@ public class BatchRedaction_Production {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-53464", enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 4)
 	public void createExport(String username, String password) throws InterruptedException {
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String exportname = "E" + Utility.dynamicNameAppender();
@@ -310,7 +310,7 @@ public class BatchRedaction_Production {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-53463", enabled = true, dataProvider = "Users", groups = { "regression" }, priority = 5)
 	public void generateProductionWithMultipleRedactionTags(String username, String password)
 			throws InterruptedException {
 		String tagname = "FirstTag" + Utility.dynamicNameAppender();
@@ -369,7 +369,7 @@ public class BatchRedaction_Production {
 	 *              redacted documents.
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-53462", enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyModifiedPlaceholdertext() throws InterruptedException {
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String testData1 = Input.testData1;
@@ -462,7 +462,7 @@ public class BatchRedaction_Production {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-53475", enabled = true, groups = { "regression" }, priority = 7)
 	public void generateProductionWithMultipleRedactionTags() throws InterruptedException {
 
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -510,7 +510,7 @@ public class BatchRedaction_Production {
 	 *         Metadata should not be displayed on DAT(RPMXCON-53460 )
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-53460", enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 8)
 	public void verifyAnnotationLayer(String username, String password) throws InterruptedException {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
@@ -566,7 +566,7 @@ public class BatchRedaction_Production {
 	 *         specified(RPMXCON-53458 )
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-53458", enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 9)
 	public void verifyRedactionStyle(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -617,7 +617,7 @@ public class BatchRedaction_Production {
 	 *         redactions burned on the TIFFs(RPMXCON-53457 )
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true,groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-53457", enabled = true,groups = { "regression" }, priority = 10)
 	public void verifyRedactionText() throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -671,7 +671,7 @@ public class BatchRedaction_Production {
 	 * @throws InterruptedException
 	 */
 
-	@Test(enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-53459", enabled = true,dataProvider = "Users", groups = { "regression" }, priority = 11)
 	public void verifyRedactionText2(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -739,7 +739,7 @@ public class BatchRedaction_Production {
 	 *              redacted content search data documents (RPMXCON-61152)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-61152", enabled = true, groups = { "regression" }, priority = 12)
 	public void checkWhetherCanCompleteBrAndDownloadPreReport() throws InterruptedException {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -797,7 +797,7 @@ public class BatchRedaction_Production {
 	 *              (RPMXCON-61151)
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-61151", enabled = true, groups = { "regression" }, priority = 13)
 	public void checkWhetherCanCompleteBrUponTextRedaction() throws Exception {
 		String searchName = "SearchName" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);

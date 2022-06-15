@@ -84,9 +84,6 @@ public class DocView_Regression5 {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
 		keywordPage = new KeywordPage(driver);
-		// Login as a RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
 	/**
@@ -106,6 +103,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Test case id : RPMXCON-51444");
 		baseClass.stepInfo(
 				"Verify that > and < arrows should work when the hit in the document is due to Keyword Group Highlights when redirected to doc view in context of an assignment");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.docIdKeyWordTest);
 		sessionsearch.bulkAssign();
@@ -158,7 +157,6 @@ public class DocView_Regression5 {
 		loginPage = new LoginPage(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docView = new DocViewPage(driver);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -211,7 +209,8 @@ public class DocView_Regression5 {
 				"Verify assigned keywords should be highlighted and should be displayed on click of the eye icon when redirected to doc view from assignment when documents are assinged after searching with reviewer remarks/comments");
 
 		String codingForm = Input.codeFormName;
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Creating Prerequisite");
 		sessionSearch.basicMetaDataSearch("SourceDocID", null, Input.sourceDocId1, null);
 		sessionSearch.viewInDocView();
@@ -266,7 +265,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Test case id : RPMXCON-51942");
 		baseClass.stepInfo(
 				"Verify when user is selecting a document to view after scrolling down the mini doc list child window when 'Loading..' displays in DocView, the entry for the same document must always present fully in the visible area of the mini-DocList child window");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocView();
 
@@ -528,6 +528,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify that when user is selecting a document to view after scrolling down/up the mini doc list and in DocView, the entry for the same document in mini-DocList must always present fully in the visible area of the mini-DocList (to the user)");
 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocView();
 
@@ -708,7 +710,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Test case id : RPMXCON-51404");
 		baseClass.stepInfo(
 				"Verify all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from Saved Search > doc list");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
 		savedSearch.savedSearchToDocList(searchName);
@@ -768,7 +771,8 @@ public class DocView_Regression5 {
 		docViewRedact = new DocViewRedactions(driver);
 		docView = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Test case id : RPMXCON-51398");
 		baseClass.stepInfo(
 				"Verify highlighted keywords should be displayed on click of the eye icon when redirected to doc view from session search when documents searched with work product");
@@ -813,7 +817,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Test case id : RPMXCON-51934");
 		baseClass.stepInfo(
 				"Verify that when completing the documents same as last the entry for the navigated document in mini-DocList child window must always present fully in the visible area of mini doc list child window");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.searchText);
 		sessionSearch.ViewInDocView();
 
@@ -974,6 +979,8 @@ public class DocView_Regression5 {
 		loginPage = new LoginPage(driver);
 
 		baseClass.stepInfo("Test case id : RPMXCON-51332");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Verify text from review mode in context of an assignment");
 
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -1034,8 +1041,6 @@ public class DocView_Regression5 {
 		baseClass.stepInfo(
 				"Verify after impersonation all hits of the document should be highlighted without clicking the eye icon when user redirects to doc view from doc list");
 
-		//
-		loginPage.logout();
 		// Login as a RMU
 		loginPage.loginToSightLine(username, password);
 		
@@ -1100,6 +1105,8 @@ public class DocView_Regression5 {
 				"Verify that when user in on Images tab and view document from analytics panel child window then should be on Images tab of the viewed document");
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.ViewInDocView();
 
@@ -1176,6 +1183,8 @@ public class DocView_Regression5 {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51044");
 		baseClass.stepInfo("Verify after impersonation user can maximize the middle panel of the doc view");
@@ -1261,6 +1270,8 @@ public class DocView_Regression5 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 
 		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51043");
 		baseClass.stepInfo("Doc view redirecting from BasicSearch and go to docview");
@@ -1309,6 +1320,8 @@ public class DocView_Regression5 {
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		String folderName = "AnalyticalPanel" + Utility.dynamicNameAppender();
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -1354,6 +1367,8 @@ public class DocView_Regression5 {
 		MiniDocListPage miniDocList = new MiniDocListPage(driver);
 		SoftAssert softAssert = new SoftAssert();
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
@@ -1426,9 +1441,6 @@ public class DocView_Regression5 {
 		String pptDocID = "ID00001354";
 		String messageDocId = "ID00000503";
 
-		
-		loginPage.logout();
-
 		// Login As User
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("Logged in as : "+fullname);
@@ -1457,6 +1469,8 @@ public class DocView_Regression5 {
 		DocViewPage docViewPage = new DocViewPage(driver);
 		String codingForm = Input.codingFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
 		baseClass.stepInfo("Step 2: Assignment should be created with  'Show Default Tab' toggle as OFF");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -1542,6 +1556,8 @@ public class DocView_Regression5 {
 		baseClass.stepInfo("Create new assignment");
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		sessionSearch.basicContentSearch(Input.randomText);
 		sessionSearch.bulkAssign();
 		assignmentspage.assignmentCreation(assignmentName, Input.codingFormName);
@@ -1580,7 +1596,9 @@ public class DocView_Regression5 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String filedText = "Stamp" + Utility.dynamicNameAppender();
 		String StampText = "Newcolor" + Utility.dynamicNameAppender();
-
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		baseClass.stepInfo("Search the non audio documents and Create new assignment");
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(searchName);
@@ -1675,7 +1693,6 @@ public class DocView_Regression5 {
 		String AllSourceData = "Automation_AllSources";
 
 		// login as PA
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Login as PA");
 		dataset.navigateToDataSetsPage();

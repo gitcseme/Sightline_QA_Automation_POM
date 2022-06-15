@@ -70,9 +70,6 @@ public class DocView_Regression1 {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 	}
 
@@ -104,6 +101,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
@@ -160,6 +160,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -200,6 +203,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -242,6 +248,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -290,6 +299,9 @@ public class DocView_Regression1 {
 		redactTag.AddRedaction(redactname, "RMU");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -361,6 +373,9 @@ public class DocView_Regression1 {
 				"#### Verify that when adding redaction in audio document blank row should not be displayed. ####");
 
 		SessionSearch sessionsearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Audio search for audio document in advanced search");
 		sessionsearch.audioSearch("Morning", Input.language);
@@ -396,6 +411,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that when applied redaction tag is unassigned then blank row should be displayed in edit redaction pop up on audio doc view. ####");
 		RedactionPage redactTag = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to redactions page");
 		redactTag.navigateToRedactionsPageURL();
@@ -480,6 +498,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching for docs and bulk assigning
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -536,6 +557,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocView();
@@ -573,6 +597,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that the undocked windows should be docked to parent window when the user refreshes the DocView page. ####");
 		manageAssignment = new ManageAssignment(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.stepInfo("Navigate to assignments page");
 		manageAssignment.navigateToAssignmentsPageURL();
@@ -611,6 +638,9 @@ public class DocView_Regression1 {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Navigate to session search");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		sessionSearch.navigateToSessionSearchPageURL();
 
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -652,6 +682,9 @@ public class DocView_Regression1 {
 		// Pre-requisites
 		// create tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Tags And Folder Page");
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
@@ -775,6 +808,9 @@ public class DocView_Regression1 {
 		// Pre-requisites
 		// create tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Tags And Folder Page");
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
@@ -892,6 +928,9 @@ public class DocView_Regression1 {
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
 
 		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Assignments Page");
 		assgnPage.navigateToAssignmentsPage();
@@ -980,6 +1019,9 @@ public class DocView_Regression1 {
 		String folderName = Input.randomText + Utility.dynamicNameAppender();
 		String assignmentName = Input.randomText + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Tags And Folder Page");
 		tagPage.navigateToTagsAndFolderPage();
@@ -1090,6 +1132,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify when navigated to doc view with two different ad-hoc results with term/phrase are highlighted which are exists in the document ####");
 		SessionSearch search = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Session Search Page URL");
 		search.navigateToSessionSearchPageURL();
@@ -1169,6 +1214,9 @@ public class DocView_Regression1 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Redactions Page URL");
 		redactionpage.navigateToRedactionsPageURL();
@@ -1293,6 +1341,9 @@ public class DocView_Regression1 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Redactions Page URL");
 		redactionpage.navigateToRedactionsPageURL();
@@ -1414,6 +1465,9 @@ public class DocView_Regression1 {
 					"#### Verify that Producing a PDF with Page Redaction burning properly and not eliminate any characters in the produced document. ####");
 
 			RedactionPage redactionpage = new RedactionPage(driver);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+			Reporter.log("Logged in as User: " + Input.rmu1password);
 			redactionpage.navigateToRedactionsPageURL();
 			redactionpage.manageRedactionTagsPage(Redactiontag1);
 
@@ -1484,6 +1538,9 @@ public class DocView_Regression1 {
 			String suffixID = "_P" + Utility.dynamicNameAppender();
 			baseClass.stepInfo(
 					"#### Verify that Producing a PDF with Block Redaction burning properly and not eliminate any characters in the produced document. ####");
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+			Reporter.log("Logged in as User: " + Input.rmu1password);
 
 			RedactionPage redactionpage = new RedactionPage(driver);
 			redactionpage.navigateToRedactionsPageURL();
@@ -1564,6 +1621,9 @@ public class DocView_Regression1 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Redactions Page URL");
 		redactionpage.navigateToRedactionsPageURL();
@@ -1686,6 +1746,9 @@ public class DocView_Regression1 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		RedactionPage redactionpage = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Redactions Page URL");
 		redactionpage.navigateToRedactionsPageURL();
@@ -1802,6 +1865,9 @@ public class DocView_Regression1 {
 				"#### Verify that same user with two different tabs in the same browser, and confirm that able to delete reviewer remark to the same records successfully. ####");
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch search = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Session Search Page URL");
 		search.navigateToSessionSearchPageURL();
@@ -1907,6 +1973,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(docId);
@@ -1941,6 +2010,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that when user is viewing a document in DocView, the entry for the same document in mini-DocList child window  ####");
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -1969,6 +2041,9 @@ public class DocView_Regression1 {
 				"#### Verify that when performing doc-to-doc navigation the entry for the same document in mini-DocList child window  ####");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -1996,6 +2071,9 @@ public class DocView_Regression1 {
 				"#### Verify persistent Hit panel of DocView should present only content terms, not operators when navigating from basic search  ####");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -2027,6 +2105,9 @@ public class DocView_Regression1 {
 				"####Verify persistent Hit panel of DocView should present only content terms, not metadata terms when navigating from basic search ####");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCN, null);
@@ -2055,6 +2136,9 @@ public class DocView_Regression1 {
 				"#### Verify persistent Hit panel of DocView should present only content terms, not Comment/Remark when navigating from basic search ####");
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -2096,7 +2180,10 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("RPMXCON-51906 docview-sprint:08");
 		baseClass.stepInfo(
 				"#### Verify that when user in on Images tab and navigates to next document then should be on Images tab for next document ####");
-		SessionSearch sessionSearch = new SessionSearch(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -2143,6 +2230,9 @@ public class DocView_Regression1 {
 				"#### Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList. ####");
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
@@ -2182,6 +2272,9 @@ public class DocView_Regression1 {
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search");
 		session.basicContentSearch(Input.searchString1);
@@ -2217,6 +2310,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		MiniDocListPage miniDoc = new MiniDocListPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 
 		baseClass.stepInfo("Basic Content Search");
@@ -2274,6 +2370,9 @@ public class DocView_Regression1 {
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 
 		baseClass.stepInfo("Basic Content Search");
@@ -2326,6 +2425,9 @@ public class DocView_Regression1 {
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search completed");
 		session.basicContentSearch(Input.searchString1);
@@ -2357,6 +2459,9 @@ public class DocView_Regression1 {
 				"#### Verify that when completing the documents the entry for the navigated document in mini-DocList child window ####");
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 
 		baseClass.stepInfo("Basic content search");
@@ -2409,6 +2514,9 @@ public class DocView_Regression1 {
 		String DocId = "ID00001155";
 		String ExpectedText = "Native file variant of the document being displayed";
 		baseClass.stepInfo("Basic meta data search");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(DocId);
 
@@ -2475,6 +2583,9 @@ public class DocView_Regression1 {
 
 		String ExpectedText = "PDF file variant of the document being displayed";
 		String Doc = "ID00001036";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Doc);
 
@@ -2540,6 +2651,9 @@ public class DocView_Regression1 {
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 
 		baseClass.stepInfo("Basic Content Search");
@@ -2604,6 +2718,9 @@ public class DocView_Regression1 {
 
 		AssignmentsPage assgnPage = new AssignmentsPage(driver);
 		manageAssignment = new ManageAssignment(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Assignments Page");
 		assgnPage.navigateToAssignmentsPage();
@@ -2682,6 +2799,9 @@ public class DocView_Regression1 {
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search");
 		session.basicContentSearch(Input.searchString1);
@@ -2714,7 +2834,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo(
 				"####  Verify that persistent hits should be highligted when documents are assigned to new assignment from Saved Search. ####");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic Search");
 		search.basicContentSearch(Input.searchString1);
 
@@ -2781,7 +2903,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo(
 				"####  Verify that persistent hits should be highligted when documents are assigned to new assignment from Advanced Search ####");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Advance metadata Search");
 		search.metaDataSearchInAdvancedSearch(Input.metaDataName, Input.metaDataCN);
 
@@ -2840,6 +2964,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo(
 				"#### Verify that persistent hits should be highligted when documents are assigned to new assignment from Basic Search. ####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Search");
 		search.basicContentSearch(Input.searchString1);
@@ -2901,6 +3028,9 @@ public class DocView_Regression1 {
 				"#### Verify that all relevant hits should be displayed on persistent hits panel when navigated to doc view with ad hoc search and keywords highlighting ####");
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -2958,6 +3088,9 @@ public class DocView_Regression1 {
 		SavedSearch savesearch = new SavedSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		DocListPage doclistpage = new DocListPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		assignmentPage.createAssignment(AssignName, Input.codingFormName);
 		baseClass.stepInfo("New Assignment created");
 
@@ -3016,6 +3149,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo(
 				"#### Verify user can download the redacted document when 'Allow reviewers to print docs to PDF' is on at an assigment level. ####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Search");
 		search.basicContentSearch(Input.testData1);
@@ -3089,6 +3225,10 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
@@ -3139,6 +3279,9 @@ public class DocView_Regression1 {
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Advanced search with operator");
 		session.advancedContentSearchWithOperator(Input.searchString1, operator, Input.testData1);
@@ -3170,6 +3313,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3206,6 +3352,9 @@ public class DocView_Regression1 {
 
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(Input.translationDocId);
@@ -3243,6 +3392,9 @@ public class DocView_Regression1 {
 				"#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the assignment ####");
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -3321,8 +3473,10 @@ public class DocView_Regression1 {
 		final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 
-		baseClass.stepInfo("#### To verify that remarks can add/edit/delete if document is marked as Completed. ####");
-
+		baseClass.stepInfo("#### To verify that remarks can add/edit/delete if document is marked as Completed. ####");		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic Search");
 		search.basicContentSearch(Input.searchString2);
 
@@ -3403,6 +3557,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.searchText);
@@ -3463,6 +3620,9 @@ public class DocView_Regression1 {
 
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3497,6 +3657,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docview = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(Input.testTenthDocId);
@@ -3535,6 +3698,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Basic meta data search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		sessionSearch.basicContentSearch(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
@@ -3600,7 +3766,9 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo(
 				"#### To verify that Remark can be update and deleted by other reviewers in same security group. ####");
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic Search");
 		search.basicContentSearch(Input.testData1);
 
@@ -3672,6 +3840,9 @@ public class DocView_Regression1 {
 
 		agnmt = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
@@ -3712,6 +3883,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(DOcId);
@@ -3763,6 +3937,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		// searching document for assignmnet creation
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Content Search");
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -3830,6 +4007,9 @@ public class DocView_Regression1 {
 		SessionSearch session = new SessionSearch(driver);
 
 		DocListPage docList = new DocListPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		session.basicContentSearch(Input.searchString1);
 		baseClass.stepInfo("Basic Basic content search completed");
@@ -3860,6 +4040,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -3886,6 +4069,9 @@ public class DocView_Regression1 {
 
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Doc Explorer Page");
 		docExplorer.navigateToDocExplorerPage();
@@ -3925,6 +4111,10 @@ public class DocView_Regression1 {
 
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -3971,6 +4161,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search by using operator");
 		session.basicContentSearchUsingOperator(Input.searchString1, "OR", "\"" + Input.thankyouText + "\"");
@@ -4035,6 +4228,10 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -4088,6 +4285,9 @@ public class DocView_Regression1 {
 		agnmt = new AssignmentsPage(driver);
 
 		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate To Assignments Page");
 		assgnPage.navigateToAssignmentsPage();
@@ -4174,6 +4374,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -4252,6 +4455,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// searching document for assignmnet creation
 		baseClass.stepInfo("bascic contant search");
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -4301,6 +4507,9 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		// searching document for assignmnet creation
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("bascic contant search");
 		sessionSearch.basicContentSearch(Input.searchString2);
 
@@ -4353,6 +4562,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.testData1);
@@ -4391,6 +4603,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -4423,6 +4638,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(docId);
@@ -4451,6 +4669,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -4491,6 +4712,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -4553,6 +4777,9 @@ public class DocView_Regression1 {
 		ManageAssignment mngAssign = new ManageAssignment(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		// searching document for assignmnet creation
 		baseClass.stepInfo("basic contant search");
@@ -4653,6 +4880,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search for 1st document ");
 		session.basicContentSearch(docId1);
@@ -4691,6 +4921,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search for 1st document ");
 		session.basicContentSearch(docId1);
@@ -4736,7 +4969,9 @@ public class DocView_Regression1 {
 		String P_DocToolTipMessage = "PDF file variant of the document being displayed";
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Step 1: Search for the docs ");
 		session.basicContentSearch(Input.searchString1);
 
@@ -4784,6 +5019,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -4871,6 +5109,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -4979,6 +5220,9 @@ public class DocView_Regression1 {
 		KeywordPage keywordPage = new KeywordPage(driver);
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		// docViewRedact.selectsecuritygroup(Input.securityGroup);
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -5102,6 +5346,9 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -5222,6 +5469,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testTenthDocId);
 
@@ -5283,8 +5533,11 @@ public class DocView_Regression1 {
 				"#### Verify on click of the 'eye' icon, ALL highlighted terms - including those that are set from Manage > Keywords configured within the assignment ####");
 
 		KeywordPage keywordPage = new KeywordPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Navigate to keyword page");
+		
 		keywordPage.navigateToKeywordPage();
 
 		baseClass.stepInfo("Add keyword");
@@ -5362,6 +5615,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic  content search ");
 		session.basicContentSearch(Input.searchString1);
@@ -5395,6 +5651,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testData1);
@@ -5471,6 +5730,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.searchString1);
@@ -5552,7 +5814,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testData1);
 
@@ -5634,6 +5898,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testData1);
@@ -5709,6 +5976,9 @@ public class DocView_Regression1 {
 		String foldername = "folder" + Utility.dynamicNameAppender();
 		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
@@ -5784,6 +6054,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testData1);
@@ -5864,6 +6137,9 @@ public class DocView_Regression1 {
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testData1);
@@ -5939,6 +6215,9 @@ public class DocView_Regression1 {
 		DocViewMetaDataPage docViewMetaData = new DocViewMetaDataPage(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
 		DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testTenthDocId);
@@ -6007,6 +6286,9 @@ public class DocView_Regression1 {
 		DocViewMetaDataPage docViewMetaData = new DocViewMetaDataPage(driver);
 		ReusableDocViewPage reusableDocView = new ReusableDocViewPage(driver);
 		DocViewMetaDataPage docVIewMetaData = new DocViewMetaDataPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.testTenthDocId);
@@ -6066,6 +6348,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("####To verify that after closing child window, it should redirect to Parent Window. ####");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicContentSearch(Input.testData1);
 
@@ -6125,6 +6410,9 @@ public class DocView_Regression1 {
 		String ExpectedText = "Text file variant of the document being displayed";
 		baseClass.stepInfo("Basic meta data search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		sessionSearch.basicContentSearch(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
@@ -6189,6 +6477,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-50957");
 		baseClass.stepInfo("To verify that user can redirect doc view page from Doc List->'Back to Source");
 		baseClass.stepInfo("Search the documents and Navigate to Docview Page");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.basicContentSearch(Input.testTenthDocId);
 		sessionSearch.viewInDocView();
@@ -6238,6 +6529,9 @@ public class DocView_Regression1 {
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.selectproject(Input.projectName01);
 
@@ -6352,6 +6646,9 @@ public class DocView_Regression1 {
 				"#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group ####");
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -6415,6 +6712,9 @@ public class DocView_Regression1 {
 				"#### Verify user can see the keywords highlighted in doc view based on the assigned keyword group and color to the security group ####");
 
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -6469,6 +6769,9 @@ public class DocView_Regression1 {
 		SessionSearch session = new SessionSearch(driver);
 
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.stepInfo(" Basic content search");
 		session.basicContentSearch(Input.searchString1);
@@ -6540,6 +6843,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("#### Verify that search term highlighting and keyword highlighting on Searchable PDF generated from the Stitched TIFF. ####");
 	
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -6591,6 +6897,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages > 500, then set NearNativeReady = 0 and error document should be displayed on doc view. ####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.selectproject(Input.highVolumeProject);
 	
@@ -6621,6 +6930,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("####Verify that if # of pages is blank, THEN If file size is < 10MB, then nearNativeReady = 1 and document should be displayed successfully ####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.selectproject(Input.additionalDataProject);
 	
@@ -6657,6 +6969,9 @@ public class DocView_Regression1 {
 
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("searching document for assignmnet creation");
 		sessionSearch.basicContentSearch(Input.translationDocId);
@@ -6690,6 +7005,9 @@ public class DocView_Regression1 {
 
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search");
 		session.basicContentSearch(pdfDocId);
@@ -6727,6 +7045,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("#### Verify Keyword highlighting is working for Searchable PDF ####");
 	
 		KeywordPage keywordPage = new KeywordPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Navigate to keyword page");
 		keywordPage.navigateToKeywordPage();
@@ -6784,6 +7105,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("#### To verify when user clicks document pagination option from document view panel of doc view page");
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.stepInfo("Basic Content Search");
 		session.basicContentSearch(Input.searchString1);
@@ -6821,6 +7145,9 @@ public class DocView_Regression1 {
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search");
 		session.basicContentSearch(Input.searchString1);
@@ -6851,6 +7178,9 @@ public class DocView_Regression1 {
 	
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		baseClass.stepInfo("Basic Basic content search");
 		session.basicMetaDataSearch(Input.sourceDocIdSearch, null, lessThan500PagesDocId, null);
@@ -6878,6 +7208,9 @@ public class DocView_Regression1 {
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
 		docView = new DocViewPage(driver);
 		baseClass.stepInfo("#### Verify that if the file size is blank and # of pages is blank, and actual doc pages < 500 then set NearNativeReady = 1 and document should be displayed on doc view ####");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
 		baseClass.selectproject(Input.additionalDataProject);
 	
@@ -6909,7 +7242,9 @@ public class DocView_Regression1 {
 		String redactiontag1 = Input.randomText + Utility.dynamicNameAppender();
 		
 		RedactionPage redactionpage = new RedactionPage(driver);
-
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Navigate To Redactions Page URL");
 		redactionpage.navigateToRedactionsPageURL();
 
@@ -6964,6 +7299,9 @@ public class DocView_Regression1 {
 
 		
 //		searching document for assignment creation
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(assignName, Input.codingFormName);
@@ -7000,6 +7338,9 @@ public class DocView_Regression1 {
 		String assignName = "Assignment" + Utility.dynamicNameAppender();
 		String filedText = "stampName" + Utility.dynamicNameAppender();
 		String comment = "commentValue" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 //		searching document for assignment creation
 		sessionSearch.basicContentSearch(Input.searchString2);
@@ -7041,6 +7382,9 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON- 51920");
 		baseClass.stepInfo("Verify that when user in on Images tab and completes the document from coding form "
 				+ "child window then should be on Images tab for next navigated document");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 
 		// search to Assignment creation
 		sessionSearch.basicContentSearch(Input.searchText);
@@ -7088,7 +7432,7 @@ public class DocView_Regression1 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String assignmentName = "assignment" + Utility.dynamicNameAppender();
 		// Login As RMU
-		loginPage.logout();
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 		baseClass.stepInfo("Test case Id: RPMXCON- 51921");
@@ -7154,9 +7498,6 @@ public class DocView_Regression1 {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String fieldText = Input.randomText + Utility.dynamicNameAppender();
 		String comment = Input.randomText + Utility.dynamicNameAppender();
-		
-		loginPage.logout();
-		
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
@@ -7225,13 +7566,16 @@ public class DocView_Regression1 {
 	 * @Description :To Verify that when viewing the document with Hidden Properties has "External Link" as well as another hidden property, warning message should not be displayed
 	 *@throws InterruptedException
 	 */ 
-	@Test(enabled = true, groups = { "regression" }, priority = 120)
+	@Test(description ="RPMXCON-51964",enabled = true, groups = { "regression" }, priority = 120)
 	public void verifyNowarningMessageForExternalLinkHiddenProp() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String ExternalLinkDocId=Input.externalLinkDocId;
 		String projectName=Input.additionalDataProject;
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.selectproject(projectName);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51964");

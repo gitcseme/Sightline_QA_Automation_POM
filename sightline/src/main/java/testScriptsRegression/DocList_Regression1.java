@@ -656,7 +656,7 @@ public class DocList_Regression1 {
 
 //		verify the assigned dcoument from doclist
 		assignmentsPage.getAssignmentText(assignment).ScrollTo();
-		softAssertion.assertEquals(assignmentsPage.getAssignmentText(assignment).Displayed(), true);
+		softAssertion.assertEquals((boolean)assignmentsPage.getAssignmentText(assignment).Displayed(), true);
 		String text = assignmentsPage.getAssignmentText(assignment).getText().trim();
 		baseClass.stepInfo("Assign document are displyed in assignmnet :" + text);
 		driver.waitForPageToBeReady();
@@ -1033,6 +1033,7 @@ public class DocList_Regression1 {
 		 * Description : Verify filtering doc list grid by EmailAlldomain
 		 * @throws AWTException 
 		 */	
+
 	 @Test(description ="RPMXCON-53683",groups={"regression"})
 	 public void verificationOfEmailAllDomainInDocListPage() throws InterruptedException, AWTException {
 		baseClass=new BaseClass(driver);

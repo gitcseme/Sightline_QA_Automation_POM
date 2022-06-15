@@ -7762,7 +7762,7 @@ public class SavedSearch {
 			throws InterruptedException {
 
 		String docCount = docResultCOuntCHeck(savedSearchName);
-		if (docCount.isBlank()) {
+		if (docCount.trim().equals("")) {
 			if (getSearchStatus(savedSearchName, "INPROGRESS").isElementAvailable(1)) {
 				base.passedStep("DocCount is : " + docCount + " and Status is in Inprogress");
 			} else {

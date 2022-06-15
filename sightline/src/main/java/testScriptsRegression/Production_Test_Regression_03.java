@@ -1774,7 +1774,7 @@ public class Production_Test_Regression_03 {
 	for(String text : arrOfStr)
 	{
 		System.out.println("value : "+ text);
-	if (text.isBlank()||text.isEmpty()) {
+	if (text.trim().equals("")||text.isEmpty()) {
 	base.passedStep("meta data field is blank");
 	} else {
 	base.stepInfo("this field is bates number");

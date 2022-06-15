@@ -74,8 +74,8 @@ public class DocView_ProductionFlow_Regression {
 
 		// Login as a RMU
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
 	/**
@@ -84,12 +84,14 @@ public class DocView_ProductionFlow_Regression {
 	 * DocView- production flow
 	 */
 
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-52207",groups = { "regression" }, priority = 1)
 	public void verifyProductionForHighlitedDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52207");
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(folder, "Default Security Group");
 		tagsAndFolderPage.CreateTagwithClassification(tag, "Privileged");
@@ -125,7 +127,7 @@ public class DocView_ProductionFlow_Regression {
 	 * DocView- production flow
 	 */
 	
-	@Test(enabled=false, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-52208",enabled=false, groups = { "regression" }, priority = 2)
 	public void verifyProductionForTiffDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52208");
@@ -134,6 +136,8 @@ public class DocView_ProductionFlow_Regression {
 		folder = "Highlited_" + Utility.dynamicNameAppender();
 		tag = "Tag" + Utility.dynamicNameAppender();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage.CreateFolder(folder, "Default Security Group");
 		tagsAndFolderPage.CreateTagwithClassification(tag, "Privileged");
 // search for the doc with highlights and assign to folder
@@ -169,7 +173,7 @@ public class DocView_ProductionFlow_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-51269",enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyProducedDocumentClickingDropDownSelection() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51269");
@@ -190,6 +194,8 @@ public class DocView_ProductionFlow_Regression {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
@@ -268,7 +274,6 @@ public class DocView_ProductionFlow_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
 		}
 		try {
 //			loginPage.logout();
