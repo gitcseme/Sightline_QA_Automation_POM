@@ -1208,6 +1208,34 @@ public class IngestionPage_Indium {
 	public Element getCloseBtn() {
 		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-close']");
 	}
+	//Added by Arun
+	
+	public Element getAddProjectBtn(){ 
+		 return driver.FindElementById("btnAdd"); 
+		 }
+	 
+	 public Element getHelpContentIcon(String content) {
+		 return driver.FindElementByCssSelector("a[data-original-title*='"+content+"']");
+	 }
+	 
+	 public Element helpContentPopup() {
+		 return driver.FindElementByXPath("//div[@role='tooltip']");
+	 }
+	 public Element getHelpContent() {
+		 return driver.FindElementByXPath("//div[@role='tooltip']//div[@class='popover-content']");
+	 }
+	 
+	 public Element getKickOffAnalyticsCheckbox() {
+		 return driver.FindElementByXPath("//input[@id='chkAutoAnalytics']//..//i");
+	 }
+	 
+	 public Element getIncrementalAnalyticsCheckbox() {
+		 return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']//..//i");
+	 }
+	 public Element getOptionStatus() {
+		 return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']");
+	 }
+	
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -10793,5 +10821,131 @@ public class IngestionPage_Indium {
 			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(map1);
 			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(map2);
 			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(map3);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 20/06/2022 Modified by: NA Modified Date: NA
+		 * @description: Navigate to project page
+		 *               
+		 */
+		public void navigateToManageProjectPage() {
+			try {
+				driver.getWebDriver().get(Input.url + "Project/Project");
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while navigating to project page" + e.getMessage());
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 20/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the help content message in project creation Page
+		 * @param content
+		 *               
+		 */
+		public void verifyHelpContentOnProjectCreationPage(String content,String expectedMessage) {
+			
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddProjectBtn().Enabled();
+				}
+			}), Input.wait30);
+			getAddProjectBtn().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getHelpContentIcon(content).Visible();
+				}
+			}), Input.wait30);
+			getHelpContentIcon(content).waitAndClick(5);
+			
+			if(helpContentPopup().isElementAvailable(10)) {
+				String contentMessage = getHelpContent().getText();
+				
+				if(contentMessage.equalsIgnoreCase(expectedMessage)) {
+					base.passedStep("Help content displayed correctly for '"+content+"'");
+				}
+				else {
+					base.failedStep("Help content message not displayed correctly");
+				}
+				
+			}
+			else {
+				base.failedStep("help content popup message not displayed");
+			}
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 20/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the options available in project creation Page
+		 * @param content
+		 *               
+		 */
+		public void verifyoptionsAvailability(String content1,String content2) {
+			
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddProjectBtn().Enabled();
+				}
+			}), Input.wait30);
+			getAddProjectBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getKickOffAnalyticsCheckbox().Visible();
+				}
+			}), Input.wait30);
+			// verify options availablity and default enabled status
+			if(getHelpContentIcon(content1).isElementAvailable(5) &&
+					getHelpContentIcon(content2).isElementAvailable(5)) {
+				base.passedStep("'"+content1+"' and '"+content2+"' options available in project settings");
+				getKickOffAnalyticsCheckbox().waitAndClick(5);
+				base.waitTime(2);
+				String status = getOptionStatus().GetAttribute("disabled");
+				System.out.println(status);
+				if(status.equalsIgnoreCase("true")) {
+					base.passedStep("Both options enabled by default");
+				}
+				else {
+					base.failedStep("Options not enabled by default");
+				}
+			}
+			else {
+				base.failedStep("Expected options not available in project settings");
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 20/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the option of 'generate searchable pdf' in tiff section
+		 *               
+		 */
+		public void verifyGeneratePdfOptionInTiffSection() {
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddanewIngestionButton().Enabled();
+				}
+			}), Input.wait30);
+			getAddanewIngestionButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTIFFCheckBox().Visible();
+				}
+			}), Input.wait30);
+			getTIFFCheckBox().waitAndClick(5);
+			
+			if(getTIFFSearchablePDFCheckBox().isElementAvailable(10)) {
+				base.passedStep("Generate searchable pdf option available in Tiff Section");
+			}
+			else {
+				base.failedStep("Generate searchable pdf option not available in tiff section");
+			}
 		}
 }

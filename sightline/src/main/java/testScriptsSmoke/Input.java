@@ -350,6 +350,10 @@ public class Input {
 	public static String emailAddress2;
 	public static String emailDatFile;
 	public static String nonSearchablePdfLoadFile;
+	public static String kickOffAnalytics;
+	public static String incrementalAnalytics;
+	public static String kickOffHelpContent;
+	public static String incrementalHelpContent;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1108,6 +1112,11 @@ public class Input {
 		emailAddress2 = testData.getEmailAddress2();
 		emailDatFile = testData.getEmailDatFile();
 		nonSearchablePdfLoadFile = testData.getNonSearchablePdfLoadFile();
+		kickOffAnalytics = testData.getKickOffAnalytics();
+		incrementalAnalytics =testData.getIncrementalAnalytics();
+		kickOffHelpContent = testData.getKickOffHelpContent();
+		incrementalHelpContent = testData.getIncrementalHelpContent();
+		
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
