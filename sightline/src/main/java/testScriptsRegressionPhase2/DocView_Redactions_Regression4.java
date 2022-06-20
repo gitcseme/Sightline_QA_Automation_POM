@@ -109,7 +109,7 @@ public class DocView_Redactions_Regression4 {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		docViewRedact.clickingRedactionIcon();
 		DocViewPage docView = new DocViewPage(driver);
-		docView.selectDocumentFromMiniDocList(1);
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
 		if (docViewRedact.thisPageRedaction().isDisplayed()) {
 			baseClass.passedStep("Redaction panel is retained after doc navigation");
 		} else {
