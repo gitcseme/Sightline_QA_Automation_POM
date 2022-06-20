@@ -3483,6 +3483,12 @@ public class DocViewPage {
 	public Element getFileType() {
 		return driver.FindElementByXPath("//*[contains(@id,'txtspanfileType')]");
 	}
+	
+	// Added by Krishna
+	
+	public Element get_textHighlightedColorOnRedactSubMenu() {
+		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']/a");
+	}
 
 	public DocViewPage(Driver driver) {
 
