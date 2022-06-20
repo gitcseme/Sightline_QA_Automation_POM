@@ -1295,6 +1295,7 @@ public class BaseClass {
 
 	public void waitForElementCollection(ElementCollection elementCollection) {
 		try {
+			Thread.sleep(1000);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return elementCollection.Displayed() && elementCollection.Visible();

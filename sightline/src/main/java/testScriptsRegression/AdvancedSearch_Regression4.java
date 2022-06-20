@@ -45,10 +45,7 @@ public class AdvancedSearch_Regression4 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
-
-	}
+		}
 
 	/**
 	 * @Author Jeevitha R

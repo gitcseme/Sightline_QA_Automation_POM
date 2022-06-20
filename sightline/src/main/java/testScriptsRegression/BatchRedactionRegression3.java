@@ -68,8 +68,10 @@ public class BatchRedactionRegression3 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input in = new Input();
 		in.loadEnvConfig();
+
 
 	}
 

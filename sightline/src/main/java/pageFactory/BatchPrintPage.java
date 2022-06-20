@@ -2209,7 +2209,7 @@ public class BatchPrintPage {
 	 * @param Download     : download link
 	 */
 	public void fillingExportFormatPage(String exportFile, String sortBy, boolean onePdfForAll, int refreshCount) {
-		base.waitForElement(getSelectExportFileName());
+		//base.waitForElement(getSelectExportFileName());
 		getSelectExportFileName().selectFromDropdown().selectByVisibleText(exportFile);
 
 		base.waitForElement(getSelectExportFileSortBy());

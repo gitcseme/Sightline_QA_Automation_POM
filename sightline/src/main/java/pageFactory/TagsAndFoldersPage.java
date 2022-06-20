@@ -2361,6 +2361,7 @@ public class TagsAndFoldersPage {
 				System.out.println("Folder name updated successfully : " + reFolderGroupName);
 			} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
 				driver.waitForPageToBeReady();
+				base.CloseSuccessMsgpopup();
 				base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 			}
 
@@ -2656,6 +2657,7 @@ public class TagsAndFoldersPage {
 			base.VerifySuccessMessage(type + " deleted successfully");
 			base.CloseSuccessMsgpopup();
 		} else if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+			base.CloseSuccessMsgpopup();
 			base.VerifyErrorMessage("80001000004 : You don't have access to perform modify operation.");
 			base.CloseSuccessMsgpopup();
 		}

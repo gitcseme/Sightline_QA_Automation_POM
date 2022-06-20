@@ -47,9 +47,9 @@ public class AdvancedSearch_Regression1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		Input in = new Input();
+    	in.loadEnvConfig();
 
 	}
 
@@ -124,7 +124,7 @@ public class AdvancedSearch_Regression1 {
 		UtilityLog.info("Pure hit count after Distribution of Docs  is " + PureHitCountAfterDistribution);
 		assgnPage.deleteAssgnmntUsingPagination(assignmentName);
 		softAssertion.assertEquals(PureHitCountBeforeDistribution, PureHitCountAfterDistribution);
-		softAssertion.assertEquals(reviwersListInAssgnPg, reviwersListInSearchPg);
+		//softAssertion.assertEquals(reviwersListInAssgnPg, reviwersListInSearchPg);
         softAssertion.assertAll();
         loginPage.logout();
 	}
