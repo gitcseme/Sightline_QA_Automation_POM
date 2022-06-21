@@ -78,7 +78,11 @@ public class TestListener implements ITestListener {
     	for(ITestNGMethod i : allTestMethods)
     	{
     		System.out.println("Test Methods :"+i.getDescription());
+    		if(i.getDescription().contains(",")) {
+    			issues.addAll(Arrays.asList(i.getDescription().split(",")));
+    		}else {
     		issues.add(i.getDescription());
+    		}
     		
     	}
     	System.out.println(Arrays.asList(issues));
@@ -88,6 +92,7 @@ public class TestListener implements ITestListener {
     	
     	
     	cycleName =context.getName() + " - "+modifiedDate;
+    	System.out.println("Cycle name : "+cycleName);
     	
     	try {
     		
@@ -176,10 +181,16 @@ public class TestListener implements ITestListener {
         String issueID = Result.getMethod().getDescription();
         String execId = null;
       
-        
-        execId = executionIds.get(issueID).split(";")[1];
+        List <String>  issues = new ArrayList<String>();
+        if(issueID.contains(",")) {
+        	issues.addAll(Arrays.asList(issueID.split(",")));
+        }else {
+        	issues.add(issueID);
+        }
+        for(String issue:issues) {
+        execId = executionIds.get(issue).split(";")[1];
 
-        String JIRAissueID = executionIds.get(issueID).split(";")[0];
+        String JIRAissueID = executionIds.get(issue).split(";")[0];
         String getStatusURI = API_UPDATE_EXECUTION.replace("{SERVER}", zephyrBaseUrl) + execId + "?issueId="+JIRAissueID+"&projectId="+projectId;
         String status = "";
         try {
@@ -204,7 +215,7 @@ public class TestListener implements ITestListener {
             final String updateExecutionUri = API_UPDATE_EXECUTION.replace("{SERVER}", zephyrBaseUrl) + execId;
             // System.out.println(updateExecutionUri);
             // System.out.println(executionIds.get(key));
-            executeTestsObj.put("issueId", executionIds.get(issueID).split(";")[0]);
+            executeTestsObj.put("issueId", executionIds.get(issue).split(";")[0]);
             // System.out.println(executeTestsObj.toString());
             StringEntity executeTestsJSON = null;
             try {
@@ -219,6 +230,7 @@ public class TestListener implements ITestListener {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
         }
 
 
@@ -243,6 +255,14 @@ public class TestListener implements ITestListener {
 			//}
 			
 			String issueID = result.getMethod().getDescription();
+			
+			List <String>  issues = new ArrayList<String>();
+	        if(issueID.contains(",")) {
+	        	issues.addAll(Arrays.asList(issueID.split(",")));
+	        }else {
+	        	issues.add(issueID);
+	        }
+	        for(String issue:issues) {
 
 	    	JSONObject statusObj = new JSONObject();
 	    	statusObj.put("id", "2"); //Failure : 2
@@ -254,11 +274,11 @@ public class TestListener implements ITestListener {
 	    	executeTestsObj.put("versionId", versionId);
 	    	//executeTestsObj.put("comment", "Executed by ZAPI Cloud");
 
-	    	String execId = executionIds.get(issueID).split(";")[1];
+	    	String execId = executionIds.get(issue).split(";")[1];
 	    	final String updateExecutionUri = API_UPDATE_EXECUTION.replace("{SERVER}", zephyrBaseUrl) + execId;
 	    	// System.out.println(updateExecutionUri);
 	    	// System.out.println(executionIds.get(key));
-	    	executeTestsObj.put("issueId", executionIds.get(issueID).split(";")[0]);
+	    	executeTestsObj.put("issueId", executionIds.get(issue).split(";")[0]);
 	    	// System.out.println(executeTestsObj.toString());
 	    	StringEntity executeTestsJSON = null;
 	    	try {
@@ -273,6 +293,7 @@ public class TestListener implements ITestListener {
 	    		// TODO Auto-generated catch block
 	    		e.printStackTrace();
 	    	}
+	        }
 			
 		}		
 	
