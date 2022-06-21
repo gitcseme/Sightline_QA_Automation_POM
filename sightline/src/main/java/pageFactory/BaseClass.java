@@ -3416,7 +3416,7 @@ public class BaseClass {
 		System.out.println(color);
 		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
-		String ActualColor = "#e74735";
+		String ActualColor = Input.bullHornIconColor;
 		getRedBullHornIcon().isElementAvailable(10);
 		if (ActualColor.equals(ExpectedColor)) {
 		passedStep("BullHorn icon is highlighted red as expected");
