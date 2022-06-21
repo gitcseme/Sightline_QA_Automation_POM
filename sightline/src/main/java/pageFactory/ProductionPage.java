@@ -2906,7 +2906,11 @@ public class ProductionPage {
 	public Element getFirstImageFile(String presufix, String subBates) {
 		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".tiff']");
 	}
-
+	
+	public ElementCollection getDATSourceField() {
+		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -16271,6 +16275,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
 
+		driver.waitForPageToBeReady();
 		getPriveldge_TextArea().SendKeys(tagNameTechnical);
 
 		driver.scrollingToBottomofAPage();
@@ -19781,5 +19786,40 @@ public class ProductionPage {
 		BurnRedactionCheckBox(redTag).ScrollTo();
 		BurnRedactionCheckBox(redTag).waitAndClick(10);
 	}
+	/**
+	 * @author Brundha.T
+	 * Description:verfy DAT source field
+	 */
+		public void verifyingDatFieldClassification() {
+
+			base.waitForElement(getDATChkBox());
+			getDATChkBox().waitAndClick(10);
+
+			base.waitForElement(getDATTab());
+			getDATTab().waitAndClick(10);
+
+			base.waitForElement(getDAT_FieldClassification1());
+			getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
+
+			driver. waitForPageToBeReady();
+			
+			List<WebElement> option = getDATSourceField().FindWebElements();
+			int j;
+			List<String> options = new ArrayList<String>();
+			for (j = 0; j < option.size(); j++) {
+				driver.waitForPageToBeReady();
+				options.add(option.get(j).getText());
+			}
+			System.out.println(options);
+			if (options.contains("TIFFPageCount")) {
+					base.passedStep("field mapping value is displayed as expected");
+				}else {
+					base.failedStep("Field mapping value  is not displayed");
+				}
+			}
+			
+		
+
+
 
 }
