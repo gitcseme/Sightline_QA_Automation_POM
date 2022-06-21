@@ -891,11 +891,11 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-	
+
 	public Element getGenPageStatus(String status) {
-		return driver.FindElementByXPath("//label[@id='prouctionGenerateStatusTxt' and text()='"+ status+"']");
+		return driver.FindElementByXPath("//label[@id='prouctionGenerateStatusTxt' and text()='" + status + "']");
 	}
-	
+
 	public Element getChkBoxNative_Multimedia() {
 		return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[5]");
 	}
@@ -1552,8 +1552,8 @@ public class ProductionPage {
 	}
 
 	public Element getClkCheckBox_selectingRedactionTags() {
-		return driver.FindElementByXPath(
-				"(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
+		return driver
+				.FindElementByXPath("(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])");
 	}
 
 	public Element getClk_selectBtn() {
@@ -1889,6 +1889,7 @@ public class ProductionPage {
 	public Element BurnRedactionCheckBox_Imp(String tag) {
 		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[contains(text(),'" + tag + "')]");
 	}
+
 	public Element getDefaultRedacTag_BurnRedact() {
 		return driver.FindElementByXPath(
 				"(//ul[@class='jstree-children']//a[contains(text(),'Default Redaction Tag')])[last()]");
@@ -2318,8 +2319,7 @@ public class ProductionPage {
 	}
 
 	public Element BurnRedactionCheckBox(String tag) {
-		return driver
-				.FindElementByXPath("//div[@id='RedactionTagsTree']//a[contains(text(),'" + tag + "')]");
+		return driver.FindElementByXPath("//div[@id='RedactionTagsTree']//a[contains(text(),'" + tag + "')]");
 	}
 
 	// Added by Gopinath -16/12/2021
@@ -2906,11 +2906,11 @@ public class ProductionPage {
 	public Element getFirstImageFile(String presufix, String subBates) {
 		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".tiff']");
 	}
-	
+
 	public ElementCollection getDATSourceField() {
 		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
 	}
-	
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -6046,7 +6046,7 @@ public class ProductionPage {
 		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
 
 		getSelectCloseBtn().waitAndClick(10);
-		
+
 //		base.waitForElement(getClkLink_selectingRedactionTags());
 //		getClkLink_selectingRedactionTags().waitAndClick(10);
 
@@ -11498,7 +11498,7 @@ public class ProductionPage {
 	 */
 	public void clickBackBtnUntilElementFound(Element elementName) {
 		boolean flag = true;
-		for(int i=0; i<20 ; i++){
+		for (int i = 0; i < 20; i++) {
 			try {
 				if (getBackButton().isElementAvailable(2)) {
 					getBackButton().waitAndClick(10);
@@ -11506,10 +11506,10 @@ public class ProductionPage {
 					getQC_backbutton().waitAndClick(10);
 				}
 
-				if(elementName.isElementAvailable(5)) {
-				elementName.waitAndClick(20);
-				driver.scrollPageToTop();
-				break;
+				if (elementName.isElementAvailable(5)) {
+					elementName.waitAndClick(20);
+					driver.scrollPageToTop();
+					break;
 				}
 			} catch (Exception e) {
 				System.out.println("Expected page STill Not Visible");
@@ -12977,10 +12977,9 @@ public class ProductionPage {
 		for (int i = 0; i < 500; i++) {
 			driver.waitForPageToBeReady();
 			getVerifyGenStatus(statusMsg).isElementAvailable(180);
-			if(getVerifyGenStatus(statusMsg).isElementAvailable(1)) {
+			if (getVerifyGenStatus(statusMsg).isElementAvailable(1)) {
 				VerifyGenStatus = getVerifyGenStatus(statusMsg).getText();
-			}
-			else if (getGenPageStatus(statusMsg).isElementAvailable(5)) {
+			} else if (getGenPageStatus(statusMsg).isElementAvailable(5)) {
 				VerifyGenStatus = getGenPageStatus(statusMsg).getText();
 			}
 			if (VerifyGenStatus.contains(statusMsg)) {
@@ -14496,7 +14495,7 @@ public class ProductionPage {
 		if (base.getCloseSucessmsg().isElementAvailable(5)) {
 			base.CloseSuccessMsgpopup();
 		}
-		
+
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(1000);
@@ -14968,21 +14967,21 @@ public class ProductionPage {
 	 *                       committed production name.
 	 */
 	public void enterBasicDetailsStageBySelectingProduction(String exportName, String productionname) {
-		
-			getProdExport_AddaNewExportSet().isElementAvailable(15);
-			getProdExport_AddaNewExportSet().waitAndClick(10);
-			getProductionName().isElementAvailable(10);
-			getProductionName().SendKeys(exportName);
-			getProductionDesc().SendKeys(exportName);
-			getProdExport_Priorprodtoggle().isElementAvailable(15);
-			getProdExport_Priorprodtoggle().waitAndClick(10);
-			getProdExport_SelectProductionSet().ScrollTo();
-			driver.waitForPageToBeReady();
-			getProdExport_SelectProductionSet().selectFromDropdown().selectByVisibleText(productionname);
-			driver.scrollPageToTop();
-			getBasicInfoMarkComplete().isElementAvailable(15);
-			getBasicInfoMarkComplete().waitAndClick(10);
-		
+
+		getProdExport_AddaNewExportSet().isElementAvailable(15);
+		getProdExport_AddaNewExportSet().waitAndClick(10);
+		getProductionName().isElementAvailable(10);
+		getProductionName().SendKeys(exportName);
+		getProductionDesc().SendKeys(exportName);
+		getProdExport_Priorprodtoggle().isElementAvailable(15);
+		getProdExport_Priorprodtoggle().waitAndClick(10);
+		getProdExport_SelectProductionSet().ScrollTo();
+		driver.waitForPageToBeReady();
+		getProdExport_SelectProductionSet().selectFromDropdown().selectByVisibleText(productionname);
+		driver.scrollPageToTop();
+		getBasicInfoMarkComplete().isElementAvailable(15);
+		getBasicInfoMarkComplete().waitAndClick(10);
+
 	}
 
 	/**
@@ -17866,9 +17865,9 @@ public class ProductionPage {
 		getConfirmProductionCommit().waitAndClick(10);
 
 		if (base.getCloseSucessmsg().isElementAvailable(5)) {
-            base.CloseSuccessMsgpopup();
-        }
-		
+			base.CloseSuccessMsgpopup();
+		}
+
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(1000);
@@ -18141,11 +18140,10 @@ public class ProductionPage {
 		// added thread.sleep to avoid exception while executing in batch
 		Thread.sleep(2000);
 		getConfirmProductionCommit().waitAndClick(10);
-		
+
 		if (base.getCloseSucessmsg().isElementAvailable(5)) {
 			base.CloseSuccessMsgpopup();
 		}
-
 
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
@@ -19773,6 +19771,7 @@ public class ProductionPage {
 
 		base.stepInfo("Export Numbering and sorting section is filled");
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param redTagg
@@ -19786,40 +19785,62 @@ public class ProductionPage {
 		BurnRedactionCheckBox(redTag).ScrollTo();
 		BurnRedactionCheckBox(redTag).waitAndClick(10);
 	}
+
 	/**
-	 * @author Brundha.T
-	 * Description:verfy DAT source field
+	 * @author Brundha.T Description:verfy DAT source field
 	 */
-		public void verifyingDatFieldClassification() {
+	public void verifyingDatFieldClassification() {
 
-			base.waitForElement(getDATChkBox());
-			getDATChkBox().waitAndClick(10);
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().waitAndClick(10);
 
-			base.waitForElement(getDATTab());
-			getDATTab().waitAndClick(10);
+		base.waitForElement(getDATTab());
+		getDATTab().waitAndClick(10);
 
-			base.waitForElement(getDAT_FieldClassification1());
-			getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
 
-			driver. waitForPageToBeReady();
-			
-			List<WebElement> option = getDATSourceField().FindWebElements();
-			int j;
-			List<String> options = new ArrayList<String>();
-			for (j = 0; j < option.size(); j++) {
-				driver.waitForPageToBeReady();
-				options.add(option.get(j).getText());
-			}
-			System.out.println(options);
-			if (options.contains("TIFFPageCount")) {
-					base.passedStep("field mapping value is displayed as expected");
-				}else {
-					base.failedStep("Field mapping value  is not displayed");
-				}
-			}
-			
-		
+		driver.waitForPageToBeReady();
 
+		List<WebElement> option = getDATSourceField().FindWebElements();
+		int j;
+		List<String> options = new ArrayList<String>();
+		for (j = 0; j < option.size(); j++) {
+			driver.waitForPageToBeReady();
+			options.add(option.get(j).getText());
+		}
+		System.out.println(options);
+		if (options.contains("TIFFPageCount")) {
+			base.passedStep("field mapping value is displayed as expected");
+		} else {
+			base.failedStep("Field mapping value  is not displayed");
+		}
+	}
 
+	/**
+	 * @author Vijaya.Rani Modify Date:21/06/2022 Description:verfy the field
+	 *         mapping value in DAT Section
+	 */
+	public void verifyingDatMappingField() {
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().waitAndClick(10);
+		base.waitForElement(getDATTab());
+		getDATTab().waitAndClick(10);
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.docBasic);
+		List<WebElement> option = getDATSourceField().FindWebElements();
+		int j;
+		List<String> options = new ArrayList<String>();
+		for (j = 0; j < option.size(); j++) {
+			driver.waitForPageToBeReady();
+			options.add(option.get(j).getText());
+		}
+		System.out.println(options);
+		if (!options.contains("TIFFPageCount")) {
+			base.passedStep("TiffPageCount is not displayed as expected");
+		} else {
+			base.failedStep("TiffPageCount is displayed");
+		}
+	}
 
 }
