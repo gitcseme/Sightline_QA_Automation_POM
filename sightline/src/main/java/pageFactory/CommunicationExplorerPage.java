@@ -213,6 +213,10 @@ public class CommunicationExplorerPage {
 	public Element getLoadedImage() {
 		return driver.FindElementByXPath("//div[@id='processingPopupDiv' and @style='display: none;']");
 	}
+	
+	public Element getViewInDocViewInNewTab() {
+		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[contains(text(),'View in DocView in New Tab')]");
+	}
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -584,5 +588,40 @@ public class CommunicationExplorerPage {
 				return getTally_LoadingScreen().Stale();
 			}
 		}), Input.wait30);
+	}
+	/**
+	 * @author : Iyappan.Kasinathan
+	 * @description : This method navigates to docview in new tab from reports page
+	 */
+	public void viewinDocViewInNewTab() {
+		driver.scrollPageToTop();
+			base.waitForElement(getActionBtn());
+			getActionBtn().ScrollTo();
+			getActionBtn().waitAndClick(10); 
+			base.waitForElement(getViewBtn());
+			if(getViewBtn().isElementAvailable(5)) {
+				getViewBtn().ScrollTo();
+			}
+			if (getViewInDocViewInNewTab().isElementPresent()) {
+				base.passedStep("View in Doc View in new taboption is displayed under action "
+						+ "dropdown in Communication exp reports page");
+				getViewInDocViewInNewTab().ScrollTo();
+				getViewInDocViewInNewTab().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.stepInfo("Navigated to docViewPage in new tab successfully.");
+		} else {
+			base.failedStep("View in doc view in new tab option is not displayed");
+
+		}
+	}
+	/**
+	 * @author : Iyappan.Kasinathan
+	 * @description : This method returns doc count for selected item
+	 */
+	public String selectedDocsCount() {
+		base.waitForElement(getMailCountOFSelectedReport());
+		String DocCountInreportsPage = getMailCountOFSelectedReport().getText();
+		base.stepInfo(DocCountInreportsPage + "  Doc Count in report page that is selected to view in doc view.");
+		return DocCountInreportsPage;
 	}
 }

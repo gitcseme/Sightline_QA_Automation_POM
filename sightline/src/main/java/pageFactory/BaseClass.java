@@ -259,6 +259,10 @@ public class BaseClass {
 	public Element getWarningsMsgHeader() {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
 	}
+	
+	public Element getErrorMsgHeader() {
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Error !']");
+	}
 
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
@@ -268,6 +272,7 @@ public class BaseClass {
 		return driver.FindElementByXPath("(//select[@name='SecurityGroupID'])[last()]");
 	}
 	
+
 	//add by Aathith
 	public Element textValue(String text) {
 		return driver.FindElementByXPath("//*[text()=" + text + "]");
@@ -298,6 +303,10 @@ public class BaseClass {
 	
 	public ElementCollection getAvailableDomainList() {
 		return driver.FindElementsByXPath("//ul[@id='ddlDomains']//li//a");
+
+	public Element getPageTitle() {
+		return driver.FindElementByXPath("//h1[@class='page-title']");
+
 	}
 
 	public BaseClass(Driver driver) {
@@ -3378,6 +3387,7 @@ public class BaseClass {
 			} 
 			return sheetName;
 	   }
+
 	
 	/**
 	 * @author Aathith.Senthilkumar
@@ -3476,4 +3486,63 @@ public class BaseClass {
 			failedStep(text+" is displayed");
 		}
 	}
+
+
+		/**
+		 * @author Iyappan.Kasinathan
+		 * @param expURL
+		 * @description : This method verifies page navigation using url
+		 */
+		public void verifyPageNavigation(String expURL) {
+			driver.waitForPageToBeReady();
+			// String expectedURL=Input.url+expURL;
+			String actualURL = driver.getUrl();
+			if (actualURL.contains(expURL)) {
+				passedStep("Navigated to  " + expURL + " Page sucessfully");
+			} else {
+				failedStep("Navigated to  " + actualURL + " Page but expected Page to navigate  is " + expURL + ".");
+			}
+		}
+
+		/**
+		 * @author Iyappan.Kasinathan
+		 * @param expURL
+		 * @description : This method verifies the new tab is opened or not
+		 */
+		public boolean verifyNewTabOpened() {
+			// get window handlers as list
+			List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
+			boolean isTabOpen = true;
+			System.out.println(browserTabs);
+			// switch to new tab
+			if (browserTabs.size() == 1) {
+				stepInfo("Window Id of opened tab" + browserTabs);
+				stepInfo(
+						"As per the window ID list retrieved No new Tabs opened and page loaded in existing tab itself");
+			}
+			if (browserTabs.size() > 1) {
+				stepInfo("Window Id of all opened tabs" + browserTabs);
+				stepInfo("New Tabs are  opened .");
+				isTabOpen = false;
+			}
+			return isTabOpen;
+		}
+
+		/**
+		 * @author Iyappan.Kasinathan
+		 * @param expURL
+		 * @description : This method is used to switch the tab
+		 */
+		public void switchTab(int SwitchtoWindow) {
+			// get window handlers as list
+			List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
+			System.out.println("Total windows: " + browserTabs.size());
+			// switch to new tab
+			if (browserTabs.size() > 0) {
+				driver.switchTo().window(browserTabs.get(SwitchtoWindow));
+			} else {
+				stepInfo("No new Tabs opened.");
+			}
+		}
+
 }

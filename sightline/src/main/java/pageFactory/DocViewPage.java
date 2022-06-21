@@ -27938,4 +27938,38 @@ public class DocViewPage {
 
 		}
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param expCount
+	 * @description : This method returns document count of the total documents in that search
+	 * @return docviewCount
+	 */
+	public int verifyingDocCount(String expCount) {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getDocView_info());
+		String DocListCount = getDocView_info().getText();
+
+		String[] doccount = DocListCount.split(" ");
+		String DocumentCount = doccount[1];
+		int docViewCount = Integer.parseInt(DocumentCount);
+		if (expCount == null) {
+			base.stepInfo("docview page document count is : " + DocumentCount);
+		}
+		if (expCount != null) {
+			if (expCount.equals(DocumentCount)) {
+				base.stepInfo("ACtual Value--Docview page document count is : " + DocumentCount);
+				base.stepInfo("Expected Value--" + expCount);
+				base.passedStep("Document count Is displayed in doc view page  as expected ");
+
+			} else {
+				base.stepInfo("ACtual Value--Docview page document count is : " + DocumentCount);
+				base.stepInfo("Expected Value--" + expCount);
+				base.failedStep("Document count Is not displayed in doc view page  as expected ");
+			}
+		}
+
+		return docViewCount;
+
+	}
 }
