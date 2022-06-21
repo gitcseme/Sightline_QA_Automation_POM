@@ -2911,6 +2911,24 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
 	}
 
+
+
+	
+	//Added by Mohan
+	
+	public Element getProdExport_NoProductionExitSet() {
+		return driver.FindElementByXPath("//*[@id='cardCanvas']//strong");
+	}
+	
+	public Element getProdExport_ManageTemplateButton() {
+		return driver.FindElementByXPath("//a[text()='Manage Templates']");
+	}
+	
+	public Element getProdExport_CustomTemplatesEmptyValue() {
+		return driver.FindElementByXPath("//*[@id='customTemplatesDatatable']//td[text()='Your query returned no data']");
+	}
+	
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -19797,10 +19815,70 @@ public class ProductionPage {
 		base.waitForElement(getDATTab());
 		getDATTab().waitAndClick(10);
 
-		base.waitForElement(getDAT_FieldClassification1());
-		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
 
-		driver.waitForPageToBeReady();
+			base.waitForElement(getDAT_FieldClassification1());
+			getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
+
+			driver. waitForPageToBeReady();
+			
+			List<WebElement> option = getDATSourceField().FindWebElements();
+			int j;
+			List<String> options = new ArrayList<String>();
+			for (j = 0; j < option.size(); j++) {
+				driver.waitForPageToBeReady();
+				options.add(option.get(j).getText());
+			}
+			System.out.println(options);
+			if (options.contains("TIFFPageCount")) {
+					base.passedStep("field mapping value is displayed as expected");
+				}else {
+					base.failedStep("Field mapping value  is not displayed");
+				}
+			}
+			
+		
+		/**
+		 * @author Mohan.Venugopal
+		 * @description: To validate the fields in Production and export Home page
+		 * @param fieldName
+		 */
+		public void verifyProductionAndExportHomePage(String fieldName) {
+			
+			
+			if (fieldName.contains("Export")) {
+				base.waitForElement(getProdExport_NoProductionExitSet());
+				String noData = getProdExport_NoProductionExitSet().getText();
+				base.waitForElement(getProdExport_ManageTemplateButton());
+				getProdExport_ManageTemplateButton().waitAndClick(5);
+				
+				base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
+				String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
+				if (noData.contains("No")&&customFieldValue.contains("Your")) {
+					base.passedStep(" User created a new Project Using template project and no export template exists then no template is copied from the source template project to the newly created Project.");
+					
+				}else {
+					base.failedStep("Export filed has some datas");
+				}
+			}
+			
+			else if (fieldName.contains("Prod")) {
+				base.waitForElement(getProdExport_NoProductionExitSet());
+				String noData = getProdExport_NoProductionExitSet().getText();
+				base.waitForElement(getProdExport_ManageTemplateButton());
+				getProdExport_ManageTemplateButton().waitAndClick(5);
+				
+				base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
+				String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
+				if (noData.contains("No")&&customFieldValue.contains("Your")) {
+					base.passedStep(" User created a new Project Using template project and no Productions template exists then no template is copied from the source template project to the newly created Project.");
+					
+				}else {
+					base.failedStep("Export filed has some datas");
+				}
+			}
+			
+		}
+
 
 		List<WebElement> option = getDATSourceField().FindWebElements();
 		int j;

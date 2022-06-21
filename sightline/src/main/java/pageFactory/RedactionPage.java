@@ -49,6 +49,11 @@ public class RedactionPage {
 	public Element getDefaultSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupRedaction']//option[text()='Default Security Group']");
 	}
+	
+	//Added by Krishna
+		public Element redactionTagErrorMsg() {
+			return driver.FindElementById("redactionTagErrorMsg");
+		}
 
     
 
@@ -309,5 +314,34 @@ public class RedactionPage {
         	 
          }
      } 
+     
+     /**
+  	 * @Author:Krishna
+  	 */
+  	public void createRedactionTagWithExistingNameAndVerifyErrorMessage(String TagName) throws InterruptedException {
+  			driver.waitForPageToBeReady();
+  			bc.waitTime(2); 
+  			getselectAllRedactionTag().isElementAvailable(15);
+  			bc.waitForElement(getselectAllRedactionTag());
+  			getselectAllRedactionTag().waitAndClick(10);
+  			
+  			getselectActionToggle().isElementAvailable(15);
+  			bc.waitForElement(getselectActionToggle());
+  			getselectActionToggle().waitAndClick(10);
+
+  			getselectNewFromDropdown().isElementAvailable(15);
+  			bc.waitForElement(getselectNewFromDropdown());
+  			getselectNewFromDropdown().waitAndClick(10);
+
+  			getRedactionTagName().isElementAvailable(15);
+  			bc.waitForElement(getRedactionTagName());
+  			getRedactionTagName().SendKeys(TagName);
+
+  			getSaveBtn().isElementAvailable(15);
+  			bc.waitForElement(getSaveBtn());
+  			getSaveBtn().waitAndClick(10);
+  			
+  		} 
+
 
  }

@@ -1235,6 +1235,21 @@ public class IngestionPage_Indium {
 	 public Element getOptionStatus() {
 		 return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']");
 	 }
+	 
+	 public Element getMappingSourceField(int row) {
+			return driver.FindElementById("SF_"+row+"");
+		}
+		
+		public Element getMappingCategoryField(int row) {
+			return driver.FindElementById("TY_"+row+"");
+		}
+		public Element getMappingDestinationField(int row) {
+			return driver.FindElementById("DF_"+row+"");
+		}
+		public Element indexTableDataValue(String term, int row) {
+			return driver.FindElementByXPath("//*[@id='Indexingblock']//table//td[contains(text(),'" + term
+					+ "')]/following-sibling::td['" + row + "']");
+		}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -10947,5 +10962,123 @@ public class IngestionPage_Indium {
 			else {
 				base.failedStep("Generate searchable pdf option not available in tiff section");
 			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 21/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform ingestion for AllSourcesFolder
+		 */
+		
+		public void performAutomationAllsourcesIngestion(String datFile,String docKey) {
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDATDelimitersNewLine().Visible();
+				}
+			}), Input.wait30);
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.waitTime(2);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile,docKey );
+			base.waitTime(2);
+			base.stepInfo("Selecting Native file");
+			selectNativeSource(Input.NativeFile, false);
+			base.stepInfo("Selecting Text file");
+			selectTextSource(Input.TextFile, false);
+			base.waitTime(2);
+			base.stepInfo("Selecting Pdf file");
+			selectPDFSource(Input.PDFFile, false);
+			base.stepInfo("Selecting Tiff file");
+			selectTIFFSource(Input.TIFFFile, false,false);
+			base.waitTime(2);
+			base.stepInfo("Selecting Mp3 file");
+			selectMP3VarientSource(Input.MP3File, false);
+			base.waitTime(2);
+			base.stepInfo("Selecting Transcript file");
+			selectAudioTranscriptSource(Input.TranscriptFile, false);
+			base.stepInfo("Selecting Translation file");
+			selectOtherSource("Translation", Input.TranslationFile, false);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDateFormat().Visible();
+				}
+			}), Input.wait30);
+			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+
+			clickOnNextButton();
+			base.waitTime(2);
+			selectValueFromEnabledFirstThreeSourceDATFields(docKey, docKey, Input.custodian);
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started");
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 21/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will start the indexing process
+		 */
+		public String startIndexing(boolean languageStatus,String language) {
+
+			getRefreshButton().waitAndClick(10);
+			base.waitTime(2);
+			
+			String ingestionName =getIngestionDetailPopup(1).getText();
+
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitTime(2);
+			driver.scrollingToElementofAPage(getRunIndexing());
+			if(languageStatus==true) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIsAudioCheckbox().Visible();
+				}
+			}), Input.wait60);
+			getIsAudioCheckbox().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getLanguage().Visible();
+				}
+			}), Input.wait60);
+			getLanguage().selectFromDropdown().selectByVisibleText(language);	
+			} else {
+				System.out.println("No need to select for other datasets");
+			}
+			getRunIndexing().waitAndClick(10);
+			base.waitTime(2);
+			base.VerifySuccessMessage("Ingestion Indexing has Started.");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(10);
+			base.passedStep("Indexing started");
+			return ingestionName;
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 21/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the options available in ingestion settings              
+		 */
+		public void verifyOptionsAvailableInIngestionSetting() {
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestionSettingGearIcon().Visible();
+				}
+			}), Input.wait60);
+			getIngestionSettingGearIcon().waitAndClick(10);
+			if (getIngestionOpenWizardbutton().Visible() && getIngestionCopyButton().Visible()
+					&& getIngestionDeleteButton().Visible() && getIngestionRollbackbutton().Visible()) {
+				base.passedStep("Ingestion settings have Edit,Copy,Rollback and Delete option available");
+			} else {
+				base.failedStep("Ingestion have no option available");
+			}
+				
+				
+	
 		}
 }

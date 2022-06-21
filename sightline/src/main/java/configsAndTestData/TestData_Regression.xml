@@ -65,6 +65,12 @@
 	<incrementalAnalytics>Run Incremental Analytics for New Small Data</incrementalAnalytics>
 	<kickOffHelpContent>If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.</kickOffHelpContent>
 	<incrementalHelpContent>If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is &#60;=20% of the existing data.</incrementalHelpContent>
+	<mp3Variant>MP3 Variant</mp3Variant>
+	<audio>Audio</audio>
+	<email>EMAIL</email>
+	<emailToNamesAndAddresses>EmailToNamesAndAddresses</emailToNamesAndAddresses>
+	<datLoadFile2>DAT4_STC_newdateformatEmailData -NEWID.dat</datLoadFile2>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

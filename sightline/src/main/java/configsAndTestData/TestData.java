@@ -237,6 +237,11 @@ public class TestData {
 	public String incrementalAnalytics;
 	public String kickOffHelpContent;
 	public String incrementalHelpContent;
+	public String mp3Variant;
+	public String audio;
+	public String email;
+	public String emailToNamesAndAddresses;
+	public String datLoadFile2;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
