@@ -2411,4 +2411,46 @@ public class UserManagement {
 		}
 	}
 
+	
+	/**
+	 * @author Mohan
+	 * @Description:Methods to give project access to user
+	 * @param selectProject for selecting project
+	 * @param fullName      pass fullname as user
+	 * @param roll          account role as login user
+	 * @param account       selecting sg
+	 * @param status
+	 * @param rollStatus
+	 */
+
+	public void ProjectSelectionForUser(String selectProject, String fullName, String roll, String account, boolean status,
+			boolean rollStatus) {
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(5);
+		bc.waitForElement(getProjectTab());
+		getProjectTab().waitAndClick(5);
+		bc.waitForElement(getAssignUserProjectDrp_Dwn());
+		getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		bc.waitForElement(getSelectDropProject(selectProject));
+		getSelectDropProject(selectProject).waitAndClick(5);
+		boolean projectStatus = getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		if (projectStatus == true) {
+			bc.waitForElement(getDomainUserCancelButton());
+			getDomainUserCancelButton().waitAndClick(5);
+			bc.stepInfo("User already assigned to project");
+		}
+		if (projectStatus == false && status == false) {
+			getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
+			bc.waitForElement(getDomainRole());
+			getDomainRole().selectFromDropdown().selectByVisibleText(roll);
+			if (rollStatus == true) {
+				getDomainRole().selectFromDropdown().selectByVisibleText(account);
+			}
+			getDomainUserRightArrow().waitAndClick(5);
+			bc.waitForElement(getsavedomainuser());
+			getsavedomainuser().waitAndClick(5);
+			bc.stepInfo("User successfullt added into the project");
+		}
+
+	}
 }

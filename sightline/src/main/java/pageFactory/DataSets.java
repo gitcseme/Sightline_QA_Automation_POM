@@ -559,6 +559,33 @@ public class DataSets {
 		return filePath;
 	}
 	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: Get notification msg whether the proj is cloned successfully.
+	 * @param bgCountBefore
+	 */
+	public void getNotificationMessage(int bgCountBefore, String projectName) {
+
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCountBefore + 1;
+			}
+		}), Input.wait60);
+		final int bgCountAfter = base.initialBgCount();
+
+		if (bgCountAfter > bgCountBefore) {
+			getBullHornIcon().waitAndClick(10);
+
+			String downloadMsg = getNotificationMsg().getText();
+			String expected = "Project "+projectName+" creation successful.";
+			String failMsg = "Download Notification is not As Expected";
+			base.textCompareEquals(downloadMsg, expected, downloadMsg, failMsg);
+	}else {
+		driver.Navigate().refresh();
+	}
+	}
+	
 }
 
 

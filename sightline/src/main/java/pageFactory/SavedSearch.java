@@ -710,6 +710,11 @@ public class SavedSearch {
 	}
 
 	// added by Mohan
+	
+	public Element getSavedSearchTableDraftName() {
+		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'DRAFT')]");
+	}
+	
 	public Element getSavedSearchTreeNode(String name) {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'" + name + "')]");
 	}
@@ -7877,4 +7882,35 @@ public class SavedSearch {
 		softAssertion.assertTrue(getFieldHeader(specificHeaderName).isElementPresent());
 		softAssertion.assertAll();
 	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @descripton: To Verify Cloning project saved search terms
+	 */
+	public void verifySavedSearchDetailsForCloningProject() {
+		
+		base.waitForElement(getSavedSearchGroupName("Shared With Project"));
+		getSavedSearchGroupName("Shared With Project").waitAndClick(5);
+		
+		base.waitForElementCollection(getCounts());
+		ElementCollection counts = getCounts();
+		System.out.println(counts);
+		if (counts != null) {
+			base.passedStep("Saved Saerch list contains more than 3 save searches");
+		}
+		
+		base.waitForElement(getSavedSearchTableDraftName());
+		String draftName = getSavedSearchTableDraftName().getText();
+		System.out.println(draftName);
+		base.passedStep("Draft Name is present in the Saved Search List");
+		base.waitForElement(getCountofDocs());
+		String docsCount = getCountofDocs().getText();
+		System.out.println(docsCount);
+		if (draftName.contains("D")&&docsCount.isEmpty()) {
+			base.passedStep("Copied searches is in  'DRAFT' state and doesn't have any counts associated with them.  ");
+		}else {
+			base.failedStep("The req fields are not present in the saved search list");
+		}
+		
+		}
 }
