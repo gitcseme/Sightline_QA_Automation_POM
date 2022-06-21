@@ -1,5 +1,6 @@
 package testScriptsRegressionPhase2;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -10,8 +11,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
@@ -29,8 +30,8 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocView_Regression8 {
-	
+public class DocView_Redactions_Regression4 {
+
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass baseClass;
@@ -83,48 +84,44 @@ public class DocView_Regression8 {
 		}
 	}
 	
+	@DataProvider(name = "userDetails2")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+	
 	/**
-	 * Author :Sakthivel date: NA Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51285 To verify that when user select redaction submenu, icons
-	 * should be in On states
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-47910
+	 * @throws InterruptedException
+	 * @throws AWTException
 	 */
 
-	@Test(description = "RPMXCON-51285", enabled = true, alwaysRun = true, groups = { "regression" })
-	public void verifyRedactionSubMenuIconsOnStates() throws Exception {
+	@Test(description ="RPMXCON-47910",enabled = true, alwaysRun = true, groups = { "regression" }, dataProvider = "userDetails2")
+	public void verifyRedactionPanelRetainedOnNavigation(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-51285");
-		baseClass.stepInfo("To verify that when user select redaction submenu, icons should be in On states");
-		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-47910");
+		baseClass.stepInfo("Verify when Redactions menu is selected from doc view and navigates to another document from mini doc list child window then previously selected panels/menus should remain");
+		loginPage.loginToSightLine(userName, password);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.randomText);
+		sessionSearch.viewInDocView();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		docViewRedact.clickingRedactionIcon();
 		DocViewPage docView = new DocViewPage(driver);
-
-		// login as RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Login as RMU");
-
-		// document searched and navigated to DocView
-		sessionsearch.basicContentSearch(Input.searchString1);
-		sessionsearch.ViewInDocView();
-		baseClass.stepInfo("Docs Viewed in Doc View");
-		driver.waitForPageToBeReady();
-		docView.verifyPanel();
-		baseClass.waitForElement(docView.getDocView_Text_redact());
-		docView.getDocView_Text_redact().waitAndClick(5);
-		baseClass.waitTime(10);
-		String color = docView.get_textHighlightedColorOnRedactSubMenu().getWebElement().getCssValue("color");
-		System.out.println(color);
-		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
-		System.out.println(ExpectedColor);
-		if (Input.iconColor.equalsIgnoreCase(ExpectedColor)) {
-			baseClass.passedStep("Reduction submenu icon is highlighted red color is displayed successfully");
+		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		if (docViewRedact.thisPageRedaction().isDisplayed()) {
+			baseClass.passedStep("Redaction panel is retained after doc navigation");
 		} else {
-			baseClass.failedStep("Reduction submenu icon is not highlighted");
+			baseClass.failedStep("Redaction panel not retained after doc navigation");
 		}
+		loginPage.logout();
 	}
 
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
+		System.out.println("******TEST CASES FOR DOCVIEW/Redactions EXECUTED******");
 
 	}
 
