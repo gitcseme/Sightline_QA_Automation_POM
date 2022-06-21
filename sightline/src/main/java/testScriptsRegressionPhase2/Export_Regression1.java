@@ -276,6 +276,118 @@ public class Export_Regression1 {
 		loginPage.logout();
 	}
 
+	
+
+	/**
+	 * @author Brundha
+	 * 			RPMXCON-47933
+	 * @Description To verify Preview for Export										 * 
+	 */
+		@Test(description="RPMXCON-47933",enabled = true,groups = { "regression" }, priority =6)
+		public void verifyGenerationOfPdfFile() throws Exception {
+			
+			base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-47933 -Export component");
+		base.stepInfo("To verify Preview for Export");
+		
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname,Input.tagNameTechnical);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		page.viewingPreviewInSummaryTab();
+		page.verifyingPdfgeneration(Input.searchString4);
+		}
+		
+		
+		/**
+		 * @author Brundha
+		 * 			RPMXCON-47473
+		 * @Description To Verify TIFF creation for export
+		 * 
+		 */
+			@Test(description="RPMXCON-47473",enabled = true,groups = { "regression" }, priority = 7)
+			public void verifyGenerationOfExportWithTiffSection() throws Exception {
+				
+				base = new BaseClass(driver);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-47473 -Export component");
+			base.stepInfo("To Verify TIFF creation for export");
+			
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String newExport = "Ex" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String subBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			String text = page.getProdExport_ProductionSets().getText();
+			if (text.contains("Export Set")) {
+				page.selectExportSetFromDropDown();
+			} else {
+				page.createNewExport(newExport);
+			}
+			page.addANewExport(productionname);
+			page.fillingDATSection();
+			page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+			page.navigateToNextSection();
+			page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingExportLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			loginPage.logout();
+			}
+	
+			
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
