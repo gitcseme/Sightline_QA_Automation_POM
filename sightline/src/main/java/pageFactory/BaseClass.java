@@ -267,6 +267,38 @@ public class BaseClass {
 	public Element getSelectSecurityGroupBulk() {
 		return driver.FindElementByXPath("(//select[@name='SecurityGroupID'])[last()]");
 	}
+	
+	//add by Aathith
+	public Element textValue(String text) {
+		return driver.FindElementByXPath("//*[text()=" + text + "]");
+	}
+	
+	public Element getBackGroudTaskSuccesMark() {
+		return driver.FindElementByXPath("//i[@class='fa fa-check fa-fw fa-2x']");
+	}
+	
+	public Element getBackGroudTaskIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+	
+	public Element getFirstBackRoundTask() {
+		return driver.FindElementByXPath("(//span[@class='padding-10']/a)[1]");
+	}
+	public Element getBullHornIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+	
+	public Element getRedBullHornIcon() {
+		return driver.FindElementByXPath("//span[@class='activity-dropdown newRed']");
+	}
+	
+	public Element getBullIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
+	}
+	
+	public ElementCollection getAvailableDomainList() {
+		return driver.FindElementsByXPath("//ul[@id='ddlDomains']//li//a");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -3346,4 +3378,102 @@ public class BaseClass {
 			} 
 			return sheetName;
 	   }
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description verify that background task is completed
+	 */
+	public void isBackGroudTaskCompleted() {
+		driver.waitForPageToBeReady();
+		waitForElement(getBackGroudTaskIcon());
+		getBackGroudTaskIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if(getBackGroudTaskSuccesMark().isDisplayed()) {
+			passedStep("backgroud task is completed successfully");
+		}else {
+			failedStep("verification failed");
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description click the last completed backgroud task
+	 */
+	public void clickFirstBackRoundTask() {
+		waitForElement(getFirstBackRoundTask());
+		getFirstBackRoundTask().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description verify that notification bull Icon changed to red.
+	 */
+	public void notifyBullIconVerification(){
+		driver.waitForPageToBeReady();
+		getBullHornIcon().isElementAvailable(30);
+		waitForElement(getBullHornIcon());
+		String color = getBullIcon().getWebElement().getCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#e74735";
+		getRedBullHornIcon().isElementAvailable(10);
+		if (ActualColor.equals(ExpectedColor)) {
+		passedStep("BullHorn icon is highlighted red as expected");
+		} else {
+		failedStep("Bullhorn icon is not red as expected");
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return
+	 * @Description switch to another domain.
+	 */
+	public String switchDomain() {
+		
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		String currentProject = getProjectNames().getText().trim();
+		waitForElement(getProjectNames());
+		getProjectNames().waitAndClick(10);
+
+		List<WebElement> availableProjectList = getAvailableDomainList().FindWebElements();
+		int n = availableProjectList.size();
+		System.out.println("List size : " + n);
+		if (n > 1) {
+
+			for (WebElement element : availableProjectList) {
+				String project = element.getText().trim();
+				if (!project.equalsIgnoreCase(currentProject)) {
+					waitForElement(getSelectProject(project));
+					getSelectProject(project).waitAndClick(10);
+					break;
+				}
+			}
+
+		} else {
+			UtilityLog.info(" : Not more than one project configured");
+			failedStep(" : Not more than one project configured");
+		}
+
+		driver.waitForPageToBeReady();
+		stepInfo("Project Switched : " + getProjectNames().getText());
+		UtilityLog.info("Project Switched : " + getProjectNames().getText());
+		return currentProject;
+	
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param text
+	 * @escription verify that expected text is not displayed
+	 */
+	public void notDisplayCheck(String text) {
+		if(!textValue(text).isElementAvailable(1)) {
+			passedStep(text+" is not displayed");
+		}else {
+			failedStep(text+" is displayed");
+		}
+	}
 }
