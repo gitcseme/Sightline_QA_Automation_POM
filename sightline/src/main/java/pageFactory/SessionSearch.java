@@ -2061,6 +2061,20 @@ public class SessionSearch {
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
 		}
+		
+		if (MessageNumber == 12) {
+			if (getWarningAudioBlackListChar_Header().isDisplayed()) {
+				softAssert.assertEquals(getWarningAudioBlackListChar_Header().getText(), "Possible Wrong Query Alert");
+				base.stepInfo("Displayed Header is : "+getWarningAudioBlackListChar_Header().getText());
+			}
+			String msg = " Parentheses are missing in your search query. Please correct the query to include proper opening and closing parentheses.";
+			String actualMsg=getQueryAlertGetTextSingleLine().getText();
+			base.stepInfo(actualMsg);
+			System.out.println(actualMsg);
+			softAssert.assertEquals(msg.replaceAll(" ", ""),
+					actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+		
+		}
 		// click on ok
 		/*
 		 * if(MessageNumber == 1) getTallyContinue().Click(); else
@@ -5863,7 +5877,7 @@ public class SessionSearch {
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(200, 50).release().build().perform();
+				.moveByOffset(50, 50).release().build().perform();
 		base.stepInfo("text for remarks has been selected");
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
@@ -11763,7 +11777,16 @@ public class SessionSearch {
 		}
 		
 		base.passedStep("Successfully unreleased documents from security group");
-
 	}
 	
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Session search page Url
+	 */
+	public void verifySessionSearchPageUrl() {
+		String url = driver.getUrl();
+		String expURL = Input.url + "Search/Searches";
+		softAssert.assertEquals(expURL, url);
+		base.stepInfo("Navigate to session search page");
+	}
 }
