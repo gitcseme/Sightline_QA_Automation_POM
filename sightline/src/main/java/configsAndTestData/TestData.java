@@ -233,6 +233,10 @@ public class TestData {
 	public String emailAddress2;
 	public String emailDatFile;
 	public String nonSearchablePdfLoadFile;
+	public String kickOffAnalytics;
+	public String incrementalAnalytics;
+	public String kickOffHelpContent;
+	public String incrementalHelpContent;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
