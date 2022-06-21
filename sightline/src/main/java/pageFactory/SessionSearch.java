@@ -308,6 +308,10 @@ public class SessionSearch {
 	public Element getBulkRelease_ButtonUnRelease() {
 		return driver.FindElementByXPath("//button[@id='btnUnrelease']");
 	}
+	
+	public Element getSearchCriteriaValue() {
+		return driver.FindElementByXPath("//td[@class='value']//span");
+	}
 
 	// Metadata
 	public Element getBasicSearch_MetadataBtn() {
@@ -10015,7 +10019,7 @@ public class SessionSearch {
 	 * @description: to search metadataquery
 	 * 
 	 */
-	public void basicSearchWithMetaDataQuery(String metadataDocId, String dropDownValue) {
+	public int basicSearchWithMetaDataQuery(String metadataDocId, String dropDownValue) {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
@@ -10038,10 +10042,19 @@ public class SessionSearch {
 
 			base.waitForElement(getSearchButton());
 			getSearchButton().waitAndClick(10);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitAddButton().Displayed();
+				}
+			}), Input.wait90);
+
+			int pureHit = Integer.parseInt(getPureHitsCount().getText());
 
 		} catch (Exception e) {
 			base.failedStep("Query is not found");
 		}
+		return pureHit;
 
 	}
 

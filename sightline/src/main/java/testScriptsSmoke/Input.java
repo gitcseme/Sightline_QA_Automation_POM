@@ -354,6 +354,11 @@ public class Input {
 	public static String incrementalAnalytics;
 	public static String kickOffHelpContent;
 	public static String incrementalHelpContent;
+	public static String mp3Variant;
+	public static String audio;
+	public static String email;
+	public static String emailToNamesAndAddresses;
+	public static String datLoadFile2;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1116,7 +1121,11 @@ public class Input {
 		incrementalAnalytics =testData.getIncrementalAnalytics();
 		kickOffHelpContent = testData.getKickOffHelpContent();
 		incrementalHelpContent = testData.getIncrementalHelpContent();
-		
+		mp3Variant = testData.getMp3Variant();
+		audio = testData.getAudio();
+		email = testData.getEmail();
+		emailToNamesAndAddresses = testData.getEmailToNamesAndAddresses();
+		datLoadFile2 = testData.getDatLoadFile2();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
