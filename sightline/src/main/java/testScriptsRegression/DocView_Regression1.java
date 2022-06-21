@@ -1010,7 +1010,7 @@ public class DocView_Regression1 {
 	 *              no search terms or keywords that apply to this document).
 	 */
 
-	@Test(groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-51855",groups = { "regression" }, priority = 15)
 	public void verify0HitTermsToogleNotDisplayedToAdvancedWorkProduct() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("RPMXCON-51761 Production-sprint:07");
