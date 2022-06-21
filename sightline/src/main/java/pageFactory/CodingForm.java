@@ -1326,6 +1326,36 @@ public class CodingForm {
 	public Element getCF_TagTypes(int i) {
 		return driver.FindElementByXPath(".//*[@id='c-" + i + "']//select[@id='" + i + "']");
 	}
+	
+	
+	///            CONSILIOPHASE2            ///
+	
+	
+	// Added by baskar
+	// for tagtype selection
+		public Element getTagType(int i) {
+			return driver.FindElementByXPath("//select[@class='tag-type form-control input-sm'][@id='"+i+"']");
+		}
+		public Element getAvailableObjInStructure(String availableObjects) {
+			return driver.FindElementByXPath("//span[text()='"+availableObjects+"']");
+		}
+		public Element getDefaultNoBtn() {
+			return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']/button[text()=' No']");
+		}
+		public ElementCollection getCfListSize(int i) {
+			return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td["+i+"]");
+		}
+		public ElementCollection getCf_HeaderValue() {
+			return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//th");
+		}
+		public Element getCf_RemoveLink(int i) {
+			return driver.FindElementByXPath("//a[@id='"+i+"'][text()='Remove']");
+		}
+		public Element getCf_TAGTAB() {
+			return driver.FindElementByXPath("//*[@id='internal-tab-1']//span[text()='TAGS']");
+		}
+	
+		
 
 	public CodingForm(Driver driver) {
 
@@ -4548,8 +4578,7 @@ public class CodingForm {
 		base.waitForElement(getCodingForm_Search());
 		getCodingForm_Search().SendKeys(cfName);
 		base.waitForElement(getCodingForm_EditButton(cfName));
-		base.waitTillElemetToBeClickable(getCodingForm_EditButton(cfName));
-		getCodingForm_EditButton(cfName).waitAndClick(5);
+		getCodingForm_EditButton(cfName).waitAndClick(10);
 	}
 
 	/*
