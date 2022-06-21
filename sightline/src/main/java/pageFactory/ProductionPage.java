@@ -19880,20 +19880,7 @@ public class ProductionPage {
 		}
 
 
-		List<WebElement> option = getDATSourceField().FindWebElements();
-		int j;
-		List<String> options = new ArrayList<String>();
-		for (j = 0; j < option.size(); j++) {
-			driver.waitForPageToBeReady();
-			options.add(option.get(j).getText());
-		}
-		System.out.println(options);
-		if (options.contains("TIFFPageCount")) {
-			base.passedStep("field mapping value is displayed as expected");
-		} else {
-			base.failedStep("Field mapping value  is not displayed");
-		}
-	}
+		
 
 	/**
 	 * @author Vijaya.Rani Modify Date:21/06/2022 Description:verfy the field

@@ -303,6 +303,7 @@ public class BaseClass {
 	
 	public ElementCollection getAvailableDomainList() {
 		return driver.FindElementsByXPath("//ul[@id='ddlDomains']//li//a");
+	}
 
 	public Element getPageTitle() {
 		return driver.FindElementByXPath("//h1[@class='page-title']");
