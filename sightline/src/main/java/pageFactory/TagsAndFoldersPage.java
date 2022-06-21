@@ -483,6 +483,19 @@ public class TagsAndFoldersPage {
 	public Element getEditTagWaringMessageText() {
 		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/parent::div//label");
 	}
+	
+//Added by Krishna
+	public ElementCollection saMenuItems() {
+		return driver.FindElementsByXPath("//a[@class = \"a-menu\"]");
+	}
+	
+	public Element saManageTab() {
+		return driver.FindElementByXPath("//a[@name = 'Manage']");
+	}
+	
+	public ElementCollection leftMenuItems() {
+		return driver.FindElementsByXPath("//a[@class = 'a-menu']");
+	}
 
 	public TagsAndFoldersPage(Driver driver) {
 
