@@ -35,6 +35,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import pageFactory.CodingForm;
+import pageFactory.CommentsPage;
 
 public class CodingForm_IndiumRegressionPhase2 {
 	Driver driver;
@@ -52,6 +53,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	ReusableDocViewPage reusableDocView;
 	MiniDocListPage miniDocList;
 	UserManagement userManagementPage;
+	CommentsPage commentsPage;
 	
 	String assgnCoding = "codingAssgn"+Utility.dynamicNameAppender();
 	String codingform = "CFTags"+Utility.dynamicNameAppender();
@@ -103,7 +105,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Description : Verify that Preview displays correctly and properly when
 	 *                Tags and Check group combined along with Check Item on coding form screen
 	 */
-	@Test(description = "RPMXCON-54059",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-54059",enabled = false, groups = { "regression" })
 	public void verifyCFPreviewUsingCheckItem() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54059");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly "
@@ -174,7 +176,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Description : To verify, As an RMU login, When I will edit an existing coding form,
 	 *                I can be able to select a new Tag & able to save this change
 	 */
-	@Test(description = "RPMXCON-54006",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54006",enabled = false, groups = { "regression" })
 	public void verifyRmuUserCanEditExistingCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54006");
 	    baseClass.stepInfo("To verify, As an RMU login, When I will edit an existing coding form, "
@@ -232,7 +234,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that No button functionality is working proper on "Copy" pop up Coding Form screen
 	 */
-	@Test(description = "RPMXCON-54005",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-54005",enabled = false, groups = { "regression" })
 	public void verifyNoButtonShouldNotCopyCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54005");
 	    baseClass.stepInfo("Verify that No button functionality is working proper on \"Copy\" pop up Coding Form screen");
@@ -295,7 +297,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that Nested Remove link works properly inside container on Coding form screen
 	 */
-	@Test(description = "RPMXCON-53988",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-53988",enabled = false, groups = { "regression" })
 	public void verifyRemoveLinkInCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-53988");
 	    baseClass.stepInfo("Verify that Nested Remove link works properly inside container on Coding form screen");
@@ -361,6 +363,157 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.deleteCodingForm(codingform, codingform);
 	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception 
+	 * @Author :Indium-Baskar
+	 * @Description : Verify that user adds tag/ comment / editable metadata field only once to the coding form
+	 */
+	@Test(description = "RPMXCON-53982",enabled = true, groups = { "regression" })
+	public void verifyUserCannnotAddSameNameAgainInCf() throws Exception {
+	    baseClass.stepInfo("Test case Id: RPMXCON-53982");
+	    baseClass.stepInfo("Verify that user adds tag/ comment / editable metadata field only once to the coding form");
+	    String codingform = "CFTag"+Utility.dynamicNameAppender();
+	    String tagOne = "TagOne"+Utility.dynamicNameAppender();
+	    String projectFieldINT = "Meta"+Utility.dynamicNameAppender();
+	    String addComment = "comment"+Utility.dynamicNameAppender();
+	    tagsAndFoldersPage=new TagsAndFoldersPage(driver);
+	    softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		docViewPage = new DocViewPage(driver);
+		commentsPage = new CommentsPage(driver);
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+	    
+		//Add tags
+		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
+
+		// creating codingform(as per pre-requisties)
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.firstCheckBox("tag");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.firstCheckBox("comment");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.firstCheckBox("metadata");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.saveCodingForm();
+	    baseClass.stepInfo("Codingform as per per-requistes");
+	    
+	    // selecting multiple tab
+	    codingForm.getCf_TAGTAB().waitAndClick(5);
+	    codingForm.CreateCodingFormWithParameter(codingform,tagOne,null,null,"tag");
+	    codingForm.CreateCodingFormWithParameter(codingform,null,addComment,null,"comment");
+	    codingForm.CreateCodingFormWithParameter(codingform,null,null,projectFieldINT,"metadata");
+	    codingForm.addcodingFormAddButton();
+	    baseClass.stepInfo("Added multiple tab in coding form structure");
+	    
+	    // selecting same field which added previously
+	    codingForm.getCf_TAGTAB().waitAndClick(5);
+	    boolean tagDisabled=codingForm.getCf_TagDisabled(tagOne).GetAttribute("disabled").contains("");
+	    softAssertion.assertTrue(tagDisabled);
+	    codingForm.getCodingForm_CommentTab().waitAndClick(10);
+	    boolean commentDisabled=codingForm.getCf_CommentsDisabled(addComment).GetAttribute("disabled").contains("");
+	    softAssertion.assertTrue(commentDisabled);
+	    codingForm.getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+	    boolean metadataDisabled=codingForm.getCf_MetaDataDisabled(projectFieldINT).GetAttribute("disabled").contains("");
+	    softAssertion.assertTrue(metadataDisabled);
+	    baseClass.passedStep("Added available fields, cannot able to add again in coding form structure");
+	    codingForm.deleteCodingForm(codingform, codingform);
+	    codingForm.assignCodingFormToSG(Input.codeFormName);
+	    softAssertion.assertAll();
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception 
+	 * @Author :Indium-Baskar
+	 * @Description : Shared Steps: Creating a New Coding form
+	 */
+	@Test(description = "RPMXCON-47210",enabled = true, groups = { "regression" })
+	public void validateCfTextBox() throws Exception {
+	    baseClass.stepInfo("Test case Id: RPMXCON-47210");
+	    baseClass.stepInfo("Shared Steps: Creating a New Coding form");
+	    String codingform = "1LR Coding Form";
+	    softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// validating the codingform textbox
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		baseClass.waitForElement(codingForm.getSaveCFBtn());
+		codingForm.getSaveCFBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Coding Form Saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.passedStep("Codingform get saved with the valid name");
+	    codingForm.deleteCodingForm(codingform, codingform);
+	    codingForm.assignCodingFormToSG(Input.codeFormName);
+	    softAssertion.assertAll();
+	    loginPage.logout();
+	}
+
+	
+	/**
+	 * @throws Exception 
+	 * @Author :Indium-Baskar
+	 * @Description : Shared Steps: Verify that Coding form screen opens properly inside Application
+	 */
+	@Test(description = "RPMXCON-47209",enabled = true, groups = { "regression" })
+	public void validateCfScreenWorksProperly() throws Exception {
+	    baseClass.stepInfo("Test case Id: RPMXCON-47209");
+	    baseClass.stepInfo("Shared Steps: Verify that Coding form screen opens properly inside Application");
+	    softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// validating the codingform textbox
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("User navigated to Manage coding form page");
+	    boolean flagManage=driver.getPageSource().contains("Manage Coding Forms");
+	    boolean flagNew=driver.getPageSource().contains("New Coding Form");
+	    softAssertion.assertTrue(flagManage);
+	    softAssertion.assertTrue(flagNew);
+	    softAssertion.assertAll();
+	    baseClass.passedStep("Manage coding form screen working properly as expected");
 	    loginPage.logout();
 	}
 
