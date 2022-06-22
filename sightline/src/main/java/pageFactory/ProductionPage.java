@@ -19931,4 +19931,31 @@ public class ProductionPage {
 		}
 	}
 
+	
+	/**	
+	 * @author Brundha.T
+	 * @param BrandingText
+	 * Description:verifying the pdf file
+	 * @throws IOException 
+	 *
+	 * 
+	 */
+		public void verifyingPdfgeneration(String BrandingText) throws IOException  {
+            base.waitTime(2);
+			String fileName = base.GetFileName();
+			PDDocument document = PDDocument.load(new File(fileName));
+			if (!document.isEncrypted()) {
+				PDFTextStripper stripper = new PDFTextStripper();
+				String text = stripper.getText(document);
+				System.out.println("Text:" + text);
+				if (text.contains(BrandingText)) {
+					base.passedStep(BrandingText + " text is produced in this document");
+				}
+				else {
+					base.failedStep(BrandingText + " text is not  produced in this document");
+				}
+				document.close();
+			}
+
+		}
 }
