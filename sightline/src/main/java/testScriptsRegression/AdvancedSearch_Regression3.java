@@ -48,9 +48,6 @@ public class AdvancedSearch_Regression3 {
 	public void preCondition() throws ParseException, InterruptedException, IOException, AWTException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
 		
 		// Open browser
 		driver = new Driver();

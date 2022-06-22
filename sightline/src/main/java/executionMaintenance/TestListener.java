@@ -50,17 +50,17 @@ public class TestListener implements ITestListener {
 //	// Jira accountId
 //	static String accountId = "61efa3c478b7fd0072d72c35";
 	
-	public static String versionId = "13099";
+	public static String versionId = "13146";
 	public static String projectId = "10500";
 	public static String projectName = "RPMXCON";
-	public static String versionName = "Indium";
+	public static String versionName = "Auto June 2022";
 	public static String cycleName = "Test Cycle";
 	public static String cycleDescription = "Created by ZAPI CLOUD API";
 	public static String cycleID = "b2e24bbb-34b4-4070-bbad-cb17ae390978";
 	static String zephyrBaseUrl = "https://prod-api.zephyr4jiracloud.com/connect";
-	static String accessKey = "amlyYToxNjU1NTc2OSA2MGY4Mjk5MmYwMjZhYjAwNzAyZmM5OGMgVVNFUl9ERUZBVUxUX05BTUU";
-	static String secretKey = "gO795XjYNimdmFcm-CbwQQCD5s9aQSV0igYZ4XLBNic";
-	static String accountId = "60f82992f026ab00702fc98c";
+	static String accessKey = "amlyYToxNjU1NTc2OSA1NTcwNTglM0E3Njk2NjlkOS04MTk1LTRhZWUtOThkYi1iM2Y3NWQ1OGI1NTQgVVNFUl9ERUZBVUxUX05BTUU";
+	static String secretKey = "JhW9oChT4S_izF2C1MJwp3UXCy8PfBrb7MqgzcSizOo";
+	static String accountId = "557058:769669d9-8195-4aee-98db-b3f75d58b554";
 	
 	static String createCycleUri = zephyrBaseUrl + "/public/rest/api/1.0/cycle";
 	

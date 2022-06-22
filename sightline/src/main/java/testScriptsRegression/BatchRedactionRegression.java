@@ -68,9 +68,12 @@ public class BatchRedactionRegression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input in = new Input();
 		in.loadEnvConfig();
-	}
+
+
+			}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {

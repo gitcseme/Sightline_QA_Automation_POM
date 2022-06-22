@@ -3163,8 +3163,11 @@ public class SessionSearch {
 				return getDocListAction().Visible();
 			}
 		}), Input.wait60);
-
+	    
+		Thread.sleep(2000);
 		getTallyResults().waitAndClick(5);
+			base.waitTime(3); // added for stabilization
+	
 
 		System.out.println("Navigated to Tally  to view docs");
 		UtilityLog.info("Navigated to Tally  to view docs");

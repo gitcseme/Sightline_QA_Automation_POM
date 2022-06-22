@@ -44,11 +44,12 @@ public class Projects_Regression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
+		
 		Input input = new Input();
 		input.loadEnvConfig();
 
-		driver = new Driver();
+
+			driver = new Driver();
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -70,7 +71,7 @@ public class Projects_Regression {
 	 * TestCase id :  55728 - Verify when the project is created, it should send to the background with the appropriate message to the user.
 	 * Description : Verify when the project is created, it should send to the background with the appropriate message to the user.
 	 */
-	@Test(description = "RPMXCON-55728", alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(description = "RPMXCON-55728", alwaysRun = true,groups={"regression"})
 	public void createUserWithDifferentProjectAndRole() throws Exception {		
 		baseClass=new BaseClass(driver);
 		String projectnamenondomain = Input.randomText + Utility.dynamicNameAppender();

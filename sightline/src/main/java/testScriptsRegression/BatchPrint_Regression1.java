@@ -48,7 +48,10 @@ public class BatchPrint_Regression1 {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-	
+		Input in = new Input();
+		in.loadEnvConfig();
+
+
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -775,6 +778,7 @@ public class BatchPrint_Regression1 {
 
 		// Download Batch Print File
 		String fileName = batchPrint.DownloadBatchPrintFile();
+		System.out.println(fileName);
 
 		// extract zip file
 		String extractedFile = batchPrint.extractFile(fileName);

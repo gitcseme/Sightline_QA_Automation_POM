@@ -42,8 +42,10 @@ public class ProjectField_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+		Input input = new Input();
+		input.loadEnvConfig();
+
+	
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -63,7 +65,7 @@ public class ProjectField_Regression {
 	 * @Description :Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.'RPMXCON-47066'
 	 * 
 	 */
-	@Test(description = "RPMXCON-47066", enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-47066", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldsByClickingApplyAndEnterButton() {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47066");
@@ -98,7 +100,7 @@ public class ProjectField_Regression {
 	 * @TestCase ID:47070 Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
 	 * @Description:To Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
 	 */
-	@Test(description = "RPMXCON-47070", enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-47070", enabled = true, groups = { "regression" })
 	public void verifyNoDataMessageForNoMatchingText() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47070");
 		baseClass.stepInfo("Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.");
@@ -146,7 +148,7 @@ public class ProjectField_Regression {
 	 * @TestCase Id:47069 Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
 	 * @Description:To Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
 	 */
-	@Test(description = "RPMXCON-47069", enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-47069", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldBeforeAndAfterClearFilter() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47069");
 		baseClass.stepInfo("Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields");
@@ -176,13 +178,12 @@ public class ProjectField_Regression {
 		
 		loginPage.logout();
 	}
-	
-	/**
+		/**
 	 * @author Gopinath
 	 * @TestCase ID:47065 Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
 	 * @Description:To Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
 	 */
-	@Test(description = "RPMXCON-47065", enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-47065", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldByAppliyButtonDisplayed() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47065");
 		baseClass.stepInfo("Verify that 'Filter Fields By' should be displayed on Manage > Project Fields");
@@ -206,12 +207,12 @@ public class ProjectField_Regression {
 	 * @TestCase ID:47068:Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
 	 * @Description:To Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
 	 */
-	@Test(description = "RPMXCON-47068", enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-47068", enabled = true, groups = { "regression" })
 	public void verifyPageNumberRetainedAfterEditField() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47068");
 		baseClass.stepInfo("Verify that when filter applied user edits a project field and 'saves' the edit, the application should be on the same \"page number\", where the user picked the field to edit");
 		utility = new Utility(driver);
-		String filterValue="Data";
+		String filterValue="data";
 		String fieldName =  filterValue+  Utility.dynamicNameAppender();
 		String fieldDescription= "Edit"+Utility.dynamicNameAppender();
 		
