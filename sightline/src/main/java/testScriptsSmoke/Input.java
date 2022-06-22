@@ -248,6 +248,7 @@ public class Input {
 	public static String translationDocumentId;
 	public static String parentDocument;
 	public static String masterDateText;
+	public static String pdfFileType;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1004,9 +1005,11 @@ public class Input {
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
 		masterDateText = testData.getMasterDateText();
+		pdfFileType=testData.getPdfFileType();
+		
 		/**
-		 * @author Aathith.Senthilkumar
-		 */
+		* @author Aathith.Senthilkumar
+		*/
 		pageCount = testData.getPageCount();
 		errorMsg = testData.getErrorMsg();
 		helpText = testData.getHelpText();

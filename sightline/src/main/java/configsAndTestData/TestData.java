@@ -174,6 +174,7 @@ public class TestData {
 	public String translationDocumentId;
 	public String parentDocument;
 	public String masterDateText;
+	public String pdfFileType;
 
 	// Added by Sai Krishna
 	public String pageNumber;
