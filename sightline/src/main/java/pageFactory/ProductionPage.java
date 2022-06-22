@@ -891,6 +891,24 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element batesRangeInHomePage(String suffixID) {
+		return driver.FindElementByXPath("//div[@id='batesCount']//strong[contains(text(),'"+suffixID+"')]");
+	}
+	
+	public Element automatedCheck_BatesNumberGeneration() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Bates Number Generation')]");
+	}
+	public Element automatedCheck_BlankPageRemoval() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Blank Page Removal')]");
+	}
+	
+	public Element automatedCheck_DocumentCounts() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Document and Page Counts')]");
+	}
+	
+	public Element automatedCheck_prodfiles() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Prod Files')]");
+	}
 
 	public Element getGenPageStatus(String status) {
 		return driver.FindElementByXPath("//label[@id='prouctionGenerateStatusTxt' and text()='" + status + "']");
@@ -4859,7 +4877,7 @@ public class ProductionPage {
 	 * @param productionName
 	 * @param This           method adds new production in home page
 	 */
-	public void addANewProduction(String productionName) throws InterruptedException {
+	public String addANewProduction(String productionName) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4889,6 +4907,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getBasicInfoMarkComplete().Click();
 		base.stepInfo("New production is added");
+		return productionName;
 	}
 
 	/**
@@ -5016,7 +5035,7 @@ public class ProductionPage {
 				return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
 			}
 		}), Input.wait30);
-		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("VolumeName");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
@@ -7724,7 +7743,7 @@ public class ProductionPage {
 	/**
 	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
 	 */
-	public void prodGenerationInProgressStatus() throws InterruptedException {
+	public void prodGenerationInProgressStatus(String productionName) throws InterruptedException {
 
 		base.stepInfo("Filtering IN progress status production");
 		base.waitForElement(getFilterDropDown());
@@ -7740,6 +7759,8 @@ public class ProductionPage {
 
 		base.waitForElement(getFilterDropDown());
 		getFilterDropDown().waitAndClick(10);
+		
+		getProductionFromHomepage(productionName).waitAndClick(10);
 
 	}
 
@@ -13432,20 +13453,22 @@ public class ProductionPage {
 	 * @description :method for filling Numbering And Sorting Document Page.
 	 * @param prefixID : prefixID is String value that prefix id.
 	 */
-	public void fillingNumberingAndSortingDocumentPage(String prefixID) {
-		try {
-			base.waitForElement(getDocumentRadioBtn());
-			getDocumentRadioBtn().Click();
+	public void fillingNumberingAndSortingDocumentPage(String beginningBates,String prefixId,String suffixId) {
+		
+		base.waitForElement(getDocumentRadioBtn());
+		getDocumentRadioBtn().Click();
 
-			driver.waitForPageToBeReady();
-			getBeginningSubBatesNum().Click();
-			getBeginningSubBatesNum().SendKeys(prefixID);
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while filling numbering and sorting document " + e.getMessage());
-		}
+		driver.waitForPageToBeReady();
+		getBeginningSubBatesNum().Click();
+		getBeginningSubBatesNum().SendKeys(beginningBates);
+		
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
 
-	}
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+
+}
 
 	/**
 	 * @authorGopinath
