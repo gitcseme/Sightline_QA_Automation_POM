@@ -1354,6 +1354,15 @@ public class CodingForm {
 		public Element getCf_TAGTAB() {
 			return driver.FindElementByXPath("//*[@id='internal-tab-1']//span[text()='TAGS']");
 		}
+		public Element getCf_TagDisabled(String tag) {
+			return driver.FindElementByXPath("//*[@id='lstTags']//label[@title='"+tag+"']/input[@disabled='']");
+		}
+		public Element getCf_CommentsDisabled(String comment) {
+			return driver.FindElementByXPath("//*[@id='lstComments']//label[@title='"+comment+"']/input[@disabled='']");
+		}
+		public Element getCf_MetaDataDisabled(String metadata) {
+			return driver.FindElementByXPath("//*[@id='lstMetadata']//label[@title='"+metadata+"']/input[@disabled='']");
+		}
 	
 		
 
