@@ -61,7 +61,7 @@ public class Export_Regression1 {
 	 *              then DAT component should retain the 'TIFFPageCount'
 	 * 
 	 */
-	//@Test(description = "RPMXCON-47500", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47500", enabled = true, groups = { "regression" })
 	public void verifyDatSectionMappingField() throws Exception {
 
 		base = new BaseClass(driver);
@@ -93,7 +93,7 @@ public class Export_Regression1 {
 	 *              Task
 	 * 
 	 */
-	//@Test(description = "RPMXCON-47983", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47983", enabled = true, groups = { "regression" })
 	public void verifyingCompletedStatusInTileView() throws Exception {
 
 		base = new BaseClass(driver);
@@ -155,7 +155,7 @@ public class Export_Regression1 {
 	 * @Description To Verify PDF creation for export
 	 * 
 	 */
-	//@Test(description = "RPMXCON-47471", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47471", enabled = true, groups = { "regression" })
 	public void verifyGenerationOfExportWithPdfSection() throws Exception {
 
 		base = new BaseClass(driver);
@@ -209,7 +209,7 @@ public class Export_Regression1 {
 	 *              numbering.
 	 *
 	 */
-	//@Test(description = "RPMXCON-48193", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48193", enabled = true, groups = { "regression" })
 	public void verifyGenerationOfExportForMp3File() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -255,7 +255,7 @@ public class Export_Regression1 {
 	 *              "Doc Metadata"
 	 *
 	 */
-	//@Test(description = "RPMXCON-47499", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47499", enabled = true, groups = { "regression" })
 	public void VerifydatSectionFieldMapping() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -283,7 +283,7 @@ public class Export_Regression1 {
 	 * 			RPMXCON-47933
 	 * @Description To verify Preview for Export										 * 
 	 */
-		//@Test(description="RPMXCON-47933",enabled = true,groups = { "regression" })
+		@Test(description="RPMXCON-47933",enabled = true,groups = { "regression" })
 		public void verifyGenerationOfPdfFile() throws Exception {
 			
 			base = new BaseClass(driver);
@@ -339,7 +339,7 @@ public class Export_Regression1 {
 		 * @Description To Verify TIFF creation for export
 		 * 
 		 */
-			//@Test(description="RPMXCON-47473",enabled = true,groups = { "regression" })
+			@Test(description="RPMXCON-47473",enabled = true,groups = { "regression" })
 			public void verifyGenerationOfExportWithTiffSection() throws Exception {
 				
 				base = new BaseClass(driver);
