@@ -106,7 +106,7 @@ public class DocView_Sprint2_Regression {
 	 *         Id: RPMXCON-52030 Description : login as RMU and impersonate as
 	 *         reviewer use search term to get document and redact
 	 */
-	@Test(description = "RPMXCON-52030", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-52030", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyRedactionasReviewer() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -140,7 +140,7 @@ public class DocView_Sprint2_Regression {
 	 *         navigate through documents Get document list using search input and
 	 *         view in DocView Navigate to first and last document
 	 */
-	@Test(description = "RPMXCON-50779", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-50779", enabled = true, alwaysRun = true, groups = { "regression" })
 
 	public void verifyDocNavigationRMU() throws Exception {
 // Selecting Document from Session search
@@ -186,7 +186,7 @@ public class DocView_Sprint2_Regression {
 	 *         DocView
 	 */
 
-	@Test(description = "RPMXCON-51863", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-51863", enabled = true, alwaysRun = true, groups = { "regression" })
 
 	public void verifyTextRemarks() throws Exception {
 // Selecting Document from Session search
@@ -238,7 +238,7 @@ public class DocView_Sprint2_Regression {
 	 *         document list using search input and view in DocView print document
 	 *         and verify bullhorn notification & background tasks
 	 */
-	@Test(description = "RPMXCON-52232,RPMXCON-52230,RPMXCON-52229", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 4)
+	@Test(description = "RPMXCON-52232,RPMXCON-52230,RPMXCON-52229", enabled = true, alwaysRun = true, groups = {"regression" })
 
 	public void verifyBullhornNotifications() throws Exception {
 // Selecting Document from Session search
@@ -290,7 +290,7 @@ public class DocView_Sprint2_Regression {
 	 *         Test Case Id: 51758 Description : Verify persitent hit panel As RMU,
 	 *         go to DocView from assignments with key word associated
 	 */
-	@Test(description = "RPMXCON-51758", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-51758", enabled = true, alwaysRun = true, groups = { "regression" })
 
 	public void verifyPersistantHitPanal() throws Exception {
 
@@ -342,7 +342,7 @@ public class DocView_Sprint2_Regression {
 	 * for 52194, Delete the performed text redaction
 	 */
 
-	@Test(description = "RPMXCON-52220,RPMXCON-52194", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 6)
+	@Test(description = "RPMXCON-52220,RPMXCON-52194", enabled = true, alwaysRun = true, groups = {"regression" })
 	public void textRedactionAsRMU() throws Exception {
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -384,7 +384,7 @@ public class DocView_Sprint2_Regression {
 	 * Redactions
 	 */
 
-	@Test(description = "RPMXCON-52303,RPMXCON-52304", enabled = true, alwaysRun = true, groups = {"regression" }, priority = 7)
+	@Test(description = "RPMXCON-52303,RPMXCON-52304", enabled = true, alwaysRun = true, groups = {"regression" })
 	public void verifyRedactionStabilityinAllDocTypes() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -408,7 +408,7 @@ public class DocView_Sprint2_Regression {
 	 * as RMU use search term to get a pdf document and print
 	 */
 
-	@Test(description = "RPMXCON-52231", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-52231", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void printRedactedPdfasReviewer() throws Exception {
 
 // Selecting Document from Session search	
@@ -472,7 +472,7 @@ public class DocView_Sprint2_Regression {
 	 * button is not avilable for audio docs
 	 */
 
-	@Test(description = "RPMXCON-52202", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-52202", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void textRedactionWithAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -505,7 +505,7 @@ public class DocView_Sprint2_Regression {
 	 * Redaction tag Checking if new redaction tag is displayed automatically for
 	 * next redaction
 	 */
-	@Test(description ="RPMXCON-52192,RPMXCON-52201",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-52192,RPMXCON-52201",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void textRedactionCancleButtonVerification() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -542,7 +542,7 @@ public class DocView_Sprint2_Regression {
 	 * bullet points and redaction applied at bullet points
 	 */
 
-	@Test(description = "RPMXCON-52228", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-52228", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void printingDocWithBulletPoints() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -591,7 +591,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for audio docs as RMU DocView- sprint 3
 	 */
 
-	@Test(description = "RPMXCON-52188", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-52188", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void persistentHitCheckAudioDocs() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -627,7 +627,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51326",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-51326",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51326");
@@ -791,7 +791,7 @@ public class DocView_Sprint2_Regression {
 	 * window DocView- sprint 3
 	 */
 
-	@Test(description = "RPMXCON-51350", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-51350", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void persistentHitCheckAudioDocsChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -813,7 +813,7 @@ public class DocView_Sprint2_Regression {
 	 * Author : Krishna D date: NA Modified date:NA Modified by: Test Case Id: 51626
 	 * Verifying Remarks and colour highliting as RMU DocView- sprint 3
 	 */
-	@Test(description = "RPMXCON-51626", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-51626", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifySavedTextRemark() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -877,7 +877,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for non audio docs as RMU and Rev from assignments
 	 * DocView- sprint 3
 	 */
-	@Test(description = "RPMXCON-51764", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-51764", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void persistentHitCheckNonAudioAsRev() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -909,7 +909,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying if text redaction option is present under RMU and Rev DocView-
 	 * sprint 4
 	 */
-	@Test(description = "RPMXCON-52191", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-52191", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTextRedactionOption() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52191");
@@ -956,7 +956,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying doc is highlighted using this page and highlight is deleted
 	 * successfully while refreshing page DocView- sprint 4
 	 */
-	@Test(description = "RPMXCON-51655", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-51655", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlitingInDocView() throws Exception {
 		Robot robot = new Robot();
 		Actions actions = new Actions(driver.getWebDriver());
@@ -1006,7 +1006,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51007 Verify thumbnails icon and check for doc view click
 	 */
 
-	@Test(description = "RPMXCON-51007", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-51007", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyThumbnailsPageNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51007");
@@ -1051,7 +1051,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51356", enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-51356", enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationAllMenusInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51356");
@@ -1135,7 +1135,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51560", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(description = "RPMXCON-51560", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyClickXAtAnyStateAndBringItBackToOriginalSearchIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51560");
@@ -1207,7 +1207,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51274", enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-51274", enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarCodeSameAsAction() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51274");
@@ -1295,7 +1295,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51030", enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-51030", enabled = true, groups = { "regression" })
 	public void verifyOnceDocumentIsMarkedAsUnCompleteUpdateProgressBar() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51030");
@@ -1345,7 +1345,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51914", enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description = "RPMXCON-51914", enabled = true, groups = { "regression" })
 	public void verifyImageTabOnCompleteDocsShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51914");
@@ -1435,7 +1435,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51915", enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-51915", enabled = true, groups = { "regression" })
 	public void verifyImageTabOnCompleteDocsAndApplyCodingStampShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51915");
@@ -1531,7 +1531,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51916", enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-51916", enabled = true, groups = { "regression" })
 	public void verifyImageTabOnCompleteDocsAndCodeSameAsLastShouldNavigateToNextDocs() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51916");
@@ -1629,7 +1629,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-48783", enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-48783", enabled = true, groups = { "regression" })
 	public void verifyAllRelevantHitTermsOnDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48783");
@@ -1675,7 +1675,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51917", enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description = "RPMXCON-51917", enabled = true, groups = { "regression" })
 	public void verifyImageTabOnViewDocsFromAnalyticsPanel() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51917");
@@ -1768,7 +1768,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51452",enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-51452",enabled = true, groups = { "regression" })
 	public void verifyCompleteIconOnThreadMapOutsideOfAnAssignment() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51452");
@@ -1820,7 +1820,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51559",enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-51559",enabled = true, groups = { "regression" })
 	public void verifyUserCanEnterTextAndSearchText() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51559");
@@ -1946,7 +1946,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51325",enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-51325",enabled = true, groups = { "regression" })
 	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51325");
@@ -2053,7 +2053,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51323",enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-51323",enabled = true, groups = { "regression" })
 	public void verifyHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51323");
@@ -2150,7 +2150,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52302",enabled = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-52302",enabled = true, groups = { "regression" })
 	public void verifyTextRedactionPosition() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -2214,7 +2214,7 @@ public class DocView_Sprint2_Regression {
 
 	}
 
-	@Test(description ="RPMXCON-50773",enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-50773",enabled = true, groups = { "regression" })
 
 	public void VerifyRMUToDocView() throws Exception {
 		String expectedURL = Input.url + "DocumentViewer/DocView";
@@ -2267,7 +2267,7 @@ public class DocView_Sprint2_Regression {
 	 * @author Jayanthi.ganesan
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51662",enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-51662",enabled = true, groups = { "regression" })
 	public void verifyDocCount_ABM() throws Exception {
 		String SaveSaerchName = "ABMSaveSearch" + UtilityLog.dynamicNameAppender();
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2315,7 +2315,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51327",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-51327",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonationHitsOfDocsWithoutSaveQueryHighlightedWithoutClickingEyeIconFromAdvanceSearch()
 			throws Exception {
 
@@ -2459,7 +2459,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51328",enabled = true, groups = { "regression" }, priority = 38)
+	@Test(description ="RPMXCON-51328",enabled = true, groups = { "regression" })
 	public void verifyAfterImpersonateHitsOfDocsHighlightedWithoutClickingEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51328");
@@ -2622,7 +2622,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51329",enabled = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-51329",enabled = true, groups = { "regression" })
 	public void verifyHitsOfDocsHighlightedWithoutClickingEyeIconBasicSearchDocList() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51329");
@@ -2785,7 +2785,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51981",enabled = true, groups = { "regression" }, priority = 40)
+	@Test(description ="RPMXCON-51981",enabled = true, groups = { "regression" })
 	public void verifySearchTermHighlightingWorkingForSearchablePDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51981");
@@ -2858,7 +2858,7 @@ public class DocView_Sprint2_Regression {
 	 *         Uncompleted state, and the user selects only some/select records
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51874",alwaysRun = true, groups = { "regression" }, priority = 41)
+	@Test(description ="RPMXCON-51874",alwaysRun = true, groups = { "regression" })
 	public void verifyCodeSameAsMiniDocListAndChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51874");
 		String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
@@ -2931,7 +2931,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51105",enabled = true, groups = { "regression" }, priority = 42)
+	@Test(description ="RPMXCON-51105",enabled = true, groups = { "regression" })
 	public void verifyAssociatedTiffImage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51105");
@@ -3024,7 +3024,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51273",enabled = true, groups = { "regression" }, priority = 43)
+	@Test(description ="RPMXCON-51273",enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarSameAsLastBtnAndCopmlete() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51273");
@@ -3142,7 +3142,7 @@ public class DocView_Sprint2_Regression {
 	 *                      testcase hint : used project
 	 *                      :AutomationAdditionalDataProject , Runs On : PT env
 	 */
-	@Test(description ="RPMXCON-52203",enabled = true, groups = { "regression" }, priority = 44)
+	@Test(description ="RPMXCON-52203",enabled = true, groups = { "regression" })
 	public void verifyLargeExcelInDocView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-52203");
@@ -3204,7 +3204,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51568 Verify when user navigates to other document while viewing the
 	 * search hits and comes back to same document
 	 */
-	@Test(description ="RPMXCON-51568",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 45)
+	@Test(description ="RPMXCON-51568",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTextSearchAfterUserNavigatesToAnotherDoc() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -3300,7 +3300,7 @@ public class DocView_Sprint2_Regression {
 	 *              [RPMXCON-50777]
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-50777",enabled = true, groups = { "regression" }, priority = 46)
+	@Test(description ="RPMXCON-50777",enabled = true, groups = { "regression" })
 	public void verifyDocViewPanel() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -3376,7 +3376,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51936",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 47)
+	@Test(description ="RPMXCON-51936",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListAfterPerformDocNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3939,7 +3939,7 @@ public class DocView_Sprint2_Regression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-51276",enabled = true, groups = { "regression" }, priority = 48)
+	@Test(description ="RPMXCON-51276",enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarCompleteTheCodingStamp() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51276");
@@ -4017,7 +4017,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51638",enabled = true, groups = { "regression" }, priority = 49)
+	@Test(description ="RPMXCON-51638",enabled = true, groups = { "regression" })
 	public void verifyDocViewThreadMapEmailsParticipants() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51638  sprint 12");
@@ -4071,7 +4071,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51349",enabled = true, groups = { "regression" }, priority = 50)
+	@Test(description ="RPMXCON-51349",enabled = true, groups = { "regression" })
 	public void verifyDocViewRedactionAnnotationsRemarksIconDisplay() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-57088  sprint 12");
@@ -4119,7 +4119,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51995 & 51996 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc
 	 */
-	@Test(description ="RPMXCON-51995,RPMXCON-51996",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(description ="RPMXCON-51995,RPMXCON-51996",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void RedactPageRange() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -4162,7 +4162,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51998 & 51997 - sprint 3- DocView Description : Verify redaction for
 	 * page range and all pages in a doc after impersonating user
 	 */
-	@Test(description ="RPMXCON-51997,RPMXCON-51998",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 52)
+	@Test(description ="RPMXCON-51997,RPMXCON-51998",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void RedactPageRangeImpersonatingUser() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51998, RPMXCON-51997");
@@ -4206,7 +4206,7 @@ public class DocView_Sprint2_Regression {
 	 * DocView
 	 */
 
-	@Test(description ="RPMXCON-52150",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 53)
+	@Test(description ="RPMXCON-52150",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyRedactionTagBlank() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -4251,7 +4251,7 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for audio docs DocView- sprint 3
 	 */
 
-	@Test(description ="RPMXCON-52189",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 54)
+	@Test(description ="RPMXCON-52189",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void persistentHitAudioDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -4289,7 +4289,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51937",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 55)
+	@Test(description ="RPMXCON-51937",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListChildWindowsAfterPerformNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5065,7 +5065,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 *                   stabilization done
 	 */
-	@Test(description ="RPMXCON-51938",enabled = true, groups = { "regression" }, priority = 56)
+	@Test(description ="RPMXCON-51938",enabled = true, groups = { "regression" })
 	public void verifyMiniDocListChildWindow() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51938");
@@ -5169,7 +5169,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51992 DocView and Doc Explorer_Performance_Navigate through
 	 * documents one by one for 15 mins_RMU/Rev
 	 */
-	@Test(description ="RPMXCON-51992",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 57)
+	@Test(description ="RPMXCON-51992",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void DocViewAndDocExplorerPerformanceNavigate() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51992");
@@ -5187,7 +5187,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51731 Verify that text highlighting should not be present on doc
 	 * view
 	 */
-	@Test(description ="RPMXCON-51731",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 58)
+	@Test(description ="RPMXCON-51731",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyTextHightingNotPresent() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51731");
@@ -5209,7 +5209,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51755 Verify that when the toggle is ON will hide the 0 hit terms
 	 * on hits panel
 	 */
-	@Test(description ="RPMXCON-51755",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 59)
+	@Test(description ="RPMXCON-51755",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyToggleONhideZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51755");
@@ -5231,7 +5231,7 @@ public class DocView_Sprint2_Regression {
 	 * Id: RPMXCON-51756 Verify that when the toggle is OFF will show the 0 hit
 	 * terms on hits panel
 	 */
-	@Test(description ="RPMXCON-51756",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 60)
+	@Test(description ="RPMXCON-51756",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyToggleOFFshowZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51756");
@@ -5252,7 +5252,7 @@ public class DocView_Sprint2_Regression {
 	 * Author : Krishna date: NA Modified date: NA Modified by: NA Test Case Id:
 	 * RPMXCON-51989 Verify colour is same when remarks edited by different RMU user
 	 */
-	@Test(description ="RPMXCON-51989",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 61)
+	@Test(description ="RPMXCON-51989",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyColourRemarksEditing() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5324,7 +5324,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51558 Verify if X icon is visible after clicking on the
 	 * magnfifying/search icon in docView page
 	 */
-	@Test(description ="RPMXCON-51558",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 62)
+	@Test(description ="RPMXCON-51558",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyMagnifyingIconInDocViewForAllUsers() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5350,7 +5350,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51316 Verify if color changes for any annotation icon when clicked on
 	 * DocView Page
 	 */
-	@Test(description ="RPMXCON-51316",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 63)
+	@Test(description ="RPMXCON-51316",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyOnOffColourChangeInDocViewPage() throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -5383,7 +5383,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-50848 Verify if the persistent hit icon is present in DocView from
 	 * Basic Search for non-audio Docs
 	 */
-	@Test(description ="RPMXCON-50848",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 64)
+	@Test(description ="RPMXCON-50848",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistantHitIconFromBasicSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5412,7 +5412,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51346 Verify if highlights panel once open is not closed while
 	 * navigating docs from mini doc list
 	 */
-	@Test(description ="RPMXCON-51346",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 65)
+	@Test(description ="RPMXCON-51346",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlitesPanelisOpenWhileNavigatingFromMiniDocList() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5440,7 +5440,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51345 Verify that reviewer remarks panel remains selected while
 	 * navigating through docs
 	 */
-	@Test(description ="RPMXCON-51345",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 66)
+	@Test(description ="RPMXCON-51345",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyReviewerRemarksPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5466,7 +5466,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51344 Verify that reviewer Persistent hits panel remains selected
 	 * while navigating through docs
 	 */
-	@Test(description ="RPMXCON-51344",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(description ="RPMXCON-51344",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void VerifyReviewerPersistentHitPanel() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -5495,7 +5495,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization done
 	 */
 
-	@Test(description ="RPMXCON-51849",enabled = true, alwaysRun = false, groups = { "regression" }, priority = 68)
+	@Test(description ="RPMXCON-51849",enabled = true, alwaysRun = false, groups = { "regression" })
 	public void verifyPersistentHitsAfterCompletingDocumentsNotRetain() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5574,7 +5574,7 @@ public class DocView_Sprint2_Regression {
 	 * @Description : To verify document should be displayed in doc view panel as
 	 *              per the entered document number in the inputbox.
 	 */
-	@Test(description ="RPMXCON-50786",enabled = true, groups = { "regression" }, priority = 69)
+	@Test(description ="RPMXCON-50786",enabled = true, groups = { "regression" })
 	public void verifyDocumentAsPerEnteredDocument() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50786");
 		baseClass.stepInfo(
@@ -5637,7 +5637,7 @@ public class DocView_Sprint2_Regression {
 	 * previously viewed hits for the document on completing the document same as
 	 * last from coding form child window.
 	 */
-	@Test(description ="RPMXCON-51854",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 70)
+	@Test(description ="RPMXCON-51854",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsCompletingDocumentsCodeSameAsLastChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5744,7 +5744,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51331 Verify text from review mode outside of an assignment
 	 */
 
-	@Test(description ="RPMXCON-51331",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 71)
+	@Test(description ="RPMXCON-51331",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyReviewModeTextOutsideAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5789,7 +5789,7 @@ public class DocView_Sprint2_Regression {
 	 * visible area of the mini-DocList child window stabilization -done
 	 */
 
-	@Test(description ="RPMXCON-51940",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 72)
+	@Test(description ="RPMXCON-51940",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6050,7 +6050,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51943",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 73)
+	@Test(description ="RPMXCON-51943",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsSearchedUsingDocId()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -6230,7 +6230,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51770",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 74)
+	@Test(description ="RPMXCON-51770",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterRemoveAndReassignDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6353,7 +6353,7 @@ public class DocView_Sprint2_Regression {
 	 * stabilization - done
 	 */
 
-	@Test(description ="RPMXCON-51765",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 75)
+	@Test(description ="RPMXCON-51765",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearchGroup() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -6458,7 +6458,7 @@ public class DocView_Sprint2_Regression {
 	 * Id:RPMXCON-51746 Verify that on document navigation options when hits panel
 	 * is open then enable/disable should be retained
 	 */
-	@Test(description ="RPMXCON-51746",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 76)
+	@Test(description ="RPMXCON-51746",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitPanelIsRetained() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51746");
@@ -6502,7 +6502,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52309",enabled = true, groups = { "regression" }, priority = 77)
+	@Test(description ="RPMXCON-52309",enabled = true, groups = { "regression" })
 	public void verifyHighlightedThisPage() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -6563,7 +6563,7 @@ public class DocView_Sprint2_Regression {
 	 * RPMXCON-51567 Verify when the user clicks on the X after the text search in a
 	 * document
 	 */
-	@Test(description ="RPMXCON-51567",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 78)
+	@Test(description ="RPMXCON-51567",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTextSearchAfterUserClicksX() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -6608,7 +6608,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52301",enabled = true, groups = { "regression" }, priority = 79)
+	@Test(description ="RPMXCON-52301",enabled = true, groups = { "regression" })
 	public void verifyRectangleRedactionPosition() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -6681,7 +6681,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52310",enabled = true, groups = { "regression" }, priority = 80)
+	@Test(description ="RPMXCON-52310",enabled = true, groups = { "regression" })
 	public void verifyRectangleHighlightingPosition() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -6755,7 +6755,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52210",enabled = true, groups = { "regression" }, priority = 81)
+	@Test(description ="RPMXCON-52210",enabled = true, groups = { "regression" })
 	public void verifySameDocIdAndDifferentAnnotationAddRedaction() throws Exception {
 
 		baseClass = new BaseClass(driver);
@@ -6819,7 +6819,7 @@ public class DocView_Sprint2_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-52209",enabled = true, groups = { "regression" }, priority = 82)
+	@Test(description ="RPMXCON-52209",enabled = true, groups = { "regression" })
 	public void verifySameDocIdAndSameAnnotationAddRedaction() throws Exception {
 
 		baseClass = new BaseClass(driver);
