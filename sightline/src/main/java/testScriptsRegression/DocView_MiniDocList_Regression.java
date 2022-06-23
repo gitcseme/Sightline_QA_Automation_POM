@@ -2861,7 +2861,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-59584" ,enabled = true, groups = { "regression" })
 	public void verifyNavigateDocViewManageAssignmentFromReviewerDashboard() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59584");
@@ -3306,7 +3306,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-59587",enabled = true, groups = { "regression" })
 	public void verifyNavigateDocViewRMUDashboardManageAssignment() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-59587");
 		baseClass.stepInfo(
