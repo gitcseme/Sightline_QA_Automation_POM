@@ -61,7 +61,7 @@ public class Export_Regression1 {
 	 *              then DAT component should retain the 'TIFFPageCount'
 	 * 
 	 */
-	@Test(description = "RPMXCON-47500", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47500", enabled = true, groups = { "regression" })
 	public void verifyDatSectionMappingField() throws Exception {
 
 		base = new BaseClass(driver);
@@ -93,7 +93,7 @@ public class Export_Regression1 {
 	 *              Task
 	 * 
 	 */
-	@Test(description = "RPMXCON-47983", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47983", enabled = true, groups = { "regression" })
 	public void verifyingCompletedStatusInTileView() throws Exception {
 
 		base = new BaseClass(driver);
@@ -155,7 +155,7 @@ public class Export_Regression1 {
 	 * @Description To Verify PDF creation for export
 	 * 
 	 */
-	@Test(description = "RPMXCON-47471", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47471", enabled = true, groups = { "regression" })
 	public void verifyGenerationOfExportWithPdfSection() throws Exception {
 
 		base = new BaseClass(driver);
@@ -209,7 +209,7 @@ public class Export_Regression1 {
 	 *              numbering.
 	 *
 	 */
-	@Test(description = "RPMXCON-48193", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48193", enabled = true, groups = { "regression" })
 	public void verifyGenerationOfExportForMp3File() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -255,7 +255,7 @@ public class Export_Regression1 {
 	 *              "Doc Metadata"
 	 *
 	 */
-	@Test(description = "RPMXCON-47499", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47499", enabled = true, groups = { "regression" })
 	public void VerifydatSectionFieldMapping() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -283,7 +283,7 @@ public class Export_Regression1 {
 	 * 			RPMXCON-47933
 	 * @Description To verify Preview for Export										 * 
 	 */
-		@Test(description="RPMXCON-47933",enabled = true,groups = { "regression" })
+		//@Test(description="RPMXCON-47933",enabled = true,groups = { "regression" })
 		public void verifyGenerationOfPdfFile() throws Exception {
 			
 			base = new BaseClass(driver);
@@ -339,7 +339,7 @@ public class Export_Regression1 {
 		 * @Description To Verify TIFF creation for export
 		 * 
 		 */
-			@Test(description="RPMXCON-47473",enabled = true,groups = { "regression" })
+			//@Test(description="RPMXCON-47473",enabled = true,groups = { "regression" })
 			public void verifyGenerationOfExportWithTiffSection() throws Exception {
 				
 				base = new BaseClass(driver);
@@ -515,7 +515,107 @@ public class Export_Regression1 {
 						loginPage.logout();
 						
 						}
-							
+						
+						
+						/**
+						 * @author Brundha RPMXCON-49386
+						 * @DescriptionVerify the Advanced section in Tiff /PDF component
+						 * 
+						 */
+						@Test(description = "RPMXCON-49386", enabled = true, groups = { "regression" })
+						public void verifyingAdvancedOptionInTiffSection() throws Exception {
+
+							base = new BaseClass(driver);
+							UtilityLog.info(Input.prodPath);
+							base.stepInfo("RPMXCON-49386 -Export component");
+							base.stepInfo("Verify the Advanced section in Tiff /PDF component.");
+
+							String newExport = "Ex" + Utility.dynamicNameAppender();
+
+							ProductionPage page = new ProductionPage(driver);
+							String productionname = "p" + Utility.dynamicNameAppender();
+							page.selectingDefaultSecurityGroup();
+							String text = page.getProdExport_ProductionSets().getText();
+							if (text.contains("Export Set")) {
+								page.selectExportSetFromDropDown();
+							} else {
+								page.createNewExport(newExport);
+							}
+							page.addANewExport(productionname);
+							page.verifyingAdvancedOptionInTiffSection();
+							loginPage.logout();
+						}
+
+						/**
+						 * @author Brundha RPMXCON-48187
+						 * @Description To Verify On Export Basic info page User should be able to
+						 *              select Custom Template (if available under custom template) and
+						 *              move ahead with Export
+						 * 
+						 */
+						@Test(description = "RPMXCON-48187", enabled = true, groups = { "regression" })
+						public void verifyTemplateValueInProduction() throws Exception {
+
+							base = new BaseClass(driver);
+							UtilityLog.info(Input.prodPath);
+							base.stepInfo("RPMXCON-48187 -Export component");
+							base.stepInfo(
+									"To Verify On Export Basic info page User should be able to select Custom Template (if available under custom template) and move ahead with Export");
+
+							String foldername = "FolderProd" + Utility.dynamicNameAppender();
+							String newExport = "Ex" + Utility.dynamicNameAppender();
+							String prefixID = Input.randomText + Utility.dynamicNameAppender();
+							String suffixID = Input.randomText + Utility.dynamicNameAppender();
+							String TempName = "Temp" + Utility.dynamicNameAppender();
+
+							TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+							tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+							SessionSearch sessionSearch = new SessionSearch(driver);
+							sessionSearch.basicContentSearch(Input.testData1);
+							sessionSearch.bulkFolderExisting(foldername);
+
+							ProductionPage page = new ProductionPage(driver);
+							String productionname = "p" + Utility.dynamicNameAppender();
+							String subBates = page.getRandomNumber(2);
+							page.selectingDefaultSecurityGroup();
+							String text = page.getProdExport_ProductionSets().getText();
+							if (text.contains("Export Set")) {
+								page.selectExportSetFromDropDown();
+							} else {
+								page.createNewExport(newExport);
+							}
+							page.addANewExport(productionname);
+							page.fillingDATSection();
+							page.navigateToNextSection();
+							page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+							page.navigateToNextSection();
+							page.fillingDocumentSelectionPage(foldername);
+							page.navigateToNextSection();
+							page.fillingPrivGuardPage();
+							page.fillingExportLocationPage(productionname);
+							page.navigateToNextSection();
+							page.fillingSummaryAndPreview();
+							page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+
+							this.driver.getWebDriver().get(Input.url + "Production/Home");
+							driver.Navigate().refresh();
+							String productionname1 = "p" + Utility.dynamicNameAppender();
+							page.selectExportSetFromDropDown();
+							page.savedTemplateAndNewProdcution(productionname, TempName);
+
+							driver.Navigate().refresh();
+							driver.waitForPageToBeReady();
+							page.baseInfoLoadTemplate(productionname1, TempName);
+							page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
+							page.getCheckBoxCheckedVerification(page.getNativeCheckBox());
+							driver.scrollPageToTop();
+							page.getMarkCompleteLink().waitAndClick(10);
+							base = new BaseClass(driver);
+							base.VerifySuccessMessage("Mark Complete successful");
+							loginPage.logout();
+						}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

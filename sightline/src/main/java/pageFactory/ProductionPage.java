@@ -2965,7 +2965,9 @@ public class ProductionPage {
 	public Element getSourceFiledInDatSection() {
 		return driver.FindElementByXPath("//*[@id'SF_0']//option[text()='PageCount']");
 	}
-	
+	public Element getNativeCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkIsNativeSelected']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20099,5 +20101,21 @@ public class ProductionPage {
 				}
 			}
 
-		
+
+/**
+* @author Brundha.T
+* description:Method to verify the advanced option text in tiff section
+*/
+public void verifyingAdvancedOptionInTiffSection() {
+
+base.waitForElement(getTIFFTab());
+getTIFFTab().Click();
+driver.scrollingToBottomofAPage();
+base.waitForElement(getTiffAdvancedLink());
+getTiffAdvancedLink().waitAndClick(5);
+driver.scrollingToBottomofAPage();
+nonVisibleCheck(Input.advancedOptionText);
+
+
+}
 	}
