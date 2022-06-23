@@ -61,7 +61,7 @@ public class Regression_Ingestion02 {
 	 * Description :ICE: Verify the help content for "Kick Off Analytics Automatically" option
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49320",enabled = false, groups = { "regression" })
+	@Test(description ="RPMXCON-49320",enabled = true, groups = { "regression" })
 	public void verifyHelpContentForKickOffAnalyticsAutomatically() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49320");
@@ -82,7 +82,7 @@ public class Regression_Ingestion02 {
 	 * Description :ICE: Verify the help content for "Run Incremental Analytics for New Small Data (<20%)" option
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49321",enabled = false, groups = { "regression" })
+	@Test(description ="RPMXCON-49321",enabled = true, groups = { "regression" })
 	public void verifyHelpContentForIncrementalAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49321");
@@ -104,7 +104,7 @@ public class Regression_Ingestion02 {
 	 *  for New Small Data (<20%)" available in project settings
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49319",enabled = false, groups = { "regression" })
+	@Test(description ="RPMXCON-49319",enabled = true, groups = { "regression" })
 	public void verifyOptionsAvailableInProjectSetting() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49319");
@@ -125,7 +125,7 @@ public class Regression_Ingestion02 {
 	 *  "Generate Searchable PDF for TIFFs" options should be displayed
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49490",enabled = false, groups = { "regression" })
+	@Test(description ="RPMXCON-49490",enabled = true, groups = { "regression" })
 	public void verifyGenerateSearchablePdfOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49490");
