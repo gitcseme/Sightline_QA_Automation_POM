@@ -71,7 +71,7 @@ public class SavedSearch_Regression1 {
 	 * TestCase id :  48481 - Verify that "Count" display as BLANK in Saved Search Screen when user saved a ERROR Query through Batch Search Upload.
 	 * Description : Verify that "Count" display as BLANK in Saved Search Screen when user saved a ERROR Query through Batch Search Upload.
 	 */
-	@Test(description ="RPMXCON-48481",alwaysRun = true,groups={"regression"},priority = 1)
+	@Test(description ="RPMXCON-48481",alwaysRun = true,groups={"regression"} )
 	public void verifyCountBlankWithInvalidQueryBatchUploadSavedSearch() throws Exception {		
 	
 		baseClass.stepInfo("Test case Id: RPMXCON-48481");
@@ -109,7 +109,7 @@ public class SavedSearch_Regression1 {
 		 * TestCase id :  48479 -Verify that "Count" display as BLANK in Saved Search Screen when user saved a DRAFT Basic search Query.
 		 * Description : Verify that "Count" display as BLANK in Saved Search Screen when user saved a DRAFT Basic search Query.
 		 */
-		@Test(description ="RPMXCON-48479",alwaysRun = true,groups={"regression"},priority = 2)
+		@Test(description ="RPMXCON-48479",alwaysRun = true,groups={"regression"} )
 		public void validateCountOfSavedDraftBasicMetaDataSearch() {
 			
 			String BasicMetaDataSearchName = Input.randomText + Utility.dynamicNameAppender();
@@ -147,7 +147,7 @@ public class SavedSearch_Regression1 {
 		 * @Testcase_Id : RPMXCON-48482 : Verify that 'Count' display as BLANK in Saved Search Screen when user saved a DRAFT Basic/Advanced search Query
 		 * @Description : Verify that "Count" display as BLANK in Saved Search Screen when user saved a DRAFT Basic/Advanced search Query
 		 */
-		@Test(description ="RPMXCON-48482",alwaysRun = true,groups={"regression"},priority = 3)
+		@Test(description ="RPMXCON-48482",alwaysRun = true,groups={"regression"} )
 		public void validCountOfBasicAndAndvancedDraftSavedSearch() {
 			
 			String BasicSearchName = Input.randomText + Utility.dynamicNameAppender();
@@ -199,7 +199,7 @@ public class SavedSearch_Regression1 {
 		 * @Testcase_Id : RPMXCON-48480 : Verify that 'Count' display as BLANK in Saved Search Screen when user saved a DRAFT Advanced search Query.
 		 * @Description : Verify that "Count" display as BLANK in Saved Search Screen when user saved a DRAFT Advanced search Query.
 		 */
-		@Test(description ="RPMXCON-48480",alwaysRun = true,groups={"regression"},priority = 4)
+		@Test(description ="RPMXCON-48480",alwaysRun = true,groups={"regression"} )
 		public void validateCountOfSavedDraftAdvancedDataSearch() {
 			
 			String AdvanceSearchName = Input.randomText + Utility.dynamicNameAppender();
@@ -234,7 +234,7 @@ public class SavedSearch_Regression1 {
 		 * @Testcase_Id : RPMXCON-48478 : Verify that "Count" gets update  in Saved Search Screen when user saved a Background Advanced search Query.
 		 * @Description : Verify that "Count" gets update  in Saved Search Screen when user saved a Background Advanced search Query
 		 */
-		@Test(description ="RPMXCON-48478",alwaysRun = true,groups={"regression"},priority = 5)
+		@Test(description ="RPMXCON-48478",alwaysRun = true,groups={"regression"} )
 		public void validateCountOfSavedAdvancedSearch() {
 			
 			String advanceSearchName = Input.randomText + Utility.dynamicNameAppender();
@@ -276,7 +276,7 @@ public class SavedSearch_Regression1 {
 		 * TestCase id :  48516 - Verify that "Pending" status appears in Saved Search Screen when user saved a Basic search through Batch Search Upload.
 		 * Description : Verify that "Pending" status appears in Saved Search Screen when user saved a Basic search through Batch Search Upload.
 		 */
-		@Test(description ="RPMXCON-48516",alwaysRun = true,groups={"regression"},priority = 6)
+		@Test(description ="RPMXCON-48516",alwaysRun = true,groups={"regression"} )
 		public void verifyPendingStatusBatchUploadSavedSearch() throws Exception {		
 		
 			baseClass.stepInfo("Test case Id: RPMXCON-48516");
@@ -312,7 +312,7 @@ public class SavedSearch_Regression1 {
 		 * TestCase id :  48517 - Verify that "Pending" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
 		 * Description : Verify that "Pending" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
 		 */
-		@Test(description ="RPMXCON-48517",alwaysRun = true,groups={"regression"},priority = 7)
+		@Test(description ="RPMXCON-48517",alwaysRun = true,groups={"regression"} )
 		public void verifyPendingStatusBatchUploadAdvancedSavedSearch() throws Exception {		
 		
 			baseClass.stepInfo("Test case Id: RPMXCON-48517");
@@ -346,7 +346,7 @@ public class SavedSearch_Regression1 {
 		 * TestCase id :  48519 - Verify that "Completed" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
 		 * Description : Verify that "Completed" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
 		 */
-		@Test(description ="RPMXCON-48519",alwaysRun = true,groups={"regression"},priority = 8)
+		@Test(description ="RPMXCON-48519",alwaysRun = true,groups={"regression"} )
 		public void verifyCompletedStatusBatchUploadAdvancedSavedSearch() throws Exception {		
 		
 			baseClass.stepInfo("Test case Id: RPMXCON-48519");

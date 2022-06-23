@@ -112,7 +112,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-63580",enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-63580",enabled = true, dataProvider = "AllTheUsers", groups = { "regression" } )
 	public void verifyingPrecisionSensitivityValueWhileConfiguringWithrecisionSensitivityValueWhileEditing(
 			String username, String password, String fullName) throws Exception {
 
@@ -163,7 +163,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              [RPMXCON-47154]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-47154",enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-47154",enabled = true, dataProvider = "UserAndSearchGroup", groups = { "regression" } )
 	public void validateEditingOrExecutingNonaudioSearches(String username, String password, String fullname,
 			String rootGroup) throws Exception {
 		String search1 = "Search" + Utility.dynamicNameAppender();
@@ -224,7 +224,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              against My saved searches in PAU role [RPMXCON-57405]
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-57405",enabled = true, dataProvider = "SwitchUsers", groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-57405",enabled = true, dataProvider = "SwitchUsers", groups = { "regression" } )
 	public void verifyTAllyReportForSearch(String username, String password, String role) throws InterruptedException {
 		String search1PA = "Search" + Utility.dynamicNameAppender();
 		String search2PA = "Search" + Utility.dynamicNameAppender();
@@ -303,7 +303,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 *              Search Screen\" [RPMXCON-49836] 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-49836",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-49836",enabled = true, groups = { "regression" } )
 	public void verifySearchDocOfRmu() throws Exception {
 		String folderName = "Folder" + Utility.dynamicNameAppender();
 		String tagName = "TagName" + Utility.dynamicNameAppender();
@@ -396,7 +396,7 @@ public class SavedsearchRegression_New_Set_06 {
 	 * @param fullName
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49264",enabled = true,groups = { "regression" }, dataProvider = "AllTheUsers", priority = 5)
+	@Test(description ="RPMXCON-49264",enabled = true,groups = { "regression" }, dataProvider = "AllTheUsers")
 	public void batchUploadAndVerifyConceptCount(String UserName, String PassWord, String fullName)
 			throws InterruptedException {
 

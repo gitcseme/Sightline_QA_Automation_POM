@@ -92,7 +92,7 @@ public class SavedSearch_Regression {
 	 * : Verify navigation to doclist screen from saved search is displaying docs
 	 * correctly
 	 */
-	@Test(groups = { "regression" }, priority = 1)
+	@Test(groups = { "regression" } )
 	public void saveSearchToDocList()
 			throws ParseException, InterruptedException, NoSuchMethodException, SecurityException {
 
@@ -116,7 +116,7 @@ public class SavedSearch_Regression {
 	 * : Verify navigation to docview screen from saved search is displaying docs
 	 * correctly
 	 */
-	@Test(groups = { "regression" }, priority = 2)
+	@Test(groups = { "regression" } )
 	public void saveSearchToDocView() throws ParseException, InterruptedException {
 		System.out.println("****************DocView Started*************************");
 		ss.savedSearchToDocView(saveSearchName);
@@ -130,7 +130,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify bulk tag is working correctly from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 3)
+	@Test(groups = { "regression" } )
 	public void SavedSearchBulkTag() throws ParseException, InterruptedException {
 
 		System.out.println("****************Bulk Tag Started*************************");
@@ -155,7 +155,7 @@ public class SavedSearch_Regression {
 	 * : Verify bulk folder is working correctly from saved search
 	 */
 
-   @Test(groups = { "regression" }, priority = 4)
+   @Test(groups = { "regression" } )
 	public void SavedSearchBulkFolder() throws ParseException, InterruptedException, AWTException {
 
 		// Schedule the saved search
@@ -179,7 +179,7 @@ public class SavedSearch_Regression {
 	 * : Verify bulk export is working correctly from saved search
 	 */
 
-	@Test(groups = { "regression" }, priority = 5)
+	@Test(groups = { "regression" } )
 	public void SaveSearchExport() throws ParseException, InterruptedException {
 
 		// Schedule the saved search
@@ -191,7 +191,7 @@ public class SavedSearch_Regression {
 	 * : Verify schedule saved search is working correctly and status is showing as
 	 * completed from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 6)
+	@Test(groups = { "regression" } )
 	public void scheduleSavedSearch() throws ParseException, InterruptedException {
 
 		// Schedule the saved search
@@ -205,7 +205,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify conceptual report is working correctly from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 7)
+	@Test(groups = { "regression" } )
 	public void savedSearchToConcepts() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -217,7 +217,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify Tally report is working correctly from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 8)
+	@Test(groups = { "regression" } )
 	public void savedSearchToTally() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -229,7 +229,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify Search Term report is working correctly from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 9)
+	@Test(groups = { "regression" } )
 	public void savedSearchToTermReport() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -242,7 +242,7 @@ public class SavedSearch_Regression {
 	 * : Verify new search group is created successfully and search is saved under
 	 * that group
 	 */
-	@Test(groups = { "regression" }, priority = 10)
+	@Test(groups = { "regression" } )
 	public void savedSearchNewSearchGrp() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -253,7 +253,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify execution of existing saved search is working correctly
 	 */
-	@Test(groups = { "regression" }, priority = 11)
+	@Test(groups = { "regression" } )
 	public void savedSearchExecute() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -261,7 +261,7 @@ public class SavedSearch_Regression {
 		ss.savedSearchExecute(saveSearchName, purehits);
 	}
 
-	@Test(groups = { "regression" }, priority = 12)
+	@Test(groups = { "regression" } )
 	public void savedSearchEdit() throws ParseException, InterruptedException {
 
 		// Share the saved search
@@ -273,7 +273,7 @@ public class SavedSearch_Regression {
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by: Description
 	 * : Verify deletion of saved searches is working correctly from saved search
 	 */
-	@Test(groups = { "regression" }, priority = 13)
+	@Test(groups = { "regression" } )
 	public void SaveSearchDelete() throws ParseException, InterruptedException {
 
 		// Schedule the saved search
@@ -286,7 +286,7 @@ public class SavedSearch_Regression {
 	 * Description : Verify sharing of saved searches is working correctly
 	 */
 
-	 @Test(groups = { "regression" }, priority = 14)
+	 @Test(groups = { "regression" } )
 	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
 
 		lp.logout();
