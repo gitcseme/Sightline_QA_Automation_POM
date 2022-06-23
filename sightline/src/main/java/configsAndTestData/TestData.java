@@ -242,6 +242,9 @@ public class TestData {
 	public String email;
 	public String emailToNamesAndAddresses;
 	public String datLoadFile2;
+	public String nativeLoadFile2;
+	public String textLoadFile2;
+	public String defaultNewLineDelimiter;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

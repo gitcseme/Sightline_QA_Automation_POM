@@ -61,7 +61,7 @@ public class Regression_Ingestion02 {
 	 * Description :ICE: Verify the help content for "Kick Off Analytics Automatically" option
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49320",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-49320",enabled = true, groups = { "regression" })
 	public void verifyHelpContentForKickOffAnalyticsAutomatically() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49320");
@@ -82,7 +82,7 @@ public class Regression_Ingestion02 {
 	 * Description :ICE: Verify the help content for "Run Incremental Analytics for New Small Data (<20%)" option
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49321",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-49321",enabled = true, groups = { "regression" })
 	public void verifyHelpContentForIncrementalAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49321");
@@ -104,7 +104,7 @@ public class Regression_Ingestion02 {
 	 *  for New Small Data (<20%)" available in project settings
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49319",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-49319",enabled = true, groups = { "regression" })
 	public void verifyOptionsAvailableInProjectSetting() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49319");
@@ -125,7 +125,7 @@ public class Regression_Ingestion02 {
 	 *  "Generate Searchable PDF for TIFFs" options should be displayed
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49490",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-49490",enabled = true, groups = { "regression" })
 	public void verifyGenerateSearchablePdfOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49490");
@@ -143,7 +143,7 @@ public class Regression_Ingestion02 {
 	 * Description :To verify Document Count for Audio Docs in Indexing section
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48244",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-48244",enabled = true, groups = { "regression" })
 	public void verifyCountInAudioDocsIndexing() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48244");
@@ -189,7 +189,7 @@ public class Regression_Ingestion02 {
 	 * Description :To Verify In Ingestions, for audio indexing, there should not be any error message.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48236",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-48236",enabled = true, groups = { "regression" })
 	public void verifyAudioIndexingErrorMessage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48236");
@@ -214,7 +214,7 @@ public class Regression_Ingestion02 {
 	 * Description :To verify that user is not able to search the data if Ingestions Indexing is running
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47372",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-47372",enabled = true, groups = { "regression" })
 	public void verifyDataSearchWhileindexProcessRunning() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47372");
@@ -245,7 +245,7 @@ public class Regression_Ingestion02 {
 	 * Description :Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is available
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49552",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-49552",enabled = true, groups = { "regression" })
 	public void verifyIngestionMetaDataAvailable() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49552");
@@ -272,6 +272,67 @@ public class Regression_Ingestion02 {
 				break;
 			}
 		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 22/06/2022 TestCase Id:RPMXCON-49556
+	 * Description :Verify Ingestion should published successfully with new Email metadata
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49556",enabled = true, groups = { "regression" })
+	public void verifyAddOnlyIngestionWithNewEmailMetadata() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49556");
+		baseClass.stepInfo("Verify Ingestion should published successfully with new Email metadata");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		if (status == false) {
+			baseClass.stepInfo("Performing add only ingestion");
+			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile2,Input.nativeLoadFile2, 
+					Input.textLoadFile2);
+			ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
+			baseClass.passedStep("Ingestion published successfully with new email metadata");
+		}
+		else {
+			baseClass.passedStep("Ingestion already present in the project");
+		}
+	}
+	
+	/**
+	 * Author :Arunkumar date: 22/06/2022 TestCase Id:RPMXCON-48290 
+	 * Description :To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiter
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48290",enabled = true, groups = { "regression" })
+	public void verifyAddOnlyIngestionWithDefaultDelimiter() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48290");
+		baseClass.stepInfo("To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiter");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion with default new line delimiter");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
+				Input.sourceLocation, Input.HiddenPropertiesFolder);
+		baseClass.stepInfo("verify default value of new line delimiter");
+		ingestionPage.verifyDefaultValueOfDelimiter();
+		baseClass.stepInfo("Selecting Dat and Native file");
+		ingestionPage.selectDATSource(Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.selectNativeSource(Input.YYYYMMDDHHMISSLst, false);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingestionPage.getDateFormat().Visible();
+			}
+		}), Input.wait30);
+		ingestionPage.getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		//Complete analytics and publish ingestion
+		ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
+		baseClass.passedStep("Ingestion completed successfully without error message");
 		loginPage.logout();
 	}
 	

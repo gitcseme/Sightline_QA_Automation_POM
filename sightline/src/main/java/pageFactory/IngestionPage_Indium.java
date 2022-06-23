@@ -3820,9 +3820,10 @@ public class IngestionPage_Indium {
 			getPreviewRun().isElementAvailable(15);
 			getPreviewRun().Click();
 			driver.waitForPageToBeReady();
-			getApproveMessageOKButton().isElementAvailable(15);
+			if(getApproveMessageOKButton().isElementAvailable(15)) {
 			getApproveMessageOKButton().Click();
 			driver.waitForPageToBeReady();
+			}
 			getbtnRunIngestion().isElementAvailable(15);
 			getbtnRunIngestion().Click();
 		} catch (Exception e) {
@@ -11080,5 +11081,115 @@ public class IngestionPage_Indium {
 				
 				
 	
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform ingestion for GD994NativeTextForProductionFolder
+		 */
+		public void performGD_994NativeFolderIngestion(String datFile,String nativeFile,String textFile) {
+			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDATDelimitersNewLine().Visible();
+				}
+			}), Input.wait30);
+			base.waitForElement(getDATDelimitersNewLine());
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.waitTime(2);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile, Input.documentKey);
+			base.stepInfo("Selecting Native file");
+			selectNativeSource(nativeFile, false);
+			base.stepInfo("Selecting Text file");
+			selectTextSource(textFile, false);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDateFormat().Visible();
+				}
+			}), Input.wait30);
+			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+			clickOnNextButton();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDateFormat().Visible();
+				}
+			}), Input.wait30);
+			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.documentKey, Input.documentKey);
+			performMapping(6,"EmailBCCNameAndBCCAddress",Input.email,"EmailBCCNamesAndAddresses");
+			performMapping(7,"EmailCCNamAndCCAddress",Input.email,"EmailCCNamesAndAddresses");
+			performMapping(8,"EmailToNameAndAddress",Input.email,Input.emailToNamesAndAddresses);
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started");
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform mapping in Mapping section
+		 */
+		
+		public void performMapping(int row,String source,String category,String destination) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMappingSourceField(row).Visible();
+				}
+			}), Input.wait30);
+			getMappingSourceField(row).selectFromDropdown().selectByVisibleText(source);
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMappingCategoryField(row).Visible();
+				}
+			}), Input.wait30);
+			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(category);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMappingDestinationField(row).Visible();
+				}
+			}), Input.wait30);
+			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(destination);
+				
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform all the ingestion process and publish ingestion
+		 */
+		public String publishAddonlyIngestion(String dataset) {
+			ignoreErrorsAndCatlogging();
+			ignoreErrorsAndCopying();
+			ingestionIndexing(dataset);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestionDetailPopup(1).Displayed();
+				}
+			}), Input.wait30);
+			String ingestionName =getIngestionDetailPopup(1).getText();
+			approveIngestion(1);
+			runFullAnalysisAndPublish();
+			return ingestionName;
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the default value of delimiter
+		 *               
+		 */
+		public void verifyDefaultValueOfDelimiter() {
+			driver.waitForPageToBeReady();
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDATDelimitersNewLine().Visible();
+				}
+			}), Input.wait30);
+			String newLineDelimiter=getDATDelimitersNewLine().selectFromDropdown().getFirstSelectedOption().getText();
+			if(newLineDelimiter.equalsIgnoreCase(Input.defaultNewLineDelimiter)) {
+				base.passedStep("New line delimiter have default value selected");
+			}
+			else {
+				base.failedStep("default value not selected for new line delimiter");
+			}
 		}
 }
