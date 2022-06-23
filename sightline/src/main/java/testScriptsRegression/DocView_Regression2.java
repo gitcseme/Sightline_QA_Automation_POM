@@ -101,7 +101,7 @@ public class DocView_Regression2 {
 	 * Verifying persistent hit for audio docs as RMU when navigated from child
 	 * window As PA DocView- sprint 3
 	 */
-	@Test(description ="RPMXCON-51349",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-51349",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void persistentHitCheckAudioDocsChildWindowAsPA() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -125,7 +125,7 @@ public class DocView_Regression2 {
 	 * with impersonation PA to RMU
 	 */
 
-	@Test(description ="RPMXCON-51009",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-51009",enabled = true, groups = { "regression" })
 	public void verifyThumbnailsInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51009");
@@ -177,7 +177,7 @@ public class DocView_Regression2 {
 	 * box and hits Enter, then the app looks for the corresponding text and
 	 * highlights them in the document
 	 */
-	@Test(description ="RPMXCON-51562",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-51562",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -199,7 +199,7 @@ public class DocView_Regression2 {
 	 * of 30) and the option to traverse through these hits using the forward and
 	 * backward arrows.
 	 */
-	@Test(description ="RPMXCON-51563",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-51563",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTraverseForwardAndBackwardOnHits()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -220,7 +220,7 @@ public class DocView_Regression2 {
 	 * Id: RPMXCON-51564 Verify when there are no hits, then it will show 0 of 0
 	 * with the forward and backward arrows grayed out.
 	 */
-	@Test(description ="RPMXCON-51564",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-51564",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyThereAreNoHits(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -243,7 +243,7 @@ public class DocView_Regression2 {
 	 * navigation from child window
 	 */
 
-	@Test(description ="RPMXCON-51425",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-51425",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyConceptuallySimilarTabChildWindow(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -278,7 +278,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51909 Verify Images tab when moved to last Doc PA to RMU
 	 */
 
-	@Test(description ="RPMXCON-51909",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-51909",enabled = true, groups = { "regression" })
 	public void verifyImagesIconWhenMovedToLastDoc() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -313,7 +313,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51910",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-51910",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyImagesIconWhenMovedToFirstDoc(String fullName, String userName, String password)
 			throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
@@ -353,7 +353,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51911",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-51911",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyImagesIconWhenMovedtoDocByEnteringNumber(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -392,7 +392,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51908",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-51908",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyImagesIconWhenNavigatingPriviousDoc(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -428,7 +428,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51566
 	 * 
 	 */
-	@Test(description ="RPMXCON-51566",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-51566",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -464,7 +464,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51918
 	 * 
 	 */
-	@Test(description ="RPMXCON-51918",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-51918",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyImagesTabRetainedWhileSaving(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -497,7 +497,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51919
 	 * 
 	 */
-	@Test(description ="RPMXCON-51919",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-51919",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -530,7 +530,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51407
 	 * 
 	 */
-	@Test(description ="RPMXCON-51407",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-51407",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyKeywordHighliteIsdisplayedOnHitofPersistentHitIcon(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -563,7 +563,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51114",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-51114",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDownloadDropdownDocViewAsSA() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -614,7 +614,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-50915",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-50915",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyNavigationToDocViewAsSAimpersonation() throws InterruptedException, AWTException {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -667,7 +667,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51013",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-51013",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyImagesTabFromAssignmentAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -704,7 +704,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51113",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-51113",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyImagesTabDropDownAsSA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51113");
@@ -752,7 +752,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51432",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-51432",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifySearchBoxNotPresent(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51432");
@@ -786,7 +786,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-50849",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-50849",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyAllObjectsDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50849");
@@ -863,7 +863,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description = "RPMXCON-51254", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(description = "RPMXCON-51254", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyTraverseForwardOnHitsAfterImpersonation() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		String assignmentName2 = "AAassignment2" + Utility.dynamicNameAppender();
@@ -932,7 +932,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51079",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-51079",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyAnnotationDelete(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -970,7 +970,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51057",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-51057",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyRedactionOnImpersonationRMUtoREV() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1002,7 +1002,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-51912",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyImagesTabRetainedFromHistoryDropdown(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -1038,7 +1038,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51348",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 25)
+	@Test(description ="RPMXCON-51348",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyRemarksPanelRetainedOnDocNavigation(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -1073,7 +1073,7 @@ public class DocView_Regression2 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(description ="RPMXCON-51927",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-51927",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyDocumentPresentAfterDocToDocNavigation(String fullName, String userName, String password)
 			throws InterruptedException {
 		baseClass = new BaseClass(driver);
@@ -1126,7 +1126,7 @@ public class DocView_Regression2 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(description ="RPMXCON-51353",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description ="RPMXCON-51353",enabled = true, groups = { "regression" })
 	public void verifyMenuStatusAfterMovingToNextDoc() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
@@ -1190,7 +1190,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51347",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-51347",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentPanelRetainedOnDocNavigation(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -1224,7 +1224,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51351",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-51351",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyRemarksPanelRetained(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1257,7 +1257,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47736",enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-47736",enabled = true, groups = { "regression" })
 	public void verifyWarningMessageDisplay() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		docView = new DocViewPage(driver);
@@ -1304,7 +1304,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-51115",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-51115",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPrintIconAfterDisablingToggle() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1351,7 +1351,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-48810
 	 * 
 	 */
-	@Test(description ="RPMXCON-48811",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-48811",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyTextRedactionFunctionDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1388,7 +1388,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-50774",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-50774",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAssignmentDocs() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1425,7 +1425,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-50776",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-50776",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAssignmentPageViewInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -1460,7 +1460,7 @@ public class DocView_Regression2 {
 	 * remark respecive page should be scrolled in doc view when redirecting from
 	 * basic search/saved search/doc list
 	 */
-	@Test(description ="RPMXCON-51083",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-51083",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" })
 	public void VerifyReviewerRemarksPageFromSearchPg(String userName, String password, String fullName)
 			throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51083");
@@ -1513,7 +1513,7 @@ public class DocView_Regression2 {
 	 * remark respective page should be scrolled in doc view when redirecting from
 	 * my assignment
 	 */
-	@Test(description ="RPMXCON-51082",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-51082",enabled = true, dataProvider = "UsersWithoutPA", alwaysRun = true, groups = { "regression" })
 	public void VerifyReviewerRemarksPageFromAssignments(String userName, String password, String fullName)
 			throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51082");
@@ -1598,7 +1598,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-51046",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-51046",enabled = true, groups = { "regression" })
 	public void verifyKeywordsHighlightingWhenMappedToAssignment() throws InterruptedException, AWTException {
 
 		baseClass = new BaseClass(driver);
@@ -1666,7 +1666,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51557
 	 * 
 	 */
-	@Test(description ="RPMXCON-51557",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-51557",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifySearchIconGreyedForTiff(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -1691,7 +1691,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51267
 	 * 
 	 */
-	@Test(description ="RPMXCON-51267",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 40)
+	@Test(description ="RPMXCON-51267",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyUniCodeFilesViewInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 //	 checking hits as SA to PA		
@@ -1763,7 +1763,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-50787",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 41)
+	@Test(description ="RPMXCON-50787",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyDocViewOptions(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50787");
@@ -1823,7 +1823,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-50787",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 42)
+	@Test(description ="RPMXCON-50787",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocViewOptions() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-50787");
@@ -1927,7 +1927,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-510785",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 43)
+	@Test(description ="RPMXCON-510785",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAssignmentViewInDocViewZero() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1960,7 +1960,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51305",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 44)
+	@Test(description ="RPMXCON-51305",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyMetaDataTermOnPersistentPanel(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1986,7 +1986,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51324",enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 45)
+	@Test(description ="RPMXCON-51324",enabled = true, dataProvider = "userDetails", groups = { "regression" })
 	public void verifyHighlightingWhenNavigatingFromAdvancedSearch(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -2012,7 +2012,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51012",enabled = true, groups = { "regression" }, priority = 46)
+	@Test(description ="RPMXCON-51012",enabled = true, groups = { "regression" })
 	public void verifyHighlightingWhenNavigatingFromSavedSearch() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -2054,7 +2054,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51047",enabled = true, groups = { "regression" }, priority = 47)
+	@Test(description ="RPMXCON-51047",enabled = true, groups = { "regression" })
 	public void verifyHighlightingWhenSameKeywordsHaveDifferentColor() throws AWTException, InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2121,7 +2121,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-52658",enabled = true, groups = { "regression" }, priority = 48)
+	@Test(description ="RPMXCON-52658",enabled = true, groups = { "regression" })
 	public void verifyDocviewFunctionalityThroughAssignments() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2177,7 +2177,7 @@ public class DocView_Regression2 {
 	 *                     this action
 	 * 
 	 */
-	@Test(description = "RPMXCON-51278", enabled = true, groups = { "regression" }, priority = 49)
+	@Test(description = "RPMXCON-51278", enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarRefreshApplying() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51278");
 		baseClass.stepInfo(
@@ -2273,7 +2273,7 @@ public class DocView_Regression2 {
 	 *                     same as this action
 	 * 
 	 */
-	@Test(description = "RPMXCON-51277", enabled = true, groups = { "regression" }, priority = 50)
+	@Test(description = "RPMXCON-51277", enabled = true, groups = { "regression" })
 	public void verifyAssignmentProgressBarRefreshApplyingCodingStamp() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51277");
 		baseClass.stepInfo(
@@ -2341,7 +2341,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51961
 	 * 
 	 */
-	@Test(description = "RPMXCON-51961", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 51)
+	@Test(description = "RPMXCON-51961", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyDocsWithHiddenProperties(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2361,7 +2361,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51959
 	 * 
 	 */
-	@Test(description = "RPMXCON-51959", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 52)
+	@Test(description = "RPMXCON-51959", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenInfoIcon(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2408,7 +2408,7 @@ public class DocView_Regression2 {
 	 *               message to indicate that document is having hidden content
 	 * 
 	 */
-	@Test(description = "RPMXCON-51957", enabled = true, groups = { "regression" }, priority = 53)
+	@Test(description = "RPMXCON-51957", enabled = true, groups = { "regression" })
 	public void verifyWarningMsgOfHiddenDocs() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51957");
 		baseClass.stepInfo(
@@ -2504,7 +2504,7 @@ public class DocView_Regression2 {
 	 *              document is having hidden content
 	 * 
 	 */
-	@Test(description ="RPMXCON-51958",enabled = true, groups = { "regression" }, priority = 54)
+	@Test(description ="RPMXCON-51958",enabled = true, groups = { "regression" })
 	public void verifyWarningMsgOfHiddenDocsInChildWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51958");
 		baseClass.stepInfo(
@@ -2615,7 +2615,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-50783",enabled = true, groups = { "regression" }, priority = 55)
+	@Test(description ="RPMXCON-50783",enabled = true, groups = { "regression" })
 	public void verifyDocViewActionWhenSAImpersonateToRMU() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2652,7 +2652,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-50784",enabled = true, groups = { "regression" }, priority = 56)
+	@Test(description ="RPMXCON-50784",enabled = true, groups = { "regression" })
 	public void verifyDocViewActionWhenPAImpersonateToRMU() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2685,7 +2685,7 @@ public class DocView_Regression2 {
 	 * @Author : Iyappan.Kasinathan
 	 * @Description: To verify Doc View page for RMU and Reviewer
 	 */
-	@Test(description ="RPMXCON-50775",enabled = true, dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 57)
+	@Test(description ="RPMXCON-50775",enabled = true, dataProvider = "UsersWithoutPA", groups = { "regression" })
 	public void verifyDocViewPanels(String userName, String password, String fullName)
 			throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-50775");
@@ -2759,7 +2759,7 @@ public class DocView_Regression2 {
 	 *               Properties" "ExcelProtectedSheets" ExcelProtectedWorkbook
 	 *               viewed from analytics panel should display alert message
 	 */
-	@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 58)
+	@Test(description ="RPMXCON-51962",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyWarningMsgOfHiddenDocFromAnalyticsPanel(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2812,7 +2812,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51956
 	 * 
 	 */
-	@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 59)
+	@Test(description ="RPMXCON-51956",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentMessagewhilenavigatingFromDocNumber(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2847,7 +2847,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51946
 	 * 
 	 */
-	@Test(description ="RPMXCON-51946",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 60)
+	@Test(description ="RPMXCON-51946",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenInfoIconinDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2871,7 +2871,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-50780",enabled = true, groups = { "regression" }, priority = 61)
+	@Test(description ="RPMXCON-50780",enabled = true, groups = { "regression" })
 	public void verifyMenuBarOptionsInDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -2904,7 +2904,7 @@ public class DocView_Regression2 {
 	 *               'ExcelProtectedWorkbook' value should provide indicator in
 	 *               viewer to convey that document is having hidden content
 	 */
-	@Test(description ="RPMXCON-51952",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 62)
+	@Test(description ="RPMXCON-51952",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyExcelProtectWorkbookWarningMsg(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -2947,7 +2947,7 @@ public class DocView_Regression2 {
 	 *               warning message to indicate that document is having hidden
 	 *               content
 	 */
-	@Test(description ="RPMXCON-51955",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 63)
+	@Test(description ="RPMXCON-51955",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyWarningMsgFromMinidoclistChildWindow(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3009,7 +3009,7 @@ public class DocView_Regression2 {
 	 *                 native, text and pdf
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51965",alwaysRun = true, groups = { "regression" }, priority = 64)
+	@Test(description ="RPMXCON-51965",alwaysRun = true, groups = { "regression" })
 	public void verifySearchHighlighAndDownloadFiles() throws InterruptedException {
 		String metaDataField = "DocFileExtension";
 		String fileExtensionName = ".wmf";
@@ -3051,7 +3051,7 @@ public class DocView_Regression2 {
 	 *                 context of an assignment
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51265",alwaysRun = true, groups = { "regression" }, priority = 65)
+	@Test(description ="RPMXCON-51265",alwaysRun = true, groups = { "regression" })
 	public void verifyUnicodeFilesInNearNativeView() throws InterruptedException {
 		String AssignmentName = Input.randomText + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -3079,7 +3079,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51266
 	 * 
 	 */
-	@Test(description ="RPMXCON-51266",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority = 66)
+	@Test(description ="RPMXCON-51266",enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" })
 	public void verifyUniCodeFilesViewInDocViewforRMUandREV(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3103,7 +3103,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51954
 	 * 
 	 */
-	@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 67)
+	@Test(description ="RPMXCON-51954",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyMessageForHiddenContentDocsExcelProtecTedWorkSheets(String fullName, String userName,
 			String password) throws Exception {
 		baseClass = new BaseClass(driver);
@@ -3138,7 +3138,7 @@ public class DocView_Regression2 {
 	 * properly created/reflected in the XML
 	 * stabilization done
 	 */
-	@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 68)
+	@Test(description ="RPMXCON-51540",enabled = true, dataProvider = "userDetailss", groups = { "regression" })
 	public void verifyRemarkPanelRemarkDetailsAfterDeletionBetweenTwoUsers(String firstUserName,
 			String firstUserPassword, String secondUserName, String secondUserPassword) throws Exception {
 
@@ -3224,7 +3224,7 @@ public class DocView_Regression2 {
 	 * Description :To verify user can view the document for review in text view after impersonation
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-50914",enabled = true, groups = {"regression" },priority = 69)
+	@Test(description ="RPMXCON-50914",enabled = true, groups = {"regression" })
 	public void verifyTextViewAfterImpersonation() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3286,7 +3286,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51948
 	 * 
 	 */
-	@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =70)
+	@Test(description ="RPMXCON-51948",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyMouseHoverOfHiddenContentIconDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -3318,7 +3318,7 @@ public class DocView_Regression2 {
 	 * Description :Verify that persistent hits should be highlighted when documents are assigned to existing assignment from Advanced Search > Doc List
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-51729",enabled = true, groups = {"regression" },priority = 71)
+	@Test(description ="RPMXCON-51729",enabled = true, groups = {"regression" })
 	public void verifyPersistentHitsHighlightWhenAssigned() throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3355,7 +3355,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51960
 	 * 
 	 */
-	@Test(description ="RPMXCON-51960",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =72)
+	@Test(description ="RPMXCON-51960",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentDocswhileSwitchingViews(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -3385,7 +3385,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51953
 	 * 
 	 */
-	@Test(description ="RPMXCON-51953",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =73)
+	@Test(description ="RPMXCON-51953",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyMessageForHiddenContentDocsFromDocNavigation(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -3414,7 +3414,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51106
 	 * 
 	 */
-	@Test(description ="RPMXCON-51106",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =74)
+	@Test(description ="RPMXCON-51106",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyDocViewOptionsInTiff(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -3475,7 +3475,7 @@ public class DocView_Regression2 {
      *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51306
 	 * Description :Verify persistent Hit panel of DocView should present only content terms, not work product when navigating from advance search
 	 */
-	@Test(description ="RPMXCON-51306",enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 75)
+	@Test(description ="RPMXCON-51306",enabled = true, dataProvider = "userDetails", groups = {"regression" })
 	public void verifyWorkProductDisplayOnPersistentPanel(String fullName, String userName, String password) throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3503,7 +3503,7 @@ public class DocView_Regression2 {
 	 * Description :Verify user can download the redacted document from default view using print icon outside of an assignment.
 	 * validated the step of checking the format of Downloaded document in pdf for rectangle and current page redaction
 	 */
-	@Test(description ="RPMXCON-51107",enabled = true, groups = {"regression" },priority = 76)
+	@Test(description ="RPMXCON-51107",enabled = true, groups = {"regression" })
 	public void verifyDownloadDocsInPDF() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3555,7 +3555,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51951
 	 * 
 	 */
-	@Test(description ="RPMXCON-51951",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =77)
+	@Test(description ="RPMXCON-51951",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentDocs(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -3594,7 +3594,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51035",enabled = true, groups = { "regression" }, priority = 78)
+	@Test(description ="RPMXCON-51035",enabled = true, groups = { "regression" })
 	public void verifyImpersonationKeyWordsHighLightingDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51035 sprint 12");
@@ -3702,7 +3702,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51036", enabled = true, groups = { "regression" }, priority = 79)
+	@Test(description = "RPMXCON-51036", enabled = true, groups = { "regression" })
 	public void verifyImpersonationKeyWordsHighLightingAssignmentDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51036 sprint 12");
@@ -3784,7 +3784,7 @@ public class DocView_Regression2 {
      *Author :Arunkumar date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51561
 	 * Description :Verify that if the text is a multi-word text (e.g. Hello there), it is considered a phrase and highlights only the phrases "Hello there".
 	 */
-	@Test(description ="RPMXCON-51561",enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 80)
+	@Test(description ="RPMXCON-51561",enabled = true, dataProvider = "userDetails", groups = {"regression" })
 	public void verifyMultiwordTextHighlightAsPhrase(String fullName, String userName, String password) throws InterruptedException  {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3804,7 +3804,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-47230
 	 * @throws Exception 
 	 */
-	@Test(description ="RPMXCON-47230",enabled = true, dataProvider = "userDetails", groups = {"regression" },priority = 81)
+	@Test(description ="RPMXCON-47230",enabled = true, dataProvider = "userDetails", groups = {"regression" })
 	public void verifyDocViewScreenNavigationFromBasicSearch(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -3827,7 +3827,7 @@ public class DocView_Regression2 {
 	 *                     for audio file in context of an assignment.
 	 * 
 	 */
-	@Test(description = "RPMXCON-51056", enabled = true, groups = { "regression" }, priority = 82)
+	@Test(description = "RPMXCON-51056", enabled = true, groups = { "regression" })
 	public void verifyCanSeePersistentSearchOnDocViewAudioFile() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51056");
 		baseClass.stepInfo(
@@ -3898,7 +3898,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51994
 	 * 
 	 */
-	@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 83)
+	@Test(description ="RPMXCON-51994",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentContainsComments(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is not presented in the Viewer. Please download the native to review.";
@@ -3927,7 +3927,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 84)
+	@Test(description ="RPMXCON-51993",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentContainsTrackChanges(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -3966,7 +3966,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(description ="RPMXCON-51987",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 85)
+	@Test(description ="RPMXCON-51987",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentFromIngestionName() throws Exception {
 		baseClass = new BaseClass(driver);
 		String expectedMessage1 = "The document has the following hidden information that is presented in the Viewer.";
@@ -4014,7 +4014,7 @@ public class DocView_Regression2 {
 	 */
 	
 	
-	@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 86)
+	@Test(description ="RPMXCON-51949",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenContentExternalLink(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -4041,7 +4041,7 @@ public class DocView_Regression2 {
 	 *         ingest only metadata
 	 *
 	 */
-	@Test(description ="RPMXCON-51234",alwaysRun = true, groups = { "regression" }, priority = 87)
+	@Test(description ="RPMXCON-51234",alwaysRun = true, groups = { "regression" })
 	public void verifyUserAfterImpersonationMsgOnlyMetaData() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51243");
 		baseClass.stepInfo(
@@ -4113,7 +4113,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 88)
+	@Test(description ="RPMXCON-51984",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyDocHighlightingIsWorkingForSearchablePdf(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4145,7 +4145,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-60572", enabled = true, groups = { "regression" }, priority = 89)
+	@Test(description = "RPMXCON-60572", enabled = true, groups = { "regression" })
 	public void verifyDocViewReviewerRemarkDeletedAndHighlightedNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-60572");
@@ -4234,7 +4234,7 @@ public class DocView_Regression2 {
 	 *              the accompanying mouse over tool tip must appear.
 	 * @throws InterruptedException stabilization - not done
 	 */
-	@Test(description ="RPMXCON-51438",enabled = true,dataProvider="multiUserCredentials", groups = { "regression" }, priority = 90)
+	@Test(description ="RPMXCON-51438",enabled = true,dataProvider="multiUserCredentials", groups = { "regression" })
 	public void verifyDocIdIconOnDocViewPanal(String fullName, String userName, String password, String fromRole,String toRole) throws InterruptedException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -4293,7 +4293,7 @@ public class DocView_Regression2 {
 	 *                 message
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51963", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 91)
+	@Test(description = "RPMXCON-51963", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyWarningMsgForHiddenProportiesDocChildWindow() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4324,7 +4324,7 @@ public class DocView_Regression2 {
 	 * @Description:To Verify that when viewing the document having the 'ExcelProtectedSheets' value should provide indicator in viewer to convey that document is having hidden content
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 92)
+	@Test(description ="RPMXCON-51950",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyWarningMsgForHiddenProportiesExternalProtectedSheet() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
@@ -4351,7 +4351,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 
-	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 93)
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifySinglePageTiffInDocView()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4375,7 +4375,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51975
 	 * 
 	 */
-	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 94)
+	@Test(description ="RPMXCON-51976",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyStitchedPageTiffInDocViewImageTab()
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -4405,7 +4405,7 @@ public class DocView_Regression2 {
 	 * on DocView
 	 */
 
-	@Test(description ="RPMXCON-52211",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 95)
+	@Test(description ="RPMXCON-52211",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyEmailMetaDataPresentOnDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52211");
@@ -4471,7 +4471,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51565 Verify when enteres the long text to search in a document
 	 */
 
-	@Test(description ="RPMXCON-51565",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 96)
+	@Test(description ="RPMXCON-51565",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyEntersLongTextToSearchDocument() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51565");
@@ -4499,7 +4499,7 @@ public class DocView_Regression2 {
 	 * also the warning message
 	 */
 
-	@Test(description ="RPMXCON-52240",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 97)
+	@Test(description ="RPMXCON-52240",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocWithHiddenContentIconNotShowForHiddenProperties() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52240");
@@ -4538,7 +4538,7 @@ public class DocView_Regression2 {
 	 * appear on doc view
 	 */
 
-	@Test(description ="RPMXCON-52242",enabled = true, alwaysRun = true, groups = { "regression" }, priority = 98)
+	@Test(description ="RPMXCON-52242",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocWithNativeReviewRequiredAndNoHiddenContent() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52242");

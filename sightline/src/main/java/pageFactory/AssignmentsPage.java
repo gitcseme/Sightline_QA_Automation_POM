@@ -1425,6 +1425,10 @@ public class AssignmentsPage {
 	public Element getFamilyMembersCount() {
 		return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
 	}
+	//Added by Iyappan
+	public Element getProgressReport() {
+		return driver.FindElementByXPath("//a[text()='Progress Report']");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9952,6 +9956,23 @@ public class AssignmentsPage {
 			} else {
 				bc.failedStep("Application is allowing assignment name with special character");
 			}
+		}
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method verifies the the progress report option link is present or not
+	 */
+	public void verifyProgressReportIsPresent() {
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Navigated to assignments page successfully.");
+		bc.waitTillElemetToBeClickable(getAssgGrptionDropdown());
+		getAssgGrptionDropdown().Click();
+		bc.waitTillElemetToBeClickable(getProgressReport());
+		if(getProgressReport().isDisplayed()) {
+			bc.passedStep("Progress report option is present in manage assignment group actions.");
+		}else {
+			bc.failedStep("Progress report option is not displayed");
 		}
 	}
 

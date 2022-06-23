@@ -174,6 +174,7 @@ public class TestData {
 	public String translationDocumentId;
 	public String parentDocument;
 	public String masterDateText;
+	public String pdfFileType;
 
 	// Added by Sai Krishna
 	public String pageNumber;
@@ -242,6 +243,9 @@ public class TestData {
 	public String email;
 	public String emailToNamesAndAddresses;
 	public String datLoadFile2;
+	public String nativeLoadFile2;
+	public String textLoadFile2;
+	public String defaultNewLineDelimiter;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

@@ -111,7 +111,7 @@ public class DocView_Regression6 {
 	 * @Description : Verify that uploaded documents should be threaded into
 	 *              families.
 	 */
-	@Test(description = "RPMXCON-52265", alwaysRun = true, groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description = "RPMXCON-52265", alwaysRun = true, groups = { "regression" }, enabled = true)
 	public void verifyUplodedDocumentsShouldBeThearedIntoFamilies() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52265 Sprint 12");
@@ -161,7 +161,7 @@ public class DocView_Regression6 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51045", enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-51045", enabled = true, groups = { "regression" })
 	public void verifyKeywordsHighlightingWhenUnMappedFromAssignment() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -244,7 +244,7 @@ public class DocView_Regression6 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51395", enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-51395", enabled = true, groups = { "regression" })
 	public void verifySearchTermHighlightedInEyeIcon() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51395");
@@ -300,7 +300,7 @@ public class DocView_Regression6 {
 		loginPage.logout();
 	}
 
-	@Test(description = "RPMXCON-52233", enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-52233", enabled = true, groups = { "regression" })
 	public void printRedactedDocsAsPA() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52233- DocView- Sprint 2");
@@ -355,7 +355,7 @@ public class DocView_Regression6 {
 	 * redaction
 	 */
 
-@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 5)
+@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"})
 	public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");
@@ -448,7 +448,7 @@ public class DocView_Regression6 {
 	 * different SG
 	 */
 
-@Test(description = "RPMXCON-51990", groups={"regression"},priority = 6)
+@Test(description = "RPMXCON-51990", groups={"regression"})
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		folder = "51990Default_" + Utility.dynamicNameAppender();

@@ -248,6 +248,7 @@ public class Input {
 	public static String translationDocumentId;
 	public static String parentDocument;
 	public static String masterDateText;
+	public static String pdfFileType;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -359,6 +360,9 @@ public class Input {
 	public static String email;
 	public static String emailToNamesAndAddresses;
 	public static String datLoadFile2;
+	public static String nativeLoadFile2;
+	public static String textLoadFile2;
+	public static String defaultNewLineDelimiter;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1004,9 +1008,11 @@ public class Input {
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
 		masterDateText = testData.getMasterDateText();
+		pdfFileType=testData.getPdfFileType();
+		
 		/**
-		 * @author Aathith.Senthilkumar
-		 */
+		* @author Aathith.Senthilkumar
+		*/
 		pageCount = testData.getPageCount();
 		errorMsg = testData.getErrorMsg();
 		helpText = testData.getHelpText();
@@ -1126,6 +1132,9 @@ public class Input {
 		email = testData.getEmail();
 		emailToNamesAndAddresses = testData.getEmailToNamesAndAddresses();
 		datLoadFile2 = testData.getDatLoadFile2();
+		nativeLoadFile2 = testData.getNativeLoadFile2();
+		textLoadFile2 = testData.getTextLoadFile2();
+		defaultNewLineDelimiter = testData.getDefaultNewLineDelimiter();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

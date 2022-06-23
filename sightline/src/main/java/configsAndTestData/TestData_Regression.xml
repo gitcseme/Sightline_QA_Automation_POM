@@ -70,6 +70,9 @@
 	<email>EMAIL</email>
 	<emailToNamesAndAddresses>EmailToNamesAndAddresses</emailToNamesAndAddresses>
 	<datLoadFile2>DAT4_STC_newdateformatEmailData -NEWID.dat</datLoadFile2>
+	<nativeLoadFile2>DAT4_STC_NativesEmailData NEWID.lst</nativeLoadFile2>
+	<textLoadFile2>DAT4_STC_TextEmailData NEWID.lst</textLoadFile2>
+	<defaultNewLineDelimiter>ASCII(59)</defaultNewLineDelimiter>
 	
 
 	<!-- Production path for redaction master doc -->
@@ -192,6 +195,7 @@
 	<documentID>ID00004969</documentID>
 	<orphanDocument>ID00001344</orphanDocument>
 	<parentDocument>ID00001053</parentDocument>
+	<pdfFileType>Adobe Portable Document Format (.pdf)</pdfFileType>
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>

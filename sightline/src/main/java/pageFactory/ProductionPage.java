@@ -891,6 +891,18 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element btnOK_Metafield() {
+		return driver.FindElementByXPath("//div[@id='MetadataPopup']//button[@value='submit']");
+	}
+	
+	public Element insertMetadataLink() {
+		return driver.FindElementById("LaunchMetaData0");
+	}
+	
+	public Element ddnselectFileType() {
+		return driver.FindElementByXPath("//select[@id='TIFFFileTypes_0']");
+	}
+	
 	public Element batesRangeInHomePage(String suffixID) {
 		return driver.FindElementByXPath("//div[@id='batesCount']//strong[contains(text(),'"+suffixID+"')]");
 	}
@@ -2947,6 +2959,13 @@ public class ProductionPage {
 	}
 	
 
+	public Element getAdvancedToggle() {
+		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='advanced']");
+	}
+	public Element getSourceFiledInDatSection() {
+		return driver.FindElementByXPath("//*[@id'SF_0']//option[text()='PageCount']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -12914,7 +12933,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author:Sowndariya.velraj
+	 * @author:Sowndarya.velraj
 	 * @Description: Method for generating production without commit and with
 	 *               continue generation popup
 	 */
@@ -19958,4 +19977,127 @@ public class ProductionPage {
 			}
 
 		}
-}
+		
+		/**
+		 * @author: sowndarya.velraj Created date: NA Modified date: NA Modified sowndarya.velraj 
+		 * @Description: Method for filling natively produced docs in pdf section.
+		 * @param Tag  : Tag is String value that name of tag.
+		 * @param Text : Text is String value that need to enter in place holder.
+		 */
+		public void fillingPDFWithNativelyProduceddDocsSelectingFileType(String Tag, String Text,String metaDataLink,String fileType) {
+			
+				base.waitForElement(getPDFChkBox());
+				getPDFChkBox().Click();
+				base.waitForElement(getPDFTab());
+				getPDFTab().Click();
+				
+				// disabling enable for priviledged docs
+
+				base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+				getTIFF_EnableforPrivilegedDocs().Enabled();
+				getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+				// clicking enable for natively placeholder
+
+				driver.waitForPageToBeReady();
+				getSelectCloseBtn().ScrollTo();
+				getSelectCloseBtn().waitAndClick(10);
+				
+				base.waitForElement(getTiff_NativeDoc());
+				getTiff_NativeDoc().waitAndClick(10);
+				
+				driver.waitForPageToBeReady();
+				ddnselectFileType().selectFromDropdown().selectByVisibleText(fileType);
+				
+				base.waitForElement(getclkSelectTag());
+				getclkSelectTag().Click();
+				base.waitForElement(getPriveldged_TagTree(Tag));
+				getPriveldged_TagTree(Tag).Click();
+				base.waitForElement(getClkSelect());
+				getClkSelect().Click();
+					
+				driver.waitForPageToBeReady();
+				base.waitForElement(getNativeDocsPlaceholder());
+				getNativeDocsPlaceholder().Clear();
+				getNativeDocsPlaceholder().SendKeys(Text);
+				
+				insertMetadataLink().waitAndClick(10);
+				getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaDataLink);	
+
+				btnOK_Metafield().waitAndClick(10);
+		}
+		
+		/**
+		 * @author sowndarya.velraj
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @param verificationText
+		 * @Description verifying text on the PDF image file on downloaded zip file
+		 */
+		public void OCR_Verification_In_Generated_PDF(int firstFile, int lastFile, String prefixID, String suffixID,
+				String verificationText) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+
+			for (int i = firstFile; i < lastFile; i++) {
+
+				File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".pdf");
+				// ITesseract instance = new Tesseract(); // JNA Interface Mapping
+				ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+				File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+				instance.setDatapath(tessDataFolder.getPath());
+
+				try {
+					String result = instance.doOCR(imageFile);
+					System.out.println(result);
+					if (result.contains(verificationText)) {
+						base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".pdf"
+								+ " file as expected");
+					} else {
+						base.failedStep(verificationText + " verification failed");
+					}
+				} catch (TesseractException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}
+		
+		/**
+		 * @author sowndarya.velraj
+		 * @param firstFile
+		 * @param lastFile
+		 * @param prefixID
+		 * @param suffixID
+		 * @param verificationText
+		 * @Description verifying text on the PDF image file on downloaded zip file
+		 */
+		public void OCR_Verification__BatesNo_In_GeneratedFile(String prefixID, String suffixID,
+				String beginningBates) {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+
+
+				File destinationLoc = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID +beginningBates + suffixID + ".tiff");
+				// ITesseract instance = new Tesseract(); // JNA Interface Mapping
+				ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+				File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+				instance.setDatapath(tessDataFolder.getPath());
+
+				try {
+					String result = instance.doOCR(destinationLoc);
+					System.out.println(result);
+					if (result.contains(beginningBates)) {
+						base.passedStep(beginningBates + " is displayed in " + prefixID + beginningBates + suffixID + ".tiff"
+								+ " file as expected");
+					} else {
+						base.failedStep(beginningBates + " verification failed");
+					}
+				} catch (TesseractException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+
+		
+	}

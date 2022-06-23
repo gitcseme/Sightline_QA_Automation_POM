@@ -98,7 +98,7 @@ public class DocView_Regression3_2 {
 	 * redaction added in first security group only with different annotation layer
 	 * and shared redaction tags.
 	 */
-	@Test(description = "RPMXCON-52236", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-52236", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifPrintDocumentPARedactionForFirstSecurityGroup() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -208,7 +208,7 @@ public class DocView_Regression3_2 {
 	 * two different security groups and redaction added in both security groups
 	 * with different annotation layer.
 	 */
-	@Test(description = "RPMXCON-52237", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-52237", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifPrintDocumentWithoutRedactionAsPA() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -319,7 +319,7 @@ public class DocView_Regression3_2 {
 	 * different security groups
 	 * stabilization done
 	 */
-	@Test( description = "RPMXCON-51052", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test( description = "RPMXCON-51052", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyAnnotationAcrossSecurityGroupsWhnSameAnnotationLayerIsMapped() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -461,7 +461,7 @@ public class DocView_Regression3_2 {
 	 * Verify that annotation should be saved for the document when same annotation
 	 * layer is mapped to different security groups.
 	 */
-	@Test(description = "RPMXCON-51447", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-51447", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -571,7 +571,7 @@ public class DocView_Regression3_2 {
 	 * security group only with different annotation layer and shared redaction
 	 * tags.
 	 */
-	@Test(description = "RPMXCON-52244", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-52244", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyDocumentPrintsDifferentRedactionsBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -699,7 +699,7 @@ public class DocView_Regression3_2 {
 	 * security groups and redaction added in both security groups with different
 	 * annotation layer.
 	 */
-	@Test(description = "RPMXCON-52245", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-52245", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyDocumentPrintsRedactionBySecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -817,7 +817,7 @@ public class DocView_Regression3_2 {
 	 * and redaction added in first security group only with shared annotation
 	 * layer.
 	 */
-	@Test(description = "RPMXCON-52246", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-52246", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyDocumentPrintsRedactionsReleasedToSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -926,7 +926,7 @@ public class DocView_Regression3_2 {
 	 * the document when same annotation layer is mapped to different security
 	 * groups.
 	 */
-	@Test(description = "RPMXCON-51449", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-51449", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyEditAnnotationSavedWithDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1032,7 +1032,7 @@ public class DocView_Regression3_2 {
 	 * security groups and redaction added in both security groups with shared
 	 * annotation layer and redaction tags.
 	 */
-	@Test(description = "RPMXCON-52247", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-52247", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyPrintsRedactionsReleasedToDifferentSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1157,7 +1157,7 @@ public class DocView_Regression3_2 {
 	 * tags and history) shown in the doc in 2nd sec group
 	 * stabilization done
 	 */
-	@Test(description = "RPMXCON-48251",  enabled = true,alwaysRun = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-48251",  enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyRedactionInfoAcrossSecurityGroups() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew1 = Input.randomText + Utility.dynamicNameAppender();
@@ -1272,7 +1272,7 @@ public class DocView_Regression3_2 {
 	 * under different security group with different annotation layer
 	 * adds/edit/delete reviewer remark to the same record successfully.
 	 */
-	@Test(description = "RPMXCON-51546", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-51546", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithDiffAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		String AnnotationLayerNew2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1398,7 +1398,7 @@ public class DocView_Regression3_2 {
 	 * Description : Verify that after editing the remark should be saved for the
 	 * document when same annotation layer is mapped to different security groups.
 	 */
-	@Test(description = "RPMXCON-51450", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-51450", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyRemarkAddedInSGRefectedToOtherSGWithSameAnnotation() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();
@@ -1504,7 +1504,7 @@ public class DocView_Regression3_2 {
 	 * deleting the annotation layer by PA user under 'AllSecurityGroups' should not
 	 * present respective redactions/annotations/remarks on documents.
 	 */
-	@Test(description = "RPMXCON-52256", enabled = true,alwaysRun = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-52256", enabled = true,alwaysRun = true, groups = { "regression" })
 	public void verifyRemarkOnSecucityGroupByAnnotationlayerDeleted() throws Exception {
 		AnnotationLayerNew = Input.randomText + Utility.dynamicNameAppender();
 		namesg2 = Input.randomText + Utility.dynamicNameAppender();

@@ -66,7 +66,7 @@ public class BasicSearchRegression {
 	 *              40001000008)
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57359", dataProvider = "reserveWords", groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-57359", dataProvider = "reserveWords", groups = { "regression" }, priority = 1)
 	public void verifyBellyBandMsg(String username, String password, String data1) throws InterruptedException {
 
 		// login as User
@@ -95,7 +95,7 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57347", dataProvider = "Users", groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-57347", dataProvider = "Users", groups = { "regression" }, priority = 2)
 	public void verifyWrappedParenthesis(String username, String password) throws InterruptedException {
 		String search = "(\"that this\")";
 
@@ -119,7 +119,7 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57345", dataProvider = "Users", groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-57345", dataProvider = "Users", groups = { "regression" }, priority = 3)
 	public void verifyPhraseInBasicSearch(String username, String password) throws InterruptedException {
 		String search = "\"Government Agency Correspondance\"";
 
@@ -163,7 +163,68 @@ public class BasicSearchRegression {
 		login.logout();
 	}
 
-	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application does not display warning A message on
+	 *              Advanced Search if user enters "2009-09-20" with quotations.
+	 *              [RPMXCON-57117]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57117", groups = { "regression" }, priority = 5)
+	public void verifyWarningMsgOnAdvPage() throws InterruptedException {
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57117 Basic Search");
+		base.stepInfo(
+				"Verify that application does not display warning A message on Advanced Search if user enters \"2009-09-20\" with quotations.");
+
+		// Verify Expanded Query
+		session.navigateToSessionSearchPageURL();
+		session.advancedContentSearchWithSearchChanges("\"2009-09-20\"", "No");
+		session.SearchBtnAction();
+
+		// verify if warning message is displayed
+		String expectedMsg = "Warning message is not Displayed ";
+		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
+		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application does not display warning B message on
+	 *              Basic Search if user enters "bi - weekly" into Non-Date field
+	 *              with wrapper quotations. [RPMXCON-57115]
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57115", groups = { "regression" }, priority = 6)
+	public void verifyWarningMsgOnBsPage() throws InterruptedException {
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57115 Basic Search");
+		base.stepInfo(
+				"Verify that application does not display warning B message on Basic Search if user enters \"bi - weekly\" into Non-Date field with wrapper quotations.");
+
+		// Verify Expanded Query
+		session.navigateToSessionSearchPageURL();
+		session.basicMetaDataDraftSearch("EmailSubject", null, "\"bi-weekly\"", null);
+		session.addNewSearch();
+
+		// verify if warning message is displayed
+		String expectedMsg = "Warning Message is Not Displayed ";
+		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
+		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
