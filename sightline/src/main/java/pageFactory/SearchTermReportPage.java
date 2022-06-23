@@ -26,6 +26,7 @@ public class SearchTermReportPage {
 	BaseClass bc;
 	ReportsPage reportPage;
 	SoftAssert softAssertion;
+	DocListPage dl;
 
 	public Element getReport_SearchTerm() {
 		return driver.FindElementByXPath(".//*[@id='collapseOne']//a[contains(.,'Search Term Report')]");
@@ -235,10 +236,15 @@ public class SearchTermReportPage {
 	public Element getTotalSelectedCount_fontSize() {
 		return driver.FindElementByXPath("//div//label[@id='lblTotal' and @style[contains(.,'font-size: 16px')]]");
 	}
+	//Added by Iyappan
+	public Element getViewinDocListBtn() {
+		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[text()='View in DocList']");
+	}
 	public SearchTermReportPage(Driver driver) {
 		this.driver = driver;
 		bc = new BaseClass(driver);
 		reportPage = new ReportsPage(driver);
+		dl = new DocListPage(driver);
 		// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		softAssertion = new SoftAssert();
 	}
@@ -722,6 +728,37 @@ public class SearchTermReportPage {
 		} else {
 			bc.failedStep("Report not generated sucessfully");
 		}
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method is used to verify the documents count in doclist page
+	 */
+	public String verifyingDocListCount() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(dl.getTableFooterDocListCount());
+		String DocListCount = dl.getTableFooterDocListCount().getText();
+		driver.waitForPageToBeReady();
+		String[] doccount = DocListCount.split(" ");
+		String DocumentCount = doccount[5];
+		System.out.println("doclist page document count is" + DocumentCount);
+		driver.waitForPageToBeReady();
+		return DocumentCount;
+	}
+	
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method is used to view in doclist from searcterm report page
+	 */
+	public void ViewInDocList() {
+		driver.scrollPageToTop();
+		bc.waitForElement(getActionButton());
+		getActionButton().waitAndClick(20);
+		bc.waitForElement(getViewBtn());
+		getViewBtn().ScrollTo();
+		getViewinDocListBtn().ScrollTo();
+		getViewinDocListBtn().waitAndClick(30);
+		bc.stepInfo("Navigating from Search term report page to view in doc list page.");
 	}
 
 }
