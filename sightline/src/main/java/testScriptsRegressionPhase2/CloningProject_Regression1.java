@@ -25,6 +25,7 @@ import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -89,7 +90,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject();
+		saveSearch.verifySavedSearchDetailsForCloningProject("Shared With Project");
 		
 		loginPage.logout();
 
@@ -151,18 +152,25 @@ public class CloningProject_Regression1 {
 
 	}
 	
-	/**
-	 * @author Vijaya.Rani ModifyDate:22/06/2022 RPMXCON-54838
-	 * @Description Verify that when User creates a new Domain Project Using template project then corresponding "Shared with Default Security Group" are copied from the source template
-	 * project to the newly created Project.
-	 */
-	
-	@Test(description = "RPMXCON-54838",enabled = true, groups = { "regression" })
-	public void userCreateDomainUsingSavedSearchAndUserDefaultSecurityGroup() {
+
+	@Test(description = "RPMXCON-54843",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingMySavedSearch() {
 		
-		baseClass.stepInfo("Test case Id: RPMXCON-54838");
-		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding \"Shared with Default Security Group\" are copied from the source template project to the newly created Project.");
-		String projectName = "CloneProject1"+Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-54843");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding 'My Saved Search' hierarchy copied from the source template project to the newly created Project.");
+		String projectName = "DemoCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Pre-Requsite:Make sure that at least 3 level Search Group  hierarchy should create and have at least 2 searches Under 'My Saved Search' search group.");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		savedSearch.navigateToSSPage();
+		sessionSearch.validateSavedSearchNode();
+		sessionSearch.validateMySavedSearchTerms();
+		loginPage.logout();
+		
+		
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectPage.navigateToProductionPage();
@@ -178,24 +186,29 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with Default");
+		saveSearch.verifySavedSearchDetailsForCloningProject("My Saved");
 		
 		loginPage.logout();
 
 	}
 	
-	/**
-	 * @author Vijaya.Rani ModifyDate:22/06/2022 RPMXCON-54839
-	 * @Description Verify that when User creates a new Domain Project Using template project then corresponding "Shared with New Security Group" are copied from the source 
-	 * template project to the newly created Project.
-	 */
-	
-	@Test(description = "RPMXCON-54839",enabled = true, groups = { "regression" })
-	public void userCreateDomainUsingSavedSearchAndUserNewSecurityGroup() {
+	@Test(description = "RPMXCON-54836",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingMySavedSearchWithoutHierarchy() {
 		
-		baseClass.stepInfo("Test case Id: RPMXCON-54839");
-		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding \"Shared with New Security Group\" are copied from the source template project to the newly created Project.");
-		String projectName = "Demosaved02"+Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-54836");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding \"My Saved Search\" are copied from the source template project to the newly created Project.");
+		String projectName = "DemoCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Pre-Requsite : Make sure that at least 3 Searches are Saved Under 'My Saved Search' search group.");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		savedSearch.navigateToSSPage();
+		sessionSearch.validateMySavedSearchTerms();
+		loginPage.logout();
+		
+		
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectPage.navigateToProductionPage();
@@ -205,17 +218,142 @@ public class CloningProject_Regression1 {
 		
 		UserManagement users = new UserManagement(driver);
 		users.navigateToUsersPAge();
-		users.ProjectSelectionForUser(projectName,Input.pa1FullName, "Project Administrator", "", false, false);
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
 		loginPage.logout();
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with securityGroup5531457");
+		saveSearch.verifySavedSearchDetailsForCloningProject("My Saved");
 		
 		loginPage.logout();
 
 	}
+	
+	@Test(description = "RPMXCON-54837",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingSavedSearchOnly() {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54837");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding \"Shared With Project Administrator\" are copied from the source template project to the newly created Project.");
+		String projectName = "DemoCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"2");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		saveSearch.navigateToSSPage();
+		saveSearch.verifySavedSearchDetailsForCloningProject("Shared With Project");
+		
+		loginPage.logout();
+
+	}
+
+	/**
+* @author Vijaya.Rani ModifyDate:22/06/2022 RPMXCON-54838
+* @Description Verify that when User creates a new Domain Project Using
+* template project then corresponding "Shared with Default
+* Security Group" are copied from the source template project to
+* the newly created Project.
+*/
+
+
+
+@Test(description = "RPMXCON-54838",enabled = true, groups = { "regression" })
+public void userCreateDomainUsingSavedSearchAndUserDefaultSecurityGroup() {
+
+
+
+baseClass.stepInfo("Test case Id: RPMXCON-54838");
+baseClass.stepInfo(
+"Verify that when User creates a new Domain Project Using template project then corresponding \"Shared with Default Security Group\" are copied from the source template project to the newly created Project.");
+String projectName = "CloneProject1" + Utility.dynamicNameAppender();
+loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+projectPage.navigateToProductionPage();
+projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "4");
+DataSets data = new DataSets(driver);
+data.getNotificationMessage(0, projectName);
+
+
+
+UserManagement users = new UserManagement(driver);
+users.navigateToUsersPAge();
+users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+loginPage.logout();
+
+
+
+loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+SavedSearch saveSearch = new SavedSearch(driver);
+saveSearch.navigateToSSPage();
+saveSearch.verifySavedSearchDetailsForCloningProject("Shared with Default");
+
+
+
+loginPage.logout();
+
+
+
+}
+
+
+
+/**
+* @author Vijaya.Rani ModifyDate:22/06/2022 RPMXCON-54839
+* @Description Verify that when User creates a new Domain Project Using
+* template project then corresponding "Shared with New Security
+* Group" are copied from the source template project to the newly
+* created Project.
+*/
+
+
+
+@Test(description = "RPMXCON-54839",enabled = true, groups = { "regression" })
+public void userCreateDomainUsingSavedSearchAndUserNewSecurityGroup() {
+
+
+
+baseClass.stepInfo("Test case Id: RPMXCON-54839");
+baseClass.stepInfo(
+"Verify that when User creates a new Domain Project Using template project then corresponding \"Shared with New Security Group\" are copied from the source template project to the newly created Project.");
+String projectName = "Demosaved02" + Utility.dynamicNameAppender();
+loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+projectPage.navigateToProductionPage();
+projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "4");
+DataSets data = new DataSets(driver);
+data.getNotificationMessage(0, projectName);
+
+
+
+UserManagement users = new UserManagement(driver);
+users.navigateToUsersPAge();
+users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+loginPage.logout();
+
+
+
+loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+SavedSearch saveSearch = new SavedSearch(driver);
+saveSearch.navigateToSSPage();
+saveSearch.verifySavedSearchDetailsForCloningProject("Shared with securityGroup5531457");
+
+
+
+loginPage.logout();
+
+
+
+}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
