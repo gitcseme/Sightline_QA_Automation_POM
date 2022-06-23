@@ -285,7 +285,43 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//div[@id='annotationJSTree']//ul[@class='jstree-children']");
 	}
 	
+	//Added by Krishna
 	
+	public Element daFirstBlock() {
+		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-0']//*[@id=\"taskbasic\"]");
+	}
+	
+	public Element daFirstTabledata(int i) {
+		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-0']//*[@id='taskbasic']/tbody/tr[" + i + "]/td[1]/a");
+	}
+	
+	public Element daSecondBlock() {
+		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-2']//*[@id=\"taskbasic\"]");
+	}
+	
+	public Element daSecondTabledata(int i) {
+		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-2']//*[@id='taskbasic']/tbody/tr[\" + i + \"]/td[1]/a");
+	}
+	
+	public ElementCollection daFirstTableList() {
+		return driver.FindElementsByXPath("//div[@id = 'rmu-wid-id-0']//*[@id=\\\"taskbasic\\\"]/thead/tr/th[1]");
+	}
+	
+	public Element productionPageSelectedSG() {
+		return driver.FindElementByXPath("//*[@id=\"SecurityGrpList\"]/option[@selected = \"selected\"]");
+	}
+	
+	public Element securityGroupTab() {
+		return driver.FindElementById("SecurityGroup-selector");
+	}
+	
+	public Element backToDomain() {
+		return driver.FindElementById("BackToDomain");
+	}
+	
+	public Element productionLeftMenu() {
+		return driver.FindElementByXPath("//a[@name = 'Productions']");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
@@ -1032,6 +1068,31 @@ public class SecurityGroupsPage {
 		bc.waitForElement(getSG_ProjectFieldButton());
 		bc.waitTillElemetToBeClickable(getSG_ProjectFieldButton());
 		getSG_ProjectFieldButton().waitAndClick(10);
+	}
+	
+
+	/**
+	 * Method to select project from DAU
+	 * @author Sai.Duvvuru
+	 */
+	
+	public void selectProjectFromDA(String projectname) {
+		 WebElement mytable = daFirstBlock().getWebElement();
+		    List<String> projects = new ArrayList<String>();
+		    List < WebElement > rows_table = mytable.findElements(By.tagName("tr"));
+	    	//To calculate no of rows In table.
+	    	int rows_count = rows_table.size();
+		    System.out.println(rows_count);
+		    for (int row = 1; row < rows_count; row++) {	    	
+		    	projects.add(daFirstTabledata(row).getText());
+		    }
+		    System.out.println(projects);
+		   int index = projects.indexOf(projectname);
+		   System.out.println(index);
+		   driver.waitForPageToBeReady();
+		   bc.waitTillElemetToBeClickable(daFirstTabledata(index+1));
+		   daFirstTabledata(index+1).waitAndClick(5);
+		   bc.waitForElement(securityGroupTab());
 	}
 
 }
