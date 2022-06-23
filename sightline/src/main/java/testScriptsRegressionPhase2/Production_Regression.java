@@ -75,7 +75,7 @@ public class Production_Regression {
 	 *                 placeholder PDFs/TIFF's
 	 */
 
-	@Test(description = "RPMXCON-47916", enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-47916", enabled = false, groups = { "regression" })
 	public void verifyPlaceholderText() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47916- Production Sprint 16");
@@ -101,7 +101,8 @@ public class Production_Regression {
 		int firstFile = Integer.parseInt(beginningBates);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
@@ -128,7 +129,7 @@ public class Production_Regression {
 	 *                 production wizard
 	 */
 
-	@Test(description = "RPMXCON-47895", enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-47895", enabled = false, groups = { "regression" })
 	public void verifySelfProductionWizard() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47895- Production Sprint 16");
@@ -153,7 +154,8 @@ public class Production_Regression {
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
-		String prodName = page.addANewProduction(productionname);
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
@@ -206,7 +208,7 @@ public class Production_Regression {
 	 * @Description:To verify On Document Level Numbering Bates Number should get displayed on Production Home Page.
 	 */
 
-	@Test(description = "RPMXCON-47935", enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-47935", enabled = false, groups = { "regression" })
 	public void verifyDocumentLevelNumbering() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47935- Production Sprint 16");
@@ -231,7 +233,8 @@ public class Production_Regression {
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
@@ -257,7 +260,7 @@ public class Production_Regression {
 	 * @Description:To Verify in DAT section of a production configuration step availability of calculated fields
 	 */
 
-	@Test(description = "RPMXCON-47929", enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-47929", enabled = false, groups = { "regression" })
 	public void verifyDATSectionOfCalculatedFields() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47929- Production Sprint 16");
@@ -283,7 +286,8 @@ public class Production_Regression {
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
 		page.fillingDATSection();
 		page.datMetaDataTiffPageCount();
 		page.fillingTIFFSection(tagname);
@@ -300,6 +304,110 @@ public class Production_Regression {
 		baseClass.passedStep("Verified DAT section of a production configuration step availability of calculated fields");
 		}
 
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47963
+	 * @Description:To Verify Place holder for PDF file type in Production Generation
+	 */
+
+	@Test(description = "RPMXCON-47963", enabled = true, groups = { "regression" })
+	public void verifyPlaceholderTextForPDF() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47963- Production Sprint 16");
+		baseClass.stepInfo("To Verify Place holder for PDF file type in Production Generation");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		page.fillingPDFWithNativelyProduceddDocsSelectingFileType(tagname, Input.searchString4,Input.orderCriteria,Input.pdfFileType);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		int doccount = page.fillingGeneratePageWithContinueGenerationPopup();
+		int lastFile = firstFile + doccount;
+
+		page.extractFile();
+		page.OCR_Verification_In_Generated_PDF(firstFile, lastFile, prefixID, suffixID, Input.searchString4);
+		baseClass.stepInfo("verified placeholder in PDF");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47905
+	 * @Description:To Verify The Bates No Generated is in Sync with Bates No enter in The Application for Generation
+	 */
+
+	@Test(description = "RPMXCON-47905", enabled = true, groups = { "regression" })
+	public void verifyBatesNumberSync() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47905- Production Sprint 16");
+		baseClass.stepInfo("To Verify The Bates No Generated is in Sync with Bates No enter in The Application for Generation");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : "+beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		int doccount = page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.extractFile();
+		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID,beginningBates);
+		baseClass.stepInfo("verified Bates Number Sync With Generates Files");
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
