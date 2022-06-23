@@ -1527,7 +1527,7 @@ public class DocView_Regression1 {
 	 * eliminate any characters in the produced document.
 	 * 
 	 */
-	 @Test(description ="RPMXCON-52197",alwaysRun = true,groups={"regression"},priority =20)
+	 @Test(description ="RPMXCON-52197",alwaysRun = true,groups={"regression"})
 	public void verifyThRectangleeRedactionOfTagInProduction() {
 		try {
 			baseClass = new BaseClass(driver);
