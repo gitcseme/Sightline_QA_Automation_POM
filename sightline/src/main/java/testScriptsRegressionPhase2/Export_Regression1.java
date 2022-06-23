@@ -388,7 +388,134 @@ public class Export_Regression1 {
 			loginPage.logout();
 			}
 	
+			/**
+			 * @author Brundha
+			 * 			RPMXCON-47478
+			 * @Description To Verify Export in production, basic Export without Production.
+			 * 
+			 */
+				@Test(description="RPMXCON-47478",enabled = true,groups = { "regression" })
+				public void verifyingGenerationOfExport() throws Exception {
+					
+					base = new BaseClass(driver);
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-47478 -Export component");
+				base.stepInfo("To Verify Export in production, basic Export without Production.");
+				
+				String foldername = "FolderProd" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String newExport = "Ex" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
 			
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
+				tagsAndFolderPage.createNewTagwithClassification(tagname,Input.tagNamePrev);
+				
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+
+				
+				ProductionPage page = new ProductionPage(driver);
+				String productionname = "p" + Utility.dynamicNameAppender();
+				String subBates = page.getRandomNumber(2);
+				page.selectingDefaultSecurityGroup();
+				String text = page.getProdExport_ProductionSets().getText();
+				if (text.contains("Export Set")) {
+					page.selectExportSetFromDropDown();
+				} else {
+					page.createNewExport(newExport);
+				}
+				page.addANewExport(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSection(tagname);
+				page.navigateToNextSection();
+				page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingExportLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+				loginPage.logout();
+				}
+				
+
+				/**
+				 * @author Brundha
+				 * 			RPMXCON-47498
+				 * @DescriptionExport: Verify that the production field PageCount is renamed to TIFFPageCount
+				 * 
+				 */
+					@Test(description="RPMXCON-47498",enabled = true,groups = { "regression" })
+					public void verifyingTiffPageCountOptionInDatSection() throws Exception {
+						
+						base = new BaseClass(driver);
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-47498 -Export component");
+					base.stepInfo("Export: Verify that the production field PageCount is renamed to TIFFPageCount");
+					
+					String newExport = "Ex" + Utility.dynamicNameAppender();
+					ProductionPage page = new ProductionPage(driver);
+					String productionname = "p" + Utility.dynamicNameAppender();
+					
+					page.selectingDefaultSecurityGroup();
+					String text = page.getProdExport_ProductionSets().getText();
+					if (text.contains("Export Set")) {
+						page.selectExportSetFromDropDown();
+					} else {
+						page.createNewExport(newExport);
+					}
+					page.addANewExport(productionname);
+					page.verifyingDatFieldClassification();
+					if(!page.getSourceFiledInDatSection().isElementAvailable(2)) {
+						base.passedStep("PageCount is not displayed as expected");
+					}else {
+						base.failedStep("pagecount is displayed and not renamed ");}
+					
+					loginPage.logout();
+					
+					}
+					/**
+					 * @author Brundha
+					 * 			RPMXCON-49383
+					 * @Description Export: Verify 'Advanced Options' should be removed from the DAT component section in Production-Export
+					 * 
+					 */
+						@Test(description="RPMXCON-49383",enabled = true,groups = { "regression" })
+						public void verifyingAdvancedOptionInDatSection() throws Exception {
+							
+							base = new BaseClass(driver);
+						UtilityLog.info(Input.prodPath);
+						base.stepInfo("RPMXCON-49383 -Export component");
+						base.stepInfo("Verify 'Advanced Options' should be removed from the DAT component section in Production-Export");
+						
+						String newExport = "Ex" + Utility.dynamicNameAppender();
+						ProductionPage page = new ProductionPage(driver);
+						String productionname = "p" + Utility.dynamicNameAppender();
+						
+						page.selectingDefaultSecurityGroup();
+						String text = page.getProdExport_ProductionSets().getText();
+						if (text.contains("Export Set")) {
+							page.selectExportSetFromDropDown();
+						} else {
+							page.createNewExport(newExport);
+						}
+						page.addANewExport(productionname);
+						page.getDATTab().waitAndClick(5);
+						if(!page.getAdvancedToggle().isDisplayed()) {
+							base.passedStep("Advanced option is removed  as expected");
+						}else{
+							base.failedStep("Advanced option is not removed");
+						}
+						
+						loginPage.logout();
+						
+						}
+							
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

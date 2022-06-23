@@ -2947,6 +2947,13 @@ public class ProductionPage {
 	}
 	
 
+	public Element getAdvancedToggle() {
+		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='advanced']");
+	}
+	public Element getSourceFiledInDatSection() {
+		return driver.FindElementByXPath("//*[@id'SF_0']//option[text()='PageCount']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
