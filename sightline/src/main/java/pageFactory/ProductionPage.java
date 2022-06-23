@@ -894,30 +894,31 @@ public class ProductionPage {
 	public Element btnOK_Metafield() {
 		return driver.FindElementByXPath("//div[@id='MetadataPopup']//button[@value='submit']");
 	}
-	
+
 	public Element insertMetadataLink() {
 		return driver.FindElementById("LaunchMetaData0");
 	}
-	
+
 	public Element ddnselectFileType() {
 		return driver.FindElementByXPath("//select[@id='TIFFFileTypes_0']");
 	}
-	
+
 	public Element batesRangeInHomePage(String suffixID) {
-		return driver.FindElementByXPath("//div[@id='batesCount']//strong[contains(text(),'"+suffixID+"')]");
+		return driver.FindElementByXPath("//div[@id='batesCount']//strong[contains(text(),'" + suffixID + "')]");
 	}
-	
+
 	public Element automatedCheck_BatesNumberGeneration() {
 		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Bates Number Generation')]");
 	}
+
 	public Element automatedCheck_BlankPageRemoval() {
 		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Blank Page Removal')]");
 	}
-	
+
 	public Element automatedCheck_DocumentCounts() {
 		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Document and Page Counts')]");
 	}
-	
+
 	public Element automatedCheck_prodfiles() {
 		return driver.FindElementByXPath("//table[@id='taskbasic']//td[contains(text(),'Prod Files')]");
 	}
@@ -2941,31 +2942,33 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
 	}
 
+	// Added by Mohan
 
-
-	
-	//Added by Mohan
-	
 	public Element getProdExport_NoProductionExitSet() {
 		return driver.FindElementByXPath("//*[@id='cardCanvas']//strong");
 	}
-	
+
 	public Element getProdExport_ManageTemplateButton() {
 		return driver.FindElementByXPath("//a[text()='Manage Templates']");
 	}
-	
+
 	public Element getProdExport_CustomTemplatesEmptyValue() {
-		return driver.FindElementByXPath("//*[@id='customTemplatesDatatable']//td[text()='Your query returned no data']");
+		return driver
+				.FindElementByXPath("//*[@id='customTemplatesDatatable']//td[text()='Your query returned no data']");
 	}
-	
 
 	public Element getAdvancedToggle() {
 		return driver.FindElementByXPath("//div[@id='DATContainer']//*[text()='advanced']");
 	}
+
 	public Element getSourceFiledInDatSection() {
 		return driver.FindElementByXPath("//*[@id'SF_0']//option[text()='PageCount']");
 	}
-	
+
+	public Element getProdExport_CustomTemplatesValues() {
+		return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']/tbody/tr");
+	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -7778,7 +7781,7 @@ public class ProductionPage {
 
 		base.waitForElement(getFilterDropDown());
 		getFilterDropDown().waitAndClick(10);
-		
+
 		getProductionFromHomepage(productionName).waitAndClick(10);
 
 	}
@@ -13472,22 +13475,22 @@ public class ProductionPage {
 	 * @description :method for filling Numbering And Sorting Document Page.
 	 * @param prefixID : prefixID is String value that prefix id.
 	 */
-	public void fillingNumberingAndSortingDocumentPage(String beginningBates,String prefixId,String suffixId) {
-		
+	public void fillingNumberingAndSortingDocumentPage(String beginningBates, String prefixId, String suffixId) {
+
 		base.waitForElement(getDocumentRadioBtn());
 		getDocumentRadioBtn().Click();
 
 		driver.waitForPageToBeReady();
 		getBeginningSubBatesNum().Click();
 		getBeginningSubBatesNum().SendKeys(beginningBates);
-		
+
 		base.waitForElement(gettxtBeginningBatesIDPrefix());
 		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
 
 		base.waitForElement(gettxtBeginningBatesIDSuffix());
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
 
-}
+	}
 
 	/**
 	 * @authorGopinath
@@ -19857,72 +19860,68 @@ public class ProductionPage {
 		base.waitForElement(getDATTab());
 		getDATTab().waitAndClick(10);
 
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
 
-			base.waitForElement(getDAT_FieldClassification1());
-			getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.productionText);
+		driver.waitForPageToBeReady();
 
-			driver. waitForPageToBeReady();
-			
-			List<WebElement> option = getDATSourceField().FindWebElements();
-			int j;
-			List<String> options = new ArrayList<String>();
-			for (j = 0; j < option.size(); j++) {
-				driver.waitForPageToBeReady();
-				options.add(option.get(j).getText());
+		List<WebElement> option = getDATSourceField().FindWebElements();
+		int j;
+		List<String> options = new ArrayList<String>();
+		for (j = 0; j < option.size(); j++) {
+			driver.waitForPageToBeReady();
+			options.add(option.get(j).getText());
+		}
+		System.out.println(options);
+		if (options.contains("TIFFPageCount")) {
+			base.passedStep("field mapping value is displayed as expected");
+		} else {
+			base.failedStep("Field mapping value  is not displayed");
+		}
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To validate the fields in Production and export Home page
+	 * @param fieldName
+	 */
+	public void verifyProductionAndExportHomePage(String fieldName) {
+
+		if (fieldName.contains("Export")) {
+			base.waitForElement(getProdExport_NoProductionExitSet());
+			String noData = getProdExport_NoProductionExitSet().getText();
+			base.waitForElement(getProdExport_ManageTemplateButton());
+			getProdExport_ManageTemplateButton().waitAndClick(5);
+
+			base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
+			String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
+			if (noData.contains("No") && customFieldValue.contains("Your")) {
+				base.passedStep(
+						" User created a new Project Using template project and no export template exists then no template is copied from the source template project to the newly created Project.");
+
+			} else {
+				base.failedStep("Export filed has some datas");
 			}
-			System.out.println(options);
-			if (options.contains("TIFFPageCount")) {
-					base.passedStep("field mapping value is displayed as expected");
-				}else {
-					base.failedStep("Field mapping value  is not displayed");
-				}
-			}
-			
-		
-		/**
-		 * @author Mohan.Venugopal
-		 * @description: To validate the fields in Production and export Home page
-		 * @param fieldName
-		 */
-		public void verifyProductionAndExportHomePage(String fieldName) {
-			
-			
-			if (fieldName.contains("Export")) {
-				base.waitForElement(getProdExport_NoProductionExitSet());
-				String noData = getProdExport_NoProductionExitSet().getText();
-				base.waitForElement(getProdExport_ManageTemplateButton());
-				getProdExport_ManageTemplateButton().waitAndClick(5);
-				
-				base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
-				String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
-				if (noData.contains("No")&&customFieldValue.contains("Your")) {
-					base.passedStep(" User created a new Project Using template project and no export template exists then no template is copied from the source template project to the newly created Project.");
-					
-				}else {
-					base.failedStep("Export filed has some datas");
-				}
-			}
-			
-			else if (fieldName.contains("Prod")) {
-				base.waitForElement(getProdExport_NoProductionExitSet());
-				String noData = getProdExport_NoProductionExitSet().getText();
-				base.waitForElement(getProdExport_ManageTemplateButton());
-				getProdExport_ManageTemplateButton().waitAndClick(5);
-				
-				base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
-				String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
-				if (noData.contains("No")&&customFieldValue.contains("Your")) {
-					base.passedStep(" User created a new Project Using template project and no Productions template exists then no template is copied from the source template project to the newly created Project.");
-					
-				}else {
-					base.failedStep("Export filed has some datas");
-				}
-			}
-			
 		}
 
+		else if (fieldName.contains("Prod")) {
+			base.waitForElement(getProdExport_NoProductionExitSet());
+			String noData = getProdExport_NoProductionExitSet().getText();
+			base.waitForElement(getProdExport_ManageTemplateButton());
+			getProdExport_ManageTemplateButton().waitAndClick(5);
 
-		
+			base.waitForElement(getProdExport_CustomTemplatesEmptyValue());
+			String customFieldValue = getProdExport_CustomTemplatesEmptyValue().getText();
+			if (noData.contains("No") && customFieldValue.contains("Your")) {
+				base.passedStep(
+						" User created a new Project Using template project and no Productions template exists then no template is copied from the source template project to the newly created Project.");
+
+			} else {
+				base.failedStep("Export filed has some datas");
+			}
+		}
+
+	}
 
 	/**
 	 * @author Vijaya.Rani Modify Date:21/06/2022 Description:verfy the field
@@ -19950,154 +19949,193 @@ public class ProductionPage {
 		}
 	}
 
-	
-	/**	
+	/**
 	 * @author Brundha.T
-	 * @param BrandingText
-	 * Description:verifying the pdf file
-	 * @throws IOException 
+	 * @param BrandingText Description:verifying the pdf file
+	 * @throws IOException
 	 *
 	 * 
 	 */
-		public void verifyingPdfgeneration(String BrandingText) throws IOException  {
-            base.waitTime(2);
-			String fileName = base.GetFileName();
-			PDDocument document = PDDocument.load(new File(fileName));
-			if (!document.isEncrypted()) {
-				PDFTextStripper stripper = new PDFTextStripper();
-				String text = stripper.getText(document);
-				System.out.println("Text:" + text);
-				if (text.contains(BrandingText)) {
-					base.passedStep(BrandingText + " text is produced in this document");
-				}
-				else {
-					base.failedStep(BrandingText + " text is not  produced in this document");
-				}
-				document.close();
+	public void verifyingPdfgeneration(String BrandingText) throws IOException {
+		base.waitTime(2);
+		String fileName = base.GetFileName();
+		PDDocument document = PDDocument.load(new File(fileName));
+		if (!document.isEncrypted()) {
+			PDFTextStripper stripper = new PDFTextStripper();
+			String text = stripper.getText(document);
+			System.out.println("Text:" + text);
+			if (text.contains(BrandingText)) {
+				base.passedStep(BrandingText + " text is produced in this document");
+			} else {
+				base.failedStep(BrandingText + " text is not  produced in this document");
 			}
-
+			document.close();
 		}
-		
-		/**
-		 * @author: sowndarya.velraj Created date: NA Modified date: NA Modified sowndarya.velraj 
-		 * @Description: Method for filling natively produced docs in pdf section.
-		 * @param Tag  : Tag is String value that name of tag.
-		 * @param Text : Text is String value that need to enter in place holder.
-		 */
-		public void fillingPDFWithNativelyProduceddDocsSelectingFileType(String Tag, String Text,String metaDataLink,String fileType) {
-			
-				base.waitForElement(getPDFChkBox());
-				getPDFChkBox().Click();
-				base.waitForElement(getPDFTab());
-				getPDFTab().Click();
-				
-				// disabling enable for priviledged docs
 
-				base.waitForElement(getTIFF_EnableforPrivilegedDocs());
-				getTIFF_EnableforPrivilegedDocs().Enabled();
-				getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
-
-				// clicking enable for natively placeholder
-
-				driver.waitForPageToBeReady();
-				getSelectCloseBtn().ScrollTo();
-				getSelectCloseBtn().waitAndClick(10);
-				
-				base.waitForElement(getTiff_NativeDoc());
-				getTiff_NativeDoc().waitAndClick(10);
-				
-				driver.waitForPageToBeReady();
-				ddnselectFileType().selectFromDropdown().selectByVisibleText(fileType);
-				
-				base.waitForElement(getclkSelectTag());
-				getclkSelectTag().Click();
-				base.waitForElement(getPriveldged_TagTree(Tag));
-				getPriveldged_TagTree(Tag).Click();
-				base.waitForElement(getClkSelect());
-				getClkSelect().Click();
-					
-				driver.waitForPageToBeReady();
-				base.waitForElement(getNativeDocsPlaceholder());
-				getNativeDocsPlaceholder().Clear();
-				getNativeDocsPlaceholder().SendKeys(Text);
-				
-				insertMetadataLink().waitAndClick(10);
-				getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaDataLink);	
-
-				btnOK_Metafield().waitAndClick(10);
-		}
-		
-		/**
-		 * @author sowndarya.velraj
-		 * @param firstFile
-		 * @param lastFile
-		 * @param prefixID
-		 * @param suffixID
-		 * @param verificationText
-		 * @Description verifying text on the PDF image file on downloaded zip file
-		 */
-		public void OCR_Verification_In_Generated_PDF(int firstFile, int lastFile, String prefixID, String suffixID,
-				String verificationText) {
-			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-
-			for (int i = firstFile; i < lastFile; i++) {
-
-				File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".pdf");
-				// ITesseract instance = new Tesseract(); // JNA Interface Mapping
-				ITesseract instance = new Tesseract1(); // JNA Direct Mapping
-				File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
-				instance.setDatapath(tessDataFolder.getPath());
-
-				try {
-					String result = instance.doOCR(imageFile);
-					System.out.println(result);
-					if (result.contains(verificationText)) {
-						base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".pdf"
-								+ " file as expected");
-					} else {
-						base.failedStep(verificationText + " verification failed");
-					}
-				} catch (TesseractException e) {
-					System.err.println(e.getMessage());
-				}
-			}
-		}
-		
-		/**
-		 * @author sowndarya.velraj
-		 * @param firstFile
-		 * @param lastFile
-		 * @param prefixID
-		 * @param suffixID
-		 * @param verificationText
-		 * @Description verifying text on the PDF image file on downloaded zip file
-		 */
-		public void OCR_Verification__BatesNo_In_GeneratedFile(String prefixID, String suffixID,
-				String beginningBates) {
-			driver.waitForPageToBeReady();
-			String home = System.getProperty("user.home");
-
-
-				File destinationLoc = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID +beginningBates + suffixID + ".tiff");
-				// ITesseract instance = new Tesseract(); // JNA Interface Mapping
-				ITesseract instance = new Tesseract1(); // JNA Direct Mapping
-				File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
-				instance.setDatapath(tessDataFolder.getPath());
-
-				try {
-					String result = instance.doOCR(destinationLoc);
-					System.out.println(result);
-					if (result.contains(beginningBates)) {
-						base.passedStep(beginningBates + " is displayed in " + prefixID + beginningBates + suffixID + ".tiff"
-								+ " file as expected");
-					} else {
-						base.failedStep(beginningBates + " verification failed");
-					}
-				} catch (TesseractException e) {
-					System.err.println(e.getMessage());
-				}
-			}
-
-		
 	}
+
+	/**
+	 * @author: sowndarya.velraj Created date: NA Modified date: NA Modified
+	 *          sowndarya.velraj
+	 * @Description: Method for filling natively produced docs in pdf section.
+	 * @param Tag  : Tag is String value that name of tag.
+	 * @param Text : Text is String value that need to enter in place holder.
+	 */
+	public void fillingPDFWithNativelyProduceddDocsSelectingFileType(String Tag, String Text, String metaDataLink,
+			String fileType) {
+
+		base.waitForElement(getPDFChkBox());
+		getPDFChkBox().Click();
+		base.waitForElement(getPDFTab());
+		getPDFTab().Click();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		// clicking enable for natively placeholder
+
+		driver.waitForPageToBeReady();
+		getSelectCloseBtn().ScrollTo();
+		getSelectCloseBtn().waitAndClick(10);
+
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		ddnselectFileType().selectFromDropdown().selectByVisibleText(fileType);
+
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(Tag));
+		getPriveldged_TagTree(Tag).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().Clear();
+		getNativeDocsPlaceholder().SendKeys(Text);
+
+		insertMetadataLink().waitAndClick(10);
+		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaDataLink);
+
+		btnOK_Metafield().waitAndClick(10);
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @Description verifying text on the PDF image file on downloaded zip file
+	 */
+	public void OCR_Verification_In_Generated_PDF(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+
+		for (int i = firstFile; i < lastFile; i++) {
+
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".pdf");
+			// ITesseract instance = new Tesseract(); // JNA Interface Mapping
+			ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+			File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+			instance.setDatapath(tessDataFolder.getPath());
+
+			try {
+				String result = instance.doOCR(imageFile);
+				System.out.println(result);
+				if (result.contains(verificationText)) {
+					base.passedStep(verificationText + " is displayed in " + prefixID + i + suffixID + ".pdf"
+							+ " file as expected");
+				} else {
+					base.failedStep(verificationText + " verification failed");
+				}
+			} catch (TesseractException e) {
+				System.err.println(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @Description verifying text on the PDF image file on downloaded zip file
+	 */
+	public void OCR_Verification__BatesNo_In_GeneratedFile(String prefixID, String suffixID, String beginningBates) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+
+		File destinationLoc = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		// ITesseract instance = new Tesseract(); // JNA Interface Mapping
+		ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		instance.setDatapath(tessDataFolder.getPath());
+
+		try {
+			String result = instance.doOCR(destinationLoc);
+			System.out.println(result);
+			if (result.contains(beginningBates)) {
+				base.passedStep(beginningBates + " is displayed in " + prefixID + beginningBates + suffixID + ".tiff"
+						+ " file as expected");
+			} else {
+				base.failedStep(beginningBates + " verification failed");
+			}
+		} catch (TesseractException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Vijaya.Rani
+	 * @description: To validate the fields in Production and export Home page
+	 * @param fieldName
+	 */
+	public void verifyProductionTemplateAndExportTemplateHomePage(String fieldName) {
+
+		if (fieldName.contains("Export")) {
+			base.waitForElement(getProdExport_NoProductionExitSet());
+			String noData = getProdExport_NoProductionExitSet().getText();
+			System.out.println(noData);
+			base.waitForElement(getProdExport_ManageTemplateButton());
+			getProdExport_ManageTemplateButton().waitAndClick(5);
+
+			base.waitForElement(getProdExport_CustomTemplatesValues());
+			if (getProdExport_CustomTemplatesValues().Displayed()) {
+				base.passedStep(
+						"User created a new Project Using template project and no Productions template exists then no template is copied from the source template project to the newly created Project.Export template should exists in newly created Project.If no export had been saved as a template, then no templates are copied.");
+
+			} else {
+				base.failedStep("Export filed has some datas");
+			}
+		}
+
+		else if (fieldName.contains("Prod")) {
+			base.waitForElement(getProdExport_NoProductionExitSet());
+			String noData = getProdExport_NoProductionExitSet().getText();
+			System.out.println(noData);
+			base.waitForElement(getProdExport_ManageTemplateButton());
+			getProdExport_ManageTemplateButton().waitAndClick(5);
+
+			base.waitForElement(getProdExport_CustomTemplatesValues());
+			if (getProdExport_CustomTemplatesValues().Displayed()) {
+				base.passedStep(
+						"User created a new Project Using template project and no Productions template exists then no template is copied from the source template project to the newly created Project.Export template should exists in newly created Project.If no export had been saved as a template, then no templates are copied.");
+
+			} else {
+				base.failedStep("Export filed has some datas");
+			}
+		}
+
+	}
+}
