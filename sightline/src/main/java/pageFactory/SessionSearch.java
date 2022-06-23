@@ -1101,6 +1101,18 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
+	public Element getSavedSearchNodeCount() {
+		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//ul//li");
+	}
+	
+	public Element getSavedSearchTableCount() {
+		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//tbody/tr");
+	}
+	
+	
+	public Element getSavedSearchTableNoDatas() {
+		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'Your query returned no data')]");
+	}
 
 	public Element getPureHitsCountNumText() {
 		return driver.FindElementByXPath("//*[@id='001']//span//count");
@@ -11804,5 +11816,56 @@ public class SessionSearch {
 		String expURL = Input.url + "Search/Searches";
 		softAssert.assertEquals(expURL, url);
 		base.stepInfo("Navigate to session search page");
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To Validate under My saved search more 3 saved search trems are there
+	 * 
+	 */
+	public void validateMySavedSearchTerms() {
+
+		String BasicSearchName = "CloningProjectSaveSearch01" + Utility.dynamicNameAppender();
+		String BasicSearchName1 = "CloningProjectSaveSearch02" + Utility.dynamicNameAppender();
+		String BasicSearchName2 = "CloningProjectSaveSearch03" + Utility.dynamicNameAppender();
+		
+		WebElement savedSearchTableCount = getSavedSearchTableCount().getWebElement();
+		List<WebElement> tablecount = savedSearchTableCount.findElements(By.tagName("tr"));
+		int tableSize = tablecount.size();
+		
+		if (getSavedSearchTableNoDatas().isElementAvailable(5)&&tableSize<3) {
+			base.stepInfo("There is no search terms under My saved search");
+			basicContentSearch("test");
+			saveSearch(BasicSearchName);
+			base.selectproject(Input.projectName);
+			basicContentSearch("crammer");
+			saveSearch(BasicSearchName1);
+			base.selectproject(Input.projectName);
+			basicContentSearch("comments");
+			saveSearch(BasicSearchName2);
+			
+		}else {
+			base.stepInfo("Save search terms are already present");
+		}
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To Validate under My saved search more 3 saved search nodes are there
+	 * 
+	 */
+	public void validateSavedSearchNode() {
+		getSavedSearchNodeCount().isElementAvailable(5);
+		WebElement savedSearchNodes = getSavedSearchNodeCount().getWebElement();
+		List<WebElement> NodesCount = savedSearchNodes.findElements(By.xpath("//*[@id='jsTreeSavedSearch']//ul//li"));
+		int nodeSize = NodesCount.size();
+		System.out.println(nodeSize);
+		if (nodeSize>2) {
+			base.passedStep("There are more than 2 level of search group hierarchy");
+			
+		}else {
+			base.failedStep("There are no search nodes hierarchy present");
+		}
+
 	}
 }
