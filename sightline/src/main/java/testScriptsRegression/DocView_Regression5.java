@@ -92,7 +92,7 @@ public class DocView_Regression5 {
 	 * DocView as RMU and REV
 	 * 
 	 */
-	@Test(description = "RPMXCON-51444", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-51444", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitNavigation2() throws Exception {
 
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -148,7 +148,7 @@ public class DocView_Regression5 {
 	 * from persistent hit panel from basic search
 	 */
 
-	@Test(description = "RPMXCON-51445", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-51445", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitNavigation() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
@@ -197,7 +197,7 @@ public class DocView_Regression5 {
 	 * remarks/comments stabilization done
 	 */
 
-	@Test(description = "RPMXCON-51403", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-51403", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocsSearchWithCommentsRemarks() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -255,7 +255,7 @@ public class DocView_Regression5 {
 	 * stabilization - done
 	 */
 
-	@Test(description = "RPMXCON-51942", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-51942", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -517,7 +517,7 @@ public class DocView_Regression5 {
 	 * stabilization - done
 	 */
 
-	@Test(description = "RPMXCON-51939", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-51939", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListAfterScrollingDown() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -697,7 +697,7 @@ public class DocView_Regression5 {
 	 * Search > doc list Stabilization done
 	 */
 
-	@Test(description = "RPMXCON-51404", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-51404", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyHighlightedKeywordsForDocsAreDisplayedSavedSearch() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -762,7 +762,7 @@ public class DocView_Regression5 {
 	 * the eye icon when redirected to doc view from session search when documents
 	 * searched with work product Stabilization done
 	 */
-	@Test(description = "RPMXCON-51398", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-51398", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void validatePersistentPanelHitCountAgainstDocHighlightedCount() throws Exception {
 		String searchName ="Search"+utility.dynamicNameAppender();
 		
@@ -807,7 +807,7 @@ public class DocView_Regression5 {
 	 * done
 	 */
 
-	@Test(description = "RPMXCON-51934", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-51934", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocInMiniDocListChildWindowsAfterPerformCodeSameAsLast() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -969,7 +969,7 @@ public class DocView_Regression5 {
 	 * stabilization done
 	 */
 
-	@Test(description = "RPMXCON-51332", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-51332", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyReviewModeTextContextOfAssignment() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1028,7 +1028,7 @@ public class DocView_Regression5 {
 				};
 		return Users;
 	}
-	@Test(description = "RPMXCON-51330", enabled = true,dataProvider = "Users",  groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-51330", enabled = true,dataProvider = "Users",  groups = { "regression" })
 	public void verifyImpersonationHitsOfDocWithoutClickingEyeIconToDocViewFromDocList(String username,String password,String fromRole,String toRole) throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1094,7 +1094,7 @@ public class DocView_Regression5 {
 	 * document
 	 * 
 	 */
-	@Test(description = "RPMXCON-51923", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-51923", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyImageTabViewDocAnalyticalPanelChildWindow() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1178,7 +1178,7 @@ public class DocView_Regression5 {
 	 * of the doc view
 	 * 
 	 */
-	@Test(description = "RPMXCON-51044", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-51044", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAfterImpersonationMiddlePanelInDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1264,7 +1264,7 @@ public class DocView_Regression5 {
 	 * Assignment/Manage Reviewers.
 	 * 
 	 */
-	@Test(description = "RPMXCON-51043", enabled = true, alwaysRun = true, priority = 13)
+	@Test(description = "RPMXCON-51043", enabled = true, alwaysRun = true)
 	public void verifyMaximizeTheMiddlePanelInDocView() throws Exception {
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1309,7 +1309,7 @@ public class DocView_Regression5 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(description = "RPMXCON-51881", alwaysRun = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-51881", alwaysRun = true, groups = { "regression" })
 	public void verifyFolderWorksFineInCompleteAndUnCompleteSateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51881");
 		baseClass.stepInfo(
@@ -1356,7 +1356,7 @@ public class DocView_Regression5 {
 	 *         with records in an Uncompleted state in Mini DocList
 	 *
 	 */
-	@Test(description = "RPMXCON-51880", alwaysRun = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-51880", alwaysRun = true, groups = { "regression" })
 	public void verifyRemoveCodeSameInCompleteandUncompleteStateInMiniDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51880");
 		baseClass.stepInfo(
@@ -1429,7 +1429,7 @@ public class DocView_Regression5 {
 		return AllTheUsers;
 	}
 
-	@Test(description = "RPMXCON-51006", alwaysRun = true,dataProvider = "AllTheUsers", groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-51006", alwaysRun = true,dataProvider = "AllTheUsers", groups = { "regression" })
 	public void verifyEachPageDocViewedOnDocViewInThumbNailPanel(String username,String password,String fullname) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51006");
 		baseClass.stepInfo(
@@ -1458,7 +1458,7 @@ public class DocView_Regression5 {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-51925", enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-51925", enabled = true, groups = { "regression" })
 	public void verifyImageTabRetainOnDocsNavigation() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51925");
@@ -1545,7 +1545,7 @@ public class DocView_Regression5 {
 	 * Id:RPMXCON-51008 Verify thumbnails in Doc View From assignments page
 	 */
 
-	@Test(description = "RPMXCON-51008", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-51008", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void checkingThumbnailsIconFromAssignment() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
@@ -1579,7 +1579,7 @@ public class DocView_Regression5 {
 	 * previously viewed hits for the document on completing the document after
 	 * applying the coding stamp.
 	 */
-	@Test(description = "RPMXCON-51851", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-51851", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyPersistentHitsCompletingDocumentsAfterCodingStamp() throws Exception {
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1681,7 +1681,7 @@ public class DocView_Regression5 {
 	 * Id:RPMXCON-51977 Verify that DocView should be able to load the stitched TIFF
 	 */
 
-	@Test(description = "RPMXCON-51977", enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-51977", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocViewStichedTIFFIsLoad() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51977");
