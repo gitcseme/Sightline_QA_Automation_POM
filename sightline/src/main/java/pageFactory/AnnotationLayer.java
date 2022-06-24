@@ -66,6 +66,11 @@ public class AnnotationLayer {
 	public Element getAnnotation_Pagination() {
 		return driver.FindElementByXPath("//div[@id='AnnotationsDatatable_paginate']//li//a[text()='Next']");
 	}
+	
+	//Added by Mohan
+		public Element getAnnotationDatatable() {
+			return driver.FindElementById("AnnotationsDatatable_info");
+		}
 
 	// Annotation Layer added successfully
 	public AnnotationLayer(Driver driver) {
@@ -170,6 +175,97 @@ public class AnnotationLayer {
 			e.printStackTrace();
 			base.failedStep("Exception occured while deleting annotation layer " + e.getLocalizedMessage());
 		}
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To add annotation layer
+	 * @param layerName
+	 * @param layerDescription
+	 */
+	public void addAnnotationLayer(String layerName, String layerDescription) {
+
+		try {
+			
+			getAddAnnotationLayerBtn().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAnnotationName().Visible();
+				}
+			}), Input.wait30);
+			getAnnotationName().SendKeys(layerName);
+			getDescription().SendKeys(layerDescription);
+			getSaveBtn().Click();
+			base.VerifySuccessMessage("Annotation Layer added successfully");
+		} catch (Exception e) {
+			Reporter.log("Annotation layer " + layerDescription + " added!", true);
+			UtilityLog.info("Annotation layer already exist");
+		}
+
+		base.CloseSuccessMsgpopup();
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Annotation Table
+	 */
+	public void verifyAnnotationTable() {
+
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		String annotationRowList = getAnnotationDatatable().getText();
+		System.out.println(annotationRowList);
+		
+		if (annotationRowList.contains("0")&&annotationRowList.contains("3")) {
+			
+			driver.waitForPageToBeReady();
+			
+			addAnnotationLayer("AnnotationClone","DefaultAnnotationLayer");
+			addAnnotationLayer("AnnotationClone01","DefaultAnnotationLayer1");
+			addAnnotationLayer("AnnotationClone02","DefaultAnnotationLayer2");
+			addAnnotationLayer("AnnotationClone03","DefaultAnnotationLayer3");
+			base.passedStep("There are more than 2 Annotation Layers  in each security Groups(1-1 in Security Group) and are exists in source template project.");
+			
+		}else if (annotationRowList.contains("Showing 1 to ")) {
+			base.passedStep("There are more than 2 Annotation Layers  in each security Groups(1-1 in Security Group) and are exists in source template project.");
+			
+		}else{
+			base.failedStep("There are no Annotation Layers in the project");
+		}
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Annotation Table
+	 */
+	 public void verifyAnnotationLayerTable() {
+		 driver.waitForPageToBeReady();
+			String annotationRowList = getAnnotationDatatable().getText();
+			System.out.println(annotationRowList);
+    	 if (annotationRowList.contains("Showing 1 to")) {
+    		 base.passedStep("There are more than 2 Annotation Layers  in each security Groups(1-1 in Security Group) and are exists in source template project.");
+    		 
+    	 }else {
+    		 base.failedStep("There are no Annotation Layers in the project");
+		}
+    	 
+	}
+	 
+	 /**
+		 * @author Mohan.Venugopal
+		 * @description: To navigate Annotation layer page
+		 */
+	 public void navigateToAnnotationLayerPage() {
+		 try {
+	    		driver.getWebDriver().get(Input.url + "Annotations/Annotations");
+	    	}catch(Exception e) {
+	    		e.printStackTrace();
+	    		base.failedStep("Navigaing to Annotations Layer page is failed"+e.getLocalizedMessage());
+	    	}
+
+		 
 	}
 
 }

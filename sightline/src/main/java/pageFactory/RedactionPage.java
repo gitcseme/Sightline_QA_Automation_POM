@@ -341,7 +341,27 @@ public class RedactionPage {
   			bc.waitForElement(getSaveBtn());
   			getSaveBtn().waitAndClick(10);
   			
-  		} 
+  		}
+  	
+  	/**
+  	 * @author Mohan.Venugopal
+  	 * @description: To validate Redaction Tag page count 
+  	 */
+  	public void validateReactionTagPageTree() {
+
+  		driver.waitForPageToBeReady();
+  		ElementCollection redactionTagsCount = getredactiontags();
+  		int sizeRCCount = redactionTagsCount.size();
+  		System.out.println(redactionTagsCount);
+  		if (sizeRCCount>3) {
+  			bc.passedStep("There are more than 2 Redaction Tags in each security Groups(1-1 in Security Group) should exists in source template project.");
+			
+		}else {
+			bc.failedStep("There is no Redaction Tags in this project");
+		}
+  		
+  		
+	}
 
 
  }
