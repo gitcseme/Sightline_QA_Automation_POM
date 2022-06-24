@@ -336,6 +336,89 @@ public class Regression_Ingestion02 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 24/06/2022 TestCase Id:RPMXCON-48148 
+	 * Description :To Verify User is able to Ingest Transcript  along with native
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48148",enabled = true, groups = { "regression" })
+	public void verifyIngestingTranscriptAlongWithNative() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48148");
+		baseClass.stepInfo("To Verify User is able to Ingest Transcript  along with native");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		// perform add only ingestion
+		baseClass.stepInfo("Ingest Transcript along with native");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+			baseClass.passedStep("performed ingesting transcript along with native successfully");
+		}
+		else {
+			baseClass.passedStep("Transcript along with native ingestion already present in the project");
+		}
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/06/2022 TestCase Id:RPMXCON-47305
+	 * Description :To verify that progress bar is displayed on tiles
+	 * and Counts of Ingested and Errors keeps on updated once Ingestion process is started.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47305",enabled = true, groups = { "regression" })
+	public void verifyProgressBarAndCountDetailsOnTiles() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47305");
+		baseClass.stepInfo("Verify progress bar and count data updated once ingestion process started");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Start new ingestion and verify status on tiles");
+		ingestionPage.IngestionOnlyForDatFile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.ingestionCatalogging();
+		baseClass.stepInfo("verify content on ingestion tiles");
+		ingestionPage.verifyContentOnIngestionTiles();
+		// rollback ingestion
+		ingestionPage.rollBackIngestion();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 24/06/2022 TestCase Id:RPMXCON-47312
+	 * Description :To verify that user can Ingest the files which are in Draft Mode
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47312",enabled = true, groups = { "regression" })
+	public void verifyIngestionFromDraftMode() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47312");
+		baseClass.stepInfo("To verify that user can Ingest the files which are in Draft Mode");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Map mandatory fields for ingestion and save");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		ingestionPage.getIngestionSettingGearIcon().waitAndClick(5);
+		//verify options available after clicking settings icon
+		ingestionPage.verifyOptionsAvailableForDraftStageIngestion();
+		baseClass.stepInfo("perform ingestion from draft mode using open in wizard option");
+		ingestionPage.IngestionFromDraftModeWithOpenWizardOption("Native",Input.YYYYMMDDHHMISSLst);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		baseClass.passedStep("Ingestion status changed from draft to catalog state");
+		loginPage.logout();
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

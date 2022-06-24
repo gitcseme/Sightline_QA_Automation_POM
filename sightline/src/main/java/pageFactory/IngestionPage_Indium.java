@@ -6608,7 +6608,7 @@ public class IngestionPage_Indium {
 		getNextButton().waitAndClick(10);
 		base.passedStep("Clicked on Next button");
 
-		base.stepInfo("Pop up messgae for Ingestion without text file");
+		base.stepInfo("Pop up message for Ingestion without text file");
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().waitAndClick(10);
 			base.passedStep("Clicked on OK button to continue without text files");
@@ -7136,6 +7136,7 @@ public class IngestionPage_Indium {
 	public void verifyContentOnIngestionTiles() {
 
 		getRefreshButton().waitAndClick(5);
+		base.waitTime(2);
 
 		if (getIngestionDetailPopup(1).isElementAvailable(5)) {
 			int sourceCount = Integer.parseInt(getSourceCount().getText());
@@ -8112,6 +8113,12 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedStep("Ingestion details popup not displayed");
 		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCloseButton().Enabled();
+			}
+		}), Input.wait30);
+		getCloseButton().waitAndClick(10);
 
 	}
 
@@ -11192,4 +11199,73 @@ public class IngestionPage_Indium {
 				base.failedStep("default value not selected for new line delimiter");
 			}
 		}
+		
+		/**
+		 * @author: Arun Created Date: 24/06/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform ingestion using open in wizard option
+		 */
+
+		public void IngestionFromDraftModeWithOpenWizardOption(String type ,String file) {
+
+			driver.waitForPageToBeReady();
+			getIngestionDetailPopup(1).waitAndClick(5);
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getActionOpenWizard().Visible();
+				}
+			}), Input.wait30);
+
+			getActionOpenWizard().waitAndClick(5);
+			base.waitTime(3);
+			
+			if (type.equalsIgnoreCase("Native")) {
+				selectNativeSource(file, false);
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNextButton().Visible();
+				}
+			}), Input.wait30);
+			getNextButton().waitAndClick(10);
+			base.passedStep("Clicked on Next button");
+			if (getPreviewRun().Enabled()) {
+				base.passedStep("Configure mapping section enabled after changing value");
+			} else {
+				base.failedStep("Configure mapping section not enabled");
+			}
+			base.stepInfo("Pop up message for Ingestion without text file");
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
+				getApproveMessageOKButton().waitAndClick(10);
+				base.passedStep("Clicked on OK button to continue without text files");
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPreviewRun().Visible();
+				}
+			}), Input.wait30);
+			getPreviewRun().waitAndClick(10);
+
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getApproveMessageOKButton().Visible();
+					}
+				}), Input.wait30);
+				getApproveMessageOKButton().waitAndClick(10);
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnRunIngestion().Visible();
+				}
+			}), Input.wait30);
+			getbtnRunIngestion().waitAndClick(10);
+
+		}
+		
+		
+		
+		
 }
