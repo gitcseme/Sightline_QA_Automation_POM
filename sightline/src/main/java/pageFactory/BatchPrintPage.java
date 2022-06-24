@@ -254,11 +254,18 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getTagStatus() {
+		return driver.FindElementByXPath("//div[@id='tagSet']");
+	}
+
+	public Element getFolderStatus() {
+		return driver.FindElementByXPath("//div[@id='folderSet']");
+	}
 
 	public Element getAnalysSkipDocFolder_DD() {
 		return driver.FindElementByXPath("//li[contains(@class,' jstree-closed')]//i[@class='jstree-icon jstree-ocl']");
 	}
-
+	
 	public ElementCollection getAnalysSkipDocFolder_List() {
 		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li");
 	}
@@ -2091,6 +2098,12 @@ public class BatchPrintPage {
 	 * @param Next             : Next Button
 	 */
 	public void fillingSourceSelectionTab(String select, String searchOrTagOrFol, boolean Next) {
+		if (getSelectRadioButton().isElementAvailable(3) && getTagBatchPrint().isElementAvailable(3)
+				&& getFolderBatchPrint().isElementAvailable(3)) {
+			System.out.println("Select Search , Select Tag & Select Folder is Displayed");
+			base.stepInfo("Select Search , Select Tag & Select Folder is Displayed");
+		}
+
 		if (select.equalsIgnoreCase("Search")) {
 			saveSearchRadiobutton(searchOrTagOrFol);
 
@@ -2111,7 +2124,7 @@ public class BatchPrintPage {
 			getAllFoldersArrow().waitAndClick(10);
 			base.waitForElement(getSelectFolder(searchOrTagOrFol));
 			getSelectFolder(searchOrTagOrFol).waitAndClick(10);
-			System.out.println("Selected Tag : " + searchOrTagOrFol);
+			System.out.println("Selected Folder : " + searchOrTagOrFol);
 			base.passedStep("Select Folder From Sorce Selection Tab is : " + searchOrTagOrFol);
 
 		}
@@ -2173,17 +2186,17 @@ public class BatchPrintPage {
 	 * @param metadata : Metadata to select
 	 * @param Next     : Next Button
 	 */
-	public void fillingSlipSheetWithMetadata(String metadata, boolean Next ,String[] listofMetadata) {
+	public void fillingSlipSheetWithMetadata(String metadata, boolean Next, String[] listofMetadata) {
 		driver.scrollingToBottomofAPage();
-		if(metadata != null) {
-		base.waitForElement(getMetaDataCheckbox(metadata));
-		getMetaDataCheckbox(metadata).waitAndClick(5);
-		System.out.println("Selected METADATA : " + metadata);
-		base.stepInfo("Selected METADATA from SlipSheets Is : " + metadata);
-		}else {
-			for(String meta :listofMetadata ) {
+		if (metadata != null) {
+			base.waitForElement(getMetaDataCheckbox(metadata));
+			getMetaDataCheckbox(metadata).waitAndClick(5);
+			System.out.println("Selected METADATA : " + metadata);
+			base.stepInfo("Selected METADATA from SlipSheets Is : " + metadata);
+		} else {
+			for (String meta : listofMetadata) {
 				base.waitForElement(getMetaDataCheckbox(meta));
-				getMetaDataCheckbox(meta).waitAndClick(5);	
+				getMetaDataCheckbox(meta).waitAndClick(5);
 				System.out.println("Selected METADATA : " + meta);
 				base.stepInfo("Selected METADATA from SlipSheets Is : " + meta);
 			}
@@ -2191,7 +2204,6 @@ public class BatchPrintPage {
 		driver.scrollingToBottomofAPage();
 		base.waitForElement(getAddToSelectedButton());
 		getAddToSelectedButton().waitAndClick(5);
-		
 
 		if (Next) {
 			navigateToNextPage(1);
@@ -2209,7 +2221,7 @@ public class BatchPrintPage {
 	 * @param Download     : download link
 	 */
 	public void fillingExportFormatPage(String exportFile, String sortBy, boolean onePdfForAll, int refreshCount) {
-		//base.waitForElement(getSelectExportFileName());
+		// base.waitForElement(getSelectExportFileName());
 		getSelectExportFileName().selectFromDropdown().selectByVisibleText(exportFile);
 
 		base.waitForElement(getSelectExportFileSortBy());
@@ -2587,7 +2599,13 @@ public class BatchPrintPage {
 		}
 	}
 
-	public void fillingExceptioanlFileTypeTab(Boolean skipExcel, String Metadata, String[] listOfMetadata,Boolean Next) {
+	/**
+	 * @Author Jeevitha
+	 * @Description : filling exception file type tab
+	 * @param Next
+	 */
+	public void fillingExceptioanlFileTypeTab(Boolean skipExcel, String Metadata, String[] listOfMetadata,
+			Boolean Next) {
 		if (skipExcel) {
 			base.waitForElement(getAnalysis_SkipExcelFiles_RadioButton());
 			getAnalysis_SkipExcelFiles_RadioButton().waitAndClick(5);
@@ -2621,7 +2639,7 @@ public class BatchPrintPage {
 			base.stepInfo("No Exceptional file displayed");
 
 		}
-		
+
 		if (Next) {
 			navigateToNextPage(1);
 		}

@@ -502,6 +502,8 @@ public class TestData {
 	public String ingestionPrjt;
 	public String AutomationAllSources;
 	public String TiffImages;
+	public String advancedOptionText;
+	
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
 

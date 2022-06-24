@@ -169,7 +169,6 @@
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
 	<masterDateText>MasterDate</masterDateText>
-	<pdfFileType>Adobe Portable Document Format (.pdf)</pdfFileType>
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
@@ -196,6 +195,7 @@
 	<documentID>ID00004969</documentID>
 	<orphanDocument>ID00001344</orphanDocument>
 	<parentDocument>ID00001053</parentDocument>
+	<pdfFileType>Adobe Portable Document Format (.pdf)</pdfFileType>
 
 	<!-- Added by Krishna -->
 	<pageNumber>10</pageNumber>
@@ -476,6 +476,7 @@
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
+<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
 
 	<!-- Added by Gopinath Created date - 03/12/2021 -->
 	<thankyouText>thank you</thankyouText>
