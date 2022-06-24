@@ -254,6 +254,10 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	public Element getSlipSheetDD_prod() {
+		return driver.FindElementByXPath("//select[@id='slipSheetsDropdown']");
+	}
+
 	public Element getTagStatus() {
 		return driver.FindElementByXPath("//div[@id='tagSet']");
 	}
@@ -2643,5 +2647,15 @@ public class BatchPrintPage {
 		if (Next) {
 			navigateToNextPage(1);
 		}
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : select Dropdown In slipsheet 
+	 * @param ddValue
+	 */
+	public void selectDropdownFromSlipSheet_prod(String ddValue) {
+		base.waitForElement(getSlipSheetDD_prod());
+		getSlipSheetDD_prod().selectFromDropdown().selectByVisibleText(ddValue);
 	}
 }
