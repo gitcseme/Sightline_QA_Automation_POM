@@ -1809,6 +1809,12 @@ public class SessionSearch {
 	public Element getTaskBackGround(String id) {
 		return driver.FindElementByXPath("//a[text()='Your Navigation execution with Notification Id. " + id+ " is COMPLETED']");
 	}
+	public Element getEnterSearchString_UsingPosition(int i) {
+		return driver.FindElementByXPath("(.//*[@id='xEdit']/li/input)[position()="+i+"]");
+	}
+	public Element getPureHit_UsingLast() {
+		return driver.FindElementByXPath("(//a[@id='001']/span/count)[last()]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

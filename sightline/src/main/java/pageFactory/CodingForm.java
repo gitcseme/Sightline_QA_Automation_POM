@@ -1363,7 +1363,17 @@ public class CodingForm {
 		public Element getCf_MetaDataDisabled(String metadata) {
 			return driver.FindElementByXPath("//*[@id='lstMetadata']//label[@title='"+metadata+"']/input[@disabled='']");
 		}
+		public Element getCf_DownPull(String name) {
+			return driver.FindElementByXPath("//span[text()='"+name+"']//parent::a//i[@class='fa fa-lg fa-angle-up pull-right']");
+		}
 	
+		public Element getCf_ValidationYesUsingPosition(int i) {
+			return driver.FindElementByXPath("(//button[@id='btnYes'])[position()="+i+"]");
+		}
+		public Element getCf_PreviewTagDisabled(String tagName) {
+			return driver.FindElementByXPath("//span[text()='"+tagName+"']//ancestor::div/label/input[@disabled='']");
+		}
+
 		
 
 	public CodingForm(Driver driver) {
