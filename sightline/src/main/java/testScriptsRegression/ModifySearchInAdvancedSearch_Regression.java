@@ -286,7 +286,7 @@ public class ModifySearchInAdvancedSearch_Regression{
 	 *                     (RPMXCON-57976),(RPMXCON-57969)
 	 */
 	
-	@Test(description ="RPMXCON-57976,RPMXCON-57969,RPMXCON-57959",dataProvider = "WPSearchwithOperators",groups = {"regression"},priority=7,enabled=true )
+	@Test(description ="RPMXCON-57976,RPMXCON-57969,RPMXCON-57959",dataProvider = "WPSearchwithOperators",groups = {"regression"},enabled=true )
 		public void validateEditSearchin_AdvnSearchWPproduction(String operator) throws Exception {
 			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			if(operator=="NOT") { baseClass.stepInfo("Test case Id: RPMXCON-57976");}
