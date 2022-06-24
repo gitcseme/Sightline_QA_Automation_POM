@@ -40,6 +40,9 @@ public class KeywordPage {
     public Element getNextButton(){ return driver.FindElementByXPath("//a[text()='Next']/parent::li"); }
     public Element getNextButtonEle(){ return driver.FindElementByXPath("//a[text()='Next']"); }
     
+  //Added by Mohan
+    public Element getKeywordListEmpty(){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//td[contains(text(),'Your')]"); }
+    public Element getKeywordRowList(){ return driver.FindElementById("KeywordsDatatable_info"); }
   
     //Annotation Layer added successfully
     public KeywordPage(Driver driver){
@@ -311,5 +314,60 @@ public class KeywordPage {
            	getYesButton().isElementAvailable(10);
            	getYesButton().Click();        	
            }
+         
+         /**
+          * @author Mohan.Venugopal
+          * @description: To verify KeywordHighlight count
+         * @throws AWTException
+         */
+        public void validateKeywordHighlightingIsPresent() throws AWTException {
+
+        	 driver.waitForPageToBeReady();
+        	 String rowList = getKeywordRowList().getText();
+        	 System.out.println(rowList);
+        	 if (rowList.contains("0")&&rowList.contains("3")) {
+        		 
+					base.waitForElement(getNewKeywordButton());
+					getNewKeywordButton().waitAndClick(5);
+					addKeyword("test", "testDes", "Aqua");
+					
+					driver.waitForPageToBeReady();
+					getNewKeywordButton().waitAndClick(5);
+					addKeyword("basis", "basisDes", "Blue");
+					
+					driver.waitForPageToBeReady();
+					getNewKeywordButton().waitAndClick(5);
+					addKeyword("high", "highDes", "Gold");
+					
+					driver.waitForPageToBeReady();
+					getNewKeywordButton().waitAndClick(5);
+					addKeyword("is", "isDes", "Pink");
+					
+					base.passedStep("There are more than 2 Keywords highlighting present in each security Groups (1 -1 each comments) which also exists in newly created Project.");
+				}
+        		
+        	 else {
+        		 base.passedStep("There are more than 2 Keywords highlighting present in each security Groups (1 -1 each comments) which also exists in newly created Project.");
+			}
+        
+		}
+         
+        /**
+         * @author Mohan.Venugopal
+         * @description: To verify KeywordHighlight list
+        * @throws AWTException
+        */
+         public void verifyKeywordHighlight() {
+        	 driver.waitForPageToBeReady();
+        	 String rowList = getKeywordRowList().getText();
+        	 System.out.println(rowList);
+        	 if (rowList.contains("Showing 1 to")) {
+        		 base.passedStep("There are more than 2 Keywords highlighting present in each security Groups (1 -1 each comments) which also exists in newly created Project.");
+        		 
+        	 }else {
+        		 base.failedStep("There are no Keyword Highlight in the project");
+			}
+        	 
+		}
 	
  }

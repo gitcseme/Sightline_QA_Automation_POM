@@ -1,5 +1,6 @@
 package testScriptsRegressionPhase2;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -23,6 +25,7 @@ import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -68,6 +71,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 21/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding 'Shared With Project Administrator' are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54905", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingSavedSearchAndUser() {
 
@@ -96,6 +104,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 21/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project and no export template  exists then no template gets copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54903", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingExportTemplate() {
 
@@ -125,6 +138,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 21/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project and no Productions template  exists then no template gets copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54902", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingProductionTemplate() {
 
@@ -154,6 +172,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 22/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding 'My Saved Search' hierarchy copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54843", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingMySavedSearch() {
 
@@ -194,6 +217,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 22/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding \"My Saved Search\" are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54836", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingMySavedSearchWithoutHierarchy() {
 
@@ -233,6 +261,11 @@ public class CloningProject_Regression1 {
 
 	}
 
+	/**
+	 * @author Mohan.Venugopal Created on : 22/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding \"Shared With Project Administrator\" are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54837", enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingSavedSearchOnly() {
 
@@ -419,6 +452,117 @@ public class CloningProject_Regression1 {
 
 		prodPage.verifyProductionTemplateAndExportTemplateHomePage("Export");
 
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created on : 24/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Keywords highlighting Layers are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-54803",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingKeywordHighlight() throws AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54803");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Keywords highlighting Layers are copied from the source template project to the newly created Project.");
+		String projectName = "KeywordCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		KeywordPage keywordPage  = new KeywordPage(driver);
+		keywordPage.validateKeywordHighlightingIsPresent();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		keywordPage.navigateToKeywordPage();
+		keywordPage.verifyKeywordHighlight();
+		
+		
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created on : 24/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Annotation Layers are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-54802",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingAnnotationLayer() throws AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54802");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Annotation Layers are copied from the source template project to the newly created Project.");
+		String projectName = "AnnotationCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		AnnotationLayer annotation = new AnnotationLayer(driver);
+		annotation.verifyAnnotationTable();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		annotation.navigateToAnnotationLayerPage();
+		annotation.verifyAnnotationLayerTable();
+		
+		
+		loginPage.logout();
+
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created on : 24/06/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Redaction Tags are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-54801",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingRedactionTag() throws AWTException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54801");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Redaction Tags are copied from the source template project to the newly created Project.");
+		String projectName = "RedactionTagCloneProject"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		RedactionPage redactionPage = new RedactionPage(driver);
+		redactionPage.navigateToRedactionsPageURL();
+		redactionPage.validateReactionTagPageTree();
+		
+		
 		loginPage.logout();
 
 	}
