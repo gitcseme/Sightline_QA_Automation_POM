@@ -574,6 +574,7 @@ public class Input {
 	public static String ingestionPrjt;
 	public static String AutomationAllSources;
 	public static String TiffImages;
+	public static String advancedOptionText;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1391,6 +1392,7 @@ public class Input {
 		ingestionPrjt=testData.getIngestionPrjt();
 		AutomationAllSources=testData.getAutomationAllSources();
 		TiffImages=testData.getTiffImages();
+		advancedOptionText=testData.getAdvancedOptionText();
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 
