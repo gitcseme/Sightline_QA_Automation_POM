@@ -371,7 +371,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that user adds tag/ comment / editable metadata field only once to the coding form
 	 */
-	@Test(description = "RPMXCON-53982",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53982",enabled = false, groups = { "regression" })
 	public void verifyUserCannnotAddSameNameAgainInCf() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-53982");
 	    baseClass.stepInfo("Verify that user adds tag/ comment / editable metadata field only once to the coding form");
@@ -457,7 +457,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Shared Steps: Creating a New Coding form
 	 */
-	@Test(description = "RPMXCON-47210",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47210",enabled = false, groups = { "regression" })
 	public void validateCfTextBox() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-47210");
 	    baseClass.stepInfo("Shared Steps: Creating a New Coding form");
@@ -493,7 +493,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Shared Steps: Verify that Coding form screen opens properly inside Application
 	 */
-	@Test(description = "RPMXCON-47209",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47209",enabled = false, groups = { "regression" })
 	public void validateCfScreenWorksProperly() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-47209");
 	    baseClass.stepInfo("Shared Steps: Verify that Coding form screen opens properly inside Application");
@@ -516,6 +516,93 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    baseClass.passedStep("Manage coding form screen working properly as expected");
 	    loginPage.logout();
 	}
+	
+	
+	/**
+	 * @throws Exception 
+	 * @Author :Indium-Baskar
+	 * @Description : Verify that Preview displays correctly and properly when Tags 
+	 *                and Radio Group combined along with Radio Item on coding form screen
+	 */
+	@Test(description = "RPMXCON-54058",enabled = true, groups = { "regression" })
+	public void verifyCFPreviewUsingRadioItem() throws Exception {
+	    baseClass.stepInfo("Test case Id: RPMXCON-54058");
+	    baseClass.stepInfo("Verify that Preview displays correctly and properly when Tags "
+	    		+ "and Radio Group combined along with Radio Item on coding form screen");
+	    String codingform = "CFTag"+Utility.dynamicNameAppender();
+	    String tagOne = "TagOne"+Utility.dynamicNameAppender();
+	    String tagTwo = "TagTwo"+Utility.dynamicNameAppender();
+	    tagsAndFoldersPage=new TagsAndFoldersPage(driver);
+	    softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		docViewPage = new DocViewPage(driver);
+	    
+	    //Create coding form as per attachment
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+	   
+		//Add tags
+		tagsAndFoldersPage.CreateTag(tagOne, Input.securityGroup);
+		tagsAndFoldersPage.CreateTag(tagTwo, Input.securityGroup);
+
+		// creating codingform
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		
+		//Adding the tags to codingform
+	    codingForm.CreateCodingFormWithParameter(codingform,tagOne,null,null,"tag");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.CreateCodingFormWithParameter(codingform,tagTwo,null,null,"tag");	  
+	    codingForm.addcodingFormAddButton();
+	    baseClass.stepInfo("Selected  tags are added to coding form");
+	    
+	    //Add special objects
+	    codingForm.specialObjectsBox("radio");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.selectTagTypeByIndex("radio item",1,0);
+	    codingForm.selectTagTypeByIndex("radio item",1,1);
+	    codingForm.selectDefaultActions(2, Input.optional);	
+	    driver.scrollPageToTop();
+	    codingForm.saveCodingForm();
+	    
+		//opening same codinform in edit mode
+	    driver.Navigate().refresh();
+	    baseClass.waitTime(10);
+	    codingForm.editCodingForm(codingform);
+	    codingForm.getCF_PreviewButton().waitAndClick(10);
+	    boolean tagOneTrue=codingForm.selectTagInPreviewBox(2).Enabled();
+	    softAssertion.assertTrue(tagOneTrue);
+	    baseClass.passedStep("For optional action radio box is enabled");
+	    codingForm.getCF_Preview_Ok().waitAndClick(10);
+	    
+	    // validating for not selectable
+	    codingForm.getCf_DownPull("Radio Group").waitAndClick(10);
+	    codingForm.selectDefaultActions(2, Input.notSelectable);	
+	    driver.scrollPageToTop();
+	    baseClass.waitForElement(codingForm.getSaveCFBtn());
+	    codingForm.getSaveCFBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getCf_ValidationYesUsingPosition(2));
+		codingForm.getCf_ValidationYesUsingPosition(2).waitAndClick(5);
+	    driver.Navigate().refresh();
+	    baseClass.waitTime(10);
+	    codingForm.editCodingForm(codingform);
+	    codingForm.getCF_PreviewButton().waitAndClick(10);
+	    baseClass.waitForElement(codingForm.getCf_PreviewTagDisabled(tagOne));
+	    boolean tagDisFalse=codingForm.getCf_PreviewTagDisabled(tagOne).Enabled();
+	    softAssertion.assertFalse(tagDisFalse);
+	    System.out.println(tagDisFalse);
+	    baseClass.stepInfo("Radiobox for notsectable tag is disabled");
+	    baseClass.passedStep("codingfrom preview working as per configured");
+	    codingForm.deleteCodingForm(codingform, codingform);
+	    codingForm.assignCodingFormToSG(Input.codeFormName);
+	    softAssertion.assertAll();
+	    loginPage.logout();
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

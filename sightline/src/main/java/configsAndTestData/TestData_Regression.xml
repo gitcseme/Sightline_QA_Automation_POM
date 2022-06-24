@@ -476,6 +476,7 @@
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
+<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
 
 	<!-- Added by Gopinath Created date - 03/12/2021 -->
 	<thankyouText>thank you</thankyouText>

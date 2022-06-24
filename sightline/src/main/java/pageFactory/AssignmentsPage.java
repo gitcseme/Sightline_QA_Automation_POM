@@ -1425,10 +1425,6 @@ public class AssignmentsPage {
 	public Element getFamilyMembersCount() {
 		return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
 	}
-	//Added by Iyappan
-	public Element getProgressReport() {
-		return driver.FindElementByXPath("//a[text()='Progress Report']");
-	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9958,22 +9954,35 @@ public class AssignmentsPage {
 			}
 		}
 	}
+	
 	/**
-	 * @author Iyappan.Kasinathan
-	 * @description This method verifies the the progress report option link is present or not
+	 * @author Indium-Baskar date: 24/06/2022 Modified date: NA
+	 * @Description: validating assignment available or not in manage assignment
+	 * @param filedValue
 	 */
-	public void verifyProgressReportIsPresent() {
-		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
-		driver.waitForPageToBeReady();
-		bc.stepInfo("Navigated to assignments page successfully.");
-		bc.waitTillElemetToBeClickable(getAssgGrptionDropdown());
-		getAssgGrptionDropdown().Click();
-		bc.waitTillElemetToBeClickable(getProgressReport());
-		if(getProgressReport().isDisplayed()) {
-			bc.passedStep("Progress report option is present in manage assignment group actions.");
-		}else {
-			bc.failedStep("Progress report option is not displayed");
+
+	public void assignmentNameValidation(String filedValue) {
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getAssgn_Pagination());
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(filedValue).isDisplayed();
+			if (status == true) {
+				bc.passedStep("Assignment name available in manage assignmnet");
+				bc.stepInfo("Assignment in the name of :"+filedValue+"");
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.failedStep("Assignment name not found in manage assignmnet");
+			}
 		}
 	}
+	
+	
 
 }

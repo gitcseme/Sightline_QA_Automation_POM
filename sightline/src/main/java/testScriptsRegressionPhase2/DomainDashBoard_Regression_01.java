@@ -394,6 +394,85 @@ public class DomainDashBoard_Regression_01 {
 		base.passedStep("Validated exported values for project grid details from Domain Dashboard for Domain Admin user having access to multiple Domains");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 23-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate column customization of project grid on Domain dashboard screen (Domain Admin login and System Admin impersonate as Domain Admin)
+	 */
+	@Test(description = "RPMXCON-53140",enabled = true, groups = {"regression" })
+	public void verifyCustomizedProjectGrid()  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53140");
+		base.stepInfo("Validate column customization of project grid on Domain dashboard screen (Domain Admin login and System Admin impersonate as Domain Admin)");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
+		String[] availableColum = {"PROJECT NAME", "STATUS","TOTAL UTILIZED DISK SIZE (GB)","TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.AddOrRemoveColum(colums);
+		for(String availablestatus:availableColum) {
+			base.visibleCheck(availablestatus);
+		}
+		
+		//login as sa
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a Sa user :"+Input.sa1userName);
+		base.impersonateSAtoDA(Input.domainName);
+		
+		dash.AddOrRemoveColum(colums);
+		for(String availablestatus:availableColum) {
+			base.visibleCheck(availablestatus);
+		}
+		
+		base.passedStep("Validated column customization of project grid on Domain dashboard screen (Domain Admin login and System Admin impersonate as Domain Admin)");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 23-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate column customization of project grid on Domain dashboard screen after changing to different Domain
+	 */
+	@Test(description = "RPMXCON-53142",enabled = true, groups = {"regression" })
+	public void verifyCustomizedProjectGridDiffDomain()  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53142");
+		base.stepInfo("Validate column customization of project grid on Domain dashboard screen after changing to different Domain");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
+		String[] availableColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.AddOrRemoveColum(colums);
+		for(String availablestatus:availableColum) {
+			base.visibleCheck(availablestatus);
+		}
+		
+		base.switchDomain();
+		dash.AddOrRemoveColum(colums);
+		for(String availablestatus:availableColum) {
+			base.visibleCheck(availablestatus);
+		}
+		
+		base.passedStep("Validate column customization of project grid on Domain dashboard screen after changing to different Domain");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
