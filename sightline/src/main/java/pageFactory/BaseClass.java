@@ -248,7 +248,7 @@ public class BaseClass {
 
 	// added by Aathith
 	public Element text(String text) {
-		return driver.FindElementByXPath("//*[contains(text()," + text + ")]");
+		return driver.FindElementByXPath("//*[contains(text(),'" + text + "')]");
 	}
 
 	public Element getGlobalMessagePopUpClose() {
@@ -3545,6 +3545,35 @@ public class BaseClass {
 			} else {
 				stepInfo("No new Tabs opened.");
 			}
+		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param textList
+		 * @Description verify list of text is displayed in webPage
+		 */
+		public void isTextAreAvailableInWebPage(String[] textList) {
+			driver.waitForPageToBeReady();
+			for(String text:textList) {
+				if(text(text).isElementAvailable(5)) {
+					passedStep(text +"  is displayed");
+				}else {
+					failedStep(text+ " not displayed");
+				}
+			}
+		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @Description Clear bullhorn notifications
+		 */
+		public void clearBullHornNotification() {
+			driver.waitForPageToBeReady();
+			waitForElement(getBullHornIcon());
+			getBullHornIcon().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			waitForElement(getBullHornIcon());
+			getBullHornIcon().waitAndClick(10);
 		}
 
 }

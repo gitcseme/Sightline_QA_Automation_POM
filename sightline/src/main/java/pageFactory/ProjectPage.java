@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
@@ -147,6 +148,15 @@ public class ProjectPage {
 	public Element getAssignmnetToggleButton() {
 		return driver.FindElementByXPath("//div[@id='projCopyOption']//i[@id='IsactiveAssignments']");
 	}
+	
+	//Added by Aathith
+	public ElementCollection getProjectTableHeader() {
+		return driver.FindElementsByXPath("//*[@id='ProjectDataTable']/thead/tr/th");
+	}
+	
+	public Element getColumValue(int colum) {
+		return driver.FindElementByXPath("//*[@id='ProjectDataTable']/tbody/tr/td["+colum+"]");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -198,6 +208,7 @@ public class ProjectPage {
 		getProductionFolder().Clear();
 		getProductionFolder().SendKeys("Automation");
 
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAddProject_SettingsTab().Visible();
@@ -627,4 +638,20 @@ public class ProjectPage {
 		UtilityLog.info(bc.initialBgCount());
 
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectName
+	 * @Description filter the project using project name
+	 */
+	public void filterTheProject(String projectName) {
+	   	this.driver.getWebDriver().get(Input.url+"Project/Project");
+	 	  
+	 	 bc.waitForElement(getSearchProjectName());
+	 	 getSearchProjectName().SendKeys(projectName);
+	 	 
+	 	bc.waitForElement(getProjectFilterButton());
+	 	getProjectFilterButton().Click(); 	 
+	 	
+   }
 }
