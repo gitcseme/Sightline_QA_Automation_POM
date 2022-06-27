@@ -2974,7 +2974,15 @@ public class ProductionPage {
 	public Element getNativeCheckBox() {
 		return driver.FindElementByXPath("//input[@id='chkIsNativeSelected']");
 	}
-
+	public Element getInsertMetaDataLink() {
+		return driver.FindElementByXPath("//div[@id='BRDiv_1']//label//a");
+	}
+	public Element getBrandingOkBtn() {
+		return driver.FindElementByXPath("//div[@aria-describedby='MetadataPopup']//footer//button");
+	}
+	public Element getMultiBrandingTags() {
+		return driver.FindElementByXPath("//td[contains(text(),'Multiple Branding Tags')]/following-sibling::td//span");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20142,7 +20150,7 @@ public class ProductionPage {
 				base.failedStep("Export filed has some datas");
 			}
 		}
-
+	}
 
 
 /**
@@ -20161,6 +20169,75 @@ nonVisibleCheck(Input.advancedOptionText);
 
 
 }
+/**
+ * @author Brundha.T
+ * @param tagname
+ * @param tagname1
+ * @throws InterruptedException 
+ * @Description:method to filling native placeholder with two tags
+ */
+public void nativePlaceholderWithTwoTags(boolean value,String tagname,String tagname1) throws InterruptedException {
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getSelectCloseBtn());
+	getSelectCloseBtn().Click();
+	base.waitForElement(getTiff_NativeDoc());
+	getTiff_NativeDoc().Click();
+	if(value) {
+		base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
+		getFileTypeNativelyProducedDocs().Click();
+	}
+	base.waitForElement(getclkSelectTag());
+	getclkSelectTag().Click();
+	base.waitForElement(getPriveldged_TagTree(tagname));
+	getPriveldged_TagTree(tagname).waitAndClick(10);
+	base.waitForElement(getPriveldged_TagTree(tagname1));
+	getPriveldged_TagTree(tagname1).waitAndClick(10);
+	base.waitForElement(getClkSelect());
+	getClkSelect().Click();
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().SendKeys(Input.searchString4);
+}
 
+/**
+ * @author Brundha.T
+ * @param tagname
+ * @param Tagname2
+ * Description:Selecting Multiple tags in tiff section
+ */
+public void selectMultiBrandingTags(String tagname,String Tagname2) {
 
+	getBrandingBySelectingTags().ScrollTo();
+	base.waitTillElemetToBeClickable(getBrandingBySelectingTags());
+	getBrandingBySelectingTags().Click();
+	base.waitForElement(getbtnSelectTags());
+	getbtnSelectTags().Click();
+	base.waitForElement(getChkBoxSelect(tagname));
+	getChkBoxSelect(tagname).waitAndClick(5);
+	base.waitForElement(getChkBoxSelect(Tagname2));
+	getChkBoxSelect(Tagname2).Click();
+	getbtnSelect().waitAndClick(10);
+	base.waitForElement(getInsertMetaDataLink());
+	getInsertMetaDataLink().Click();
+	getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText("AttachCount");
+	getBrandingOkBtn().waitAndClick(5);
+	
+	
+
+}
+/**
+ * @author Brundha.T
+ * Description:verifying the document count in multiple branding Tags
+ */
+	public void verifyingMultipleBrandingCount() {
+		
+		base.waitForElement(getMultiBrandingTags());
+		String BrandingCount=getMultiBrandingTags().getText();
+		if(Integer.parseInt(BrandingCount)!=(0)&&BrandingCount.equals(Input.pageCount)) {
+			base.passedStep("Document count is displayed as expected");
+		}else {
+			base.failedStep("Document count is not displayed as expected");
+		}
+		
+	}
 }
