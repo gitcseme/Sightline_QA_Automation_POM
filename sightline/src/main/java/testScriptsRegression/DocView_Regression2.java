@@ -1927,7 +1927,7 @@ public class DocView_Regression2 {
 	 * @throws AWTException
 	 * 
 	 */
-	@Test(description ="RPMXCON-510785",enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description ="RPMXCON-50785",enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyAssignmentViewInDocViewZero() throws Exception {
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
