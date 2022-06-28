@@ -18,9 +18,11 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -37,8 +39,8 @@ public class Production_Regression {
 	TagsAndFoldersPage tagsAndFolderPage;
 	SessionSearch sessionSearch;
 	SoftAssert softAssertion;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
+	String  prefixID = "A" + Utility.dynamicNameAppender();
+	String suffixID = "P" + Utility.dynamicNameAppender();
 	String foldername;
 	String tagname;
 	String productionname;
@@ -408,6 +410,210 @@ public class Production_Regression {
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID,beginningBates);
 		baseClass.stepInfo("verified Bates Number Sync With Generates Files");
 	}
+	
+	//today
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47911
+	 * @Description:To Verify In generated load files, the key is the ID (e.g. bates number) of the produced document, not the DocID of the document
+	 */
+
+	@Test(description = "RPMXCON-47911", enabled = true, groups = { "regression" })
+	public void verifyKeyIDAndBatesSync() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47911- Production Sprint 16");
+		baseClass.stepInfo("To Verify In generated load files, the key is the ID (e.g. bates number) of the produced document, not the DocID of the document");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		String datField = page.fillingDatWithSpecificClassification(Input.productionText,Input.tiffPageCountNam, Input.bates);
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : "+beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.extractFile();
+		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID,datField);
+		baseClass.stepInfo("Verified the key is the ID in generated load files,");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47919
+	 * @Description:To Verify In Summary step, Should Display the Redaction Documents Count
+	 **/
+
+	@Test(description = "RPMXCON-47919", enabled = true, groups = { "regression" })
+	public void verifyRedactedCountInSummary() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-47915- Production Sprint 16");
+		baseClass.stepInfo("To Verify In Summary step, Should Display the Redaction Documents Count");
+		UtilityLog.info(Input.prodPath);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		baseClass.selectproject();
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+
+		String redactTag= "Redaction"+ Utility.dynamicNameAppender();
+		RedactionPage redact=new RedactionPage(driver);
+		redact.selectDefaultSecurityGroup();
+		redact.manageRedactionTagsPage(redactTag);
+		
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString4);
+		sessionSearch.viewInDocView();
+		
+		DocViewRedactions docview=new DocViewRedactions(driver);
+		docview.redactRectangleUsingOffset(10, 10, 20, 20);
+		driver.waitForPageToBeReady();
+		docview.selectingRedactionTag(redactTag);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		page.TIFFSectionEnableBurnRedactionAndSelectRedactedTag(redactTag);
+		page.navigateToNextSection();
+		String batesNum=page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : "+batesNum);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.scrollingToBottomofAPage();
+		String docCount = page.redactedDocCountInSummaryPage().getText();
+		int redactedCount = Integer.parseInt(docCount);
+		int count=0;
+		
+		if(redactedCount>count) {
+			baseClass.passedStep("Redacted count displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-63064
+	 * @Description:Verify that user should be able to change the automatically enabled native placeholdering under TIFF/PDF section from new production
+	 **/
+
+	@Test(description = "RPMXCON-63064", enabled = true)
+	public void verifyNativePlaceholderInSpreadsheet() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-63064- Production Sprint 16");
+		baseClass.stepInfo("Verify that user should be able to change the automatically enabled native placeholdering under TIFF/PDF section from new production");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		 DocListPage doclist=new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExisting(tagname);
+		
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		page.getTIFFChkBox().waitAndClick(10);
+		page.getTIFFTab().waitAndClick(10);
+		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		page.verifyEnableNativelyProduceddocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : "+beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		baseClass.stepInfo("Create production by selecting PDF and using required inputs");
+		String beginningBates2 = page.getRandomNumber(2);
+		String productionname2 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName2=page.addANewProduction(productionname2);
+		System.out.println("created a new production - "+prodName2);
+		page.fillingDATSection();
+		page.getTIFFChkBox().waitAndClick(10);
+		page.getTIFFTab().waitAndClick(10);
+		page.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		page.getPDFGenerateRadioButton().waitAndClick(10);
+		page.verifyEnableNativelyProduceddocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates2);
+		System.out.println("Bates Number is : "+beginningBates2);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname2);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
@@ -421,7 +627,7 @@ public class Production_Regression {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
-	}
+		}
 
 	@AfterClass(alwaysRun = true)
 
