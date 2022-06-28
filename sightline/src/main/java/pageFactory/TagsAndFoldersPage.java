@@ -483,18 +483,23 @@ public class TagsAndFoldersPage {
 	public Element getEditTagWaringMessageText() {
 		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/parent::div//label");
 	}
-	
+
 //Added by Krishna
 	public ElementCollection saMenuItems() {
 		return driver.FindElementsByXPath("//a[@class = \"a-menu\"]");
 	}
-	
+
 	public Element saManageTab() {
 		return driver.FindElementByXPath("//a[@name = 'Manage']");
 	}
-	
+
 	public ElementCollection leftMenuItems() {
 		return driver.FindElementsByXPath("//a[@class = 'a-menu']");
+	}
+
+	// Added by Mohan
+	public ElementCollection getTotFolderCount() {
+		return driver.FindElementsByXPath("//ul[@class='jstree-children']//a");
 	}
 
 	public TagsAndFoldersPage(Driver driver) {
@@ -2675,6 +2680,7 @@ public class TagsAndFoldersPage {
 			base.CloseSuccessMsgpopup();
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param strFolder
@@ -2696,4 +2702,39 @@ public class TagsAndFoldersPage {
 		getFolderViewDoclist().waitAndClick(10);
 		driver.waitForPageToBeReady();
 	}
+
+	public void validateTagsPageCount() {
+
+		driver.waitForPageToBeReady();
+
+		ElementCollection totFolderCount = getTotFolderCount();
+		int totFolderSize = totFolderCount.size();
+		if (totFolderSize > 3) {
+			base.passedStep(
+					"There are more than 2 Tags in each security Groups(1-1 in Security Group) is exists in source template project.");
+
+		} else {
+			base.failedStep("There are no Tags in this project");
+		}
+
+	}
+	
+	public void validateFolderPageCount() {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+
+		ElementCollection totFolderCount = getTotFolderCount();
+		int totFolderSize = totFolderCount.size();
+		if (totFolderSize > 3) {
+			base.passedStep(
+					"There are more than 2 Folders in each security Groups(1-1 in Security Group) is exists in source template project.");
+
+		} else {
+			base.failedStep("There are no Folders in this project");
+		}
+
+	}
+
 }

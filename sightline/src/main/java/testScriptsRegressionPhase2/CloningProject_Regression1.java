@@ -18,6 +18,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CommentsPage;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.KeywordPage;
@@ -29,6 +30,7 @@ import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -563,6 +565,119 @@ public class CloningProject_Regression1 {
 		redactionPage.validateReactionTagPageTree();
 		
 		
+		loginPage.logout();
+
+	}
+	
+
+	/**
+	 * @author Mohan.Venugopal Created on : 24/06/2022 Modified On:NA
+	 * @description:Verify that when User creates a new Domain  Project Using template project then corresponding comments are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	
+	@Test(description = "RPMXCON-54800",enabled = true, groups = { "regression" },priority = 4)
+	public void userCreateNewDomainUsingComments()  {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54800");
+		baseClass.stepInfo("Verify that when User creates a new Domain  Project Using template project then corresponding comments are copied from the source template project to the newly created Project.");
+		String projectName = "CommentsCloneProject"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		CommentsPage commentsPage = new CommentsPage(driver);
+		commentsPage.validateCommentsTable();
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		baseClass.waitTime(10);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		
+		commentsPage.navigateToCommentsPage();
+		commentsPage.verifyCommentsPage();
+		
+		
+		
+		loginPage.logout();
+
+	}
+	
+	
+
+	/**
+	 * @author Mohan.Venugopal Created on : 28/06/2022 Modified On:NA
+	 * @description:Verify that when User creates a new Domain Project Using template project then corresponding Folders are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-54799",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingFolder(){
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54799");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Folders are copied from the source template project to the newly created Project.");
+		String projectName = "FolderCloneProject"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		TagsAndFoldersPage folder = new TagsAndFoldersPage(driver);
+		folder.navigateToTagsAndFolderPage();
+		folder.validateFolderPageCount();
+
+		loginPage.logout();
+
+	}
+	
+	
+
+	/**
+	 * @author Mohan.Venugopal Created on : 28/06/2022 Modified On:NA
+	 * @description:Verify that when User creates a new Domain Project Using template project then corresponding Tags are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-54798",enabled = true, groups = { "regression" })
+	public void userCreateNewDomainUsingTags()  {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54798");
+		baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Tags are copied from the source template project to the newly created Project.");
+		String projectName = "TagsCloneProject"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		DataSets data = new DataSets(driver);
+		data.getNotificationMessage(0,projectName);
+		
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		TagsAndFoldersPage folder = new TagsAndFoldersPage(driver);
+		folder.navigateToTagsAndFolderPage();
+		folder.validateTagsPageCount();
+
 		loginPage.logout();
 
 	}
