@@ -788,6 +788,10 @@ public class Input {
 	public static String ingestionLessThanHour;
 	public static String ingestionOneHour;
 	
+	//Added by Iyappan
+	public static String docAudioId1;
+	public static String docAudioId2;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1583,6 +1587,10 @@ public class Input {
 		 sourceBlank=testData.getSourceBlank();
 		 ingestionOneHour=testData.getIngestionOneHour();
 		 ingestionLessThanHour=testData.getIngestionLessThanHour();
+		 
+		 //Added by Iyappan
+		 docAudioId1=testData.getDocAudioId1();
+		 docAudioId2=testData.getDocAudioId2();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

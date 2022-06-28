@@ -1425,6 +1425,11 @@ public class AssignmentsPage {
 	public Element getFamilyMembersCount() {
 		return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
 	}
+	//Added by Iyappan
+	public Element getProgressReport() {
+		return driver.FindElementByXPath("//a[text()='Progress Report']");
+	}
+	
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9577,6 +9582,7 @@ public class AssignmentsPage {
 		int records = Integer.parseInt(count);
 		for (int i = 0; i < records; i++) {
 			driver.waitForPageToBeReady();
+			editCodingForm(Input.searchString1);
 			bc.waitForElement(completeBtn());
 			completeBtn().waitAndClick(5);
 		}
@@ -9980,6 +9986,19 @@ public class AssignmentsPage {
 				getAssgnPaginationNextButton().Click();
 				bc.failedStep("Assignment name not found in manage assignmnet");
 			}
+		}
+	}
+	public void verifyProgressReportIsPresent() {
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Navigated to assignments page successfully.");
+		bc.waitTillElemetToBeClickable(getAssgGrptionDropdown());
+		getAssgGrptionDropdown().Click();
+		bc.waitTillElemetToBeClickable(getProgressReport());
+		if(getProgressReport().isDisplayed()) {
+			bc.passedStep("Progress report option is present in manage assignment group actions.");
+		}else {
+			bc.failedStep("Progress report option is not displayed");
 		}
 	}
 	
