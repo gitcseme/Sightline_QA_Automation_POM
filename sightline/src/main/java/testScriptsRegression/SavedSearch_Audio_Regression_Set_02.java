@@ -118,7 +118,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         group within "My Saved Search" -RPMXCON-47393 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-47393",enabled = false, dataProvider = "TestUser", groups = { "regression" } )
+	@Test(description ="RPMXCON-47393",enabled = true, dataProvider = "TestUser", groups = { "regression" } )
 	public void verifyMoveActionSS(String UserName, String PassWord, String fullName) throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47393 - Saved Search Sprint 03");
@@ -154,7 +154,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         Saved Search -RPMXCON-49352 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49352",enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description ="RPMXCON-49352",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
 
 	public void verifyMoveRenamedSearch(String UserName, String PassWord, String fullName) throws InterruptedException {
 
@@ -201,7 +201,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         -RPMXCON-49354 Sprint 03
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49354",enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description ="RPMXCON-49354",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
 	public void editRenamedSearchSS(String UserName, String PassWord, String fullName) throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-49354 - Saved Search Sprint 03");
 		// Login as RMU
@@ -237,7 +237,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49353",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49353",enabled = true, groups = { "regression" } )
 	public void shareaRenamedSearchSS() throws InterruptedException, ParseException {
 		base.stepInfo("Test case Id: RPMXCON-49353 - Saved Search Sprint 03");
 		// Login as PA
@@ -295,7 +295,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49845",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49845",enabled = true, groups = { "regression" } )
 	public void sharingSearchGroupToPA() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchPA;
@@ -350,7 +350,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49844",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49844",enabled = true, groups = { "regression" } )
 	public void sharingSearchWithPA() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchPA;
@@ -398,7 +398,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws ParseException
 	 * @Stabilization : Completed-In
 	 */
-	@Test(description ="RPMXCON-49873",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49873",enabled = true, groups = { "regression" } )
 	public void performActionOnSGviaSG() throws InterruptedException, ParseException {
 
 		String SGtoShare = Input.shareSearchDefaultSG;
@@ -474,7 +474,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49874",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49874",enabled = true, groups = { "regression" } )
 	public void newSearchViaSavedSearch() throws InterruptedException {
 
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
@@ -547,7 +547,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed - In
 	 */
-	@Test(description ="RPMXCON-49832",enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description ="RPMXCON-49832",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
 	public void saveSearchAdvDraft(String userName, String password, String fullName)
 			throws InterruptedException, ParseException {
 		String search = "Search6" + Utility.dynamicNameAppender();
@@ -589,7 +589,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 * @throws InterruptedException
 	 * @Stabilization : Completed
 	 */
-	@Test(description ="RPMXCON-49828",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-49828",enabled = true, groups = { "regression" } )
 	public void verifyBasic_Advancesearch() throws InterruptedException {
 		String Search1 = "search" + Utility.dynamicNameAppender();
 		String Search2 = "search" + Utility.dynamicNameAppender();
@@ -641,7 +641,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         query based on search name from My Search folder RPMXCON-47460-
 	 *         Sprint 03
 	 */
-	@Test(description ="RPMXCON-47460",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-47460",enabled = true, groups = { "regression" } )
 	public void searchAsavedQueryBasedOnSearchName() throws InterruptedException {
 
 		base.stepInfo("Test case Id: RPMXCON-47460 - Saved Search Sprint 03");
@@ -671,7 +671,7 @@ public class SavedSearch_Audio_Regression_Set_02 {
 	 *         query based on search name from My Search folder RPMXCON-47561-
 	 *         Sprint 03
 	 */
-	@Test(description ="RPMXCON-47460",enabled = false, groups = { "regression" } )
+	@Test(description ="RPMXCON-47460",enabled = true, groups = { "regression" } )
 	public void verifySavedSearchAsRev() throws InterruptedException {
 		base.stepInfo("Test case Id: RPMXCON-47460 - Saved Search Sprint 03");
 		String search_Name1 = "Search1" + Utility.dynamicNameAppender();

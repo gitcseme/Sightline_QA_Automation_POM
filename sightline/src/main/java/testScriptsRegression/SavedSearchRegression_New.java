@@ -1142,8 +1142,7 @@ public class SavedSearchRegression_New {
 	 * @throws ParseException
 	 */
 
-	@Test(description ="RPMXCON-49009",enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRoleANDshareType", groups = {
-			"regression" } )
+	@Test(description ="RPMXCON-49009",enabled = true, dataProvider = "SavedSearchwithPAandRMUwithRoleANDshareType", groups = {"regression" } )
 	public void showHideFieldsVIaSHared(String userName, String password, String fullName, String role, int type)
 			throws InterruptedException, ParseException {
 		String SGtoShare = Input.shareSearchDefaultSG;
@@ -1920,7 +1919,7 @@ public class SavedSearchRegression_New {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(description ="RPMXCON-49038",enabled = false, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
+	@Test(description ="RPMXCON-49038",enabled = true, dataProvider = "SavedSearchwithUsers", groups = { "regression" } )
 	public void validateSavedSearchPageProperOptionsSharedWith(String username, String password, String fullName)
 			throws InterruptedException, ParseException {
 

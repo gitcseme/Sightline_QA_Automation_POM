@@ -1040,8 +1040,7 @@ public class AdvancedSearch_Regression2 {
 	 * @author Jayanthi 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-48434", dataProvider = "Users", enabled = true, groups = {
-			"regression" })
+	@Test(description ="RPMXCON-48434", dataProvider = "Users", enabled = true, groups = {"regression" })
 	public void verifyBG_CountAdvancesearchToDocList(String username, String password) throws InterruptedException {
 
 		SessionSearch search = new SessionSearch(driver);

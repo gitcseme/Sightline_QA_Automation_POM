@@ -3,8 +3,8 @@
         <url>https://sightlineuat.consiliotest.com/</url>
         <prodpath>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation\RegressionAllDatasetConsilio</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>             
-      <domainName>Indium</domainName>
-        <projectName>Indium_Regressionrun</projectName>
+      <domainName>MasterAutomationData</domainName>
+        <projectName>Automation_Consilio</projectName>
            <ICEProjectName>Automation_Consilio</ICEProjectName>
 		    <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
      <ingestDataProject>AutomationIngestionProject</ingestDataProject>
