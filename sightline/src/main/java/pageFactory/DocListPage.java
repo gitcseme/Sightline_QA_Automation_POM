@@ -1806,6 +1806,8 @@ public class DocListPage {
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
 		base.VerifySuccessMessage("Records saved successfully");
+		
+		driver.Manage().window().maximize();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;

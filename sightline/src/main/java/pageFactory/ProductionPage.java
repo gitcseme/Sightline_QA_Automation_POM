@@ -891,6 +891,19 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element defaultTextInNativeToggle() {
+		return driver.FindElementByXPath("//div[@class='redactor-editor']//p[contains(text(),'Document Produced in Native Format.')]");
+	}
+	
+	public Element redactedDocCountInSummaryPage() {
+		return driver.FindElementByXPath(
+				"(//div[@class='smart-form']//label[contains(text(),'Redacted Documents: ')]//..//label[@class='col-sm-6 labelAlign'])[2]");
+	}
+	
+	public Element redactionTagInBurnRedactionToggle(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul[@class='jstree-children']//a[contains(text(),'"+tag+"')]");
+	}
+	
 	public Element btnOK_Metafield() {
 		return driver.FindElementByXPath("//div[@id='MetadataPopup']//button[@value='submit']");
 	}
@@ -6370,8 +6383,9 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
 	 * @param beginningBates added as a argument to avoid production failure in
 	 *                       batch run
+	 * @return 
 	 */
-	public void fillingNumberingAndSortingPage(String prefixId, String suffixId, String beginningBates)
+	public String fillingNumberingAndSortingPage(String prefixId, String suffixId, String beginningBates)
 			throws InterruptedException {
 
 		base.waitForElement(getBeginningBates());
@@ -6413,6 +6427,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Numbering and sorting section is filled");
 
+		return beginningBates;
 	}
 
 	/**
@@ -20240,4 +20255,103 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 		}
 		
 	}
+	/**
+	 * @author sowndarya.velraj
+	 * @Description filling DAT section with specific classification after bates
+	 */
+	public String fillingDatWithSpecificClassification(String classification,String sourceField,String datField) {
+		addNewFieldOnDAT();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(classification);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText(sourceField);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField2().SendKeys(datField);
+		base.stepInfo("Dat section is filled with required specifications");
+		return datField;
+	}
+	
+	/**
+	 * Modified on 03/05/2022
+	 * 
+	 * @authorIndium-Sowndarya.Velraj
+	 * @param tagname
+	 * @param This    method selects TIFF component and disables "Enable for
+	 *                privileged tags" toggle.Then "EnablesBurn Redaction Tags"
+	 *                toggle and select the particular tag.
+	 */
+	public void TIFFSectionEnableBurnRedactionAndSelectRedactedTag(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		// diabling enable for natively placeholder
+		base.waitForElement(getEnableForNativelyToggle());
+		getEnableForNativelyToggle().waitAndClick(10);
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkLink_selectingRedactionTags().ScrollTo();
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		getClkBtn_selectingRedactionTags().ScrollTo();
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+	
+		redactionTagInBurnRedactionToggle(tagname).waitAndClick(10);
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description verifying natively placeholder toggle default changes 
+	 */
+	public void verifyEnableNativelyProduceddocs() {
+		driver.waitForPageToBeReady();
+		defaultTextInNativeToggle().isDisplayed();
+		base.stepInfo("Document Produced in Native Format Text is present in text area by default");		}
+
+
+
 }
