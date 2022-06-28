@@ -3489,6 +3489,18 @@ public class DocViewPage {
 	public Element get_textHighlightedColorOnRedactSubMenu() {
 		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']/a");
 	}
+	
+	public Element getCopyPasteIcon() {
+		return driver.FindElementByXPath("//*[@id='copyPasteEnable']//i");
+	}
+
+	public Element getCopyPasteIconStatus() {
+		return driver.FindElementByXPath("//*[@id='copyPasteEnable']");
+	}
+	
+	public Element getRedacTextRightClickSelctCopy() {
+		return driver.FindElementByXPath("//ul[@class='ctxmenu']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -27971,5 +27983,61 @@ public class DocViewPage {
 
 		return docViewCount;
 
+	}
+	
+	/**
+	 * @author 
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description: This method used to verify Select text copy and paste text on
+	 *               doc comment box on selection action as
+	 * 
+	 */
+	public String verifyClickRightClickAndCopyPasteRedacTextOnCommentBox() throws InterruptedException, AWTException {
+		driver.waitForPageToBeReady();
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		Actions actions = new Actions(driver.getWebDriver());
+		Robot robot = new Robot();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPasteIcon().Displayed();
+			}
+		}), Input.wait120);
+		String status = getCopyPasteIconStatus().GetAttribute("class");
+		System.out.println(status);
+		if (status == "active") {
+			base.stepInfo("Copyandpaste icon is already clicked successfully");
+		} else {
+			getCopyPasteIcon().waitAndClick(5);
+			base.stepInfo("Copyandpaste icon is clicked successfully");
+		}
+		driver.waitForPageToBeReady();
+		// Thread sleep added for the page to adjust resolution
+		Thread.sleep(1000);
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
+				.moveByOffset(20, 10).release().build().perform();
+		driver.waitForPageToBeReady();
+		// copy the text
+		actions.contextClick().build().perform();
+		getRedacTextRightClickSelctCopy().waitAndClick(3);
+		base.passedStep("Right click and Select action as copy the text is copied successfully");
+		driver.waitForPageToBeReady();
+		editCodingForm();
+		getAddComment1().Clear();
+		getAddComment1().waitAndClick(2);
+		// Paste the text
+		driver.waitForPageToBeReady();
+		actions.moveToElement(getAddComment1().getWebElement()).contextClick().build().perform();
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		base.passedStep(
+				"Right click and Select action as paste the text is pasted on codingform comment box successfully");
+		return status;
 	}
 }
