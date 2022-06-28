@@ -2915,8 +2915,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *         : Overwriting saved Searches - User should be allowed to overwrite
 	 *         the search in Completed/Draft status - RPMXCON-48943 Sprint 09
 	 */
-	@Test(description ="RPMXCON-48943",enabled = true, dataProvider = "verifyOverwrittingSavedSearchAsUser", groups = {
-			"regression" } )
+	@Test(description ="RPMXCON-48943",enabled = true, dataProvider = "verifyOverwrittingSavedSearchAsUser", groups = {"regression" } )
 	public void verifyOverwrittingSavedSearchInCompletedAndDraftStatusAsPAUandRMUandRev(String userName,
 			String password, String fullName, String Query, String Status, int searchNum) throws Exception {
 
