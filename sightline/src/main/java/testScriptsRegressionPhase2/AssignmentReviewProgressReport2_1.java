@@ -13,11 +13,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
+import pageFactory.AssignmentReviewProgressReport;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
+import pageFactory.ReviewerReviewProgressReport;
 import pageFactory.SessionSearch;
 import pageFactory.UserReviewActivityReport;
 import pageFactory.Utility;
@@ -30,6 +32,10 @@ public class AssignmentReviewProgressReport2_1 {
 	BaseClass bc;
 	UserReviewActivityReport userActivityRptPg;
 	AssignmentsPage assgnmntPg;
+	SessionSearch sessionSearch;
+	DocViewPage docview;
+	AssignmentReviewProgressReport arpr;
+	ReviewerReviewProgressReport rrpr;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -48,6 +54,191 @@ public class AssignmentReviewProgressReport2_1 {
 		assgnmntPg = new AssignmentsPage(driver);
 		assgnmntPg.verifyProgressReportIsPresent();		
 		lp.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @description: To verify that 'Total Audio Docs Completed' count should be display correct 
+	 *               in 'Review Progress Report'/'Assignment Progress Report'. RPMXCON-56540
+	 */
+	@Test(description = "RPMXCON-56540", enabled = true, groups = { "regression" })
+	public void validateTotalAudioDocsInARPRandRRPR() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-56540"); 
+		bc.stepInfo("To verify that 'Total Audio Docs Completed' count should be display correct in 'Review Progress Report'/'Assignment Progress Report'"); 
+		// Login as Reviewer Manager
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		assgnmntPg = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		arpr = new AssignmentReviewProgressReport(driver);
+		rrpr = new ReviewerReviewProgressReport(driver);
+		String assign1 =  "Assignment" + Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssignmentGrp"+Utility.dynamicNameAppender();
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assgnmntPg.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
+		assgnmntPg.selectAssignmentGroup(assignmentGrpName);
+		assgnmntPg.createAssignmentFromAssgnGroup(assign1, Input.codeFormName);			
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.docAudioId1);	
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(docview.getAudioDocEndDuration());
+		String durationForFirstDoc = docview.getAudioDocEndDuration().getText();
+		driver.Navigate().back();
+		sessionSearch.bulkAssignExisting(assign1);
+		bc.selectproject();		
+		sessionSearch.basicContentSearch(Input.docAudioId2);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(docview.getAudioDocEndDuration());
+		String durationForSecondDoc = docview.getAudioDocEndDuration().getText();
+		driver.Navigate().back();
+		sessionSearch.bulkAssignExisting(assign1);		
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assgnmntPg.selectAssignmentGroup(assignmentGrpName);
+		Boolean status = assgnmntPg.getSelectAssignment(assign1).isElementAvailable(5);
+		if (status == true) {
+			driver.scrollingToElementofAPage(assgnmntPg.getSelectAssignment(assign1));
+			if (!assgnmntPg.getSelectAssignmentHighlightCheck(assign1).isElementAvailable(5)) {
+				assgnmntPg.getSelectAssignment(assign1).waitAndClick(5);
+			}
+			driver.scrollPageToTop();
+			assgnmntPg.getAssignmentActionDropdown().waitAndClick(3);
+			bc.waitForElement(assgnmntPg.getAssignmentAction_EditAssignment());
+			assgnmntPg.getAssignmentAction_EditAssignment().waitAndClick(3);
+		}
+		assgnmntPg.assignmentDistributingToReviewer();
+		lp.logout();
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assgnmntPg.SelectAssignmentByReviewer(assign1);
+		assgnmntPg.completeAllDocsByReviewer(assign1);
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String expectedTotalTimeDuration = arpr.addTwoTimeDuration(durationForFirstDoc, durationForSecondDoc);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		arpr.navigateToAssgnmntReviewProgressReport();
+		arpr.generateARPreport(assignmentGrpName,"1LR" );
+		driver.waitForPageToBeReady();
+		String completedDocsInARP=arpr.getColoumnValue(arpr.agnmtColumnNameHeader(), "Total Audio Docs Completed",assign1);
+		String actualTotalAudioHoursInARP=arpr.getColoumnValue(arpr.agnmtColumnNameHeader(), "Total Audio Hours Completed",assign1);
+		softAssertion.assertEquals(completedDocsInARP, "2");
+		softAssertion.assertEquals(actualTotalAudioHoursInARP, expectedTotalTimeDuration);
+		softAssertion.assertAll();
+		bc.passedStep("Total completes docs are "+completedDocsInARP+" displayed in report as expected");
+		bc.passedStep("Total audio hours completed are "+actualTotalAudioHoursInARP+" displayed in report as expected");
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		rrpr.navigateToReviewerReviewProgressReport();
+		rrpr.generateRRPreport(assignmentGrpName, Input.rev1FullName);
+		driver.waitForPageToBeReady();
+		String completedDocsInRRP=rrpr.getColoumnValue(rrpr.reviewerColumnNameHeader(), "Total Audio Docs Completed",assign1);
+		String actualTotalAudioHoursInRRP=rrpr.getColoumnValue(rrpr.reviewerColumnNameHeader(), "Total Audio Hours Completed",assign1);
+		softAssertion.assertEquals(completedDocsInRRP, "2");
+		softAssertion.assertEquals(actualTotalAudioHoursInRRP, expectedTotalTimeDuration);
+		softAssertion.assertAll();
+		bc.passedStep("Total completes docs displayed in report as expected");
+		bc.passedStep("Total audio hours completed are "+actualTotalAudioHoursInRRP+" displayed in report as expected");
+		assgnmntPg.deleteAssignmentFromSingleAssgnGrp(assignmentGrpName, assign1);
+		assgnmntPg.DeleteAssgnGroup(assignmentGrpName);
+		// logout
+		lp.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @description: To Verify RMU can able to generate 'Review Progress Assignment Report' 
+	 *               using following Options \"Assignment\",Assignment Level,Assigment Group. RPMXCON-48701
+	 */
+	@Test(description = "RPMXCON-48701", enabled = true, groups = { "regression" })
+	public void verifyRMUuserAbleToGenerateReport() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-48701"); 
+		bc.stepInfo("To Verify RMU can able to generate 'Review Progress Assignment Report' using following Options \"Assignment\",Assignment Level,Assigment Group."); 
+		// Login as Reviewer Manager
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		assgnmntPg = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		arpr = new AssignmentReviewProgressReport(driver);
+		rrpr = new ReviewerReviewProgressReport(driver);		
+		String assignmentName =  "Assignment" + Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssignmentGrp"+Utility.dynamicNameAppender();
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assgnmntPg.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
+		assgnmntPg.selectAssignmentGroup(assignmentGrpName);
+		assgnmntPg.createAssignmentFromAssgnGroup(assignmentName, Input.codeFormName);			
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.TallySearch);	
+		sessionSearch.bulkAssignExisting(assignmentName);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		arpr.navigateToAssgnmntReviewProgressReport();
+		arpr.applyChanges();
+		bc.VerifyErrorMessage("Please select assignment group");
+		bc.passedStep("Without selecting assignment group and assignment level error message getting successfully as expected");
+		arpr.generateARPreport(assignmentGrpName, "1LR");
+		assgnmntPg.deleteAssignmentFromSingleAssgnGrp(assignmentGrpName, assignmentName);
+		assgnmntPg.DeleteAssgnGroup(assignmentGrpName);
+		lp.logout();		
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @description: To verify that in reviewer progress report,\"My Batch Docs Completed By Me\" column should contain the number of documents 
+	 *               that were distributed and completed by that reviewer. RPMXCON-48769
+	 */
+	@Test(description = "RPMXCON-48769", enabled = true, groups = { "regression" })
+	public void verifyMyBatchDocsCompletedByMeInRRP() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-48769"); 
+		bc.stepInfo("To verify that in reviewer progress report,\"My Batch Docs Completed By Me\" column should contain the number of documents that were distributed and completed by that reviewer."); 
+		// Login as Reviewer Manager
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		assgnmntPg = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		arpr = new AssignmentReviewProgressReport(driver);
+		rrpr = new ReviewerReviewProgressReport(driver);		
+		String assignmentName =  "Assignment" + Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssignmentGrp"+Utility.dynamicNameAppender();
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assgnmntPg.createCascadeNonCascadeAssgnGroup(assignmentGrpName, "No");
+		assgnmntPg.selectAssignmentGroup(assignmentGrpName);
+		assgnmntPg.createAssignmentFromAssgnGroup(assignmentName, Input.codeFormName);			
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.TallySearch);	
+		sessionSearch.bulkAssignExisting(assignmentName);
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assgnmntPg.selectAssignmentGroup(assignmentGrpName);
+		Boolean status = assgnmntPg.getSelectAssignment(assignmentName).isElementAvailable(5);
+		if (status == true) {
+			driver.scrollingToElementofAPage(assgnmntPg.getSelectAssignment(assignmentName));
+			if (!assgnmntPg.getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+				assgnmntPg.getSelectAssignment(assignmentName).waitAndClick(5);
+			}
+			driver.scrollPageToTop();
+			assgnmntPg.getAssignmentActionDropdown().waitAndClick(3);
+			bc.waitForElement(assgnmntPg.getAssignmentAction_EditAssignment());
+			assgnmntPg.getAssignmentAction_EditAssignment().waitAndClick(3);
+		}
+		assgnmntPg.assignmentDistributingToReviewer();
+		lp.logout();
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		assgnmntPg.SelectAssignmentByReviewer(assignmentName);
+		assgnmntPg.completeAllDocsByReviewer(assignmentName);
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		rrpr.navigateToReviewerReviewProgressReport();
+		rrpr.generateRRPreport(assignmentGrpName, Input.rev1FullName);
+		driver.waitForPageToBeReady();
+		String batchDocsCompletedInRRP=rrpr.getColoumnValue(rrpr.reviewerColumnNameHeader(), "My Batch Docs Completed by Me",assignmentName);
+		softAssertion.assertEquals(batchDocsCompletedInRRP, "16");
+		softAssertion.assertAll();
+		bc.passedStep("My Batch Docs Completed by Me are displayed in report as expected");
+		bc.passedStep("Total docs completed are "+batchDocsCompletedInRRP+" displayed in report as expected");
+		assgnmntPg.deleteAssignmentFromSingleAssgnGrp(assignmentGrpName, assignmentName);
+		assgnmntPg.DeleteAssgnGroup(assignmentGrpName);
+		lp.logout();		
 	}
 	
 

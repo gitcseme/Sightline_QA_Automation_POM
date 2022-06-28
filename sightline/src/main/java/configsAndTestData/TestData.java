@@ -704,4 +704,8 @@ public class TestData {
 		public String sourceParentBlank;
 		public String ingestionOneHour;
 		public String ingestionLessThanHour;
+		
+   //Added by Iyappan
+	public String docAudioId1;
+	public String docAudioId2;
 }
