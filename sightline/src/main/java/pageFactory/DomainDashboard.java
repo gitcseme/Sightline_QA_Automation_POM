@@ -3,6 +3,7 @@ package pageFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -236,7 +237,7 @@ public class DomainDashboard {
 			 double a = Double.parseDouble(db.get(i));
 			 double b = Double.parseDouble(index.get(i));
 			 double c = Double.parseDouble(workspace.get(i));
-			 if(sum!=(a+b+c)) {
+			 if(sum!=Double.parseDouble(new DecimalFormat("##.####").format(a+b+c))) {
 				 base.failedStep("total size is mismatch");
 			 }
 		 }
@@ -348,6 +349,26 @@ public class DomainDashboard {
 				 base.passedStep("Active project is listed");
 				 break;
 			 }
+		 }
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param colums
+	  * @Description verify that column title is available
+	  */
+	 public void isTitleIsAvailable(String colums) {
+		 boolean flag = true;
+		 List<String> tableheadervalues = getColumValues(getTableHeader());
+		 for(String colum:tableheadervalues) {
+			 if(colum.equalsIgnoreCase(colums)) {
+				 flag = false;
+				 base.passedStep(colums+" is available in Table");
+				 break;
+			 }
+		 }
+		 if(flag) {
+			 base.failedStep(colums+"colum is not available");
 		 }
 	 }
 
