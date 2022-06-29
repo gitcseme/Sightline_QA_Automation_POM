@@ -104,7 +104,7 @@ public class Tally_Regression1 {
  * @author Jayanthi.ganesan
  * @throws InterruptedException
  */
-	@Test(description ="RPMXCON-56223",groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-56223",groups = { "regression" })
 	public void ValidateTally_BulkRelease() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56223");
 		bc.stepInfo("To verify  Admin can release all the documents in a Tally");
@@ -137,7 +137,7 @@ public class Tally_Regression1 {
 		 * @param role
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56212",dataProvider = "Users_PARMU",groups = { "regression" }, priority = 2)
+		@Test(description ="RPMXCON-56212",dataProvider = "Users_PARMU",groups = { "regression" })
 		public void ValidateTally_ViewInDocView(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56212");
 			bc.stepInfo("To verify Admin/RMU will be able to view tallied documents in a doc view(Tally)");
@@ -164,7 +164,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56204",groups = { "regression" }, priority = 3)
+		@Test(description ="RPMXCON-56204",groups = { "regression" })
 		public void verifyTally_Assignments() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56204");
 			bc.stepInfo("To Verify RMU will have a report in Tally with document counts by metadata fields for assignment groups.");
@@ -197,7 +197,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56203",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4)
+		@Test(description ="RPMXCON-56203",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifyTally_Searches(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56203");
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by metadata fields for searches.");
@@ -229,7 +229,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56196",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+		@Test(description ="RPMXCON-56196",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifyTallyDropDown(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56196");
 			bc.stepInfo("To Verify \"Tally By\" Drop Down And \"Apply\" button on Tally Page");
@@ -259,7 +259,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-			@Test(description ="RPMXCON-56226",groups = { "regression" }, priority = 6)
+			@Test(description ="RPMXCON-56226",groups = { "regression" })
 			public void ValidateSubTally_BulkRelease() throws InterruptedException {
 				bc.stepInfo("Test case Id: RPMXCON-56226");
 				bc.stepInfo("To Verify Admin can release all the documents in subtally");
@@ -302,7 +302,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-48704", groups = { "regression" }, priority = 7)
+		@Test(description ="RPMXCON-48704", groups = { "regression" })
 			public void verifyTally_SG() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-48704");
 			bc.stepInfo("To Verify Admin/RMU will have a report that provides ability to view the document volume by metadata "
@@ -333,7 +333,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56205", groups = { "regression" }, priority = 8)
+		@Test(description ="RPMXCON-56205", groups = { "regression" })
 		public void verifyTallyDocsCount_SG() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56205");
 			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by"
@@ -366,7 +366,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56218",groups = { "regression" }, priority = 9)
+		@Test(description ="RPMXCON-56218",groups = { "regression" })
 		public void verifySubTally_Assignments() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56218");
 			bc.stepInfo("To Verify RMU will have a report in SubTally with document counts by metadata fields for assignment groups.");
@@ -405,7 +405,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(description ="RPMXCON-48703",dataProvider = "Users_PARMU",groups = { "regression" }, priority = 10)
+		@Test(description ="RPMXCON-48703",dataProvider = "Users_PARMU",groups = { "regression" })
 		public void verifySubTally_Searches(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-48703");
 			bc.stepInfo("To Verify Admin/RMU will have a report in SubTally with document counts by metadata fields for searches.");
@@ -444,7 +444,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(description ="RPMXCON-56227",dataProvider = "Users_PARMU",groups = { "regression" }, priority = 11)
+		@Test(description ="RPMXCON-56227",dataProvider = "Users_PARMU",groups = { "regression" })
 		public void verifySubTally_SavedSearchToTally(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56227");
 			bc.stepInfo("To Verify Admin/RMU will be able to go to Tally from Saved Search");
@@ -482,7 +482,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(description ="RPMXCON-56213",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
+		@Test(description ="RPMXCON-56213",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifySubTally_docview(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56213");
 			bc.stepInfo("To verify Admin/RMU can view all the documents tallied in a doc view (SubTally)");
@@ -553,7 +553,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(description ="RPMXCON-56221",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13)
+		@Test(description ="RPMXCON-56221",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifyFilterDocumentsBy(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56221");
 			bc.stepInfo("To Verify Admin/RMU on the Tally report page will be able to filter on multiple "
@@ -613,7 +613,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(description ="RPMXCON-56964",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 14)
+		@Test(description ="RPMXCON-56964",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifyTallyReportSourceAsSearch(String username, String password, String role)
 				throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56964");
@@ -661,7 +661,7 @@ public class Tally_Regression1 {
 		 * @throws InterruptedException
 		 */
 
-		@Test(description ="RPMXCON-48705",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 15)
+		@Test(description ="RPMXCON-48705",dataProvider = "Users_PARMU", groups = { "regression" })
 		public void verifyExport(String username, String password, String role) throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-48705");
 			bc.stepInfo("To Verify User will be able to export data in an excel format from Subtally.");
