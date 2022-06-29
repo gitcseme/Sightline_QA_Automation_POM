@@ -60,7 +60,7 @@ public class Tally_Regression2 {
 		lp = new LoginPage(driver);
 	}
 
-	@Test(description ="RPMXCON-48694",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description ="RPMXCON-48694",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void tallyEndToEnd(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-48694");
 		bc.stepInfo("To Verify Tally End to End Flow.");

@@ -75,7 +75,7 @@ public class TagCountByTagsReport_Regression {
 	 * @description To verify that on selecting TagCount by Tags Report option, 
 	 * Tag counts By Tag page is displayed.
 	 */
-	@Test(description ="RPMXCON-48780",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description ="RPMXCON-48780",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyTagReportsPAgeDisplay(String username, String password, String role) throws InterruptedException {
 
 		bc.stepInfo("Test case Id: RPMXCON-48780");
@@ -103,7 +103,7 @@ public class TagCountByTagsReport_Regression {
 				}
 				lp.logout();				
 	}
-	 @Test(description ="RPMXCON-56235",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	 @Test(description ="RPMXCON-56235",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyTagCountReport(String username, String password, String role)
 			throws InterruptedException, AWTException, ParseException {
 		bc.stepInfo("Test case Id: RPMXCON-56235");
@@ -134,7 +134,7 @@ public class TagCountByTagsReport_Regression {
 		 * @description To verify that Tagscount by Tags report option is displayed on
 		 *              Report menu.
 		 */
-		@Test(description ="RPMXCON-56230",dataProvider = "UsersWithSA", groups = { "regression" }, priority = 3, enabled = true)
+		@Test(description ="RPMXCON-56230",dataProvider = "UsersWithSA", groups = { "regression" }, enabled = true)
 		public void VerifyTagCountByTagDisplay(String username, String password, String role) throws InterruptedException {
 
 			bc.stepInfo("Test case Id: RPMXCON-56230");
@@ -172,7 +172,7 @@ public class TagCountByTagsReport_Regression {
 		 * @description To verify that in Tags Type selection criteria all types of Tags
 		 *              are displayed.
 		 */
-		@Test(description ="RPMXCON-56232",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4, enabled = true)
+		@Test(description ="RPMXCON-56232",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 		public void VerifyTagTypeDisplay(String username, String password, String role) throws InterruptedException {
 
 			bc.stepInfo("Test case Id: RPMXCON-56232");
@@ -212,7 +212,7 @@ public class TagCountByTagsReport_Regression {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-		@Test(description ="RPMXCON-56234",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5, enabled = true)
+		@Test(description ="RPMXCON-56234",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 		public void  VerifyResetFunctionality_TagCountsReport(String username, String password, String role) throws InterruptedException, ParseException {
 			bc.stepInfo("Test case Id: RPMXCON-56234");
 			bc.stepInfo("To Verify that on clicking RESET link current selected criteria are set to default selected criteria");
@@ -231,7 +231,7 @@ public class TagCountByTagsReport_Regression {
 		 * @throws Exception 
 		 * @description To verify that User must be able export the Tag count by Tag report in excel format
 		 */
-		@Test(description ="RPMXCON-56245",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6, enabled = true)
+		@Test(description ="RPMXCON-56245",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 		public void VerifyFileDownloadInTagCountsReport(String username, String password, String role) throws InterruptedException, Exception {
 
 			bc.stepInfo("Test case Id: RPMXCON-56245");

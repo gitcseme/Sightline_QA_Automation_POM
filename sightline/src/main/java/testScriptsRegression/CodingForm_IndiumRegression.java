@@ -100,7 +100,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Coding Form Preview is working Properly when user configured Field logic as Part of Radio Group objects in Coding Form
 	 */
-	@Test(description = "RPMXCON-54555",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-54555",enabled = true, groups = { "regression" })
 	public void verifyCFPreviewLogicValidations() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54555");
 	    baseClass.stepInfo("Verify that Coding Form Preview is working Properly when user configured Field logic as Part of Radio Group objects in Coding Form");
@@ -165,7 +165,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Coding Form Preview (Radio Button) works Properly in the context of a document review in Parent Window in DocView
 	 */
-	@Test(description = "RPMXCON-54556",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54556",enabled = true, groups = { "regression" })
 	public void verifyCFLogicValidationsWithRadioInDocViewParentWindow() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54556");
 	    baseClass.stepInfo("Verify that Coding Form Preview (Radio Button) works Properly in the context of a document review in Parent Window in DocView");
@@ -242,7 +242,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Coding Form Preview is working Properly when user configured Field logic as Part of 
 	 *                Radio Group objects in Coding Form in the context of a document in an assignment
 	 */
-	@Test(description = "RPMXCON-54562",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-54562",enabled = true, groups = { "regression" })
 	public void verifyCFLogicValidationsUsingAssignmentsInDocviewPg() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54562");
 	    baseClass.stepInfo("Verify that Coding Form Preview is working Properly when user configured Field logic as Part of "+
@@ -323,7 +323,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Coding Form Preview (CheckBox) works Properly in the context of a document review in Parent Window in DocView
 	 */
-	@Test(description = "RPMXCON-54559",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-54559",enabled = true, groups = { "regression" })
 	public void verifyCFLogicValidationsWithCheckTypeInDocViewParentWindow() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54559");
 	    baseClass.stepInfo("Verify that Coding Form Preview (CheckBox) works Properly in the context of a document review in Parent Window in DocView");
@@ -400,7 +400,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that when user edit the Coding Form then User can edit default action and
 	 *                field logic Special Objects.(Check Group)
 	 */
-	@Test(description = "RPMXCON-54535",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-54535",enabled = true, groups = { "regression" })
 	public void verifyEditCFFieldLogicValidation() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54535");
 	    baseClass.stepInfo("Verify that when user edit the Coding Form then User can edit default action and field logic Special Objects.(Check Group)");
@@ -482,7 +482,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that default action and field logic (Special Objects - Check Group) works
 	 *                in the context of a document review in Child Window.
 	 */
-	@Test(description = "RPMXCON-54539",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-54539",enabled = true, groups = { "regression" })
 	public void verifyCFLogicValidationsInDocViewChildWindow() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54539");
 	    baseClass.stepInfo("Verify that default action and field logic (Special Objects - Check Group) works "+
@@ -559,7 +559,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-53951",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-53951",enabled = true, groups = { "regression" })
 	public void verifyCodingFormNameWithoutAnyObject() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-53951");
 		baseClass.stepInfo("Verify that User (RMU) Saves customized coding form name only  without any objects");
@@ -593,7 +593,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-53994",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-53994",enabled = true, groups = { "regression" })
 	public void verifyNewTagsAddedToCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-53994");
 		baseClass.stepInfo("Verify that  new TAGs gets added on Coding Form Screen");
@@ -638,7 +638,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-54057",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-54057",enabled = true, groups = { "regression" })
 	public void verifyPreviewDispalysStaticObjectProperly() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54057");
 		baseClass.stepInfo(
@@ -686,7 +686,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Preview displays correctly and properly for Tag objects along with "Selected"
 	 *                condition user on coding form screen
 	 */
-	@Test(description = "RPMXCON-54062",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-54062",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayTagObjectsByEditing() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54062");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Tag objects along "+
@@ -727,7 +727,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Preview displays correctly and properly for Comments objects along with
 	 *                "Not Selected" condition user on coding form screen
 	 */
-	@Test(description = "RPMXCON-54063",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-54063",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayCommentObjectsByEditing() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54063");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Comments objects along with "+
@@ -782,7 +782,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Preview displays correctly and properly for Comment object for new coding form
 	 */
-	@Test(description = "RPMXCON-54069",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-54069",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayOfComment() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54069");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Comment object for new coding form");
@@ -815,7 +815,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Preview displays correctly and properly for Editable Metadata object for new coding form
 	 */
-	@Test(description = "RPMXCON-54070",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-54070",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayOfMetadata() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54070");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Editable Metadata object for new coding form");
@@ -855,7 +855,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Preview displays correctly and properly for 
 	 *                Tag/Comments/Metadata objects for New coding form
 	 */
-	@Test(description = "RPMXCON-54071",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-54071",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayOfMultipleObjects() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54071");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Tag/Comments/Metadata objects for New coding form");
@@ -902,7 +902,7 @@ public class CodingForm_IndiumRegression {
 	 * @Author : Iyappan.Kasinathan 
 	 * @Description : Verify that Preview displays correctly and properly for Static object for New coding form
 	 */
-	@Test(description = "RPMXCON-54072",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-54072",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayOfStaticText() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54072");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Static object for New coding form");
@@ -930,7 +930,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Preview displays correctly and properly for Tag objects along with "Selected"
 	 *               condition user for New coding form
 	 */
-	@Test(description = "RPMXCON-54077",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-54077",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayTagObjects() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54077");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Tag objects along with"+
@@ -970,7 +970,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Preview displays correctly and properly for Comments objects 
 	 *                along with "Not Selected" condition user for New coding form
 	 */
-	@Test(description = "RPMXCON-54078",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-54078",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayCommentObjects() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54078");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly for Comments objects along with"+
@@ -1027,7 +1027,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-54134",enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-54134",enabled = true, groups = { "regression" })
 	public void verifyCommentsAddedToCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54134");
 		baseClass.stepInfo("Verify that Comments gets added into Coding Form Screen successfully");
@@ -1072,7 +1072,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-54228",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-54228",enabled = true, groups = { "regression" })
 	public void verifyRemoveFuctionalityForTagsCodingForm() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54228");
 		baseClass.stepInfo(
@@ -1131,7 +1131,7 @@ public class CodingForm_IndiumRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-54545",enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-54545",enabled = true, groups = { "regression" })
 	public void verifyCodingFormWithRadioGroupTagAndCheckGroup() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-54545");
 		baseClass.stepInfo("Verify that While creating a Coding Form, Associated RadioGroup Tag(s)- values does not disappear in coding form.");
@@ -1209,7 +1209,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Coding Form Preview is working Properly when user configured Field logic as
 	 *                 Part of Radio Group objects in Coding Form
 	 */
-	@Test(description = "RPMXCON-54568",enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description = "RPMXCON-54568",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayUsingRadioGroupObjects() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54568");
 	    baseClass.stepInfo("Verify that Coding Form Preview is working Properly when user configured Field logic as"+
@@ -1293,7 +1293,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Coding Form Preview is working Properly when user configured Field logic
 	 *                as Part of Check Group objects in Coding Form
 	 */
-	@Test(description = "RPMXCON-54569",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-54569",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayUsingCheckGroupObjects() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54569");
 	    baseClass.stepInfo("Verify that Coding Form Preview is working Properly when user configured Field logic as"+
@@ -1380,7 +1380,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that Coding Form Preview is working Properly 
 	 *                when user configured Field logic as Part of Check Group objects in Coding Form
 	 */
-	@Test(description = "RPMXCON-54554",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-54554",enabled = true, groups = { "regression" })
 	public void validatePreviewDisplayUsingCheckGroup() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54554");
 	    baseClass.stepInfo("Verify that Coding Form Preview is working Properly when user configured Field"
@@ -1473,7 +1473,7 @@ public class CodingForm_IndiumRegression {
 	 * @Description : Verify that While creating a Coding Form, 
 	 *                Associated CheckGroups Tag(s)- values does not disappear in coding form.
 	 */
-	@Test(description = "RPMXCON-54546",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description = "RPMXCON-54546",enabled = true, groups = { "regression" })
 	public void validateWhileConfigure() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54546");
 	    baseClass.stepInfo("Verify that While creating a Coding Form, Associated CheckGroups Tag(s)-"

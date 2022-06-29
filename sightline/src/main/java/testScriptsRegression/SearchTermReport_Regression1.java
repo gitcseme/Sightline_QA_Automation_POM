@@ -99,7 +99,7 @@ public class SearchTermReport_Regression1 {
 
 	}
 
-	@Test(description ="RPMXCON-56497",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-56497",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void ValidateSearchTermreport_BulkTag(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56497");
@@ -132,7 +132,7 @@ public class SearchTermReport_Regression1 {
 		lp.logout();
 	}
 
-	@Test(description ="RPMXCON-56498",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-56498",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void ValidateSearchTermreport_BulkFolder(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56498");
@@ -165,7 +165,7 @@ public class SearchTermReport_Regression1 {
 		lp.logout();
 	}
 
-	 @Test(description ="RPMXCON-56496",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	 @Test(description ="RPMXCON-56496",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void ValidateSearchTermreport_viewInDocView(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56496");
@@ -200,7 +200,7 @@ public class SearchTermReport_Regression1 {
 		lp.logout();
 	}
 
-	@Test(description ="RPMXCON-56501",groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-56501",groups = { "regression" })
 	public void ValidateSearchTermreport_BulkAssign() throws InterruptedException, AWTException {
 		bc.stepInfo("Test case Id: RPMXCON-56501");
 		bc.stepInfo("To verify that Bulk action_Bulk Assign is working on Search Term Report");
@@ -239,7 +239,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56507",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5, enabled = true)
+	@Test(description ="RPMXCON-56507",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyTotalDocsSelected(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56507");
 		bc.stepInfo("To verify that total selected unique count will be displayed as \"Total Selected\" under "
@@ -271,7 +271,7 @@ public class SearchTermReport_Regression1 {
 		lp.logout();
 	}
 
-	@Test(description ="RPMXCON-56361",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-56361",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void navigateToSearchTermReport(String username, String password, String role) {
 		bc.stepInfo("Test case Id: RPMXCON-56361");
 		bc.stepInfo(
@@ -305,7 +305,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56482",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7, enabled = true)
+	@Test(description ="RPMXCON-56482",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyAggregateSummary(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56482");
 		bc.stepInfo(
@@ -359,7 +359,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56588",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 8, enabled = true)
+	@Test(description ="RPMXCON-56588",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifySorting(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56588");
 		bc.stepInfo("Search Term Report - Verify sorting feature on Unique Hits and Unique Family Hits columns");
@@ -390,7 +390,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56963",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 9, enabled = true)
+	@Test(description ="RPMXCON-56963",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyReportGeneration(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56963");
 		bc.stepInfo("Verify and generate Search Term Report with source as Search");
@@ -417,7 +417,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56584",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 10, enabled = true)
+	@Test(description ="RPMXCON-56584",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyUniqueHits(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56584");
 		bc.stepInfo("Search Term Report - Validate Unique Hits column value.");
@@ -470,7 +470,7 @@ public class SearchTermReport_Regression1 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56499",groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-56499",groups = { "regression" })
 	public void ValidateBulkRelease() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56499");
 		bc.stepInfo("To verify that Bulk action_Bulk Release is working on Search Term Report");
@@ -501,7 +501,7 @@ public class SearchTermReport_Regression1 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56500",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-56500",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void validateExportData(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56500");
 		bc.stepInfo("To verify that Action_Export Data is working on Search Term Report");
@@ -538,7 +538,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56586",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 13, enabled = true)
+	@Test(description ="RPMXCON-56586",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyCombinedUniqueHits(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56586");
 		bc.stepInfo(
@@ -592,7 +592,7 @@ public class SearchTermReport_Regression1 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56585",groups = { "regression" }, priority = 14, enabled = true)
+	@Test(description ="RPMXCON-56585",groups = { "regression" }, enabled = true)
 	public void VerifyFamilyUniqueHits() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56585");
 		bc.stepInfo("Search Term Report - Validate Unique Family Hits column value.");
@@ -660,7 +660,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-56582",groups = { "regression" }, priority = 15, enabled = true)
+	@Test(description ="RPMXCON-56582",groups = { "regression" }, enabled = true)
 	public void UIvalidation_STR() throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56582");
 		bc.stepInfo(
@@ -710,7 +710,7 @@ public class SearchTermReport_Regression1 {
 	 * @param role
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-61220",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 16, enabled = true)
+	@Test(description ="RPMXCON-61220",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyTotalDocsSelectedFontSize(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-61220");
 		bc.stepInfo("Verify that in Reports/Search Term Report , Doc Count Font Size is Increased");
