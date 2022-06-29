@@ -411,7 +411,6 @@ public class Production_Regression {
 		baseClass.stepInfo("verified Bates Number Sync With Generates Files");
 	}
 	
-	//today
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47911
@@ -539,7 +538,7 @@ public class Production_Regression {
 	 * @Description:Verify that user should be able to change the automatically enabled native placeholdering under TIFF/PDF section from new production
 	 **/
 
-	@Test(description = "RPMXCON-63064", enabled = true)
+	@Test(description = "RPMXCON-63064", enabled = true, groups = { "regression" })
 	public void verifyNativePlaceholderInSpreadsheet() throws Exception {
 
 		baseClass.stepInfo("Test case Id:RPMXCON-63064- Production Sprint 16");
@@ -612,6 +611,107 @@ public class Production_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-63711
+	 * @Description:Field Delimiter values should display consistently on all project selections in Export DAT componen
+	 **/
+
+	@Test(description = "RPMXCON-63711", enabled = true, groups = { "regression" })
+	public void verifyFieldDelimeter() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-63711- Production Sprint 16");
+		baseClass.stepInfo("Field Delimiter values should display consistently on all project selections in Export DAT componen");
+		UtilityLog.info(Input.prodPath);
+
+		baseClass.stepInfo("Create Export using required inputs");
+		String export = "Ex" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String exportName = "E" + Utility.dynamicNameAppender();
+
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(export);
+		}
+		page.addANewExport(exportName);
+		page.getDATTab().waitAndClick(10);
+		page.getDATChkBox().waitAndClick(10);
+		
+		String defaultFielsSep = page.defaultFielsSeperator().getText();
+		System.out.println("Default Field seperator -"+defaultFielsSep);
+		
+		String defaultTextQualifier = page.defaultTextQualifier().getText();
+		System.out.println("Default Text Qualifier -"+defaultTextQualifier);
+		
+		String defaultMultiValue = page.defaultMultiValue().getText();
+		System.out.println("Default Multi value -"+defaultMultiValue);
+		
+		String defaultNewLineSeperator = page.defaultNewLineSeperator().getText();
+		System.out.println("Default New Line Seperator -"+defaultNewLineSeperator);
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-64076
+	 * @Description:Verify for new production Native, Spreadsheets, and Multimedia checkbox should be checked
+	 **/
+
+	@Test(description = "RPMXCON-64076", enabled = true, groups = { "regression" })
+	public void verifySpreadsheetAndMultimedia() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-64076- Production Sprint 16");
+		baseClass.stepInfo("Verify for new production Native, Spreadsheets, and Multimedia checkbox should be checked");
+		UtilityLog.info(Input.prodPath);
+		
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		 DocListPage doclist=new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExisting(tagname);
+		
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName=page.addANewProduction(productionname);
+		System.out.println("created a new production - "+prodName);
+		page.fillingDATSection();
+		String defSelectedFiletype = page.ddnselectFileType().getText();
+		System.out.println("File type:"+defSelectedFiletype);
+		
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : "+beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		int doccount=page.fillingGeneratePageWithContinueGenerationPopup();
+		int lastfile = firstFile + doccount;
+		page.extractFile();
+		page.isNativeSpreadsheetFileExist(firstFile,lastfile, prefixID, suffixID);
 	}
 	
 	@AfterMethod(alwaysRun = true)

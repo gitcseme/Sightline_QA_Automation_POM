@@ -370,7 +370,7 @@ public class ProductionPage {
 
 	public Element getSelectFolder(String foldername) {
 		return driver.FindElementByXPath(
-				"//ul[@class='jstree-container-ul jstree-children']//a[contains(.,'" + foldername + "')]");
+				"//ul[@class='jstree-container-ul jstree-children']//a[contains(text(),'"+ foldername +"')]");
 	}
 
 	public Element getFolderRadioButton() {
@@ -891,6 +891,23 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	
+	
+	public Element defaultNewLineSeperator() {
+		return driver.FindElementByXPath("//select[@id='lstNewLineSeparator']//option");
+	}
+	
+	public Element defaultMultiValue() {
+		return driver.FindElementByXPath("//select[@id='lstMultiValue']//option");
+	}
+	
+	public Element defaultFielsSeperator() {
+		return driver.FindElementByXPath("//select[@id='lstFieldSeparator']//option");
+	}
+	
+	public Element defaultTextQualifier() {
+		return driver.FindElementByXPath("//select[@id='lstTextQualifier']//option");
+	}
 	public Element defaultTextInNativeToggle() {
 		return driver.FindElementByXPath("//div[@class='redactor-editor']//p[contains(text(),'Document Produced in Native Format.')]");
 	}
@@ -1794,8 +1811,8 @@ public class ProductionPage {
 	}
 
 	public Element getSlipCalculatedTabSelection() {
-		return driver.FindElementByXPath("//span[text()='CALCULATED']//parent::a");
-	}
+        return driver.FindElementByXPath("//span[text()='Calculated']//parent::a");
+    }
 
 	public Element getCalculatedCheckBoxSelection(String fieldValue) {
 		return driver.FindElementByXPath("//strong[text()='" + fieldValue + "']//parent::label//following-sibling::i");
@@ -18689,7 +18706,37 @@ public class ProductionPage {
 			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".docx");
 
 			if (Native.exists()) {
+				
+				
+				
 				base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".docx");
+				System.out.println("passeed");
+			} else {
+				base.failedStep("verification failed");
+				System.out.println("failed");
+			}
+		}
+	}
+	
+	/**
+	 * @authorAathith.Senthilkumar
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description Native Docx file is Generated in production
+	 */
+	public void isNativeSpreadsheetFileExist(int firstFile, int lastFile, String prefixID, String suffixID) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for (int i = firstFile; i < lastFile; i++) {
+			File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + i + suffixID + ".xlsx");
+
+			if (Native.exists()) {
+				
+				
+				
+				base.passedStep("Native file are generated correctly : " + prefixID + i + suffixID + ".xlsx");
 				System.out.println("passeed");
 			} else {
 				base.failedStep("verification failed");
@@ -18764,6 +18811,7 @@ public class ProductionPage {
 	 * @throws InterruptedException
 	 */
 	public void clickBackBtnandSelectingNative(int Count, String tagname) throws InterruptedException {
+		
 		clickElementNthtime(getBackButton(), Count);
 
 		driver.scrollPageToTop();
@@ -20053,7 +20101,7 @@ public class ProductionPage {
 
 		btnOK_Metafield().waitAndClick(10);
 	}
-
+	
 	/**
 	 * @author sowndarya.velraj
 	 * @param firstFile
