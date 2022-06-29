@@ -395,6 +395,22 @@ public class WorkflowPage {
 	public Element getFamilyOption_First() {
 		return driver.FindElementByXPath("//span[normalize-space(.)='Only act upon a candidate document if all of its family members are also present in the selected Source Universe. If this condition is met, then action the entire family unit along with the candidate document. If the condition is not met, do not action the family unit and do not action the candidate document.']");
 	}
+	public Element getNotifyUserName(String userName) {
+		return driver.FindElementByXPath("//select[@id='UnNotifiedUser']//option[text()='"+userName+"']");
+	}
+	
+	public Element getNotify_ButtonRight() {
+		return driver.FindElementById("btnRightMapping");
+	}
+	
+	public Element getSummaryTab(String tabName) {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-angle-up pull-right']//parent::a[text()='"+tabName+"']");
+	}
+	public Element getNotified_EmailUserId() {
+		return driver.FindElementByXPath("//label[@for='WF_Notifications_AssignedUsers']");
+	}
+	
+	
 	public WorkflowPage(Driver driver) {
 
 		this.driver = driver;
@@ -1465,6 +1481,68 @@ public class WorkflowPage {
 		} else {
 			System.out.println("No need this action");
 		}
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for notification tab passing all user
+	 */
+	// Reusable method for notification tab
+	public void notificationTabWithEmail() {
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getNotifyUserName(Input.rmu1FullName));
+		getNotifyUserName(Input.rmu1FullName).waitAndClick(5);
+		baseClass.waitForElement(getNotify_ButtonRight());
+		getNotify_ButtonRight().waitAndClick(5);
+
+	}
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @Description : Method for summary tab to validate user email present or not
+	 */
+	// Reusable method for summary tab
+	public void summaryTabEmailValidation() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		baseClass.waitForElement(getSummaryTab("Notifications"));
+		getSummaryTab("Notifications").waitAndClick(5);
+		baseClass.waitForElement(getNotified_EmailUserId());
+		String userId=getNotified_EmailUserId().getText();
+		if (userId.contains(Input.rmu1userName)) {
+			baseClass.passedStep("user email id are displaying in summary tab");
+		}
+		else {
+			baseClass.failedStep("Not as per expected");
+		}
+		baseClass.waitForElement(geWorkFlow_Summary_Save());
+		geWorkFlow_Summary_Save().waitAndClick(5);
+
+	}
+	
+	/**
+	 * @author Indium-Baskar Modified Date:24/2/2022
+	 * @throws ParseException
+	 * @Description : Method for creating new workflow
+	 */
+	// Reusable method for summary tab email id checking
+	public void newWorkFlowCreationWithOneEmail(String wfName, String wfDesc, int savedSearch, boolean familyFlag, String folder,
+			boolean folderFlag, String assgn, boolean assgnFlag, int number) throws ParseException {
+		createNewWorkFlow();
+		descriptionTab(wfName, wfDesc);
+		nextButton();
+		sourcesTab(savedSearch);
+		nextButton();
+		nextButton();
+		familyOptions(familyFlag);
+		nextButton();
+		actionTabToSelectFolder(folder, folderFlag);
+		actionTabToSelectAssignment(assgn, assgnFlag);
+		nextButton();
+		schedulesTab(number);
+		nextButton();
+		notificationTabWithEmail();
+		nextButton();
+		summaryTabEmailValidation();
 	}
 
 }
