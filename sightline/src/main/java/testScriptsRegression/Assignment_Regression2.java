@@ -59,7 +59,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU is able to sort the documents by selecting
 	 *               option as Near Duplicate Docs (RPMXCON-53824)
 	 */
-	@Test(description ="RPMXCON-53824",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-53824",enabled = true, groups = { "regression" })
 	public void verifyDocSortedByNearDupesID() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as Near Duplicate Docs");
 		bc.stepInfo("Test case Id:RPMXCON-53824");
@@ -99,7 +99,7 @@ public class Assignment_Regression2 {
 	 *               option as Email Threads (RPMXCON-53823)
 	 */
 
-	@Test(description ="RPMXCON-53823",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-53823",enabled = true, groups = { "regression" })
 	public void verifyDocSortedByEmailThreadId() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as Email Threads.");
 		bc.stepInfo("Test case Id:RPMXCON-53823");
@@ -139,7 +139,7 @@ public class Assignment_Regression2 {
 	 * @description: Verify that help text pop does not appear when the user just
 	 *               hovers the "?" icon on "Manage Assignments" screen.
 	 */
-	@Test(description ="RPMXCON-54945",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-54945",enabled = true, groups = { "regression" })
 	public void validateHelpPopUpWhenHoveringInAssignmentsPg()
 			throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("Test case Id: RPMXCON-54945");
@@ -155,7 +155,7 @@ public class Assignment_Regression2 {
 	 *               application on 'Manage Assignments' screen.
 	 */
 
-	@Test(description ="RPMXCON-54943",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-54943",enabled = true, groups = { "regression" })
 	public void verifyHelpTextPopUpWhenClickingInAssignmentsPg()
 			throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("Test case Id: RPMXCON-54944, RPMXCON-54943");
@@ -173,7 +173,7 @@ public class Assignment_Regression2 {
 	 * @description: Validate distributed list and results for searching by Assigned
 	 *               Assignment workproduct
 	 */
-	@Test(description ="RPMXCON-54580",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-54580",enabled = true, groups = { "regression" })
 	public void verifyDistributedListResultsWithAssignedDocs() throws InterruptedException, AWTException {
 		bc.stepInfo("Validate distributed list and results for searching by Assigned Assignment workproduct");
 		bc.stepInfo("Test case Id: RPMXCON-54580");
@@ -209,7 +209,7 @@ public class Assignment_Regression2 {
 	 * @description: Validate distributed list and results for searching by
 	 *               Assignment workproduct
 	 */
-	@Test(description ="RPMXCON-54581",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-54581",enabled = true, groups = { "regression" })
 	public void verifyDistributedListResultsOfWPAssgn() throws InterruptedException, AWTException {
 		bc.stepInfo("Validate distributed list and results for searching by Assignment workproduct");
 		bc.stepInfo("Test case Id: RPMXCON-54581");
@@ -244,7 +244,7 @@ public class Assignment_Regression2 {
 	 * @description: Validate distributed list and results for searching by Assigned
 	 *               Assignment work product (SysAdmin/DAU/PAU impersonated as RMU)
 	 */
-	@Test(description ="RPMXCON-54582",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-54582",enabled = true, groups = { "regression" })
 	public void verifyDistributedListResultsWithAssignedDocsUsingImpersonation()
 			throws InterruptedException, AWTException {
 		bc.stepInfo("Validate distributed list and results for searching by"
@@ -303,7 +303,7 @@ public class Assignment_Regression2 {
 	 * @description: Validate distributed list and results for searching by
 	 *               Assignment work product (SysAdmin/DAU/PAU impersonated as RMU)
 	 */
-	@Test(description ="RPMXCON-54583",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-54583",enabled = true, groups = { "regression" })
 	public void verifyDistributedListResultsOfWPAssgnImpersonation() throws InterruptedException, AWTException {
 		bc.stepInfo("Validate distributed list and results for searching by Assignment workproduct"
 				+ " (SysAdmin/DAU/PAU impersonated as RMU)");
@@ -361,7 +361,7 @@ public class Assignment_Regression2 {
 	 *               color bands when assignments are with Uncomplete and Complete
 	 *               status RPMXCON-53723
 	 */
-	@Test(description ="RPMXCON-53723",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-53723",enabled = true, groups = { "regression" })
 	public void validateColorBandsForStatusBtns() throws InterruptedException {
 		bc.stepInfo("To verify assignment progress bar should be displayed with color bands"
 				+ " when assignments are with Uncomplete and Complete status");
@@ -393,7 +393,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that Unassigned RU is not displayed in the Manage
 	 *               Reviewer and Distribute Documents RPMXCON-53724
 	 */
-	@Test(description ="RPMXCON-53724",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-53724",enabled = true, groups = { "regression" })
 	public void verifyUnassignedUserNotDisplayedInAgnmt() throws InterruptedException {
 		bc.stepInfo("To verify that Unassigned RU is not displayed in the Manage Reviewer and Distribute Documents");
 		bc.stepInfo("Test case Id: RPMXCON-53724");
@@ -415,7 +415,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that on selecting specific category, only that
 	 *               category documents are assign to Assignment- RPMXCON-53943.
 	 */
-	@Test(description ="RPMXCON-53943",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-53943",enabled = true, groups = { "regression" })
 	public void VerifyDocAssignedfromcategory() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("Test case Id: RPMXCON-53943");
 		bc.stepInfo("To verify that on selecting specific category, only that category documents are assign"
@@ -451,7 +451,7 @@ public class Assignment_Regression2 {
 	 *               Instruction pop out elements on clicking the Configure
 	 *               button(RPMXCON-53795).
 	 */
-	@Test(description ="RPMXCON-53795",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-53795",enabled = true, groups = { "regression" })
 	public void verifyInstructionPopUp() throws InterruptedException, AWTException {
 		try {
 			bc.stepInfo("To verify that RMU is able to view the Instruction pop out on clicking the Configure button");
@@ -483,7 +483,7 @@ public class Assignment_Regression2 {
 	 *               option as Family Members (RPMXCON-53825)
 	 */
 
-	@Test(description ="RPMXCON-53825",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-53825",enabled = true, groups = { "regression" })
 	public void verifyDocSortedByFamilyId() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify that RMU is able to sort the documents by selecting option as FamilyMemebers.");
 		bc.stepInfo("Test case Id:RPMXCON-53825");
@@ -522,7 +522,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU is able to view the configure button on New
 	 *               Assignment Page(RPMXCON-53793).
 	 */
-	@Test(description ="RPMXCON-53793",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-53793",enabled = true, groups = { "regression" })
 	public void verifyConfigureButtonNewAssgn() throws InterruptedException, AWTException {
 		try {
 			bc.stepInfo("To verify that RMU is able to view the configure button on New Assignment Page");
@@ -549,7 +549,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU is able to view the configure button in Edit
 	 *               Asssignments Page(RPMXCON-53794).
 	 */
-	@Test(description ="RPMXCON-53794",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-53794",enabled = true, groups = { "regression" })
 	public void verifyConfigureButton_EditAssgn() throws InterruptedException, AWTException {
 		try {
 			bc.stepInfo("To verify that RMU is able to view the configure button on Edit Assignment Page");
@@ -583,7 +583,7 @@ public class Assignment_Regression2 {
 	 * @description:To verify that on clicking Keyword button pop up is displayed on
 	 *                 New/Edit Assignment Page
 	 */
-	@Test(description ="RPMXCON-53857",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-53857",enabled = true, groups = { "regression" })
 	public void VerifyKeywordPopUp() throws InterruptedException {
 		try {
 			bc.stepInfo("To verify that on clicking Keyword button pop up is displayed on New/Edit Assignment Page");
@@ -623,7 +623,7 @@ public class Assignment_Regression2 {
 	 *               RMU.(RPMXCON-53744)
 	 */
 
-	@Test(description ="RPMXCON-53744",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-53744",enabled = true, groups = { "regression" })
 	public void verifyLiveSequenceOptions() throws InterruptedException, ParseException, IOException {
 		try {
 			bc.stepInfo(
@@ -663,7 +663,7 @@ public class Assignment_Regression2 {
 	 *               "Assign/Unassign Documents" pop up from Doclist page.
 	 */
 
-	@Test(description ="RPMXCON-53817",enabled = true,groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-53817",enabled = true,groups = { "regression" })
 	public void CreateAssgn_DocList() throws InterruptedException {
 		try {
 			bc.stepInfo("Test case Id:RPMXCON-53817");
@@ -695,7 +695,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that configuration of Copied Assignment can be
 	 *               changed. RPMXCON-53756
 	 */
-	@Test(description ="RPMXCON-53756",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-53756",enabled = true, groups = { "regression" })
 	public void verifyCopyAssignmentChanges() throws InterruptedException {
 		bc.stepInfo("To verify that configuration of Copied Assignment can be changed.");
 		bc.stepInfo("Test case Id: RPMXCON-53756");
@@ -730,7 +730,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU changes in the Copied Assignment if
 	 *               Cascading settings are ON/OFF RPMXCON-53760
 	 */
-	@Test(description ="RPMXCON-53760",enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-53760",enabled = true, groups = { "regression" })
 	public void verifyCascadingSettingsOfCopyAssginment() throws InterruptedException {
 		bc.stepInfo("To verify that RMU changes in the Copied Assignment if Cascading settings are ON/OFF");
 		bc.stepInfo("Test case Id: RPMXCON-53760");
@@ -753,7 +753,7 @@ public class Assignment_Regression2 {
 	 *               are getting reflected correctly on RU Dashboard & My Activity
 	 *               page. RPMXCON-53714
 	 */
-	@Test(description ="RPMXCON-53714",enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-53714",enabled = true, groups = { "regression" })
 	public void verifyCompletedDocsCountInReviewerPg() throws InterruptedException {
 		bc.stepInfo("To verify that on marking the documents as completed the counts are getting"
 				+ " reflected correctly on RU Dashboard & My Activity page.");
@@ -815,7 +815,7 @@ public class Assignment_Regression2 {
 	 *               are getting reflected correctly on RU Dashboard & My Activity
 	 *               page. RPMXCON-53718
 	 */
-	@Test(description ="RPMXCON-53718",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-53718",enabled = true, groups = { "regression" })
 	public void verifyUnCompletedDocsCountInReviewerPg() throws InterruptedException {
 		bc.stepInfo(
 				"To verify that on marking the documents as un-completed the counts are getting reflected correctly on RU Dashboard & My Activity page.");
@@ -889,7 +889,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that validations are displayed properly.
 	 *               RPMXCON-53706
 	 */
-	@Test(description ="RPMXCON-53706",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-53706",enabled = true, groups = { "regression" })
 	public void verifyDisplayedValidationsInManageReviewer() throws InterruptedException {
 		bc.stepInfo("To verify that validations are displayed properly.");
 		bc.stepInfo("Test case Id: RPMXCON-53706");
@@ -913,7 +913,7 @@ public class Assignment_Regression2 {
 	 *               on selecting Remove Documents options validation must be
 	 *               displayed. RPMXCON-53693
 	 */
-	@Test(description ="RPMXCON-53693",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-53693",enabled = true, groups = { "regression" })
 	public void verifyDisplayValidationOnRemoveDocs() throws InterruptedException {
 		bc.stepInfo(
 				"To verify that if RU has only and some completed documents then on selecting Remove Documents options validation must be displayed.");
@@ -937,7 +937,7 @@ public class Assignment_Regression2 {
 	 * @description To verify that RMU can create New Assignments from
 	 *              "Assign/Unassign Documents" with descending Metadata selection
 	 */
-	@Test(description ="RPMXCON-54916",enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description ="RPMXCON-54916",enabled = true, groups = { "regression" })
 	public void CreateAssgn_DescendingMetadata() throws InterruptedException {
 		assertion = new SoftAssert();
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
@@ -978,7 +978,7 @@ public class Assignment_Regression2 {
 	 * @description To verify that RMU can create New Assignments from
 	 *              "Assign/Unassign Documents" pop up if Search Results are saved.
 	 */
-	@Test(description ="RPMXCON-53816",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-53816",enabled = true, groups = { "regression" })
 	public void CreateAssignfromSavedSearch() throws InterruptedException, ParseException, IOException {
 		try {
 			assertion = new SoftAssert();
@@ -1024,7 +1024,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that for Assignment if draw from pool in enable then
 	 *               RU is able to view/use the "Draw From Pool". RPMXCON-53883
 	 */
-	@Test(description ="RPMXCON-53883",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description ="RPMXCON-53883",enabled = true, groups = { "regression" })
 	public void validateDrawFromPoolLinkInReviewerPg() throws InterruptedException {
 		assertion = new SoftAssert();
 		bc.stepInfo(
@@ -1074,7 +1074,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU is able to view/edit/move/cancel/delete
 	 *               changes in Assignment Group RPMXCON-53594
 	 */
-	@Test(description ="RPMXCON-53594",enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-53594",enabled = true, groups = { "regression" })
 	public void validateAddUpdateDeleteInassgnGrp() throws InterruptedException {
 		assertion = new SoftAssert();
 		bc.stepInfo("To verify that RMU is able to view/edit/move/cancel/delete changes in Assignment Group");
@@ -1159,7 +1159,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that RMU is able to view option "View All Docs in
 	 *               DocList"(RPMXCON-53761)
 	 */
-	@Test(description ="RPMXCON-53761",enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-53761",enabled = true, groups = { "regression" })
 	public void verifyTagAllOptions() throws InterruptedException, IOException {
 		bc.stepInfo("To verify that RMU is able to view Tag all option in Action dropdown in Manage Assignment Page");
 		bc.stepInfo("Test case Id:RPMXCON-53761");
@@ -1189,7 +1189,7 @@ public class Assignment_Regression2 {
 	 * @description Bulk assignment - Default Metadata list is retained even after
 	 *              modifying bulk assignment
 	 */
-	@Test(description ="RPMXCON-54936",enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-54936",enabled = true, groups = { "regression" })
 	public void verifyMetaDataList() throws InterruptedException, IOException {
 		bc.stepInfo("Bulk assignment - Default Metadata list is retained even after modifying bulk assignment");
 		bc.stepInfo("Test case Id:RPMXCON-54936");
@@ -1238,7 +1238,7 @@ public class Assignment_Regression2 {
 	 *              after modifying Quick batch.
 	 */
 
-	@Test(description ="RPMXCON-54934",enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-54934",enabled = true, groups = { "regression" })
 	public void VerifyMetaList_QuickBatch() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("Test case Id: RPMXCON-54934");
 		bc.stepInfo("Quick Batch assignment - Default Metadata list is retained even after modifying Quick batch");
@@ -1277,7 +1277,7 @@ public class Assignment_Regression2 {
 	 * @description: To verify that Edit Actions can be performed on Copied
 	 *               Assignment RPMXCON-53758
 	 */
-	@Test(description ="RPMXCON-53758",enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-53758",enabled = true, groups = { "regression" })
 	public void verifyActionFunctionsValidationsInCopyAssignment() throws InterruptedException {
 		bc.stepInfo("To verify that Edit Actions can be performed on Copied Assignment");
 		bc.stepInfo("Test case Id: RPMXCON-53758");
@@ -1344,7 +1344,7 @@ public class Assignment_Regression2 {
 	 * @description: Verify that Keyword should automatically added to New
 	 *               assignment through Bulk Assign from Save Search RPMXCON-54908
 	 */
-	@Test(description ="RPMXCON-54908",enabled = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-54908",enabled = true, groups = { "regression" })
 	public void validateKeywordsInAssignment() throws InterruptedException, AWTException {
 		bc.stepInfo(
 				"Verify that Keyword should automatically added to New assignment through Bulk Assign from Save Search");
@@ -1378,7 +1378,7 @@ public class Assignment_Regression2 {
 	 *              Assignment Group.
 	 */
 
-	@Test(description ="RPMXCON-53597",enabled = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-53597",enabled = true, groups = { "regression" })
 	public void VerifyCascadeFunctionality() throws InterruptedException {
 		String cascadeSettings_yes = "Yes";
 		String cascadeSettings_No = "No";
@@ -1456,7 +1456,7 @@ public class Assignment_Regression2 {
 	 * @description Bulk assignment - Metadata list is retained even after modifying
 	 *              bulk assignment for impersonated user
 	 */
-	@Test(description ="RPMXCON-54933",dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-54933",dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void verifyMetaDataList_impersonatedUser(String userName, String Password)
 			throws InterruptedException, IOException {
 
@@ -1523,7 +1523,7 @@ public class Assignment_Regression2 {
 	 * @description Quick Batch assignment - Default Metadata list is retained even
 	 *              after modifying Quick batch for impersonated user
 	 */
-	@Test(description ="RPMXCON-54935",dataProvider = "Users", enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-54935",dataProvider = "Users", enabled = true, groups = { "regression" })
 	public void VerifyMetaDataList_QuickBatchImpersonateadUser(String userName, String Password)
 			throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("Test case Id: RPMXCON-54935");
@@ -1572,7 +1572,7 @@ public class Assignment_Regression2 {
 	 *              Pool' Action when 'Draw From Pool' option is enabled in
 	 *              Assignment.
 	 */
-	@Test(description ="RPMXCON-54215",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-54215",enabled = true, groups = { "regression" })
 	public void VerifyDrawFromPooldisplay() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("RPMXCON-12669 Scenario 2 - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' "
 				+ "option is enabled in   Assignment.");
@@ -1634,7 +1634,7 @@ public class Assignment_Regression2 {
 	 *              Pool' Action when 'Draw From Pool' option is disabled in
 	 *              Assignment.
 	 */
-	@Test(description ="RPMXCON-54214",enabled = true, groups = { "regression" }, priority = 38)
+	@Test(description ="RPMXCON-54214",enabled = true, groups = { "regression" })
 	public void VerifyDrawFromPooldisplay_ifToggledisabled() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("RPMXCON-12669 Scenario 1 - Verify the display of 'Draw from Pool' Action when 'Draw From Pool' "
 				+ "option is disabled in   Assignment.");
@@ -1696,7 +1696,7 @@ public class Assignment_Regression2 {
 	 *               if he is assigned with documents which are in Incomplete
 	 *               state.. RPMXCON-54767
 	 */
-	@Test(description ="RPMXCON-54767",enabled = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-54767",enabled = true, groups = { "regression" })
 	public void verifyUnassignedDocsAfterUnassignedUser() throws InterruptedException {
 		bc.stepInfo(
 				"To verify that RMU can unassign the Pending RU from Assignment if he is assigned with documents which are in Incomplete state.");
@@ -1721,7 +1721,7 @@ public class Assignment_Regression2 {
 	 *               Completed Document then that documents can be Reassigned to
 	 *               Reviewer. RPMXCON-53704
 	 */
-	@Test(description ="RPMXCON-53704",enabled = true, groups = { "regression" }, priority = 40)
+	@Test(description ="RPMXCON-53704",enabled = true, groups = { "regression" })
 	public void verifyRedistributionDocs() throws InterruptedException {
 		assertion = new SoftAssert();
 		bc.stepInfo(
@@ -1762,7 +1762,7 @@ public class Assignment_Regression2 {
 	 * @description To verify the functionality of the Redistribute Documents for
 	 *              the Pending Reviewer which has no documents assigned
 	 */
-	@Test(description ="RPMXCON-54765",enabled = true, groups = { "regression" }, priority = 41)
+	@Test(description ="RPMXCON-54765",enabled = true, groups = { "regression" })
 	public void VerifyRedistributefunctionality() throws InterruptedException, ParseException, IOException {
 		bc.stepInfo("To verify the functionality of the Redistribute Documents for the Pending Reviewer "
 				+ "which has no documents assigned");
@@ -1788,7 +1788,7 @@ public class Assignment_Regression2 {
 	 *              Reviewers then document counts are correctly displayed on Manage
 	 *              Reviewer Tab and Manage Assignment Page.
 	 */
-	@Test(description ="RPMXCON-54766",enabled = true, groups = { "regression" }, priority = 42)
+	@Test(description ="RPMXCON-54766",enabled = true, groups = { "regression" })
 	public void verifyRedistributeDocsCount() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		bc.stepInfo(

@@ -83,7 +83,7 @@ public class Assignment_Regression3 {
 		softAssertion = new SoftAssert();
 	}
 
-	@Test(description = "RPMXCON-54431", enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-54431", enabled = true, groups = { "regression" })
 	public void verifyDocCounts() throws Exception {
 		baseClass = new BaseClass(driver);
 		softAssertion = new SoftAssert();
@@ -123,7 +123,7 @@ public class Assignment_Regression3 {
 	 * Documents tab
 	 */
 
-	@Test(description = "RPMXCON-54432", enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-54432", enabled = true, groups = { "regression" })
 	public void VerifyDocsCount_DistributeTab() throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -173,7 +173,7 @@ public class Assignment_Regression3 {
 	 * distribute all documents to Reviewer in assignment, then 'DISTRIBUTED to
 	 * User' count displays correct count on Manage Reviewers tab
 	 */
-	@Test(description = "RPMXCON-54433", enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-54433", enabled = true, groups = { "regression" })
 
 	public void VerifyDocsCount_ReviewerTab() throws Exception {
 		baseClass = new BaseClass(driver);
@@ -223,7 +223,7 @@ public class Assignment_Regression3 {
 	 * in context of an assignment
 	 */
 
-	@Test(description = "RPMXCON-54434", enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-54434", enabled = true, groups = { "regression" })
 	public void VerifyDocsCount_DocView() throws Exception {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
@@ -264,7 +264,7 @@ public class Assignment_Regression3 {
 	 * @Description-Verify that 'Show Default View Tab' enabled by default with
 	 *                     cascading settings not enabled
 	 */
-	@Test(description = "RPMXCON-54513", enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-54513", enabled = true, groups = { "regression" })
 
 	public void VerifyToggleEnabled() throws Exception {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -306,7 +306,7 @@ public class Assignment_Regression3 {
 	 * @description: Delete keywords - Assignment should not display the deleted
 	 *               keyword
 	 */
-	@Test(description = "RPMXCON-54756", enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-54756", enabled = true, groups = { "regression" })
 	public void validateKeywordsInAssignment() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Delete keywords - Assignment should not display the deleted keyword");
@@ -352,7 +352,7 @@ public class Assignment_Regression3 {
 	 * @description:Verifying the Default Live Sequence while creating a new
 	 *                        assignment group
 	 */
-	@Test(description = "RPMXCON-54493", enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description = "RPMXCON-54493", enabled = true, groups = { "regression" })
 	public void verifyLivesequence() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verifying the Default Live Sequence while creating a new assignment group");
@@ -390,7 +390,7 @@ public class Assignment_Regression3 {
 	 *                     settings incl. Max Draw Count as 100 when creating
 	 *                     assignment group
 	 */
-	@Test(description = "RPMXCON-60049", enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description = "RPMXCON-60049", enabled = true, groups = { "regression" })
 	public void verifyToggle_AssgnGrp() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Verify default settings for toggles as well as Draw from Pool settings"
@@ -430,7 +430,7 @@ public class Assignment_Regression3 {
 	 *                     incl. Max Draw Count as 100 when creating new assignment
 	 *                     from manage assignment
 	 */
-	@Test(description = "RPMXCON-60048", enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description = "RPMXCON-60048", enabled = true, groups = { "regression" })
 	public void verifyToggle_Assignments() throws InterruptedException, AWTException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo(
@@ -467,7 +467,7 @@ public class Assignment_Regression3 {
 	 *              settings incl. Max Draw Count as 100 when creating assignment
 	 *              with Quick Batch
 	 */
-	@Test(description = "RPMXCON-60046", enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description = "RPMXCON-60046", enabled = true, groups = { "regression" })
 	public void VerifyToggle_QuickBatch() throws InterruptedException, ParseException, IOException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -506,7 +506,7 @@ public class Assignment_Regression3 {
 	 *                     with Bulk Assign
 	 */
 
-	@Test(description = "RPMXCON-60047", enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description = "RPMXCON-60047", enabled = true, groups = { "regression" })
 	public void CreateAssgn_DocExp_VerifyToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -553,7 +553,7 @@ public class Assignment_Regression3 {
 	 * @description:
 	 */
 
-	@Test(description = "RPMXCON-54497", enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description = "RPMXCON-54497", enabled = true, groups = { "regression" })
 	public void verifyDrawPoolToggle() throws InterruptedException {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		loginPage = new LoginPage(driver);
@@ -604,7 +604,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59178]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59178", enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description = "RPMXCON-59178", enabled = true, groups = { "regression" })
 	public void verifyDrawLinkWhenFamiliesToggleDisabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -666,7 +666,7 @@ public class Assignment_Regression3 {
 	 *              [RPMXCON-59201]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59201", enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description = "RPMXCON-59201", enabled = true, groups = { "regression" })
 	public void verifyAfterEditingAssignGroup() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -716,7 +716,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59179", enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description = "RPMXCON-59179", enabled = true, groups = { "regression" })
 	public void verifyDrawLinkWhenEmailThreadToggleEnabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -821,7 +821,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59177", enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description = "RPMXCON-59177", enabled = true, groups = { "regression" })
 	public void verifyDrawLinkWhenFamilyToggleEnabled() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -926,7 +926,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59197", enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description = "RPMXCON-59197", enabled = true, groups = { "regression" })
 	public void verifyDrawaLimit_BothToggleOFF() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1032,7 +1032,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59196", enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description = "RPMXCON-59196", enabled = true, groups = { "regression" })
 	public void verifyDrawaLimit_BothToggleON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1141,7 +1141,7 @@ public class Assignment_Regression3 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description = "RPMXCON-59202", enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description = "RPMXCON-59202", enabled = true, groups = { "regression" })
 	public void verifyAfterEditingAssignGroup_FamilyON_EmailThreadOFF() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1212,7 +1212,7 @@ public class Assignment_Regression3 {
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
-	@Test(description = "RPMXCON-59206", enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description = "RPMXCON-59206", enabled = true, groups = { "regression" })
 	public void verifyAfterEditingAssignGroup_FamilyOFF_EmailThreadON() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1289,7 +1289,7 @@ public class Assignment_Regression3 {
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
-	@Test(description = "RPMXCON-59207", enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description = "RPMXCON-59207", enabled = true, groups = { "regression" })
 	public void verifyAfterEditingAssignGroup_FamilyOFF_EmailThreadOFF() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1369,7 +1369,7 @@ public class Assignment_Regression3 {
 	/**
 	 * @author Jayanthi.Ganesan
 	 */
-	@Test(description = "RPMXCON-59176", enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description = "RPMXCON-59176", enabled = true, groups = { "regression" })
 	public void UI_Validation_Toggles() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1415,7 +1415,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59199", enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description = "RPMXCON-59199", enabled = true, groups = { "regression" })
 	public void verifyDrawaLimitEditAssgn_ThreadON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1519,7 +1519,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59198", enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description = "RPMXCON-59198", enabled = true, groups = { "regression" })
 	public void verifyDrawLimitEditAssgn_FamilyON() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1624,7 +1624,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59216", enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description = "RPMXCON-59216", enabled = true, groups = { "regression" })
 	public void verifyDrawPoolToggle_existingAssgn() throws InterruptedException {
 		String assignmentName = "FamilyAssignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1728,7 +1728,7 @@ public class Assignment_Regression3 {
 	 * @description: Verify that help text pop does not appear when the user just
 	 *               hovers the "?" icon on "Create Client" page.
 	 */
-	@Test(description = "RPMXCON-54960", enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-54960", enabled = true, groups = { "regression" })
 	public void validateHelpPopUpWhenHoveringInClientPg() throws InterruptedException, ParseException, IOException {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -1748,7 +1748,7 @@ public class Assignment_Regression3 {
 	 *               Size of Project Database" then help text appears on "Create
 	 *               Client" page.
 	 */
-	@Test(description = "RPMXCON-54958", enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-54958", enabled = true, groups = { "regression" })
 	public void verifyHelpTextPopUpWhenClickingInClientPg() throws InterruptedException, ParseException, IOException {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
@@ -1768,7 +1768,7 @@ public class Assignment_Regression3 {
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-59180", enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description = "RPMXCON-59180", enabled = true, groups = { "regression" })
 	public void verifyDrawLinkWhenEmailThreadToggleDisabled() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 		softAssertion = new SoftAssert();
@@ -1869,7 +1869,7 @@ public class Assignment_Regression3 {
 	 * @Description :
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-56825", enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description = "RPMXCON-56825", enabled = true, groups = { "regression" })
 	public void verifyCascadeAssignGroup() throws InterruptedException {
 		String cascadeAsgnGrpName = "CascadeAssgnGrp" + Utility.dynamicNameAppender();
 		String assignment = "Assignment" + Utility.dynamicNameAppender();
@@ -1918,7 +1918,7 @@ public class Assignment_Regression3 {
 	 *              Characters) from Notepad. [RPMXCON-54444]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-54444", enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description = "RPMXCON-54444", enabled = true, groups = { "regression" })
 	public void verifyErrorMsgForSpclChar() throws InterruptedException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 
@@ -1949,7 +1949,7 @@ public class Assignment_Regression3 {
 	 *              on Assign Like Document pop up. [RPMXCON-53942]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-53942", enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description = "RPMXCON-53942", enabled = true, groups = { "regression" })
 	public void VerifyDocAssignedfromcategory() throws InterruptedException, ParseException, IOException {
 		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
 
