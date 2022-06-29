@@ -45,7 +45,7 @@ public class AssignmentReviewProgressReport {
 		return driver.FindElementByXPath("//a[@href='#collapseAssignment1']");
 	}
 	public Element selectAgnmtLevel(String assignmentLevel) {
-		return driver.FindElementByXPath("//span[text()='"+assignmentLevel+"']/parent::label/input");
+		return driver.FindElementByXPath("//span[text()='"+assignmentLevel+"']");
 	}
 	public Element selectAssignmentGroupCheckBox(String assignmentGrpName) {
 		return driver.FindElementByXPath("//a[text()='"+assignmentGrpName+"']/i");
@@ -133,6 +133,7 @@ public class AssignmentReviewProgressReport {
 		getAssignmentGroupExpandIcon().Click();
 		base.stepInfo("Assignment group popup is expanded");
 		base.waitTillElemetToBeClickable(selectAssignmentGroupCheckBox(agnmtGrp));
+		selectAssignmentGroupCheckBox(agnmtGrp).ScrollTo();
 		selectAssignmentGroupCheckBox(agnmtGrp).waitAndClick(10);
 		base.stepInfo("Assignment group of "+agnmtGrp+" is selected");
 		base.waitTillElemetToBeClickable(getAssignmentGroupExpandIcon());
