@@ -4212,7 +4212,7 @@ public class Production_Regression1 {
 			page.navigateToNextSection();
 
 			base.stepInfo("Filling Numbering And Sorting Document Page");
-			page.fillingNumberingAndSortingDocumentPage(beginningBates);
+			page.fillingNumberingAndSortingDocumentPage(beginningBates, prefixID, suffixID);
 			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates1);
 			
 			base.stepInfo("Navigate To Next Section");

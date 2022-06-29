@@ -916,7 +916,7 @@ public class ProductionPage_Regression {
 		driver.Navigate().refresh();
 
 		// To filter In progress state Production
-		page.prodGenerationInProgressStatus();
+		page.prodGenerationInProgressStatus(productionname);
 
 		// verify Production in Post-Gen QC Checks Complete status
 		if (page.gettxtPostGenCompleted().Displayed()) {
