@@ -101,17 +101,31 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getAnalysisOfCommExplorer() {
+		return driver.FindElementByXPath("//li[@id='CommunicationsExplorerOpt']");
+	}
+
+	public Element getAnalysisOfConceptExplorer() {
+		return driver.FindElementByXPath("//li[@id='ConceptExplorerOpt']");
+	}
+
+	public Element getNoBtn() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+
 	public Element getConceptualCount_last() {
 		return driver.FindElementByXPath("(.//*[@id='005']/span/count)[last()]");
 	}
+
 	public Element getConceptualCountPlayButton() {
 		return driver.FindElementByXPath("(//i[@Class='fa fa-play-circle-o playButton'])[last()]");
 	}
-	
+
 	public Element getConceptualCountDisplayed() {
-		return driver.FindElementByXPath("(.//*[@id='005']/span/count)[last()]/../preceding-sibling::i[@style='display: block;']");
+		return driver.FindElementByXPath(
+				"(.//*[@id='005']/span/count)[last()]/../preceding-sibling::i[@style='display: block;']");
 	}
-	
+
 	public Element getModifyASearch_Current() {
 		return driver.FindElementByXPath("//div[@style='display: block;']//a[@id='qModifySearch']");
 	}
@@ -303,12 +317,12 @@ public class SessionSearch {
 	public Element getBulkRelease_ButtonRelease() {
 		return driver.FindElementById("btnRelease");
 	}
-	
+
 	// Added by Arunkumar
 	public Element getBulkRelease_ButtonUnRelease() {
 		return driver.FindElementByXPath("//button[@id='btnUnrelease']");
 	}
-	
+
 	public Element getSearchCriteriaValue() {
 		return driver.FindElementByXPath("//td[@class='value']//span");
 	}
@@ -1104,14 +1118,14 @@ public class SessionSearch {
 	public Element getSavedSearchNodeCount() {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//ul//li");
 	}
-	
+
 	public Element getSavedSearchTableCount() {
 		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//tbody/tr");
 	}
-	
-	
+
 	public Element getSavedSearchTableNoDatas() {
-		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'Your query returned no data')]");
+		return driver
+				.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'Your query returned no data')]");
 	}
 
 	public Element getPureHitsCountNumText() {
@@ -1798,20 +1812,24 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"(//div[@id='bgTask']//child::span[contains(text(),' Your Batch Print')])[position()=1]");
 	}
-	
+
 	public Element getMouseOver_ToTextBoxString(String inputString) {
-		return driver.FindElementByXPath("//span[text()='"+inputString+"']");
+		return driver.FindElementByXPath("//span[text()='" + inputString + "']");
 	}
+
 	public Element getDeletePreviousSearch() {
 		return driver.FindElementByXPath("//a[@class='textboxlist-bit-box-deletebutton']");
 	}
-	
+
 	public Element getTaskBackGround(String id) {
-		return driver.FindElementByXPath("//a[text()='Your Navigation execution with Notification Id. " + id+ " is COMPLETED']");
+		return driver.FindElementByXPath(
+				"//a[text()='Your Navigation execution with Notification Id. " + id + " is COMPLETED']");
 	}
+
 	public Element getEnterSearchString_UsingPosition(int i) {
-		return driver.FindElementByXPath("(.//*[@id='xEdit']/li/input)[position()="+i+"]");
+		return driver.FindElementByXPath("(.//*[@id='xEdit']/li/input)[position()=" + i + "]");
 	}
+
 	public Element getPureHit_UsingLast() {
 		return driver.FindElementByXPath("(//a[@id='001']/span/count)[last()]");
 	}
@@ -2083,19 +2101,18 @@ public class SessionSearch {
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
 		}
-		
+
 		if (MessageNumber == 12) {
 			if (getWarningAudioBlackListChar_Header().isDisplayed()) {
 				softAssert.assertEquals(getWarningAudioBlackListChar_Header().getText(), "Possible Wrong Query Alert");
-				base.stepInfo("Displayed Header is : "+getWarningAudioBlackListChar_Header().getText());
+				base.stepInfo("Displayed Header is : " + getWarningAudioBlackListChar_Header().getText());
 			}
 			String msg = " Parentheses are missing in your search query. Please correct the query to include proper opening and closing parentheses.";
-			String actualMsg=getQueryAlertGetTextSingleLine().getText();
+			String actualMsg = getQueryAlertGetTextSingleLine().getText();
 			base.stepInfo(actualMsg);
 			System.out.println(actualMsg);
-			softAssert.assertEquals(msg.replaceAll(" ", ""),
-					actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
-		
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+
 		}
 		// click on ok
 		/*
@@ -2175,6 +2192,8 @@ public class SessionSearch {
 
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+			base.passedStep(msg);
+
 		}
 		if (MessageNumber == 4)
 			Assert.assertEquals(
@@ -2214,12 +2233,14 @@ public class SessionSearch {
 			String msg = "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+			base.passedStep(msg);
 		}
 
 		if (MessageNumber == 11) {
 			String msg = "Your query has multiple potential syntax issues.1. Your query contains a ~ (tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
 			Assert.assertEquals(msg.replaceAll(" ", ""),
 					getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""));
+			base.passedStep(msg);
 		}
 		if (MessageNumber == 12) {
 			String msg = "Search queries with wildcard characters within phrases are not supported. Alternatively, you could get the same results by performing a proximity search with a distance of zero. For example, a search \"trade contr*\" can be equivalently reconstructed as \"trade contr*\"~0! to get the same results. Please reach out to Support or your administrator for any additional help.";
@@ -2466,14 +2487,10 @@ public class SessionSearch {
 		if (metaDataField.equalsIgnoreCase("CustodianName") || metaDataField.equalsIgnoreCase("EmailAuthorName")
 				|| metaDataField.equalsIgnoreCase("EmailRecipientNames")) {
 
-			try {
-
-				getTallyContinue().waitAndClick(4000);
-			} catch (Exception e) {
-
+			if (getTallyContinue().isElementAvailable(2)) {
+				getTallyContinue().waitAndClick(5);
 			}
 		}
-
 		// verify counts for all the tiles
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2667,10 +2684,10 @@ public class SessionSearch {
 		driver.scrollingToBottomofAPage();
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			// System.out.println(iterable_element.getText());
-			 base.waitTime(2);
+			base.waitTime(2);
 			if (iterable_element.getText().contains(SaveName)) {
-				 base.waitTime(2);
-				 new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				base.waitTime(2);
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				// System.out.println(iterable_element.getText());
 				iterable_element.click();
@@ -2874,9 +2891,9 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 	}
 
-
-/**
+	/**
 	 * * Modified on 05/12/22
+	 * 
 	 * @modifiedOn : 3/8/2022 (added wait time)
 	 * @modifiedOn : 1/5/2022 (getRemovePureHit().isElementAvailable(3))
 	 * @modifiedOn : 1/7/2022 getPureHitAddButton().Click(); to
@@ -2886,7 +2903,7 @@ public class SessionSearch {
 	 */
 	// Function to perform bulk tag with existing tag
 	public void bulkTagExisting(final String tagName) throws InterruptedException {
-		
+
 		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
@@ -2947,7 +2964,7 @@ public class SessionSearch {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
-		
+
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
 		// driver.getWebDriver().get(Input.url+"Search/Searches");
@@ -3181,11 +3198,10 @@ public class SessionSearch {
 				return getDocListAction().Visible();
 			}
 		}), Input.wait60);
-	    
+
 		Thread.sleep(2000);
 		getTallyResults().waitAndClick(5);
-			base.waitTime(3); // added for stabilization
-	
+		base.waitTime(3); // added for stabilization
 
 		System.out.println("Navigated to Tally  to view docs");
 		UtilityLog.info("Navigated to Tally  to view docs");
@@ -8694,7 +8710,7 @@ public class SessionSearch {
 	}
 
 	public int basicContentSearchForTwoItems(String SearchString, String SearchString2) {
-		int pureHit=0;
+		int pureHit = 0;
 		try {
 			// To make sure we are in basic search page
 			driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -9371,7 +9387,9 @@ public class SessionSearch {
 
 			Reporter.log("Saved the search with name '" + searchName + "'", true);
 			UtilityLog.info("Saved search with name - " + searchName);
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -10077,7 +10095,7 @@ public class SessionSearch {
 
 			base.waitForElement(getSearchButton());
 			getSearchButton().waitAndClick(10);
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getPureHitAddButton().Displayed();
@@ -11315,16 +11333,16 @@ public class SessionSearch {
 	 * @description : Method to verify the document count in metadata
 	 */
 	public void verifyTheCountOfDocumentForMetaData() {
-		for(int i=0;i<4;i++) {
-		driver.waitForPageToBeReady();
-		getPureHitsCount().isElementAvailable(2);
-		String PurehitCount = getPureHitsCount().getText();
-		if (Integer.valueOf(PurehitCount) != 0) {
-			base.passedStep("Document is displayed as expected");
-			break;
-		} else {
-			base.failedStep("Document count is not displayed as expected");
-		}
+		for (int i = 0; i < 4; i++) {
+			driver.waitForPageToBeReady();
+			getPureHitsCount().isElementAvailable(2);
+			String PurehitCount = getPureHitsCount().getText();
+			if (Integer.valueOf(PurehitCount) != 0) {
+				base.passedStep("Document is displayed as expected");
+				break;
+			} else {
+				base.failedStep("Document count is not displayed as expected");
+			}
 		}
 	}
 
@@ -11637,7 +11655,6 @@ public class SessionSearch {
 		}
 	}
 
-	
 	/**
 	 * @Author Jeevitha
 	 * @param SearchNamelist
@@ -11648,7 +11665,7 @@ public class SessionSearch {
 			List<String> conceptuallySimilarCountList) throws InterruptedException {
 		for (int i = 0; i < SearchNamelist.size(); i++) {
 			driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-			String concept =conceptuallySimilarCountList.get(i);
+			String concept = conceptuallySimilarCountList.get(i);
 			driver.waitForPageToBeReady();
 			SavedSearch savedSearch = new SavedSearch(driver);
 			savedSearch.selectSavedSearch(SearchNamelist.get(i));
@@ -11684,7 +11701,7 @@ public class SessionSearch {
 			softAssert.assertAll();
 		}
 	}
-	
+
 	/**
 	 * @Author Baskar
 	 * @Description: To Create Metadata basic search
@@ -11722,7 +11739,7 @@ public class SessionSearch {
 		base.stepInfo("Search is done for " + metaDataField + " with value " + val1 + " purehit is : " + pureHit);
 		return pureHit;
 	}
-	
+
 	/**
 	 * this method will verify whether the notification count in bull horn icon and
 	 * navigate to doclist page
@@ -11730,7 +11747,7 @@ public class SessionSearch {
 	 * @author Baskar
 	 * @param bgCount[Initial back ground count]
 	 */
-	public void verifyNotificationAndNavigateToDocList(int bgCount,String bgId) {
+	public void verifyNotificationAndNavigateToDocList(int bgCount, String bgId) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11756,12 +11773,11 @@ public class SessionSearch {
 		driver.waitForPageToBeReady();
 		if (driver.getUrl().equalsIgnoreCase(doclistUrl)) {
 			base.passedStep("User navigate to doclist when clicked from bull icon task");
-		}
-		else {
+		} else {
 			base.failedMessage("user not navigated to doclist page");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 20/05/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will perform unrelease docs from security group
@@ -11775,7 +11791,7 @@ public class SessionSearch {
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 
-		getBulkActionButton().waitAndClick(10);		 
+		getBulkActionButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 
 		try {
@@ -11809,10 +11825,10 @@ public class SessionSearch {
 			}), Input.wait60);
 			getFinalizeButton().waitAndClick(20);
 		}
-		
+
 		base.passedStep("Successfully unreleased documents from security group");
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Session search page Url
@@ -11823,10 +11839,11 @@ public class SessionSearch {
 		softAssert.assertEquals(expURL, url);
 		base.stepInfo("Navigate to session search page");
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To Validate under My saved search more 3 saved search trems are there
+	 * @description: To Validate under My saved search more 3 saved search trems are
+	 *               there
 	 * 
 	 */
 	public void validateMySavedSearchTerms() {
@@ -11834,12 +11851,12 @@ public class SessionSearch {
 		String BasicSearchName = "CloningProjectSaveSearch01" + Utility.dynamicNameAppender();
 		String BasicSearchName1 = "CloningProjectSaveSearch02" + Utility.dynamicNameAppender();
 		String BasicSearchName2 = "CloningProjectSaveSearch03" + Utility.dynamicNameAppender();
-		
+
 		WebElement savedSearchTableCount = getSavedSearchTableCount().getWebElement();
 		List<WebElement> tablecount = savedSearchTableCount.findElements(By.tagName("tr"));
 		int tableSize = tablecount.size();
-		
-		if (getSavedSearchTableNoDatas().isElementAvailable(5)&&tableSize<3) {
+
+		if (getSavedSearchTableNoDatas().isElementAvailable(5) && tableSize < 3) {
 			base.stepInfo("There is no search terms under My saved search");
 			basicContentSearch("test");
 			saveSearch(BasicSearchName);
@@ -11849,15 +11866,16 @@ public class SessionSearch {
 			base.selectproject(Input.projectName);
 			basicContentSearch("comments");
 			saveSearch(BasicSearchName2);
-			
-		}else {
+
+		} else {
 			base.stepInfo("Save search terms are already present");
 		}
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To Validate under My saved search more 3 saved search nodes are there
+	 * @description: To Validate under My saved search more 3 saved search nodes are
+	 *               there
 	 * 
 	 */
 	public void validateSavedSearchNode() {
@@ -11866,11 +11884,48 @@ public class SessionSearch {
 		List<WebElement> NodesCount = savedSearchNodes.findElements(By.xpath("//*[@id='jsTreeSavedSearch']//ul//li"));
 		int nodeSize = NodesCount.size();
 		System.out.println(nodeSize);
-		if (nodeSize>2) {
+		if (nodeSize > 2) {
 			base.passedStep("There are more than 2 level of search group hierarchy");
-			
-		}else {
+
+		} else {
 			base.failedStep("There are no search nodes hierarchy present");
+		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * 
+	 */
+	public void addPurehitAndActionAsConceptOrComm(boolean communication, boolean concept) {
+
+		driver.waitForPageToBeReady();
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(3);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(3);
+
+		if (communication) {
+			base.waitForElement(getAnalysisOfCommExplorer());
+			getAnalysisOfCommExplorer().waitAndClick(3);
+		} else if (concept) {
+			base.waitForElement(getAnalysisOfConceptExplorer());
+			getAnalysisOfConceptExplorer().waitAndClick(3);
+		}
+		driver.waitForPageToBeReady();
+
+		String url = driver.getUrl();
+		if (url.contains("CommunicationExplorerReport")) {
+			base.passedStep("Navigate to Communications Explorer Page");
+		} else if (url.contains("ConceptExplorer")) {
+			base.passedStep("Navigate to Concept Explorer Page");
+		} else {
+			base.failedStep("Navigates to wrong Page");
 		}
 
 	}

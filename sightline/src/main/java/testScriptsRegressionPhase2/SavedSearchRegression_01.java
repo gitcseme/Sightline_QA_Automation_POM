@@ -3,6 +3,8 @@ package testScriptsRegressionPhase2;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -53,6 +55,15 @@ public class SavedSearchRegression_01 {
 		return users;
 	}
 
+	@DataProvider(name = "SavedSearchwithUsersAndShareGroup")
+	public Object[][] SavedSearchwithUsersAndShareGroup() {
+	Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName,Input.shareSearchPA },
+	{ Input.pa1userName, Input.pa1password, Input.pa1FullName,Input.shareSearchDefaultSG },
+	{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName, Input.shareSearchDefaultSG },
+	{ Input.rev1userName, Input.rev1password, Input.rev1FullName, Input.shareSearchDefaultSG } };
+	return users;
+	}
+	
 	/**
 	 * @Author
 	 * @Description : To verify as a Reviewer user login, I will be able to search a
@@ -220,6 +231,222 @@ public class SavedSearchRegression_01 {
 		// logOut
 		login.logout();
 
+	}
+
+	/**
+	 * @throws Exception
+	 * @Author :
+	 * @Description : To verify, As an user login into the Application, I will be
+	 *              able to see all the searches upload from xls sheet as batch
+	 *              search upload in selected search group
+	 */
+	@Test(description = "RPMXCON-47730", enabled = true, groups = { "regression" })
+	public void verifyUserAbleToUploadBatchFileInSelectedSearchGroup() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-47730");
+		base.stepInfo(
+				"To verify, As an user login into the Application, I will be able to see all the searches upload from xls sheet as batch search upload in selected search group");
+		String renameFile = saveSearch.renameFile(Input.WPbatchFile);
+		String columnHeading = "Search Name";
+		String fileLocation = System.getProperty("user.dir") + Input.WPbatchFile + renameFile;
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// creating new node
+		String newNode = saveSearch.createNewSearchGrp(Input.mySavedSearch);
+
+		// selecting the created node and uploading the excel file
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
+		List<String> searchNames = saveSearch.batchFileUpload(Input.WPbatchFile, renameFile);
+		System.out.println("First step");
+
+		// collecting search Names in excel sheet
+		List<String> excelData = base.readExcelColumnData(fileLocation, columnHeading);
+		System.out.println("data in excel sheet are readed");
+		base.passedStep("data in excel sheet are readed");
+
+		// comparing the search Names in excel sheet with search names in saved search
+		// page
+		base.compareListViaContains(searchNames, excelData);
+		System.out.println("Search Names in excel sheet are Matches with the Search Names in Saved Search Page");
+		base.passedStep("Search Names in excel sheet are Matches with the Search Names in Saved Search Page");
+
+		// deleting the created node
+		driver.scrollPageToTop();
+		driver.Navigate().refresh();
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+		
+		// logOut
+		login.logout();
+
+	}
+
+	/**
+	 * @Author :
+	 * @Description : Verify that correct number of documents appears when user
+	 *              Selects \"Bulk Release\" action from Advanced Search Screen
+	 */
+
+	@Test(description = "RPMXCON-47961", enabled = true, groups = { "regression" })
+	public void verifyPurehitCountWithDocumentCountInBulkRelease() throws Exception {
+
+		base.stepInfo("Test case Id:RPMXCON-47961");
+		base.stepInfo(
+				"Verify that correct number of documents appears when user Selects \"Bulk Release\" action from Advanced Search Screen");
+
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// searching and saving in advanced search
+		int pureHit = session.advancedContentSearch(Input.searchString1);
+		session.saveAdvancedSearchQuery(searchName);
+
+		// selecting and editing the saved search
+		saveSearch.savesearch_Edit(searchName);
+
+		// performing bulk release
+		int finalCount = session.verifyBulk_releaseCount(Input.securityGroup);
+
+		// comparing the pureHit count and final document count
+		softAssertion.assertEquals(pureHit, finalCount);
+		softAssertion.assertAll();
+		base.passedStep("pureHit count matches with the final count in bulk release");
+	}
+
+	/**
+	 * @Author
+	 * @Description : To verify, as an user login into the Application, I will be
+	 *              able to export the saved search from search group in csv format
+	 */
+
+	@Test(description = "RPMXCON-47732", enabled = true, groups = { "regression" })
+	public void verifyAbleToExportSavedSearchInCsvFormat() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-47732");
+		base.stepInfo(
+				"To verify, as an user login into the Application, I will be able to export the saved search from search group in csv format");
+
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		List<String> metadata = new ArrayList<String>();
+		metadata.add(Input.metaDataName);
+		metadata.add(Input.docFileExt);
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+		String TextTypetoChoose = "[\"] 034";
+		String NewLineTypetoChoose = "[;] 059";
+		String DateStyleTypetoChoose = "MM/DD/YYYY";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// metadata search is performed and saved
+		session.basicSearchWithMetaDataQuery(Input.metaDataCustodianNameInput, Input.metaDataName);
+		session.saveSearch(searchName);
+
+		// selecting the savedSearch
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectSavedSearch(searchName);
+
+		// performing Export action & verify format
+		saveSearch.getSavedSearchExportButton().waitAndClick(5);
+		base.stepInfo("Export button clicked");
+		int bgCount = saveSearch.configureExportPopup(metadata, StyletoChoose, fieldTypeToChoose, TextTypetoChoose,
+				NewLineTypetoChoose, DateStyleTypetoChoose);
+		saveSearch.downloadExportFile(bgCount, "csv");
+		base.passedStep("able to export the saved search in csv format and download the File");
+
+	}
+
+	/**
+	 * @Author
+	 * @Description : To Verify, In Saved search page when user click on any of the
+	 *              sub folder under \"My Search\" and select execute, it will
+	 *              execute all the search query as Admin Login
+	 */
+
+	@Test(description = "RPMXCON-57017", enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyUserAbleToExecuteSubFolderInMySearch() throws InterruptedException {
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-57017");
+		base.stepInfo(
+				"To Verify, In Saved search page when user click on any of the sub folder under \"My Search\" and select execute, it will execute all the search query as Admin Login");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create node under my saved search
+		String newNode = saveSearch.createNewSearchGrp(Input.mySavedSearch);
+
+		// performing search and saving under created node
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNewNode(searchName, newNode);
+
+		// selecting the node and executing
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
+		saveSearch.performExecute();
+		base.passedStep("All the Search Query under selected folder is Executed");
+
+		// delete the node
+		saveSearch.deleteNode(Input.mySavedSearch, newNode);
+
+		// logout
+		login.logout();
+
+	}
+
+	/**
+	 * @Author
+	 * @Description : Verify Rename action for any of the shared folders on saved
+	 *              search screen
+	 */
+
+	@Test(description = "RPMXCON-57023", dataProvider = "SavedSearchwithUsersAndShareGroup", enabled = true, groups = {
+			"regression" })
+	public void verifyRenameActionForSharedFolder(String username, String password, String fullName, String sharedGroup)
+			throws InterruptedException, Exception {
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-57023");
+		base.stepInfo("Verify Rename action for any of the shared folders on saved search screen");
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		base.stepInfo("logged in as : " + fullName);
+
+		// creating the node and saving the searchQuery and shared with shared Group
+		String newNode = saveSearch.createNewSearchGrp(Input.mySavedSearch);
+		session.basicContentSearch(Input.searchString2);
+		session.saveSearchInNodeUnderGroup(searchName, newNode, Input.mySavedSearch);
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.shareSavedNodeWithDesiredGroup(newNode, sharedGroup);
+		saveSearch.getCreatedNode(newNode).waitAndClick(20);
+		saveSearch.deleteFunctionality();
+
+		// selecting the shared group and verifying whether it highlighted
+		saveSearch.selectRootGroupTab(sharedGroup);
+		saveSearch.navigateToSavedSearchPage();
+		String bgcolor = saveSearch.currentClickedNode().GetCssValue("background");
+		String splitTerm = bgcolor.substring(bgcolor.indexOf("(") + 1, bgcolor.indexOf(")"));
+		String color = base.rgbTohexaConvertor_Optional(null, false, splitTerm);
+		base.textCompareEquals(color, Input.selectionHighlightColor, "selected search group get highlighted",
+				"selected search group is not getting highlighted");
+
+		// selecting the subnode under shared group
+		saveSearch.selectNodeUnderSpecificSearchGroup(sharedGroup, newNode);
+		saveSearch.deleteFunctionality();
+
+		// verifying whether the rename option is disabled when shared group is selected
+		saveSearch.selectRootGroupTab(sharedGroup);
+		softAssertion.assertEquals(saveSearch.getRenameButtonDisabled().isElementAvailable(5), true);
+		softAssertion.assertAll();
+		base.passedStep("Rename action should is disabled when user selects any Shared folder");
+
+		// logout
+		login.logout();
 	}
 
 	@BeforeMethod(alwaysRun = true)

@@ -207,9 +207,8 @@ public class BaseClass {
 	}
 
 	public Element getEditButton(String ProjectName) {
-		return driver.FindElementByXPath("//td[text()='"+ProjectName+"']//following-sibling::td//a[text()='Edit']");
+		return driver.FindElementByXPath("//td[text()='" + ProjectName + "']//following-sibling::td//a[text()='Edit']");
 	}
-
 
 	public Element getFunctionalityButton() {
 		return driver.FindElementByXPath("//a[contains(text(),'Functionality')] ");
@@ -259,7 +258,7 @@ public class BaseClass {
 	public Element getWarningsMsgHeader() {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Warning !']");
 	}
-	
+
 	public Element getErrorMsgHeader() {
 		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span[text()='Error !']");
 	}
@@ -267,40 +266,40 @@ public class BaseClass {
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//span[text()='Warning !']/parent::div/p");
 	}
-	
+
 	public Element getSelectSecurityGroupBulk() {
 		return driver.FindElementByXPath("(//select[@name='SecurityGroupID'])[last()]");
 	}
-	
 
-	//add by Aathith
+	// add by Aathith
 	public Element textValue(String text) {
 		return driver.FindElementByXPath("//*[text()=" + text + "]");
 	}
-	
+
 	public Element getBackGroudTaskSuccesMark() {
 		return driver.FindElementByXPath("//i[@class='fa fa-check fa-fw fa-2x']");
 	}
-	
+
 	public Element getBackGroudTaskIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
 	}
-	
+
 	public Element getFirstBackRoundTask() {
 		return driver.FindElementByXPath("(//span[@class='padding-10']/a)[1]");
 	}
+
 	public Element getBullHornIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
 	}
-	
+
 	public Element getRedBullHornIcon() {
 		return driver.FindElementByXPath("//span[@class='activity-dropdown newRed']");
 	}
-	
+
 	public Element getBullIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/following-sibling::b");
 	}
-	
+
 	public ElementCollection getAvailableDomainList() {
 		return driver.FindElementsByXPath("//ul[@id='ddlDomains']//li//a");
 	}
@@ -3202,6 +3201,7 @@ public class BaseClass {
 		String url = driver.getUrl();
 		textCompareEquals(expURL, url, passMsg, failMsg);
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description impersonate Da to pa if Da user is multi domain assigned
@@ -3226,7 +3226,7 @@ public class BaseClass {
 				return getSelectProjectTo().Visible();
 			}
 		}), Input.wait30);
-		
+
 		waitForElement(getAvlDomain());
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
@@ -3243,6 +3243,7 @@ public class BaseClass {
 			}
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectVerify
@@ -3251,13 +3252,13 @@ public class BaseClass {
 	public void verifyCurrentProject(String projectVerify) {
 		String project = getProjectNames().getText().trim();
 		softAssertion.assertEquals(projectVerify, project);
-		passedStep(projectVerify+" is the Current Project");
+		passedStep(projectVerify + " is the Current Project");
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
-	 * @Description This Method used for impersonate to pa to rmu user
-	 *              after bulk user access done
+	 * @Description This Method used for impersonate to pa to rmu user after bulk
+	 *              user access done
 	 */
 	public void impersonatePAtoRMUAfterbulk() throws InterruptedException {
 		waitForElement(getSignoutMenu());
@@ -3298,13 +3299,13 @@ public class BaseClass {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 * 
 	 */
 
-	public void impersonateBasedOnCondition(String role,String domainName,String nonDomainProject) {
+	public void impersonateBasedOnCondition(String role, String domainName, String nonDomainProject) {
 		try {
 			waitForElement(getSignoutMenu());
 			getSignoutMenu().waitAndClick(5);
@@ -3332,8 +3333,8 @@ public class BaseClass {
 			Thread.sleep(3000);
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 			getSaveChangeRole().waitAndClick(10);
-			System.out.println("Impersnated  to : " +role+"");
-			UtilityLog.info("Impersnated  to : " +role+"");
+			System.out.println("Impersnated  to : " + role + "");
+			UtilityLog.info("Impersnated  to : " + role + "");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -3347,50 +3348,49 @@ public class BaseClass {
 			UtilityLog.info(sw.toString());
 		}
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : Wait until file download is complete
 	 */
 	public void waitUntilFileDownload() {
 		File dir = new File(Input.fileDownloadLocation);
-		long size , resize;
-		for(int i =0 ;i<1000;i++) {
-		size=org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
-		System.out.println("Initial Size : "+size);
-		waitTime(6);
-		resize=org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
-		System.out.println("Resized size: "+resize);
+		long size, resize;
+		for (int i = 0; i < 1000; i++) {
+			size = org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
+			System.out.println("Initial Size : " + size);
+			waitTime(6);
+			resize = org.apache.commons.io.FileUtils.sizeOfDirectory(dir);
+			System.out.println("Resized size: " + resize);
 
-		if(size == resize) {
-			System.out.println("File Downloaded Successfully");
-			stepInfo("File Downloaded Successfully");
-			break;			
+			if (size == resize) {
+				System.out.println("File Downloaded Successfully");
+				stepInfo("File Downloaded Successfully");
+				break;
+			}
+
 		}
+	}
 
-	}
-	}
-	
 	/**
-	 * @throws IOException 
+	 * @throws IOException
 	 * @Author Mohan Modified date: 18/11/2021 Description : Read Excel Data and
 	 *         return the value
 	 */
 	public String readExcelDataSheetNameOnly(String filename, int sheetNameNum) throws IOException {
-		
-			String sheetName = null;
-			try {
-				File file = new File(filename);
-				FileInputStream xlFile = new FileInputStream(file);
-				Workbook xlwb = new XSSFWorkbook(xlFile);
-				sheetName = xlwb.getSheetName(sheetNameNum);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} 
-			return sheetName;
-	   }
 
-	
+		String sheetName = null;
+		try {
+			File file = new File(filename);
+			FileInputStream xlFile = new FileInputStream(file);
+			Workbook xlwb = new XSSFWorkbook(xlFile);
+			sheetName = xlwb.getSheetName(sheetNameNum);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return sheetName;
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description verify that background task is completed
@@ -3400,13 +3400,13 @@ public class BaseClass {
 		waitForElement(getBackGroudTaskIcon());
 		getBackGroudTaskIcon().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		if(getBackGroudTaskSuccesMark().isDisplayed()) {
+		if (getBackGroudTaskSuccesMark().isDisplayed()) {
 			passedStep("backgroud task is completed successfully");
-		}else {
+		} else {
 			failedStep("verification failed");
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description click the last completed backgroud task
@@ -3415,12 +3415,12 @@ public class BaseClass {
 		waitForElement(getFirstBackRoundTask());
 		getFirstBackRoundTask().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description verify that notification bull Icon changed to red.
 	 */
-	public void notifyBullIconVerification(){
+	public void notifyBullIconVerification() {
 		driver.waitForPageToBeReady();
 		getBullHornIcon().isElementAvailable(30);
 		waitForElement(getBullHornIcon());
@@ -3431,19 +3431,19 @@ public class BaseClass {
 		String ActualColor = Input.bullHornIconColor;
 		getRedBullHornIcon().isElementAvailable(10);
 		if (ActualColor.equals(ExpectedColor)) {
-		passedStep("BullHorn icon is highlighted red as expected");
+			passedStep("BullHorn icon is highlighted red as expected");
 		} else {
-		failedStep("Bullhorn icon is not red as expected");
+			failedStep("Bullhorn icon is not red as expected");
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @return
 	 * @Description switch to another domain.
 	 */
 	public String switchDomain() {
-		
+
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		String currentProject = getProjectNames().getText().trim();
@@ -3473,107 +3473,155 @@ public class BaseClass {
 		stepInfo("Project Switched : " + getProjectNames().getText());
 		UtilityLog.info("Project Switched : " + getProjectNames().getText());
 		return currentProject;
-	
+
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param text
 	 * @escription verify that expected text is not displayed
 	 */
 	public void notDisplayCheck(String text) {
-		if(!textValue(text).isElementAvailable(1)) {
-			passedStep(text+" is not displayed");
-		}else {
-			failedStep(text+" is displayed");
+		if (!textValue(text).isElementAvailable(1)) {
+			passedStep(text + " is not displayed");
+		} else {
+			failedStep(text + " is displayed");
 		}
 	}
 
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param expURL
+	 * @description : This method verifies page navigation using url
+	 */
+	public void verifyPageNavigation(String expURL) {
+		driver.waitForPageToBeReady();
+		// String expectedURL=Input.url+expURL;
+		String actualURL = driver.getUrl();
+		if (actualURL.contains(expURL)) {
+			passedStep("Navigated to  " + expURL + " Page sucessfully");
+		} else {
+			failedStep("Navigated to  " + actualURL + " Page but expected Page to navigate  is " + expURL + ".");
+		}
+	}
 
-		/**
-		 * @author Iyappan.Kasinathan
-		 * @param expURL
-		 * @description : This method verifies page navigation using url
-		 */
-		public void verifyPageNavigation(String expURL) {
-			driver.waitForPageToBeReady();
-			// String expectedURL=Input.url+expURL;
-			String actualURL = driver.getUrl();
-			if (actualURL.contains(expURL)) {
-				passedStep("Navigated to  " + expURL + " Page sucessfully");
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param expURL
+	 * @description : This method verifies the new tab is opened or not
+	 */
+	public boolean verifyNewTabOpened() {
+		// get window handlers as list
+		List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
+		boolean isTabOpen = true;
+		System.out.println(browserTabs);
+		// switch to new tab
+		if (browserTabs.size() == 1) {
+			stepInfo("Window Id of opened tab" + browserTabs);
+			stepInfo("As per the window ID list retrieved No new Tabs opened and page loaded in existing tab itself");
+		}
+		if (browserTabs.size() > 1) {
+			stepInfo("Window Id of all opened tabs" + browserTabs);
+			stepInfo("New Tabs are  opened .");
+			isTabOpen = false;
+		}
+		return isTabOpen;
+	}
+
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param expURL
+	 * @description : This method is used to switch the tab
+	 */
+	public void switchTab(int SwitchtoWindow) {
+		// get window handlers as list
+		List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
+		System.out.println("Total windows: " + browserTabs.size());
+		// switch to new tab
+		if (browserTabs.size() > 0) {
+			driver.switchTo().window(browserTabs.get(SwitchtoWindow));
+		} else {
+			stepInfo("No new Tabs opened.");
+		}
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param textList
+	 * @Description verify list of text is displayed in webPage
+	 */
+	public void isTextAreAvailableInWebPage(String[] textList) {
+		driver.waitForPageToBeReady();
+		for (String text : textList) {
+			if (text(text).isElementAvailable(5)) {
+				passedStep(text + "  is displayed");
 			} else {
-				failedStep("Navigated to  " + actualURL + " Page but expected Page to navigate  is " + expURL + ".");
+				failedStep(text + " not displayed");
 			}
 		}
+	}
 
-		/**
-		 * @author Iyappan.Kasinathan
-		 * @param expURL
-		 * @description : This method verifies the new tab is opened or not
-		 */
-		public boolean verifyNewTabOpened() {
-			// get window handlers as list
-			List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
-			boolean isTabOpen = true;
-			System.out.println(browserTabs);
-			// switch to new tab
-			if (browserTabs.size() == 1) {
-				stepInfo("Window Id of opened tab" + browserTabs);
-				stepInfo(
-						"As per the window ID list retrieved No new Tabs opened and page loaded in existing tab itself");
-			}
-			if (browserTabs.size() > 1) {
-				stepInfo("Window Id of all opened tabs" + browserTabs);
-				stepInfo("New Tabs are  opened .");
-				isTabOpen = false;
-			}
-			return isTabOpen;
-		}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description Clear bullhorn notifications
+	 */
+	public void clearBullHornNotification() {
+		driver.waitForPageToBeReady();
+		waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(10);
+	}
 
-		/**
-		 * @author Iyappan.Kasinathan
-		 * @param expURL
-		 * @description : This method is used to switch the tab
-		 */
-		public void switchTab(int SwitchtoWindow) {
-			// get window handlers as list
-			List<String> browserTabs = new ArrayList<String>(driver.WindowHandles());
-			System.out.println("Total windows: " + browserTabs.size());
-			// switch to new tab
-			if (browserTabs.size() > 0) {
-				driver.switchTo().window(browserTabs.get(SwitchtoWindow));
-			} else {
-				stepInfo("No new Tabs opened.");
-			}
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param textList
-		 * @Description verify list of text is displayed in webPage
-		 */
-		public void isTextAreAvailableInWebPage(String[] textList) {
-			driver.waitForPageToBeReady();
-			for(String text:textList) {
-				if(text(text).isElementAvailable(5)) {
-					passedStep(text +"  is displayed");
-				}else {
-					failedStep(text+ " not displayed");
+	/**
+	 * @author
+	 * @Description reads excel column data
+	 */
+	public List<String> readExcelColumnData(String filename, String columnHeading) throws Exception {
+
+		List<String> excelData = new ArrayList<String>();
+		File file = new File(filename);
+
+		FileInputStream xlFile = new FileInputStream(file);
+		Workbook xlwb = new XSSFWorkbook(xlFile);
+		Sheet xlSheet = xlwb.getSheetAt(0);
+
+		int numRows = xlSheet.getLastRowNum() + 1;
+		System.out.println("no of Rows : " + numRows);
+		int numCols = xlSheet.getRow(0).getLastCellNum();
+		System.out.println("NO of columns : " + numCols);
+
+		for (int i = 0; i < numCols; i++) {
+			String columnValue = xlSheet.getRow(0).getCell(i).getStringCellValue();
+			System.out.println(columnValue);
+
+			if (columnValue.equals(columnHeading)) {
+				for (int j = 1; j < numRows; j++) {
+					String currentValue = xlSheet.getRow(j).getCell(i).getStringCellValue();
+					System.out.println(currentValue);
+					excelData.add(currentValue);
 				}
+				
+                  break;
 			}
 		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @Description Clear bullhorn notifications
-		 */
-		public void clearBullHornNotification() {
-			driver.waitForPageToBeReady();
-			waitForElement(getBullHornIcon());
-			getBullHornIcon().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			waitForElement(getBullHornIcon());
-			getBullHornIcon().waitAndClick(10);
+		return excelData;
+
+	}
+
+	/**
+	 * @author
+	 * @Description compare list with list using contains
+	 */
+	public void compareListViaContains(List<String> baseList, List<String> compareList) {
+		for (int i = 0; i < baseList.size(); i++) {
+			if (baseList.get(i).contains(compareList.get(i))) {
+				Assert.assertEquals(true, true);
+			} else {
+				failedStep("Base String doesn't contains compare String");
+			}
 		}
+	}
 
 }
