@@ -246,6 +246,9 @@ public class TestData {
 	public String nativeLoadFile2;
 	public String textLoadFile2;
 	public String defaultNewLineDelimiter;
+	public String is;
+	public String range;
+	public String DocDateDateOnly;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

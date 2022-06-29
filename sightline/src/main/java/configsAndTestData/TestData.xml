@@ -73,6 +73,9 @@
 	<nativeLoadFile2>DAT4_STC_NativesEmailData NEWID.lst</nativeLoadFile2>
 	<textLoadFile2>DAT4_STC_TextEmailData NEWID.lst</textLoadFile2>
 	<defaultNewLineDelimiter>ASCII(59)</defaultNewLineDelimiter>
+	<is>IS</is>
+	<range>RANGE</range>
+	<DocDateDateOnly>DocDateDateOnly</DocDateDateOnly>
 	
 
 	<!-- Production path for redaction master doc -->

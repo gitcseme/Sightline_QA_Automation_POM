@@ -363,6 +363,9 @@ public class Input {
 	public static String nativeLoadFile2;
 	public static String textLoadFile2;
 	public static String defaultNewLineDelimiter;
+	public static String is;
+	public static String range;
+	public static String DocDateDateOnly;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1140,6 +1143,9 @@ public class Input {
 		nativeLoadFile2 = testData.getNativeLoadFile2();
 		textLoadFile2 = testData.getTextLoadFile2();
 		defaultNewLineDelimiter = testData.getDefaultNewLineDelimiter();
+		is = testData.getIs();
+		range = testData.getRange();
+		DocDateDateOnly = testData.getDocDateDateOnly();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
