@@ -83,7 +83,7 @@ public class Reports_Regression1 {
 		savedSearch = new SavedSearch(driver);
 		reportPage = new ReportsPage(driver);	
 	}
-	@Test(description ="RPMXCON-48789",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-48789",enabled = true, groups = { "regression" })
 	public void verifyDocCount_ABM() throws Exception {
 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 	String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
@@ -136,7 +136,7 @@ public class Reports_Regression1 {
 	baseClass.passedStep("Sucessfully Validated data on Advanced batch management report when Domain and Project Admin associated to Assignments of a project");
 	loginPage.logout();
 	}
-	@Test(description ="RPMXCON-56807",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-56807",enabled = true, groups = { "regression" })
 	public void verifyABM_BG_Notification() throws Exception {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		String SaveSaerchName ="ABMSaveSearch" + UtilityLog.dynamicNameAppender();
@@ -208,7 +208,7 @@ public class Reports_Regression1 {
 		AbmReportPage.generateABM_BackGroundReportGeneration(SaveSaerchName,SaveSaerch_docLevel, assignmentName1,assignmentName,false);
 		loginPage.logout();
 	}
-	@Test(description ="RPMXCON-48706",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-48706",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyReviewerCountsReportDayHour(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		LoginPage lp = new LoginPage(driver);

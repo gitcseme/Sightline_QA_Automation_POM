@@ -44,7 +44,7 @@ public class DocumentAuditReport_Regression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-56594",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-56594",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void DocAuditPageDisplay(String username, String password, String role) throws InterruptedException {
 		LoginPage lp = new LoginPage(driver);
 		bc.stepInfo("Test case Id: RPMXCON-56594");
@@ -59,7 +59,7 @@ public class DocumentAuditReport_Regression {
 		lp.logout();
 		
 	}
-	@Test(description ="RPMXCON-48781",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-48781",dataProvider = "Users_PARMU", groups = { "regression" })
 	  public void validateDocAuditBulkTag(String username, String password, String role) throws InterruptedException {
 			bc = new BaseClass(driver);
 			lp = new LoginPage(driver);

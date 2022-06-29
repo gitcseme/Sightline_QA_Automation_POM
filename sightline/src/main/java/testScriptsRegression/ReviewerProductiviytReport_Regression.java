@@ -50,7 +50,7 @@ public class ReviewerProductiviytReport_Regression {
  * @throws InterruptedException
  * @throws AWTException
  */
-	@Test(description ="RPMXCON-56335",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-56335",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void reviewerProdPageDisplay(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		LoginPage lp = new LoginPage(driver);
@@ -64,7 +64,7 @@ public class ReviewerProductiviytReport_Regression {
 		lp.logout();
 	}
 	
-	@Test(description ="RPMXCON-48733",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-48733",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyDistributedCount(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		LoginPage lp = new LoginPage(driver);
@@ -79,7 +79,7 @@ public class ReviewerProductiviytReport_Regression {
 		rp.verifyColumnDisplay(rp.getTableHeader("Distributed Docs Completed by This Reviewer"),"Distributed Docs Completed by This Reviewer");
 		lp.logout();
 	}
-	@Test(description ="RPMXCON-48734",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-48734",dataProvider = "Users_PARMU", groups = { "regression" })
 	public void verifyTotalDocsCount(String username, String password, String role)
 			throws InterruptedException, AWTException {
 		LoginPage lp = new LoginPage(driver);

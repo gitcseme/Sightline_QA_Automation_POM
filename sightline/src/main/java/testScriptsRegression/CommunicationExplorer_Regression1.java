@@ -47,7 +47,7 @@ public class CommunicationExplorer_Regression1 {
 
 	}
 
-	@Test(description ="RPMXCON-56969",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1, enabled = true)
+	@Test(description ="RPMXCON-56969",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void verifyReportGeneration_searches(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56969");
@@ -91,7 +91,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @description Verify that Exclude filter functionality works properly when TAG
 	 *              name contains word between on Communications Explorer screen
 	 */
-	@Test(description ="RPMXCON-54955",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2, enabled = true)
+	@Test(description ="RPMXCON-54955",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyExcludeFiltersFunctionality_ComMapExp(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-54955");
@@ -138,7 +138,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @throws InterruptedException
 	 * @description To verify that Users are able to Save Communication Map report.
 	 */
-	@Test(description ="RPMXCON-56415",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 3, enabled = true)
+	@Test(description ="RPMXCON-56415",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifySaveFunctionality_ComMapExp(String username, String password, String role)
 			throws InterruptedException {
 		String reportName = "IndiumReport" + Utility.dynamicNameAppender();
@@ -164,7 +164,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @description Validate list for Tags in on page filter on Communication
 	 *              Explorer report
 	 */
-	@Test(description ="RPMXCON-56918",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4, enabled = true)
+	@Test(description ="RPMXCON-56918",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyFiltersFunctionality_ComMapExp(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56918");
@@ -197,7 +197,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @description Validate on Page filter by Tag on Communication Explorer (same
 	 *              documents are part of multiple tags)
 	 */
-	@Test(description ="RPMXCON-56917",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5, enabled = true)
+	@Test(description ="RPMXCON-56917",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyIncludeFiltersFunctionality_ComMapExp(String username, String password, String role)
 			throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56917");
@@ -256,7 +256,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @description Validate on page tag filter for Communication Explorer(few
 	 *              documents are not part of any Tag)
 	 */
-	@Test(description ="RPMXCON-56916",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 6, enabled = true)
+	@Test(description ="RPMXCON-56916",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyFilters_ComMapExp(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56916");
 		bc.stepInfo("Validate on page tag filter for Communication Explorer(few documents are not part of any Tag)");
@@ -318,7 +318,7 @@ public class CommunicationExplorer_Regression1 {
 	 * @description To verify that Users are able to View In Doc View option is
 	 *              displayed in Action dropdown in Comm Map
 	 */
-	@Test(description ="RPMXCON-56414",dataProvider = "Users_PARMU", groups = { "regression" }, priority = 7, enabled = true)
+	@Test(description ="RPMXCON-56414",dataProvider = "Users_PARMU", groups = { "regression" }, enabled = true)
 	public void VerifyViewInDocView(String username, String password, String role) throws InterruptedException {
 		bc.stepInfo("Test case Id: RPMXCON-56414");
 		bc.stepInfo("To verify that Users are able to  View In Doc View option is displayed in"
