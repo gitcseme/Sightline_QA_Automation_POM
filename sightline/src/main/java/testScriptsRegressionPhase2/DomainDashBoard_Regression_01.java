@@ -422,7 +422,7 @@ public class DomainDashBoard_Regression_01 {
 		String[] availableColum = {"PROJECT NAME", "STATUS","TOTAL UTILIZED DISK SIZE (GB)","TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
 		dash.AddOrRemoveColum(colums);
 		for(String availablestatus:availableColum) {
-			base.visibleCheck(availablestatus);
+			dash.isTitleIsAvailable(availablestatus);
 		}
 		
 		//login as sa
@@ -433,7 +433,7 @@ public class DomainDashBoard_Regression_01 {
 		
 		dash.AddOrRemoveColum(colums);
 		for(String availablestatus:availableColum) {
-			base.visibleCheck(availablestatus);
+			dash.isTitleIsAvailable(availablestatus);
 		}
 		
 		base.passedStep("Validated column customization of project grid on Domain dashboard screen (Domain Admin login and System Admin impersonate as Domain Admin)");
@@ -463,13 +463,13 @@ public class DomainDashBoard_Regression_01 {
 		String[] availableColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
 		dash.AddOrRemoveColum(colums);
 		for(String availablestatus:availableColum) {
-			base.visibleCheck(availablestatus);
+			dash.isTitleIsAvailable(availablestatus);
 		}
 		
 		base.switchDomain();
 		dash.AddOrRemoveColum(colums);
 		for(String availablestatus:availableColum) {
-			base.visibleCheck(availablestatus);
+			dash.isTitleIsAvailable(availablestatus);
 		}
 		
 		base.passedStep("Validate column customization of project grid on Domain dashboard screen after changing to different Domain");
