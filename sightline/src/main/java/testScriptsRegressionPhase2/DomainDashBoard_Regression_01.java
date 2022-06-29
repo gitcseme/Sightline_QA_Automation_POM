@@ -3,6 +3,7 @@ package testScriptsRegressionPhase2;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -25,6 +26,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.UserManagement;
@@ -50,6 +52,7 @@ public class DomainDashBoard_Regression_01 {
 	SoftAssert softAssertion;
 	BatchPrintPage batchPrint;
 	DomainDashboard dash;
+	ProjectPage project;
 	
 	@BeforeClass(alwaysRun = true)
 
@@ -470,6 +473,286 @@ public class DomainDashBoard_Regression_01 {
 		}
 		
 		base.passedStep("Validate column customization of project grid on Domain dashboard screen after changing to different Domain");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify customized column list is saved for selected entity but not for all entities of that user
+	 */
+	@Test(description = "RPMXCON-53144",enabled = true, groups = {"regression" })
+	public void verifyCustomizedColumNotForAllEntity()  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53144");
+		base.stepInfo("Verify customized column list is saved for selected entity but not for all entities of that user");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
+		String[] availableColum = {"PROJECT NAME","STATUS","CORPORATE CLIENT","CREATED DATE","CREATED BY","TOTAL UTILIZED DISK SIZE (GB)",
+				"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		String[] customColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.AddOrRemoveColum(colums);
+		driver.waitForPageToBeReady();
+		dash.isAllColumsAreAvailable(availableColum);
+		dash.getSavebtn().waitAndClick(10);
+		
+		//verify for another domain
+		String previousproject = base.switchDomain();
+		base.isTextAreNotAvailableInWebPage(customColum);
+		
+		//verify for previous domain
+		base.selectproject(previousproject);
+		dash.isAllColumsAreAvailable(availableColum);
+		
+		//restore default
+		dash.AddOrRemoveColum(colums);
+		dash.getSavebtn().waitAndClick(10);
+		
+		base.passedStep("Verified customized column list is saved for selected entity but not for all entities of that user");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify column order is not customizable
+	 */
+	@Test(description = "RPMXCON-53147",enabled = true, groups = {"regression" })
+	public void verifyColumnOrderNotCustomizable()  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53147");
+		base.stepInfo("To verify column order is not customizable");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"ProjectLabel","IsActive","LastUpdatedOn","NoOfCustodian","NoOfPublishedDocument",
+				"NoOfReleasedDocument", "CorpClient", "ProjectCreatedOn", "ProjectCreatedBy", "TotalUtilizedDiskSize",
+				"NoOfIngestion","NoOfSecurityGroup","Firm"};
+		String[] availableColm = {"FIRM", "SECURITY GROUPS (#)", "INGESTIONS (#)"};
+		
+		//remove exciting colum and add new colum in non sequencing order
+		dash.AddOrRemoveColum(colums);
+		List<String> tablehearvalues =dash.getColumValues(dash.getTableHeader());
+		
+		//verify colum sequnce is not costomizable
+		for(int i=0;i<3;i++) {
+			if(!availableColm[i].equals(tablehearvalues.get(i))) {
+				System.out.println(availableColm[i]+" "+tablehearvalues.get(i));
+				base.failedStep(availableColm[i]+"colume order verification failed"+tablehearvalues.get(i));
+			}
+		}
+		base.passedStep("Whichever column is added is in same sequence as seen on settings tab pop up");
+		
+		base.passedStep("To verify column order is not customizable");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate customize column for Project Summary grid on Domain Dashboard screen 
+	 * (Domain Admin login and System Admin impersonate as Domain Admin)
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53151",enabled = true, groups = {"regression" })
+	public void verifyCostimizeColum() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53151");
+		base.stepInfo("Validate customize column for Project Summary grid on Domain Dashboard screen "
+				+ "(Domain Admin login and System Admin impersonate as Domain Admin)");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"ProjectLabel","IsActive","LastUpdatedOn","NoOfCustodian","NoOfPublishedDocument",
+				"NoOfReleasedDocument", "CorpClient", "ProjectCreatedOn", "ProjectCreatedBy", "TotalUtilizedDiskSize",
+				"NoOfIngestion","NoOfSecurityGroup","Firm"};
+		String[] availableColm = {"FIRM", "SECURITY GROUPS (#)", "INGESTIONS (#)"};
+		
+		//remove exciting colum and add new colum in non sequencing order
+		dash.AddOrRemoveColum(colums);
+		dash.isAllColumsAreAvailable(availableColm);
+		
+		//check for another domain
+		base.switchDomain();
+		dash.AddOrRemoveColum(colums);
+		dash.isAllColumsAreAvailable(availableColm);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.da1userName);
+		
+		base.impersonateSAtoDA(Input.domainName);
+		dash.AddOrRemoveColum(colums);
+		dash.isAllColumsAreAvailable(availableColm);
+		
+		base.passedStep("Validated customize column for Project Summary grid on Domain Dashboard screen "
+				+ "(Domain Admin login and System Admin impersonate as Domain Admin)");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate customize column retains column selection even after performing any actions on the grid 
+	 * (Domain Admin login and System Admin impersonate as Domain Admin)
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53152",enabled = true, groups = {"regression" })
+	public void verifyCostimizeColumRatainAfterPerformAnyAction() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53152");
+		base.stepInfo("Validate customize column retains column selection even after performing any actions on the grid "
+				+ "(Domain Admin login and System Admin impersonate as Domain Admin)");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a Da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		
+		String[] colums = {"ProjectLabel","IsActive","LastUpdatedOn","NoOfCustodian","NoOfPublishedDocument",
+				"NoOfReleasedDocument", "CorpClient", "ProjectCreatedOn", "ProjectCreatedBy", "TotalUtilizedDiskSize",
+				"NoOfIngestion","NoOfSecurityGroup","Firm"};
+		String[] availableColm = {"FIRM", "SECURITY GROUPS (#)", "INGESTIONS (#)"};
+		
+		//remove exciting colum and add new colum in non sequencing order
+		dash.AddOrRemoveColum(colums);
+		dash.isAllColumsAreAvailable(availableColm);
+		dash.getExportbtn().waitAndClick(10);
+		dash.isAllColumsAreAvailable(availableColm);
+		base.stepInfo("After perform action also costomize colum retain");
+		
+		//login as SA
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		base.impersonateSAtoDA(Input.domainName);
+		
+		dash.AddOrRemoveColum(colums);
+		dash.isAllColumsAreAvailable(availableColm);
+		dash.getExportbtn().waitAndClick(10);
+		dash.isAllColumsAreAvailable(availableColm);
+		base.stepInfo("After perform action also costomize colum retain");
+		
+		base.passedStep("Validated customize column retains column selection even after performing any actions on the grid "
+				+ "(Domain Admin login and System Admin impersonate as Domain Admin)");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify Inactive projects should not display in active users widget
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53153",enabled = true, groups = {"regression" })
+	public void verifyInactiveProjectNotDisplayedInActiveUser() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53153");
+		base.stepInfo("Verify Inactive projects should not display in active users widget");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		project = new ProjectPage(driver);
+		dash = new DomainDashboard(driver);
+		
+		String projectName = "AAA"+Utility.dynamicNameAppender();
+		if(!dash.isInactiveProjectAvailable()) {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+			base.clearBullHornNotification();
+			project.navigateToProductionPage();
+			project.AddDomainProject(projectName, Input.domainName);
+			project.waitTillProjectCreated();
+			project.filterTheProject(projectName);
+			project.inActiveProject(projectName);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		}
+		
+		String inActiveProjectName = dash.getInactiveProjectName();
+		if(!dash.getActiveprojectTableValue(inActiveProjectName).isElementAvailable(1)) {
+			base.passedStep("Inactive projects is not show in list of projects on Active users widget");
+		}else {
+			base.failedStep("project is displayed");
+		}
+		
+		base.passedStep("Verified Inactive projects should not display in active users widget");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 29-06-22
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate project summary grid columns on Domain dashboard
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53154",enabled = true, groups = {"regression" })
+	public void validateProjectGridColum() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53154");
+		base.stepInfo("Validate project summary grid columns on Domain dashboard");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		project = new ProjectPage(driver);
+		dash = new DomainDashboard(driver);
+		
+		String projectName = "AAA"+Utility.dynamicNameAppender();
+		if(!dash.isInactiveProjectAvailable()) {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+			base.clearBullHornNotification();
+			project.navigateToProductionPage();
+			project.AddDomainProject(projectName, Input.domainName);
+			project.waitTillProjectCreated();
+			project.filterTheProject(projectName);
+			project.inActiveProject(projectName);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		}
+		String[] availableColm = {"PROJECT NAME","STATUS","DATA AS OF (UTC)","CUSTODIANS (#)",
+				"DOCS PUBLISHED (#)","DOCS RELEASED (#)","CORPORATE CLIENT","CREATED DATE",
+				"CREATED BY","TOTAL UTILIZED DISK SIZE (GB)"};
+		
+		dash.isAllColumsAreAvailable(availableColm);
+		dash.isActiveInactiveListed();
+		
+		base.passedStep("Validate project summary grid columns on Domain dashboard");
 		loginPage.logout();
 	}
 	

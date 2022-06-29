@@ -3575,5 +3575,19 @@ public class BaseClass {
 			waitForElement(getBullHornIcon());
 			getBullHornIcon().waitAndClick(10);
 		}
-
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param textList
+		 * @Description verify that list of text are not available in webPage
+		 */
+		public void isTextAreNotAvailableInWebPage(String[] textList) {
+			driver.waitForPageToBeReady();
+			for(String text:textList) {
+				if(!textValue(text).isElementAvailable(1)) {
+					passedStep(text +"  is displayed");
+				}else {
+					failedStep(text+ " not displayed");
+				}
+			}
+		}
 }

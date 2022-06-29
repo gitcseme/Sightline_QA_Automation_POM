@@ -157,6 +157,14 @@ public class ProjectPage {
 	public Element getColumValue(int colum) {
 		return driver.FindElementByXPath("//*[@id='ProjectDataTable']/tbody/tr/td["+colum+"]");
 	}
+	
+	public Element getEditBtn() {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary btn-xs' and text()='Edit']");
+	}
+	
+	public Element getIsProjectActiveBtn() {
+		return driver.FindElementByXPath("//i[@id='Isactive']");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -654,4 +662,34 @@ public class ProjectPage {
 	 	getProjectFilterButton().Click(); 	 
 	 	
    }
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectName
+	 * @Description inactive a project
+	 */
+	public void inActiveProject(String projectName) {
+		filterTheProject(projectName);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getEditBtn());
+		getEditBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getIsProjectActiveBtn());
+		getIsProjectActiveBtn().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description wait till get notification for project creation
+	 */
+	public void waitTillProjectCreated() {
+		if(bc.getRedBullHornIcon().isElementAvailable(300)) {
+			bc.passedStep("project was created and notification received");
+		}else {
+			bc.failedStep("notification still not received,it's get too much time");
+		}
+	}
 }

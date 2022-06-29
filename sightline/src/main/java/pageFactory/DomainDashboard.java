@@ -11,6 +11,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -19,7 +21,7 @@ import testScriptsSmoke.Input;
 public class DomainDashboard {
 	 Driver driver;
 	 BaseClass base;
-	 
+	 SoftAssert softAssertion;
 	
 	 
 	 public Element getDataRefresh_info(){ return driver.FindElementByXPath("//*[@id='domainDashboardRefreshTime']"); }
@@ -70,13 +72,45 @@ public class DomainDashboard {
 	public Element getSavebtn() {
 		return driver.FindElementByXPath("//i[@id='domainDashboardSaveReport']");
 	}
+	
+	public Element getInactiveProjectToggle() {
+		return driver.FindElementByXPath("//input[@id='showDeactiveProjects']/../i");
+	}
+	
+	public Element getActiveprojectTableValue(String text) {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//*[contains(text(),'"+text+"')]");
+	}
 
+	public Element getToatalProjectCount() {
+		return driver.FindElementByXPath("//div[text()='TOTAL PROJECTS']/preceding-sibling::div");
+	}
+	
+	public Element getActiveProjectCount() {
+		return driver.FindElementByXPath("//div[text()='ACTIVE PROJECTS']/preceding-sibling::div");
+	}
+	
+	public Element getTableValue(int row, int colum){
+		 return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/tbody/tr["+row+"]/td["+colum+"]");
+	}
+	
+	public Element getNextBtn() {
+		return driver.FindElementByXPath("//a[text()='Next']");
+	}
+	
+	public Element getNextbuttonDisabledStatus() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']");
+	}
+	
+	public Element getOneTableHeader(int colum) {
+		return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/thead/tr/th["+colum+"]");
+	}
 	 
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
 	        //this.driver.getWebDriver().get(Input.url+ "DomainDashboard/DomainDashboard");
 	        base = new BaseClass(driver);
+	        softAssertion = new SoftAssert();
 	        //This initElements method will create all WebElements
 	        //PageFactory.initElements(driver.getWebDriver(), this);
 	  
@@ -220,5 +254,101 @@ public class DomainDashboard {
 			 waitForFileDownload();
 		}
 	 }
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param colums
+	  * @Description verify the column available in domain dashboard table
+	  */
+	 public void isAllColumsAreAvailable(String[] colums) {
+		 List<String> tableheadervalues = getColumValues(getTableHeader());
+		 int n = colums.length;
+		 for(int i=0;i<n;i++) {
+			 softAssertion.assertEquals(colums[i], tableheadervalues.get(i));
+		 }
+		 softAssertion.assertAll();
+		 base.passedStep("All colums are available as expected sequance");
+	 }
 	    
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return
+	  * @Description verify that is inactive project is available in the domain
+	  */
+	 public boolean isInactiveProjectAvailable() {
+		 int total = Integer.parseInt(getToatalProjectCount().getText().trim());
+		 int active = Integer.parseInt(getActiveProjectCount().getText().trim());
+		 if(total>active)
+			 return true;
+		 return false;
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return inactive project name
+	  * @Description get name inactive project name
+	  */
+	 public String getInactiveProjectName() {
+		 
+		 String projectname = null;
+		 getInactiveProjectToggle().waitAndClick(10);
+		 int n = base.getIndex(getTableHeader(), "STATUS");
+		 getOneTableHeader(n).waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 base.waitForElementCollection(getColumValue(n));
+		 List<WebElement> element = getColumValue(n).FindWebElements();
+		 int i = 1;
+		 driver.waitForPageToBeReady();
+		 for(WebElement ele : element) {
+			 driver.waitForPageToBeReady();
+			 String isActive = ele.getText();
+			 if(isActive.equals("Inactive")) {
+				 int m =base.getIndex(getTableHeader(), "PROJECT NAME");
+				 projectname = getTableValue(i, m).getText().trim();
+			 }
+			 i++;
+		 }
+		 if(projectname==null) {
+			 if(!getNextbuttonDisabledStatus().isElementAvailable(1)) {
+				 getNextBtn().waitAndClick(10);
+				 getOneTableHeader(n).waitAndClick(10);
+				 driver.waitForPageToBeReady();
+				 getInactiveProjectName();
+			 }else {
+				 base.failedStep("verification failed");
+			 }
+		 }
+		 return projectname;
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Descrioption verify that is inactive and active project are available in the list
+	  */
+	 public void isActiveInactiveListed() {
+		 
+		 getInactiveProjectToggle().waitAndClick(10);
+		 int n = base.getIndex(getTableHeader(), "STATUS");
+		 getOneTableHeader(n).waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 base.waitForElementCollection(getColumValue(n));
+		 List<WebElement> element = getColumValue(n).FindWebElements();
+		 driver.waitForPageToBeReady();
+		 for(WebElement ele : element) {
+			 driver.waitForPageToBeReady();
+			 String isActive = ele.getText();
+			 if(isActive.equals("Inactive")) {
+				 base.passedStep("inactive project is listed");
+				 break;
+			 }
+		 }
+		 for(WebElement ele : element) {
+			 driver.waitForPageToBeReady();
+			 String isActive = ele.getText();
+			 if(isActive.equals("Active")) {
+				 base.passedStep("Active project is listed");
+				 break;
+			 }
+		 }
+	 }
+
 }
