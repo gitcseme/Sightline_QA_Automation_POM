@@ -45,7 +45,8 @@ public class BasicSearch_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		Input in = new Input();
+    	in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -372,7 +373,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-57446,RPMXCON-57445,RPMXCON-57443,RPMXCON-57442,RPMXCON-57441,RPMXCON-57440,RPMXCON-57439,RPMXCON57438,RPMXCON-57437,RPMXCON-57436,RPMXCON-57433,RPMXCON-57430,RPMXCON-57429,RPMXCON-57427,RPMXCON-57426",dataProvider = "query", groups = { "regression" })
+	@Test(description ="RPMXCON-57446,RPMXCON-57445,RPMXCON-57443,RPMXCON-57442,RPMXCON-57441,RPMXCON-57440,RPMXCON-57439,RPMXCON-57438,RPMXCON-57437,RPMXCON-57436,RPMXCON-57433,RPMXCON-57430,RPMXCON-57429,RPMXCON-57427,RPMXCON-57426",dataProvider = "query", groups = { "regression" })
 	public void verifyBasicSearch2(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
 		// login as PA
 
@@ -447,7 +448,7 @@ public class BasicSearch_Regression1 {
 	 *         double quotes.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-46991`",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-46991",enabled = true, groups = { "regression" })
 	public void verifyMetadataAutoSuggest() throws InterruptedException {
 		String expectedFileName = "\"Scott Tholan\"";
 		String metaDataField = "EmailToAddresses";
