@@ -11893,6 +11893,7 @@ public class SessionSearch {
 
 	}
 
+
 	/**
 	 * @Author Jeevitha
 	 * 
@@ -11927,6 +11928,61 @@ public class SessionSearch {
 		} else {
 			base.failedStep("Navigates to wrong Page");
 		}
+
+
+	/**
+	 * @author: Arun Created Date: 29/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will navigate to perform metadata search in advanced search 
+	 */
+	public void navigateToAdvancedMetaDataSearch() {
+		navigateToSessionSearchPageURL();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedSearchLink().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedSearchLink().waitAndClick(5);
+		base.stepInfo("Navigated to advanced search");
+		getContentAndMetaDatabtn().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvanceSearch_MetadataBtn().Visible();
+			}
+		}), Input.wait30);
+		getAdvanceSearch_MetadataBtn().waitAndClick(5);
+		
+	}
+	/**
+	 * @author: Arun Created Date: 29/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify options available on DocDateDateOnly field
+	 */
+	public void verifyOptionsDisplayForDocDateDateOnlyField() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectMetaData().Visible();
+			}
+		}), Input.wait30);
+		getSelectMetaData().selectFromDropdown().selectByVisibleText(Input.DocDateDateOnly);
+		base.stepInfo("Verifying the options available for 'DocDateDateOnly'");
+		 List<WebElement> availableOptions =getMetaOption().selectFromDropdown().getOptions();
+		int size = availableOptions.size();
+		for(int i=0;i<size;i++) {
+			String option = availableOptions.get(i).getAttribute("value");
+			if(option.equalsIgnoreCase(Input.is)) {
+				if(getMetaDataSearchText1().isElementAvailable(10) &&
+						!getMetaDataSearchText2().isElementAvailable(10)) {
+					base.passedStep("'IS' option available with single textbox");
+				}
+			}
+			if(option.equalsIgnoreCase(Input.range)) {
+				getMetaOption().selectFromDropdown().selectByVisibleText(Input.range);
+				if(getMetaDataSearchText1().isElementAvailable(10) &&
+						getMetaDataSearchText2().isElementAvailable(10)) {
+					base.passedStep("'RANGE' option available with two textboxes");
+				}
+			}
+		}
+		
 
 	}
 }
