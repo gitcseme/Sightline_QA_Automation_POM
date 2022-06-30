@@ -98,7 +98,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that for the saved template under TIFF/PDF component
 	 *              and Available Fields in Slip Sheets should be disabled.
 	 */
-	@Test(description="RPMXCON-56134",enabled=true,groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-56134",enabled=true,groups = { "regression" })
 	public void verifyingTiffComponentsInManageTemplate() throws InterruptedException, AWTException {
 		UtilityLog.info(Input.prodPath);
 
@@ -120,7 +120,7 @@ public class Production_Regression1 {
 	 * @Description: Verify the error message for TIFF/PDF component when 'Enable
 	 *               Tech issue doc without tag or text'.
 	 */
-	@Test(description="RPMXCON-56102",enabled=true,groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-56102",enabled=true,groups = { "regression" })
 	public void verifyingTiffComponentsWithoutTagOrText() throws InterruptedException, AWTException {
 
 		ProductionPage page = new ProductionPage(driver);
@@ -155,7 +155,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for TIFF/PDF component when 'don't
 	 *              add any text in specify redaction text section'.
 	 */
-	@Test(description="RPMXCON-56107",enabled=true,groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-56107",enabled=true,groups = { "regression" })
 	public void verifyingTiffComponentsWithoutTextInSpecifyRedactionSection()
 			throws InterruptedException, AWTException {
 		ProductionPage page = new ProductionPage(driver);
@@ -191,7 +191,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for TIFF/PDF component when 'Enable
 	 *              redaction without selecting redaction tag'.
 	 */
-	@Test(description="RPMXCON-56106",enabled=true,groups = { "regression" }, priority = 4)
+	@Test(description="RPMXCON-56106",enabled=true,groups = { "regression" })
 	public void verifyingTiffComponentsWithoutTagInSpecifyRedactionSection() throws InterruptedException, AWTException {
 		base.stepInfo("Test case Id: No:RPMXCON_56106 -Production Sprint 04");
 		base.stepInfo(
@@ -225,7 +225,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding without tag and with text' .
 	 */
-	@Test(description="RPMXCON-56105",enabled=true,groups = { "regression" }, priority =5 )
+	@Test(description="RPMXCON-56105",enabled=true,groups = { "regression" } )
 	public void verifyTiffSectionSpecifyBrandingWithoutTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56105 -Production Sprint 04");
@@ -253,7 +253,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding with tag and without text'.
 	 */
-	@Test(description="RPMXCON-56104",enabled=true,groups = { "regression" }, priority =6 )
+	@Test(description="RPMXCON-56104",enabled=true,groups = { "regression" } )
 	public void verifyTiffSectionSpecifyBrandingWithoutText() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56104 -Production Sprint 04");
@@ -292,7 +292,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for TIFF/PDF component when 'Specify
 	 *              branding without tag and text'.
 	 */
-	@Test(description="RPMXCON-56103",enabled=true,groups = { "regression" }, priority =7 )
+	@Test(description="RPMXCON-56103",enabled=true,groups = { "regression" })
 	public void TiffSectionSpecifyBrandingWithoutTagAndText() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56103 -Production Sprint 04");
@@ -323,7 +323,7 @@ public class Production_Regression1 {
 	 *              Produced Documents' placeholder then that Tag will available
 	 *              again to select for branding.
 	 */
-	@Test(description="RPMXCON-56131",enabled=true,groups = { "regression" }, priority =8 )
+	@Test(description="RPMXCON-56131",enabled=true,groups = { "regression" } )
 	public void verifyTiffSectionSelectingNativeProducedDocsAndBrandingTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56131 -Production Sprint 04");
@@ -360,7 +360,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that if Tag is already specified with Placeholder then
 	 *              that Tag will available again to select for branding
 	 */
-	@Test(description="RPMXCON-56127",enabled=true,groups = { "regression" }, priority =9 )
+	@Test(description="RPMXCON-56127",enabled=true,groups = { "regression" })
 	public void verifyTagSelectedPrivilegedTagEnableBandingTag() throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON_56127 -Production Sprint 04");
@@ -401,7 +401,7 @@ public class Production_Regression1 {
 	 * @Description : Verify the error message for MP3 component when 'Enable burn
 	 *              redaction without selecting redaction tag'.
 	 */
-	@Test(description="RPMXCON-56108",enabled=true,groups = { "regression" }, priority =10 )
+	@Test(description="RPMXCON-56108",enabled=true,groups = { "regression" })
 	public void VerifyMsgByEnableBurnRedactionWithoutSelectRedactionTag() throws Exception {
 
 		base.stepInfo("Test case Id: No:RPMXCON_56108 -Production Sprint 04");
@@ -432,7 +432,7 @@ public class Production_Regression1 {
 	 *              section and document is redacted then selected Metadata should
 	 *              not be displayed on DAT.
 	 */
-	@Test(description="RPMXCON-48500",enabled=true,groups = { "regression" }, priority =11 )
+	@Test(description="RPMXCON-48500",enabled=true,groups = { "regression" } )
 	public void generateProductionWithoutSelectedMetadata() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -522,7 +522,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that if annotation layer option is selected and non
 	 *              audio document is redacted then native should not copied.
 	 */
-	@Test(description="RPMXCON-48491",enabled=true,groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-48491",enabled=true,groups = { "regression" })
 	public void generateProductionWithNonAudioDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -607,7 +607,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects Tiff.
 	 */
-	@Test(description="RPMXCON-48312",enabled=true,groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-48312",enabled=true,groups = { "regression" })
 	public void verifyingRedactedTextPrintedOnBurnRedactionSelectingTIFF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -697,7 +697,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that redaction text should be printed on burned
 	 *              redaction if user selects only PDF.
 	 */
-	@Test(description="RPMXCON-48310",enabled=true,groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-48310",enabled=true,groups = { "regression" })
 	public void verifyingRedactedTextPrintedOnSelectingPDF() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -785,7 +785,7 @@ public class Production_Regression1 {
 	 * @Description :Verify that user can export only after pre-gen check is
 	 *              completed.
 	 */
-	@Test(description="RPMXCON-48600",enabled=true,groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-48600",enabled=true,groups = { "regression" })
 	public void verifyExportButtonEnabledAfterPreGenCompletion() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -882,7 +882,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that in Advanced Search, search against uncommit
 	 *              Production should not display any results.
 	 */
-	@Test(description="RPMXCON-49218",enabled=true,groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-49218",enabled=true,groups = { "regression" })
 	public void verifyCommitAndUnCommitProductionResults() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1002,7 +1002,7 @@ public class Production_Regression1 {
 	 *              branding text should display on 'Preview' document and on
 	 *              produced documents also.
 	 */
-	@Test(description="RPMXCON-49998",enabled=true,groups = { "regression" }, priority = 17)
+	@Test(description="RPMXCON-49998",enabled=true,groups = { "regression" })
 	public void defaultBrandingTextDisplayedInPrieviewDocs() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1087,7 +1087,7 @@ public class Production_Regression1 {
 	 * @Description :Verify that if 'AllProductionBatesRanges' is non-searchable for
 	 *              existing project, user cannot make it as Searchable field.
 	 */
-	@Test(description="RPMXCON-50016",enabled=true,groups = { "regression" }, priority = 18)
+	@Test(description="RPMXCON-50016",enabled=true,groups = { "regression" })
 	public void verifyingTheSearchableFieldInAllProductionBatesRanges() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
