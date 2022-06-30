@@ -3424,11 +3424,12 @@ public class BaseClass {
 		driver.waitForPageToBeReady();
 		getBullHornIcon().isElementAvailable(30);
 		waitForElement(getBullHornIcon());
+		getRedBullHornIcon().isElementAvailable(30);
+		driver.waitForPageToBeReady();
 		String color = getBullIcon().getWebElement().getCssValue("background-color");
 		System.out.println(color);
 		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
-		getRedBullHornIcon().isElementAvailable(10);
 		if (ExpectedColor.equals("#e74735")) {
 		passedStep("BullHorn icon is highlighted red as expected");
 		} else {

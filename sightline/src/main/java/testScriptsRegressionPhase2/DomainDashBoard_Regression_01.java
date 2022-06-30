@@ -134,6 +134,7 @@ public class DomainDashBoard_Regression_01 {
 		String[] colums = {"NoOfCustodian","NoOfIngestion"};
 		
 		//verify export
+		base.clearBullHornNotification();
 		driver.scrollingToElementofAPage(dash.getExportbtn());
 		dash.getExportbtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -214,6 +215,7 @@ public class DomainDashBoard_Regression_01 {
 		
 		//verify export
 		base.impersonateSAtoDA(Input.domainName);
+		base.clearBullHornNotification();
 		driver.scrollingToElementofAPage(dash.getExportbtn());
 		dash.getExportbtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -292,6 +294,7 @@ public class DomainDashBoard_Regression_01 {
 		
 		//verify export
 		base.impersonateSAtoDA(Input.domainName);
+		base.clearBullHornNotification();
 		driver.scrollingToElementofAPage(dash.getExportbtn());
 		dash.getExportbtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -688,16 +691,11 @@ public class DomainDashBoard_Regression_01 {
 		
 		String projectName = "AAA"+Utility.dynamicNameAppender();
 		if(!dash.isInactiveProjectAvailable()) {
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 			base.clearBullHornNotification();
-			project.navigateToProductionPage();
-			project.AddDomainProject(projectName, Input.domainName);
+			dash.create_a_project_From_Domain(projectName);
 			project.waitTillProjectCreated();
-			project.filterTheProject(projectName);
-			project.inActiveProject(projectName);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+			dash.naviageToDomainDashBoardPage();
+			dash.deactivateProject(projectName);
 		}
 		
 		String inActiveProjectName = dash.getInactiveProjectName();
@@ -734,22 +732,19 @@ public class DomainDashBoard_Regression_01 {
 		
 		String projectName = "AAA"+Utility.dynamicNameAppender();
 		if(!dash.isInactiveProjectAvailable()) {
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 			base.clearBullHornNotification();
-			project.navigateToProductionPage();
-			project.AddDomainProject(projectName, Input.domainName);
+			dash.create_a_project_From_Domain(projectName);
 			project.waitTillProjectCreated();
-			project.filterTheProject(projectName);
-			project.inActiveProject(projectName);
-			loginPage.logout();
-			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+			dash.naviageToDomainDashBoardPage();
+			dash.deactivateProject(projectName);
 		}
-		String[] availableColm = {"PROJECT NAME","STATUS","DATA AS OF (UTC)","CUSTODIANS (#)",
+		String[] availableColm = {"PROJECT NAME","STATUS","DATA AS OF (UTC)",
 				"DOCS PUBLISHED (#)","DOCS RELEASED (#)","CORPORATE CLIENT","CREATED DATE",
 				"CREATED BY","TOTAL UTILIZED DISK SIZE (GB)"};
 		
-		dash.isAllColumsAreAvailable(availableColm);
+		for(String column:availableColm) {
+		dash.isTitleIsAvailable(column);
+		}
 		dash.isActiveInactiveListed();
 		
 		base.passedStep("Validate project summary grid columns on Domain dashboard");

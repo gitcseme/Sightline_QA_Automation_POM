@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -106,6 +107,30 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("//*[@id='dtDomainProjectList']/thead/tr/th["+colum+"]");
 	}
 	 
+	public Element getCreateNewProjectBtn() {
+		return driver.FindElementByXPath("//a[@id='createProject']");
+	}
+	
+	public Element getProjectName(){ 
+		return driver.FindElementById("txtproject"); 
+	}
+	
+	public Element getButtonSaveProject(){ 
+		return driver.FindElementById("btnSaveProject"); 
+	}
+	
+	public Element getSearchProject(){ 
+		return driver.FindElementById("txtSearch"); 
+	}
+	
+	public Element getHyperLinkOnProject(String projectName) {
+		return driver.FindElementByXPath("//td[@class='ddGridAlignLeft sorting_1']//a[text()='"+projectName+"']");
+	}
+	
+	public Element getDeactivateProject(String projectName) {
+		return driver.FindElementByXPath("//a[text()='"+projectName+"']/..//a[text()='Deactivate Project']");
+	}
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
@@ -371,5 +396,82 @@ public class DomainDashboard {
 			 base.failedStep(colums+"colum is not available");
 		 }
 	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description natigate to domainDashBoard Page
+	  */
+	 public void naviageToDomainDashBoardPage() {
+		 try {
+			 this.driver.getWebDriver().get(Input.url+ "DomainDashboard/DomainDashboard");
+		 }catch(Exception e) {
+			 base.failedStep(e.getMessage()+" navigate to domainDashBoardPage failed");
+		 }
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param projectName
+	  * @Description Deactivate a project
+	  */
+	 public void deactivateProject(String projectName) {
+		 naviageToDomainDashBoardPage();
+		 driver.waitForPageToBeReady();
+		 filterProject(projectName);
+		 
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getHyperLinkOnProject(projectName));
+		 getHyperLinkOnProject(projectName).waitAndClick(10);
+		 base.waitForElement(getDeactivateProject(projectName));
+		 getDeactivateProject(projectName).waitAndClick(10);
+		 base.getNOBtn().waitAndClick(10);
+		 
+		 clearProjectSearchFilter();
+		 base.stepInfo("deactivated a project");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param projectName
+	  * @Description filter the project using projectName
+	  */
+	 public void filterProject(String projectName) {
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getSearchProject());
+		 getSearchProject().waitAndClick(5);
+		 getSearchProject().SendKeys(projectName);
+		 base.hitKey(KeyEvent.VK_ENTER);
+		 base.stepInfo(projectName+"filter the project");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description clear the project search filter
+	  */
+	 public void clearProjectSearchFilter() {
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getSearchProject());
+		 getSearchProject().waitAndClick(5);
+		 getSearchProject().Clear();
+		 base.hitKey(KeyEvent.VK_ENTER);
+		 base.stepInfo("clear the project filter");
+	 }
 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param projectname
+	  * @Description create a project using domain credential 
+	  */
+	 public void create_a_project_From_Domain(String projectname) {
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getCreateNewProjectBtn());
+		 getCreateNewProjectBtn().waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getProjectName());
+		 getProjectName().SendKeys(projectname);
+		 driver.scrollingToBottomofAPage();
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getButtonSaveProject());
+		 getButtonSaveProject().waitAndClick(10);
+	 }
 }
