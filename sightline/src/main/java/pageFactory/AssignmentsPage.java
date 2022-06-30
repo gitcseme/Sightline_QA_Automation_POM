@@ -1429,6 +1429,41 @@ public class AssignmentsPage {
 	public Element getProgressReport() {
 		return driver.FindElementByXPath("//a[text()='Progress Report']");
 	}
+
+	public Element getSelectedCodeForm_inSortingPopUp(String CFName) {
+		return driver.FindElementByXPath("//div[@id='divSortCodingForm']//li[@value='" + CFName + "']");
+	}
+
+	public Element getSelectCodeFormRadioBtn(String CFName) {
+		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
+				+ "']/ancestor::td/following-sibling::td//span/label/i");
+	}
+
+	public Element getSelectCF_CheckBox(String CFName) {
+		return driver.FindElementByXPath(
+				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "']/parent::label/i");
+	}
+
+	public Element SelectCFPopUp_Step1() {
+		return driver.FindElementByXPath("//span[text()='Step 01: Add / Remove Coding Forms in this Assignment']");
+	}
+
+	public Element sortOrderNxtBtn() {
+		return driver.FindElementById("btnSortOrderNext");
+	}
+
+	public Element sortCodeFormOrderSaveBtn() {
+		return driver.FindElementById("btnCodingFormSave");
+	}
+
+	public Element getSelectSortCodingForm_Tab() {
+		return driver.FindElementById("CodingFormBtn");
+	}
+
+	public Element getSelectedCodeForminAssignPAge() {
+		return driver.FindElementByXPath(" //label[@id='selectedCodingFormString']");
+	}
+	
 	
 
 	public AssignmentsPage(Driver driver) {
@@ -3767,12 +3802,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		driver.waitForPageToBeReady();
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(3);
 		bc.stepInfo("Assignment " + assignmentName + " created with CF " + codingForm);
@@ -9999,6 +10029,47 @@ public class AssignmentsPage {
 			bc.passedStep("Progress report option is present in manage assignment group actions.");
 		}else {
 			bc.failedStep("Progress report option is not displayed");
+		}
+	}
+	/**@author Iyappan.Kasinathan
+	 * @description This method used to select coding form in assignments page
+	 * 
+	 */
+	public void SelectCodingform(String CFName) {
+		getSelectSortCodingForm_Tab().ScrollTo();
+		getSelectSortCodingForm_Tab().Click();
+
+		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
+			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			bc.waitForElement(getSelectCF_CheckBox(CFName));
+			getSelectCF_CheckBox(CFName).ScrollTo();
+			getSelectCF_CheckBox(CFName).Click();
+			bc.waitTime(1);
+			getSelectCodeFormRadioBtn(CFName).Click();
+			bc.waitTime(1);
+			sortOrderNxtBtn().ScrollTo();
+			sortOrderNxtBtn().Click();
+			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+				sortCodeFormOrderSaveBtn().Click();
+				bc.waitTime(2);
+				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
+					String acualCfName = getSelectedCodeForminAssignPAge().getText();
+					String expectedCFDisplay = CFName + " (Set As Default)";
+					SoftAssert assertion = new SoftAssert();
+					assertion.assertEquals(expectedCFDisplay, acualCfName);
+					assertion.assertAll();
+					bc.passedStep("Selected a coding form " + CFName
+							+ " and its reflected in manage assignments page");
+				} else {
+					bc.failedStep("Selected  coding form " + CFName
+							+ "  is not reflected in manage assignments page");
+				}
+
+			} else {
+				bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+			}
+		} else {
+			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
 	}
 	

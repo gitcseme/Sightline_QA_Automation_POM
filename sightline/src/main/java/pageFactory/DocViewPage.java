@@ -3501,6 +3501,10 @@ public class DocViewPage {
 	public Element getRedacTextRightClickSelctCopy() {
 		return driver.FindElementByXPath("//ul[@class='ctxmenu']");
 	}
+	//Added by Iyappan
+	public Element getAudioDocEndDuration() {
+				return driver.FindElementByXPath("//div[@class='jp-duration end']");
+			}
 
 	public DocViewPage(Driver driver) {
 
