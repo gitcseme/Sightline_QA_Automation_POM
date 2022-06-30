@@ -24,6 +24,7 @@ import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
@@ -332,6 +333,30 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	public ElementCollection getSearchNames() {
+		return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody//tr/td[3]");
+	}
+
+	public Element getText_dropdown() {
+		return driver.FindElementByXPath("//select[@id='textSelect']");
+	}
+
+	public Element getNewLine_dropdown() {
+		return driver.FindElementByXPath("//select[@id='newLineSelect']");
+	}
+
+	public Element getDateStyle_dropdown() {
+		return driver.FindElementByXPath("//select[@id='dateStyleSelect']");
+	}
+
+	public Element getSelectMatadata(String metaData) {
+		return driver.FindElementByCssSelector("input[data-friendlbl='" + metaData + "'] + i");
+	}
+
+	public Element getRenameButtonDisabled() {
+		return driver.FindElementByXPath("//a[@id='rbnRename' and @class='disabled']");
+	}
+
 	public Element getGridHeader() {
 		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']");
 	}
@@ -710,11 +735,11 @@ public class SavedSearch {
 	}
 
 	// added by Mohan
-	
+
 	public Element getSavedSearchTableDraftName() {
 		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'DRAFT')]");
 	}
-	
+
 	public Element getSavedSearchTreeNode(String name) {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'" + name + "')]");
 	}
@@ -5406,12 +5431,12 @@ public class SavedSearch {
 			base.stepInfo("--- Within My Saved Search - Node - sub node ---");
 
 			String newNode = createSearchGroupAndReturn(SearchName, username, "Yes");
-			
+
 //			selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
 			base.selectproject();
 			navigateToSavedSearchPage();
-		    rootGroupExpansion();
-			
+			rootGroupExpansion();
+
 			String subNodeName = createNewSearchGrp(newNode, 1);
 
 			// Save Search within MySearch
@@ -7882,7 +7907,7 @@ public class SavedSearch {
 		softAssertion.assertTrue(getFieldHeader(specificHeaderName).isElementPresent());
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @descripton: To Verify Cloning project saved search terms
@@ -7909,4 +7934,144 @@ public class SavedSearch {
 			base.failedStep("The req fields are not present in the saved search list");
 		}
 	}
+
+	/**
+	 * @Author
+	 * @param batchFilePath
+	 * @param batchFile
+	 * @return
+	 */
+	public List<String> batchFileUpload(String batchFilePath, String batchFile) {
+		driver.waitForPageToBeReady();
+		ArrayList<Integer> actualCounts = new ArrayList<Integer>();
+		uploadWPBatchFile_New(batchFile, batchFilePath);
+
+		base.waitForElement(getNumberOfSavedSearchToBeShown());
+		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+
+		base.waitForElementCollection(getCounts());
+		driver.scrollingToBottomofAPage();
+		String value = "0";
+		for (int i = 1; i <= getCounts().size(); i++) {
+			try {
+				value = driver.FindElement(By.xpath("//*[@id='SavedSearchGrid']/tbody/tr[" + i + "]/td[4]")).getText();
+				actualCounts.add(Integer.parseInt(value));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+				value = "0";
+				actualCounts.add(Integer.parseInt(value));
+			}
+
+		}
+
+		System.out.println("ActualCounts :" + actualCounts);
+		UtilityLog.info("ActualCounts :" + actualCounts);
+
+		List<String> searchNames = base.availableListofElements(getSearchNames());
+
+		return searchNames;
+	}
+
+	/**
+	 * @Author
+	 * @param metadata
+	 * @param StyletoChoose
+	 * @param fieldTypeToChoose
+	 * @param TextTypetoChoose
+	 * @param NewLineTypetoChoose
+	 * @param DateStyleTypetoChoose
+	 * @return 
+	 * @throws InterruptedException
+	 */
+	public int configureExportPopup(List<String> metadata, String StyletoChoose, String fieldTypeToChoose,
+			String TextTypetoChoose, String NewLineTypetoChoose, String DateStyleTypetoChoose)
+			throws InterruptedException {
+
+		base.waitForElement(getExportPopup());
+
+		if (StyletoChoose != null) {
+			base.waitForElement(getStyle_dropdown());
+			getStyle_dropdown().selectFromDropdown().selectByVisibleText(StyletoChoose);
+		}
+		if (fieldTypeToChoose != null) {
+			base.waitForElement(getField_dropdown());
+			getField_dropdown().selectFromDropdown().selectByVisibleText(fieldTypeToChoose);
+		}
+		if (TextTypetoChoose != null) {
+			base.waitForElement(getText_dropdown());
+			getText_dropdown().selectFromDropdown().selectByVisibleText(TextTypetoChoose);
+		}
+		if (NewLineTypetoChoose != null) {
+			base.waitForElement(getNewLine_dropdown());
+			getNewLine_dropdown().selectFromDropdown().selectByVisibleText(NewLineTypetoChoose);
+		}
+		if (DateStyleTypetoChoose != null) {
+			base.waitForElement(getNewLine_dropdown());
+			getDateStyle_dropdown().selectFromDropdown().selectByVisibleText(DateStyleTypetoChoose);
+		}
+		for (int i = 0; i < metadata.size(); i++) {
+			base.waitForElement(getSelectMatadata(metadata.get(i)));
+			getSelectMatadata(metadata.get(i)).waitAndClick(5);
+		}
+		base.waitForElement(getAddToSelected_Button());
+		getAddToSelected_Button().waitAndClick(3);
+		base.waitForElement(getRunReport_Button());
+		getRunReport_Button().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		base.VerifySuccessMessage(
+				"Your Report has been added into the Background successfully. Once it is complete, the "
+						+ "\"bullhorn\""
+						+ " icon in the upper right-hand corner will turn red, and will increment forward.");
+
+		return Bgcount;
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param initialBgcount
+	 * @param expectedFormat
+	 */
+	public void downloadExportFile(int initialBgcount,String expectedFormat) {
+	   driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == initialBgcount + 1;
+			}
+		}), Input.wait60);
+		base.waitForElement(base.getBackgroundTask_Button());
+		base.getBackgroundTask_Button().waitAndClick(10);
+		base.waitTime(3);
+		base.waitForElement(getBckTask_selectExport());
+		getBckTask_selectExport().waitAndClick(10);
+
+		base.waitTime(2);
+		File ab = new File(Input.fileDownloadLocation);
+		String testPath = ab.toString() + "\\";
+
+		// wait until file download is complete
+		base.waitUntilFileDownload();
+
+		// base.csvReader();
+		ReportsPage report = new ReportsPage(driver);
+		File a = report.getLatestFilefromDir(testPath);
+		System.out.println(a.getName());
+		base.stepInfo(a.getName());
+
+		String fileName = a.getName();
+
+		String filePath = testPath + fileName;
+		System.out.println(fileName);
+		base.stepInfo("Downloade File  : " + filePath);
+
+		// Verify File Extension
+		String fileFormat = FilenameUtils.getExtension(fileName);
+		
+		String passMsg = "Downloaded File : " + fileName + "    And Verified Format IS  : " + fileFormat;
+		String failMsg = "Downloaded File Format is Not As Expected";
+		base.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
+   }
+
 }
