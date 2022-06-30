@@ -11928,6 +11928,7 @@ public class SessionSearch {
 		} else {
 			base.failedStep("Navigates to wrong Page");
 		}
+	}
 
 
 	/**
