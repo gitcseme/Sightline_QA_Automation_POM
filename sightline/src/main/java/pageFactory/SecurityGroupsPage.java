@@ -322,6 +322,10 @@ public class SecurityGroupsPage {
 	public Element productionLeftMenu() {
 		return driver.FindElementByXPath("//a[@name = 'Productions']");
 	}
+	
+	public ElementCollection getTolSecurityGroupCount() {
+		return driver.FindElementsByXPath("//select[@id='ddlSecurityGroupsList']/option");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
@@ -1095,4 +1099,26 @@ public class SecurityGroupsPage {
 		   bc.waitForElement(securityGroupTab());
 	}
 
+	
+
+	/*@author Vijaya.Rani
+	 * 
+	 */
+	public void validateSecurityGroupsCount() {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSecurityGroupList());
+		getSecurityGroupList().waitAndClick(5);
+		
+		ElementCollection totFolderCount = getTolSecurityGroupCount();
+		int totFolderSize = totFolderCount.size();
+		if (totFolderSize > 3) {
+			bc.passedStep(
+					"There are more than 2 security Groups(1-1 in Security Group) is exists in source template project.");
+
+		} else {
+			bc.failedStep("There are no SecurityGroup in this project");
+		}
+
+	}
 }
