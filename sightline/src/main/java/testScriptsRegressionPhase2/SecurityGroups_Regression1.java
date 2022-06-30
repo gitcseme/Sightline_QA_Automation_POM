@@ -27,6 +27,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.TagsAndFoldersPage;
@@ -216,6 +217,52 @@ public class SecurityGroups_Regression1 {
 		} else {
 			baseClass.failedStep("Productions left menu is NOT accessible for RMU");
 		}
+	}
+	
+	/**
+	 * @author  Date: Modified date:N/A Modified by: Description Verify
+	 *         that RMU can delete the production
+	 * 
+	 */
+	@Test(description = "RPMXCON-54741", enabled = true, groups = { "regression" })
+	public void verifyRmuCanDeleteTheProduction() throws Exception {
+		baseClass.stepInfo("RPMXCON-54741");
+		baseClass.stepInfo("Verify that RMU can delete the production");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String productionname2 = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// Login as Rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname2);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
+		page.deleteProduction(productionname2);
 	}
 
 }
