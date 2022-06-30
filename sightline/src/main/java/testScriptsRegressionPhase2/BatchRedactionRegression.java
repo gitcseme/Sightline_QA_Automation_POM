@@ -49,7 +49,7 @@ public class BatchRedactionRegression {
 	 *              documents for list of occurrences [RPMXCON-48805]
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-48805", enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-48805", enabled = true, groups = { "regression" })
 	public void verifyAnalyeSearchSuccessMsg() throws Exception {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 

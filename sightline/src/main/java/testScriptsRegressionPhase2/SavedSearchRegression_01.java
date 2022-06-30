@@ -367,7 +367,7 @@ public class SavedSearchRegression_01 {
 	 *              execute all the search query as Admin Login
 	 */
 
-	@Test(description = "RPMXCON-57017", enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-57017", enabled = true, groups = { "regression" })
 	public void verifyUserAbleToExecuteSubFolderInMySearch() throws InterruptedException {
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
 

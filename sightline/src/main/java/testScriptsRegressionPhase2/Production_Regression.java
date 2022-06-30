@@ -77,7 +77,7 @@ public class Production_Regression {
 	 *                 placeholder PDFs/TIFF's
 	 */
 
-	@Test(description = "RPMXCON-47916", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47916", enabled = true, groups = { "regression" })
 	public void verifyPlaceholderText() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47916- Production Sprint 16");
@@ -131,7 +131,7 @@ public class Production_Regression {
 	 *                 production wizard
 	 */
 
-	@Test(description = "RPMXCON-47895", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47895", enabled = true, groups = { "regression" })
 	public void verifySelfProductionWizard() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47895- Production Sprint 16");
@@ -210,7 +210,7 @@ public class Production_Regression {
 	 * @Description:To verify On Document Level Numbering Bates Number should get displayed on Production Home Page.
 	 */
 
-	@Test(description = "RPMXCON-47935", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47935", enabled = true, groups = { "regression" })
 	public void verifyDocumentLevelNumbering() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47935- Production Sprint 16");
@@ -262,7 +262,7 @@ public class Production_Regression {
 	 * @Description:To Verify in DAT section of a production configuration step availability of calculated fields
 	 */
 
-	@Test(description = "RPMXCON-47929", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47929", enabled = true, groups = { "regression" })
 	public void verifyDATSectionOfCalculatedFields() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47929- Production Sprint 16");
