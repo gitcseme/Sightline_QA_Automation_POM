@@ -105,7 +105,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Description : Verify that Preview displays correctly and properly when
 	 *                Tags and Check group combined along with Check Item on coding form screen
 	 */
-	@Test(description = "RPMXCON-54059",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-54059",enabled = true, groups = { "regression" })
 	public void verifyCFPreviewUsingCheckItem() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54059");
 	    baseClass.stepInfo("Verify that Preview displays correctly and properly "
@@ -150,10 +150,12 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.selectDefaultActions(1, Input.required);	
 	    driver.scrollPageToTop();
 	    codingForm.saveCodingForm();
+	    driver.waitForPageToBeReady();
 	    
 		//opening same codinform in edit mode
 	    driver.Navigate().refresh();
-	    baseClass.waitTime(10);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(40);
 	    codingForm.editCodingForm(codingform);
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    docViewPage.verifyTagsAreDisabledInPreviewBox(1);
@@ -165,7 +167,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    baseClass.passedStep("codingfrom preview working as per configured");
 	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -176,7 +177,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Description : To verify, As an RMU login, When I will edit an existing coding form,
 	 *                I can be able to select a new Tag & able to save this change
 	 */
-	@Test(description = "RPMXCON-54006",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-54006",enabled = true, groups = { "regression" })
 	public void verifyRmuUserCanEditExistingCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54006");
 	    baseClass.stepInfo("To verify, As an RMU login, When I will edit an existing coding form, "
@@ -208,10 +209,12 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.addcodingFormAddButton();
 	    driver.scrollPageToTop();
 	    codingForm.saveCodingForm();
+	    driver.waitForPageToBeReady();
 	    
 		//opening same codinform in edit mode
 	    driver.Navigate().refresh();
-	    baseClass.waitTime(10);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(40);
 	    codingForm.editCodingForm(codingform);
 	    
 	    // adding tag to existing codingfrom
@@ -223,7 +226,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.codingFormSaveButton();
 	    baseClass.VerifySuccessMessage("Coding Form updated successfully");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -234,7 +236,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that No button functionality is working proper on "Copy" pop up Coding Form screen
 	 */
-	@Test(description = "RPMXCON-54005",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-54005",enabled = true, groups = { "regression" })
 	public void verifyNoButtonShouldNotCopyCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-54005");
 	    baseClass.stepInfo("Verify that No button functionality is working proper on \"Copy\" pop up Coding Form screen");
@@ -265,10 +267,12 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.addcodingFormAddButton();
 	    driver.scrollPageToTop();
 	    codingForm.saveCodingForm();
+	    driver.waitForPageToBeReady();
 	    
 		//opening same codingform in copy mode
 	    driver.Navigate().refresh();
-	    baseClass.waitTime(10);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(40);
 	    baseClass.waitForElement(codingForm.getCodingForm_Search());
 	    codingForm.getCodingForm_Search().SendKeys(codingform);
 	    codingForm.getCodingForm_CopyButton(codingform).waitAndClick(5);
@@ -287,7 +291,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 			baseClass.failedStep("Coding from copied");
 		}
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -297,7 +300,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that Nested Remove link works properly inside container on Coding form screen
 	 */
-	@Test(description = "RPMXCON-53988",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-53988",enabled = true, groups = { "regression" })
 	public void verifyRemoveLinkInCF() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-53988");
 	    baseClass.stepInfo("Verify that Nested Remove link works properly inside container on Coding form screen");
@@ -361,7 +364,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    softAssertion.assertFalse(flagFalseThree);
 	    baseClass.passedStep("Removed tag are not displaying in coding form structure");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -371,7 +373,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Verify that user adds tag/ comment / editable metadata field only once to the coding form
 	 */
-	@Test(description = "RPMXCON-53982",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-53982",enabled = true, groups = { "regression" })
 	public void verifyUserCannnotAddSameNameAgainInCf() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-53982");
 	    baseClass.stepInfo("Verify that user adds tag/ comment / editable metadata field only once to the coding form");
@@ -447,7 +449,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    softAssertion.assertTrue(metadataDisabled);
 	    baseClass.passedStep("Added available fields, cannot able to add again in coding form structure");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -457,7 +458,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Shared Steps: Creating a New Coding form
 	 */
-	@Test(description = "RPMXCON-47210",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47210",enabled = true, groups = { "regression" })
 	public void validateCfTextBox() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-47210");
 	    baseClass.stepInfo("Shared Steps: Creating a New Coding form");
@@ -482,7 +483,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 		baseClass.CloseSuccessMsgpopup();
 		baseClass.passedStep("Codingform get saved with the valid name");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
@@ -493,7 +493,7 @@ public class CodingForm_IndiumRegressionPhase2 {
 	 * @Author :Indium-Baskar
 	 * @Description : Shared Steps: Verify that Coding form screen opens properly inside Application
 	 */
-	@Test(description = "RPMXCON-47209",enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-47209",enabled = true, groups = { "regression" })
 	public void validateCfScreenWorksProperly() throws Exception {
 	    baseClass.stepInfo("Test case Id: RPMXCON-47209");
 	    baseClass.stepInfo("Shared Steps: Verify that Coding form screen opens properly inside Application");
@@ -568,10 +568,13 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    codingForm.selectDefaultActions(2, Input.optional);	
 	    driver.scrollPageToTop();
 	    codingForm.saveCodingForm();
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(20);
 	    
-		//opening same codinform in edit mode
+		//opening same codingform in edit mode
 	    driver.Navigate().refresh();
-	    baseClass.waitTime(10);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(40);
 	    codingForm.editCodingForm(codingform);
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    boolean tagOneTrue=codingForm.selectTagInPreviewBox(2).Enabled();
@@ -588,8 +591,10 @@ public class CodingForm_IndiumRegressionPhase2 {
 		baseClass.waitForElement(codingForm.getCf_ValidationYesUsingPosition(2));
 		codingForm.getCf_ValidationYesUsingPosition(2).waitAndClick(5);
 	    driver.Navigate().refresh();
-	    baseClass.waitTime(10);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(50);
 	    codingForm.editCodingForm(codingform);
+	    baseClass.waitTime(50);
 	    codingForm.getCF_PreviewButton().waitAndClick(10);
 	    baseClass.waitForElement(codingForm.getCf_PreviewTagDisabled(tagOne));
 	    boolean tagDisFalse=codingForm.getCf_PreviewTagDisabled(tagOne).Enabled();
@@ -598,7 +603,6 @@ public class CodingForm_IndiumRegressionPhase2 {
 	    baseClass.stepInfo("Radiobox for notsectable tag is disabled");
 	    baseClass.passedStep("codingfrom preview working as per configured");
 	    codingForm.deleteCodingForm(codingform, codingform);
-	    codingForm.assignCodingFormToSG(Input.codeFormName);
 	    softAssertion.assertAll();
 	    loginPage.logout();
 	}
