@@ -168,7 +168,7 @@ public class DocView_Regression8 {
 		keywordPage.AddKeyword(hitTerms, hitTerms);
 
 		// document searched and navigated to DocView
-		sessionsearch.basicContentSearch(Input.GNon_searchable_PDF_Load_file);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Docs Viewed in Doc View");
 		driver.waitForPageToBeReady();
