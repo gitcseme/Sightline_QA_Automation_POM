@@ -571,7 +571,7 @@ public class DataSets {
 			public Boolean call() {
 				return base.initialBgCount() == bgCountBefore + 1;
 			}
-		}), Input.wait120);
+		}), 240000);
 		final int bgCountAfter = base.initialBgCount();
 
 		if (bgCountAfter > bgCountBefore) {
@@ -585,7 +585,6 @@ public class DataSets {
 		driver.Navigate().refresh();
 	}
 	}
-	
 }
 
 
