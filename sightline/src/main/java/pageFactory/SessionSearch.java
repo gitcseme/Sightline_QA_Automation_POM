@@ -42,6 +42,9 @@ public class SessionSearch {
 	DocViewMetaDataPage docViewMetaDataPage;
 	SoftAssert softAssert;
 	DocViewRedactions docViewRedact;
+	Categorization categorize;
+	UserManagement userManage;
+	
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
 
@@ -11983,7 +11986,48 @@ public class SessionSearch {
 				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will add the pure hit tile to shopping cart and navigate to required page
+	 */
+	public void addPureHitAndNavigate(String navigate) {
+		 
+		driver.waitForPageToBeReady();
 
+		if (getPureHitAddBtn().isElementAvailable(2)) {
+			getPureHitAddBtn().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		base.passedStep("Pure hit added to the shopping cart");
+		if(navigate.equalsIgnoreCase("Categorize")) {
+			categorize = new Categorization(driver);
+			categorize.navigateToCategorizePage();
+			base.passedStep("Navigated to categorize page");
+		}
+		else if(navigate.equalsIgnoreCase("Users")) {
+			userManage = new UserManagement(driver);
+			userManage.navigateToUsersPAge();
+			base.passedStep("Navigated to users page");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will navigate to search page and check tile retained status
+	 */
+	public void navigateToSearchPageAndVerifyTileStatus() {
+		navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		if(getRemoveAddBtn().isElementAvailable(10)) {
+			base.passedStep("Dropped tiles retained in shopping cart when navigating back to search page");
+		}
+		else {
+			base.failedStep("Dropped tiles not retained in shopping cart when navigating back to search page");
+		}
+		
 	}
 }
