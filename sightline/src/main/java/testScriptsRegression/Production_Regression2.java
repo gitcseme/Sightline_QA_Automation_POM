@@ -92,7 +92,7 @@ public class Production_Regression2 {
 	 *              selects the Redaction Tag in PDF
 	 * 
 	 */
-	@Test(description="RPMXCON-55945",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-55945",enabled = true, groups = { "regression" })
 	public void verifyPlaceholderInPDFBurnRedaction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -118,7 +118,7 @@ public class Production_Regression2 {
 	 * @Description Verify changes in Text component section
 	 * 
 	 */
-	@Test(description="RPMXCON-55926",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-55926",enabled = true, groups = { "regression" })
 	public void verifyTextInTextSection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -143,7 +143,7 @@ public class Production_Regression2 {
 	 *                     only then branding should be display on 'Preview'
 	 *                     document and on produced documents also
 	 */
-	@Test(description="RPMXCON-55947",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-55947",enabled = true, groups = { "regression" })
 	public void verifyBrandingSectionInGenration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55947 -Production Sprint 10");
@@ -220,7 +220,7 @@ public class Production_Regression2 {
 	 *              'Reserving Bates Range' status on Production Geneartion page
 	 * 
 	 */
-	@Test(description="RPMXCON-55976",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description="RPMXCON-55976",enabled = true, groups = { "regression" })
 	public void verifyStatusInGeneratePage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -269,7 +269,7 @@ public class Production_Regression2 {
 	 * @Description: Verify that it should displays 'Pre-Gen Check - 19999/20000
 	 *               docs' status on Progress bar in Production Tile View
 	 */
-	@Test(description="RPMXCON-55977",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-55977",enabled = true, groups = { "regression" })
 	public void preGenChecksStatusVerifyOnTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-55977 -Production Sprint 10");
@@ -322,7 +322,7 @@ public class Production_Regression2 {
 	 *              the Production URL if user does not have Production rights
 	 * 
 	 */
-	@Test(description="RPMXCON-55954",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-55954",enabled = true, groups = { "regression" })
 	public void verifyingProductionAccess() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -374,7 +374,7 @@ public class Production_Regression2 {
 	 *              action menu For(Draft Mode)
 	 * 
 	 */
-	@Test(description="RPMXCON-47775",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description="RPMXCON-47775",enabled = true, groups = { "regression" })
 	public void AvailabilityOfDeleteOptionInDraftMode() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -413,7 +413,7 @@ public class Production_Regression2 {
 	 *              in the DocView for the document
 	 * 
 	 */
-	@Test(description="RPMXCON-48271",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-48271",enabled = true, groups = { "regression" })
 	public void PDFDocumentDisplayedInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -477,7 +477,7 @@ public class Production_Regression2 {
 	 * @Description:Admin able to view production guard information on the self
 	 *                    production wizard
 	 */
-	@Test(description="RPMXCON-47749",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-47749",enabled = true, groups = { "regression" })
 	public void verifyProductionGuardInformation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -582,7 +582,7 @@ public class Production_Regression2 {
 	 *              Production URL if user is part of that security group/Project
 	 * 
 	 */
-	@Test(description="RPMXCON-55955",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-55955",enabled = true, groups = { "regression" })
 	public void verifyingProductionPageAccessUsingSecurityGroup() throws Exception {
 		base.stepInfo("RPMXCON-55955 -Production Sprint 10");
 		base.stepInfo(
@@ -647,7 +647,7 @@ public class Production_Regression2 {
 	 * @Description:Verify that Production should be generated successfully if PDF
 	 *                     documents are ICE processed with Upload set
 	 */
-	@Test(description="RPMXCON-55943",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-55943",enabled = true, groups = { "regression" })
 	public void generateTheProdcutionForPDFFiles() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -703,7 +703,7 @@ public class Production_Regression2 {
 	 * @Description:To verify that when Tech Issue placeholdering is enabled, the
 	 *                 text file should exported with the placeholder text.
 	 */
-	@Test(description="RPMXCON-55918",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-55918",enabled = true, groups = { "regression" })
 	public void GenerateTheProductionForTechIssuePlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -756,7 +756,7 @@ public class Production_Regression2 {
 	 *                     'Split Sub Folders' is ON with split count as 10 and
 	 *                     selected documents <= 10
 	 */
-	 @Test(description="RPMXCON-47175",enabled = true, groups = { "regression" }, priority = 13)
+	 @Test(description="RPMXCON-47175",enabled = true, groups = { "regression" })
 	public void verifyTheSubFolderAfterGenration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -905,7 +905,7 @@ public class Production_Regression2 {
 	 *              including ''Volume Included'' subfolder
 	 * 
 	 */
-	 @Test(description="RPMXCON-55956",enabled = true, groups = { "regression" }, priority = 14)
+	 @Test(description="RPMXCON-55956",enabled = true, groups = { "regression" })
 	public void verifyingTheProductionOnVolumeIncludedToggle() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -961,7 +961,7 @@ public class Production_Regression2 {
 	 * @Description Verify and generate Production with Search as source
 	 * 
 	 */
-	 @Test(description="RPMXCON-49901",enabled = true, groups = { "regression" }, priority = 15)
+	 @Test(description="RPMXCON-49901",enabled = true, groups = { "regression" })
 	public void verifyProductionGenerationWithSearches() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1008,7 +1008,7 @@ public class Production_Regression2 {
 	 *              Production-Generate tab
 	 * 
 	 */
-	@Test(description="RPMXCON-48577",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description="RPMXCON-48577",enabled = true, groups = { "regression" })
 	public void verifyExportBatesOptionInGenerateTab() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1064,7 +1064,7 @@ public class Production_Regression2 {
 	 *              completed
 	 * 
 	 */
-	@Test(description="RPMXCON-48601",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description="RPMXCON-48601",enabled = true, groups = { "regression" })
 	public void verifyExportBatesOptionDisabledInGenerateTab() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1122,7 +1122,7 @@ public class Production_Regression2 {
 	 * @Description:To verify that on Tiff OR PDF section, 'Do Not Produce TIFFs for
 	 *                 Natively Produced Docs' option is disabled by default
 	 */
-	@Test(description="RPMXCON-48642",enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description="RPMXCON-48642",enabled = true, groups = { "regression" })
 	public void verifyingNativelyProducedDocsToggleIsDisAbledInTiffAndPDFSection() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48642 - from Production");
@@ -1157,7 +1157,7 @@ public class Production_Regression2 {
 	 * @Description Verify the exported CSV data
 	 * 
 	 */
-	@Test(description="RPMXCON-48604",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description="RPMXCON-48604",enabled = true, groups = { "regression" })
 	public void verifyExportBatesGeneratedFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1222,7 +1222,7 @@ public class Production_Regression2 {
 	 *                Production-Generate-Export is completed
 	 * 
 	 */
-	@Test(description="RPMXCON-48603",enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description="RPMXCON-48603",enabled = true, groups = { "regression" })
 	public void verifyExportBatesGeneratedFileInNotification() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1282,7 +1282,7 @@ public class Production_Regression2 {
 	 *              Docs" is Enabled, then only Native should be produced
 	 * 
 	 */
-	@Test(description="RPMXCON-48654",enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description="RPMXCON-48654",enabled = true, groups = { "regression" })
 	public void verifyNativelyProducedRToggleForGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1343,7 +1343,7 @@ public class Production_Regression2 {
 	 *              docs in DAT.
 	 * 
 	 */
-	@Test(description="RPMXCON-48307",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description="RPMXCON-48307",enabled = true, groups = { "regression" })
 	public void verifyOrderOfDATAndOPTInGeneratedProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1397,7 +1397,7 @@ public class Production_Regression2 {
 	 *                 it is enable
 	 * 
 	 */
-	@Test(description="RPMXCON-48530",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description="RPMXCON-48530",enabled = true, groups = { "regression" })
 	public void verifyBlankPageRemovalToggle() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48530 -Production Sprint 11");
@@ -1418,7 +1418,7 @@ public class Production_Regression2 {
 	 * @Description:Verify that TIFF files should be copied to folder when 'Split
 	 *                     Sub Folders' is ON with split count as 10
 	 */
-	@Test(description="RPMXCON-47173",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description="RPMXCON-47173",enabled = true, groups = { "regression" })
 	public void verifyTheSubFolderInProductionGeneration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -1468,7 +1468,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify In Productions, production template Should retain the
 	 *                 redaction tags configured in the production.
 	 */
-	@Test(description="RPMXCON-48196",enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description="RPMXCON-48196",enabled = true, groups = { "regression" })
 	public void verifySaveTemplateAndRetainedValueInBurnRedaction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -1520,7 +1520,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify Production Using Template Should be able to load the
 	 *                 configuration of Rotation in PDF and TIFF.
 	 */
-	@Test(description="RPMXCON-48285",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description="RPMXCON-48285",enabled = true, groups = { "regression" })
 	public void verifySaveTemplateAndRetainedValueInRotationConfiguration() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -1555,7 +1555,7 @@ public class Production_Regression2 {
 	 * @Description: To Verify Keep Docs w/ No Master Date on Numbering and Sorting
 	 *               Page.
 	 */
-	@Test(description="RPMXCON-47976",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description="RPMXCON-47976",enabled = true, groups = { "regression" })
 	public void verifyTheMasterDateInGeneratedProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -1606,7 +1606,7 @@ public class Production_Regression2 {
 	 *                     Package.
 	 * 
 	 */
-	@Test(description="RPMXCON-46895",enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description="RPMXCON-46895",enabled = true, groups = { "regression" })
 	public void ProductionGenerateForAudioFile() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -1657,7 +1657,7 @@ public class Production_Regression2 {
 	 *                 maintained even when the user has not "checked" the option to
 	 *                 "club family members together".
 	 */
-	@Test(description="RPMXCON-48301",enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description="RPMXCON-48301",enabled = true, groups = { "regression" })
 	public void verifyOrderOfDocumentsInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48301 -Production Sprint 11");
@@ -1709,7 +1709,7 @@ public class Production_Regression2 {
 	 *                required information
 	 * 
 	 */
-	@Test(description="RPMXCON-47966",enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description="RPMXCON-47966",enabled = true, groups = { "regression" })
 	public void verifyOPTInGeneratedProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1781,7 +1781,7 @@ public class Production_Regression2 {
 	 *               status on Production Grid View page as 'Post Generation QC
 	 *               Check Complete'
 	 */
-	@Test(description="RPMXCON-56054",enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description="RPMXCON-56054",enabled = true, groups = { "regression" })
 	public void verifyPostGenCompleteStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56054 - from Production component");
@@ -1841,7 +1841,7 @@ public class Production_Regression2 {
 	 * @Description:To verify that belly band message is displays if user map the
 	 *                 one source field to multiple DAT fields
 	 */
-	@Test(description="RPMXCON-48876",enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description="RPMXCON-48876",enabled = true, groups = { "regression" })
 	public void verifyPreGenStatusOnGridView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -1867,7 +1867,7 @@ public class Production_Regression2 {
 	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-46870
 	 * @Description:To Verify generation of redacted TIFFs.
 	 */
-	@Test(description="RPMXCON-46870",enabled = true, groups = { "regression" }, priority = 33)
+	@Test(description="RPMXCON-46870",enabled = true, groups = { "regression" })
 	public void verifyGenerationInRedactedTiff() throws Exception {
 		UtilityLog.info(Input.prodPath);
 
@@ -1935,7 +1935,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify, when Include Family Members is selected, should not
 	 *                 give error message on click of Mark Complete
 	 */
-	@Test(description="RPMXCON-47931",enabled = true, groups = { "regression" }, priority = 34)
+	@Test(description="RPMXCON-47931",enabled = true, groups = { "regression" })
 	public void verifyingIncludeFamiliesToggleInDocumentSelectionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-47931 - from Production component");
@@ -1981,7 +1981,7 @@ public class Production_Regression2 {
 	 * @Description:Admin able to view and enter production guard information on the
 	 *                    self production wizard.
 	 */
-	@Test(description="RPMXCON-47750",enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description="RPMXCON-47750",enabled = true, groups = { "regression" })
 	public void verifyProductionGuardInformationinProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -2032,7 +2032,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify In Productions, the validation of specific file types
 	 *                 when entering placeholder text for TIFF/PDF.
 	 */
-	@Test(description="RPMXCON-48206",enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description="RPMXCON-48206",enabled = true, groups = { "regression" })
 	public void verifyingWarningMessageInProductionComponentTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -2057,7 +2057,7 @@ public class Production_Regression2 {
 	 * @Description To verify that exported CSV should be sorted by BegBates
 	 * 
 	 */
-	@Test(description="RPMXCON-48632",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description="RPMXCON-48632",enabled = true, groups = { "regression" })
 	public void verifyExportCSVFileSorted() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2125,7 +2125,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify All MP3 Files info should get loaded when using (Saved
 	 *                 )Template for Production.
 	 */
-	@Test(description="RPMXCON-48167",enabled = true, groups = { "regression" }, priority = 38)
+	@Test(description="RPMXCON-48167",enabled = true, groups = { "regression" })
 	public void verifySaveTemplateAndRetainedValueInComponentTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -2162,7 +2162,7 @@ public class Production_Regression2 {
 	 *              the document
 	 * 
 	 */
-	@Test(description="RPMXCON-48006",enabled = true, groups = { "regression" }, priority = 39)
+	@Test(description="RPMXCON-48006",enabled = true, groups = { "regression" })
 	public void PDFDocumentDisplayedInDocViewPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2232,7 +2232,7 @@ public class Production_Regression2 {
 	 *              should be created where it is specified,
 	 * 
 	 */
-	@Test(description="RPMXCON-47993",enabled = true, groups = { "regression" }, priority = 40)
+	@Test(description="RPMXCON-47993",enabled = true, groups = { "regression" })
 	public void VerifyingVolumeInProductionOutput() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2319,7 +2319,7 @@ public class Production_Regression2 {
 	 *              Production Should work fine.
 	 * 
 	 */
-	@Test(description="RPMXCON-48032",enabled = true, groups = { "regression" }, priority = 41)
+	@Test(description="RPMXCON-48032",enabled = true, groups = { "regression" })
 	public void verifyingNativeFileType() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2384,7 +2384,7 @@ public class Production_Regression2 {
 	 * @Description Validate Production with tiff and text options
 	 * 
 	 */
-	@Test(description="RPMXCON-49539",enabled = true, groups = { "regression" }, priority = 42)
+	@Test(description="RPMXCON-49539",enabled = true, groups = { "regression" })
 	public void verifyingTheGenerationOfProdcution() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2475,7 +2475,7 @@ public class Production_Regression2 {
 	 * @Description To Verify In Productions, the workproduct fields for slip sheets
 	 * 
 	 */
-	@Test(description="RPMXCON-47997",enabled = true, groups = { "regression" }, priority = 43)
+	@Test(description="RPMXCON-47997",enabled = true, groups = { "regression" })
 	public void verifyingWorkProductFieldInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2547,7 +2547,7 @@ public class Production_Regression2 {
 	 *              Docs" is Enabled, then only Native should be produced
 	 * 
 	 */
-	@Test(description="RPMXCON-48646",enabled = true, groups = { "regression" }, priority = 44)
+	@Test(description="RPMXCON-48646",enabled = true, groups = { "regression" })
 	public void verifyingNativelyProducedDocumentInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2615,7 +2615,7 @@ public class Production_Regression2 {
 	 *              successfully if PDF documents are ICE processed with Mapped set
 	 * 
 	 */
-	@Test(description="RPMXCON-49868",enabled = true, groups = { "regression" }, priority = 45)
+	@Test(description="RPMXCON-49868",enabled = true, groups = { "regression" })
 	public void verifyingTheGenerationOfProduction() throws Exception {
 
 		SessionSearch session = new SessionSearch(driver);
@@ -2706,7 +2706,7 @@ public class Production_Regression2 {
 	 *              export only Natives.
 	 * 
 	 */
-	@Test(description="RPMXCON-48647",enabled = true, groups = { "regression" }, priority = 46)
+	@Test(description="RPMXCON-48647",enabled = true, groups = { "regression" })
 	public void verifyingNativelyProducedDocInProducedFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2776,7 +2776,7 @@ public class Production_Regression2 {
 	 *                some doc having Priv Tag Classification.
 	 * 
 	 */
-	@Test(description="RPMXCON-48179",enabled = true, groups = { "regression" }, priority = 47)
+	@Test(description="RPMXCON-48179",enabled = true, groups = { "regression" })
 	public void verifyTheGenerationOfProductionWithNativeWithoutPrivFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2867,7 +2867,7 @@ public class Production_Regression2 {
 	 * @DescriptionProduction Document Selection to DocList with Child Documents
 	 * 
 	 */
-	@Test(description="RPMXCON-49079",enabled = true, groups = { "regression" }, priority = 48)
+	@Test(description="RPMXCON-49079",enabled = true, groups = { "regression" })
 	public void verifyingTheParentAndChildDocumentInDoclistPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2958,7 +2958,7 @@ public class Production_Regression2 {
 	 * @Description:To Verify placeholders of the docs of the selected file types
 	 *                 are produced in Production.
 	 */
-	@Test(description="RPMXCON-48063",enabled = true, groups = { "regression" }, priority = 49)
+	@Test(description="RPMXCON-48063",enabled = true, groups = { "regression" })
 	public void verifyTheFileTypeInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.logout();
@@ -3048,7 +3048,7 @@ public class Production_Regression2 {
 	 * @Description:To verify that In DAT file, Email metadata should not be
 	 *                 displayed if document is redacted and privileged
 	 */
-	@Test(description="RPMXCON-49102",enabled = true, groups = { "regression" }, priority = 50)
+	@Test(description="RPMXCON-49102",enabled = true, groups = { "regression" })
 	public void verifyEndBatesInProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 

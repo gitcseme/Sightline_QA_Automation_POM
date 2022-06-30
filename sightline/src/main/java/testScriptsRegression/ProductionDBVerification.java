@@ -67,7 +67,7 @@ public class ProductionDBVerification {
 	}
 
 	
-	@Test(description="RPMXCON-56070",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description="RPMXCON-56070",enabled = true, groups = { "regression" })
 	public void getTIFFpageCountAlwaysOne() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56070 -Production Sprint 06");
@@ -129,7 +129,7 @@ public class ProductionDBVerification {
 	 *         No:RPMXCON-56076
 	 * @Description: To Verify if user selects only PDF for Native Placeholdering file then PageCount is always 1 and it will not skip the 'DOCPGCOUNTUPDT'.
 	 */
-	@Test(description="RPMXCON-56076",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-56076",enabled = true, groups = { "regression" })
 	public void getPageCountOneWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56076 -Production Sprint 06");
@@ -189,7 +189,7 @@ public class ProductionDBVerification {
 	 *         No:RPMXCON-56081
 	 * @Description: To Verify in production if selects DAT,Native ,TIFF AND Text (ingested) then it will not skip the page count.
 	 */
-	@Test(description="RPMXCON-56081",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-56081",enabled = true, groups = { "regression" })
 	public void getProductionPageCountWithoutSkip() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56081 -Production Sprint 06");
