@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -81,6 +82,26 @@ public class DocView_Regression8 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+	
+	@DataProvider(name = "userDetails2")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+	
+
+	@DataProvider(name = "userDetails3")
+	public Object[][] userLoginDetails3() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.pa1FullName, Input.pa1userName, Input.pa1password } };
+	}
+	
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
 	}
 	
 	/**

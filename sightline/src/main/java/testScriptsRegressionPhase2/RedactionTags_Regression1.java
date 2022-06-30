@@ -13,6 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
@@ -135,6 +136,12 @@ public class RedactionTags_Regression1 {
 			baseClass.passedStep("Rev user can not make changes to Redaction Tags");
 		}
 		loginPage.logout();
+	}
+	
+	@DataProvider(name = "userDetails3")
+	public Object[][] userLoginDetails3() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.pa1FullName, Input.pa1userName, Input.pa1password } };
 	}
 
 	/**
