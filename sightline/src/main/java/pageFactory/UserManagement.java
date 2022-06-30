@@ -2429,6 +2429,7 @@ public class UserManagement {
 		getAssignUserButton().waitAndClick(5);
 		bc.waitForElement(getProjectTab());
 		getProjectTab().waitAndClick(5);
+		driver.Manage().window().fullscreen();
 		bc.waitForElement(getAssignUserProjectDrp_Dwn());
 		getAssignUserProjectDrp_Dwn().waitAndClick(5);
 		bc.waitForElement(getSelectDropProject(selectProject));
@@ -2444,7 +2445,7 @@ public class UserManagement {
 			bc.waitForElement(getDomainRole());
 			getDomainRole().selectFromDropdown().selectByVisibleText(roll);
 			if (rollStatus == true) {
-				getDomainRole().selectFromDropdown().selectByVisibleText(account);
+				getDomainSG().selectFromDropdown().selectByVisibleText(account);
 			}
 			getDomainUserRightArrow().waitAndClick(5);
 			bc.waitForElement(getsavedomainuser());

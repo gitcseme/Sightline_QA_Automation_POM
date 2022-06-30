@@ -1252,14 +1252,14 @@ public class CodingForm {
 	public Element getCF_Preview1CheckBox() {
 		return driver.FindElementByXPath("//div[@id='item0']//input[@class='checkbox']");
 	}
-	
+
 	public Element getCodingForm_MetaDataUsingIndex(int index) {
-		return driver.FindElementByXPath("//*[@id='lstMetadata']/li["+index+"]/label/i");
+		return driver.FindElementByXPath("//*[@id='lstMetadata']/li[" + index + "]/label/i");
 	}
+
 	public Element getCF_PreviewTagNameHidden(String tagName) {
-		return driver.FindElementByXPath("(//span[text()='"+tagName+"'])[last()]");
+		return driver.FindElementByXPath("(//span[text()='" + tagName + "'])[last()]");
 	}
-	
 
 	// projectfiledWithData
 	String expectedStaticText = "This is the default Coding Form for this project.  Please complete all fields.";
@@ -1326,55 +1326,68 @@ public class CodingForm {
 	public Element getCF_TagTypes(int i) {
 		return driver.FindElementByXPath(".//*[@id='c-" + i + "']//select[@id='" + i + "']");
 	}
-	
-	
-	///            CONSILIOPHASE2            ///
-	
-	
+
+	/// CONSILIOPHASE2 ///
+
 	// Added by baskar
 	// for tagtype selection
-		public Element getTagType(int i) {
-			return driver.FindElementByXPath("//select[@class='tag-type form-control input-sm'][@id='"+i+"']");
-		}
-		public Element getAvailableObjInStructure(String availableObjects) {
-			return driver.FindElementByXPath("//span[text()='"+availableObjects+"']");
-		}
-		public Element getDefaultNoBtn() {
-			return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']/button[text()=' No']");
-		}
-		public ElementCollection getCfListSize(int i) {
-			return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td["+i+"]");
-		}
-		public ElementCollection getCf_HeaderValue() {
-			return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//th");
-		}
-		public Element getCf_RemoveLink(int i) {
-			return driver.FindElementByXPath("//a[@id='"+i+"'][text()='Remove']");
-		}
-		public Element getCf_TAGTAB() {
-			return driver.FindElementByXPath("//*[@id='internal-tab-1']//span[text()='TAGS']");
-		}
-		public Element getCf_TagDisabled(String tag) {
-			return driver.FindElementByXPath("//*[@id='lstTags']//label[@title='"+tag+"']/input[@disabled='']");
-		}
-		public Element getCf_CommentsDisabled(String comment) {
-			return driver.FindElementByXPath("//*[@id='lstComments']//label[@title='"+comment+"']/input[@disabled='']");
-		}
-		public Element getCf_MetaDataDisabled(String metadata) {
-			return driver.FindElementByXPath("//*[@id='lstMetadata']//label[@title='"+metadata+"']/input[@disabled='']");
-		}
-		public Element getCf_DownPull(String name) {
-			return driver.FindElementByXPath("//span[text()='"+name+"']//parent::a//i[@class='fa fa-lg fa-angle-up pull-right']");
-		}
-	
-		public Element getCf_ValidationYesUsingPosition(int i) {
-			return driver.FindElementByXPath("(//button[@id='btnYes'])[position()="+i+"]");
-		}
-		public Element getCf_PreviewTagDisabled(String tagName) {
-			return driver.FindElementByXPath("//span[text()='"+tagName+"']//ancestor::div/label/input[@disabled='']");
-		}
+	public Element getTagType(int i) {
+		return driver.FindElementByXPath("//select[@class='tag-type form-control input-sm'][@id='" + i + "']");
+	}
 
-		
+	public Element getAvailableObjInStructure(String availableObjects) {
+		return driver.FindElementByXPath("//span[text()='" + availableObjects + "']");
+	}
+
+	public Element getDefaultNoBtn() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']/button[text()=' No']");
+	}
+
+	public ElementCollection getCfListSize(int i) {
+		return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td[" + i + "]");
+	}
+
+	public ElementCollection getCf_HeaderValue() {
+		return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//th");
+	}
+
+	public Element getCf_RemoveLink(int i) {
+		return driver.FindElementByXPath("//a[@id='" + i + "'][text()='Remove']");
+	}
+
+	public Element getCf_TAGTAB() {
+		return driver.FindElementByXPath("//*[@id='internal-tab-1']//span[text()='TAGS']");
+	}
+
+	public Element getCf_TagDisabled(String tag) {
+		return driver.FindElementByXPath("//*[@id='lstTags']//label[@title='" + tag + "']/input[@disabled='']");
+	}
+
+	public Element getCf_CommentsDisabled(String comment) {
+		return driver.FindElementByXPath("//*[@id='lstComments']//label[@title='" + comment + "']/input[@disabled='']");
+	}
+
+	public Element getCf_MetaDataDisabled(String metadata) {
+		return driver
+				.FindElementByXPath("//*[@id='lstMetadata']//label[@title='" + metadata + "']/input[@disabled='']");
+	}
+
+	public Element getCf_DownPull(String name) {
+		return driver.FindElementByXPath(
+				"//span[text()='" + name + "']//parent::a//i[@class='fa fa-lg fa-angle-up pull-right']");
+	}
+
+	public Element getCf_ValidationYesUsingPosition(int i) {
+		return driver.FindElementByXPath("(//button[@id='btnYes'])[position()=" + i + "]");
+	}
+
+	public Element getCf_PreviewTagDisabled(String tagName) {
+		return driver.FindElementByXPath("//span[text()='" + tagName + "']//ancestor::div/label/input[@disabled='']");
+	}
+
+	public ElementCollection getCFTableTotalShowingCount() {
+		return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']//tbody//tr");
+	}
 
 	public CodingForm(Driver driver) {
 
@@ -4678,6 +4691,7 @@ public class CodingForm {
 			}
 		}
 	}
+
 	/**
 	 * @author Sakthivel date:03/01/2022 Modified date:NA
 	 * @throws InterruptedException
@@ -4718,7 +4732,8 @@ public class CodingForm {
 
 	/**
 	 * @author Sakthivel date:03/01/2022 Modified date:NA
-	 * @Description : this method is verify CodingForm preview CheckBox Tags is  selected or UnSelected.
+	 * @Description : this method is verify CodingForm preview CheckBox Tags is
+	 *              selected or UnSelected.
 	 */
 	public void verifyCfTagDependentSelctedOrNot() throws InterruptedException {
 		driver.waitForPageToBeReady();
@@ -4743,7 +4758,6 @@ public class CodingForm {
 		softAssertion.assertFalse(getCF_Preview1().Selected());
 		base.stepInfo("Codingform preview tag1 checbox is unselected");
 	}
-	
 
 	/**
 	 * @author Sakthivel date:05/01/2022 Modified date:NA
@@ -4790,8 +4804,7 @@ public class CodingForm {
 		addLogicOptionWithIndexWithoutIncreace(5, 0, Input.notSelect, Input.thisRequired);
 		driver.waitForPageToBeReady();
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -4802,7 +4815,7 @@ public class CodingForm {
 		addNewCodingFormButton();
 		base.waitForElement(getCodingForm_EDITABLE_METADATA_Tab());
 		getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
-		for (int i = 1; i <=25; i++) {
+		for (int i = 1; i <= 25; i++) {
 			base.waitForElement(getCodingForm_MetaDataUsingIndex(i));
 			getCodingForm_MetaDataUsingIndex(i).waitAndClick(5);
 		}
@@ -4811,19 +4824,19 @@ public class CodingForm {
 		passingCodingFormName(cfName);
 		saveCodingForm();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 03/03/2022 Modified date: 03/03/2022
 	 * @Description:This method used to create coding form
 	 * @param cfName
-	 * @param small 
-	 * @param tiny 
-	 * @param average 
+	 * @param small
+	 * @param tiny
+	 * @param average
 	 * @param bit
 	 * @param action
 	 */
 	public void creatingCodingFormusingMultipleNvachar(String cfName, String tiny, String small, String average,
-			String bit,String action) throws InterruptedException {
+			String bit, String action) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		addNewCodingFormButton();
 		basedOnCreatingNewObject(null, null, tiny, "metadata");
@@ -4845,6 +4858,40 @@ public class CodingForm {
 		driver.scrollPageToTop();
 		passingCodingFormName(cfName);
 		saveCodingForm();
+
+	}
+
+	public void validateTotalShowingCountInCF() throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		ElementCollection totalShowingCount = getCFTableTotalShowingCount();
+		int showingCountInCF = totalShowingCount.size();
+
+		if (showingCountInCF < 3) {
+			for (int i = 1; i <= 3; i++) {
+				CodingformToSecurityGroup("CloningCodingForm" + Utility.dynamicNameAppender());
+				base.passedStep("CodingForm Created Successfully");
+
+			}
+
+		} else {
+			base.passedStep(
+					"There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
+		}
+	}
+
+	public void finalVerificationForCodingForm() {
+		driver.waitForPageToBeReady();
+		ElementCollection totalShowingCount = getCFTableTotalShowingCount();
+		int showingCountInCF = totalShowingCount.size();
+		System.out.println(showingCountInCF);
+		if (showingCountInCF >= 3) {
+			base.passedStep(
+					"There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
+
+		} else {
+			base.failedStep("There is no Coding Form list in this prj");
+		}
 
 	}
 }
