@@ -3621,6 +3621,7 @@ public class BaseClass {
 				failedStep("Base String doesn't contains compare String");
 			}
 		}
+	}
 
 		/**
 		 * @author Aathith.Senthilkumar
