@@ -42,8 +42,11 @@ public class AdvancedSearchRegression1 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
-				{ Input.rev1userName, Input.rev1password } };
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password }, 
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password },
+				};
 		return users;
 	}
 
@@ -167,7 +170,7 @@ public class AdvancedSearchRegression1 {
 
 		// Verify Expanded Query
 		session.advancedMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
-		session.AnalysisOfCommunicationExplorer();
+		session.addPurehitAndActionAsConceptOrComm(true ,false);
 
 		session.navigateToSessionSearchPageURL();
 		String passMSg = "Added Purehit is Present in Cart";
@@ -195,7 +198,7 @@ public class AdvancedSearchRegression1 {
 
 		// Verify Expanded Query
 		session.basicMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
-		session.AnalysisOfCommunicationExplorer();
+		session.addPurehitAndActionAsConceptOrComm(true,false);
 
 		session.navigateToSessionSearchPageURL();
 		String passMSg = "Added Purehit is Present in Cart";
