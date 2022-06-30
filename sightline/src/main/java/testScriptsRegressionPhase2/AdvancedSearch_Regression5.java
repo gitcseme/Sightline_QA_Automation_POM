@@ -99,6 +99,53 @@ public class AdvancedSearch_Regression5 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 30/06/2022  TestCase Id:RPMXCON-57256 
+	 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates
+	 *  Advanced Search (Pure Hit) >> "Manage >> Categorize" screen and Come back to Search Page.
+	 * 
+	 */
+	@Test(description ="RPMXCON-57256",groups = { "regression" })
+	public void verifyDroppedTileRetainedWhenNavigateToCategorize() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57256");
+		baseClass.stepInfo(
+				"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"Manage >> Categorize\" screen and Come back to Search Page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Perform search with metadata");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		baseClass.stepInfo("Add pure hit and navigate to categorize page");
+		sessionSearch.addPureHitAndNavigate("Categorize");
+		baseClass.stepInfo("Navigate back to search page and verify tile status");
+		sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 30/06/2022  TestCase Id:RPMXCON-57257 
+	 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates 
+	 * Advanced Search (Pure Hit) >> "Manage >>Users" screen and Come back to Search Page.
+	 * 
+	 */
+	@Test(description ="RPMXCON-57257",groups = { "regression" })
+	public void verifyDroppedTileRetainedWhenNavigateToUserPage() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57257");
+		baseClass.stepInfo(
+				"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"Manage >>Users\" screen and Come back to Search Page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Perform search with metadata");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		baseClass.stepInfo("Add pure hit and navigate to users page");
+		sessionSearch.addPureHitAndNavigate("Users");
+		baseClass.stepInfo("Navigate back to search page and verify tile status");
+		sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+		loginPage.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
