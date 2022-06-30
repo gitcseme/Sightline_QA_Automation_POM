@@ -3505,6 +3505,14 @@ public class DocViewPage {
 	public Element getAudioDocEndDuration() {
 				return driver.FindElementByXPath("//div[@class='jp-duration end']");
 			}
+	
+	public Element getDocView_CodingFormlist() {
+		return driver.FindElementById("codingFormList");
+	}
+
+	public Element getCodingFormSaveThisForm() {
+		return driver.FindElementByXPath("//div[@id='divCodingForms']//a[@id='Save']");
+	}
 
 	public DocViewPage(Driver driver) {
 
