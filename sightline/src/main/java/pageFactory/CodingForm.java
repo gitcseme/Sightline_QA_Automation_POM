@@ -3241,9 +3241,10 @@ public class CodingForm {
 		getCodingForm_Search().SendKeys(cfName);
 		base.waitForElement(getCodingForm_DeleteButton(fieldValue));
 		getCodingForm_DeleteButton(fieldValue).waitAndClick(10);
+		base.waitTime(4);
 		if (getCodingForm_SGValidation_ButtonYes().isElementAvailable(1)) {
 			base.waitForElement(getCodingForm_SGValidation_ButtonYes());
-			getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
+			getCodingForm_SGValidation_ButtonYes().waitAndClick(20);
 		} else {
 			System.out.println("Coding form Already deleted");
 		}

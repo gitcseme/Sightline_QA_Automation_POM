@@ -110,7 +110,9 @@ public class BulkAction_IndiumRegressionPhase2 {
 		// saving the search as per pre-requistes
 		int pureHit =sessionSearch.basicContentSearch(Input.searchString1)  ;
 		sessionSearch.saveSearch(savedsSarch);
-		savedSearch.SaveSearchToBulkAssign(savedsSarch,assignment,Input.codingFormName,pureHit);
+		savedSearch.savedSearch_Searchandclick(savedsSarch);
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentPage.assignmentCreationAsPerCf(assignment, Input.codeFormName);
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentPage.assignmentNameValidation(assignment);
 		
@@ -159,7 +161,7 @@ public class BulkAction_IndiumRegressionPhase2 {
 		sessionSearch.getPureHit_UsingLast().waitAndClick(20);
 		int pureHits = Integer.parseInt(sessionSearch.getPureHit_UsingLast().getText());
 		sessionSearch.bulkAssign();
-		assignmentPage.assignDocstoNewAssgnEnableAnalyticalPanel(assignmentName, Input.codeFormName, pureHit);
+		assignmentPage.assignmentCreationAsPerCf(assignmentName, Input.codeFormName);
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignmentPage.assignmentNameValidation(assignmentName);
 		baseClass.passedStep("Rmu can able to assign docs from session serach using multiple query");
