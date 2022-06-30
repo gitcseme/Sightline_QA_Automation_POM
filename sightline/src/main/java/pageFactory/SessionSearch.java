@@ -11990,7 +11990,7 @@ public class SessionSearch {
 	
 	/**
 	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify options available on DocDateDateOnly field
+	 * @description: this method will add the pure hit tile to shopping cart and navigate to required page
 	 */
 	public void addPureHitAndNavigate(String navigate) {
 		 
