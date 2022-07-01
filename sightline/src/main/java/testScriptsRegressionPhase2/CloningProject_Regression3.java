@@ -139,6 +139,11 @@ public class CloningProject_Regression3 {
 
 	}
 	
+	/**
+	 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Custom Project Fields are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54795",enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingCustomProjectFields() throws AWTException, InterruptedException {
 		
@@ -174,6 +179,11 @@ public class CloningProject_Regression3 {
 
 	}
 	
+	/**
+	 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Released Project Fields are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54794",enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingUnAssignedProjectFields() throws AWTException, InterruptedException {
 		
@@ -220,6 +230,11 @@ public class CloningProject_Regression3 {
 
 	}
 	
+	/**
+	 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Active Project Fields are copied from the source template project to the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54793",enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingActiveProjectFields() throws AWTException, InterruptedException {
 		
@@ -255,7 +270,11 @@ public class CloningProject_Regression3 {
 		loginPage.logout();
 
 	}
-	
+	/**
+	 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
+	 * @description: Verify that when User creates a new Domain  Project Using template project then corresponding Active Users are automatically active in the newly created Project.
+	 * @throws AWTException
+	 */
 	@Test(description = "RPMXCON-54842",enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingNewUserCreated() throws AWTException, InterruptedException {
 		
@@ -279,7 +298,11 @@ public class CloningProject_Regression3 {
 
 	}
 	
-			
+	/**
+	 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
+	 * @description:Verify that when User creates a new Non-domain Project Using template project then corresponding Active Users are automatically active in the newly created Project.
+	 * @throws AWTException
+	 */	
 		@Test(description = "RPMXCON-54925",enabled = true, groups = { "regression" })
 		public void userCreateNewNonDomainUsingNewUserCreated() throws AWTException, InterruptedException {
 			
