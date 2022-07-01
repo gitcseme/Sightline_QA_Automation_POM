@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.testng.Reporter;
 
 import automationLibrary.Driver;
@@ -69,6 +70,15 @@ public class CommentsPage {
 		return driver.FindElementByXPath("//div[@id='CommentsTable_info']");
 	}
 
+	//Added by Vijaya.Rani
+	public Element getCommentsTableErrorMsg() {
+		return driver.FindElementByXPath("//span[@id='CommentLabel-error']");
+	}
+	
+	public Element getEditCommentLabel() {
+		return driver.FindElementByXPath("//input[@id='CommentLabel']");
+	}
+	
 	public CommentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -220,4 +230,54 @@ public class CommentsPage {
 		}
 
 	}
+	/**
+	 * @author Vijaya.Rani ModifyDate:01/07/2022 
+	 * @Description Add comments With Error Msg
+	 */
+	public void AddCommentsWithErrorMsg(String ComentName) {
+
+		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
+		getAddCommentsBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCommentName().Visible();
+			}
+		}), Input.wait30);
+		getCommentName().SendKeys(ComentName);
+		getSaveBtn().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCommentsTableErrorMsg());
+		getCommentsTableErrorMsg().isElementAvailable(10);
+		String errorMsg = getCommentsTableErrorMsg().getText();
+		base.stepInfo(errorMsg);
+		System.out.println(errorMsg);
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:01/07/2022 
+	 * @Description Add comments And Edit
+	 */
+	public void EditCommentsIsDisabled() {
+
+		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEditCommentButton());
+		getEditCommentButton().waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String color = driver
+                .FindElement(By.xpath("//input[@id='CommentLabel']"))
+                .GetCssValue("background-color");
+        System.out.println(color);
+        String ExpectedColor = Color.fromString(color).asHex();
+        System.out.println(ExpectedColor);
+        String ActualColor = "#eeeeee";
+        if (ActualColor.equals(ExpectedColor)) {
+            base.passedStep("EditComments are not Editable,it is disabled");
+        } else {
+            base.failedStep("Edit Comments is Editable");
+        }
+	
+	}
+
 }
