@@ -697,6 +697,19 @@ public class UserManagement {
 				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + domain + "')]");
 	}
 
+	// Added by Mohan
+	public Element getProjectNameFromUserManagment(String projectName) {
+		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='" + projectName + "']");
+	}
+
+	public Element getUserListNextButton() {
+		return driver.FindElementByXPath("//a[text()='Next']");
+	}
+
+	public ElementCollection getAssgnPaginationCount() {
+		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
+	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -2392,7 +2405,7 @@ public class UserManagement {
 	}
 
 	/**
-	 *@Author Jeevitha
+	 * @Author Jeevitha
 	 */
 	public void navigateToUsersPAge() {
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
@@ -2403,7 +2416,7 @@ public class UserManagement {
 	}
 
 	/**
-	 *@Author Jeevitha
+	 * @Author Jeevitha
 	 */
 	public void saveButtonOfFunctionTab() {
 		if (getSaveEditUser().isElementAvailable(3)) {
@@ -2411,7 +2424,6 @@ public class UserManagement {
 		}
 	}
 
-	
 	/**
 	 * @author Mohan
 	 * @Description:Methods to give project access to user
@@ -2423,8 +2435,8 @@ public class UserManagement {
 	 * @param rollStatus
 	 */
 
-	public void ProjectSelectionForUser(String selectProject, String fullName, String roll, String account, boolean status,
-			boolean rollStatus) {
+	public void ProjectSelectionForUser(String selectProject, String fullName, String roll, String account,
+			boolean status, boolean rollStatus) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(5);
 		bc.waitForElement(getProjectTab());
@@ -2451,6 +2463,50 @@ public class UserManagement {
 			bc.waitForElement(getsavedomainuser());
 			getsavedomainuser().waitAndClick(5);
 			bc.stepInfo("User successfullt added into the project");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @Description To verify Assigned project is present for all kind of users
+	 */
+	public void projectIsPresentForAllUsers(String username, String role, String projectName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitTime(20);
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		getFilerApplyBtn().Click();
+
+		if (getProjectNameFromUserManagment(projectName).isElementAvailable(5)) {
+			bc.passedStep(
+					"The User haven't activate himself and " + projectName + " project is present in " + username + "");
+
+		} else if (getUserListNextButton().isElementAvailable(5)) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAssgnPaginationCount().Visible();
+				}
+			}), Input.wait30);
+			int count = ((getAssgnPaginationCount().size()) - 2);
+			for (int i = 0; i < count; i++) {
+				Boolean status = getProjectNameFromUserManagment(projectName).isElementAvailable(5);
+				if (status == true) {
+					bc.passedStep("The User haven't activate himself and " + projectName + " project is present in "
+							+ username + "");
+					break;
+				} else {
+					getUserListNextButton().isElementAvailable(5);
+					getUserListNextButton().waitAndClick(5);
+					bc.stepInfo("Expected user " + projectName + " not found in the page " + i);
+				}
+			}
+
+		} else {
+
+			bc.failedStep("The User is not present in the UserManagement Page");
 		}
 
 	}

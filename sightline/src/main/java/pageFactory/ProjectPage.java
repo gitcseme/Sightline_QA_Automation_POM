@@ -692,4 +692,160 @@ public class ProjectPage {
 			bc.failedStep("notification still not received,it's get too much time");
 		}
 	}
+	
+	/**
+	 * @author VijayaRani
+	 * @Description To select Nondomain as Client type and clone a project
+	 */
+	public void selectProjectToBeCopiedNonDomain(String projectname,String clientName,String projectName, String hcode,String toggleNo) {
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getAddProjectBtn().Visible();
+            }
+        }), Input.wait30);
+        getAddProjectBtn().Click();
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getProjectName().Visible();
+            }
+        }), Input.wait30);
+        getProjectName().SendKeys(projectname);
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getSelectEntityType().Visible();
+            }
+        }), Input.wait30);
+        getSelectEntityType().selectFromDropdown().selectByVisibleText("Not a Domain");
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getSelectEntity().Visible();
+            }
+        }), Input.wait30);
+        getSelectEntity().selectFromDropdown().selectByVisibleText(clientName);
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getHCode().Visible();
+            }
+        }), Input.wait30);
+        getHCode().SendKeys(hcode);
+
+        driver.scrollingToBottomofAPage();
+
+        bc.waitForElement(getCopyProjectName());
+        getCopyProjectName().selectFromDropdown().selectByVisibleText(projectName);
+
+        if (toggleNo.equals("1")) {
+            String user = getUserToggleButton().GetAttribute("data-swchoff-text");
+            if (user.contains("OFF")) {
+                getUserToggleButton().waitAndClick(5);
+            }
+
+        }
+
+        else if (toggleNo.equals("2")) {
+            String savedSearch = getSavedSearchToggleButton().GetAttribute("data-swchoff-text");
+            if (savedSearch.contains("OFF")) {
+                getSavedSearchToggleButton().waitAndClick(5);
+            }
+
+        }
+
+        else if (toggleNo.equals("3")) {
+            String assignment = getAssignmnetToggleButton().GetAttribute("data-swchoff-text");
+            if (assignment.contains("OFF")) {
+                getAssignmnetToggleButton().waitAndClick(5);
+            }
+
+        }
+
+        else if (toggleNo.equals("4")) {
+            String user = getUserToggleButton().GetAttribute("data-swchoff-text");
+            if (user.contains("OFF")) {
+                getUserToggleButton().waitAndClick(5);
+                getSavedSearchToggleButton().waitAndClick(5);
+            } else if (toggleNo.equals("0")) {
+                bc.stepInfo("The test case doesn't need Toggle to be enabled");
+            }
+
+        } else {
+            bc.stepInfo("The required toggle is not visible");
+        }
+
+
+        driver.scrollingToBottomofAPage();
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getProjectDBServerDropdown().Visible();
+            }
+        }), Input.wait30);
+        getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getProjectServerPath().Visible();
+            }
+        }), Input.wait30);
+        getProjectServerPath().Click();
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getIngestionserverpath().Visible();
+            }
+        }), Input.wait30);
+        getIngestionserverpath().selectFromDropdown().selectByIndex(0);
+        getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getProductionserverpath().Visible();
+            }
+        }), Input.wait30);
+        getProductionserverpath().Click();
+
+        getProjectFolder().SendKeys("Automation");
+
+        getIngestionFolder().SendKeys("Automation");
+
+        getProductionFolder().SendKeys("Automation");
+
+        driver.scrollPageToTop();
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getAddProject_SettingsTab().Visible();
+            }
+        }), Input.wait30);
+        getAddProject_SettingsTab().waitAndClick(10);
+        ;
+
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getNoOfDocuments().Visible();
+            }
+        }), Input.wait30);
+        getNoOfDocuments().SendKeys("999");
+
+        final BaseClass bc = new BaseClass(driver);
+        final int Bgcount = bc.initialBgCount();
+        System.out.println(Bgcount);
+        UtilityLog.info(Bgcount);
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getButtonSaveProject().Visible();
+            }
+        }), Input.wait30);
+        driver.scrollingToBottomofAPage();
+        getButtonSaveProject().Click();
+
+        bc.VerifySuccessMessage(
+                "Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+        
+
+    }
 }
