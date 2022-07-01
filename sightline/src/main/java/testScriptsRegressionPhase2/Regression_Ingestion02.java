@@ -62,7 +62,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49320",enabled = true, groups = { "regression" })
-	public void verifyHelpContentForKickOffAnalyticsAutomatically() throws InterruptedException {
+	public void TCA1verifyHelpContentForKickOffAnalyticsAutomatically() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49320");
 		baseClass.stepInfo("ICE: Verify the help content for Kick Off Analytics Automatically option");
@@ -74,7 +74,6 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verifying the help content for Kick Off Analytics Automatically option");
 		ingestionPage.verifyHelpContentOnProjectCreationPage(Input.kickOffAnalytics, Input.kickOffHelpContent);
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -83,7 +82,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49321",enabled = true, groups = { "regression" })
-	public void verifyHelpContentForIncrementalAnalytics() throws InterruptedException {
+	public void TCA2verifyHelpContentForIncrementalAnalytics() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49321");
 		baseClass.stepInfo("ICE: Verify the help content for Run Incremental Analytics for New Small Data (<20%) option");
@@ -95,7 +94,6 @@ public class Regression_Ingestion02 {
 		baseClass.stepInfo("Verifying the help content for run incremental analytics option");
 		ingestionPage.verifyHelpContentOnProjectCreationPage(Input.incrementalAnalytics, Input.incrementalHelpContent);
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -105,7 +103,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49319",enabled = true, groups = { "regression" })
-	public void verifyOptionsAvailableInProjectSetting() throws InterruptedException {
+	public void TCA3verifyOptionsAvailableInProjectSetting() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49319");
 		baseClass.stepInfo("ICE: Verify the options available in project settings");
@@ -126,7 +124,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49490",enabled = true, groups = { "regression" })
-	public void verifyGenerateSearchablePdfOption() throws InterruptedException {
+	public void TCA4verifyGenerateSearchablePdfOption() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49490");
 		baseClass.stepInfo("Verify that in Ingestion Wizard page, in the TIFF section'Generate Searchable PDF for TIFFs' options should be displayed");
@@ -144,7 +142,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48244",enabled = true, groups = { "regression" })
-	public void verifyCountInAudioDocsIndexing() throws InterruptedException {
+	public void TCA5verifyCountInAudioDocsIndexing() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48244");
 		baseClass.stepInfo("To verify Document Count for Audio Docs in Indexing section");
@@ -181,7 +179,6 @@ public class Regression_Ingestion02 {
 		// Rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
-	
 	}
 	
 	/**
@@ -190,7 +187,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48236",enabled = true, groups = { "regression" })
-	public void verifyAudioIndexingErrorMessage() throws InterruptedException {
+	public void TCA6verifyAudioIndexingErrorMessage() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48236");
 		baseClass.stepInfo("To Verify In Ingestions, for audio indexing, there should not be any error message.");
@@ -206,7 +203,6 @@ public class Regression_Ingestion02 {
 		//rollback
 		ingestionPage.rollBackIngestion();
 		loginPage.logout();
-		
 	}
 	
 	/**
@@ -215,7 +211,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47372",enabled = true, groups = { "regression" })
-	public void verifyDataSearchWhileindexProcessRunning() throws InterruptedException {
+	public void TCA7verifyDataSearchWhileindexProcessRunning() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47372");
 		baseClass.stepInfo("To verify that user is not able to search the data if Ingestions Indexing is running");
@@ -238,6 +234,7 @@ public class Regression_Ingestion02 {
 		else {
 			baseClass.failedStep("able to view the data if ingestion indexing is running");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -246,7 +243,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49552",enabled = true, groups = { "regression" })
-	public void verifyIngestionMetaDataAvailable() throws InterruptedException {
+	public void TCA8verifyIngestionMetaDataAvailable() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49552");
 		baseClass.stepInfo("Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is available");
@@ -281,7 +278,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49556",enabled = true, groups = { "regression" })
-	public void verifyAddOnlyIngestionWithNewEmailMetadata() throws InterruptedException {
+	public void TCA9verifyAddOnlyIngestionWithNewEmailMetadata() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49556");
 		baseClass.stepInfo("Verify Ingestion should published successfully with new Email metadata");
@@ -299,6 +296,7 @@ public class Regression_Ingestion02 {
 		else {
 			baseClass.passedStep("Ingestion already present in the project");
 		}
+		loginPage.logout();
 	}
 	
 	/**
@@ -307,7 +305,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48290",enabled = true, groups = { "regression" })
-	public void verifyAddOnlyIngestionWithDefaultDelimiter() throws InterruptedException {
+	public void TCB4verifyAddOnlyIngestionWithDefaultDelimiter() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48290");
 		baseClass.stepInfo("To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiter");
@@ -342,7 +340,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48148",enabled = true, groups = { "regression" })
-	public void verifyIngestingTranscriptAlongWithNative() throws InterruptedException {
+	public void TCB1verifyIngestingTranscriptAlongWithNative() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48148");
 		baseClass.stepInfo("To Verify User is able to Ingest Transcript  along with native");
@@ -371,7 +369,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47305",enabled = true, groups = { "regression" })
-	public void verifyProgressBarAndCountDetailsOnTiles() throws InterruptedException {
+	public void TCB2verifyProgressBarAndCountDetailsOnTiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47305");
 		baseClass.stepInfo("Verify progress bar and count data updated once ingestion process started");
@@ -396,7 +394,7 @@ public class Regression_Ingestion02 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47312",enabled = true, groups = { "regression" })
-	public void verifyIngestionFromDraftMode() throws InterruptedException {
+	public void TCB3verifyIngestionFromDraftMode() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47312");
 		baseClass.stepInfo("To verify that user can Ingest the files which are in Draft Mode");
@@ -416,10 +414,7 @@ public class Regression_Ingestion02 {
 		baseClass.passedStep("Ingestion status changed from draft to catalog state");
 		loginPage.logout();
 	}
-	
-	
-	
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

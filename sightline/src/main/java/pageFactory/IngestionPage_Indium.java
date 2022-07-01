@@ -10979,6 +10979,7 @@ public class IngestionPage_Indium {
 		
 		public void performAutomationAllsourcesIngestion(String datFile,String docKey) {
 			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AllSourcesFolder);
+			base.waitTime(2);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getDATDelimitersNewLine().Visible();
@@ -11265,7 +11266,16 @@ public class IngestionPage_Indium {
 
 		}
 		
-		
+		public String getPublishedIngestionName(String dataset) {
+			String ingestionName="null";
+			if (getAllIngestionName(dataset).isElementAvailable(5)) {
+				  ingestionName =getAllIngestionName(dataset).getText();
+			}
+			else {
+				System.out.println("dataset not available");
+			}
+			return ingestionName;
+		}
 		
 		
 }
