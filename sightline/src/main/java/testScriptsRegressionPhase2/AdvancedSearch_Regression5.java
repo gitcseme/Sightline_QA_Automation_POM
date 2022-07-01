@@ -114,7 +114,7 @@ public class AdvancedSearch_Regression5 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Perform search with metadata");
-		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
 		baseClass.stepInfo("Add pure hit and navigate to categorize page");
 		sessionSearch.addPureHitAndNavigate("Categorize");
 		baseClass.stepInfo("Navigate back to search page and verify tile status");
@@ -137,7 +137,7 @@ public class AdvancedSearch_Regression5 {
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Perform search with metadata");
-		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
 		baseClass.stepInfo("Add pure hit and navigate to users page");
 		sessionSearch.addPureHitAndNavigate("Users");
 		baseClass.stepInfo("Navigate back to search page and verify tile status");
