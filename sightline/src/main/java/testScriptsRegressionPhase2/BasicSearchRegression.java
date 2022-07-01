@@ -22,6 +22,7 @@ import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -66,7 +67,7 @@ public class BasicSearchRegression {
 	 *              40001000008)
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57359", dataProvider = "reserveWords", groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-57359", enabled = false, dataProvider = "reserveWords", groups = { "regression" })
 	public void verifyBellyBandMsg(String username, String password, String data1) throws InterruptedException {
 
 		// login as User
@@ -95,7 +96,7 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57347", dataProvider = "Users", groups = { "regression" }, priority = 2)
+	@Test(description = "RPMXCON-57347", enabled = false, dataProvider = "Users", groups = { "regression" })
 	public void verifyWrappedParenthesis(String username, String password) throws InterruptedException {
 		String search = "(\"that this\")";
 
@@ -119,7 +120,7 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57345", dataProvider = "Users", groups = { "regression" }, priority = 3)
+	@Test(description = "RPMXCON-57345", enabled = false, dataProvider = "Users", groups = { "regression" })
 	public void verifyPhraseInBasicSearch(String username, String password) throws InterruptedException {
 		String search = "\"Government Agency Correspondance\"";
 
@@ -147,7 +148,7 @@ public class BasicSearchRegression {
 	 * @param data1
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57277", dataProvider = "reserve", groups = { "regression" }, priority = 4)
+	@Test(description = "RPMXCON-57277", enabled = false, dataProvider = "reserve", groups = { "regression" })
 	public void verifyPhraseForSearch(String data1) throws InterruptedException {
 
 		// login as Users
@@ -170,7 +171,7 @@ public class BasicSearchRegression {
 	 *              [RPMXCON-57117]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57117", groups = { "regression" }, priority = 5)
+	@Test(description = "RPMXCON-57117", enabled = true, groups = { "regression" })
 	public void verifyWarningMsgOnAdvPage() throws InterruptedException {
 
 		// login as Users
@@ -201,7 +202,7 @@ public class BasicSearchRegression {
 	 *              with wrapper quotations. [RPMXCON-57115]
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57115", groups = { "regression" }, priority = 6)
+	@Test(description = "RPMXCON-57115", enabled = true, groups = { "regression" })
 	public void verifyWarningMsgOnBsPage() throws InterruptedException {
 
 		// login as Users
@@ -220,6 +221,82 @@ public class BasicSearchRegression {
 		String expectedMsg = "Warning Message is Not Displayed ";
 		boolean flag = session.getQueryAlertGetText().isElementAvailable(5);
 		base.printResutInReport(flag, "Warning message is displayed", expectedMsg, "Fail");
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	@DataProvider(name = "data")
+	public Object[][] data() {
+		return new Object[][] { { "“ProximitySearch (Truthful OR Recall)”~9" },
+				{ "\"ProximitySearch (Truthful OR Recall)\"~9" }, };
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that result appears for proximity having 2 words with
+	 *              OR in Basic Search Query Screen.
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57359", enabled = true, dataProvider = "data", groups = { "regression" })
+	public void verifyResultForTwoWords(String data) throws InterruptedException {
+
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-57303 Basic Search");
+		base.stepInfo("Verify that result appears for proximity having 2 words with OR in Basic Search Query Screen.");
+
+		// Verify Expanded Query
+		session.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		base.waitForElement(session.getYesQueryAlert());
+		session.getYesQueryAlert().waitAndClick(10);
+
+		// verify session search Page
+		session.returnPurehitCount();
+		session.verifySessionSearchPageUrl();
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that UnFolder works properly using Bulk Folder Action
+	 *              in Basic Search Screen
+	 * @param data1
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57186", enabled = true, groups = { "regression" })
+	public void verifyPhraseForSearch1() throws InterruptedException {
+		String folder = "FOLDER" + Utility.dynamicNameAppender();
+
+		// login as Users
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57186 Basic Search");
+		base.stepInfo("Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
+
+		// perform bulk folder
+		int purehit=session.basicContentSearch(Input.searchString5);
+		session.bulkFolder(folder);
+
+		//verify doc count after bulk folder
+		TagsAndFoldersPage tagsAndFolder = new TagsAndFoldersPage(driver);
+		tagsAndFolder.navigateToTagsAndFolderPage();
+		base.stepInfo("navigated to Tags & folder page");
+		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folder, purehit);
+		
+		//unfolder doc in session search page
+		session.navigateToSessionSearchPageURL();
+		base.stepInfo("navigated to session search page");
+		session.bulkUnFolder(folder);
+		
+		//verify doc count after bulk unfolder
+		tagsAndFolder.navigateToTagsAndFolderPage();
+		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folder, 0);
+		
+		//delet folder
+		tagsAndFolder.deleteAllFolders(folder);
 
 		softAssertion.assertAll();
 		login.logout();
