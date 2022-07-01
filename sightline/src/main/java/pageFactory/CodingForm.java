@@ -23,6 +23,7 @@ public class CodingForm {
 	SoftAssert softAssertion;
 	ReusableDocViewPage reusableDocView;
 	final DocViewPage doc;
+	AssignmentsPage assgnpage;
 
 	public Element getAddNewCodingFormBtn() {
 		return driver.FindElementByXPath("//*[@id='content']//button[@class='btn btn-primary new-coding-form']");
@@ -1389,12 +1390,22 @@ public class CodingForm {
 		return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']//tbody//tr");
 	}
 
+	//Added by shilpi for coding form changes
+	public Element getSetCFButton() {return driver.FindElementById("btnSetSGCodingForms");	}
+	public Element getSFFormCol(String cfname) {return driver.FindElementByXPath(
+			".//*[@id='CodingFormDataTable']//td[text()='"+cfname+"']/../td[text()='YES (Default)']");
+	}
+
+	
+	
+	
 	public CodingForm(Driver driver) {
 
 		this.driver = driver;
 		base = new BaseClass(driver);
 		doc = new DocViewPage(driver);
 		reusableDocView = new ReusableDocViewPage(driver);
+		assgnpage = new AssignmentsPage(driver);
 //		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
 
@@ -4895,4 +4906,50 @@ public class CodingForm {
 		}
 
 	}
+
+
+/**@author Shilpi
+ * @description This method used to assign coding form to security group
+ * 
+ */
+ public void AssignCFstoSG(String CFName) {
+	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 base.waitForElement(getSetCFButton());
+	
+	
+	 getSetCFButton().ScrollTo();
+	 getSetCFButton().waitAndClick(10);
+
+	    assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
+		base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
+		assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
+		assgnpage.getSelectCF_CheckBox(CFName).Click();
+		base.waitTime(1);
+		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
+		base.waitTime(1);
+		assgnpage.sortOrderNxtBtn().ScrollTo();
+		assgnpage.sortOrderNxtBtn().Click();
+		if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+			assgnpage.sortCodeFormOrderSaveBtn().Click();
+			base.waitTime(2);
+			base.passedStep("Coding Form applied successfully");
+		} else {
+			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+		}
+		base.waitForElement(getManageCodingFormButton());
+		if(getManageCodingFormButton().Displayed()) {
+			base.waitForElement(getCodingForm_Search());
+			getCodingForm_Search().SendKeys(CFName);
+		   System.out.println( getSFFormCol(CFName).getText());
+		softAssertion.assertEquals("YES (Default)", getSFFormCol(CFName).getText());
+		softAssertion.assertAll();
+		base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+       }
+       else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+		}
+ 
+ }
 }
+
+
