@@ -22,7 +22,7 @@ import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SecurityGroupsPage {
-    
+
 	Driver driver;
 	BaseClass bc;
 
@@ -280,51 +280,61 @@ public class SecurityGroupsPage {
 	public ElementCollection getAvailableSGlist() {
 		return driver.FindElementsByXPath("//select[@id='ddlSecurityGroupsList']//option");
 	}
-	
+
 	public Element getAnnotationDD() {
 		return driver.FindElementByXPath("//div[@id='annotationJSTree']//ul[@class='jstree-children']");
 	}
-	
-	//Added by Krishna
-	
+
+	// Added by Krishna
+
 	public Element daFirstBlock() {
 		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-0']//*[@id=\"taskbasic\"]");
 	}
-	
+
 	public Element daFirstTabledata(int i) {
 		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-0']//*[@id='taskbasic']/tbody/tr[" + i + "]/td[1]/a");
 	}
-	
+
 	public Element daSecondBlock() {
 		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-2']//*[@id=\"taskbasic\"]");
 	}
-	
+
 	public Element daSecondTabledata(int i) {
-		return driver.FindElementByXPath("//div[@id = 'rmu-wid-id-2']//*[@id='taskbasic']/tbody/tr[\" + i + \"]/td[1]/a");
+		return driver
+				.FindElementByXPath("//div[@id = 'rmu-wid-id-2']//*[@id='taskbasic']/tbody/tr[\" + i + \"]/td[1]/a");
 	}
-	
+
 	public ElementCollection daFirstTableList() {
 		return driver.FindElementsByXPath("//div[@id = 'rmu-wid-id-0']//*[@id=\\\"taskbasic\\\"]/thead/tr/th[1]");
 	}
-	
+
 	public Element productionPageSelectedSG() {
 		return driver.FindElementByXPath("//*[@id=\"SecurityGrpList\"]/option[@selected = \"selected\"]");
 	}
-	
+
 	public Element securityGroupTab() {
 		return driver.FindElementById("SecurityGroup-selector");
 	}
-	
+
 	public Element backToDomain() {
 		return driver.FindElementById("BackToDomain");
 	}
-	
+
 	public Element productionLeftMenu() {
 		return driver.FindElementByXPath("//a[@name = 'Productions']");
 	}
-	
+
 	public ElementCollection getTolSecurityGroupCount() {
 		return driver.FindElementsByXPath("//select[@id='ddlSecurityGroupsList']/option");
+	}
+
+	// Added by Mohan
+	public Element getProjectFieldsAvailableInProjects(String projectFieldValue) {
+		return driver.FindElementByXPath("//div[@id='fieldJSTree']//a[text()='" + projectFieldValue + "']");
+	}
+
+	public Element getProjectFieldsAddToSecurityGroup(String projectFieldValue) {
+		return driver.FindElementByXPath("//div[@id='fieldJSTree_Selected']//a[text()='" + projectFieldValue + "']");
 	}
 
 	public SecurityGroupsPage(Driver driver) {
@@ -790,7 +800,7 @@ public class SecurityGroupsPage {
 				} catch (Exception e) {
 					bc.waitForElement(getSG_AnnSaveButton());
 					bc.waitTillElemetToBeClickable(getSG_AnnSaveButton());
-				} 
+				}
 			}
 			bc.waitForElement(bc.getSuccessMsg());
 			bc.getSuccessMsg().waitAndFind(10);
@@ -818,10 +828,10 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(redactionTags());
 		redactionTags().waitAndClick(10);
-		
+
 		bc.waitForElement(SelectredactionCheckBox(Tag));
 		SelectredactionCheckBox(Tag).waitAndClick(10);
-		
+
 		bc.waitForElement(getSG_AddAnnLayer_Left());
 		getSG_AddAnnLayer_Left().waitAndClick(10);
 
@@ -840,17 +850,17 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAnnotationLayerLink());
 		getAnnotationLayerLink().waitAndClick(10);
-		
+
 		Actions actions = new Actions(driver.getWebDriver());
 		actions.sendKeys(Keys.SPACE).build().perform();
-		
-		bc.waitTime(2); 
+
+		bc.waitTime(2);
 		bc.waitForElement(getAnnotationDD());
 		getAnnotationDD().waitAndClick(10);
 
 		bc.waitForElement(getAnnotation(annotation));
 		getAnnotation(annotation).waitAndClick(10);
-		
+
 		System.out.println("Selected Annotation layer : " + annotation);
 		bc.stepInfo("Selected Annotation layer : " + annotation);
 
@@ -1048,14 +1058,14 @@ public class SecurityGroupsPage {
 		}
 		return securitygroupname;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date:5/05/2021 Modified date: 23/8/2021 Modified
 	 *         by:Baskar.
 	 * @Description:project field assign to security group
 	 */
 
-	public void addProjectFieldtoSG(String securityGroup,String projectTag) {
+	public void addProjectFieldtoSG(String securityGroup, String projectTag) {
 		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		bc.waitForElement(getSecurityGroupList());
 		getSecurityGroupList().selectFromDropdown().selectByVisibleText(securityGroup);
@@ -1073,35 +1083,34 @@ public class SecurityGroupsPage {
 		bc.waitTillElemetToBeClickable(getSG_ProjectFieldButton());
 		getSG_ProjectFieldButton().waitAndClick(10);
 	}
-	
 
 	/**
 	 * Method to select project from DAU
+	 * 
 	 * @author Sai.Duvvuru
 	 */
-	
+
 	public void selectProjectFromDA(String projectname) {
-		 WebElement mytable = daFirstBlock().getWebElement();
-		    List<String> projects = new ArrayList<String>();
-		    List < WebElement > rows_table = mytable.findElements(By.tagName("tr"));
-	    	//To calculate no of rows In table.
-	    	int rows_count = rows_table.size();
-		    System.out.println(rows_count);
-		    for (int row = 1; row < rows_count; row++) {	    	
-		    	projects.add(daFirstTabledata(row).getText());
-		    }
-		    System.out.println(projects);
-		   int index = projects.indexOf(projectname);
-		   System.out.println(index);
-		   driver.waitForPageToBeReady();
-		   bc.waitTillElemetToBeClickable(daFirstTabledata(index+1));
-		   daFirstTabledata(index+1).waitAndClick(5);
-		   bc.waitForElement(securityGroupTab());
+		WebElement mytable = daFirstBlock().getWebElement();
+		List<String> projects = new ArrayList<String>();
+		List<WebElement> rows_table = mytable.findElements(By.tagName("tr"));
+		// To calculate no of rows In table.
+		int rows_count = rows_table.size();
+		System.out.println(rows_count);
+		for (int row = 1; row < rows_count; row++) {
+			projects.add(daFirstTabledata(row).getText());
+		}
+		System.out.println(projects);
+		int index = projects.indexOf(projectname);
+		System.out.println(index);
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(daFirstTabledata(index + 1));
+		daFirstTabledata(index + 1).waitAndClick(5);
+		bc.waitForElement(securityGroupTab());
 	}
 
-	
-
-	/*@author Vijaya.Rani
+	/*
+	 * @author Vijaya.Rani
 	 * 
 	 */
 	public void validateSecurityGroupsCount() {
@@ -1109,7 +1118,7 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSecurityGroupList());
 		getSecurityGroupList().waitAndClick(5);
-		
+
 		ElementCollection totFolderCount = getTolSecurityGroupCount();
 		int totFolderSize = totFolderCount.size();
 		if (totFolderSize > 3) {
@@ -1120,5 +1129,43 @@ public class SecurityGroupsPage {
 			bc.failedStep("There are no SecurityGroup in this project");
 		}
 
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @Description To verify UnassignField is not present in the newly created project
+	 */
+	public void verifyUnAssignedInSecurityGroup(String fieldName) {
+
+		bc.waitForElement(getProjectFieldLabel());
+		getProjectFieldLabel().waitAndClick(5);
+
+		bc.waitTime(2);
+
+		bc.waitForElement(getProjectFieldsAddToSecurityGroup(fieldName));
+		if (getProjectFieldsAddToSecurityGroup(fieldName).isElementAvailable(5)) {
+			bc.failedStep("UnReleased Field is Available in newly created Project.");
+
+		} else {
+			bc.passedStep("UnReleased Field is not Available in newly created Project.");
+		}
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @Description To verify AssignField is present in the newly created project
+	 */
+	public void verifyAssignedInSecurityGroup(String fieldName) {
+
+		bc.waitForElement(getProjectFieldLabel());
+		getProjectFieldLabel().waitAndClick(5);
+
+		bc.waitForElement(getProjectFieldsAddToSecurityGroup(fieldName));
+		if (getProjectFieldsAddToSecurityGroup(fieldName).isElementAvailable(5)&&getProjectFieldsAvailableInProjects(fieldName).isElementAvailable(5)) {
+			bc.passedStep("Released Field is Available in newly created Project.");
+
+		} else {
+			bc.failedStep("Released Field is not Available in newly created Project.");
+		}
 	}
 }
