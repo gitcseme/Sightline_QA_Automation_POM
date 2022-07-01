@@ -28101,4 +28101,145 @@ public class DocViewPage {
 		base.stepInfo("copied text is pasted on codingform comment box");
 		return status;
 	}
+	
+	/**
+	 * @author Baskar
+	 * @modiedOn : 06/30/200
+	 * @param redactionTag
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void fullAudioReduction(String redactionTag) throws InterruptedException, ParseException {
+		// adding redactions
+		driver.waitForPageToBeReady();
+		getDocview_RedactionsTab().waitAndClick(10);
+
+		// Audio Redaction Tag deletion
+		deleteAudioRedactionTag();
+
+		// click on + icon to add redactions
+		getDocview_RedactionsTab_Add().waitAndClick(10);
+
+		// Get Audio duration start and End time first
+		audioRedactionUsingDocTime();
+
+		// Check Default Selection
+		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"In default : Application automatically selected the ‘Default Redaction Tag’",
+				"In default : invalid redaction tag selected");
+
+		// select redaction tags
+		base.waitForElement(getDocview_AudioRedactions());
+		getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(redactionTag);
+		driver.waitForPageToBeReady();
+
+		// click on save button
+		getSaveButton().waitAndClick(20);
+
+		// verify success message
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Record added Successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Redaction added successfully");
+		UtilityLog.info("Redaction added successfully");
+	}
+	
+	/**
+	 * @author Baskar
+	 * @throws ParseException
+	 */
+	public void audioRedactionUsingDocTime() throws ParseException {
+		// Get Audio duration start and End time first
+		String Audiostarttime = getDocview_Audio_StartTime().getText();
+		System.out.println(Audiostarttime);
+		UtilityLog.info(Audiostarttime);
+		String Audioendtime = getDocview_Audio_EndTime().getText();
+		System.out.println(Audioendtime);
+		UtilityLog.info(Audioendtime);
+
+		// Doing audio redaction for start to end
+		// Enter time in start field
+		getDocview_AddRedactions_StartTime().SendKeys(Audiostarttime);
+
+		// Enter time in end field
+		getDocview_AddRedactions_EndTime().SendKeys(Audioendtime);
+	}
+	
+	/**
+	 * @author Baskar
+	 * @throws ParseException
+	 */
+	public void audioRedactionBasesOnTime(int timeOne, int timeTwo) throws ParseException {
+		// Get Audio duration start and End time first
+		String Audiostarttime = getDocview_Audio_StartTime().getText();
+		System.out.println(Audiostarttime);
+		UtilityLog.info(Audiostarttime);
+		String Audioendtime = getDocview_Audio_EndTime().getText();
+		System.out.println(Audioendtime);
+		UtilityLog.info(Audioendtime);
+
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		Date d = df.parse(Audiostarttime);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.MINUTE, timeOne);
+		String newTime = df.format(cal.getTime());
+		System.out.println(newTime);
+		UtilityLog.info(newTime);
+
+		cal.add(Calendar.MINUTE, timeTwo);
+		String newTime1 = df.format(cal.getTime());
+		System.out.println(newTime1);
+		UtilityLog.info(newTime1);
+
+		// Enter time in start field
+		getDocview_AddRedactions_StartTime().SendKeys(newTime);
+
+		// Enter time in end field
+		getDocview_AddRedactions_EndTime().SendKeys(newTime1);
+	}
+	
+	
+	/**
+	 * @author Baskar
+	 * @modiedOn : 06/30/200
+	 * @param redactionTag
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void audioRedactionUsingAudioRange(String redactionTag,int timeOne,int timeTwo) throws InterruptedException, ParseException {
+		// adding redactions
+		driver.waitForPageToBeReady();
+		getDocview_RedactionsTab().waitAndClick(10);
+
+		// Audio Redaction Tag deletion
+		deleteAudioRedactionTag();
+
+		// click on + icon to add redactions
+		getDocview_RedactionsTab_Add().waitAndClick(10);
+		// Get Audio duration start and End time first
+		audioRedactionBasesOnTime(timeOne,timeTwo);
+
+		// Check Default Selection
+		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"In default : Application automatically selected the ‘Default Redaction Tag’",
+				"In default : invalid redaction tag selected");
+
+		// select redaction tags
+		base.waitForElement(getDocview_AudioRedactions());
+		getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(redactionTag);
+		driver.waitForPageToBeReady();
+
+		// click on save button
+		getSaveButton().waitAndClick(20);
+
+		// verify success message
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Record added Successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Redaction added successfully");
+		UtilityLog.info("Redaction added successfully");
+	}
 }
