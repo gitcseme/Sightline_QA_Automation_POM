@@ -256,7 +256,7 @@ public class CloningProject_Regression3 {
 
 	}
 	
-	@Test(description = "RPMXCON-54842",enabled = true, groups = { "regression" },priority = 6)
+	@Test(description = "RPMXCON-54842",enabled = true, groups = { "regression" })
 	public void userCreateNewDomainUsingNewUserCreated() throws AWTException, InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-54842");
@@ -280,7 +280,7 @@ public class CloningProject_Regression3 {
 	}
 	
 			
-		@Test(description = "RPMXCON-54925",enabled = true, groups = { "regression" },priority = 6)
+		@Test(description = "RPMXCON-54925",enabled = true, groups = { "regression" })
 		public void userCreateNewNonDomainUsingNewUserCreated() throws AWTException, InterruptedException {
 			
 			baseClass.stepInfo("Test case Id: RPMXCON-54925");
