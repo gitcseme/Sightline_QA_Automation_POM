@@ -91,7 +91,7 @@ public class Production_Page_Regression {
 	 *                     change on Production progress status bar on Tile View
 	 */
 
-@Test(description="RPMXCON-55991",enabled = true, groups = { "regression" }, priority = 1)
+@Test(description="RPMXCON-55991",enabled = true, groups = { "regression" } )
 	public void verifyStatusAfterRegeneratingProductionInHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55991- Production Sprint 06");
@@ -177,7 +177,7 @@ public class Production_Page_Regression {
 	 *                     change on Production progress status bar on Generate page
 	 */
 
-	@Test(description="RPMXCON-55992",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description="RPMXCON-55992",enabled = true, groups = { "regression" } )
 	public void verifyStatusAfterRegeneratingProductionInGeneratePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55992- Production Sprint 06");
@@ -241,7 +241,7 @@ public class Production_Page_Regression {
 	 *                     Placeholder
 	 */
 
-	@Test(description="RPMXCON-56087",enabled = false,groups = { "regression" }, priority = 3)
+	@Test(description="RPMXCON-56087",enabled = true,groups = { "regression" } )
 	public void generateTIFFWithTechIssue() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-56087- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
@@ -289,7 +289,7 @@ public class Production_Page_Regression {
 	 *                     Produced Documents Placeholder
 	 */
 
-	@Test(description="RPMXCON-56089",enabled = false,groups = { "regression" }, priority = 4)
+	@Test(description="RPMXCON-56089",enabled = true,groups = { "regression" } )
 	public void generateTIFFWithNativelyPlaceholder() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56089- Production Sprint 06");
@@ -336,7 +336,7 @@ public class Production_Page_Regression {
 	 *                     data field '
 	 */
 
-	@Test(description="RPMXCON-56093",enabled = false, groups = { "regression" }, priority = 5)
+	@Test(description="RPMXCON-56093",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageInDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56093- Production Sprint 06");
@@ -369,7 +369,7 @@ public class Production_Page_Regression {
 	 *                     field more than one time'
 	 */
 
-	@Test(description="RPMXCON-56092",enabled = false, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-56092",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageInDATByRepeatingSameField() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56092- Production Sprint 07");
@@ -417,7 +417,7 @@ public class Production_Page_Regression {
 	 *                     with different source field and same DAT field name'
 	 */
 
-	@Test(description="RPMXCON-56098",enabled = true,  groups = { "regression" }, priority = 7)
+	@Test(description="RPMXCON-56098",enabled = true,  groups = { "regression" } )
 	public void verifyErrorMessageInDATForSameDatFieldName() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56098- Production Sprint 07");
@@ -485,7 +485,7 @@ public class Production_Page_Regression {
 	 *                     with special character'
 	 */
 
-	@Test(description="RPMXCON-56097",enabled = false,  groups = { "regression" }, priority = 8)
+	@Test(description="RPMXCON-56097",enabled = true,  groups = { "regression" } )
 	public void verifyErrorMessageInDATWithSpecialCharacter() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56097- Production Sprint 07");
@@ -518,7 +518,7 @@ public class Production_Page_Regression {
 	 *                     other that alphabet character'
 	 */
 
-	@Test(description="RPMXCON-56096",enabled = false, groups = { "regression" }, priority = 9)
+	@Test(description="RPMXCON-56096",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageInDATAddingOtherCharacter() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56096- Production Sprint 07");
@@ -550,7 +550,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify the error message for DAT component when 'Don't add bate
 	 *                     number data field'
 	 */
-	@Test(description="RPMXCON-56094",enabled = false,  groups = { "regression" }, priority = 10)
+	@Test(description="RPMXCON-56094",enabled = true,  groups = { "regression" } )
 	public void verifyErrorMessageInDATByNotAddingBates()  throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56094- Production Sprint 07");
@@ -599,7 +599,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify the error message for DAT component when 'don't select
 	 *                     DAT component'
 	 */
-	@Test(description="RPMXCON-56095",enabled = false,  groups = { "regression" }, priority = 11)
+	@Test(description="RPMXCON-56095",enabled = true,  groups = { "regression" } )
 	public void verifyErrorMessageInDATByNotSelectingDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56095- Production Sprint 07");
@@ -647,7 +647,7 @@ public class Production_Page_Regression {
 	 *                     Production Home page
 	 */
 
-	@Test(description="RPMXCON-56044",enabled = false,  groups = { "regression" }, priority = 12)
+	@Test(description="RPMXCON-56044",enabled = true,  groups = { "regression" } )
 	public void verifyPostGenCompleteStatusInGridView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56044- Production Sprint 07");
@@ -708,7 +708,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that after Pre-gen checks is in progress, it will
 	 *                     displays status on Production Grid view
 	 */
-	@Test(description="RPMXCON-56042,RPMXCON-56036",enabled = false, groups = { "regression" }, priority = 13)
+	@Test(description="RPMXCON-56042,RPMXCON-56036",enabled = true, groups = { "regression" } )
 	public void verifyPreGenChecksInHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56042- Production Sprint 07");
@@ -778,7 +778,7 @@ public class Production_Page_Regression {
 	 *                     'Reserving Bates Range' status on Grid View on Production
 	 *                     Home page
 	 */
-	@Test(description="RPMXCON-56039",enabled = false, groups = { "regression" }, priority = 14)
+	@Test(description="RPMXCON-56039",enabled = true, groups = { "regression" } )
 	public void verifyReservingBatesRangeInGridView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56039- Production Sprint 07");
@@ -841,7 +841,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that after Pregen checks completed it should displays
 	 *                     'Pre-Gen Checks Complete' status on Production Grid View
 	 */
-	@Test(description="RPMXCON-56038",enabled = false,  groups = { "regression" }, priority = 15)
+	@Test(description="RPMXCON-56038",enabled = true,  groups = { "regression" } )
 	public void verifyPreGenChecksInGridView() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56038- Production Sprint 07");
@@ -896,7 +896,7 @@ public class Production_Page_Regression {
 	 *                     'Pre-Gen Checks Complete' status on Progress bar in Tile
 	 *                     View on Production Home page
 	 */
-	@Test(description="RPMXCON-56016",enabled = false,  groups = { " regression" }, priority = 16)
+	@Test(description="RPMXCON-56016",enabled = true,  groups = { " regression" } )
 	public void verifyPreGenChecksCompleteInHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-56016- Production Sprint 07");
@@ -956,7 +956,7 @@ public class Production_Page_Regression {
 	 *                     status on Production Generation page as 'Post-Gen QC
 	 *                     checks In Progress'
 	 */
-	@Test(description="RPMXCON-55985",enabled = false, groups = { " regression" }, priority = 17)
+	@Test(description="RPMXCON-55985",enabled = true, groups = { " regression" } )
 
 	public void verifyPostGenQCchecksInProgressInGeneratePage() throws Exception {
 
@@ -1025,7 +1025,7 @@ public class Production_Page_Regression {
 	 *                     displays status on Production Progress bar ,Tile View as
 	 *                     'Post-Gen QC Checks In Progress'
 	 */
-	@Test(description="RPMXCON-55984",enabled = false,groups = { " regression" }, priority = 18)
+	@Test(description="RPMXCON-55984",enabled = true,groups = { " regression" } )
 	public void verifyPostGenQCchecksInProgressInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55984- Production Sprint 07");
@@ -1089,7 +1089,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that user can download only Produced DAT file by
 	 *                     selecting 'Download DAT file'
 	 */
-	@Test(description="RPMXCON-48849",enabled = false, groups = { " regression" }, priority = 19)
+	@Test(description="RPMXCON-48849",enabled = true, groups = { " regression" } )
 	public void verifyDownloadDATFile() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48849- Production Sprint 08");
@@ -1143,7 +1143,7 @@ public class Production_Page_Regression {
 	 * @Description:Run Production by selecting components like DAT,TIFF,NATIVE and
 	 *                  with selection of multiple tags with audio files
 	 */
-	@Test(description="RPMXCON-48664",enabled = true, groups = { " regression" }, priority = 20)
+	@Test(description="RPMXCON-48664",enabled = true, groups = { " regression" } )
 	public void verifyAudioFilesWithMultipleBranding() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48664- Production Sprint 08");
@@ -1197,7 +1197,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each
 	 *                 document should be zero when only DAT component is selected
 	 */
-	@Test(description="RPMXCON-49250",enabled = false, groups = { " regression" }, priority = 21)
+	@Test(description="RPMXCON-49250",enabled = true, groups = { " regression" } )
 	public void verifyDocumentCountForDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1236,7 +1236,7 @@ public class Production_Page_Regression {
 	 *                 should be displayed when production is done with any
 	 *                 component
 	 */
-	@Test(description="RPMXCON-49250",enabled = false, groups = { " regression" }, priority = 22)
+	@Test(description="RPMXCON-49250",enabled = true, groups = { " regression" } )
 	public void verifyDocumentCountForDATWithOtherComponent() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1276,7 +1276,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify the count 'Total Documents: ' on Production Summary
 	 *                 page
 	 */
-	@Test(description="RPMXCON-49106",enabled = false, groups = { " regression" }, priority = 23)
+	@Test(description="RPMXCON-49106",enabled = true, groups = { " regression" } )
 	public void verifyTotalPagesOnSummary() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49106- Production Sprint 08");
@@ -1328,7 +1328,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49107
 	 * @Description:To verify that Total Pages count on Production-Summary page
 	 */
-	@Test(description="RPMXCON-49107",enabled = false, groups = { " regression" }, priority = 24)
+	@Test(description="RPMXCON-49107",enabled = true, groups = { " regression" })
 	public void verifyTotalPagesCountOnSummary() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49107- Production Sprint 08");
@@ -1382,7 +1382,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that Tiff should generate with Burned Redaction if Only
 	 *                     Burn Redaction is enabled
 	 */
-	@Test(description="RPMXCON-48505",enabled = true, groups = { " regression" }, priority = 25)
+	@Test(description="RPMXCON-48505",enabled = true, groups = { " regression" } )
 	public void verifyTiffWithBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48505- Production Sprint 08");
@@ -1428,7 +1428,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify appropriate display of data is occurring in 'Summary &
 	 *                 Preview' tab.
 	 */
-	@Test(description="RPMXCON-47791",enabled = false, groups = { " regression" }, priority = 26)
+	@Test(description="RPMXCON-47791",enabled = true, groups = { " regression" } )
 	public void verifySummaryAndPreview() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47791- Production Sprint 08");
@@ -1501,7 +1501,7 @@ public class Production_Page_Regression {
 	 *                 section and document is redacted then selected Metadata
 	 *                 should not be displayed on DAT
 	 */
-	@Test(description="RPMXCON-48502",enabled = true, groups = { " regression" }, priority = 27)
+	@Test(description="RPMXCON-48502",enabled = true, groups = { " regression" } )
 	public void verifyPDFWithAnnotationLayer() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48502- Production Sprint 08");
@@ -1545,7 +1545,7 @@ public class Production_Page_Regression {
 	 *                 section and Audio is redacted then selected Metadata should
 	 *                 not be displayed on DATF
 	 */
-	@Test(description="RPMXCON-48503",enabled = false, groups = { " regression" }, priority = 28)
+	@Test(description="RPMXCON-48503",enabled = true, groups = { " regression" } )
 	public void verifyMP3WithAnnotationLayer() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48503- Production Sprint 08");
@@ -1590,7 +1590,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that "Generate Load File" is enabled by default for
 	 *                 TIFF components.
 	 */
-	@Test(description="RPMXCON-48322",enabled = false, groups = { " regression" }, priority = 29)
+	@Test(description="RPMXCON-48322",enabled = true, groups = { " regression" } )
 	public void verifyGenerateLoadFileForTIFF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48322- Production Sprint 09");
@@ -1626,7 +1626,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that "Generate Load File" is enabled by default for
 	 *                 PDF components.
 	 */
-	@Test(description="RPMXCON-48323",enabled = false, groups = { " regression" }, priority = 30)
+	@Test(description="RPMXCON-48323",enabled = true, groups = { " regression" } )
 	public void verifyGenerateLoadFileForPDF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48323- Production Sprint 09");
@@ -1663,7 +1663,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify Production Generation for NATIVE/PDF/TIFF/Text
 	 */
 
-	@Test(description="RPMXCON-47821",enabled = false, groups = { "regression" }, priority = 31)
+	@Test(description="RPMXCON-47821",enabled = true, groups = { "regression" } )
 	public void verifyProductionWithPriviledgedDocuments() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47821- Production Sprint 09");
@@ -1726,7 +1726,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that confirmation message is displays if Blank Page
 	 *                 Removal option is enable.
 	 */
-	@Test(description="RPMXCON-48532",enabled = false, groups = { " regression" }, priority = 32)
+	@Test(description="RPMXCON-48532",enabled = true, groups = { " regression" } )
 	public void verifyConfirmationMessageWithBlankPageEnabled() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48532- Production Sprint 09");
@@ -1757,7 +1757,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that if Blank Page Removal toggle is ON then it should
 	 *                 produced Tiff without blank pages
 	 */
-	@Test(description="RPMXCON-48531",enabled = false, groups = { " regression" }, priority = 33)
+	@Test(description="RPMXCON-48531",enabled = true, groups = { " regression" } )
 	public void generateProductionWithBlankPageEnabled() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48531- Production Sprint 09");
@@ -1812,7 +1812,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify the name of load files should be used the name of the
 	 *                     Export
 	 */
-	@Test(description="RPMXCON-58562",enabled = false, groups = { " regression" }, priority = 34)
+	@Test(description="RPMXCON-58562",enabled = true, groups = { " regression" } )
 	public void verifySameNameForLoadFilesAndExportName() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-58562- Production Sprint 10");
@@ -1867,7 +1867,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55927
 	 * @Description:Verify 'Placeholders' section in Tiff/PDF components
 	 */
-	@Test(description="RPMXCON-55927",enabled = false, groups = { " regression" }, priority = 35)
+	@Test(description="RPMXCON-55927",enabled = true, groups = { " regression" } )
 	public void verifyPlaceholdersInTIFF() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55927- Production Sprint 10");
@@ -1896,7 +1896,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/10/22 TESTCASE No:RPMXCON-55925
 	 * @Description:Verify Native section in Production Components section
 	 */
-	@Test(description="RPMXCON-55925",enabled = false, groups = { " regression" }, priority = 36)
+	@Test(description="RPMXCON-55925",enabled = true, groups = { " regression" } )
 	public void verifyNativeSectionComponent() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55925- Production Sprint 10");
@@ -1918,7 +1918,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that user can download the production by using the
 	 *                     Shareable link for 'DAT Only'
 	 */
-	@Test(description="RPMXCON-56008",enabled = false, groups = { " regression" }, priority = 37)
+	@Test(description="RPMXCON-56008",enabled = true, groups = { " regression" } )
 	public void verifySharableLinkForDAT() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56008- Production Sprint 10");
 		baseClass.stepInfo("Verify that user can download the production by using the Shareable link for 'DAT Only'");
@@ -1982,7 +1982,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that on if user paste the sharable link and gives the
 	 *                     correct password then it should download the zip file
 	 */
-	@Test(description="RPMXCON-56015",enabled = false, groups = { " regression" }, priority = 38)
+	@Test(description="RPMXCON-56015",enabled = true, groups = { " regression" } )
 	public void verifySharableLinkByCorrectPassword() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56015- Production Sprint 10");
 		baseClass.stepInfo(
@@ -2038,7 +2038,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that error should displays if user paste the shareable
 	 *                     link with incorrect password
 	 */
-	@Test(description="RPMXCON-56014",enabled = false, groups = { " regression" }, priority = 39)
+	@Test(description="RPMXCON-56014",enabled = true, groups = { " regression" } )
 	public void verifyErrorInSharableLinkByIncorrectPassword() throws Exception {
 		baseClass.stepInfo("Test case Id RPMXCON-56014- Production Sprint 10");
 		baseClass
@@ -2092,7 +2092,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/12/22 TESTCASE No:RPMXCON-56013
 	 * @Description:Verify that error should be displays if user enters invalid URL
 	 */
-	@Test(description="RPMXCON-56013",enabled = false, groups = { " regression" }, priority = 40)
+	@Test(description="RPMXCON-56013",enabled = true, groups = { " regression" } )
 	public void verifyErrorInSharableLinkWithInvalidURL() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-56013- Production Sprint 10");
@@ -2148,7 +2148,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that production should generate successfully if user
 	 *                 disabled the 'Generate Load File'
 	 */
-	@Test(description="RPMXCON-48326",enabled = false, groups = { " regression" }, priority = 41)
+	@Test(description="RPMXCON-48326",enabled = true, groups = { " regression" } )
 	public void verifyToggleOffForGenerateLoadFile() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48326- Production Sprint 10");
@@ -2210,7 +2210,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/13/22 TESTCASE No:RPMXCON-48186
 	 * @Description:To Verify Generate Section for Production Name and Status.
 	 */
-	@Test(description="RPMXCON-48186",enabled = false, groups = { " regression" }, priority = 42)
+	@Test(description="RPMXCON-48186",enabled = true, groups = { " regression" } )
 	public void verifyProductionNameAndStatus() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48186- Production Sprint 10");
@@ -2279,7 +2279,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Redaction Check box along with Privilege Check box, In
 	 *                 Generated DAT of Production.
 	 */
-	@Test(description="RPMXCON-48145",enabled = false, groups = { " regression" }, priority = 43)
+	@Test(description="RPMXCON-48145",enabled = true, groups = { " regression" } )
 	public void verifyCheckboxInDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48145- Production Sprint 10");
@@ -2339,7 +2339,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify Redacted Document count should get displayed on
 	 *                 Summary & Preview tab
 	 */
-	@Test(description="RPMXCON-47822",enabled = true, groups = { " regression" }, priority = 44)
+	@Test(description="RPMXCON-47822",enabled = true, groups = { " regression" } )
 	public void verifyRedactedCountOnSummaryTab() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47822- Production Sprint 10");
@@ -2400,7 +2400,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify Bates Number Generated in Production can be start with
 	 *                 {0}.
 	 */
-	@Test(description="RPMXCON-47823",enabled = true, groups = { " regression" }, priority = 45)
+	@Test(description="RPMXCON-47823",enabled = true, groups = { " regression" } )
 	public void verifyBatesNumberAsZero() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47823- Production Sprint 10");
@@ -2456,7 +2456,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify the Create/Display of Template with newly created
 	 *                 Project and Production Set.
 	 */
-	@Test(description="RPMXCON-47844",enabled = false, groups = { " regression" }, priority = 46)
+	@Test(description="RPMXCON-47844",enabled = true, groups = { " regression" } )
 	public void createTemplateWithNewProductionSet() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47844- Production Sprint 10");
@@ -2506,7 +2506,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/18/22 TESTCASE No:RPMXCON-47845
 	 * @Description:To Verify the View of the Custom Template
 	 */
-	@Test(description="RPMXCON-47845",enabled = false, groups = { " regression" }, priority = 47)
+	@Test(description="RPMXCON-47845",enabled = true, groups = { " regression" } )
 	public void verifyCustomTemplate() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47845- Production Sprint 10");
@@ -2540,7 +2540,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Sorting configured in the production is being honored
 	 *                 by the generated production
 	 */
-	@Test(description="RPMXCON-55696",enabled = true, groups = { " regression" }, priority = 48)
+	@Test(description="RPMXCON-55696",enabled = true, groups = { " regression" } )
 	public void verifySortingInProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55696- Production Sprint 10");
@@ -2598,7 +2598,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify User will be able to enter production components
 	 *                 information on the self production wizard
 	 */
-	@Test(description="RPMXCON-55696",enabled = false, groups = { " regression" }, priority = 49)
+	@Test(description="RPMXCON-55696",enabled = true, groups = { " regression" } )
 	public void verifyProductionComponents() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55696- Production Sprint 10");
@@ -2627,7 +2627,7 @@ public class Production_Page_Regression {
 	 *                 Files for select file types are to being honored by the
 	 *                 production
 	 */
-	@Test(description="RPMXCON-47925",enabled = false, groups = { " regression" }, priority = 50)
+	@Test(description="RPMXCON-47925",enabled = true, groups = { " regression" } )
 	public void verifyNativesForSelectedFiles() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47925- Production Sprint 11");
@@ -2685,7 +2685,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:01/20/22 TESTCASE No:RPMXCON-47927
 	 * @Description:To Verify ProductionBatesRange in production slip sheet.
 	 */
-	@Test(description="RPMXCON-47927",enabled = false, groups = { " regression" }, priority = 51)
+	@Test(description="RPMXCON-47927",enabled = true, groups = { " regression" })
 	public void verifySlipSheetInProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47927- Production Sprint 11");
@@ -2747,7 +2747,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify In Productions, the produced DAT should have DAT filed
 	 *                 name configured in DAT component.
 	 */
-	@Test(description="RPMXCON-48269",enabled = false, groups = { " regression" }, priority = 52)
+	@Test(description="RPMXCON-48269",enabled = true, groups = { " regression" } )
 	public void verifyDATFieldName() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48269- Production Sprint 11");
@@ -2806,7 +2806,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Redaction check box under DAT Section in Production
 	 *                 Component Section.
 	 */
-	@Test(description="RPMXCON-48144",enabled = true, groups = { " regression" }, priority = 53)
+	@Test(description="RPMXCON-48144",enabled = true, groups = { " regression" } )
 	public void verifyRedactionCheckboxInDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48144- Production Sprint 11");
@@ -2864,7 +2864,7 @@ public class Production_Page_Regression {
 	 *                 with new production documents and with new bates numbers, if
 	 *                 the production is not flagged as Locked
 	 */
-	@Test(description="RPMXCON-47902",enabled = true, groups = { " regression" }, priority = 54)
+	@Test(description="RPMXCON-47902",enabled = true, groups = { " regression" } )
 	public void verifyOverwriteDocumentFromProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47902- Production Sprint 11");
@@ -2942,7 +2942,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify that the pre-gen checks continue to show through out
 	 *                 the next steps of the production.
 	 */
-	@Test(description="RPMXCON-48572",enabled = false, groups = { " regression" }, priority = 55)
+	@Test(description="RPMXCON-48572",enabled = true, groups = { " regression" } )
 	public void verifyBatesRangeAfterProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48572- Production Sprint 11");
@@ -2997,7 +2997,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify Document Selection Section on the self production
 	 *                 wizard For Folder
 	 */
-	@Test(description="RPMXCON-47897",enabled = false, groups = { " regression" }, priority = 56)
+	@Test(description="RPMXCON-47897",enabled = true, groups = { " regression" } )
 	public void verifyDocumentSelectionWithFolder() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47897- Production Sprint 11");
@@ -3050,7 +3050,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify numbering and sorting Section on the self production
 	 *                 wizard for Numbering
 	 */
-	@Test(description="RPMXCON-47892",enabled = false, groups = { " regression" }, priority = 57)
+	@Test(description="RPMXCON-47892",enabled = true, groups = { " regression" } )
 	public void verifyNumberingAndSorting() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47892- Production Sprint 11");
@@ -3121,7 +3121,7 @@ public class Production_Page_Regression {
 	 *              is exists. [RPMXCON-48506]
 	 * @throws InterruptedException
 	 */
-	@Test(description="RPMXCON-48506",enabled = false, groups = { "regression" }, priority = 58)
+	@Test(description="RPMXCON-48506",enabled = true, groups = { "regression" } )
 	public void verifyTIffOrPdfWithPrivPlaceholder() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3182,7 +3182,7 @@ public class Production_Page_Regression {
 	 *                     only Native Files selected in the native components, then
 	 *                     Component tab should Complete without any error.
 	 */
-	@Test(description="RPMXCON-49362",enabled = true, groups = { " regression" }, priority = 59)
+	@Test(description="RPMXCON-49362",enabled = true, groups = { " regression" } )
 	public void verifyComponentTabWithoutAnyError() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49362- Production Sprint 11");
@@ -3255,7 +3255,7 @@ public class Production_Page_Regression {
 	 *              [RPMXCON-48507]
 	 * @throws Exception
 	 */
-	@Test(description="RPMXCON-48507",enabled = true, groups = { "regression" }, priority = 60)
+	@Test(description="RPMXCON-48507",enabled = true, groups = { "regression" } )
 	public void verifyTIFFAndGenerate() throws Exception {
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3313,7 +3313,7 @@ public class Production_Page_Regression {
 	 *                 the doc has at least one of the selected Redaction tags for
 	 *                 Audio files
 	 */
-	@Test(description="RPMXCON-48334",enabled = true, groups = { " regression" }, priority = 61)
+	@Test(description="RPMXCON-48334",enabled = true, groups = { " regression" } )
 	public void verifyDATWithRedactionsCheckboxForAudioFiles() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48334- Production Sprint 11");
@@ -3370,7 +3370,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify status on the tile of a production on the landing page
 	 *                 should show correct production status
 	 */
-	@Test(description="RPMXCON-47904",enabled = true, groups = { " regression" }, priority = 62)
+	@Test(description="RPMXCON-47904",enabled = true, groups = { " regression" } )
 	public void verifyProductionStatusInTileView() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47904- Production Sprint 11");
@@ -3443,7 +3443,7 @@ public class Production_Page_Regression {
 	 * @author Brundha.T TESTCASE No:RPMXCON-47979
 	 * @Description:To Verify OCRing of Text component of the production, only for Redacted Documents when "OCR non-redacted docs... " option is selected in Production-text component
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 63)
+	@Test(description="RPMXCON-47979",enabled = true, groups = { " regression" })
 	public void verifyTextFileComponentInGeneratedProduction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47979- Production ");

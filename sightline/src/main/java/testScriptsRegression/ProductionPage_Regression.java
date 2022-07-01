@@ -152,7 +152,7 @@ public class ProductionPage_Regression {
 	 *              Preview button is not available on 'Summary and Preview' tab
 	 */
 
-	@Test(description="RPMXCON-56116",enabled = ture, groups = { "regression" })
+	@Test(description="RPMXCON-56116",enabled = true, groups = { "regression" })
 	public void verifyPreviewButtonShouldNotDisplayWhileDatOnlySelection() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56116- Production Sprint 02");
 		UtilityLog.info(Input.prodPath);
