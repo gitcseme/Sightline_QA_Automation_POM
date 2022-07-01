@@ -67,7 +67,8 @@ public class BasicSearchRegression {
 	 *              40001000008)
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57359", enabled = false, dataProvider = "reserveWords", groups = { "regression" })
+
+	@Test(description = "RPMXCON-57359", enabled = true, dataProvider = "reserveWords", groups = { "regression" })
 	public void verifyBellyBandMsg(String username, String password, String data1) throws InterruptedException {
 
 		// login as User
@@ -96,7 +97,9 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57347", enabled = false, dataProvider = "Users", groups = { "regression" })
+
+	@Test(description = "RPMXCON-57347", enabled = true, dataProvider = "Users", groups = { "regression" })
+
 	public void verifyWrappedParenthesis(String username, String password) throws InterruptedException {
 		String search = "(\"that this\")";
 
@@ -120,7 +123,8 @@ public class BasicSearchRegression {
 	 * @param password
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-57345", enabled = false, dataProvider = "Users", groups = { "regression" })
+
+	@Test(description = "RPMXCON-57345", dataProvider = "Users", groups = { "regression" })
 	public void verifyPhraseInBasicSearch(String username, String password) throws InterruptedException {
 		String search = "\"Government Agency Correspondance\"";
 
@@ -148,7 +152,9 @@ public class BasicSearchRegression {
 	 * @param data1
 	 * @throws InterruptedException
 	 */
+
 	@Test(description = "RPMXCON-57277", enabled = false, dataProvider = "reserve", groups = { "regression" })
+
 	public void verifyPhraseForSearch(String data1) throws InterruptedException {
 
 		// login as Users
@@ -171,7 +177,9 @@ public class BasicSearchRegression {
 	 *              [RPMXCON-57117]
 	 * @throws InterruptedException
 	 */
+
 	@Test(description = "RPMXCON-57117", enabled = true, groups = { "regression" })
+
 	public void verifyWarningMsgOnAdvPage() throws InterruptedException {
 
 		// login as Users
@@ -202,7 +210,9 @@ public class BasicSearchRegression {
 	 *              with wrapper quotations. [RPMXCON-57115]
 	 * @throws InterruptedException
 	 */
+
 	@Test(description = "RPMXCON-57115", enabled = true, groups = { "regression" })
+
 	public void verifyWarningMsgOnBsPage() throws InterruptedException {
 
 		// login as Users

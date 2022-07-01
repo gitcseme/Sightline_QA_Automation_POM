@@ -3,6 +3,7 @@ package testScriptsRegressionPhase2;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -167,7 +168,7 @@ public class DocView_Regression8 {
 		keywordPage.AddKeyword(hitTerms, hitTerms);
 
 		// document searched and navigated to DocView
-		sessionsearch.basicContentSearch(Input.GNon_searchable_PDF_Load_file);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Docs Viewed in Doc View");
 		driver.waitForPageToBeReady();
@@ -293,13 +294,21 @@ public class DocView_Regression8 {
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		baseClass.waitTime(5);
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
-		baseClass.waitTime(5);
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText = docView.getAddComment1().getText();
 		System.out.println(beforeText);
-		docView.getCodingFormSaveButton().waitAndClick(2);
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
 		baseClass.stepInfo("Document saved successfully");
 		driver.waitForPageToBeReady();
 		docView.getClickDocviewID(2).waitAndClick(5);
@@ -309,7 +318,8 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getClickDocviewID(1));
 		docView.getClickDocviewID(1).waitAndClick(5);
-		baseClass.waitTime(5);
+		baseClass.waitTime(8);
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
 		System.out.println(afterText);
 		softassertion.assertEquals(beforeText, afterText);
@@ -322,8 +332,9 @@ public class DocView_Regression8 {
 		docView.getClickDocviewID(5).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText1 = docView.getAddComment1().getText();
 		System.out.println(beforeText1);
 		driver.waitForPageToBeReady();
@@ -331,14 +342,13 @@ public class DocView_Regression8 {
 		baseClass.stepInfo("Document saved successfully");
 		baseClass.waitTime(5);
 		docView.getClickDocviewID(5).waitAndClick(5);
-		baseClass.waitTime(5);
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText1 = docView.getAddComment1().getText();
 		System.out.println(afterText1);
 		softassertion.assertEquals(beforeText1, afterText1);
 		baseClass.passedStep("After clicked saveandnext with the doc comments is same on saved doc");
-		softassertion.assertAll();
 		if (docView.getCopyPasteIcon().Enabled()) {
 			baseClass.passedStep("Copy menu is retained after saved documents");
 		} else {
@@ -359,7 +369,7 @@ public class DocView_Regression8 {
 		docView.getClickDocviewID(2).waitAndClick(5);
 		baseClass.waitTime(5);
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
 		String beforeText2 = docView.getAddComment1().getText();
 		System.out.println(beforeText2);
@@ -373,13 +383,12 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getClickDocviewID(2));
 		docView.getClickDocviewID(2).waitAndClick(5);
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
 		String afterText2 = docView.getAddComment1().getText();
 		System.out.println(afterText2);
 		softassertion.assertEquals(beforeText2, afterText2);
 		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
-		softassertion.assertAll();
 		driver.Navigate().refresh();
 
 	}
@@ -409,15 +418,24 @@ public class DocView_Regression8 {
 		docexp = new DocExplorerPage(driver);
 		// DocExploer to viewindocView Page
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+		baseClass.waitTime(5);
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		baseClass.waitTime(8);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
 		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText = docView.getAddComment1().getText();
 		System.out.println(beforeText);
-		docView.getCodingFormSaveButton().waitAndClick(2);
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
 		baseClass.stepInfo("Document saved successfully");
 		driver.waitForPageToBeReady();
 		docView.getClickDocviewID(2).waitAndClick(5);
@@ -427,12 +445,12 @@ public class DocView_Regression8 {
 		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getClickDocviewID(1));
 		docView.getClickDocviewID(1).waitAndClick(5);
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
 		System.out.println(afterText);
 		softassertion.assertEquals(beforeText, afterText);
 		baseClass.passedStep("After clicked codesameas with the doc comments is same on saved doc");
-		softassertion.assertAll();
 		driver.Navigate().refresh();
 
 		// Create assignment and go to docview
@@ -448,7 +466,8 @@ public class DocView_Regression8 {
 		docView.getClickDocviewID(2).waitAndClick(5);
 		baseClass.waitTime(5);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		baseClass.waitForElement(docView.getAddComment1());
 		String beforeText2 = docView.getAddComment1().getText();
 		System.out.println(beforeText2);
@@ -462,13 +481,13 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getClickDocviewID(2));
 		docView.getClickDocviewID(2).waitAndClick(5);
-		baseClass.waitTime(8);
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		baseClass.waitForElement(docView.getAddComment1());
 		String afterText2 = docView.getAddComment1().getText();
 		System.out.println(afterText2);
 		softassertion.assertEquals(beforeText2, afterText2);
 		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
-		softassertion.assertAll();
 		driver.Navigate().refresh();
 
 	}
@@ -500,14 +519,21 @@ public class DocView_Regression8 {
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return docView.getDocView_CodingFormlist().Displayed();
+			}
+		}), Input.wait30);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		baseClass.waitTime(5);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		baseClass.waitTime(5);
-		baseClass.waitForElement(docView.getAddComment1());
+		docView.getCodingFormSaveThisForm().waitAndClick(2);
+		baseClass.stepInfo("Document saved successfully");
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText = docView.getAddComment1().getText();
 		System.out.println(beforeText);
-		docView.getCodingFormSaveButton().waitAndClick(2);
-		baseClass.stepInfo("Document saved successfully");
 		driver.waitForPageToBeReady();
 		docView.getClickDocviewID(2).waitAndClick(5);
 		baseClass.stepInfo("Navigate to another document in mini doc list");
@@ -516,12 +542,12 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getClickDocviewID(1));
 		docView.getClickDocviewID(1).waitAndClick(5);
-		baseClass.waitTime(5);
+		baseClass.waitTime(8);
+		 docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
 		System.out.println(afterText);
 		softassertion.assertEquals(beforeText, afterText);
 		baseClass.passedStep("After clicked codesameas with the doc comments is same on saved doc");
-		softassertion.assertAll();
 		driver.Navigate().refresh();
 
 		// verify comment is same on save and next doc
@@ -529,23 +555,22 @@ public class DocView_Regression8 {
 		docView.getClickDocviewID(5).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		baseClass.waitTime(5);
-		baseClass.waitForElement(docView.getAddComment1());
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText1 = docView.getAddComment1().getText();
 		System.out.println(beforeText1);
 		driver.waitForPageToBeReady();
 		docView.getSaveAndNextButton().waitAndClick(2);
 		baseClass.stepInfo("Document saved successfully");
-		baseClass.waitTime(5);
+		baseClass.waitTime(8);
 		docView.getClickDocviewID(5).waitAndClick(5);
-		baseClass.waitTime(5);
+		baseClass.waitTime(10);
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docView.getAddComment1());
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText1 = docView.getAddComment1().getText();
 		System.out.println(afterText1);
 		softassertion.assertEquals(beforeText1, afterText1);
 		baseClass.passedStep("After clicked saveandnext with the doc comments is same on saved doc");
-		softassertion.assertAll();
 		if (docView.getCopyPasteIcon().Enabled()) {
 			baseClass.passedStep("Copy menu is retained after saved documents");
 		} else {
@@ -566,8 +591,8 @@ public class DocView_Regression8 {
 		docView.getClickDocviewID(2).waitAndClick(5);
 		baseClass.waitTime(5);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
-		baseClass.waitTime(8);
-		baseClass.waitForElement(docView.getAddComment1());
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		String beforeText2 = docView.getAddComment1().getText();
 		System.out.println(beforeText2);
 		docView.getCompleteDocBtn().waitAndClick(2);
@@ -580,13 +605,12 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		baseClass.waitForElement(docView.getClickDocviewID(2));
 		docView.getClickDocviewID(2).waitAndClick(5);
-		baseClass.waitTime(8);
-		baseClass.waitForElement(docView.getAddComment1());
+		baseClass.waitTime(10);
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText2 = docView.getAddComment1().getText();
 		System.out.println(afterText2);
 		softassertion.assertEquals(beforeText2, afterText2);
 		baseClass.passedStep("After clicked codesameas with the doc comments is same on completed doc");
-		softassertion.assertAll();
 		driver.Navigate().refresh();
 
 	}

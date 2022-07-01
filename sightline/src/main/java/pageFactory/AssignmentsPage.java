@@ -5715,6 +5715,7 @@ public class AssignmentsPage {
 	 * @param assignmentName
 	 * @param codingForm
 	 * @param purehits
+	 * Modified as per new build
 	 */
 
 	public void assignDocstoNewAssgnEnableAnalyticalPanel(final String assignmentName, String codingForm,
@@ -5764,18 +5765,8 @@ public class AssignmentsPage {
 			getAssignmentName().SendKeys(assignmentName);
 		}
 		getParentAssignmentGroupName().isDisplayed();
-		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
-
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");		
+		SelectCodingform(codingForm);
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
 			getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);

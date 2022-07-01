@@ -99,6 +99,97 @@ public class AdvancedSearch_Regression5 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 30/06/2022  TestCase Id:RPMXCON-57256 
+	 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates
+	 *  Advanced Search (Pure Hit) >> "Manage >> Categorize" screen and Come back to Search Page.
+	 * 
+	 */
+	@Test(description ="RPMXCON-57256",groups = { "regression" })
+	public void verifyDroppedTileRetainedWhenNavigateToCategorize() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57256");
+		baseClass.stepInfo(
+				"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"Manage >> Categorize\" screen and Come back to Search Page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Perform search with metadata");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		baseClass.stepInfo("Add pure hit and navigate to categorize page");
+		sessionSearch.addPureHitAndNavigate("Categorize");
+		baseClass.stepInfo("Navigate back to search page and verify tile status");
+		sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 30/06/2022  TestCase Id:RPMXCON-57257 
+	 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates 
+	 * Advanced Search (Pure Hit) >> "Manage >>Users" screen and Come back to Search Page.
+	 * 
+	 */
+	@Test(description ="RPMXCON-57257",groups = { "regression" })
+	public void verifyDroppedTileRetainedWhenNavigateToUserPage() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57257");
+		baseClass.stepInfo(
+				"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"Manage >>Users\" screen and Come back to Search Page.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Perform search with metadata");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+		baseClass.stepInfo("Add pure hit and navigate to users page");
+		sessionSearch.addPureHitAndNavigate("Users");
+		baseClass.stepInfo("Navigate back to search page and verify tile status");
+		sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 01/07/2022  TestCase Id:RPMXCON-57158 
+	 * Description :Verify that - Application returns all the documents which are available under selected group 
+	 * with OR operator and production optional filters - status  in search result.
+	 * 
+	 */
+	@Test(description ="RPMXCON-57158",groups = { "regression" })
+	public void verifyDocumentWithORProdOptFilters() throws InterruptedException{
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-57158 ");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with OR operator and production optional filters - status  in search result");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionSearch.switchToWorkproduct();
+		baseClass.stepInfo("Configure query with security group OR production");
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(Input.securityGroup, "OR",false);
+		baseClass.stepInfo("Search query and verify search result");
+		sessionSearch.verifyDocsCountAvailableInSgWithSearchResult();
+		loginPage.logout();	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 01/07/2022  TestCase Id:RPMXCON-57159 
+	 * Description :Verify that - Application returns all the documents which are available under selected group
+	 *  with OR operator and production optional filters - Date Range in search result. 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57159",groups = { "regression" })
+	public void verifyDocumentWithORProdOptFiltersDateRange() throws InterruptedException{
+		baseClass.stepInfo("Test case Id: RPMXCON-57159 ");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with OR operator and production optional filters - Date Range in search result");
+		//login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionSearch.switchToWorkproduct();
+		baseClass.stepInfo("Configure query with security group OR production status with date");
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(Input.securityGroup, "OR",true);
+		baseClass.stepInfo("Search query and verify search result");
+		sessionSearch.verifyDocsCountAvailableInSgWithSearchResult();
+		loginPage.logout();		
+	}
+	
+	
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

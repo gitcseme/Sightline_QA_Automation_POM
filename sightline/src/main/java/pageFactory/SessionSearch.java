@@ -42,6 +42,9 @@ public class SessionSearch {
 	DocViewMetaDataPage docViewMetaDataPage;
 	SoftAssert softAssert;
 	DocViewRedactions docViewRedact;
+	Categorization categorize;
+	UserManagement userManage;
+	
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
 
@@ -325,6 +328,9 @@ public class SessionSearch {
 
 	public Element getSearchCriteriaValue() {
 		return driver.FindElementByXPath("//td[@class='value']//span");
+	}
+	public Element getCountUniqueDocId() {
+		return driver.FindElementByXPath("//h1[@class='page-title']//label");
 	}
 
 	// Metadata
@@ -11983,7 +11989,102 @@ public class SessionSearch {
 				}
 			}
 		}
-		
-
 	}
+	
+	/**
+	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will add the pure hit tile to shopping cart and navigate to required page
+	 */
+	public void addPureHitAndNavigate(String navigate) {
+		 
+		driver.waitForPageToBeReady();
+
+		if (getPureHitAddBtn().isElementAvailable(2)) {
+			getPureHitAddBtn().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		base.passedStep("Pure hit added to the shopping cart");
+		if(navigate.equalsIgnoreCase("Categorize")) {
+			categorize = new Categorization(driver);
+			categorize.navigateToCategorizePage();
+			base.passedStep("Navigated to categorize page");
+		}
+		else if(navigate.equalsIgnoreCase("Users")) {
+			userManage = new UserManagement(driver);
+			userManage.navigateToUsersPAge();
+			base.passedStep("Navigated to users page");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will navigate to search page and check tile retained status
+	 */
+	public void navigateToSearchPageAndVerifyTileStatus() {
+		navigateToSessionSearchPageURL();
+		driver.waitForPageToBeReady();
+		if(getRemoveAddBtn().isElementAvailable(10)) {
+			base.passedStep("Dropped tiles retained in shopping cart when navigating back to search page");
+		}
+		else {
+			base.failedStep("Dropped tiles not retained in shopping cart when navigating back to search page");
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 01/07/2022 Modified by: NA Modified Date: NA
+	 * @throws InterruptedException 
+	 * @description: this method will create query with SG OR operator with production status/date
+	 */
+	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,Boolean productionDate) throws InterruptedException{
+		driver.waitForPageToBeReady();
+		selectSecurityGinWPS(securityGroup);
+		selectOperator(operator);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionBtn().Visible() && getProductionBtn().Enabled();
+			}
+		}), Input.wait30);
+		getProductionBtn().Click();
+		if(productionDate) {
+			selectDate("From Date");
+			selectDate("To Date");
+		}
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getMetaDataInserQuery().Visible();
+			}
+		}), Input.wait30);
+		getMetaDataInserQuery().waitAndClick(5);
+		base.passedStep("Inserted query");
+		driver.scrollPageToTop();
+	}
+	
+	
+	/**
+	 * @author: Arun Created Date: 01/07/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the doc count available under SG with search result
+	 */
+	public void verifyDocsCountAvailableInSgWithSearchResult() {
+		serarchWP();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Get count available in selected security group");
+		if (getCountUniqueDocId().isElementAvailable(10)) {
+		String label = getCountUniqueDocId().getText();
+		String countlabel= label.substring(label.indexOf(":"));
+		int expectedCount = Integer.parseInt(countlabel.replace(",","").replace(": ", ""));
+		int actualCount = Integer.parseInt(verifyPureHitsCount());
+		if(expectedCount ==actualCount) {
+			base.passedStep("Application returns all the documents which are available under selected security group in search result.");	
+		}
+		else {
+			base.failedStep("Application not returned all the documents which are available");
+		}
+	  }		
+	}
+			
 }
