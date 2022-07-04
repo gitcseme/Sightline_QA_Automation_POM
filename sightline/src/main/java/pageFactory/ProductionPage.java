@@ -2010,7 +2010,7 @@ public class ProductionPage {
 		return driver
 				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor redactor-placeholder']");
 	}
-
+	
 	public Element getPriviledgedDoogle() {
 		return driver.FindElementById("chkEnabledforPrivDocs");
 	}
@@ -3012,6 +3012,23 @@ public class ProductionPage {
 	}
 	public Element getMultiBrandingTags() {
 		return driver.FindElementByXPath("//td[contains(text(),'Multiple Branding Tags')]/following-sibling::td//span");
+	}
+	
+	public Element getFailedStatus() {
+		return driver.FindElementByXPath("//label[@class='labelAlign']//a");
+	}
+	
+	public Element getErrorMsg() {
+		return driver.FindElementByXPath("//table[@id='GenerateErrorDataTable']//tr//td//following-sibling::td");
+	}
+	
+	public Element getProductionNameLink(String ProdName) {
+		return driver.FindElementByXPath("//a[@title='"+ProdName+"']");
+	}
+	
+	public Element getNativeDocsPlaceholderText() {
+		return driver
+				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor']//p");
 	}
 	public ProductionPage(Driver driver) {
 
@@ -20400,6 +20417,7 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 		defaultTextInNativeToggle().isDisplayed();
 		base.stepInfo("Document Produced in Native Format Text is present in text area by default");		}
 
+
 	
 	/**
 	 * @throws InterruptedException
@@ -20452,6 +20470,49 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 	base.stepInfo("wait until Document Generated Text is visible");
 	String actualText = getStatusSuccessTxt().getText();
 	System.out.println(actualText);
+  }
+	/**
+	 *@author Brundha.T 
+	 * @param ProdName
+	 * Description:Method to verify the failed status in production generate page
+	 */
+	public void verifyingFailedStatusInProduction(String ProdName) {
+		String ReservingBatesRangeFailed=getFailedStatus().getText();
+		if(ReservingBatesRangeFailed.equals("Reserving Bates Range Failed")) {
+			base.passedStep(""+ReservingBatesRangeFailed+" is displayed as expected");
+		}else {
+			base.failedStep(""+ReservingBatesRangeFailed+" is not displayed as expecetd");}
+		driver.waitForPageToBeReady();
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		getProductionNameLink(ProdName).waitAndClick(5);
+		getFailedStatus().waitAndClick(5);
+		String ErrorMsg="PreGenCheck : Bates numbers are duplicate.";
+		String ActualErrorMsg=getErrorMsg().getText();
+		base.compareTextViaContains(ErrorMsg, ActualErrorMsg, "Error msg is displayed as expected", "Error msg is not displayed as expected");
+		
+	}
+
+	/**
+	 *@author Brundha.T 
+	 * Description:Method to verify default selected option in natively produced doc placeholder
+	 */
+	public void verifyingTheDefaultSelectedOptionInNative() {
+		    selectGenerateOption(false);
+		    getEnableForNativelyToggle().isDisplayed();
+			String color = getEnableForNativelyToggle().GetCssValue("background-color");
+			String ExpectedColor = Color.fromString(color).asHex();
+			System.out.println(ExpectedColor);
+			String ActualColor = "#a9c981";
+			driver.scrollingToBottomofAPage();
+			base.textCompareEquals(ActualColor, ExpectedColor, "Natively produced docs toggle is enabled by default",
+					"Natively produced docs toggle is not  enabled  by Default");
+			String ActualText=getNativeDocsPlaceholderText().getText();
+			String ExpectedText="Document Produced in Native Format.";
+					base.textCompareEquals(ActualText,ExpectedText, "Default text in native placeholder is displayed as expected","Text is not Displayed as expected");
+		
+	}
+
 
 	softAssertion.assertTrue(actualText.contains(expectedText));
 	base.passedStep("Documents Generated successfully");

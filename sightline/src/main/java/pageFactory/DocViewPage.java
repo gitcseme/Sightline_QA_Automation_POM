@@ -3513,6 +3513,9 @@ public class DocViewPage {
 	public Element getCodingFormSaveThisForm() {
 		return driver.FindElementByXPath("//div[@id='divCodingForms']//a[@id='Save']");
 	}
+	public Element getRedactionModify() {
+		return driver.FindElementById("btnEdit");
+	}
 
 	public DocViewPage(Driver driver) {
 
