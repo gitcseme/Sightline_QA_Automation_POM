@@ -255,7 +255,76 @@ public class CloningProject_Regression01 {
 			}
 
 
-		
+			/**
+			 * @author Vijaya.Rani ModifyDate:30/06/2022 RPMXCON-54797
+			 * @throws InterruptedException 
+			 * @Description Verify that when User creates a new Domain Project Using template project then corresponding Coding Form are copied from the source template project to the newly created Project.
+			 */
+			@Test(description = "RPMXCON-54797",enabled = true, groups = { "regression" })
+		    public void userCreateNewDomainUsingCodingForm() throws InterruptedException {
+
+		        baseClass.stepInfo("Test case Id: RPMXCON-54797");
+		        baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Coding Form are copied from the source template project to the newly created Project.");
+		        String projectName = "CodingFormCloneProject"+Utility.dynamicNameAppender();
+
+		        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		        UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		        CodingForm codingForm = new CodingForm(driver);
+		        codingForm.navigateToCodingFormPage();
+		        codingForm.validateTotalShowingCountInCF();
+		        loginPage.logout();
+
+		        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		        UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		        projectPage.navigateToProductionPage();
+		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		        DataSets data = new DataSets(driver);
+		        data.getNotificationMessage(0,projectName);
+
+		        UserManagement users = new UserManagement(driver);
+		        users.navigateToUsersPAge();
+		        users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", "Default Security Group", false, true);
+		        loginPage.logout();
+
+		        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password, projectName);
+		        codingForm.navigateToCodingFormPage();
+		        codingForm.finalVerificationForCodingForm();
+		        loginPage.logout();
+
+		    }
+			
+			/**
+			 * @author Vijaya.Rani ModifyDate:30/06/2022 RPMXCON-54796
+			 * @Description Verify that when User creates a new Domain Project Using template project then corresponding Security Groups 
+			 * are copied from the source template project to the newly created Project.
+			 */
+			@Test(description = "RPMXCON-54796",enabled = true, groups = { "regression" })
+			public void userCreatenewDomainUsingSecurityGroups()  {
+				
+				baseClass.stepInfo("Test case Id: RPMXCON-54796");
+				baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Security Groups are copied from the source template project to the newly created Project.");
+				String projectName = "SecurityCloneProject"+Utility.dynamicNameAppender();
+				
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+				projectPage.navigateToProductionPage();
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+				DataSets data = new DataSets(driver);
+				data.getNotificationMessage(0,projectName);
+				
+				UserManagement users = new UserManagement(driver);
+				users.navigateToUsersPAge();
+				users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+				SecurityGroupsPage securityGroup = new SecurityGroupsPage(driver);
+				securityGroup.navigateToSecurityGropusPageURL();
+				securityGroup.validateSecurityGroupsCount();
+
+				loginPage.logout();
+
+			}
 		
 
 		@AfterMethod(alwaysRun = true)
