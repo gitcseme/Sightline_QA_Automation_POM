@@ -590,6 +590,7 @@ public class Production_Regression {
 		baseClass.stepInfo("Create production by selecting PDF and using required inputs");
 		String beginningBates2 = page.getRandomNumber(2);
 		String productionname2 = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		String prodName2=page.addANewProduction(productionname2);
 		System.out.println("created a new production - "+prodName2);
@@ -708,10 +709,8 @@ public class Production_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		int doccount=page.fillingGeneratePageWithContinueGenerationPopup();
-		int lastfile = firstFile + doccount;
+		page.fillingGeneratePageWithContinueGenerationPopup();
 		page.extractFile();
-		page.isNativeSpreadsheetFileExist(firstFile,lastfile, prefixID, suffixID);
 	}
 	
 	@AfterMethod(alwaysRun = true)
