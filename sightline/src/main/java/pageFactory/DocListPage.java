@@ -1462,12 +1462,14 @@ public class DocListPage {
 		Thread.sleep(7000);
 
 		getDocList_Preview_AudioPlay().waitAndClick(10);
+		base.stepInfo("successfully click audio play Button");
 
 		String playtime = getDocList_Preview_AudioDuration().getText();
 		System.out.println(playtime);
+		base.stepInfo(playtime);
 
 		getDocList_Preview_AudioStop().waitAndClick(10);
-
+		base.stepInfo("successfully click audio stop Button");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocList_Previewpage().Visible();
