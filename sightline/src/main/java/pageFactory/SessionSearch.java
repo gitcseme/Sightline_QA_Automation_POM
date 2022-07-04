@@ -44,6 +44,7 @@ public class SessionSearch {
 	DocViewRedactions docViewRedact;
 	Categorization categorize;
 	UserManagement userManage;
+	AssignmentsPage assignPage;
 	
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
@@ -12015,6 +12016,11 @@ public class SessionSearch {
 			userManage = new UserManagement(driver);
 			userManage.navigateToUsersPAge();
 			base.passedStep("Navigated to users page");
+		}
+		else if(navigate.equalsIgnoreCase("Assignment")) {
+			assignPage = new AssignmentsPage(driver);
+			assignPage.navigateToAssignmentsPage();
+			base.passedStep("Navigated to Assignment page");
 		}
 	}
 	
