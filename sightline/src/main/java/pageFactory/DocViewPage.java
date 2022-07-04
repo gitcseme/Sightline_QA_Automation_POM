@@ -3507,7 +3507,7 @@ public class DocViewPage {
 			}
 	
 	public Element getDocView_CodingFormlist() {
-		return driver.FindElementById("codingFormList");
+		return driver.FindElementById("//select[@id='codingFormList']");
 	}
 
 	public Element getCodingFormSaveThisForm() {
