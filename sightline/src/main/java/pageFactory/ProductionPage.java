@@ -20400,6 +20400,65 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 		defaultTextInNativeToggle().isDisplayed();
 		base.stepInfo("Document Produced in Native Format Text is present in text area by default");		}
 
+	
+	/**
+	 * @throws InterruptedException
+	 * @authorIndium-Sowndarya.Velraj
+	 */
+	public void fillingNumberingPageWithDocumentLevelAndSubBates(String bates) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_RadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_RadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_BeginningBates_Text().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_BeginningBates_Text().SendKeys(bates);
+
+	}
+	
+	/**
+	 * @authorIndium-Sowndarya.Velraj.
+	 */
+	public void toStartGenerate() throws InterruptedException {
+	SoftAssert softAssertion = new SoftAssert();
+	String expectedText = "Success";
+
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+		}
+	}), Input.wait30);
+	getbtnProductionGenerate().waitAndClick(10);
+
+	getVerifyGenStatus("Reserving Bates").isElementAvailable(150);
+	getbtnContinueGeneration().isElementAvailable(60);
+	if (getbtnContinueGeneration().isDisplayed()) {
+		base.waitForElement(getbtnContinueGeneration());
+		getbtnContinueGeneration().waitAndClick(10);
+	}
+
+	Reporter.log("Wait for generate to complete", true);
+	System.out.println("Wait for generate to complete");
+	UtilityLog.info("Wait for generate to complete");
+
+	getDocumentGeneratetext().isElementAvailable(180);
+	base.stepInfo("wait until Document Generated Text is visible");
+	String actualText = getStatusSuccessTxt().getText();
+	System.out.println(actualText);
+
+	softAssertion.assertTrue(actualText.contains(expectedText));
+	base.passedStep("Documents Generated successfully");
+}
+
 
 
 }
+
+
