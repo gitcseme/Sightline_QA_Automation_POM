@@ -376,6 +376,8 @@ public class DomainDashBoard_Regression_01 {
 		
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
 		dash.AddOrRemoveColum(colums);
+		driver.waitForPageToBeReady();
+		base.waitTime(4);
 		int n = base.getIndex(dash.getTableHeader(), "TOTAL UTILIZED DISK SIZE (GB)");
 		int n1 = base.getIndex(dash.getTableHeader(), "TOTAL DB SIZE (GB)");
 		int n2 = base.getIndex(dash.getTableHeader(), "TOTAL SEARCH INDEX SIZE (GB)");
@@ -392,7 +394,8 @@ public class DomainDashBoard_Regression_01 {
 		base.impersonateSAtoDA(Input.domainName);
 		
 		dash.AddOrRemoveColum(colums);
-		
+		driver.waitForPageToBeReady();
+		base.waitTime(4);		
 		//verify total size of utilized size
 		dash.verifyTotalUtilizedDiskSpace(dash.getColumValues(dash.getColumValue(n)), dash.getColumValues(dash.getColumValue(n1)), 
 				dash.getColumValues(dash.getColumValue(n2)), dash.getColumValues(dash.getColumValue(n3)));

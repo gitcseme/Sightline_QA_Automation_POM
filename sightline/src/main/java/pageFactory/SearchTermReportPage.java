@@ -351,7 +351,7 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
-		bc.waitTime(4);
+		bc.waitTime(8);
 		bc.waitForElement(getSTReport());
 		int i;
 		try {
@@ -735,8 +735,9 @@ public class SearchTermReportPage {
 	 */
 	public String verifyingDocListCount() {
 		driver.waitForPageToBeReady();
-		driver.scrollingToBottomofAPage();
+		driver.scrollingToBottomofAPage();		
 		bc.waitForElement(dl.getTableFooterDocListCount());
+		bc.waitTime(5);
 		String DocListCount = dl.getTableFooterDocListCount().getText();
 		driver.waitForPageToBeReady();
 		String[] doccount = DocListCount.split(" ");

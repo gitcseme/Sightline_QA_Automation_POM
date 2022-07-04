@@ -141,6 +141,7 @@ public class ReviewerReviewProgressReport {
 		selectReviewer(reviewer);
 		selectAssignmentGroup(agnmtGrp);
 		applyChanges();	
+		base.waitForElement(titleHeader());
 		String title = titleHeader().getText();
 		if(title.contains("Reviewer Progress Summary")) {
 			base.passedStep("Report generated for the reviewer "+reviewer+" and the assignment group "+agnmtGrp+" is successfully");
