@@ -754,8 +754,6 @@ public class DomainDashBoard_Regression_01 {
 		loginPage.logout();
 	}
 	
-	
-	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

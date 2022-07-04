@@ -3639,5 +3639,90 @@ public class BaseClass {
 				}
 			}
 		}
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param domain
+		 * @param projectName
+		 * @param securityGroup
+		 * @throws InterruptedException
+		 * @Descripiton imporsonate rmu to reviewer with out taken input as domain projectname and security group
+		 */
+		public void impersonateRMUtoReviewer(String domain,String projectName, String securityGroup) throws InterruptedException {
+			getSignoutMenu().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait90);
+			getChangeRole().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait60);
+			getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
+			Thread.sleep(3000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAvlDomain().Visible();
+				}
+			}), Input.wait30);
+			getAvlDomain().selectFromDropdown().selectByVisibleText(domain);
+			Thread.sleep(3000);
+			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+			Thread.sleep(3000);
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+			getSaveChangeRole().waitAndClick(5);
+			System.out.println("Impersnated from RMU to Reviewer");
+			UtilityLog.info("Impersnated from RMU to Reviewer");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @Description oprn imporsonate tab
+		 */
+		public void openImpersonateTab() {
+			driver.waitForPageToBeReady();
+			waitForElement(getSignoutMenu());
+			getSignoutMenu().waitAndClick(10);
+			waitForElement(getChangeRole());
+			getChangeRole().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			stepInfo("open impersonate tab");
+		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param role
+		 * @Description select role in imporsonate tab 
+		 */
+		public void selectImpersonateRole(String role) {
+			driver.waitForPageToBeReady();
+			waitForElement(getSelectRole());
+			getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			driver.waitForPageToBeReady();
+			stepInfo("select imporsonate role");
+		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param domain
+		 * @Description select domain in imporsonate tab
+		 */
+		public void selectImpersonateDomain(String domain) {
+			driver.waitForPageToBeReady();
+			waitForElement(getSelectDomain());
+			getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
+			stepInfo(domain+" domain was selected");
+		}
+
 
 }

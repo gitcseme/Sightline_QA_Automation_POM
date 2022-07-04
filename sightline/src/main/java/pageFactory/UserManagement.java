@@ -2510,4 +2510,63 @@ public class UserManagement {
 		}
 
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param firstName
+	 * @param lastName
+	 * @param role
+	 * @param emailId
+	 * @param domain
+	 * @param project
+	 * @Description add new user in sa credential but it's complete with verify the success message
+	 */
+	public void addNewUserWithoutVerifySuccesMsg(String firstName, String lastName, String role, String emailId, String domain,
+			String project) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddUserBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddUserBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFirstName().Visible();
+			}
+		}), Input.wait30);
+		getFirstName().SendKeys(firstName);
+		getLastName().SendKeys(lastName);
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+
+		if (role.equalsIgnoreCase("Domain Administrator")) {
+			getSelectDomain().isElementAvailable(10);
+			getSelectDomain().selectFromDropdown().selectByIndex(1);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEmail().Exists();
+			}
+		}), Input.wait30);
+		getEmail().SendKeys(emailId);
+		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
+				|| role.equalsIgnoreCase("Reviewer")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProject().Visible();
+				}
+			}), Input.wait30);
+			getSelectProject().Click();
+			getSelectProject(project).Click();
+		}
+
+		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			getSecurityDropDown().isElementAvailable(10);
+			getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+		}
+		getSave().waitAndClick(10);
+		bc.stepInfo("add new user details was filed and clicked save button");
+	}
 }

@@ -131,6 +131,14 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("//a[text()='"+projectName+"']/..//a[text()='Deactivate Project']");
 	}
 	
+	public Element getFirstHyperLink() {
+		return driver.FindElementByXPath("(//a[@id='dropdownMenuLink'])[1]");
+	}
+	
+	public Element getFirstGoToProject() {
+		return driver.FindElementByXPath("(//a[text()='Go to Project'])[1]");
+	}
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
