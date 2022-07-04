@@ -1840,7 +1840,9 @@ public class SessionSearch {
 	public Element getPureHit_UsingLast() {
 		return driver.FindElementByXPath("(//a[@id='001']/span/count)[last()]");
 	}
-
+	public Element getSearchString2(int i) {
+		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input["+i+"]");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -12092,5 +12094,44 @@ public class SessionSearch {
 		}
 	  }		
 	}
+	/**
+	 * @Author Brundha
+	 * @Description: To Create Metadata basic search
+	 * @param metaDataField
+	 * @param val1--metadata value
+	 * @param val2
+	 * @return
+	 */
+	public int metaDataSearchInBasicSearch(String metaDataField, String val1,String val2) {
+		// Enter search string
+		base.waitForElement(getBasicSearch_MetadataBtn());
+		getBasicSearch_MetadataBtn().waitAndClick(3);
+		base.waitForElement(getSelectMetaData());
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().waitAndClick(3);
+		base.waitForElement(SelectFromDropDown(metaDataField));
+		SelectFromDropDown(metaDataField).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		getSearchString2(2).getWebElement().sendKeys(Keys.ENTER + val2);
+		
+		if(getTallyContinue().isElementAvailable(2)) {
+			getTallyContinue().waitAndClick(10);
+		}else {
+			driver.waitForPageToBeReady();}
+		base.waitForElement(getSearchButton());
+		getSearchButton().waitAndClick(3);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		getPureHitsCount().waitAndClick(15);
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		return pureHit;
+	}		
 			
 }
