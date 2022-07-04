@@ -96,6 +96,78 @@ public class AdvancedSearch_Regression5_2 {
 		loginPage.logout();		
 	}
 	
+	/**
+		 * Author :Arunkumar date: 04/07/2022  TestCase Id:RPMXCON-57258 
+		 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates
+		 * Advanced Search (Pure Hit) >> "View in Doc View" screen and Come back to Search Page.
+		 * 
+		 */
+		@Test(description ="RPMXCON-57258",groups = { "regression" })
+		public void verifyDroppedTileRetainedWhenNavigateToDocViewPage() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-57258");
+			baseClass.stepInfo(
+					"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"View in Doc View\" screen and Come back to Search Page.");
+			//Login as PA
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Perform search with metadata");
+			sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
+			baseClass.stepInfo("Add pure hit and navigate to docview page");
+			sessionSearch.viewInDocView();
+			driver.waitForPageToBeReady();
+			baseClass.stepInfo("Navigate back to search page and verify tile status");
+			sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author :Arunkumar date: 04/07/2022  TestCase Id:RPMXCON-57254 
+		 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates 
+		 * Advanced Search (Pure Hit) >> "Analyze in Concept Explorer" screen and Come back to Search Page.
+		 * 
+		 */
+		@Test(description ="RPMXCON-57254",groups = { "regression" })
+		public void verifyDroppedTileRetainedWhenNavigateToConceptExplorerPage() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-57254");
+			baseClass.stepInfo(
+					"Verify that Dropped tiles are retained in shopping cart when User Navigates Advanced Search (Pure Hit) >> \"Analyze in Concept Explorer\" screen and Come back to Search Page.");
+			//Login as PA
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Perform search with metadata");
+			sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
+			baseClass.stepInfo("Add pure hit and navigate to concept explorer page");
+			sessionSearch.addPurehitAndActionAsConceptOrComm(false,true);
+			driver.waitForPageToBeReady();
+			baseClass.stepInfo("Navigate back to search page and verify tile status");
+			sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author :Arunkumar date: 04/07/2022  TestCase Id:RPMXCON-57261 
+		 * Description :Verify that Dropped tiles are retained in shopping cart when User Navigates
+		 * Basic Search (Pure Hit) >> "Manage >> Assignments" screen and Come back to Search Page.
+		 * 
+		 */
+		@Test(description ="RPMXCON-57261",groups = { "regression" })
+		public void verifyDroppedTileRetainedWhenNavigateToAssignmentsPage() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-57261");
+			baseClass.stepInfo(
+					"Verify that Dropped tiles are retained in shopping cart when User Navigates Basic Search (Pure Hit) >> \"Manage >> Assignments\" screen and Come back to Search Page.");
+			//Login as PA
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Perform search with metadata");
+			sessionSearch.basicSearchWithMetaDataQuery(Input.custodianName_Andrew,Input.metaDataName);
+			baseClass.stepInfo("Add pure hit and navigate to docview page");
+			sessionSearch.addPureHitAndNavigate("Assignment");
+			driver.waitForPageToBeReady();
+			baseClass.stepInfo("Navigate back to search page and verify tile status");
+			sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+			loginPage.logout();
+		}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
