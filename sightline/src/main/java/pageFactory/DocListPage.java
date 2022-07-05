@@ -5196,4 +5196,72 @@ public class DocListPage {
 		String docId = getColumValue(index).getText().trim();
 		return docId;
 	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description :The filtered alldomains when selecting Include .
+	 * 
+	 */
+	public void EmailAllDomainsNameIncludeVerificationInDoc() {
+		try {
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+			base.waitForElement(getSelectEmailAuthorDomain());
+			getSelectEmailAuthorDomain().ScrollTo();
+			getSelectEmailAuthorDomain().Click();
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().Click();
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().Click();
+			base.waitForElement(getEmailAuthorDomainBth());
+			getEmailAuthorDomainBth().waitAndClick(5);
+			base.waitForElement(getIncludeBtn());
+			getIncludeBtn().Click();
+			base.waitForElement(getClickToMakeSelection());
+			getClickToMakeSelection().Click();
+			base.waitForElement(getSelectAuthor());
+			getSelectAuthor().Click();
+			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.]", "");
+			base.waitForElement(getFilterToDomainName());
+			getFilterToDomainName().Click();
+
+			base.waitForElement(getApplyFilters());
+			getApplyFilters().Click();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getActiveFilter(emailDomainName));
+			base.waitTillElemetToBeClickable(getActiveFilter(emailDomainName));
+			boolean activeFilter = getActiveFilter(emailDomainName).isElementPresent();
+			if (activeFilter) {
+				base.passedStep("Active filter for email author domain by name: " + emailDomainName
+						+ " is Present as Expected");
+			} else {
+				base.failedStep("Active filter for email author domain by name: " + emailDomainName
+						+ " is not Present as Expected");
+			}
+
+			String AssertDate = null;
+			for (int D = 1; D <= getRowCount().size(); D++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getAssertEmaialAuthorDomain(D));
+				AssertDate = getAssertEmaialAuthorDomain(D).getText();
+				System.out.println(AssertDate);
+
+				if (!AssertDate.contains(emailDomainName)) {
+					base.failedStep("The Filter AuthorName:" + AssertDate + " and  Document AuthorName "
+							+ emailDomainName + " are not same");
+				}
+			}
+
+			base.passedStep(
+					"The Filter AuthorName:" + AssertDate + " and Document AuthorName" + emailDomainName + " are same");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClearFilters());
+			getClearFilters().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to verify email author domain name" + e.getMessage());
+		}
+	}
 }
