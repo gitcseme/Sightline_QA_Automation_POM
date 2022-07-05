@@ -405,6 +405,9 @@ public class Input {
 	public static String bulkSearchSting1;
 	public static String validBatchFile;
 	public static String masterDateBatchFile;
+	public static String totalDirSubClusterText;
+	public static String analyzeAt2;
+	public static String analyzeAt3;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1185,7 +1188,10 @@ public class Input {
 		bulkSearchSting1 = testData.getBulkSearchSting1();
 		validBatchFile = testData.getValidBatchFile();
 		masterDateBatchFile = testData.getMasterDateBatchFile();
-
+		totalDirSubClusterText = testData.getTotalDirSubClusterText();
+		analyzeAt2 = testData.getAnalyzeAt2();
+		analyzeAt3 = testData.getAnalyzeAt3();
+		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
