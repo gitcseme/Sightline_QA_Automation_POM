@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-   
+
 @Getter
 @Setter
 //@Builder(toBuilder = true)
@@ -506,7 +506,7 @@ public class TestData {
 	public String AutomationAllSources;
 	public String TiffImages;
 	public String advancedOptionText;
-	
+
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
 
@@ -674,7 +674,7 @@ public class TestData {
 	public String multiPageTIFFSourceFolder;
 	public String multiPageTIFFDATLoadFile;
 	public String documentKeyBNum;
-	public String documentKeyDSource; 
+	public String documentKeyDSource;
 	public String documentKeyCName;
 
 	// Added by gopinath - 23/03/2022
@@ -692,23 +692,29 @@ public class TestData {
 	public String langName_japnese;
 	public String createDate;
 	public String highVolumeProjSearchString;
-	
+
 	public String cfDocId1;
 	public String cfDocId2;
 
-	//Added by Gopinath - 08/04/2022
+	// Added by Gopinath - 08/04/2022
 	public String warningMsgDocId;
 	public String externalLinkDocId;
-	
-	//Added by Gopinath -28/09/2022
-		public String telecom;
-		public String regressionRun;
-		public String sourceBlank;
-		public String sourceParentBlank;
-		public String ingestionOneHour;
-		public String ingestionLessThanHour;
-		
-   //Added by Iyappan
+
+	// Added by Gopinath -28/09/2022
+	public String telecom;
+	public String regressionRun;
+	public String sourceBlank;
+	public String sourceParentBlank;
+	public String ingestionOneHour;
+	public String ingestionLessThanHour;
+
+	// Added by Iyappan
 	public String docAudioId1;
 	public String docAudioId2;
+
+	// Added by Raghuram
+	public String preBuilt;
+	public String preBuiltHelpText;
+	public String DEPIPTheft;
+
 }
