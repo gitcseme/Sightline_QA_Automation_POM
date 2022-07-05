@@ -7357,12 +7357,7 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -10036,24 +10031,19 @@ public class AssignmentsPage {
 				bc.waitTime(2);
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
-					String expectedCFDisplay = CFName + " (Set As Default)";
-					SoftAssert assertion = new SoftAssert();
-					assertion.assertEquals(expectedCFDisplay, acualCfName);
-					assertion.assertAll();
-					bc.passedStep("Selected a coding form " + CFName
-							+ " and its reflected in manage assignments page");
-				} else {
-					bc.failedStep("Selected  coding form " + CFName
-							+ "  is not reflected in manage assignments page");
-				}
-
+				String passMSg=	"Selected a coding form " + CFName
+							+ " and its reflected in manage assignments page";		
+				String failMsg=	"Selected  coding form " + CFName
+							+ "  is not reflected in manage assignments page";
+				bc.compareTextViaContains(acualCfName, CFName,  passMSg, failMsg);
+				
 			} else {
 				bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 			}
 		} else {
 			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-	}
+	}}
 	
 	/**
 	 * @author Indium-Baskar date: 30/6/2022 Modified date:30/6/2022 Modified

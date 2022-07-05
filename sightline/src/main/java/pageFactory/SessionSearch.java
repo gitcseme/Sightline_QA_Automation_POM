@@ -3642,7 +3642,7 @@ public class SessionSearch {
 	}
 
 	// Function to perform bulk tag from any page
-	public void BulkActions_Tag(String TagName) throws InterruptedException {
+	public String BulkActions_Tag(String TagName) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -3681,6 +3681,7 @@ public class SessionSearch {
 				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
+		String finalCnt=getFinalCount().getText();
 		getFinalizeButton().Click();
 
 		getTallyContinue().waitAndClick(10);
@@ -3693,7 +3694,8 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		System.out.println("Bulk Tag is done, Tag is : " + TagName);
-		UtilityLog.info("Bulk Tag is done, Tag is : " + TagName);
+        base.stepInfo("Bulk Tag is done for "+finalCnt+" docs with  Tag name  : " + TagName);
+        return finalCnt;
 	}
 
 	public void saveSearchAdvanced(String searchName) {
@@ -8790,7 +8792,7 @@ public class SessionSearch {
 		}
 	}
 
-	public void BulkActions_Folder(String folderName) throws InterruptedException {
+	public String BulkActions_Folder(String folderName) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8837,6 +8839,7 @@ public class SessionSearch {
 				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
+		String finalCnt= getFinalCount().getText();
 		base.waitForElement(getFinalizeButton());
 		base.waitTillElemetToBeClickable(getFinalizeButton());
 
@@ -8847,8 +8850,9 @@ public class SessionSearch {
 
 //			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //					bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-		System.out.println("Bulk folder is done, folder is : " + folderName);
-		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
+		System.out.println("Bulk folder is done for "+finalCnt+", folder name is : " + folderName);
+        base.stepInfo("Bulk folder is done for "+finalCnt+" docs with folder name  : " + folderName);
+        return finalCnt;
 	}
 
 	public void advancedNewContentSearch1(String SearchString) {
