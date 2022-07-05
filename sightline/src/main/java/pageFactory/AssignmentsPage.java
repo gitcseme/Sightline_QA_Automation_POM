@@ -1501,16 +1501,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Enabled();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 
 		// permissions
 		driver.scrollingToBottomofAPage();

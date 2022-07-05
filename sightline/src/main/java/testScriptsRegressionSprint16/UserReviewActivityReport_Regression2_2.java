@@ -13,6 +13,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
 import pageFactory.DocViewPage;
@@ -28,6 +29,9 @@ public class UserReviewActivityReport_Regression2_2 {
 	SoftAssert softAssertion;
 	BaseClass bc;
 	UserReviewActivityReport userActivityRptPg;
+	AssignmentsPage agnmt;
+	SessionSearch search;
+	DocViewPage docview;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -36,6 +40,56 @@ public class UserReviewActivityReport_Regression2_2 {
 		Input in = new Input();
 		in.loadEnvConfig();
 
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description: Verify User Review Activity Report
+	 */
+	@Test(description = "RPMXCON-56941",groups = {"regression" },enabled = true)
+	public void verifyUserReviewActivityReport()
+			throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-56941");
+		bc.stepInfo("Verify User Review Activity Report");
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		agnmt = new AssignmentsPage(driver);
+		search =new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String initialUtcTime =userActivityRptPg.getCurrentUtcTime();
+		agnmt.createAssignment(assignmentName, Input.codeFormName);
+		search.basicContentSearch(Input.TallySearch);
+		search.bulkAssignExisting(assignmentName);
+		bc.selectproject();
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.assignmentDistributingToReviewer();
+		lp.logout();
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		agnmt.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(docview.getDocView_CurrentDocId());
+		String completedDocId = docview.getDocView_CurrentDocId().getText();
+		docview.editCodingForm("test");
+		bc.waitTillElemetToBeClickable(agnmt.completeBtn());
+		agnmt.completeBtn().waitAndClick(10);
+		String actualCompltedTime = userActivityRptPg.getCurrentUtcTime();
+		bc.waitForElement(docview.getDocView_CurrentDocId());
+		bc.waitTime(3);
+		String viewedDocId = docview.getDocView_CurrentDocId().getText();
+		String expectedViewedDocTime = userActivityRptPg.getCurrentUtcTime();
+		lp.logout();
+		String finalUtcTime =userActivityRptPg.getCurrentUtcTime();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userActivityRptPg.navigateToUserReviewActivityReport();
+		userActivityRptPg.generateUserReviewActivityReport(Input.rev1FullName, initialUtcTime, finalUtcTime);
+		userActivityRptPg.validateStatusOfUser(completedDocId, " Completed");
+		String expectedCompletedTime = userActivityRptPg.getDateFromReportsPage(completedDocId, " Completed");
+		userActivityRptPg.validateDate(actualCompltedTime, expectedCompletedTime);
+		userActivityRptPg.validateStatusOfUser(viewedDocId, "Viewed");
+		String actualViewedDocTime = userActivityRptPg.getDateFromReportsPage(viewedDocId, "Viewed");
+		userActivityRptPg.validateDate(actualViewedDocTime, expectedViewedDocTime);
+		lp.logout();
 	}
 
 	
@@ -73,7 +127,7 @@ public class UserReviewActivityReport_Regression2_2 {
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.pa1userName, Input.pa1password, "PA" } 
+//				{ Input.pa1userName, Input.pa1password, "PA" } 
 				};
 		return users;
 	}
