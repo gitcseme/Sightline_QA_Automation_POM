@@ -3507,7 +3507,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		bc.waitForElement(getAssignmentCodingFormDropDown());
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(5);
@@ -9871,7 +9871,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		bc.waitForElement(getAssignmentCodingFormDropDown());
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 		getAssignmentSaveButton().waitAndClick(5);

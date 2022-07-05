@@ -2729,6 +2729,8 @@ public class UsersAndRoleManagement_Regression {
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
 		userManage.getBulkUserAccessTab().waitAndClick(5);
+		Thread.sleep(2000);
+		baseClass.waitForElement(userManage.getSelectRollId());
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
 		if (roll == "pa") {
 			userManage.defaultSelectionCheckboxForAllRole(true, false, true, true, true, true, true, true, true, true,
@@ -2747,7 +2749,9 @@ public class UsersAndRoleManagement_Regression {
 			driver.scrollingToElementofAPage(userManage.getDisableRadioBtn());
 			userManage.getDisableRadioBtn().waitAndClick(5);
 			if (roll == "rmu" || roll == "rev") {
+				baseClass.waitForElement(userManage.getBulkUserSecurityGroup());
 				userManage.getBulkUserSecurityGroup().waitAndClick(5);
+				baseClass.waitForElement(userManage.getSelectDropSG(Input.securityGroup));
 				userManage.getSelectDropSG(Input.securityGroup).waitAndClick(5);
 			}
 		}
@@ -2762,6 +2766,8 @@ public class UsersAndRoleManagement_Regression {
 			}
 		}
 		driver.scrollingToElementofAPage(userManage.getSelectBulkUser(firstName));
+		Thread.sleep(2000);
+		baseClass.waitForElement(userManage.getSelectBulkUser(firstName));
 		userManage.getSelectBulkUser(firstName).waitAndClick(5);
 		userManage.getBulkUserSaveBtn().waitAndClick(5);
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
