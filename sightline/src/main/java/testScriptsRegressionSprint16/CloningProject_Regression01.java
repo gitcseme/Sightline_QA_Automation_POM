@@ -25,6 +25,7 @@ import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -323,6 +324,198 @@ public class CloningProject_Regression01 {
 				securityGroup.validateSecurityGroupsCount();
 
 				loginPage.logout();
+
+			}
+			
+			/**
+			 * @author Mohan.Venugopal Created on : 05/07/2022 Modified On:NA
+			 * @description:Verify that when User creates a new Domain Project Using
+			 *                     template project without "Assigned Reviewers" then Only
+			 *                     assignments with configurations and without Users
+			 *                     assigned to assignment are copied to the newly created
+			 *                     Project.
+			 * @throws AWTException
+			 */
+			@Test(description = "RPMXCON-54886", enabled = true, groups = { "regression" })
+			public void userCreateNewNonDomainUsingAssignmentCreation() throws AWTException, InterruptedException {
+
+				baseClass.stepInfo("Test case Id: RPMXCON-54886");
+				baseClass.stepInfo(
+						"Verify that when User creates a new Domain Project Using template project without  \"Assigned Reviewers\" then Only assignments with configurations and without Users assigned to assignment are copied to the newly created Project.");
+				String projectName = "AssignmentCloning" + Utility.dynamicNameAppender();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.searchString1);
+				sessionSearch.bulkAssign();
+
+				AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+				assignmentsPage.assignmentCreation(projectName, Input.codeFormName);
+				assignmentsPage.toggleDisableForAnalyticsPanelMiniDoclistReviewerToApplyRedation();
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+				ProjectPage projectPage = new ProjectPage(driver);
+				projectPage.navigateToProductionPage();
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "0");
+				DataSets data = new DataSets(driver);
+				data.getNotificationMessage(0, projectName);
+
+				UserManagement users = new UserManagement(driver);
+				users.navigateToUsersPAge();
+				users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", Input.securityGroup, false, true);
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+				assignmentsPage.navigateToAssignmentsPage();
+				assignmentsPage.verifyAssignmentsPageWithOnlyAssignments(projectName);
+				loginPage.logout();
+				
+				
+
+			}
+			
+			/**
+			 * @author Mohan.Venugopal Created on : 05/07/2022 Modified On:NA
+			 * @description:Verify that when User creates a new Domain  Project Using template project then corresponding 
+			 * Assignments - properties are copied from the source template project to the newly created Project.
+			 * @throws AWTException
+			 */
+			@Test(description = "RPMXCON-54845", enabled = true, groups = { "regression" })
+			public void userCreateNewNonDomainUsingAssignmentOnlyCreation() throws AWTException, InterruptedException {
+
+				baseClass.stepInfo("Test case Id: RPMXCON-54845");
+				baseClass.stepInfo(
+						"Verify that when User creates a new Domain  Project Using template project then corresponding Assignments - properties are copied from the source template project to the newly created Project.");
+				String projectName = "AssignmentCloning" + Utility.dynamicNameAppender();
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(Input.searchString1);
+				sessionSearch.bulkAssign();
+
+				AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+				assignmentsPage.assignmentCreation(projectName, Input.codeFormName);
+				assignmentsPage.toggleDisableForAnalyticsPanelMiniDoclistReviewerToApplyRedation();
+				loginPage.logout();
+
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+				ProjectPage projectPage = new ProjectPage(driver);
+				projectPage.navigateToProductionPage();
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "0");
+				DataSets data = new DataSets(driver);
+				data.getNotificationMessage(0, projectName);
+
+				UserManagement users = new UserManagement(driver);
+				users.navigateToUsersPAge();
+				users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", Input.securityGroup, false, true);
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+				assignmentsPage.navigateToAssignmentsPage();
+				assignmentsPage.verifyAssignmentsPageWithOnlyAssignments(projectName);
+				loginPage.logout();
+				
+				
+
+			}
+			
+			/**
+			 * @author Mohan.Venugopal Created on : 05/07/2022 Modified On:NA
+			 * @description:Verify that when User creates a new Domain Project Using
+			 *                     template project without "Assigned Reviewers" then Only
+			 *                     assignments with configurations and without Users
+			 *                     assigned to assignment are copied to the newly created
+			 *                     Project.
+			 * @throws AWTException
+			 */
+			@Test(description = "RPMXCON-54866", enabled = true, groups = { "regression" })
+			public void userCreateNewNonDomainUsingSecurityGroupCreation() throws AWTException, InterruptedException {
+
+				baseClass.stepInfo("Test case Id: RPMXCON-54866");
+				baseClass.stepInfo(
+						"Verify that when User creates a new Domain Project Using template project then corresponding All security groups and their associated workproduct objects (and project fields)  are copied from the source template project to the newly created Project.");
+				String projectName = "SecurityGroupsCloning" + Utility.dynamicNameAppender();
+
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+				ProjectPage projectPage = new ProjectPage(driver);
+				projectPage.navigateToProductionPage();
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "0");
+				DataSets data = new DataSets(driver);
+				data.getNotificationMessage(0, projectName);
+
+				UserManagement users = new UserManagement(driver);
+				users.navigateToUsersPAge();
+				users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,projectName);
+				UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+				SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
+				securityPage.navigateToSecurityGropusPageURL();
+				securityPage.verifyAllFieldsArePresentInSecurityHomePage();
+				loginPage.logout();
+				
+				
+
+			}
+			
+			/**
+			 * @author Mohan.Venugopal Created on : 05/07/2022 Modified On:NA
+			 * @description: Verify that when User creates a new Domain Project Using template 
+			 * project then corresponding Active Users are copied from the source template project to the newly created Project.
+			 * @throws AWTException
+			 */
+			@Test(description = "RPMXCON-54834", enabled = true, groups = { "regression" })
+			public void userCreateNewDomainUsingNewUserCreatedAndCheckThem() throws AWTException, InterruptedException {
+
+				baseClass.stepInfo("Test case Id: RPMXCON-54834");
+				baseClass.stepInfo(
+						"Verify that when User creates a new Domain Project Using template project then corresponding Active Users are copied from the source template project to the newly created Project.");
+				String projectName = "NewUserCheckCloning" + Utility.dynamicNameAppender();
+
+				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+				projectPage.navigateToProductionPage();
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "1");
+				DataSets data = new DataSets(driver);
+				data.getNotificationMessage(0, projectName);
+				UserManagement users = new UserManagement(driver);
+				users.navigateToUsersPAge();
+				users.projectIsPresentForAllUsers(Input.pa1userName, "Project Administrator", projectName);
+				users.projectIsPresentForAllUsers(Input.rmu1userName, "Review Manager", projectName);
+				users.projectIsPresentForAllUsers(Input.rev1userName, "Reviewer", projectName);
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,projectName);
+				UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+				
+				baseClass.passedStep("The User PA is mapped with "+projectName+" successfully. User PA is copied with the same role that they have in the template project");
+				
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password,projectName);
+				UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+				
+				baseClass.passedStep("The User RMU is mapped with "+projectName+" successfully. User RMU is copied with the same role that they have in the template project");
+				
+				loginPage.logout();
+				
+				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password,projectName);
+				UtilityLog.info("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+				
+				baseClass.passedStep("The User Reviewer is mapped with "+projectName+" successfully. User Reviewer is copied with the same role that they have in the template project");
+				
+				loginPage.logout();
+				
+				
 
 			}
 		
