@@ -76,6 +76,10 @@
 	<is>IS</is>
 	<range>RANGE</range>
 	<DocDateDateOnly>DocDateDateOnly</DocDateDateOnly>
+	<nuix>NUIX</nuix>
+	<mappedData>Mapped Data</mappedData>
+	<docPrimaryLanguage>DocPrimaryLanguage</docPrimaryLanguage>
+	<english>English</english>
 	
 
 	<!-- Production path for redaction master doc -->

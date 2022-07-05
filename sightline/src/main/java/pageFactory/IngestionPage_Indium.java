@@ -11277,5 +11277,65 @@ public class IngestionPage_Indium {
 			return ingestionName;
 		}
 		
+		/**
+		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform ingestion using open in wizard option
+		 */
+
+		public void addMetadatAndVerifyValue(String metadata ,String value) {
+			DocListPage docList = new DocListPage(driver);
+			docList.selectingSingleValueInCoumnAndRemovingExistingOne(metadata);
+			for(int i=1;i<=5;i++) {
+				String Language = docList.getDataInDoclist(i,4).getText();
+				System.out.println(Language);
+				if(docList.getDataInDoclist(i,4).Displayed() && Language.equalsIgnoreCase(value)) {
+					base.passedStep("value for metdata 'DocPrimaryLanguage' displayed");
+					break;
+				}
+				else {
+					System.out.println("value for metdata 'DocPrimaryLanguage' not displayed");
+				}
+		   }
+			
+		}
 		
+		/**
+		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify options available under source system dropdown
+		 */
+
+		public void verifyOptionAvailableInSourceSystem() {
+			base.stepInfo("Click on add new ingestion button");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddanewIngestionButton().Visible();
+				}
+			}), Input.wait30);
+			getAddanewIngestionButton().waitAndClick(10);
+			if(getSpecifySourceSystem().isElementAvailable(15)) {
+			 List<WebElement> availableOptions =getSpecifySourceSystem().selectFromDropdown().getOptions();
+			 int size = availableOptions.size();
+			 System.out.println(size);
+			 for(int i=0;i<size;i++) {
+				String option = availableOptions.get(i).getText();
+				if(option.equalsIgnoreCase(Input.iceSourceSystem)) {
+					base.passedStep("'ICE' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.sourceSystem)) {
+					base.passedStep("'TRUE' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.nuix)) {
+					base.passedStep("'NUIX' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.mappedData)) {
+					base.passedStep("'Mapped Data' option available in the source system");
+				}	
+			 }	
+			}
+			else {
+				base.failedStep("Selecting source system option not available");
+			}
+			
+		}
+
 }

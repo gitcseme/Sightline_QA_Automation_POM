@@ -10,9 +10,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
@@ -26,8 +28,9 @@ public class Ingestion_Regression_2 {
 	LoginPage loginPage;
 	BaseClass baseClass;
 	IngestionPage_Indium ingestionPage;
-	SessionSearch sessionsearch;
+	SessionSearch sessionSearch;
 	DocListPage docList;
+	DataSets dataSets;
 	Input ip;
 
 	@BeforeClass(alwaysRun = true)
@@ -48,10 +51,60 @@ public class Ingestion_Regression_2 {
 
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
 		loginPage = new LoginPage(driver);
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 05/07/2022 TestCase Id:RPMXCON-49338 
+	 * Description :Verify value of metadata field "DocPrimaryLanguage" should be derived from CA for Add Only Ingestion
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49338",enabled = true, groups = { "regression" })
+	public void verifyValueOfDocPrimaryLanguageMetadata() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49338");
+		baseClass.stepInfo("Verify value of metadata field 'DocPrimaryLanguage' should be derived from CA for Add Only Ingestion");
+		dataSets = new DataSets(driver);
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and navigate to doclist");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+			String ingestionName= ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
+			sessionSearch.basicSearchWithMetaDataQuery(ingestionName,Input.metadataIngestion);
+			sessionSearch.ViewInDocList();
+		}
+		else {
+			dataSets.selectDataSetWithName(Input.HiddenPropertiesFolder);
+		}
+		baseClass.stepInfo("Verify the value of metadata");
+		ingestionPage.addMetadatAndVerifyValue(Input.docPrimaryLanguage, Input.english);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 05/07/2022 TestCase Id:RPMXCON-49265 
+	 * Description :To verify that option "ICE" is available in the Source System dropdown in Ingestion
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49265",enabled = true, groups = { "regression" })
+	public void verifyIceOptionInSourceSystemDropdown() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49265");
+		baseClass.stepInfo("To verify that option 'ICE' is available in the Source System dropdown in Ingestion");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("verify option 'ICE' available under source system");
+		ingestionPage.verifyOptionAvailableInSourceSystem();
+		loginPage.logout();
+	
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

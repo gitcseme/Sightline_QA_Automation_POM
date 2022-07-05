@@ -366,6 +366,10 @@ public class Input {
 	public static String is;
 	public static String range;
 	public static String DocDateDateOnly;
+	public static String nuix;
+	public static String mappedData;
+	public static String docPrimaryLanguage;
+	public static String english;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1146,6 +1150,10 @@ public class Input {
 		is = testData.getIs();
 		range = testData.getRange();
 		DocDateDateOnly = testData.getDocDateDateOnly();
+		nuix = testData.getNuix();
+		mappedData = testData.getMappedData();
+		docPrimaryLanguage = testData.getDocPrimaryLanguage();
+		english = testData.getEnglish();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
