@@ -154,7 +154,7 @@ public class CommunicationExplorerPage {
 	}
 
 	public Element getAutosuggestElement(String eleName) {
-		return driver.FindElementByXPath("//ul[@id='select2-Tags-results']/li[text()='" + eleName + "']");
+		return driver.FindElementByXPath("//ul[@class='select2-results__options']/li[text()='" + eleName + "']");
 	}
 
 	public Element getUpdateFiltersElement() {
@@ -174,7 +174,7 @@ public class CommunicationExplorerPage {
 	}
 
 	public Element getVisualizedReportDisplay() {
-		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node']");
+		return driver.FindElementByCssSelector("g[class='graph']>g[Class*='node normal-node']");
 	}
 	public Element getVisualizedSelectedReportDisplay() {
 		return driver.FindElementByCssSelector("g[class='graph']>g[Class*='node-active']");
@@ -217,7 +217,34 @@ public class CommunicationExplorerPage {
 	public Element getViewInDocViewInNewTab() {
 		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[contains(text(),'View in DocView in New Tab')]");
 	}
-
+	public Element getBackToSourceButton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]");
+	}
+	public Element getSelectedFilterName(String sType, String option, String sgName) {
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li[@class='active' and text()='" + sType + " - "
+				+ option + ": \"" + sgName + "\"']");
+	}
+	public Element getActionBulkTag() {
+		return driver.FindElementByXPath("//a[text()='Bulk Tag']");
+	}
+	public Element getActionBulkFolder() {
+		return driver.FindElementByXPath("//a[text()='Bulk Folder']");
+	}
+	public Element getBulkAssignBtn() {
+		return driver.FindElementByXPath("//a[text()='Bulk Assign']");
+	}
+	public Element getSelectedSourcesName(String sType, String sgName) {
+		return driver.FindElementByXPath("//ul[@id='bitlist-sources']//li[text()='" + sType + ": " + sgName + "']");	}
+	public Element getShowByCountTop_8_20() {
+		return driver.FindElementById("ShowByCount");
+	}
+	public Element getShowByDomainOrEmail() {
+		return driver.FindElementById("ShowBy");
+	}
+	public Element getShowByVolume() {
+		return driver.FindElementById("ShowByVolume");
+	}
+	
 	public CommunicationExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -624,4 +651,131 @@ public class CommunicationExplorerPage {
 		base.stepInfo(DocCountInreportsPage + "  Doc Count in report page that is selected to view in doc view.");
 		return DocCountInreportsPage;
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param showCount[only number as 8 or 20 ]
+	 * @param domain_EmailAdress
+	 * @param getShowByVolume
+	 * this method used select option under show tab in communications explorer page
+	 */
+	public void selectShowOptions(String showCount,String domain_EmailAdress,String getShowByVolume ) {
+		String showbyCountTop_Option="Top "+showCount;
+		getShowByCountTop_8_20().selectFromDropdown().selectByVisibleText(showbyCountTop_Option);
+		base.waitTime(1);
+		base.stepInfo("Selected show by count as  "+showbyCountTop_Option);
+		getShowByDomainOrEmail().selectFromDropdown().selectByVisibleText(domain_EmailAdress);
+		base.waitTime(1);
+		base.stepInfo("Selected show by as  "+domain_EmailAdress);
+		getShowByVolume().selectFromDropdown().selectByVisibleText(getShowByVolume);
+		base.stepInfo("Selected show by volume as  "+getShowByVolume);
+		base.waitTime(1);
+	}
+	/**
+	 * This method performs click on action button and click on bulk action btn.
+	 * @param tag
+	 * @param folder
+	 * @param assign
+	 */
+	public void clickActionBtn(boolean tag,boolean folder,boolean assign) {
+		driver.scrollPageToTop();
+		base.waitForElement(getActionBtn());
+		getActionBtn().ScrollTo();
+		getActionBtn().waitAndClick(10);
+		if(tag) {
+		base.waitForElement(getActionBulkTag());
+		getActionBulkTag().Click();
+		base.stepInfo("Performing bulk tag.");
+		}
+		if(folder) {
+		base.waitForElement(getActionBulkFolder());
+		getActionBulkFolder().Click();
+		base.stepInfo("Performing bulk folder.");
+		}
+		if(assign) {
+			base.waitForElement(getBulkAssignBtn());
+			getBulkAssignBtn().Click();
+			base.stepInfo("Navigating from com explorer page to assignments creation page.");
+		}
+	}
+	
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 */
+	public void navigateToCommunicationExpPage() {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getReports_CommunicationsExplorer());
+		getReports_CommunicationsExplorer().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.verifyPageNavigation("DataAnalysisReport/CommunicationExplorerReport");
+	}
+
+	
+	/** 
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException 
+	 * @description This method will generate report by selecting default security group as selected source.
+	 */
+
+	public void generateReport_DefaultSG() throws InterruptedException {
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().waitAndClick(25);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTally_SecurityGroupsButton());
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
+		base.waitForElement(getTally_SelectSecurityGroup());
+		getTally_SelectSecurityGroup().waitAndClick(10);
+		base.waitForElement(getTally_SaveSelections());
+		getTally_SaveSelections().waitAndClick(15);
+		// Validate retained datas
+		base.ValidateElement_Presence(getSelectedSourcesName("Security Group", "Default Security Group"),
+				"'Selected source : Default Security Group'.");
+				
+		
+	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * This method will perform click operation on apply button and handles bulk navigation pop up if appeared.
+	 */
+	public void clickApplyBtn() {
+		base.waitForElement(getCommunicationExplorer_ApplyBtn());
+		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		for(int i=0;i<10;i++) {
+			if(getLoadedImage().isElementAvailable(1)) {
+				base.waitTime(1);
+				continue;
+			}
+			else {
+			break;
+		}}
+		if(getBG_NotificationPopUp().isElementAvailable(2)) {
+			base.stepInfo("Bulk Navigation pop up appeared");
+		getYesButton().Click();
+		}else {
+			base.stepInfo("Bulk Navigation pop up not appeared");
+		}
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param metaDataType
+	 * @param metadataText
+	 * @param exclude
+	 * this method verify whether the selected filter is reflected in communication exp page.
+	 */
+public void filterCriteriaVerify(String metaDataType,String metadataText,boolean exclude) {
+	String filterType=null;
+	if(exclude) {
+	filterType="Exclude";
+	}else {
+		filterType = "Include";
+	}
+	base.ValidateElement_Presence(getSelectedFilterName(metaDataType, filterType, metadataText),
+			"Selected filter data : " + getSelectedFilterName(metaDataType, filterType, metadataText).getText()
+					+ " retained.");
+}
+	
 }
