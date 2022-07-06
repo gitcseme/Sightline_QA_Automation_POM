@@ -3723,6 +3723,17 @@ public class BaseClass {
 			getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
 			stepInfo(domain+" domain was selected");
 		}
-
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @Desction wait for task should be completed and get notified
+		 */
+		public void waitForNotification() {
+			if(getRedBullHornIcon().isElementAvailable(350)) {
+				passedStep("notification got received");
+			}else {
+				failedStep("notification still not received,it's get too much time");
+			}
+		}
 
 }
