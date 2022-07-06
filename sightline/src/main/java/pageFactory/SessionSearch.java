@@ -1843,6 +1843,18 @@ public class SessionSearch {
 	public Element getSearchString2(int i) {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input["+i+"]");
 	}
+	
+//Added by Krishna
+	
+	public Element getAdvScrnSearchLabel(String i) {
+		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
+	}
+	
+
+	public Element getConceptualTileHit(int i) {
+		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()="+ i +"]");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -12132,6 +12144,20 @@ public class SessionSearch {
 		getPureHitsCount().waitAndClick(15);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		return pureHit;
-	}		
+	}	
+	
+public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
+		
+		if(getAdvScrnSearchLabel(SearchTabNo).Visible()){
+			base.waitForElement(getQueryFromTextBox());
+			String actText = getQueryFromTextBox().getText();
+			String expText = query;
+			SoftAssert asserts = new SoftAssert();
+			asserts.assertEquals(expText, actText);
+			base.passedStep(query + " present in search " +SearchTabNo); 
+		}else {
+			base.failedStep(SearchTabNo + "is Not Visible"); 
+		}
+	}
 			
 }
