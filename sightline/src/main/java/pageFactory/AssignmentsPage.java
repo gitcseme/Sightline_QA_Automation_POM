@@ -1002,6 +1002,11 @@ public class AssignmentsPage {
 
 	// End of (added by jayanthi 28/9/21)
 	// Added by Indium-Mohan
+	
+	public Element getMiniDocListToggleButton() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsShowMiniDocList']/following-sibling::i");
+	}
+	
 	public Element getNearDupeDocumentsIncludeToggleButton() {
 		return driver.FindElementByXPath("//input[@id='chkIncludeNearDuplicates']//following-sibling::i");
 	}
@@ -7357,12 +7362,7 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -10036,24 +10036,19 @@ public class AssignmentsPage {
 				bc.waitTime(2);
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
-					String expectedCFDisplay = CFName + " (Set As Default)";
-					SoftAssert assertion = new SoftAssert();
-					assertion.assertEquals(expectedCFDisplay, acualCfName);
-					assertion.assertAll();
-					bc.passedStep("Selected a coding form " + CFName
-							+ " and its reflected in manage assignments page");
-				} else {
-					bc.failedStep("Selected  coding form " + CFName
-							+ "  is not reflected in manage assignments page");
-				}
-
+				String passMSg=	"Selected a coding form " + CFName
+							+ " and its reflected in manage assignments page";		
+				String failMsg=	"Selected  coding form " + CFName
+							+ "  is not reflected in manage assignments page";
+				bc.compareTextViaContains(acualCfName, CFName,  passMSg, failMsg);
+				
 			} else {
 				bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 			}
 		} else {
 			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-	}
+	}}
 	
 	/**
 	 * @author Indium-Baskar date: 30/6/2022 Modified date:30/6/2022 Modified
@@ -10142,6 +10137,66 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(getAssignmentAction_EditAssignment());
 		getAssignmentAction_EditAssignment().waitAndClick(5);
 
+	}
+	
+	/**
+	 * @Author Mohan Created on 04/07/2022
+	 * @Description To enable the Analytics panel Toggle present in AssignPage
+	 */
+	public void toggleDisableForAnalyticsPanelMiniDoclistReviewerToApplyRedation() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
+		System.out.println(analyticalPanelFlag);
+		String miniDocListFlag = getMiniDocListToggleButton().GetAttribute("class");
+		System.out.println(miniDocListFlag);
+		
+		String applyRedactionFlag = getAssgn_ApplyRedactionToggle().GetAttribute("class");
+		System.out.println(applyRedactionFlag);
+		if (analyticalPanelFlag.contains("true")&&miniDocListFlag.contains("true")&&applyRedactionFlag.contains("true")) {
+			bc.waitForElement(getAssgn_AnalyticsPanelToggle());
+			getAssgn_AnalyticsPanelToggle().Click();
+			
+			bc.waitForElement(getMiniDocListToggleButton());
+			getMiniDocListToggleButton().Click();
+			
+			bc.waitForElement(getMiniDocListToggleButton());
+			getMiniDocListToggleButton().Click();
+		}
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Assignmnets with toggle off condition is present in Assignmnets page.
+	 * @param assignmentName
+	 */
+	public void verifyAssignmentsPageWithOnlyAssignments(String assignmentName) {
+
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getAssgn_Pagination());
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				bc.stepInfo("The Assignment mentioned in Pre-requisite is display with the changes in properties in source template project and the Mini DocList,Analytics Panel and Allow reviewers to apply redactions toggles are OFF successfully");
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+		
+		
 	}
 	
 	

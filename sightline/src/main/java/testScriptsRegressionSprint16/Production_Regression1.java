@@ -253,6 +253,165 @@ public class Production_Regression1 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha.T
+	 *         No:RPMXCON-47986
+	 * @Description:To Verify Editing an existing draft production by clicking on Mark Incomplete
+	 **/
+
+	@Test(description = "RPMXCON-47986", enabled = true)
+	public void verifyDraftedProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-47986- Production component");
+		base.stepInfo("To Verify Editing an existing draft production by clicking on Mark Incomplete");
+		UtilityLog.info(Input.prodPath);
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getMarkCompleteLink().waitAndClick(10);
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		page.verifyingDraftedProductionInComponentTab(productionname, tagname);
+		
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author Brundha.T
+	 *         No:RPMXCON-47995
+	 * @Description:To Verify Admin will be able to regenerate an existing production (for the same configuration) with the previous bates numbers,(Before commit Bates Number).
+	 **/
+
+	@Test(description = "RPMXCON-47995", enabled = true)
+	public void verfyBatesNumberInProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-47995- Production component");
+		base.stepInfo("To Verify Admin will be able to regenerate an existing production (for the same configuration) with the previous bates numbers,(Before commit Bates Number).");
+		UtilityLog.info(Input.prodPath);
+
+		String foldername="Folder"+ Utility.dynamicNameAppender();
+		String prefixID="P"+ Utility.dynamicNameAppender();
+		String suffixID="S"+ Utility.dynamicNameAppender();
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates=page.getRandomNumber(2);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.gettext("Back").Click();
+		String Batesno =page. getProd_BatesRange().getText();
+		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		page.navigateToProductionPage();
+		page.getProductionNameLink(productionname).waitAndClick(5);
+		page.gettext("Back").Click();
+		page.getMarkInCompleteBtn().Click();
+		page.getbtnReGenerateMarkComplete().waitAndClick(5);
+		base.waitForElement(page.getbtnRegenerateContinue());
+		page.getbtnRegenerateContinue().Click();
+		page.getbtnContinueGeneration().isElementAvailable(80);
+		if (page.getbtnContinueGeneration().isElementAvailable(1)) {
+			page.getbtnContinueGeneration().Click();
+		}	
+		String BatesNumber =page. getProd_BatesRange().getText();
+		base = new BaseClass(driver);
+		base.textCompareEquals(Batesno, BatesNumber, "Bates number are equal expecetd", "Bates number are not equal as expecetd");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48004
+	 * @Description:To Verify Split Count in production is actually splitting the folder directory.
+	 */
+	 @Test(description="RPMXCON-48004",enabled = true, groups = { "regression" })
+	public void verifyTheSubFoldersAfterGenration() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-48004 -Production Sprint 10");
+		base.stepInfo("To Verify Split Count in production is actually splitting the folder directory.");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		int purehit=sessionSearch.basicContentSearch(Input.testData1);
+		int Count=purehit-1;
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectPrivDocsInTiffSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		page.ProductionLocationSplitCount().Clear();
+		page.ProductionLocationSplitCount().SendKeys(Integer.toString(Count));
+		driver.scrollPageToTop();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+			File ImageFile1 = new File(home+"\\Downloads\\VOL0001\\Images\\0001");
+			if (ImageFile1.exists()) {
+				base.passedStep("TIFF file is splited as expected");
+			}else {
+				base.failedStep("TIFF file is not splited as expected");}
+			File ImageFile2 = new File(home+"\\Downloads\\VOL0001\\Images\\0002");
+			if (ImageFile2.exists()) {
+				base.passedStep("TIFF file is splited as expected");
+			}else {
+				base.failedStep("TIFF file is not splited as expected");
+			}
+		loginPage.logout();
+	 }
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

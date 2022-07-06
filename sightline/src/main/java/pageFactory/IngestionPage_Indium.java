@@ -11279,7 +11279,7 @@ public class IngestionPage_Indium {
 		
 		/**
 		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
-		 * @description: this method will perform ingestion using open in wizard option
+		 * @description: this method will verify the value of metadata
 		 */
 
 		public void addMetadatAndVerifyValue(String metadata ,String value) {

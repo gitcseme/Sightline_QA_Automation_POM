@@ -292,6 +292,9 @@ public class TestData {
 	public String bulkSearchSting1;
 	public String validBatchFile;
 	public String masterDateBatchFile;
+	public String totalDirSubClusterText;
+	public String analyzeAt2;
+	public String analyzeAt3;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

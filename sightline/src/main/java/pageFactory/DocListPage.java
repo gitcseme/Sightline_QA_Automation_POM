@@ -4549,8 +4549,9 @@ public class DocListPage {
 	public List<String> gettingAllDocIDs() {
 		driver.waitForPageToBeReady();
 		List<String> docIDs = new ArrayList<String>();
-		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
 		base.waitTime(2);
+		getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText("500");
+		base.waitTime(8);
 		docIDs = base.availableListofElements(getDocIds());
 		return docIDs;
 	}
