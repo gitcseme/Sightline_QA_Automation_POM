@@ -1678,7 +1678,8 @@ public class TallyPage {
 		}	
 		System.out.println(elementNames);
 		Collections.sort(elementNames);
-		
+		base.stepInfo("MetaData displayed in horizontal barchart is : ");
+		base.stepInfo(elementNames.toString());
 		return elementNames.toString();
 	
 	}
