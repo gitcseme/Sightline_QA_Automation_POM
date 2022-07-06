@@ -44,8 +44,8 @@ public class CommunicationExplorer_Regression2_2 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 	}
 
