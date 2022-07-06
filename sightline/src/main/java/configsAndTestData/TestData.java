@@ -249,6 +249,10 @@ public class TestData {
 	public String is;
 	public String range;
 	public String DocDateDateOnly;
+	public String nuix;
+	public String mappedData;
+	public String docPrimaryLanguage;
+	public String english;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
