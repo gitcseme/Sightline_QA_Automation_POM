@@ -1,5 +1,7 @@
 package pageFactory;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.management.ListenerNotFoundException;
@@ -16,7 +18,7 @@ import testScriptsSmoke.Input;
 public class ConceptExplorerPage {
 
 	Driver driver;
-	BaseClass bc;
+	BaseClass base;
 
 	public Element getReports_ConceptExplorer() {
 		return driver.FindElementByXPath("//*[@id='collapseOne']//a[contains(.,'Concept Explorer Report')]");
@@ -101,20 +103,143 @@ public class ConceptExplorerPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
-	//added by jayanthi
+
+	// added by jayanthi
 	public Element getfilterDocumentsBy() {
 		return driver.FindElementByXPath("//a[@id='lnk_collapsID']/parent::h4");
 	}
+
 	public Element getfilterOptions() {
 		return driver.FindElementByXPath("//ul[@id='optionFilters']");
 	}
-	
-	
+
+	// Added by Raghuram
+	public Element getSelectSourcedBtn() {
+		return driver.FindElementByXPath("//a[text()='Select Sources']");
+	}
+
+	public Element getSelectSourcedOptions() {
+		return driver.FindElementByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]");
+	}
+
+	public Element getSelectSourcedOption(String option) {
+		return driver.FindElementByXPath("// strong[text()='" + option + "']//..//span[@class='fa fa-plus']");
+	}
+
+	public Element getSelectSGOption(String option) {
+		return driver.FindElementByXPath("//li//label[text()='" + option + "']//..//input[@type='checkbox']");
+	}
+
+	public Element getSaveSelectionsBtn() {
+		return driver.FindElementByXPath("//button[@id='secgroup']");
+	}
+
+	public ElementCollection getSelectSourcedOptionsList() {
+		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
+	}
+
+	public Element getApplyFilterBtn() {
+		return driver.FindElementByXPath("//a[@id='btnAppyFilter']");
+	}
+
+	public ElementCollection getDataToAddInCart() {
+		return driver.FindElementsByXPath("//div[@class='node cedefault']//i");
+	}
+
+	public Element getDataToAddInCart(int i) {
+		return driver.FindElementByXPath("(//div[@class='node cedefault']//i)[" + i + "]");
+	}
+
+	public Element getCreateBtn() {
+		return driver.FindElementByXPath("//a[text()='Create']");
+	}
+
+	public Element getKeywordTextBox() {
+		return driver.FindElementByXPath("//input[@placeholder='Enter keyword for highlighting']");
+	}
+
+	public Element getKeyWordPopUpOkBtn() {
+		return driver.FindElementByXPath("//button[@id='submitSearchTearm']");
+	}
+
+	public Element getAppliedKeyword(String keyWord) {
+		return driver.FindElementByXPath("//strong[text()='Applied Keyword Heat Map:" + keyWord + "']");
+	}
+
+	public Element getAnalyseActionBtn(String text) {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary' and text()='" + text + "']");
+	}
+
+	public Element getSquareToSelect(int i) {
+		return driver.FindElementByXPath("(//div[@class='node cedefault'])[" + i + "]");
+	}
+
+	public Element getSpanText() {
+		return driver.FindElementByXPath("//span[@class='font-sm ']");
+	}
+
+	public Element geClusterID() {
+		return driver.FindElementByXPath("//div[@class='popover fade top in']//h3[@class='popover-title']");
+	}
+
+	public Element getTileToSelect(int clusterID) {
+		return driver.FindElementByXPath("//div[@id='" + clusterID + "' and @class='node cedefault']");
+	}
+
+	public Element getTileSelected(int clusterID) {
+		return driver.FindElementByXPath("//div[@id='" + clusterID + "' and @class='node cedefault selected']");
+	}
+
+	public Element getHighlightedNodeNames(int i) {
+		return driver.FindElementByXPath("(//div[contains(@class,'purple')]//span)[" + i + "]");
+	}
+
+	public ElementCollection getCartAddedTilesName() {
+		return driver.FindElementsByXPath("//ul[@id='ulResultsCart']//label");
+	}
+
+	public Element getKeywordHighlightedNodesPlusBtn(int i) {
+		return driver.FindElementByXPath("(//div[contains(@class,'purple')]//i)[" + i + "]");
+	}
+
+	public ElementCollection getKeywordHighlightedNodesPlusBtns() {
+		return driver.FindElementsByXPath("(//div[contains(@class,'purple')]//i)");
+	}
+
+	public Element getActionBtn() {
+		return driver.FindElementByXPath("//button[@id='idAction']");
+	}
+
+	public Element getActionType(String actionTpye) {
+		return driver.FindElementByXPath("//a[text()='" + actionTpye + "']");
+	}
+
+	public Element getPageLevel(String level) {
+		return driver.FindElementByXPath(
+				"//div[@id='textpannel']//span[contains(text(),'" + level + " Level Conceptual Map')]");
+	}
+
+	public Element getTileAddedSelected(int clusterID) {
+		return driver.FindElementByXPath("//div[@id='" + clusterID + "' and @class='node cedefault added selected']");
+	}
+
+	public Element getAttributefromSquare(int i) {
+		return driver.FindElementByXPath("//div[contains(@class,'cedefault')][" + i + "]");
+	}
+
+//	public Element getActionBulkFolder() {
+//		return driver.FindElementByXPath("//a[text()='Bulk Folder']");
+//	}
+//
+//	public Element getBulkAssignBtn() {
+//		return driver.FindElementByXPath("//a[text()='Bulk Assign']");
+//	}
+
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
-		//this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		bc = new BaseClass(driver);
+		// this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		base = new BaseClass(driver);
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -168,12 +293,11 @@ public class ConceptExplorerPage {
 		getApplyBtn().Click();
 
 		/*
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean
-		 * call(){return getTally_LoadingScreen().Visible() ;}}), Input.wait30);
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getTally_LoadingScreen().Visible() ;}}), Input.wait30);
 		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-		 * throws Exception{return getTally_LoadingScreen().Stale() ;}}),
-		 * Input.wait30);
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws
+		 * Exception{return getTally_LoadingScreen().Stale() ;}}), Input.wait30);
 		 */
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -183,15 +307,13 @@ public class ConceptExplorerPage {
 		gettextpanel().Displayed();
 
 		/*
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean
-		 * call(){return
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 		 * getCommunicationExplorer_Graph_Action_DropDownBtn().Visible() ;}}),
-		 * Input.wait30);
-		 * getCommunicationExplorer_Graph_Action_DropDownBtn().Click();
+		 * Input.wait30); getCommunicationExplorer_Graph_Action_DropDownBtn().Click();
 		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-		 * throws Exception{return getAction_ViewInDoclistButton().Enabled()
-		 * ;}}), Input.wait30); getAction_ViewInDoclistButton().Click();
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws
+		 * Exception{return getAction_ViewInDoclistButton().Enabled() ;}}),
+		 * Input.wait30); getAction_ViewInDoclistButton().Click();
 		 * 
 		 * System.out.println("Navigated to Doclist page");
 		 * 
@@ -199,31 +321,267 @@ public class ConceptExplorerPage {
 		 * dp.getDocList_info().WaitUntilPresent(); driver.WaitUntil((new
 		 * Callable<Boolean>() {public Boolean call(){return
 		 * !dp.getDocList_info().getText().isEmpty() ;}}), 60000, null, 1000);
-		 * System.out.println(dp.getDocList_info().getText().toString().
-		 * substring(19, 21));
-		 * Assert.assertEquals(dp.getDocList_info().getText().toString().
+		 * System.out.println(dp.getDocList_info().getText().toString(). substring(19,
+		 * 21)); Assert.assertEquals(dp.getDocList_info().getText().toString().
 		 * substring(19, 21),actHoverDocCount);
 		 * System.out.println("Expected docs are shown in doclist");
 		 */
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 */
 	public void navigateToConceptExplorerPage() {
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		String expectedURL = Input.url + "DataAnalysisReport/ConceptExplorer";
-		bc.waitForElement(getReports_ConceptExplorer());
+		base.waitForElement(getReports_ConceptExplorer());
 		if (getReports_ConceptExplorer().isDisplayed()) {
-			bc.passedStep("Concept Explorer Report link is displayed in reports landing page");
+			base.passedStep("Concept Explorer Report link is displayed in reports landing page");
 			getReports_ConceptExplorer().Click();
 			SoftAssert softAssertion = new SoftAssert();
 			driver.waitForPageToBeReady();
 			softAssertion.assertEquals(expectedURL, driver.getUrl());
 			softAssertion.assertAll();
-			bc.passedStep("Sucessfully navigated to Concept Explorer Report Page");
+			base.passedStep("Sucessfully navigated to Concept Explorer Report Page");
 		} else {
-			bc.failedStep("Concept Explorer Report link is not  displayed in reports landing page");
+			base.failedStep("Concept Explorer Report link is not  displayed in reports landing page");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @Description : Click Select Sources
+	 */
+	public void clickSelectSources() {
+		try {
+			getSelectSourcedBtn().waitAndClick(3);
+			base.ValidateElement_Presence(getSelectSourcedOptions(), "Select sources popup");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Select Sources button not available / not enabled");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param selectSourceList
+	 */
+	public void verifySourceList(String[] selectSourceList) {
+		try {
+			driver.waitForPageToBeReady();
+			List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+			base.printListString(listDatas);
+			base.compareArraywithDataList(selectSourceList, listDatas, true,
+					"Expected sources displayed in select source popup",
+					"Expected sources not displayed in select source popup");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Source List display Error");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @Description : Select Security group
+	 * @param sourceToSelect
+	 * @param sgToSelect
+	 */
+	public void selectSGsource(String sourceToSelect, String sgToSelect) {
+		try {
+			getSelectSourcedOption(sourceToSelect).waitAndClick(5);
+			getSelectSGOption(sgToSelect).waitAndClick(5);
+			getSaveSelectionsBtn().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Security Group selection failed");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @Description : Perform Add to cart
+	 * @param index
+	 */
+	public void addToCartIndex(int index) {
+		try {
+			getDataToAddInCart(index).waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Not able to perform Add to Cart");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @param keyWord
+	 * @param apply
+	 */
+	public void addKeyWordHighlighting(String keyWord, boolean apply) {
+		if (apply) {
+			base.waitForElement(getCreateBtn());
+			getCreateBtn().waitAndClick(10);
+			base.waitForElement(getKeywordTextBox());
+			getKeywordTextBox().SendKeys(keyWord);
+			base.waitForElement(getKeyWordPopUpOkBtn());
+			getKeyWordPopUpOkBtn().waitAndClick(10);
+		}
+		base.ValidateElement_Presence(getAppliedKeyword(keyWord), "Applied HeatMap Keyword '" + keyWord + "'. ");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param i
+	 * @return
+	 */
+	public String hoverOnSpecificConcepTualMapReturnText(int i) {
+		base.mouseHoverOnElement(getSquareToSelect(i));
+		driver.waitForPageToBeReady();
+		System.out.println("-------------------");
+		String textContent = getSpanText().getText();
+		return textContent;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 05/19/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param mouseHover
+	 * @param position
+	 * @param hoverId
+	 * @return
+	 */
+	public String getClusterID(Boolean mouseHover, int position, int hoverId) {
+		if (mouseHover) {
+			base.mouseHoverOnElement(getSquareToSelect(hoverId));
+			driver.waitForPageToBeReady();
+		}
+		String clusterIDValue = geClusterID().getText();
+		clusterIDValue = clusterIDValue.substring(clusterIDValue.lastIndexOf(" ") + position);
+		return clusterIDValue;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 05/13/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param textContent   - text content to retrive required datas
+	 * @param containsCheck - list of datas to check
+	 * @param position
+	 * @param clusterID
+	 * @return - returns hashMap datas retrived from the input textcontent
+	 */
+	public HashMap<String, String> getDataFromParticularArrayString(String textContent, String[] containsCheck,
+			int position, Boolean clusterID, Boolean splitData) {
+		HashMap<String, String> dataPair = new HashMap<>();
+		String expArratyToString, lastWord = null;
+		String[] textContentArray = textContent.split("\n");
+		for (int i = 0; i < textContentArray.length; i++) {
+			System.out.println(i);
+			System.out.println(textContentArray[i]);
+			for (int k = 0; k < containsCheck.length; k++) {
+				if (textContentArray[i].contains(containsCheck[k])) {
+					expArratyToString = textContentArray[i];
+					if (splitData) {
+						lastWord = expArratyToString.substring(expArratyToString.lastIndexOf(" ") + position);
+						dataPair.put(containsCheck[k], lastWord);
+					} else {
+						dataPair.put(containsCheck[k], expArratyToString);
+					}
+				}
+			}
+		}
+		return dataPair;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @param actionType
+	 */
+	public void performActions(String actionType) {
+
+		// Perform View in DocView/DocList Action
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getActionBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getActionType(actionType).waitAndClick(10);
+			base.stepInfo("Clicked : " + actionType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("View Action failed");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param analyze
+	 */
+	public void analyzeAction(String analyze) {
+		if (getAnalyseActionBtn(analyze).isElementAvailable(3)) {
+			base.stepInfo(analyze + " button is enabled to click");
+			getAnalyseActionBtn(analyze).ScrollTo();
+			getAnalyseActionBtn(analyze).waitAndClick(3);
+			base.stepInfo("Clicked : " + analyze);
+			driver.waitForPageToBeReady();
+		} else {
+			base.stepInfo(analyze + " button is disabled");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @param limitCheck
+	 */
+	public String tileSelctionBasedOnChildCountReturnClusterID(int limitCheck, int docCount) {
+		// Verify child count
+		String clusterID = null;
+		for (int k = 1; k <= limitCheck; k++) {
+			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
+			if (clusterCount > docCount) {
+				String textContent = hoverOnSpecificConcepTualMapReturnText(k);
+
+				// Cluster ID
+				clusterID = getClusterID(false, 1, limitCheck);
+				base.stepInfo("Cluster Id : " + clusterID);
+
+				int tCid = Integer.parseInt(clusterID);
+				getTileToSelect(tCid).waitAndClick(5);
+				driver.waitForPageToBeReady();
+			}
+		}
+		return clusterID;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @param limitCheck
+	 * @param docCount
+	 */
+	public void tileSelctionBasedOnChildCount(int limitCheck, int docCount) {
+		for (int k = 1; k <= limitCheck; k++) {
+			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
+			if (clusterCount > docCount) {
+				getSquareToSelect(k).waitAndClick(3);
+			}
 		}
 	}
 
