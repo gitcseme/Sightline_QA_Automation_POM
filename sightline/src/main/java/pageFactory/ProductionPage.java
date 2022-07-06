@@ -3030,6 +3030,21 @@ public class ProductionPage {
 		return driver
 				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor']//p");
 	}
+	
+	public Element getSortingRadioBtn() {
+		return driver
+				.FindElementByXPath("//input[@id='rdbSortByTag']/..//i");
+	}
+	public Element selectTagInSortingPage(String Tag) {
+		return driver
+				.FindElementByXPath("//div[@id='tagsTree']/ul/li/ul/li//a[text()="+Tag+"]");
+	}
+	public Element getAddToSelectedBtn() {
+		return driver
+				.FindElementById("addFormObjects");
+	}
+		
+		
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20513,11 +20528,29 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 		
 	}
 
-
-	softAssertion.assertTrue(actualText.contains(expectedText));
-	base.passedStep("Documents Generated successfully");
+/**
+ * @author Brundha.T
+ * @param ProdName
+ * @param TagName
+ * @description: verifying component tab in drafted production
+ */
+public void verifyingDraftedProductionInComponentTab(String ProdName,String TagName) {
+	getProductionNameLink(ProdName).waitAndClick(5);
+	gettext("Back").Click();
+	getMarkInCompleteBtn().Click();
+	selectPrivDocsInTiffSection(TagName);
+	driver.scrollPageToTop();
+	getMarkCompleteLink().waitAndClick(10);
+	base.CloseSuccessMsgpopup();
+	getCheckBoxCheckedVerification(chkIsDATSelected());
+	getCheckBoxCheckedVerification(chkIsTIFFSelected());
+	getTIFFTab().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	String PlaceholderText=getPriveldge_TextArea().getText();
+	System.out.println(PlaceholderText);
+	base.textCompareEquals(PlaceholderText, Input.tagNameTechnical, "All the values entered retained on markcomplete", "Entered values not retained");
+	
 }
-
 
 
 }
