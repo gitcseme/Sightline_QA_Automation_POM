@@ -363,6 +363,7 @@ public class CloningProject_Regression01 {
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
+				
 				UserManagement users = new UserManagement(driver);
 				users.navigateToUsersPAge();
 				users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", Input.securityGroup, false, true);
@@ -411,6 +412,7 @@ public class CloningProject_Regression01 {
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
+				
 				UserManagement users = new UserManagement(driver);
 				users.navigateToUsersPAge();
 				users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", Input.securityGroup, false, true);
