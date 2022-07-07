@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
@@ -405,5 +406,115 @@ public class Production_Regression2 {
 		baseClass.passedStep("Verified TIFF Section with various options");
 	}
 
-	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48184
+	 * @Description:To Verify Production Location For Production Root
+	 *                 Path/Production Directory/Load File Path/Volume
+	 *                 Included/Production Component Folders.
+	 **/
+
+	@Test(description = "RPMXCON-48184", enabled = true, groups = { "regression" })
+	public void verifyProductionLocationComponent() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-48184- Production Sprint 16");
+		baseClass.stepInfo(
+				"To Verify Production Location For Production Root Path/Production Directory/Load File Path/Volume Included/Production Component Folders.");
+		UtilityLog.info(Input.prodPath);
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName = page.addANewProduction(productionname);
+		System.out.println("created a new production - " + prodName);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.getlstProductionRootPaths().isElementAvailable(10);
+		page.getProductionOutputLocation_ProductionDirectory().isElementAvailable(10);
+		page.loadFilePath().isElementAvailable(10);
+		page.GetVolumeName().isElementAvailable(10);
+		baseClass.passedStep("Verified Production Location component");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48185
+	 * @Description:To Verify Summary and Preview for (Total Documents/Total
+	 *                 Pages/Number of Custodians/Number of Natives/Exception
+	 *                 Files/Missing Text Files/First and Last Doc ID's/Privileged
+	 *                 Documents/Documents identified by Production Guard/Redacted
+	 *                 Documents/OCR/TIFF
+	 **/
+
+	@Test(description = "RPMXCON-48185", enabled = true, groups = { "regression" })
+	public void verifySummaryComponent() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-48185- Production Sprint 16");
+		baseClass.stepInfo(
+				"To Verify Summary and Preview for (Total Documents/Total Pages/Number of Custodians/Number of Natives/Exception Files/Missing Text Files/First and Last Doc ID's/Privileged Documents/Documents identified by Production Guard/Redacted Documents/OCR/TIFF");
+		UtilityLog.info(Input.prodPath);
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName = page.addANewProduction(productionname);
+		System.out.println("created a new production - " + prodName);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.getValueTotalDocuments().isElementAvailable(10);
+		page.getValueTotalPagesCount().isElementAvailable(10);
+		page.getNoOfCustodians().isElementAvailable(10);
+		page.getDocPages().isElementAvailable(10);
+		page.getTextMp3File().isElementAvailable(10);
+		page.exceptionDocCount().isElementAvailable(10);
+		page.documentMissingCount().isElementAvailable(10);
+		page.getValueFirstLastDocs().isElementAvailable(10);
+		page.getPrivDocCountInSummaryPage().isElementAvailable(10);
+		page.docIdentifiedByProtectionGuard().isElementAvailable(10);
+		page.redactedDocCountInSummaryPage().isElementAvailable(10);
+		page.getDocumentsOfOCR().isElementAvailable(10);
+		page.getDocumentsOfTIFF().isElementAvailable(10);
+
+		baseClass.passedStep(" Verified Summary and Preview  Component");
+
+	}
+
 }
