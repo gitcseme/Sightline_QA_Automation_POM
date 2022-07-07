@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -206,6 +207,160 @@ public class DomainManagement_Regression_02 {
 				
 		base.passedStep("Verified when Sys Admin selects 'Domain Admin' as Impersonate To");
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07-07-2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that if System admin apply the Filter User by selecting ‘Domain Administrator’ role then grid should show only DA users
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52795",enabled = true, groups = {"regression" })
+	public void verifySysAdminFilterDomainAdmin() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52795");
+		base.stepInfo("To verify that if System admin apply the Filter User by selecting ‘Domain Administrator’ role then grid should show only DA users");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		dash = new DomainDashboard(driver);
+		softAssertion = new SoftAssert();
+		
+		//filter the role
+		userManage.filterTheRole("Domain Administrator");
+		
+		//get colum values
+		int colum = base.getIndex(userManage.userDetailsTableHeader(), "ROLE");
+		List<String> roles = dash.getColumValues(userManage.getTableColumnData(colum));
+		
+		//verify colum values
+		for(String role:roles) {
+			softAssertion.assertEquals(role, "Domain Administrator");
+		}
+		softAssertion.assertAll();
+		base.passedStep("It's show only Domain Admin users");
+				
+		base.passedStep("verified that if System admin apply the Filter User by selecting ‘Domain Administrator’ role then grid should show only DA users");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07-07-2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that 'Domain' value should not be displayed in Role drop down when Project Admin/RMU adds new user
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52774",dataProvider = "PaRmu",enabled = true, groups = {"regression" })
+	public void verifyDomainValueNotDiaplayed(String username, String password) throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52774");
+		base.stepInfo("Verify that 'Domain' value should not be displayed in Role drop down when Project Admin/RMU adds new user");
+		
+		//login 
+		loginPage.loginToSightLine(username, password);
+		
+		base = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		//user popup open
+		userManage.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
+		base.waitForElement(userManage.getAddUserBtn());
+		userManage.getAddUserBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Add User pop up was opened ");
+		
+		if(!userManage.getUserRole("Domain Administrator").isElementAvailable(1)) {
+			base.passedStep("'Domain' value was not be displayed in Role drop down in Add User pop up for Project Admin and RMU user");
+		}else {
+			base.failedStep("verification failed");
+		}
+				
+		base.passedStep("Verified that 'Domain' value should not be displayed in Role drop down when Project Admin/RMU adds new user");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07-07-2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that error message should be displayed when system admin adds existing system admin as domain user
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52780",enabled = true, groups = {"regression" })
+	public void verifySysAdminAddExitSaForDomainRole() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52780");
+		base.stepInfo("Verify that error message should be displayed when system admin adds existing system admin as domain user");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		
+		driver.waitForPageToBeReady();
+		userManage.addNewUserWithoutVerifySuccesMsg(Input.randomText, Input.randomText, "Domain Administrator", Input.sa1userName, Input.domainName, Input.projectName);
+		base.VerifyErrorMessage("20001000014 : The given user is already a system administrator and cannot be assigned another role.");
+		
+		base.passedStep("Verified that error message should be displayed when system admin adds existing system admin as domain user");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07-07-2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify when system admin adds domain user same as deleted domain admin/project admin/RMU/Reviewer
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52781",enabled = true, groups = {"regression" })
+	public void verifySysAdminAddDomainSameAsDeletedUser() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52781");
+		base.stepInfo("Verify when system admin adds domain user same as deleted domain admin/project admin/RMU/Reviewer");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		
+		String email = Input.randomText+Utility.dynamicNameAppender()+"@consilio.com";
+		
+		//pre-req delete exiting user
+		userManage.createNewUser(Input.randomText, Input.randomText, "Domain Administrator", email, Input.domainName, Input.projectName);
+		userManage.deleteUser(Input.randomText);
+		base.stepInfo("Existing user with role as Domain Admin is deleted");
+		
+		//Add deleted user
+		base.CloseSuccessMsgpopup();
+		userManage.createNewUser(Input.randomText, Input.randomText, "Domain Administrator", email, Input.domainName, Input.projectName);
+		base.stepInfo("All the details was entered/selected  Success message should be displayed ");
+		
+		//remove added cred
+		userManage.deleteUser(Input.randomText);
+		
+		base.passedStep("Verified when system admin adds domain user same as deleted domain admin/project admin/RMU/Reviewer");
+		loginPage.logout();
+	}
+	
+	@DataProvider(name= "PaRmu" )
+	public Object[][] PaRmu(){
+		return new Object[][] {{Input.pa1userName,Input.pa1password},{Input.rmu1userName,Input.rmu1password}};
 	}
 	
 	@AfterMethod(alwaysRun = true)
