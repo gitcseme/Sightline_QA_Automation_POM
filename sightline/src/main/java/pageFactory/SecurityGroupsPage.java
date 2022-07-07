@@ -345,6 +345,12 @@ public class SecurityGroupsPage {
 	public Element getProjectFieldsAddToSecurityGroup(String projectFieldValue) {
 		return driver.FindElementByXPath("//div[@id='fieldJSTree_Selected']//a[text()='" + projectFieldValue + "']");
 	}
+	
+//Added by Krishna
+	
+	public Element getSGGrpList(String sgname) {
+		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']//option[text()='" + sgname + "']");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
