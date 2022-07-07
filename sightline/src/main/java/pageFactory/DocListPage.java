@@ -490,9 +490,9 @@ public class DocListPage {
 	public Element getCancelButton() {
 		return driver.FindElementById("bot2-Msg1");
 	}
-	
-	//Added by arun
-	public Element getDataInDoclist(int row,int column) {
+
+	// Added by arun
+	public Element getDataInDoclist(int row, int column) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + row + "]//td[" + column + "]");
 	}
 
@@ -1218,12 +1218,9 @@ public class DocListPage {
 		return driver.FindElementsByXPath("//tr[@role='row']/th");
 	}
 
-	
-		
-		public Element getDocCount(int i) {
-			return driver.FindElementByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td[text()="+i+"]");
-		}
-	
+	public Element getDocCount(int i) {
+		return driver.FindElementByXPath("//table[contains(@id,'dtDocList')]//tbody//tr/td[text()=" + i + "]");
+	}
 
 	public Element getParentDocumentID(int i) {
 		return driver.FindElementByXPath("//td[@class=' details-control']/..//td[" + i + "]");
@@ -1261,53 +1258,79 @@ public class DocListPage {
 	public Element getDocList_EmailName() {
 		return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[4]");
 	}
+
 	public ElementCollection getAvailable_MetaData() {
 		return driver.FindElementsByXPath("//div[@class='listContainer']//strong");
 	}
+
 	public Element getDocList_CancelButton() {
 		return driver.FindElementById("btnColumnsCancel");
 	}
-	
 
-	public Element getDocList_BlankSource(String docBlank,int size) {
-		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='"+docBlank+"']//following-sibling::td[string-length()=0]//parent::tr/td['"+size+"']//label");
+	public Element getDocList_BlankSource(String docBlank, int size) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//tr//td[text()='" + docBlank
+				+ "']//following-sibling::td[string-length()=0]//parent::tr/td['" + size + "']//label");
 
 	}
+
 	public Element getDocList_PlusIcon() {
 		return driver.FindElementByXPath("//td[@class=' details-control']");
 
 	}
+
 	public ElementCollection getDocList_ChildDocCount(int tableSize) {
-		return driver.FindElementsByXPath("(//div[@class='dataTables_wrapper form-inline no-footer'])[last()]//tr/td["+tableSize+"]");
+		return driver.FindElementsByXPath(
+				"(//div[@class='dataTables_wrapper form-inline no-footer'])[last()]//tr/td[" + tableSize + "]");
 
 	}
+
 	public Element getDocList_NewAssgnDocCount() {
-		return driver.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+		return driver
+				.FindElementByXPath("//div[@id='newassignmentdiv']//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 
 	}
+
 	public Element getDocList_FamilyMemberCount() {
 		return driver.FindElementById("CountTextFamilyMem");
 
 	}
+
 	public Element getDocList_Drp_DwnParentLevel() {
 		return driver.FindElementByXPath("//select[@id='sampleMethodNewAssignment']");
 
 	}
+
 	public ElementCollection getDocList_ChildHeader() {
-		return driver.FindElementsByXPath("//table[contains(@class,'table_Scroll table table-striped smart-form has-tickbox data-table-alt d')]//th");
+		return driver.FindElementsByXPath(
+				"//table[contains(@class,'table_Scroll table table-striped smart-form has-tickbox data-table-alt d')]//th");
 
 	}
+
 	public ElementCollection getColumValues(int colum) {
-		return driver.FindElementsByXPath("//*[@id='dtDocList']/tbody/tr/td["+colum+"]");
-		}
+		return driver.FindElementsByXPath("//*[@id='dtDocList']/tbody/tr/td[" + colum + "]");
+	}
+
 	public ElementCollection getTableRowHeaderInDocList() {
 		return driver.FindElementsByXPath("//tr[@role='row']/th");
-		}
-	
-	public Element getColumValue(int colum) {
-		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr[1]/td["+colum+"]");
 	}
-	
+
+	public Element getColumValue(int colum) {
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr[1]/td[" + colum + "]");
+	}
+//Added by Vijaya.Rani
+	public Element getAssertEmailRecipientNames(int colno) {
+		return driver.FindElementByXPath("//th[text()='EmailRecipientNames']/following::tr[" + colno + "]//td[8]");
+	}
+
+	public Element getEmailRecipientNameApplyFilter() {
+		return driver.FindElementByXPath("(//a[@id='action-NVARCHAR--15'])[1]");
+	}
+
+	public Element getActiveFilterInEmailRecipientName(String emailDomainName) {
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li[contains(text(),'" + emailDomainName
+				+ "') and contains(text(),'EmailRecipientNames - Include')]");
+	}
+
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -1808,7 +1831,7 @@ public class DocListPage {
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
 		base.VerifySuccessMessage("Records saved successfully");
-		
+
 		driver.Manage().window().maximize();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4817,8 +4840,8 @@ public class DocListPage {
 				getRemoveBtn().Click();
 				System.out.println(i);
 			}
-			String[] eleValue = { "LastAccessDate", "LastModifiedDate", "LastSaveDate","LastEditDate", "MasterDate", "EmailSentDate",
-					"EmailReceivedDate", "DocDate", "AppointmentStartDate", "AppointmentEndDate" };
+			String[] eleValue = { "LastAccessDate", "LastModifiedDate", "LastSaveDate", "LastEditDate", "MasterDate",
+					"EmailSentDate", "EmailReceivedDate", "DocDate", "AppointmentStartDate", "AppointmentEndDate" };
 			for (int j = 0; j < eleValue.length; j++) {
 				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
 				getSelectAvailMetadata(eleValue[j]).ScrollTo();
@@ -4840,17 +4863,17 @@ public class DocListPage {
 			}), Input.wait30);
 			getUpdateColumnBtn().waitAndClick(5);
 			driver.waitForPageToBeReady();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getDataInDoclist(1,13).Visible();
+				return getDataInDoclist(1, 13).Visible();
 			}
 		}), Input.wait30);
-		String dateFormat = getDataInDoclist(1,13).getText();
+		String dateFormat = getDataInDoclist(1, 13).getText();
 		String firstSectionInDateFormat[] = dateFormat.split("/");
 		int firstsectionLength = firstSectionInDateFormat[0].length();
 		int dateFormatTotalLength = dateFormat.length();
@@ -4858,10 +4881,9 @@ public class DocListPage {
 		if (dateFormatTotalLength == 19 && firstsectionLength == 4) {
 			base.passedStep(" date fields displayed correctly ");
 		} else {
-			base.failedStep(
-					"date fields not displayed correctly ");
+			base.failedStep("date fields not displayed correctly ");
 		}
-		
+
 	}
 
 	/**
@@ -4912,52 +4934,53 @@ public class DocListPage {
 	public ArrayList<String> verifyingEmailMetaData(int Metadata) {
 		ArrayList<String> arList = null;
 
-		      int j;
-		      arList = new ArrayList<String>();
-			  List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
-				for (j = 0; j < RowCount.size(); j++) {
-					driver.waitForPageToBeReady();
-					String row = RowCount.get(j).getText();
-					arList.add(row);
-				}
-				System.out.println(arList);
-				 return arList;
-}
+		int j;
+		arList = new ArrayList<String>();
+		List<WebElement> RowCount = GetColumnData(Metadata).FindWebElements();
+		for (j = 0; j < RowCount.size(); j++) {
+			driver.waitForPageToBeReady();
+			String row = RowCount.get(j).getText();
+			arList.add(row);
+		}
+		System.out.println(arList);
+		return arList;
+	}
+
 	/**
-	* @author Brundha.T
-	* @param docCount
-	* Description:Validating mp3 file count.
-	*/
+	 * @author Brundha.T
+	 * @param docCount Description:Validating mp3 file count.
+	 */
 	public void verifyingTheMp3FileAndOtherFile(int docCount) {
-	if(getDocCount(docCount).isElementAvailable(10)) {
-	base.passedStep("Document count is displayed as expected");
-	}else {
-	base.failedStep("Document count is not displayed as expected");
+		if (getDocCount(docCount).isElementAvailable(10)) {
+			base.passedStep("Document count is displayed as expected");
+		} else {
+			base.failedStep("Document count is not displayed as expected");
+		}
 	}
-	}
+
 	/**
-	* @authorBrundha
-	* @param ele
-	* Description:Removing some columns and adding particular column in doclist page
-	*/
+	 * @authorBrundha
+	 * @param ele Description:Removing some columns and adding particular column in
+	 *            doclist page
+	 */
 	public void selectingSingleValueInCoumnAndRemovingExistingOne(String AudioPlayer) {
 
-	base.waitForElement(SelectColumnBtn());
-	SelectColumnBtn().waitAndClick(10);
+		base.waitForElement(SelectColumnBtn());
+		SelectColumnBtn().waitAndClick(10);
 
-	int metadatasCount = getAvailableRemoveButtonCount().size();
-	for (int i = 0; i < metadatasCount; i++) {
-	getRemoveBtn().Click();
-	System.out.println(i);
-	}
+		int metadatasCount = getAvailableRemoveButtonCount().size();
+		for (int i = 0; i < metadatasCount; i++) {
+			getRemoveBtn().Click();
+			System.out.println(i);
+		}
 
-	getSelectAvailMetadata(AudioPlayer).ScrollTo();
-	getSelectAvailMetadata(AudioPlayer).waitAndClick(10);
+		getSelectAvailMetadata(AudioPlayer).ScrollTo();
+		getSelectAvailMetadata(AudioPlayer).waitAndClick(10);
 
-	base.waitForElement(getAddToSelect());
-	getAddToSelect().waitAndClick(10);
-	base.waitForElement(getUpdateColumnBtn());
-	getUpdateColumnBtn().waitAndClick(10);
+		base.waitForElement(getAddToSelect());
+		getAddToSelect().waitAndClick(10);
+		base.waitForElement(getUpdateColumnBtn());
+		getUpdateColumnBtn().waitAndClick(10);
 
 	}
 
@@ -4967,55 +4990,53 @@ public class DocListPage {
 	 * @param tag
 	 */
 	public void verifyTheMetaDataPresences() {
-			driver.waitForPageToBeReady();
-			List<String> metadataName = Arrays.asList("EmailAuthorNameAndAddress","EmailBCCNamesAndAddresses","EmailCCNamesAndAddresses","EmailToNamesAndAddresses");
-			base.waitForElement(SelectColumnBtn());
-			SelectColumnBtn().waitAndClick(10);
-			List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
-			System.out.println(availableMetaData.size());
-			int j;
-			String counts;
-			List<String> value = new ArrayList<String>();
-			for (j = 0; j < availableMetaData.size(); j++) {
-				System.out.println(availableMetaData.get(j).getText());
-				counts = availableMetaData.get(j).getText();
-				value.add(availableMetaData.get(j).getText());
-			}
-			value.retainAll(metadataName);
-			String availablevalue=String.join(",", value);
-			if (availablevalue.contentEquals(String.join(",", metadataName))) {
-				base.passedStep("Email metadata fields are available as per the assigned one in doclist page");
+		driver.waitForPageToBeReady();
+		List<String> metadataName = Arrays.asList("EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses",
+				"EmailCCNamesAndAddresses", "EmailToNamesAndAddresses");
+		base.waitForElement(SelectColumnBtn());
+		SelectColumnBtn().waitAndClick(10);
+		List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
+		System.out.println(availableMetaData.size());
+		int j;
+		String counts;
+		List<String> value = new ArrayList<String>();
+		for (j = 0; j < availableMetaData.size(); j++) {
+			System.out.println(availableMetaData.get(j).getText());
+			counts = availableMetaData.get(j).getText();
+			value.add(availableMetaData.get(j).getText());
+		}
+		value.retainAll(metadataName);
+		String availablevalue = String.join(",", value);
+		if (availablevalue.contentEquals(String.join(",", metadataName))) {
+			base.passedStep("Email metadata fields are available as per the assigned one in doclist page");
 
-			} else {
-				base.failedStep("email metadata fields not available");
-			}
-			getDocList_CancelButton().waitAndClick(5);
+		} else {
+			base.failedStep("email metadata fields not available");
+		}
+		getDocList_CancelButton().waitAndClick(5);
 	}
-	
+
 	/**
 	 * @author Malayala.Seenivasan
 	 * @description method for validating the email metadata
 	 */
 	public void selectColumnMetaDataSelection() {
-			driver.waitForPageToBeReady();
-			base.waitForElement(SelectColumnBtn());
-			SelectColumnBtn().waitAndClick(10);
-			List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
-			System.out.println(availableMetaData.size());
-			String[] eleValue = { "SourceParentDocID","SourceDocID"};
-			for (int j = 0; j < eleValue.length; j++) {
-				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
-				getSelectAvailMetadata(eleValue[j]).ScrollTo();
-				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
-			}
-			base.waitForElement(getAddToSelect());
-			getAddToSelect().waitAndClick(10);
-			base.waitForElement(getUpdateColumnBtn());
-			getUpdateColumnBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.waitForElement(SelectColumnBtn());
+		SelectColumnBtn().waitAndClick(10);
+		List<WebElement> availableMetaData = getAvailable_MetaData().FindWebElements();
+		System.out.println(availableMetaData.size());
+		String[] eleValue = { "SourceParentDocID", "SourceDocID" };
+		for (int j = 0; j < eleValue.length; j++) {
+			base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+			getSelectAvailMetadata(eleValue[j]).ScrollTo();
+			getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+		}
+		base.waitForElement(getAddToSelect());
+		getAddToSelect().waitAndClick(10);
+		base.waitForElement(getUpdateColumnBtn());
+		getUpdateColumnBtn().waitAndClick(10);
 	}
-	
-	
-	
 
 	/**
 	 * @author Malayala.Seenivasan
@@ -5025,19 +5046,19 @@ public class DocListPage {
 	 * @param size
 	 * @param pureHit
 	 */
-	
-	public void selectingBlankDocs(String docId,String parentdocId,int size,int pureHit) {
-		SoftAssert assertion =new SoftAssert();
+
+	public void selectingBlankDocs(String docId, String parentdocId, int size, int pureHit) {
+		SoftAssert assertion = new SoftAssert();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocList_BlankSource(docId,size));
-		getDocList_BlankSource(docId,size).waitAndClick(5);
+		base.waitForElement(getDocList_BlankSource(docId, size));
+		getDocList_BlankSource(docId, size).waitAndClick(5);
 		base.waitForElement(getDocList_PlusIcon());
 		getDocList_PlusIcon().waitAndClick(5);
-		int tableSize=base.getIndex(getDocList_ChildHeader(),"DOCID");
-		int childDocCount=getDocList_ChildDocCount(tableSize).FindWebElements().size();
+		int tableSize = base.getIndex(getDocList_ChildHeader(), "DOCID");
+		int childDocCount = getDocList_ChildDocCount(tableSize).FindWebElements().size();
 		base.stepInfo("Parent child document count :" + childDocCount);
-		base.waitForElement(getDocList_BlankSource(parentdocId,size));
-		getDocList_BlankSource(parentdocId,size).waitAndClick(5);
+		base.waitForElement(getDocList_BlankSource(parentdocId, size));
+		getDocList_BlankSource(parentdocId, size).waitAndClick(5);
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().waitAndClick(5);
 		base.stepInfo("both child and parent document selected");
@@ -5048,11 +5069,10 @@ public class DocListPage {
 		base.waitForElement(getNewFolderBtn());
 		getNewFolderBtn().waitAndClick(5);
 		base.waitForElement(getDocList_NewAssgnDocCount());
-		String docTotalCount=getDocList_NewAssgnDocCount().getText();
-		if (Integer.parseInt(docTotalCount)==pureHit) {
+		String docTotalCount = getDocList_NewAssgnDocCount().getText();
+		if (Integer.parseInt(docTotalCount) == pureHit) {
 			base.passedStep("Blank document for sourceparentdocid count and child are expected ones");
-		}
-		else {
+		} else {
 			base.failedStep("count are not same");
 		}
 		base.stepInfo("selecting parent level only docs");
@@ -5061,21 +5081,19 @@ public class DocListPage {
 		base.waitForElement(getContinueBtn());
 		getContinueBtn().waitAndClick(5);
 		base.waitForElement(getDocList_FamilyMemberCount());
-		String familyCount=getDocList_FamilyMemberCount().getText();
-		if (Integer.parseInt(familyCount)==childDocCount) {
+		String familyCount = getDocList_FamilyMemberCount().getText();
+		if (Integer.parseInt(familyCount) == childDocCount) {
 			base.passedStep("Child document count are same in family member");
-		}
-		else {
+		} else {
 			base.failedStep("count are not same");
 		}
 		base.waitForElement(getFinalCount());
-		String finalcount=getFinalCount().getText();
-		int totalDocsCount=pureHit-childDocCount;
+		String finalcount = getFinalCount().getText();
+		int totalDocsCount = pureHit - childDocCount;
 		assertion.assertEquals(totalDocsCount, Integer.parseInt(finalcount));
 		base.passedStep("only parent level document are finalize for assignment");
 		assertion.assertAll();
 	}
-	
 
 	/**
 	 * @author Malayala.Seenivasan
@@ -5084,18 +5102,18 @@ public class DocListPage {
 	 * @param size
 	 * @param pureHit
 	 */
-	
-	public void selectingDocsBasedOnSources(String parentdocId,int size,int pureHit) {
-		SoftAssert assertion =new SoftAssert();
+
+	public void selectingDocsBasedOnSources(String parentdocId, int size, int pureHit) {
+		SoftAssert assertion = new SoftAssert();
 		driver.waitForPageToBeReady();
-		base.waitForElement(getDocList_BlankSource(parentdocId,size));
-		getDocList_BlankSource(parentdocId,size).waitAndClick(5);
+		base.waitForElement(getDocList_BlankSource(parentdocId, size));
+		getDocList_BlankSource(parentdocId, size).waitAndClick(5);
 		base.waitForElement(getCancelButton());
 		getCancelButton().waitAndClick(5);
 		base.waitForElement(getDocList_PlusIcon());
 		getDocList_PlusIcon().waitAndClick(5);
-		int tableSize=base.getIndex(getDocList_ChildHeader(),"DOCID");
-		int childDocCount=getDocList_ChildDocCount(tableSize).FindWebElements().size();
+		int tableSize = base.getIndex(getDocList_ChildHeader(), "DOCID");
+		int childDocCount = getDocList_ChildDocCount(tableSize).FindWebElements().size();
 		base.stepInfo("Parent child document count :" + childDocCount);
 		base.waitForElement(getDocList_actionButton());
 		getDocList_actionButton().waitAndClick(5);
@@ -5104,12 +5122,11 @@ public class DocListPage {
 		base.waitForElement(getNewFolderBtn());
 		getNewFolderBtn().waitAndClick(5);
 		base.waitForElement(getDocList_NewAssgnDocCount());
-		String docTotalCount=getDocList_NewAssgnDocCount().getText();
-		int removingChild=pureHit-childDocCount;
-		if (Integer.parseInt(docTotalCount)==removingChild) {
+		String docTotalCount = getDocList_NewAssgnDocCount().getText();
+		int removingChild = pureHit - childDocCount;
+		if (Integer.parseInt(docTotalCount) == removingChild) {
 			base.passedStep("popup window count are same");
-		}
-		else {
+		} else {
 			base.failedStep("count are not same");
 		}
 		base.stepInfo("selecting parent level only docs");
@@ -5118,74 +5135,74 @@ public class DocListPage {
 		base.waitForElement(getContinueBtn());
 		getContinueBtn().waitAndClick(5);
 		base.waitForElement(getDocList_FamilyMemberCount());
-		String familyCount=getDocList_FamilyMemberCount().getText();
-		if (Integer.parseInt(familyCount)==childDocCount) {
+		String familyCount = getDocList_FamilyMemberCount().getText();
+		if (Integer.parseInt(familyCount) == childDocCount) {
 			base.passedStep("Child document count are same in family member");
-		}
-		else {
+		} else {
 			base.failedStep("count are not same");
 		}
 		base.stepInfo("Child document not selected,only parent doc selected");
 		base.waitForElement(getFinalCount());
-		String finalcount=getFinalCount().getText();
-		int totalDocsCount=pureHit-childDocCount;
+		String finalcount = getFinalCount().getText();
+		int totalDocsCount = pureHit - childDocCount;
 		assertion.assertEquals(totalDocsCount, Integer.parseInt(finalcount));
 		base.passedStep("only parent level document are finalize for assignment");
 		assertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Brundha
 	 * @Description verifying email author address value
 	 */
 	public void emailAuthorAddressParentheses(String EmailAuthorAddress) {
-		int index = base.getIndex(getTableRowHeaderInDocList(),EmailAuthorAddress);
-		List<WebElement> element =getColumValues(index).FindWebElements();
-		for(WebElement ele:element) {
-		String text = ele.getText().trim();
-		if(text.contains("(")) {
-		base.failedStep(""+EmailAuthorAddress+" is with closed parentheses");
+		int index = base.getIndex(getTableRowHeaderInDocList(), EmailAuthorAddress);
+		List<WebElement> element = getColumValues(index).FindWebElements();
+		for (WebElement ele : element) {
+			String text = ele.getText().trim();
+			if (text.contains("(")) {
+				base.failedStep("" + EmailAuthorAddress + " is with closed parentheses");
+			} else {
+				System.out.println("" + EmailAuthorAddress + " is not with closed parentheses as expected");
+			}
 		}
-		else {
-			System.out.println(""+EmailAuthorAddress+" is not with closed parentheses as expected");
-		}
-		}
-		base.passedStep(""+EmailAuthorAddress+" is not with closed parentheses as expected");
-		
-		}
+		base.passedStep("" + EmailAuthorAddress + " is not with closed parentheses as expected");
+
+	}
+
 	/**
 	 * @author Brundha
 	 * 
 	 */
 	public void verifyingEmailMetadataInDocListPage(String EmailMetaData) {
-		int index = base.getIndex(getTableRowHeaderInDocList(),EmailMetaData);
-		List<WebElement> element =getColumValues(index).FindWebElements();
-		for(WebElement ele:element) {
-		String text = ele.getText().trim();
-		if(text.contains("(")) {
-		base.passedStep(""+EmailMetaData+" is with parentheses");
-		break;
+		int index = base.getIndex(getTableRowHeaderInDocList(), EmailMetaData);
+		List<WebElement> element = getColumValues(index).FindWebElements();
+		for (WebElement ele : element) {
+			String text = ele.getText().trim();
+			if (text.contains("(")) {
+				base.passedStep("" + EmailMetaData + " is with parentheses");
+				break;
+			}
 		}
-		}
-		
-		
-		}
+
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param EmailAuthorAddress
 	 */
 	public void emailAuthorNameParentheses(String EmailAuthorAddress) {
-		int index = base.getIndex(getTableRowHeaderInDocList(),EmailAuthorAddress);
-		List<WebElement> element =getColumValues(index).FindWebElements();
-		for(WebElement ele:element) {
-		String text = ele.getText().trim();
-		if(!text.contains("(")) {
-		base.passedStep(""+EmailAuthorAddress+" is not contains open closed parentheses");
-		break;
+		int index = base.getIndex(getTableRowHeaderInDocList(), EmailAuthorAddress);
+		List<WebElement> element = getColumValues(index).FindWebElements();
+		for (WebElement ele : element) {
+			String text = ele.getText().trim();
+			if (!text.contains("(")) {
+				base.passedStep("" + EmailAuthorAddress + " is not contains open closed parentheses");
+				break;
+			}
 		}
-		}
-		
-		}
+
+	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @return
@@ -5197,7 +5214,7 @@ public class DocListPage {
 		String docId = getColumValue(index).getText().trim();
 		return docId;
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 * @Description :The filtered alldomains when selecting Include .
@@ -5265,4 +5282,190 @@ public class DocListPage {
 			base.failedStep("Failed to verify email author domain name" + e.getMessage());
 		}
 	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description : Comparing Email author name with table Email author name .
+	 */
+	public void EmailAuthorNameVerificationInDocexplorer() {
+		try {
+		
+			driver.waitForPageToBeReady();
+			base.waitForElement(getEmailAuthorNameBtn());
+			base.waitTillElemetToBeClickable(getEmailAuthorNameBtn());
+			getEmailAuthorNameBtn().waitAndClick(5);
+			base.waitForElement(getIncludeBtn());
+			base.waitTillElemetToBeClickable(getIncludeBtn());
+			getIncludeBtn().Click();
+			base.waitForElement(getClickToMakeSelection());
+			base.waitTillElemetToBeClickable(getClickToMakeSelection());
+			getClickToMakeSelection().Click();
+
+			base.waitForElement(getEmailAuthorNameSelectAuthor());
+			base.waitTillElemetToBeClickable(getEmailAuthorNameSelectAuthor());
+			getEmailAuthorNameSelectAuthor().Click();
+			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+			System.out.println(emailDomainName);
+			base.waitForElement(getEmailAuthorNameApplyFilter());
+			base.waitTillElemetToBeClickable(getEmailAuthorNameApplyFilter());
+			getEmailAuthorNameApplyFilter().Click();
+			base.waitForElement(getApplyFilters());
+			getApplyFilters().Click();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getActiveFilterInEmailAuthorName(emailDomainName));
+			base.waitTillElemetToBeClickable(getActiveFilterInEmailAuthorName(emailDomainName));
+			boolean activeFilter = getActiveFilterInEmailAuthorName(emailDomainName).isElementPresent();
+			if (activeFilter) {
+				base.passedStep(
+						"Active filter for email all domains by name: " + emailDomainName + " is Present as Expected");
+			} else {
+				base.failedStep("Active filter for email all domains by name: " + emailDomainName
+						+ " is not Present as Expected");
+			}
+
+			String AssertDate = null;
+			for (int D = 1; D <= getRowCount().size(); D++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getAssertEmailAuthorName(D));
+				base.waitTillElemetToBeClickable(getAssertEmailAuthorName(D));
+				AssertDate = getAssertEmailAuthorName(D).getText();
+				System.out.println("The expected text:" + AssertDate);
+				if (!AssertDate.contains(emailDomainName)) {
+					base.failedStep("The Filtered Emailalldomain:  " + emailDomainName
+							+ "  and  Document AuthorName contains " + AssertDate + "  are not same");
+				}
+			}
+
+			base.passedStep("The Filtered Emailalldomain: " + emailDomainName + "  and Document AuthorName "
+					+ AssertDate + "  are same");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClearFilters());
+			base.waitTillElemetToBeClickable(getClearFilters());
+			getClearFilters().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to comparing Email author name with table Email author name" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Vijaya.Rani
+	 * @Description : Comparing EmailRecipientsName with table EmailRecipientsName .
+	 */
+	public void EmailRecipientsNameVerificationInDocexplorer() {
+		try {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getEmailRecNameFilter());
+			base.waitTillElemetToBeClickable(getEmailRecNameFilter());
+			getEmailRecNameFilter().waitAndClick(5);
+			base.waitForElement(getIncludeBtn());
+			base.waitTillElemetToBeClickable(getIncludeBtn());
+			getIncludeBtn().Click();
+			base.waitForElement(getClickToMakeSelection());
+			base.waitTillElemetToBeClickable(getClickToMakeSelection());
+			getClickToMakeSelection().Click();
+
+			base.waitForElement(getEmailAuthorNameSelectAuthor());
+			base.waitTillElemetToBeClickable(getEmailAuthorNameSelectAuthor());
+			getEmailAuthorNameSelectAuthor().Click();
+			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+			System.out.println(emailDomainName);
+			base.waitForElement(getEmailRecipientNameApplyFilter());
+			base.waitTillElemetToBeClickable(getEmailRecipientNameApplyFilter());
+			getEmailRecipientNameApplyFilter().Click();
+			base.waitForElement(getApplyFilters());
+			getApplyFilters().Click();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getActiveFilterInEmailRecipientName(emailDomainName));
+			base.waitTillElemetToBeClickable(getActiveFilterInEmailRecipientName(emailDomainName));
+			boolean activeFilter = getActiveFilterInEmailRecipientName(emailDomainName).isElementPresent();
+			if (activeFilter) {
+				base.passedStep("Active filter for email Recipients Name by name: " + emailDomainName
+						+ " is Present as Expected");
+			} else {
+				base.failedStep("Active filter for email RecipientsName by name: " + emailDomainName
+						+ " is not Present as Expected");
+			}
+
+			String AssertDate = null;
+			for (int D = 1; D <= getRowCount().size(); D++) {
+
+				driver.waitForPageToBeReady();
+				base.waitForElement(getAssertEmailRecipientNames(D));
+				base.waitTillElemetToBeClickable(getAssertEmailRecipientNames(D));
+				AssertDate = getAssertEmailRecipientNames(D).getText();
+				System.out.println("The expected text:" + AssertDate);
+				if (!AssertDate.contains(emailDomainName)) {
+					base.failedStep("The Filtered EmailRecipientsName:  " + emailDomainName
+							+ "  and  Document RecipientsName contains " + AssertDate + "  are not same");
+				}
+			}
+
+			base.passedStep("The Filtered EmailRecipientsName: " + emailDomainName + "  and Document AuthorName "
+					+ AssertDate + "  are same");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClearFilters());
+			base.waitTillElemetToBeClickable(getClearFilters());
+			getClearFilters().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Failed to comparing Email author name with table Email author name" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Vijaya.Rani
+	 * @Description : Comparing EmailRecipientsName with table EmailRecipientsName .
+	 */
+	public void EmailRecipientsNameVerificationInDocexplorerExlude() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getEmailRecNameFilter());
+			base.waitTillElemetToBeClickable(getEmailRecNameFilter());
+			getEmailRecNameFilter().waitAndClick(5);
+			base.waitForElement(getExcludeBtn());
+			base.waitTillElemetToBeClickable(getExcludeBtn());
+			getExcludeBtn().Click();
+			base.waitForElement(getClickToMakeSelection());
+			base.waitTillElemetToBeClickable(getClickToMakeSelection());
+			getClickToMakeSelection().Click();
+			base.waitForElement(getEmailAuthorNameSelectAuthor());
+			base.waitTillElemetToBeClickable(getEmailAuthorNameSelectAuthor());
+			getEmailAuthorNameSelectAuthor().Click();
+			String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+			System.out.println(emailDomainName);
+			base.waitForElement(getEmailRecipientNameApplyFilter());
+			base.waitTillElemetToBeClickable(getEmailRecipientNameApplyFilter());
+			getEmailRecipientNameApplyFilter().Click();
+			base.waitForElement(getApplyFilters());
+			base.waitTillElemetToBeClickable(getApplyFilters());
+			getApplyFilters().Click();
+			String output = null;
+			String AssertDate = null;
+			for (int D = 1; D <= getRowCount().size(); D++) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getAssertEmailRecipientNames(D));
+				base.waitTillElemetToBeClickable(getAssertEmailRecipientNames(D));
+				output = getAssertEmailRecipientNames(D).getText();
+				System.out.println("The Empty Column:" + AssertDate);
+				if (output.equals(emailDomainName)) {
+					base.failedStep("The Filtered EmailRecipientName When Selecting Exclude is not equals to "
+							+ emailDomainName + "");
+				}
+			}
+			base.passedStep(
+					"The Filtered EmailRecipientName When Selecting Exclude is not equals to" + emailDomainName + " ");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Failed to filtered EmailRecipientName when selecting exclude is not equals to EmailRecipientName "
+							+ e.getMessage());
+		}
+	}
+	
+	
 }
