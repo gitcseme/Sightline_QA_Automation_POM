@@ -333,6 +333,7 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+
 	public ElementCollection getSearchNames() {
 		return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody//tr/td[3]");
 	}
@@ -411,6 +412,14 @@ public class SavedSearch {
 	}
 
 	// Added by Raghuram
+	public Element getPreBuiltHelpIcon() {
+        return driver.FindElementByXPath("//a[text()='Pre-Built Models']//div");
+    }
+
+    public Element getPreBuiltHelpTextContent() {
+        return driver.FindElementByXPath("//h3[@class='popover-title']//..//div[@class='popover-content']");
+    }
+    
 	public Element getCreatedNodeName(String nodeName) {
 		return driver.FindElementByXPath("//a[text()='My Saved Search']//..//li//a[text()='" + nodeName + "']");
 	}
@@ -7981,7 +7990,7 @@ public class SavedSearch {
 	 * @param TextTypetoChoose
 	 * @param NewLineTypetoChoose
 	 * @param DateStyleTypetoChoose
-	 * @return 
+	 * @return
 	 * @throws InterruptedException
 	 */
 	public int configureExportPopup(List<String> metadata, String StyletoChoose, String fieldTypeToChoose,
@@ -8029,14 +8038,14 @@ public class SavedSearch {
 
 		return Bgcount;
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param initialBgcount
 	 * @param expectedFormat
 	 */
-	public void downloadExportFile(int initialBgcount,String expectedFormat) {
-	   driver.WaitUntil((new Callable<Boolean>() {
+	public void downloadExportFile(int initialBgcount, String expectedFormat) {
+		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return base.initialBgCount() == initialBgcount + 1;
 			}
@@ -8068,10 +8077,34 @@ public class SavedSearch {
 
 		// Verify File Extension
 		String fileFormat = FilenameUtils.getExtension(fileName);
-		
+
 		String passMsg = "Downloaded File : " + fileName + "    And Verified Format IS  : " + fileFormat;
 		String failMsg = "Downloaded File Format is Not As Expected";
 		base.textCompareEquals(fileFormat, expectedFormat, passMsg, failMsg);
-   }
+	}
 
+	/**
+     * @author Raghuram.A
+     * @createdOn : 07/05/22
+     * @ModifiedOn :N/A
+     * @ModifiedBy : N/A
+     * @param groupName - Select root group name
+     */
+    public void selectSearchGroupTab(String groupName , String rootFolder) {
+            if (groupName.equalsIgnoreCase(Input.preBuilt)) {
+                getSavedSearchGroupName(rootFolder).waitAndClick(10);
+                System.out.println("Clicked :" + rootFolder);
+                rootGroupExpansion();
+        		base.passedStep(rootFolder + " Selected And Expanded");
+                getSavedSearchGroupName(Input.preBuilt).waitAndClick(10);
+                driver.waitForPageToBeReady();
+                System.out.println("Clicked : Pre-Built Models");
+                base.stepInfo("Clicked : Pre-Built Models");
+            } else {
+                getSavedSearchGroupName(groupName).waitAndClick(10);
+                System.out.println("Clicked :" + groupName);
+                base.stepInfo("Clicked :" + groupName);
+
+            }
+    }
 }

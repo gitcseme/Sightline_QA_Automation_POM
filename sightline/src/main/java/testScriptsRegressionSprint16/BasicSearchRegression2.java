@@ -15,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -92,26 +93,120 @@ public class BasicSearchRegression2 {
 		base.stepInfo("Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
 
 		// perform bulk folder
-		int purehit=session.basicContentSearch(Input.searchString5);
+		int purehit = session.basicContentSearch(Input.searchString5);
 		session.bulkFolder(folder);
 
-		//verify doc count after bulk folder
+		// verify doc count after bulk folder
 		TagsAndFoldersPage tagsAndFolder = new TagsAndFoldersPage(driver);
 		tagsAndFolder.navigateToTagsAndFolderPage();
 		base.stepInfo("navigated to Tags & folder page");
 		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folder, purehit);
-		
-		//unfolder doc in session search page
+
+		// unfolder doc in session search page
 		session.navigateToSessionSearchPageURL();
 		base.stepInfo("navigated to session search page");
 		session.bulkUnFolder(folder);
-		
-		//verify doc count after bulk unfolder
+
+		// verify doc count after bulk unfolder
 		tagsAndFolder.navigateToTagsAndFolderPage();
 		tagsAndFolder.selectingFolderAndVerifyingTheDocCount(folder, 0);
-		
-		//delet folder
+
+		// delet folder
 		tagsAndFolder.deleteAllFolders(folder);
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	@DataProvider(name = "dataSearch")
+	public Object[][] dataSearch() {
+		return new Object[][] { { "Precision AND (ProximitySearch Truthful~5)" },
+				{ "Precision AND (ProximitySearch Truthful ~5)" },
+				       {"Precision AND ProximitySearch Truthful~5"},};
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that belly band message when user configured Proximity
+	 *              without (proper) double quotes and combined with other criteria
+	 *              in Basic Search Query Screen.
+	 * @param data
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-57296", enabled = true, dataProvider = "dataSearch", groups = { "regression" })
+	public void verifyBandMsgWithoutDoubleQuotes(String data) throws InterruptedException {
+
+		// login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-57296 Basic Search");
+		base.stepInfo(
+				"Verify that belly band message when user configured Proximity without (proper) double quotes and combined with other criteria in Basic Search Query Screen.");
+
+		// Verify belly band message Query
+		session.wrongQueryAlertBasicSaerch(data, 13, "non fielded", null);
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that basic search for Comment is working properly
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-56997", enabled = true, groups = { "regression" })
+	public void verifyBasicSearchComment() throws InterruptedException {
+		String docComment1 = "Reviewed" + Utility.dynamicNameAppender();
+		String docComment2 = "Reviewed on 09-20-2009 " + Utility.dynamicNameAppender();
+		String docComment3 = "Morning" + Utility.dynamicNameAppender();
+		String regularExp = "\"##Reviewed on [0-9]{2}-[0-9]{2}-[0-9]{4}\"";
+		int count = 1;
+		DocViewPage docview = new DocViewPage(driver);
+
+		// login as User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("RPMXCON-56997 Basic Search");
+		base.stepInfo("Verify that basic search for Comment is working properly");
+
+		//configure metadata query and add comment
+		session.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		session.viewInDocView();
+		docview.addCommentAndSave(docComment1, true, count);
+
+		//verify comment in session search page
+		base.selectproject();
+		int PureHit = session.getCommentsOrRemarksCount(Input.documentComments, docComment1);
+		softAssertion.assertEquals(count, PureHit);
+		
+		//configure query and add comment
+		base.selectproject();
+		session.basicContentSearch(Input.searchString5);
+		session.viewInDocView();
+		docview.addCommentAndSave(docComment2, true, count);
+
+		//verify comment for regular exp
+		base.selectproject();
+		int PureHit2 = session.getCommentsOrRemarksCount(Input.documentComments, regularExp);
+
+		//configure audio doc and add comment
+		base.selectproject();
+		session.audioSearch(Input.audioSearchString1, Input.language);
+		session.viewInDocView();
+		docview.addCommentAndSave(docComment3, true, count);
+
+		//verify comment
+		base.selectproject();
+		int PureHit3 = session.getCommentsOrRemarksCount(Input.documentComments, docComment3);
+		softAssertion.assertEquals(count, PureHit3);
+
+		//verify comment in advance search page
+		base.selectproject();
+		session.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment1);
+		base.selectproject();
+		session.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, regularExp);
+		base.selectproject();
+		session.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment3);
 
 		softAssertion.assertAll();
 		login.logout();

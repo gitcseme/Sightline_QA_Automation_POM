@@ -105,6 +105,10 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getWarningMsg() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//div[contains(@style,'overflow')]");
+	}
+	
 	public Element getAnalysisOfCommExplorer() {
 		return driver.FindElementByXPath("//li[@id='CommunicationsExplorerOpt']");
 	}
@@ -2135,6 +2139,28 @@ public class SessionSearch {
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 
 		}
+		if (MessageNumber == 13) {
+			if (getWarningAudioBlackListChar_Header().isDisplayed()) {
+				softAssert.assertEquals(getWarningAudioBlackListChar_Header().getText(), "Possible Wrong Query Alert");
+				base.stepInfo("Displayed Header is : " + getWarningAudioBlackListChar_Header().getText());
+				System.out.println("Displayed Header is : " + getWarningAudioBlackListChar_Header().getText());
+			}
+
+			String msg = "Your query has multiple potential syntax issues.\r\n" + "\r\n"
+					+ "1. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value .\r\n"
+					+ "If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4.\r\n"
+					+ "Note there is no space before or after the tilde.\r\n" + "\r\n"
+					+ "2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).\r\n"
+					+ "\r\n" + "Does your query reflect your intent?\r\n"
+					+ "Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
+			
+			String actualMsg = getWarningMsg().getText();
+			System.out.println(actualMsg);
+			base.stepInfo(actualMsg);
+			
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+
+		}
 		// click on ok
 		/*
 		 * if(MessageNumber == 1) getTallyContinue().Click(); else
@@ -2275,6 +2301,7 @@ public class SessionSearch {
 			if (msg.replaceAll(" ", "")
 					.equals(getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""))) {
 				base.passedStep("Proximity query alert message displayed as expected.");
+				base.passedStep(msg);
 				getTallyContinue().waitAndClick(10);
 				// verify counts for all the tiles
 				driver.WaitUntil((new Callable<Boolean>() {
@@ -2284,6 +2311,7 @@ public class SessionSearch {
 				}), Input.wait90);
 
 			} else {
+				base.failedMessage(msg);
 				base.failedStep("Proximity query alert message not displayed as expected.");
 			}
 		}

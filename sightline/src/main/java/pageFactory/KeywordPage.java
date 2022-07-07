@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -43,6 +44,17 @@ public class KeywordPage {
   //Added by Mohan
     public Element getKeywordListEmpty(){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//td[contains(text(),'Your')]"); }
     public Element getKeywordRowList(){ return driver.FindElementById("KeywordsDatatable_info"); }
+    public Element getKeywordSecurityGroupList(){ return driver.FindElementById("ddlSecurityGroup"); }
+    public Element getKeywordTableListValues(String fieldValues){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//th[text()='"+fieldValues+"']"); }
+    public Element getKeywordTableActionFields(String fieldValues){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//td//a[text()='"+fieldValues+"']"); }
+    public ElementCollection getAssgnPaginationCount() {
+		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
+	}
+    public Element getKeywordTableFirstFieldValue(String fieldValues){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']/tbody/tr/td["+fieldValues+"]"); }
+    public Element getKeywordSecurityErrorMessage(){ return driver.FindElementByXPath("//label[contains(text(),'Name already')]"); }
+  
+    
+    
   
     //Annotation Layer added successfully
     public KeywordPage(Driver driver){
@@ -367,6 +379,78 @@ public class KeywordPage {
         	 }else {
         		 base.failedStep("There are no Keyword Highlight in the project");
 			}
+        	 
+		}
+         /**
+          * @author Mohan.Venugopal
+          * @description: To verify Manage Keyword Page for RMU and PA
+         * @throws AWTException
+         */
+         public void verifyManageKeywordPageRMUAndPA(String userName) {
+
+        	 driver.waitForPageToBeReady();
+        	 base.waitForElement(getKeywordSecurityGroupList());
+        	 if (userName.contains("RMU")&&!getKeywordSecurityGroupList().Enabled()) {
+				base.passedStep("Security group under RMU is added is  displayed as read only and selected are on the Manage Keywords page.");
+			}else if (userName.contains("PA")&&getKeywordSecurityGroupList().Enabled()) {
+				base.passedStep("Security group under RMU is added is displayed as read only and selected are on the Manage Keywords page.");
+			}else {
+				base.failedStep("Security group under RMU is added is not displayed as read only and selected are not on the Manage Keywords page.");
+			}
+        	 
+        	if (getKeywordTableActionFields("Edit").isElementPresent()&&getKeywordTableActionFields("Delete").isElementPresent()) {
+        		
+        		base.passedStep("Keywords list are displayed with columns - Group Name  - Color  - Description  - Keywords  - Action [Edit, Delete buttons] successfully");
+			} else {
+				base.failedStep("Keywords list are not displayed");
+			}
+        	
+        	ElementCollection paginationCount = getAssgnPaginationCount();
+        	int pageSize = paginationCount.size();
+        	System.out.println(pageSize);
+        	if (pageSize>1) {
+        		base.passedStep("The pagination are displayed on Manage Keywords page successfully");
+				
+			}else {
+				base.failedStep("The pagination are not displayed on Manage Keywords page");
+			}
+		}
+         
+         /**
+          * @author Mohan.Venugopal
+          * @description: To verify Dulpicate Keyword Page
+         * @throws AWTException
+         */
+         public void verifyDuplicateKeywordFromList() {
+
+        	 
+        	 driver.waitForPageToBeReady();
+        	 base.waitForElement(getKeywordTableFirstFieldValue("1"));
+        	 String firstFeildValue = getKeywordTableFirstFieldValue("1").getText();
+        	 System.out.println(firstFeildValue);
+        	 
+        	 base.waitForElement(getNewKeywordButton());
+        	 getNewKeywordButton().waitAndClick(5);
+        	 base.waitForElement(getKeywordName());
+         	getKeywordName().SendKeys(firstFeildValue);
+         	base.waitForElement(getDescription());
+         	getDescription().SendKeys(firstFeildValue);
+         	base.waitForElement(getKeywords());
+         	getKeywords().SendKeys(firstFeildValue);
+         	getSelectColor().selectFromDropdown().selectByVisibleText("Aqua");
+         	
+         	base.waitForElement(getSaveBtn());
+         	getSaveBtn().waitAndClick(5);
+         	base.waitForElement(getYesButton());
+         	getYesButton().waitAndClick(5);
+         	
+         	String errorMessage = getKeywordSecurityErrorMessage().getText();
+         	System.out.println(errorMessage);
+         	SoftAssert softAssert = new SoftAssert();
+         	softAssert.assertEquals("Name already exists", errorMessage);
+         	softAssert.assertAll();
+         	base.passedStep("Message is displayed like Keyword with name already exists with error code successfully.");
+        	 
         	 
 		}
 	

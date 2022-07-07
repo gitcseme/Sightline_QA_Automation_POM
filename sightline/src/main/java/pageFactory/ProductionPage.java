@@ -892,7 +892,47 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element loadFilePath() {
+		return driver.FindElementById("ProductionOutputLocation_DriveText");
+	}
+
+	public Element slipSheetsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Slip Sheets')]");
+	}
+	public Element redactionsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Redactions')]");
+	}
+	public Element placeHolderText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Placeholders')]");
+	}
 	
+	public Element brandingText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Branding')]");
+	}
+	
+	public Element pageOptionsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Page Options')]");
+	}
+	
+	public Element nativeTextInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//p[contains(text(),'Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section)]");
+	}
+	
+	public Element radioButtonInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Do not produce natives of the entire family of privileged and redacted docs')]");
+	}
+	
+	public Element radioBtnInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Do not produce natives of the parents of privileged and redacted docs')]");
+	}
+	
+	public Element RedactedMsgInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Families of Redacted and Privileged Documents')]");
+	}
+	
+	public Element warningMsgMP3() {
+		return driver.FindElementByXPath("//div[@id='divbigBoxes']//p");
+	}
 	public Element defaultNewLineSeperator() {
 		return driver.FindElementByXPath("//select[@id='lstNewLineSeparator']//option");
 	}
