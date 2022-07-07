@@ -80,6 +80,8 @@
 	<mappedData>Mapped Data</mappedData>
 	<docPrimaryLanguage>DocPrimaryLanguage</docPrimaryLanguage>
 	<english>English</english>
+	<yearRange1>2021</yearRange1>
+	<yearRange2>2022</yearRange2>
 	
 
 	<!-- Production path for redaction master doc -->
@@ -291,6 +293,9 @@
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
 	<masterDateBatchFile>MasterDate-IS-RANGE</masterDateBatchFile>
+	<totalDirSubClusterText>Total Direct Sub-Clusters:</totalDirSubClusterText>
+	<analyzeAt2>Analyze at 2nd Level</analyzeAt2>
+	<analyzeAt3>Analyze at 3rd Level</analyzeAt3>
 
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->

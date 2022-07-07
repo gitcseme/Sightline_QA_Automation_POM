@@ -337,6 +337,9 @@ public class SessionSearch {
 	public Element getCountUniqueDocId() {
 		return driver.FindElementByXPath("//h1[@class='page-title']//label");
 	}
+	public Element getMasterDate() {
+		return driver.FindElementByXPath("//td[@class=' formatDate']");
+	}
 
 	// Metadata
 	public Element getBasicSearch_MetadataBtn() {
@@ -12191,6 +12194,51 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		}else {
 			base.failedStep(SearchTabNo + "is Not Visible"); 
 		}
+	}
+
+	/**
+	 * @author: Arun Created Date: 07/07/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the search result for master date metadata using range operator
+	 * @param range1--from date (year)
+	 * @param range2-- to date (year)
+	 */
+	public void verifyMasterDateSearchResults(String range1,String range2) {
+		
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		base.stepInfo("pure hit count for search result '"+pureHit+"'");
+		String masterDate = getMasterDate().getText();
+		base.stepInfo(" master date search result details'"+masterDate+"'");
+		if(pureHit>0 && getMasterDate().isElementAvailable(10) &&
+				masterDate.contains(range1) || masterDate.contains(range2)) {
+			base.passedStep("Search results and Master date details displayed on advanced search screen");
+		}
+		else {
+			base.failedStep("Search results and Master date details not present, please check the range");
+		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 07/07/2022 Modified by: NA Modified Date: NA
+	 * @throws InterruptedException 
+	 * @description: this method will verify the conceptual tile run result status
+	 */
+	public void verifySearchResultAndConceptualTileReturnResult() throws InterruptedException {
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		base.stepInfo("pure hit count for search result '"+pureHit+"'");
+		if(pureHit>0) {
+			base.passedStep("Search results returned for the configured query");
+		}
+		else {
+			base.failedStep("Search results not returned for the configured query");
+		}
+		int conceptPureHit = runAndVerifyConceptualSearch();
+		
+		if(getConceptualTileHit(conceptPureHit).Visible()) {
+			base.passedStep("Verified that Conceptual tile return the result for work product search in Advanced  Search Screen");
+		}else {
+			base.failedStep("Still conceptual results Loading on the Screen");
+		}
+		
 	}
 			
 }
