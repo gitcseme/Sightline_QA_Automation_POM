@@ -333,6 +333,10 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
+	// ul[@class='jstree-children']//li//a
+	public ElementCollection getListOfGroupsUnderTab() {
+		return driver.FindElementsByXPath("//a[contains(@class,'clicked')]//following-sibling::ul//li");
+	}
 
 	public ElementCollection getSearchNames() {
 		return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody//tr/td[3]");
@@ -413,13 +417,13 @@ public class SavedSearch {
 
 	// Added by Raghuram
 	public Element getPreBuiltHelpIcon() {
-        return driver.FindElementByXPath("//a[text()='Pre-Built Models']//div");
-    }
+		return driver.FindElementByXPath("//a[text()='Pre-Built Models']//div");
+	}
 
-    public Element getPreBuiltHelpTextContent() {
-        return driver.FindElementByXPath("//h3[@class='popover-title']//..//div[@class='popover-content']");
-    }
-    
+	public Element getPreBuiltHelpTextContent() {
+		return driver.FindElementByXPath("//h3[@class='popover-title']//..//div[@class='popover-content']");
+	}
+
 	public Element getCreatedNodeName(String nodeName) {
 		return driver.FindElementByXPath("//a[text()='My Saved Search']//..//li//a[text()='" + nodeName + "']");
 	}
@@ -7368,8 +7372,12 @@ public class SavedSearch {
 				return bc.initialBgCount() == Bgcount + 1;
 			}
 		}), Input.wait60);
-		System.out.println("Got notification!");
-
+		int afterBg = base.initialBgCount();
+		
+		if (Bgcount < afterBg) {
+			System.out.println("Got notification!");
+			base.stepInfo("Recieved Notification ");
+		}
 		softAssertion.assertAll();
 	}
 
@@ -8084,27 +8092,28 @@ public class SavedSearch {
 	}
 
 	/**
-     * @author Raghuram.A
-     * @createdOn : 07/05/22
-     * @ModifiedOn :N/A
-     * @ModifiedBy : N/A
-     * @param groupName - Select root group name
-     */
-    public void selectSearchGroupTab(String groupName , String rootFolder) {
-            if (groupName.equalsIgnoreCase(Input.preBuilt)) {
-                getSavedSearchGroupName(rootFolder).waitAndClick(10);
-                System.out.println("Clicked :" + rootFolder);
-                rootGroupExpansion();
-        		base.passedStep(rootFolder + " Selected And Expanded");
-                getSavedSearchGroupName(Input.preBuilt).waitAndClick(10);
-                driver.waitForPageToBeReady();
-                System.out.println("Clicked : Pre-Built Models");
-                base.stepInfo("Clicked : Pre-Built Models");
-            } else {
-                getSavedSearchGroupName(groupName).waitAndClick(10);
-                System.out.println("Clicked :" + groupName);
-                base.stepInfo("Clicked :" + groupName);
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @ModifiedOn :N/A
+	 * @ModifiedBy : N/A
+	 * @param groupName - Select root group name
+	 */
+	public void selectSearchGroupTab(String groupName, String rootFolder) {
+		if (groupName.equalsIgnoreCase(Input.preBuilt)) {
+			getSavedSearchGroupName(rootFolder).waitAndClick(10);
+			System.out.println("Clicked :" + rootFolder);
+			rootGroupExpansion();
+			base.passedStep(rootFolder + " Selected And Expanded");
+			getSavedSearchGroupName(Input.preBuilt).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			System.out.println("Clicked : Pre-Built Models");
+			base.stepInfo("Clicked : Pre-Built Models");
+		} else {
+			getSavedSearchGroupName(groupName).waitAndClick(10);
+			System.out.println("Clicked :" + groupName);
+			base.stepInfo("Clicked :" + groupName);
 
-            }
-    }
+		}
+	}
+
 }
