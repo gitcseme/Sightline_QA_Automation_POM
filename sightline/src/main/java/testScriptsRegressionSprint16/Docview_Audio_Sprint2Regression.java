@@ -911,7 +911,7 @@ public class Docview_Audio_Sprint2Regression {
 		boolean radctionTrue = docViewPage.getDeleteRedaction(modify).isElementAvailable(4);
 		softAssertion.assertTrue(radctionTrue);
 		baseClass.stepInfo("Updated remarks shows correctlly");
-		boolean radctionFalse = docViewPage.getDeleteRedaction(remarkOne + 0).isElementAvailable(4);
+		boolean radctionFalse = docViewPage.getDeleteRedaction(remarkTwo).isElementAvailable(4);
 		softAssertion.assertTrue(radctionFalse);
 		baseClass.stepInfo("un-Updated remarks displayed as previous one");
 
