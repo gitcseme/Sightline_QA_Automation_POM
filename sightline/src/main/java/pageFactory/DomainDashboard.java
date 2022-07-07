@@ -151,6 +151,14 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("//th[@aria-sort='descending']");
 	}
 	
+	public Element getYesBtn() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+	
+	public Element getNoBtn() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;

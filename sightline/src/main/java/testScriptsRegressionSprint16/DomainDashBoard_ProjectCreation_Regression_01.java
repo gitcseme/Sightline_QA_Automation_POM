@@ -157,13 +157,13 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		base.waitForElement(dash.getPopupMsg());
 		String text = dash.getPopupMsg().getText().trim();
 		softAssertion.assertEquals(text, "Do you really want to deactivate this project?");
-		base.getYesBtn().waitAndClick(10);
+		dash.getNoBtn().waitAndClick(10);
 		base.stepInfo("cancel inActivate a project");
 		
 		
 		//deactivate a project
 		dash.doYouDeactivateProject(projectName);
-		base.getNOBtn().waitAndClick(10);
+		dash.getYesBtn().waitAndClick(10);
 		base.stepInfo("deactivate a project");
 		
 		//verify ascending descending order
@@ -207,12 +207,12 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		
 		//cancel the inActivate
 		dash.doYouDeactivateProject(projectName);
-		base.getYesBtn().waitAndClick(10);
+		dash.getNoBtn().waitAndClick(10);
 		base.stepInfo("click no to deactivate a project");
 		
 		//deactivate a project
 		dash.doYouDeactivateProject(projectName);
-		base.getNOBtn().waitAndClick(10);
+		dash.getYesBtn().waitAndClick(10);
 		base.stepInfo("project was deactivated");
 		
 		
@@ -245,12 +245,12 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		
 		//cancel the inActivate
 		dash.doYouDeactivateProject(projectName);
-		base.getYesBtn().waitAndClick(10);
+		dash.getNoBtn().waitAndClick(10);
 		base.stepInfo("click no to deactivate a project");
 				
 		//deactivate a project
 		dash.doYouDeactivateProject(projectName);
-		base.getNOBtn().waitAndClick(10);
+		dash.getYesBtn().waitAndClick(10);
 		base.stepInfo("project was deactivated");
 	
 		//filter
