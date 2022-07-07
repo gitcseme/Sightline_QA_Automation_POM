@@ -228,6 +228,7 @@ public class ConceptExplorer_Regression_2_1 {
 		String totalSelectedDocCount = conceptExplorer.getTotalSelectedDocCount().getText();
 		arrOfStr = totalSelectedDocCount.split(" ");
 		String aggregatedDocCount = arrOfStr[arrOfStr.length - 3];
+		base.stepInfo("Total Doc count added to cart : " + aggregatedDocCount);
 
 		// Bulk Action [Tag | Folder | Release | Assign | DocView | DocList | Tally]
 		base.stepInfo("**Step-5 Select @bulk action  [Tag | Folder | Release | Assign | DocView | DocList | Tally] **");
