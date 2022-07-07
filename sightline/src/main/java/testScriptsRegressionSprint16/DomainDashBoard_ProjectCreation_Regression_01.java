@@ -208,7 +208,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		//cancel the inActivate
 		dash.doYouDeactivateProject(projectName);
 		dash.getNoBtn().waitAndClick(10);
-		base.stepInfo("click no to deactivate a project");
+		base.stepInfo("Action was cancelled and user should be on Domain Dashboard screen");
 		
 		//deactivate a project
 		dash.doYouDeactivateProject(projectName);
@@ -246,7 +246,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		//cancel the inActivate
 		dash.doYouDeactivateProject(projectName);
 		dash.getNoBtn().waitAndClick(10);
-		base.stepInfo("click no to deactivate a project");
+		base.stepInfo("Action was cancelled and user should be on Domain Dashboard screen");
 				
 		//deactivate a project
 		dash.doYouDeactivateProject(projectName);
