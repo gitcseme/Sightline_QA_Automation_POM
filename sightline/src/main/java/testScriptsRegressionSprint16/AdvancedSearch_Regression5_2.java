@@ -10,7 +10,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
@@ -34,8 +36,8 @@ public class AdvancedSearch_Regression5_2 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+	//	in = new Input();
+	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -167,7 +169,41 @@ public class AdvancedSearch_Regression5_2 {
 			sessionSearch.navigateToSearchPageAndVerifyTileStatus();
 			loginPage.logout();
 		}
-	
+
+		/**
+		 * @author Jayanthi.ganesan
+		 */
+		@Test(description = "RPMXCON-57305", dataProvider = "Users")
+		public void verifyWarningForTwoWordsWithOR(String username, String password) throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-57305");
+			baseClass.stepInfo("Verify that result appears for proximity having "
+					+ "2 words with OR in Advanced Search Query Screen.");
+			SoftAssert assertion = new SoftAssert();
+			loginPage.loginToSightLine(username, password);
+			baseClass.stepInfo("Logged in as " + username);
+			String eleValue[] = { "“ProximitySearch (Truthful OR Recall)”~9",
+					"\"ProximitySearch (Truthful OR Recall)\"~9", "“ProximitySearch (Truthful OR Recall)”~9" };
+			driver.scrollingToBottomofAPage();
+			for (int i = 0; i < eleValue.length; i++) {	
+				sessionSearch.wrongQueryAlertAdvanceSaerch(eleValue[i], 13, "non-fielded", null);
+				assertion.assertNotNull(sessionSearch.verifyPureHitsCount(),
+						"purehit is null after entering two proximity term with OR ");
+				baseClass.passedStep("Pure hit count is not null and value displayed is " +sessionSearch.verifyPureHitsCount());
+				if (i != 2) {
+					baseClass.selectproject();
+				}
+			}
+			baseClass.passedStep("Sucessfully Verified  that result appears for proximity having  "
+					+ "2 words with OR in Advanced Search Query Screen.");
+			loginPage.logout();
+		}
+
+		@DataProvider(name = "Users")
+		public Object[][] CombinedSearchwithUsers() {
+			Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
+					{ Input.rev1userName, Input.rev1password } };
+			return users;
+		}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

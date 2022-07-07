@@ -2301,6 +2301,7 @@ public class SessionSearch {
 			if (msg.replaceAll(" ", "")
 					.equals(getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n", ""))) {
 				base.passedStep("Proximity query alert message displayed as expected.");
+				base.passedStep(msg);
 				getTallyContinue().waitAndClick(10);
 				// verify counts for all the tiles
 				driver.WaitUntil((new Callable<Boolean>() {
@@ -2310,6 +2311,7 @@ public class SessionSearch {
 				}), Input.wait90);
 
 			} else {
+				base.failedMessage(msg);
 				base.failedStep("Proximity query alert message not displayed as expected.");
 			}
 		}
