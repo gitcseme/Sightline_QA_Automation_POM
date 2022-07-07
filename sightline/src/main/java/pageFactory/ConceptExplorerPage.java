@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import javax.management.ListenerNotFoundException;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -227,13 +228,17 @@ public class ConceptExplorerPage {
 		return driver.FindElementByXPath("//div[contains(@class,'cedefault')][" + i + "]");
 	}
 
-//	public Element getActionBulkFolder() {
-//		return driver.FindElementByXPath("//a[text()='Bulk Folder']");
-//	}
-//
-//	public Element getBulkAssignBtn() {
-//		return driver.FindElementByXPath("//a[text()='Bulk Assign']");
-//	}
+	public Element getTotalSelectedDocCount() {
+		return driver.FindElementByXPath("//span[@class='text-muted']");
+	}
+
+	public Element getBackToSourceButton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Back to Source : ')]");
+	}
+
+	public Element getBackToSourceBtn() {
+		return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]");
+	}
 
 	public ConceptExplorerPage(Driver driver) {
 
@@ -581,6 +586,55 @@ public class ConceptExplorerPage {
 			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
 			if (clusterCount > docCount) {
 				getSquareToSelect(k).waitAndClick(3);
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 04/21/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @Description : Perform Doc View/List Actions
+	 * @param action     - View / ...
+	 * @param actionType - Action type existing tab / new tab
+	 */
+	public void performDocActions(String action, String actionType) {
+
+		// Perform View in DocView/DocList Action
+		try {
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getActionBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(getActionType(action).getWebElement()).build().perform();
+			getActionType(actionType).waitAndClick(10);
+			base.stepInfo("Clicked : " + actionType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("View Action failed");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param actionType
+	 * @param actualUserName
+	 * @param expectedUserType
+	 */
+	public void performSpecificActions(String actionType, String actualUserName, String expectedUserType) {
+		if (actualUserName.equalsIgnoreCase(expectedUserType)) {
+			try {
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getActionBtn().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				getActionType(actionType).waitAndClick(10);
+				base.stepInfo("Clicked : " + actionType);
+			} catch (Exception e) {
+				e.printStackTrace();
+				base.failedStep("View Action failed");
 			}
 		}
 	}

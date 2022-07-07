@@ -10198,8 +10198,35 @@ public class AssignmentsPage {
 		
 		
 	}
-	
-	
-	
+
+	/**
+	 * @author Raghuram.A
+	 * @param username
+	 * @param assignmentName
+	 * @throws InterruptedException
+	 */
+	public String assignMentCreationDeletionBasedOnUser(Boolean createAssign, String username, String assignmentName,
+			Boolean deleteAssignment, String expectedUserRole, Boolean additional, String additional1)
+			throws InterruptedException {
+		String ActualCount = null;
+		if (createAssign) {
+			if (username.equals(expectedUserRole)) {
+				FinalizeAssignmentAfterBulkAssign();
+				createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+				getAssignmentSaveButton().waitAndClick(10);
+				bc.selectproject();
+				bc.stepInfo("Created a assignment by assigning saved search documents from search term report page -"
+						+ assignmentName);
+				ActualCount = verifydocsCountInAssgnPage(assignmentName);
+			}
+		}
+
+		if (deleteAssignment) {
+			if (username.equals(expectedUserRole)) {
+				deleteAssgnmntUsingPagination(assignmentName);
+			}
+		}
+		return ActualCount;
+	}
 
 }

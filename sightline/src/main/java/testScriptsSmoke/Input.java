@@ -803,9 +803,12 @@ public class Input {
 	public static String docAudioId2;
 	
 	// Added by Raghuram
-		public static String preBuilt;
-		public static String preBuiltHelpText;
-		public static String DEPIPTheft;
+	public static String preBuilt;
+	public static String preBuiltHelpText;
+	public static String DEPIPTheft;
+	public static String Discrimination;
+	public static String FCPA;
+	public static String Harassment;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1617,10 +1620,13 @@ public class Input {
 		 docAudioId1=testData.getDocAudioId1();
 		 docAudioId2=testData.getDocAudioId2();
 		 
-		 //Added By Raghuram
-		 preBuilt=testData.getPreBuilt();
-		 preBuiltHelpText=testData.getPreBuiltHelpText();
-		 DEPIPTheft=testData.getDEPIPTheft();
+			// Added By Raghuram
+			preBuilt = testData.getPreBuilt();
+			preBuiltHelpText = testData.getPreBuiltHelpText();
+			DEPIPTheft = testData.getDEPIPTheft();
+			Discrimination = testData.getDiscrimination();
+			FCPA = testData.getFCPA();
+			Harassment = testData.getHarassment();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

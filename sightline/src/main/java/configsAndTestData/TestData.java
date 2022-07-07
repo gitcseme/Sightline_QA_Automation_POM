@@ -723,5 +723,8 @@ public class TestData {
 	public String preBuilt;
 	public String preBuiltHelpText;
 	public String DEPIPTheft;
+	public String Discrimination;
+    public String FCPA;
+    public String Harassment;
 
 }
