@@ -135,6 +135,70 @@ public class ManageKeywords_Regression1 {
 
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:06/07/2022 RPMXCON-52501
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify Manage Keywords page
+	 */
+	@Test(description = "RPMXCON-52505", enabled = true, groups = { "regression" })
+	public void verifyManageKeywordPage() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52505");
+		baseClass.stepInfo("To verify Manage Keywords page");
+		KeywordPage keyWord = new KeywordPage(driver);
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Verify Manage Keyowrd Page for RMU
+		keyWord.navigateToKeywordPage();
+		keyWord.verifyManageKeywordPageRMUAndPA("RMU");
+		loginPage.logout();
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		// Verify Manage Keyowrd Page for PA
+		keyWord.navigateToKeywordPage();
+		keyWord.verifyManageKeywordPageRMUAndPA("PA");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:06/07/2022 RPMXCON-52497
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify user creates duplicate keyword group and adds keywords into the group
+	 */
+	@Test(description = "RPMXCON-52497", enabled = true, groups = { "regression" })
+	public void verifyManageKeywordPageDuplicate() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52497");
+		baseClass.stepInfo("To verify user creates duplicate keyword group and adds keywords into the group");
+		KeywordPage keyWord = new KeywordPage(driver);
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Verify Manage Keyowrd Page for RMU
+		keyWord.navigateToKeywordPage();
+		keyWord.verifyDuplicateKeywordFromList();
+		loginPage.logout();
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		// Verify Manage Keyowrd Page for PA
+		keyWord.navigateToKeywordPage();
+		keyWord.verifyDuplicateKeywordFromList();
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
