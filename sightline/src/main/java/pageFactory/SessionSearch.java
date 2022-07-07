@@ -1864,7 +1864,7 @@ public class SessionSearch {
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
 		base = new BaseClass(driver);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		assignPage   = new AssignmentsPage(driver);
+		
 		softAssert = new SoftAssert();
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
@@ -9792,7 +9792,7 @@ public class SessionSearch {
 	 */
 	public void bulkAssignWithNewAssignmentWithPersistantHit(String assignmentName, String codingForm)
 			throws InterruptedException {
-		
+		AssignmentsPage assignPage   = new AssignmentsPage(driver);
 		driver.waitForPageToBeReady();
 		if (getPureHitAddButton().isDisplayed()) {
 			base.waitForElement(getPureHitAddButton());
