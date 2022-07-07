@@ -139,6 +139,26 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("(//a[text()='Go to Project'])[1]");
 	}
 	
+	public Element getPopupMsg() {
+		return driver.FindElementByXPath("//span[@class='MsgTitle']/../p");
+	}
+	
+	public Element getAscending() {
+		return driver.FindElementByXPath("//th[@aria-sort='ascending']");
+	}
+	
+	public Element getDescending() {
+		return driver.FindElementByXPath("//th[@aria-sort='descending']");
+	}
+	
+	public Element getYesBtn() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+	
+	public Element getNoBtn() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
@@ -429,6 +449,7 @@ public class DomainDashboard {
 		 
 		 driver.waitForPageToBeReady();
 		 base.waitForElement(getHyperLinkOnProject(projectName));
+		 driver.scrollingToElementofAPage(getHyperLinkOnProject(projectName));
 		 getHyperLinkOnProject(projectName).waitAndClick(10);
 		 base.waitForElement(getDeactivateProject(projectName));
 		 getDeactivateProject(projectName).waitAndClick(10);
@@ -445,11 +466,13 @@ public class DomainDashboard {
 	  */
 	 public void filterProject(String projectName) {
 		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getSearchProject());
+		 driver.scrollingToElementofAPage(getSearchProject());
 		 getSearchProject().waitAndClick(5);
 		 getSearchProject().SendKeys(projectName);
 		 base.hitKey(KeyEvent.VK_ENTER);
-		 base.stepInfo(projectName+"filter the project");
+		 base.stepInfo(projectName+" filter the project");
 	 }
 	 
 	 /**
@@ -482,4 +505,155 @@ public class DomainDashboard {
 		 base.waitForElement(getButtonSaveProject());
 		 getButtonSaveProject().waitAndClick(10);
 	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return
+	  * @Description Create a project and Deactivate that project
+	  */
+	 public String createAndDeactivateProject() {
+		 String projectName = "AAA"+Utility.dynamicNameAppender();
+		 if(!isInactiveProjectAvailable()) {
+				base.clearBullHornNotification();
+				create_a_project_From_Domain(projectName);
+				base.waitForNotification();
+				naviageToDomainDashBoardPage();
+				deactivateProject(projectName);
+				base.stepInfo("domain project was created and deactivated the project");
+		 }
+		 return projectName;
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Desctiprion click on inactive project name and verify it's not a hyper link
+	  */
+	 public void clickInactiveProjectName() {
+		 
+		 getInactiveProjectToggle().waitAndClick(10);
+		 int n = base.getIndex(getTableHeader(), "STATUS");
+		 getOneTableHeader(n).waitAndClick(10);
+		 
+		 driver.waitForPageToBeReady();
+		 base.waitForElementCollection(getColumValue(n));
+		 List<WebElement> element = getColumValue(n).FindWebElements();
+		 
+		 int i = 1;
+		 driver.waitForPageToBeReady();
+		 for(WebElement ele : element) {
+			 driver.waitForPageToBeReady();
+			 String isActive = ele.getText();
+			 if(isActive.equals("Inactive")) {
+				 int m =base.getIndex(getTableHeader(), "PROJECT NAME");
+				 getTableValue(i, m).Click();
+				 if(base.text("Domain:").isDisplayed()){
+					 base.passedStep("Inactive project name is a label and not link");
+				 }else {
+					 base.failedStep("is not in domain dashboard");
+				 }
+				 break;
+			 }
+			 i++;
+		 }
+		 
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Descripiton verify only Active project is listed
+	  */
+	 public void verifyOnlyActiveProjectListed() {
+		 
+		 int n = base.getIndex(getTableHeader(), "STATUS");
+		 driver.waitForPageToBeReady();
+		 base.waitForElementCollection(getColumValue(n));
+		 List<WebElement> element = getColumValue(n).FindWebElements();
+		 driver.waitForPageToBeReady();
+		 for(WebElement ele : element) {
+			 driver.waitForPageToBeReady();
+			 String isActive = ele.getText();
+			 if(isActive.equals("Inactive")) {
+				 base.failedStep("in active project available");
+			 }
+		 }
+		 base.passedStep("only active project is listed");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param projectName
+	  * @Description go to the progress on the alert message do you deactivate a project
+	  */
+	 public void doYouDeactivateProject(String projectName) {
+		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
+		 filterProject(projectName);
+		 
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getHyperLinkOnProject(projectName));
+		 driver.scrollingToElementofAPage(getHyperLinkOnProject(projectName));
+		 getHyperLinkOnProject(projectName).waitAndClick(10);
+		 base.waitForElement(getDeactivateProject(projectName));
+		 getDeactivateProject(projectName).waitAndClick(10);
+		 base.stepInfo("Do you really wants to deactivate a project ?");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description wait for domain dash board page to load completely 
+	  */
+	 public void waitForDomainDashBoardIsReady() {
+			base.text("Active Projects").isElementAvailable(30);
+			base.text("Active Projects Utilization").isElementAvailable(30);
+			base.text("Users in Active Projects").isElementAvailable(30);
+	}
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description verify user able to the table as ascending and descending order
+	  */
+	 public void verifyAscendingDescendingOrder() {
+			driver.waitForPageToBeReady();
+			waitForDomainDashBoardIsReady();
+			if(getAscending().isElementAvailable(10)) {
+				base.passedStep("Web table is sorted in Ascending ordrer");
+				getAscending().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				waitForDomainDashBoardIsReady();
+				if(getDescending().isElementAvailable(10)) {
+					base.stepInfo("Web table s in descending order");
+					base.passedStep("User is able to sort the column by ascending/descending order.");
+				}else {
+					base.failedStep("verification failed");
+				}
+			}else {
+				base.stepInfo("Web table is sorted in Desscending ordrer");
+				getDescending().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				waitForDomainDashBoardIsReady();
+				if(getAscending().isElementAvailable(10)) {
+					base.stepInfo("Web table s in Ascending order");
+					base.passedStep("User is able to sort the column by ascending/descending order.");
+				}else {
+					base.failedStep("verification failed");
+				}
+			}
+		}
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description enable display Inactive project
+	  */
+	 public void enableInActiveProject() {
+			try{
+				driver.waitForPageToBeReady();
+				waitForDomainDashBoardIsReady();
+				base.waitForElement(getInactiveProjectToggle());
+				driver.scrollingToElementofAPage(getInactiveProjectToggle());
+				getInactiveProjectToggle().waitAndClick(10);
+				base.stepInfo("Display enabled for inactive project");
+			}catch(Exception e) {
+				base.failedStep(e.getMessage());
+			}
+		}
 }
