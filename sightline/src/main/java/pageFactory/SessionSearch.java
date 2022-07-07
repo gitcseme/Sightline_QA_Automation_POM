@@ -1861,6 +1861,10 @@ public class SessionSearch {
 	public Element getConceptualTileHit(int i) {
 		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()="+ i +"]");
 	}
+	
+	public Element getTotalSelectedDocs() {
+		return driver.FindElementByXPath("//span[@id='spanTotal']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -12196,6 +12200,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		}
 	}
 
+
 	/**
 	 * @author: Arun Created Date: 07/07/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will verify the search result for master date metadata using range operator
@@ -12239,6 +12244,109 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 			base.failedStep("Still conceptual results Loading on the Screen");
 		}
 		
+
+
+	/**
+	 * @author Raghuram.A
+	 * @param SG
+	 * @param UserType
+	 * @param expectedUserType
+	 * @param countComparision
+	 * @param expectedDocCount
+	 * @return
+	 */
+	public String bulkReleaseCountReturn(String SG, String UserType, String expectedUserType, Boolean countComparision,
+			String expectedDocCount) {
+		String TotalDocs = null;
+		if (UserType.equalsIgnoreCase(expectedUserType)) {
+			getBulkRelDefaultSecurityGroup_CheckBox(SG).Click();
+			base.waitForElement(getBulkRelease_ButtonRelease());
+			getBulkRelease_ButtonRelease().waitAndClick(20);
+			base.waitForElement(getTotalSelectedDocs());
+			TotalDocs = getTotalSelectedDocs().getText();
+			base.waitForElement(getFinalizeButton());
+			getFinalizeButton().waitAndClick(20);
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessageB("Records saved successfully");
+			base.stepInfo("performing bulk release for " + SG + " docs count is " + TotalDocs);
+
+			if (countComparision) {
+				base.textCompareEquals(expectedDocCount, TotalDocs, "SG releasae Document count matches as expected",
+						"Mis-match in document count");
+			}
+			base.stepInfo("Bulk Release Action done successfully");
+		}
+
+		return TotalDocs;
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : save search in pre-built Models
+	 * @param searchName
+	 * @param childSearchGrp
+	 * @param defaultSearchGroup
+	 * @param groupName
+	 * @param childGroup
+	 * @param defaultGroup
+	 * @throws InterruptedException
+	 */
+
+	public void saveSearchInPreBuiltModels(String searchName, String childSearchGrp, String defaultSearchGroup,
+			String groupName, boolean childGroup, boolean defaultGroup) throws InterruptedException {
+		// SaveSearch
+		saveSearchAction();
+
+		base.waitForElement(getSaveAsNewSearchRadioButton());
+		getSaveAsNewSearchRadioButton().waitAndClick(5);
+
+		base.waitForElement(getCreatedNode(groupName));
+		getCreatedNode(groupName).waitAndClick(3);
+
+		if (getCurrentTabClosed().isElementAvailable(2)) {
+			getCurrentTabClosedExpand().waitAndClick(5);
+		} else {
+			base.waitForElement(getsavesearch_overwrite());
+			getsavesearch_overwrite().waitAndClick(5);
+			base.waitTime(5);
+			getSaveAsNewSearchRadioButton().waitAndClick(10);
+			if (getCurrentTabClosed().isElementAvailable(2)) {
+				getCurrentTabClosedExpand().waitAndClick(5);
+			}
+		}
+
+		if (getCreatedNode(Input.preBuilt).isElementAvailable(5)) {
+			getCreatedNode(Input.preBuilt).waitAndClick(10);
+			if (getCurrentTabClosed().isElementAvailable(2)) {
+				getCurrentTabClosedExpand().waitAndClick(5);
+				System.out.println(" Expanded");
+
+			} else {
+				System.out.println("Already Expanded");
+			}
+
+			if (defaultGroup)
+				if (getCreatedNode(defaultSearchGroup).isElementAvailable(5)) {
+					getCreatedNode(defaultSearchGroup).waitAndClick(10);
+				}
+			if (childGroup) {
+				if (getCurrentTabClosed().isElementAvailable(2)) {
+					getCurrentTabClosedExpand().waitAndClick(5);
+				}
+				getCreatedNode(childSearchGrp).waitAndClick(10);
+
+			}
+		} else {
+			base.failedStep("Pre-Built Model Tab is Not available");
+		}
+
+		driver.waitForPageToBeReady();
+		getSaveSearch_Name().SendKeys(searchName);
+		getSaveSearch_SaveButton().Click();
+		base.VerifySuccessMessage("Saved search saved successfully");
+		Reporter.log("Saved the search with name '" + searchName + "'", true);
+		UtilityLog.info("Saved search with name - " + searchName);
+
 	}
 			
 }
