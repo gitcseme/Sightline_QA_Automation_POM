@@ -3516,6 +3516,15 @@ public class DocViewPage {
 	public Element getRedactionModify() {
 		return driver.FindElementById("btnEdit");
 	}
+	public Element getDeleteRedaction(String redactionName) {
+		return driver.FindElementByXPath("//*[text()='"+redactionName+"']//..//*[starts-with(@onclick,'DeleteReviewerRemarks')]");
+	}
+	public Element getModifyRedaction(String redactionName) {
+		return driver.FindElementByXPath("//*[text()='"+redactionName+"']//..//*[starts-with(@onclick,'UpdateReviewerRemarks')]");
+	}
+	public Element getSaveEditRemarks() {
+		return driver.FindElementByXPath("//*[@class='fa fa-check-circle-o EditSaveRemark']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -18206,8 +18215,8 @@ public class DocViewPage {
 //	Reusable method for coding form save button
 	public void codingFormSaveButton() {
 		driver.waitForPageToBeReady();
-		base.waitForElement(getCodingFormSaveButton());
-		getCodingFormSaveButton().waitAndClick(5);
+		base.waitForElement(getCodingFormSaveThisForm());
+		getCodingFormSaveThisForm().waitAndClick(5);
 	}
 
 	/**
@@ -28245,5 +28254,66 @@ public class DocViewPage {
 		base.CloseSuccessMsgpopup();
 		System.out.println("Redaction added successfully");
 		UtilityLog.info("Redaction added successfully");
+	}
+	
+	/**
+	 * @author Baskar 07/07/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public Map<String, String> addContinuousRemark(int iteration, String remark,
+			String msgType) throws Exception, ParseException {
+
+		Map<String, String> datas = new HashMap<String, String>();
+		List<WebElement> documents = getMiniDocListDocIdText().FindWebElements();
+		String newTime;
+
+		if (iteration <= documents.size()) {
+			for (int i = 0; i < iteration; i++) {
+
+				Actions act = new Actions(driver.getWebDriver());
+				act.moveToElement(documents.get(i)).click().perform();
+				driver.waitForPageToBeReady();
+				String docID = getDocView_CurrentDocId().getText();
+				base.stepInfo("Current viewed document : " + docID);
+                 
+				// adding remarks
+				getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+				newTime = audioRemarkDataInput(remark, msgType);
+				driver.waitForPageToBeReady();
+				String authorName = getAuthorName(remark).getText();
+				String dateAndTime = getRemarkdateTime(remark).getText();
+				datas.put("DocID-" + i, docID);
+				datas.put("Time-" + i, newTime);
+				datas.put("remark-" + i, remark);
+				datas.put("authorName-" + i, authorName);
+				datas.put("Duration-" + i, dateAndTime);
+			}
+		} else {
+			System.out.println("The given iteration count exceed the Document Count");
+			base.stepInfo("The given iteration count exceed the Document Count");
+		}
+
+		return datas;
+	}
+	
+	/**
+	 * @author Baskar 07/07/22 NA Modified date: NA Modified by:NA
+	 * @return
+	 * @description
+	 */
+	public void deleteRemark(String redactionName) {
+		if (getDeleteRedaction(redactionName).isElementAvailable(4)) {
+			getDeleteRedaction(redactionName).waitAndClick(5);
+
+			// click on yes button
+			getDocview_ButtonYes().waitAndClick(5);
+
+			base.VerifySuccessMessage("Record Deleted Successfully");
+			driver.waitForPageToBeReady();
+		} else {
+			System.out.println("No Remarks exist'");
+			UtilityLog.info("No Remarks exist'");
+		}
 	}
 }

@@ -9955,20 +9955,20 @@ public class AssignmentsPage {
 	public void SelectCodingform(String CFName) {
 		
 		getSelectSortCodingForm_Tab().ScrollTo();
-		getSelectSortCodingForm_Tab().Click();
+		getSelectSortCodingForm_Tab().waitAndClick(5);
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			bc.waitForElement(getSelectCF_CheckBox(CFName));
 			getSelectCF_CheckBox(CFName).ScrollTo();
-			getSelectCF_CheckBox(CFName).Click();
+			getSelectCF_CheckBox(CFName).waitAndClick(5);
 			bc.waitTime(1);
-			getSelectCodeFormRadioBtn(CFName).Click();
+			getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			bc.waitTime(1);
 			sortOrderNxtBtn().ScrollTo();
-			sortOrderNxtBtn().Click();
+			sortOrderNxtBtn().waitAndClick(5);
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
-				sortCodeFormOrderSaveBtn().Click();
+				sortCodeFormOrderSaveBtn().waitAndClick(5);
 				bc.waitTime(2);
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
