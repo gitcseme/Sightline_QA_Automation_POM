@@ -80,7 +80,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "4");
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
 	
 		data.getNotificationMessage(0, projectName);
 
