@@ -802,6 +802,11 @@ public class Input {
 	public static String docAudioId1;
 	public static String docAudioId2;
 	
+	// Added by Raghuram
+		public static String preBuilt;
+		public static String preBuiltHelpText;
+		public static String DEPIPTheft;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1611,6 +1616,11 @@ public class Input {
 		 //Added by Iyappan
 		 docAudioId1=testData.getDocAudioId1();
 		 docAudioId2=testData.getDocAudioId2();
+		 
+		 //Added By Raghuram
+		 preBuilt=testData.getPreBuilt();
+		 preBuiltHelpText=testData.getPreBuiltHelpText();
+		 DEPIPTheft=testData.getDEPIPTheft();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

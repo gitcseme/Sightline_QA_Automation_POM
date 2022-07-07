@@ -25130,8 +25130,9 @@ public class DocViewPage {
 	public void addCommentAndSave(String comment, boolean save, int docs) {
 		for (int i = 1; i <= docs; i++) {
 			getClickDocviewID(i).waitAndClick(5);
+			base.waitTime(2);
 			base.waitForElement(getResponsiveCheked());
-			getResponsiveCheked().waitAndClick(5);
+			getResponsiveCheked().waitAndClick(10);
 			base.waitForElement(getNonPrivilegeRadio());
 			getNonPrivilegeRadio().waitAndClick(5);
 			base.waitForElement(getDocument_CommentsTextBox());
@@ -25139,15 +25140,15 @@ public class DocViewPage {
 			base.stepInfo("Added Document Comment : " + comment);
 			if (save) {
 				driver.scrollPageToTop();
-				base.waitForElement(getCodingFormSaveBtn());
-				getCodingFormSaveBtn().waitAndClick(10);
+				base.waitForElement(getCodingFormSaveThisForm());
+				getCodingFormSaveThisForm().waitAndClick(10);
 				driver.waitForPageToBeReady();
-				base.VerifySuccessMessage("Document saved successfully");
+				base.VerifySuccessMessage("Applied coding saved successfully");
 				base.CloseSuccessMsgpopup();
 			}
 		}
 	}
-
+	
 	/**
 	 * @author Vijaya.Rani
 	 */
