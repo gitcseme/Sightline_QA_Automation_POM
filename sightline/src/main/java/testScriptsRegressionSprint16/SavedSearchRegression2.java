@@ -3,6 +3,9 @@ package testScriptsRegressionSprint16;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -14,6 +17,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
@@ -44,9 +48,9 @@ public class SavedSearchRegression2 {
 	@DataProvider(name = "SavedSearchwithUsers")
 	public Object[][] SavedSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
-//				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
-//				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } 
-				};
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName }
+		};
 		return users;
 	}
 
@@ -150,6 +154,183 @@ public class SavedSearchRegression2 {
 		base.stepInfo("Actual helpText message : " + actualHelpText);
 		base.textCompareEquals(actualHelpText, expectedhelpText, "Disclaimer text message displayed as expected",
 				"Disclaimer text message displayed not as expected");
+
+		// Logout Application
+		login.logout();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : To check that when user clicks on little arrow at \"Pre-Built
+	 *              Models\" Search Group then the folder should get expanded with
+	 *              its pre-created saved search groups/present sub-folder.
+	 *              //additional inputs can be added based on future enhancements
+	 */
+	@Test(description = "RPMXCON-64862", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
+	public void verifyFoldersUnderPreBuiltArrow(String username, String password, String fullname)
+			throws InterruptedException {
+		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA, Input.Harassment };
+		List<String> actualList = new ArrayList<String>();
+
+		base.stepInfo("Test case Id: RPMXCON-64862 - Saved Search");
+		base.stepInfo(
+				"To check that when user clicks on little arrow at \"Pre-Built Models\" Search Group then the folder should get expanded with its pre-created saved search groups/present sub-folder.");
+
+		// Login as user
+		login.loginToSightLine(username, password);
+
+		// Navigate to Saved Search page and select default SG Tab
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectSearchGroupTab(Input.preBuilt, Input.shareSearchDefaultSG);
+
+		// validate Pre-Built model Search group
+		base.ValidateElement_Presence(saveSearch.getSavedSearchGroupName(Input.preBuilt), Input.preBuilt);
+		saveSearch.rootGroupExpansion();
+
+		// get the available tabs under Pre-built model and verify the list
+		actualList = base.availableListofElements(saveSearch.getListOfGroupsUnderTab());
+
+		String passMsg = actualList + " : is avialable tabs under Pre-Built";
+		String failMsg = actualList + " : is not present";
+		base.compareArraywithDataList(dataSet, actualList, true, passMsg, failMsg);
+
+		base.passedStep("Pre-Built Models Selected And little Arrow is CLicked");
+
+		// Logout Application
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that when users select \"Pre-Built Models\" Search
+	 *              Group then \"Execute\" button from action panel is disable.
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-64864", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
+	public void verifyexcuteBtnForPReBuilt(String username, String password, String fullname)
+			throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-64864 - Saved Search");
+		base.stepInfo(
+				"Verify that when users select \"Pre-Built Models\" Search Group then \"Execute\" button from action panel is disable.");
+
+		// Login as user
+		login.loginToSightLine(username, password);
+		base.stepInfo("Logged In As : " + fullname);
+
+		// Navigate to Saved Search page and select default SG Tab
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectSearchGroupTab(Input.preBuilt, Input.shareSearchDefaultSG);
+
+		// validate Pre-Built model Search group and arrow Clickable
+		saveSearch.rootGroupExpansion();
+		base.passedStep("Pre-Built Models Selected And Arrow is CLicked");
+		Element executeBtnStatus = saveSearch.getSavedSearchExecuteButton();
+		saveSearch.checkButtonDisabled(executeBtnStatus, "Should be disabled", "Execute");
+
+		// Logout Application
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that when users select other pre-created saved search
+	 *              groups/models/sub-folder from "Pre-Built Models" Search Group
+	 *              then "Execute" button from action panel is enable and can
+	 *              perform execution.
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-64865", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
+	public void executeFolderUnderPreBuilt(String username, String password, String fullname)
+			throws InterruptedException {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+
+		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA, Input.Harassment };
+		List<String> actualList = new ArrayList<String>();
+
+		base.stepInfo("Test case Id: RPMXCON-64865 - Saved Search");
+		base.stepInfo(
+				"Verify that when users select other pre-created saved search groups/models/sub-folder from \"Pre-Built Models\" Search Group then \"Execute\" button from action panel is enable and can perform execution.");
+
+		// Login as user
+		login.loginToSightLine(username, password);
+
+		// configure query
+		session.basicContentSearch(Input.searchString5);
+		session.saveSearchInPreBuiltModels(searchName, null, Input.DEPIPTheft, Input.shareSearchDefaultSG, false, true);
+
+		// Navigate to Saved Search page and select default SG Tab
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectSearchGroupTab(Input.preBuilt, Input.shareSearchDefaultSG);
+
+		// validate Pre-Built model Search group
+		base.ValidateElement_Presence(saveSearch.getSavedSearchGroupName(Input.preBuilt), Input.preBuilt);
+		saveSearch.rootGroupExpansion();
+
+		// get the available tabs under Pre-built model and verify the list
+		actualList = base.availableListofElements(saveSearch.getListOfGroupsUnderTab());
+
+		String passMsg = actualList + " : is avialable tabs under Pre-Built";
+		String failMsg = actualList + " : is not present";
+		base.compareArraywithDataList(dataSet, actualList, true, passMsg, failMsg);
+
+		base.passedStep("Pre-Built Models Selected And little Arrow is CLicked");
+
+		// execute folder under pre-built model
+		saveSearch.getSharedGroupName(Input.DEPIPTheft).waitAndClick(10);
+		base.stepInfo("Clicked : " + Input.DEPIPTheft);
+
+		base.waitForElement(saveSearch.getSavedSearchExecuteButton());
+		Element executeBtnStatus = saveSearch.getSavedSearchExecuteButton();
+		saveSearch.checkButtonEnabled(executeBtnStatus, "Should be Enabled", "Execute");
+		saveSearch.performExecute();
+
+		// verify bull horn and click view all btn
+		base.clickButton(base.getBullHornIcon());
+		base.getBckTask_SelectAll().waitAndClick(10);
+		base.stepInfo("Clicked View all Button");
+
+		// Logout Application
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To check that we have Helper text icon present at "Pre-Built
+	 *              Models" Search Group (UI).
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-64874", enabled = true, dataProvider = "SavedSearchwithUsers", groups = {
+			"regression" })
+	public void verifyHelpIconForPreBuilt(String username, String password, String fullname)
+			throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-64874 - Saved Search");
+		base.stepInfo("To check that we have Helper text icon present at \"Pre-Built Models\" Search Group (UI).");
+
+		// Login as RMU user
+		base.stepInfo("Login to sightline and Select Project**");
+		login.loginToSightLine(username, password);
+
+		// Navigate to Saved Search page
+		saveSearch.navigateToSavedSearchPage();
+		base.stepInfo(" Navigate to search- saved search");
+		saveSearch.selectSearchGroupTab(Input.preBuilt, Input.shareSearchDefaultSG);
+
+		// validate help icon presence
+		base.ValidateElement_Presence(saveSearch.getPreBuiltHelpIcon(), Input.preBuilt + " Help Icon");
 
 		// Logout Application
 		login.logout();
