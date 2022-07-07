@@ -11,16 +11,21 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.ConceptExplorerPage;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.ReportsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import testScriptsRegression.TagAndFolder;
 import testScriptsSmoke.Input;
 
 public class ConceptExplorer_Regression_2_1 {
@@ -31,6 +36,9 @@ public class ConceptExplorer_Regression_2_1 {
 	ReportsPage reports;
 	ConceptExplorerPage conceptExplorer;
 	SessionSearch sessionSearch;
+	TagsAndFoldersPage tagsAndFolder;
+	MiniDocListPage miniDocListPage;
+	AssignmentsPage assign;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -56,6 +64,16 @@ public class ConceptExplorer_Regression_2_1 {
 		reports = new ReportsPage(driver);
 		conceptExplorer = new ConceptExplorerPage(driver);
 		sessionSearch = new SessionSearch(driver);
+		tagsAndFolder = new TagsAndFoldersPage(driver);
+		miniDocListPage = new MiniDocListPage(driver);
+		assign = new AssignmentsPage(driver);
+	}
+
+	@DataProvider(name = "PaAndRmuUser")
+	public Object[][] PaAndRmuUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+		return users;
 	}
 
 	/**
@@ -152,6 +170,134 @@ public class ConceptExplorer_Regression_2_1 {
 		conceptExplorer.analyzeAction(analyze3);
 		base.printResutInReport(base.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
 				"Page navigated to Third level", "Page didn't navigate to second level", "Pass");
+
+		// Logout Application
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws InterruptedException
+	 * @Date: 07/06/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To Verify in the Concept Explorer user can select a cluster
+	 *              and Perform bulk tag, bulk folder, bulk assign documents and
+	 *              view in doc list. RPMXCON-48738
+	 */
+	@Test(description = "RPMXCON-48738", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyConceptExplorerActions(String userName, String password, String role)
+			throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-48738 - Concept Explorer");
+		base.stepInfo(
+				"To Verify in the Concept Explorer user can select a cluster and Perform bulk tag, bulk folder, bulk assign documents and view in doc list");
+
+		String tagName = "TagTT" + UtilityLog.dynamicNameAppender();
+		String folderName = "Folder" + UtilityLog.dynamicNameAppender();
+		String assignmentName = "Assignment" + UtilityLog.dynamicNameAppender();
+		String sourceToSelect = "Security Groups";
+		String sgToSelect = Input.securityGroup;
+		String[] arrOfStr = null;
+
+		// Login as user
+		base.stepInfo("**Step-1 Login to RPMX Application as @User.**");
+		login.loginToSightLine(userName, password);
+
+		// Navigate to Concept Explorer page
+		base.stepInfo("**Step-2 Go to Report->Concept Explorer**");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// Select Sources and Apply filter
+		base.stepInfo("**Step-3 Select source and generate the report**");
+		conceptExplorer.clickSelectSources();
+		conceptExplorer.selectSGsource(sourceToSelect, sgToSelect);
+		base.stepInfo("Selected : " + sgToSelect + "and Saved selection");
+		conceptExplorer.getApplyFilterBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+
+		// Select data to 'Add to cart'
+		base.stepInfo("**Step-4 Drag n drop any cluster in to Shopping Cart **");
+		base.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+		int resultToAddInCart = conceptExplorer.getDataToAddInCart().size() - 3;
+		conceptExplorer.addToCartIndex(resultToAddInCart);
+		driver.waitForPageToBeReady();
+
+		// Segregating total docs count from the display
+		String totalSelectedDocCount = conceptExplorer.getTotalSelectedDocCount().getText();
+		arrOfStr = totalSelectedDocCount.split(" ");
+		String aggregatedDocCount = arrOfStr[arrOfStr.length - 3];
+		base.stepInfo("Total Doc count added to cart : " + aggregatedDocCount);
+
+		// Bulk Action [Tag | Folder | Release | Assign | DocView | DocList | Tally]
+		base.stepInfo("**Step-5 Select @bulk action  [Tag | Folder | Release | Assign | DocView | DocList | Tally] **");
+
+		// Perform Bulk Tag Action
+		driver.waitForPageToBeReady();
+		conceptExplorer.performActions("Bulk Tag");
+		String bulkCount = sessionSearch.BulkActions_Tag(tagName);
+		base.textCompareEquals(aggregatedDocCount, bulkCount, "Tag Document count matches as expected",
+				"Mis-match in document count");
+		base.stepInfo("Bulk Tag Action done successfully");
+
+		// Perform Bulk Folder Action
+		driver.waitForPageToBeReady();
+		conceptExplorer.performActions("Bulk Folder");
+		String bulkFolderCount = sessionSearch.BulkActions_Folder_returnCount(folderName);
+		base.textCompareEquals(aggregatedDocCount, bulkFolderCount, "Folder Document count matches as expected",
+				"Mis-match in document count");
+		base.stepInfo("Bulk Folder Action done successfully");
+
+		// Perform Bulk Release Action
+		driver.waitForPageToBeReady();
+		conceptExplorer.performSpecificActions("Bulk Release", role, "PA");
+		sessionSearch.bulkReleaseCountReturn(sgToSelect, role, "PA", true, aggregatedDocCount);
+
+		// Perform View in DocView List Action
+		conceptExplorer.performDocActions("View", "View in DocList");
+		base.waitTime(6);
+		base.verifyPageNavigation("en-us/Document/DocList");
+		conceptExplorer.getBackToSourceBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+
+		// Perform View in DocView Action
+		conceptExplorer.performDocActions("View", "View in DocView");
+		base.verifyPageNavigation("DocumentViewer/DocView");
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		base.stepInfo("Available documents in DocView page : " + documentSize);
+		base.textCompareEquals(aggregatedDocCount, documentSize, "DocView Document count matches as expected",
+				"Mis-match in document count");
+		driver.Navigate().back();
+		driver.waitForPageToBeReady();
+
+		// Perform Tally
+		conceptExplorer.performActions("Tally");
+		base.verifyPageNavigation("Report/Tally");
+		base.stepInfo("Tally Action done successfully");
+		driver.Navigate().back();
+		driver.waitForPageToBeReady();
+
+		// Select data to 'Add to cart' to reAdd data
+		base.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+		resultToAddInCart = conceptExplorer.getDataToAddInCart().size() - 3;
+		conceptExplorer.addToCartIndex(resultToAddInCart);
+		driver.waitForPageToBeReady();
+
+		// Perform Bulk Assign
+		conceptExplorer.performSpecificActions("Bulk Assign", role, "RMU");
+		assign.assignMentCreationDeletionBasedOnUser(true, role, assignmentName, false, "RMU", false, "");
+		base.stepInfo("Bulk Assign Action done successfully");
+
+		// Tag and Folder and Assignment Delete
+		base.stepInfo("Initiating Tag and Folder and Assignment deletion");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+		tagsAndFolder.deleteAllTags(tagName);
+		tagsAndFolder.deleteAllFolders(folderName);
+		assign.assignMentCreationDeletionBasedOnUser(false, role, assignmentName, true, "RMU", false, "");
 
 		// Logout Application
 		login.logout();
