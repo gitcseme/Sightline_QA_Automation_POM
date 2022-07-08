@@ -80,6 +80,8 @@
 	<mappedData>Mapped Data</mappedData>
 	<docPrimaryLanguage>DocPrimaryLanguage</docPrimaryLanguage>
 	<english>English</english>
+	<yearRange1>2021</yearRange1>
+	<yearRange2>2022</yearRange2>
 	
 
 	<!-- Production path for redaction master doc -->

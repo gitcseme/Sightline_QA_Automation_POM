@@ -3,6 +3,7 @@ package testScriptsRegressionSprint16;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -15,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -30,14 +32,15 @@ public class AdvancedSearch_Regression5_2 {
 	SessionSearch sessionSearch;
 	SavedSearch savedSearch;
 	TagsAndFoldersPage tagPage;
+	AssignmentsPage assignPage;
 	BaseClass baseClass;
 	Input in;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	in = new Input();
-	//	in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -197,6 +200,106 @@ public class AdvancedSearch_Regression5_2 {
 					+ "2 words with OR in Advanced Search Query Screen.");
 			loginPage.logout();
 		}
+		
+		
+		/**
+		 * Author :Arunkumar date: 07/07/2022  TestCase Id:RPMXCON-49306 
+		 * Description :Verify that Conceptual tile return the result for 
+		 * WorkProduct >> Security Group  Search in Advanced Search Screen.
+		 * 
+		 */
+		@Test(description ="RPMXCON-49306",groups = { "regression" })
+		public void verifyConceptualTileForSecurityGroupQuery() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-49306");
+			baseClass.stepInfo(
+					"Verify that Conceptual tile return the result for WorkProduct >> Security Group  Search in Advanced Search Screen.");
+			//Login as PA
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Configure query with workproduct-securitygroup and search");
+			sessionSearch.switchToWorkproduct();
+			sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+			baseClass.passedStep("Inserted query");
+			sessionSearch.serarchWP();
+			baseClass.stepInfo("verify query search result and conceptual tile return result");
+			sessionSearch.verifySearchResultAndConceptualTileReturnResult();
+			loginPage.logout();
+			
+		}
+		
+		/**
+		 * Author :Arunkumar date: 07/07/2022  TestCase Id:RPMXCON-49310 
+		 * Description :Verify that Conceptual tile return the result for 
+		 * WorkProduct >> Assignments  Search in Advanced Search Screen
+		 * 
+		 */
+		@Test(description ="RPMXCON-49310",groups = { "regression" })
+		public void verifyConceptualTileForAssignmentsQuery() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-49310");
+			baseClass.stepInfo(
+					"Verify that Conceptual tile return the result for WorkProduct >> Security Group  Search in Advanced Search Screen.");
+			String assignmentName = "Aassignment"+Utility.dynamicNameAppender();
+			//Login as PA
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Bulk assign docs to new assignment");
+			assignPage = new AssignmentsPage(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkAssignWithNewAssignment();
+			assignPage.createAssignmentByBulkAssignOperation(assignmentName, Input.codeFormName);
+			baseClass.selectproject();
+			baseClass.stepInfo("Configure query with workproduct-Assignment");
+			sessionSearch.switchToWorkproduct();
+			sessionSearch.selectAssignmentInWPS(assignmentName);
+			baseClass.passedStep("Inserted query");
+			sessionSearch.serarchWP();
+			baseClass.stepInfo("verify query search result and conceptual tile return result");
+			sessionSearch.verifySearchResultAndConceptualTileReturnResult();
+			loginPage.logout();
+			
+		}
+		
+		/**
+		 * Author :Arunkumar date: 07/07/2022  TestCase Id:RPMXCON-57081 
+		 * Description :Verify that Bulk Release Action is working properly on Advanced Search result Screen 
+		 * 
+		 */
+		@Test(description ="RPMXCON-57081",groups = { "regression" })
+		public void verifyBulkReleaseOnAdvancedSearch() throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-57081");
+			baseClass.stepInfo(
+					"Verify that Bulk Release Action is working properly on Advanced Search result Screen");
+			//Login as PA
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Navigate to advanced search and search query");
+			sessionSearch.advancedContentSearch(Input.testData1);
+			baseClass.stepInfo("Add purehit to shopping cart and perform bulk release");
+			sessionSearch.bulkRelease(Input.securityGroup);
+			baseClass.passedStep("Bulk release action performed successfully on advanced search");
+			loginPage.logout();
+		}
+		
+		/**
+		 * Author :Arunkumar date: 07/07/2022  TestCase Id:RPMXCON-57062 
+		 * Description :Verify that Advanced Search is working properly for MasterDate Metadata with Range Operator
+		 * 
+		 */
+		@Test(description ="RPMXCON-57062",dataProvider = "Users",groups = { "regression" })
+		public void verifyMasterDateMetaDataWithRange(String username, String password) throws InterruptedException {
+			
+			baseClass.stepInfo("Test case Id: RPMXCON-57062");
+			baseClass.stepInfo(
+					"Verify that Advanced Search is working properly for MasterDate Metadata with Range Operator");
+			//Login as PA
+			loginPage.loginToSightLine(username,password);
+			baseClass.stepInfo("perform 'MasterDate' metadata search with Range operator");
+			sessionSearch.advancedMetaDataSearch(Input.masterDateText, Input.range,"2021-01-01","2022-01-01");
+			baseClass.stepInfo("verify search result for query and master date details");
+			sessionSearch.verifyMasterDateSearchResults(Input.yearRange1, Input.yearRange2);
+			loginPage.logout();
+		}
+		
 
 		@DataProvider(name = "Users")
 		public Object[][] CombinedSearchwithUsers() {

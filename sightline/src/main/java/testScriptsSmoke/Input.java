@@ -370,6 +370,8 @@ public class Input {
 	public static String mappedData;
 	public static String docPrimaryLanguage;
 	public static String english;
+	public static String yearRange1;
+	public static String yearRange2;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1165,6 +1167,8 @@ public class Input {
 		mappedData = testData.getMappedData();
 		docPrimaryLanguage = testData.getDocPrimaryLanguage();
 		english = testData.getEnglish();
+		yearRange1 = testData.getYearRange1();
+		yearRange2 = testData.getYearRange2();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

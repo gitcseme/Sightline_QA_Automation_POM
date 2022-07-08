@@ -253,6 +253,8 @@ public class TestData {
 	public String mappedData;
 	public String docPrimaryLanguage;
 	public String english;
+	public String yearRange1;
+	public String yearRange2;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
