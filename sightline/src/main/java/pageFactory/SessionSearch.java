@@ -12243,7 +12243,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		}else {
 			base.failedStep("Still conceptual results Loading on the Screen");
 		}
-		
+	}
 
 
 	/**
