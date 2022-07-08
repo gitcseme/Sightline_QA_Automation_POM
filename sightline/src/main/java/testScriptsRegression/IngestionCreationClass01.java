@@ -65,7 +65,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-47566 Description :To Verify status update in cataloging,
 	 * copying, and Indexing Section in Ingestion Details Page
 	 */
-	@Test(description ="RPMXCON-47566",enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-47566",enabled = true, groups = { "regression" } )
 	public void verifyStatusUpdateInPopup() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -97,7 +97,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47404",enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-47404",enabled = true, groups = { "regression" } )
 	public void verifyConfigureMappingWarningMessage() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -122,7 +122,7 @@ public class IngestionCreationClass01 {
 	 * having Read Only Attributes.
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-48175",enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-48175",enabled = true, groups = { "regression" } )
 	public void verifyRollbackReadOnlyAttribute() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -149,7 +149,7 @@ public class IngestionCreationClass01 {
 	 * section, Stitching TIFFs details should display before the "Generate
 	 * Searchable PDFs" row on Ingestion details pop up
 	 */
-	@Test(description ="RPMXCON-49703",enabled = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-49703",enabled = true, groups = { "regression" } )
 	public void verifyStitchedTiffBeforeGeneratedSearchablePDFs() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -174,7 +174,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-48194 Description :To Verify In Ingestions the pop-up Details
 	 * Window for media ;audio & Transcript Count.
 	 */
-	@Test(description ="RPMXCON-48194",enabled = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-48194",enabled = true, groups = { "regression" } )
 	public void verifyMediaAndTranscriptDetailInPopup() throws InterruptedException {
 
 		String[] selectedTerm = { "Native", "Text", "MP3 Variant", "Audio Transcript" };
@@ -208,7 +208,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47402",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-47402",enabled = true, groups = { "regression" } )
 	public void verifyCopyIngestionUsingNewApproach() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -235,7 +235,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49282",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-49282",enabled = true, groups = { "regression" } )
 	public void verifyAddonlyIngestionWithMappedData() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -263,7 +263,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49467",enabled = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-49467",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageIfDocidExists() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -296,7 +296,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49466",enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-49466",enabled = true, groups = { "regression" } )
 	public void verifyErrorMessageIfDocIdNotAvailable() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -340,7 +340,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-46868",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-46868",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForAudioFiles() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -366,7 +366,7 @@ public class IngestionCreationClass01 {
 	 * Description :Add only ingestion with only .mp3 audio files with MP3 Variant file types. 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47842",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-47842",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForMp3VariantFileTypes() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -394,7 +394,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48147",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-48147",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionForMp3WithNative() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -419,7 +419,7 @@ public class IngestionCreationClass01 {
 	 * Author :Arunkumar date: 20/04/2022 Modified date: NA Modified by: NA Test
 	 * Case Id:RPMXCON-47293 Description :Ingesting Duplicate files.
 	 */
-	@Test(description ="RPMXCON-47293",enabled = true, groups = { "regression" }, priority = 13)
+	@Test(description ="RPMXCON-47293",enabled = true, groups = { "regression" } )
 	public void verifyErrorForIngestingDuplicateFiles() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -450,7 +450,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49258",enabled = true, groups = { "regression" }, priority = 14)
+	@Test(description ="RPMXCON-49258",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyPdfOverlay() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -494,7 +494,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49259",enabled = true, groups = { "regression" }, priority = 15)
+	@Test(description ="RPMXCON-49259",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyNativeOverlay() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -537,7 +537,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49261",enabled = true, groups = { "regression" }, priority = 16)
+	@Test(description ="RPMXCON-49261",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyMp3Overlay() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -581,7 +581,7 @@ public class IngestionCreationClass01 {
 	 * Description :Ingestion with Overlay mode with only DAT file along with PDF or TIFF or Native file type 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47587",enabled = true, groups = { "regression" }, priority = 17)
+	@Test(description ="RPMXCON-47587",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithDatAlongWithNative() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -612,7 +612,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify the Analytics process should be skipped when Text files are not overlayed .
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48591",enabled = true, groups = { "regression" }, priority = 18)
+	@Test(description ="RPMXCON-48591",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayDatWithoutText() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -663,7 +663,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify the Analytics process should be skipped when PDF Files are overlayed and Text files are not overlayed.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48593",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-48593",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayPdfWithoutText() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -695,7 +695,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify the Analytics process should take places when Text files are overlayed .
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48592",enabled = true, groups = { "regression" }, priority = 20)
+	@Test(description ="RPMXCON-48592",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayWithText() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -725,7 +725,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify the Analytics process should be skipped when we overlay Audio Files without Text File
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48594",enabled = true, groups = { "regression" }, priority = 21)
+	@Test(description ="RPMXCON-48594",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayMp3WithoutText() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -764,7 +764,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48267",enabled = true, groups = { "regression" }, priority = 22)
+	@Test(description ="RPMXCON-48267",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTranslation() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -797,7 +797,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48266",enabled = true, groups = { "regression" }, priority = 23)
+	@Test(description ="RPMXCON-48266",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTranscript() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -829,7 +829,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48265",enabled = true, groups = { "regression" }, priority = 24)
+	@Test(description ="RPMXCON-48265",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForMp3() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -864,7 +864,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-48263 Description :To Verify Ingestion Overlay Without DAT
 	 * for PDF.
 	 */
-	@Test(description ="RPMXCON-48263",enabled = true, groups = { "regression" }, priority = 25)
+	@Test(description ="RPMXCON-48263",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForPdf() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -894,7 +894,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-48262 Description :To Verify Ingestion Overlay Without DAT
 	 * for Native.
 	 */
-	@Test(description ="RPMXCON-48262",enabled = true, groups = { "regression" }, priority = 26)
+	@Test(description ="RPMXCON-48262",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForNative() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -926,7 +926,7 @@ public class IngestionCreationClass01 {
 	 * Description :To Verify Ingestion overlay of Others without Unpublish
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48203",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description ="RPMXCON-48203",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithOthers() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -958,7 +958,7 @@ public class IngestionCreationClass01 {
 	 * Description :Verify the Analytics process should be skipped when Tiff Files are overlayed without Text Files.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48597",enabled = true, groups = { "regression" }, priority = 28)
+	@Test(description ="RPMXCON-48597",enabled = true, groups = { "regression" } )
 	public void verifyAnalyticsStatusWhenOverlayTiffWithoutText() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -991,7 +991,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49260",enabled = true, groups = { "regression" }, priority = 29)
+	@Test(description ="RPMXCON-49260",enabled = true, groups = { "regression" } )
 	public void verifyUniqueCountForOnlyTiffOverlay() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1036,7 +1036,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48264",enabled = true, groups = { "regression" }, priority = 30)
+	@Test(description ="RPMXCON-48264",enabled = true, groups = { "regression" } )
 	public void verifyIngestionOverlayWithoutDatForTiff() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1066,7 +1066,7 @@ public class IngestionCreationClass01 {
 	 * Description :To verify In Ingestion, with another New Line delimiter other than ASCII(59)
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-48292",enabled = true, groups = { "regression" }, priority = 31)
+	@Test(description ="RPMXCON-48292",enabled = true, groups = { "regression" } )
 	public void verifyAddOnlyIngestionWithAnotherNewLineDelimiter() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1095,7 +1095,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-47598 Description :Edit of saved Overlay ingestion with out
 	 * mapping field selection.
 	 */
-	@Test(description ="RPMXCON-47598",enabled = true, groups = { "regression" }, priority = 32)
+	@Test(description ="RPMXCON-47598",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithoutMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1127,7 +1127,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-47597 Description :Edit of Overlay saved ingestion with
 	 * mapping field selection
 	 */
-	@Test(description ="RPMXCON-47597",enabled = true, groups = { "regression" }, priority = 33)
+	@Test(description ="RPMXCON-47597",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1160,7 +1160,7 @@ public class IngestionCreationClass01 {
 	 * with out mapping field selection.
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-47600",enabled = true, groups = { "regression" }, priority = 34)
+	@Test(description ="RPMXCON-47600",enabled = true, groups = { "regression" } )
 	public void verifyEditOverlayIngestionWithoutDatAndIngestionMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1189,7 +1189,7 @@ public class IngestionCreationClass01 {
 	 * mapping field selection
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-47596",enabled = true, groups = { "regression" }, priority = 35)
+	@Test(description ="RPMXCON-47596",enabled = true, groups = { "regression" } )
 	public void verifyCopyOverlayIngestionWithMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1221,7 +1221,7 @@ public class IngestionCreationClass01 {
 	 * ingestion with out mapping field selection.
 	 * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-47599",enabled = true, groups = { "regression" }, priority = 36)
+	@Test(description ="RPMXCON-47599",enabled = true, groups = { "regression" } )
 	public void verifyCopyOverlayIngestionWithoutDatAndMapping() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1252,7 +1252,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-47369 Description :To verify 'Ingestion Details' pop up
 	 * display
 	 */
-	@Test(description ="RPMXCON-47369",enabled = true, groups = { "regression" }, priority = 37)
+	@Test(description ="RPMXCON-47369",enabled = true, groups = { "regression" } )
 	public void verifyIngestionDetailsPopupDisplay() {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1267,7 +1267,7 @@ public class IngestionCreationClass01 {
 	 * Case Id:RPMXCON-47362 Description :To verify that on Ingestion Home page,
 	 * user is able to access all page by navigation controls.
 	 */
-	@Test(description ="RPMXCON-47362",enabled = true, groups = { "regression" }, priority = 38)
+	@Test(description ="RPMXCON-47362",enabled = true, groups = { "regression" } )
 	public void verifyIngestionHomePageNavigation() {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1285,7 +1285,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-49022",enabled = true, groups = { "regression" }, priority = 39)
+	@Test(description ="RPMXCON-49022",enabled = true, groups = { "regression" } )
 	public void verifyTwoIngestionRunTillApprovingSimultaneously() throws InterruptedException {
 
 		String[] dataset = { Input.AllSourcesFolder, Input.TiffImagesFolder };
@@ -1318,7 +1318,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47588",enabled = true, groups = { "regression" }, priority = 40)
+	@Test(description ="RPMXCON-47588",enabled = true, groups = { "regression" } )
 	public void verifyOverlayIngestionWithOnlyLoadFiles() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -1350,7 +1350,7 @@ public class IngestionCreationClass01 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-47594",enabled = true, groups = { "regression" }, priority = 41)
+	@Test(description ="RPMXCON-47594",enabled = true, groups = { "regression" } )
 	public void verifyRollbackStatusForApprovedIngestion() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
