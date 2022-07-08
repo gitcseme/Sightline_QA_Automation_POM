@@ -262,6 +262,7 @@ public class DomainDashboard {
 	  */
 	 public void AddOrRemoveColum(String[] colums) {
 		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getGearbtn());
 		 driver.scrollingToElementofAPage(getGearbtn());
 		 getGearbtn().waitAndClick(10);
@@ -290,8 +291,9 @@ public class DomainDashboard {
 			 double a = Double.parseDouble(db.get(i));
 			 double b = Double.parseDouble(index.get(i));
 			 double c = Double.parseDouble(workspace.get(i));
-			 if(sum!=Double.parseDouble(new DecimalFormat("##.####").format(a+b+c))) {
-				 base.failedStep("total size is mismatch");
+			 double tsum = a+b+c;
+			 if((int)sum!=(int)tsum) {
+				 base.failedStep(sum+"total size is mismatch"+tsum);
 			 }
 		 }
 		 base.passedStep("verified Total project size including the database size, index size and workspace size of the project");
@@ -314,6 +316,7 @@ public class DomainDashboard {
 	  * @Description verify the column available in domain dashboard table
 	  */
 	 public void isAllColumsAreAvailable(String[] colums) {
+		 driver.waitForPageToBeReady();
 		 List<String> tableheadervalues = getColumValues(getTableHeader());
 		 int n = colums.length;
 		 for(int i=0;i<n;i++) {
@@ -411,6 +414,7 @@ public class DomainDashboard {
 	  * @Description verify that column title is available
 	  */
 	 public void isTitleIsAvailable(String colums) {
+		 driver.waitForPageToBeReady();
 		 boolean flag = true;
 		 List<String> tableheadervalues = getColumValues(getTableHeader());
 		 for(String colum:tableheadervalues) {
