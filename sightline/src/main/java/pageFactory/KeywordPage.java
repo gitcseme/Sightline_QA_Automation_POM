@@ -517,10 +517,11 @@ public class KeywordPage {
           	getSelectColor().selectFromDropdown().selectByVisibleText(color);
           	base.waitForElement(getCancelBtn());
           	getCancelBtn().waitAndClick(5);
-          	base.waitForElement(getNewKeywordButton());
-          	softAssert = new SoftAssert();
-          	softAssert.assertTrue(getNewKeywordButton().isElementPresent());
-          	softAssert.assertAll();
+          	if (getKeywordTableFirstFieldValue(keywordName).isElementAvailable(5)) {
+				base.failedStep("keyword group and keyword is not be created on click of Cancel button");
+			}else {
+				base.passedStep("keyword group and keyword is not be created on click of Cancel button successfully");
+			}
           	
           	base.passedStep("keyword group and keyword is not be created on click of Cancel button successfully");
           	
