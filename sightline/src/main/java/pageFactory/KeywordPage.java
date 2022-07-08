@@ -518,7 +518,7 @@ public class KeywordPage {
           	base.waitForElement(getCancelBtn());
           	getCancelBtn().waitAndClick(5);
           	if (getKeywordTableFirstFieldValue(keywordName).isDisplayed()) {
-				base.failedStep("keyword group and keyword is not be created on click of Cancel button");
+				base.failedStep("keyword group and keyword is created on click of Cancel button");
 			}else {
 				base.passedStep("keyword group and keyword is not be created on click of Cancel button successfully");
 			}
