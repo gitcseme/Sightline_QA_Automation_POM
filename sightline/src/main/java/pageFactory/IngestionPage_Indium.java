@@ -11443,7 +11443,7 @@ public class IngestionPage_Indium {
 				base.passedStep("Source and overwrite setting page enabled with values");
 			}
 			else {
-				base.passedStep("Source and overwrite setting page not enabled with values");
+				base.failedStep("Source and overwrite setting page not enabled with values");
 			}
 			if (getPreviewRun().Enabled()) {
 				base.failedStep("Configure mapping section enabled");
