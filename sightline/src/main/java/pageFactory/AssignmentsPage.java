@@ -76,6 +76,9 @@ public class AssignmentsPage {
 	public Element getAssignmentCodingFormDropDown() {
 		return driver.FindElementById("SelectedCodingForm");
 	}
+	public Element getAssignmentCodingFormName() {
+		return driver.FindElementById("selectedCodingFormString");
+	}
 
 	public Element getAssignmentSaveButton() {
 		return driver.FindElementByXPath("//input[@value='Save']");
@@ -4084,12 +4087,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 		bc.waitForElement(metaDataSort());
 		if (metaDataSort().isDisplayed() == true) {
 			bc.passedStep("The sort by metadata option is as enabled by the cascading group options");
@@ -4723,12 +4721,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 	}
 
 	/**
@@ -5008,12 +5001,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 		bc.waitForElement(getParentAssignmentGroupName());
 		String value = getParentAssignmentGroupName().GetAttribute("value");
 		System.out.println(value);
@@ -6852,8 +6840,7 @@ public class AssignmentsPage {
 			assertion.assertTrue(getAssignmentName().GetAttribute("value").contains("Copy"));
 			assertion.assertTrue(getAssignmentName().GetAttribute("value").contains("updated " + assignmentName));
 			bc.passedStep("Assignment name is reflected as expected");
-			assertion.assertTrue(getAssignmentCodingFormDropDown().selectFromDropdown().getFirstSelectedOption()
-					.getText().equalsIgnoreCase(codingfrom));
+			assertion.assertTrue(getAssignmentCodingFormName().getText().equalsIgnoreCase(codingfrom));
 			bc.passedStep("coding form is reflected as expected");
 			assertion.assertTrue(getSelectedClassification().selectFromDropdown().getFirstSelectedOption().getText()
 					.equalsIgnoreCase("1LR"));
@@ -9970,6 +9957,7 @@ public class AssignmentsPage {
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
 				sortCodeFormOrderSaveBtn().Click();
 				bc.waitTime(2);
+				bc.waitForElement(getSelectedCodeForminAssignPAge());
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
 				String passMSg=	"Selected a coding form " + CFName
