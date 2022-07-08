@@ -247,7 +247,7 @@ public class ManageKeywords_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-52496");
 		baseClass.stepInfo("To verify on click of Cancel button keyword group and keyword should not be created");
 		KeywordPage keyWord = new KeywordPage(driver);
-		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
+		String keywordname = "Pass";
 		String color = "Blue";
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
