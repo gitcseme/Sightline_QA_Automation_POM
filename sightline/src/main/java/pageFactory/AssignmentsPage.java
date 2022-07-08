@@ -504,8 +504,10 @@ public class AssignmentsPage {
 	}
 
 	public Element getAssgn_CodingStampAplliedToggle() {
+//		return driver.FindElementByXPath(
+//				"//*[@id='AdditionalPreferences_ShouldCompleteOnApplyCodingStamp']/following-sibling::i");
 		return driver.FindElementByXPath(
-				"//*[@id='AdditionalPreferences_ShouldCompleteOnApplyCodingStamp']/following-sibling::i");
+				"//*[@id='grayoutToggle']/following-sibling::i");
 	}
 
 	public Element getAssgn_OverrideOptimizedSortToggle() {
@@ -3497,7 +3499,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().isDisplayed();
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		bc.waitForElement(getAssignmentCodingFormDropDown());
+		//bc.waitForElement(getAssignmentCodingFormDropDown());
 		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
@@ -10036,7 +10038,7 @@ public class AssignmentsPage {
 				bc.waitTime(2);
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
-					String expectedCFDisplay = CFName + " (Set As Default)";
+					String expectedCFDisplay = CFName + " (Set as Default)";
 					SoftAssert assertion = new SoftAssert();
 					assertion.assertEquals(expectedCFDisplay, acualCfName);
 					assertion.assertAll();
