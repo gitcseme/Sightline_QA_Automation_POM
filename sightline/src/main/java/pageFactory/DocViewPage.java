@@ -75,6 +75,14 @@ public class DocViewPage {
 	public Element getSaveDoc() {
 		return driver.FindElementById("Save");
 	}
+	
+	public Element getDocView_CodingFormlist() {
+		return driver.FindElementByXPath("//select[@id='codingFormList']");
+	}
+
+	public Element getCodingFormSaveThisForm() {
+		return driver.FindElementByXPath("//div[@id='divCodingForms']//a[@id='Save']");
+	}
 
 	public Element getNonAudioRemarkBtn() {
 		return driver.FindElementById("remarks-btn");
@@ -3505,14 +3513,6 @@ public class DocViewPage {
 	public Element getAudioDocEndDuration() {
 				return driver.FindElementByXPath("//div[@class='jp-duration end']");
 			}
-	
-	public Element getDocView_CodingFormlist() {
-		return driver.FindElementById("//select[@id='codingFormList']");
-	}
-
-	public Element getCodingFormSaveThisForm() {
-		return driver.FindElementByXPath("//div[@id='divCodingForms']//a[@id='Save']");
-	}
 	public Element getRedactionModify() {
 		return driver.FindElementById("btnEdit");
 	}
