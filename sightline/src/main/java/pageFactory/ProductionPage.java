@@ -892,6 +892,26 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element getSelect_Can_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Can']");
+	}
+	
+	public Element getSelect_Bomb_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Bomb']");
+	}
+	
+		public Element docIdentifiedByProtectionGuard() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents Identified by Production Guard')]/following-sibling::label");
+	}
+	
+	public Element documentMissingCount() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents with Missing')]/following-sibling::label");
+	}
+	
+	public Element exceptionDocCount() {
+		return driver.FindElementByXPath("//label[contains(text(),'Exception Documents')]/following-sibling::label");
+	}
+	
 	public Element loadFilePath() {
 		return driver.FindElementById("ProductionOutputLocation_DriveText");
 	}
