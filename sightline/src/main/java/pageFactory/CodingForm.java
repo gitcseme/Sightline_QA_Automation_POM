@@ -3892,7 +3892,6 @@ public class CodingForm {
 	 */
 	public void CreateCodingFormWithParameter(String cfName, String tag, String comment, String metadata,
 			String ObjectName) throws InterruptedException {
-		System.out.println(ObjectName);
 		switch (ObjectName) {
 		case "tag":
 			if (ObjectName.equalsIgnoreCase("tag")) {
