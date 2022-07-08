@@ -2869,9 +2869,9 @@ public class BaseClass {
 			}
 		} else if (condition.equalsIgnoreCase("Fail")) {
 			if (result) {
-				failedStep(passMsg);
+				failedStep(failMsg);
 			} else {
-				passedStep(failMsg);
+				passedStep(passMsg);
 			}
 		} else if (condition.equalsIgnoreCase("Warning")) {
 			if (result) {
