@@ -968,29 +968,6 @@ public class CodingForm {
 	public Element getSetCodingFormToSG() {
 		return driver.FindElementByXPath("//button[@id='btnSetSGCodingForms']");
 	}
-	public Element getSelectCF_CheckBox(String CFName) {
-		return driver.FindElementByXPath(
-				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "']/parent::label/i");
-	}
-	public Element getSelectCodeFormRadioBtn(String CFName) {
-		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
-				+ "']/ancestor::td/following-sibling::td//span/label/i");
-	}
-	public Element sortOrderNxtBtn() {
-		return driver.FindElementById("btnSortOrderNext");
-	}
-	public Element getSelectedCodeForminAssignPAge() {
-		return driver.FindElementByXPath(" //label[@id='selectedCodingFormString']");
-	}
-	public Element sortCodeFormOrderSaveBtn() {
-		return driver.FindElementById("btnCodingFormSave");
-	}
-	public Element SelectCFPopUp_Step1() {
-		return driver.FindElementByXPath("//span[text()='Step 01: Add / Remove Coding Forms in this Security Group']");
-	}
-	public Element getSelectedCodeForm_inSortingPopUp(String CFName) {
-		return driver.FindElementByXPath("//div[@id='divSortCodingForm']//li[@value='" + CFName + "']");
-	}
 
 	public Element getTagType2() {
 		return driver.FindElementByXPath(".//*[@id='c-1']//select[@id='1']");
@@ -3028,23 +3005,23 @@ public class CodingForm {
 		base.waitForElement(getManageCodingFormButton());
 		base.waitForElement(getSetCodingFormToSG());
 		getSetCodingFormToSG().waitAndClick(15);
-		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
+		if (assgnpage.SelectCFPopUp_Step1().isElementAvailable(2)) {
 			base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
-			base.waitForElement(getSelectCF_CheckBox(cfName));
-			getSelectCF_CheckBox(cfName).ScrollTo();
-			getSelectCF_CheckBox(cfName).waitAndClick(5);
+			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
+			assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
+			assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
 			base.waitTime(1);
-			getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
+			assgnpage.getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
 			base.waitTime(2);
-			sortOrderNxtBtn().ScrollTo();
-			sortOrderNxtBtn().waitAndClick(5);
-			base.waitForElement(getSelectedCodeForm_inSortingPopUp(cfName));
-			if (getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
-				sortCodeFormOrderSaveBtn().waitAndClick(5);
+			assgnpage.sortOrderNxtBtn().ScrollTo();
+			assgnpage.sortOrderNxtBtn().waitAndClick(5);
+			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(cfName));
+			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
+				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
 				base.waitTime(2);
-				base.waitForElement(getSelectedCodeForminAssignPAge());
-				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
-					String acualCfName = getSelectedCodeForminAssignPAge().getText();
+				base.waitForElement(assgnpage.getSelectedCodeForminAssignPAge());
+				if (assgnpage.getSelectedCodeForminAssignPAge().isDisplayed()) {
+					String acualCfName = assgnpage.getSelectedCodeForminAssignPAge().getText();
 				String passMSg=	"Selected a coding form " + cfName
 							+ " and its reflected in manage assignments page";		
 				String failMsg=	"Selected  coding form " + cfName
