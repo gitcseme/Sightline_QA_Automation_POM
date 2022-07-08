@@ -420,16 +420,23 @@ public class BatchPrintRegression {
 		batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
 		batchPrint.fillingBasisForPrinting(true, true, null);
 		batchPrint.navigateToNextPage(1);
+		if (!batchPrint.getSlipSheetDD_prod().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
 		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+
 		batchPrint.fillingSlipSheetWithMetadata("AllProductionBatesRanges", true, null);
+		if (!batchPrint.getSelectExportFileName().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
 
 		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
 		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
 
-		// Download ABtch Print File
+		// Download Batch Print File
 		String fileName = batchPrint.DownloadBatchPrintFile();
 
-		// extract zip file
+		// extract Zip file
 		String extractedFile = batchPrint.extractFile(fileName);
 
 		// verify Downloaded File Count and Format
@@ -445,8 +452,9 @@ public class BatchPrintRegression {
 	 * @throws InterruptedException
 	 * @throws ZipException
 	 */
-	@Test(description = "RPMXCON-49435", enabled = true,dataProvider = "Users" ,groups = { "regression" })
-	public void validateBatchPrintProductionWithSlipSheet(String username, String password) throws InterruptedException, ZipException {
+	@Test(description = "RPMXCON-49435", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void validateBatchPrintProductionWithSlipSheet(String username, String password)
+			throws InterruptedException, ZipException {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String foldername = "Folder" + Utility.dynamicNameAppender();
@@ -459,14 +467,18 @@ public class BatchPrintRegression {
 		// Login As User
 		loginPage.loginToSightLine(username, password);
 
-		baseClass.stepInfo("Test case Id: RPMXCON-49435 Batch Print");
+		baseClass.stepInfo("Test case Id: RPMXCON-49435 BatchPrint");
 		baseClass.stepInfo(
 				"To verify that 'AllProductionBatesRanges' should display correct value on Batch Print slip sheets");
 
 		// Create tag and folder
 		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+		if (username.equals(Input.pa1userName)) {
+			tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+		} else {
+			tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName, Input.tagNamePrev);
+		}
 
 		// Bulk Tag
 		search.basicContentSearch(Input.testData1);
@@ -488,14 +500,14 @@ public class BatchPrintRegression {
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab("Folder", foldername, true);
 		batchPrint.fillingBasisForPrinting(false, true, productionname);
-		batchPrint.navigateToNextPage(1);
+		batchPrint.disableSlipSheet(true);
 		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
 		batchPrint.fillingSlipSheetWithMetadata("AllProductionBatesRanges", true, null);
 
 		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
 		batchPrint.fillingExportFormatPage(Input.docFileName, Input.documentKey, true, 20);
 
-		// Download ABtch Print File
+		// Download Batch Print File
 		String fileName = batchPrint.DownloadBatchPrintFile();
 
 		// extract zip file
@@ -507,11 +519,90 @@ public class BatchPrintRegression {
 		loginPage.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify that Batch print functionality is working correctly
+	 *              and properly if user select 'Prior Productions (TIFFs/PDFs)'
+	 * @throws IOException
+	 */
+	@Test(description = "RPMXCON-48191", enabled = true, groups = { "regression" })
+	public void validateBatchPrintWithPriorProduction() throws InterruptedException, IOException {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		String savesearch = "Search" + Utility.dynamicNameAppender();
+		String slipsheetDD = "Create new slip sheets";
+
+		SessionSearch search = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48191 Batch Print");
+		baseClass.stepInfo(
+				"To verify that Batch print functionality is working correctly and properly if user select 'Prior Productions (TIFFs/PDFs)'");
+
+		// Create tag and folder
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagName, Input.tagNamePrev);
+
+		// Bulk Tag
+		search.basicMetaDataSearch(Input.metaDataName, null, Input.custodianName_Andrew, null);
+		search.saveSearch(savesearch);
+		search.bulkFolderExisting(foldername);
+
+		// Generate Production
+		String productionname = "P" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		System.out.println(productionname);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionwithBurnRedaction();
+		page.slipSheetToggleEnable();
+		page.getSlipCalculatedTabSelection().ScrollTo();
+		page.availableFieldSelection(Input.batesNumber);
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname,
+				beginningBates);
+
+		// Select Search
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab("Search", savesearch, false);
+
+		// select production
+		batchPrint.fillingBasisForPrinting(false, true, productionname);
+		batchPrint.navigateToNextPage(1);
+
+		// fill slipsheet tab
+		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
+		batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count and Format
+		batchPrint.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		loginPage.logout();
+
+	}
+
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password },
-//				{ Input.rmu1userName, Input.rmu1password },
-				};
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
 
