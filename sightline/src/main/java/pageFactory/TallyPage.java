@@ -539,6 +539,9 @@ public class TallyPage {
 	public Element getHeaderSubtally(int i) {
 		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th["+i+"]");
 	}
+	public ElementCollection getSelectSourcedOptionsList() {
+		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
+	}
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -2296,5 +2299,32 @@ public void applyFilterToTallyBy( String metaDataTally, String FilterType,String
 	
 }
 
+/**
+ * @author Jayanthi
+ * @param selectSourceList
+ */
+public void verifySourceList(String userNAme) {
+	driver.waitForPageToBeReady();
+	base.waitForElement(getTally_SelectSource());
+	getTally_SelectSource().Click();
+	if (userNAme.equals(Input.rmu1userName)) {
+		String[] selectSourceList = { "Security Groups", "Searches", "Assignments", "Folders" };
+		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+		base.printListString(listDatas);
+		base.compareArraywithDataList(selectSourceList, listDatas, true,
+				"Expected sources displayed in select source popup For RMU USer",
+				"Expected sources not displayed in select source popup For RMU USer");
+	}
+	if (userNAme.equals(Input.pa1userName)) {
+		String[] selectSourceList = { "Security Groups", "Searches", "Projects", "Folders" };
+		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+		base.printListString(listDatas);
+		base.compareArraywithDataList(selectSourceList, listDatas, true,
+				"Expected sources displayed in select source popup For PA USer",
+				"Expected sources not displayed in select source popup For PA USer");
+	}
+	base.waitForElement(getTally_SelectSource());
+	getTally_SelectSource().Click();
+}
 
 }
