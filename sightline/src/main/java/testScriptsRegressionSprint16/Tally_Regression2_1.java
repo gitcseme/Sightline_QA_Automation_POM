@@ -53,11 +53,11 @@ public class Tally_Regression2_1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 
 		// Open browser
-	/*	driver = new Driver();
+		driver = new Driver();
 		bc = new BaseClass(driver);
 		// Login as a PA
 		lp = new LoginPage(driver);
@@ -96,7 +96,7 @@ public class Tally_Regression2_1 {
 		bc.stepInfo("Created a security group" + securityGrpName + "Bulk Realese is done");
 		lp.logout();
 		lp.quitBrowser();
-*/
+
 	}
 
 	/**
