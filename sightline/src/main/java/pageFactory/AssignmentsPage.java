@@ -2898,7 +2898,6 @@ public class AssignmentsPage {
 
 	public void createnewquickbatch_Optimized_withReviewer(final String assignmentName, String codingForm,
 			String Reviewercheck) {
-
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAssignmentName().Visible();
