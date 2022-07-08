@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -44,6 +45,7 @@ public class ManageKeywords_Regression1 {
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
 	ProjectPage projectPage;
+	SoftAssert softAssert;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -137,7 +139,7 @@ public class ManageKeywords_Regression1 {
 	}
 	
 	/**
-	 * @author Mohan.Venugopal Created Date:06/07/2022 RPMXCON-52501
+	 * @author Mohan.Venugopal Created Date:06/07/2022 RPMXCON-52505
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 * @Description To verify Manage Keywords page
@@ -197,6 +199,115 @@ public class ManageKeywords_Regression1 {
 		// Verify Manage Keyowrd Page for PA
 		keyWord.navigateToKeywordPage();
 		keyWord.verifyDuplicateKeywordFromList();
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:07/07/2022 RPMXCON-52494
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify when user edits keyword group and keywords into the group
+	 */
+	@Test(description = "RPMXCON-52494", enabled = true, groups = { "regression" })
+	public void verifyManageKeywordPageEdit() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52494");
+		baseClass.stepInfo("To verify when user edits keyword group and keywords into the group");
+		KeywordPage keyWord = new KeywordPage(driver);
+		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Verify Manage Keyowrd Page for RMU
+		keyWord.navigateToKeywordPage();
+		keyWord.editExistigKeywordAndVerifyThem(keywordname);
+		loginPage.logout();
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+
+		// Verify Manage Keyowrd Page for PA
+		keyWord.navigateToKeywordPage();
+		keyWord.editExistigKeywordAndVerifyThem(keywordname);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:07/07/2022 RPMXCON-52496
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify on click of Cancel button keyword group and keyword should not be created
+	 */
+	@Test(description = "RPMXCON-52496", enabled = true, groups = { "regression" })
+	public void verifyKeywordAfterPressOfCancelButtonToNotCreate() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52496");
+		baseClass.stepInfo("To verify on click of Cancel button keyword group and keyword should not be created");
+		KeywordPage keyWord = new KeywordPage(driver);
+		String keywordname = "Pass";
+		String color = "Blue";
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		// Add keyword and Cancel it
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeywordsAndPressCancelButton(keywordname, color);
+		loginPage.logout();
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		// Add keyword and Cancel it
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeywordsAndPressCancelButton(keywordname, color);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:07/07/2022 RPMXCON-52499
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify user with Sys Admin and Reviewer can not create keyword group and keywords
+	 */
+	@Test(description = "RPMXCON-52499", enabled = true, groups = { "regression" })
+	public void verifySAandReviewerCanCreateKeyword() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52499");
+		baseClass.stepInfo("To verify user with Sys Admin and Reviewer can not create keyword group and keywords");
+		KeywordPage keyWord = new KeywordPage(driver);
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		
+		// Keyword cannot be created
+		softAssert = new SoftAssert();
+		baseClass.waitForElement(keyWord.getManageBtn());
+		keyWord.getManageBtn().waitAndClick(5);
+		
+		if (keyWord.getKeywordBtn().isElementAvailable(5)) {
+			baseClass.failedStep("KeywordHighlightning Button is present");
+		}else {
+			baseClass.passedStep("Sys Admin doesn't have access to create keyword group and keywords.");
+		}
+		loginPage.logout();
+		
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+		
+		// Keyword cannot be creted
+		softAssert = new SoftAssert();
+		if (keyWord.getManageBtn().isElementAvailable(5)) {
+			baseClass.failedStep("KeywordHighlightning Button is present");
+		}else {
+			baseClass.passedStep("Reviewer doesn't have access to create keyword group and keywords.");
+		}
 		loginPage.logout();
 	}
 

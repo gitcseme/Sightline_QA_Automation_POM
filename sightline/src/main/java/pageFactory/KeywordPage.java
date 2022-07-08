@@ -16,10 +16,19 @@ import automationLibrary.ElementCollection;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
+/**
+ * @author Mohan.Venugopal
+ *
+ */
+/**
+ * @author Mohan.Venugopal
+ *
+ */
 public class KeywordPage {
 
     Driver driver;
     BaseClass base;
+    SoftAssert softAssert;
    
     public Element getNewKeywordButton(){ return driver.FindElementById("btnAddKeyword"); }
     public Element getKeywordName(){ return driver.FindElementById("KeywordName"); }
@@ -52,10 +61,11 @@ public class KeywordPage {
 	}
     public Element getKeywordTableFirstFieldValue(String fieldValues){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']/tbody/tr/td["+fieldValues+"]"); }
     public Element getKeywordSecurityErrorMessage(){ return driver.FindElementByXPath("//label[contains(text(),'Name already')]"); }
-  
+    public Element getCancelBtn(){ return driver.FindElementById("btnCancel"); }
+    public Element getKeywordTableEditFields(){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//tr[1]//td//a[text()='Edit']"); }  
+    public Element getManageBtn(){ return driver.FindElementByName("Manage"); }
+    public Element getKeywordBtn() { return driver.FindElementByName("Keywords");}
     
-    
-  
     //Annotation Layer added successfully
     public KeywordPage(Driver driver){
 
@@ -446,11 +456,76 @@ public class KeywordPage {
          	
          	String errorMessage = getKeywordSecurityErrorMessage().getText();
          	System.out.println(errorMessage);
-         	SoftAssert softAssert = new SoftAssert();
+         	softAssert = new SoftAssert();
          	softAssert.assertEquals("Name already exists", errorMessage);
          	softAssert.assertAll();
          	base.passedStep("Message is displayed like Keyword with name already exists with error code successfully.");
         	 
+        	 
+		}
+         
+         
+        /**
+         * @author Mohan.Venugopal
+         * @description: To check dit option for existing Keyword
+         * @param keywordName
+         */
+        public void editExistigKeywordAndVerifyThem(String keywordName) {
+
+        	 
+        	 driver.waitForPageToBeReady();
+        	 base.waitForElement(getKeywordTableEditFields());
+        	 getKeywordTableEditFields().waitAndClick(5);
+        	 
+        	 base.waitForElement(getDescription());
+        	 getDescription().Clear();
+          	getDescription().SendKeys(keywordName);
+          	
+          	base.waitForElement(getSaveBtn());
+         	getSaveBtn().waitAndClick(5);
+         	base.waitForElement(getYesButton());
+         	getYesButton().waitAndClick(5);
+         	
+         	base.VerifySuccessMessage("Keyword Highlighting Group successfully updated");
+         	
+         	driver.waitForPageToBeReady();
+         	getKeywordTableFirstFieldValue("3").isElementAvailable(5);
+         	String keywordName1 = getKeywordTableFirstFieldValue("3").getText();
+         	softAssert = new SoftAssert();
+         	softAssert.assertEquals(keywordName, keywordName1);
+         	softAssert.assertAll();
+        	 
+        	 
+        	}
+         
+        /**
+         * @author Mohan.Venugopal
+         * @description: To add keyword and click on cancel button.
+         * @param keywordName, color
+         */
+         public void addKeywordsAndPressCancelButton(String keywordName, String color) {
+
+        	driver.waitForPageToBeReady();
+        	base.waitForElement(getNewKeywordButton());
+          	getNewKeywordButton().waitAndClick(5);
+          	base.waitForElement(getKeywordName());
+          	getKeywordName().SendKeys(keywordName);
+          	base.waitForElement(getDescription());
+          	getDescription().SendKeys(keywordName);
+          	base.waitForElement(getKeywords());
+          	getKeywords().SendKeys(keywordName);
+          	getSelectColor().selectFromDropdown().selectByVisibleText(color);
+          	base.waitForElement(getCancelBtn());
+          	getCancelBtn().waitAndClick(5);
+          	if (getKeywordTableFirstFieldValue(keywordName).isDisplayed()) {
+				base.failedStep("keyword group and keyword is created on click of Cancel button");
+			}else {
+				base.passedStep("keyword group and keyword is not be created on click of Cancel button successfully");
+			}
+          	
+          	base.passedStep("keyword group and keyword is not be created on click of Cancel button successfully");
+          	
+          	
         	 
 		}
 	

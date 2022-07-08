@@ -69,7 +69,13 @@ public class CommentsPage {
 	public Element getTotCommentsTable() {
 		return driver.FindElementByXPath("//div[@id='CommentsTable_info']");
 	}
-
+	
+	public Element getCommentsTableFieldValue(String fieldName) {
+		return driver.FindElementByXPath("//*[@id='CommentsTable']//td[text()='"+fieldName+"']");
+	}
+	
+	
+	
 	//Added by Vijaya.Rani
 	public Element getCommentsTableErrorMsg() {
 		return driver.FindElementByXPath("//span[@id='CommentLabel-error']");
@@ -278,6 +284,26 @@ public class CommentsPage {
             base.failedStep("Edit Comments is Editable");
         }
 	
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * #description: To check Comment name is present in the table or not
+	 * @param commentsName
+	 */
+	public void validateCommentNameIsPresentOrNot(String commentsName) {
+		
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCommentsTableFieldValue(commentsName));
+
+		if (getCommentsTableFieldValue(commentsName).isElementAvailable(5)) {
+			base.passedStep("Comment are added under the security group of the logged in RMU user and success message is displayed successfully ");
+			
+		}else {
+			base.failedStep("Comments are not added under the security group of the logged in RMU user");
+		}
+		
 	}
 
 }
