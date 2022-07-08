@@ -3104,7 +3104,14 @@ public class ProductionPage {
 				.FindElementById("addFormObjects");
 	}
 		
-		
+	public Element getNativeTags() {
+		return driver
+				.FindElementByXPath("//span[@id='NativeTagsLabel']");
+	}
+	public Element getNativeFileTypeCheckBox(String Value) {
+		return driver
+				.FindElementByXPath("//input[contains(@value,'"+Value+"')]");
+	}	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20611,7 +20618,100 @@ public void verifyingDraftedProductionInComponentTab(String ProdName,String TagN
 	base.textCompareEquals(PlaceholderText, Input.tagNameTechnical, "All the values entered retained on markcomplete", "Entered values not retained");
 	
 }
+/**
+ * @author Brundha.T
+ * @description : Method to fill native section with tags.
+ * @param Tag 
+ */
+public void fillingNativeSectionWithTag(String Tag,String Tag1,boolean value) {
+		
+		if(value) {
+			base.waitForElement(getNativeTab());
+			getNativeTab().Click();
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			base.waitForElement(getNativeCheckBox(Tag));
+			getNativeCheckBox(Tag).Click();
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+		}else {
+			getNativeTab().waitAndClick(10);
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			base.waitForElement(getNativeCheckBox(Tag));
+			getNativeCheckBox(Tag).Click();
+			base.waitForElement(getNativeCheckBox(Tag1));
+			getNativeCheckBox(Tag1).Click();
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+			base.stepInfo("Native section is filled");
+		}
+	
+}
+/**
+ * @author Brundha.T
+ * @param FileType
+ * Description:verifying the native filetype checked
+ */
+public void verifyingNativeSectionFileType(String FileType) {
+	String value = getNativeFileTypeCheckBox(FileType).GetAttribute("checked");
+	boolean bool = Boolean.parseBoolean(value);
+	System.out.println(bool);
+	if(bool==true) {
+		base.passedStep(FileType+"is checked as expected");
+	}else {
+		base.failedStep(FileType+"is not checked");
+	}
+	
+}
+/**
+ * @author Brundha.T
+ * @param tagname
+ * @param BrandingPlaceholder
+ * @param PrivPlaceholder
+ * Description: filling tiff section with branding
+ * 
+ */
+public void fillingTIFFSectionWithBranding(String tagname, String BrandingPlaceholder,String PrivPlaceholder) {
 
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
+	driver.scrollPageToTop();
+	base.waitForElement(getTIFF_CenterHeaderBranding());
+	getTIFF_CenterHeaderBranding().Click();
+	new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+	getTIFF_EnterBranding().SendKeys(BrandingPlaceholder);
+	getTIFF_EnableforPrivilegedDocs().ScrollTo();
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	base.waitForElement(getPriveldge_SelectTagButton());
+	getPriveldge_SelectTagButton().Click();
+	driver.waitForPageToBeReady();
+	driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+	getPriveldge_TagTree(tagname).waitAndClick(10);
+	getPriveldge_TagTree_SelectButton().waitAndClick(10);
+	new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+	getPriveldge_TextArea().SendKeys(PrivPlaceholder);
+
+}
+/**
+ * @author Brundha.T
+ * @param Tag
+ * Description: selecting document in sorting tab
+ */
+public void selectingTaginSortingPage(String Tag) {
+	driver.waitForPageToBeReady();
+	driver.scrollingToBottomofAPage();
+	getSortingRadioBtn().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(selectTagInSortingPage(Tag));
+	selectTagInSortingPage(Tag).waitAndClick(10);
+	getAddToSelectedBtn().Click();
+	
+	
+}
 
 }
 
