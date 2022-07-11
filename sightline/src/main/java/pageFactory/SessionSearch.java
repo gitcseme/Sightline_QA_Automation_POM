@@ -7886,17 +7886,21 @@ public class SessionSearch {
 		Thread.sleep(2000);// required
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000);// // required
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocViewAction().Visible();
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
 			}
-		}), Input.wait30);
-		getDocViewAction().waitAndClick(10);
+		
+		base.waitForElement(getDocViewAction());
+		getDocViewAction().waitAndClick(5);
+	
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
-
 	}
-
+	
 	/**
 	 * @author Jeevitha Description : advanceWorkProduct
 	 */
