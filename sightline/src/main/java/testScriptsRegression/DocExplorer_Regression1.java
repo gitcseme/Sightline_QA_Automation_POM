@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
@@ -48,6 +49,7 @@ public class DocExplorer_Regression1 {
 	TallyPage tally;
 	SecurityGroupsPage securityGroup;
 	DocExplorerPage docexp;
+	CodingForm codingpage;
 
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -339,6 +341,12 @@ public class DocExplorer_Regression1 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		
+		//create coding form
+		String cfName = "CF" + Utility.dynamicNameAppender();
+		codingpage = new CodingForm(driver);
+		codingpage.commentRequired(cfName);
+		codingpage.AssignCFstoSG(cfName);
+		
 		baseClass.stepInfo("Selecting the document in docExplorer page");
 		ArrayList<String> documentId=docExplorer.documentsSelection(1);
 		
@@ -350,6 +358,10 @@ public class DocExplorer_Regression1 {
 		
 		baseClass.stepInfo("Verifying selected documents are visible in docexplorerpage");
 		docExplorer.verifyingTheSelectedDocumentInDocExplorerPage(documentId,Input.documentComments);
+		
+		
+		codingpage = new CodingForm(driver);
+		codingpage.AssigndefaultCFstoSG(Input.codingFormName);
 		loginPage.logout();
 	 }
 	 
@@ -378,7 +390,7 @@ public class DocExplorer_Regression1 {
 			
 			
 			baseClass.stepInfo("View document in doc view on doc explorer");
-			docExplorer.navigateToDocViewFromDocExplorer();
+			docExplorer.navigateToDoclistFromDocExplorer();
 			
 			baseClass.stepInfo("Verify Doc List Header");
 			docExplorer.verifyDocListHeader();
