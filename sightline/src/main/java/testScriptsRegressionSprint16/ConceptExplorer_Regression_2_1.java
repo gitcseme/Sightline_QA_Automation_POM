@@ -18,7 +18,9 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CommunicationExplorerPage;
 import pageFactory.ConceptExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ReportsPage;
@@ -302,6 +304,147 @@ public class ConceptExplorer_Regression_2_1 {
 		// Logout Application
 		login.logout();
 
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws InterruptedException
+	 * @Date: 07/08/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Validate list for Tags in on page filter on Concept Explorer
+	 *              report. RPMXCON-48738
+	 */
+	@Test(description = "RPMXCON-56882", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyDeletedTagsNotShownInTheFilterOption(String userName, String password, String role)
+			throws InterruptedException {
+
+		base.stepInfo("Test case Id: RPMXCON-56882 - Concept Explorer");
+		base.stepInfo("Validate list for Tags in on page filter on Concept Explorer report");
+
+		String tagName = "TagTT" + UtilityLog.dynamicNameAppender();
+		String sourceToSelect = "Security Groups";
+		String sgToSelect = Input.securityGroup;
+
+		// Login as user
+		base.stepInfo("**Step-1 Login in as @User**");
+		login.loginToSightLine(userName, password);
+		base.stepInfo("Current User role : " + role);
+
+		// create tag and DeleteTag for pre-requesties
+		base.stepInfo("**Pre-condition: Few tags are deleted**");
+		tagsAndFolder.CreateTag(tagName, sgToSelect);
+		tagsAndFolder.navigateToTagsAndFolderPage();
+		tagsAndFolder.DeleteTag(tagName, Input.securityGroup);
+
+		// Navigate to Concept Explorer page
+		base.stepInfo("**Step-2 & 3 Go to Report->Concept Explorer**");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// Select Sources and Apply filter
+		base.stepInfo("**Step-4 & 5 Select source and generate the report**");
+		conceptExplorer.clickSelectSources();
+		conceptExplorer.selectSGsource(sourceToSelect, sgToSelect);
+		base.stepInfo("Selected : " + sgToSelect + "and Saved selection");
+		conceptExplorer.getApplyFilterBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+
+		// Filter data status
+		base.stepInfo("**Step-6 & 7 Try to filter by Tag and Check for listed Tags**");
+		Boolean status = conceptExplorer.filterActionResultStatus(tagName, "Tags", true);
+		base.printResutInReport(status, "Deleted Tags not listed in the filter option",
+				"Deleted Tags listed in the filter option", "Fail");
+
+		// Logout Application
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws InterruptedException
+	 * @Date: 07/08/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Validate on Page filter by Tag on Concept Explorer(same
+	 *              documents are part of multiple tags). RPMXCON-56881
+	 */
+	@Test(description = "RPMXCON-56881", groups = { "regression" }, enabled = true)
+	public void VerifyIncludeExcludeFiltersFunctionality_ConceptExp() throws InterruptedException {
+		base.stepInfo("Test case Id: RPMXCON-56881");
+		base.stepInfo("Validate on Page filter by Tag on Concept Explorer(same documents are part of multiple tags)");
+
+		String sourceToSelect = "Security Groups";
+		String sgToSelect = Input.securityGroup;
+		String TagName1 = "ReportsTag" + Utility.dynamicNameAppender();
+		String MetaSearch = Input.metaDataCustodianNameInput;
+
+		// Login as PA
+		base.stepInfo("**Step-1 Login as Project Admin**");
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Tag creation - 1
+		tagsAndFolder.CreateTagwithClassification(TagName1, Input.tagNamePrev);
+		int pureHit = sessionSearch.MetaDataSearchInAdvancedSearch(Input.metaDataName, MetaSearch);
+		sessionSearch.bulkTagExisting(TagName1);
+		base.stepInfo("Created a Tag with name--" + TagName1);
+		base.stepInfo("Created tag assigned with docs : " + pureHit);
+
+		// Reports - Concept Explorer - Generate report
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// Select Sources and Apply filter
+		base.stepInfo("**Step-3 & 4 & 5 Select source and Generate Concept Explorer**");
+		conceptExplorer.clickSelectSources();
+		conceptExplorer.selectSGsource(sourceToSelect, sgToSelect);
+		base.stepInfo("Selected : " + sgToSelect + "and Saved selection");
+		conceptExplorer.getApplyFilterBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitForElement(conceptExplorer.getDocCOuntFromHeader());
+		base.stepInfo("Report Generated.");
+
+		// Get Doc count consolidated
+		String totalSelectedDocCount = conceptExplorer.getDocCOuntFromHeader().getText();
+		String aggregatedDocCount = conceptExplorer.extractStringFromPosition(totalSelectedDocCount, 2);
+		base.stepInfo("Report Generated with doc count : " + aggregatedDocCount);
+
+		// Count calculation
+		int excludeCountToCheck = Integer.parseInt(aggregatedDocCount) - pureHit;
+
+		// Apply on page filter by including one/multiple Tags
+		base.stepInfo("**Step-6 Apply on page filter by including one/multiple Tags**");
+		conceptExplorer.filterAction(TagName1, "Tags", null, true);
+		conceptExplorer.getApplyFilterBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitTime(10);
+		base.waitForElement(conceptExplorer.getDocCOuntFromHeader());
+		totalSelectedDocCount = conceptExplorer.getDocCOuntFromHeader().getText();
+		aggregatedDocCount = conceptExplorer.extractStringFromPosition(totalSelectedDocCount, 2);
+		base.stepInfo("Report Generated after INCLUDE tag filter applied with doc count : " + aggregatedDocCount);
+		base.textCompareEquals(aggregatedDocCount, Integer.toString(pureHit),
+				"Result set included all documents that are part of the selected Tags.",
+				"Result set didn't includ all documents that are part of the selected Tags.");
+
+		// Apply on page filter by excluding one/multiple Tags
+		base.stepInfo("**Step-7 Remove filter and Apply on Page filter by excluding one/multiple Tags**");
+		conceptExplorer.excludeAfterInclude();
+		conceptExplorer.getApplyFilterBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		base.waitTime(10);
+		base.waitForElement(conceptExplorer.getDocCOuntFromHeader());
+		totalSelectedDocCount = conceptExplorer.getDocCOuntFromHeader().getText();
+		aggregatedDocCount = conceptExplorer.extractStringFromPosition(totalSelectedDocCount, 2);
+		base.stepInfo("Report Generated after EXCLUDE tag filter applied with doc count : " + aggregatedDocCount);
+		base.textCompareEquals(aggregatedDocCount, Integer.toString(excludeCountToCheck),
+				"Result set excluded all the document that are part of the selected Tags.",
+				"Result set didn't exclude all the document that are part of the selected Tags.");
+
+		// Create tag and Delete Tag for pre-requesties
+		base.stepInfo("**Pre-condition: Few tags are deleted**");
+		tagsAndFolder.navigateToTagsAndFolderPage();
+		tagsAndFolder.DeleteTag(TagName1, Input.securityGroup);
+
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

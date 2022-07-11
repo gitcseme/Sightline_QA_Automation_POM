@@ -1865,6 +1865,10 @@ public class SessionSearch {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
+	
+	public Element getSelectSgPopup() {
+        return driver.FindElementById("Edit User Group");
+    }
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -2002,7 +2006,7 @@ public class SessionSearch {
 				return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
 			}
 		}), Input.wait30);
-		getSavedSearch_MySearchesTab().Click();
+		getSavedSearch_MySearchesTab().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -10300,15 +10304,6 @@ public class SessionSearch {
 		} else {
 			driver.waitForPageToBeReady();
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait90);
-
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
-		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
 

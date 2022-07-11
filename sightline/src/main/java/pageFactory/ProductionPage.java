@@ -391,7 +391,7 @@ public class ProductionPage {
 	}
 
 	public Element getProdExportSet() {
-		return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a new production/export set')]");
+		return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a New Production/Export Set')]");
 	}
 
 	public Element getProductionLink() {
@@ -3097,7 +3097,7 @@ public class ProductionPage {
 	}
 	public Element selectTagInSortingPage(String Tag) {
 		return driver
-				.FindElementByXPath("//div[@id='tagsTree']/ul/li/ul/li//a[text()="+Tag+"]");
+				.FindElementByXPath("//div[@id='tagsTree']/ul/li/ul/li//a[text()='"+Tag+"']");
 	}
 	public Element getAddToSelectedBtn() {
 		return driver

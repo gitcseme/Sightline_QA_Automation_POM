@@ -9941,7 +9941,8 @@ public class AssignmentsPage {
 	public void SelectCodingform(String CFName) {
 		
 		getSelectSortCodingForm_Tab().ScrollTo();
-		getSelectSortCodingForm_Tab().waitAndClick(5);
+		getSelectSortCodingForm_Tab().waitAndClick(10);
+
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
@@ -9959,6 +9960,7 @@ public class AssignmentsPage {
 				bc.waitForElement(getSelectedCodeForminAssignPAge());
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
+
 				String passMSg=	"Selected a coding form " + CFName
 							+ " and its reflected in manage assignments page";		
 				String failMsg=	"Selected  coding form " + CFName

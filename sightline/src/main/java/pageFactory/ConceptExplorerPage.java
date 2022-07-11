@@ -240,6 +240,52 @@ public class ConceptExplorerPage {
 		return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]");
 	}
 
+	public Element getFilterDocumentsBy_options(String option) {
+		return driver.FindElementByXPath("//ul[@id='optionFilters']//li[text()='" + option + "']");
+	}
+
+	public Element getIncludeExcludeRadioBtn(String option) {
+		return driver
+				.FindElementByXPath("//div[text()=' Filter by CustodianName:']//..//..//input[@id='" + option + "']");
+	}
+
+	public Element searchCriteriaTextBox() {
+		return driver.FindElementByXPath("//ul[@class='select2-selection__rendered']/li/input");
+	}
+
+	public Element getAutosuggestElement(String eleName) {
+		return driver.FindElementByXPath("//ul[@class='select2-results__options']/li[text()='" + eleName + "']");
+	}
+
+	public Element getIncludeRadioBtn() {
+		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[1])");
+	}
+
+	public Element getExcludeRadioBtn() {
+		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[2])");
+	}
+
+	public Element getAddToFilter() {
+		return driver.FindElementByXPath("(//*[contains(text(),' Add to Filter')])");
+	}
+
+	public Element getNoResultData() {
+		return driver.FindElementByXPath("//li[text()='No results found']");
+	}
+
+	public Element getDocCOuntFromHeader() {
+		return driver.FindElementByXPath("//span[@class='font-lg']");
+	}
+
+	public Element getUpdateFilter() {
+		return driver.FindElementByXPath(
+				"//div[@class='popover-content']//a[@class='btn btn-primary active' and text()='Update Filter']");
+	}
+
+	public Element getActiveFiltersElement() {
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li[1]");
+	}
+
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -637,6 +683,118 @@ public class ConceptExplorerPage {
 				base.failedStep("View Action failed");
 			}
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 04/21/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @Description : Filter Action
+	 * @param data      - input value
+	 * @param options   - action options
+	 * @param data1     - autosuggest data
+	 * @param selection - include or exclude
+	 */
+	public void filterAction(String data, String options, String data1, Boolean include) {
+		try {
+			// Fiter option
+			filterSelection(options, include);
+
+			// Input text for applying filter
+			searchCriteriaTextBox().SendKeys(data);
+			base.waitForElement(getAutosuggestElement(data));
+			getAutosuggestElement(data).waitAndClick(20);
+			if (data1 != null) {
+				driver.waitForPageToBeReady();
+				searchCriteriaTextBox().SendKeys(data1);
+				base.waitForElement(getAutosuggestElement(data1));
+				getAutosuggestElement(data1).waitAndClick(20);
+			}
+
+			// Add to filer Action
+			getAddToFilter().waitAndClick(20);
+			base.stepInfo("Filters Applied.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Error in Applying filter");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/08/22
+	 * @param data
+	 * @param options
+	 * @param include
+	 * @return
+	 */
+	public Boolean filterActionResultStatus(String data, String options, Boolean include) {
+
+		// Fiter option
+		filterSelection(options, include);
+
+		// Input text for applying filter
+		searchCriteriaTextBox().SendKeys(data);
+		if (getNoResultData().isElementAvailable(15)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/08/22
+	 * @Description : Filter Selection against options
+	 * @param options
+	 * @param include
+	 */
+	public void filterSelection(String options, Boolean include) {
+		// Fiter option
+		getFilterDocumentsBy_options(options).waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// Include or Exclude option
+		if (include) {
+			base.waitForElement(getIncludeRadioBtn());
+			getIncludeRadioBtn().Click();
+		} else {
+			base.waitForElement(getExcludeRadioBtn());
+			getExcludeRadioBtn().waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/08/22
+	 * @Description : Extract String from the required position
+	 * @param textContent
+	 * @param position
+	 * @return
+	 */
+	public String extractStringFromPosition(String textContent, int position) {
+		String[] arrOfStr = null;
+		// Get Doc count consolidated
+		base.stepInfo(textContent);
+		arrOfStr = textContent.split(" ");
+		String aggregatedDocCount = arrOfStr[arrOfStr.length - position];
+		return aggregatedDocCount;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/08/22
+	 */
+	public void excludeAfterInclude() {
+		base.waitForElement(getActiveFiltersElement());
+		getActiveFiltersElement().waitAndClick(10);
+		getExcludeRadioBtn().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getUpdateFilter());
+		base.waitForElement(getUpdateFilter());
+		getUpdateFilter().waitAndClick(20);
+
 	}
 
 }

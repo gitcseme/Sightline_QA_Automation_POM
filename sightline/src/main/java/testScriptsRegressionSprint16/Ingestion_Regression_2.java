@@ -104,6 +104,57 @@ public class Ingestion_Regression_2 {
 		loginPage.logout();
 	
 	}
+	
+	/**
+	 * Author :Arunkumar date: 08/07/2022 TestCase Id:RPMXCON-47376 
+	 * Description :To verify that Delete button is available on Tile.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 47376",enabled = true, groups = { "regression" })
+	public void verifyOverlayIngestionForSameFiles() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47376");
+		baseClass.stepInfo("verify that Delete button is available on Tile.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add new ingestion and save as draft");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		baseClass.stepInfo("Verify delete option available in settings option");
+		ingestionPage.verifyOptionsAvailableForDraftStageIngestion();
+		ingestionPage.getIngestionSettingGearIcon().waitAndClick(5);
+		baseClass.stepInfo("Verify ingestion detail popup display and action dropdown options");
+		ingestionPage.verifyIngestionDetailPopupAndActionDropDown();
+		baseClass.stepInfo("Delete ingestion");
+		ingestionPage.deleteIngestion();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 08/07/2022 TestCase Id:RPMXCON-47399 
+	 * Description :To verify Back button functionality for ingestion wizard
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 47399",enabled = true, groups = { "regression" })
+	public void verifyBackButtonFunctionality() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47399");
+		baseClass.stepInfo("verify Back button functionality for ingestion wizard");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and Enter mandatory field values");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat);
+		baseClass.stepInfo("verify source and mapping section status after clicking Next button");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("verify source and mapping section status after clicking back button");
+		ingestionPage.verifySourceAndMappingSectionStatusAfterClickingBackButton();
+		loginPage.logout();
+		
+	}
 
 	
 	@AfterMethod(alwaysRun = true)

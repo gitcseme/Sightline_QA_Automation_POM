@@ -306,5 +306,122 @@ public class Securitygroups_Regression2 {
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 
 	}
+	
+	/**
+	 * @author  Date: Modified date:N/A Modified by: Description :Verify
+	 *         that Project Admin can release the document for the selected security
+	 *         group from saved search.
+	 */
+	@Test(description = "RPMXCON-53675", enabled = true, groups = { "regression" })
+	public void verifyPAReleaseTheDocSgFromSavedSearch() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53675");
+		baseClass.stepInfo(
+				"Verify that Project Admin can release the document for the selected security group from saved search.");
+		String searchName = Input.randomText + Utility.dynamicNameAppender();
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		savedsearch = new SavedSearch(driver);
+		SoftAssert softassert = new SoftAssert();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as" + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.createSecurityGroups(SGname);
+		baseClass.stepInfo("Added new Security group" + SGname);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchName);
+		savedsearch.navigateToSSPage();
+		savedsearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		baseClass.passedStep("Clicked my saved Search Tab");
+		baseClass.waitForElement(savedsearch.getChooseSearchRadiobtn(searchName));
+		savedsearch.getChooseSearchRadiobtn(searchName);
+		// Release Icon
+		driver.waitForPageToBeReady();
+		savedsearch.getReleaseIcon().waitAndClick(3);
+
+		// Choose SG in PopUp
+		baseClass.waitForElement(sessionsearch.getSelectSgPopup());
+		softassert.assertTrue(sessionsearch.getSelectSgPopup().Displayed());
+		baseClass.stepInfo("Security group popup is opened successfully");
+		baseClass.waitForElement(savedsearch.getReleaseDocToSG(SGname));
+		System.out.println(SGname);
+		savedsearch.getReleaseDocToSG(SGname).waitAndClick(5);
+		softassert.assertTrue(savedsearch.getReleaseDocToSG(SGname).isDisplayed());
+		if (savedsearch.getReleaseDocToSG(SGname).isDisplayed()) {
+			baseClass.passedStep(SGname + " is displayed on popup successfully");
+		} else {
+			baseClass.failedMessage("Security group is not displayed");
+		}
+		baseClass.waitForElement(savedsearch.getReleaseBtn());
+		savedsearch.getReleaseBtn().waitAndClick(5);
+		// Finalize release button
+		baseClass.waitForElement(savedsearch.getFinalizeReleaseButtonfromPopup());
+		savedsearch.getFinalizeReleaseButtonfromPopup().waitAndClick(6);
+		baseClass.VerifySuccessMessage("Records saved successfully");
+		baseClass.stepInfo("Success message has been verified");
+		baseClass.passedStep(searchName + "  Document released to Selected.." + SGname);
+		softassert.assertAll();
+		sgpage.deleteSecurityGroups(SGname);
+		baseClass.stepInfo("deleted the Security group with name " + SGname);
+	}
+	
+	/**
+	 * @author  Date: Modified date:N/A Modified by: Description :To verify
+	 *         that project admin can assign/unassign Folders for selected security
+	 *         group.
+	 */
+	@Test(description = "RPMXCON-53682", enabled = true, groups = { "regression" })
+	public void verifyPAAssignUnAssignFoldersForSelectingSg() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-53682");
+		baseClass.stepInfo(
+				"Verify that Project Admin can release the document for the selected security group from saved search.");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		String Folder = "Folders";
+		String foldername = "AAFolder" + Utility.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		baseClass.stepInfo("craeted new folder with name " + foldername);
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.getSGSelectAccessControlTages(Folder).waitAndClick(3);
+		sgpage.verifySelectFolderisAssignedInSelectedList(foldername);
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(20);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.stepInfo("Success message has been verified");
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.waitTime(5);
+		baseClass.waitTillElemetToBeClickable(sgpage.getSelectedFoldersCheckBox(foldername));
+		sgpage.getSelectedFoldersCheckBox(foldername).waitAndClick(5);
+		baseClass.waitForElement(sgpage.getSG_Folder_Left());
+		sgpage.getSG_Folder_Left().waitAndClick(3);
+		baseClass.waitForElement(sgpage.getFoldersCheckBox(foldername));
+		if (sgpage.getFoldersCheckBox(foldername).isElementAvailable(5)) {
+			baseClass.passedStep(foldername + "is displayed on available list");
+
+		} else {
+			baseClass.failedMessage("folder is not displayed");
+		}
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(20);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.stepInfo("Success message has been verified");
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.waitForElement(sgpage.getFoldersCheckBox(foldername));
+		softassert.assertTrue(sgpage.getFoldersCheckBox(foldername).isElementAvailable(5));
+		baseClass.passedStep(foldername + "is unassigned from security group successfully");
+		softassert.assertAll();
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		baseClass.stepInfo("deleted the folder with name " + foldername);
+	}
+
 
 }
