@@ -1395,6 +1395,15 @@ public class CodingForm {
 	public Element getSFFormCol(String cfname) {return driver.FindElementByXPath(
 			".//*[@id='CodingFormDataTable']//td[text()='"+cfname+"']/../td[text()='YES (Default)']");
 	}
+	public Element getValidationText() {
+		return driver.FindElementByXPath("//div[@id='ui-id-1']");
+	}
+	public Element getValidationButtonText() {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']");
+	}
+	public Element getFullTagText() {
+		return driver.FindElementByXPath("//a[@data-toggle='collapse']");
+	}
 
 	
 	
