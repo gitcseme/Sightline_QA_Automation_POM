@@ -52,7 +52,8 @@ public class ReusableDocViewPage {
 	public Element getConfidentialRadio() {return driver.FindElementByXPath("//div[@id='item17']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
 	public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 	public Element getReadOnlyTextBox(String projectFieldName) {return driver.FindElementByXPath("//input[@name='FIELD'][@projectfieldname='" + projectFieldName + "']");}
-	public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//child::a[@id='Save']");}
+	//public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//child::a[@id='Save']");}
+	public Element getCodingFormSaveButton() {return driver.FindElementByXPath("//div[@id='divCodingForms']//child::a[@id='Save']");}
 //	Coding Stamp button
 	public Element getCodingFormStampButton() {return driver.FindElementById("SaveUserStamps");}
 //	Stamp Name text box
