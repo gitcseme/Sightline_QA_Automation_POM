@@ -10300,15 +10300,6 @@ public class SessionSearch {
 		} else {
 			driver.waitForPageToBeReady();
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait90);
-
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
-		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
 
