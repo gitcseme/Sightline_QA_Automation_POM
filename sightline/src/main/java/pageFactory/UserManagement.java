@@ -2446,7 +2446,6 @@ public class UserManagement {
 		getAssignUserButton().waitAndClick(5);
 		bc.waitForElement(getProjectTab());
 		getProjectTab().waitAndClick(5);
-		driver.Manage().window().fullscreen();
 		bc.waitForElement(getAssignUserProjectDrp_Dwn());
 		getAssignUserProjectDrp_Dwn().waitAndClick(5);
 		bc.waitForElement(getSelectDropProject(selectProject));
