@@ -45,6 +45,7 @@ public class CloningProject_Regression01 {
 		KeywordPage keywordPage;
 		SavedSearch savedsearch;
 		ProjectPage projectPage;
+		DataSets data;
 
 		@BeforeClass(alwaysRun = true)
 
@@ -66,6 +67,7 @@ public class CloningProject_Regression01 {
 			baseClass = new BaseClass(driver);
 			projectPage = new ProjectPage(driver);
 			loginPage = new LoginPage(driver);
+			data = new DataSets(driver);
 
 		}
 		
@@ -85,7 +87,6 @@ public class CloningProject_Regression01 {
 			UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 			projectPage.navigateToProductionPage();
 			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"1");
-			DataSets data = new DataSets(driver);
 			data.getNotificationMessage(0,projectName);
 			UserManagement users = new UserManagement(driver);
 			users.navigateToUsersPAge();
@@ -113,7 +114,6 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopiedNonDomain(projectName, "Indium_NonDomain","Non_Domain1","86423","1");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0,projectName);
 				UserManagement users = new UserManagement(driver);
 				users.navigateToUsersPAge();
@@ -149,7 +149,6 @@ public class CloningProject_Regression01 {
 		        UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		        projectPage.navigateToProductionPage();
 		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"0");
-		        DataSets data = new DataSets(driver);
 		        data.getNotificationMessage(0,projectName);
 
 		        UserManagement users = new UserManagement(driver);
@@ -180,7 +179,6 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"0");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0,projectName);
 				
 				UserManagement users = new UserManagement(driver);
@@ -230,7 +228,6 @@ public class CloningProject_Regression01 {
 				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "3");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
 				
@@ -279,7 +276,6 @@ public class CloningProject_Regression01 {
 				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "3");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
 				
@@ -317,10 +313,8 @@ public class CloningProject_Regression01 {
 
 				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
-				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
 				UserManagement users = new UserManagement(driver);
@@ -357,7 +351,6 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				projectPage.navigateToProductionPage();
 				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "1");
-				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 				UserManagement users = new UserManagement(driver);
 				users.navigateToUsersPAge();
