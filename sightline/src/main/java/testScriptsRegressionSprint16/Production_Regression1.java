@@ -42,7 +42,7 @@ public class Production_Regression1 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
+		base = new BaseClass(driver);
 		Input input = new Input();
 		input.loadEnvConfig();
 
@@ -253,7 +253,355 @@ public class Production_Regression1 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha.T
+	 *         No:RPMXCON-47986
+	 * @Description:To Verify Editing an existing draft production by clicking on Mark Incomplete
+	 **/
+
+	@Test(description = "RPMXCON-47986", enabled = true)
+	public void verifyDraftedProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-47986- Production component");
+		base.stepInfo("To Verify Editing an existing draft production by clicking on Mark Incomplete");
+		UtilityLog.info(Input.prodPath);
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.getMarkCompleteLink().waitAndClick(10);
+		
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		page.verifyingDraftedProductionInComponentTab(productionname, tagname);
+		
+		loginPage.logout();
+	}
 	
+	
+	/**
+	 * @author Brundha.T
+	 *         No:RPMXCON-47995
+	 * @Description:To Verify Admin will be able to regenerate an existing production (for the same configuration) with the previous bates numbers,(Before commit Bates Number).
+	 **/
+
+	@Test(description = "RPMXCON-47995", enabled = true)
+	public void verfyBatesNumberInProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-47995- Production component");
+		base.stepInfo("To Verify Admin will be able to regenerate an existing production (for the same configuration) with the previous bates numbers,(Before commit Bates Number).");
+		UtilityLog.info(Input.prodPath);
+
+		String foldername="Folder"+ Utility.dynamicNameAppender();
+		String prefixID="P"+ Utility.dynamicNameAppender();
+		String suffixID="S"+ Utility.dynamicNameAppender();
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates=page.getRandomNumber(2);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.gettext("Back").Click();
+		String Batesno =page. getProd_BatesRange().getText();
+		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
+		page.navigateToProductionPage();
+		page.getProductionNameLink(productionname).waitAndClick(5);
+		page.gettext("Back").Click();
+		page.getMarkInCompleteBtn().Click();
+		page.getbtnReGenerateMarkComplete().waitAndClick(5);
+		base.waitForElement(page.getbtnRegenerateContinue());
+		page.getbtnRegenerateContinue().Click();
+		page.getbtnContinueGeneration().isElementAvailable(80);
+		if (page.getbtnContinueGeneration().isElementAvailable(1)) {
+			page.getbtnContinueGeneration().Click();
+		}	
+		String BatesNumber =page. getProd_BatesRange().getText();
+		base = new BaseClass(driver);
+		base.textCompareEquals(Batesno, BatesNumber, "Bates number are equal expecetd", "Bates number are not equal as expecetd");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48004
+	 * @Description:To Verify Split Count in production is actually splitting the folder directory.
+	 */
+	@Test(description="RPMXCON-48004",enabled = true, groups = { "regression" })
+	public void verifyTheSubFoldersAfterGenration() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-48004 -Production Sprint 10");
+		base.stepInfo("To Verify Split Count in production is actually splitting the folder directory.");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		int purehit=sessionSearch.basicContentSearch(Input.testData1);
+		int Count=purehit-1;
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectPrivDocsInTiffSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		page.ProductionLocationSplitCount().Clear();
+		page.ProductionLocationSplitCount().SendKeys(Integer.toString(Count));
+		driver.scrollPageToTop();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		String home = System.getProperty("user.home");
+		driver.waitForPageToBeReady();
+			File ImageFile1 = new File(home+"\\Downloads\\VOL0001\\Images\\0001");
+			if (ImageFile1.exists()) {
+				base.passedStep("TIFF file is splited as expected");
+			}else {
+				base.failedStep("TIFF file is not splited as expected");}
+			File ImageFile2 = new File(home+"\\Downloads\\VOL0001\\Images\\0002");
+			if (ImageFile2.exists()) {
+				base.passedStep("TIFF file is splited as expected");
+			}else {
+				base.failedStep("TIFF file is not splited as expected");
+			}
+		loginPage.logout();
+	 }
+	
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48017
+	 * @Description:To Verify In Native section User should be able to select one or more tags
+	 */
+	 @Test(description="RPMXCON-48017",enabled = true, groups = { "regression" })
+	public void verifySelectedTagInNativeSection() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-48017 -Production component");
+		base.stepInfo("To Verify In Native section User should be able to select one or more tags");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String tagname1 = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.bulkTagExisting(tagname1);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTag(tagname,tagname1,false);
+		page.getMarkCompleteLink().waitAndClick(10);
+		base.VerifySuccessMessage("Mark Complete successful");
+		page.getNativeTab().waitAndClick(10);
+		String NativeTag=page.getNativeTags().getText();
+		String Tags=tagname+","+tagname1;
+		base.textCompareEquals(Tags, NativeTag,"Native tag is displayed in production component as expecetd" ,"Tag is not displayed as expected" );
+		loginPage.logout();
+		}
+	 
+	 /**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48019
+		 * @Description:User should be able to select one or more tags along with one or more file types.
+		 */
+		 @Test(description="RPMXCON-48019",enabled = true, groups = { "regression" })
+		public void verifyFileTypeAndTagInComponentTab() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base = new BaseClass(driver);
+			base.stepInfo("RPMXCON-48019-Production component");
+			base.stepInfo("User should be able to select one or more tags along with one or more file types.");
+
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String tagname1 = "Tag" + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateTagwithClassification(tagname1, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkTagExisting(tagname1);
+
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSectionWithTag(tagname,tagname1,false);
+			page.getMarkCompleteLink().waitAndClick(10);
+	        base.VerifySuccessMessage("Mark Complete successful");
+			page.getNativeTab().waitAndClick(10);
+			String NativeTag=page.getNativeTags().getText();
+			String Tags=tagname+","+tagname1;
+			base.textCompareEquals(Tags, NativeTag,"Native tag is displayed in production component as expecetd" ,"Tag is not displayed as expected" );
+			page.verifyingNativeSectionFileType("Spreadsheets");
+			page.verifyingNativeSectionFileType("Multimedia");
+			loginPage.logout();
+			}
+		 
+		 /**
+			 * @author Brundha RPMXCON-48008
+			 * @Description To verify production branding is longer, it is going off the page instead of wrapping
+			 */
+			 @Test(description = "RPMXCON-48008", enabled = true, groups = { "regression"})
+			 
+			public void verifyProductionWithBrandingText() throws Exception {
+
+				base = new BaseClass(driver);
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48008 -Production component");
+				base.stepInfo("To verify production branding is longer, it is going off the page instead of wrapping");
+
+				String foldername = "FolderProd" + Utility.dynamicNameAppender();
+				String tagname = "Tag" + Utility.dynamicNameAppender();
+				String productionname = "P" + Utility.dynamicNameAppender();
+				String prefixID = Input.randomText + Utility.dynamicNameAppender();
+				String suffixID = Input.randomText + Utility.dynamicNameAppender();
+				String BrandingPlaceHolder="Longer text for Branding in tiff section";
+				
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+				tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				int docno=sessionSearch.basicContentSearch(Input.testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+
+				ProductionPage page = new ProductionPage(driver);
+				String beginningBates = page.getRandomNumber(2);
+				int firstFile = Integer.parseInt(beginningBates);
+				int lastFile = docno + firstFile;
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingTIFFSectionWithBranding(tagname,BrandingPlaceHolder,Input.tagNameTechnical);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				page.extractFile();
+				
+				driver.waitForPageToBeReady();
+				String home = System.getProperty("user.home");
+				driver.waitForPageToBeReady();
+				File TiffFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+				if (TiffFile.exists()) {
+					base.passedStep("Tiff  file is displayed as expected");
+				} else {
+					base.failedStep("Tiff file is not displayed as expected");
+				}
+				page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, lastFile, prefixID, suffixID,BrandingPlaceHolder);
+				loginPage.logout();
+				
+			}
+			 /**
+				 * @author Brundha.T
+				 *         No:RPMXCON-48005
+				 * @Description:To Verify In Production produce documents are correct, And there Should not be any error on QC check for that produced docs.
+				 **/
+
+				@Test(description = "RPMXCON-48005", enabled = true)
+				public void GenerationOfProductionUsingDocumentLevel() throws Exception {
+
+					base = new BaseClass(driver);
+					base.stepInfo("Test case Id:RPMXCON-48005- Production component");
+					base.stepInfo("To Verify In Production produce documents are correct, And there Should not be any error on QC check for that produced docs.");
+					UtilityLog.info(Input.prodPath);
+
+					String foldername="Folder"+ Utility.dynamicNameAppender();
+					String tagname="ATag"+ Utility.dynamicNameAppender();
+					String suffixID="S"+ Utility.dynamicNameAppender();
+					
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+					tagsAndFolderPage.CreateTagwithClassification(tagname,"Select Tag Classification");
+					
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(Input.testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+					sessionSearch.bulkTagExisting(tagname);
+					
+					ProductionPage page = new ProductionPage(driver);
+					String beginningBates=page.getRandomNumber(2);
+					String productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.navigateToNextSection();
+					page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates);
+					page.gettxtBeginningBatesIDSuffix().SendKeys(suffixID);
+					page.selectingTaginSortingPage(tagname);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					String ActualText=page.getStatusSuccessTxt().getText();
+					String ExpectedText="Success";
+					base.textCompareEquals(ActualText, ExpectedText, "Production Generated successfully without any error", "Error in Production generation");
+					loginPage.logout();
+				}
+				
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

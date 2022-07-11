@@ -76,6 +76,12 @@
 	<is>IS</is>
 	<range>RANGE</range>
 	<DocDateDateOnly>DocDateDateOnly</DocDateDateOnly>
+	<nuix>NUIX</nuix>
+	<mappedData>Mapped Data</mappedData>
+	<docPrimaryLanguage>DocPrimaryLanguage</docPrimaryLanguage>
+	<english>English</english>
+	<yearRange1>2021</yearRange1>
+	<yearRange2>2022</yearRange2>
 	
 
 	<!-- Production path for redaction master doc -->
@@ -287,6 +293,9 @@
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
 	<masterDateBatchFile>MasterDate-IS-RANGE</masterDateBatchFile>
+	<totalDirSubClusterText>Total Direct Sub-Clusters:</totalDirSubClusterText>
+	<analyzeAt2>Analyze at 2nd Level</analyzeAt2>
+	<analyzeAt3>Analyze at 3rd Level</analyzeAt3>
 
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
@@ -732,4 +741,14 @@
 	<!-- Added by Iyappan -->
 	<docAudioId1>H136960002001058</docAudioId1>
 	<docAudioId2>H136960002001067</docAudioId2>
+	
+	<!-- Added By Raghuram -->
+	<preBuilt>Pre-Built Models</preBuilt>
+	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
+    <DEPIPTheft>DEP IP Theft</DEPIPTheft>
+    <Discrimination>Discrimination</Discrimination>
+    <FCPA>FCPA</FCPA>
+    <Harassment>Harassment</Harassment>
+
+
 </TestData>

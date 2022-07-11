@@ -2743,7 +2743,7 @@ public class BaseClass {
 	}
 
 	/**
-	 * @author Indium Raghuram Description : Date:02/03/21 Modified date: N/A
+	 * @author Indium Raghuram Description : Date:05/17/21 Modified date: N/A
 	 *         Modified by: N/A
 	 */
 	public Boolean verifyElementCollectionIsNotEmpty(ElementCollection elementC, String passMsg, String failMsg) {
@@ -2869,9 +2869,9 @@ public class BaseClass {
 			}
 		} else if (condition.equalsIgnoreCase("Fail")) {
 			if (result) {
-				failedStep(passMsg);
+				failedStep(failMsg);
 			} else {
-				passedStep(failMsg);
+				passedStep(passMsg);
 			}
 		} else if (condition.equalsIgnoreCase("Warning")) {
 			if (result) {
@@ -3723,6 +3723,102 @@ public class BaseClass {
 			getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
 			stepInfo(domain+" domain was selected");
 		}
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @Desction wait for task should be completed and get notified
+		 */
+		public void waitForNotification() {
+			if(getRedBullHornIcon().isElementAvailable(350)) {
+				passedStep("notification got received");
+			}else {
+				failedStep("notification still not received,it's get too much time");
+			}
+		}
+
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 07/04/22
+		 * @ModifiedOn : N/A
+		 * @ModifiedBy : N/A
+		 * @param dataList
+		 */
+		public void printListString(List<String> dataList) {
+			// Using For Each loop to print String list
+			stepInfo("--------------------------------");
+			for (String value : dataList) {
+				stepInfo(value);
+			}
+			stepInfo("--------------------------------");
+		}
+		
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 07/04/22
+		 * @ModifiedOn : N/A
+		 * @ModifiedBy : N/A
+		 * @param listarray - source array
+		 * @param dataList - list to compare
+		 * @param sort - sort condition if required
+		 * @param passMsg
+		 * @param failMsg
+		 */
+		public void compareArraywithDataList(String[] listarray, List<String> dataList, Boolean sort, String passMsg,
+				String failMsg) {
+
+			List<String> value = new ArrayList<String>();
+			for (int i = 0; i < listarray.length; i++) {
+				value.add(listarray[i]);
+			}
+
+			if (sort) {
+				Collections.sort(value);
+				Collections.sort(dataList);
+			}
+			listCompareEquals(dataList, value, passMsg, failMsg);
+		}
+		
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 07/04/22
+		 * @ModifiedOn : N/A
+		 * @ModifiedBy : N/A
+		 * @param element
+		 */
+		public void mouseHoverOnElement(Element element) {
+			try {
+				Actions ac = new Actions(driver.getWebDriver());
+				ac.moveToElement(element.getWebElement()).build().perform();
+			} catch (Exception e) {
+				e.printStackTrace();
+				failedStep("Failed to mouse hover");
+			}
+		}
+		
+		/**
+		 * @author Indium Raghuram Description : Date:07/04/21 Modified date: N/A
+		 *         Modified by: N/A
+		 */
+		public Boolean stringNotEmpty(String content) {
+			if (content != "") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		/**
+		 * @author Indium Raghuram Description : Date:07/05/21 Modified date: N/A
+		 *         Modified by: N/A
+		 */
+		public Boolean ValidateElement_PresenceReturn(Element element) {
+			if (element.isElementAvailable(5)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 
 
 }

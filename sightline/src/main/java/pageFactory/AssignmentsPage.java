@@ -76,6 +76,9 @@ public class AssignmentsPage {
 	public Element getAssignmentCodingFormDropDown() {
 		return driver.FindElementById("SelectedCodingForm");
 	}
+	public Element getAssignmentCodingFormName() {
+		return driver.FindElementById("selectedCodingFormString");
+	}
 
 	public Element getAssignmentSaveButton() {
 		return driver.FindElementByXPath("//input[@value='Save']");
@@ -1004,6 +1007,11 @@ public class AssignmentsPage {
 
 	// End of (added by jayanthi 28/9/21)
 	// Added by Indium-Mohan
+	
+	public Element getMiniDocListToggleButton() {
+		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsShowMiniDocList']/following-sibling::i");
+	}
+	
 	public Element getNearDupeDocumentsIncludeToggleButton() {
 		return driver.FindElementByXPath("//input[@id='chkIncludeNearDuplicates']//following-sibling::i");
 	}
@@ -1795,16 +1803,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
@@ -1869,16 +1868,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
@@ -2910,24 +2900,13 @@ public class AssignmentsPage {
 
 	public void createnewquickbatch_Optimized_withReviewer(final String assignmentName, String codingForm,
 			String Reviewercheck) {
-
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAssignmentName().Visible();
 			}
 		}), Input.wait60);
 		getAssignmentName().SendKeys(assignmentName);
-
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait30);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+          SelectCodingform(codingForm);
 
 		if (Reviewercheck.equals("AllRev")) {
 			getQuickBatch_Selectallrev().waitAndClick(10);
@@ -3106,16 +3085,7 @@ public class AssignmentsPage {
 		}), Input.wait60);
 		getAssignmentName().SendKeys(assignmentName);
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait30);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 
 		String doccount = getQuickBatch_Doccount().getText();
 		Integer.parseInt(doccount);
@@ -3219,16 +3189,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 
 		// verify keywords
 		getAssgn_Keywordsbutton().waitAndClick(10);
@@ -3353,13 +3314,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait30);
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAssignmentCodingFormDropDown().Visible();
-			}
-		}), Input.wait30);
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+		SelectCodingform(codingForm);
 		// permissions
 		driver.scrollingToBottomofAPage();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3517,6 +3472,7 @@ public class AssignmentsPage {
 		}
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+		
 		bc.waitForElement(getNumberOfAssignmentsToBeShown());
 		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
 		driver.scrollingToBottomofAPage();
@@ -4132,12 +4088,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 		bc.waitForElement(metaDataSort());
 		if (metaDataSort().isDisplayed() == true) {
 			bc.passedStep("The sort by metadata option is as enabled by the cascading group options");
@@ -4771,12 +4722,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 	}
 
 	/**
@@ -5056,12 +5002,7 @@ public class AssignmentsPage {
 		driver.waitForPageToBeReady();
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		SelectCodingform(codingForm);
 		bc.waitForElement(getParentAssignmentGroupName());
 		String value = getParentAssignmentGroupName().GetAttribute("value");
 		System.out.println(value);
@@ -5340,12 +5281,7 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			if (getAssignmentCodingFormDropDown().isElementAvailable(10)) {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} else {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 			driver.scrollPageToTop();
 			bc.waitForElement(getAssignmentSaveButton());
 			getAssignmentSaveButton().Click();
@@ -5543,9 +5479,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().isDisplayed();
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		bc.waitForElement(getAssignmentCodingFormDropDown());
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		// getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+		SelectCodingform(codingForm);
 		driver.scrollingToBottomofAPage();
 		bc.waitForElement(getAssgn_SaveWithoutCompleteingToggle());
 		bc.waitTillElemetToBeClickable(getAssgn_SaveWithoutCompleteingToggle());
@@ -6907,8 +6841,7 @@ public class AssignmentsPage {
 			assertion.assertTrue(getAssignmentName().GetAttribute("value").contains("Copy"));
 			assertion.assertTrue(getAssignmentName().GetAttribute("value").contains("updated " + assignmentName));
 			bc.passedStep("Assignment name is reflected as expected");
-			assertion.assertTrue(getAssignmentCodingFormDropDown().selectFromDropdown().getFirstSelectedOption()
-					.getText().equalsIgnoreCase(codingfrom));
+			assertion.assertTrue(getAssignmentCodingFormName().getText().equalsIgnoreCase(codingfrom));
 			bc.passedStep("coding form is reflected as expected");
 			assertion.assertTrue(getSelectedClassification().selectFromDropdown().getFirstSelectedOption().getText()
 					.equalsIgnoreCase("1LR"));
@@ -7359,12 +7292,7 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -7976,12 +7904,7 @@ public class AssignmentsPage {
 			getAssignmentName().SendKeys(assignmentName);
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 			driver.scrollingToBottomofAPage();
 
@@ -8878,8 +8801,7 @@ public class AssignmentsPage {
 			getParentAssignmentGroupName().isDisplayed();
 			bc.waitForElement(getSelectedClassification());
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			SelectCodingform(codingForm);
 			bc.waitForElement(getAssignmentSaveButton());
 			bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
 			getAssignmentSaveButton().waitAndClick(5);
@@ -8972,8 +8894,7 @@ public class AssignmentsPage {
 			getParentAssignmentGroupName().Displayed();
 			bc.waitForElement(getSelectedClassification());
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			bc.waitForElement(getAssignmentCodingFormDropDown());
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+			SelectCodingform(codingForm);
 			driver.scrollingToBottomofAPage();
 			getAssgn_DownloadNativesToggle().ScrollTo();
 			if (getAssign_DownloadNativesToggleON().isElementAvailable(5) == false) {
@@ -10020,42 +9941,40 @@ public class AssignmentsPage {
 	 * 
 	 */
 	public void SelectCodingform(String CFName) {
+		
 		getSelectSortCodingForm_Tab().ScrollTo();
-		getSelectSortCodingForm_Tab().Click();
+		getSelectSortCodingForm_Tab().waitAndClick(5);
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			bc.waitForElement(getSelectCF_CheckBox(CFName));
 			getSelectCF_CheckBox(CFName).ScrollTo();
-			getSelectCF_CheckBox(CFName).Click();
+			getSelectCF_CheckBox(CFName).waitAndClick(5);
 			bc.waitTime(1);
-			getSelectCodeFormRadioBtn(CFName).Click();
+			getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			bc.waitTime(1);
 			sortOrderNxtBtn().ScrollTo();
-			sortOrderNxtBtn().Click();
+			sortOrderNxtBtn().waitAndClick(5);
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
-				sortCodeFormOrderSaveBtn().Click();
+				sortCodeFormOrderSaveBtn().waitAndClick(5);
 				bc.waitTime(2);
+				bc.waitForElement(getSelectedCodeForminAssignPAge());
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
-					String expectedCFDisplay = CFName + " (Set as Default)";
-					SoftAssert assertion = new SoftAssert();
-					assertion.assertEquals(expectedCFDisplay, acualCfName);
-					assertion.assertAll();
-					bc.passedStep("Selected a coding form " + CFName
-							+ " and its reflected in manage assignments page");
-				} else {
-					bc.failedStep("Selected  coding form " + CFName
-							+ "  is not reflected in manage assignments page");
-				}
 
+				String passMSg=	"Selected a coding form " + CFName
+							+ " and its reflected in manage assignments page";		
+				String failMsg=	"Selected  coding form " + CFName
+							+ "  is not reflected in manage assignments page";
+				bc.compareTextViaContains(acualCfName, CFName,  passMSg, failMsg);
+				
 			} else {
 				bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
 			}
 		} else {
 			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-	}
+	}}
 	
 	/**
 	 * @author Indium-Baskar date: 30/6/2022 Modified date:30/6/2022 Modified
@@ -10146,7 +10065,94 @@ public class AssignmentsPage {
 
 	}
 	
+	/**
+	 * @Author Mohan Created on 04/07/2022
+	 * @Description To enable the Analytics panel Toggle present in AssignPage
+	 */
+	public void toggleDisableForAnalyticsPanelMiniDoclistReviewerToApplyRedation() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		String analyticalPanelFlag = getAssgn_AnalyticsPanelToggle().GetAttribute("class");
+		System.out.println(analyticalPanelFlag);
+		String miniDocListFlag = getMiniDocListToggleButton().GetAttribute("class");
+		System.out.println(miniDocListFlag);
+		
+		String applyRedactionFlag = getAssgn_ApplyRedactionToggle().GetAttribute("class");
+		System.out.println(applyRedactionFlag);
+		if (analyticalPanelFlag.contains("true")&&miniDocListFlag.contains("true")&&applyRedactionFlag.contains("true")) {
+			bc.waitForElement(getAssgn_AnalyticsPanelToggle());
+			getAssgn_AnalyticsPanelToggle().Click();
+			
+			bc.waitForElement(getMiniDocListToggleButton());
+			getMiniDocListToggleButton().Click();
+			
+			bc.waitForElement(getMiniDocListToggleButton());
+			getMiniDocListToggleButton().Click();
+		}
+		driver.scrollPageToTop();
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+	}
 	
 	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Assignmnets with toggle off condition is present in Assignmnets page.
+	 * @param assignmentName
+	 */
+	public void verifyAssignmentsPageWithOnlyAssignments(String assignmentName) {
+
+		bc.waitForElement(getNumberOfAssignmentsToBeShown());
+		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getAssgn_Pagination());
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+			if (status == true) {
+				bc.stepInfo("The Assignment mentioned in Pre-requisite is display with the changes in properties in source template project and the Mini DocList,Analytics Panel and Allow reviewers to apply redactions toggles are OFF successfully");
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				bc.waitForElement(getAssgnPaginationNextButton());
+				getAssgnPaginationNextButton().Click();
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+		}
+		
+		
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param username
+	 * @param assignmentName
+	 * @throws InterruptedException
+	 */
+	public String assignMentCreationDeletionBasedOnUser(Boolean createAssign, String username, String assignmentName,
+			Boolean deleteAssignment, String expectedUserRole, Boolean additional, String additional1)
+			throws InterruptedException {
+		String ActualCount = null;
+		if (createAssign) {
+			if (username.equals(expectedUserRole)) {
+				FinalizeAssignmentAfterBulkAssign();
+				createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+				getAssignmentSaveButton().waitAndClick(10);
+				bc.selectproject();
+				bc.stepInfo("Created a assignment by assigning saved search documents from search term report page -"
+						+ assignmentName);
+				ActualCount = verifydocsCountInAssgnPage(assignmentName);
+			}
+		}
+
+		if (deleteAssignment) {
+			if (username.equals(expectedUserRole)) {
+				deleteAssgnmntUsingPagination(assignmentName);
+			}
+		}
+		return ActualCount;
+	}
 
 }

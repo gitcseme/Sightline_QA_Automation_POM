@@ -965,6 +965,9 @@ public class CodingForm {
 	public Element getAddCodingFormCheckToSG(String fieldValue) {
 		return driver.FindElementByXPath(".//*[@id='CodingFormDataTable']//td[text()='" + fieldValue + "']//..//td//i");
 	}
+	public Element getSetCodingFormToSG() {
+		return driver.FindElementByXPath("//button[@id='btnSetSGCodingForms']");
+	}
 
 	public Element getTagType2() {
 		return driver.FindElementByXPath(".//*[@id='c-1']//select[@id='1']");
@@ -3000,15 +3003,38 @@ public class CodingForm {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getManageCodingFormButton());
-		base.waitForElement(getCodingForm_Search());
-		getCodingForm_Search().SendKeys(cfName);
-		base.waitForElement(getAddCodingFormCheckToSG(cfName));
-		getAddCodingFormCheckToSG(cfName).waitAndClick(15);
-		if (getCodingForm_SGValidation_ButtonYes().isElementAvailable(1)) {
-			base.waitForElement(getCodingForm_SGValidation_ButtonYes());
-			getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
+		base.waitForElement(getSetCodingFormToSG());
+		getSetCodingFormToSG().waitAndClick(15);
+		if (assgnpage.SelectCFPopUp_Step1().isElementAvailable(2)) {
+			base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
+			assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
+			assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
+			base.waitTime(1);
+			assgnpage.getSelectCodeFormRadioBtn(cfName).waitAndClick(5);
+			base.waitTime(2);
+			assgnpage.sortOrderNxtBtn().ScrollTo();
+			assgnpage.sortOrderNxtBtn().waitAndClick(5);
+			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(cfName));
+			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
+				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
+				base.waitTime(2);
+				base.waitForElement(assgnpage.getSelectedCodeForminAssignPAge());
+				if (assgnpage.getSelectedCodeForminAssignPAge().isDisplayed()) {
+					String acualCfName = assgnpage.getSelectedCodeForminAssignPAge().getText();
+				String passMSg=	"Selected a coding form " + cfName
+							+ " and its reflected in manage assignments page";		
+				String failMsg=	"Selected  coding form " + cfName
+							+ "  is not reflected in manage assignments page";
+				base.compareTextViaContains(acualCfName, cfName,  passMSg, failMsg);
+				
+			} else {
+				base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+			}
 		} else {
+			base.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
+	}
 
 	}
 

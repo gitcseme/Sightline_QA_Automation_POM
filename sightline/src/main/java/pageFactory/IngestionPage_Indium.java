@@ -1022,6 +1022,10 @@ public class IngestionPage_Indium {
 	public Element getActionCopy() {
 		return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Copy ']");
 	}
+	
+	public Element getActionDelete() {
+		return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']//a[text()='Delete']");
+	}
 
 	public Element backButton() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
@@ -1060,6 +1064,10 @@ public class IngestionPage_Indium {
 	
 	public Element getAnalyticsStatus(int analyticRow,int dataColumn) {
 		return driver.FindElementByXPath("//table[@id='ProjectFieldsDataTable']//tbody//tr["+ analyticRow +"]//td["+ dataColumn +"]");
+	}
+	
+	public Element getMappingFieldBackButton() {
+		return driver.FindElementById("BackButton");
 	}
 
 	// Added by Gopinath - 28/02/2022
@@ -11277,5 +11285,179 @@ public class IngestionPage_Indium {
 			return ingestionName;
 		}
 		
+		/**
+		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the value of metadata
+		 */
+
+		public void addMetadatAndVerifyValue(String metadata ,String value) {
+			DocListPage docList = new DocListPage(driver);
+			docList.selectingSingleValueInCoumnAndRemovingExistingOne(metadata);
+			for(int i=1;i<=5;i++) {
+				String Language = docList.getDataInDoclist(i,4).getText();
+				System.out.println(Language);
+				if(docList.getDataInDoclist(i,4).Displayed() && Language.equalsIgnoreCase(value)) {
+					base.passedStep("value for metdata 'DocPrimaryLanguage' displayed");
+					break;
+				}
+				else {
+					System.out.println("value for metdata 'DocPrimaryLanguage' not displayed");
+				}
+		   }
+			
+		}
 		
+		/**
+		 * @author: Arun Created Date: 05/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify options available under source system dropdown
+		 */
+
+		public void verifyOptionAvailableInSourceSystem() {
+			base.stepInfo("Click on add new ingestion button");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddanewIngestionButton().Visible();
+				}
+			}), Input.wait30);
+			getAddanewIngestionButton().waitAndClick(10);
+			if(getSpecifySourceSystem().isElementAvailable(15)) {
+			 List<WebElement> availableOptions =getSpecifySourceSystem().selectFromDropdown().getOptions();
+			 int size = availableOptions.size();
+			 System.out.println(size);
+			 for(int i=0;i<size;i++) {
+				String option = availableOptions.get(i).getText();
+				if(option.equalsIgnoreCase(Input.iceSourceSystem)) {
+					base.passedStep("'ICE' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.sourceSystem)) {
+					base.passedStep("'TRUE' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.nuix)) {
+					base.passedStep("'NUIX' option available in the source system");
+				}	
+				else if(option.equalsIgnoreCase(Input.mappedData)) {
+					base.passedStep("'Mapped Data' option available in the source system");
+				}	
+			 }	
+			}
+			else {
+				base.failedStep("Selecting source system option not available");
+			}
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 08/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify options available under action dropdown in popup
+		 */
+
+		public void verifyIngestionDetailPopupAndActionDropDown() {
+			
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestionDetailPopup(1).Visible();
+				}
+			}), Input.wait30);
+			getIngestionDetailPopup(1).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			if(getActionDropdownArrow().isElementAvailable(10) && getRunCopying().isElementAvailable(10)) {
+				base.passedStep("Ingestion details popup displayed");
+			}
+			else {
+				base.failedStep("Ingestion details popup not displayed");
+			}
+			
+			getActionDropdownArrow().waitAndClick(5);
+			if(getActionOpenWizard().Displayed() && getActionCopy().isDisplayed() 
+					&& getActionDelete().isDisplayed()) {
+				base.passedStep("Open in Wizard,Copy and Delete option available in action dropdown");
+			}
+			else {
+				base.failedStep("action dropdown options not available in popup");
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(10);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 08/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will delete the ingestion using action dropdown in popup
+		 */
+
+		public void deleteIngestion() {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIngestionDetailPopup(1).Visible();
+				}
+			}), Input.wait30);
+			getIngestionDetailPopup(1).waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getActionDropdownArrow().Visible();
+				}
+			}), Input.wait30);
+			getActionDropdownArrow().waitAndClick(5);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getActionDelete().Visible();
+				}
+			}), Input.wait30);
+
+			getActionDelete().waitAndClick(5);
+			
+			if (getApproveMessageOKButton().isElementAvailable(5)) {
+				getApproveMessageOKButton().waitAndClick(10);
+				base.passedStep("Clicked on OK button to delete ingestion");
+			}
+			
+			base.VerifySuccessMessage("Ingestion deleted successfully.");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCloseButton().Enabled();
+				}
+			}), Input.wait30);
+			getCloseButton().waitAndClick(10);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 08/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of source and mapping section
+		 */
+		
+		public void verifySourceAndMappingSectionStatusAfterClickingBackButton() {
+			base.waitForElement(getMappingFieldBackButton());
+			getMappingFieldBackButton().waitAndClick(5);
+			
+			String sourceSystemStatus = getSpecifySourceSystem().GetAttribute("disabled");
+			System.out.println(sourceSystemStatus);
+			String ingestionTypeStatus = getIngestion_IngestionType().GetAttribute("disabled");
+			System.out.println(ingestionTypeStatus);
+			String type = getIngestion_IngestionType().selectFromDropdown().getFirstSelectedOption().getText();
+			System.out.println(type);
+			
+			if(type.contains(Input.ingestionType) || type.contains(Input.overlayOnly)) {
+				base.passedStep("Source and overwrite setting page enabled with values");
+			}
+			else {
+				base.failedStep("Source and overwrite setting page not enabled with values");
+			}
+			if (getPreviewRun().Enabled()) {
+				base.failedStep("Configure mapping section enabled");
+			} else {
+				base.passedStep("Configure mapping section disabled after clicking back button");
+			}
+			if (sourceSystemStatus == null && ingestionTypeStatus == null) {
+				base.passedStep("Source and overwrite setting page enabled after clicking back button");
+				
+			} else {
+				base.failedStep("Source and overwrite setting page disabled");
+			}
+			
+			
+		}
+
 }

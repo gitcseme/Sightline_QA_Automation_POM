@@ -299,7 +299,10 @@ public class TallyPage {
 	public Element getTallyViewinDocViewBtn() {
 		return driver.FindElementByXPath("//ul[contains(@Class,'dropdown-menu')]//li//a[@id='idViewInDocview']");
 	}
-
+	public Element getTallyViewinDocListBtn() {
+		return driver.FindElementById("idViewDoclist");
+	}
+	
 	public Element getSubTallyBulkReleaseAction() {
 		return driver.FindElementByXPath(
 				"//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
@@ -535,6 +538,9 @@ public class TallyPage {
 	}
 	public Element getHeaderSubtally(int i) {
 		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/thead/tr/th["+i+"]");
+	}
+	public ElementCollection getSelectSourcedOptionsList() {
+		return driver.FindElementsByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]//strong");
 	}
 	public TallyPage(Driver driver) {
 
@@ -1577,7 +1583,7 @@ public class TallyPage {
 			String temp = DocCount_BarData.get(ele);
 			docCount.add(Integer.parseInt(temp));
 		}
-		System.out.println("From hashmap doc count extracted are" + docCount);
+		System.out.println("From hashmap doc count extracted are " + docCount);
 		Integer sum = 0;
 		if (docCount == null || docCount.size() < 1) {
 			System.out.println("List size is zero");
@@ -1587,7 +1593,7 @@ public class TallyPage {
 			}
 		}
 		System.out.println("List sum up" + sum);
-		base.stepInfo("Count of docs reflected in tally by report" + sum.toString());
+		base.stepInfo("Count of docs reflected in tally by report is " + sum.toString());
 		return sum;
 	}
 
@@ -1678,7 +1684,8 @@ public class TallyPage {
 		}	
 		System.out.println(elementNames);
 		Collections.sort(elementNames);
-		
+		base.stepInfo("MetaData displayed in horizontal barchart is : ");
+		base.stepInfo(elementNames.toString());
 		return elementNames.toString();
 	
 	}
@@ -2183,6 +2190,17 @@ public void subTallyToExport() {
 }
 
 /**
+ * @author Jayanthi.Ganesan
+ * This method will navigate from tally page[ tally report] to doc list page 
+ */
+public void tallyToDocList() {
+	base.waitForElement(getTallyViewinDocListBtn());
+	getTallyViewinDocListBtn().Click();
+	driver.waitForPageToBeReady();
+}
+
+
+/**
  * @author Jayanthi.ganesan
  */
 public void SelectSource_MultipleSavedSearch(String saveSearch[]) {
@@ -2249,5 +2267,64 @@ public void subTallyActionsWithOutTallyAllSelection() {
 }
 
 
+/**
+ * @author Jayanthi.Ganesan
+ * @param metaDataTally
+ * @param FilterType
+ * @param ApplyFilterMetaData
+ */
+
+public void applyFilterToTallyBy( String metaDataTally, String FilterType,String ApplyFilterMetaData) {
+
+	driver.waitForPageToBeReady();
+	base.waitForElement(metaDataFilterForTallyBy(metaDataTally));
+	base.waitTillElemetToBeClickable(metaDataFilterForTallyBy(metaDataTally));
+	metaDataFilterForTallyBy(metaDataTally).waitAndClick(10);
+	if (FilterType.equalsIgnoreCase("Include")) {
+		IncludeRadioButtonForTallyBy().waitAndClick(10);
+	} else if (FilterType.equalsIgnoreCase("Exclude")) {
+		ExcludeRadioButtonForTallyBy().waitAndClick(10);
+	}
+	System.out.println(ApplyFilterMetaData + " filter tally by");
+	FilterInputTextBoxTallyBy().SendKeys(ApplyFilterMetaData);
+	FilterInputOptionTallyBy(ApplyFilterMetaData).waitAndClick(10);
+	ApplyFilterTallyBy().waitAndClick(10);
+	base.waitForElement(ActiveFiltersTallyBy(ApplyFilterMetaData));
+	if (ActiveFiltersTallyBy(ApplyFilterMetaData).isElementAvailable(2)) {
+		base.passedStep("Selected Metadata "+FilterType+" : "+ metaDataTally+" : "+ApplyFilterMetaData+" reflected in Active Filter under Tally by option .");
+	} else {
+		base.failedStep("selected metadata "+FilterType+" : "+ metaDataTally+" : "+ApplyFilterMetaData+"is not reflected in active filters under tally  by option.");
+
+	}
+	
+}
+
+/**
+ * @author Jayanthi
+ * @param selectSourceList
+ */
+public void verifySourceList(String userNAme) {
+	driver.waitForPageToBeReady();
+	base.waitForElement(getTally_SelectSource());
+	getTally_SelectSource().Click();
+	if (userNAme.equals(Input.rmu1userName)) {
+		String[] selectSourceList = { "Security Groups", "Searches", "Assignments", "Folders" };
+		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+		base.printListString(listDatas);
+		base.compareArraywithDataList(selectSourceList, listDatas, true,
+				"Expected sources displayed in select source popup For RMU USer",
+				"Expected sources not displayed in select source popup For RMU USer");
+	}
+	if (userNAme.equals(Input.pa1userName)) {
+		String[] selectSourceList = { "Security Groups", "Searches", "Projects", "Folders" };
+		List<String> listDatas = base.getAvailableListofElements(getSelectSourcedOptionsList());
+		base.printListString(listDatas);
+		base.compareArraywithDataList(selectSourceList, listDatas, true,
+				"Expected sources displayed in select source popup For PA USer",
+				"Expected sources not displayed in select source popup For PA USer");
+	}
+	base.waitForElement(getTally_SelectSource());
+	getTally_SelectSource().Click();
+}
 
 }

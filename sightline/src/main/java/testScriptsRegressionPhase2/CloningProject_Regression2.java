@@ -84,7 +84,7 @@ public class CloningProject_Regression2 {
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectName = "DemoCloneProject" + Utility.dynamicNameAppender();
 		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "0");
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
 	
 		data.getNotificationMessage(0, projectName);
 
@@ -173,7 +173,7 @@ public class CloningProject_Regression2 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopied(projectName1, Input.domainName, Input.projectName02, "2");
+		projectPage.selectProjectToBeCopied(projectName1, Input.domainName, Input.projectName, "2");
 		data.getNotificationMessage(0, projectName1);
 
 		UserManagement users = new UserManagement(driver);
