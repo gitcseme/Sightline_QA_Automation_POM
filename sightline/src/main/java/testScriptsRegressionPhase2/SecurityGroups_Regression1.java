@@ -104,6 +104,7 @@ public class SecurityGroups_Regression1 {
 				"Verify that in Domain Dashboard page, on clicking on Project from 'Active Projects' widgets, should take the DAU to Default SG in the project");
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.selectdomain(Input.domainName);
+		driver.waitForPageToBeReady();
 		WebElement mytable = sgpage.daFirstBlock().getWebElement();
 		List<WebElement> rows_table = mytable.findElements(By.tagName("tr"));
 		// To calculate no of rows In table.
