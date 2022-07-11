@@ -205,6 +205,28 @@ public class ManageComments_Regression1 {
 		baseClass.stepInfo("Edit comment pop up is open, and comment is not editable  ");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:07/07/2022 RPMXCON-52507
+	 * @throws InterruptedException
+	 * @Description To verify when RMU creates new comment.
+	 */
+	@Test(description = "RPMXCON-52507", enabled = true, groups = { "regression" })
+	public void verifyRMUCreatesNewComments() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52507");
+		baseClass.stepInfo("To verify when RMU creates new comment.");
+		CommentsPage comments = new CommentsPage(driver);
+		// Login As PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		String commentName = "Doc_Comment"+Utility.dynamicNameAppender();
+		comments.AddComments(commentName);
+		comments.validateCommentNameIsPresentOrNot(commentName);
+		loginPage.logout();
+
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

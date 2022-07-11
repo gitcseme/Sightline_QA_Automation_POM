@@ -101,6 +101,166 @@ public class DocList_Regression1 {
 		
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:05/07/2022 RPMXCON-54567
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that Audio Document Preview functionality is working
+	 *              proper in Saved Search >> DocList screen.
+	 */
+	@Test(description = "RPMXCON-54567", enabled = true, groups = { "regression" })
+	public void verifyPerviewDocAudioFileFunctionalityWorkProper() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54567");
+		baseClass.stepInfo(
+				"Verify that Audio Document Preview functionality is working proper in Saved Search >> DocList screen.");
+
+		sessionSearch = new SessionSearch(driver);
+		savedsearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String searchname = Input.randomText + Utility.dynamicNameAppender();
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching Content documents based on search audio string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		baseClass.stepInfo("Save searched content");
+		sessionSearch.saveSearch(searchname);
+
+		baseClass.stepInfo("Open Doc list from Saved search page");
+		savedsearch.savedSearchToDocList(searchname);
+
+		baseClass.stepInfo("Verify preview Doc list of audio document");
+		docList.DoclistPreviewAudio();
+		baseClass.passedStep("Audio Document Preview functionality are working proper in DocList screen.");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:05/07/2022 RPMXCON-54526
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Validate onpage filter for EmailAllDomains with any special
+	 *              charatcers (,/"/-/_ /) on Communication Explorer Report.
+	 */
+	@Test(description = "RPMXCON-54526", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterEmailAllDomainWithSpicalCharatcers(String username, String password, String role)
+			throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54526");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailAllDomains with any special charatcers (,/\"/-/_ /) on Communication Explorer Report.");
+
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		// Login As PA
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+
+		baseClass.stepInfo(
+				"Select Author name  From Filter and Applying Filter And Verifying The Name in Email All Domain");
+		docList.EmailAllDomainsNameVerificationInDoc();
+
+		baseClass.stepInfo("Select Include and Applying filter In Email All Domain DocList Page");
+		docList.EmailAllDomainsNameIncludeVerificationInDoc();
+		// Clear Applied filter
+		docList.clearAllAppliedFilters();
+		baseClass.stepInfo("Select Exclude and Applying filter In Email All Domain DocList Page");
+		docList.EmailAllDomainsNameInExcludeVerificationInDoc();
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:06/07/2022 RPMXCON-54528
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Validate Doclist sorting.
+	 */
+	@Test(description = "RPMXCON-54528", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyDocExplorerUsingSpecialCharacter(String username, String password, String role)
+			throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54528");
+		baseClass.stepInfo("Validate Doclist sorting.");
+
+		sessionSearch = new SessionSearch(driver);
+		savedsearch = new SavedSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		docexp = new DocExplorerPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		baseClass.stepInfo("Basic meta data search");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+
+		docList.verifyingDescendingOrderSortingInColumn();
+
+		baseClass.stepInfo("removing the column in doclist page");
+		docList.removeColumn();
+
+		baseClass.stepInfo("Adding column in doclist page");
+		docList.addColumn();
+
+		baseClass.stepInfo("Verify Doclist sorting after shuffling the columns");
+		docList.sufflingColumnValueInDocListPage();
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:06/07/2022 RPMXCON-54983
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Doc Explorer: Verify that results should be displayed if
+	 *              filtering columns (metadata) value contain special characters
+	 *              (angular brackets < > and also other special character).
+	 */
+	@Test(description = "RPMXCON-54983", enabled = true, groups = { "regression" })
+	public void verifyResultDisplayFilteringCloumnsSpecialCharaters() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54983");
+		baseClass.stepInfo(
+				"Doc Explorer: Verify that results should be displayed if filtering columns (metadata) value contain special characters (angular brackets < > and also other special character).");
+		sessionSearch = new SessionSearch(driver);
+		savedsearch = new SavedSearch(driver);
+		docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		// EmailAuthorNameInclude
+		baseClass.stepInfo("Select Include and Applying filter In Email Author Name DocExplorer Page");
+		docList.EmailAuthorNameVerificationInDocexplorer();
+	
+		baseClass.stepInfo("Select Exclude and Applying filter In Email Author Name DocExplorer Page");
+		docList.EmailAuthorNameInExcludeVerificationInDoc();
+		// Clear Applied filter
+		docList.clearAllAppliedFilters();
+		
+		baseClass.stepInfo("Select Include and Applying filter In EmailRecipientsName DocExplorer Page");
+		docList.EmailRecipientsNameVerificationInDocexplorer();
+		
+		baseClass.stepInfo("Select Exclude and Applying filter In EmailRecipientsName DocExplorer Page");
+		docList.EmailRecipientsNameVerificationInDocexplorerExlude();
+		
+		loginPage.logout();
+	}
+
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

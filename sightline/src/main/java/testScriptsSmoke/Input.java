@@ -366,6 +366,12 @@ public class Input {
 	public static String is;
 	public static String range;
 	public static String DocDateDateOnly;
+	public static String nuix;
+	public static String mappedData;
+	public static String docPrimaryLanguage;
+	public static String english;
+	public static String yearRange1;
+	public static String yearRange2;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -405,6 +411,9 @@ public class Input {
 	public static String bulkSearchSting1;
 	public static String validBatchFile;
 	public static String masterDateBatchFile;
+	public static String totalDirSubClusterText;
+	public static String analyzeAt2;
+	public static String analyzeAt3;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -795,6 +804,14 @@ public class Input {
 	public static String docAudioId1;
 	public static String docAudioId2;
 	
+	// Added by Raghuram
+	public static String preBuilt;
+	public static String preBuiltHelpText;
+	public static String DEPIPTheft;
+	public static String Discrimination;
+	public static String FCPA;
+	public static String Harassment;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1146,6 +1163,12 @@ public class Input {
 		is = testData.getIs();
 		range = testData.getRange();
 		DocDateDateOnly = testData.getDocDateDateOnly();
+		nuix = testData.getNuix();
+		mappedData = testData.getMappedData();
+		docPrimaryLanguage = testData.getDocPrimaryLanguage();
+		english = testData.getEnglish();
+		yearRange1 = testData.getYearRange1();
+		yearRange2 = testData.getYearRange2();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
@@ -1185,7 +1208,10 @@ public class Input {
 		bulkSearchSting1 = testData.getBulkSearchSting1();
 		validBatchFile = testData.getValidBatchFile();
 		masterDateBatchFile = testData.getMasterDateBatchFile();
-
+		totalDirSubClusterText = testData.getTotalDirSubClusterText();
+		analyzeAt2 = testData.getAnalyzeAt2();
+		analyzeAt3 = testData.getAnalyzeAt3();
+		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
@@ -1597,6 +1623,14 @@ public class Input {
 		 //Added by Iyappan
 		 docAudioId1=testData.getDocAudioId1();
 		 docAudioId2=testData.getDocAudioId2();
+		 
+			// Added By Raghuram
+			preBuilt = testData.getPreBuilt();
+			preBuiltHelpText = testData.getPreBuiltHelpText();
+			DEPIPTheft = testData.getDEPIPTheft();
+			Discrimination = testData.getDiscrimination();
+			FCPA = testData.getFCPA();
+			Harassment = testData.getHarassment();
 		 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

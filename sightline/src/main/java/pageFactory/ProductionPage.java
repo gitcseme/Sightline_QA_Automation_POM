@@ -391,7 +391,7 @@ public class ProductionPage {
 	}
 
 	public Element getProdExportSet() {
-		return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a new production/export set')]");
+		return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a New Production/Export Set')]");
 	}
 
 	public Element getProductionLink() {
@@ -892,7 +892,67 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element getSelect_Can_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Can']");
+	}
 	
+	public Element getSelect_Bomb_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Bomb']");
+	}
+	
+		public Element docIdentifiedByProtectionGuard() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents Identified by Production Guard')]/following-sibling::label");
+	}
+	
+	public Element documentMissingCount() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents with Missing')]/following-sibling::label");
+	}
+	
+	public Element exceptionDocCount() {
+		return driver.FindElementByXPath("//label[contains(text(),'Exception Documents')]/following-sibling::label");
+	}
+	
+	public Element loadFilePath() {
+		return driver.FindElementById("ProductionOutputLocation_DriveText");
+	}
+
+	public Element slipSheetsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Slip Sheets')]");
+	}
+	public Element redactionsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Redactions')]");
+	}
+	public Element placeHolderText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Placeholders')]");
+	}
+	
+	public Element brandingText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Branding')]");
+	}
+	
+	public Element pageOptionsText() {
+		return driver.FindElementByXPath("//div[@id='TIFFContainer']//strong[contains(text(),'Page Options')]");
+	}
+	
+	public Element nativeTextInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//p[contains(text(),'Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section)]");
+	}
+	
+	public Element radioButtonInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Do not produce natives of the entire family of privileged and redacted docs')]");
+	}
+	
+	public Element radioBtnInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Do not produce natives of the parents of privileged and redacted docs')]");
+	}
+	
+	public Element RedactedMsgInNative() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Families of Redacted and Privileged Documents')]");
+	}
+	
+	public Element warningMsgMP3() {
+		return driver.FindElementByXPath("//div[@id='divbigBoxes']//p");
+	}
 	public Element defaultNewLineSeperator() {
 		return driver.FindElementByXPath("//select[@id='lstNewLineSeparator']//option");
 	}
@@ -3030,6 +3090,28 @@ public class ProductionPage {
 		return driver
 				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor']//p");
 	}
+	
+	public Element getSortingRadioBtn() {
+		return driver
+				.FindElementByXPath("//input[@id='rdbSortByTag']/..//i");
+	}
+	public Element selectTagInSortingPage(String Tag) {
+		return driver
+				.FindElementByXPath("//div[@id='tagsTree']/ul/li/ul/li//a[text()='"+Tag+"']");
+	}
+	public Element getAddToSelectedBtn() {
+		return driver
+				.FindElementById("addFormObjects");
+	}
+		
+	public Element getNativeTags() {
+		return driver
+				.FindElementByXPath("//span[@id='NativeTagsLabel']");
+	}
+	public Element getNativeFileTypeCheckBox(String Value) {
+		return driver
+				.FindElementByXPath("//input[contains(@value,'"+Value+"')]");
+	}	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20513,12 +20595,123 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 		
 	}
 
-
-	softAssertion.assertTrue(actualText.contains(expectedText));
-	base.passedStep("Documents Generated successfully");
+/**
+ * @author Brundha.T
+ * @param ProdName
+ * @param TagName
+ * @description: verifying component tab in drafted production
+ */
+public void verifyingDraftedProductionInComponentTab(String ProdName,String TagName) {
+	getProductionNameLink(ProdName).waitAndClick(5);
+	gettext("Back").Click();
+	getMarkInCompleteBtn().Click();
+	selectPrivDocsInTiffSection(TagName);
+	driver.scrollPageToTop();
+	getMarkCompleteLink().waitAndClick(10);
+	base.CloseSuccessMsgpopup();
+	getCheckBoxCheckedVerification(chkIsDATSelected());
+	getCheckBoxCheckedVerification(chkIsTIFFSelected());
+	getTIFFTab().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	String PlaceholderText=getPriveldge_TextArea().getText();
+	System.out.println(PlaceholderText);
+	base.textCompareEquals(PlaceholderText, Input.tagNameTechnical, "All the values entered retained on markcomplete", "Entered values not retained");
+	
 }
+/**
+ * @author Brundha.T
+ * @description : Method to fill native section with tags.
+ * @param Tag 
+ */
+public void fillingNativeSectionWithTag(String Tag,String Tag1,boolean value) {
+		
+		if(value) {
+			base.waitForElement(getNativeTab());
+			getNativeTab().Click();
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			base.waitForElement(getNativeCheckBox(Tag));
+			getNativeCheckBox(Tag).Click();
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+		}else {
+			getNativeTab().waitAndClick(10);
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			base.waitForElement(getNativeCheckBox(Tag));
+			getNativeCheckBox(Tag).Click();
+			base.waitForElement(getNativeCheckBox(Tag1));
+			getNativeCheckBox(Tag1).Click();
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+			base.stepInfo("Native section is filled");
+		}
+	
+}
+/**
+ * @author Brundha.T
+ * @param FileType
+ * Description:verifying the native filetype checked
+ */
+public void verifyingNativeSectionFileType(String FileType) {
+	String value = getNativeFileTypeCheckBox(FileType).GetAttribute("checked");
+	boolean bool = Boolean.parseBoolean(value);
+	System.out.println(bool);
+	if(bool==true) {
+		base.passedStep(FileType+"is checked as expected");
+	}else {
+		base.failedStep(FileType+"is not checked");
+	}
+	
+}
+/**
+ * @author Brundha.T
+ * @param tagname
+ * @param BrandingPlaceholder
+ * @param PrivPlaceholder
+ * Description: filling tiff section with branding
+ * 
+ */
+public void fillingTIFFSectionWithBranding(String tagname, String BrandingPlaceholder,String PrivPlaceholder) {
 
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
+	driver.scrollPageToTop();
+	base.waitForElement(getTIFF_CenterHeaderBranding());
+	getTIFF_CenterHeaderBranding().Click();
+	new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+	getTIFF_EnterBranding().SendKeys(BrandingPlaceholder);
+	getTIFF_EnableforPrivilegedDocs().ScrollTo();
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	base.waitForElement(getPriveldge_SelectTagButton());
+	getPriveldge_SelectTagButton().Click();
+	driver.waitForPageToBeReady();
+	driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+	getPriveldge_TagTree(tagname).waitAndClick(10);
+	getPriveldge_TagTree_SelectButton().waitAndClick(10);
+	new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+	getPriveldge_TextArea().SendKeys(PrivPlaceholder);
 
+}
+/**
+ * @author Brundha.T
+ * @param Tag
+ * Description: selecting document in sorting tab
+ */
+public void selectingTaginSortingPage(String Tag) {
+	driver.waitForPageToBeReady();
+	driver.scrollingToBottomofAPage();
+	getSortingRadioBtn().waitAndClick(5);
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(selectTagInSortingPage(Tag));
+	selectTagInSortingPage(Tag).waitAndClick(10);
+	getAddToSelectedBtn().Click();
+	
+	
+}
 
 }
 

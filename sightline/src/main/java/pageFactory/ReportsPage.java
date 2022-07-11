@@ -297,6 +297,11 @@ public class ReportsPage {
 		return driver.FindElementByXPath("//a[contains(@class,'accordion-toggle')]//strong[text()='" + option + "']");
 	}
 
+	// Added by Raghuram
+	public Element navigateToReports() {
+		return driver.FindElementByXPath("//a[@name='Reports']//i");
+	}
+
 	public ReportsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1185,6 +1190,24 @@ public class ReportsPage {
 			base.stepInfo("Timeline Report generated sucessfull");
 		} else {
 			base.failedStep("Timeline Report generated sucessfull");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/05/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @description : Navigation to Reports Page
+	 */
+	public void navigateToReportsPage(String componentName) {
+		driver.scrollPageToTop();
+		navigateToReports().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.verifyPageNavigation("Report/ReportsLanding");
+		if (!componentName.equalsIgnoreCase("")) {
+			getThisLink(componentName).waitAndClick(10);
+			base.verifyPageNavigation("DataAnalysisReport/ConceptExplorer");
 		}
 	}
 

@@ -123,7 +123,21 @@ public class DataSets {
 		public Element loadMoreOption() {
 			return driver.FindElementByXPath("//button[@id='btnLoadDataset']");
 		}
-				
+		
+	//added by sowndariya
+		
+		public Element allSourcesDataset() {
+			return driver.FindElementByXPath("//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]");
+		}
+		
+		public Element allSourcesDatasetDropdown() {
+			return driver.FindElementByXPath("//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]//..//..//..//button[@id='idAction']");
+		}
+		
+		public Element allSourcesDataset_viewInDoclist() {
+			return driver.FindElementByXPath("//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]//..//..//..//button[@id='idAction']//..//li//a[contains(text(),'DocList')]");
+		}
+						
 	public DataSets(Driver driver) {
 
 		this.driver = driver;
@@ -571,7 +585,7 @@ public class DataSets {
 			public Boolean call() {
 				return base.initialBgCount() == bgCountBefore + 1;
 			}
-		}), 240000);
+		}),  Input.wait120);
 		final int bgCountAfter = base.initialBgCount();
 
 		if (bgCountAfter > bgCountBefore) {

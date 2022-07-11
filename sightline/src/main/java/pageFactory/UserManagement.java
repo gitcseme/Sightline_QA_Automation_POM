@@ -709,6 +709,11 @@ public class UserManagement {
 	public ElementCollection getAssgnPaginationCount() {
 		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
 	}
+	
+	//Added by Aathith
+	public Element getUserRole(String role) {
+		return driver.FindElementByXPath("//select[@id='ddlAdminCreateUserRoles']/option[text()='"+role+"']");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -898,6 +903,7 @@ public class UserManagement {
 	}
 
 	// 00AutoRev510105322
+	//modified delete button xpath on 07-07-2022 by Aathith
 	public void deleteUser(String firstName) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -921,8 +927,7 @@ public class UserManagement {
 			// System.out.println(driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+i+"]/td[1]").getText());
 			if (driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[" + i + "]/td[1]").getText()
 					.equals(firstName)) {
-				driver.FindElementByXPath("//table[@id='dtUserList']//tr[" + i + "]/td[8]/a[contains(text(),'Delete')]")
-						.Click();
+				driver.FindElementByXPath("//table[@id='dtUserList']//tr[" + i + "]/td[9]/a[contains(text(),'Delete')]").waitAndClick(10);
 				break;
 			}
 		}
@@ -1399,7 +1404,7 @@ public class UserManagement {
 			getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
 
 		}
-		getSave().Click();
+		getSave().waitAndClick(10);
 		bc.VerifySuccessMessage("User profile was successfully created");
 
 	}
@@ -2441,7 +2446,6 @@ public class UserManagement {
 		getAssignUserButton().waitAndClick(5);
 		bc.waitForElement(getProjectTab());
 		getProjectTab().waitAndClick(5);
-		driver.Manage().window().fullscreen();
 		bc.waitForElement(getAssignUserProjectDrp_Dwn());
 		getAssignUserProjectDrp_Dwn().waitAndClick(5);
 		bc.waitForElement(getSelectDropProject(selectProject));
@@ -2568,5 +2572,20 @@ public class UserManagement {
 		}
 		getSave().waitAndClick(10);
 		bc.stepInfo("add new user details was filed and clicked save button");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param role
+	 * @Description filter the users with role.
+	 */
+	public void filterTheRole(String role) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("applied fileter the for role : "+role);
 	}
 }

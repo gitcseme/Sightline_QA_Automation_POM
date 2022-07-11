@@ -13,6 +13,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -329,12 +330,47 @@ public class SecurityGroupsPage {
 	}
 
 	// Added by Mohan
+	
+	public Element getAllFolder(String treeName,String fieldTab) {
+		return driver.FindElementByXPath("//div[@id='"+treeName+"']//a[text()='"+fieldTab+"']");
+	}
+	
+	public Element getAllSecurityPageTabsInProjects(String projectFieldValue) {
+		return driver.FindElementByXPath("//a[text()='"+projectFieldValue+"']");
+	}
+	
 	public Element getProjectFieldsAvailableInProjects(String projectFieldValue) {
 		return driver.FindElementByXPath("//div[@id='fieldJSTree']//a[text()='" + projectFieldValue + "']");
 	}
 
 	public Element getProjectFieldsAddToSecurityGroup(String projectFieldValue) {
 		return driver.FindElementByXPath("//div[@id='fieldJSTree_Selected']//a[text()='" + projectFieldValue + "']");
+	}
+	
+//Added by Krishna
+	
+	public Element getSGGrpList(String sgname) {
+		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']//option[text()='" + sgname + "']");
+	}
+	
+	public Element getSGSelectAccessControlTages(String TagName) {
+		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='" + TagName + "']");
+	}
+
+	public Element getFoldersCheckBox(String folder) {
+		return driver.FindElementByXPath("//*[@id='folderJSTree']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+	
+	public Element getSG_Folder_Right() {
+		return driver.FindElementByXPath("//*[@onclick='FolderRightShift();']");
+	}
+
+	public Element getSG_Folder_Left() {
+		return driver.FindElementByXPath("//*[@onclick='FolderLeftShift();']");
+	}
+
+	public Element getSelectedFoldersCheckBox(String folder) {
+		return driver.FindElementByXPath("//*[@id='folderJSTree_Selected']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	public SecurityGroupsPage(Driver driver) {
@@ -1121,7 +1157,7 @@ public class SecurityGroupsPage {
 
 		ElementCollection totFolderCount = getTolSecurityGroupCount();
 		int totFolderSize = totFolderCount.size();
-		if (totFolderSize > 3) {
+		if (totFolderSize > 0) {
 			bc.passedStep(
 					"There are more than 2 security Groups(1-1 in Security Group) is exists in source template project.");
 
@@ -1166,6 +1202,99 @@ public class SecurityGroupsPage {
 
 		} else {
 			bc.failedStep("Released Field is not Available in newly created Project.");
+		}
+	}
+	
+	public void verifyAllFieldsArePresentInSecurityHomePage() {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSecurityGroupList());
+		getSecurityGroupList().selectFromDropdown().selectByVisibleText("Default Security Group");
+		
+		if (getAllFolder("folderJSTree","All Folders").isElementPresent()) {
+			bc.passedStep("Folders Tab is clicked and all folders are present under Folders tab");
+		}else {
+			bc.failedStep("All Foders are nor present under Folders Tab");
+		}
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Keywords"));
+		getAllSecurityPageTabsInProjects("Keywords").waitAndClick(5);
+		if (getAllFolder("keywordJSTree","All Keywords").isElementPresent()) {
+			bc.passedStep("Keyword Tab is clicked and all keywords are present under Keyword tab");
+		}else {
+			bc.failedStep("All Keyword are nor present under Keyword Tab");
+		}
+		
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Tags"));
+		getAllSecurityPageTabsInProjects("Tags").waitAndClick(5);
+		if (getAllFolder("tagsJSTree","All Tags").isElementPresent()) {
+			bc.passedStep("Tags Tab is clicked and all Tags are present under Tags tab");
+		}else {
+			bc.failedStep("All Tags are nor present under Tags Tab");
+		}
+		
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Comments"));
+		getAllSecurityPageTabsInProjects("Comments").waitAndClick(5);
+		if (getAllFolder("commentJSTree","All Comments").isElementPresent()) {
+			bc.passedStep("Comments Tab is clicked and all Comments are present under Comments tab");
+		}else {
+			bc.failedStep("All Comments are nor present under Comments Tab");
+		}
+		
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Annotation Layers"));
+		getAllSecurityPageTabsInProjects("Annotation Layers").waitAndClick(5);
+		if (getAllFolder("annotationJSTree","All AnnotationLayers").isElementPresent()) {
+			bc.passedStep("AnnotationLayers Tab is clicked and all AnnotationLayers are present under AnnotationLayers tab");
+		}else {
+			bc.failedStep("All AnnotationLayers are nor present under AnnotationLayers Tab");
+		}
+		
+		
+		
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Project Fields"));
+		getAllSecurityPageTabsInProjects("Project Fields").waitAndClick(5);
+		
+		if (getAllFolder("fieldJSTree","All Fields").isElementAvailable(5)) {
+			bc.passedStep("Project Fields Tab is clicked and all Project Fields are present under Project Fields tab");
+		}else {
+			bc.failedStep("All Project Fields are nor present under Fields Tab");
+		}
+		
+		bc.waitForElement(getAllSecurityPageTabsInProjects("Redaction Tags"));
+		getAllSecurityPageTabsInProjects("Redaction Tags").waitAndClick(5);
+		
+		if (getAllFolder("redactionJSTree","All Redaction Tags").isElementAvailable(5)) {
+			bc.passedStep("Redaction Tags Tab is clicked and all Redaction Tags are present under Redaction Tags tab");
+		}else {
+			bc.failedStep("All Redaction Tags are nor present under Redaction Tags Tab");
+		}
+		
+		}
+	
+	/**
+	 * @author  date:Modified date:
+	 * @Description: verify selected folder on avalaible field and assign selected fields 
+	 */
+	public void verifySelectFolderisAssignedInSelectedList(String foldername) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFoldersCheckBox(foldername).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(foldername);
+		bc.waitTillElemetToBeClickable(getFoldersCheckBox(foldername));
+		getFoldersCheckBox(foldername).waitAndClick(5);
+		driver.waitForPageToBeReady();
+	    getSG_Folder_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedFoldersCheckBox(foldername));
+		System.out.println(foldername);
+		softassert.assertTrue(getSelectedFoldersCheckBox(foldername).isElementAvailable(5));
+		if (getSelectedFoldersCheckBox(foldername).isElementAvailable(5)) {
+			bc.passedStep(foldername + "is displayed on Rightside list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
 		}
 	}
 }

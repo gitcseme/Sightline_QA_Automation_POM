@@ -427,6 +427,7 @@ public class DomainDashBoard_Regression_01 {
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
 		String[] availableColum = {"PROJECT NAME", "STATUS","TOTAL UTILIZED DISK SIZE (GB)","TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
 		dash.AddOrRemoveColum(colums);
+		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
 			dash.isTitleIsAvailable(availablestatus);
 		}
@@ -436,8 +437,10 @@ public class DomainDashBoard_Regression_01 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("Login as a Sa user :"+Input.sa1userName);
 		base.impersonateSAtoDA(Input.domainName);
+		dash.waitForDomainDashBoardIsReady();
 		
 		dash.AddOrRemoveColum(colums);
+		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
 			dash.isTitleIsAvailable(availablestatus);
 		}
@@ -467,13 +470,17 @@ public class DomainDashBoard_Regression_01 {
 		
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
 		String[] availableColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.waitForDomainDashBoardIsReady();
 		dash.AddOrRemoveColum(colums);
+		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
 			dash.isTitleIsAvailable(availablestatus);
 		}
 		
 		base.switchDomain();
+		dash.waitForDomainDashBoardIsReady();
 		dash.AddOrRemoveColum(colums);
+		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
 			dash.isTitleIsAvailable(availablestatus);
 		}
@@ -513,10 +520,12 @@ public class DomainDashBoard_Regression_01 {
 		
 		//verify for another domain
 		String previousproject = base.switchDomain();
+		dash.waitForDomainDashBoardIsReady();
 		base.isTextAreNotAvailableInWebPage(customColum);
 		
 		//verify for previous domain
 		base.selectproject(previousproject);
+		dash.waitForDomainDashBoardIsReady();
 		dash.isAllColumsAreAvailable(availableColum);
 		
 		//restore default
@@ -734,6 +743,8 @@ public class DomainDashBoard_Regression_01 {
 		dash = new DomainDashboard(driver);
 		
 		String projectName = "AAA"+Utility.dynamicNameAppender();
+		
+		dash.waitForDomainDashBoardIsReady();
 		if(!dash.isInactiveProjectAvailable()) {
 			base.clearBullHornNotification();
 			dash.create_a_project_From_Domain(projectName);
@@ -745,6 +756,7 @@ public class DomainDashBoard_Regression_01 {
 				"DOCS PUBLISHED (#)","DOCS RELEASED (#)","CORPORATE CLIENT","CREATED DATE",
 				"CREATED BY","TOTAL UTILIZED DISK SIZE (GB)"};
 		
+		dash.waitForDomainDashBoardIsReady();
 		for(String column:availableColm) {
 		dash.isTitleIsAvailable(column);
 		}

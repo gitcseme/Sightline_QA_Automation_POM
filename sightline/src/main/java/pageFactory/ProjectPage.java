@@ -842,10 +842,5 @@ public class ProjectPage {
         driver.scrollingToBottomofAPage();
         getButtonSaveProject().Click();
 
-        bc.VerifySuccessMessage(
-                "Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
-
-        
-
-    }
+}
 }
