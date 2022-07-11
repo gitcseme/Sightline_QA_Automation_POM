@@ -10019,7 +10019,7 @@ public class AssignmentsPage {
 	 */
 	public void SelectCodingform(String CFName) {
 		getSelectSortCodingForm_Tab().ScrollTo();
-		getSelectSortCodingForm_Tab().Click();
+		getSelectSortCodingForm_Tab().waitAndClick(10);
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
@@ -10036,7 +10036,7 @@ public class AssignmentsPage {
 				bc.waitTime(2);
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
-					String expectedCFDisplay = CFName + " (Set As Default)";
+					String expectedCFDisplay = CFName + " (Set as Default)";
 					SoftAssert assertion = new SoftAssert();
 					assertion.assertEquals(expectedCFDisplay, acualCfName);
 					assertion.assertAll();

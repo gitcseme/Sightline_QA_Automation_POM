@@ -1978,7 +1978,7 @@ public class SessionSearch {
 				return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
 			}
 		}), Input.wait30);
-		getSavedSearch_MySearchesTab().Click();
+		getSavedSearch_MySearchesTab().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

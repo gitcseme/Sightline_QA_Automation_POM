@@ -773,6 +773,7 @@ public class WorkflowPage {
 	public void familyOptions(boolean flag) {
 		driver.waitForPageToBeReady();
 		if (flag == true) {
+			baseClass.waitForElement(getFirstFamilyOptions());
 			baseClass.waitTillElemetToBeClickable(getFirstFamilyOptions());
 			getFirstFamilyOptions().ScrollTo();
 			boolean flg2 = getFirstFamilyOptions().isDisplayed();

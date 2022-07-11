@@ -1739,12 +1739,33 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 	 * @author Gopinath
 	 * @Description : Method for navigating To DocView From Doc Explorer.
 	 */
-	public void navigateToDocViewFromDocExplorer() {
+	public void navigateToDoclistFromDocExplorer() {
 		try {
-			getDocExp_actionButton().isElementAvailable(15);
+			bc.waitForElement(getDocExp_actionButton());
 			getDocExp_actionButton().waitAndClick(10);
-			getDocExp_actionButton().isElementAvailable(15);
-			getDocListAction().waitAndClick(20);
+			bc.waitTime(2);
+			if (getView().isDisplayed()) {
+				driver.waitForPageToBeReady();
+				Actions act = new Actions(driver.getWebDriver());
+				act.moveToElement(getView().getWebElement()).build().perform();
+			} else {
+				System.out.println("View is not found");
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocListAction().Visible();
+				}
+			}), Input.wait60);
+
+			getDocListAction().waitAndClick(5);
+
+			bc.waitForElement(doclist.getDocListPageHeader());
+			if (doclist.getDocListPageHeader().isElementAvailable(5)) {
+				bc.passedStep("Navigated to doclist, to view docslist");
+			} else {
+				bc.failedStep("unable to Navigated to doclist, to view docslist");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while navigating To DocView From Doc Explorer is failed" + e.getMessage());
@@ -2163,17 +2184,40 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		try {
 			bc.waitForElement(getDocExp_SelectAllDocs());
 			getDocExp_SelectAllDocs().waitAndClick(5);
-			bc.waitForElement(doclist.getPopUpOkBtn());
+			
+			try {
+		//	bc.waitForElement(doclist.getPopUpOkBtn());
 			if (doclist.getPopUpOkBtn().isElementAvailable(5)) {
 				bc.passedStep("popup is appeared with ok and cancel button after select all docs");
-			} else {
-				bc.failedStep("popup is not displayed after click on check box to select all docs");
-			}
 			doclist.getPopUpOkBtn().waitAndClick(10);
+				}
+		 else {
+				bc.stepInfo("popup is not displayed after click on check box to select all docs");
+			}
+			}
+			catch (Exception e)
+			{
+				System.out.println("No pop up displayed");
+			}
+		
 			bc.waitForElement(getDocExp_actionButton());
 			getDocExp_actionButton().waitAndClick(10);
-			bc.waitForElement(getDocListAction());
-			getDocListAction().waitAndClick(20);
+			bc.waitTime(2);
+			if (getView().isDisplayed()) {
+				driver.waitForPageToBeReady();
+				Actions act = new Actions(driver.getWebDriver());
+				act.moveToElement(getView().getWebElement()).build().perform();
+			} else {
+				System.out.println("View is not found");
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocListAction().Visible();
+				}
+			}), Input.wait60);
+
+			getDocListAction().waitAndClick(5);
 
 			bc.waitForElement(doclist.getDocListPageHeader());
 			if (doclist.getDocListPageHeader().isElementAvailable(5)) {
