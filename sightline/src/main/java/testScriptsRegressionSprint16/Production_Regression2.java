@@ -161,7 +161,7 @@ public class Production_Regression2 {
 		baseClass.stepInfo("Create tags and folders");
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		baseClass.stepInfo("perform basic search and bulk folder");
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -400,7 +400,8 @@ public class Production_Regression2 {
 		page.placeHolderText().isElementAvailable(10);
 		page.redactionsText().ScrollTo();
 		page.redactionsText().isElementAvailable(10);
-		page.getAdvancedTabInNative().waitAndClick(10);
+		page.getAdvancedTabInTIFF().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
 		page.slipSheetsText().ScrollTo();
 		page.slipSheetsText().isElementAvailable(10);
 		baseClass.passedStep("Verified TIFF Section with various options");
