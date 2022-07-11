@@ -305,13 +305,112 @@ public class ManageKeywords_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
 		
 		// Keyword cannot be creted
-		softAssert = new SoftAssert();
-		if (keyWord.getManageBtn().isElementAvailable(5)) {
+		if (keyWord.getManageBtn().isDisplayed()) {
 			baseClass.failedStep("KeywordHighlightning Button is present");
 		}else {
 			baseClass.passedStep("Reviewer doesn't have access to create keyword group and keywords.");
 		}
 		loginPage.logout();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:11/07/2022 RPMXCON-52539
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify whether user is able to create keyword group, keyword after changing role to RMU from Reviewer by Project Admin
+	 */
+	@Test(description = "RPMXCON-52539", enabled = true, groups = { "regression" })
+	public void verifyChangeRoleToRMUFromReviewer() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52539");
+		baseClass.stepInfo("To verify whether user is able to create keyword group, keyword after changing role to RMU from Reviewer by Project Admin");
+		KeywordPage keyWord = new KeywordPage(driver);
+		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		//Navigate to Users Page
+		UserManagement userManagement = new UserManagement(driver);
+		userManagement.navigateToUsersPAge();
+		userManagement.editRoleOfAnUser(Input.rev1userName, "Reviewer");
+		
+		loginPage.logout();
+		
+		// Login As RMU from Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rev1userName + "");
+		
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeyword(keywordname, color);
+		keyWord.deleteKeywordByName(keywordname);
+		keyWord.editExistigKeywordAndVerifyThem(keywordname);
+		baseClass.passedStep("User have access to Manage > Keywords page and able to create, modify and delete keywords successfully.");
+		loginPage.logout();
+		
+		//Re assigning the User to its original username
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		//Navigate to Users Page
+		userManagement.navigateToUsersPAge();
+		userManagement.editRoleForRMUANdPAUsers(Input.rev1userName, "Review Manager");
+		baseClass.stepInfo("User had changed the access to original name");
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:11/07/2022 RPMXCON-52536
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify whether user is able to create comment after changing role to Project Admin from RMU by Project Admin
+	 */
+	@Test(description = "RPMXCON-52536", enabled = true, groups = { "regression" })
+	public void verifyChangeRoleToPAFromRMU() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52536");
+		baseClass.stepInfo("To verify whether user is able to create comment after changing role to Project Admin from RMU by Project Admin");
+		KeywordPage keyWord = new KeywordPage(driver);
+		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
+		String color = "Blue";
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		//Navigate to Users Page
+		UserManagement userManagement = new UserManagement(driver);
+		userManagement.navigateToUsersPAge();
+		userManagement.editRoleOfAnUser(Input.rmu1userName, "Review Manager");
+		
+		loginPage.logout();
+		
+		// Login As PA from RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu1userName + "");
+		
+		keyWord.navigateToKeywordPage();
+		keyWord.addKeyword(keywordname, color);
+		keyWord.deleteKeywordByName(keywordname);
+		keyWord.editExistigKeywordAndVerifyThem(keywordname);
+		baseClass.passedStep("User have access to Manage > Keywords page and able to create, modify and delete keywords successfully.");
+		loginPage.logout();
+		
+		//Re assigning the User to its original username
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		//Navigate to Users Page
+		userManagement.navigateToUsersPAge();
+		userManagement.editRoleFromPAToRMU(Input.rmu1userName, "Project Administrator");
+		baseClass.stepInfo("User had changed the access to original name");
+		loginPage.logout();
+		
+		
 	}
 
 	@AfterMethod(alwaysRun = true)

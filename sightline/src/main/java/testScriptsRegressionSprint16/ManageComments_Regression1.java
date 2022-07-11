@@ -227,6 +227,100 @@ public class ManageComments_Regression1 {
 
 		
 	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:11/07/2022 RPMXCON-52532
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify user is not able to access comments after changing role to Reviewer from RMU by Sys Admin
+	 */
+	@Test(description = "RPMXCON-52532", enabled = true, groups = { "regression" })
+	public void verifyChangeRoleToReviewerFromRMUAsSA() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52532");
+		baseClass.stepInfo("To verify user is not able to access comments after changing role to Reviewer from RMU by Sys Admin");
+		// Login As PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		
+		//Navigate to Users Page
+		UserManagement userManagement = new UserManagement(driver);
+		userManagement.editRoleForRMUANdPAUsers(Input.rmu1userName, "Review Manager");
+		
+		loginPage.logout();
+
+		
+		// Login As RMU from Reviewer
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		if (userManagement.getManageBtn().isDisplayed()) {
+			baseClass.failedStep("Manage Button is present");
+		}else {
+			baseClass.passedStep("Reviewer User doesn't have access to Manage > Comments page.");
+		}
+		
+		loginPage.logout();
+		
+		//Re assigning the User to its original username
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		//Navigate to Users Page
+		userManagement.navigateToUsersPAge();
+		userManagement.editRoleOfAnUser(Input.rmu1userName, "Reviewer");
+		baseClass.stepInfo("User had changed the access to original name");
+		loginPage.logout();
+		
+		
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal Created Date:11/07/2022 RPMXCON-52531
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify user is not able to access comments after changing role to Reviewer from Project Admin by Sys Admin
+	 */
+	@Test(description = "RPMXCON-52531", enabled = true, groups = { "regression" })
+	public void verifyChangeRoleToReviewerFromPAAsSA() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52531");
+		baseClass.stepInfo("To verify user is not able to access comments after changing role to Reviewer from Project Admin by Sys Admin");
+		// Login As PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
+		
+		//Navigate to Users Page
+		UserManagement userManagement = new UserManagement(driver);
+		userManagement.editRoleForRMUANdPAUsers(Input.pa1userName, "Project Administrator");
+		
+		loginPage.logout();
+		
+		// Login As RMU from Reviewer
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		if (userManagement.getManageBtn().isDisplayed()) {
+			baseClass.failedStep("Manage Button is present");
+		}else {
+			baseClass.passedStep("Reviewer User doesn't have access to Manage > Comments page.");
+		}
+		loginPage.logout();
+		
+		//Re assigning the User to its original username
+		// Login As PA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as sA with " + Input.sa1userName + "");
+		
+		//Navigate to Users Page
+		userManagement.editRoleForRMUANdPAUsers(Input.pa1userName, "Reviewer");
+		baseClass.stepInfo("User had changed the access to original name");
+		loginPage.logout();
+		
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

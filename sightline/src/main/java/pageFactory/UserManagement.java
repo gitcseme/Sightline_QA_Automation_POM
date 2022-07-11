@@ -698,6 +698,39 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+	public Element getManageBtn() {
+		return driver.FindElementByName("Manage");
+	}
+
+	public Element getConfirmTab() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+
+	public Element getSecurityTab() {
+		return driver.FindElementById("ddlSg");
+	}
+
+	public Element getFunctionalityButton() {
+		return driver.FindElementByXPath("//a[contains(normalize-space(.),'Functionality')]");
+	}
+
+	public Element getSaveButtonInFuctionalitiesTab() {
+		return driver.FindElementByXPath("//button[@id='btnsubmit']");
+	}
+
+	public Element getSelectFuctionalitiesCheckBox(String tabNames) {
+		return driver.FindElementByXPath("//label[contains(normalize-space(.),'" + tabNames + "')]//i");
+	}
+
+	public Element getEditButtonFromUserManagentPage() {
+		return driver.FindElementByXPath("//*[@id='dtUserList']//tr[1]//td//a[text()='Edit']");
+	}
+
+	public Element getUserChangeDropDown() {
+		return driver.FindElementByXPath("//select[@name='Role']");
+	}
+
+	
 	public Element getProjectNameFromUserManagment(String projectName) {
 		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='" + projectName + "']");
 	}
@@ -2587,5 +2620,214 @@ public class UserManagement {
 		getFilerApplyBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("applied fileter the for role : "+role);
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from Reviewer and Reviewer Manager to PA and Reviewer Manager
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleOfAnUser(String username, String role) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		bc.waitForElement(getEditButtonFromUserManagentPage());
+		getEditButtonFromUserManagentPage().waitAndClick(10);
+
+		if (role.contains("Reviewer")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
+
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityButton());
+			getFunctionalityButton().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled and Save button is clicked");
+
+		} else if (role.contains("Review Manager")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			bc.waitForElement(getFunctionalityButton());
+			getFunctionalityButton().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled and Save button is clicked");
+
+		} else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from RMU,PA and Reviewer to reviewer and PA
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleForRMUANdPAUsers(String username, String role) {
+		driver.waitForPageToBeReady();
+		bc.waitTime(20);
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		bc.waitForElement(getEditButtonFromUserManagentPage());
+		getEditButtonFromUserManagentPage().waitAndClick(10);
+
+		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().Click();
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+			
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage").GetAttribute("style");
+			System.out.println(checkBoxStatus);
+
+			if (checkBoxStatus.contains("grey")) {
+
+				bc.passedStep("Manage is unchecked and disable and Save button is clicked");
+				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+				bc.VerifySuccessMessage("User profile was successfully modified");
+			} else {
+				bc.failedStep("Manage is checked and enabled for the user");
+			}
+		}
+			else if (role.contains("Reviewer")) {
+				bc.waitForElement(getUserChangeDropDown());
+				getUserChangeDropDown().Click();
+				getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+				
+				bc.waitForElement(getFunctionalityTab());
+				getFunctionalityTab().waitAndClick(5);
+				
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+				bc.VerifySuccessMessage("User profile was successfully modified");
+				bc.passedStep("Manage is checked and enabled and Save button is clicked");
+			}
+		 else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from PA to reviewer manager and Reviewer
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleFromPAToRMU(String username, String role) {
+		driver.waitForPageToBeReady();
+		bc.waitTime(20);
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		bc.waitForElement(getEditButtonFromUserManagentPage());
+		getEditButtonFromUserManagentPage().waitAndClick(10);
+
+		if (role.contains("Project Administrator")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled for the user");
+
+		} else if (role.contains("Reviewer")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled for the user");
+
+		} else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
 	}
 }
