@@ -372,6 +372,9 @@ public class Input {
 	public static String english;
 	public static String yearRange1;
 	public static String yearRange2;
+	public static String translation;
+	public static String related;
+	public static String mandatoryMappingError;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1169,6 +1172,9 @@ public class Input {
 		english = testData.getEnglish();
 		yearRange1 = testData.getYearRange1();
 		yearRange2 = testData.getYearRange2();
+		translation = testData.getTranslation();
+		related = testData.getRelated();
+		mandatoryMappingError = testData.getMandatoryMappingError();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
