@@ -3526,6 +3526,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@class='fa fa-check-circle-o EditSaveRemark']");
 	}
 
+	public Element getViewAllInDocListBtn() {
+		return driver.FindElementById("btnShowAllInDocList");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;

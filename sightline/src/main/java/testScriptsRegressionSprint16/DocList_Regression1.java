@@ -19,6 +19,8 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -260,6 +262,94 @@ public class DocList_Regression1 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/07/2022 RPMXCON-54979
+	 * @throws Exception
+	 * @Description Doc List: Preview- Verify that on click of the print icon
+	 *              success message should be displayed to inform the user that it
+	 *              is processed in background task.
+	 */
+	@Test(description = "RPMXCON-54979", enabled = true, groups = { "regression" })
+	public void verifyDocListPerviewAndProcessedInBackgroundTask() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54979");
+		baseClass.stepInfo(
+				"Doc List: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task.");
+		sessionSearch = new SessionSearch(driver);
+		savedsearch = new SavedSearch(driver);
+		docexp = new DocExplorerPage(driver);
+		DocListPage docList = new DocListPage(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(" Search meta data DocFile Type");
+		sessionSearch.basicSearchWithMetaDataQuery(".tiff", "DocFileType");
+		sessionSearch.ViewInDocView();
+		
+		//Apply Redaction
+		baseClass.stepInfo("Go to DocView And Add Redaction");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(2));
+		docView.getDocView_MiniDoc_Selectdoc(2).waitAndClick(5);
+        driver.waitForPageToBeReady();
+        docViewRedactions.redactRectangleUsingOffset(20,20,30,30);
+        driver.waitForPageToBeReady();
+        docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+        
+        baseClass.stepInfo("Go to DocList Page");
+        driver.waitForPageToBeReady();
+        baseClass.waitForElement(docView.getViewAllInDocListBtn());
+        docView.getViewAllInDocListBtn().waitAndClick(5);
+        baseClass.stepInfo("Successfully navigate to DocList Page");
+        
+        baseClass.stepInfo("Verify preview Doc list of non audio document");
+        docList.DoclistPreviewNonAudio();
+        
+        baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
+        docList.VerifyPerviewDocumentAndPrintAndDownload();
+		
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/07/2022 RPMXCON-54531
+	 * @throws Exception
+	 * @Description Validate onpage filter for EmailAuthorName and EmailAllDomains on DocList page.
+	 */
+	@Test(description = "RPMXCON-54531", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterEamilAuthorNameAndAllDomainsInDocList(String username, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54531");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailAuthorName and EmailAllDomains on DocList page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String emailAuthor="EmailAuthorName";
+		String emailAllDomain="EmailAllDomains";
+		
+		//Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		
+		baseClass.stepInfo("verify DocList EmailAuthorName Include and EmailAllDomain Exclude Filter");
+		docList.emailValueFirstIncludeAndEmailValueSecondExcludeVerifyInDocList(emailAuthor,emailAllDomain);
+		
+		// Clear Applied filter
+		baseClass.stepInfo("Clear the Applied Filters");
+		docList.clearAllAppliedFilters();
+		
+		baseClass.stepInfo("verify DocList EmailAuthorName Exclude  and EmailAllDomain Include Filter");
+		docList.emailValueFirstExcludeAndEmailValueSecondIncludeVerifyInDocList(emailAllDomain,emailAuthor);
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
