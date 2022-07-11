@@ -69,137 +69,7 @@ public class CloningProject_Regression01 {
 
 		}
 		
-		/**
-		 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
-		 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Custom Project Fields are copied from the source template project to the newly created Project.
-		 * @throws AWTException
-		 */
-		@Test(description = "RPMXCON-54795",enabled = true, groups = { "regression" })
-		public void userCreateNewDomainUsingCustomProjectFields() throws AWTException, InterruptedException {
-			
-			baseClass.stepInfo("Test case Id: RPMXCON-54795");
-			baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Custom Project Fields are copied from the source template project to the newly created Project.");
-			String projectName = "CustomProjectsFiledFormCloneProject"+Utility.dynamicNameAppender();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
-			ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
-			projectFieldsPage.navigateToProjectFieldsPage();
-			projectFieldsPage.verifyCustomFieldsInProjectFieldsList();
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
-			ProjectPage projectPage = new ProjectPage(driver);
-			projectPage.navigateToProductionPage();
-			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
-			DataSets data = new DataSets(driver);
-			data.getNotificationMessage(0,projectName);
-			
-			UserManagement users = new UserManagement(driver);
-			users.navigateToUsersPAge();
-			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
-			projectFieldsPage.navigateToProjectFieldsPage();
-			projectFieldsPage.verifyCustomFieldsInProjectFieldsList();
-			loginPage.logout();
-
-
-		}
-		
-		/**
-		 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
-		 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Released Project Fields are copied from the source template project to the newly created Project.
-		 * @throws AWTException
-		 */
-		@Test(description = "RPMXCON-54794",enabled = true, groups = { "regression" })
-		public void userCreateNewDomainUsingUnAssignedProjectFields() throws AWTException, InterruptedException {
-			
-			baseClass.stepInfo("Test case Id: RPMXCON-54794");
-			baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Released Project Fields are copied from the source template project to the newly created Project.");
-			String projectName = "UnAssignedProjectsFiledFormCloneProject"+Utility.dynamicNameAppender();
-			String fieldName = "Done"+Utility.dynamicNameAppender();
-			String fieldsValue = "Not"+Utility.dynamicNameAppender();
-			String fieldType = "INT";
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
-			// Custom Field created with INT DataType
-			
-	        projectPage.addCustomFieldProjectDataType(fieldName, fieldType);
-	        driver.Navigate().refresh();
-	        projectPage.addCustomFieldProjectDataType(fieldsValue, fieldType);
-	 
-	        // Custom Field Assign to SecurityGroup
-	        SecurityGroupsPage securityGroupPage = new SecurityGroupsPage(driver);
-	        securityGroupPage.addProjectFieldtoSG(fieldName);
-	        baseClass.stepInfo("Custom meta data field assign to security group");
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
-			ProjectPage projectPage = new ProjectPage(driver);
-			projectPage.navigateToProductionPage();
-			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
-			DataSets data = new DataSets(driver);
-			data.getNotificationMessage(0,projectName);
-			
-			UserManagement users = new UserManagement(driver);
-			users.navigateToUsersPAge();
-			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
-			securityGroupPage.navigateToSecurityGropusPageURL();
-			securityGroupPage.verifyUnAssignedInSecurityGroup(fieldsValue);
-			securityGroupPage.verifyAssignedInSecurityGroup(fieldName);
-			loginPage.logout();
-
-
-		}
-		
-		/**
-		 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
-		 * @description: Verify that when User creates a new Domain Project Using template project then corresponding Active Project Fields are copied from the source template project to the newly created Project.
-		 * @throws AWTException
-		 */
-		@Test(description = "RPMXCON-54793",enabled = true, groups = { "regression" })
-		public void userCreateNewDomainUsingActiveProjectFields() throws AWTException, InterruptedException {
-			
-			baseClass.stepInfo("Test case Id: RPMXCON-54793");
-			baseClass.stepInfo("Verify that when User creates a new Domain Project Using template project then corresponding Active Project Fields are copied from the source template project to the newly created Project.");
-			String projectName = "ActiveProjectFields"+Utility.dynamicNameAppender();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
-			ProjectFieldsPage projectFieldsPage = new ProjectFieldsPage(driver);
-			projectFieldsPage.navigateToProjectFieldsPage();
-			projectFieldsPage.verifyCustomFieldsInProjectFieldsList();
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-			UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
-			ProjectPage projectPage = new ProjectPage(driver);
-			projectPage.navigateToProductionPage();
-			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
-			DataSets data = new DataSets(driver);
-			data.getNotificationMessage(0,projectName);
-			
-			UserManagement users = new UserManagement(driver);
-			users.navigateToUsersPAge();
-			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-			loginPage.logout();
-			
-			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
-			projectFieldsPage.navigateToProjectFieldsPage();
-			projectFieldsPage.verifyCustomFieldsInProjectFieldsList();
-			loginPage.logout();
-
-
-		}
-		/**
+				/**
 		 * @author Mohan.Venugopal Created on : 01/07/2022 Modified On:NA
 		 * @description: Verify that when User creates a new Domain  Project Using template project then corresponding Active Users are automatically active in the newly created Project.
 		 * @throws AWTException
@@ -214,7 +84,7 @@ public class CloningProject_Regression01 {
 			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 			UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 			projectPage.navigateToProductionPage();
-			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"1");
+			projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"1");
 			DataSets data = new DataSets(driver);
 			data.getNotificationMessage(0,projectName);
 			UserManagement users = new UserManagement(driver);
@@ -278,7 +148,7 @@ public class CloningProject_Regression01 {
 		        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		        UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		        projectPage.navigateToProductionPage();
-		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"0");
 		        DataSets data = new DataSets(driver);
 		        data.getNotificationMessage(0,projectName);
 
@@ -309,7 +179,7 @@ public class CloningProject_Regression01 {
 				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				projectPage.navigateToProductionPage();
-				projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"0");
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0,projectName);
 				
@@ -359,7 +229,7 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
-				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "3");
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "3");
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
@@ -408,7 +278,7 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
-				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "3");
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "3");
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
@@ -449,7 +319,7 @@ public class CloningProject_Regression01 {
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				ProjectPage projectPage = new ProjectPage(driver);
 				projectPage.navigateToProductionPage();
-				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "0");
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 
@@ -486,7 +356,7 @@ public class CloningProject_Regression01 {
 				loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 				UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 				projectPage.navigateToProductionPage();
-				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName02, "1");
+				projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "1");
 				DataSets data = new DataSets(driver);
 				data.getNotificationMessage(0, projectName);
 				UserManagement users = new UserManagement(driver);
