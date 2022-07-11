@@ -3,6 +3,9 @@ package testScriptsRegressionSprint16;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -15,10 +18,12 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.ConceptExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -26,8 +31,10 @@ import testScriptsSmoke.Input;
 public class Tally_Regression2_1 {
 	Driver driver;
 	LoginPage lp;
-	SessionSearch search;
+	SessionSearch sessionsearch;
 	BaseClass bc;
+	SoftAssert softAssertion;
+	TallyPage tp;
 	String hitsCountPA;
 	int hitsCount;
 
@@ -151,6 +158,98 @@ public class Tally_Regression2_1 {
 
 		softAssertion.assertAll();
 	}
+	
+	@Test(description = "RPMXCON-48757", dataProvider = "Users_PARMU", groups = { "regression" })
+	public void verifyTally_WorkProduct(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-48757");
+		bc.stepInfo("To verify that Tally is working correctly with work product");
+
+		lp.loginToSightLine(username, password);
+
+		String tallyType = "folder";
+
+		String folderTallyByName = "folderTally" + Utility.dynamicNameAppender();
+		String tagTallyName = "tagTally" + Utility.dynamicNameAppender();
+		String assignmentTallyName = "AssignTally" + Utility.dynamicNameAppender();
+
+		DocListPage dlPage = new DocListPage(driver);
+		ConceptExplorerPage CEPage = new ConceptExplorerPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+
+		int expDocCount = sessionsearch.basicContentSearch(Input.TallySearch);
+		sessionsearch.bulkFolder(folderTallyByName);
+		bc.stepInfo("Created a folder " + folderTallyByName
+				+ " to use as  tally by option[Work product-tally By-tags] in tally report.");
+
+		tp.navigateTo_Tallypage();
+		tp.verifySourceList(username);
+		tp.SelectSource_SecurityGroup(Input.securityGroup);
+		
+		//source verification
+		tp.verifySourceSelected();
+		tp.applyFilterToTallyBy(Input.metaDataName, "exclude", Input.custodianName_Andrew); // Applying filter 'Include'
+		bc.stepInfo(
+				"**Applying  Tally by field as " + folderTallyByName + " under TallyBy work product/Folder option ");
+		tp.selectTallyBy(tallyType, folderTallyByName);
+		List<String> ListOfMetaData = tp.verifyTallyChart();
+		softAssertion.assertEquals(expDocCount, tp.verifyDocCountBarChart());
+		String actualValue = folderTallyByName.trim().toUpperCase();
+		String expValue = ListOfMetaData.get(0).trim();
+
+		if (actualValue.equalsIgnoreCase(expValue)) {
+			bc.passedStep("Displayed Tally  by value in tally report is " + expValue + " Which is expected.");
+		} else {
+			bc.failedStep("Displayed Tally  by value " + expValue + " which is not expected. ");
+		}
+
+		// bulk tag
+		tp.tallyActions();
+		bc.waitTime(2);
+		bc.stepInfo("**Bulk Tag**");
+		tp.bulkTag(tagTallyName, 1);
+		bc.stepInfo("Bulk Tag Action done successfully from tally page using Work prodcut as Tally by option.");
+
+		// doc list
+		tp.tallyActions();
+		tp.tallyToDocList();
+		bc.verifyPageNavigation("DocList");
+		List<String> docIDs = new ArrayList<String>();
+		docIDs = dlPage.gettingAllDocIDs();
+		int docCountInDocList = docIDs.size();
+
+		// validation of doc count in doc list page and docs selected from tally page.
+		softAssertion.assertEquals(expDocCount, docCountInDocList,
+				"Docs count in doc list not matching with docs selected from tally page");
+		bc.stepInfo("Navigation to doclist done successfully from tally page using Work prodcut as Tally by option.");
+
+		// Bulk assign
+		if (username.equals(Input.rmu1userName)) {
+			// clicking back to source button in doc list page in order
+			// to navigate back to tally page.
+			CEPage.getBackToSourceBtn().Click();
+
+			bc.stepInfo("**Bulk Assign**");
+			tp.tallyActions();
+			tp.bulkAssign(1);
+
+			// assignment creation verification of doc count .
+			agnmt.assignMentCreationDeletionBasedOnUser(true, role, assignmentTallyName, false, "RMU", false, "");
+			bc.stepInfo("Bulk Assign Action done successfully from tally page using Work prodcut as Tally by option.");
+			// deletion of assignment created sucesfullt
+			agnmt.assignMentCreationDeletionBasedOnUser(false, role, assignmentTallyName, true, "RMU", false, "");
+
+		}
+		softAssertion.assertAll();
+
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagPage.deleteAllTags(tagTallyName);
+		tagPage.deleteAllFolders(folderTallyByName);
+
+		lp.logout();
+
+	}
+	
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -159,6 +258,9 @@ public class Tally_Regression2_1 {
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
+		softAssertion = new SoftAssert();
+		tp = new TallyPage(driver);
+		sessionsearch = new SessionSearch(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -178,7 +280,7 @@ public class Tally_Regression2_1 {
 
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
-		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+		Object[][] users = {{ Input.rmu1userName, Input.rmu1password, "RMU" },
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
