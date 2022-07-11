@@ -8,12 +8,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -94,7 +96,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         1 hour
 	 * 
 	 */
-	@Test(description = "RPMXCON-52316", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52316", enabled = true, groups = { "regression" })
 	public void audioRedactionForLessThanHourToEnd() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -162,7 +164,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         leave some audio unredacted
 	 * 
 	 */
-	@Test(description = "RPMXCON-52315", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52315", enabled = true, groups = { "regression" })
 	public void audioRedactionToEnd() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -224,7 +226,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         list
 	 * 
 	 */
-	@Test(description = "RPMXCON-52019", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52019", enabled = true, groups = { "regression" })
 	public void verifyRedactionAfterDeletion() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -343,7 +345,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         the first in the list of redaction tags
 	 * 
 	 */
-	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
 	public void verifyDFRedactionNotExistFirstRedactionShouldSelect() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -434,7 +436,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         allow to select only one redaction tag while editing the redaction
 	 * 
 	 */
-	@Test(description = "RPMXCON-52008", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52008", enabled = true, groups = { "regression" })
 	public void verifyPaUserImpAndEditRedaction() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -515,7 +517,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         allow to select only one redaction tag while editing the redaction
 	 * 
 	 */
-	@Test(description = "RPMXCON-52006", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52006", enabled = true, groups = { "regression" })
 	public void verifyDaUserImpAndEditRedaction() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -981,6 +983,165 @@ public class Docview_Audio_Sprint2Regression {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: 8/07/2022 Modified date: Modified by: Baskar
+	 * Description:Verify RMU/Reviewer can save coding form, save coding stamp 
+	 *              on doc view in an assignment when reviewing the audio file
+	 */
+
+	@Test(description = "RPMXCON-48713", enabled = true, groups = { "regression" })
+	public void verifyAfterImpAudioFile() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-48713");
+		baseClass.stepInfo("Verify RMU/Reviewer can save coding form, save coding stamp "
+				+ "on doc view in an assignment when reviewing the audio file");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stampName = "colour" + Utility.dynamicNameAppender();
+
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		// search to Assignment creation
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreationAsPerCf(assign, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewerManager();
+		
+		// impersonating to Rmu to Rev
+		baseClass.impersonateRMUtoReviewer();
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Edit coding form and save using save button
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.stepInfo("Coding form saved successfully for audio file docs ");
+		
+		// save using stamp colour label
+		docViewPage.stampColourSelection(stampName, Input.stampColour);
+		baseClass.VerifySuccessMessage("Coding Stamp saved successfully");
+		baseClass.stepInfo("Document saved successfully using stamp colour");
+		
+		// validating the floppy icon for tool tips should be displayed
+		baseClass.waitForElement(docViewPage.getCodingStampToolTipIcon(Input.stampColour));
+		if (docViewPage.getCodingStampToolTipIcon(Input.stampColour).Displayed()) {
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(docViewPage.getCodingStampToolTipIcon(Input.stampColour).getWebElement()).build().perform();
+			baseClass.passedStep("While doing mouse over tool tip get displayed");
+		} else {
+			baseClass.failedStep("Tool tip name not displyed");
+			System.out.println("Save this coding form as a new stamp not displayed");
+		}
+		docViewPage.verifySavedStampTooltip(stampName,Input.stampColour);
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: 8/07/2022 Modified date: Modified by: Baskar
+	 * Description:Verify RMU/Reviewer can complete the audio file in an assignment
+	 */
+
+	@Test(description = "RPMXCON-46858", enabled = true, groups = { "regression" })
+	public void verifyAfterImpAudioFileUsingAllOptionInCf() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-46858");
+		baseClass.stepInfo("Verify RMU/Reviewer can complete the audio file in an assignment");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stampName = "colour" + Utility.dynamicNameAppender();
+		int size=5;
+
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		List<String > docId=new LinkedList<String>();
+
+		// search to Assignment creation
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewerManager();
+		
+		// impersonating to Rmu to Rev
+		baseClass.impersonateRMUtoReviewer();
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// Edit coding form and save using save button
+		for (int i = 1; i <=size; i++) {
+			driver.waitForPageToBeReady();
+			docViewPage.getDocView_Select_MiniDocList_Docs(i).waitAndClick(10);
+			String docIdPresent=docViewPage.getVerifyPrincipalDocument().getText();
+			docId.add(docIdPresent);
+		}
+		
+		// saving the coding form using complete button
+		String firstId=docId.get(0);
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(firstId));
+		docViewPage.getDocView_MiniDoc_SelectDOcId(firstId).waitAndClick(5);
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Document completed successfully");
+		
+		// validating cursor navigating next docs from using complete buton
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		String prnComplete=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(firstId, prnComplete);
+		baseClass.stepInfo("Cursor navigated to next document from minidoclist using complete button");
+		
+		// validating using coding stamp button
+		docViewPage.editCodingForm(comment);
+		docViewPage.stampColourSelection(stampName, Input.stampColour);
+		baseClass.stepInfo("Coding Stamp saved successfully");
+		docViewPage.lastAppliedStamp(Input.stampColour);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coding Stamp applied successfully");
+		
+		// verifying cursor navigate to next docs
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		String prnStampLast=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnComplete, prnStampLast);
+		baseClass.stepInfo("Cursor navigated to next document from minidoclist using stamp last button");
+		
+		// validating using code same as last button
+		docViewPage.clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		String prnCodeSameLast=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnCodeSameLast, prnStampLast);
+		baseClass.stepInfo("Cursor navigated to next document from minidoclist using code same as last button");
+
+		// verifying as per preceeding document
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(prnStampLast));
+		docViewPage.getDocView_MiniDoc_SelectDOcId(prnStampLast).waitAndClick(5);
+		docViewPage.verifyingComments(comment);
+		baseClass.passedStep("As per all validation its working successfully");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+
 	
 
 	@AfterMethod(alwaysRun = true)
