@@ -1865,6 +1865,10 @@ public class SessionSearch {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
+	
+	public Element getSelectSgPopup() {
+        return driver.FindElementById("Edit User Group");
+    }
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
