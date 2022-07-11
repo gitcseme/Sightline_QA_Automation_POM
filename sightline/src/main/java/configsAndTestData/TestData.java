@@ -255,6 +255,9 @@ public class TestData {
 	public String english;
 	public String yearRange1;
 	public String yearRange2;
+	public String translation;
+	public String related;
+	public String mandatoryMappingError;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
