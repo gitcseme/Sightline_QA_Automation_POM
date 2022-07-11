@@ -477,7 +477,8 @@ public class DocViewPage {
 	}
 
 	public Element geDocView_MiniList_CodeSameAsIcon() {
-		return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
+		//return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
+		return driver.FindElementByXPath("//*[@id='CodeSameAsLast']");
 	}
 
 	public Element geDocView_FamilyMem_CodeSameAsIcon() {
@@ -917,7 +918,8 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormSaveBtn() {
-		return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//a[@id='Save']");
+		//return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//a[@id='Save']");
+		return driver.FindElementByXPath("//*[@id='Save']");
 	}
 
 	public Element getCodeSameAsLast() {
@@ -5717,8 +5719,8 @@ public class DocViewPage {
 		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		childWindowToParentWindowSwitching(childWindow);
-		driver.getWebDriver().navigate().refresh();
-		driver.switchTo().alert().accept();
+		//driver.getWebDriver().navigate().refresh();
+		//driver.switchTo().alert().accept();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
 		base.waitForElement(getCodingFormSaveBtn());
@@ -5728,6 +5730,7 @@ public class DocViewPage {
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(5);
 		base.CloseSuccessMsgpopup();
+		driver.getWebDriver().navigate().refresh();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Coded as per the coding form for the previous document");
 		base.passedStep("Cursor moved to the next document after getting success message ");
@@ -5772,13 +5775,26 @@ public class DocViewPage {
 	 *                     coding form
 	 */
 	public void userClickCodeSameAsAfterSaving() {
+//		driver.waitForPageToBeReady();
+//		base.waitForElement(getDocument_CommentsTextBox());
+//		getDocument_CommentsTextBox().SendKeys("Verifycodesameaslast");
+//		base.waitForElement(getCodingFormSaveBtn());
+//		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
+//		getCodingFormSaveBtn().waitAndClick(5);
+//		base.VerifySuccessMessage("Document saved successfully");
 		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
 		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys("Verifycodesameaslast");
+		driver.scrollPageToTop();
 		base.waitForElement(getCodingFormSaveBtn());
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.stepInfo("Document saved successfully");
+		
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(5);
@@ -6007,8 +6023,11 @@ public class DocViewPage {
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
-		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);	
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		base.waitForElement(getCodeSameAsLast());
+		base.waitTillElemetToBeClickable(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
 		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
 //		base.waitForElementCollection(getDocumetCountMiniDocList());
 		for (int i = 5; i <= 5; i++) {

@@ -507,8 +507,10 @@ public class AssignmentsPage {
 	}
 
 	public Element getAssgn_CodingStampAplliedToggle() {
+//		return driver.FindElementByXPath(
+//				"//*[@id='AdditionalPreferences_ShouldCompleteOnApplyCodingStamp']/following-sibling::i");
 		return driver.FindElementByXPath(
-				"//*[@id='AdditionalPreferences_ShouldCompleteOnApplyCodingStamp']/following-sibling::i");
+				"//*[@id='grayoutToggle']/following-sibling::i");
 	}
 
 	public Element getAssgn_OverrideOptimizedSortToggle() {
