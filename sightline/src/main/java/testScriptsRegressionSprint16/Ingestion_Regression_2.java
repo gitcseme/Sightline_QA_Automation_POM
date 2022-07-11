@@ -155,6 +155,60 @@ public class Ingestion_Regression_2 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Arunkumar date: 11/07/2022 TestCase Id:RPMXCON-47398
+	 * Description :To verify the mandatory field validations in Ingestion Wizard.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 47398",enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldInWizard() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47398");
+		baseClass.stepInfo("verify the mandatory field validations in Ingestion Wizard");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add ingestion and verify mandatory field warning message");
+		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
+		baseClass.stepInfo("Verify source and mapping section status after filling mandatory field");
+		ingestionPage.navigateToIngestionPage();
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("verify mandatory field error in mapping section");
+		ingestionPage.validateMappingSectionMandatoryFieldWarningMessage();
+		baseClass.stepInfo("Map mandatory field and verify preview record popup displayed");
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.passedStep("Verified the mandatory field validations in Ingestion Wizard");
+		loginPage.logout();
+		
+	}
+	
+
+	/**
+	 * Author :Arunkumar date: 11/07/2022 TestCase Id:RPMXCON-47397
+	 * Description :To verify the Source Selection in Ingestion Wizard Page.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 47397",enabled = true, groups = { "regression" })
+	public void verifySourceSelectionInWizard() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47397");
+		baseClass.stepInfo("verify the Source Selection in Ingestion Wizard Page.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Check the file types availability under source selection");
+		ingestionPage.verifyDifferentFileTypesAvailability();
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, Input.sourceLocation, Input.UniCodeFilesFolder);
+		baseClass.stepInfo("verify dat and remainingfile field options and their availability");
+		ingestionPage.verifyDatAndRemainingFileFieldOptionsAvailability(Input.datLoadFile1);
+		baseClass.stepInfo("verify Other file field availability and link type dropdown values");
+		ingestionPage.verifyOtherFileFieldOptionAndDropdownValueAvailability();
+		loginPage.logout();
+		
+	}
 
 	
 	@AfterMethod(alwaysRun = true)

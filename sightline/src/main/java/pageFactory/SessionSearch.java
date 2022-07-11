@@ -1865,6 +1865,10 @@ public class SessionSearch {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
+	
+	public Element getSelectSgPopup() {
+        return driver.FindElementById("Edit User Group");
+    }
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -2002,7 +2006,7 @@ public class SessionSearch {
 				return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
 			}
 		}), Input.wait30);
-		getSavedSearch_MySearchesTab().Click();
+		getSavedSearch_MySearchesTab().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -3232,7 +3236,14 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
-		getDocViewActionGerman().waitAndClick(10);
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
+			}
+		
 		base.waitTime(3); // added for stabilization
 
 		System.out.println("Navigated to docView to view docs");
@@ -4614,12 +4625,14 @@ public class SessionSearch {
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(10);
 
-		if (getDocViewAction().isElementAvailable(5)) {
-			base.waitForElement(getDocViewAction());
-			getDocViewAction().waitAndClick(10);
-		} else {
-			getDocViewActionDL().Click();
-		}
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
+			}
+		
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");
 	}
@@ -4725,6 +4738,7 @@ public class SessionSearch {
 		}), Input.wait30);
 		getBulkActionButton().waitAndClick(10);
 		Thread.sleep(1000);
+
 
 //		if (getDocViewAction().isElementAvailable(6)) {
 //			getDocViewAction().waitAndClick(10);
@@ -7904,17 +7918,21 @@ public class SessionSearch {
 		Thread.sleep(2000);// required
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000);// // required
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocViewAction().Visible();
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
 			}
-		}), Input.wait30);
-		getDocViewAction().waitAndClick(10);
+		
+		base.waitForElement(getDocViewAction());
+		getDocViewAction().waitAndClick(5);
+	
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
-
 	}
-
+	
 	/**
 	 * @author Jeevitha Description : advanceWorkProduct
 	 */
@@ -8483,8 +8501,14 @@ public class SessionSearch {
 		Thread.sleep(2000);// required
 		getBulkActionButton().waitAndClick(10);
 		Thread.sleep(2000);// // required
-		base.waitForElement(getDocViewAction());
-		getDocViewAction().waitAndClick(10);
+		if(getView().isDisplayed()) {
+			driver.waitForPageToBeReady();
+			Actions act = new Actions(driver.getWebDriver());
+			act.moveToElement(getView().getWebElement()).build().perform();
+			}else {
+			System.out.println("View is not found");
+			}
+		
 
 		/*
 		 * base.waitForElement(getFMHitsCount()); // verify counts for all the tiles
@@ -10318,15 +10342,6 @@ public class SessionSearch {
 		} else {
 			driver.waitForPageToBeReady();
 		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait90);
-
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		System.out.println("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
-		UtilityLog.info("Audio Search is done for DocFileExtension and PureHit is : " + pureHit);
 
 	}
 
@@ -12365,6 +12380,8 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 
+
 	}
-			
 }
+	 
+		

@@ -13,6 +13,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -350,6 +351,26 @@ public class SecurityGroupsPage {
 	
 	public Element getSGGrpList(String sgname) {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']//option[text()='" + sgname + "']");
+	}
+	
+	public Element getSGSelectAccessControlTages(String TagName) {
+		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='" + TagName + "']");
+	}
+
+	public Element getFoldersCheckBox(String folder) {
+		return driver.FindElementByXPath("//*[@id='folderJSTree']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+	
+	public Element getSG_Folder_Right() {
+		return driver.FindElementByXPath("//*[@onclick='FolderRightShift();']");
+	}
+
+	public Element getSG_Folder_Left() {
+		return driver.FindElementByXPath("//*[@onclick='FolderLeftShift();']");
+	}
+
+	public Element getSelectedFoldersCheckBox(String folder) {
+		return driver.FindElementByXPath("//*[@id='folderJSTree_Selected']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	public SecurityGroupsPage(Driver driver) {
@@ -1136,7 +1157,7 @@ public class SecurityGroupsPage {
 
 		ElementCollection totFolderCount = getTolSecurityGroupCount();
 		int totFolderSize = totFolderCount.size();
-		if (totFolderSize > 3) {
+		if (totFolderSize > 0) {
 			bc.passedStep(
 					"There are more than 2 security Groups(1-1 in Security Group) is exists in source template project.");
 
@@ -1248,4 +1269,32 @@ public class SecurityGroupsPage {
 		}
 		
 		}
+	
+	/**
+	 * @author  date:Modified date:
+	 * @Description: verify selected folder on avalaible field and assign selected fields 
+	 */
+	public void verifySelectFolderisAssignedInSelectedList(String foldername) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFoldersCheckBox(foldername).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(foldername);
+		bc.waitTillElemetToBeClickable(getFoldersCheckBox(foldername));
+		getFoldersCheckBox(foldername).waitAndClick(5);
+		driver.waitForPageToBeReady();
+	    getSG_Folder_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedFoldersCheckBox(foldername));
+		System.out.println(foldername);
+		softassert.assertTrue(getSelectedFoldersCheckBox(foldername).isElementAvailable(5));
+		if (getSelectedFoldersCheckBox(foldername).isElementAvailable(5)) {
+			bc.passedStep(foldername + "is displayed on Rightside list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
+		}
+	}
 }

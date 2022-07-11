@@ -115,6 +115,14 @@ public class IngestionPage_Indium {
 	public Element getTIFFFilePathFieldinDAT() {
 		return driver.FindElementById("ddlFilesPathTIFF");
 	}
+	
+	public Element getMp3FilePathFieldinDAT() {
+		return driver.FindElementById("ddlFilesPathMP3Variant");
+	}
+	
+	public Element getTranscriptFilePathFieldinDAT() {
+		return driver.FindElementById("ddlFilesPathTranscript");
+	}
 
 	public Element getOtherLinkType() {
 		return driver.FindElementById("ddlLoadLinkType");
@@ -439,6 +447,10 @@ public class IngestionPage_Indium {
 
 	public Element getTextCheckBox() {
 		return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsTextFolder']/following-sibling::i");
+	}
+	
+	public Element getDatCheckBox() {
+		return driver.FindElementByXPath("//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i");
 	}
 
 	public Element getPDFCheckBoxButton() {
@@ -1258,6 +1270,23 @@ public class IngestionPage_Indium {
 			return driver.FindElementByXPath("//*[@id='Indexingblock']//table//td[contains(text(),'" + term
 					+ "')]/following-sibling::td['" + row + "']");
 		}
+	public Element sourceLocationMandatoryError() {
+		return driver.FindElementById("ddlServerLocation-error");
+	}
+	public Element sourceFolderMandatoryError() {
+		return driver.FindElementById("ddlFolders-error");
+	}
+	public Element dateFormatMandatoryError() {
+		return driver.FindElementById("ddlDateFormat-error");
+	}
+	public Element datKeyMandatryError() {
+		return driver.FindElementById("lblErrorDATKey");
+	}
+	
+	public Element previewRecordPopup() {
+		return driver.FindElementByXPath("//div[@id='popupdiv']");
+	}
+	
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -3818,7 +3847,7 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Gopinath Created Date: 23/02/2022 Modified by: NA Modified Date: NA
+	 * @author: Gopinath Created Date: 23/02/2022 Modified by: Arunkumar Modified Date: 11/07/2022
 	 * @description: Method to click on preview and run button.
 	 */
 	public void clickOnPreviewAndRunButton() {
@@ -3831,6 +3860,9 @@ public class IngestionPage_Indium {
 			if(getApproveMessageOKButton().isElementAvailable(15)) {
 			getApproveMessageOKButton().Click();
 			driver.waitForPageToBeReady();
+			}
+			if(previewRecordPopup().isElementAvailable(10)) {
+				base.passedStep("Preview record popup displayed");
 			}
 			getbtnRunIngestion().isElementAvailable(15);
 			getbtnRunIngestion().Click();
@@ -11458,6 +11490,269 @@ public class IngestionPage_Indium {
 			}
 			
 			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the mandatory field warning message in ingestion wizard
+		 */
+		
+		public void validateIngestionWizardMandatoryFieldWarningMessage() {
+			
+			base.stepInfo("Click on add new ingestion button");
+			base.waitForElement(getAddanewIngestionButton());
+			getAddanewIngestionButton().waitAndClick(10);
+			base.stepInfo("Without entering mandatory field enter next button");
+			base.waitForElement(getNextButton());
+			getNextButton().waitAndClick(5);
+			
+			if(sourceLocationMandatoryError().Displayed() && sourceFolderMandatoryError().Displayed() 
+					&& dateFormatMandatoryError().Displayed()) {
+				base.passedStep("Error messsage displayed to fill in mandatory fields");
+			}
+			else {
+				base.failedStep("Error message not displayed");
+			}
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the mandatory field warning message in mapping section
+		 */
+		
+		public void validateMappingSectionMandatoryFieldWarningMessage() {
+			
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPreviewRun());
+			getPreviewRun().waitAndClick(5);
+			base.VerifyErrorMessage(Input.mandatoryMappingError);
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the availability of different available file types in ingestion wizard
+		 */
+		
+		public void verifyDifferentFileTypesAvailability() {
+			
+			base.stepInfo("Click on add new ingestion button");
+			base.waitForElement(getAddanewIngestionButton());
+			getAddanewIngestionButton().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			if(getDatCheckBox().Displayed() && getNativeCheckBox().Displayed() && 
+					getTextCheckBox().Displayed() && getPDFCheckBoxButton().Displayed()) {
+				base.passedStep("Dat, Native, Text, Pdf file types available under source selection");
+			}
+			else {
+				base.failedStep("Dat, Native, Text, Pdf files not available");
+			}
+			
+			if(getTIFFCheckBox().Displayed() && getMP3CheckBoxButton().Displayed() && 
+					getAudioTranscriptCheckBoxstionButton().Displayed() && getOtherCheckBox().Displayed()) {
+				base.passedStep("Tiff,Mp3,Audio transcript,other file types available under source selection");
+			}
+			else {
+				base.failedStep("Tiff,Mp3,Audio transcript,other file options not available");
+			}
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the different available file types and status in ingestion wizard
+		 */
+		
+		public void verifyDatAndRemainingFileFieldOptionsAvailability(String datFile) {
+			if(!getSourceSelectionDATLoadFile().isElementAvailable(10)) {
+				getDatCheckBox().waitAndClick(5);
+			}
+			driver.waitForPageToBeReady();
+			if(getSourceSelectionDATLoadFile().isElementAvailable(10) && getSourceSelectionDATKey().isElementAvailable(10)) {
+				getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(datFile);
+				base.passedStep("both load file and key selection options available");
+			}
+			else {
+				base.failedStep("options not available under dat selection");
+			}
+			// Verify native file options and status
+			if(getNativeCheckBox().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Native file");
+				getNativeCheckBox().waitAndClick(5);
+				if(getNativeLST().isElementAvailable(5) && getNativePathInDATFileCheckBox().isElementAvailable(5)) {
+					base.passedStep("Load file and is path in dat option available for Native File");
+					getNativePathInDATFileCheckBox().ScrollTo();
+					getNativePathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getNativeLST().GetAttribute("disabled");
+					System.out.println(status);
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getNativeFilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for native file enabled");
+					}else {
+						base.failedStep("File path for native file not enabled");
+					}
+				}else {
+					base.failedStep("Native options not available");
+				}
+			}
+			// Verify text file options and status
+			if(getTextCheckBox().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Text file");
+				getTextCheckBox().waitAndClick(5);
+				if(getSourceSelectionTextLoadFile().isElementAvailable(5) && getTextPathInDATFileCheckBox().isElementAvailable(5)) {
+					base.passedStep("Load file and is path in dat option available for Text File");
+					getTextPathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getSourceSelectionTextLoadFile().GetAttribute("disabled");
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getTextFilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for text file enabled");
+					}else {
+						base.failedStep("File path for text file not enabled");
+					}
+				}else {
+					base.failedStep("Text options not available");
+				}
+			}
+			// Verify pdf file options and status
+			if(getPDFCheckBoxButton().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Pdf file");
+				getPDFCheckBoxButton().waitAndClick(5);
+				if(getPDFLST().isElementAvailable(5) && getPDFPathInDATFileCheckBox().isElementAvailable(5)) {
+					base.passedStep("Load file and is path in dat option available for Pdf File");
+					getPDFPathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getPDFLST().GetAttribute("disabled");
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getPDFFilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for Pdf file enabled");
+					}else {
+						base.failedStep("File path for Pdf file not enabled");
+					}
+				}else {
+					base.failedStep("Pdf options not available");
+				}
+			}
+			// Verify tiff file options and status
+			if(getTIFFCheckBox().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Tiff file");
+				getTIFFCheckBox().waitAndClick(5);
+				if(getTIFFLST().isElementAvailable(5) && getTIFFPathInDATFileCheckBox().isElementAvailable(5) && getTIFFSearchablePDFCheckBox().Displayed()) {
+					base.passedStep("Load file and is path in dat option available for Tiff File");
+					getTIFFPathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getTIFFLST().GetAttribute("disabled");
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getTIFFFilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for Tiff file enabled");
+					}else {
+						base.failedStep("File path for Tiff file not enabled");
+					}
+				}else {
+					base.failedStep("Tiff options not available");
+				}
+			}
+			// Verify mp3 file options and status
+			if(getMP3CheckBoxButton().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Mp3 file");
+				getMP3CheckBoxButton().waitAndClick(5);
+				if(getMP3LST().isElementAvailable(5) && getMP3PathInDATFileCheckBox().isElementAvailable(5)) {
+					base.passedStep("Load file and is path in dat option available for Mp3 File");
+					getMP3PathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getMP3LST().GetAttribute("disabled");
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getMp3FilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for Mp3 file enabled");
+					}else {
+						base.failedStep("File path for Mp3 file not enabled");
+					}
+				}else {
+					base.failedStep("Mp3 options not available");
+				}
+			}
+			// Verify audio transcript file options and status
+			if(getAudioTranscriptCheckBoxstionButton().isElementAvailable(5)) {
+				base.stepInfo("Verify available options and status for Audio transcript file");
+				getAudioTranscriptCheckBoxstionButton().waitAndClick(5);
+				if(getAudioTranscriptLST().isElementAvailable(5) && getAudioTransistPathInDATFileCheckBox().isElementAvailable(5)) {
+					base.passedStep("Load file and is path in dat option available for Audio transcript File");
+					getAudioTransistPathInDATFileCheckBox().waitAndClick(5);
+					base.waitTime(1);
+					String status =getAudioTranscriptLST().GetAttribute("disabled");
+					if(status.contains("true")) {
+						base.passedStep("Load file disabled upon selection of IS DAT option");
+					}else {
+						base.failedStep("Load file not disabled upon selection of IS DAT option");
+					}
+					if(getTranscriptFilePathFieldinDAT().isElementAvailable(5)) {
+						base.passedStep("File path for audio transcript file enabled");
+					}else {
+						base.failedStep("File path for audio transcript file not enabled");
+					}
+				}else {
+					base.failedStep("Audio transcript options not available");
+				}
+			}
+			
+		}
+		
+
+		/**
+		 * @author: Arun Created Date: 11/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the options for other file type
+		 */
+		
+		public void verifyOtherFileFieldOptionAndDropdownValueAvailability() {
+			if(getOtherCheckBox().isElementAvailable(10)) {
+				getOtherCheckBox().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				if(getOtherLinkType().Displayed() && getOtherLoadFile().Displayed() 
+						&& getOtherPathInDATFileCheckBox().Displayed()) {
+					 List<WebElement> availableOptions =getOtherLinkType().selectFromDropdown().getOptions();
+					 int size = availableOptions.size();
+					 System.out.println(size);
+					 for(int i=0;i<size;i++) {
+						String option = availableOptions.get(i).getText();
+						if(option.equalsIgnoreCase(Input.translation)) {
+							base.passedStep("'Translation' option available in the link type dropdown");
+						}	
+						else if(option.equalsIgnoreCase(Input.related)) {
+							base.passedStep("'Related' option available in the link type dropdown");
+						}	
+					 }	
+					base.passedStep("Link type,load options and is path options available");
+				}
+				else {
+					base.failedStep("Other file type options not available");
+				}
+				
+			}
+			else {
+				base.failedStep("Other field options not available");
+			}
 		}
 
 }

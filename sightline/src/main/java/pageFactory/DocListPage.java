@@ -1331,6 +1331,46 @@ public class DocListPage {
 				+ "') and contains(text(),'EmailRecipientNames - Include')]");
 	}
 
+	public Element getDocListFilterDocs(String emaileleValue) {
+		return driver.FindElementByXPath("//ul[@id='optionFilters']/li[text()='"+ emaileleValue +"']");
+	}
+	
+	public Element getDocListAddFliterBtn() {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary option']");
+	}
+	
+	public Element getDocListFilterTable() {
+		return driver.FindElementByXPath("//table[@id='dtDocList']/tbody/tr");
+	}
+	
+	public Element getMakeSureSelectedValue() {
+		return driver.FindElementByXPath("//input[@class='select2-search__field']");
+	}
+	
+	public Element getEmailAuthorNameFilter() {
+		return driver.FindElementByXPath("//ul//li[@class='select2-results__option'][2]");
+	}
+	
+	public Element getDocListBullhornIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
+	}
+	
+	public Element getDocListNotifiMsg() {
+		return driver.FindElementByXPath("//a[contains(text(),'Your printed document')][1]");
+	}
+	public Element getReleaseBtn() {
+		return driver.FindElementById("btnRelease");
+
+	}
+	
+	public ElementCollection getChildDocumentInDocListPage() {
+		return driver.FindElementsByXPath("//input[contains(@id,'chkDocChild')]//following-sibling::i");
+
+	}
+	public Element getChildDocumentInDocListPage(int i) {
+		return driver.FindElementByXPath("(//input[contains(@id,'chkDocChild')]//following-sibling::i)["+i+"]");
+
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -5467,5 +5507,290 @@ public class DocListPage {
 		}
 	}
 	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description :The filtered alldomains when selecting Include .
+	 * 
+	 */
+	public void emailValueFirstIncludeAndEmailValueSecondExcludeVerifyInDocList(String emailvalue ,String emailvalue1) {
+
+		try {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListFilterDocs(emailvalue));
+		getDocListFilterDocs(emailvalue).waitAndClick(10);
+		base.waitForElement(getIncludeBtn());
+		base.waitTillElemetToBeClickable(getIncludeBtn());
+		getIncludeBtn().Click();
+		base.waitForElement(getClickToMakeSelection());
+		base.waitTillElemetToBeClickable(getClickToMakeSelection());
+		getClickToMakeSelection().Click();
+
+		base.waitForElement(getEmailAuthorNameSelectAuthor());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameSelectAuthor());
+		getEmailAuthorNameSelectAuthor().Click();
+		String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName);
+		base.stepInfo("EmailAuthorName Include Filter is "+emailDomainName+"");
+		base.waitForElement(getMakeSureSelectedValue());
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getMakeSureSelectedValue());
+		getMakeSureSelectedValue().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		
+		String emailDomainName1 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName1);
+		base.stepInfo("EmailAuthorName Exclude Filter is "+emailDomainName1+"");
+		base.waitForElement(getDocListAddFliterBtn());
+		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
+		getDocListAddFliterBtn().Click();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListFilterDocs(emailvalue1));
+		getDocListFilterDocs(emailvalue1).waitAndClick(10);
+		
+		base.waitForElement(getExcludeBtn());
+		base.waitTillElemetToBeClickable(getExcludeBtn());
+		getExcludeBtn().Click();
+		base.waitForElement(getClickToMakeSelection());
+		base.waitTillElemetToBeClickable(getClickToMakeSelection());
+		getClickToMakeSelection().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		String emailDomainName2 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName2);
+		base.stepInfo("EmailAllDomain Exclude Filter is "+emailDomainName2+"");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMakeSureSelectedValue());
+		base.waitTillElemetToBeClickable(getMakeSureSelectedValue());
+		getMakeSureSelectedValue().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		
+		String emailDomainName3 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName3);
+		base.stepInfo("EmailAuthorName Exclude Filter is "+emailDomainName3+"");
+		base.waitForElement(getDocListAddFliterBtn());
+		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
+		getDocListAddFliterBtn().Click();
+		base.waitForElement(getApplyFilters());
+		base.waitTillElemetToBeClickable(getApplyFilters());
+		getApplyFilters().Click();
+		
+		if(getDocListFilterTable().Displayed()) {
+			base.passedStep("Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is displayed.");
+		}
+		else {
+			base.failedStep("Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is not displayed.");
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is not displayed."
+							+ e.getMessage());
+		}
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description :The filtered alldomains when selecting Include .
+	 * 
+	 */
+	public void emailValueFirstExcludeAndEmailValueSecondIncludeVerifyInDocList(String emailvalue,String emailvalue1) {
+
+		try {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListFilterDocs(emailvalue));
+		getDocListFilterDocs(emailvalue).waitAndClick(10);
+		base.waitForElement(getExcludeBtn());
+		base.waitTillElemetToBeClickable(getExcludeBtn());
+		getExcludeBtn().Click();
+		base.waitForElement(getClickToMakeSelection());
+		base.waitTillElemetToBeClickable(getClickToMakeSelection());
+		getClickToMakeSelection().Click();
+
+		base.waitForElement(getEmailAuthorNameSelectAuthor());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameSelectAuthor());
+		getEmailAuthorNameSelectAuthor().Click();
+		String emailDomainName = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName);
+		base.stepInfo("EmailAuthorName Exclude Filter is "+emailDomainName+"");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMakeSureSelectedValue());
+		base.waitTillElemetToBeClickable(getMakeSureSelectedValue());
+		getMakeSureSelectedValue().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		
+		String emailDomainName1 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName1);
+		base.stepInfo("EmailAuthorName Exclude Filter is "+emailDomainName1+"");
+		base.waitForElement(getDocListAddFliterBtn());
+		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
+		getDocListAddFliterBtn().Click();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListFilterDocs(emailvalue1));
+		getDocListFilterDocs(emailvalue1).waitAndClick(10);
+		
+		base.waitForElement(getIncludeBtn());
+		base.waitTillElemetToBeClickable(getIncludeBtn());
+		getIncludeBtn().Click();
+		base.waitForElement(getClickToMakeSelection());
+		base.waitTillElemetToBeClickable(getClickToMakeSelection());
+		getClickToMakeSelection().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		String emailDomainName2 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName2);
+		base.stepInfo("EmailAllDomain Include Filter is "+emailDomainName2+"");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getMakeSureSelectedValue());
+		base.waitTillElemetToBeClickable(getMakeSureSelectedValue());
+		getMakeSureSelectedValue().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEmailAuthorNameFilter());
+		base.waitTillElemetToBeClickable(getEmailAuthorNameFilter());
+		getEmailAuthorNameFilter().Click();
+		
+		String emailDomainName3 = getDomainAuthorName().getText().trim().replaceAll("[^a-zA-Z.@]", "");
+		System.out.println(emailDomainName3);
+		base.stepInfo("EmailAuthorName Exclude Filter is "+emailDomainName3+"");
+		base.waitForElement(getDocListAddFliterBtn());
+		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
+		getDocListAddFliterBtn().Click();
+		base.waitForElement(getApplyFilters());
+		base.waitTillElemetToBeClickable(getApplyFilters());
+		getApplyFilters().Click();
+		
+		if(getDocListFilterTable().Displayed()) {
+			base.passedStep("Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is displayed.");
+		}
+		else {
+			base.failedStep("Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is not displayed.");
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Documents is filtered based on the applied EmailAuthorName and EmailAllDomain is not displayed.");
+		}
+		
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @throws InterruptedException
+	 * @Description :perview Document and click Print.
+	 * 
+	 */
+	public void VerifyPerviewDocumentAndPrintAndDownload() throws InterruptedException {
+
+		String mainWindow = driver.getWebDriver().getWindowHandle();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPrintIcon());
+		getPrintIcon().waitAndClick(5);
+
+		base.VerifySuccessMessage(
+				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
+		closePreviewedDocument();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListBullhornIcon());
+		getDocListBullhornIcon().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocListNotifiMsg());
+		getDocListNotifiMsg().waitAndClick(5);
+
+		// open a new tab
+		JavascriptExecutor js = (JavascriptExecutor) driver.getWebDriver();
+		js.executeScript("window.open()");
+		// switch to new tab
+		// Switch to new window opened
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.getWebDriver().switchTo().window(winHandle);
+		}
+		String currentURL = driver.getWebDriver().getCurrentUrl();
+		System.out.println(currentURL);
+		if (currentURL.contains("pdf")) {
+			base.passedStep("PDF file downloded by name :: " + currentURL + " as expected");
+		} else {
+			base.failedStep("PDF file downloded by name :: " + currentURL + " is not as expected");
+		}
+		driver.getWebDriver().close();
+		driver.getWebDriver().switchTo().window(mainWindow);
+	}
+
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @param Select Column Display by remove and add new values
+	 */
+	public void SelectColumnDisplayByRemovingAddNewValues(String[] eleValue) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(SelectColumnBtn());
+			SelectColumnBtn().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			int metadatasCount = getAvailableRemoveButtonCount().size();
+			for (int i = 0; i < metadatasCount; i++) {
+				getRemoveBtn().Click();
+				System.out.println(i);
+			}
+			for (int j = 0; j < eleValue.length; j++) {
+				base.waitForElement(getSelectAvailMetadata(eleValue[j]));
+				getSelectAvailMetadata(eleValue[j]).ScrollTo();
+				getSelectAvailMetadata(eleValue[j]).waitAndClick(10);
+				System.out.println(eleValue[j]);
+				base.stepInfo("The selected clounm values Are "+eleValue[j]+"");
+			}
+			base.waitForElement(getAddToSelect());
+			getAddToSelect().waitAndClick(10);
+			base.waitForElement(getUpdateColumnBtn());
+			getUpdateColumnBtn().waitAndClick(10);
+			base.passedStep("Columns is added successfully, the selected Values displayed single quote ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param securityGroupName
+	 * Description: Bulk release the Document
+	 */
+	public void bulkRelease(String securityGroupName) {
+		driver.waitForPageToBeReady();
+		getDocList_PlusIcon().ScrollTo();
+		getDocList_PlusIcon().Click();
+		for(int i=1;i<=getChildDocumentInDocListPage().size();i++) {
+			getChildDocumentInDocListPage(i).waitAndClick(5);
+		}
+		driver.scrollPageToTop();
+			base.waitForElement(getDocList_actionButton());
+			getDocList_actionButton().waitAndClick(10);
+			getDocList_action_BulkReleaseButton().waitAndClick(10);
+			base.waitForElement(search.getBulkRelDefaultSecurityGroup_CheckBox(securityGroupName));
+			search.getBulkRelDefaultSecurityGroup_CheckBox(securityGroupName).Click();
+			base.waitForElement(getReleaseBtn());
+			getReleaseBtn().Click();
+			getFinalizeButton().Click();
+			base.VerifySuccessMessage("Records saved successfully");
+			base.passedStep("performed bulk release successfully");
+			
+}
 	
 }

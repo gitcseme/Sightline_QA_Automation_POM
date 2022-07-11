@@ -3529,6 +3529,9 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@class='fa fa-check-circle-o EditSaveRemark']");
 	}
 
+	public Element getViewAllInDocListBtn() {
+		return driver.FindElementById("btnShowAllInDocList");
+	}
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -11164,7 +11167,7 @@ public class DocViewPage {
 			base.waitTillElemetToBeClickable(getSelectSaveLink());
 			getSelectSaveLink().Click();
 			driver.waitForPageToBeReady();
-			base.VerifySuccessMessage("Document saved successfully");
+			base.VerifySuccessMessage("Applied coding saved successfully");
 		} catch (Exception e) {
 			base.failedStep("Exception occcured while filling document_comments section ." + e.getMessage());
 			e.printStackTrace();

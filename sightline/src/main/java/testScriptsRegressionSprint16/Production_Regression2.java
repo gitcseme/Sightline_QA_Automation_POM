@@ -161,7 +161,7 @@ public class Production_Regression2 {
 		baseClass.stepInfo("Create tags and folders");
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
 		baseClass.stepInfo("perform basic search and bulk folder");
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -400,7 +400,8 @@ public class Production_Regression2 {
 		page.placeHolderText().isElementAvailable(10);
 		page.redactionsText().ScrollTo();
 		page.redactionsText().isElementAvailable(10);
-		page.getAdvancedTabInNative().waitAndClick(10);
+		page.getAdvancedTabInTIFF().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
 		page.slipSheetsText().ScrollTo();
 		page.slipSheetsText().isElementAvailable(10);
 		baseClass.passedStep("Verified TIFF Section with various options");
@@ -449,7 +450,7 @@ public class Production_Regression2 {
 		page.fillingPrivGuardPage();
 		page.getlstProductionRootPaths().isElementAvailable(10);
 		page.getProductionOutputLocation_ProductionDirectory().isElementAvailable(10);
-		System.out.println("Production Location : "+page.getProductionOutputLocation_ProductionDirectory().getText());
+		System.out.println("Production Location : " + page.getProductionOutputLocation_ProductionDirectory().getText());
 		page.loadFilePath().isElementAvailable(10);
 		page.GetVolumeName().isElementAvailable(10);
 		baseClass.passedStep("Verified Production Location component");
@@ -501,34 +502,173 @@ public class Production_Regression2 {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		page.getValueTotalDocuments().isDisplayed();
-		System.out.println("Total Documents "+page.getValueTotalDocuments().getText());
+		System.out.println("Total Documents " + page.getValueTotalDocuments().getText());
 		page.getValueTotalPagesCount().isDisplayed();
-		System.out.println("Total pages count "+page.getValueTotalPagesCount().getText());
+		System.out.println("Total pages count " + page.getValueTotalPagesCount().getText());
 		page.getNoOfCustodians().isDisplayed();
-		System.out.println("Number of custodians "+page.getNoOfCustodians().getText());
+		System.out.println("Number of custodians " + page.getNoOfCustodians().getText());
 		page.getDocPages().isDisplayed();
-		System.out.println("Document pages "+page.getDocPages().getText());
+		System.out.println("Document pages " + page.getDocPages().getText());
 		page.getTextMp3File().isDisplayed();
-		System.out.println("MP3 file "+page.getTextMp3File().getText());
+		System.out.println("MP3 file " + page.getTextMp3File().getText());
 		page.exceptionDocCount().isDisplayed();
-		System.out.println("Exception Document Count "+page.exceptionDocCount().getText());
+		System.out.println("Exception Document Count " + page.exceptionDocCount().getText());
 		page.documentMissingCount().isDisplayed();
-		System.out.println("Document Missing count "+page.documentMissingCount().getText());
+		System.out.println("Document Missing count " + page.documentMissingCount().getText());
 		page.getValueFirstLastDocs().isDisplayed();
-		System.out.println("First and Last docIDs "+page.getValueFirstLastDocs().getText());
+		System.out.println("First and Last docIDs " + page.getValueFirstLastDocs().getText());
 		page.getPrivDocCountInSummaryPage().isDisplayed();
-		System.out.println("privilege Document count "+page.getPrivDocCountInSummaryPage().getText());
+		System.out.println("privilege Document count " + page.getPrivDocCountInSummaryPage().getText());
 		page.docIdentifiedByProtectionGuard().isDisplayed();
-		System.out.println("Document Identified by protection guard "+page.docIdentifiedByProtectionGuard().getText());
+		System.out
+				.println("Document Identified by protection guard " + page.docIdentifiedByProtectionGuard().getText());
 		page.redactedDocCountInSummaryPage().isDisplayed();
-		System.out.println("Redacted Doc count in summary page"+page.redactedDocCountInSummaryPage().getText());
+		System.out.println("Redacted Doc count in summary page" + page.redactedDocCountInSummaryPage().getText());
 		page.getDocumentsOfOCR().isDisplayed();
-		System.out.println("Documents of OCR "+page.getDocumentsOfOCR().getText());
+		System.out.println("Documents of OCR " + page.getDocumentsOfOCR().getText());
 		page.getDocumentsOfTIFF().isDisplayed();
-		System.out.println("Documents of TIFF"+page.getDocumentsOfTIFF().getText());
+		System.out.println("Documents of TIFF" + page.getDocumentsOfTIFF().getText());
 
 		baseClass.passedStep(" Verified Summary and Preview  Component");
 
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48165
+	 * @Description:To Verify Filler Audio is available only on enabling Burn
+	 *                 Redaction for MP3 Files under Advanced Production Components
+	 **/
+
+	@Test(description = "RPMXCON-48165", enabled = true, groups = { "regression" })
+	public void verifyMP3Component() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-48165- Production Sprint 16");
+		baseClass.stepInfo(
+				"To Verify Filler Audio is available only on enabling Burn Redaction for MP3 Files under Advanced Production Components");
+		UtilityLog.info(Input.prodPath);
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName = page.addANewProduction(productionname);
+		System.out.println("created a new production - " + prodName);
+		page.fillingMP3();
+			baseClass.stepInfo(
+					"Redaction style drop down should be displayed  User can select one of the three filler Audio files for redaction in MP3 Files Advanced Production Components  ");
+			System.out.println("Redaction Style Options available are :"+page.getSelect_RedactionStyle_Dropdown().getText());
+			page.getSelect_Beep_RedactionStyle_Dropdown().isDisplayed( );
+			page.getSelect_Bomb_RedactionStyle_Dropdown().isDisplayed( );
+			page.getSelect_Can_RedactionStyle_Dropdown().isDisplayed( );
+
+		baseClass.passedStep(
+				"Verified Filler Audio is available only on enabling Burn Redaction for MP3 Files under Advanced Production Components");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48276
+	 * @Description:To verify MP3 productions with DAT and PDF.
+	 **/
+
+	@Test(description = "RPMXCON-48276", enabled = true, groups = { "regression" })
+	public void verifyMP3WithDAT() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-48276- Production Sprint 16");
+		baseClass.stepInfo("To verify MP3 productions with DAT and PDF.");
+		UtilityLog.info(Input.prodPath);
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("Ingestion should have Documents with following file Variants  Native /Text /PDF & MP3");
+		DataSets dataSet = new DataSets(driver);
+		dataSet.navigateToDataSetsPage();
+		dataSet.selectDataSetWithName(Input.ingestionAutomationAllSource);
+
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(6);
+		doclist.bulkTagExisting(tagname);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName = page.addANewProduction(productionname);
+		System.out.println("created a new production - " + prodName);
+		page.fillingDATSection();
+		page.fillingPDFSection(tagname);
+		page.fillingMP3();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : " + beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		baseClass.passedStep("verified MP3 productions with DAT and PDF.");
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48274
+	 * @Description:To verify MP3 productions with DAT and Native.
+	 **/
+
+	@Test(description = "RPMXCON-48274", enabled = true, groups = { "regression" })
+	public void verifyMP3WithDATandNative() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-48274- Production Sprint 16");
+		baseClass.stepInfo("To verify MP3 productions with DAT and Native.");
+		UtilityLog.info(Input.prodPath);
+		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
+		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Create tags and folders");
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		baseClass.stepInfo("Ingestion should have Documents with following file Variants  Native /Text /PDF & MP3");
+		DataSets dataSet = new DataSets(driver);
+		dataSet.navigateToDataSetsPage();
+		dataSet.selectDataSetWithName(Input.ingestionAutomationAllSource);
+
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(6);
+		doclist.bulkTagExisting(tagname);
+
+		baseClass.stepInfo("Create production using required inputs");
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String prodName = page.addANewProduction(productionname);
+		System.out.println("created a new production - " + prodName);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingMP3();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		System.out.println("Bates Number is : " + beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		baseClass.passedStep("verified MP3 productions with DAT and Native");
+	}
 }

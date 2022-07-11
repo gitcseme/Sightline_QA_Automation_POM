@@ -53,8 +53,10 @@ public class Tally_Regression2_1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+
+		// Input in = new Input();
+		// in.loadEnvConfig();
+
 
 		// Open browser
 		driver = new Driver();
@@ -68,7 +70,7 @@ public class Tally_Regression2_1 {
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		ss.basicContentSearch(Input.TallySearch);
 		hitsCountPA = ss.verifyPureHitsCount();
-		ss.saveSearchAtAnyRootGroup(SearchName, Input.shareSearchDefaultSG);
+	    ss.saveSearchAtAnyRootGroup(SearchName, Input.shareSearchDefaultSG);
 		ss.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 		agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
@@ -249,7 +251,48 @@ public class Tally_Regression2_1 {
 		lp.logout();
 
 	}
-	
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+
+	@Test(description = "RPMXCON-56195", dataProvider = "Users_PARMU", groups = { "regression" })
+	public void verifyTally_FolderAsSource(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56195");
+		bc.stepInfo(
+				"To Verify Admin/RMU will have a tally report with document counts by Workproduct fields for Folder");
+
+		String[] tallyBy = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+		String[] expectedMetaData = { expectedCusName, expectedDocFileType, expectedEAName, expectedEAAdress };
+
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as " + role);
+
+		// Navigating to tally page
+		tp.navigateTo_Tallypage();
+
+		// selecting source as Work PRoduct -Folder
+		tp.SelectSource_Folder(folderName);
+
+		// iterating this for loop to change the tally by metadata value for every
+		for (int i = 0; i < tallyBy.length; i++) {
+			String metadataTally = tallyBy[i];
+			bc.stepInfo("**selecting " + metadataTally + " as tally by option.**");
+			tp.selectTallyByMetaDataField(metadataTally);
+			tp.validateMetaDataFieldName(metadataTally);
+			String metadataBarchartTally = tp.verifyTallyChartMetadata();
+
+			bc.stepInfo("Expected MetaData to be displayed in horizontal barchart is : ");
+			bc.stepInfo(expectedMetaData[i]);
+
+			String passMsg = "if we select tally by option as " + metadataTally + " Horizontal Bar Chart Graph  "
+					+ "get populated in View with expected values.";
+			String failMSg = "if we select tally by option as " + metadataTally + " Horizontal Bar Chart Graph  "
+					+ "not getting populated in View with expected values.";
+			bc.textCompareEquals(expectedMetaData[i], metadataBarchartTally.toLowerCase(), passMsg, failMSg);
+		}
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

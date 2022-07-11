@@ -120,9 +120,10 @@ public class BasicSearchRegression2 {
 
 	@DataProvider(name = "dataSearch")
 	public Object[][] dataSearch() {
-		return new Object[][] { { "Precision AND (ProximitySearch Truthful~5)" },
+		return new Object[][] { 
+			{ "Precision AND (ProximitySearch Truthful~5)" },
 				{ "Precision AND (ProximitySearch Truthful ~5)" },
-				       {"Precision AND ProximitySearch Truthful~5"},};
+				       {"Precision AND (ProximitySearch Truthful~5 )"},};
 	}
 
 	/**
