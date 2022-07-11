@@ -20712,7 +20712,36 @@ public void selectingTaginSortingPage(String Tag) {
 	
 	
 }
+/**
+ * @author Brundha.T
+ * @param tagname
+ * @param tagnametech
+ * @Description This  method selects TIFF radio button and selects Enable for
+ *                    privileged tags by default and passes the placeholder
+ *                    value.
+ */
+public void fillingTIFFSectionPrivDocs(String tagname, String tagnametech) throws InterruptedException {
 
+	base.waitForElement(getTIFFChkBox());
+	getTIFFChkBox().Click();
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(getTIFFTab());
+	getTIFFTab().Click();
+	getTIFF_EnableforPrivilegedDocs().ScrollTo();
+	base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+	base.waitForElement(getPriveldge_SelectTagButton());
+	getPriveldge_SelectTagButton().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+	getPriveldge_TagTree(tagname).waitAndClick(10);
+	base.waitForElement(getPriveldge_TagTree_SelectButton());
+	getPriveldge_TagTree_SelectButton().waitAndClick(10);
+	new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+	getPriveldge_TextArea().SendKeys(tagnametech);
+	driver.scrollingToBottomofAPage();
+	base.stepInfo("TIFF section is filled");
+
+}
 }
 
 

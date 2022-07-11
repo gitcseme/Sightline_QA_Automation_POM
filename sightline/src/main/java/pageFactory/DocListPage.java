@@ -1358,7 +1358,19 @@ public class DocListPage {
 	public Element getDocListNotifiMsg() {
 		return driver.FindElementByXPath("//a[contains(text(),'Your printed document')][1]");
 	}
+	public Element getReleaseBtn() {
+		return driver.FindElementById("btnRelease");
+
+	}
 	
+	public ElementCollection getChildDocumentInDocListPage() {
+		return driver.FindElementsByXPath("//input[contains(@id,'chkDocChild')]//following-sibling::i");
+
+	}
+	public Element getChildDocumentInDocListPage(int i) {
+		return driver.FindElementByXPath("(//input[contains(@id,'chkDocChild')]//following-sibling::i)["+i+"]");
+
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -5754,5 +5766,31 @@ public class DocListPage {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param securityGroupName
+	 * Description: Bulk release the Document
+	 */
+	public void bulkRelease(String securityGroupName) {
+		driver.waitForPageToBeReady();
+		getDocList_PlusIcon().ScrollTo();
+		getDocList_PlusIcon().Click();
+		for(int i=1;i<=getChildDocumentInDocListPage().size();i++) {
+			getChildDocumentInDocListPage(i).waitAndClick(5);
+		}
+		driver.scrollPageToTop();
+			base.waitForElement(getDocList_actionButton());
+			getDocList_actionButton().waitAndClick(10);
+			getDocList_action_BulkReleaseButton().waitAndClick(10);
+			base.waitForElement(search.getBulkRelDefaultSecurityGroup_CheckBox(securityGroupName));
+			search.getBulkRelDefaultSecurityGroup_CheckBox(securityGroupName).Click();
+			base.waitForElement(getReleaseBtn());
+			getReleaseBtn().Click();
+			getFinalizeButton().Click();
+			base.VerifySuccessMessage("Records saved successfully");
+			base.passedStep("performed bulk release successfully");
+			
+}
 	
 }

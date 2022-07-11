@@ -620,7 +620,196 @@ public class Production_Regression1 {
 				"Error in Production generation");
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha RPMXCON-63183
+	 * @Description Verify if no text file exists in the SL Workspace and "OCR
+	 *              non-redacted docs... " option is selected in Production-text
+	 *              component then it should export OCR text for non-redacted
+	 *              document
+	 */
+	@Test(description = "RPMXCON-63183", enabled = true, groups = { "regression" })
 
+	public void verifyingOCRTextInAllGeneratedDocument() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-63183 -Production component");
+		base.stepInfo(
+				"Verify if no text file exists in the SL Workspace and \"OCR non-redacted docs... \" option is selected in Production-text component then it should export OCR text for non-redacted document");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.CreateTagwithClassification(tagname,Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int Purehit=sessionSearch.basicContentSearch(Input.telecaSearchString);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		int LastFile=Purehit+firstFile;
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.addDATFieldAtSecondRow(Input.productionText, Input.tiffPageCountNam, Input.tiffPageCountText);
+		page.fillingNativeSection();
+		page.fillingTIFFSectionPrivDocs(tagname,Input.searchString4);
+		page.fillingTextSection();
+		page.textComponentVerification();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File TiffFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_TIFF.OPT");
+		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_DAT.dat");
+		File Textfile = new File(home + "/Downloads/VOL0001/Text/0001");
+
+		if (Textfile.exists()) {
+			base.passedStep("Text file is displayed as expected");
+		} else {base.failedStep("Text file is not displayed as expected");}
+
+		if (TiffFile.exists()) {
+			base.passedStep("Tiff file is generated as expected");
+		} else {base.failedStep("Tiff file is not generated as expected");}
+
+		if (DatFile.exists()) {
+			base.passedStep("Dat file is generated as expected");
+		} else {base.failedStep("Dat file is not generated as expected");}
+		
+		page.OCR_Verification_In_Generated_Tiff_tess4j(firstFile, LastFile, prefixID, suffixID,Input.searchString4);
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Brundha.T No:RPMXCON-47999
+	 * @Description:Verify the Matched Documents count when Include Family Members
+	 *                     is selected
+	 **/
+
+	@Test(description = "RPMXCON-47999", enabled = true)
+	public void verifyingParentndChildDocumentInDocumentSelectionTab() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-47999- Production Component");
+		base.stepInfo("Verify the Matched Documents count when Include Family Members is selected");
+		UtilityLog.info(Input.prodPath);
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.telecaSearchString);
+		sessionSearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		doc.getSelectDropDown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String ParentDocId = doc.getParentDocumentDocId().getText();
+		System.out.println(ParentDocId);
+		doc.bulkRelease(Input.securityGroup);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		sessionSearch = new SessionSearch(driver);
+		int purehit = sessionSearch.basicContentSearch(ParentDocId);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		driver.scrollingToBottomofAPage();
+		page.getIncludeFamilies().waitAndClick(10);
+		driver.scrollPageToTop();
+		page.getMarkCompleteLink().waitAndClick(10);
+		base.waitTime(2);
+		String DocumentCount = page.getDocumentSelectionLink().getText();
+		System.out.println(":"+DocumentCount);
+		int DocCount = Integer.valueOf(DocumentCount);
+		if (DocCount >=purehit) {
+			base.passedStep("Family member Document  is displayed as expected");
+		}else {
+			base.failedStep("Family member is not displayed as expecetd");
+		}
+
+	}
+	
+	/**
+	 * @author Brundha RPMXCON-48275
+	 * @Description To verify MP3 productions with DAT and Text
+	 */
+	@Test(description = "RPMXCON-48275", enabled = true, groups = { "regression" })
+
+	public void verifyingGenerationOfProduction() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48275 -Production component");
+		base.stepInfo("To verify MP3 productions with DAT and Text");
+				
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearchForTwoItems(Input.telecaSearchString,Input.testData1);
+		sessionSearch.addNewSearch();
+		sessionSearch.SearchMetaData(Input.ingDocFileType,"MP3");
+		sessionSearch.addPureHit();
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTextSection();
+		base.clickButton(page.getAdvancedProductionComponent());
+		page.getMP3CheckBox().waitAndClick(10);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
