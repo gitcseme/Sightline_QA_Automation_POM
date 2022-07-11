@@ -75,7 +75,7 @@ public class DocViewPage {
 	public Element getSaveDoc() {
 		return driver.FindElementById("Save");
 	}
-	
+
 	public Element getDocView_CodingFormlist() {
 		return driver.FindElementByXPath("//select[@id='codingFormList']");
 	}
@@ -477,7 +477,8 @@ public class DocViewPage {
 	}
 
 	public Element geDocView_MiniList_CodeSameAsIcon() {
-		//return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa fa-link']");
+		// return driver.FindElementByXPath(".//*[@id='SearchDataTable']//i[@class='fa
+		// fa-link']");
 		return driver.FindElementByXPath("//*[@id='CodeSameAsLast']");
 	}
 
@@ -918,7 +919,8 @@ public class DocViewPage {
 	}
 
 	public Element getCodingFormSaveBtn() {
-		//return driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//a[@id='Save']");
+		// return
+		// driver.FindElementByXPath("//div[@id='divCodingFormSaveComplete']//a[@id='Save']");
 		return driver.FindElementByXPath("//*[@id='Save']");
 	}
 
@@ -2061,7 +2063,8 @@ public class DocViewPage {
 	public Element getHitPanelCount() {
 		return driver.FindElement(By.xpath("//p[contains(@id,'PHitCount')][1]//span"));
 	}
-	//New built
+
+	// New built
 	public Element getHitPanel_New() {
 		return driver.FindElementByXPath("(//span[contains(@id,'HitCount')])//parent::strong//following-sibling::p");
 	}
@@ -2069,11 +2072,11 @@ public class DocViewPage {
 	public Element getHitPanelCount_New() {
 		return driver.FindElement(By.xpath("(//span[contains(@id,'HitCount')])[1]"));
 	}
-	
+
 	public Element getHitTermToggle_New() {
 		return driver.FindElement(By.xpath("//i[@id='EnableSearchTerm' and @data-class='false']"));
 	}
-	
+
 	// Added by Gopinath - 10/11/2021
 	public Element getAssertOnImage() {
 		return driver.FindElementByCssSelector("g:nth-child(1) svg:nth-child(1)");
@@ -3493,13 +3496,13 @@ public class DocViewPage {
 	public Element getFileType() {
 		return driver.FindElementByXPath("//*[contains(@id,'txtspanfileType')]");
 	}
-	
+
 	// Added by Krishna
-	
+
 	public Element get_textHighlightedColorOnRedactSubMenu() {
 		return driver.FindElementByXPath("//li[@id='textSelectionRedaction_divDocViewer' and @class='state-active']/a");
 	}
-	
+
 	public Element getCopyPasteIcon() {
 		return driver.FindElementByXPath("//*[@id='copyPasteEnable']//i");
 	}
@@ -3507,23 +3510,30 @@ public class DocViewPage {
 	public Element getCopyPasteIconStatus() {
 		return driver.FindElementByXPath("//*[@id='copyPasteEnable']");
 	}
-	
+
 	public Element getRedacTextRightClickSelctCopy() {
 		return driver.FindElementByXPath("//ul[@class='ctxmenu']");
 	}
-	//Added by Iyappan
+
+	// Added by Iyappan
 	public Element getAudioDocEndDuration() {
-				return driver.FindElementByXPath("//div[@class='jp-duration end']");
-			}
+		return driver.FindElementByXPath("//div[@class='jp-duration end']");
+	}
+
 	public Element getRedactionModify() {
 		return driver.FindElementById("btnEdit");
 	}
+
 	public Element getDeleteRedaction(String redactionName) {
-		return driver.FindElementByXPath("//*[text()='"+redactionName+"']//..//*[starts-with(@onclick,'DeleteReviewerRemarks')]");
+		return driver.FindElementByXPath(
+				"//*[text()='" + redactionName + "']//..//*[starts-with(@onclick,'DeleteReviewerRemarks')]");
 	}
+
 	public Element getModifyRedaction(String redactionName) {
-		return driver.FindElementByXPath("//*[text()='"+redactionName+"']//..//*[starts-with(@onclick,'UpdateReviewerRemarks')]");
+		return driver.FindElementByXPath(
+				"//*[text()='" + redactionName + "']//..//*[starts-with(@onclick,'UpdateReviewerRemarks')]");
 	}
+
 	public Element getSaveEditRemarks() {
 		return driver.FindElementByXPath("//*[@class='fa fa-check-circle-o EditSaveRemark']");
 	}
@@ -3531,6 +3541,7 @@ public class DocViewPage {
 	public Element getViewAllInDocListBtn() {
 		return driver.FindElementById("btnShowAllInDocList");
 	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -5719,8 +5730,8 @@ public class DocViewPage {
 		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
 		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		childWindowToParentWindowSwitching(childWindow);
-		//driver.getWebDriver().navigate().refresh();
-		//driver.switchTo().alert().accept();
+		// driver.getWebDriver().navigate().refresh();
+		// driver.switchTo().alert().accept();
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		softAssertion.assertTrue(geDocView_MiniList_CodeSameAsIcon().Displayed());
 		base.waitForElement(getCodingFormSaveBtn());
@@ -5794,7 +5805,7 @@ public class DocViewPage {
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
 		base.stepInfo("Document saved successfully");
-		
+
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(5);
@@ -6023,7 +6034,7 @@ public class DocViewPage {
 		getDocView_Mini_ActionButton().waitAndClick(5);
 		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
 		base.waitTillElemetToBeClickable(getDocView__ChildWindow_Mini_CodeSameAs());
-		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);	
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
 		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
@@ -8481,7 +8492,7 @@ public class DocViewPage {
 			if (j == 15) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
-				softAssertion.assertEquals((boolean)getDocumetListLoading().Displayed(), true);
+				softAssertion.assertEquals((boolean) getDocumetListLoading().Displayed(), true);
 				driver.waitForPageToBeReady();
 			} else {
 			}
@@ -9256,7 +9267,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Action performing in parent window");
 		base.waitForElement(getCodingFormCommentDisabled());
-		softAssertion.assertEquals((boolean)getCodingFormCommentDisabled().Enabled(), false);
+		softAssertion.assertEquals((boolean) getCodingFormCommentDisabled().Enabled(), false);
 		if (getCodingFormCommentDisabled().Enabled() && getCodingFormCommentDisabled().Displayed()) {
 			base.stepInfo("Comment text box is clickable in docview coding form page");
 		} else {
@@ -9302,7 +9313,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.stepInfo("Action performing in parent window");
 		base.waitForElement(getCodingFormCommentVal());
-		softAssertion.assertEquals((boolean)getCodingFormCommentVal().Enabled(), true);
+		softAssertion.assertEquals((boolean) getCodingFormCommentVal().Enabled(), true);
 		if (getCodingFormCommentVal().Enabled() && getCodingFormCommentVal().Displayed()) {
 			base.passedStep("Comment text box is under validation text box filed value has to entered");
 		} else {
@@ -13886,7 +13897,7 @@ public class DocViewPage {
 				JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
 				jse.executeScript("document.querySelector('.dataTables_scrollBody').scrollBy(0,4000)");
 				if (loadingFlag)
-					softAssertion.assertEquals((boolean)getDocumetListLoading().isDisplayed(), true);
+					softAssertion.assertEquals((boolean) getDocumetListLoading().isDisplayed(), true);
 				driver.waitForPageToBeReady();
 			} else {
 				UtilityLog.info("Scroll is not required, Document is displayed");
@@ -14349,9 +14360,9 @@ public class DocViewPage {
 			getSelectedAreaElement().Click();
 			WebElement text = getPageNumberInputTextField().getWebElement();
 			int x = text.getLocation().getX();
-			int y =text.getLocation().getY();
-			actions.moveToElement(text, off1, off2+55).clickAndHold();
-			actions.moveToElement(text, off1+10, off2+120);
+			int y = text.getLocation().getY();
+			actions.moveToElement(text, off1, off2 + 55).clickAndHold();
+			actions.moveToElement(text, off1 + 10, off2 + 120);
 			actions.release();
 			actions.build().perform();
 			driver.scrollPageToTop();
@@ -20653,9 +20664,10 @@ public class DocViewPage {
 	public void verifyCfAttachCountInDocView() {
 		try {
 			base.waitForElement(getAttachCountTextBox());
-			Boolean actualObjectName = (boolean)getAttachCountTextBox().Visible() && (boolean)getAttachCountTextBox().Enabled();
+			Boolean actualObjectName = (boolean) getAttachCountTextBox().Visible()
+					&& (boolean) getAttachCountTextBox().Enabled();
 			System.out.println("actual: " + actualObjectName);
-			softAssertion.assertEquals(true, (boolean)actualObjectName);
+			softAssertion.assertEquals(true, (boolean) actualObjectName);
 			base.passedStep("Object added in the coding form is displayed in docview page as expected");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -21293,8 +21305,8 @@ public class DocViewPage {
 	}
 
 	/**
-	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: 19/05/2022 Modified by:NA
-	 * Description :perform The Eye Icon HighLighting SearchTerm.
+	 * Author : Vijaya.Rani date: 12/01/22 NA Modified date: 19/05/2022 Modified
+	 * by:NA Description :perform The Eye Icon HighLighting SearchTerm.
 	 *
 	 */
 	public void verifyPersistentHitPanelAndCount(String panel) throws Exception {
@@ -21302,9 +21314,9 @@ public class DocViewPage {
 		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
 		softAssertion.assertTrue(getHitPanleVerify(panel).isDisplayed());
 		if (getHitPanleVerify(panel).Displayed()) {
-		base.passedStep("persistent hit panel displayed in docview panel");
+			base.passedStep("persistent hit panel displayed in docview panel");
 		} else {
-		base.failedStep("Hit panel not displayed");
+			base.failedStep("Hit panel not displayed");
 		}
 		driver.waitForPageToBeReady();
 		base.waitForElementCollection(getDocView_Terms());
@@ -25179,7 +25191,7 @@ public class DocViewPage {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 */
@@ -27997,10 +28009,12 @@ public class DocViewPage {
 
 		}
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param expCount
-	 * @description : This method returns document count of the total documents in that search
+	 * @description : This method returns document count of the total documents in
+	 *              that search
 	 * @return docviewCount
 	 */
 	public int verifyingDocCount(String expCount) {
@@ -28031,9 +28045,9 @@ public class DocViewPage {
 		return docViewCount;
 
 	}
-	
+
 	/**
-	 * @author 
+	 * @author
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 * @Description: This method used to verify Select text copy and paste text on
@@ -28087,9 +28101,9 @@ public class DocViewPage {
 				"Right click and Select action as paste the text is pasted on codingform comment box successfully");
 		return status;
 	}
-	
+
 	/**
-	 * @author 
+	 * @author
 	 * @throws InterruptedException
 	 * @Description: This method used to verify copy and paste text on doc comment
 	 *               box
@@ -28136,7 +28150,7 @@ public class DocViewPage {
 		base.stepInfo("copied text is pasted on codingform comment box");
 		return status;
 	}
-	
+
 	/**
 	 * @author Baskar
 	 * @modiedOn : 06/30/200
@@ -28179,7 +28193,7 @@ public class DocViewPage {
 		System.out.println("Redaction added successfully");
 		UtilityLog.info("Redaction added successfully");
 	}
-	
+
 	/**
 	 * @author Baskar
 	 * @throws ParseException
@@ -28200,7 +28214,7 @@ public class DocViewPage {
 		// Enter time in end field
 		getDocview_AddRedactions_EndTime().SendKeys(Audioendtime);
 	}
-	
+
 	/**
 	 * @author Baskar
 	 * @throws ParseException
@@ -28234,8 +28248,7 @@ public class DocViewPage {
 		// Enter time in end field
 		getDocview_AddRedactions_EndTime().SendKeys(newTime1);
 	}
-	
-	
+
 	/**
 	 * @author Baskar
 	 * @modiedOn : 06/30/200
@@ -28243,7 +28256,8 @@ public class DocViewPage {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	public void audioRedactionUsingAudioRange(String redactionTag,int timeOne,int timeTwo) throws InterruptedException, ParseException {
+	public void audioRedactionUsingAudioRange(String redactionTag, int timeOne, int timeTwo)
+			throws InterruptedException, ParseException {
 		// adding redactions
 		driver.waitForPageToBeReady();
 		getDocview_RedactionsTab().waitAndClick(10);
@@ -28254,7 +28268,7 @@ public class DocViewPage {
 		// click on + icon to add redactions
 		getDocview_RedactionsTab_Add().waitAndClick(10);
 		// Get Audio duration start and End time first
-		audioRedactionBasesOnTime(timeOne,timeTwo);
+		audioRedactionBasesOnTime(timeOne, timeTwo);
 
 		// Check Default Selection
 		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
@@ -28277,14 +28291,14 @@ public class DocViewPage {
 		System.out.println("Redaction added successfully");
 		UtilityLog.info("Redaction added successfully");
 	}
-	
+
 	/**
 	 * @author Baskar 07/07/22 NA Modified date: NA Modified by:NA
 	 * @return
 	 * @description
 	 */
-	public Map<String, String> addContinuousRemark(int iteration, String remark,
-			String msgType) throws Exception, ParseException {
+	public Map<String, String> addContinuousRemark(int iteration, String remark, String msgType)
+			throws Exception, ParseException {
 
 		Map<String, String> datas = new HashMap<String, String>();
 		List<WebElement> documents = getMiniDocListDocIdText().FindWebElements();
@@ -28298,7 +28312,7 @@ public class DocViewPage {
 				driver.waitForPageToBeReady();
 				String docID = getDocView_CurrentDocId().getText();
 				base.stepInfo("Current viewed document : " + docID);
-                 
+
 				// adding remarks
 				getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
 				newTime = audioRemarkDataInput(remark, msgType);
@@ -28318,7 +28332,7 @@ public class DocViewPage {
 
 		return datas;
 	}
-	
+
 	/**
 	 * @author Baskar 07/07/22 NA Modified date: NA Modified by:NA
 	 * @return
@@ -28337,5 +28351,41 @@ public class DocViewPage {
 			System.out.println("No Remarks exist'");
 			UtilityLog.info("No Remarks exist'");
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : edit existing remark non audio document
+	 * @param remark
+	 * @param modifiedRemark
+	 */
+	public void editRemarkForNonAudioDoc(String remark, String modifiedRemark) {
+		driver.waitForPageToBeReady();
+		String panelItemValue = null;
+		base.waitForElement(getNonAudioRemarkBtn());
+		getNonAudioRemarkBtn().waitAndClick(9);
+		driver.waitForPageToBeReady();
+		List<WebElement> remarkPanelItems = getRemarkPanelItems().FindWebElements();
+		List<WebElement> gettrashBasketsofRemarks = getPencilsofRemarks().FindWebElements();
+		boolean flag = false;
+		for (int i = 0; i < remarkPanelItems.size(); i++) {
+			driver.waitForPageToBeReady();
+			panelItemValue = remarkPanelItems.get(i).getText().trim();
+			if (panelItemValue.equalsIgnoreCase(remark)) {
+				driver.waitForPageToBeReady();
+				gettrashBasketsofRemarks.get(i).click();
+				getEditTextField().SendKeys(modifiedRemark);
+				driver.waitForPageToBeReady();
+				base.waitForElement(getSaveRemark());
+				getSaveRemark().waitAndClick(10);
+				flag = true;
+				break;
+			}
+
+		}
+		if (!flag) {
+			base.failedStep(remark + " : expected remark is not found");
+		}
+
 	}
 }

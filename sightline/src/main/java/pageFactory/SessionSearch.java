@@ -5992,7 +5992,7 @@ public class SessionSearch {
 		base.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
 				.moveByOffset(50, 50).release().build().perform();
 		base.stepInfo("text for remarks has been selected");
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
