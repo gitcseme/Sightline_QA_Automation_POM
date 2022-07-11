@@ -92,6 +92,7 @@ public class ManageKeywords_Regression1 {
 		// Impersonate SA to RMU
 		baseClass.impersonateSAtoRMU();
 		// Add keyword
+		keyWord.navigateToKeywordPage();
 		keyWord.addKeywordWithColor(keywordname, color);
 		baseClass.passedStep("After impersonating to access the create keyword group and keywords. ");
 		loginPage.logout();
@@ -104,6 +105,7 @@ public class ManageKeywords_Regression1 {
 		// Impersonate SA to PA
 		baseClass.impersonateSAtoPA();
 		// Add keyword
+		keyWord.navigateToKeywordPage();
 		keyWord.addKeywordWithColor(keywordname1, color1);
 		baseClass.passedStep("After impersonating to access the create keyword group and keywords. ");
 		loginPage.logout();
@@ -132,6 +134,7 @@ public class ManageKeywords_Regression1 {
 		baseClass.impersonatePAtoRMU();
 
 		// Add keyword
+		keyWord.navigateToKeywordPage();
 		keyWord.addKeywordWithColor(keywordname, color);
 		baseClass.passedStep("After impersonating to RMU role from Project Admin, access to create keyword group and keywords in the selected project and the security group. ");
 
