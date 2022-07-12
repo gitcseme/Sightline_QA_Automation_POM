@@ -96,7 +96,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         1 hour
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52316", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52316", enabled = true, groups = { "regression" })
 	public void audioRedactionForLessThanHourToEnd() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -164,7 +164,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         leave some audio unredacted
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52315", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52315", enabled = true, groups = { "regression" })
 	public void audioRedactionToEnd() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -226,7 +226,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         list
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52019", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52019", enabled = true, groups = { "regression" })
 	public void verifyRedactionAfterDeletion() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -345,7 +345,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         the first in the list of redaction tags
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
 	public void verifyDFRedactionNotExistFirstRedactionShouldSelect() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -436,7 +436,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         allow to select only one redaction tag while editing the redaction
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52008", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52008", enabled = true, groups = { "regression" })
 	public void verifyPaUserImpAndEditRedaction() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
@@ -517,7 +517,7 @@ public class Docview_Audio_Sprint2Regression {
 	 *         allow to select only one redaction tag while editing the redaction
 	 * 
 	 */
-//	@Test(description = "RPMXCON-52006", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52006", enabled = true, groups = { "regression" })
 	public void verifyDaUserImpAndEditRedaction() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);

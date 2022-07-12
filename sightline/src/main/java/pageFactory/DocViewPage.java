@@ -3541,6 +3541,10 @@ public class DocViewPage {
 	public Element getViewAllInDocListBtn() {
 		return driver.FindElementById("btnShowAllInDocList");
 	}
+	
+	public Element getCodingStampToolTipIcon(String icon) {
+		return driver.FindElementByXPath("//ul[@id='UserStamps']//li[@id='" + icon + "']//a");
+	}
 
 	public DocViewPage(Driver driver) {
 

@@ -1399,14 +1399,24 @@ public class CodingForm {
 			".//*[@id='CodingFormDataTable']//td[text()='"+cfname+"']/../td[text()='YES (Default)']");
 	}
 	public Element getValidationText() {
-		return driver.FindElementByXPath("//div[@id='ui-id-1']");
+		return driver.FindElementByXPath("(//div[contains(@class,'modal-body ui-dialog')])[last()]");
 	}
 	public Element getValidationButtonText() {
-		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']");
+		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset'])[last()]");
 	}
 	public Element getFullTagText() {
 		return driver.FindElementByXPath("//a[@data-toggle='collapse']");
 	}
+	public Element getValidationButtonYes() {
+		return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[text()='Yes'])[last()]");
+	}
+	public ElementCollection getListOfNameInCfStructure() {
+		return driver.FindElementsByXPath("//a[@data-toggle='collapse']");
+	}
+	public Element getVerifyCfSavedName(String cfName) {
+		return driver.FindElementByXPath("//table[@id='CodingFormDataTable']/tbody//..//td[text()='"+cfName+"']");
+	}
+
 
 	
 	
