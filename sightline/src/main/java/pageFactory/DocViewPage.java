@@ -24372,8 +24372,6 @@ public class DocViewPage {
 	 */
 	public void verifyResults(String remarkText, String remarkTime, String remarkDateTime, String authorName,
 			String status) {
-		
-		System.out.println(getRemarkText(remarkText).getText());
 		base.textCompareEquals(remarkText, getRemarkText(remarkText).getText(),
 				"Remark Text : " + remarkText + " is " + status + " ",
 				"Remark Text : " + remarkText + " not " + status + " ");
@@ -24408,7 +24406,6 @@ public class DocViewPage {
 			String remarkTime = datas.get("Time-" + i);
 			String remarkauthorName = datas.get("authorName-" + i);
 			String dateAndTime = datas.get("Duration-" + i);
-			System.out.println("remarkText"+remarkText);
 			mindiocList.getDociD(dociID).waitAndClick(5);
 			driver.waitForPageToBeReady();
 
