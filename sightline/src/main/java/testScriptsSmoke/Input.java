@@ -566,6 +566,11 @@ public class Input {
 	public static String BEbomDat;
 	public static String MP3_OverlayLst;
 	public static String ingestionAutomationAllSource;
+	public static String SystemAdministrator;
+	public static String DomainAdministrator;
+	public static String ProjectAdministrator;
+	public static String ReviewManager;
+	public static String Reviewer;
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
@@ -1074,6 +1079,11 @@ public class Input {
 		BEbomDat = testData.getBEbomDat();
 		MP3_OverlayLst = testData.getMP3_OverlayLst();
 		ingestionAutomationAllSource = testData.getIngestionAutomationAllSource();
+		SystemAdministrator = testData.getSystemAdministrator();
+		DomainAdministrator = testData.getDomainAdministrator();
+		ProjectAdministrator = testData.getProjectAdministrator();
+		ReviewManager = testData.getReviewManager();
+		Reviewer = testData.getReviewer();
 
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.

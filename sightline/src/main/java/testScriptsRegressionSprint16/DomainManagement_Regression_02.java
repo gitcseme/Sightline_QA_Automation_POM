@@ -102,7 +102,7 @@ public class DomainManagement_Regression_02 {
 		}else {
 			base.failedStep("verification failed");
 		}
-		base.impersonateRMUtoReviewer(Input.domainName,Input.largeVolDataProject,Input.securityGroup);
+		base.impersonateRMUtoReviewer(Input.domainName,Input.additionalDataProject,Input.securityGroup);
 		driver.waitForPageToBeReady();
 		
 		base.passedStep("When System Admin impersonate as RMU is able to impersonate as Reviewer under different project");
@@ -355,6 +355,269 @@ public class DomainManagement_Regression_02 {
 		userManage.deleteUser(Input.randomText);
 		
 		base.passedStep("Verified when system admin adds domain user same as deleted domain admin/project admin/RMU/Reviewer");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that Sys Admin can select only one domain during impersonation as Domain Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52861",enabled = true, groups = {"regression" })
+	public void verifySysAdminSelectOnlyONeDomain() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52861");
+		base.stepInfo("Verify that Sys Admin can select only one domain during impersonation as Domain Admin");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		softAssertion = new SoftAssert();
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.DomainAdministrator);
+		base.selectImpersonateDomain(Input.domainName);
+		
+		base.getSelectDomain().selectFromDropdown().selectByIndex(1);
+		base.stepInfo("Try to select more than one Domain from drop down  ");
+		base.getSaveChangeRole().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		String domain = base.getProjectNames().getText().trim();
+		softAssertion.assertNotEquals(domain, Input.domainName);
+		softAssertion.assertAll();
+		base.passedStep("System Admin is select only one domain during impersonation as Domain Admin");
+		
+		base.passedStep("Verified that Sys Admin can select only one domain during impersonation as Domain Admin");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022 
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Domain Admin'
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52867",enabled = true, groups = {"regression" })
+	public void verifySysAdminImpersonateRoles() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52867");
+		base.stepInfo("Verify Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Domain Admin'");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		String[] roles = {Input.DomainAdministrator, Input.ProjectAdministrator, Input.ReviewManager, Input.Reviewer};
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		for(String role: roles) {
+		base.selectImpersonateRole(role);
+		driver.waitForPageToBeReady();
+		if(base.getSelectRole(role).isDisplayed()) {
+			base.passedStep(role+" role is displayed");
+		}else {
+			base.failedStep("verification failed");
+		}
+		}
+		
+		base.passedStep("Verified Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Domain Admin'");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022 
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify the fields from 'Impersonate to' when sys admin impersonate as Project Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52868",enabled = true, groups = {"regression" })
+	public void verifySysAdminToPa() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52868");
+		base.stepInfo("Verify the fields from 'Impersonate to' when sys admin impersonate as Project Admin");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.ProjectAdministrator);
+		base.selectImpersonateDomain(Input.domainName);
+		base.selectImpersonateProject(Input.projectName);
+		
+		base.getSaveChangeRole().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if(base.text("Datasets").isDisplayed()) {
+			base.passedStep("sa Impersonated to pa");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		base.passedStep("Verified the fields from 'Impersonate to' when sys admin impersonate as Project Admin");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022 
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Review Manager'
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52872",enabled = true, groups = {"regression" })
+	public void verifySysAdminToRmuRmuAvailRoles() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52872");
+		base.stepInfo("Verify Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Review Manager'");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		
+		String[] roles = {Input.SystemAdministrator,Input.DomainAdministrator,Input.ProjectAdministrator,Input.Reviewer};
+		
+		base.impersonateSAtoRMU();
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		for(String role:roles) {
+		base.selectImpersonateRole(role);
+		driver.waitForPageToBeReady();
+		if(base.getSelectRole(role).isDisplayed()) {
+			base.passedStep(role+" role is displayed");
+		}else {
+			base.failedStep("verification failed");
+		}
+		}
+		
+		
+		base.passedStep("Verify Role drop down from ' Impersonate To' when Sys Admin impersonates as 'Review Manager'");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022 
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that error message should be displayed when Domain is not selected during Sys Admin > Domain Admin impersonation
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52873",enabled = true, groups = {"regression" })
+	public void verifyErrorMsgForDomain() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52873");
+		base.stepInfo("Verify that error message should be displayed when Domain is not selected during Sys Admin > Domain Admin impersonation");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.DomainAdministrator);
+		base.getSaveChangeRole().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if(base.text("You must specify a domain").isDisplayed()) {
+			base.passedStep("Error message should be displayed to select domain  ");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		base.passedStep("Verify that error message should be displayed when Domain is not selected during Sys Admin > Domain Admin impersonation");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/12/2022 
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify fields from 'Impersonate To' on selecting role as RMU/Reviewer
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52874",enabled = true, groups = {"regression" })
+	public void verifyFieldWhenImpersonate() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52874");
+		base.stepInfo("Verify fields from 'Impersonate To' on selecting role as RMU/Reviewer");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		base.selectImpersonateRole("Review Manager");
+		driver.waitForPageToBeReady();
+		if(base.getAvlDomain().isDisplayed()) {
+			base.passedStep("domain field is displayed");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		if(base.getAvlProject().isDisplayed()) {
+			base.passedStep("project field is displayed");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		if(base.getSelectSecurityGroup().isDisplayed()) {
+			base.passedStep("ecurity group field is displayed");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		base.passedStep("Verify fields from 'Impersonate To' on selecting role as RMU/Reviewer");
 		loginPage.logout();
 	}
 	

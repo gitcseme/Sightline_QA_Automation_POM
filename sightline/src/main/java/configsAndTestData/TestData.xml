@@ -466,6 +466,11 @@
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
 	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
+	<SystemAdministrator>System Administrator</SystemAdministrator>
+	<DomainAdministrator>Domain Administrator</DomainAdministrator>
+	<ProjectAdministrator>Project Administrator</ProjectAdministrator>
+	<ReviewManager>Review Manager</ReviewManager>
+	<Reviewer>Reviewer</Reviewer>
 	
 	<!-- Added by Brundha -->
 	<documentID>ID00004969</documentID>

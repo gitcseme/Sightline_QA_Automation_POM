@@ -487,6 +487,11 @@ public class TestData {
 	public String BEbomDat;
 	public String MP3_OverlayLst;
 	public String ingestionAutomationAllSource;
+	public String SystemAdministrator;
+	public String DomainAdministrator;
+	public String ProjectAdministrator;
+	public String ReviewManager;
+	public String Reviewer;
 
 	// Added by Gopinath - 30/11/2021
 	public String postGenQcChecks;

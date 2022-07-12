@@ -306,7 +306,10 @@ public class BaseClass {
 
 	public Element getPageTitle() {
 		return driver.FindElementByXPath("//h1[@class='page-title']");
-
+	}
+	
+	public Element getSelectRole(String role) {
+		return driver.FindElementByXPath("//select[@name='Role']/option[text()='"+role+"']");
 	}
 
 	public BaseClass(Driver driver) {
@@ -3818,7 +3821,18 @@ public class BaseClass {
 				return false;
 			}
 		}
-
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param project
+		 * @Description selecting project name while impersonate the role
+		 */
+		public void selectImpersonateProject(String project) {
+			driver.waitForPageToBeReady();
+			waitForElement(getSelectProjectTo());
+			getSelectProjectTo().selectFromDropdown().selectByVisibleText(project);
+			stepInfo("impersonate tab project was selected");
+		}
 
 
 }
