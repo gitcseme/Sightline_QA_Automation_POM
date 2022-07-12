@@ -1869,6 +1869,22 @@ public class SessionSearch {
 	public Element getSelectSgPopup() {
         return driver.FindElementById("Edit User Group");
     }
+	
+	public Element getBellyBandTitleLabel() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//child::span[text()='This search is in progress']");
+	}
+
+	public Element getIWantToWaitPopup(){
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' I want to wait']");
+	}
+	
+	public Element getWhenPureHitsAreReadyPopup() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' When Pure Hits are ready']");
+	}
+	
+	public Element getExecutedStatusinLHS(int searchNum) {
+		return driver.FindElementByXPath("//li[@lang='tabs-"+searchNum+"']//a//span[@id='idLastExecuted' and contains(text(),'Executed')]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -12382,6 +12398,76 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 
 
 	}
+	
+	public void verifyAllTilesResultsinAdvSrcScrn() throws InterruptedException{
+
+		SoftAssert softAssert = new SoftAssert();
+		// Getting Result From PureHit Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);	
+		
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		softAssert.assertNotNull(pureHit, "Pure Hit Tile Successfully Returned the Results");
+		System.out.println("PureHit Count :" + pureHit);
+		
+		// Getting Result From Thread Count Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getThreadedCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		
+		int threadCount = Integer.parseInt(getThreadedCount().getText());
+		softAssert.assertNotNull(threadCount, "Thread Tile Successfully Returned the Results");
+		System.out.println("ThreadCount :" + threadCount);
+
+		// Getting Result From NearDuplicate Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNearDupeCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		
+		int nearDuplicate = Integer.parseInt(getNearDupeCount().getText());
+		softAssert.assertNotNull(nearDuplicate, "Near Duplicate Tile Successfully Returned the Results");
+		System.out.println("Near Duplocate Count :" + nearDuplicate);
+		
+		// Getting Result From Family Count Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFamilyCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+	
+		int familyMember = Integer.parseInt(getFamilyCount().getText());
+		softAssert.assertNotNull(familyMember, "Family Member Tile Successfully Returned the Results");
+		System.out.println("Family Member Count :" + familyMember);
+
+	}		
+	
+
+	public void verifyBellyBandOptions() {
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBellyBandTitleLabel().isElementAvailable(10);
+			}
+		}), Input.wait120);
+		base.stepInfo("Belly Band PopUpSuccessfully Opened");
+		
+		if (getWhenAllResultsAreReadyPopUp().isElementAvailable(5) && getWhenPureHitsAreReadyPopup().isElementAvailable(06) &&
+				getIWantToWaitPopup().isElementAvailable(5)) {
+			base.passedStep("All Three Options are Present in BellyBand When Search Goes BackGround");
+			System.out.println("All Three Options are Present in BellyBand When Search Goes BackGround");
+			
+			}else {
+				base.failedStep("All Three Options Not Present in BellyBand When Search Goes BackGround");
+				System.out.println("All Three Options Not Present in BellyBand When Search Goes BackGround");
+			}
+		}
 }
 	 
 		
