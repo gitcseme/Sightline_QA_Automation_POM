@@ -24372,6 +24372,7 @@ public class DocViewPage {
 	 */
 	public void verifyResults(String remarkText, String remarkTime, String remarkDateTime, String authorName,
 			String status) {
+		base.waitForElement(getRemarkText(remarkText));
 		base.textCompareEquals(remarkText, getRemarkText(remarkText).getText(),
 				"Remark Text : " + remarkText + " is " + status + " ",
 				"Remark Text : " + remarkText + " not " + status + " ");
@@ -24414,7 +24415,7 @@ public class DocViewPage {
 			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
 			// Verify Remark Retained Datas
-			getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
+//			getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");
 
 			base.failedMessage(
