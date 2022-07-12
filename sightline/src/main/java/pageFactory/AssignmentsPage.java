@@ -9097,8 +9097,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().Displayed();
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		bc.waitForElement(getAssignmentCodingFormDropDown());
-		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		SelectCodingform(codingForm);
 
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());

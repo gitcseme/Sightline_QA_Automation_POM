@@ -95,8 +95,8 @@ public class RedactionPage {
     	}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAllRedactionRootNode().Visible()  ;}}),Input.wait30); 
-    	getAllRedactionRootNode().Click();
+    			getselectAllRedactionTag().Visible()  ;}}),Input.wait30); 
+    	getselectAllRedactionTag().Click();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getactionDropDown().Visible()  ;}}),Input.wait30); 

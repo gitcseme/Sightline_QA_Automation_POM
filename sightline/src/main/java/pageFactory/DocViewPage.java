@@ -19110,8 +19110,8 @@ public class DocViewPage {
 	 */
 	public void verifyingToolTipPopupMessage(String Doc, String ExpectedText) throws InterruptedException {
 
-		base.waitTillElemetToBeClickable(getDociD(Doc));
-		getDociD(Doc).waitAndClick(10);
+		//base.waitTillElemetToBeClickable(getDociD(Doc));
+		//getDociD(Doc).waitAndClick(10);
 
 		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());

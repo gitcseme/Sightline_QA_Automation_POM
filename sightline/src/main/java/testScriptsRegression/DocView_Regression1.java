@@ -282,77 +282,77 @@ public class DocView_Regression1 {
 	 * when redaction tag is unassigned from security group.
 	 */
 	 @Test(description = "RPMXCON-52151", alwaysRun = true,groups={"regression"})
-	public void verifyBlankRowDisplayedAppliedRedactionIsUnTaggedFromSecurityGroup() throws Exception {
-		baseClass = new BaseClass(driver);
-		baseClass.stepInfo("Test case Id: RPMXCON-52151 DocView Sprint 03");
-		utility = new Utility(driver);
-		String redactnam = "ATest" + utility.dynamicNameAppender();
-		final String redactname = redactnam;
-		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		baseClass.stepInfo( 
-				"#### Verify that when applied redaction tag is unassigned then blank row should be displayed in edit redaction pop up on doc view ####");
+		public void verifyBlankRowDisplayedAppliedRedactionIsUnTaggedFromSecurityGroup() throws Exception {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-52151 DocView Sprint 03");
+			utility = new Utility(driver);
+			String redactnam = "ATest" + utility.dynamicNameAppender();
+			final String redactname = redactnam;
+			docViewMetaDataPage = new DocViewMetaDataPage(driver);
+			baseClass.stepInfo( 
+					"#### Verify that when applied redaction tag is unassigned then blank row should be displayed in edit redaction pop up on doc view ####");
 
-		docView = new DocViewPage(driver);
-		RedactionPage redactTag = new RedactionPage(driver);
+			docView = new DocViewPage(driver);
+			RedactionPage redactTag = new RedactionPage(driver);
 
-		baseClass.stepInfo("Add redaction tag");
-		redactTag.AddRedaction(redactname, "RMU");
+			
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		Reporter.log("Logged in as User: " + Input.rmu1password);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+			Reporter.log("Logged in as User: " + Input.rmu1password);
+			baseClass.stepInfo("Add redaction tag");
+			redactTag.AddRedaction(redactname, "RMU");
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.addDocsMetCriteriaToActionBoard();
 
-		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.addDocsMetCriteriaToActionBoard();
+			baseClass.stepInfo("Click on reduction button ");
+			docViewMetaDataPage.clickOnRedactAndRectangle();
 
-		baseClass.stepInfo("Click on reduction button ");
-		docViewMetaDataPage.clickOnRedactAndRectangle();
+			baseClass.stepInfo("Set rectangle reduct in doc");
+			docViewMetaDataPage.redactbyrectangle(10, 15, redactname);
 
-		baseClass.stepInfo("Set rectangle reduct in doc");
-		docViewMetaDataPage.redactbyrectangle(10, 15, redactname);
+			loginPage = new LoginPage(driver);
+			loginPage.logout();
 
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
+			baseClass.stepInfo("Login with project administrator");
+			loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+			Reporter.log("Logged in as User: " + Input.pa2userName);
 
-		baseClass.stepInfo("Login with project administrator");
-		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		Reporter.log("Logged in as User: " + Input.pa2userName);
+			security = new SecurityGroupsPage(driver);
 
-		security = new SecurityGroupsPage(driver);
+			baseClass.stepInfo("Navigate To Security Gropus Page URL");
+			security.navigateToSecurityGropusPageURL();
+			
+			baseClass.stepInfo("Click on Security group");
+			security.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
+			
+			baseClass.stepInfo("Un tag redaction from security group");
+			security.unTagFromRedatctionTags(redactname);
 
-		baseClass.stepInfo("Navigate To Security Gropus Page URL");
-		security.navigateToSecurityGropusPageURL();
-		
-		baseClass.stepInfo("Click on Security group");
-		security.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
-		
-		baseClass.stepInfo("Un tag redaction from security group");
-		security.unTagFromRedatctionTags(redactname);
+			loginPage = new LoginPage(driver);
+			loginPage.logout();
 
-		loginPage = new LoginPage(driver);
-		loginPage.logout();
+			baseClass.stepInfo("Login with RMU");
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		baseClass.stepInfo("Login with RMU");
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			sessionSearch = new SessionSearch(driver);
 
-		sessionSearch = new SessionSearch(driver);
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.addDocsMetCriteriaToActionBoard();
 
-		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.addDocsMetCriteriaToActionBoard();
+			redact = new DocViewRedactions(driver);
 
-		redact = new DocViewRedactions(driver);
+			baseClass.stepInfo("Unredact on performed redaction");
+			redact.clickOnLastPerformedRedactionOnCurrentDoc();
 
-		baseClass.stepInfo("Unredact on performed redaction");
-		redact.clickOnLastPerformedRedactionOnCurrentDoc();
+			baseClass.stepInfo("Verify selected option from untag select dropdown is blank");
+			redact.verifySelectedOptionFromUnRedactionDropdownIsBlank();
+			loginPage.logout();
 
-		baseClass.stepInfo("Verify selected option from untag select dropdown is blank");
-		redact.verifySelectedOptionFromUnRedactionDropdownIsBlank();
-		loginPage.logout();
-
-	}
+		}
 
 	/**
 	 * Author : Gopinath date: NA Modified date: NA Modified by: NA Test Case Id:
@@ -3694,7 +3694,7 @@ public class DocView_Regression1 {
 				"#### Verify that if the document TIFF is being presented, the 'T' icon with the accompanying mouse over tool tip must appear ####");
 
 		String ExpectedText = "TIFF file variant of the document being displayed";
-		String DocId = "ID00001075";
+		String DocId = "D21006P";
 
 		baseClass.stepInfo("Basic meta data search");
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -5975,11 +5975,11 @@ public class DocView_Regression1 {
 
 		String foldername = "folder" + Utility.dynamicNameAppender();
 		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
-		RedactionPage redactionpage = new RedactionPage(driver);
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
-
+		RedactionPage redactionpage = new RedactionPage(driver);
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
 		System.out.println("First Redaction Tag is created" + Redactiontag1);
