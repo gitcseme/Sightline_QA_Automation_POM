@@ -485,8 +485,8 @@ public class DocExplorer_Regression1 {
 			 */
 			@Test(description ="RPMXCON-54978",alwaysRun = true, groups = { "regression" } )
 			public void verifyBackgroundProcessOfPrintDocument() throws InterruptedException {
-				String pdfDocId = "ID00001304";
-				String textDocId = "ID00001012";
+				String pdfDocId = "STC4_00000871";
+				String textDocId = "ID00000206";
 				baseClass = new BaseClass(driver);
 				baseClass.stepInfo("Test case Id: RPMXCON-54978 sprint 12");
 				baseClass.stepInfo("###Doc Explorer: Preview- Verify that on click of the print icon success message should be displayed to inform the user that it is processed in background task ###");
@@ -502,6 +502,8 @@ public class DocExplorer_Regression1 {
 				
 				baseClass.stepInfo("View serached dos in Docview");
 				session.ViewInDocView();
+				
+				docView.selectDocIdInMiniDocList(pdfDocId);
 				
 				baseClass.stepInfo("Select pdf document");
 				docView.ScrollAndSelectDocument(pdfDocId);
