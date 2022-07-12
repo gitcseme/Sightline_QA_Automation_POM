@@ -66,6 +66,8 @@ public class ReusableDocViewPage {
 	public Element getDrp_StampColour() {return driver.FindElementById("stampSelect");}
 //	coding stamp save button
 	public Element getCodingStampSaveBtn() {return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save']");}
+//	coding stamp save this form button
+	public Element getCodingStampSaveThisFormBtn() {return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='Save This Form']");}
 //	coding Stamp colour selection 
 	public Element getAssignedColour(String colour) {return driver.FindElementByXPath("//dl[@id='stampSelect']//ul//li[@id='" + colour + "']");}
 	public Element getEditAssignedColour(String editColour) {return driver.FindElementByXPath("//dl[@id='ddlEditStamps']//ul//li[@id='" + editColour + "']");}
@@ -1443,8 +1445,8 @@ public class ReusableDocViewPage {
 		getEditAssignedColour(colour).waitAndClick(10);
 		base.waitForElement(getCodingStampEditTextBox());
 		getCodingStampEditTextBox().SendKeys(fieldValue);
-		base.waitForElement(getCodingStampSaveBtn());
-		getCodingStampSaveBtn().waitAndClick(10);
+		base.waitForElement(getCodingStampSaveThisFormBtn());
+		getCodingStampSaveThisFormBtn().waitAndClick(10);
 		base.passedStep("User successfully edited the colour and text in coding stamp");		
 	}
 	/**
