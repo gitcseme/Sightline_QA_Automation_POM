@@ -120,10 +120,8 @@ public class BasicSearchRegression2 {
 
 	@DataProvider(name = "dataSearch")
 	public Object[][] dataSearch() {
-		return new Object[][] { 
-			{ "Precision AND (ProximitySearch Truthful~5)" },
-				{ "Precision AND (ProximitySearch Truthful ~5)" },
-				       {"Precision AND (ProximitySearch Truthful~5 )"},};
+		return new Object[][] { { "Precision AND (ProximitySearch Truthful~5)" },
+				{ "Precision AND (ProximitySearch Truthful ~5)" }, { "Precision AND (ProximitySearch Truthful~5 )" }, };
 	}
 
 	/**
@@ -170,38 +168,38 @@ public class BasicSearchRegression2 {
 		base.stepInfo("RPMXCON-56997 Basic Search");
 		base.stepInfo("Verify that basic search for Comment is working properly");
 
-		//configure metadata query and add comment
+		// configure metadata query and add comment
 		session.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
 		session.viewInDocView();
 		docview.addCommentAndSave(docComment1, true, count);
 
-		//verify comment in session search page
+		// verify comment in session search page
 		base.selectproject();
 		int PureHit = session.getCommentsOrRemarksCount(Input.documentComments, docComment1);
 		softAssertion.assertEquals(count, PureHit);
-		
-		//configure query and add comment
+
+		// configure query and add comment
 		base.selectproject();
 		session.basicContentSearch(Input.searchString5);
 		session.viewInDocView();
 		docview.addCommentAndSave(docComment2, true, count);
 
-		//verify comment for regular exp
+		// verify comment for regular exp
 		base.selectproject();
 		int PureHit2 = session.getCommentsOrRemarksCount(Input.documentComments, regularExp);
 
-		//configure audio doc and add comment
+		// configure audio doc and add comment
 		base.selectproject();
 		session.audioSearch(Input.audioSearchString1, Input.language);
 		session.viewInDocView();
 		docview.addCommentAndSave(docComment3, true, count);
 
-		//verify comment
+		// verify comment
 		base.selectproject();
 		int PureHit3 = session.getCommentsOrRemarksCount(Input.documentComments, docComment3);
 		softAssertion.assertEquals(count, PureHit3);
 
-		//verify comment in advance search page
+		// verify comment in advance search page
 		base.selectproject();
 		session.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment1);
 		base.selectproject();
@@ -210,6 +208,92 @@ public class BasicSearchRegression2 {
 		session.getCommentsOrRemarksCount_AdvancedSearch(Input.documentComments, docComment3);
 
 		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that added reviewer remarks for Non-audio documents is
+	 *              working correctly in Basic Search. [RPMXCON-46879]
+	 * @throws ParseException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-46879", enabled = true, groups = { "regression" })
+	public void addRemarkForNonAudio() throws ParseException, Exception {
+		String remark = "Reviewed" + Utility.dynamicNameAppender();
+		int count = 1;
+
+		// login as User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("RPMXCON-46879 Basic Search");
+		base.stepInfo(
+				"Verify that added reviewer remarks for Non-audio documents is working correctly in Basic Search.");
+
+		// configure metadata query and add remark
+		session.basicContentSearch(Input.searchString2);
+		session.viewInDocView();
+		session.createRemarks(remark);
+
+		// verify Remark in session search page
+		base.selectproject();
+		int PureHit = session.getCommentsOrRemarksCount("Remark", remark);
+		softAssertion.assertEquals(count, PureHit);
+
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that Modified reviewer remarks for Non-audio documents
+	 *              is working correctly in Advanced Search. [RPMXCON-48230]
+	 * @throws ParseException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-48230", enabled = true, groups = { "regression" })
+	public void modifyExistingRemarkOnAdv() throws ParseException, Exception {
+		String remark = "Reviewed" + Utility.dynamicNameAppender();
+		String ModifiedRemark = "Remark" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+		
+		// login as User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("RPMXCON-48230 BasicSearch");
+		base.stepInfo(
+				"Verify that Modified reviewer remarks for Non-audio documents is working correctly in Advanced Search.");
+
+		// configure metadata query 
+		session.basicContentSearch(Input.searchString2);
+		session.viewInDocView();
+		
+		//add remark
+		session.createRemarks(remark);
+
+		// verify Remark in session search page
+		base.selectproject();
+		int PureHit = session.getCommentsOrRemarksCount_AdvancedSearch("Remark", remark);
+
+		// configure metadata query and modify remark
+		base.selectproject();
+		session.basicContentSearch(Input.searchString2);
+		session.viewInDocView();
+		docview.editRemarkForNonAudioDoc(remark, ModifiedRemark);
+
+		// verify Remark in session search page
+		base.selectproject();
+		int PureHit2 = session.getCommentsOrRemarksCount_AdvancedSearch("Remark", remark);
+
+		// configure metadata query and modify remark
+		base.selectproject();
+		session.basicContentSearch(Input.searchString2);
+		session.viewInDocView();
+		docview.deleteReamark(ModifiedRemark);
+		
+		softAssertion.assertNotEquals(PureHit2, PureHit);
+		softAssertion.assertAll();
+
 		login.logout();
 	}
 

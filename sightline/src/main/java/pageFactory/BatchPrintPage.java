@@ -2593,10 +2593,11 @@ public class BatchPrintPage {
 	 * @param Next
 	 */
 	public void disableSlipSheet(boolean Next) {
-		base.waitForElement(getToggleButton());
+		if(getToggleButton().isElementAvailable(10)) {
 		getToggleButton().waitAndClick(5);
 
 		base.passedStep("Disables Slipsheet Toggle");
+	}
 
 		if (Next) {
 			navigateToNextPage(1);
