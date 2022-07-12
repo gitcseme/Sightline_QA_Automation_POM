@@ -250,6 +250,14 @@ public class Input {
 	public static String parentDocument;
 	public static String masterDateText;
 	public static String pdfFileType;
+	public static String reviewerProgress;
+	public static String ReviewRateTrend;
+	public static String TotalReviewProgress;
+	public static String EndtoEnd;
+	public static String ReviewerProductivity;
+	public static String Tagging;
+	public static String ToDoDocs;
+	public static String Complete;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1044,6 +1052,14 @@ public class Input {
 		parentDocument = testData.getParentDocument();
 		masterDateText = testData.getMasterDateText();
 		pdfFileType=testData.getPdfFileType();
+		reviewerProgress=testData.getReviewerProgress();
+		ReviewRateTrend=testData.getReviewRateTrend();
+		TotalReviewProgress=testData.getTotalReviewProgress();
+		EndtoEnd=testData.getEndtoEnd();
+		Tagging=testData.getTagging();
+		ReviewerProductivity=testData.getReviewerProductivity();
+		ToDoDocs=testData.getToDoDocs();
+		Complete=testData.getComplete();
 		
 		/**
 		* @author Aathith.Senthilkumar

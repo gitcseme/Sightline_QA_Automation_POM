@@ -215,6 +215,15 @@
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
 	<masterDateText>MasterDate</masterDateText>
+	<reviewerProgress>Reviewer Progress</reviewerProgress>
+	<ReviewRateTrend>Review Rate Trend - Last 7 Days</ReviewRateTrend>
+	<TotalReviewProgress>Total Review Progress</TotalReviewProgress>
+	<EndtoEnd>End-to-End</EndtoEnd>
+	<Tagging>Tagging</Tagging>
+	<ReviewerProductivity>Reviewer Productivity</ReviewerProductivity>
+	<ToDoDocs>ToDoDocs</ToDoDocs>
+	<Complete>Complete</Complete>
+	
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
