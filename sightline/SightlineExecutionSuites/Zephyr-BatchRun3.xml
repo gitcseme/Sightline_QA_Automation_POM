@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-BatchRun3" preserve-order="true">
+<listeners>
+		<listener class-name="executionMaintenance.TestListener" />
+	</listeners>
+	
+	<test name="Zephyr-BatchRun3">
+		<classes>
+		    <class name="testScriptsSmoke.Input"></class>
+			<class name="sightline.smallComponents.DomainManagement_IndiumRegression"></class>
+			<class name="sightline.smallComponents.UsersAndRoleManagement_Regression"></class>
+			<class name="sightline.smallComponents.DocExplorer_Regression1"></class>
+			<class name="sightline.smallComponents.DocList_Regression1"></class>
+			<class name="sightline.smallComponents.WorkFlow_IndiumRegression" />
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_04"></class>
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_03"></class>
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_02"></class>
+			<class name="sightline.savedSearch.SavedSearch_Regression_Set_01"></class>
+			<class name="sightline.savedSearch.SavedSearch_Regression1"></class>
+			<class name="sightline.savedSearch.SavedSearchAudio_Regresssion"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_01"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_02"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_03"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_04"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_05"></class>
+			<class name="sightline.savedSearch.SavedsearchRegression_New_Set_06"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New"></class>
+		</classes>
+	</test> <!-- Test -->
+
+</suite>
+<!-- Suite -->
+
+<!-- The class file is not created by indium team and may not work in zephyr as descriptions are not added<class name="sightline.savedSearch.SavedSearch_Regression"></class> -->

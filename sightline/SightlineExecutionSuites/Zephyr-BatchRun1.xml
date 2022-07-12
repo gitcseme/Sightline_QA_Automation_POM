@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-BatchRun1" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Zephyr-BatchRun1">
+<classes>
+<class name="testScriptsSmoke.Input" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression1" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression2" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression3" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression4" />
+<class name= "sightline.advancedSearch.ModifySearchInAdvancedSearch_Regression" />
+<class name= "sightline.basicSearch.BasicSearch_Regression1" />
+<class name= "sightline.basicSearch.PerformanceTest_Regression" />
+<class name= "sightline.bulkActions.BulkActions_Regression" />
+<class name= "sightline.projects.ProjectField_Regression" />
+<class name= "sightline.projects.Projects_Regression" />
+<class name= "sightline.proview.Proview_Regression" />
+<class name= "sightline.tagsAndFolders.TagAndFolder" />
+<class name= "sightline.batchPrint.BatchPrint_Regression1" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression2" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression3" />
+<class name= "sightline.batchRedaction.BatchRedaction_Production" />
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+

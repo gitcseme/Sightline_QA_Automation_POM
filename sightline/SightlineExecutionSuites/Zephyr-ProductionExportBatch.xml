@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-ProductionExportBatch" preserve-order="true">
+<listeners>
+		<listener class-name="executionMaintenance.TestListener" />
+	</listeners>
+
+     <test name="Production_Page_Regression">
+        <classes>
+		     <class name="testScriptsSmoke.Input"></class>
+		     
+             <class name="sightline.productions.Production_Page_Regression"></class>
+      
+             <class name="sightline.productions.Production_Regression1"></class>
+       
+             <class name="sightline.productions.Production_Regression2"></class>
+    
+             <class name="sightline.productions.Production_Test_Regression_01"></class>
+      
+             <class name="sightline.productions.Production_Test_Regression_02"></class>
+       
+             <class name="sightline.productions.Production_Test_Regression_03"></class>
+      
+             <class name="sightline.productions.ProductionDBVerification"></class>
+      
+             <class name="sightline.productions.ProductionNew_Regression"></class>
+     
+             <class name="sightline.productions.ProductionPage_Regression"></class>
+			 
+			 <class name="sightline.productions.Export_Regression"></class>
+       </classes>
+       </test>
+</suite>
+<!-- Suite -->
