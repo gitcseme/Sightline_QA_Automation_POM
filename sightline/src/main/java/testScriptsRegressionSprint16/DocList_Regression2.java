@@ -69,7 +69,7 @@ public class DocList_Regression2 {
 	}
 	
 	/**
-	 * @author Vijaya.Rani ModifyDate:06/07/2022 RPMXCON-54963
+	 * @author Vijaya.Rani ModifyDate:11/07/2022 RPMXCON-54963
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 * @Description Verify that email metadata should present with single quote on DocList.
@@ -114,7 +114,7 @@ public class DocList_Regression2 {
 	}
 	
 	/**
-	 * @author Vijaya.Rani ModifyDate:08/07/2022 RPMXCON-54534
+	 * @author Vijaya.Rani ModifyDate:11/07/2022 RPMXCON-54534
 	 * @throws Exception
 	 * @Description Validate onpage filter for EmailAuthorDomains And DocFileType on DocList page.
 	 */
@@ -146,6 +146,77 @@ public class DocList_Regression2 {
 		
 		baseClass.stepInfo("verify DocList DocFileType Include  and EmailAuthorDomain Exclude Filter");
 		docList.emailValueFirstExcludeAndEmailValueSecondIncludeVerifyInDocList(docFileType,emailAuthor);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/07/2022 RPMXCON-54532
+	 * @throws Exception
+	 * @Description Validate onpage filter for CustodianName and MasterDate on DocList page.
+	 */
+	@Test(description = "RPMXCON-54532", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterCustodianNameAndMasterDateInDocList(String username, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54532");
+		baseClass.stepInfo(
+				"Validate onpage filter for CustodianName and MasterDate on DocList page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String custodianName="CustodianName";
+		
+		
+		//Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		
+		baseClass.stepInfo("verify DocList CustodianName Include and MasterDate Between Filter");
+		docList.emailCustodianNameIncludeAndMasterDate(custodianName);
+		
+		// Clear Applied filter
+		baseClass.stepInfo("Clear the Applied Filters");
+		docList.clearAllAppliedFilters();
+		
+		baseClass.stepInfo("verify DocList MasterDate Before and CustodianName Exclude Filter");
+		docList.emailCustodianNameExcludeAndMasterDateBefore(custodianName);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:12/07/2022 RPMXCON-54533
+	 * @throws Exception
+	 * @Description Validate onpage filter for EmailRecipientNames and DocFileSize on DocList page.
+	 */
+	@Test(description = "RPMXCON-54533", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	public void verifyFilterEmailRecipientNamesAndDocFileSizeInDocList(String username, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54533");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailRecipientNames and DocFileSize on DocList page.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String emailRecipientNames="EmailRecipientNames";
+		
+		//Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		
+		baseClass.stepInfo("verify DocList EmailRecipientNames Include and DocFileSize Filter");
+		docList.emailRecipientNamesIncludeAndDocFileSize(emailRecipientNames);
+		
+		// Clear Applied filter
+		baseClass.stepInfo("Clear the Applied Filters");
+		docList.clearAllAppliedFilters();
+		
+		baseClass.stepInfo("verify DocList DocFileSize and EmailRecipientNames Include Filter");
+		docList.emailRecipientNamesExcludeAndDocFileSize(emailRecipientNames);
 		loginPage.logout();
 	}
 	
