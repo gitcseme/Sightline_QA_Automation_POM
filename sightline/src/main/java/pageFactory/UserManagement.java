@@ -2830,4 +2830,104 @@ public class UserManagement {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from PA to reviewer manager and Reviewer
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleFromPAToRMU(String username, String role,String select) {
+		driver.waitForPageToBeReady();
+		bc.waitTime(20);
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		bc.waitForElement(getEditButtonFromUserManagentPage());
+		getEditButtonFromUserManagentPage().waitAndClick(10);
+
+		if (role.contains("Project Administrator")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			if (select.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}else if (select.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled for the user");
+
+		}else if (role.contains("Review Manager")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			if (select.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}else if (select.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled for the user");
+
+		}else if (role.contains("Reviewer")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+			bc.waitForElement(getConfirmTab());
+			getConfirmTab().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled for the user");
+
+		} else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+	}
 }

@@ -16,14 +16,7 @@ import automationLibrary.ElementCollection;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
-/**
- * @author Mohan.Venugopal
- *
- */
-/**
- * @author Mohan.Venugopal
- *
- */
+
 public class KeywordPage {
 
     Driver driver;
@@ -65,6 +58,9 @@ public class KeywordPage {
     public Element getKeywordTableEditFields(){ return driver.FindElementByXPath("//*[@id='KeywordsDatatable']//tr[1]//td//a[text()='Edit']"); }  
     public Element getManageBtn(){ return driver.FindElementByName("Manage"); }
     public Element getKeywordBtn() { return driver.FindElementByName("Keywords");}
+    public ElementCollection getKeywordTableValues(String fieldValues){ return driver.FindElementsByXPath("//*[@id='KeywordsDatatable']//td[text()='"+fieldValues+"']"); }
+    public Element getKeyword4000CharactersWordText(){ return driver.FindElementByXPath("//span[text()='(Maximum Characters 4000)']"); }
+    public Element getNoButton(){ return driver.FindElementById("bot2-Msg1");  }
     
     //Annotation Layer added successfully
     public KeywordPage(Driver driver){
@@ -528,5 +524,85 @@ public class KeywordPage {
           	
         	 
 		}
+         
+         
+         	/**
+        	 * @author Mohan.Venugopal
+        	 * @Description: Method for getting all keywords
+        	 * @param keyword : keyword creation without saving
+        	 */
+         public void deleteKeywordByNameAndCancel(String keyword) {
+      	  	try {
+      	  		driver.waitForPageToBeReady();
+            		int rowCount = totalRows().FindWebElements().size();
+            		for(int i=0;i<rowCount;i++) {
+            			ElementCollection tableValues = getKeywordTableValues(keyword);
+            			int val = tableValues.size();
+            			System.out.println(val);
+            			if(val==1) {
+             				base.waitForElement(getDeleteButton(keyword));
+             		    	getDeleteButton(keyword).waitAndClick(5);
+             		    	base.waitForElement(getNoButton());
+             		    	getNoButton().waitAndClick(5);
+             		    	base.waitForElementCollection(getKeywordTableValues(keyword));
+             		    	ElementCollection keywordTableValues = getKeywordTableValues(keyword);
+             		    	int size = keywordTableValues.size();
+             		    	System.out.println(size);
+             		    	base.stepInfo("Keyword Group is not deleted and Present in the Tabel");
+             		        break;
+             			}
+             			String getNextButtonAtt = getNextButton().GetAttribute("class");
+             			if((i==rowCount-1)&&!(getNextButtonAtt.contains("disabled"))) {
+             				driver.scrollingToBottomofAPage();
+             				driver.waitForPageToBeReady();
+             				getNextButtonEle().isElementAvailable(8);
+             				getNextButtonEle().Click();
+             				driver.waitForPageToBeReady();
+             				rowCount = totalRows().FindWebElements().size();
+             				i=-1;
+             			}
+             		}
+      		}catch(Exception e) {
+             		e.printStackTrace();
+             		base.failedStep("Execption occured while deleting keyword"+e.getLocalizedMessage());
+             	}
+         	
+         } 
+         
+         /**
+     	 * @author Mohan.Venugopal
+     	 * @Description: Method for creating with 4000 characters
+     	 * @param keyword : keyword creation
+     	 */
+         public void verifyMoreThan500AndWithin4000CharacterCanBeAddKeyword(String keywordName,String keywordValue, String keywordDescription, String color) {
+
+         	
+         	base.waitForElement(getNewKeywordButton());
+            	getNewKeywordButton().waitAndClick(5);
+            	
+            	base.waitForElement(getKeyword4000CharactersWordText());
+            	if (getKeyword4000CharactersWordText().isElementAvailable(5)) {
+            		base.passedStep("Character limit to add Keywords is increased to 4000 characters");
+ 				
+ 			}else {
+ 				base.failedStep("Character limit is not displayed");
+ 			}
+            	base.waitForElement(getKeywordName());
+            	getKeywordName().SendKeys(keywordName);
+            	base.waitForElement(getDescription());
+            	getDescription().SendKeys(keywordValue);
+            	base.waitForElement(getKeywords());
+            	getKeywords().SendKeys(keywordDescription);
+            	getSelectColor().selectFromDropdown().selectByVisibleText(color);
+            	base.waitTime(2);
+            	getSaveBtn().isElementAvailable(10);
+            	getSaveBtn().Click();
+            	getYesButton().isElementAvailable(10);
+            	getYesButton().Click(); 
+            	
+            	
+            	base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
+            	base.CloseSuccessMsgpopup();
+ 		}
 	
  }
