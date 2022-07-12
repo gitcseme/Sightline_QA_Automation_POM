@@ -279,6 +279,13 @@ public class AdvancedSearchRegression2 {
 		login.logout();
 	}
 	
+	/**
+	 * Author : date: 
+	 * TestCase Id:RPMXCON-57083
+	 * Description :Verify that User Navigates from Advanced Search result to Document View screen.
+	 * 
+	 */
+	
 	@Test(description ="RPMXCON-57083", dataProvider = "Users", groups = { "regression" })
 	public void verifyNavigatesfrmAdvsearchsreentoDocViewScreen(String username, String password) throws InterruptedException {
 		BaseClass baseClass = new BaseClass(driver);
@@ -310,6 +317,14 @@ public class AdvancedSearchRegression2 {
 	
 	}
 	
+	/**
+	 * Author : date: 
+	 * TestCase Id:RPMXCON-57089
+	 * Description :To Verify as an user login into the Application 
+	 * User will be able to copy a search query into the new search box by clicking on 'Copy to new search' in advanced search page
+	 * 
+	 */
+	
 	@Test(description ="RPMXCON-57089",dataProvider = "Users", groups = { "regression" })
 	public void verifyCopytoNewSearchinAdvanceSearch(String username, String password) throws InterruptedException {
 		BaseClass baseClass = new BaseClass(driver);
@@ -338,6 +353,13 @@ public class AdvancedSearchRegression2 {
 
 	}
 	
+	/**
+	 * Author : date: 
+	 * TestCase Id:RPMXCON-57158 
+	 * Description :Verify that Remove functionality working fine for 'Audio' block on 'Advanced Search' screen 
+	 * 
+	 */
+	
 	@Test(description ="RPMXCON-57078", dataProvider = "Users", groups = { "regression" })
 	public void verifyRemoveFunctionallityAudioAdvSearch(String username, String password) throws InterruptedException {
 		BaseClass baseClass = new BaseClass(driver);
@@ -347,7 +369,7 @@ public class AdvancedSearchRegression2 {
 		baseClass.stepInfo("Verify that Remove functionality working fine for 'Audio' block on 'Advanced Search' screen");
 		
 		loginPage.loginToSightLine(username, password);
-	
+		baseClass.stepInfo("Logged In As : " + username);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.navigateToAdvancedSearchPage();	
 		
@@ -374,6 +396,13 @@ public class AdvancedSearchRegression2 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-57242 
+	 * Description :Verify that Conceptual tile return the result for Metatadata Search in Advanced Search 
+	 * 
+	 */
+	
 	@Test(description ="RPMXCON-57242", dataProvider = "Users", groups = { "regression" })
 	public void verifyConceptTileRtnMetadataInAdvSrcScreen (String username, String password) throws InterruptedException {
 		BaseClass baseClass = new BaseClass(driver);
@@ -383,6 +412,7 @@ public class AdvancedSearchRegression2 {
 		baseClass.stepInfo("Verify that Conceptual tile return the result for Metatadata Search in Advanced Search Screen.");
 		
 		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In As : " + username);
 		sessionSearch.advancedMetaDataSearch(Input.docFileExt, null, ".xls", null );
 		
 		int pureHit =Integer.parseInt(sessionSearch.verifyPureHitsCount());
@@ -397,6 +427,196 @@ public class AdvancedSearchRegression2 {
 			baseClass.failedStep("Still Loading on the Screen");
 		}
 		baseClass.passedStep("Verified - that Conceptual tile return the result for Metatadata Search in Advanced Search Screen");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-57343 
+	 * Description :Verify that Advanced Proximity Search upload functionality is working proper in Saved searches 
+	 * 
+	 */
+	
+	@Test(description ="RPMXCON-57343", dataProvider = "Users", groups = { "regression" })
+	public void verifyAdvProxUploadFunctinSS (String username, String password) throws Exception {
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-57343");
+		baseClass.stepInfo(
+				"Verify that Advanced Proximity Search upload functionality is working proper in Saved searches");
+		SavedSearch savedSearch = new SavedSearch(driver);
+		String renameFile = savedSearch.renameFile(Input.WPbatchFile);
+		String columnHeading = "Search Name";
+		String fileLocation = System.getProperty("user.dir") + Input.WPbatchFile + renameFile;
+
+		// Login 
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In As : " + username);
+	    savedSearch.navigateToSSPage();
+	    savedSearch.verifySavedSearchPage();
+	    driver.waitForPageToBeReady();
+	    baseClass.stepInfo("Navigated to SavedSearch Page");
+	    
+		baseClass.waitForElement(savedSearch.getSavedSearchGroupName(Input.mySavedSearch));
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).Click();
+		
+		// Uploading Batch File
+		List<String> searchNames = savedSearch.batchFileUpload(Input.WPbatchFile, renameFile);
+		baseClass.passedStep("Verified - that Upload Functionality Working Properly");
+		
+		// collecting search Names in attached File
+		List<String> excelData = baseClass.readExcelColumnData(fileLocation, columnHeading);
+		System.out.println("datas in attached File are readed");
+		baseClass.passedStep("data in attached File are readed");
+
+		// comparing the search Names in excel sheet with search names in saved search
+		// page
+		baseClass.compareListViaContains(searchNames, excelData);
+		baseClass.passedStep("Verified - that upload functionality is working proper and all saved Search appears  under Saved searches");
+
+		driver.scrollPageToTop();
+		driver.Navigate().refresh();
+		savedSearch.deleteUplodedBatchFile(renameFile);
+		
+		// logOut
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-48394 
+	 * Description :Verify that Conceptually similar tile 
+	 * does not display any document when search is run on Advanced Search Screen. 
+	 * 
+	 */
+	
+	@Test(description ="RPMXCON-48394", dataProvider = "Users"  , groups = { "regression" })////Doubt
+	public void verifyConceptTiledoesnotRtnDocInAdvSrcScreen (String username, String password) throws InterruptedException {
+		String docFileType = "Spreadsheet";
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48394");
+		baseClass.stepInfo("Verify that Conceptually similar tile does not display any document when search is run on Advanced Search Screen.");
+		
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In As : " + username);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.advancedMetaDataSearch(Input.docFileType, null, docFileType, null );
+		driver.waitForPageToBeReady();
+		
+		sessionSearch.verifyTileSpinning();
+		int conceptTileHits = sessionSearch.runAndVerifyConceptualSearch();
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertEquals(0, conceptTileHits, "Conceptually similar tile does not display any document");
+		asserts.assertAll();
+		baseClass.passedStep("Verified - that Conceptually similar tile does not display any document when search is run on Advanced Search Screen.");	
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-48416 
+	 * Description : Verify that Search status display Completed on My BackGround Page 
+	 * 
+	 */
+	
+	@Test(description ="RPMXCON-48416", dataProvider = "Users", groups = { "regression" })
+	public void verifySearchStatusDisplayCompletedOnMyBGPage (String username, String password) throws InterruptedException {
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48416");
+		baseClass.stepInfo("Verify that Search status display Completed on My BackGround Page");
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In As : " + username);
+		baseClass.selectproject(Input.highVolumeProject);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR", Input.metaDataName, Input.searchStringStar, true);
+		sessionSearch.SearchBtnAction();
+		
+		sessionSearch.verifyTileSpinning();
+		String backGroundID = sessionSearch.handleWhenAllResultsPopUpDynamic();
+		sessionSearch.verifyAllTilesResultsinAdvSrcScrn();
+		baseClass.passedStep("All Tiles Successfully Returned Results");
+		
+		baseClass.waitForElement(sessionSearch.getBullHornIcon());
+		sessionSearch.getBullHornIcon().waitAndClick(20);
+			
+		baseClass.waitForElement(sessionSearch.getViewAllBtn());
+		sessionSearch.getViewAllBtn().waitAndClick(20);
+		
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to My BackGround Task Page...");
+		
+		String status = sessionSearch.getRowData_BGT_Page("STATUS", backGroundID);
+
+		SoftAssert asserts = new SoftAssert();
+		asserts.assertEquals(status, "COMPLETED");
+		asserts.assertAll();
+		baseClass.passedStep("Verified - that Search status display Completed on My BackGround Page");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-48403
+	 * Description : Verify that 3 options appears on a bellyband 
+	 * when search goes to BackGround on Advanced Search Result Screen"
+	 * 
+	 */
+	
+	@Test(description ="RPMXCON-48403", dataProvider = "Users",  groups = { "regression" })
+	public void verifyOptionsInBellyBandWhenSrcGoesBG (String username, String password) throws InterruptedException {
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48403");
+		baseClass.stepInfo("Verify that 3 options appears on a bellyband when search goes to BackGround on Advanced Search Result Screen");
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("Logged In As : " + username);
+		baseClass.selectproject(Input.highVolumeProject);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR", Input.metaDataName, Input.searchStringStar, true);
+		sessionSearch.SearchBtnAction();
+		
+		sessionSearch.verifyTileSpinning();
+		sessionSearch.verifyBellyBandOptions();
+		baseClass.passedStep("Verified - that 3 options appears on a bellyband when search goes BackGround on Advanced Search Result Screen");
+		loginPage.logout();
+		}
+	
+	
+	/**
+	 * Author : date: 12/07/2022  
+	 * TestCase Id:RPMXCON-48408
+	 * Description : Verify that Search status display Executed in left hand side
+	 * 
+	 */
+	@Test(description ="RPMXCON-48408", dataProvider = "Users", groups = { "regression" })
+	public void verifySearchStatusDisplayExecutedinLHS (String username, String password) throws InterruptedException {
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-48408");
+		baseClass.stepInfo("Verify that Search status display Executed in left hand side");
+		loginPage.loginToSightLine(username, password);	
+		baseClass.stepInfo("Logged In As : " + username);
+		baseClass.selectproject(Input.highVolumeProject);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR", Input.metaDataName, Input.searchStringStar, true);
+		sessionSearch.SearchBtnAction();		
+		sessionSearch.verifyTileSpinning();
+		sessionSearch.verifyAllTilesResultsinAdvSrcScrn();
+		baseClass.passedStep("All Tiles Are succesfully returned the Results..");
+		sessionSearch.verifySessionSearchPage();
+		
+		if(sessionSearch.getExecutedStatusinLHS(1).isElementAvailable(10)) {
+			String status = sessionSearch.getExecutedStatusinLHS(1).getText();
+			baseClass.passedStep("Executed Status Present in Left Hand Side of Session Search Page" + status);
+		
+		}else {
+			baseClass.failedStep("Executed Status Not Present in Left Hand Side of Session Search Page");
+		}
+		baseClass.passedStep("Verified - that Search status display Executed in left hand side ");
 		loginPage.logout();
 	}
 
