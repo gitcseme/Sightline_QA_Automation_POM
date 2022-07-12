@@ -287,7 +287,7 @@ public class DocList_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
 
 		baseClass.stepInfo(" Search meta data DocFile Type");
-		sessionSearch.basicSearchWithMetaDataQuery(".tiff", "DocFileType");
+		sessionSearch.basicSearchWithMetaDataQuery(Input.searchDocFileType, "DocFileType");
 		sessionSearch.ViewInDocView();
 		
 		//Apply Redaction
