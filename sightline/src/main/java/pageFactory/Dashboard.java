@@ -39,8 +39,6 @@ public class Dashboard {
     public Element mostToDoDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Most To Do Docs')]"); }
     public Element mostCompletedDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Completed')]"); }
     
-  
-    
     public Dashboard(Driver driver){
 
         this.driver = driver;
