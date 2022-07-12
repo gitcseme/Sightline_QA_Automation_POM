@@ -2444,7 +2444,7 @@ public class DocViewPage {
 	}
 
 	public Element getPanelText() {
-		return driver.FindElementByXPath("//p[@id='PHitCount_crammer' and contains(text(),'crammer')]");
+		return driver.FindElementByXPath("//p[contains(text(),'crammer')]");
 	}
 
 	// Added by Aathith
@@ -19115,8 +19115,8 @@ public class DocViewPage {
 	 */
 	public void verifyingToolTipPopupMessage(String Doc, String ExpectedText) throws InterruptedException {
 
-		base.waitTillElemetToBeClickable(getDociD(Doc));
-		getDociD(Doc).waitAndClick(10);
+		//base.waitTillElemetToBeClickable(getDociD(Doc));
+		//getDociD(Doc).waitAndClick(10);
 
 		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());
