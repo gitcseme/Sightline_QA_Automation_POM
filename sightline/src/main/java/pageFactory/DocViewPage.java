@@ -24372,6 +24372,8 @@ public class DocViewPage {
 	 */
 	public void verifyResults(String remarkText, String remarkTime, String remarkDateTime, String authorName,
 			String status) {
+		
+		System.out.println(getRemarkText(remarkText).getText());
 		base.textCompareEquals(remarkText, getRemarkText(remarkText).getText(),
 				"Remark Text : " + remarkText + " is " + status + " ",
 				"Remark Text : " + remarkText + " not " + status + " ");
@@ -24402,18 +24404,20 @@ public class DocViewPage {
 		for (int i = 0; i < iteration; i++) {
 
 			String dociID = datas.get("DocID-" + i);
-			String remarkText = datas.get("remark-" + i);
+			String remarkText = datas.get("remark-"+ i);
 			String remarkTime = datas.get("Time-" + i);
 			String remarkauthorName = datas.get("authorName-" + i);
 			String dateAndTime = datas.get("Duration-" + i);
-
+			System.out.println("remarkText"+remarkText);
 			mindiocList.getDociD(dociID).waitAndClick(5);
 			driver.waitForPageToBeReady();
 
 			// click on remarks button
+			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
 			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
 			// Verify Remark Retained Datas
+			getAdvancedSearchAudioRemarkPlusIcon().waitAndClick(5);
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");
 
 			base.failedMessage(
