@@ -24402,7 +24402,7 @@ public class DocViewPage {
 		for (int i = 0; i < iteration; i++) {
 
 			String dociID = datas.get("DocID-" + i);
-			String remarkText = datas.get("remark-"+ i);
+			String remarkText = datas.get("remark-" + i);
 			String remarkTime = datas.get("Time-" + i);
 			String remarkauthorName = datas.get("authorName-" + i);
 			String dateAndTime = datas.get("Duration-" + i);
