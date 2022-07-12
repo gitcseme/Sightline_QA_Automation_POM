@@ -2443,7 +2443,7 @@ public class DocViewPage {
 	}
 
 	public Element getPanelText() {
-		return driver.FindElementByXPath("//p[@id='PHitCount_crammer' and contains(text(),'crammer')]");
+		return driver.FindElementByXPath("//p[contains(text(),'crammer')]");
 	}
 
 	// Added by Aathith
