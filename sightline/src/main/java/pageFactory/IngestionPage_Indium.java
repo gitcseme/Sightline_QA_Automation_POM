@@ -9374,15 +9374,14 @@ public class IngestionPage_Indium {
 				}), Input.wait30);
 				getbtnRunIngestion().waitAndClick(10);
 				
-				if(ingestionType=="Overlay Only") {
+				if(ingestionType.equalsIgnoreCase(Input.overlayOnly)) {
 				verifyApprovedStatusForOverlayIngestion();
 				runFullAnalysisAndPublish();
-				base.stepInfo("The ingestion started to run automatically");
 				}
 				else {
 					ignoreErrorsAndCatlogging();
 					ignoreErrorsAndCopying();
-					ingestionIndexing(Input.PP_PDFGen_10Docs);
+					ingestionIndexing(dataset);
 					approveIngestion(1);
 					runFullAnalysisAndPublish();
 				}
