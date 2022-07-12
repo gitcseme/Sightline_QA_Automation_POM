@@ -333,7 +333,15 @@ public class SavedSearch {
 	}
 
 	// Added By Jeevitha
-	// ul[@class='jstree-children']//li//a
+
+	public Element getUnreleaseBtn() {
+		return driver.FindElementByXPath("// button[@id='btnUnrelease']");
+	}
+
+	public Element getNotificationStatus(int i) {
+		return driver.FindElementByXPath("(// ul[@class='notification-body']//span//span)[" + i + "]");
+	}
+
 	public ElementCollection getListOfGroupsUnderTab() {
 		return driver.FindElementsByXPath("//a[contains(@class,'clicked')]//following-sibling::ul//li");
 	}
@@ -7373,7 +7381,7 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		int afterBg = base.initialBgCount();
-		
+
 		if (Bgcount < afterBg) {
 			System.out.println("Got notification!");
 			base.stepInfo("Recieved Notification ");
@@ -8114,6 +8122,84 @@ public class SavedSearch {
 			base.stepInfo("Clicked :" + groupName);
 
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Decsription  : verify Notification of saved search screen
+	 * @param initialCount
+	 * @param size
+	 * @return
+	 */
+	public List<String> verifyExecuteAndReleaseNotify(int initialCount, int size) {
+		List<String> id = new ArrayList<>();
+		driver.waitForPageToBeReady();
+		int afterCount = base.initialBgCount();
+		if (afterCount == initialCount + size) {
+			for (int i = 1; i <= size; i++) {
+				base.getBullHornIcon().waitAndClick(10);
+				String completeStatus = getNotificationStatus(i).getText();
+				base.stepInfo("Recieved Notification : " + completeStatus);
+				String[] notify = completeStatus.split(" ");
+				int count=notify.length;
+				System.out.println(count);
+				String lastID = notify[count-3];
+				String status = notify[count-1];
+				System.out.println("Id : " + lastID);
+				base.stepInfo("Id : " + lastID);
+				System.out.println("Status : " + status);
+				base.stepInfo("Status : " + status);
+
+				id.add(lastID);
+			}
+		} else {
+			base.failedStep("Didnot recieve Notification");
+	}
+		return id;
+	}
+
+	/**
+	 * @Author : Jeevitha
+	 * @Description : Perform Release action On saved search Screen
+	 * @param securityGroup
+	 * @param release
+	 */
+	public void performReleaseAction(String securityGroup, boolean release) {
+		String expected = "Records saved successfully";
+		 int Bgcount = base.initialBgCount();
+		base.waitForElement(getReleaseIcon());
+		getReleaseIcon().waitAndClick(5);
+
+		// CHoose SG
+		base.waitForElement(getReleaseDocToSG(securityGroup));
+		getReleaseDocToSG(securityGroup).waitAndClick(5);
+
+		// Click Release OR Unrelease Button
+		if (release) {
+			base.waitForElement(getReleaseBtn());
+			getReleaseBtn().waitAndClick(5);
+
+			// Finalize release button
+			base.waitForElement(getFinalizeReleaseButtonfromPopup());
+			getFinalizeReleaseButtonfromPopup().waitAndClick(6);
+			base.stepInfo("Released to SG : " + securityGroup);
+			base.VerifySuccessMessage(expected);
+		} else {
+			base.waitForElement(getUnreleaseBtn());
+			getUnreleaseBtn().waitAndClick(10);
+			base.stepInfo("Unreleased From SG : " + securityGroup);
+			base.VerifySuccessMessage(expected);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		 int afterBgcount = base.initialBgCount();
+		if(afterBgcount>Bgcount) {
+			base.stepInfo("Recieved Notification");
+		}
+
 	}
 
 }
