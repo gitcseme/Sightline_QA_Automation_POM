@@ -66,25 +66,28 @@ public class CommentsPage {
 	}
 
 	// Added by Mohan
+
+	public Element getPopupNoBtn() {
+		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+	}
+
 	public Element getTotCommentsTable() {
 		return driver.FindElementByXPath("//div[@id='CommentsTable_info']");
 	}
-	
+
 	public Element getCommentsTableFieldValue(String fieldName) {
-		return driver.FindElementByXPath("//*[@id='CommentsTable']//td[text()='"+fieldName+"']");
+		return driver.FindElementByXPath("//*[@id='CommentsTable']//td[text()='" + fieldName + "']");
 	}
-	
-	
-	
-	//Added by Vijaya.Rani
+
+	// Added by Vijaya.Rani
 	public Element getCommentsTableErrorMsg() {
 		return driver.FindElementByXPath("//span[@id='CommentLabel-error']");
 	}
-	
+
 	public Element getEditCommentLabel() {
 		return driver.FindElementByXPath("//input[@id='CommentLabel']");
 	}
-	
+
 	public CommentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -184,6 +187,11 @@ public class CommentsPage {
 		base.CloseSuccessMsgpopup();
 	}
 
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To validate comments Table
+	 * @param commentsName
+	 */
 	public void validateCommentsTable() {
 
 		driver.waitForPageToBeReady();
@@ -212,6 +220,11 @@ public class CommentsPage {
 		}
 	}
 
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To navigate to Comment Page
+	 * @param commentsName
+	 */
 	public void navigateToCommentsPage() {
 		try {
 			driver.getWebDriver().get(Input.url + "Comments/CommentsList");
@@ -221,6 +234,12 @@ public class CommentsPage {
 		}
 	}
 
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Comment Page
+	 * @param commentsName
+	 */
 	public void verifyCommentsPage() {
 
 		driver.waitForPageToBeReady();
@@ -236,8 +255,9 @@ public class CommentsPage {
 		}
 
 	}
+
 	/**
-	 * @author Vijaya.Rani ModifyDate:01/07/2022 
+	 * @author Vijaya.Rani ModifyDate:01/07/2022
 	 * @Description Add comments With Error Msg
 	 */
 	public void AddCommentsWithErrorMsg(String ComentName) {
@@ -258,9 +278,9 @@ public class CommentsPage {
 		base.stepInfo(errorMsg);
 		System.out.println(errorMsg);
 	}
-	
+
 	/**
-	 * @author Vijaya.Rani ModifyDate:01/07/2022 
+	 * @author Vijaya.Rani ModifyDate:01/07/2022
 	 * @Description Add comments And Edit
 	 */
 	public void EditCommentsIsDisabled() {
@@ -269,41 +289,65 @@ public class CommentsPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getEditCommentButton());
 		getEditCommentButton().waitAndClick(5);
-		
+
 		driver.waitForPageToBeReady();
-		String color = driver
-                .FindElement(By.xpath("//input[@id='CommentLabel']"))
-                .GetCssValue("background-color");
-        System.out.println(color);
-        String ExpectedColor = Color.fromString(color).asHex();
-        System.out.println(ExpectedColor);
-        String ActualColor = "#eeeeee";
-        if (ActualColor.equals(ExpectedColor)) {
-            base.passedStep("EditComments are not Editable,it is disabled");
-        } else {
-            base.failedStep("Edit Comments is Editable");
-        }
-	
+		String color = driver.FindElement(By.xpath("//input[@id='CommentLabel']")).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor = "#eeeeee";
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("EditComments are not Editable,it is disabled");
+		} else {
+			base.failedStep("Edit Comments is Editable");
+		}
+
 	}
-	
+
 	/**
-	 * @author Mohan.Venugopal
-	 * #description: To check Comment name is present in the table or not
+	 * @author Mohan.Venugopal #description: To check Comment name is present in the
+	 *         table or not
 	 * @param commentsName
 	 */
 	public void validateCommentNameIsPresentOrNot(String commentsName) {
-		
-		
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCommentsTableFieldValue(commentsName));
 
 		if (getCommentsTableFieldValue(commentsName).isElementAvailable(5)) {
-			base.passedStep("Comment are added under the security group of the logged in RMU user and success message is displayed successfully ");
-			
-		}else {
+			base.passedStep(
+					"Comment are added under the security group of the logged in RMU user and success message is displayed successfully ");
+
+		} else {
 			base.failedStep("Comments are not added under the security group of the logged in RMU user");
 		}
-		
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal #description: To delete Comment name and click on
+	 *         cancel button
+	 * @param commentsName
+	 */
+	public void deleteCommentsAndClickOnCancelButton(String commentsName) {
+
+		driver.waitForPageToBeReady();
+		FindComment(commentsName);
+		base.waitForElement(getDeleteCommentButton(commentsName));
+		getDeleteCommentButton(commentsName).Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPopupNoBtn().Visible();
+			}
+		}), Input.wait30);
+		getPopupNoBtn().Click();
+
+		if (getCommentsTableFieldValue(commentsName).isDisplayed()) {
+			base.passedStep("Comment is not deleted successfully");
+		} else {
+			base.failedStep("Delete fuction is not working fine");
+		}
+
 	}
 
 }
