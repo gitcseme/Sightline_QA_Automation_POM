@@ -266,14 +266,14 @@ public class Docview_Audio_Sprint2Regression {
 				"In default : invalid redaction tag selected");
 
 		// first redaction
-		docViewPage.audioRedactionUsingAudioRange(RedactName, 1, 2);
+		docViewPage.audioRedactionUsingAudioRange(RedactName, 0, 1);
 		baseClass.stepInfo("Adding the first redaction");
 
 		// adding second redaction
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocview_RedactionsTab_Add());
 		docViewPage.getDocview_RedactionsTab_Add().waitAndClick(20);
-		docViewPage.audioRedactionBasesOnTime(3, 4);
+		docViewPage.audioRedactionBasesOnTime(2, 3);
 		baseClass.stepInfo("Adding the second redaction");
 
 		// select redaction tags

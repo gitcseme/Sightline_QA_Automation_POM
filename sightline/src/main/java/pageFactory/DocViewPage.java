@@ -28209,6 +28209,8 @@ public class DocViewPage {
 		System.out.println(Audiostarttime);
 		UtilityLog.info(Audiostarttime);
 		String Audioendtime = getDocview_Audio_EndTime().getText();
+		String[] splitData = Audioendtime.split(":");
+		String data = splitData[1].toString();
 		System.out.println(Audioendtime);
 		UtilityLog.info(Audioendtime);
 
@@ -28217,7 +28219,7 @@ public class DocViewPage {
 		getDocview_AddRedactions_StartTime().SendKeys(Audiostarttime);
 
 		// Enter time in end field
-		getDocview_AddRedactions_EndTime().SendKeys(Audioendtime);
+		getDocview_AddRedactions_EndTime().SendKeys("0:" + data + ":00");
 	}
 
 	/**
