@@ -175,6 +175,16 @@ public class TestData {
 	public String parentDocument;
 	public String masterDateText;
 	public String pdfFileType;
+	public String reviewerProgress;
+	public String ReviewRateTrend;
+	public String TotalReviewProgress;
+	public String EndtoEnd;
+	public String ReviewerProductivity;
+	public String Tagging;
+	public String ToDoDocs;
+	public String Complete;
+	
+	
 
 	// Added by Sai Krishna
 	public String pageNumber;
