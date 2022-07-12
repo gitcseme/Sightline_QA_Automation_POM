@@ -8566,7 +8566,22 @@ public class SessionSearch {
 		Thread.sleep(2000); // App synch
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
-		getDocViewAction().waitAndClick(10);
+		if (getViewBtn().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
+			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
+
+			base.waitForElement(getDocViewFromDropDown());
+			getDocViewFromDropDown().waitAndClick(10);
+		} else {
+			getDocViewActionDL().Click();
+			getDocViewAction().waitAndClick(10);
+			base.waitTime(3); // added for stabilization
+		}
+
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 	}
