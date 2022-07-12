@@ -1474,7 +1474,9 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(" //label[@id='selectedCodingFormString']");
 	}
 	
-	
+	public Element getQB_AssignemntName_ErrorMSg() {
+		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -10156,4 +10158,32 @@ public class AssignmentsPage {
 		return ActualCount;
 	}
 
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param AssignName
+	 * @param codingForm
+	 * @param expErrorMSg
+	 */
+	
+	public void verifyErrorMSg_QuickBatchAssing(String AssignName,String codingForm,String expErrorMSg) {
+		
+		bc.waitForElement(getAssignmentName());
+		getAssignmentName().SendKeys(AssignName);
+		bc.stepInfo("Entered Assignment Name as -"+AssignName);
+		bc.waitForElement(getAssignmentCodingFormDropDown());
+		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+		bc.stepInfo("Selected Coding form as -"+codingForm);
+		getContinueBulkAssign().waitAndClick(30);
+		if(	getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
+		String actualMsg=getQB_AssignemntName_ErrorMSg().getText();
+		bc.textCompareEquals(actualMsg, expErrorMSg, "ErrorAlert for assignment name with special chars Displayed as expected ",
+				"ErrorAlert Displayed for assignment name with special chars is not as expected");
+		}else {
+			
+			bc.failedStep("After entering Assginment name in "
+					+ "quick batch assign creation,Error message not displayed ");
+		}
+
+	}
 }
