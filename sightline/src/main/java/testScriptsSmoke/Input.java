@@ -417,6 +417,8 @@ public class Input {
 	public static String totalDirSubClusterText;
 	public static String analyzeAt2;
 	public static String analyzeAt3;
+	public static String collectionPageUrl;
+	public static String sourceLocationPageUrl;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1227,6 +1229,8 @@ public class Input {
 		totalDirSubClusterText = testData.getTotalDirSubClusterText();
 		analyzeAt2 = testData.getAnalyzeAt2();
 		analyzeAt3 = testData.getAnalyzeAt3();
+		collectionPageUrl = testData.getCollectionPageUrl();
+		sourceLocationPageUrl = testData.getSourceLocationPageUrl();
 		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

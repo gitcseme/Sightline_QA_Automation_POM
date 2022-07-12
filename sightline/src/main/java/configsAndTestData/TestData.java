@@ -300,6 +300,8 @@ public class TestData {
 	public String totalDirSubClusterText;
 	public String analyzeAt2;
 	public String analyzeAt3;
+	public String collectionPageUrl;
+	public String sourceLocationPageUrl;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;
