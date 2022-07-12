@@ -247,7 +247,7 @@ public class AdvancedSearchRegression2 {
 	}
 
 	/**
-	 * @Author
+	 * @Author Krishna
 	 * @Description : Verify that belly band message appears when user tries to run
 	 *              search having Right double quote only in Advanced Search Query
 	 *              Screen.
@@ -280,7 +280,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 
+	 * Author :Krishna date: 
 	 * TestCase Id:RPMXCON-57083
 	 * Description :Verify that User Navigates from Advanced Search result to Document View screen.
 	 * 
@@ -318,7 +318,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 
+	 * Author :Krishna date: 
 	 * TestCase Id:RPMXCON-57089
 	 * Description :To Verify as an user login into the Application 
 	 * User will be able to copy a search query into the new search box by clicking on 'Copy to new search' in advanced search page
@@ -354,7 +354,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 
+	 * Author :Krishna date: 
 	 * TestCase Id:RPMXCON-57158 
 	 * Description :Verify that Remove functionality working fine for 'Audio' block on 'Advanced Search' screen 
 	 * 
@@ -397,7 +397,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-57242 
 	 * Description :Verify that Conceptual tile return the result for Metatadata Search in Advanced Search 
 	 * 
@@ -431,7 +431,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-57343 
 	 * Description :Verify that Advanced Proximity Search upload functionality is working proper in Saved searches 
 	 * 
@@ -484,7 +484,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-48394 
 	 * Description :Verify that Conceptually similar tile 
 	 * does not display any document when search is run on Advanced Search Screen. 
@@ -515,7 +515,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-48416 
 	 * Description : Verify that Search status display Completed on My BackGround Page 
 	 * 
@@ -559,7 +559,7 @@ public class AdvancedSearchRegression2 {
 	}
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-48403
 	 * Description : Verify that 3 options appears on a bellyband 
 	 * when search goes to BackGround on Advanced Search Result Screen"
@@ -587,7 +587,7 @@ public class AdvancedSearchRegression2 {
 	
 	
 	/**
-	 * Author : date: 12/07/2022  
+	 * Author :Krishna date: 12/07/2022  
 	 * TestCase Id:RPMXCON-48408
 	 * Description : Verify that Search status display Executed in left hand side
 	 * 
