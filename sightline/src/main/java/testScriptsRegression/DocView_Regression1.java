@@ -3758,43 +3758,40 @@ public class DocView_Regression1 {
 	public void verifyRemarkOperationsOfDocumentOnDocview() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51020 spint 09");
-		AssignmentsPage assgnPage = new AssignmentsPage(driver);
+		
 		SessionSearch search = new SessionSearch(driver);
-		final String assignStamp = Input.randomText + Utility.dynamicNameAppender();
+		
 		String editRemark = Input.randomText + Utility.dynamicNameAppender();
 		String remark = Input.randomText + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo(
 				"#### To verify that Remark can be update and deleted by other reviewers in same security group. ####");
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
-		Reporter.log("Logged in as User: " + Input.rmu1password);
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		
 		baseClass.stepInfo("Basic Search");
-		search.basicContentSearch(Input.testData1);
+		search.basicSearchWithMetaDataQueryUsingSourceDOCID("ID00001420");
+         search.ViewInDocView();
+       
+		docView = new DocViewPage(driver);
 
-		baseClass.stepInfo("Bulk Assign");
-		search.bulkAssign();
-
-		baseClass.stepInfo("Assignment Creation");
-		assgnPage.assignmentCreation(assignStamp, Input.codingFormName);
-
-		baseClass.stepInfo("Assignment Distributing To Reviewer");
-		assgnPage.assignmentDistributingToReviewer();
+		baseClass.stepInfo("Add Remark To Non Audio Document");
+		docView.addRemarkToNonAudioDocument(5,55, remark);
 
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
 		// Login As Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
 
-		// selecting the assignment
-		baseClass.stepInfo("Selecting the assignment");
-		assgnPage.SelectAssignmentByReviewer(assignStamp);
+		
 
 		docView = new DocViewPage(driver);
 
-		baseClass.stepInfo("Add Remark To Non Audio Document");
-		docView.addRemarkToNonAudioDocument(5,55, remark);
+		baseClass.stepInfo("Basic Search");
+		search.basicSearchWithMetaDataQueryUsingSourceDOCID("ID00001420");
+         search.ViewInDocView();
+       
+		docView = new DocViewPage(driver);
 
 		baseClass.stepInfo("Verify Remark Is Added");
 		docView.verifyRemarkIsAdded(remark);
@@ -3810,17 +3807,7 @@ public class DocView_Regression1 {
 
 		loginPage.logout();
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		baseClass.stepInfo("Navigate To Assignments Page");
-		assgnPage.navigateToAssignmentsPage();
-
-		baseClass.stepInfo("Refresh page");
-		driver.Navigate().refresh();
-
-		baseClass.stepInfo("Delete Assgnmnt Using Pagination");
-		assgnPage.deleteAssignment(assignStamp);
-		loginPage.logout();
+		
 
 	}
 
@@ -6901,7 +6888,7 @@ public class DocView_Regression1 {
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 		
-		baseClass.selectproject(Input.highVolumeProject);
+		baseClass.selectproject(Input.additionalDataProject);
 	
 		docView = new DocViewPage(driver);
 		SessionSearch session = new SessionSearch(driver);
