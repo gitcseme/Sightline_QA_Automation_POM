@@ -681,17 +681,12 @@
 	<H1369Folder>0002_H13696_1_Latest</H1369Folder>
 	<MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
 	<SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
-	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData
-	</CJK_FrenchAudioTestDataFolder>
-	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS
-	</EmailConcatenatedDataFolder>
+	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
+	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
 	<SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
-	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction
-	</GD994NativeTextForProductionFolder>
-	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file
-	</GNonsearchablePDFLoadfileFolder>
-	<HiddenPropertiesFolder>HiddenProperties_IngestionData
-	</HiddenPropertiesFolder>
+	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 
@@ -719,37 +714,29 @@
 	<YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
 	<YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
 	<StitchedTIFF>Stitched TIFFs</StitchedTIFF>
-	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat
-	</DATFile1>
+	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
 	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
 	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
 	<DAT_MMDDYYYY>DAT_MMDDYYYY.dat</DAT_MMDDYYYY>
 	<Natives_MMDDYYYY>Natives_MMDDYYYY.lst</Natives_MMDDYYYY>
 	<DAT_YYYYDDMM_Slash>DAT_YYYYDDMM_Slash.dat</DAT_YYYYDDMM_Slash>
-	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst
-	</Natives_YYYYDDMM_Slash>
+	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst</Natives_YYYYDDMM_Slash>
 	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
 	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
 	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
-	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst
-	</Natives_DDMMYYYY_Slash>
+	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
 	<DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
-	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst
-	</Natives_MMDDYYYY_Slash>
+	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
 	<DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
 
 	<DAT_MMDDYYYY_HHMI>DAT_MMDDYYYY HHMI.dat</DAT_MMDDYYYY_HHMI>
-	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst
-	</Natives_MMDDYYYY_HHMI>
+	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst</Natives_MMDDYYYY_HHMI>
 	<DAT_DDMMYYYY_HHMI>DAT_DDMMYYYY HHMI.dat</DAT_DDMMYYYY_HHMI>
-	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst
-	</Natives_DDMMYYYY_HHMI>
+	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst</Natives_DDMMYYYY_HHMI>
 	<DAT_MMDDYYYY_HHMISS>DAT_MMDDYYYY HHMISS.dat</DAT_MMDDYYYY_HHMISS>
-	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst
-	</Natives_MMDDYYYY_HHMISS>
+	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst</Natives_MMDDYYYY_HHMISS>
 	<DAT_DDMMYYYY_HHMISS>DAT_DDMMYYYY HHMISS.dat</DAT_DDMMYYYY_HHMISS>
-	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst
-	</Natives_DDMMYYYY_HHMISS>
+	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
 	<differentDateFormatError>Date format selected in the ingestion is not
@@ -767,8 +754,7 @@
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
 	<textFile1>DAT4_STC_Text.lst</textFile1>
 	<PP_PDFGen_10Docs>PP_PDFGen_10Docs</PP_PDFGen_10Docs>
-	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat
-	</DATPPPDF10Docs>
+	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</DATPPPDF10Docs>
 	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
 	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
 	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
@@ -778,8 +764,7 @@
 	<emailAddress1>Gren Sheltr(GrenSheltr@aol.com)</emailAddress1>
 	<emailAddress2>CALXA@aol.com(CALXA@aol.com)</emailAddress2>
 	<emailDatFile>Large_39760.dat</emailDatFile>
-	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat
-	</nonSearchablePdfLoadFile>
+	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat</nonSearchablePdfLoadFile>
 
 	<!-- Ingestion Related data END -->
 
