@@ -550,10 +550,8 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
-		baseClass.stepInfo("perform basic search and bulk folder");
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch.ViewInDocList();
