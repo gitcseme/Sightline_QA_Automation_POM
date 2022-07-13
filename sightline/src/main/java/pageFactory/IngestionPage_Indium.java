@@ -11752,8 +11752,8 @@ public class IngestionPage_Indium {
 		/**
 		 * @author: Arun Created Date: 13/07/2022 Modified by: NA Modified Date: NA
 		 * @description: this method will verify the details retained after opening ingestion using open wizard option
-		 * @parameter: ingestionType
-		 * @parameter: sourceFolder
+		 * @param: ingestionType
+		 * @param: sourceFolder
 		 */
 		
 		public void validateDetailsAfterOpeningIngestionFromDraft(String ingestionType,String sourceFolder) {
