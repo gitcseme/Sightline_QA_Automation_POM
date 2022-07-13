@@ -5432,7 +5432,12 @@ public class DocViewAudio_IndiumRegression {
 			saveSearch.navigateToSSPage();
 			saveSearch.selectNode1(nodeName);
 			driver.waitForPageToBeReady();
-			saveSearch.getToDocView().waitAndClick(5);
+			
+
+			new Actions(driver.getWebDriver()).moveToElement(saveSearch.getToDocViewoption().getWebElement()).build().perform();
+	 		Actions act = new Actions(driver.getWebDriver()).moveToElement(saveSearch.getToDocView().getWebElement());
+			act.click().build().perform();
+			
 
 			// Persistant data to check
 			miniDocListpage.getDocListDatas();
@@ -5543,7 +5548,8 @@ public class DocViewAudio_IndiumRegression {
 			loginPage.logoutWithoutAssert();
 		}
 		try {
-			// loginPage.logout();
+			
+			 loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();

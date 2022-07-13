@@ -25615,6 +25615,7 @@ public class DocViewPage {
 	 * @throws ParseException
 	 */
 	public void audioReduction(String redactionTag) throws InterruptedException, ParseException {
+		
 		// adding redactions
 		driver.waitForPageToBeReady();
 		getDocview_RedactionsTab().waitAndClick(10);
@@ -25624,15 +25625,15 @@ public class DocViewPage {
 
 		// click on + icon to add redactions
 		getDocview_RedactionsTab_Add().waitAndClick(10);
-
+		
 		// Get Audio duration start and End time first
 		audioRedactionTimeConfig();
 
 		// Check Default Selection
-		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
-		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
-				"In default : Application automatically selected the ‘Default Redaction Tag’",
-				"In default : invalid redaction tag selected");
+//		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+//		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+//				"In default : Application automatically selected the ‘Default Redaction Tag’",
+//				"In default : invalid redaction tag selected");
 
 		// select redaction tags
 		base.waitForElement(getDocview_AudioRedactions());
