@@ -285,8 +285,8 @@ public class DocView_Regression8 {
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid ="ICE000784-8-00000003";
-		String docid1 ="H16135-0188-003146";
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -413,8 +413,8 @@ public class DocView_Regression8 {
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid ="ICE000784-8-00000003";
-		String docid1 ="H16135-0188-003146";
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -519,8 +519,8 @@ public class DocView_Regression8 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid ="ICE000784-8-00000003";
-		String docid1 ="H16135-0188-003146";
+		String docid = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
