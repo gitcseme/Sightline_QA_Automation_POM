@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint17;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -36,10 +37,10 @@ public class AdvancedSearch_Regression2_6 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-
-		//in = new Input();
-		//in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		//in = new Input();
+	    //in.loadEnvConfig();
+		
 
 	}
 
@@ -110,6 +111,65 @@ public class AdvancedSearch_Regression2_6 {
 		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagPage.deleteAllTags(tagTallyName);
+
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @description:Verify that - Application returns all the documents which are available under selected group and Assignments - 
+	 * Completed status with OR operator in search result.
+	 */
+	@Test(description ="RPMXCON-57162",groups = { "regression" }, enabled = true)
+	public void verifyDocsCntCompletedAssgnments_OR() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57162");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group and"
+				+ " Assignments - Completed status with OR operator in search result.");
+		String tagName = "combined" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		// Pre requesite creation
+		// Performing Star search since this will add all avail docs from default sec
+		// group .
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		String tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
+		sessionSearch.bulkTag(tagName);
+		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
+		
+		baseClass.selectproject();
+		sessionSearch.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		sessionSearch.workProductSearch("tag", tagName, true);
+		// Adding Operator into search text box
+		sessionSearch.selectOperator("OR");
+		// Adding WP assignment into search text box
+		sessionSearch.selectCompletedAssignmentInWP("Completed");
+		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] OR  Assignments:[completed:\"true\"]");
+		sessionSearch.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = sessionSearch.verifyPureHitsCount();
+		baseClass.stepInfo("Pure hits count value after Configuring a Query with TagName:[ " + tagName + "] OR  Assignments:[completed:\"true\"] is "+PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(PureHitCount, tagHitsCount);
+
+		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		tp.deleteAllTags(tagName);
+		assertion.assertAll();
+		baseClass.passedStep("Application   returned all the documents which are available under "
+				+ "selected  group in search result   for the configured query." + PureHitCount);
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
+						+ "OR operator in search result.");
+		
+		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagPage.deleteAllTags(tagName);
 
 		loginPage.logout();
 
