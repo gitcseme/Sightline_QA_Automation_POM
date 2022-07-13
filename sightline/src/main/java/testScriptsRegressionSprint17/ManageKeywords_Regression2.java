@@ -250,7 +250,7 @@ public class ManageKeywords_Regression2 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleFromPAToRMU(Input.pa1userName, "Project Administrator","1");
+		userManagement.editRoleFromPAUToRMU(Input.pa1userName, "Project Administrator","1",Input.projectName);
 		
 		loginPage.logout();
 		
@@ -275,7 +275,7 @@ public class ManageKeywords_Regression2 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		
 		//Navigate to Users Page
-		userManagement.editRoleFromPAToRMU(Input.pa1userName, "Review Manager","1");
+		userManagement.editRoleFromPAUToRMU(Input.pa1userName, "Review Manager","1",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
