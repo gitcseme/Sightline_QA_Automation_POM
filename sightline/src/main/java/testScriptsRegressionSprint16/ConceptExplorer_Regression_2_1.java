@@ -335,7 +335,7 @@ public class ConceptExplorer_Regression_2_1 {
 		base.stepInfo("**Pre-condition: Few tags are deleted**");
 		tagsAndFolder.CreateTag(tagName, sgToSelect);
 		tagsAndFolder.navigateToTagsAndFolderPage();
-		tagsAndFolder.DeleteTag(tagName, Input.securityGroup);
+		tagsAndFolder.deleteAllTags(tagName);
 
 		// Navigate to Concept Explorer page
 		base.stepInfo("**Step-2 & 3 Go to Report->Concept Explorer**");
