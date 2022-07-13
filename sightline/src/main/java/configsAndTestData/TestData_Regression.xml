@@ -21,8 +21,7 @@
 	<totalNumberOfDocsincludeadvoption>103
 	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -52,49 +51,24 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
-	<indexingWarningMessage>As part of indexing step, index for metadata,
-		text and audio have already been updated. The searches run in the
-		project will reflect these changes. Rolling back will not roll back
-		the updates to the index, so you MUST rerun indexing for the entire
-		project. Do you want to continue with Rollback?
-	</indexingWarningMessage>
-	<mappingWarningMessage>Unique Document Code doesnot match with the
-		previously ingested documents. Existing mappings will be reset. Do you
-		want to continue?</mappingWarningMessage>
-	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
-	<docIdKey>DOCID</docIdKey>
-	<selectNativeFile>natives.lst</selectNativeFile>
-	<selectTextFile>text.lst</selectTextFile>
-	<selectMp3File>MP3 Files.LST</selectMp3File>
-	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
-	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED,
-		ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED
-	</skippedAnalyticMessage>
-	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED,
-		ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_COMPLETED,
-		ES_INDEXING_COMPLETED</completedAnalyticMessage>
+	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
+	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
+   	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
+   	<docIdKey>DOCID</docIdKey>
+   	<selectNativeFile>natives.lst</selectNativeFile>
+   	<selectTextFile>text.lst</selectTextFile>
+   	<selectMp3File>MP3 Files.LST</selectMp3File>
+   	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
+   	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED</skippedAnalyticMessage>
+	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_COMPLETED, ES_INDEXING_COMPLETED</completedAnalyticMessage>
 	<kickOffAnalytics>Kick Off Analytics Automatically</kickOffAnalytics>
-	<incrementalAnalytics>Run Incremental Analytics for New Small Data
-	</incrementalAnalytics>
-	<kickOffHelpContent>If this option is disabled, the ingestion will not
-		kick off analytics after the ingestion is complete. The user needs to
-		manually run analytics and publish the documents. If this option is
-		enabled, the analytics is automatically kicked off after the data is
-		ingested after all the datasets being ingested are complete, and
-		automatically publishes the documents into the project. Sightline will
-		wait until all the datasets are complete to kick off analytics.
-	</kickOffHelpContent>
-	<incrementalHelpContent>If this option is disabled, full analytics is
-		always executed automatically by Sightline. If this option is enabled,
-		Sightline runs full analytics when the new data being ingested is >20%
-		of the existing data and runs incremental analytics when the new data
-		being ingests is &#60;=20% of the existing data.
-	</incrementalHelpContent>
+	<incrementalAnalytics>Run Incremental Analytics for New Small Data</incrementalAnalytics>
+	<kickOffHelpContent>If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.</kickOffHelpContent>
+	<incrementalHelpContent>If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is &#60;=20% of the existing data.</incrementalHelpContent>
 	<mp3Variant>MP3 Variant</mp3Variant>
 	<audio>Audio</audio>
 	<email>EMAIL</email>
-	<emailToNamesAndAddresses>EmailToNamesAndAddresses
-	</emailToNamesAndAddresses>
+	<emailToNamesAndAddresses>EmailToNamesAndAddresses</emailToNamesAndAddresses>
 	<datLoadFile2>DAT4_STC_newdateformatEmailData -NEWID.dat</datLoadFile2>
 	<nativeLoadFile2>DAT4_STC_NativesEmailData NEWID.lst</nativeLoadFile2>
 	<textLoadFile2>DAT4_STC_TextEmailData NEWID.lst</textLoadFile2>
@@ -110,15 +84,12 @@
 	<yearRange2>2022</yearRange2>
 	<translation>Translation</translation>
 	<related>Related</related>
-	<mandatoryMappingError>Please specify a mapping for the mandatory
-		fields.</mandatoryMappingError>
-
+	<mandatoryMappingError>Please specify a mapping for the mandatory fields.</mandatoryMappingError>
+	
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
-	</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
-	</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -147,8 +118,7 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<threadDocumentForReviewer>H16135-0188-002339
-	</threadDocumentForReviewer>
+	<threadDocumentForReviewer>H16135-0188-002339</threadDocumentForReviewer>
 	<nearDupeCompletedDocIdReviewer>T2393D</nearDupeCompletedDocIdReviewer>
 	<newNearDupeDocId>T1796D</newNearDupeDocId>
 	<warningDocId>H16135-0188-002241</warningDocId>
@@ -171,20 +141,17 @@
 	<fieldByValue>Custodian</fieldByValue>
 	<highlightDocId>ICE010058-13-00000001</highlightDocId>
 	<highlightedDocsQuery>DupeCount:[1 TO 10000]</highlightedDocsQuery>
-	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183
-	</ingestionQuery>
-	<ingestionDocIdFamilyMember>H16135-0188-002093
-	</ingestionDocIdFamilyMember>
+	<ingestionQuery>8DFD_Automation_AllSources_20220321095504183</ingestionQuery>
+	<ingestionDocIdFamilyMember>H16135-0188-002093</ingestionDocIdFamilyMember>
 	<ingestionDocIdNearDupe>H16135-0188-001027</ingestionDocIdNearDupe>
 	<warning01>ICE010058-21-00000001</warning01>
-	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610
-	</ingestionQuery01>
+	<ingestionQuery01>8DFD_QA_EmailConcatenatedData_SS_20220322044013610</ingestionQuery01>
 	<sourceDocId10>T2549D</sourceDocId10>
 	<sourceDocId11>T2545D</sourceDocId11>
 	<sourceDocId12>T2529D</sourceDocId12>
 	<projectName01>AutomationAdditionalDataProject</projectName01>
 	<projectName02>Indium_Regressionrun</projectName02>
-	<searchDocFileType>.tiff</searchDocFileType>
+
 
 	<!-- DocView Coding Form -->
 	<savedName>AttachData</savedName>
@@ -196,7 +163,7 @@
 	<reviewerName>MalayalaBaskar</reviewerName>
 	<stampColours>BLACK</stampColours>
 	<stampSelection>YELLOW</stampSelection>
-	<oneHourAudio>ID00001247</oneHourAudio>
+	<oneHourAudio>ID00001113</oneHourAudio>
 
 
 	<!-- Sowndariya Indium -->
@@ -206,8 +173,7 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>S22936960011001028</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
-	</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -215,20 +181,10 @@
 	<TIFFPageCount>TIFFPageCount</TIFFPageCount>
 	<translationDocumentId>STC4_00000001</translationDocumentId>
 	<masterDateText>MasterDate</masterDateText>
-	<reviewerProgress>Reviewer Progress</reviewerProgress>
-	<ReviewRateTrend>Review Rate Trend - Last 7 Days</ReviewRateTrend>
-	<TotalReviewProgress>Total Review Progress</TotalReviewProgress>
-	<EndtoEnd>End-to-End</EndtoEnd>
-	<Tagging>Tagging</Tagging>
-	<ReviewerProductivity>Reviewer Productivity</ReviewerProductivity>
-	<ToDoDocs>ToDoDocs</ToDoDocs>
-	<Complete>Complete</Complete>
-	
 
 	<!-- Added by Gopinath -->
 	<historyTab>History</historyTab>
-	<documentConceptualTab>liDocumentConceptualSimilar
-	</documentConceptualTab>
+	<documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
 	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
@@ -309,52 +265,38 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\
-	</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads\\</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group
-	</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\
-	</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\BatchFiles\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of type
-		xls/xlsx</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of type xls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
-	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is
-		in progress, you cannot overwrite it. Please wait until SavedSearch is
-		completed.</errMsgSinceExecutionInProgress>
-	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\
-	</validBatchFileLocation>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
+	<validBatchFileLocation>\BatchFiles\ValidBatchFiles\</validBatchFileLocation>
 	<fileDataErrMsg>Error in file saving</fileDataErrMsg>
-	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error
-	</batchColumnHeaderErrorFileName>
-	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet
-	</BatchFileWithMultiplesheetFile>
+	<batchColumnHeaderErrorFileName>Batch_columnHeader_Error</batchColumnHeaderErrorFileName>
+	<BatchFileWithMultiplesheetFile>BatchFileWithMultiplesheet</BatchFileWithMultiplesheetFile>
 	<savedSearchColor>#FFFFFF</savedSearchColor>
 	<searchString8>XLS OR XLSX OR CSV</searchString8>
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
-	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS
-	</batchFileWithMultiSheetColumnMissing>
-	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS -
-		Duplicate</batchFileWithMultiSheetColumnDuplicate>
+	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
+	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
 	<searchString9>document</searchString9>
-	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange
-	</batchFileWithColumnOrderChange>
-	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS
-	</batchFileWithMultiSheetColumnOrderChange>
+	<batchFileWithColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange</batchFileWithColumnOrderChange>
+	<batchFileWithMultiSheetColumnOrderChange>Batch_columnHeader_Error_Header_OrderCHange_MS</batchFileWithMultiSheetColumnOrderChange>
 	<highVolumeProject>AutomationHighVolumeProject</highVolumeProject>
 	<bulkSearchSting1>s</bulkSearchSting1>
 	<validBatchFile>ValidBatchFile</validBatchFile>
 	<masterDateBatchFile>MasterDate-IS-RANGE</masterDateBatchFile>
-	<totalDirSubClusterText>Total Direct Sub-Clusters:
-	</totalDirSubClusterText>
+	<totalDirSubClusterText>Total Direct Sub-Clusters:</totalDirSubClusterText>
 	<analyzeAt2>Analyze at 2nd Level</analyzeAt2>
 	<analyzeAt3>Analyze at 3rd Level</analyzeAt3>
 
@@ -372,8 +314,7 @@
 
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
-	<codeSameAsLastMsg>Code this document the same as the last coded
-		document</codeSameAsLastMsg>
+	<codeSameAsLastMsg>Code this document the same as the last coded document</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -382,8 +323,7 @@
 	<performaceBatchFile>\performance BatchFile\</performaceBatchFile>
 	<bullHornIconColor>#E74735</bullHornIconColor>
 	<progresBarColor>#3276B1</progresBarColor>
-	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error
-	</BatchFileduplicateHeader>
+	<BatchFileduplicateHeader>BatchFile_duplicateHeader_Error</BatchFileduplicateHeader>
 	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
@@ -461,8 +401,7 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains
-	</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -474,8 +413,7 @@
 	<docBasic>Doc Basic</docBasic>
 
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and
-		production generated text, and not to ingested text.</exText>
+	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>H16135-0188-001099</paginationDocId>
@@ -506,8 +444,7 @@
 	<notSelect>Not Selected</notSelect>
 	<securityGroup_sg47>SG1134047</securityGroup_sg47>
 	<regressionConsilio>Regression_AllDataset_Consilio</regressionConsilio>
-	<regressionConsilio1>Regression_AllDataset_Consilio1
-	</regressionConsilio1>
+	<regressionConsilio1>Regression_AllDataset_Consilio1</regressionConsilio1>
 	<audioSearchString2>interview</audioSearchString2>
 	<audioSearchString3>six</audioSearchString3>
 	<audioSearchString4>Phrase</audioSearchString4>
@@ -523,62 +460,44 @@
 	<PDFGen_10Docs>PP_PDFGen_10Docs</PDFGen_10Docs>
 	<PDF5DocsLst>PDFs - 5Docs.lst</PDF5DocsLst>
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
-	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat
-	</newdateformat_5Docs>
+	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 	<JanMultiPTIFF>16JanMultiPTIFF</JanMultiPTIFF>
-	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file
-	</GNon_searchable_PDF_Load_file>
+	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
-	<ingestionAutomationAllSource>Automation_AllSources
-	</ingestionAutomationAllSource>
-	<SystemAdministrator>System Administrator</SystemAdministrator>
-	<DomainAdministrator>Domain Administrator</DomainAdministrator>
-	<ProjectAdministrator>Project Administrator</ProjectAdministrator>
-	<ReviewManager>Review Manager</ReviewManager>
-	<Reviewer>Reviewer</Reviewer>
-
+	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
+	
 	<!-- Added by Brundha -->
 	<documentID>ID00004969</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
 	<docFile>H16135-0188-002430</docFile>
 	<stampRed>RED</stampRed>
 	<stampGreen>GREEN</stampGreen>
-	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009
-		STC4_00001016</fileGroup>
+	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
 	<document>H136960002001015</document>
-	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)
-	</fileTypeInNativeDocs>
-	<filterMonth>Dec</filterMonth>
+	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
+   <filterMonth>Dec</filterMonth>
 	<filterYear>2021</filterYear>
 	<userRole>Review Manager</userRole>
-	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596
-	</nativeFileName>
+	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596</nativeFileName>
 	<audioPlayerReady>AudioPlayerReady</audioPlayerReady>
-	<datFormatFile>DAT4_STC_newdateformatEmailData -differentformatdata.dat
-	</datFormatFile>
-	<nativeMp3FileFormat>F10A_AK_Native_PDF_MP3_Transcript_ForProduction_20220502105322190
-	</nativeMp3FileFormat>
+	<datFormatFile>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datFormatFile>
+	<nativeMp3FileFormat>F10A_AK_Native_PDF_MP3_Transcript_ForProduction_20220502105322190</nativeMp3FileFormat>
 	<DocCount>2</DocCount>
 	<emailAllDomain>EmailAllDomains</emailAllDomain>
-	<validationData>/o=enron/ou=na/cn=recipients/cn=notesaddr/cn=a3a4cb81-65db1a4f-862569e7-6cfe2f
-	</validationData>
+	<validationData>/o=enron/ou=na/cn=recipients/cn=notesaddr/cn=a3a4cb81-65db1a4f-862569e7-6cfe2f</validationData>
 	<ingestionPrjt>Indium_IngestionFix</ingestionPrjt>
-	<AutomationAllSources>8B61_Automation_AllSources_20220506060704110
-	</AutomationAllSources>
+	<AutomationAllSources>8B61_Automation_AllSources_20220506060704110</AutomationAllSources>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
-	<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not
-		Implemented):</advancedOptionText>
+<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
 
 	<!-- Added by Gopinath Created date - 03/12/2021 -->
 	<thankyouText>thank you</thankyouText>
 
 	<!-- Added by Gopinath Created date - 08/12/2021 -->
-	<anotherRemarkMessage>Another user has applied redactions, annotations
-		or Reviewer Remarks to this document since you presented it in
-		DocView.</anotherRemarkMessage>
+	<anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
 
 	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>H16135-0188-002188</familyMembersDocId>
@@ -593,16 +512,14 @@
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
-	</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 	<conceptualDoc>H136960002001001</conceptualDoc>
 	<TallySearch>null</TallySearch>
 	<TallyCN>4</TallyCN>
 	<sameThreadDocs_EmailThreadID>F00000001</sameThreadDocs_EmailThreadID>
 	<sameFamilyDocs_FamilyID>41ID00000005</sameFamilyDocs_FamilyID>
-	<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590
-	</IngestionName_PT>
+	<IngestionName_PT>5FC0_QA_EmailConcatenatedData_SS_20220404082309590</IngestionName_PT>
 	<IngestionName_UAT></IngestionName_UAT>
 	<metadataIngestion>IngestionName</metadataIngestion>
 	<custodianName_Andrew>Andrew</custodianName_Andrew>
@@ -640,18 +557,13 @@
 
 	<hiddenDocId>ICE010044-18-00000035</hiddenDocId>
 	<excelProtectedHiddenDocId>ID00000053</excelProtectedHiddenDocId>
-	<warningMessage>Another user has applied redactions, annotations or
-		Reviewer Remarks to this document since you presented it in DocView.
-		You may not apply markup because that would overwrite the markup work
-		done by the other user. Please reload the document.</warningMessage>
+	<warningMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView. You may not apply markup because that would overwrite the markup work done by the other user. Please reload the document.</warningMessage>
 	<conceptualDocId01>ID00000012</conceptualDocId01>
 	<conceptualDocId02>ID00000013</conceptualDocId02>
 	<conceptualDocId03>ID00000015</conceptualDocId03>
-	<conceptualDocIdForReviewer01>331ID00000014
-	</conceptualDocIdForReviewer01>
+	<conceptualDocIdForReviewer01>331ID00000014</conceptualDocIdForReviewer01>
 	<conceptualDocIdForReviewer02>ID00005172</conceptualDocIdForReviewer02>
-	<conceptualDocIdForReviewer03>331ID00000166
-	</conceptualDocIdForReviewer03>
+	<conceptualDocIdForReviewer03>331ID00000166</conceptualDocIdForReviewer03>
 	<familyDocId01>T486D</familyDocId01>
 	<familyDocId02>T487D</familyDocId02>
 	<familyDocId03>T488D</familyDocId03>
@@ -661,15 +573,11 @@
 	<nearDupeDocId01>T1796D</nearDupeDocId01>
 	<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
 	<nearDupeDocId03>T1862D</nearDupeDocId03>
-	<nearDupeDocIdForReviewer01>ICE010058-9-00000007
-	</nearDupeDocIdForReviewer01>
-	<nearDupeDocIdForReviewer02>H16135-0188-003146
-	</nearDupeDocIdForReviewer02>
-	<nearDupeDocIdForReviewer03>ICE010058-21-00000010
-	</nearDupeDocIdForReviewer03>
+	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
+	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
+	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
-	<threadMapWithNonEmailAttachment>H16135-0188-001001
-	</threadMapWithNonEmailAttachment>
+	<threadMapWithNonEmailAttachment>H16135-0188-001001</threadMapWithNonEmailAttachment>
 	<conceptualDocId04>331ID00000187</conceptualDocId04>
 	<nearDupeDoc05>STC4_00000560</nearDupeDoc05>
 
@@ -681,17 +589,12 @@
 	<H1369Folder>0002_H13696_1_Latest</H1369Folder>
 	<MultiPTIFFFolder>16JanMultiPTIFF</MultiPTIFFFolder>
 	<SinglePageTIFFFolder>27Mar_SinglePageTIFF</SinglePageTIFFFolder>
-	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData
-	</CJK_FrenchAudioTestDataFolder>
-	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS
-	</EmailConcatenatedDataFolder>
+	<CJK_FrenchAudioTestDataFolder>CJK_FrenchAudioTestData</CJK_FrenchAudioTestDataFolder>
+	<EmailConcatenatedDataFolder>QA_EmailConcatenatedData_SS</EmailConcatenatedDataFolder>
 	<SSAudioSpeechFolder>SSAudioSpeech_Transcript</SSAudioSpeechFolder>
-	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction
-	</GD994NativeTextForProductionFolder>
-	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file
-	</GNonsearchablePDFLoadfileFolder>
-	<HiddenPropertiesFolder>HiddenProperties_IngestionData
-	</HiddenPropertiesFolder>
+	<GD994NativeTextForProductionFolder>GD_994_Native_Text_ForProduction</GD994NativeTextForProductionFolder>
+	<GNonsearchablePDFLoadfileFolder>GNon searchable PDF Load file</GNonsearchablePDFLoadfileFolder>
+	<HiddenPropertiesFolder>HiddenProperties_IngestionData</HiddenPropertiesFolder>
 	<UniCodeFilesFolder>UniCodeFiles</UniCodeFilesFolder>
 	<IngestionEmailDataFolder>IngestionEmailData</IngestionEmailDataFolder>
 
@@ -708,78 +611,59 @@
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
 	<DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
-	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST
-	</MP3GermanFile>
-	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST
-	</MP3JapneseFile>
-	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst
-	</TranscriptJapneseFile>
-	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst
-	</TranscriptGermanFile>
+	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
+	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
+	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
+	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
 	<YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
 	<YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
 	<StitchedTIFF>Stitched TIFFs</StitchedTIFF>
-	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat
-	</DATFile1>
+	<DATFile1>DAT4_STC_09172014_Modified_Value_for_Some_Fields.dat</DATFile1>
 	<DATFile2>DAT4_STC_NewDateFormat.dat</DATFile2>
 	<TiffImagesFolder>Tiff_Images</TiffImagesFolder>
 	<DAT_MMDDYYYY>DAT_MMDDYYYY.dat</DAT_MMDDYYYY>
 	<Natives_MMDDYYYY>Natives_MMDDYYYY.lst</Natives_MMDDYYYY>
 	<DAT_YYYYDDMM_Slash>DAT_YYYYDDMM_Slash.dat</DAT_YYYYDDMM_Slash>
-	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst
-	</Natives_YYYYDDMM_Slash>
+	<Natives_YYYYDDMM_Slash>Natives_YYYYDDMM_Slash.lst</Natives_YYYYDDMM_Slash>
 	<DAT_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</DAT_YYYYMMDD_Slash>
 	<Natives_YYYYMMDD_Slash>DAT_YYYYMMDD_Slash.dat</Natives_YYYYMMDD_Slash>
 	<DAT_DDMMYYYY_Slash>DAT_DDMMYYYY_Slash.dat</DAT_DDMMYYYY_Slash>
-	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst
-	</Natives_DDMMYYYY_Slash>
+	<Natives_DDMMYYYY_Slash>Natives_DDMMYYYY_Slash.lst</Natives_DDMMYYYY_Slash>
 	<DAT_MMDDYYYY_Slash>DAT_MMDDYYYY_Slash.dat</DAT_MMDDYYYY_Slash>
-	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst
-	</Natives_MMDDYYYY_Slash>
+	<Natives_MMDDYYYY_Slash>Natives_MMDDYYYY_Slash.lst</Natives_MMDDYYYY_Slash>
 	<DATFile3>DAT4_STC_Image_PDFs.dat</DATFile3>
 
 	<DAT_MMDDYYYY_HHMI>DAT_MMDDYYYY HHMI.dat</DAT_MMDDYYYY_HHMI>
-	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst
-	</Natives_MMDDYYYY_HHMI>
+	<Natives_MMDDYYYY_HHMI>Natives_MMDDYYYY HHMI.lst</Natives_MMDDYYYY_HHMI>
 	<DAT_DDMMYYYY_HHMI>DAT_DDMMYYYY HHMI.dat</DAT_DDMMYYYY_HHMI>
-	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst
-	</Natives_DDMMYYYY_HHMI>
+	<Natives_DDMMYYYY_HHMI>Natives_DDMMYYYY HHMI.lst</Natives_DDMMYYYY_HHMI>
 	<DAT_MMDDYYYY_HHMISS>DAT_MMDDYYYY HHMISS.dat</DAT_MMDDYYYY_HHMISS>
-	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst
-	</Natives_MMDDYYYY_HHMISS>
+	<Natives_MMDDYYYY_HHMISS>Natives_MMDDYYYY HHMISS.lst</Natives_MMDDYYYY_HHMISS>
 	<DAT_DDMMYYYY_HHMISS>DAT_DDMMYYYY HHMISS.dat</DAT_DDMMYYYY_HHMISS>
-	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst
-	</Natives_DDMMYYYY_HHMISS>
+	<Natives_DDMMYYYY_HHMISS>Natives_DDMMYYYY HHMISS.lst</Natives_DDMMYYYY_HHMISS>
 	<DAT_DDMMYYYY>DAT_DDMMYYYY.dat</DAT_DDMMYYYY>
 	<Natives_DDMMYYYY>Natives_DDMMYYYY.lst</Natives_DDMMYYYY>
-	<differentDateFormatError>Date format selected in the ingestion is not
-		matching with the date format of the dates in the DAT file. Please
-		provide the matching date format.</differentDateFormatError>
+	<differentDateFormatError>Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format.</differentDateFormatError>
 	<prodBeg>ProdBeg</prodBeg>
 	<tiffLoadFile>DAT4_STC_Images.OPT</tiffLoadFile>
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
 	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
-	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction
-	</AK_NativeFolder>
-	<duplicateIngestionError>SourceDocID already exists in the database.
-		Cannot add again.</duplicateIngestionError>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
+	<duplicateIngestionError>SourceDocID already exists in the database. Cannot add again.</duplicateIngestionError>
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>
 	<textFile1>DAT4_STC_Text.lst</textFile1>
 	<PP_PDFGen_10Docs>PP_PDFGen_10Docs</PP_PDFGen_10Docs>
-	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat
-	</DATPPPDF10Docs>
+	<DATPPPDF10Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</DATPPPDF10Docs>
 	<TextPPPDF10Docs>Text_5Docs.lst</TextPPPDF10Docs>
 	<ImagePPPDF10docs>Images - 5Docs.lst</ImagePPPDF10docs>
 	<sourceDocIDPPPDF10Docs>11VR00000028</sourceDocIDPPPDF10Docs>
-	<nonExistingDataError>SourceDocID provided in the overlay for this doc
-		is not available in the database.</nonExistingDataError>
+	<nonExistingDataError>SourceDocID provided in the overlay for this doc is not available in the database.</nonExistingDataError>
 	<emailName>Phillip K Allen</emailName>
 	<emailAddress1>Gren Sheltr(GrenSheltr@aol.com)</emailAddress1>
 	<emailAddress2>CALXA@aol.com(CALXA@aol.com)</emailAddress2>
 	<emailDatFile>Large_39760.dat</emailDatFile>
-	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat
-	</nonSearchablePdfLoadFile>
+	<nonSearchablePdfLoadFile>Cracked Files_loadfile.dat</nonSearchablePdfLoadFile>
 
 	<!-- Ingestion Related data END -->
 
@@ -816,15 +700,13 @@
 	<ingDocFileName>DocFileName</ingDocFileName>
 	<ingDocFileSize>DocFileSize</ingDocFileSize>
 	<ingDocFileType>DocFileType</ingDocFileType>
-	<lessThan500PagesDocId>H16135-0188-001092</lessThan500PagesDocId>
-	<d500PagesDocId>H16135-0188-001166</d500PagesDocId>
+	<lessThan500PagesDocId>113ID00000174</lessThan500PagesDocId>
+	<d500PagesDocId>113ID00000170</d500PagesDocId>
 
 	<!-- Added by Gopinath Created date - 21/03/2022 -->
 	<iceSourceSystem>ICE</iceSourceSystem>
-	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF
-	</multiPageTIFFSourceFolder>
-	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat
-	</multiPageTIFFDATLoadFile>
+	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
+	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
 	<documentKeyBNum>BNum</documentKeyBNum>
 	<documentKeyDSource>DSource</documentKeyDSource>
 	<documentKeyCName>CName</documentKeyCName>
@@ -851,33 +733,25 @@
 	<warningMsgDocId>ID00002019</warningMsgDocId>
 	<externalLinkDocId>ID00000168</externalLinkDocId>
 
-	<!-- Added by Gopinath Created date - 28/04/2022 -->
+<!-- Added by Gopinath Created date - 28/04/2022 -->
 	<telecom>telecom</telecom>
 	<regressionRun>Indium_Regressionrun</regressionRun>
 	<sourceBlank>ID00005105</sourceBlank>
 	<sourceParentBlank>ID00005117</sourceParentBlank>
 	<ingestionOneHour>ID00001298</ingestionOneHour>
 	<ingestionLessThanHour>ID00001294</ingestionLessThanHour>
-
+	
 	<!-- Added by Iyappan -->
 	<docAudioId1>H136960002001058</docAudioId1>
 	<docAudioId2>H136960002001067</docAudioId2>
-
+	
 	<!-- Added By Raghuram -->
 	<preBuilt>Pre-Built Models</preBuilt>
-	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been
-		developed by our experts and refined over the years based on our
-		consulting experience in actual client projects. Each saved search can
-		be leveraged as a starting point to filter your data based on common
-		keywords and concept search queries and can be run as-is or modified
-		based on requirements for your project. These Pre-Built Models are
-		provided by default in DRAFT state at the beginning of each project
-		and can be executed on the fly. We will continue to expand and refine
-		these models regularly as advised by our experts.</preBuiltHelpText>
-	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
-	<Discrimination>Discrimination</Discrimination>
-	<FCPA>FCPA</FCPA>
-	<Harassment>Harassment</Harassment>
+	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
+    <DEPIPTheft>DEP IP Theft</DEPIPTheft>
+    <Discrimination>Discrimination</Discrimination>
+    <FCPA>FCPA</FCPA>
+    <Harassment>Harassment</Harassment>
 
 
 </TestData>
