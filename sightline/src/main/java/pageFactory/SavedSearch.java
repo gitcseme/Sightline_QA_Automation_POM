@@ -177,7 +177,6 @@ public class SavedSearch {
 	public Element getToDocView() {
 		return driver.FindElementById("document-btn");
 	}
-	
 	public Element getToDocViewoption() {
 		return driver.FindElementByXPath("//span[contains(text(),'Doc View')]");
 	}

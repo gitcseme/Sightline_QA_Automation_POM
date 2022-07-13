@@ -25615,6 +25615,7 @@ public class DocViewPage {
 	 * @throws ParseException
 	 */
 	public void audioReduction(String redactionTag) throws InterruptedException, ParseException {
+		
 		// adding redactions
 		driver.waitForPageToBeReady();
 		getDocview_RedactionsTab().waitAndClick(10);
@@ -25624,7 +25625,7 @@ public class DocViewPage {
 
 		// click on + icon to add redactions
 		getDocview_RedactionsTab_Add().waitAndClick(10);
-
+		
 		// Get Audio duration start and End time first
 		audioRedactionTimeConfig();
 

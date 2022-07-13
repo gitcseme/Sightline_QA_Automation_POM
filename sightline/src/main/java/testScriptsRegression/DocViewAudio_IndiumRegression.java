@@ -5548,6 +5548,7 @@ public class DocViewAudio_IndiumRegression {
 			loginPage.logoutWithoutAssert();
 		}
 		try {
+			
 			 loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
