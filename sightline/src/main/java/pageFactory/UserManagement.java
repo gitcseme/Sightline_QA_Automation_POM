@@ -725,6 +725,10 @@ public class UserManagement {
 	public Element getEditButtonFromUserManagentPage(String projectName) {
 		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='"+projectName+"']//parent::tr//a[text()='Edit']");
 	}
+	
+	public Element getEditButtonFromUserManagentPage() {
+		return driver.FindElementByXPath("//*[@id='dtUserList']//tr//td//a[text()='Edit']");
+	}
 
 	public Element getUserChangeDropDown() {
 		return driver.FindElementByXPath("//select[@name='Role']");
@@ -2661,9 +2665,15 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-
+		bc.waitTime(5);
+		if (username.equalsIgnoreCase("cons")) {
+			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		}else {
+			bc.waitForElement(getEditButtonFromUserManagentPage());
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
+		
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
@@ -2730,9 +2740,13 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-
+		if (username.contains("sa")) {
+			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		}else {
+			bc.waitForElement(getEditButtonFromUserManagentPage());
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().Click();
@@ -2801,8 +2815,13 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		if (username.contains("sa")) {
+			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		}else {
+			bc.waitForElement(getEditButtonFromUserManagentPage());
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
 
 		if (role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2869,8 +2888,13 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		if (username.contains("sa")) {
+			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		}else {
+			bc.waitForElement(getEditButtonFromUserManagentPage());
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
 
 		if (role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
