@@ -182,7 +182,7 @@ public class Production_Regression2 {
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
-		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates);
+		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates,prefixID,suffixID);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
