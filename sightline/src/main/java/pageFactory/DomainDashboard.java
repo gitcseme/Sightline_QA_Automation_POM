@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -474,7 +475,7 @@ public class DomainDashboard {
 		 base.waitForElement(getSearchProject());
 		 driver.scrollingToElementofAPage(getSearchProject());
 		 getSearchProject().waitAndClick(5);
-		 getSearchProject().SendKeys(projectName);
+		 getSearchProject().SendKeys(projectName+Keys.ENTER);
 		 base.hitKey(KeyEvent.VK_ENTER);
 		 base.stepInfo(projectName+" filter the project");
 	 }

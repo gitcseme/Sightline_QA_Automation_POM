@@ -102,7 +102,7 @@ public class DomainManagement_Regression_02 {
 		}else {
 			base.failedStep("verification failed");
 		}
-		base.impersonateRMUtoReviewer(Input.domainName,Input.additionalDataProject,Input.securityGroup);
+		base.impersonateRMUtoReviewer();
 		driver.waitForPageToBeReady();
 		
 		base.passedStep("When System Admin impersonate as RMU is able to impersonate as Reviewer under different project");
@@ -134,7 +134,8 @@ public class DomainManagement_Regression_02 {
 		dash.getFirstHyperLink().waitAndClick(10);
 		dash.getFirstGoToProject().waitAndClick(10);
 		base.stepInfo("clicked first hyper link and click go to project");
-		if(base.text("Datasets").isDisplayed()) {
+		driver.waitForPageToBeReady();
+		if(base.text("Project").isElementAvailable(10)) {
 			base.passedStep("Clicking on hyperlink automatically impersonated user as project admin into the clicked project");
 		}else {
 			base.failedStep("verification failed");
@@ -236,6 +237,7 @@ public class DomainManagement_Regression_02 {
 		userManage.filterTheRole("Domain Administrator");
 		
 		//get colum values
+		driver.waitForPageToBeReady();
 		int colum = base.getIndex(userManage.userDetailsTableHeader(), "ROLE");
 		List<String> roles = dash.getColumValues(userManage.getTableColumnData(colum));
 		
@@ -343,6 +345,7 @@ public class DomainManagement_Regression_02 {
 		
 		//pre-req delete exiting user
 		userManage.createNewUser(Input.randomText, Input.randomText, "Domain Administrator", email, Input.domainName, Input.projectName);
+		driver.waitForPageToBeReady();
 		userManage.deleteUser(Input.randomText);
 		base.stepInfo("Existing user with role as Domain Admin is deleted");
 		
@@ -352,6 +355,7 @@ public class DomainManagement_Regression_02 {
 		base.stepInfo("All the details was entered/selected  Success message should be displayed ");
 		
 		//remove added cred
+		driver.waitForPageToBeReady();
 		userManage.deleteUser(Input.randomText);
 		
 		base.passedStep("Verified when system admin adds domain user same as deleted domain admin/project admin/RMU/Reviewer");
@@ -475,7 +479,7 @@ public class DomainManagement_Regression_02 {
 		
 		base.getSaveChangeRole().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		if(base.text("Datasets").isDisplayed()) {
+		if(base.text("Project").isElementAvailable(10)) {
 			base.passedStep("sa Impersonated to pa");
 		}else {
 			base.failedStep("verification failed");
