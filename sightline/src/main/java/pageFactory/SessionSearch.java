@@ -6010,33 +6010,34 @@ public class SessionSearch {
 	}
 
 	/**
-	 * @author Jayanthi.ganesan
+	 * @author Jayanthi.ganesan.Modified by jeevitha
 	 * @description-This method will create remarks
 	 * @param RemarksName Modified on : 10/26/21 - 5400
 	 * 
 	 */
 
 	public void createRemarks(String RemarksName) {
-		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-		driver.waitForPageToBeReady();
-		base.waitTillElemetToBeClickable(docViewRedact.remarksIcon());
-		docViewRedact.remarksIcon().waitAndClick(25);
-		base.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
-		driver.waitForPageToBeReady();
-		Actions actions = new Actions(driver.getWebDriver());
-		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
-				.moveByOffset(50, 50).release().build().perform();
-		base.stepInfo("text for remarks has been selected");
-		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-		actions.click().build().perform();
-		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-		actions.click();
-		actions.sendKeys(RemarksName);
-		actions.build().perform();
-		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
-		actions.click().build().perform();
-		base.stepInfo("Remarks added sucessfully " + RemarksName);
-	}
+        DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+        driver.waitForPageToBeReady();
+        base.waitTillElemetToBeClickable(docViewRedact.remarksIcon());
+        docViewRedact.remarksIcon().waitAndClick(25);
+        base.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+        driver.waitForPageToBeReady();
+        Actions actions = new Actions(driver.getWebDriver());
+        docViewRedact.getDocView_Redactrec_textarea().ScrollTo();
+        actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
+                .moveByOffset(40, 40).release().build().perform();
+        base.stepInfo("text for remarks has been selected");
+        actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+        actions.click().build().perform();
+        actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+        actions.click();
+        actions.sendKeys(RemarksName);
+        actions.build().perform();
+        actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
+        actions.click().build().perform();
+        base.stepInfo("Remarks added sucessfully " + RemarksName);
+    }
 
 	/**
 	 * @author Jayanthi.ganesan

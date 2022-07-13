@@ -586,6 +586,8 @@ public class Production_Regression1 {
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String tagname = "ATag" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
+		String prefixID = "P" + Utility.dynamicNameAppender();
+		
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -603,8 +605,7 @@ public class Production_Regression1 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates);
-		page.gettxtBeginningBatesIDSuffix().SendKeys(suffixID);
+		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates,prefixID,suffixID);
 		page.selectingTaginSortingPage(tagname);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);

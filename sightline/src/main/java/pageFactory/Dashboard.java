@@ -38,6 +38,8 @@ public class Dashboard {
     public Element selectSpecificReviewer(){ return driver.FindElementByXPath("//select[@id='UserList']//option"); }
     public Element mostToDoDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Most To Do Docs')]"); }
     public Element mostCompletedDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Completed')]"); }
+    public Element selectProjectName(String project){ return driver.FindElementByXPath("//strong[contains(text(),'"+project+"')]"); }
+  
     
     public Dashboard(Driver driver){
 
@@ -83,14 +85,10 @@ public class Dashboard {
 			navigateToDashboard();
 			base.waitForElement(dashboardWidgetIcon());
 			dashboardWidgetIcon().waitAndClick(10);
+			selectProjectName(Input.projectName).ScrollTo();
+			base.waitForElement(btndeleteWidgetInDashboard());
+			btndeleteWidgetInDashboard().waitAndClick(10);
 			
-			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
-			Actions actions = new Actions(driver.getWebDriver());
-			wait.until(ExpectedConditions.elementToBeClickable(btndeleteWidgetInDashboard().getWebElement()));
-			actions.moveToElement(btndeleteWidgetInDashboard().getWebElement()).build().perform();
-			
-//			base.waitForElement(btndeleteWidgetInDashboard());
-//			btndeleteWidgetInDashboard().waitAndClick(10);
 			base.waitForElement(btnYes_deleteWidget());
 			btnYes_deleteWidget().waitAndClick(10);
 			base.VerifySuccessMessage("Widget Deleted");

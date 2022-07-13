@@ -7166,6 +7166,10 @@ public class ProductionPage {
 		base.waitTime(2);
 		getConfirmProductionCommit().ScrollTo();
 		getConfirmProductionCommit().waitAndClick(10);
+		
+		if(base.getErrorMsgHeader().isElementAvailable(10)) {
+            base.failedStep("Commit is not successfull");
+        }
 
 		base.CloseSuccessMsgpopup();
 
@@ -20505,20 +20509,19 @@ public void selectMultiBrandingTags(String tagname,String Tagname2) {
 	 * @throws InterruptedException
 	 * @authorIndium-Sowndarya.Velraj
 	 */
-	public void fillingNumberingPageWithDocumentLevelAndSubBates(String bates) throws InterruptedException {
+	public void fillingNumberingPageWithDocumentLevelAndSubBates(String bates,String PrefixID,String SuffixID) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNumbering_Document_RadioButton().Enabled();
-			}
-		}), Input.wait30);
+
+		base.waitForElement(gettxtBeginningBatesIDPrefix());
+		gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
+
+		base.waitForElement(gettxtBeginningBatesIDSuffix());
+		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
+		
+		base.waitForElement(getNumbering_Document_RadioButton());
 		getNumbering_Document_RadioButton().Click();
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNumbering_Document_BeginningBates_Text().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getNumbering_Document_BeginningBates_Text());
 		getNumbering_Document_BeginningBates_Text().SendKeys(bates);
 
 	}
