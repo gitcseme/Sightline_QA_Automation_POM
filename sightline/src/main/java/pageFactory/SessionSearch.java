@@ -1129,6 +1129,18 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
+	public Element getSavedSearchGroupName(String name) {
+		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
+	}
+	
+	public ElementCollection getCounts() {
+		return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody/tr");
+	}
+	
+	public ElementCollection getSavedSearchTermsListEmpty() {
+		return driver.FindElementsByXPath("//td[text()='Your query returned no data']");
+	}
+	
 	public Element getSavedSearchNodeCount() {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//ul//li");
 	}
@@ -11982,7 +11994,7 @@ public class SessionSearch {
 		List<WebElement> tablecount = savedSearchTableCount.findElements(By.tagName("tr"));
 		int tableSize = tablecount.size();
 
-		if (getSavedSearchTableNoDatas().isElementAvailable(5) && tableSize < 3) {
+		if (getSavedSearchTableNoDatas().isDisplayed() && tableSize < 3) {
 			base.stepInfo("There is no search terms under My saved search");
 			basicContentSearch("test");
 			saveSearch(BasicSearchName);
@@ -12484,6 +12496,41 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 				System.out.println("All Three Options Not Present in BellyBand When Search Goes BackGround");
 			}
 		}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @throws InterruptedException 
+	 * @descripton: To Verify Cloning project saved search terms
+	 */
+	public void verifySavedSearchTermsForCloningProject(String searchGroup) throws InterruptedException {
+		base.waitForElement(getSavedSearchGroupName(searchGroup));
+		getSavedSearchGroupName(searchGroup).waitAndClick(5);
+		base.waitForElementCollection(getCounts());
+		ElementCollection counts = getCounts();
+		int size = counts.size();
+		System.out.println(size);
+		if (size >3) {
+			base.passedStep("Saved Search list contains more than 3 save searches");
+		}else if (getSavedSearchTermsListEmpty().isElementAvailable(5)|| size<3) {
+			
+		
+			basicContentSearch(Input.searchString1);
+			saveSearchAtAnyRootGroup("Donot Delete1"+ Utility.dynamicNameAppender(), searchGroup);
+			driver.waitForPageToBeReady();
+			base.selectproject();
+			basicContentSearch(Input.testData1);
+			driver.waitForPageToBeReady();
+			saveSearchAtAnyRootGroup("Donot Delete2"+ Utility.dynamicNameAppender(), searchGroup);
+			driver.waitForPageToBeReady();
+			base.selectproject();
+			basicContentSearch(Input.searchString2);
+			saveSearchAtAnyRootGroup("Donot Delete3"+ Utility.dynamicNameAppender(), searchGroup);
+			
+			base.stepInfo("Saved search list is creted with more than 3 save searches");
+		}
+		
+	}
 }
 	 
 		

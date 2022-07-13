@@ -73,7 +73,11 @@ public class CloningProject_Regression1 {
 		SavedSearch savedSearch = new SavedSearch(driver);
 		savedSearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
-		sessionSearch.validateMySavedSearchTerms();
+		sessionSearch.verifySavedSearchTermsForCloningProject("Shared With Project");
+		sessionSearch.verifySavedSearchTermsForCloningProject("My Saved");
+		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Default");
+		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Security Group_728582");
+		
 		loginPage.logout();
 		
 		projectName = "DemoCloneProject" + Utility.dynamicNameAppender();
@@ -213,7 +217,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with securityGroup5531457");
+		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with Security Group_728582");
 
 		loginPage.logout();
 
