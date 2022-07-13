@@ -76,7 +76,7 @@ public class CloningProject_Regression1 {
 		sessionSearch.verifySavedSearchTermsForCloningProject("Shared With Project");
 		sessionSearch.verifySavedSearchTermsForCloningProject("My Saved");
 		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Default");
-		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Security Group_728582");
+		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with demoSg5021561");
 		
 		loginPage.logout();
 		
@@ -217,7 +217,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with Security Group_728582");
+		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with demoSg5021561");
 
 		loginPage.logout();
 
