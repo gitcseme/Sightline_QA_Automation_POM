@@ -110,8 +110,7 @@
 	<yearRange2>2022</yearRange2>
 	<translation>Translation</translation>
 	<related>Related</related>
-	<mandatoryMappingError>Please specify a mapping for the mandatory
-		fields.</mandatoryMappingError>
+	<mandatoryMappingError>Please specify a mapping for the mandatory fields.</mandatoryMappingError>
 
 
 	<!-- Production path for redaction master doc -->
@@ -556,11 +555,9 @@
 	<filterMonth>Dec</filterMonth>
 	<filterYear>2021</filterYear>
 	<userRole>Review Manager</userRole>
-	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596
-	</nativeFileName>
+	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596</nativeFileName>
 	<audioPlayerReady>AudioPlayerReady</audioPlayerReady>
-	<datFormatFile>DAT4_STC_newdateformatEmailData -differentformatdata.dat
-	</datFormatFile>
+	<datFormatFile>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datFormatFile>
 	<nativeMp3FileFormat>F10A_AK_Native_PDF_MP3_Transcript_ForProduction_20220502105322190
 	</nativeMp3FileFormat>
 	<DocCount>2</DocCount>
@@ -707,14 +704,10 @@
 	<!-- <NativeFile>RegressionAllDatasetNatives.LST</NativeFile> <MP3File>RegressionAllDatasetTRIMMEDAUDIOMP3.LST</MP3File> -->
 	<DATGermanFile>RegressionAllDatasetGerman.dat</DATGermanFile>
 	<DATJapneseFile>RegressionAllDatasetJapnese.dat</DATJapneseFile>
-	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST
-	</MP3GermanFile>
-	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST
-	</MP3JapneseFile>
-	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst
-	</TranscriptJapneseFile>
-	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst
-	</TranscriptGermanFile>
+	<MP3GermanFile>RegressionAllDatasetTrimmedAudioMP3German.LST</MP3GermanFile>
+	<MP3JapneseFile>RegressionAllDatasetTrimmedAudioMP3Japnese.LST</MP3JapneseFile>
+	<TranscriptJapneseFile>RegressionAllDatasetTranscriptJapnese.lst</TranscriptJapneseFile>
+	<TranscriptGermanFile>RegressionAllDatasetTranscriptGerman.lst</TranscriptGermanFile>
 	<YYYYMMDDHHMISSDat>DAT_YYYYMMDD HHMISS.dat</YYYYMMDDHHMISSDat>
 	<YYYYMMDDHHMISSLst>Natives_YYYYMMDD HHMISS.lst</YYYYMMDDHHMISSLst>
 	<StitchedTIFF>Stitched TIFFs</StitchedTIFF>
@@ -751,8 +744,7 @@
 	<tiffFile2>DAT4_STC_Images - ForPDFs.OPT</tiffFile2>
 	<generateSearchablePDF>Generate Searchable PDFs</generateSearchablePDF>
 	<DATFile4>DAT4_STC_NewDateFormat -38577.dat</DATFile4>
-	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction
-	</AK_NativeFolder>
+	<AK_NativeFolder>AK_Native_PDF_MP3_Transcript_ForProduction</AK_NativeFolder>
 	<duplicateIngestionError>SourceDocID already exists in the database.
 		Cannot add again.</duplicateIngestionError>
 	<datLoadFile1>DAT4_STC 1_newdateformat.dat</datLoadFile1>

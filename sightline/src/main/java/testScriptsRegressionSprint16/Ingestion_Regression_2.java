@@ -205,6 +205,103 @@ public class Ingestion_Regression_2 {
 		loginPage.logout();
 		
 	}
+	
+
+	/**
+	 * Author :Arunkumar date: 13/07/2022 TestCase Id:RPMXCON-47584 
+	 * Description :To verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47584",enabled = true, groups = { "regression" })
+	public void verifyConfigureMappingSection() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47584");
+		baseClass.stepInfo("verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click on next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		baseClass.stepInfo("verify source and mapping section status after clicking Next button");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("Configure mapping and run ingestion");
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey,Input.documentKey,Input.custodian);
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.stepInfo("verify tile in ingestion homepage");
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 13/07/2022 TestCase Id:RPMXCON-47582
+	 * Description :To verify mandatory field validation for mapping fields before Preview&Run.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 47582",enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldValidationInMappingSection() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47582");
+		baseClass.stepInfo("verify mandatory field validation for mapping fields before Preview&Run.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add ingestion and click on next");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("verify mandatory field error in mapping section");
+		ingestionPage.validateMappingSectionMandatoryFieldWarningMessage();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 13/07/2022 TestCase Id:RPMXCON-48146
+	 * Description :To Verify selected audio and transcript file types are retained on opening of Draft Ingestion in Wizard.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON- 48146",enabled = true, groups = { "regression" })
+	public void verifyAudioAndTranscriptFilesRetainedStatus() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48146");
+		baseClass.stepInfo("Verify selected audio and transcript file types are retained on opening of Draft Ingestion in Wizard.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion with dat,mp3 and transcript");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, 
+				Input.sourceLocation, Input.AK_NativeFolder);
+		baseClass.waitForElement(ingestionPage.getDATDelimitersNewLine());
+		ingestionPage.getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+		baseClass.waitForElement(ingestionPage.getSourceSelectionDATLoadFile());
+		ingestionPage.selectDATSource(Input.DATFile1, Input.prodBeg);
+		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+		ingestionPage.selectAudioTranscriptSource(Input.TranscriptFile, false);
+		baseClass.waitForElement(ingestionPage.getDateFormat());
+		ingestionPage.getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+		baseClass.stepInfo("Save ingestion as draft");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		baseClass.stepInfo("select ingestion from draft and open in wizard");
+		driver.waitForPageToBeReady();
+		ingestionPage.getIngestionDetailPopup(1).waitAndClick(5);
+		baseClass.waitForElement(ingestionPage.getActionDropdownArrow());
+		ingestionPage.getActionDropdownArrow().waitAndClick(5);
+		baseClass.waitForElement(ingestionPage.getActionOpenWizard());
+		ingestionPage.getActionOpenWizard().waitAndClick(5);
+		baseClass.stepInfo("verify retained value of audio and transcript file");
+		driver.waitForPageToBeReady();
+		ingestionPage.validateDetailsAfterOpeningIngestionFromDraft(Input.ingestionType, Input.AK_NativeFolder);
+		String retainedMp3 =ingestionPage.getMP3LST().selectFromDropdown().getFirstSelectedOption().getText();
+		String retainedTranscript = ingestionPage.getAudioTranscriptLST().selectFromDropdown().getFirstSelectedOption().getText();
+		if(retainedMp3.equalsIgnoreCase(Input.MP3File) && retainedTranscript.equalsIgnoreCase(Input.TranscriptFile)) {
+			baseClass.passedStep("Both audio and transcript files retained after opening ingestion in wizard from draft");
+		}
+		else {
+			baseClass.failedStep("Both audio and transcript files not retained after opening ingestion in wizard from draft");
+		}	
+		loginPage.logout();
+	}
+	
+	
 
 	
 	@AfterMethod(alwaysRun = true)

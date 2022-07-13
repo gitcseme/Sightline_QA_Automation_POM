@@ -11748,5 +11748,27 @@ public class IngestionPage_Indium {
 				base.failedStep("Other field options not available");
 			}
 		}
+		
+		/**
+		 * @author: Arun Created Date: 13/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the details retained after opening ingestion using open wizard option
+		 * @parameter: ingestionType
+		 * @parameter: sourceFolder
+		 */
+		
+		public void validateDetailsAfterOpeningIngestionFromDraft(String ingestionType,String sourceFolder) {
+			
+			String retainedSourceFolder= getSpecifySourceFolder().selectFromDropdown().getFirstSelectedOption().getText();
+			String retainedDate=getDateFormat().selectFromDropdown().getFirstSelectedOption().getText();
+			String retainedType=getIngestion_IngestionType().selectFromDropdown().getFirstSelectedOption().getText();
+			
+			if(retainedDate.equalsIgnoreCase(Input.dateFormat) && retainedSourceFolder.equalsIgnoreCase(sourceFolder)
+					&& retainedType.equalsIgnoreCase(ingestionType)) {
+				base.passedStep("All information displayed in wizard");
+			}
+			else {
+				base.failedStep("Information not displayed");
+			}
+		}
 
 }
