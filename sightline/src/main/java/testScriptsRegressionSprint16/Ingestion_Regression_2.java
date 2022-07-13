@@ -75,12 +75,8 @@ public class Ingestion_Regression_2 {
 		if (status == false) {
 			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
 			String ingestionName= ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
-			sessionSearch.basicSearchWithMetaDataQuery(ingestionName,Input.metadataIngestion);
-			sessionSearch.ViewInDocList();
 		}
-		else {
-			dataSets.selectDataSetWithName(Input.HiddenPropertiesFolder);
-		}
+		dataSets.selectDataSetWithName(Input.HiddenPropertiesFolder);
 		baseClass.stepInfo("Verify the value of metadata");
 		ingestionPage.addMetadatAndVerifyValue(Input.docPrimaryLanguage, Input.english);
 		loginPage.logout();
