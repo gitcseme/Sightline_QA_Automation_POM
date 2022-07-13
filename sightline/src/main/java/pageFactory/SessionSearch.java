@@ -12417,52 +12417,52 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 	
 	public void verifyAllTilesResultsinAdvSrcScrn() throws InterruptedException{
 
-		SoftAssert softAssert = new SoftAssert();
-		// Getting Result From PureHit Tile
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait120);	
-		
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		softAssert.assertNotNull(pureHit, "Pure Hit Tile Successfully Returned the Results");
-		System.out.println("PureHit Count :" + pureHit);
-		
-		// Getting Result From Thread Count Tile
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getThreadedCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait120);
-		
-		int threadCount = Integer.parseInt(getThreadedCount().getText());
-		softAssert.assertNotNull(threadCount, "Thread Tile Successfully Returned the Results");
-		System.out.println("ThreadCount :" + threadCount);
+        SoftAssert softAssert = new SoftAssert();
+        // Getting Result From PureHit Tile
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+            }
+        }), Input.wait120);    
+        base.waitTime(60);
+        int pureHit = Integer.parseInt(getPureHitsCount().getText());
+        softAssert.assertNotNull(pureHit, "Pure Hit Tile Successfully Returned the Results");
+        System.out.println("PureHit Count :" + pureHit);
 
-		// Getting Result From NearDuplicate Tile
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNearDupeCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait120);
-		
-		int nearDuplicate = Integer.parseInt(getNearDupeCount().getText());
-		softAssert.assertNotNull(nearDuplicate, "Near Duplicate Tile Successfully Returned the Results");
-		System.out.println("Near Duplocate Count :" + nearDuplicate);
-		
-		// Getting Result From Family Count Tile
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFamilyCount().getText().matches("-?\\d+(\\.\\d+)?");
-			}
-		}), Input.wait120);
-	
-		int familyMember = Integer.parseInt(getFamilyCount().getText());
-		softAssert.assertNotNull(familyMember, "Family Member Tile Successfully Returned the Results");
-		System.out.println("Family Member Count :" + familyMember);
+        // Getting Result From Thread Count Tile
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getThreadedCount().getText().matches("-?\\d+(\\.\\d+)?");
+            }
+        }), Input.wait120);
 
-	}		
+        int threadCount = Integer.parseInt(getThreadedCount().getText());
+        softAssert.assertNotNull(threadCount, "Thread Tile Successfully Returned the Results");
+        System.out.println("ThreadCount :" + threadCount);
+
+        // Getting Result From NearDuplicate Tile
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getNearDupeCount().getText().matches("-?\\d+(\\.\\d+)?");
+            }
+        }), Input.wait120);
+
+        int nearDuplicate = Integer.parseInt(getNearDupeCount().getText());
+        softAssert.assertNotNull(nearDuplicate, "Near Duplicate Tile Successfully Returned the Results");
+        System.out.println("Near Duplocate Count :" + nearDuplicate);
+
+        // Getting Result From Family Count Tile
+        driver.WaitUntil((new Callable<Boolean>() {
+            public Boolean call() {
+                return getFamilyCount().getText().matches("-?\\d+(\\.\\d+)?");
+            }
+        }), Input.wait120);
+
+        int familyMember = Integer.parseInt(getFamilyCount().getText());
+        softAssert.assertNotNull(familyMember, "Family Member Tile Successfully Returned the Results");
+        System.out.println("Family Member Count :" + familyMember);
+
+    }      	
 	
 
 	public void verifyBellyBandOptions() {
