@@ -491,7 +491,7 @@ public class AdvancedSearchRegression2 {
 	 * 
 	 */
 	
-	@Test(description ="RPMXCON-48394", dataProvider = "Users"  , groups = { "regression" })////Doubt
+	@Test(description ="RPMXCON-48394", dataProvider = "Users"  , groups = { "regression" })
 	public void verifyConceptTiledoesnotRtnDocInAdvSrcScreen (String username, String password) throws InterruptedException {
 		String docFileType = "Spreadsheet";
 		BaseClass baseClass = new BaseClass(driver);
