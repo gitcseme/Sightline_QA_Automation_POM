@@ -320,6 +320,8 @@ public class Input {
 	public static String multiplePageSourceDocID;
 	public static String StitchedTiffSourceDocID;
 	public static String SinglePageTiffSourceDocID;
+	public static String DocIdCopyPaste;
+	public static String DocIdCopyPaste1;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1395,7 +1397,8 @@ public class Input {
 		tiffDocId1 = testData.getTiffDocId1();
 		pptDocId = testData.getPptDocId();
 		messageDocId = testData.getMessageDocId();
-
+		DocIdCopyPaste = testData.getDocIdCopyPaste();
+		DocIdCopyPaste1 = testData.getDocIdCopyPaste1();
 		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();

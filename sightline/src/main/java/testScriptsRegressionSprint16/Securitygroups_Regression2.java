@@ -235,9 +235,10 @@ public class Securitygroups_Regression2 {
 		driver.waitForPageToBeReady();
 		docViewMetaDataPage.getSecurityGroupDropDownButton().waitAndClick(3);
 		baseClass.stepInfo(SGname + "from header drop down for current project on rmu");
+		baseClass.waitTime(3);
 		baseClass.waitForElement(docViewMetaDataPage.getSecurityGroup(SGname));
-		softassert.assertTrue(docViewMetaDataPage.getSecurityGroup(SGname).isDisplayed());
-		if (docViewMetaDataPage.getSecurityGroup(SGname).isDisplayed()) {
+		softassert.assertTrue(docViewMetaDataPage.getSecurityGroup(SGname).isElementAvailable(5));
+		if (docViewMetaDataPage.getSecurityGroup(SGname).isElementAvailable(5)) {
 			baseClass.passedStep("corressponding " + SGname + "on the same project is displayed successfully");
 
 		} else {
@@ -419,7 +420,7 @@ public class Securitygroups_Regression2 {
 		baseClass.passedStep(foldername + "is unassigned from security group successfully");
 		softassert.assertAll();
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		baseClass.stepInfo("deleted the folder with name " + foldername);
 	}
 
