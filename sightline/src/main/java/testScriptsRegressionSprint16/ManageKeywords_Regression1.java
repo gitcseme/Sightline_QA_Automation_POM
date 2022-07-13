@@ -334,7 +334,7 @@ public class ManageKeywords_Regression1 {
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rev1userName, "Reviewer");
+		userManagement.editRoleOfAnUser(Input.rev1userName, "Reviewer",Input.projectName);
 		
 		loginPage.logout();
 		
@@ -356,7 +356,7 @@ public class ManageKeywords_Regression1 {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleForRMUANdPAUsers(Input.rev1userName, "Review Manager");
+		userManagement.editRoleForRMUANdPAUsers(Input.rev1userName, "Review Manager",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
@@ -384,7 +384,7 @@ public class ManageKeywords_Regression1 {
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rmu1userName, "Review Manager");
+		userManagement.editRoleOfAnUser(Input.rmu1userName, "Review Manager",Input.projectName);
 		
 		loginPage.logout();
 		
@@ -406,7 +406,7 @@ public class ManageKeywords_Regression1 {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleFromPAToRMU(Input.rmu1userName, "Project Administrator");
+		userManagement.editRoleFromPAToRMU(Input.rmu1userName, "Project Administrator",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		

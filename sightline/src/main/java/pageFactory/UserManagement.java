@@ -722,8 +722,8 @@ public class UserManagement {
 		return driver.FindElementByXPath("//label[contains(normalize-space(.),'" + tabNames + "')]//i");
 	}
 
-	public Element getEditButtonFromUserManagentPage() {
-		return driver.FindElementByXPath("//*[@id='dtUserList']//tr[1]//td//a[text()='Edit']");
+	public Element getEditButtonFromUserManagentPage(String projectName) {
+		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='"+projectName+"']//parent::tr//a[text()='Edit']");
 	}
 
 	public Element getUserChangeDropDown() {
@@ -742,6 +742,7 @@ public class UserManagement {
 	public ElementCollection getAssgnPaginationCount() {
 		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
 	}
+	
 	
 	//Added by Aathith
 	public Element getUserRole(String role) {
@@ -2643,13 +2644,14 @@ public class UserManagement {
 	}
 	
 	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To change role from Reviewer and Reviewer Manager to PA and Reviewer Manager
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleOfAnUser(String username, String role) {
+	public void editRoleOfAnUser(String username, String role,String projectName) {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
@@ -2659,8 +2661,8 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage());
-		getEditButtonFromUserManagentPage().waitAndClick(10);
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2718,7 +2720,7 @@ public class UserManagement {
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleForRMUANdPAUsers(String username, String role) {
+	public void editRoleForRMUANdPAUsers(String username, String role,String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitTime(20);
 		bc.waitForElement(getUserNameFilter());
@@ -2728,8 +2730,8 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage());
-		getEditButtonFromUserManagentPage().waitAndClick(10);
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2789,7 +2791,7 @@ public class UserManagement {
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleFromPAToRMU(String username, String role) {
+	public void editRoleFromPAToRMU(String username,String role,String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitTime(20);
 		bc.waitForElement(getUserNameFilter());
@@ -2799,8 +2801,8 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage());
-		getEditButtonFromUserManagentPage().waitAndClick(10);
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 
 		if (role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2857,7 +2859,7 @@ public class UserManagement {
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleFromPAToRMU(String username, String role,String select) {
+	public void editRoleFromPAUToRMU(String username, String role,String select,String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitTime(20);
 		bc.waitForElement(getUserNameFilter());
@@ -2867,8 +2869,8 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage());
-		getEditButtonFromUserManagentPage().waitAndClick(10);
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 
 		if (role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
