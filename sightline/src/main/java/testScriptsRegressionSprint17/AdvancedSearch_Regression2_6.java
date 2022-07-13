@@ -166,10 +166,6 @@ public class AdvancedSearch_Regression2_6 {
 		baseClass.passedStep(
 				"Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
 						+ "OR operator in search result.");
-		
-		TagsAndFoldersPage tagPage = new TagsAndFoldersPage(driver);
-		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-		tagPage.deleteAllTags(tagName);
 
 		loginPage.logout();
 
