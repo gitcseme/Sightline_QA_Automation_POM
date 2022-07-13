@@ -74,7 +74,7 @@ public class DocList_Regression2 {
 	 * @throws AWTException
 	 * @Description Verify that email metadata should present with single quote on DocList.
 	 */
-	//@Test(description = "RPMXCON-54963", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54963", enabled = true, groups = { "regression" })
 	public void verifyEmailMetaDataPresentWithSingleQuote() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54963");
@@ -118,7 +118,7 @@ public class DocList_Regression2 {
 	 * @throws Exception
 	 * @Description Validate onpage filter for EmailAuthorDomains And DocFileType on DocList page.
 	 */
-	//@Test(description = "RPMXCON-54534", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54534", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
 	public void verifyFilterEamilAuthorNameAndDocFileTypeInDocList(String username, String password, String role) throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54534");
