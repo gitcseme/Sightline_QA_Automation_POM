@@ -218,6 +218,8 @@ public class TestData {
 	public String multiplePageSourceDocID;
 	public String StitchedTiffSourceDocID;
 	public String SinglePageTiffSourceDocID;
+	public String DocIdCopyPaste;
+	public String DocIdCopyPaste1;
 
 	// Added by arunkumar
 	public String pageRange1;
