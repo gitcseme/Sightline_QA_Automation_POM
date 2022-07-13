@@ -320,7 +320,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_CFName() {
-		return driver.FindElementById("lblCodingFormName");
+		return driver.FindElementById("codingFormList");
 	}
 
 	// added on 04-01
