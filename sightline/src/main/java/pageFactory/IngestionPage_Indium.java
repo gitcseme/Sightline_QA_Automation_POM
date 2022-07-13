@@ -8507,11 +8507,6 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTotalPageCount().Visible();
-			}
-		}), Input.wait30);
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
