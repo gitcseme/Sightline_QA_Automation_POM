@@ -1021,7 +1021,7 @@ public class Input {
 		sourceDocId12 = testData.getSourceDocId12();
 		projectName01= testData.getProjectName01();
 		projectName02=testData.getProjectName02();
-		searchDocFileType=testData.getSeachDocFileType();
+		searchDocFileType=testData.getSearchDocFileType();
 		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
