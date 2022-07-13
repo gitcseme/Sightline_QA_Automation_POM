@@ -379,7 +379,7 @@ public class DataSets {
 		driver.waitForPageToBeReady();
 		int i = 1;
 		try {
-			while (!getDataSetActionBtn(DataSet).isElementAvailable(1)) {
+			while (!getDataSetActionBtn(DataSet).isElementAvailable(10)) {
 				driver.scrollingToBottomofAPage();
 				driver.waitForPageToBeReady();
 				if (loadMoreOption().isElementAvailable(10)) {
