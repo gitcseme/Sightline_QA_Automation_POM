@@ -66,6 +66,10 @@ public class CommentsPage {
 	}
 
 	// Added by Mohan
+	
+	public ElementCollection totalRows(){ return driver.FindElementsByXPath("//table[@id='KeywordsDatatable']//tbody//tr"); }
+    public Element getNextButton(){ return driver.FindElementByXPath("//a[text()='Next']/parent::li"); }
+    public Element getNextButtonEle(){ return driver.FindElementByXPath("//a[text()='Next']"); }
 
 	public Element getPopupNoBtn() {
 		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
@@ -312,16 +316,30 @@ public class CommentsPage {
 	public void validateCommentNameIsPresentOrNot(String commentsName) {
 
 		driver.waitForPageToBeReady();
-		base.waitForElement(getCommentsTableFieldValue(commentsName));
+		int rowCount = totalRows().FindWebElements().size();
+       		for(int i=0;i<rowCount;i++) {
+       			
+       			if (getCommentsTableFieldValue(commentsName).isElementAvailable(5)) {
+       				base.passedStep(
+       						"Comment are added under the security group of the logged in RMU user and success message is displayed successfully ");
 
-		if (getCommentsTableFieldValue(commentsName).isElementAvailable(5)) {
-			base.passedStep(
-					"Comment are added under the security group of the logged in RMU user and success message is displayed successfully ");
+       		        break;
+       			}
+       			String getNextButtonAtt = getNextButton().GetAttribute("class");
+       			if((i==rowCount-1)&&!(getNextButtonAtt.contains("disabled"))) {
+       				driver.scrollingToBottomofAPage();
+       				driver.waitForPageToBeReady();
+       				getNextButtonEle().isElementAvailable(8);
+       				getNextButtonEle().Click();
+       				driver.waitForPageToBeReady();
+       				rowCount = totalRows().FindWebElements().size();
+       				i=-1;
+       			}else {
+       				base.failedStep("Comments are not added under the security group of the logged in RMU user");
+       			}
 
-		} else {
-			base.failedStep("Comments are not added under the security group of the logged in RMU user");
-		}
-
+			
+		} 
 	}
 
 	/**
