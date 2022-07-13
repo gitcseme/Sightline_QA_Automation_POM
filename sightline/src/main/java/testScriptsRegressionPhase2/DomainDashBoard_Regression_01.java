@@ -375,6 +375,8 @@ public class DomainDashBoard_Regression_01 {
 		dash = new DomainDashboard(driver);
 		
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
+		
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		driver.waitForPageToBeReady();
 		base.waitTime(4);
@@ -393,6 +395,7 @@ public class DomainDashBoard_Regression_01 {
 		base.stepInfo("Login as a sa user :"+Input.sa1userName);
 		base.impersonateSAtoDA(Input.domainName);
 		
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		driver.waitForPageToBeReady();
 		base.waitTime(4);		
@@ -426,6 +429,7 @@ public class DomainDashBoard_Regression_01 {
 		
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
 		String[] availableColum = {"PROJECT NAME", "STATUS","TOTAL UTILIZED DISK SIZE (GB)","TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
@@ -439,6 +443,7 @@ public class DomainDashBoard_Regression_01 {
 		base.impersonateSAtoDA(Input.domainName);
 		dash.waitForDomainDashBoardIsReady();
 		
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
@@ -471,6 +476,7 @@ public class DomainDashBoard_Regression_01 {
 		String[] colums = {"NoOfCustodian","LastUpdatedOn","NoOfPublishedDocument","NoOfReleasedDocument","TotalDBDiskSize","TotalIndexSize","TotalWorkspaceSize"};
 		String[] availableColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
 		dash.waitForDomainDashBoardIsReady();
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
@@ -479,6 +485,7 @@ public class DomainDashBoard_Regression_01 {
 		
 		base.switchDomain();
 		dash.waitForDomainDashBoardIsReady();
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		dash.waitForDomainDashBoardIsReady();
 		for(String availablestatus:availableColum) {
@@ -497,7 +504,7 @@ public class DomainDashBoard_Regression_01 {
 	 * @Description :Verify customized column list is saved for selected entity but not for all entities of that user
 	 */
 	@Test(description = "RPMXCON-53144",enabled = true, groups = {"regression" })
-	public void verifyCustomizedColumNotForAllEntity()  {
+	public void zverifyzCustomizedColumNotForAllEntity()  {
 		
 		base.stepInfo("Test case Id: RPMXCON-53144");
 		base.stepInfo("Verify customized column list is saved for selected entity but not for all entities of that user");
@@ -513,6 +520,7 @@ public class DomainDashBoard_Regression_01 {
 		String[] availableColum = {"PROJECT NAME","STATUS","CORPORATE CLIENT","CREATED DATE","CREATED BY","TOTAL UTILIZED DISK SIZE (GB)",
 				"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
 		String[] customColum = {"TOTAL DB SIZE (GB)", "TOTAL SEARCH INDEX SIZE (GB)", "TOTAL WORKSPACE SIZE (GB)"};
+		dash.makeDomainDashBoardTableDefaultOrder();
 		dash.AddOrRemoveColum(colums);
 		driver.waitForPageToBeReady();
 		dash.isAllColumsAreAvailable(availableColum);
@@ -757,6 +765,7 @@ public class DomainDashBoard_Regression_01 {
 				"CREATED BY","TOTAL UTILIZED DISK SIZE (GB)"};
 		
 		dash.waitForDomainDashBoardIsReady();
+		dash.makeDomainDashBoardTableDefaultOrder();
 		for(String column:availableColm) {
 		dash.isTitleIsAvailable(column);
 		}

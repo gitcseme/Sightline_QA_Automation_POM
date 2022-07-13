@@ -160,6 +160,10 @@ public class DomainDashboard {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
 	
+	public ElementCollection getCheckBox() {
+		return driver.FindElementsByXPath("//li/label/input");
+	}
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
@@ -661,4 +665,64 @@ public class DomainDashboard {
 				base.failedStep(e.getMessage());
 			}
 		}
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description check domainDashBoard table is in default order or not, if not in default order make it as a default order
+	  */
+	 public void makeDomainDashBoardTableDefaultOrder() {
+		 
+		 String[] addcolumns = {"ProjectLabel", "IsActive", "LastUpdatedOn", "NoOfCustodian",
+				 "NoOfPublishedDocument", "NoOfReleasedDocument", "CorpClient",
+				 "ProjectCreatedOn", "ProjectCreatedBy", "TotalUtilizedDiskSize"};
+		 if(!isAllColumnsAreInDefaultOrder()) {
+			 removeSelectedCheckBox();
+			 AddOrRemoveColum(addcolumns);
+			 getSavebtn().waitAndClick(10);
+		 }
+		 
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @return boolean
+	  * @Description verify table header is default order
+	  */
+	 public boolean isAllColumnsAreInDefaultOrder() {
+		 String[] colums = {"PROJECT NAME","STATUS","DATA AS OF (UTC)","CUSTODIANS (#)",
+					"DOCS PUBLISHED (#)","DOCS RELEASED (#)","CORPORATE CLIENT","CREATED DATE",
+					"CREATED BY","TOTAL UTILIZED DISK SIZE (GB)"};
+		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
+		 List<String> tableheadervalues = getColumValues(getTableHeader());
+		 int n = colums.length;
+		 for(int i=0;i<n;i++) {
+			 //System.out.println(colums[i]+" vs "+tableheadervalues.get(i));
+			 if(!colums[i].equalsIgnoreCase(tableheadervalues.get(i))) {
+				 return false;
+			}
+		 }
+		 return true;
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @Description remove all selected check box
+	  */
+	 public void removeSelectedCheckBox() {
+		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
+		 base.waitForElement(getGearbtn());
+		 driver.scrollingToElementofAPage(getGearbtn());
+		 getGearbtn().waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 List<WebElement> element = getCheckBox().FindWebElements();
+		 for(WebElement ele : element) {
+			 if(ele.isSelected()) {
+				 driver.waitForPageToBeReady();
+				 ele.click();
+			 }
+		 }
+		 getBackGround().waitAndClick(10);
+	 }
 }
