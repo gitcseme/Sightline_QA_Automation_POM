@@ -3112,6 +3112,9 @@ public class ProductionPage {
 		return driver
 				.FindElementByXPath("//input[contains(@value,'"+Value+"')]");
 	}	
+	public Element getNextBatesNumberInSortingPage() {
+		return driver.FindElementById("hdrNextBatesNo");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -7172,7 +7175,6 @@ public class ProductionPage {
         }
 
 		base.CloseSuccessMsgpopup();
-
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		base.waitTime(1);
@@ -20743,6 +20745,23 @@ public void fillingTIFFSectionPrivDocs(String tagname, String tagnametech) throw
 	getPriveldge_TextArea().SendKeys(tagnametech);
 	driver.scrollingToBottomofAPage();
 	base.stepInfo("TIFF section is filled");
+
+}
+
+/**
+ * @author Brundha.T
+ * @param Text Description:filling Native section with filetype in tiff section
+ */
+public void fillingNativePlaceHolderFileTypeInTiffSection(String Text) {
+	selectGenerateOption(false);
+	getSelectCloseBtn().waitAndClick(10);
+	base.waitForElement(getTiff_NativeDoc());
+	getTiff_NativeDoc().Click();
+	getFileTypeNativelyProducedDocs().Click();
+	driver.waitForPageToBeReady();
+	base.waitForElement(getNativeDocsPlaceholder());
+	getNativeDocsPlaceholder().Click();
+	getNativeDocsPlaceholder().SendKeys(Text);
 
 }
 }
