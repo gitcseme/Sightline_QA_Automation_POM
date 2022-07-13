@@ -5800,19 +5800,18 @@ public class AssignmentsPage {
 			getAssgnName().Click();
 			getAssgnName().SendKeys(test);
 
-			bc.waitForElement(getSelectdCodingForm());
-			getSelectdCodingForm().isDisplayed();
-			getSelectdCodingForm().selectFromDropdown().selectByVisibleText(codingForm);
+			SelectCodingform(codingForm);
 
 			bc.waitForElement(getSaveBtn());
 			getSaveBtn().Click();
 			driver.waitForPageToBeReady();
 
 			driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
-			bc.waitTillElemetToBeClickable(getLastPage());
-			getLastPage().Click();
-
+			/*driver.waitForPageToBeReady();
+			bc.waitTillElemetToBeClickable(getAssgnPaginationNextButton());
+			getAssgnPaginationNextButton().Click();
+*/
+			assignmentNameValidation(test);
 			driver.waitForPageToBeReady();
 
 			bc.waitForElement(getNoOfDocuments(test));
@@ -5852,24 +5851,27 @@ public class AssignmentsPage {
 			this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 			String expectedText = "0";
 			driver.Navigate().refresh();
+			/*
 			driver.waitForPageToBeReady();
-			bc.waitForElement(getLastPage());
-			getLastPage().Click();
+			bc.waitForElement(getAssgnPaginationNextButton());
+			getAssgnPaginationNextButton().Click();
 			System.out.println("Clicked last page");
 
 			driver.waitForPageToBeReady();
+			*/
+			assignmentNameValidation(test);
 			String DocCount = getNoOfDocuments(test).getText();
 			for (int i = 0; i < 7; i++) {
 				if (expectedText.equals(DocCount.trim())) {
 					break;
 				} else {
-					driver.Navigate().refresh();
+					/*driver.Navigate().refresh();
 					driver.waitForPageToBeReady();
 					bc.waitTillElemetToBeClickable(getLastPage());
 					getLastPage().Click();
 
 					driver.waitForPageToBeReady();
-
+*/
 					bc.waitForElement(getNoOfDocuments(test));
 					DocCount = getNoOfDocuments(test).getText();
 				}
