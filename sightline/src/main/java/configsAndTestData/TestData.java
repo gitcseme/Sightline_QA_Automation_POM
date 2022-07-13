@@ -114,7 +114,7 @@ public class TestData {
 	public String sourceDocId12;
 	public String projectName01;
 	public String projectName02;
-	public String seachDocFileType;
+	public String searchDocFileType;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
