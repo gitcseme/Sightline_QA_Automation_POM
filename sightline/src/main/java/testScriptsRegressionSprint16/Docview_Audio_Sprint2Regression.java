@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -1098,6 +1099,7 @@ public class Docview_Audio_Sprint2Regression {
 		String firstId=docId.get(0);
 		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_SelectDOcId(firstId));
 		docViewPage.getDocView_MiniDoc_SelectDOcId(firstId).waitAndClick(5);
+		driver.waitForPageToBeReady();
 		docViewPage.editCodingForm(comment);
 		docViewPage.completeButton();
 		driver.waitForPageToBeReady();
@@ -1106,12 +1108,13 @@ public class Docview_Audio_Sprint2Regression {
 		// validating cursor navigating next docs from using complete buton
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnComplete=docViewPage.getVerifyPrincipalDocument().getText();
-		softAssertion.assertNotEquals(firstId, prnComplete);
+		Assert.assertNotEquals(firstId, prnComplete);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using complete button");
 		
 		// validating using coding stamp button
 		docViewPage.editCodingForm(comment);
 		docViewPage.stampColourSelection(stampName, Input.stampColour);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Coding Stamp saved successfully");
 		docViewPage.lastAppliedStamp(Input.stampColour);
 		driver.waitForPageToBeReady();
@@ -1120,7 +1123,7 @@ public class Docview_Audio_Sprint2Regression {
 		// verifying cursor navigate to next docs
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnStampLast=docViewPage.getVerifyPrincipalDocument().getText();
-		softAssertion.assertNotEquals(prnComplete, prnStampLast);
+		Assert.assertNotEquals(prnComplete, prnStampLast);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using stamp last button");
 		
 		// validating using code same as last button
@@ -1128,7 +1131,7 @@ public class Docview_Audio_Sprint2Regression {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnCodeSameLast=docViewPage.getVerifyPrincipalDocument().getText();
-		softAssertion.assertNotEquals(prnCodeSameLast, prnStampLast);
+		Assert.assertNotEquals(prnCodeSameLast, prnStampLast);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using code same as last button");
 
 		// verifying as per preceeding document
@@ -1142,18 +1145,15 @@ public class Docview_Audio_Sprint2Regression {
 		loginPage.logout();
 	}
 
-	
-
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-			loginPage.logoutWithoutAssert();
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
-			// loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
@@ -1161,13 +1161,9 @@ public class Docview_Audio_Sprint2Regression {
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
 
-		} catch (Exception e) {
-			System.out.println("Sessions already closed");
-		}
+	public void close() {
+		System.out.println("******TEST CASES FOR DocView_Audio EXECUTED******");
+	}
 	}
 
-}

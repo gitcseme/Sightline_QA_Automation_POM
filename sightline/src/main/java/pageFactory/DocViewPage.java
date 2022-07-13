@@ -18702,7 +18702,6 @@ public class DocViewPage {
 		base.waitForElement(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		base.VerifySuccessMessage("Coded as per the coding form for the previous document");// updated verification
 		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
 		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
 			base.stepInfo("coded as per the previous document..");
