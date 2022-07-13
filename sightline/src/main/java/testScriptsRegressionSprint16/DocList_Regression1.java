@@ -110,6 +110,7 @@ public class DocList_Regression1 {
 	 * @Description Verify that Audio Document Preview functionality is working
 	 *              proper in Saved Search >> DocList screen.
 	 */
+	
 	@Test(description = "RPMXCON-54567", enabled = true, groups = { "regression" })
 	public void verifyPerviewDocAudioFileFunctionalityWorkProper() throws InterruptedException, AWTException {
 
@@ -135,11 +136,13 @@ public class DocList_Regression1 {
 		savedsearch.savedSearchToDocList(searchname);
 
 		baseClass.stepInfo("Verify preview Doc list of audio document");
+		driver.waitForPageToBeReady();
 		docList.DoclistPreviewAudio();
 		baseClass.passedStep("Audio Document Preview functionality are working proper in DocList screen.");
 		loginPage.logout();
 
 	}
+
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:05/07/2022 RPMXCON-54526
@@ -269,6 +272,7 @@ public class DocList_Regression1 {
 	 *              success message should be displayed to inform the user that it
 	 *              is processed in background task.
 	 */
+
 	@Test(description = "RPMXCON-54979", enabled = true, groups = { "regression" })
 	public void verifyDocListPerviewAndProcessedInBackgroundTask() throws Exception {
 
@@ -280,7 +284,6 @@ public class DocList_Regression1 {
 		docexp = new DocExplorerPage(driver);
 		DocListPage docList = new DocListPage(driver);
 		DocViewPage docView = new DocViewPage(driver);
-		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -289,16 +292,6 @@ public class DocList_Regression1 {
 		baseClass.stepInfo(" Search meta data DocFile Type");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.searchDocFileType, "DocFileType");
 		sessionSearch.ViewInDocView();
-		
-		//Apply Redaction
-		baseClass.stepInfo("Go to DocView And Add Redaction");
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(2));
-		docView.getDocView_MiniDoc_Selectdoc(2).waitAndClick(5);
-        driver.waitForPageToBeReady();
-        docViewRedactions.redactRectangleUsingOffset(20,20,30,30);
-        driver.waitForPageToBeReady();
-        docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
         
         baseClass.stepInfo("Go to DocList Page");
         driver.waitForPageToBeReady();
