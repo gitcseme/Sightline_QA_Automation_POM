@@ -177,6 +177,10 @@ public class SavedSearch {
 	public Element getToDocView() {
 		return driver.FindElementById("document-btn");
 	}
+	
+	public Element getToDocViewoption() {
+		return driver.FindElementByXPath("//span[contains(text(),'Doc View')]");
+	}
 
 	public Element getLaunchDocView() {
 		return driver.FindElementByXPath("//li[@id='rbngViewGroup']//a[@id='view']");

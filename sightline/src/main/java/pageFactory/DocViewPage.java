@@ -25629,10 +25629,10 @@ public class DocViewPage {
 		audioRedactionTimeConfig();
 
 		// Check Default Selection
-		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
-		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
-				"In default : Application automatically selected the ‘Default Redaction Tag’",
-				"In default : invalid redaction tag selected");
+//		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+//		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+//				"In default : Application automatically selected the ‘Default Redaction Tag’",
+//				"In default : invalid redaction tag selected");
 
 		// select redaction tags
 		base.waitForElement(getDocview_AudioRedactions());
