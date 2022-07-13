@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -1147,16 +1148,17 @@ public class Docview_Audio_Sprint2Regression {
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-			loginPage.logoutWithoutAssert();
-		}
-		try {
-			// loginPage.logout();
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
+			baseClass = new BaseClass(driver);
+			Reporter.setCurrentTestResult(result);
+			if (ITestResult.FAILURE == result.getStatus()) {
+				Utility baseClass = new Utility(driver);
+				baseClass.screenShot(result);
+			}
+			try {
+				loginPage.quitBrowser();
+			} catch (Exception e) {
+				loginPage.quitBrowser();
+			}
 		}
 	}
 
