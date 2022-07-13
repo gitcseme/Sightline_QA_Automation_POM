@@ -1147,7 +1147,7 @@ public class Docview_Audio_Sprint2Regression {
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
+	baseClass = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);

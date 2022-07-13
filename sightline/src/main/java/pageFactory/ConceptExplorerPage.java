@@ -632,6 +632,7 @@ public class ConceptExplorerPage {
 			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
 			if (clusterCount > docCount) {
 				getSquareToSelect(k).waitAndClick(3);
+				break;
 			}
 		}
 	}
