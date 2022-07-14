@@ -111,7 +111,7 @@ public class ProductionRegression_17 {
 		driver.waitForPageToBeReady();
 		File TiffFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_TIFF.OPT");
 		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_DAT.dat");
-		File NativeFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "Native.lst");
+		File NativeFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_Native.lst");
 
 		if (TiffFile.exists()) {
 			base.passedStep("Tiff file is generated as expected");
@@ -120,7 +120,7 @@ public class ProductionRegression_17 {
 		if (DatFile.exists()) {
 			base.passedStep("Dat file is generated as expected");
 		} else {base.failedStep("Dat file is not generated as expected");}
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		if (NativeFile.exists()) {
 			base.passedStep("Native file is generated as expected");
 		} else {base.failedStep("Native file is not generated as expected");}
@@ -297,6 +297,7 @@ public void verifyClickHereLinkInSortingPage() throws Exception {
 	driver.waitForPageToBeReady();
 	page.verifyAvailbleLinkAtNumberingAndSorting();
 	page.getClickHereLink().waitAndClick(5);
+	driver.waitForPageToBeReady();
 	base.ValidateElement_Presence(page.NextBatesNumberPopup(),"Next Bates Number Popup");
 	base.ValidateElement_Presence(page.getNextBatesNumberInSortingPage(),"Next Bates Number");
 	base.ValidateElement_Presence(page.getNextBatesNumber(),"Select Button");
