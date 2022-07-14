@@ -752,5 +752,17 @@ public class TestData {
 	public String Discrimination;
     public String FCPA;
     public String Harassment;
-
+    
+    //Added by Aathith ,Client Page details
+  	public String FilterByType;
+  	public String Name;
+  	public String ShortName;
+  	public String Type;
+  	public String DomainID;
+  	public String ProcessingEngine;
+  	public String CreatedBy;
+  	public String CreatedON;
+  	public String Actions;
+  	public String Delete;
+  	public String Edit;
 }

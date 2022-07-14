@@ -3103,4 +3103,75 @@ public class UserManagement {
 			getPopUpCloseBtn().waitAndClick(10);
 		}
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param emailOrName
+	 * @Description filter the user by name or email id
+	 */
+	public void filterByName(String emailOrName) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(emailOrName);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Applied fileter the for Name or Email Adress : "+emailOrName);
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return user name
+	 * @Description return the first users full name
+	 */
+	public String getfirstUserName() {
+		driver.waitForPageToBeReady();
+		String firstName = getTableData("FIRST NAME", 1);
+		String lastName = getTableData("LAST NAME", 1);
+		return firstName+" "+lastName;
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param role
+	 * @param project
+	 * @param secutiryGroup
+	 * @Desctiption select role, project and security group for bulk user access control tab
+	 */
+	public void selectRoleBulkUserAccessControl(String role, String project, String secutiryGroup) {
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRollId());
+		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+		
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectDropProject(project));
+		driver.scrollingToElementofAPage(getSelectDropProject(project));
+		getSelectDropProject(project).waitAndClick(10);
+		
+		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserSecurityGroup());
+		getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param users
+	 * @Description select list of users in bulk access control tab popup
+	 */
+	public void selectBulkAccessUsers(String[] users) {
+		driver.waitForPageToBeReady();
+		for(String user:users) {
+			driver.scrollingToElementofAPage(getSelectBulkUser(user));
+			getSelectBulkUser(user).waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+		bc.stepInfo("users was selected");
+	}
 }

@@ -33,7 +33,30 @@ public class ClientsPage {
     public Element createClientHelpIcon_clientPg(){ return driver.FindElementByXPath("//span[text()='Create Client']//i"); }
     public Element createClientHelpIconPopOver_clientPg(){ return driver.FindElementByXPath("//span[text()='Create Client']//a[contains(@aria-describedby,'popover')]"); }
     public Element dataBaseTitle(){ return driver.FindElementByXPath("//strong[text()='Database ']"); }
+    
+    //Add by Aathith
+    public Element getDBSizeOption(){ 
+    	return driver.FindElementById("ddlProjectDBSizeInstance"); 
+    }
+    public Element getProgressingInstanceOption(){ 
+    	return driver.FindElementById("ddlProjectDBSizeInstance"); 
+    }
+    
+    public Element getClientDeleteBtn(String client){ 
+    	return driver.FindElementByXPath("//*[@id='EntityDataTable']/tbody/tr/td[text()='"+client+"']/../td/a[text()='Delete']"); 
+    }
+    
+    public Element getTableHeader(int i){ 
+    	return driver.FindElementByXPath("//*[@id='EntityDataTable']/thead/tr/th["+i+"]"); 
+    }
 
+    public Element getAscending() {
+		return driver.FindElementByXPath("//th[@aria-sort='ascending']");
+	}
+	
+	public Element getDescending() {
+		return driver.FindElementByXPath("//th[@aria-sort='descending']");
+	}
   
     //Annotation Layer added successfully
     public ClientsPage(Driver driver){
@@ -203,6 +226,38 @@ public class ClientsPage {
 		 }
 		 
 	 }
+	 
+	 public void navigateToClientPage() {
+		 try {
+			 this.driver.getWebDriver().get(Input.url+"Entity/Entity");
+		 }catch(Exception e) {
+			 bc.failedStep(e.getMessage());
+		 }
+	 }
+	 public void verifyAscendingDescendingOrder() {
+			driver.waitForPageToBeReady();
+			if(getAscending().isElementAvailable(10)) {
+				bc.passedStep("Web table is sorted in Ascending ordrer");
+				getAscending().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				if(getDescending().isElementAvailable(10)) {
+					bc.stepInfo("Web table s in descending order");
+					bc.passedStep("User is able to sort the column by ascending/descending order.");
+				}else {
+					bc.failedStep("verification failed");
+				}
+			}else {
+				bc.stepInfo("Web table is sorted in Desscending ordrer");
+				getDescending().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				if(getAscending().isElementAvailable(10)) {
+					bc.stepInfo("Web table s in Ascending order");
+					bc.passedStep("User is able to sort the column by ascending/descending order.");
+				}else {
+					bc.failedStep("verification failed");
+				}
+			}
+		}
 	     
  
  }

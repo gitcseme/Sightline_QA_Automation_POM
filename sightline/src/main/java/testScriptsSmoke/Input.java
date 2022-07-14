@@ -836,6 +836,19 @@ public class Input {
 	public static String FCPA;
 	public static String Harassment;
 	
+	//Added by Aathith ,Client Page details
+	public static String FilterByType;
+	public static String Name;
+	public static String ShortName;
+	public static String Type;
+	public static String DomainID;
+	public static String ProcessingEngine;
+	public static String CreatedBy;
+	public static String CreatedON;
+	public static String Actions;
+	public static String Delete;
+	public static String Edit;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1697,7 +1710,21 @@ public class Input {
 			Discrimination = testData.getDiscrimination();
 			FCPA = testData.getFCPA();
 			Harassment = testData.getHarassment();
-		 
+		
+			
+			//Added by Aathith ,Client Page details
+		  	FilterByType = testData.getFilterByType();
+		  	Name = testData.getName();
+		  	ShortName = testData.getShortName();
+		  	Type = testData.getType();
+		  	DomainID = testData.getDomainID();
+		  	ProcessingEngine = testData.getProcessingEngine();
+		  	CreatedBy = testData.getCreatedBy();
+		  	CreatedON = testData.getCreatedON();
+		  	Actions = testData.getActions();
+		  	Delete = testData.getDelete();
+		  	Edit = testData.getEdit();
+			
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 
