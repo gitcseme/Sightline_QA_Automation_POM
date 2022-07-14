@@ -344,9 +344,11 @@ public class Docview_Audio_Sprint2Regression {
 	 *         Verify that when ‘Default Redaction Tag’ doesn’t exist then on
 	 *         applying audio redaction, the application must automatically select
 	 *         the first in the list of redaction tags
+	 *         
+	 *         Script commented as it results in deletion of Default redaction Tag
 	 * 
 	 */
-	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
+//	@Test(description = "RPMXCON-52010", enabled = true, groups = { "regression" })
 	public void verifyDFRedactionNotExistFirstRedactionShouldSelect() throws InterruptedException, ParseException {
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
