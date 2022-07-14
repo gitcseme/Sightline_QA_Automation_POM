@@ -1,6 +1,11 @@
 package pageFactory;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.internal.FindsByXPath;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
@@ -13,41 +18,118 @@ import testScriptsSmoke.Input;
 public class Dashboard {
 	Driver driver;
 	BaseClass base;
-    Element element;
-    SoftAssert assertion;
-    
-    // Added by sowndarya.velraj
-    
-    public Element dashboardWidgetIcon(){ return driver.FindElementByXPath("//a[@id='wEdit']"); }
-    public Element btnAddNewWidget(){ return driver.FindElementByXPath("//input[@id='wAdd']"); }
-    public Element selectWidget(String widget){ return driver.FindElementByXPath("//ul[@id='DataCollection']//span[contains(text(),'"+widget+"')]"); }
-    public Element btnAddToDashboard(){ return driver.FindElementById("btnAddToDashboard"); }
-    public Element warningPopup(){ return driver.FindElementByXPath("//div[@id='bigBoxColor2']//p"); }
-    public Element btndeleteWidgetInDashboard(){ return driver.FindElementByXPath("(//div[@class='jarviswidget-ctrls']//a)[last()]"); }
-    public Element btnYes_deleteWidget(){ return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'Yes')]"); }
-    public Element btnNo_deleteWidget(){ return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'No')]"); }
-    public Element reviewerProgress_gearIcon(){ return driver.FindElementByXPath("//span[contains(text(),'Reviewer Progress')]//..//i[@id='OpenPop']"); }
-    public Element selectReviewers_mostToDoDocs(){ return driver.FindElementByXPath("//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Most To Do Docs')]"); }
-    public Element selectReviewers_mostCompleteDocs(){ return driver.FindElementByXPath("//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Most Complete Docs')]");}
-    public Element selectReviewers_selectReviewers(){ return driver.FindElementByXPath("//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Select Specific Reviewers')]");}
-  
-    public Element btnSave_customizeWidget(){ return driver.FindElementByXPath("//button[@onclick='ReviewerProcessOpreation();']"); }
-    public Element arrow_selectAssignment(){ return driver.FindElementByXPath("//i[@class='jstree-icon jstree-ocl']"); }
-    public Element selectAssignment_CustomizeWidget(String assignment){ return driver.FindElementByXPath("//div[@id='treeAssignment-review-progress']//a[contains(text(),'"+assignment+"')]"); }
-    public ElementCollection countOfWidget(){ return driver.FindElementsByXPath("//div[@class='wellHdr font-md']"); }
-    public Element selectSpecificReviewer(){ return driver.FindElementByXPath("//select[@id='UserList']//option"); }
-    public Element mostToDoDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Most To Do Docs')]"); }
-    public Element mostCompletedDocs_InsideWidget(){ return driver.FindElementByXPath("//label[contains(text(),'Completed')]"); }
-    public Element selectProjectName(String project){ return driver.FindElementByXPath("//strong[contains(text(),'"+project+"')]"); }
-  
-    
-    public Dashboard(Driver driver){
+	Element element;
+	SoftAssert assertion;
 
-        this.driver = driver;
-        base = new BaseClass(driver);
-        assertion = new SoftAssert();
-  
-    }
+	// Added by sowndarya.velraj
+
+	public Element dashboardWidgetIcon() {
+		return driver.FindElementByXPath("//a[@id='wEdit']");
+	}
+
+	public Element btnAddNewWidget() {
+		return driver.FindElementByXPath("//input[@id='wAdd']");
+	}
+
+	public Element selectWidget(String widget) {
+		return driver.FindElementByXPath("//ul[@id='DataCollection']//span[contains(text(),'" + widget + "')]");
+	}
+
+	public Element btnAddToDashboard() {
+		return driver.FindElementById("btnAddToDashboard");
+	}
+
+	public Element warningPopup() {
+		return driver.FindElementByXPath("//div[@id='bigBoxColor2']//p");
+	}
+
+	public Element btndeleteWidgetInDashboard() {
+		return driver.FindElementByXPath("(//div[@class='jarviswidget-ctrls']//a)[last()]");
+	}
+
+	public Element btnYes_deleteWidget() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'Yes')]");
+	}
+
+	public Element btnNo_deleteWidget() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[contains(text(),'No')]");
+	}
+
+	public Element reviewerProgress_gearIcon() {
+		return driver.FindElementByXPath("//span[contains(text(),'Reviewer Progress')]//..//i[@id='OpenPop']");
+	}
+
+	public Element selectReviewers_mostToDoDocs() {
+		return driver.FindElementByXPath(
+				"//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Most To Do Docs')]");
+	}
+
+	public Element selectReviewers_mostCompleteDocs() {
+		return driver.FindElementByXPath(
+				"//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Most Complete Docs')]");
+	}
+
+	public Element selectReviewers_selectReviewers() {
+		return driver.FindElementByXPath(
+				"//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Select Specific Reviewers')]");
+	}
+
+	public Element btnSave_customizeWidget() {
+		return driver.FindElementByXPath("//button[@onclick='ReviewerProcessOpreation();']");
+	}
+
+	public Element arrow_selectAssignment() {
+		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-ocl']");
+	}
+
+	public Element selectAssignment_CustomizeWidget(String assignment) {
+		return driver.FindElementByXPath(
+				"//div[@id='treeAssignment-review-progress']//a[contains(text(),'" + assignment + "')]");
+	}
+
+	public ElementCollection countOfWidget() {
+		return driver.FindElementsByXPath("//div[@class='wellHdr font-md']");
+	}
+
+	public Element selectSpecificReviewer() {
+		return driver.FindElementByXPath("//select[@id='UserList']//option");
+	}
+
+	public Element mostToDoDocs_InsideWidget() {
+		return driver.FindElementByXPath("//label[contains(text(),'Most To Do Docs')]");
+	}
+
+	public Element mostCompletedDocs_InsideWidget() {
+		return driver.FindElementByXPath("//label[contains(text(),'Completed')]");
+	}
+
+	public Element selectProjectName(String project) {
+		return driver.FindElementByXPath("//strong[contains(text(),'" + project + "')]");
+	}
+
+	public ElementCollection selectedTags_TaggingWidget() {
+		return driver.FindElementsByXPath("//div[@id='tableex']//tbody//th[@class='text-left']");
+	}
+
+	public ElementCollection privilegedAndResponsiveTagCount() {
+		return driver.FindElementsByXPath("//table[@id='TotalTagsCountTable']//td[@class='text-center']");
+	}
+
+	public ElementCollection privilegedAndResponsiveTagTableCount() {
+		return driver.FindElementsByXPath("//table[@id='TotalTagsCountTable']//th[@class='text-center']");
+	}
+	public Element txtselectedTags() {
+		return driver.FindElementByXPath("//span[text()='Selected Tags']");
+	}
+	
+
+	public Dashboard(Driver driver) {
+
+		this.driver = driver;
+		base = new BaseClass(driver);
+		assertion = new SoftAssert();
+
+	}
 
 	/**
 	 * @authorSowndarya.velraj
@@ -61,34 +143,34 @@ public class Dashboard {
 			base.failedStep("Exception occured while navigating to production page" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * @authorSowndarya.velraj
 	 * @Description : To add new widget "Reviewer Progress" in the dashboard
 	 */
 	public void AddNewWidgetToDashboard(String widget) {
-		
+
 		navigateToDashboard();
-		
+
 		base.waitForElementCollection(countOfWidget());
 		int count = countOfWidget().size();
-		System.out.println("count of widget : "+count);
-		if (count<3) {
+		System.out.println("count of widget : " + count);
+		if (count < 3) {
 			driver.Navigate().refresh();
 			dashboardWidgetIcon().waitAndClick(10);
 			btnAddNewWidget().waitAndClick(10);
 			selectWidget(widget).waitAndClick(10);
 			driver.scrollingToBottomofAPage();
 			btnAddToDashboard().waitAndClick(10);
-			
-		}else if (count==3) {
+
+		} else if (count == 3) {
 			navigateToDashboard();
 			base.waitForElement(dashboardWidgetIcon());
 			dashboardWidgetIcon().waitAndClick(10);
 			selectProjectName(Input.projectName).ScrollTo();
 			base.waitForElement(btndeleteWidgetInDashboard());
 			btndeleteWidgetInDashboard().waitAndClick(10);
-			
+
 			base.waitForElement(btnYes_deleteWidget());
 			btnYes_deleteWidget().waitAndClick(10);
 			base.VerifySuccessMessage("Widget Deleted");
@@ -104,28 +186,25 @@ public class Dashboard {
 			btnAddToDashboard().waitAndClick(10);
 			base.stepInfo("New widget is added");
 		}
-	
+
 	}
-	
-	
 
 	/**
 	 * @authorSowndarya.velraj
 	 * @Description : To customize Reviewer Progress Widget
 	 */
-	public void customizeReviewerProgressWidget(String radioBtn,String fullName,String assignmentName) {
-		
+	public void customizeReviewerProgressWidget(String radioBtn, String fullName, String assignmentName) {
+
 		driver.waitForPageToBeReady();
 		reviewerProgress_gearIcon().waitAndClick(10);
 		base.stepInfo("Select Reviewers");
-		if(radioBtn.equalsIgnoreCase("ToDoDocs")) {
+		if (radioBtn.equalsIgnoreCase("ToDoDocs")) {
 			selectReviewers_mostToDoDocs().waitAndClick(10);
-			System.out.println("selected - "+selectReviewers_mostToDoDocs().getText());
-		}else if (radioBtn.equalsIgnoreCase("Complete")) {
-		selectReviewers_mostCompleteDocs().waitAndClick(10);
-		System.out.println("selected - "+selectReviewers_mostCompleteDocs().getText());
-		}
-		else {
+			System.out.println("selected - " + selectReviewers_mostToDoDocs().getText());
+		} else if (radioBtn.equalsIgnoreCase("Complete")) {
+			selectReviewers_mostCompleteDocs().waitAndClick(10);
+			System.out.println("selected - " + selectReviewers_mostCompleteDocs().getText());
+		} else {
 			selectReviewers_selectReviewers().waitAndClick(10);
 			base.waitForElement(selectSpecificReviewer());
 			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(fullName);
@@ -136,6 +215,51 @@ public class Dashboard {
 		selectAssignment_CustomizeWidget(assignmentName).waitAndClick(10);
 		base.waitForElement(btnSave_customizeWidget());
 		btnSave_customizeWidget().waitAndClick(10);
+	}
+
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To verify selected tags
+	 */
+	public void  verifySelectedTagsInTaggingWidget() {
+
+		base.waitForElementCollection(selectedTags_TaggingWidget());
+		List<String> listofElements = base.availableListofElements(selectedTags_TaggingWidget());
+		base.waitForElementCollection(privilegedAndResponsiveTagTableCount());
+		List<String> elements = base.availableListofElements(privilegedAndResponsiveTagTableCount());
+		if(txtselectedTags().isElementAvailable(5)) {
+		base.passedStep("Selected tag 1 :"+listofElements.get(0)+" counts are :"+ elements.get(2));
+		base.passedStep("Selected tag 2 :"+listofElements.get(1)+"counts are : "+ elements.get(3));
+		base.passedStep("Selected tag 3 :"+listofElements.get(2)+"counts are : "+elements.get(4));
+		base.passedStep("Selected tag 4 :"+listofElements.get(3)+"counts are : "+elements.get(5));
+		base.passedStep("Selected tag 5 :"+listofElements.get(4)+"counts are : "+ elements.get(6));
+		base.passedStep("Selected tag 6 :"+listofElements.get(5)+"counts are : "+ elements.get(7));
+		}	
+	}
+
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To verify privileged and responsive tags count
+	 */
+	public void verifyPrivilegedAndResponsiveTags() {
+		driver.waitForPageToBeReady();
+		List<String> elements = base.availableListofElements(privilegedAndResponsiveTagTableCount());
+		String priv = elements.get(0);
+		System.out.println(priv);
+		String resp = elements.get(1);
+		System.out.println(resp);
+		base.waitTime(2);
+		List<String> availableListofElements = base.availableListofElements(privilegedAndResponsiveTagCount());
+
+		String PrivilegedCount = availableListofElements.get(0);
+		System.out.println(PrivilegedCount);
+		String ResponsiveCount = availableListofElements.get(1);
+		System.out.println(ResponsiveCount);
+		if (priv.equalsIgnoreCase("Privileged") && resp.equalsIgnoreCase("Responsive")) {
+			base.passedStep("Privileged counts are : " + PrivilegedCount);
+			base.passedStep("Responsive  counts are : " + ResponsiveCount);
+		}
+
 	}
 
 }
