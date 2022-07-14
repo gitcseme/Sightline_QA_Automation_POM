@@ -45,9 +45,40 @@
 				<version>2.18.1</version>
 				<configuration>
 					<forkCount>0</forkCount>
-					<suiteXmlFiles>
+			<!-- 		<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
+					</suiteXmlFiles> -->
+					
+					<!-- This is used to execute from Jenkins --> 
+    <systemPropertyVariables>
+		<environment>${environment}</environment>
+		<browser>${browser}</browser>
+		<testType>${testType}</testType>
+		<projectName>${projectName}</projectName>
+		<ICEProjectName>${ICEProjectName}</ICEProjectName>
+		<noOfDataSet>${noOfDataSet}</noOfDataSet>
+		<domainName>${domainName}</domainName>
+		<da1userName>${da1userName}</da1userName>
+		<da1password>${da1password}</da1password>
+		<sa1userName>${sa1userName}</sa1userName>
+		<sa1password>${sa1password}</sa1password>
+		<pa1userName>${pa1userName}</pa1userName>
+		<pa1password>${pa1password}</pa1password>
+		<rmu1userName>${rmu1userName}</rmu1userName>
+		<rmu1password>${rmu1password}</rmu1password>
+		<rev1userName>${rev1userName}</rev1userName>
+		<rev1password>${rev1password}</rev1password>
+		<pa2userName>${pa2userName}</pa2userName>
+		<pa2password>${pa2password}</pa2password>
+		<rmu2userName>${rmu2userName}</rmu2userName>
+		<rmu2password>${rmu2password}</rmu2password>
+		<rev2userName>${rev2userName}</rev2userName>
+		<rev2password>${rev2password}</rev2password>
+	</systemPropertyVariables> 
+
+<suiteXmlFiles>
+            <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+     </suiteXmlFiles>    
 				</configuration>
 			</plugin>
 		</plugins>
@@ -133,16 +164,6 @@
 
 			<version>1.2.3</version>
 
-		</dependency>
-
-		<dependency>
-
-			<groupId>ch.qos.logback</groupId>
-
-			<artifactId>logback-classic</artifactId>
-
-			<version>1.2.3</version>
-
 			<exclusions>
 
 				<exclusion>
@@ -192,12 +213,7 @@
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.7</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
