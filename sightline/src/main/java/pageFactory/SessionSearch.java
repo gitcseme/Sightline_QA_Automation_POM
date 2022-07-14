@@ -4307,19 +4307,25 @@ public class SessionSearch {
 					return getBulkActionButton().Visible();
 				}
 			}), Input.wait30);
-			base.waitTime(2); // App synch
+			Thread.sleep(2000); // App synch
 			getBulkActionButton().waitAndClick(5);
-			base.waitTime(2); // App Synch
+			Thread.sleep(2000); // App Synch
 
-			if (getDocViewAction().isDisplayed()) {
-				getDocViewAction().Click();
+			if (getViewBtn().isElementAvailable(2)) {
+				driver.waitForPageToBeReady();
+
+				WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+				Actions actions = new Actions(driver.getWebDriver());
+				wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
+				actions.moveToElement(getViewBtn().getWebElement()).build().perform();
+
+				base.waitForElement(getDocViewFromDropDown());
+				getDocViewFromDropDown().waitAndClick(10);
 			} else {
-				Actions ac = new Actions(driver.getWebDriver());
-				ac.moveToElement(getViewOn().getWebElement()).build().perform();
-				base.waitTime(2);
-				getViewInDocViewLat().isElementAvailable(15);
-				getViewInDocViewLat().Click();
+				getDocViewAction().waitAndClick(10);
+				base.waitTime(3); // added for stabilization
 			}
+
 			System.out.println("Navigated to docView to view docs");
 			UtilityLog.info("Navigated to docView to view docs");
 
