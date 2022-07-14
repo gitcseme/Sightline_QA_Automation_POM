@@ -1157,7 +1157,7 @@ public class SecurityGroupsPage {
 
 		ElementCollection totFolderCount = getTolSecurityGroupCount();
 		int totFolderSize = totFolderCount.size();
-		if (totFolderSize > 0) {
+		if (totFolderSize > 3) {
 			bc.passedStep(
 					"There are more than 2 security Groups(1-1 in Security Group) is exists in source template project.");
 
