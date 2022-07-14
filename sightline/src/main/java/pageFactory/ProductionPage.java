@@ -7167,14 +7167,16 @@ public class ProductionPage {
 
 		getConfirmProductionCommit().isElementAvailable(120);
 		base.waitTime(2);
+		base.waitTillElemetToBeClickable(getConfirmProductionCommit());
 		getConfirmProductionCommit().ScrollTo();
 		getConfirmProductionCommit().waitAndClick(10);
 		
-		if(base.getErrorMsgHeader().isElementAvailable(10)) {
-            base.failedStep("Commit is not successfull");
-        }
-
-		base.CloseSuccessMsgpopup();
+		  if(base.getErrorMsgHeader().isElementAvailable(2)) {
+	            base.failedStep("Commit is not successfull");
+	        }
+	        if(base.getCloseSucessmsg().isElementAvailable(2)) {
+	        base.CloseSuccessMsgpopup();
+	        }
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		base.waitTime(1);
