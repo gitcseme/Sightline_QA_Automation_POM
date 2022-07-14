@@ -106,7 +106,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To verify that Delete button is available on Tile.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 47376",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-47376",enabled = true, groups = { "regression" })
 	public void verifyOverlayIngestionForSameFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47376");
@@ -133,7 +133,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To verify Back button functionality for ingestion wizard
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 47399",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-47399",enabled = true, groups = { "regression" })
 	public void verifyBackButtonFunctionality() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47399");
@@ -157,7 +157,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To verify the mandatory field validations in Ingestion Wizard.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 47398",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-47398",enabled = true, groups = { "regression" })
 	public void verifyMandatoryFieldInWizard() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47398");
@@ -187,7 +187,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To verify the Source Selection in Ingestion Wizard Page.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 47397",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-47397",enabled = true, groups = { "regression" })
 	public void verifySourceSelectionInWizard() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47397");
@@ -238,7 +238,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To verify mandatory field validation for mapping fields before Preview&Run.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 47582",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-47582",enabled = true, groups = { "regression" })
 	public void verifyMandatoryFieldValidationInMappingSection() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47582");
@@ -259,7 +259,7 @@ public class Ingestion_Regression_2 {
 	 * Description :To Verify selected audio and transcript file types are retained on opening of Draft Ingestion in Wizard.
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON- 48146",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-48146",enabled = true, groups = { "regression" })
 	public void verifyAudioAndTranscriptFilesRetainedStatus() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48146");
