@@ -248,17 +248,17 @@ public class O365_Regression_2_1 {
 	 *              Application ID and Application Secret Key .
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-60519", enabled = true, groups = { "regression" })
-	public void verifyAttributesInPopUp() throws Exception {
+	@Test(description = "RPMXCON-60519",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAttributesInPopUp(String username,String password,String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60519 - O365");
 		base.stepInfo(
 				"Verify the attributes from the 'Add Source Location' pop up should be Data Source Type, Data Source Name, Tenant ID, Application ID and Application Secret Key");
 
-		String[][] userRolesData = { { Input.pa1userName, "PA" } };
+		String[][] userRolesData = { { username, fullname } };
 
-		// Login as PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// Login as User
+		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
@@ -281,17 +281,17 @@ public class O365_Regression_2_1 {
 	 *              required fields on click of 'Save'.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-60520", enabled = true, groups = { "regression" })
-	public void verifyErrorMsgInPopUp() throws Exception {
+	@Test(description = "RPMXCON-60520",dataProvider = "PaAndRmuUser",  enabled = true, groups = { "regression" })
+	public void verifyErrorMsgInPopUp(String username,String password,String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60520 - O365");
 		base.stepInfo(
 				"Verify that error messages should be displayed for the blank required fields on click of 'Save'");
 
-		String[][] userRolesData = { { Input.pa1userName, "PA" } };
+		String[][] userRolesData = { { username, fullname } };
 
-		// Login as PA
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// Login as User
+		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
