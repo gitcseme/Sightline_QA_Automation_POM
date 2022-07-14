@@ -26,6 +26,9 @@ import pageFactory.Utility;
 public class Input {
 	Driver driver;   
 	LoginPage lp;
+	
+	// Default should be true, Make it false during Development
+			public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -900,6 +903,16 @@ public class Input {
 
 		// Environment data-------------------------------------------------------------
 		url = envConfig.getUrl();
+		pa1FullName = envConfig.getPa1FullName();
+		rmu1FullName = envConfig.getRmu1FullName();
+		rev1FullName = envConfig.getRev1FullName();
+		pa2FullName = envConfig.getPa2FullName();
+		rmu2FullName = envConfig.getRmu2FullName();
+		rev2FullName = envConfig.getRev2FullName();
+		prodPath = envConfig.getProdpath();
+		SourceLocation = envConfig.getSourceLocation();
+		
+		if (mode) {	
 		projectName = envConfig.getProjectName();
 		domainName = envConfig.getDomainName();
 		sa1userName = envConfig.getSa1userName();
@@ -915,19 +928,31 @@ public class Input {
 		rmu2userName = envConfig.getRmu2userName();
 		rmu2password = envConfig.getRmu2password();
 		rev2userName = envConfig.getRev2userName();
-		rev2password = envConfig.getRev2password();
-		shareTo = envConfig.shareTo;
-		pa1FullName = envConfig.getPa1FullName();
-		rmu1FullName = envConfig.getRmu1FullName();
-		rev1FullName = envConfig.getRev1FullName();
-		pa2FullName = envConfig.getPa2FullName();
-		rmu2FullName = envConfig.getRmu2FullName();
-		rev2FullName = envConfig.getRev2FullName();
-		prodPath = envConfig.getProdpath();
-		SourceLocation = envConfig.getSourceLocation();
+		rev2password = envConfig.getRev2password();						
 		ICEProjectName = envConfig.getICEProjectName();
 		da1userName = envConfig.getDa1userName();
 		da1password = envConfig.getDa1password();
+		} else {
+			projectName = envConfig.getProjectName();
+			ICEProjectName = envConfig.getICEProjectName();
+			domainName = envConfig.getDomainName();
+			da1userName = envConfig.getDa1userName();
+			da1password = envConfig.getDa1password();
+			sa1userName = envConfig.getSa1userName();
+			sa1password = envConfig.getSa1password();
+			pa1userName = envConfig.getPa1userName();
+			pa1password = envConfig.getPa1password();
+			rmu1userName = envConfig.getRmu1userName();
+			rmu1password = envConfig.getRmu1password();
+			rev1userName = envConfig.getRev1userName();
+			rev1password = envConfig.getRev1password();
+			pa2userName = envConfig.getPa2userName();
+			pa2password = envConfig.getPa2password();
+			rmu2userName = envConfig.getRmu2userName();
+			rmu2password = envConfig.getRmu2password();
+			rev2userName = envConfig.getRev2userName();
+			rev2password = envConfig.getRev2password();
+		}
 		// Test data-------------------------------------------------------------
 
 		loadSuiteTestData();// Load required suite data first, smoke or regression one - Modified date :
