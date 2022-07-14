@@ -183,7 +183,7 @@ public class SessionSearch {
 	// public Element getBulkActionButton(){ return
 	// driver.FindElementById("idAction"); }
 	public Element getBulkActionButton() {
-		return driver.FindElementByXPath("//*[@id=\"idAction\"]");
+		return driver.FindElementByXPath("//*[@id='idAction']");
 	}
 
 	public Element getBulkTagAction() {

@@ -1483,7 +1483,16 @@ public class DocView_MiniDocList_DataProvider {
 		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
 
 		savedSearch.savedSearch_Searchandclick(savedSearchs);
-		savedSearch.getToDocView().waitAndClick(5);
+		savedSearch.docViewFromSS("View in DocView");
+		try {
+			if (baseClass.getYesBtn().isElementAvailable(3)) {
+				baseClass.getYesBtn().waitAndClick(10);
+			}
+
+		} catch (Exception e) {
+			System.out.println("Pop up message does not appear");
+			UtilityLog.info("Pop up message does not appear");
+		}
 		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
 		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
 		
@@ -1626,7 +1635,7 @@ public class DocView_MiniDocList_DataProvider {
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(savedSearchs, "Yes");
-		savedSearch.getToDocView().waitAndClick(5);
+		savedSearch.docViewFromSS("View in DocView");
 		baseClass.waitTime(3);
 		driver.waitForPageToBeReady();
 		if(driver.getUrl().equals(expectedURL)) {
@@ -1692,11 +1701,11 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("Verify scrolling in mini doc list should "
 				+ "work when user completes the document from mini doc list");
 		String comment = "comment" + Utility.dynamicNameAppender();
-		String rmu = "RMU";
+		String rmu = "rm";
 
 		loginPage.loginToSightLine(userName, password);
-
-		if (fullName.contains(rmu)) {
+		 if(userName.contains(rmu)) {
+		//if (fullName.contains(rmu)) {
 //			 searching document for assignment creation
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.bulkAssign();
@@ -1935,15 +1944,15 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("To verify that user can 'popout panels' on Doc View, "
 				+ "if preferences is set as 'Enabled' from the assignment.");
 
-		String rmu = "RMU";
+		String rmu = "rm";
 		String miniDocListChild = Input.url + "DocumentViewer/DocViewChild";
 		String analyticalChild = Input.url + "DocumentViewer/AnalyticsChildWindow";
 		String metaDataChild = Input.url + "DocumentViewer/MetaDataChildWindow";
 
 //      Login As
 		loginPage.loginToSightLine(userName, password);
-
-		if (fullName.contains(rmu)) {
+		 if(userName.contains(rmu)) {
+		//if (fullName.contains(rmu)) {
 //			 searching document for assignment creation
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.bulkAssign();
@@ -2019,12 +2028,12 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("To verify user can see the document one by one "
 				+ "in doc view by selecting document from mini doc list");
 
-		String rmu = "RMU";
+		String rmu = "rm";
 
 //      Login As
 		loginPage.loginToSightLine(userName, password);
-
-		if (fullName.contains(rmu)) {
+     if(userName.contains(rmu)) {
+		//if (fullName.contains(rmu)) {
 //			 searching document for assignment creation
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.bulkAssign();
