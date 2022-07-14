@@ -2861,7 +2861,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-59584" ,enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-59584",enabled = true, groups = { "regression" })
 	public void verifyNavigateDocViewManageAssignmentFromReviewerDashboard() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59584");
