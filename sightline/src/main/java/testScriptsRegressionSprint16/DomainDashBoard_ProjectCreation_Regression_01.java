@@ -221,6 +221,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		driver.waitForPageToBeReady();
 		dash.waitForDomainDashBoardIsReady();
 		dash.enableInActiveProject();
+		base.waitTime(5);
 		dash.filterProject(projectName);
 		driver.waitForPageToBeReady();
 		dash.waitForDomainDashBoardIsReady();
@@ -258,6 +259,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		//filter
 		driver.waitForPageToBeReady();
 		dash.enableInActiveProject();
+		base.waitTime(5);
 		dash.filterProject(projectName);
 		driver.waitForPageToBeReady();
 		
