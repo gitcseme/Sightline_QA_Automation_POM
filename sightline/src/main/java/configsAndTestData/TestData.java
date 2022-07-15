@@ -272,6 +272,7 @@ public class TestData {
 	public String translation;
 	public String related;
 	public String mandatoryMappingError;
+	public String analyticStatus;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

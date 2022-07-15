@@ -389,6 +389,7 @@ public class Input {
 	public static String translation;
 	public static String related;
 	public static String mandatoryMappingError;
+	public static String analyticStatus;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1245,6 +1246,7 @@ public class Input {
 		translation = testData.getTranslation();
 		related = testData.getRelated();
 		mandatoryMappingError = testData.getMandatoryMappingError();
+		analyticStatus = testData.getAnalyticStatus();
 		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

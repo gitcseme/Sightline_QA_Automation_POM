@@ -85,6 +85,7 @@
 	<translation>Translation</translation>
 	<related>Related</related>
 	<mandatoryMappingError>Please specify a mapping for the mandatory fields.</mandatoryMappingError>
+	<analyticStatus>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_STAGING_COMPLETED, ANALYTICS_INDEXING_COMPLETED, ES_INDEXING_COMPLETED</analyticStatus>
 
 
 	<!-- Production path for redaction master doc -->
