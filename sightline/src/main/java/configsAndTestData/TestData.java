@@ -326,6 +326,11 @@ public class TestData {
 	public String progresBarColor;
 	public String BatchFileduplicateHeader;
 	public String SearchBatchFile;
+	
+	//Added By Jeevitha [Collection] 
+    public String TenantID;
+    public String ApplicationID;
+    public String ApplicationKey;
 
 	/**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
