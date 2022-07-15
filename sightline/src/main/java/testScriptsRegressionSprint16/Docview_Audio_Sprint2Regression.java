@@ -712,6 +712,7 @@ public class Docview_Audio_Sprint2Regression {
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to apply the stamp, "
 				+ "then waveform should be loaded [Greater than 1 hr audio file]");
 		// Login as Reviewer Manager
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
@@ -724,7 +725,7 @@ public class Docview_Audio_Sprint2Regression {
 		sessionSearch = new SessionSearch(driver);
 
 		// search to Assignment creation
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.basicContentSearch(Input.oneHourAudio);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreationAsPerCf(assign, Input.codingFormName);
 		assignmentPage.toggleSaveButton();
@@ -741,8 +742,6 @@ public class Docview_Audio_Sprint2Regression {
 		// Assignment Selection
 		assignmentPage.SelectAssignmentByReviewer(assign);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		driver.waitForPageToBeReady();
-		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
 
 		// verifying more than one hour audio docs
