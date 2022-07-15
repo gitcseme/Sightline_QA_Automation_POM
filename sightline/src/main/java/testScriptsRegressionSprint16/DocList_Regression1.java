@@ -303,6 +303,7 @@ public class DocList_Regression1 {
 		baseClass.stepInfo("Verify preview Doc list of non audio document");
 		docList.DoclistPreviewNonAudio();
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
 		docList.VerifyPerviewDocumentAndPrintAndDownload();
 
