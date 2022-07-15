@@ -698,6 +698,7 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+	
 	public Element getManageBtn() {
 		return driver.FindElementByName("Manage");
 	}
@@ -2732,7 +2733,6 @@ public class UserManagement {
 	 */
 	public void editRoleForRMUANdPAUsers(String username, String role,String projectName) {
 		driver.waitForPageToBeReady();
-		bc.waitTime(20);
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
 		bc.waitForElement(getSelectRoleToFilter());
@@ -2740,16 +2740,23 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		if (username.contains("sa")) {
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		}else {
-			bc.waitForElement(getEditButtonFromUserManagentPage());
-			getEditButtonFromUserManagentPage().waitAndClick(10);
-		}
+		
+		
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			if (username.contains("sa")) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).Click();
+ 			}
+			
+			else {
+				bc.waitForElement(getEditButtonFromUserManagentPage());
+				getEditButtonFromUserManagentPage().Click();
+				
+			}
+ 			
+		
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
-			getUserChangeDropDown().Click();
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
 			bc.waitForElement(getConfirmTab());
 			getConfirmTab().waitAndClick(5);
@@ -2777,7 +2784,6 @@ public class UserManagement {
 		}
 			else if (role.contains("Reviewer")) {
 				bc.waitForElement(getUserChangeDropDown());
-				getUserChangeDropDown().Click();
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
