@@ -159,6 +159,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitTime(2);
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -173,6 +174,7 @@ public class Production_Regression1 {
 		} else {
 			base.failedStep("Dat file is not displayed as expected");
 		}
+		base.waitTime(1);
 		int TiffPageCount = 1;
 		String line;
 		List<String> lines = new ArrayList<>();
@@ -406,6 +408,7 @@ public class Production_Regression1 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitTime(2);
 		page.extractFile();
 		String home = System.getProperty("user.home");
 		driver.waitForPageToBeReady();
@@ -415,6 +418,7 @@ public class Production_Regression1 {
 		} else {
 			base.failedStep("TIFF file is not splited as expected");
 		}
+		driver.waitForPageToBeReady();
 		File ImageFile2 = new File(home + "\\Downloads\\VOL0001\\Images\\0002");
 		if (ImageFile2.exists()) {
 			base.passedStep("TIFF file is splited as expected");
