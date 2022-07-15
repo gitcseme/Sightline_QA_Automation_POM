@@ -14,6 +14,23 @@ public class ProjectFieldsPage {
 	Driver driver;
 	BaseClass base;
 
+	public Element getAddProjectFieldGroup() {
+		return driver.FindElementByXPath("//a[@id='btnAddProjectFieldGroup']");
+	}
+	public Element getGroupCancelBtn() {
+		return driver.FindElementById("btnProjectFieldGroupCancel");
+	}
+	
+	public Element getAddFieldGroupName() {
+		return driver.FindElementByXPath("//*[@id='FieldGroupLabel']");
+	}
+	
+	public Element getFieldGroupNameDp_Dwn() {
+		return driver.FindElementById("ddlProjectFieldGroups");
+	}
+	public ElementCollection getFieldGroupNameDp_DwnValue() {
+		return driver.FindElementsByXPath("//select[@id='ddlProjectFieldGroups']//option");
+	}
 	public Element getAddProjectFieldButton() {
 		return driver.FindElementByXPath("//a[@id='btnAddProjectField']");
 	}
@@ -140,6 +157,15 @@ public class ProjectFieldsPage {
 	public Element getFieldTableNextButtonDisabled() {
 		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']/a");
 	}
+	public ElementCollection getProjectFieldHeader() {
+		return driver.FindElementsByXPath("//table[@id='ProjectFieldsDataTable']//th");
+	}
+	public Element getPagination() {
+		return driver.FindElementByXPath("//*[@id='ProjectFieldsDataTable_paginate']");
+	}
+	
+	
+	
 
 	// Annotation Layer added successfully
 	public ProjectFieldsPage(Driver driver) {
