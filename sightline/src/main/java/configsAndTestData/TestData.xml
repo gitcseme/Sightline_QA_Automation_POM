@@ -771,6 +771,18 @@
     <Discrimination>Discrimination</Discrimination>
     <FCPA>FCPA</FCPA>
     <Harassment>Harassment</Harassment>
-
+	
+	 <!-- Added By Aathith , Client Page Details -->
+    <FilterByType>Filter By Type</FilterByType>
+	<Name>Name</Name>
+	<ShortName>Short Name</ShortName>
+	<Type>Type</Type>
+	<DomainID>Domain ID</DomainID>
+	<ProcessingEngine>Processing Engine</ProcessingEngine>
+	<CreatedBy>Created By</CreatedBy>
+	<CreatedON>Created ON</CreatedON>
+	<Actions>Actions</Actions>
+	<Delete>Delete</Delete>
+	<Edit>Edit</Edit>
 
 </TestData>
