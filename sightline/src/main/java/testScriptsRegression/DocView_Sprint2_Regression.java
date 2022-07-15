@@ -641,7 +641,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("Step 1: Impersonating RMU to Reviewer");
 		baseClass.impersonateRMUtoReviewer();
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
@@ -672,7 +672,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.impersonatePAtoRMU();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
@@ -703,7 +703,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.impersonatePAtoReviewer();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
@@ -734,7 +734,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.impersonateSAtoRMU();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
@@ -765,7 +765,7 @@ public class DocView_Sprint2_Regression {
 		baseClass.impersonateSAtoReviewer();
 
 		baseClass.stepInfo("Step 2: Search the documents with search term from basic search and go to doc view");
-		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("Basic Search is done and navigated to docview successfully");
 
