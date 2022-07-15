@@ -9671,7 +9671,8 @@ public class IngestionPage_Indium {
 					
 					if ((!endTime.contentEquals("")) && publishButton().getWebElement().isEnabled()) {
 						driver.waitForPageToBeReady();
-						if(status.contains(Input.completedAnalyticMessage)) {
+						base.passedStep("Analytics status : '"+status+"'");
+						if(status.contains(Input.completedAnalyticMessage) || status.contains(Input.analyticStatus)) {
 							base.passedStep("Analytics process takes place when perform overlay ingestion with text files");
 							
 						}
@@ -10703,6 +10704,90 @@ public class IngestionPage_Indium {
 			else {
 				base.failedStep("Information not displayed");
 			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 15/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will enter the source and mapping field section details and start the overlay ingestion
+		 * @param: dataset
+		 * @param: datFile
+		 * @param: dockey
+		 * @param: textFile
+		 * @param: nativeFile
+		 * @param: PDF
+		 * @param: tiffFile
+		 * @param: mp3Variant
+		 * @param: audioTranscript
+		 * @param: otherLinkType
+		 * @param: otherFile
+		 * @param: generatepdf
+		 */
+		
+		public void startOverlayIngestion(String dataset,String datFile,String dockey,String textFile,String nativeFile,String PDF,
+				String tiffFile,String mp3Variant,String audioTranscript,String otherFile,String otherLinkType,boolean generatepdf) {
+			
+			selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation, dataset);
+			base.waitTime(2);
+			base.waitForElement(getDATDelimitersFieldSeparator());
+			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
+			base.waitForElement(getDATDelimitersTextQualifier());
+			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
+			base.waitForElement(getDATDelimitersNewLine());
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.waitTime(2);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile, dockey);
+			if (nativeFile!=null) {
+				base.stepInfo("Selecing Native file");
+				selectNativeSource(nativeFile, false);
+			}
+			base.waitTime(2);
+			if (textFile!=null) {
+				base.stepInfo("Selecing Text file");
+				selectTextSource(textFile, false);
+			}
+			if (PDF!=null) {
+				base.stepInfo("Selecing PDF file");
+				selectPDFSource(PDF, false);
+			}
+			if (tiffFile!=null) {
+				base.stepInfo("Selecing TIFF file");
+				selectTIFFSource(tiffFile,false,generatepdf);
+			}
+			if (mp3Variant!=null) {
+				base.stepInfo("Selecing MP3 file");
+				selectMP3VarientSource(Input.MP3File, false);
+			}
+			base.waitTime(2);
+			if (audioTranscript!=null) {
+				base.stepInfo("Selecing Audio Transcript file");
+				selectAudioTranscriptSource(Input.TranscriptFile, false);
+			}
+			if (otherLinkType!=null) {
+				base.stepInfo("Selecing Other file");
+				selectOtherSource(otherLinkType,otherFile,false);
+			}
+			base.waitForElement(getDateFormat());
+			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+			clickOnNextButton();
+			base.waitTime(2);
+			clickOnPreviewAndRunButton();
+			base.passedStep("Overlay Ingestion started");	
+		}
+		
+		/**
+		 * @author: Arun Created Date: 15/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform catalog,copy,index and approve stages for overlay
+		 * @param: dataset
+		 */
+		public String approveOverlayonlyTextIngestion(String dataset) {
+			ignoreErrorsAndCatlogging();
+			ignoreErrorsAndCopying();
+			ingestionIndexing(dataset);
+			base.waitForElement(getIngestionDetailPopup(1));
+			String ingestionName =getIngestionDetailPopup(1).getText();
+			approveIngestion(1);
+			return ingestionName;
 		}
 				
 }

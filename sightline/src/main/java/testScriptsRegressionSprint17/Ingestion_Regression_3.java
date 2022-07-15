@@ -177,6 +177,131 @@ public class Ingestion_Regression_3 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 15/07/2022 TestCase Id:RPMXCON-48595
+	 * Description :Verify the Analytics process should take places when Audio files with Text files are overlayed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48595",enabled = true, groups = { "regression" })
+	public void verifyOverlayIngestionOfAudioWithTextFiles() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48595");
+		baseClass.stepInfo("Verify the Analytics process should take places when Audio files with Text files are overlayed.");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName = null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("Unpublish the text file");
+		System.out.println(ingestionName);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("Perform overlay ingestion with audio and text files");
+		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, null,
+				null,null, Input.MP3File, null, null, null, false);
+		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		baseClass.passedStep("Analytics takes place when audio and Text files are overlayed");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 15/07/2022 TestCase Id:RPMXCON-48596
+	 * Description :Verify the Analytics process should take places when Tiff files and Text files are overlayed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48596",enabled = true, groups = { "regression" })
+	public void verifyOverlayIngestionOfTiffWithTextFiles() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48596");
+		baseClass.stepInfo("Verify the Analytics process should take places when Tiff files and Text files are overlayed.");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName = null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("Unpublish the text file");
+		System.out.println(ingestionName);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("Perform overlay ingestion with tiff and text files");
+		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, null,
+				null, Input.TIFFFile, null, null, null, null, false);
+		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		baseClass.passedStep("Analytics takes place when Tiff files and Text files are overlayed");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 15/07/2022 TestCase Id:RPMXCON-48599
+	 * Description :Verify the Analytics process should take places when Native files and Text files are overlayed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48599",enabled = true, groups = { "regression" })
+	public void verifyOverlayIngestionOfNativeWithTextFiles() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48599");
+		baseClass.stepInfo("Verify the Analytics process should take places when Native files and Text files are overlayed.");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName = null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.AllSourcesFolder);
+		}
+		baseClass.stepInfo("Unpublish the text file");
+		System.out.println(ingestionName);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("Perform overlay ingestion with native and text files");
+		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, Input.NativeFile,
+				null, null, null, null, null, null, false);
+		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
+		baseClass.passedStep("Analytics takes place when native and Text files are overlayed");
+		loginPage.logout();
+		
+	}
+	
+	
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
