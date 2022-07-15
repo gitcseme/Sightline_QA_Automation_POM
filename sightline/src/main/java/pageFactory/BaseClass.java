@@ -2061,15 +2061,17 @@ public class BaseClass {
 	}
 
 	/**
-	 * @author Raghuram A Date: 11/11/21 Modified date:N/A Modified by: Description
-	 *         : textCompareEquals with Pass and Fail Message
+	 * @author Raghuram A Date: 11/11/21 Modified date:7/13/22 Modified by:
+	 *         Description : textCompareEquals with Pass and Fail Message
 	 */
 	public void textCompareEquals(String sourceString, String compreString, String passMsg, String failMessage) {
 		try {
 			System.out.println("Source String  : " + sourceString);
 			System.out.println("Compare String  : " + compreString);
 
-			softAssertion.assertEquals(sourceString, compreString);
+			stepInfo("Expected : " + sourceString);
+			stepInfo("Actual : " + compreString);
+
 			if (sourceString.equals(compreString)) {
 				passedStep(passMsg);
 			} else if (!sourceString.equals(compreString)) {
@@ -2078,6 +2080,7 @@ public class BaseClass {
 		} catch (Exception E) {
 			E.printStackTrace(pw);
 			UtilityLog.info(sw.toString());
+			failedStep(failMessage);
 		}
 	}
 
@@ -3832,6 +3835,30 @@ public class BaseClass {
 			waitForElement(getSelectProjectTo());
 			getSelectProjectTo().selectFromDropdown().selectByVisibleText(project);
 			stepInfo("impersonate tab project was selected");
+		}
+		
+		/**
+		 * @author Raghuram.A
+		 * @param bgColor
+		 * @param subStringPosition
+		 * @return
+		 * @Description : Modified rgbTohexaConvertor method based on customization
+		 */
+		public String rgbTohexaConvertorCustomized(String bgColor, int subStringPosition) {
+			String s1 = bgColor.substring(subStringPosition);
+			bgColor = s1.replace('(', ' ');
+			bgColor = bgColor.replace(')', ' ');
+			StringTokenizer st = new StringTokenizer(bgColor);
+			System.out.println(bgColor);
+			int r = Integer.parseInt(st.nextToken(",").trim());
+			int g = Integer.parseInt(st.nextToken(",").trim());
+			int b = Integer.parseInt(st.nextToken(",").trim());
+
+			Color c = new Color(r, g, b);
+			String hex = "#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase();
+
+			stepInfo("RGB color " + bgColor + " is converted to hex value -" + hex);
+			return hex;
 		}
 
 

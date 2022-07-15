@@ -1897,6 +1897,14 @@ public class SessionSearch {
 	public Element getExecutedStatusinLHS(int searchNum) {
 		return driver.FindElementByXPath("//li[@lang='tabs-"+searchNum+"']//a//span[@id='idLastExecuted' and contains(text(),'Executed')]");
 	}
+	
+	public Element getBulkAssignSelectedExistingAssignment() {
+		return driver.FindElementByXPath("//li[@class='active']/a[@id='tabBasicToExtAssigmnment']");
+	}
+
+	public Element getBulkAssignAssignDocumentsButton() {
+		return driver.FindElementByXPath("//*[@id='toAssign']/following-sibling::i");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
