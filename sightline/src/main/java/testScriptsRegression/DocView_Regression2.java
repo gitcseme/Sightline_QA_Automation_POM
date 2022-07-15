@@ -2341,7 +2341,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51961
 	 * 
 	 */
-	@Test(description = "RPMXCON-51961", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51961",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyDocsWithHiddenProperties(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2361,7 +2361,7 @@ public class DocView_Regression2 {
 	 * Id:RPMXCON-51959
 	 * 
 	 */
-	@Test(description = "RPMXCON-51959", enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51959",enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" })
 	public void verifyHiddenInfoIcon(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password, Input.additionalDataProject);
@@ -2408,7 +2408,7 @@ public class DocView_Regression2 {
 	 *               message to indicate that document is having hidden content
 	 * 
 	 */
-	@Test(description = "RPMXCON-51957", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51957",enabled = true, groups = { "regression" })
 	public void verifyWarningMsgOfHiddenDocs() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51957");
 		baseClass.stepInfo(
@@ -3702,7 +3702,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-51036", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51036",enabled = true, groups = { "regression" })
 	public void verifyImpersonationKeyWordsHighLightingAssignmentDocView() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51036 sprint 12");
@@ -3827,7 +3827,7 @@ public class DocView_Regression2 {
 	 *                     for audio file in context of an assignment.
 	 * 
 	 */
-	@Test(description = "RPMXCON-51056", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51056",enabled = true, groups = { "regression" })
 	public void verifyCanSeePersistentSearchOnDocViewAudioFile() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-51056");
 		baseClass.stepInfo(
@@ -4145,7 +4145,7 @@ public class DocView_Regression2 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-60572", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-60572",enabled = true, groups = { "regression" })
 	public void verifyDocViewReviewerRemarkDeletedAndHighlightedNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-60572");

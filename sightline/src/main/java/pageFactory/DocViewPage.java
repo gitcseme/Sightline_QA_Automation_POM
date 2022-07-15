@@ -456,7 +456,7 @@ public class DocViewPage {
 	}
 
 	public Element getDocView_HitsTogglePanel() {
-		return driver.FindElementByXPath("//*[@class='toggletText light-bg']");
+		return driver.FindElement(By.xpath("//i[@id='EnableSearchTerm' and @data-class='false']"));
 	}
 
 	public Element getDocView_ToogleLabel() {
@@ -2058,11 +2058,11 @@ public class DocViewPage {
 	}
 
 	public Element getHitPanel() {
-		return driver.FindElementByXPath("//p[contains(@id,'PHitCount')]");
+		return driver.FindElementByXPath("(//span[contains(@id,'HitCount')])//parent::strong//following-sibling::p");
 	}
 
 	public Element getHitPanelCount() {
-		return driver.FindElement(By.xpath("//p[contains(@id,'PHitCount')][1]//span"));
+		return driver.FindElement(By.xpath("(//span[contains(@id,'HitCount')])[1]"));
 	}
 
 	// New built
