@@ -220,6 +220,7 @@ public class BasicSearchRegression2 {
 	 */
 	@Test(description = "RPMXCON-46879", enabled = true, groups = { "regression" })
 	public void addRemarkForNonAudio() throws ParseException, Exception {
+		DocViewPage docView = new DocViewPage(driver);
 		String remark = "Reviewed" + Utility.dynamicNameAppender();
 		int count = 1;
 
@@ -233,7 +234,7 @@ public class BasicSearchRegression2 {
 		// configure metadata query and add remark
 		session.basicContentSearch(Input.searchString2);
 		session.viewInDocView();
-		session.createRemarks(remark);
+		docView.addRemarkByText(remark);
 
 		// verify Remark in session search page
 		base.selectproject();
@@ -256,7 +257,7 @@ public class BasicSearchRegression2 {
 		String remark = "Reviewed" + Utility.dynamicNameAppender();
 		String ModifiedRemark = "Remark" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
-		
+
 		// login as User
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -264,11 +265,11 @@ public class BasicSearchRegression2 {
 		base.stepInfo(
 				"Verify that Modified reviewer remarks for Non-audio documents is working correctly in Advanced Search.");
 
-		// configure metadata query 
+		// configure metadata query
 		session.basicContentSearch(Input.searchString2);
 		session.viewInDocView();
-		
-		//add remark
+
+		// add remark
 		session.createRemarks(remark);
 
 		// verify Remark in session search page
@@ -290,7 +291,7 @@ public class BasicSearchRegression2 {
 		session.basicContentSearch(Input.searchString2);
 		session.viewInDocView();
 		docview.deleteReamark(ModifiedRemark);
-		
+
 		softAssertion.assertNotEquals(PureHit2, PureHit);
 		softAssertion.assertAll();
 
