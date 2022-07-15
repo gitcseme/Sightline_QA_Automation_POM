@@ -724,7 +724,7 @@ public class Docview_Audio_Sprint2Regression {
 		sessionSearch = new SessionSearch(driver);
 
 		// search to Assignment creation
-		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.basicContentSearch(Input.oneHourAudio);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreationAsPerCf(assign, Input.codingFormName);
 		assignmentPage.toggleSaveButton();
@@ -741,8 +741,6 @@ public class Docview_Audio_Sprint2Regression {
 		// Assignment Selection
 		assignmentPage.SelectAssignmentByReviewer(assign);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
-		driver.waitForPageToBeReady();
-		docViewPage.getDociD(Input.oneHourAudio).waitAndClick(5);
 		driver.waitForPageToBeReady();
 
 		// verifying more than one hour audio docs
