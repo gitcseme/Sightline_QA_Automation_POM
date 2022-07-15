@@ -225,6 +225,7 @@ public class Securitygroups_Regression2 {
 		baseClass.stepInfo("Added new Security group");
 
 		// access to security group to Rmu
+		baseClass.waitTime(5);
 		userManagement.assignAccessToSecurityGroups(SGname, Input.rmu1userName);
 		userManagement.saveSecurityGroup();
 		loginPage.logout();
@@ -307,11 +308,11 @@ public class Securitygroups_Regression2 {
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 
 	}
-	
+
 	/**
-	 * @author  Date: Modified date:N/A Modified by: Description :Verify
-	 *         that Project Admin can release the document for the selected security
-	 *         group from saved search.
+	 * @author Date: Modified date:N/A Modified by: Description :Verify that Project
+	 *         Admin can release the document for the selected security group from
+	 *         saved search.
 	 */
 	@Test(description = "RPMXCON-53675", enabled = true, groups = { "regression" })
 	public void verifyPAReleaseTheDocSgFromSavedSearch() throws Exception {
@@ -368,10 +369,10 @@ public class Securitygroups_Regression2 {
 		sgpage.deleteSecurityGroups(SGname);
 		baseClass.stepInfo("deleted the Security group with name " + SGname);
 	}
-	
+
 	/**
-	 * @author  Date: Modified date:N/A Modified by: Description :To verify
-	 *         that project admin can assign/unassign Folders for selected security
+	 * @author Date: Modified date:N/A Modified by: Description :To verify that
+	 *         project admin can assign/unassign Folders for selected security
 	 *         group.
 	 */
 	@Test(description = "RPMXCON-53682", enabled = true, groups = { "regression" })
@@ -423,6 +424,5 @@ public class Securitygroups_Regression2 {
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		baseClass.stepInfo("deleted the folder with name " + foldername);
 	}
-
 
 }
