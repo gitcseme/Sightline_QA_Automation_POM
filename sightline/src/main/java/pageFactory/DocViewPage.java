@@ -3546,6 +3546,10 @@ public class DocViewPage {
 	public Element getCodingStampToolTipIcon(String icon) {
 		return driver.FindElementByXPath("//ul[@id='UserStamps']//li[@id='" + icon + "']//a");
 	}
+	
+	public Element getRemarkBlockDisplayed() {
+		return driver.FindElementByXPath("//div[@class='remarks-tab col-md-2 active']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -3821,29 +3825,27 @@ public class DocViewPage {
 		}), Input.wait30);
 		getAdvancedSearchAudioRemarkIcon().waitAndClick(30);
 
-		try {
+			if(getDocView_AudioRemark_DeleteButton().isElementAvailable(10)) {
 			// Delete any existing remarks if any
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getDocView_AudioRemark_DeleteButton().Enabled();
 				}
 			}), Input.wait30);
-			getDocView_AudioRemark_DeleteButton().Click();
+			getDocView_AudioRemark_DeleteButton().waitAndClick(5);			// click on yes button
+						driver.WaitUntil((new Callable<Boolean>() {
+							public Boolean call() {
+								return getDocview_ButtonYes().Visible();
+							}
+						}), Input.wait30);
+						getDocview_ButtonYes().waitAndClick(5);
 
-			// click on yes button
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDocview_ButtonYes().Visible();
-				}
-			}), Input.wait30);
-			getDocview_ButtonYes().Click();
-
-			base.VerifySuccessMessage("Record Deleted Successfully");
-			Thread.sleep(10000);
-		} catch (Exception e) {
-			System.out.println("No Remarks exist'");
-			UtilityLog.info("No Remarks exist'");
-		}
+						base.VerifySuccessMessage("Record Deleted Successfully");
+						Thread.sleep(10000);
+			} else {
+				System.out.println("No Remarks exist'");
+				UtilityLog.info("No Remarks exist'");
+			}
 
 		// click on + icon to add remarks
 		getAdvancedSearchAudioRemarkPlusIcon().Click();
@@ -26670,7 +26672,7 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Gopinath Created date: 16/03/2022 Modified date: N/A
+	 * @author Gopinath Created date: 16/03/2022 Modified date: 7/15/22
 	 * @Description:This method used to add remark by cicking on text on doc view
 	 *                   page.
 	 * @param remark : remark is String value that need to enter in remark text
@@ -26678,14 +26680,14 @@ public class DocViewPage {
 	 */
 	public void addRemarkByText(String remark) {
 		try {
+			if(getRemarkBlockDisplayed().isElementAvailable(5)) {
+				System.out.println("add remark Block is already available");
+			}else {
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getNonAudioRemarkBtn().isElementAvailable(10);
-				}
-			}), Input.wait60);
+			base.waitForElement(getNonAudioRemarkBtn());
 			getNonAudioRemarkBtn().waitAndClick(9);
+			}
 
 			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
 				getDocView_Remark_DeleteIcon().waitAndClick(10);
@@ -26701,7 +26703,11 @@ public class DocViewPage {
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
 			if (getSelectRemarkDocArea().isElementAvailable(20)) {
-				getSelectRemarkDocArea().Click();
+				
+				Actions action = new Actions(driver.getWebDriver());
+				action.moveToElement(getSelectRemarkDocArea().getWebElement()).click().build().perform();
+				
+			//	getSelectRemarkDocArea().Click();
 			} else if (remarkElement().isElementAvailable(20)) {
 				remarkElement().Click();
 			}
@@ -28396,5 +28402,18 @@ public class DocViewPage {
 			base.failedStep(remark + " : expected remark is not found");
 		}
 
+	}
+	
+	public void deleteAudioRemark() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedSearchAudioRemarkIcon().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedSearchAudioRemarkIcon().waitAndClick(30);
+		base.waitForElement(getDocView_AudioRemark_DeleteButton());
+		getDocView_AudioRemark_DeleteButton().waitAndClick(10);
+		getDocview_ButtonYes().waitAndClick(10);
+		base.VerifySuccessMessage("Record Deleted Successfully");
 	}
 }
