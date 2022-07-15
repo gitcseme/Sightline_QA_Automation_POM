@@ -164,6 +164,11 @@ public class DomainDashboard {
 		return driver.FindElementsByXPath("//li/label/input");
 	}
 	
+	public Element getNotificationMsg() {
+		return driver.FindElementByXPath("(//ul[@class='notification-body']//a)[1]");
+	}
+
+	
 	 public DomainDashboard(Driver driver){
 
 	        this.driver = driver;
@@ -478,7 +483,7 @@ public class DomainDashboard {
 		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getSearchProject());
 		 driver.scrollingToElementofAPage(getSearchProject());
-		 getSearchProject().waitAndClick(5);
+		 //getSearchProject().waitAndClick(5);
 		 getSearchProject().SendKeys(projectName+Keys.ENTER);
 		 base.hitKey(KeyEvent.VK_ENTER);
 		 base.stepInfo(projectName+" filter the project");
@@ -601,6 +606,7 @@ public class DomainDashboard {
 		 driver.waitForPageToBeReady();
 		 base.waitForElement(getHyperLinkOnProject(projectName));
 		 driver.scrollingToElementofAPage(getHyperLinkOnProject(projectName));
+		 base.waitTillElemetToBeClickable(getHyperLinkOnProject(projectName));
 		 getHyperLinkOnProject(projectName).waitAndClick(10);
 		 base.waitForElement(getDeactivateProject(projectName));
 		 getDeactivateProject(projectName).waitAndClick(10);
@@ -725,4 +731,24 @@ public class DomainDashboard {
 		 }
 		 getBackGround().waitAndClick(10);
 	 }
+	 public void getNotificationMessage(int bgCountBefore, String projectName) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.initialBgCount() == bgCountBefore + 1;
+				}
+			}), Input.wait120);
+			final int bgCountAfter = base.initialBgCount();
+
+			if (bgCountAfter > bgCountBefore) {
+				getBullHornIcon().waitAndClick(10);
+
+				String downloadMsg = getNotificationMsg().getText();
+				String expected = "Project " + projectName + " creation successful.";
+				String failMsg = "Download Notification is not As Expected";
+				base.textCompareEquals(downloadMsg, expected, downloadMsg, failMsg);
+			} else {
+				driver.Navigate().refresh();
+			}
+		}
 }

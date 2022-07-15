@@ -140,6 +140,8 @@ public class DomainManagement_Regression_02 {
 		}else {
 			base.failedStep("verification failed");
 		}
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(loginPage.getSignoutMenu());
 		
 		base.passedStep("Verified while clicking on Project name \"Go to Project\" link will impersonated user as PAU into that project");
 		loginPage.logout();
@@ -203,7 +205,6 @@ public class DomainManagement_Regression_02 {
 		}
 		base.selectImpersonateRole("Domain Administrator");
 		base.selectImpersonateDomain(Input.domainName);
-		base.getSaveChangeRole().waitAndClick(10);
 		base.stepInfo("Domain Admin role is selected  Make sure that on selecting the domain admin role drop down should be displayed to select the domain");
 				
 		base.passedStep("Verified when Sys Admin selects 'Domain Admin' as Impersonate To");
