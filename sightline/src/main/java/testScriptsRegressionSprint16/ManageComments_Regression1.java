@@ -246,13 +246,13 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleForRMUANdPAUsers(Input.rmu1userName, "Review Manager",Input.projectName);
+		userManagement.editRoleForRMUANdPAUsers(Input.rmu2userName, "Review Manager",Input.projectName);
 		
 		loginPage.logout();
 
 		
 		// Login As RMU from Reviewer
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		
 		if (userManagement.getManageBtn().isDisplayed()) {
@@ -270,7 +270,7 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rmu1userName, "Reviewer",Input.projectName);
+		userManagement.editRoleOfAnUser(Input.rmu2userName, "Reviewer",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
@@ -295,12 +295,12 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleForRMUANdPAUsers(Input.pa1userName, "Project Administrator",Input.projectName);
+		userManagement.editRoleForRMUANdPAUsers(Input.pa2userName, "Project Administrator",Input.projectName);
 		
 		loginPage.logout();
 		
 		// Login As RMU from Reviewer
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 		if (userManagement.getManageBtn().isDisplayed()) {
 			baseClass.failedStep("Manage Button is present");
@@ -315,7 +315,7 @@ public class ManageComments_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as sA with " + Input.sa1userName + "");
 		
 		//Navigate to Users Page
-		userManagement.editRoleForRMUANdPAUsers(Input.pa1userName, "Reviewer",Input.projectName);
+		userManagement.editRoleForRMUANdPAUsers(Input.pa2userName, "Reviewer",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		

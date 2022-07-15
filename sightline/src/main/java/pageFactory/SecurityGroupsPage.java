@@ -1155,6 +1155,7 @@ public class SecurityGroupsPage {
 		bc.waitForElement(getSecurityGroupList());
 		getSecurityGroupList().waitAndClick(5);
 
+		driver.waitForPageToBeReady();
 		ElementCollection totFolderCount = getTolSecurityGroupCount();
 		int totFolderSize = totFolderCount.size();
 		if (totFolderSize > 3) {

@@ -189,6 +189,7 @@ public class CloningProject_Regression01 {
 				loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 				SecurityGroupsPage securityGroup = new SecurityGroupsPage(driver);
 				securityGroup.navigateToSecurityGropusPageURL();
+				driver.waitForPageToBeReady();
 				securityGroup.validateSecurityGroupsCount();
 
 				loginPage.logout();
