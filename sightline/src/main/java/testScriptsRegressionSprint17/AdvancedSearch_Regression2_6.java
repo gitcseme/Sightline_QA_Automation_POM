@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -38,9 +39,8 @@ public class AdvancedSearch_Regression2_6 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		//in = new Input();
-	    //in.loadEnvConfig();
-		
+		in = new Input();
+		in.loadEnvConfig();
 
 	}
 
@@ -56,9 +56,11 @@ public class AdvancedSearch_Regression2_6 {
 		baseClass = new BaseClass(driver);
 
 	}
+
 	/**
 	 * @Author Jayanthi
-	 * @description:To Verify Regression Issue: After bulk tagging, Session search with workproduct 'Tag' is not working:1
+	 * @description:To Verify Regression Issue: After bulk tagging, Session search
+	 *                 with workproduct 'Tag' is not working:1
 	 * @throws InterruptedException
 	 */
 	@Test(description = "RPMXCON-49048", groups = { "regression" })
@@ -115,19 +117,20 @@ public class AdvancedSearch_Regression2_6 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description:Verify that - Application returns all the documents which are available under selected group and Assignments - 
-	 * Completed status with OR operator in search result.
+	 * @description:Verify that - Application returns all the documents which are
+	 *                     available under selected group and Assignments -
+	 *                     Completed status with OR operator in search result.
 	 */
-	@Test(description ="RPMXCON-57162",groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-57162", groups = { "regression" }, enabled = true)
 	public void verifyDocsCntCompletedAssgnments_OR() throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-57162");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group and"
-				+ " Assignments - Completed status with OR operator in search result.");
+						+ " Assignments - Completed status with OR operator in search result.");
 		String tagName = "combined" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
@@ -140,7 +143,7 @@ public class AdvancedSearch_Regression2_6 {
 		String tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
 		sessionSearch.bulkTag(tagName);
 		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
-		
+
 		baseClass.selectproject();
 		sessionSearch.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box
@@ -153,7 +156,8 @@ public class AdvancedSearch_Regression2_6 {
 		sessionSearch.serarchWP();
 		driver.waitForPageToBeReady();
 		String PureHitCount = sessionSearch.verifyPureHitsCount();
-		baseClass.stepInfo("Pure hits count value after Configuring a Query with TagName:[ " + tagName + "] OR  Assignments:[completed:\"true\"] is "+PureHitCount);
+		baseClass.stepInfo("Pure hits count value after Configuring a Query with TagName:[ " + tagName
+				+ "] OR  Assignments:[completed:\"true\"] is " + PureHitCount);
 		SoftAssert assertion = new SoftAssert();
 		// validation of pure hits
 		assertion.assertEquals(PureHitCount, tagHitsCount);
@@ -167,6 +171,100 @@ public class AdvancedSearch_Regression2_6 {
 				"Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignments - Completed status with "
 						+ "OR operator in search result.");
 
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/15/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that search result appears the added Remark documents
+	 *              in Advanced Search.. RPMXCON-48474
+	 */
+	@Test(description = "RPMXCON-48474", enabled = true, groups = { "regression" })
+	public void verifySearchResultAppearsAddRemarkDocumentsInAdvancedSearch() throws ParseException, Exception {
+		int remarkCount1 = 1;
+		int remarkCount2 = 2;
+		String selectField = "Remark";
+		DocViewPage docView = new DocViewPage(driver);
+		String remark = "Reviewed on 09-20-2009";
+		String regularExpression = "\"##Reviewed on [0-9]{2}-[0-9]{2}-[0-9]{4}\"";
+
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48474");
+		baseClass.stepInfo("Verify that search result appears the added Remark documents in Advanced Search.");
+
+		// performing metaData search and adding pureHit to cart and viewing in docView
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		baseClass.stepInfo("performing advanced metadata search.");
+		sessionSearch.viewInDocView();
+
+		// adding remark and performing search using remark
+		docView.addRemarkByText(Input.reviewed);
+		baseClass.stepInfo("adding Remark to document");
+		baseClass.selectproject();
+		int pureHit1 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+		// verifying the pureHit count with number of remark added
+		baseClass.digitCompareEquals(pureHit1, remarkCount1, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		// performing advanced search metaData search and adding pureHit to cart and
+		// viewing in docView
+		baseClass.selectproject();
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		baseClass.stepInfo("performing advanced metadata search.");
+		sessionSearch.viewInDocView();
+
+		// adding remark and performing search using remark
+		docView.addRemarkByText(remark);
+		baseClass.stepInfo("adding Remark to document");
+		baseClass.selectproject();
+		int pureHit2 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, regularExpression);
+		// verifying the pureHit count with number of remark added
+		baseClass.digitCompareEquals(pureHit2, remarkCount1, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		// performing audio search and adding pureHit to cart and viewing in docView
+		baseClass.selectproject();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		baseClass.stepInfo("performing Audio search.");
+		sessionSearch.viewInDocView();
+
+		// adding remark to audio documents and performing search using remark
+		docView.audioRemark(Input.reviewed);
+		baseClass.stepInfo("adding Remark to Audio document");
+		baseClass.selectproject();
+		int pureHit3 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+		// verifying the pureHit count with number of remark added
+		baseClass.digitCompareEquals(pureHit3, remarkCount2, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		// performing search using remark in basic search
+		baseClass.selectproject();
+		int pureHit4 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+		// verifying the pureHit count with number of remark added
+		baseClass.digitCompareEquals(pureHit4, remarkCount2, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		// performing search using remark in basic search
+		baseClass.selectproject();
+		int pureHit5 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, regularExpression);
+		// verifying the pureHit count with number of remark added
+		baseClass.digitCompareEquals(pureHit5, remarkCount1, "pureHit count match with remark count",
+				"pureHit count doesn't match with remark count");
+
+		// deleting the remark
+		baseClass.selectproject();
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		docView.deleteAudioRemark();
+
+		// logout
 		loginPage.logout();
 
 	}
