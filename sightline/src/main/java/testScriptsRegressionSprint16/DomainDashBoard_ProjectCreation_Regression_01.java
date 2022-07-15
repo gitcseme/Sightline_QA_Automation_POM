@@ -203,6 +203,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		base.clearBullHornNotification();
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
+		dash.getNotificationMessage(0, projectName);
 		dash.naviageToDomainDashBoardPage();
 		
 		//cancel the inActivate
@@ -241,6 +242,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		base.clearBullHornNotification();
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
+		dash.getNotificationMessage(0, projectName);
 		dash.naviageToDomainDashBoardPage();
 		
 		//cancel the inActivate
@@ -302,6 +304,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
 		dash.naviageToDomainDashBoardPage();
+		dash.getNotificationMessage(0, projectName);
 		base.stepInfo(projectName+" project was created");
 		
 		//verify is available
@@ -328,6 +331,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		base.clearBullHornNotification();
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
+		dash.getNotificationMessage(0, projectName);
 		dash.naviageToDomainDashBoardPage();
 		driver.waitForPageToBeReady();
 		dash.waitForDomainDashBoardIsReady();
