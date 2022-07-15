@@ -612,6 +612,7 @@ public class Input {
 	public static String AutomationAllSources;
 	public static String TiffImages;
 	public static String advancedOptionText;
+	public static String sourceDocument;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1510,6 +1511,7 @@ public class Input {
 		AutomationAllSources=testData.getAutomationAllSources();
 		TiffImages=testData.getTiffImages();
 		advancedOptionText=testData.getAdvancedOptionText();
+		sourceDocument=testData.getSourceDocument();
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 
