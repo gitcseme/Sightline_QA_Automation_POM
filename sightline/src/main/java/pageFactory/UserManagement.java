@@ -772,6 +772,9 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox' and normalize-space()='" + componentName + "']//input[@checked='checked']");
 	}
+	public Element getEditUserProduction() {
+		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanProductions']");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -3181,5 +3184,29 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 		}
 		bc.stepInfo("users was selected");
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description:Select Bulk Access Control For PA uset
+	 * @param roll    account role as login user
+	 * @param account selecting sg
+	 * 
+	 */
+	public void selectRoleBulkUserAccessControlForPA(String role, String secutiryGroup) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRollId());
+		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+
+		if (!role.equalsIgnoreCase("Project Administrator")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getBulkUserSecurityGroup());
+			getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
+		}
 	}
 }
