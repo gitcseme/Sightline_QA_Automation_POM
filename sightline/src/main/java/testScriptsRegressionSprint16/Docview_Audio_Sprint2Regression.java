@@ -712,6 +712,7 @@ public class Docview_Audio_Sprint2Regression {
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to apply the stamp, "
 				+ "then waveform should be loaded [Greater than 1 hr audio file]");
 		// Login as Reviewer Manager
+		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
