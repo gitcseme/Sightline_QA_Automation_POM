@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -18,7 +19,9 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -36,6 +39,8 @@ public class NotificationRegression {
 	SessionSearch session;
 	BaseClass base;
 	SoftAssert softAssertion;
+	DocListPage docList;
+	AssignmentsPage asgmt;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -67,24 +72,24 @@ public class NotificationRegression {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in as : " + Input.pa1FullName);
 
-		// create the node 
+		// create the node
 		String newNode = saveSearch.createNewSearchGrp(Input.mySavedSearch);
 
-		//save query in node
+		// save query in node
 		session.basicContentSearch(Input.searchString2);
 		session.saveSearchInNodeUnderGroup(searchName, newNode, Input.mySavedSearch);
 
-		//Select Node 
+		// Select Node
 		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
-		
-		//get count of search in node
+
+		// get count of search in node
 		int initialBg = base.initialBgCount();
 		int sizeoflist = saveSearch.getListFromSavedSearchTable(headerName).size();
-		
-		//Execute Node
+
+		// Execute Node
 		saveSearch.performExecute();
-		
-		//verify Notification
+
+		// verify Notification
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, sizeoflist);
 
 		// delete Node
@@ -118,14 +123,14 @@ public class NotificationRegression {
 		session.basicContentSearch(Input.searchString2);
 		session.saveSearch(searchName);
 
-		//select search
+		// select search
 		saveSearch.savedSearch_Searchandclick(searchName);
-		
-		//execute Search
+
+		// execute Search
 		int initialBg = base.initialBgCount();
 		saveSearch.savedSearchExecute_Draft(searchName, initialBg);
-		
-		//verify Notification
+
+		// verify Notification
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
 		// Delete Search
@@ -159,14 +164,14 @@ public class NotificationRegression {
 		session.basicContentSearch(Input.searchString2);
 		session.saveSearch(searchName);
 
-		//select search
+		// select search
 		saveSearch.savedSearch_Searchandclick(searchName);
-		
-		//bulk unrelease the doc
+
+		// bulk unrelease the doc
 		int initialBg = base.initialBgCount();
 		saveSearch.performReleaseAction(Input.securityGroup, false);
-		
-		//verify notification
+
+		// verify notification
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
 		// release back to SG & Delete Search
@@ -176,6 +181,119 @@ public class NotificationRegression {
 
 		// logout
 		login.logout();
+	}
+
+	/**
+	 * @Author : Sowndarya.velraj
+	 * @Description :To verify, As an RM user login, I will get an notification when
+	 *              I will perform Bulk Unassign from Doc List page.[RPMXCON-53866]
+	 * @throws InterruptedException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53866", enabled = true, groups = { "regression" })
+	public void verifyBulkUnassignFromDocList() throws InterruptedException, Exception {
+		DocListPage docList = new DocListPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		base.stepInfo("Test case Id: RPMXCON-53866 Notification Component - Sprint 17");
+		base.stepInfo(
+				"To verify, As an RM user login, I will get an notification when I will perform Bulk Unassign from Doc List page");
+		String assignmentName = "Assignment" + UtilityLog.dynamicNameAppender();
+		// Login as User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in as : " + Input.rmu1FullName);
+
+		// perform search
+		session.basicContentSearch(Input.testData1);
+		session.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+
+		// create assignment
+		agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		base.stepInfo("Created a assignment " + assignmentName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		base.stepInfo(assignmentName + " assignment opened in edit mode");
+		agnmt.assignmentDistributingToReviewerManager();
+
+		// navigate to doclist and perform bulk unassign
+		session.basicContentSearch(Input.testData1);
+		session.ViewInDocList();
+		driver.waitForPageToBeReady();
+		int initialBg = base.initialBgCount();
+		docList.documentSelection(2);
+		docList.bulkassignAndUnAssignTheDoc(assignmentName);
+
+//		verify notification for bulk unassign
+		base.checkNotificationCount(initialBg, 1);
+		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+	}
+
+	/**
+	 * @Author : Sowndarya.velraj
+	 * @Description :To verify, As an Project admin user login, I will get an
+	 *              notification when I will perform Bulk UnRelease from Doc List
+	 *              page[RPMXCON-53867]
+	 * @throws InterruptedException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53867", enabled = true, groups = { "regression" })
+	public void verifyBulkUnreleaseNotification_FromSecurityGroup() throws InterruptedException, Exception {
+		DocListPage docList = new DocListPage(driver);
+		base.stepInfo("Test case Id: RPMXCON-53867 Notification Component - Sprint 17");
+		base.stepInfo(
+				"To verify, As an Project admin user login, I will get an notification when I will perform Bulk UnRelease from Doc List page");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("logged in as : " + Input.pa1FullName);
+
+		// perform search and bulk release to security group
+		session.basicContentSearch(Input.testData1);
+		session.bulkRelease(Input.securityGroup);
+
+		// navigate to doclist and perform bulk unrelease
+		session.ViewInDocList();
+		int initialBg = base.initialBgCount();
+		docList.documentSelection(4);
+		docList.bulkUnRelease(Input.securityGroup);
+
+		//verify notification for bulk unassign
+		base.checkNotificationCount(initialBg, 1);
+		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+	}
+	
+	/**
+	 * @Author : Sowndarya.velraj
+	 * @Description :To verify, as an Project admin user, I will get an notification when I will perform Bulk Unrelease from current search[RPMXCON-53864]
+	 * @throws InterruptedException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53864", enabled = true, groups = { "regression" })
+	public void verifyBulkUnreleaseFromCurrentSearch() throws InterruptedException, Exception {
+		base.stepInfo("Test case Id: RPMXCON-53864 Notification Component - Sprint 17");
+		base.stepInfo("To verify, as an Project admin user, I will get an notification when I will perform Bulk Unrelease from current search");
+		
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("logged in as : " + Input.pa1FullName);
+
+		// perform search and bulk release to security group
+		session.basicContentSearch(Input.testData1);
+		session.bulkRelease(Input.securityGroup);
+		System.out.println("release done");
+
+		//		//perform bulk unrelease from current search
+		base.selectproject();
+		session.basicContentSearch(Input.testData1);
+		int initialBg = base.initialBgCount();
+		session.unReleaseDocsFromSecuritygroup(Input.securityGroup);
+				
+       //verify notification for bulk unassign
+		base.checkNotificationCount(initialBg, 1);
+		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 	}
 
 	@BeforeMethod(alwaysRun = true)
