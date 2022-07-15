@@ -12221,7 +12221,7 @@ public class SessionSearch {
 		String countlabel= label.substring(label.indexOf(":"));
 		int expectedCount = Integer.parseInt(countlabel.replace(",","").replace(": ", ""));
 		int actualCount = Integer.parseInt(verifyPureHitsCount());
-		if(expectedCount ==actualCount) {
+		if(actualCount <=expectedCount) {
 			base.passedStep("Application returns all the documents which are available under selected security group in search result.");	
 		}
 		else {
