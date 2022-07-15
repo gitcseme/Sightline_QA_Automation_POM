@@ -3042,7 +3042,11 @@ public class UserManagement {
 			bc.stepInfo("Checking for the role : " + userRolesData[i][1]);
 			passingUserName(userRolesData[i][0]);
 			applyFilter();
-			editFunctionality(Input.projectName);
+			if (userRolesData[i][1].equalsIgnoreCase("PA") || userRolesData[i][1].equalsIgnoreCase("RMU")) {
+				editLoginUser();
+			} else {
+				editFunctionality(Input.projectName);
+			}
 
 			// Launch functionality pop-up
 			getFunctionalityTab().waitAndClick(5);
@@ -3062,8 +3066,12 @@ public class UserManagement {
 				driver.waitForPageToBeReady();
 
 				if (checkUpdateCollections.equals("Yes") && actionTaken == true) {
-					// Edit functionality
-					editFunctionality(Input.projectName);
+					if (userRolesData[i][1].equalsIgnoreCase("PA") || userRolesData[i][1].equalsIgnoreCase("RMU")) {
+						editLoginUser();
+					} else {
+						// Edit functionality
+						editFunctionality(Input.projectName);
+					}
 
 					// Launch functionality pop-up
 					getFunctionalityTab().waitAndClick(5);

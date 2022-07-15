@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
 import pageFactory.UserManagement;
@@ -29,6 +30,7 @@ public class O365_Regression_2_1 {
 	BaseClass base;
 	UserManagement userManagement;
 	DataSets dataSets;
+	CollectionPage collection;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -53,6 +55,7 @@ public class O365_Regression_2_1 {
 		login = new LoginPage(driver);
 		userManagement = new UserManagement(driver);
 		dataSets = new DataSets(driver);
+		collection = new CollectionPage(driver);
 	}
 
 	@DataProvider(name = "PaAndRmuUser")
@@ -236,6 +239,77 @@ public class O365_Regression_2_1 {
 		// Logout
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify the attributes from the 'Add Source Location' pop up
+	 *              should be Data Source Type, Data Source Name, Tenant ID,
+	 *              Application ID and Application Secret Key .
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60519",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAttributesInPopUp(String username,String password,String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60519 - O365");
+		base.stepInfo(
+				"Verify the attributes from the 'Add Source Location' pop up should be Data Source Type, Data Source Name, Tenant ID, Application ID and Application Secret Key");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// verify Add new source Pop up Attributes
+		collection.verifyAddNewSourcePopupAttributes();
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that error messages should be displayed for the blank
+	 *              required fields on click of 'Save'.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60520",dataProvider = "PaAndRmuUser",  enabled = true, groups = { "regression" })
+	public void verifyErrorMsgInPopUp(String username,String password,String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60520 - O365");
+		base.stepInfo(
+				"Verify that error messages should be displayed for the blank required fields on click of 'Save'");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// verify Add new source Pop up Attributes
+		collection.verifyAddNewSourcePopupAttributes();
+
+		// Verify Error Message In Add new source Popup
+		driver.Navigate().refresh();
+		collection.performAddNewSource(null, "", "", "", "");
+
+		// Logout
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
