@@ -5651,6 +5651,7 @@ public class DocListPage {
 		base.waitForElement(getClickToMakeSelection());
 		base.waitTillElemetToBeClickable(getClickToMakeSelection());
 		getClickToMakeSelection().Click();
+		Thread.sleep(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getEmailAuthorNameFilter());
 		getEmailAuthorNameFilter().Click();
@@ -5661,6 +5662,7 @@ public class DocListPage {
 		base.waitForElement(getMakeSureSelectedValue());
 		base.waitTillElemetToBeClickable(getMakeSureSelectedValue());
 		getMakeSureSelectedValue().Click();
+		Thread.sleep(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getEmailAuthorNameFilter());
 		base.waitTillElemetToBeClickable(getEmailAuthorNameFilter());
@@ -5708,6 +5710,7 @@ public class DocListPage {
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		closePreviewedDocument();
 
+		Thread.sleep(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocListBullhornIcon());
 		getDocListBullhornIcon().waitAndClick(5);
