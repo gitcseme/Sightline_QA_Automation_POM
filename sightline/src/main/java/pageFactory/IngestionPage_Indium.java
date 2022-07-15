@@ -1297,947 +1297,6 @@ public class IngestionPage_Indium {
 
 	}
 
-	public boolean AddOnlyNewIngestion(String dataset) throws InterruptedException {
-
-		boolean ingestionStatus = false;
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAddanewIngestionButton().Enabled();
-				}
-			}), Input.wait30);
-			getAddanewIngestionButton().waitAndClick(10);
-
-			// Select Source System
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSpecifySourceSystem().Visible();
-				}
-			}), Input.wait30);
-			getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSpecifyLocation().Visible();
-				}
-			}), Input.wait30);
-			for (int i = 0; i < 30; i++) {
-				try {
-					getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
-					break;
-				} catch (Exception e) {
-					base.waitTime(1);
-				}
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSpecifySourceFolder().Visible();
-				}
-			}), Input.wait30);
-
-			for (int i = 0; i < 30; i++) {
-				try {
-					if (dataset.contains("Automation_Collection1K_Tally")) {
-						getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
-					} else if (dataset.contains("Automation_20Family_20Threaded")) {
-						getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.FamilyFolder);
-					} else if (dataset.contains("Automation_AllSources")) {
-						getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
-					}
-				} catch (Exception e) {
-					base.waitTime(1);
-				}
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersFieldSeparator().Visible();
-				}
-			}), Input.wait30);
-
-			for (int i = 0; i < 30; i++) {
-				try {
-					getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
-				} catch (Exception e) {
-					base.waitTime(1);
-				}
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersTextQualifier().Visible();
-				}
-			}), Input.wait30);
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersNewLine().Visible();
-				}
-			}), Input.wait30);
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
-
-			driver.scrollingToBottomofAPage();
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSourceSelectionDATLoadFile().Visible();
-				}
-			}), Input.wait30);
-
-			// getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.AllSourcesDATFile);
-
-			if (dataset.contains("Automation_Collection1K_Tally")) {
-				getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.Collection1KDATFile);
-			} else if (dataset.contains("Automation_20Family_20Threaded")) {
-				getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.FamilyDATFile);
-			} else if (dataset.contains("Automation_AllSources")) {
-				getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.AllSourcesDATFile);
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSourceSelectionDATKey().Visible();
-				}
-			}), Input.wait30);
-			// getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-			base.waitTime(3);
-			if (dataset.contains("Automation_Collection1K_Tally")) {
-				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.Collection1KDockey);
-			} else if (dataset.contains("Automation_20Family_20Threaded")) {
-				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.FamilyDockey);
-			} else if (dataset.contains("Automation_AllSources")) {
-				getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSourceSelectionText().Enabled();
-				}
-			}), Input.wait30);
-			getSourceSelectionText().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSourceSelectionTextLoadFile().Visible();
-				}
-			}), Input.wait30);
-
-			if (dataset.contains("Automation_Collection1K_Tally")) {
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.Collection1KTextFile);
-			} else if (dataset.contains("Automation_20Family_20Threaded")) {
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.FamilyTextFile);
-			} else if (dataset.contains("Automation_AllSources")) {
-				getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText(Input.AllSourcesTextFile);
-			}
-			// getSourceSelectionTextLoadFile().selectFromDropdown().selectByVisibleText("DAT4_STC_Text.lst");
-
-			if (dataset.contains("Automation_AllSources") || dataset.contains("Automation_20Family_20Threaded")) {
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getNativeCheckBox().Visible();
-					}
-				}), Input.wait30);
-				getNativeCheckBox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getNativeLST().Visible();
-					}
-				}), Input.wait30);
-
-				if (dataset.contains("Automation_20Family_20Threaded")) {
-					getNativeLST().selectFromDropdown().selectByVisibleText(Input.FamilyNativeFile);
-				} else if (dataset.contains("Automation_AllSources")) {
-					getNativeLST().selectFromDropdown().selectByVisibleText(Input.AllSourcesNativeFile);
-				}
-
-			} else {
-				System.out.println("No need to select Native");
-			}
-			if (dataset.contains("Automation_AllSources")) {
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getPDFCheckBoxButton().Enabled();
-					}
-				}), Input.wait30);
-				getPDFCheckBoxButton().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getPDFLST().Visible();
-					}
-				}), Input.wait30);
-				getPDFLST().selectFromDropdown().selectByVisibleText("PDFs.lst");
-
-				driver.scrollingToBottomofAPage();
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getTIFFCheckBox().Enabled();
-					}
-				}), Input.wait30);
-				getTIFFCheckBox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getSourceSelectionTextLoadFile().Visible();
-					}
-				}), Input.wait30);
-				getTIFFLST().selectFromDropdown().selectByVisibleText("Images.lst");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMP3CheckBoxButton().Enabled();
-					}
-				}), Input.wait30);
-				getMP3CheckBoxButton().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getSourceSelectionTextLoadFile().Visible();
-					}
-				}), Input.wait30);
-				getMP3LST().selectFromDropdown().selectByVisibleText("MP3.lst");
-
-				driver.scrollingToBottomofAPage();
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getAudioTranscriptCheckBoxstionButton().Enabled();
-					}
-				}), Input.wait30);
-				getAudioTranscriptCheckBoxstionButton().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getSourceSelectionTextLoadFile().Visible();
-					}
-				}), Input.wait30);
-				getAudioTranscriptLST().selectFromDropdown().selectByVisibleText("Transcript.lst");
-
-				driver.scrollingToBottomofAPage();
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getOtherCheckBox().Enabled();
-					}
-				}), Input.wait30);
-				getOtherCheckBox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getOtherLoadFile().Visible();
-					}
-				}), Input.wait30);
-				getOtherLoadFile().selectFromDropdown().selectByVisibleText("Translation.lst");
-			} else {
-				System.out.println("No need to select PDF and MP3");
-			}
-
-			// select date format
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDateFormat().Visible();
-				}
-			}), Input.wait30);
-			getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-
-			driver.scrollPageToTop();
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getNextButton().Visible();
-				}
-			}), Input.wait30);
-			getNextButton().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingSOURCEFIELD2().Visible();
-				}
-			}), Input.wait30);
-			if (dataset.contains("Automation_Collection1K_Tally")) {
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.Collection1KDockey);
-			} else if (dataset.contains("Automation_20Family_20Threaded")) {
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-			} else if (dataset.contains("Automation_AllSources")) {
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-			}
-			// getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingSOURCEFIELD3().Visible();
-				}
-			}), Input.wait30);
-			if (dataset.contains("Automation_Collection1K_Tally")) {
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			} else if (dataset.contains("Automation_20Family_20Threaded")) {
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			} else if (dataset.contains("Automation_AllSources")) {
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-			}
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingSOURCEFIELD4().Visible();
-				}
-			}), Input.wait30);
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
-
-			if (dataset.contains("Automation_Collection1K_Tally") || dataset.contains("Automation_AllSources")) {
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT25().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT26().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT27().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT28().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
-			} else {
-				System.out.println("No need to selected 'Field 25 to 28' from here");
-			}
-
-			if (dataset.contains("Automation_20Family_20Threaded")) {
-
-				/*
-				 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-				 * getMappingFIELDCAT8().Visible() ;}}), Input.wait30);
-				 * getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-				 * getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText(
-				 * "EmailAuthorName");
-				 */
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT9().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT10().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-
-//	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//	    			getMappingFIELDCAT11().Visible()  ;}}), Input.wait30); 
-//	    	getMappingFIELDCAT11().selectFromDropdown().selectByVisibleText("EMAIL");
-//	    	getMappingDESTINATIONFIELD11().selectFromDropdown().selectByVisibleText("EmailBCCNames");
-//	    	
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT13().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-
-//	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//	    			getMappingFIELDCAT14().Visible()  ;}}), Input.wait30); 
-//	    	getMappingFIELDCAT14().selectFromDropdown().selectByVisibleText("EMAIL");
-//	    	getMappingDESTINATIONFIELD14().selectFromDropdown().selectByVisibleText("EmailCCNames");
-				//
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT25().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT26().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT27().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT28().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT29().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT31().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT49().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
-
-//	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//	    			getMappingFIELDCAT50().Visible()  ;}}), Input.wait30); 
-//	    	getMappingFIELDCAT50().selectFromDropdown().selectByVisibleText("EMAIL");
-//	    	getMappingDESTINATIONFIELD50().selectFromDropdown().selectByVisibleText("EmailToNames");
-//	        	
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getMappingFIELDCAT51().Visible();
-					}
-				}), Input.wait30);
-				getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-			} else {
-				System.out.println("No need to select fields for this dataset'");
-			}
-
-			// Below called function handles all the stages of ingestion from catalog to
-			// publish!
-			IngestionCatlogtoIndexing(dataset);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionName().Visible();
-				}
-			}), Input.wait60);
-			getIngestionName().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionNameText().Visible();
-				}
-			}), Input.wait60);
-			IngestionName = getIngestionNameText().getText();
-			base.waitTime(2);
-			System.out.println(IngestionName);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getCloseButton().Enabled();
-				}
-			}), Input.wait30);
-			getCloseButton().waitAndClick(10);
-
-			ingestionStatus = true;
-
-		} finally {
-			return ingestionStatus;
-		}
-	}
-
-	public void ReIngestionofNativeWithOverlay(String dataset) throws InterruptedException {
-
-		// Publish
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(Input.wait30);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByPUBLISHED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByPUBLISHED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionActionButton().Displayed();
-			}
-		}), Input.wait30);
-		getIngestionActionButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionAction_Copy().Displayed();
-			}
-		}), Input.wait30);
-		getIngestionAction_Copy().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceFolder().Visible();
-			}
-		}), Input.wait30);
-
-		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceFolder().Visible();
-			}
-		}), Input.wait30);
-		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
-
-		driver.scrollingToBottomofAPage();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSourceSelectionDATLoadFile().Visible();
-			}
-		}), Input.wait30);
-		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.AllSourcesDATFile);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSourceSelectionDATKey().Visible();
-			}
-		}), Input.wait30);
-		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNativeCheckBox().Visible();
-			}
-		}), Input.wait30);
-		getNativeCheckBox().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNativeLST().Visible();
-			}
-		}), Input.wait30);
-
-		getNativeLST().selectFromDropdown().selectByVisibleText(Input.AllSourcesNativeFile);
-
-		driver.scrollPageToTop();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
-		getNextButton().waitAndClick(10);
-
-		IngestionCatlogtoIndexing(dataset);
-
-		// ***************************Verify in DocView Default tab should come as
-		// Native*********************
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionName().Visible();
-			}
-		}), Input.wait60);
-		getIngestionName().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getIngestionNameText().Visible();
-			}
-		}), Input.wait60);
-		IngestionName = getIngestionNameText().getText();
-		base.waitTime(2);
-		System.out.println(IngestionName);
-	}
-
-	public void ReIngestionofDataWithOverlay(String dataset, String fieldname) throws InterruptedException {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAddanewIngestionButton().Displayed();
-			}
-		}), Input.wait60);
-
-		getAddanewIngestionButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceFolder().Visible();
-			}
-		}), Input.wait30);
-		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
-
-		driver.scrollingToBottomofAPage();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifyLocation().Visible();
-			}
-		}), Input.wait60);
-
-		getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
-
-		// Thread.sleep(4000);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSpecifySourceFolder().Visible();
-			}
-		}), Input.wait60);
-		base.waitForElement(getSpecifySourceFolder());
-
-		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSourceSelectionDATLoadFile().Visible();
-			}
-		}), Input.wait60);
-		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.Collection1KDATFile);
-
-		// base.waitTime(2);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSourceSelectionDATKey().Visible();
-			}
-		}), Input.wait60);
-		base.waitTillElemetToBeClickable(getSourceSelectionDATKey());
-		getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.Collection1KSourceDatField2);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDateFormat().Visible();
-			}
-		}), Input.wait30);
-		getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
-
-		driver.scrollPageToTop();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getNextButton().Visible();
-			}
-		}), Input.wait30);
-		getNextButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMappingSOURCEFIELD2().Visible();
-			}
-		}), Input.wait60);
-
-		getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.SourceDatFieldCustom);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMappingFIELDCAT2().Visible();
-			}
-		}), Input.wait30);
-		getMappingFIELDCAT2().selectFromDropdown().selectByVisibleText("CUSTOM");
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getMappingDESTINATIONFIELD2().Visible();
-			}
-		}), Input.wait30);
-		getMappingDESTINATIONFIELD2().selectFromDropdown().selectByVisibleText(fieldname);
-
-		driver.scrollPageToTop();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
-		getPreviewRun().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
-		getApproveMessageOKButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnRunIngestion().Visible();
-			}
-		}), Input.wait30);
-		getbtnRunIngestion().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByCATALOGED().waitAndClick(10);
-
-		// catlogging
-		for (int i = 0; i < 40; i++) {
-			try {
-				getCatalogedIngestionStatus().Displayed();
-				UtilityLog.info(dataset + " cataloged.");
-				break;
-			} catch (Exception e) {
-
-				try {
-					base.waitTime(5);
-					getRefreshButton().waitAndClick(10);
-					if (getFailedIngestionStatus().Displayed()) {
-						System.out.println("Execution aborted!");
-						UtilityLog.info("Execution aborted!");
-						System.out.println(dataset + " is failed in catalog stage. Take a look and continue!");
-						UtilityLog.info(dataset + " is failed in catalog stage. Take a look and continue!");
-						System.exit(1);
-
-					}
-				} catch (Throwable e1) {
-					System.out.println("Task in Progress : " + i);
-					UtilityLog.info("Task in Progress : " + i);
-				}
-			}
-		}
-
-		// copy
-		getRefreshButton().waitAndClick(10);
-
-		UtilityLog.info(dataset + "'s copying is started.");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCOPIED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByCOPIED().waitAndClick(10);
-
-		for (int i = 0; i < 120; i++) {
-			try {
-				getCopiedIngestionStatus().Displayed();
-				UtilityLog.info(dataset + " copied.");
-				break;
-			} catch (Exception e) {
-
-				try {
-					base.waitTime(5);
-					getRefreshButton().waitAndClick(10);
-					if (getFailedIngestionStatus().Displayed()) {
-						System.out.println("Execution aborted!");
-						UtilityLog.info("Execution aborted!");
-						System.out.println(dataset + " is failed in copying stage. Take a look and continue!");
-						UtilityLog.info(dataset + " is failed in copying stage. Take a look and continue!");
-						System.exit(1);
-
-					}
-				} catch (Throwable e1) {
-					System.out.println("Task in Progress : " + i);
-					UtilityLog.info("Task in Progress : " + i);
-				}
-
-			}
-		}
-
-		// Indexing
-		getRefreshButton().waitAndClick(10);
-
-		getIngestionName().waitAndClick(Input.wait30);
-
-		if (dataset.contains("Automation_AllSources")) {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIsAudioCheckbox().Visible();
-				}
-			}), Input.wait60);
-			getIsAudioCheckbox().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getLanguage().Visible();
-				}
-			}), Input.wait60);
-			getLanguage().selectFromDropdown().selectByVisibleText("North American English");
-		} else {
-			System.out.println("No need to select for other datasets");
-		}
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getRunIndexing().Visible();
-			}
-		}), Input.wait60);
-		getRunIndexing().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCloseButton().Enabled();
-			}
-		}), Input.wait30);
-		getCloseButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByINDEXED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByINDEXED().waitAndClick(10);
-
-		for (int i = 0; i < 120; i++) {
-
-			try {
-				getIndexedIngestionStatus().Displayed();
-				UtilityLog.info(dataset + " indexed.");
-				break;
-			} catch (Exception e) {
-
-				try {
-					base.waitTime(10);
-					getRefreshButton().waitAndClick(10);
-					if (getFailedIngestionStatus().Displayed()) {
-						System.out.println("Execution aborted!");
-						UtilityLog.info("Execution aborted!");
-						System.out.println(dataset + " is failed in indexing stage. Take a look and continue!");
-						UtilityLog.info(dataset + " is failed in indexing stage. Take a look and continue!");
-						System.exit(1);
-
-					}
-				} catch (Throwable e1) {
-					System.out.println("Task in Progress : " + i);
-					UtilityLog.info("Task in Progress : " + i);
-				}
-			}
-		}
-
-		base.waitTime(5);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByAPPROVED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByAPPROVED().waitAndClick(10);
-
-		for (int i = 0; i < 30; i++) {
-			try {
-				getApproveIngestionStatus().Displayed();
-				UtilityLog.info(dataset + " approved.");
-				break;
-
-			} catch (Exception e) {
-				try {
-					base.waitTime(5);
-					getRefreshButton().waitAndClick(10);
-					if (getFailedIngestionStatus().Displayed()) {
-						System.out.println("Execution aborted!");
-						UtilityLog.info("Execution aborted!");
-						System.out.println(dataset + " is failed in approving stage. Take a look and continue!");
-						UtilityLog.info(dataset + " is failed in approving stage. Take a look and continue!");
-						System.exit(1);
-
-					}
-				} catch (Throwable e1) {
-					System.out.println("Task in Progress : " + i);
-					UtilityLog.info("Task in Progress : " + i);
-				}
-
-			}
-		}
-
-		base.waitTime(5);
-
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getFilterByPUBLISHED().Visible();
-				}
-			}), Input.wait30);
-			getFilterByPUBLISHED().waitAndClick(10);
-		} catch (Exception e) {
-			System.out.println("Not able to select Published. Pleasae check!!");
-		}
-
-		for (int i = 0; i < 10; i++) {
-			try {
-
-				getcurrentPublishIngestionStatus().Displayed();
-				UtilityLog.info(dataset + " published.");
-				break;
-			} catch (Exception e) {
-				try {
-					base.waitTime(5);
-					getRefreshButton().waitAndClick(10);
-					if (getFailedIngestionStatus().Displayed()) {
-						System.out.println("Execution aborted!");
-						UtilityLog.info("Execution aborted!");
-						System.out.println(dataset + " is failed in publishing stage. Take a look and continue!");
-						UtilityLog.info(dataset + " is failed in publishing stage. Take a look and continue!");
-						System.exit(1);
-
-					}
-				} catch (Throwable e1) {
-					System.out.println("Task in Progress : " + i);
-					UtilityLog.info("Task in Progress : " + i);
-				}
-
-			}
-
-		}
-	}
-
 	public void IngestionCatlogtoIndexing(String dataset) throws InterruptedException {
 
 		driver.scrollPageToTop();
@@ -2760,13 +1819,13 @@ public class IngestionPage_Indium {
 			}
 			base.waitTime(2);
 			base.waitForElement(getDATDelimitersFieldSeparator());
-			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 			base.waitForElement(getDATDelimitersTextQualifier());
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 			driver.scrollingToBottomofAPage();
 
@@ -4124,13 +3183,13 @@ public class IngestionPage_Indium {
 		}
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 		driver.scrollingToBottomofAPage();
 
@@ -4434,13 +3493,13 @@ public class IngestionPage_Indium {
 		}
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 		driver.scrollingToBottomofAPage();
 
@@ -5077,13 +4136,13 @@ public class IngestionPage_Indium {
 		}
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 		driver.scrollingToBottomofAPage();
 
@@ -5749,13 +4808,13 @@ public class IngestionPage_Indium {
 
 		getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.TiffImagesFolder);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 		base.waitForElement(getSourceSelectionDATKey());
 
@@ -6038,13 +5097,13 @@ public class IngestionPage_Indium {
 		}
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 		driver.scrollingToBottomofAPage();
 
@@ -6577,7 +5636,7 @@ public class IngestionPage_Indium {
 		} else {
 			base.failedMessage("Rollback button not disabled in draft mode");
 		}
-		getIngestionSettingGearIcon().waitAndClick(5);
+		getRefreshButton().waitAndClick(10);
 
 	}
 
@@ -7723,13 +6782,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.TiffImagesFolder);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(DATfile, "ProdBeg");
 		getTIFFLST().ScrollTo();
@@ -8005,13 +7064,13 @@ public class IngestionPage_Indium {
 
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, ingestionName);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.stepInfo("Selecting DAT source");
 		selectDATSource(datFile, datKey);
 
@@ -8174,13 +7233,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.UniCodeFilesFolder);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
@@ -8242,13 +7301,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 
@@ -8271,13 +7330,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 
@@ -8303,13 +7362,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation, ingestionName);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8581,13 +7640,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.AK_NativeFolder);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
@@ -8697,13 +7756,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, sourceFolder);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
@@ -8890,13 +7949,13 @@ public class IngestionPage_Indium {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(dataset);
 			base.waitTime(2);
 			base.waitForElement(getDATDelimitersFieldSeparator());
-			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 			base.waitForElement(getDATDelimitersTextQualifier());
-			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 			base.waitForElement(getDATDelimitersNewLine());
-			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 
 			driver.scrollingToBottomofAPage();
 
@@ -9400,7 +8459,7 @@ public class IngestionPage_Indium {
 			}
 		}), Input.wait30);
 
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -9649,13 +8708,13 @@ public class IngestionPage_Indium {
 		selectIngestionTypeAndSpecifySourceLocation("Add Only", source, Input.sourceLocation, Input.UniCodeFilesFolder);
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		base.stepInfo("*******Selecing text files***************");
@@ -9807,124 +8866,6 @@ public class IngestionPage_Indium {
 
 	/**
 	 * @author Aathith.Senthilkumar
-	 * @return
-	 * @throws InterruptedException
-	 * @Description perform action ingestion to cataloge to copied stage
-	 */
-	public String overlayIngestionCreationToCatalogedtoCopiedorIndex() throws InterruptedException {
-		String title = null;
-		String titleCar = null;
-		int count = 0;
-		driver.waitForPageToBeReady();
-		base.waitForElement(getStatus());
-		for (int i = 1; i < 500; i++) {
-			driver.waitForPageToBeReady();
-			getIngestionTitle(count + 1).ScrollTo();
-			getIngestionTitle(count + 1).isElementAvailable(15);
-			title = getIngestionTitle(count + 1).GetAttribute("title").trim();
-			getStatus(count + 1).isElementAvailable(15);
-			String status = getStatus(count + 1).getText().trim();
-			driver.waitForPageToBeReady();
-			for (int j = 1; j < 50; j++) {
-				titleCar = getIngestionTitle(j).GetAttribute("title").trim();
-				getIngestionTitle(j).ScrollTo();
-				if (titleCar.equalsIgnoreCase(title)) {
-					if (j != 1) {
-						count = j - 1;
-					}
-					break;
-				} else {
-					driver.scrollingToBottomofAPage();
-				}
-			}
-			if (status.contains("In Progress")) {
-				driver.scrollPageToTop();
-				getRefeshBtn().isElementAvailable(15);
-				driver.waitForPageToBeReady();
-				driver.waitForPageToBeReady();
-				getRefeshBtn().waitAndClick(10);
-				driver.waitForPageToBeReady();
-			}
-			if (status.contains("Cataloged") && titleCar.equalsIgnoreCase(title)) {
-				base.passedStep("Ingestion completed till cataloged stage");
-				IngestionCatlogtoCopyingOrIndex(title);
-				break;
-			}
-			if (status.contains("Copied") && titleCar.equalsIgnoreCase(title)) {
-				base.passedStep("Ingestion completed till cataloged stage");
-				break;
-			}
-			if (status.contains("Indexed") && titleCar.equalsIgnoreCase(title)) {
-				base.passedStep("Ingestion completed till cataloged stage");
-				break;
-			}
-			if (status.contains("Approved") && titleCar.equalsIgnoreCase(title)) {
-				base.passedStep("Ingestion completed till cataloged stage");
-				break;
-			}
-		}
-		return title;
-	}
-
-	/**
-	 * @author Aathith.Senthilkumar
-	 * @param dataset
-	 * @throws InterruptedException
-	 * @Description perform action catalog to copied stage
-	 */
-	public void IngestionCatlogtoCopyingOrIndex(String dataset) throws InterruptedException {
-
-		// catlogging
-		for (int i = 0; i < 60; i++) {
-			base.waitTime(2);
-			String status = getStatus(1).getText().trim();
-
-			if (status.contains("Cataloged")) {
-				base.passedStep("Cataloged completed");
-				break;
-			} else if (status.contains("In Progress")) {
-				base.waitTime(5);
-				getRefeshBtn().waitAndClick(10);
-			} else if (status.contains("Failed")) {
-				base.failedStep("Ingestion Failed");
-			}
-		}
-
-		// copy
-		getRefeshBtn().waitAndClick(10);
-		getIngestionDetailPopup(1).waitAndClick(10);
-		driver.Manage().window().fullscreen();
-		driver.scrollingToElementofAPage(getRunCopying());
-		base.waitForElement(getRunCopying());
-		getRunCopying().waitAndClick(10);
-
-		if (getCloseButton().isElementAvailable(2)) {
-			getCloseButton().waitAndClick(10);
-		}
-		UtilityLog.info(dataset + "'s copying is started.");
-
-		driver.waitForPageToBeReady();
-		getRefeshBtn().waitAndClick(10);
-		for (int i = 0; i < 70; i++) {
-			base.waitTime(2);
-			String status = getStatus(1).getText().trim();
-
-			if (status.contains("Copied")) {
-				base.passedStep("Copied completed");
-				break;
-			} else if (status.contains("In Progress")) {
-				base.waitTime(5);
-				getRefeshBtn().waitAndClick(5);
-			} else if (status.contains("Indexed")) {
-				base.passedStep("Indexed completed");
-			} else if (status.contains("Failed")) {
-				base.failedStep("Ingestion Failed");
-			}
-		}
-	}
-
-	/**
-	 * @author Aathith.Senthilkumar
 	 * @Description Nativigate Ingestion page using button
 	 */
 	public void nativigateToIngestionViaButton() {
@@ -9952,21 +8893,21 @@ public class IngestionPage_Indium {
 	/**
 	 * @author: Vijaya.Rani Created Date: 5/05/2022 Modified by: NA Modified Date:
 	 *          NA
-	 * @description: this method will verify back,ignore and done option in error
-	 *               detail popup in overlay
+	 * @description: this method will perform overlay for ak native folder ingestion
+	 *               
 	 */
 	public void performAKNativeFolderIngestionInOverlay(String datFile) {
 
 		selectIngestionTypeAndSpecifySourceLocation("Overlay Only", "TRUE", Input.sourceLocation,
 				Input.AK_NativeFolder);
 		base.waitForElement(getDATDelimitersFieldSeparator());
-		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText("ASCII(20)");
+		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
 
 		base.waitForElement(getDATDelimitersTextQualifier());
-		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText("ASCII(254)");
+		getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
 
 		base.waitForElement(getDATDelimitersNewLine());
-		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText("ASCII(174)");
+		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 		base.stepInfo("Selecting Dat file");
 		selectDATSource(datFile, Input.prodBeg);
 		base.stepInfo("Selecting Native file");
@@ -9989,7 +8930,6 @@ public class IngestionPage_Indium {
 
 		clickOnNextButton();
 		base.waitTime(2);
-		selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
 		clickOnPreviewAndRunButton();
 		base.stepInfo("Ingestion started");
 
@@ -11134,11 +10074,6 @@ public class IngestionPage_Indium {
 		 */
 		public void performGD_994NativeFolderIngestion(String datFile,String nativeFile,String textFile) {
 			selectIngestionTypeAndSpecifySourceLocation("Add Only", "TRUE", Input.sourceLocation, Input.GD994NativeTextForProductionFolder);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDATDelimitersNewLine().Visible();
-				}
-			}), Input.wait30);
 			base.waitForElement(getDATDelimitersNewLine());
 			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
 			base.waitTime(2);
@@ -11148,11 +10083,7 @@ public class IngestionPage_Indium {
 			selectNativeSource(nativeFile, false);
 			base.stepInfo("Selecting Text file");
 			selectTextSource(textFile, false);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getDateFormat().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getDateFormat());
 			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
 			clickOnNextButton();
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -11773,5 +10704,5 @@ public class IngestionPage_Indium {
 				base.failedStep("Information not displayed");
 			}
 		}
-
+				
 }
