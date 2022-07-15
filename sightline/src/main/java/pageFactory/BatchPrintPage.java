@@ -269,7 +269,7 @@ public class BatchPrintPage {
 	public Element getAnalysSkipDocFolder_DD() {
 		return driver.FindElementByXPath("//li[contains(@class,' jstree-closed')]//i[@class='jstree-icon jstree-ocl']");
 	}
-	
+
 	public ElementCollection getAnalysSkipDocFolder_List() {
 		return driver.FindElementsByXPath("//ul[@class='jstree-children']//li");
 	}
@@ -2241,9 +2241,11 @@ public class BatchPrintPage {
 		base.waitForElement(getGenerateButton());
 		getGenerateButton().waitAndClick(5);
 
-		base.VerifySuccessMessage(
-				"Successfully initiated the batch print. You will be prompted with notification once completed.");
-
+		if (base.getSuccessMsgHeader().isElementAvailable(3)) {
+			base.VerifySuccessMessage(
+					"Successfully initiated the batch print. You will be prompted with notification once completed.");
+		}
+		
 		// verifying In Background ask PAge
 		driver.waitForPageToBeReady();
 		base.waitForElement(getBgPageDD());
@@ -2593,11 +2595,11 @@ public class BatchPrintPage {
 	 * @param Next
 	 */
 	public void disableSlipSheet(boolean Next) {
-		if(getToggleButton().isElementAvailable(10)) {
-		getToggleButton().waitAndClick(5);
+		if (getToggleButton().isElementAvailable(10)) {
+			getToggleButton().waitAndClick(5);
 
-		base.passedStep("Disables Slipsheet Toggle");
-	}
+			base.passedStep("Disables Slipsheet Toggle");
+		}
 
 		if (Next) {
 			navigateToNextPage(1);
@@ -2649,10 +2651,10 @@ public class BatchPrintPage {
 			navigateToNextPage(1);
 		}
 	}
-	
+
 	/**
 	 * @Author Jeevitha
-	 * @Description : select Dropdown In slipsheet 
+	 * @Description : select Dropdown In slipsheet
 	 * @param ddValue
 	 */
 	public void selectDropdownFromSlipSheet_prod(String ddValue) {

@@ -1,11 +1,9 @@
 package testScriptsRegressionSprint16;
 
-import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
-import org.apache.commons.io.FilenameUtils;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -17,14 +15,9 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
-import net.lingala.zip4j.exception.ZipException;
 import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
-import pageFactory.DocListPage;
-import pageFactory.DocViewMetaDataPage;
-import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
-import pageFactory.ManageAssignment;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -122,11 +115,17 @@ public class BatchPrintRegression2 {
 		// select production
 		batchPrint.fillingBasisForPrinting(false, true, productionname);
 		batchPrint.navigateToNextPage(1);
-
+		if (!batchPrint.getSlipSheetDD_prod().isElementAvailable(10) ) {
+			batchPrint.navigateToNextPage(1);
+		}
+		
 		// fill slipsheet tab
 		batchPrint.selectDropdownFromSlipSheet_prod(slipsheetDD);
 		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
-
+		if (!batchPrint.getSelectExportFileName().isElementAvailable(10)) {
+			batchPrint.navigateToNextPage(1);
+		}
+		
 		// Filling Export File Name as 'DOCFileName', select Sort by 'DOCID'
 		batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, false, 20);
 
