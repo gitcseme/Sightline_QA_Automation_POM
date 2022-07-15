@@ -79,14 +79,15 @@ public class DocList_Regression1 {
 	 *              stop the audio file.
 	 */
 	@Test(description = "RPMXCON-54280", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
-	public void verifyPerviewDocAudioFile(String username, String password, String role) throws InterruptedException, AWTException {
+	public void verifyPerviewDocAudioFile(String username, String password, String role)
+			throws InterruptedException, AWTException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54280");
 		baseClass.stepInfo(
 				"To verify that When a audio file is being played via Preview Document, clicking on close of the preview pop-up should also stop the audio file.");
 
 		sessionSearch = new SessionSearch(driver);
-		DocListPage docList= new DocListPage(driver);
+		DocListPage docList = new DocListPage(driver);
 		// Login As PA
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
@@ -95,14 +96,14 @@ public class DocList_Regression1 {
 		baseClass.stepInfo("Searching Content documents based on search audio string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocList();
-		
+
 		baseClass.stepInfo("Verify preview Doc list of audio document");
-    	docList.DoclistPreviewAudio();
-    	baseClass.passedStep("Click on 'X' icon audio file is stoped and close perviewdocument popup");
+		docList.DoclistPreviewAudio();
+		baseClass.passedStep("Click on 'X' icon audio file is stoped and close perviewdocument popup");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:05/07/2022 RPMXCON-54567
 	 * @throws InterruptedException
@@ -110,7 +111,7 @@ public class DocList_Regression1 {
 	 * @Description Verify that Audio Document Preview functionality is working
 	 *              proper in Saved Search >> DocList screen.
 	 */
-	
+
 	@Test(description = "RPMXCON-54567", enabled = true, groups = { "regression" })
 	public void verifyPerviewDocAudioFileFunctionalityWorkProper() throws InterruptedException, AWTException {
 
@@ -121,7 +122,7 @@ public class DocList_Regression1 {
 		sessionSearch = new SessionSearch(driver);
 		savedsearch = new SavedSearch(driver);
 		DocListPage docList = new DocListPage(driver);
-		String searchname = Input.randomText + Utility.dynamicNameAppender();
+
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
@@ -129,11 +130,7 @@ public class DocList_Regression1 {
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching Content documents based on search audio string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-		baseClass.stepInfo("Save searched content");
-		sessionSearch.saveSearch(searchname);
-
-		baseClass.stepInfo("Open Doc list from Saved search page");
-		savedsearch.savedSearchToDocList(searchname);
+		sessionSearch.ViewInDocList();
 
 		baseClass.stepInfo("Verify preview Doc list of audio document");
 		driver.waitForPageToBeReady();
@@ -142,7 +139,6 @@ public class DocList_Regression1 {
 		loginPage.logout();
 
 	}
-
 
 	/**
 	 * @author Vijaya.Rani ModifyDate:05/07/2022 RPMXCON-54526
@@ -169,20 +165,25 @@ public class DocList_Regression1 {
 		sessionSearch.basicContentSearch(Input.searchStringStar);
 		sessionSearch.ViewInDocList();
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo(
 				"Select Author name  From Filter and Applying Filter And Verifying The Name in Email All Domain");
 		docList.EmailAllDomainsNameVerificationInDoc();
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Select Include and Applying filter In Email All Domain DocList Page");
 		docList.EmailAllDomainsNameIncludeVerificationInDoc();
 		// Clear Applied filter
+		driver.waitForPageToBeReady();
 		docList.clearAllAppliedFilters();
+
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Select Exclude and Applying filter In Email All Domain DocList Page");
 		docList.EmailAllDomainsNameInExcludeVerificationInDoc();
 
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:06/07/2022 RPMXCON-54528
 	 * @throws InterruptedException
@@ -250,18 +251,18 @@ public class DocList_Regression1 {
 		// EmailAuthorNameInclude
 		baseClass.stepInfo("Select Include and Applying filter In Email Author Name DocExplorer Page");
 		docList.EmailAuthorNameVerificationInDocexplorer();
-	
+
 		baseClass.stepInfo("Select Exclude and Applying filter In Email Author Name DocExplorer Page");
 		docList.EmailAuthorNameInExcludeVerificationInDoc();
 		// Clear Applied filter
 		docList.clearAllAppliedFilters();
-		
+
 		baseClass.stepInfo("Select Include and Applying filter In EmailRecipientsName DocExplorer Page");
 		docList.EmailRecipientsNameVerificationInDocexplorer();
-		
+
 		baseClass.stepInfo("Select Exclude and Applying filter In EmailRecipientsName DocExplorer Page");
 		docList.EmailRecipientsNameVerificationInDocexplorerExlude();
-		
+
 		loginPage.logout();
 	}
 
@@ -292,55 +293,59 @@ public class DocList_Regression1 {
 		baseClass.stepInfo(" Search meta data DocFile Type");
 		sessionSearch.basicSearchWithMetaDataQuery(Input.searchDocFileType, "DocFileType");
 		sessionSearch.ViewInDocView();
-        
-        baseClass.stepInfo("Go to DocList Page");
-        driver.waitForPageToBeReady();
-        baseClass.waitForElement(docView.getViewAllInDocListBtn());
-        docView.getViewAllInDocListBtn().waitAndClick(5);
-        baseClass.stepInfo("Successfully navigate to DocList Page");
-        
-        baseClass.stepInfo("Verify preview Doc list of non audio document");
-        docList.DoclistPreviewNonAudio();
-        
-        baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
-        docList.VerifyPerviewDocumentAndPrintAndDownload();
-		
+
+		baseClass.stepInfo("Go to DocList Page");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getViewAllInDocListBtn());
+		docView.getViewAllInDocListBtn().waitAndClick(5);
+		baseClass.stepInfo("Successfully navigate to DocList Page");
+
+		baseClass.stepInfo("Verify preview Doc list of non audio document");
+		docList.DoclistPreviewNonAudio();
+
+		baseClass.stepInfo("Verify downloded file name consists Previwed doc id as file name");
+		docList.VerifyPerviewDocumentAndPrintAndDownload();
+
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:11/07/2022 RPMXCON-54531
 	 * @throws Exception
-	 * @Description Validate onpage filter for EmailAuthorName and EmailAllDomains on DocList page.
+	 * @Description Validate onpage filter for EmailAuthorName and EmailAllDomains
+	 *              on DocList page.
 	 */
 	@Test(description = "RPMXCON-54531", dataProvider = "Users_PARMU", enabled = true, groups = { "regression" })
-	public void verifyFilterEamilAuthorNameAndAllDomainsInDocList(String username, String password, String role) throws Exception {
+	public void verifyFilterEamilAuthorNameAndAllDomainsInDocList(String username, String password, String role)
+			throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54531");
-		baseClass.stepInfo(
-				"Validate onpage filter for EmailAuthorName and EmailAllDomains on DocList page.");
+		baseClass.stepInfo("Validate onpage filter for EmailAuthorName and EmailAllDomains on DocList page.");
 		sessionSearch = new SessionSearch(driver);
 		DocListPage docList = new DocListPage(driver);
-		String emailAuthor="EmailAuthorName";
-		String emailAllDomain="EmailAllDomains";
-		
-		//Login As user
+		String emailAuthor = "EmailAuthorName";
+		String emailAllDomain = "EmailAllDomains";
+
+		// Login As user
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
-		
+
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.basicContentSearch(Input.searchStringStar);
 		sessionSearch.ViewInDocList();
-		
+
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("verify DocList EmailAuthorName Include and EmailAllDomain Exclude Filter");
-		docList.emailValueFirstIncludeAndEmailValueSecondExcludeVerifyInDocList(emailAuthor,emailAllDomain);
-		
+		docList.emailValueFirstIncludeAndEmailValueSecondExcludeVerifyInDocList(emailAuthor, emailAllDomain);
+
 		// Clear Applied filter
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Clear the Applied Filters");
 		docList.clearAllAppliedFilters();
-		
+
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("verify DocList EmailAuthorName Exclude  and EmailAllDomain Include Filter");
-		docList.emailValueFirstExcludeAndEmailValueSecondIncludeVerifyInDocList(emailAllDomain,emailAuthor);
+		docList.emailValueFirstExcludeAndEmailValueSecondIncludeVerifyInDocList(emailAllDomain, emailAuthor);
 		loginPage.logout();
 	}
 
@@ -358,12 +363,11 @@ public class DocList_Regression1 {
 			loginPage.quitBrowser();
 		}
 	}
-	
+
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-				{ Input.pa1userName, Input.pa1password, "PA" } 
-				};
+				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
 
@@ -374,4 +378,3 @@ public class DocList_Regression1 {
 
 	}
 }
-
