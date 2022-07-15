@@ -155,7 +155,7 @@ public class ManageKeywords_Regression1 {
 		KeywordPage keyWord = new KeywordPage(driver);
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		
 		//Verify Manage Keyowrd Page for RMU
@@ -164,7 +164,7 @@ public class ManageKeywords_Regression1 {
 		loginPage.logout();
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 
 		// Verify Manage Keyowrd Page for PA
@@ -187,7 +187,7 @@ public class ManageKeywords_Regression1 {
 		KeywordPage keyWord = new KeywordPage(driver);
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		
 		//Verify Manage Keyowrd Page for RMU
@@ -196,7 +196,7 @@ public class ManageKeywords_Regression1 {
 		loginPage.logout();
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 
 		// Verify Manage Keyowrd Page for PA
@@ -220,7 +220,7 @@ public class ManageKeywords_Regression1 {
 		KeywordPage keyWord = new KeywordPage(driver);
 		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
 		// Login As RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		
 		//Verify Manage Keyowrd Page for RMU
@@ -229,7 +229,7 @@ public class ManageKeywords_Regression1 {
 		loginPage.logout();
 		
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 
 		// Verify Manage Keyowrd Page for PA
@@ -328,19 +328,19 @@ public class ManageKeywords_Regression1 {
 		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
 		String color = "Blue";
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rev1userName, "Reviewer",Input.projectName);
+		userManagement.editRoleOfAnUser(Input.rev2userName, "Reviewer",Input.projectName);
 		
 		loginPage.logout();
 		
 		// Login As RMU from Reviewer
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rev1userName + "");
+		loginPage.loginToSightLine(Input.rev2userName, Input.rev2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rev2userName + "");
 		
 		keyWord.navigateToKeywordPage();
 		keyWord.addKeyword(keywordname, color);
@@ -351,12 +351,12 @@ public class ManageKeywords_Regression1 {
 		
 		//Re assigning the User to its original username
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa2userName + "");
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleForRMUANdPAUsers(Input.rev1userName, "Review Manager",Input.projectName);
+		userManagement.editRoleForRMUANdPAUsers(Input.rev2userName, "Review Manager",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
@@ -378,19 +378,19 @@ public class ManageKeywords_Regression1 {
 		String keywordname = "PhaseII" + Utility.dynamicNameAppender();
 		String color = "Blue";
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rmu1userName, "Review Manager",Input.projectName);
+		userManagement.editRoleOfAnUser(Input.rmu2userName, "Review Manager",Input.projectName);
 		
 		loginPage.logout();
 		
 		// Login As PA from RMU
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu1userName + "");
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.rmu2userName + "");
 		
 		keyWord.navigateToKeywordPage();
 		keyWord.addKeyword(keywordname, color);
@@ -401,8 +401,8 @@ public class ManageKeywords_Regression1 {
 		
 		//Re assigning the User to its original username
 		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa2userName + "");
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
