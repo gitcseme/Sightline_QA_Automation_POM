@@ -10780,7 +10780,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will perform catalog,copy,index and approve stages for overlay
 		 * @param: dataset
 		 */
-		public String approveOverlayonlyTextIngestion(String dataset) {
+		public String approveOverlayonlyTextWithAudioIngestion(String dataset) {
 			ignoreErrorsAndCatlogging();
 			ignoreErrorsAndCopying();
 			ingestionIndexing(dataset);

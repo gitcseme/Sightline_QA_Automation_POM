@@ -211,7 +211,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Perform overlay ingestion with audio and text files");
 		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, null,
 				null,null, Input.MP3File, null, null, null, false);
-		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.approveOverlayonlyTextWithAudioIngestion(Input.AllSourcesFolder);
 		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
 		baseClass.passedStep("Analytics takes place when audio and Text files are overlayed");
 		loginPage.logout();
@@ -252,7 +252,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Perform overlay ingestion with tiff and text files");
 		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, null,
 				null, Input.TIFFFile, null, null, null, null, false);
-		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
 		baseClass.passedStep("Analytics takes place when Tiff files and Text files are overlayed");
 		loginPage.logout();
@@ -293,7 +293,7 @@ public class Ingestion_Regression_3 {
 		baseClass.stepInfo("Perform overlay ingestion with native and text files");
 		ingestionPage.startOverlayIngestion(Input.AllSourcesFolder, Input.DATFile1, Input.prodBeg, Input.TextFile, Input.NativeFile,
 				null, null, null, null, null, null, false);
-		ingestionPage.approveOverlayonlyTextIngestion(Input.AllSourcesFolder);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		ingestionPage.runAnalyticsAndVerifyAnalyticStatus();
 		baseClass.passedStep("Analytics takes place when native and Text files are overlayed");
 		loginPage.logout();
