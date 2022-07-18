@@ -300,6 +300,114 @@ public class Ingestion_Regression_3 {
 		
 	}
 	
+	/** 
+	 * Author :Arunkumar date: 18/07/2022 TestCase Id:RPMXCON-48629
+	 * Description :To verify that user can overlay text only when all the docs being overlaid are unpublished
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48629",enabled = true, groups = { "regression" })
+	public void verifyOverlayWhenDocsUnpublished() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48629");
+		baseClass.stepInfo("verify that user can overlay text only when all the docs being overlaid are unpublished");
+		docList= new DocListPage(driver);
+		dataSets = new DataSets(driver);
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion with text files");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+		ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		baseClass.stepInfo("Search text file and save the result");
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithName(Input.UniCodeFilesFolder);
+		String docId=docList.getDocumetId();
+		sessionSearch.basicSearchWithMetaDataQuery(docId, Input.docId);
+		sessionSearch.saveSearch(BasicSearchName);
+		baseClass.stepInfo("Unpublish the text file");
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("perform overlay ingestion with unpublished text files");
+		ingestionPage.OverlayIngestionWithDat(Input.UniCodeFilesFolder, Input.datLoadFile1, Input.documentKey,
+								"text", Input.textFile1);
+		ingestionPage.verifyOverlayTextUnpublishedErrorMessage();
+		baseClass.passedStep("user can overlay text only when all the docs being overlaid are unpublished");
+		// rollback ingestion
+		ingestionPage.rollBackIngestion();
+		loginPage.logout();
+	}
+	
+	/** 
+	 * Author :Arunkumar date: 18/07/2022 TestCase Id:RPMXCON-49257
+	 * Description :To verify that the total unique ingested docs count in the ingestions page should present the unique 
+	 * number of docs ingested and published
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49257",enabled = true, groups = { "regression" })
+	public void verifyTotalUniqueDocsCountIngestedAndPublished() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49257");
+		baseClass.stepInfo("verify that ingestions page should present the unique number of docs ingested and published");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName=null;
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion for dataset 1 - '"+Input.HiddenPropertiesFolder+"'");
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status1 == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder,Input.YYYYMMDDHHMISSDat);
+			ingestionName =ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.HiddenPropertiesFolder);
+			ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat,
+					Input.sourceDocIdSearch);
+			ingestionPage.clickOnPreviewAndRunButton();
+			ingestionPage.verifyApprovedStatusForOverlayIngestion();
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		baseClass.stepInfo("Perform add only ingestion for dataset 2 - '"+Input.UniCodeFilesFolder+"'");
+		ingestionPage.navigateToIngestionPage();
+		boolean status2 = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if (status2 == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+			ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		baseClass.stepInfo("Perform add only ingestion for dataset 3 - '"+Input.AllSourcesFolder+"'");
+		ingestionPage.navigateToIngestionPage();
+		boolean status3 = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status3 == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.AllSourcesFolder,Input.DATFile1);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);
+		}
+		
+		// getting unique ingested count before unpublishing documents
+		int uniqueCountBefore = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count before performing unpublish : '" + uniqueCountBefore + "'");
+		baseClass.stepInfo("Search documents and save the result");
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.saveSearch(BasicSearchName);
+		baseClass.stepInfo("Unpublish documents");
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		// getting unique ingested count after unpublishing documents
+		int uniqueCountAfter = ingestionPage.getIngestedUniqueCount();
+		baseClass.stepInfo("Total unique count after performing unpublish : '" + uniqueCountAfter + "'");
+		if (uniqueCountAfter < uniqueCountBefore) {
+			baseClass.passedStep("Only unique ingested count displayed after unpublishing documents");
+		} else {
+			baseClass.failedStep("Unique ingested count not displayed after unpublishing documents");
+		}
+		loginPage.logout();
+		
+	}
+	
 	
 	
 	
