@@ -1105,11 +1105,12 @@ public class Docview_Audio_Sprint2Regression {
 		docViewPage.completeButton();
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Document completed successfully");
+		baseClass.waitTime(5);
 		
 		// validating cursor navigating next docs from using complete buton
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnComplete=docViewPage.getVerifyPrincipalDocument().getText();
-		Assert.assertNotEquals(firstId, prnComplete);
+		softAssertion.assertNotEquals(firstId, prnComplete);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using complete button");
 		
 		// validating using coding stamp button
@@ -1119,20 +1120,22 @@ public class Docview_Audio_Sprint2Regression {
 		baseClass.stepInfo("Coding Stamp saved successfully");
 		docViewPage.lastAppliedStamp(Input.stampColour);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		baseClass.stepInfo("Coding Stamp applied successfully");
 		
 		// verifying cursor navigate to next docs
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnStampLast=docViewPage.getVerifyPrincipalDocument().getText();
-		Assert.assertNotEquals(prnComplete, prnStampLast);
+		softAssertion.assertNotEquals(prnComplete, prnStampLast);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using stamp last button");
 		
 		// validating using code same as last button
 		docViewPage.clickCodeSameAsLast();
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String prnCodeSameLast=docViewPage.getVerifyPrincipalDocument().getText();
-		Assert.assertNotEquals(prnCodeSameLast, prnStampLast);
+		softAssertion.assertNotEquals(prnCodeSameLast, prnStampLast);
 		baseClass.stepInfo("Cursor navigated to next document from minidoclist using code same as last button");
 
 		// verifying as per preceeding document
