@@ -24,11 +24,11 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 
 public class Input {
-	Driver driver;   
+	Driver driver;
 	LoginPage lp;
-	
+
 	// Default should be true, Make it false during Development
-			public static boolean mode = true;
+	public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -211,7 +211,7 @@ public class Input {
 	public static String sourceDocId11;
 	public static String sourceDocId12;
 	public static String projectName01;
-	public static String projectName02; 
+	public static String projectName02;
 	public static String searchDocFileType;
 
 	// DocView codingform Baskar Indium
@@ -444,6 +444,11 @@ public class Input {
 	public static String progresBarColor;
 	public static String BatchFileduplicateHeader;
 	public static String SearchBatchFile;
+
+	// Added By Jeevitha [Collection]
+	public static String TenantID;
+	public static String ApplicationID;
+	public static String ApplicationKey;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -810,26 +815,26 @@ public class Input {
 	public static String langName_japnese;
 	public static String createDate;
 	public static String highVolumeProjSearchString;
-	
+
 	public static String cfDocId1;
 	public static String cfDocId2;
-	
-	//Added by Gopinath - 08/04/2022
+
+	// Added by Gopinath - 08/04/2022
 	public static String warningMsgDocId;
 	public static String externalLinkDocId;
-	
-	//Added by Gopinath -28/09/2022
+
+	// Added by Gopinath -28/09/2022
 	public static String telecom;
 	public static String regressionRun;
 	public static String sourceParentBlank;
 	public static String sourceBlank;
 	public static String ingestionLessThanHour;
 	public static String ingestionOneHour;
-	
-	//Added by Iyappan
+
+	// Added by Iyappan
 	public static String docAudioId1;
 	public static String docAudioId2;
-	
+
 	// Added by Raghuram
 	public static String preBuilt;
 	public static String preBuiltHelpText;
@@ -837,8 +842,8 @@ public class Input {
 	public static String Discrimination;
 	public static String FCPA;
 	public static String Harassment;
-	
-	//Added by Aathith ,Client Page details
+
+	// Added by Aathith ,Client Page details
 	public static String FilterByType;
 	public static String Name;
 	public static String ShortName;
@@ -850,7 +855,7 @@ public class Input {
 	public static String Actions;
 	public static String Delete;
 	public static String Edit;
-	
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -926,27 +931,27 @@ public class Input {
 		rev2FullName = envConfig.getRev2FullName();
 		prodPath = envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
-		
-		if (mode) {	
-		projectName = envConfig.getProjectName();
-		domainName = envConfig.getDomainName();
-		sa1userName = envConfig.getSa1userName();
-		sa1password = envConfig.getSa1password();
-		pa1userName = envConfig.getPa1userName();
-		pa1password = envConfig.getPa1password();
-		rmu1userName = envConfig.getRmu1userName();
-		rmu1password = envConfig.getRmu1password();
-		rev1userName = envConfig.getRev1userName();
-		rev1password = envConfig.getRev1password();
-		pa2userName = envConfig.getPa2userName();
-		pa2password = envConfig.getPa2password();
-		rmu2userName = envConfig.getRmu2userName();
-		rmu2password = envConfig.getRmu2password();
-		rev2userName = envConfig.getRev2userName();
-		rev2password = envConfig.getRev2password();						
-		ICEProjectName = envConfig.getICEProjectName();
-		da1userName = envConfig.getDa1userName();
-		da1password = envConfig.getDa1password();
+
+		if (mode) {
+			projectName = envConfig.getProjectName();
+			domainName = envConfig.getDomainName();
+			sa1userName = envConfig.getSa1userName();
+			sa1password = envConfig.getSa1password();
+			pa1userName = envConfig.getPa1userName();
+			pa1password = envConfig.getPa1password();
+			rmu1userName = envConfig.getRmu1userName();
+			rmu1password = envConfig.getRmu1password();
+			rev1userName = envConfig.getRev1userName();
+			rev1password = envConfig.getRev1password();
+			pa2userName = envConfig.getPa2userName();
+			pa2password = envConfig.getPa2password();
+			rmu2userName = envConfig.getRmu2userName();
+			rmu2password = envConfig.getRmu2password();
+			rev2userName = envConfig.getRev2userName();
+			rev2password = envConfig.getRev2password();
+			ICEProjectName = envConfig.getICEProjectName();
+			da1userName = envConfig.getDa1userName();
+			da1password = envConfig.getDa1password();
 		} else {
 			projectName = envConfig.getProjectName();
 			ICEProjectName = envConfig.getICEProjectName();
@@ -1056,15 +1061,15 @@ public class Input {
 		familyDoc1 = testData.getFamilyDoc1();
 		conceptDoc1 = testData.getConceptDoc1();
 		highlightDoc1 = testData.getHighlightDoc1();
-		warning01=testData.getWarning01();
-		ingestionQuery01=testData.getIngestionQuery01();
+		warning01 = testData.getWarning01();
+		ingestionQuery01 = testData.getIngestionQuery01();
 		sourceDocId10 = testData.getSourceDocId10();
 		sourceDocId11 = testData.getSourceDocId11();
 		sourceDocId12 = testData.getSourceDocId12();
-		projectName01= testData.getProjectName01();
-		projectName02=testData.getProjectName02();
-		searchDocFileType=testData.getSearchDocFileType();
-		
+		projectName01 = testData.getProjectName01();
+		projectName02 = testData.getProjectName02();
+		searchDocFileType = testData.getSearchDocFileType();
+
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
 		codingFormName = testData.getCodingFormName();
@@ -1095,19 +1100,19 @@ public class Input {
 		translationDocumentId = testData.getTranslationDocId();
 		parentDocument = testData.getParentDocument();
 		masterDateText = testData.getMasterDateText();
-		pdfFileType=testData.getPdfFileType();
-		reviewerProgress=testData.getReviewerProgress();
-		ReviewRateTrend=testData.getReviewRateTrend();
-		TotalReviewProgress=testData.getTotalReviewProgress();
-		EndtoEnd=testData.getEndtoEnd();
-		Tagging=testData.getTagging();
-		ReviewerProductivity=testData.getReviewerProductivity();
-		ToDoDocs=testData.getToDoDocs();
-		Complete=testData.getComplete();
-		
+		pdfFileType = testData.getPdfFileType();
+		reviewerProgress = testData.getReviewerProgress();
+		ReviewRateTrend = testData.getReviewRateTrend();
+		TotalReviewProgress = testData.getTotalReviewProgress();
+		EndtoEnd = testData.getEndtoEnd();
+		Tagging = testData.getTagging();
+		ReviewerProductivity = testData.getReviewerProductivity();
+		ToDoDocs = testData.getToDoDocs();
+		Complete = testData.getComplete();
+
 		/**
-		* @author Aathith.Senthilkumar
-		*/
+		 * @author Aathith.Senthilkumar
+		 */
 		pageCount = testData.getPageCount();
 		errorMsg = testData.getErrorMsg();
 		helpText = testData.getHelpText();
@@ -1224,7 +1229,7 @@ public class Input {
 		emailDatFile = testData.getEmailDatFile();
 		nonSearchablePdfLoadFile = testData.getNonSearchablePdfLoadFile();
 		kickOffAnalytics = testData.getKickOffAnalytics();
-		incrementalAnalytics =testData.getIncrementalAnalytics();
+		incrementalAnalytics = testData.getIncrementalAnalytics();
 		kickOffHelpContent = testData.getKickOffHelpContent();
 		incrementalHelpContent = testData.getIncrementalHelpContent();
 		mp3Variant = testData.getMp3Variant();
@@ -1248,7 +1253,7 @@ public class Input {
 		related = testData.getRelated();
 		mandatoryMappingError = testData.getMandatoryMappingError();
 		analyticStatus = testData.getAnalyticStatus();
-		
+
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();
@@ -1292,7 +1297,7 @@ public class Input {
 		analyzeAt3 = testData.getAnalyzeAt3();
 		collectionPageUrl = testData.getCollectionPageUrl();
 		sourceLocationPageUrl = testData.getSourceLocationPageUrl();
-		
+
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
@@ -1302,6 +1307,11 @@ public class Input {
 		BatchFileduplicateHeader = testData.getBatchFileduplicateHeader();
 		metaDataCNcount = testData.getMetaDataCNcount();
 		SearchBatchFile = testData.getSearchBatchFile();
+
+		// Added By Jeevitha [Collection]
+		TenantID = testData.getTenantID();
+		ApplicationID = testData.getApplicationID();
+		ApplicationKey = testData.getApplicationKey();
 
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();
@@ -1512,6 +1522,7 @@ public class Input {
 		TiffImages=testData.getTiffImages();
 		advancedOptionText=testData.getAdvancedOptionText();
 		sourceDocument=testData.getSourceDocument();
+
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 
@@ -1631,12 +1642,12 @@ public class Input {
 		duplicateIngestionError = testData.getDuplicateIngestionError();
 		datLoadFile1 = testData.getDatLoadFile1();
 		textFile1 = testData.getTextFile1();
-		DATPPPDF10Docs= testData.getDATPPPDF10Docs();
-		PP_PDFGen_10Docs=testData.getPP_PDFGen_10Docs();
-		TextPPPDF10Docs=testData.getTextPPPDF10Docs();	
-		ImagePPPDF10docs=testData.getImagePPPDF10docs();
-		sourceDocIDPPPDF10Docs=testData.getSourceDocIDPPPDF10Docs();
-		
+		DATPPPDF10Docs = testData.getDATPPPDF10Docs();
+		PP_PDFGen_10Docs = testData.getPP_PDFGen_10Docs();
+		TextPPPDF10Docs = testData.getTextPPPDF10Docs();
+		ImagePPPDF10docs = testData.getImagePPPDF10docs();
+		sourceDocIDPPPDF10Docs = testData.getSourceDocIDPPPDF10Docs();
+
 		// Added by Gopinath - 02/03/2022
 		ingestionProjectName = testData.getIngestionProjectName();
 		ingestionType = testData.getIngestionType();
@@ -1680,55 +1691,54 @@ public class Input {
 		defaultAudioThresholdValue = testData.getDefaultAudioThresholdValue();
 		expectedCombinedSearchHits1 = testData.getExpectedCombinedSearchHits1();
 		expectedCombinedSearchHits2 = testData.getExpectedCombinedSearchHits2();
-		expectedPH_german= testData.getExpectedPH_german();
-		 expectedPH_Japanese= testData.getExpectedPH_Japanese();
-		 langName_german= testData.getLangName_german();
-		langName_japnese= testData.getLangName_japnese();
-		 createDate= testData.getCreateDate();
-		 highVolumeProjSearchString= testData.getHighVolumeProjSearchString();
-		 
-		 cfDocId1 =testData.getCfDocId1();
-		 cfDocId2 = testData.getCfDocId2();
-		 
-		 //Added by Gopinath - 08/04/2022
-		 warningMsgDocId =testData.getWarningMsgDocId();
-		 externalLinkDocId =testData.getExternalLinkDocId();
-		 
-		 //Added by Gopinath - 28/09/2022
-		 telecom =testData.getTelecom();
-		 regressionRun=testData.getRegressionRun();
-		 sourceParentBlank=testData.getSourceParentBlank();
-		 sourceBlank=testData.getSourceBlank();
-		 sourceBlank=testData.getSourceBlank();
-		 ingestionOneHour=testData.getIngestionOneHour();
-		 ingestionLessThanHour=testData.getIngestionLessThanHour();
-		 
-		 //Added by Iyappan
-		 docAudioId1=testData.getDocAudioId1();
-		 docAudioId2=testData.getDocAudioId2();
-		 
-			// Added By Raghuram
-			preBuilt = testData.getPreBuilt();
-			preBuiltHelpText = testData.getPreBuiltHelpText();
-			DEPIPTheft = testData.getDEPIPTheft();
-			Discrimination = testData.getDiscrimination();
-			FCPA = testData.getFCPA();
-			Harassment = testData.getHarassment();
-		
-			
-			//Added by Aathith ,Client Page details
-		  	FilterByType = testData.getFilterByType();
-		  	Name = testData.getName();
-		  	ShortName = testData.getShortName();
-		  	Type = testData.getType();
-		  	DomainID = testData.getDomainID();
-		  	ProcessingEngine = testData.getProcessingEngine();
-		  	CreatedBy = testData.getCreatedBy();
-		  	CreatedON = testData.getCreatedON();
-		  	Actions = testData.getActions();
-		  	Delete = testData.getDelete();
-		  	Edit = testData.getEdit();
-			
+		expectedPH_german = testData.getExpectedPH_german();
+		expectedPH_Japanese = testData.getExpectedPH_Japanese();
+		langName_german = testData.getLangName_german();
+		langName_japnese = testData.getLangName_japnese();
+		createDate = testData.getCreateDate();
+		highVolumeProjSearchString = testData.getHighVolumeProjSearchString();
+
+		cfDocId1 = testData.getCfDocId1();
+		cfDocId2 = testData.getCfDocId2();
+
+		// Added by Gopinath - 08/04/2022
+		warningMsgDocId = testData.getWarningMsgDocId();
+		externalLinkDocId = testData.getExternalLinkDocId();
+
+		// Added by Gopinath - 28/09/2022
+		telecom = testData.getTelecom();
+		regressionRun = testData.getRegressionRun();
+		sourceParentBlank = testData.getSourceParentBlank();
+		sourceBlank = testData.getSourceBlank();
+		sourceBlank = testData.getSourceBlank();
+		ingestionOneHour = testData.getIngestionOneHour();
+		ingestionLessThanHour = testData.getIngestionLessThanHour();
+
+		// Added by Iyappan
+		docAudioId1 = testData.getDocAudioId1();
+		docAudioId2 = testData.getDocAudioId2();
+
+		// Added By Raghuram
+		preBuilt = testData.getPreBuilt();
+		preBuiltHelpText = testData.getPreBuiltHelpText();
+		DEPIPTheft = testData.getDEPIPTheft();
+		Discrimination = testData.getDiscrimination();
+		FCPA = testData.getFCPA();
+		Harassment = testData.getHarassment();
+
+		// Added by Aathith ,Client Page details
+		FilterByType = testData.getFilterByType();
+		Name = testData.getName();
+		ShortName = testData.getShortName();
+		Type = testData.getType();
+		DomainID = testData.getDomainID();
+		ProcessingEngine = testData.getProcessingEngine();
+		CreatedBy = testData.getCreatedBy();
+		CreatedON = testData.getCreatedON();
+		Actions = testData.getActions();
+		Delete = testData.getDelete();
+		Edit = testData.getEdit();
+
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

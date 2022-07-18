@@ -698,6 +698,7 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
+	
 	public Element getManageBtn() {
 		return driver.FindElementByName("Manage");
 	}
@@ -771,6 +772,9 @@ public class UserManagement {
 	public Element getComponentCheckBoxStatus(String componentName) {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox' and normalize-space()='" + componentName + "']//input[@checked='checked']");
+	}
+	public Element getEditUserProduction() {
+		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanProductions']");
 	}
 
 	public UserManagement(Driver driver) {
@@ -2732,7 +2736,6 @@ public class UserManagement {
 	 */
 	public void editRoleForRMUANdPAUsers(String username, String role,String projectName) {
 		driver.waitForPageToBeReady();
-		bc.waitTime(20);
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
 		bc.waitForElement(getSelectRoleToFilter());
@@ -2740,16 +2743,23 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		if (username.contains("sa")) {
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		}else {
-			bc.waitForElement(getEditButtonFromUserManagentPage());
-			getEditButtonFromUserManagentPage().waitAndClick(10);
-		}
+		
+		
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			if (username.contains("sa")) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).Click();
+ 			}
+			
+			else {
+				bc.waitForElement(getEditButtonFromUserManagentPage());
+				getEditButtonFromUserManagentPage().Click();
+				
+			}
+ 			
+		
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
-			getUserChangeDropDown().Click();
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
 			bc.waitForElement(getConfirmTab());
 			getConfirmTab().waitAndClick(5);
@@ -2777,7 +2787,6 @@ public class UserManagement {
 		}
 			else if (role.contains("Reviewer")) {
 				bc.waitForElement(getUserChangeDropDown());
-				getUserChangeDropDown().Click();
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
@@ -3181,5 +3190,29 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 		}
 		bc.stepInfo("users was selected");
+	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description:Select Bulk Access Control For PA uset
+	 * @param roll    account role as login user
+	 * @param account selecting sg
+	 * 
+	 */
+	public void selectRoleBulkUserAccessControlForPA(String role, String secutiryGroup) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getBulkUserAccessTab());
+		getBulkUserAccessTab().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectRollId());
+		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
+
+		if (!role.equalsIgnoreCase("Project Administrator")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getBulkUserSecurityGroup());
+			getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
+		}
 	}
 }

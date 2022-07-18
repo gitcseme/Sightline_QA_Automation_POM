@@ -2,7 +2,6 @@ package pageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -64,6 +63,33 @@ public class CollectionPage {
 		return driver.FindElementByXPath("(//label[@class='input']//font)[" + i + "]");
 	}
 
+	public Element getDataSrcType() {
+		return driver.FindElementByXPath(
+				"//div[@class='ui-widget-overlay ui-front']//preceding::select[@id='ddlSourceType']//option");
+	}
+
+	public Element getSourceLocation(String srceLoc) {
+		return driver.FindElementByXPath(
+				"//div[@id='divSourceLocations']//div[@class='popout text-wrap' and (contains(text(),'" + srceLoc
+						+ "'))]");
+	}
+
+	public Element getCollectioName() {
+		return driver.FindElementByXPath("//input[@id='txtCollectionName']");
+	}
+
+	public Element getNextBtn() {
+		return driver.FindElementByXPath("//a[@id='btnCollectionInfoNext']");
+	}
+
+	public Element getCollectErrorMsg() {
+		return driver.FindElementByXPath("//span[@id='txtCollectionName-error']");
+	}
+
+	public ElementCollection getListOfSrcLoc() {
+		return driver.FindElementsByXPath("//div[@id='divSourceLocations']//div[@class='popout text-wrap']");
+	}
+
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
 		base = new BaseClass(driver);
@@ -85,9 +111,8 @@ public class CollectionPage {
 		String expectedUrl = Input.url + "en-us/Collection/NewCollection";
 		base.textCompareEquals(currentUrl, expectedUrl, "Landed In New Collection Page", "Landed Page : " + currentUrl);
 
-		String actualTab = getNewCollPageHeader().getText();
-		String expectedTab = "Source Selection";
-		base.compareTextViaContains(actualTab, expectedTab, "Current Tab : " + actualTab, "Current Tab : " + actualTab);
+		verifyCurrentTab("Source Selection");
+
 	}
 
 	/**
@@ -128,13 +153,24 @@ public class CollectionPage {
 	 * @param secrtKey : secret key value
 	 */
 	public void performAddNewSource(String srceTyp, String srceName, String tentID, String appID, String secrtKey) {
-
-		base.waitForElement(getAddNewSource());
-		getAddNewSource().waitAndClick(10);
-		base.stepInfo("Clicked Add new source location button");
+		SourceLocationPage source = new SourceLocationPage(driver);
+		if (getAddNewSource().isElementAvailable(10)) {
+			getAddNewSource().waitAndClick(10);
+			base.stepInfo("Clicked Add new source location button on collection page");
+		} else if (source.getAddNewSrcLoction().isElementAvailable(10)) {
+			source.getAddNewSrcLoction().waitAndClick(10);
+			base.stepInfo("Clicked Add new source location button on Source location Page");
+		}
 
 		if (getAddNewSourcePopUp().isElementAvailable(10)) {
 			base.passedStep("Add New Source location Popup is opened");
+
+			// data source type
+			base.waitForElement(getDataSrcType());
+			String actualType = getDataSrcType().getText();
+			String expectedType = "Microsoft 365";
+			base.textCompareEquals(actualType, expectedType, "Data Source type : " + actualType,
+					"Data Source type is not as expected");
 
 			// data source Name
 			getDataSourceName().waitAndClick(5);
@@ -176,6 +212,88 @@ public class CollectionPage {
 				}
 			}
 
+		} else {
+			base.VerifySuccessMessage("Source Location added successfully");
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify added source location is displayed on source location
+	 *              tab and verify available source locations in project
+	 * @param srceLocation
+	 * @throws InterruptedException
+	 */
+	public void verifyAddedSourceLocation(String srceLocation, List<String> listOfSrcLoc) throws InterruptedException {
+		List<String> availSrcLoc = new ArrayList<String>();
+				
+		verifyCurrentTab("Source Selection");
+
+		if (getSourceLocation(srceLocation).isElementAvailable(10)) {
+			base.passedStep(srceLocation + " : is displayed on Source Location Tab");
+		} else if(!listOfSrcLoc.equals(null)){
+			availSrcLoc = base.availableListofElements(getListOfSrcLoc());
+			String passMsg="Displayed Source Location is : "+availSrcLoc;
+			String failMsg="Source location list is not as expected";
+			base.listCompareEquals(listOfSrcLoc, availSrcLoc, passMsg, failMsg);
+			
+		}else {
+			base.failedStep(srceLocation + ": is not Displayed ");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Collection information Page after clciking speciifed
+	 *              source location
+	 * @param expectedSrc
+	 * @param collectionName
+	 * @param Next
+	 */
+	public void verifyCollectionInfoPage(String srceLocation, String collectionName, boolean Next) {
+		base.waitForElement(getSourceLocation(srceLocation));
+		getSourceLocation(srceLocation).waitAndClick(10);
+		base.stepInfo("Clicked on :" + srceLocation + " source location");
+
+		base.waitForElement(getCollectioName());
+		verifyCurrentTab("Collection Information");
+
+		if (getCollectioName().isElementAvailable(3)) {
+			getCollectioName().waitAndClick(5);
+			getCollectioName().SendKeys(collectionName);
+			base.passedStep("Collection Name Field Is displayed");
+			base.stepInfo("Entered collection Name : " + collectionName);
+		} else {
+			base.failedStep("Collection Name Field is Not displayed");
+		}
+
+		if (Next) {
+			getNextBtn().waitAndClick(10);
+			base.stepInfo("Clicked Next Button");
+
+			if (collectionName.equals("")) {
+				if (getCollectErrorMsg().isElementAvailable(4)) {
+					String actualMsg = getCollectErrorMsg().getText();
+					String expectedMsg = "Collection Name is required.";
+					String passMsg = "Error Message : " + actualMsg;
+					base.textCompareEquals(actualMsg, expectedMsg, passMsg, "Error Message is not as expected");
+				} else {
+					base.failedStep("Error message is not displayed");
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @Description : verify the current tab header
+	 * @param expectedTab
+	 */
+	public void verifyCurrentTab(String expectedTab) {
+		driver.waitForPageToBeReady();
+		String actualTab = getNewCollPageHeader().getText();
+		base.compareTextViaContains(actualTab, expectedTab, "Navigated Tab is : " + actualTab,
+				"Navigated Tab is : " + actualTab);
 	}
 }

@@ -3,6 +3,8 @@ package testScriptsRegressionSprint17;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -19,6 +21,7 @@ import pageFactory.BaseClass;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
 import pageFactory.LoginPage;
+import pageFactory.SourceLocationPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -31,6 +34,7 @@ public class O365_Regression_2_1 {
 	UserManagement userManagement;
 	DataSets dataSets;
 	CollectionPage collection;
+	SourceLocationPage source;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -56,12 +60,14 @@ public class O365_Regression_2_1 {
 		userManagement = new UserManagement(driver);
 		dataSets = new DataSets(driver);
 		collection = new CollectionPage(driver);
+		source = new SourceLocationPage(driver);
 	}
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+				{ Input.rmu1userName, Input.rmu1password, "RMU" } 
+		};
 		return users;
 	}
 
@@ -248,8 +254,8 @@ public class O365_Regression_2_1 {
 	 *              Application ID and Application Secret Key .
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-60519",dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyAttributesInPopUp(String username,String password,String fullname) throws Exception {
+	@Test(description = "RPMXCON-60519", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAttributesInPopUp(String username, String password, String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60519 - O365");
 		base.stepInfo(
@@ -281,8 +287,8 @@ public class O365_Regression_2_1 {
 	 *              required fields on click of 'Save'.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-60520",dataProvider = "PaAndRmuUser",  enabled = true, groups = { "regression" })
-	public void verifyErrorMsgInPopUp(String username,String password,String fullname) throws Exception {
+	@Test(description = "RPMXCON-60520", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgInPopUp(String username, String password, String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60520 - O365");
 		base.stepInfo(
@@ -310,6 +316,190 @@ public class O365_Regression_2_1 {
 
 		// Logout
 		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that from Collection Wizard user should be able to add
+	 *              new source location on click of 'Create New Collection' > 'Add
+	 *              New Source Location' button.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60518", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifySourceLocationAdded(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60518 - O365");
+		base.stepInfo(
+				"Verify that from Collection Wizard user should be able to add new source location on click of 'Create New Collection' > 'Add New Source Location' button");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Verify Error Message In Add new source Popup
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// verify Added source location is displayed
+		collection.verifyAddedSourceLocation(dataname, null);
+
+		// delete created source location
+		dataSets.navigateToDataSets("Source", "Collection/SourceLocation");
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that once source selection is configured succesfully
+	 *              with connection to the source location, the user should be taken
+	 *              to the next intended step of the collection wizard
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60532", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyOnceSrcLocIsConfig(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60532 - O365");
+		base.stepInfo(
+				"Verify that once source selection is configured succesfully with connection to the source location, the user should be taken to the next intended step of the collection wizard");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Verify Error Message In Add new source Popup
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// verify Added source location is displayed
+		collection.verifyAddedSourceLocation(dataname, null);
+
+		// click created source location and verify navigated page
+		collection.verifyCollectionInfoPage(dataname, null, false);
+
+		// delete created source location
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that error message should be displayed if collection
+	 *              name is blank on click of ‘Next’ button
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60647", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgInCollectInfoPage(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60647 - O365");
+		base.stepInfo(
+				"Verify that once source selection is configured succesfully with connection to the source location, the user should be taken to the next intended step of the collection wizard");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Verify Error Message In Add new source Popup
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// verify Added source location is displayed
+		collection.verifyAddedSourceLocation(dataname, null);
+
+		// click created source location and verify navigated page
+		// verify error message when collection name is empty
+		collection.verifyCollectionInfoPage(dataname, "", true);
+
+		// delete created source location
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that collection wizard should list all configured
+	 *              source locations in the project
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60529", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCollectionWizard(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+		String headerName="Data Source Name";
+		List<String> SrcLocInSrcPage = new ArrayList<String>();
+
+		base.stepInfo("Test case Id: RPMXCON-60529 - O365");
+		base.stepInfo("Verify that collection wizard should list all configured source locations in the project");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Source page
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+
+		// Add new source location on Source Page and get the list of Available source locations 
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+		SrcLocInSrcPage = source.getListFromTable(headerName, true);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// verify available source locations in project is dispalyed on source selection tab
+		collection.verifyAddedSourceLocation(null, SrcLocInSrcPage);
+
+		// delete created source location
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.deleteSourceLocation(dataname, false);
 	}
 
 	@AfterMethod(alwaysRun = true)

@@ -486,6 +486,11 @@ public class DomainDashboard {
 		 //getSearchProject().waitAndClick(5);
 		 getSearchProject().SendKeys(projectName+Keys.ENTER);
 		 base.hitKey(KeyEvent.VK_ENTER);
+		 //base.stepInfo(projectName+" filter the project");
+		 driver.waitForPageToBeReady();
+		 if(!base.text(projectName).isDisplayed()) {
+			 filterProject(projectName);
+		 }
 		 base.stepInfo(projectName+" filter the project");
 	 }
 	 
