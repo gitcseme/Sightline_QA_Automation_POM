@@ -617,6 +617,7 @@ public class Input {
 	public static String AutomationAllSources;
 	public static String TiffImages;
 	public static String advancedOptionText;
+	public static String sourceDocument;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1506,20 +1507,22 @@ public class Input {
 		fileGroup = testData.getFileGroup();
 		document = testData.getDocument();
 		fileTypeInNativeDocs = testData.getFileTypeInNativeDocs();
-		filterMonth = testData.getFilterMonth();
-		filterYear = testData.getFilterYear();
-		userRole = testData.getUserRole();
-		nativeFileName = testData.getNativeFileName();
-		audioPlayerReady = testData.getAudioPlayerReady();
-		datFormatFile = testData.getDatFormatFile();
-		nativeMp3FileFormat = testData.getNativeMp3FileFormat();
-		DocCount = testData.getDocCount();
-		emailAllDomain = testData.getEmailAllDomain();
-		validationData = testData.getValidationData();
-		ingestionPrjt = testData.getIngestionPrjt();
-		AutomationAllSources = testData.getAutomationAllSources();
-		TiffImages = testData.getTiffImages();
-		advancedOptionText = testData.getAdvancedOptionText();
+		filterMonth=testData.getFilterMonth();
+		filterYear=testData.getFilterYear();
+		userRole=testData.getUserRole();
+		nativeFileName=testData.getNativeFileName();
+		audioPlayerReady=testData.getAudioPlayerReady();
+		datFormatFile=testData.getDatFormatFile();
+		nativeMp3FileFormat=testData.getNativeMp3FileFormat();
+		DocCount=testData.getDocCount();
+		emailAllDomain=testData.getEmailAllDomain();
+		validationData=testData.getValidationData();
+		ingestionPrjt=testData.getIngestionPrjt();
+		AutomationAllSources=testData.getAutomationAllSources();
+		TiffImages=testData.getTiffImages();
+		advancedOptionText=testData.getAdvancedOptionText();
+		sourceDocument=testData.getSourceDocument();
+
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
 

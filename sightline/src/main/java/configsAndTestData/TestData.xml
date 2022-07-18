@@ -513,6 +513,7 @@
 	<validationData>/o=enron/ou=na/cn=recipients/cn=notesaddr/cn=a3a4cb81-65db1a4f-862569e7-6cfe2f</validationData>
 	<ingestionPrjt>Indium_IngestionFix</ingestionPrjt>
 	<AutomationAllSources>8B61_Automation_AllSources_20220506060704110</AutomationAllSources>
+	<sourceDocument>STC4_00000739</sourceDocument>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
