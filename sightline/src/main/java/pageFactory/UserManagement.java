@@ -2669,21 +2669,19 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitTime(5);
-		if (username.equalsIgnoreCase("cons")) {
+		
 			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
 			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		}else {
-			bc.waitForElement(getEditButtonFromUserManagentPage());
-			getEditButtonFromUserManagentPage().waitAndClick(10);
-		}
+		
 		
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
 
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
@@ -2701,28 +2699,116 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled and Save button is clicked");
 
-		} else if (role.contains("Review Manager")) {
+		} else if (role.contains("Review Manager")||role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage").GetAttribute("style");
+			System.out.println(checkBoxStatus);
+
+			if (checkBoxStatus.contains("grey")) {
+
+				bc.passedStep("Manage is unchecked and disable and Save button is clicked");
+				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+				bc.VerifySuccessMessage("User profile was successfully modified");
+			}
+		}else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from Reviewer and Reviewer Manager to PA and Reviewer Manager
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleOfAnUserSA(String username, String role,String projectName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		
+			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		
+		
+		if (role.contains("Reviewer")||(role.contains("Review Manager"))) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
 
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+
 
 			bc.waitForElement(getFunctionalityButton());
 			getFunctionalityButton().waitAndClick(5);
 
+			if (role.contains("Reviewer")) {
 			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-
+			}else {
+				bc.stepInfo("Manage check box is already checked");
+				System.out.println("Manage check box is already checked");
+			}
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled and Save button is clicked");
 
-		} else {
+		}else if (role.contains("Project Administrator")) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			String checkBoxStatus = getSelectFuctionalitiesCheckBox("Manage").GetAttribute("style");
+			System.out.println(checkBoxStatus);
+
+			if (checkBoxStatus.contains("grey")) {
+
+				bc.passedStep("Manage is unchecked and disable and Save button is clicked");
+				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+				bc.VerifySuccessMessage("User profile was successfully modified");
+			}
+		}else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 
@@ -2743,26 +2829,17 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		
-		
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			if (username.contains("sa")) {
-				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-				getEditButtonFromUserManagentPage(projectName).Click();
- 			}
-			
-			else {
-				bc.waitForElement(getEditButtonFromUserManagentPage());
-				getEditButtonFromUserManagentPage().Click();
-				
-			}
- 			
-		
+		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
+			
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 			
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
@@ -2788,8 +2865,10 @@ public class UserManagement {
 			else if (role.contains("Reviewer")) {
 				bc.waitForElement(getUserChangeDropDown());
 				getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
-				bc.waitForElement(getConfirmTab());
-				getConfirmTab().waitAndClick(5);
+				if (getConfirmTab().isElementAvailable(5)) {
+					bc.waitForElement(getConfirmTab());
+					getConfirmTab().waitAndClick(5);
+				}
 				
 				bc.waitForElement(getFunctionalityTab());
 				getFunctionalityTab().waitAndClick(5);
@@ -2816,7 +2895,7 @@ public class UserManagement {
 	 */
 	public void editRoleFromPAToRMU(String username,String role,String projectName) {
 		driver.waitForPageToBeReady();
-		bc.waitTime(20);
+		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
 		bc.waitForElement(getSelectRoleToFilter());
@@ -2824,29 +2903,29 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		if (username.contains("sa")) {
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		}else {
-			bc.waitForElement(getEditButtonFromUserManagentPage());
+		
+		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
+		
 
 		if (role.contains("Project Administrator")) {
-			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().isElementAvailable(5);
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
-
+			if (getConfirmTab().isElementAvailable(5)) {
+				getConfirmTab().waitAndClick(5);
+			}
+			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
-			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
@@ -2857,17 +2936,15 @@ public class UserManagement {
 		} else if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
-
-			bc.waitForElement(getSecurityTab());
-			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
 			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
@@ -2889,7 +2966,7 @@ public class UserManagement {
 	 */
 	public void editRoleFromPAUToRMU(String username, String role,String select,String projectName) {
 		driver.waitForPageToBeReady();
-		bc.waitTime(20);
+		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
 		bc.waitForElement(getSelectRoleToFilter());
@@ -2897,20 +2974,18 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		if (username.contains("sa")) {
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		}else {
-			bc.waitForElement(getEditButtonFromUserManagentPage());
-			getEditButtonFromUserManagentPage().waitAndClick(10);
-		}
-
+		
+			if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
+				getEditButtonFromUserManagentPage().waitAndClick(10);
+			}
 		if (role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
@@ -2937,20 +3012,14 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
-			if (select.contains("0")) {
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			}else if (select.contains("1")) {
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			}
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 
@@ -2961,18 +3030,15 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
-			bc.waitForElement(getConfirmTab());
-			getConfirmTab().waitAndClick(5);
-
-			driver.scrollingToBottomofAPage();
-			bc.waitForElement(getSecurityTab());
-			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
 
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
 			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());

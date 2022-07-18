@@ -246,7 +246,7 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleForRMUANdPAUsers(Input.rmu2userName, "Review Manager",Input.projectName);
+		userManagement.editRoleOfAnUser(Input.rmu2userName, "Review Manager",Input.projectName);
 		
 		loginPage.logout();
 
@@ -270,7 +270,7 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rmu2userName, "Reviewer",Input.projectName);
+		userManagement.editRoleFromPAToRMU(Input.rmu2userName, "Reviewer",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
@@ -295,7 +295,7 @@ public class ManageComments_Regression1 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleForRMUANdPAUsers(Input.pa2userName, "Project Administrator",Input.projectName);
+		userManagement.editRoleOfAnUser(Input.pa2userName, "Project Administrator",Input.projectName);
 		
 		loginPage.logout();
 		
@@ -315,7 +315,7 @@ public class ManageComments_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as sA with " + Input.sa1userName + "");
 		
 		//Navigate to Users Page
-		userManagement.editRoleForRMUANdPAUsers(Input.pa2userName, "Reviewer",Input.projectName);
+		userManagement.editRoleOfAnUserSA(Input.pa2userName, "Reviewer",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		

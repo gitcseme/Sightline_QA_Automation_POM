@@ -334,7 +334,8 @@ public class ManageKeywords_Regression1 {
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rev2userName, "Reviewer",Input.projectName);
+		userManagement.editRoleFromPAToRMU(Input.rev2userName, "Reviewer",Input.projectName);
+		
 		
 		loginPage.logout();
 		
@@ -379,12 +380,12 @@ public class ManageKeywords_Regression1 {
 		String color = "Blue";
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa2userName + "");
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleOfAnUser(Input.rmu2userName, "Review Manager",Input.projectName);
+		userManagement.editRoleFromPAUToRMU(Input.rmu2userName, "Review Manager","0",Input.projectName);
 		
 		loginPage.logout();
 		
@@ -406,7 +407,7 @@ public class ManageKeywords_Regression1 {
 		
 		//Navigate to Users Page
 		userManagement.navigateToUsersPAge();
-		userManagement.editRoleFromPAToRMU(Input.rmu1userName, "Project Administrator",Input.projectName);
+		userManagement.editRoleFromPAToRMU(Input.rmu2userName, "Project Administrator",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
