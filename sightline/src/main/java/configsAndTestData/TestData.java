@@ -545,6 +545,7 @@ public class TestData {
 	public String AutomationAllSources;
 	public String TiffImages;
 	public String advancedOptionText;
+	public String sourceDocument;
 
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;

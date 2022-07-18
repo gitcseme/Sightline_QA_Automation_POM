@@ -372,6 +372,57 @@ public class SecurityGroupsPage {
 	public Element getSelectedFoldersCheckBox(String folder) {
 		return driver.FindElementByXPath("//*[@id='folderJSTree_Selected']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
 	}
+	
+	public Element getReductionCheckBox(String Reduction) {
+		return driver.FindElementByXPath(
+				"//*[@id='redactionJSTree']//a[text()='" + Reduction + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSelectedReductionCheckBox(String Reduction) {
+		return driver.FindElementByXPath("//*[@id='redactionJSTree_Selected']//a[text()='" + Reduction
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSG_Reduction_Right() {
+		return driver.FindElementByXPath("//*[@onclick='RedactionRightShift();']");
+	}
+
+	public Element getSG_Reduction_Left() {
+		return driver.FindElementByXPath("//*[@onclick='RedactionLeftShift();']");
+	}
+	
+	public Element getTagsCheckBox(String Tag) {
+		return driver.FindElementByXPath(
+				"//*[@id='tagsJSTree']//a[text()='" + Tag + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSelectedTagsCheckBox(String Tag) {
+		return driver.FindElementByXPath(
+				"//*[@id='tagsJSTree_Selected']//a[text()='" + Tag + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSG_Tag_Right() {
+		return driver.FindElementByXPath("//*[@onclick='TagRightShift();']");
+	}
+
+	public Element getSG_Tag_Left() {
+		return driver.FindElementByXPath("//*[@onclick='TagLeftShift();']");
+	}
+
+	public Element getSG_CancelBtn() {
+		return driver.FindElementById("btnCancelAccessControls");
+	}
+
+	public Element getSG_GenerateEmailRadioButton(int RatioBtn) {
+		return driver.FindElementByXPath("(//*[@id='content']//section//div/label/i)[" + RatioBtn + "]");
+	}
+	public Element getVerifySG_EmailGenerateWarningMsg() {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b");
+	}
+
+	public Element getSG_GenerateEmailButton() {
+		return driver.FindElementById("btnRegenerateEmail");
+	}
 
 	public SecurityGroupsPage(Driver driver) {
 
@@ -1293,6 +1344,86 @@ public class SecurityGroupsPage {
 		softassert.assertTrue(getSelectedFoldersCheckBox(foldername).isElementAvailable(5));
 		if (getSelectedFoldersCheckBox(foldername).isElementAvailable(5)) {
 			bc.passedStep(foldername + "is displayed on Rightside list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
+		}
+	}
+	
+	/**
+	 * @author Krishna date:Modified date:
+	 * @Description: verify selected Tags on available field and assign selected
+	 *               fields
+	 */
+	public void verifySelectTagsAssignedInSelectedList(String Tagname) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagsCheckBox(Tagname).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(Tagname);
+		softassert.assertTrue((getTagsCheckBox(Tagname).isDisplayed()));
+		bc.stepInfo("Selected Tags is displayed on available list");
+		bc.waitTime(5);
+		bc.waitTillElemetToBeClickable(getTagsCheckBox(Tagname));
+		getTagsCheckBox(Tagname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_Tag_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedTagsCheckBox(Tagname));
+		System.out.println(Tagname);
+		softassert.assertTrue(getSelectedTagsCheckBox(Tagname).isElementAvailable(5));
+		if (getSelectedTagsCheckBox(Tagname).isElementAvailable(5)) {
+			bc.passedStep(Tagname + "is displayed on Rightside Selected list");
+
+		} else {
+			bc.failedMessage("folder is not displayed");
+		}
+	}
+
+	/**
+	 * @author Krishna date:Modified date:
+	 * @Description: selected Tags on available field
+	 */
+	public void getTagsInSelectedList(String Tagname) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagsCheckBox(Tagname).Visible();
+			}
+		}), Input.wait90);
+		bc.waitTillElemetToBeClickable(getTagsCheckBox(Tagname));
+		getTagsCheckBox(Tagname).waitAndClick(5);
+
+	}
+
+	/**
+	 * @author Krishna date:Modified date:
+	 * @Description: verify selected Reduction tag on available field and assign
+	 *               selected fields
+	 */
+	public void verifySelectReductionAssignedInSelectedList(String Redacname) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getReductionCheckBox(Redacname).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(Redacname);
+		softassert.assertTrue((getReductionCheckBox(Redacname).isDisplayed()));
+		bc.stepInfo("Selected Tags is displayed on available list");
+		bc.waitTime(5);
+		bc.waitTillElemetToBeClickable(getReductionCheckBox(Redacname));
+		getReductionCheckBox(Redacname).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_Reduction_Right().waitAndClick(5);
+		bc.waitForElement(getSelectedReductionCheckBox(Redacname));
+		System.out.println(Redacname);
+		softassert.assertTrue(getSelectedReductionCheckBox(Redacname).isElementAvailable(5));
+		if (getSelectedReductionCheckBox(Redacname).isElementAvailable(5)) {
+			bc.passedStep(Redacname + "is displayed on Rightside Selected list");
 
 		} else {
 			bc.failedMessage("folder is not displayed");
