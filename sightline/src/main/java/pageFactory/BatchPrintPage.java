@@ -2243,10 +2243,10 @@ public class BatchPrintPage {
 
 		if (base.getSuccessMsgHeader().isElementAvailable(3)) {
 			base.VerifySuccessMessage(
-					"Successfully initiated the batch print. You will be prompted with notification once completed.");
+					"The Batch Print has been successfully initiated. You will be notified once it has completed.");
 		}
 		
-		// verifying In Background ask PAge
+		// verifying In Background ask Page
 		driver.waitForPageToBeReady();
 		base.waitForElement(getBgPageDD());
 		String expURL = Input.url + "Background/BackgroundTask";
