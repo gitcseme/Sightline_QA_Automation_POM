@@ -479,18 +479,19 @@ public class DomainDashboard {
 	  * @Description filter the project using projectName
 	  */
 	 public void filterProject(String projectName) {
+		 
+		 for(int i=0;i<5;i++) {
 		 driver.waitForPageToBeReady();
 		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getSearchProject());
 		 driver.scrollingToElementofAPage(getSearchProject());
-		 //getSearchProject().waitAndClick(5);
 		 getSearchProject().SendKeys(projectName+Keys.ENTER);
 		 base.hitKey(KeyEvent.VK_ENTER);
-		 //base.stepInfo(projectName+" filter the project");
 		 driver.waitForPageToBeReady();
-		 if(!base.text(projectName).isDisplayed()) {
-			 filterProject(projectName);
+		 if(base.text(projectName).isDisplayed()) {
+			 break;
 		 }
+	 }
 		 base.stepInfo(projectName+" filter the project");
 	 }
 	 
