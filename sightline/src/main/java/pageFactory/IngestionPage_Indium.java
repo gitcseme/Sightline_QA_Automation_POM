@@ -9239,7 +9239,10 @@ public class IngestionPage_Indium {
 			base.waitTime(1);
 			selectTIFFSource(file, false, false);
 		}
-
+		if (type.equalsIgnoreCase("Text")) {
+			base.stepInfo("Selecing Text file");
+			selectTextSource(file, false);
+		}
 		if (type.equalsIgnoreCase("pdf")) {
 			base.stepInfo("Selecting Pdf file");
 			selectPDFSource(file, false);
@@ -10788,6 +10791,51 @@ public class IngestionPage_Indium {
 			String ingestionName =getIngestionDetailPopup(1).getText();
 			approveIngestion(1);
 			return ingestionName;
+		}
+		
+		/**
+		 * @author: Arun Created Date: 18/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify error message for document not unpublished
+		 */
+		public void verifyOverlayTextUnpublishedErrorMessage() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByFAILED());
+			getFilterByFAILED().waitAndClick(10);
+
+			base.waitForElement(getFilterByCATALOGED());
+			getFilterByCATALOGED().waitAndClick(10);
+
+			getRefreshButton().waitAndClick(5);
+
+			for (int i = 0; i < 30; i++) {
+				base.waitTime(2);
+				String status = getStatus(1).getText().trim();
+				if (status.contains("Cataloged")) {
+					base.failedMessage("Add only Ingestion is not present in published state");
+					break;
+				} else if (status.contains("Failed")) {
+					getIngestionDetailPopup(1).waitAndClick(5);
+					base.waitForElement(errorCountCatalogingStage());
+					errorCountCatalogingStage().waitAndClick(10);
+					base.waitTime(3);
+					String errorMessage1 = ingestionErrorNote(1).getText();
+					String errorMessage2 = ingestionErrorNote(2).getText();
+					if (errorMessage1.contains(Input.docUnpublishedError)
+							|| errorMessage2.contains(Input.docUnpublishedError)) {
+						base.passedStep("Cataloging Error displayed when ingesting text files without unpublishing");
+					} else {
+						System.out.println("Error not belonged to text files");
+					}
+					break;
+				} else {
+					base.waitTime(5);
+					getRefreshButton().waitAndClick(10);
+				}
+			}
+			getCloseButton().waitAndClick(10);
+
 		}
 				
 }
