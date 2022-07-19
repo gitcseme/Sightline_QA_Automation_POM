@@ -2240,11 +2240,6 @@ public class BatchPrintPage {
 
 		base.waitForElement(getGenerateButton());
 		getGenerateButton().waitAndClick(5);
-
-		if (base.getSuccessMsgHeader().isElementAvailable(3)) {
-			base.VerifySuccessMessage(
-					"Successfully initiated the batch print. You will be prompted with notification once completed.");
-		}
 		
 		// verifying In Background ask PAge
 		driver.waitForPageToBeReady();

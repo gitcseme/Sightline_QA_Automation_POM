@@ -152,7 +152,7 @@ public class BaseClass {
 	}
 
 	public Element getSuccessMsgHeader() {
-		return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span");
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span");
 	}
 
 	public Element getSuccessMsg() {
@@ -638,7 +638,6 @@ public class BaseClass {
 			}
 		}), Input.wait60);
 		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-		waitTillTextToPresent(getSuccessMsg(), ExpectedMsg);
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 		UtilityLog.info("Expected message - " + ExpectedMsg);
 		Reporter.log("Expected message - " + ExpectedMsg, true);
