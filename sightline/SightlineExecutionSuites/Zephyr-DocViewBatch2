@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-DocViewBatch2" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Zephyr-DocViewBatch2">
+<classes>
+<class name="testScriptsSmoke.Input" />
+
+<class name= "testScriptsRegression.DocView_CodingForm_IndiumRegression2" />
+<class name= "testScriptsRegression.DocView_CodingForm_Regression" />
+<class name= "testScriptsRegression.DocView_MetaData_Regression" />
+<class name= "testScriptsRegression.DocView_Redaction_Regression1" />
+<class name= "testScriptsRegression.DocView_Redactions_Regression" />
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+
