@@ -1,5 +1,8 @@
 package pageFactory;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -153,10 +156,18 @@ public class Dashboard {
 	}
 	
 	
-	public Element testCS() {
-		return driver.FindElementByXPath("//div[@class='col-md-12 no-padding endtoendBg']");
+	public Element getCenterStyle() {
+		return driver.FindElementByXPath("\\#taskbasic > tbody >tr:first-child > td > div.col-md-12\\).style.getPropertyValue('left')");
 	}
 
+	public ElementCollection getReviewerProgressTableName() {
+		return driver.FindElementsByXPath("//table[@id='ReviewerTable']//th");
+	}
+	
+	public ElementCollection getReviewerProgressData() {
+		return driver.FindElementsByXPath("//table[@id='ReviewerTable']//tbody//tr");
+	}
+	
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;
@@ -320,5 +331,69 @@ public class Dashboard {
 
 		}
 
+	}
+	
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To verify Reviewer progress data
+	 */
+	public void verifyReviewerProgressData(String assignmentName) {
+
+		List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
+		
+		int size = getReviewerProgressTableName().size();
+		System.out.println(size);
+		for (int i = 1; i <= size; i++) {
+			base.waitForElementCollection(getReviewerProgressData());
+			String data = getReviewerProgressData().toString();
+			driver.waitForPageToBeReady();
+			System.out.println(data);
+			
+			base.passedStep("Reviewer Progress " + availableListofElements.get(i-1) + " : " + data);
+
+		}
+
+	}
+	
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To check image is in center
+	 */
+	public String checkIMageAtCenter()
+	{
+		String jsQuery = "return document.querySelector(\"#taskbasic > tbody >tr:first-child > td > div.col-md-12\").style.getPropertyValue('left')";
+        System.out.println(jsQuery);
+        String fitSize = driver.findAttributeValueViaJS(jsQuery);
+        System.out.println(fitSize);
+        return fitSize;
+	}
+	
+	/**
+	 * @throws AWTException 
+	 * @authorSowndarya.velraj
+	 * @Description : To customize Reviewer Progress Widget
+	 */
+	public void select4Reviewers_ReviewerProgressWidget( String user1,String user2,String user3,String user4, String assignmentName) throws AWTException {
+
+		driver.waitForPageToBeReady();
+		reviewerProgress_gearIcon().waitAndClick(10);
+		base.stepInfo("Select Reviewers");
+		
+			selectReviewers_selectReviewers().waitAndClick(10);
+			base.waitForElement(selectSpecificReviewer());
+			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user1);
+			Robot r= new Robot();
+			r.keyPress(KeyEvent.VK_CONTROL);
+			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user2);
+			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user3);
+			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user4);
+			r.keyRelease(KeyEvent.VK_CONTROL);
+		
+		base.stepInfo("selecting assignment");
+		arrow_selectAssignment().waitAndClick(10);
+		base.waitForElement(selectAssignment_CustomizeWidget(assignmentName));
+		selectAssignment_CustomizeWidget(assignmentName).waitAndClick(10);
+		base.waitForElement(btnSave_customizeWidget());
+		btnSave_customizeWidget().waitAndClick(10);
 	}
 }
