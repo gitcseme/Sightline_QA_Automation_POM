@@ -287,13 +287,17 @@ public class UserLoginActivityReport {
 	  * @description This method sorts the login time to descending order
 	  */
 	 public void sortLoginTimeColumn() {
+		 base.waitTime(3);
 		 driver.waitForPageToBeReady();
 		 base.waitTillElemetToBeClickable(loginTimeIcon());
 		 loginTimeIcon().ScrollTo();
+		 base.waitTime(3);
 		 loginTimeIcon().waitAndClick(30);
 		 base.waitTillElemetToBeClickable(loginTimeIcon());
 		 loginTimeIcon().ScrollTo();
+		 base.waitTime(3);
 		 loginTimeIcon().waitAndClick(30);
+		 base.waitTime(3);
 		 base.waitForElement(loginTimeIcon());
 		 String value = loginTimeIcon().GetAttribute("aria-sort");
 		 if(value.equalsIgnoreCase("descending")) {

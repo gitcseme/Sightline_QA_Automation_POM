@@ -5639,7 +5639,7 @@ public class DocListPage {
 		base.stepInfo(" Exclude Filter is "+emailDomainName1+"");
 		base.waitForElement(getDocListAddFliterBtn());
 		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
-		getDocListAddFliterBtn().Click();
+		getDocListAddFliterBtn().waitAndClick(10);
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocListFilterDocs(emailvalue1));
@@ -5673,7 +5673,7 @@ public class DocListPage {
 		base.stepInfo(" Exclude Filter is "+emailDomainName3+"");
 		base.waitForElement(getDocListAddFliterBtn());
 		base.waitTillElemetToBeClickable(getDocListAddFliterBtn());
-		getDocListAddFliterBtn().Click();
+		getDocListAddFliterBtn().waitAndClick(10);
 		base.waitForElement(getApplyFilters());
 		base.waitTillElemetToBeClickable(getApplyFilters());
 		getApplyFilters().Click();
