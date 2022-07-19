@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Zephyr-Reports_batch" preserve-order="true">
+
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>
+<!-- *********************************************Zephyr-BatchRun1************************************ -->
+<test name="Zephyr-Reports_batch">
+<classes>
+<class name="testScriptsSmoke.Input" />
+
+<class name="testScriptsRegression.Tally_Regression1"></class>
+<class name="testScriptsRegression.Tally_Regression2"></class>
+<class name="testScriptsRegression.ReviewerProductiviytReport_Regression"></class>
+<class name="testScriptsRegression.ReviewResultReport_Regression"></class>
+<class name="testScriptsRegression.CommunicationExplorer_Regression1"></class>
+<class name= "testScriptsRegression.SearchTermReport_Regression1" />
+<class name= "testScriptsRegression.TagCountByTagsReport_Regression" />
+<class name= "testScriptsRegression.DocumentAuditReport_Regression" />
+<class name= "testScriptsRegression.CustomDocumentDataReport_Regression1" />
+<class name= "testScriptsRegression.ConceptExplorerRegression" />
+<class name= "testScriptsRegression.Reports_Regression1" />
+
+</classes>
+</test>
+
+
+
+</suite>
+<!-- Suite -->
+
