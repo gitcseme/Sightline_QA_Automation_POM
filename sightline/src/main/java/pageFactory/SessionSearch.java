@@ -4562,6 +4562,7 @@ public class SessionSearch {
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
 
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param assignMentName
@@ -4569,6 +4570,7 @@ public class SessionSearch {
 	 * @param status
 	 * @return
 	 * @throws InterruptedException
+	 * @modified by jayanthi //added if loop in status selection.
 	 */
 	public ArrayList<String> selectAssignmentInWPSWthFilters(final String assignMentName, String reviewer,
 			String status) throws InterruptedException {
@@ -4588,18 +4590,19 @@ public class SessionSearch {
 		}
 		Collections.sort(reviwersList);
 		selectReviewerInAssgnWP(reviewer).waitAndClick(3);
-		selectStatusInAssgnWp(status).waitAndClick(2);
+		if (!(status == null)) {
+			selectStatusInAssgnWp(status).waitAndClick(2);
+		}
 		System.out.println(getTree().FindWebElements().size());
 		UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			if (iterable_element.getText().contains(assignMentName)) {
-
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
 				System.out.println(iterable_element.getText());
 				UtilityLog.info(iterable_element.getText());
 				iterable_element.click();
-
+				break;
 			}
 		}
 		base.waitForElement(getMetaDataInserQuery());
@@ -4608,7 +4611,6 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 		return reviwersList;
 	}
-
 	/**
 	 * @author Jayanthi Ganesan modified date-26/11/21
 	 * @param assignmentGroup
@@ -8544,13 +8546,20 @@ public class SessionSearch {
 		Thread.sleep(2000);// required
 		getBulkActionButton().waitAndClick(10);
 		Thread.sleep(2000);// // required
-		if(getView().isDisplayed()) {
+		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
-			Actions act = new Actions(driver.getWebDriver());
-			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
-			System.out.println("View is not found");
-			}
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
+			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
+
+			base.waitForElement(getDocViewFromDropDown());
+			getDocViewFromDropDown().waitAndClick(10);
+		} else {
+			getDocViewAction().waitAndClick(10);
+			base.waitTime(3); // added for stabilization
+		}
 		
 
 		/*

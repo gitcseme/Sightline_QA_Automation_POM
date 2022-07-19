@@ -3877,4 +3877,37 @@ public class BaseClass {
 			stepInfo("impersonate tab security group was selected");
 		}
 
+		/**
+		 * @author Vijaya.Rani
+		 */
+		public void impersonateSAtoDA() {
+			try {
+				driver.waitForPageToBeReady();
+				waitForElement(getSignoutMenu());
+				getSignoutMenu().waitAndClick(10);
+				waitForElement(getChangeRole());
+				getChangeRole().waitAndClick(5);
+				waitForElement(getSelectRole());
+				getSelectRole().selectFromDropdown().selectByVisibleText("Domain Administrator");
+				waitForElement(getAvlDomain());
+				Thread.sleep(3000);
+				getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+				Thread.sleep(3000);
+				waitForElement(getSaveChangeRole());
+				getSaveChangeRole().waitAndClick(5);
+				System.out.println("Impersnated from SA to DA");
+				UtilityLog.info("Impersnated from SA to DA");
+
+				if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+					try {
+						getGlobalMessagePopUpClose().waitAndClick(5);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			} catch (Exception E) {
+				E.printStackTrace(pw);
+				UtilityLog.info(sw.toString());
+			}
+		}
 }
