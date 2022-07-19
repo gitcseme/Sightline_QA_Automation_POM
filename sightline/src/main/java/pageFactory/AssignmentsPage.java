@@ -9955,7 +9955,11 @@ public class AssignmentsPage {
 			bc.waitTime(1);
 			getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			bc.waitTime(1);
+			try {
 			sortOrderNxtBtn().ScrollTo();
+			}catch(Exception e) {
+				
+			}
 			sortOrderNxtBtn().waitAndClick(5);
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
 				sortCodeFormOrderSaveBtn().waitAndClick(5);
