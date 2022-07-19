@@ -75,13 +75,32 @@ public class UserLoginActivityReport {
 	public Element allUsers() {
 		return driver.FindElementByXPath("//h4[text()=' Users ']/parent::label/i");
 	}
+	public Element getCurrentLoggedInUser(String user) {
+		return driver.FindElementByXPath("//td[text()='"+user+"']");
+	}
+	public Element saveReport() {
+		return driver.FindElementByXPath("//i[@id='saveReport']");
+	}
+	public Element reportNameTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtReportname']");
+	}
+	public Element saveButton() {
+		return driver.FindElementByXPath("//button[@id='saveXML']");
+	}
+	public Element customReports(String rname) {
+		return driver.FindElementByXPath("//a[text()='"+rname+"']");
+	}
+	public Element getOnlyShowActivity(String value) {
+		return driver.FindElementByXPath("//select[@id='ddlActivity']/option[@value='1'][text()='"+value+"']");
+	}
+	public Element getExportReport() {
+		return driver.FindElementByXPath("//i[@id='exportExcel']");
+	}
 
 
 	public UserLoginActivityReport(Driver driver) {
-
 		this.driver = driver;
 		base = new BaseClass(driver);
-
 
 	}
 	/**
@@ -105,8 +124,7 @@ public class UserLoginActivityReport {
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method select user in the popup
-	 */
-	
+	 */	
 	public void selectUser(String reviewer) {
 		driver.waitForPageToBeReady();
 		base.waitTillElemetToBeClickable(getUserExpandIcon());
@@ -269,19 +287,87 @@ public class UserLoginActivityReport {
 	  * @description This method sorts the login time to descending order
 	  */
 	 public void sortLoginTimeColumn() {
+		 base.waitTime(3);
 		 driver.waitForPageToBeReady();
 		 base.waitTillElemetToBeClickable(loginTimeIcon());
 		 loginTimeIcon().ScrollTo();
+		 base.waitTime(3);
 		 loginTimeIcon().waitAndClick(30);
 		 base.waitTillElemetToBeClickable(loginTimeIcon());
 		 loginTimeIcon().ScrollTo();
+		 base.waitTime(3);
 		 loginTimeIcon().waitAndClick(30);
+		 base.waitTime(3);
 		 base.waitForElement(loginTimeIcon());
 		 String value = loginTimeIcon().GetAttribute("aria-sort");
 		 if(value.equalsIgnoreCase("descending")) {
 			 base.stepInfo("Datas are sorted descending order successfully");
 		 }
 		 
+	 }
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @param user
+	  * @description This method is used to verify the current logged in user is present
+	  */
+	 public void verifyCurrentLoggedInUserPresent(String user) {
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getCurrentLoggedInUser(user));
+		 if(getCurrentLoggedInUser(user).isElementAvailable(5)) {
+			 base.passedStep("The user currently logged in are present in user login activity report under current logged in activity");
+		 }else {
+			 base.failedStep("The user currently logged in are not present in user login activity report under current logged in activity");
+		 }		 
+	 }
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @param rname - report name
+	  * @description This method is used to save the report
+	  */
+	 public void saveUserloginActivityReport(String rname) {
+		 base.waitTillElemetToBeClickable(saveReport());
+		 saveReport().waitAndClick(10);
+		 base.waitTillElemetToBeClickable(reportNameTextBox());
+		 reportNameTextBox().SendKeys(rname);
+		 base.waitTillElemetToBeClickable(saveButton());
+		 saveButton().waitAndClick(10);
+		 base.VerifySuccessMessage("Report save successfully");
+	 }
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @param report name
+	  * @description This method is used to verify the report is saved successfully or not
+	  */
+	 public void verifyReportSavedSuccessfully(String reportName) {
+		 driver.waitForPageToBeReady();
+		 if(customReports(reportName).isElementAvailable(5)) {
+			 base.passedStep("Saved report shown in custom report coloumn in main reports page successfully");
+		 }else {
+			 base.failedStep("Saved report not displayed not in custom report section");
+		 }
+	 }
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @param selection criteria
+	  * @description This method is used to verify the report is saved successfully or notselection criteria
+	  */
+	 public void verifySelectionCriteria(String value) {
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(getOnlyShowActivity(value));
+		 if(getOnlyShowActivity(value).isElementAvailable(5)) {
+			 base.passedStep("The selection criterias are displayed as expected");
+		 }else {
+			 base.failedStep("The selection criterias are not displayed as expected");
+		 }		 
+	 }
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @description This method is used to export the report
+	  */
+	 public void exportReport() {
+		 base.waitTillElemetToBeClickable(getExportReport());
+		 getExportReport().waitAndClick(10);
+		 base.VerifySuccessMessage("Your report has been pushed into the background, and you will get a notification (in the upper right-hand corner \"bullhorn\" icon when your report is completed and ready for viewing.");
 	 }
 		
 }

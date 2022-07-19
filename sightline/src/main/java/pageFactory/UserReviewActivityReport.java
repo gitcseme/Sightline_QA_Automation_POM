@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 
 import javax.management.ListenerNotFoundException;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -152,8 +153,8 @@ public class UserReviewActivityReport {
 		selectUser(user);
 		selectDateRange(fromdate,todate);
 		applyChanges();
-		if(yesBtn().isElementAvailable(10)) {
-			yesBtn().Click();
+		if(yesBtn().isElementAvailable(20)) {
+			yesBtn().waitAndClick(10);
 		}
 		
 	}
@@ -172,6 +173,16 @@ public class UserReviewActivityReport {
 		System.out.println(d2);
 		return d2;
 	} 
+	public String getPriorOrPostDate(int days) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		SimpleDateFormat ldf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date d1 = ldf.parse(sdf.format(new Date()));
+		Date d2 = DateUtils.addDays(d1, days);
+		String d3 = ldf.format(d2);
+		System.out.println(d3);
+		return d3;
+	}
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param docId

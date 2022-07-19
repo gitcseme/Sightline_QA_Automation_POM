@@ -80,7 +80,7 @@ public class AdvancedSearchRegression2 {
 		// navigating to basic search and verifying whether the title is retained in
 		// shopping cart
 		session.navigateToSessionSearchPageURL();
-		softAssertion.assertEquals(session.getRemovedocsfromresult().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)session.getRemovedocsfromresult().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Dropped title is retained in shopping cart when User navigates Basic Search");
 
@@ -120,7 +120,7 @@ public class AdvancedSearchRegression2 {
 		// navigating to basic search and verifying whether the title is retained in
 		// shopping cart
 		session.navigateToSessionSearchPageURL();
-		softAssertion.assertEquals(session.getRemovedocsfromresult().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)session.getRemovedocsfromresult().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Dropped title is retained in shopping cart when User navigates Basic Search");
 
@@ -160,7 +160,7 @@ public class AdvancedSearchRegression2 {
 		// navigating to basic search and verifying whether the title is retained in
 		// shopping cart
 		session.navigateToSessionSearchPageURL();
-		softAssertion.assertEquals(session.getRemovedocsfromresult().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)session.getRemovedocsfromresult().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Dropped title is retained in shopping cart when User navigates Basic Search");
 
@@ -197,7 +197,7 @@ public class AdvancedSearchRegression2 {
 		session.navigateToSessionSearchPageURL();
 
 		// verifying whether the title is retained in shopping cart
-		softAssertion.assertEquals(session.getRemovedocsfromresult().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)session.getRemovedocsfromresult().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Dropped title is retained in shopping cart when User navigates Advanced Search");
 
@@ -233,7 +233,7 @@ public class AdvancedSearchRegression2 {
 		// shopping cart
 		base.waitTime(3);
 		session.navigateToSessionSearchPageURL();
-		softAssertion.assertEquals(session.getRemovedocsfromresult().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)session.getRemovedocsfromresult().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Dropped title is retained in shopping cart when User navigates Basic Search");
 

@@ -390,6 +390,7 @@ public class Input {
 	public static String related;
 	public static String mandatoryMappingError;
 	public static String analyticStatus;
+	public static String docUnpublishedError;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1253,6 +1254,7 @@ public class Input {
 		related = testData.getRelated();
 		mandatoryMappingError = testData.getMandatoryMappingError();
 		analyticStatus = testData.getAnalyticStatus();
+		docUnpublishedError = testData.getDocUnpublishedError();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

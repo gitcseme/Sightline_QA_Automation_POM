@@ -116,7 +116,7 @@ public class SavedSearchRegression_01 {
 		// performing search in saved search page to get the savedSearch saved under
 		// specific search group
 		saveSearch.selectSavedSearchTAb(searchName, Input.shareSearchDefaultSG, "No");
-		softAssertion.assertEquals(saveSearch.getSearchName(searchName).isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)saveSearch.getSearchName(searchName).isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Saved Search is displayed for Searched Name");
 
@@ -164,13 +164,13 @@ public class SavedSearchRegression_01 {
 		// search group
 		base.selectsecuritygroup(securityGroup);
 		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, newNode);
-		softAssertion.assertEquals(saveSearch.getSavedSearchGroupName(newNode).isElementAvailable(5), false);
+		softAssertion.assertEquals((boolean)saveSearch.getSavedSearchGroupName(newNode).isElementAvailable(5), false);
 
 		// selecting default security group and verifying the presence of newly created
 		// search group
 		base.selectsecuritygroup(Input.securityGroup);
 		saveSearch.verifyNodePresentInSG(Input.mySavedSearch, newNode);
-		softAssertion.assertEquals(saveSearch.getSavedSearchGroupName(newNode).isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)saveSearch.getSavedSearchGroupName(newNode).isElementAvailable(5), true);
 		softAssertion.assertAll();
 
 		// deleting search group
@@ -441,7 +441,7 @@ public class SavedSearchRegression_01 {
 
 		// verifying whether the rename option is disabled when shared group is selected
 		saveSearch.selectRootGroupTab(sharedGroup);
-		softAssertion.assertEquals(saveSearch.getRenameButtonDisabled().isElementAvailable(5), true);
+		softAssertion.assertEquals((boolean)saveSearch.getRenameButtonDisabled().isElementAvailable(5), true);
 		softAssertion.assertAll();
 		base.passedStep("Rename action should is disabled when user selects any Shared folder");
 

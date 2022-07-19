@@ -86,7 +86,7 @@
 	<related>Related</related>
 	<mandatoryMappingError>Please specify a mapping for the mandatory fields.</mandatoryMappingError>
 	<analyticStatus>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_STAGING_COMPLETED, ANALYTICS_INDEXING_COMPLETED, ES_INDEXING_COMPLETED</analyticStatus>
-	
+	<docUnpublishedError>Document is not unpublished.</docUnpublishedError>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

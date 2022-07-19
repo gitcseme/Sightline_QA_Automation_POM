@@ -69,6 +69,12 @@ public class ClientsPage {
         project = new ProjectPage(driver);
        }
 
+    /**
+     * @Modified by : Aathith
+     * @Modified date : 07/19/2022
+     * Modified on : change xpath 'getEntityName()' to 'getEntityNameFilter()' 
+     * @param Clientnamenondomain
+     */
     public void AddNonDomainClient(String Clientnamenondomain) {
     	   this.driver.getWebDriver().get(Input.url+"Entity/Entity");
 		
@@ -91,8 +97,8 @@ public class ClientsPage {
     	bc.VerifySuccessMessage("The new client was added successfully");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEntityName().Visible()  ;}}),Input.wait30); 
-    	getEntityName().SendKeys(Clientnamenondomain);
+    			getEntityNameFilter().Visible()  ;}}),Input.wait30); 
+    	getEntityNameFilter().SendKeys(Clientnamenondomain);
     	
     	getFilterButton().waitAndClick(10);
     	try {
@@ -258,6 +264,92 @@ public class ClientsPage {
 				}
 			}
 		}
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param clientName
+	  * @Description filter the client 
+	  */
+	 public void filterClient(String clientName) {
+		 driver.waitForPageToBeReady();
+		 bc.waitForElement(getEntityNameFilter());
+		 getEntityNameFilter().waitAndClick(5);
+		 getEntityNameFilter().SendKeys(clientName);
+		 bc.waitForElement(getFilterButton());
+		 getFilterButton().waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 bc.stepInfo(clientName+" was filtered");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param client
+	  * @Description delete the client
+	  */
+	 public void deleteClinet(String client) {
+		 driver.waitForPageToBeReady();
+		 filterClient(client);
+		 bc.waitForElement(getClientDeleteBtn(client));
+		 getClientDeleteBtn(client).waitAndClick(10);
+		 bc.getYesBtn().waitAndClick(10);
+		 bc.stepInfo("performed action for delete a client");
+		 bc.VerifySuccessMessage("The client has been deleted successfully");
+	 }
+	 
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param Clientnamedomain
+	  * @param domainid
+	  * @param dbsize
+	  * @Description Add a Domain Client with choosing database size
+	  */
+	 public void AddDomainClient(String Clientnamedomain,String domainid,String dbsize) {
+			
+	  	   this.driver.getWebDriver().get(Input.url+"Entity/Entity");
+	  	bc.waitForElement(getAddEntity());
+	  	getAddEntity().waitAndClick(10);
+	  	
+	  	bc.waitForElement(getEntityName());
+	  	getEntityName().SendKeys(Clientnamedomain);
+	  	
+	  	bc.waitForElement(getEntityshortname());
+	  	getEntityshortname().SendKeys(Clientnamedomain);
+	  	
+	  	bc.waitForElement(project.getSelectEntity());    	
+	  	project.getSelectEntity().selectFromDropdown().selectByVisibleText("Domain");
+	  	
+	  	bc.waitForElement(getDomainID());
+	  	getDomainID().SendKeys(domainid);
+	  	
+	  	bc.waitForElement(project.getProjectDBServerDropdown());
+	  	project.getProjectDBServerDropdown().selectFromDropdown().selectByIndex(1);
+	  	bc.stepInfo("DB server was selected");
+	  	
+	  	bc.waitForElement(getDBSizeOption());
+	  	getDBSizeOption().selectFromDropdown().selectByVisibleText(dbsize);
+	  	bc.stepInfo("db size was selected");
+	  	
+	  	bc.waitForElement(getEntityServerPath());
+	  	getEntityServerPath().waitAndClick(10);
+	  	bc.stepInfo("project server path was selected");
+	  	
+	  	bc.waitForElement(project.getIngestionserverpath());
+	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(0);
+	  	project.getIngestionserverpath().selectFromDropdown().selectByIndex(1);
+	  	bc.stepInfo("Ingetion path is selected");
+	  	
+	  	project.getProductionserverpath().waitAndClick(10);
+	  	bc.stepInfo("production path is selected");
+	  	
+	  	getProgressingInstanceOption().selectFromDropdown().selectByIndex(1);
+	  	bc.stepInfo("Processing Engine details selected");
+	  	
+	  	driver.Manage().window().fullscreen();
+	  	bc.waitForElement(getSaveBtn());
+	  	getSaveBtn().waitAndClick(10);
+	  	bc.stepInfo("save button was clicked");
+	  	
+	  }
 	     
  
  }

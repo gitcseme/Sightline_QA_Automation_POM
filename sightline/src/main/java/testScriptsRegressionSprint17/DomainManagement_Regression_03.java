@@ -356,6 +356,172 @@ public class DomainManagement_Regression_03 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/19/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description : To verify that system admin can create 'Domain' client  successfully
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-46913",enabled = true, groups = {"regression" })
+	public void verifySysAdminCreateDomainClient() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-46913");
+		base.stepInfo("To verify that system admin can create 'Domain' client  successfully");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a da user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		softAssertion = new SoftAssert();
+		client = new ClientsPage(driver);
+		
+		String clientName = "C"+ Utility.dynamicNameAppender();
+		String domainId = "D"+ Utility.dynamicNameAppender();
+		
+		//add new client
+		client.AddDomainClient(clientName, domainId,"Small (less than 1000 documents)");
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.stepInfo("Domain client was created successfully");
+		
+		//filter the client
+		client.filterClient(clientName);
+		driver.waitForPageToBeReady();
+		
+		//verify client name is available
+		softAssertion.assertEquals(client.getFiler_Clientname().getText(), clientName);
+		softAssertion.assertAll();
+		base.passedStep("Newly created Domain client was listed under clients list");
+		
+		//delete a created client
+		client.filterClient(clientName);
+		client.deleteClinet(clientName);
+		
+		base.passedStep("verified that system admin can create 'Domain' client  successfully");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/19/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description : To verify that system admin can create 'Not a Domain' client  successfully
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-46914",enabled = true, groups = {"regression" })
+	public void verifySysAdminCreateNonDomainClient() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-46914");
+		base.stepInfo("To verify that system admin can create 'Not a Domain' client  successfully");
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		softAssertion = new SoftAssert();
+		client = new ClientsPage(driver);
+		
+		String clientName = "C"+ Utility.dynamicNameAppender();
+		
+		//add new client
+		client.AddNonDomainClient(clientName);
+		base.passedStep("Newly created Non Domain client was listed under clients list");
+		
+		//delete a created client
+		client.filterClient(clientName);
+		client.deleteClinet(clientName);
+		
+		base.passedStep("To verify that system admin can create 'Not a Domain' client  successfully");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 07/19/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify when Domain Admin assigned to domain project only then domain dropdown in the impersonation popup should not display value "Not a Domain"
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53069",enabled = true, groups = {"regression" })
+	public void verifyDomainProjectNotDomain() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53069");
+		base.stepInfo("Verify when Domain Admin assigned to domain project only then domain dropdown in the impersonation popup should not display value \"Not a Domain\"");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.ProjectAdministrator);
+		base.stepInfo("Select role as Project Admin  Check domain drop down from the pop up");
+		if(!base.textValue("Not a Domain").isElementAvailable(1)) {
+			base.passedStep("The impersonation popup should not display the value \"Not a Domain\" as user is assigned to domain project only");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		base.passedStep("Verified when Domain Admin assigned to domain project only then domain dropdown in the impersonation popup should not display value \"Not a Domain\"");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 07/19/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that Domain Admin user impersonate as Reviewer in different Domain successfully
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52996",enabled = true, groups = {"regression" })
+	public void verifyDomainAdminImporsonateReviewer() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-52996");
+		base.stepInfo("To verify that Domain Admin user impersonate as Reviewer in different Domain successfully");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.Reviewer);
+		base.selectImpersonateDomain(Input.domainName);
+		base.selectImpersonateProject(Input.projectName);
+		if(base.getSelectProjectTo(Input.projectName).isDisplayed()) {
+			base.passedStep(" Project is displayed which is assigned as Reviewer on that Domain");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateSecurityGroup(Input.securityGroup);
+		base.getSaveChangeRole().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		if(base.text("Assignments within Assignment Group >>").isElementAvailable(10)) {
+			base.passedStep("It's redirect to reviewer landing page ,Dashboard");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.passedStep("verified that Domain Admin user impersonate as Reviewer in different Domain successfully");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

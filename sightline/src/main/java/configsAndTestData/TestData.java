@@ -273,6 +273,7 @@ public class TestData {
 	public String related;
 	public String mandatoryMappingError;
 	public String analyticStatus;
+	public String docUnpublishedError;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
