@@ -157,7 +157,7 @@ public class DataSets {
 		return driver.FindElementByXPath(
 				"//div[@id='cardCanvas']//a//strong[contains(text(),'Automation_All')]//..//..//..//button[@id='idAction']//..//li//a[contains(text(),'DocList')]");
 	}
-	
+
 	// Added by Raghuram
 	public Element NavigateToDataSets() {
 		return driver.FindElementByXPath("//a[@name='DataSets']//i");
@@ -674,9 +674,12 @@ public class DataSets {
 	 * @Description : CollectionAndSourcecomponentAbsenceCheck
 	 */
 	public void CollectionAndSourcecomponentAbsenceCheck() {
-		driver.waitForPageToBeReady();
-		base.waitForElement(NavigateToDataSets());
-		NavigateToDataSets().waitAndClick(10);
+		try {
+			driver.waitForPageToBeReady();
+			NavigateToDataSets().waitAndClick(20);
+		} catch (Exception e) {
+			base.failedStep("Datasets not available");
+		}
 		base.printResutInReport(base.ValidateElement_PresenceReturn(NavigateToDataSets("Collections")),
 				"'Collections' options not available when User do not have Collection’s access control permission.",
 				"'Collections' options are available when User do not have Collection’s access control permission.",
@@ -687,5 +690,5 @@ public class DataSets {
 				"'Source Locations' options are available when User do not have Collection’s access control permission.",
 				"Fail");
 	}
-	
+
 }
