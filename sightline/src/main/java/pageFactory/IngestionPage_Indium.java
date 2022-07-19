@@ -1286,6 +1286,12 @@ public class IngestionPage_Indium {
 	public Element previewRecordPopup() {
 		return driver.FindElementByXPath("//div[@id='popupdiv']");
 	}
+	public Element getIncrementalAnalyticsOption() {
+		return driver.FindElementByXPath("//input[@value='ANALYTICS_WEC_WII']//following-sibling::i");
+	}
+	public Element incrementalAnalyticsOptionStatus() {
+		return driver.FindElementByXPath("//input[@value='ANALYTICS_WEC_WII']");
+	}
 	
 	
 	public IngestionPage_Indium(Driver driver) {
@@ -10837,5 +10843,102 @@ public class IngestionPage_Indium {
 			getCloseButton().waitAndClick(10);
 
 		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 19/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the value and term which present in
+		 *               the indexing table column
+		 */
+		public void verifyDataPresentInIndexTableColumn(String term, String type) {
+			getRefreshButton().waitAndClick(10);
+			base.waitTime(2);
+			getIngestionDetailPopup(1).waitAndClick(10);
+
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getRunIndexing());
+			if (type.equalsIgnoreCase(Input.sourceDocs)) {
+				int sourceCount = Integer.parseInt(indexTableDataValue(term, 1).getText());
+				if (sourceCount > 0 && indexTableDataValue(term, 1).isElementAvailable(5)) {
+					base.passedStep(term + " source docs count is present in the indexing table column");
+				} else {
+					base.failedMessage(term + "source docs count in the indexing table column is 0");
+				}
+			}
+			if (type.equalsIgnoreCase(Input.copiedDocs)) {
+				int copiedCount = Integer.parseInt(indexTableDataValue(term, 2).getText());
+				if (copiedCount > 0 && indexTableDataValue(term, 2).isElementAvailable(5)) {
+					base.passedStep(term + "Copied docs count present in the indexing table column");
+				} else {
+					base.failedMessage(term + "Copied count in the indexing table column is 0");
+				}
+			}
+			if (type.equalsIgnoreCase("error")) {
+				int errorCount = Integer.parseInt(indexTableDataValue(term, 3).getText());
+				if (errorCount > 0 && indexTableDataValue(term, 3).isElementAvailable(5)) {
+					base.passedStep(term + "Errors count present in the indexing table column");
+				} else {
+					base.failedMessage(term + "Errors count in the indexing table column is 0");
+				}
+			}
+			if (type.equalsIgnoreCase(Input.missedDocs)) {
+				int missedCount = Integer.parseInt(indexTableDataValue(term, 4).getText());
+				if (missedCount > 0 && indexTableDataValue(term, 4).isElementAvailable(5)) {
+					base.passedStep(term + "Missed docs count present in the indexing table column");
+				} else {
+					base.failedMessage(term + "Missed docs count in the indexing table column is 0");
+				}
+			}
+			getCloseButton().waitAndClick(10);
+		}
+		
+		/**
+		 * @author: Arunkumar Created Date: 19/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of incremental analytics option
+		 *               
+		 */
+		public String verifyIncrementalAnalyticsStatus() {
+			navigateToAnalyticsPage();
+			base.waitForElement(getIncrementalAnalyticsOption());
+			String status = incrementalAnalyticsOptionStatus().GetAttribute("disabled");
+			System.out.println(status);
+			return status;
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 19/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform collection 1k tally ingestion
+		 *               
+		 */
+		public void performCollection1kTallyIngestion(String source,String datFile,String textFile) {
+			base.stepInfo("Add new ingestion");
+			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,source, Input.sourceLocation, 
+					Input.Collection1KFolder);
+			base.waitTime(2);
+			base.waitForElement(getDATDelimitersFieldSeparator());
+			getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
+
+			base.waitForElement(getDATDelimitersTextQualifier());
+			getDATDelimitersTextQualifier().selectFromDropdown().selectByVisibleText(Input.textQualifier);
+
+			base.waitForElement(getDATDelimitersNewLine());
+			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
+			base.waitTime(2);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile, Input.docId);
+			base.waitTime(2);
+			base.stepInfo("Selecting Text file");
+			selectTextSource(textFile, false);
+			base.waitForElement(getDateFormat());
+			getDateFormat().selectFromDropdown().selectByVisibleText(Input.dateFormat);
+			clickOnNextButton();
+			base.waitTime(2);
+			selectValueFromEnabledFirstThreeSourceDATFields(Input.docId, Input.dataSource, Input.custodian);
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started");
+
+		}
+		
+		
 				
 }
