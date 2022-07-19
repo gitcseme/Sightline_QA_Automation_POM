@@ -5521,6 +5521,7 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 		try {
+			base.waitForElement(getSaveSearchPopupFolderName(groupName));
 			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
 				base.stepInfo(groupName + " : is present");
 				getSaveSearchPopupFolderName(groupName).waitAndClick(10);
@@ -5533,7 +5534,7 @@ public class SessionSearch {
 			base.stepInfo(groupName + " : SG not available");
 		}
 
-		base.waitForElement(getSaveSearch_Name());
+		base.waitTillElemetToBeClickable(getSaveSearch_Name());
 		getSaveSearch_Name().SendKeys(searchName);
 
 		// base.waitForElement(getSaveSearch_SaveButton());
