@@ -698,7 +698,7 @@ public class UserManagement {
 	}
 
 	// Added by Mohan
-	
+
 	public Element getManageBtn() {
 		return driver.FindElementByName("Manage");
 	}
@@ -724,9 +724,10 @@ public class UserManagement {
 	}
 
 	public Element getEditButtonFromUserManagentPage(String projectName) {
-		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='"+projectName+"']//parent::tr//a[text()='Edit']");
+		return driver.FindElementByXPath(
+				"//*[@id='dtUserList']//td[text()='" + projectName + "']//parent::tr//a[text()='Edit']");
 	}
-	
+
 	public Element getEditButtonFromUserManagentPage() {
 		return driver.FindElementByXPath("//*[@id='dtUserList']//tr//td//a[text()='Edit']");
 	}
@@ -735,7 +736,6 @@ public class UserManagement {
 		return driver.FindElementByXPath("//select[@name='Role']");
 	}
 
-	
 	public Element getProjectNameFromUserManagment(String projectName) {
 		return driver.FindElementByXPath("//*[@id='dtUserList']//td[text()='" + projectName + "']");
 	}
@@ -747,11 +747,10 @@ public class UserManagement {
 	public ElementCollection getAssgnPaginationCount() {
 		return driver.FindElementsByCssSelector("li[class*='paginate_button '] a");
 	}
-	
-	
-	//Added by Aathith
+
+	// Added by Aathith
 	public Element getUserRole(String role) {
-		return driver.FindElementByXPath("//select[@id='ddlAdminCreateUserRoles']/option[text()='"+role+"']");
+		return driver.FindElementByXPath("//select[@id='ddlAdminCreateUserRoles']/option[text()='" + role + "']");
 	}
 
 	// Added by Raghuram
@@ -773,8 +772,19 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox' and normalize-space()='" + componentName + "']//input[@checked='checked']");
 	}
+
 	public Element getEditUserProduction() {
 		return driver.FindElementByXPath("//label[@class='checkbox']/input[@id='UserRights_CanProductions']");
+	}
+
+	public Element getComponentBoxBlockedBulkAssign(String componentName) {
+		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName
+				+ "']//i[@style='background-color: grey;']");
+	}
+
+	public Element getComponentNameDisabled(String componentName) {
+		return driver.FindElementByXPath(
+				"//label[@class='checkbox disableCanCollections' and normalize-space()='" + componentName + "']");
 	}
 
 	public UserManagement(Driver driver) {
@@ -965,7 +975,7 @@ public class UserManagement {
 	}
 
 	// 00AutoRev510105322
-	//modified delete button xpath on 07-07-2022 by Aathith
+	// modified delete button xpath on 07-07-2022 by Aathith
 	public void deleteUser(String firstName) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -989,7 +999,8 @@ public class UserManagement {
 			// System.out.println(driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr["+i+"]/td[1]").getText());
 			if (driver.FindElementByXPath("//*[@id='dtUserList']/tbody/tr[" + i + "]/td[1]").getText()
 					.equals(firstName)) {
-				driver.FindElementByXPath("//table[@id='dtUserList']//tr[" + i + "]/td[9]/a[contains(text(),'Delete')]").waitAndClick(10);
+				driver.FindElementByXPath("//table[@id='dtUserList']//tr[" + i + "]/td[9]/a[contains(text(),'Delete')]")
+						.waitAndClick(10);
 				break;
 			}
 		}
@@ -2576,7 +2587,7 @@ public class UserManagement {
 		}
 
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param firstName
@@ -2585,10 +2596,11 @@ public class UserManagement {
 	 * @param emailId
 	 * @param domain
 	 * @param project
-	 * @Description add new user in sa credential but it's complete with verify the success message
+	 * @Description add new user in sa credential but it's complete with verify the
+	 *              success message
 	 */
-	public void addNewUserWithoutVerifySuccesMsg(String firstName, String lastName, String role, String emailId, String domain,
-			String project) {
+	public void addNewUserWithoutVerifySuccesMsg(String firstName, String lastName, String role, String emailId,
+			String domain, String project) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2635,7 +2647,7 @@ public class UserManagement {
 		getSave().waitAndClick(10);
 		bc.stepInfo("add new user details was filed and clicked save button");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param role
@@ -2648,18 +2660,17 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		bc.stepInfo("applied fileter the for role : "+role);
+		bc.stepInfo("applied fileter the for role : " + role);
 	}
-	
-	
 
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To change role from Reviewer and Reviewer Manager to PA and Reviewer Manager
+	 * @description: To change role from Reviewer and Reviewer Manager to PA and
+	 *               Reviewer Manager
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleOfAnUser(String username, String role,String projectName) {
+	public void editRoleOfAnUser(String username, String role, String projectName) {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
@@ -2669,11 +2680,9 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		
-		
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
@@ -2699,7 +2708,7 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled and Save button is clicked");
 
-		} else if (role.contains("Review Manager")||role.contains("Project Administrator")) {
+		} else if (role.contains("Review Manager") || role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
@@ -2727,19 +2736,20 @@ public class UserManagement {
 
 				bc.VerifySuccessMessage("User profile was successfully modified");
 			}
-		}else {
+		} else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To change role from Reviewer and Reviewer Manager to PA and Reviewer Manager
+	 * @description: To change role from Reviewer and Reviewer Manager to PA and
+	 *               Reviewer Manager
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleOfAnUserSA(String username, String role,String projectName) {
+	public void editRoleOfAnUserSA(String username, String role, String projectName) {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
@@ -2749,12 +2759,10 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		
-			bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-			getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
-		
-		
-		if (role.contains("Reviewer")||(role.contains("Review Manager"))) {
+		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+
+		if (role.contains("Reviewer") || (role.contains("Review Manager"))) {
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
 
@@ -2763,14 +2771,13 @@ public class UserManagement {
 				getConfirmTab().waitAndClick(5);
 			}
 
-
 			bc.waitForElement(getFunctionalityButton());
 			getFunctionalityButton().waitAndClick(5);
 
 			if (role.contains("Reviewer")) {
-			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			}else {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			} else {
 				bc.stepInfo("Manage check box is already checked");
 				System.out.println("Manage check box is already checked");
 			}
@@ -2780,7 +2787,7 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled and Save button is clicked");
 
-		}else if (role.contains("Project Administrator")) {
+		} else if (role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
@@ -2808,7 +2815,7 @@ public class UserManagement {
 
 				bc.VerifySuccessMessage("User profile was successfully modified");
 			}
-		}else {
+		} else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 
@@ -2820,7 +2827,7 @@ public class UserManagement {
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleForRMUANdPAUsers(String username, String role,String projectName) {
+	public void editRoleForRMUANdPAUsers(String username, String role, String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
 		getUserNameFilter().SendKeys(username);
@@ -2833,14 +2840,14 @@ public class UserManagement {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
 		if (role.contains("Review Manager") || role.contains("Project Administrator")) {
-			
+
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Reviewer");
 			if (getConfirmTab().isElementAvailable(5)) {
 				bc.waitForElement(getConfirmTab());
 				getConfirmTab().waitAndClick(5);
 			}
-			
+
 			driver.scrollingToBottomofAPage();
 			bc.waitForElement(getSecurityTab());
 			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
@@ -2861,39 +2868,37 @@ public class UserManagement {
 			} else {
 				bc.failedStep("Manage is checked and enabled for the user");
 			}
-		}
-			else if (role.contains("Reviewer")) {
-				bc.waitForElement(getUserChangeDropDown());
-				getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
-				if (getConfirmTab().isElementAvailable(5)) {
-					bc.waitForElement(getConfirmTab());
-					getConfirmTab().waitAndClick(5);
-				}
-				
-				bc.waitForElement(getFunctionalityTab());
-				getFunctionalityTab().waitAndClick(5);
-				
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-
-				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
-				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
-
-				bc.VerifySuccessMessage("User profile was successfully modified");
-				bc.passedStep("Manage is checked and enabled and Save button is clicked");
+		} else if (role.contains("Reviewer")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
 			}
-		 else {
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled and Save button is clicked");
+		} else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To change role from PA to reviewer manager and Reviewer
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleFromPAToRMU(String username,String role,String projectName) {
+	public void editRoleFromPAToRMU(String username, String role, String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
@@ -2903,11 +2908,9 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		
 		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
 			getEditButtonFromUserManagentPage().waitAndClick(10);
 		}
-		
 
 		if (role.contains("Project Administrator")) {
 			getUserChangeDropDown().isElementAvailable(5);
@@ -2922,10 +2925,8 @@ public class UserManagement {
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
 
-			
-				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
-				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-				
+			bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+			getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
@@ -2957,14 +2958,14 @@ public class UserManagement {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To change role from PA to reviewer manager and Reviewer
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleFromPAUToRMU(String username, String role,String select,String projectName) {
+	public void editRoleFromPAUToRMU(String username, String role, String select, String projectName) {
 		driver.waitForPageToBeReady();
 		bc.waitTime(5);
 		bc.waitForElement(getUserNameFilter());
@@ -2974,10 +2975,9 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		
-			if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
-				getEditButtonFromUserManagentPage().waitAndClick(10);
-			}
+		if (getEditButtonFromUserManagentPage().isElementAvailable(5)) {
+			getEditButtonFromUserManagentPage().waitAndClick(10);
+		}
 		if (role.contains("Project Administrator")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
@@ -2998,7 +2998,7 @@ public class UserManagement {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
-			}else if (select.contains("1")) {
+			} else if (select.contains("1")) {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 			}
@@ -3008,7 +3008,7 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled for the user");
 
-		}else if (role.contains("Review Manager")) {
+		} else if (role.contains("Review Manager")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
@@ -3026,7 +3026,7 @@ public class UserManagement {
 			bc.VerifySuccessMessage("User profile was successfully modified");
 			bc.passedStep("Manage is checked and enabled for the user");
 
-		}else if (role.contains("Reviewer")) {
+		} else if (role.contains("Reviewer")) {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getUserChangeDropDown());
 			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
@@ -3186,7 +3186,7 @@ public class UserManagement {
 			getPopUpCloseBtn().waitAndClick(10);
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param emailOrName
@@ -3199,9 +3199,9 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		bc.stepInfo("Applied fileter the for Name or Email Adress : "+emailOrName);
+		bc.stepInfo("Applied fileter the for Name or Email Adress : " + emailOrName);
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @return user name
@@ -3211,38 +3211,39 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		String firstName = getTableData("FIRST NAME", 1);
 		String lastName = getTableData("LAST NAME", 1);
-		return firstName+" "+lastName;
+		return firstName + " " + lastName;
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param role
 	 * @param project
 	 * @param secutiryGroup
-	 * @Desctiption select role, project and security group for bulk user access control tab
+	 * @Desctiption select role, project and security group for bulk user access
+	 *              control tab
 	 */
 	public void selectRoleBulkUserAccessControl(String role, String project, String secutiryGroup) {
-		
+
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getBulkUserAccessTab());
 		getBulkUserAccessTab().waitAndClick(10);
-		
+
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectRollId());
 		getSelectRollId().selectFromDropdown().selectByVisibleText(role);
-		
+
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSelectDropProject(project));
 		driver.scrollingToElementofAPage(getSelectDropProject(project));
 		getSelectDropProject(project).waitAndClick(10);
-		
-		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
-		driver.waitForPageToBeReady();
-		bc.waitForElement(getBulkUserSecurityGroup());
-		getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
+
+		if (!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getBulkUserSecurityGroup());
+			getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param users
@@ -3250,14 +3251,14 @@ public class UserManagement {
 	 */
 	public void selectBulkAccessUsers(String[] users) {
 		driver.waitForPageToBeReady();
-		for(String user:users) {
+		for (String user : users) {
 			driver.scrollingToElementofAPage(getSelectBulkUser(user));
 			getSelectBulkUser(user).waitAndClick(10);
 			driver.waitForPageToBeReady();
 		}
 		bc.stepInfo("users was selected");
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani
 	 * @Description:Select Bulk Access Control For PA uset
@@ -3279,6 +3280,164 @@ public class UserManagement {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getBulkUserSecurityGroup());
 			getBulkUserSecurityGroup().selectFromDropdown().selectByVisibleText(secutiryGroup);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 07/18/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param userRolesData
+	 * @param dataSetsAccess
+	 * @param collectionsAccess
+	 * @param checkUpdateCollections
+	 * @param additional1
+	 * @param additional2
+	 * @throws Exception
+	 * @note Can be modified based on the future enhancements
+	 */
+	public void verifyCollectionAndDatasetsAccessForUsersViaBulkAssign(String[][] userRolesData, Boolean dataSetsAccess,
+			Boolean collectionsAccess, String checkUpdateCollections, Boolean saveAction, String enableOrdisable,
+			Boolean disableOnlyCollection, Boolean checkStatusAfterSave, Boolean additional1) throws Exception {
+		for (int i = 0; i < userRolesData.length; i++) {
+
+			// Select User role || Project || SG
+			selectRoleBulkUserAccessControl(userRolesData[i][1], Input.projectName, Input.securityGroup);
+			bc.stepInfo("----------------------------------------------");
+			bc.stepInfo("Verifying datas as : " + userRolesData[i][1]);
+			bc.stepInfo("----------------------------------------------");
+
+			// Access Verifications & Validations
+			if (userRolesData[i][1].equalsIgnoreCase("Project Administrator")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Datasets")),
+						"DataSets option is available in bulk user access control screen",
+						"Datasets option is not available in bulk user access control screen", "Pass");
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlockedBulkAssign("Datasets")),
+						"DataSets option has access", "Datasets option is blocked", "Fail");
+
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")),
+						"Collections option is available in bulk user access control screen",
+						"Collections option is not available in bulk user access control screen", "Pass");
+
+				// verify default collection access
+				if (collectionsAccess) {
+					defaultDataCollectionsStatusCheck();
+				}
+				if (disableOnlyCollection) {
+					defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, false, true,
+							false, false, false, false, false, false);
+				}
+
+			} else if (userRolesData[i][1].equalsIgnoreCase("Review Manager")) {
+
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Datasets")),
+						"DataSets option is available in bulk user access control screen",
+						"Datasets option is not available in bulk user access control screen", "Pass");
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlockedBulkAssign("Datasets")),
+						"DataSets option has access to enable", "Datasets option is blocked", "Fail");
+
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentNameDisabled("Collections")),
+						"Collections option is available in bulk user access control screen - yet to be enabled",
+						"Collections option is not available in bulk user access control screen", "Pass");
+
+				// verify default collection access
+				if (collectionsAccess) {
+					defaultDataCollectionsStatusCheck();
+				}
+				if (disableOnlyCollection) {
+					defaultSelectionCheckboxForAllRole(false, false, false, false, false, false, false, false, true,
+							false, false, false, false, false, false);
+				}
+			}
+
+			else if (userRolesData[i][1].equalsIgnoreCase("Reviewer")) {
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlockedBulkAssign("Datasets")),
+						"DataSets option is blocked in bulk user access control screen", "Datasets option has Access",
+						"Pass");
+
+				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentNameDisabled("Collections")), "For "
+						+ userRolesData[i][1]
+						+ " - Collections option is not available Under “Datasets” access control on bulk user access control screen. [Disabled] ",
+						"For " + userRolesData[i][1]
+								+ " - Collections option is  available Under “Datasets” access control on bulk user access control screen. [Enabled]",
+						"Pass");
+			}
+
+			// Save Action
+			if (saveAction) {
+				actionsToTake(enableOrdisable, userRolesData[i][2]);
+			}
+
+			// Verify Status After Save
+			if (checkStatusAfterSave) {
+				bc.printResutInReport(
+						driver.verifyElementPresence("return document.querySelector(\"#chkCanDataSets\").checked"),
+						"DataSets checkbox is Checked", "DataSets checkbox is Un-Checked", "Warning");
+
+				bc.printResutInReport(
+						driver.verifyElementPresence("return document.querySelector(\"#chkCanCollections\").checked"),
+						"Collections checkbox is Checked", "Collections checkbox is Un-Checked", "Warning");
+			}
+
+			// Close pop-up
+			getPopUpCloseBtn().waitAndClick(10);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 07/18/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 */
+	public void defaultDataCollectionsStatusCheck() {
+		// verify default collection access
+		if (driver.verifyElementPresence("return document.querySelector(\"#chkCanDataSets\").checked")) {
+			bc.stepInfo("DataSets checkbox is Checked");
+		} else {
+			getComponentName("Datasets").waitAndClick(5);
+			driver.waitForPageToBeReady();
+			bc.waitTime(2);
+			bc.stepInfo("Action : DataSets checkbox is clicked");
+		}
+		if (driver.verifyElementPresence("return document.querySelector(\"#chkCanCollections\").checked")) {
+			bc.passedStep(
+					"By default Collections option is checked when User selected “Datasets” access control on \"bulk user access control\" Screen");
+		} else {
+			bc.failedStep(
+					"By default Collections option is NOT checked when User selected “Datasets” access control on \\\"bulk user access control\\\" Screen");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 07/18/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param enableOrdisable
+	 * @param userName
+	 */
+	public void actionsToTake(String enableOrdisable, String userName) {
+		try {
+
+			// Enable or Disable
+			if (enableOrdisable.equalsIgnoreCase("Enable")) {
+				getEnableRadioBtn().waitAndClick(5);
+			} else {
+				getDisableRadioBtn().waitAndClick(5);
+			}
+
+			// Select user
+			getSelectBulkUser(userName).waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			// Save Action
+			getBulkUserSaveBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Access rights applied successfully");
+			bc.passedStep("Success message should be displayed");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
