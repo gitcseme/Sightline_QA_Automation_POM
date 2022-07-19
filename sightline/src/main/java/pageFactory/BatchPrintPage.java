@@ -2240,8 +2240,13 @@ public class BatchPrintPage {
 
 		base.waitForElement(getGenerateButton());
 		getGenerateButton().waitAndClick(5);
+
+		if (base.getSuccessMsgHeader().isElementAvailable(3)) {
+			base.VerifySuccessMessage(
+					"The Batch Print has been successfully initiated. You will be notified once it has completed.");
+		}
 		
-		// verifying In Background ask PAge
+		// verifying In Background ask Page
 		driver.waitForPageToBeReady();
 		base.waitForElement(getBgPageDD());
 		String expURL = Input.url + "Background/BackgroundTask";
