@@ -3115,6 +3115,9 @@ public class ProductionPage {
 	public Element getNextBatesNumberInSortingPage() {
 		return driver.FindElementById("hdrNextBatesNo");
 	}
+	public Element getCloseIconInManageTemplate() {
+		return driver.FindElementByXPath("//button[contains(@class,'close')]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20766,6 +20769,27 @@ public void fillingNativePlaceHolderFileTypeInTiffSection(String Text) {
 	getNativeDocsPlaceholder().SendKeys(Text);
 
 }
+/**
+ * @author Brundha.T 
+ *  Date:7/19/2022
+ * @description :Verifying the default selected option in manage template
+ */
+public void verifyingComponentTabSection() {
+		
+		driver.waitForPageToBeReady();
+		getTIFFChkBox().ScrollTo();
+		base.waitForElement(getTIFFChkBox());
+		base.waitTime(1);
+		getCheckBoxCheckedVerification(chkIsDATSelected());
+		getCheckBoxCheckedVerification(chkIsTIFFSelected());
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		verifyingNativeSectionFileType("Spreadsheets");
+		verifyingNativeSectionFileType("Multimedia");
+		getCloseIconInManageTemplate().ScrollTo();
+		base.waitForElement(getCloseIconInManageTemplate());
+		getCloseIconInManageTemplate().Click();
+	}
 }
 
 

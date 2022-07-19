@@ -547,6 +547,10 @@ public class TestData {
 	public String TiffImages;
 	public String advancedOptionText;
 	public String sourceDocument;
+	public String DatFieldClassification;
+	public String DatSourceClassification;
+	public String MetaDataFileType;
+	public String NativeFileType;
 
 	// Added by gopinath - 08/12/2021
 	public String anotherRemarkMessage;
