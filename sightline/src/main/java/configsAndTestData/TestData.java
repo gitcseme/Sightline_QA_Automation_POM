@@ -274,6 +274,11 @@ public class TestData {
 	public String mandatoryMappingError;
 	public String analyticStatus;
 	public String docUnpublishedError;
+	public String sourceDocs;
+	public String copiedDocs;
+	public String missedDocs;
+	public String text;
+	public String datLoadFile3;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

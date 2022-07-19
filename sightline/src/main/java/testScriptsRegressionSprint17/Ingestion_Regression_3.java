@@ -408,6 +408,80 @@ public class Ingestion_Regression_3 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 19/07/2022 TestCase Id:RPMXCON-48608
+	 * Description :To verify that after a text overlay ingestion, the Ingestion Details popup page should reflect
+	 * the count of text files copied under the Copying section
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48608",enabled = true, groups = { "regression" })
+	public void verifyCountOfTextFilesWhenOverlay() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48608");
+		baseClass.stepInfo("Verify that ingestion detail popup reflect the count of text files.");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName = null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+		 ingestionName =ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.UniCodeFilesFolder);
+		}
+		baseClass.stepInfo("Unpublish the text files");
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.navigateToUnPublishPage();
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("perform overlay ingestion");
+		ingestionPage.OverlayIngestionWithDat(Input.UniCodeFilesFolder, Input.datLoadFile1, Input.documentKey,
+				Input.text, Input.textFile1);
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		baseClass.stepInfo("verify count of text file under copying section");
+		ingestionPage.verifyDataPresentInCopyTableColumn(Input.text, Input.sourceDocs);
+		baseClass.stepInfo("verify count of text file under indexing section");
+		ingestionPage.verifyDataPresentInIndexTableColumn(Input.text, Input.sourceDocs);
+		baseClass.stepInfo("verify incremental analytics option status");
+		String incrementalAnalyticstatus = ingestionPage.verifyIncrementalAnalyticsStatus();
+		if(incrementalAnalyticstatus.equalsIgnoreCase("true")) {
+			baseClass.passedStep("Incremental analytics option disabled for performing text overlay");
+		}
+		else {
+			baseClass.failedStep("Incremental analytics option enabled for text overlay");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 19/07/2022 TestCase Id:RPMXCON-49019
+	 * Description :Verify-Needs to be ingest 500 documents and do analytics these documents
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49019",enabled = true, groups = { "regression" })
+	public void verifyPerformingIngestionAnalyticsFor500Docs() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49019");
+		baseClass.stepInfo("Verify ingesting 500 documents and do analytics these documents.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
+		System.out.println(status);
+		if (status == false) {
+		ingestionPage.performCollection1kTallyIngestion(Input.sourceSystem,Input.datLoadFile3, Input.textFile1);
+		ingestionPage.publishAddonlyIngestion(Input.Collection1KFolder);
+		}
+		baseClass.passedStep("Ingestion completed successfully for 500 documents without any errors");		
+		loginPage.logout();
+	}
+	
 	
 	
 	

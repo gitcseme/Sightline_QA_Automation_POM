@@ -391,6 +391,11 @@ public class Input {
 	public static String mandatoryMappingError;
 	public static String analyticStatus;
 	public static String docUnpublishedError;
+	public static String sourceDocs;
+	public static String copiedDocs;
+	public static String missedDocs;
+	public static String text;
+	public static String datLoadFile3;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1255,6 +1260,11 @@ public class Input {
 		mandatoryMappingError = testData.getMandatoryMappingError();
 		analyticStatus = testData.getAnalyticStatus();
 		docUnpublishedError = testData.getDocUnpublishedError();
+		sourceDocs = testData.getSourceDocs();
+		copiedDocs = testData.getCopiedDocs();
+		missedDocs = testData.getMissedDocs();
+		text = testData.getText();
+		datLoadFile3 = testData.getDatLoadFile3();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
