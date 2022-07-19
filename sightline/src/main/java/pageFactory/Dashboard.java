@@ -118,10 +118,44 @@ public class Dashboard {
 	public ElementCollection privilegedAndResponsiveTagTableCount() {
 		return driver.FindElementsByXPath("//table[@id='TotalTagsCountTable']//th[@class='text-center']");
 	}
+
 	public Element txtselectedTags() {
 		return driver.FindElementByXPath("//span[text()='Selected Tags']");
 	}
+
+	public Element releasedCount_EndToEnd() {
+		return driver
+				.FindElementByXPath("//table[@id='taskbasic']//div//label[contains(text(),'RELEASED:')]//..//span");
+	}
+
+	public Element notReviewedCount_EndToEnd() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//div//label[text()='NOT REVIEWED:']//..//span");
+	}
+
+	public Element reviewedCount_EndToEnd() {
+		return driver.FindElementByXPath("//table[@id='taskbasic']//div//label[text()='REVIEWED:']//..//span");
+	}
+
+	public Element totalProducedCount() {
+		return driver.FindElementByXPath("//tbody//td[@class='text-center odd']//span");
+	}
+
+	public Element getSelectAssignmentFromDashborad(String assignmentName) {
+		return driver.FindElementByXPath("//*[@id='dt_basic']//strong[text()='" + assignmentName + "']");
+	}
+
+	public Element getAssignmentData(String assignmentName, int i) {
+		return driver.FindElementByXPath("//strong[text()='" + assignmentName + "']//..//..//..//td["+ i +"]");
+	}
+
+	public ElementCollection getAssignmentsTableName() {
+		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
+	}
 	
+	
+	public Element testCS() {
+		return driver.FindElementByXPath("//div[@class='col-md-12 no-padding endtoendBg']");
+	}
 
 	public Dashboard(Driver driver) {
 
@@ -221,20 +255,20 @@ public class Dashboard {
 	 * @authorSowndarya.velraj
 	 * @Description : To verify selected tags
 	 */
-	public void  verifySelectedTagsInTaggingWidget() {
+	public void verifySelectedTagsInTaggingWidget() {
 
 		base.waitForElementCollection(selectedTags_TaggingWidget());
 		List<String> listofElements = base.availableListofElements(selectedTags_TaggingWidget());
 		base.waitForElementCollection(privilegedAndResponsiveTagTableCount());
 		List<String> elements = base.availableListofElements(privilegedAndResponsiveTagTableCount());
-		if(txtselectedTags().isElementAvailable(5)) {
-		base.passedStep("Selected tag 1 :"+listofElements.get(0)+" counts are :"+ elements.get(2));
-		base.passedStep("Selected tag 2 :"+listofElements.get(1)+"counts are : "+ elements.get(3));
-		base.passedStep("Selected tag 3 :"+listofElements.get(2)+"counts are : "+elements.get(4));
-		base.passedStep("Selected tag 4 :"+listofElements.get(3)+"counts are : "+elements.get(5));
-		base.passedStep("Selected tag 5 :"+listofElements.get(4)+"counts are : "+ elements.get(6));
-		base.passedStep("Selected tag 6 :"+listofElements.get(5)+"counts are : "+ elements.get(7));
-		}	
+		if (txtselectedTags().isElementAvailable(5)) {
+			base.passedStep("Selected tag 1 :" + listofElements.get(0) + " counts are :" + elements.get(2));
+			base.passedStep("Selected tag 2 :" + listofElements.get(1) + "counts are : " + elements.get(3));
+			base.passedStep("Selected tag 3 :" + listofElements.get(2) + "counts are : " + elements.get(4));
+			base.passedStep("Selected tag 4 :" + listofElements.get(3) + "counts are : " + elements.get(5));
+			base.passedStep("Selected tag 5 :" + listofElements.get(4) + "counts are : " + elements.get(6));
+			base.passedStep("Selected tag 6 :" + listofElements.get(5) + "counts are : " + elements.get(7));
+		}
 	}
 
 	/**
@@ -262,4 +296,29 @@ public class Dashboard {
 
 	}
 
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To verify end to end value and count
+	 */
+	public void verifyAssignmentData(String assignmentName) {
+
+		if (getSelectAssignmentFromDashborad(assignmentName).isDisplayed()) {
+			base.passedStep("Assignment created with name as : " + assignmentName);
+		}
+		List<String> availableListofElements = base.availableListofElements(getAssignmentsTableName());
+		
+		int size = getAssignmentsTableName().size();
+		String data ;
+		System.out.println(size);
+		for (int i = 1; i <= size; i++) {
+			base.waitForElement(getAssignmentData(assignmentName, i));
+			driver.waitForPageToBeReady();
+			data = getAssignmentData(assignmentName, i).getText();
+			System.out.println(data);
+			
+			base.passedStep("Assignment " + availableListofElements.get(i-1) + " : " + data);
+
+		}
+
+	}
 }
