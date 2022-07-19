@@ -311,6 +311,10 @@ public class BaseClass {
 	public Element getSelectRole(String role) {
 		return driver.FindElementByXPath("//select[@name='Role']/option[text()='"+role+"']");
 	}
+	
+	public Element getSelectProjectTo(String project) {
+		return driver.FindElementByXPath("//select[@id='ddlAvailableProjects']/option[text()='"+project+"']");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -3860,6 +3864,18 @@ public class BaseClass {
 			stepInfo("RGB color " + bgColor + " is converted to hex value -" + hex);
 			return hex;
 		}
-
+		
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @param securityGroup
+		 * @Description select security group on impersonate tab
+		 */
+		public void selectImpersonateSecurityGroup(String securityGroup) {
+			driver.waitForPageToBeReady();
+			waitForElement(getSelectSecurityGroup());
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+			driver.waitForPageToBeReady();
+			stepInfo("impersonate tab security group was selected");
+		}
 
 }
