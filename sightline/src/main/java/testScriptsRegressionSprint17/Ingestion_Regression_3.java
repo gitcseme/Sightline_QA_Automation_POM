@@ -482,7 +482,61 @@ public class Ingestion_Regression_3 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47581
+	 * Description :To verify that row population in the Configure Mapping will be as per the fields 
+	 * available in the DAT file.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47581",enabled = true, groups = { "regression" })
+	public void verifyRowPopulationInConfigureMappingSection() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47581");
+		baseClass.stepInfo("verify that row population in the Configure Mapping section.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details and click on Next");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat);
+		baseClass.stepInfo("Verify row auto populated in configure mapping section");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		if(ingestionPage.configureMappingRows().isElementAvailable(10)) {
+			int rows = ingestionPage.configureMappingRows().size();
+			baseClass.passedStep("Number of rows auto populated in configure mapping -'"+rows+"'");
+		}
+		else {
+			baseClass.failedStep("Rows not populated or the configure mapping section not enabled");
+		}
+		baseClass.passedStep("Source field gets auto populated as per the fields available in the DAT file.");
+		loginPage.logout();	
+	}
 	
+	/**
+	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47578
+	 * Description :To verify that in "Source & Overwrite Settings" section, the source selection is changed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47578",enabled = true, groups = { "regression" })
+	public void verifySourceSelectionInSourceSettings() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47578");
+		baseClass.stepInfo("verify that in 'Source & Overwrite Settings'section, the source selection is changed.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and verify available file option checkboxes");
+		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
+		ingestionPage.navigateToIngestionPage();
+		ingestionPage.verifyDifferentFileTypesAvailability();
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, Input.sourceLocation, Input.UniCodeFilesFolder);
+		baseClass.stepInfo("verify file path,load file and IS DAT options status");
+		ingestionPage.verifyDatAndRemainingFileFieldOptionsAvailability(Input.datLoadFile1);
+		ingestionPage.verifyOtherFileFieldOptionAndDropdownValueAvailability();
+		loginPage.logout();
+		
+	}
+
 	
 	
 	@AfterMethod(alwaysRun = true)

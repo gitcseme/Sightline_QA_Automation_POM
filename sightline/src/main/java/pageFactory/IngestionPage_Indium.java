@@ -1292,6 +1292,9 @@ public class IngestionPage_Indium {
 	public Element incrementalAnalyticsOptionStatus() {
 		return driver.FindElementByXPath("//input[@value='ANALYTICS_WEC_WII']");
 	}
+	public ElementCollection configureMappingRows() {
+		return driver.FindElementsByXPath("//tbody[@id='tblBody']//tr");
+	}
 	
 	
 	public IngestionPage_Indium(Driver driver) {
@@ -10667,6 +10670,7 @@ public class IngestionPage_Indium {
 			if(getOtherCheckBox().isElementAvailable(10)) {
 				getOtherCheckBox().waitAndClick(5);
 				driver.waitForPageToBeReady();
+				base.stepInfo("Verify available options and status for other file");
 				if(getOtherLinkType().Displayed() && getOtherLoadFile().Displayed() 
 						&& getOtherPathInDATFileCheckBox().Displayed()) {
 					 List<WebElement> availableOptions =getOtherLinkType().selectFromDropdown().getOptions();
@@ -10680,8 +10684,22 @@ public class IngestionPage_Indium {
 						else if(option.equalsIgnoreCase(Input.related)) {
 							base.passedStep("'Related' option available in the link type dropdown");
 						}	
-					 }	
-					base.passedStep("Link type,load options and is path options available");
+					 }
+					 base.passedStep("Link type,load options and is path options available");
+					 getOtherPathInDATFileCheckBox().waitAndClick(5);
+					 base.waitTime(1);
+						String status =getOtherLoadFile().GetAttribute("disabled");
+						if(status.contains("true")) {
+							base.passedStep("Load file disabled upon selection of IS DAT option");
+						}else {
+							base.failedStep("Load file not disabled upon selection of IS DAT option");
+						}
+						if(getOtherFilePathFieldinDAT().isElementAvailable(5)) {
+							base.passedStep("File path for other file enabled");
+						}else {
+							base.failedStep("File path for other file not enabled");
+						}
+					
 				}
 				else {
 					base.failedStep("Other file type options not available");
