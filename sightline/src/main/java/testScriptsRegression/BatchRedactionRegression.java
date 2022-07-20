@@ -55,8 +55,9 @@ public class BatchRedactionRegression {
 	AssignmentsPage assign;
 	MiniDocListPage minidocList;
 
+	String savedsearch = "Savedsearch" + Utility.dynamicNameAppender();
 	String searchName = "Search_Name" + Utility.dynamicNameAppender();
-	String searchName1 = "Search Name1" + Utility.dynamicNameAppender();
+	String searchName1 = "SearchName1" + Utility.dynamicNameAppender();
 	String searchName2 = "Searchname2" + Utility.dynamicNameAppender();
 	String searchName3 = "Searchname3" + Utility.dynamicNameAppender();
 	String redactionStyle = "White with black font";
@@ -220,8 +221,12 @@ public class BatchRedactionRegression {
 
 		base.stepInfo("Test case Id:RPMXCON-53469");
 		base.stepInfo("RPMXCON-48808 Batch Redaction");
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(savedsearch);
+		System.out.println(savedsearch);
+		batch.savedSearchBatchRedaction(savedsearch);
 		// Rename Saved Search
-		saveSearch.renameSavedSearch(searchName1, searchName);
+		saveSearch.renameSavedSearch(savedsearch, searchName1);
 		System.out.println(searchName1);
 
 		// Rollback Saved Search
@@ -1508,8 +1513,8 @@ public class BatchRedactionRegression {
 		security = new SecurityGroupsPage(driver);
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
-
 		driver.waitForPageToBeReady();
+		security.navigateToSecurityGropusPageURL();
 		security.selectSecurityGroup(securityGroup);
 		security.assignAnnotationToSG("Default Annotation Layer");
 
@@ -1601,8 +1606,9 @@ public class BatchRedactionRegression {
 		security = new SecurityGroupsPage(driver);
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
-
+		security.navigateToSecurityGropusPageURL();
 		driver.waitForPageToBeReady();
+		
 		security.selectSecurityGroup(securityGroup);
 		security.assignRedactionTagtoSG("Default Redaction Tag");
 		annotation = new AnnotationLayer(driver);

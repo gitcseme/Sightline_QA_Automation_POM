@@ -122,7 +122,8 @@ public class SecurityGroupsPage {
 	}
 
 	public Element getSelectSecurityGroup() {
-		return driver.FindElementById("ddlSecurityGroupsList");
+		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']");
+		
 	}
 
 	public Element getAllFolderCheckBox() {
@@ -745,6 +746,7 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getSelectSecurityGroup());
 			bc.waitTillElemetToBeClickable(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
+			
 			bc.stepInfo("Selected " + securityGroupName + " from available SG's");
 		} catch (Exception e) {
 			e.printStackTrace();
