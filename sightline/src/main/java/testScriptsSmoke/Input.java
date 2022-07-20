@@ -94,6 +94,7 @@ public class Input {
 	public static String rev2userName;
 	public static String rev2password;
 	public static String domainName;
+	public static String da1FullName;
 
 	// Test data------------------------------------------------------
 	public static String searchString1;
@@ -978,7 +979,8 @@ public class Input {
 			rmu2password = envConfig.getRmu2password();
 			rev2userName = envConfig.getRev2userName();
 			rev2password = envConfig.getRev2password();
-		}
+			da1FullName= envConfig.getDa1FullName();
+			}
 		// Test data-------------------------------------------------------------
 
 		loadSuiteTestData();// Load required suite data first, smoke or regression one - Modified date :
