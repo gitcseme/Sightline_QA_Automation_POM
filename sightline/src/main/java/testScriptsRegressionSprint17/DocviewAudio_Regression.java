@@ -190,6 +190,246 @@ public class DocviewAudio_Regression {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @author Baskar date: 19/07/22 Modified date: NA Modified by: NA 
+	 * @Description : Verify the automatically selected audio redaction tag when shared annotation layer 
+	 *                with un-shared redactation tags in security groups and all propogated documents are 
+	 *                not released to security groups
+	 * @throws Exception
+	 * 
+	 */
+	@Test(description = "RPMXCON-52024", enabled = true, groups = { "regression" })
+	public void audioRedactionTagAnnotationLayerSecurityGroups() throws Exception {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		RedactionPage redact = new RedactionPage(driver);
+		userManagement = new UserManagement(driver);
+		String headerName = "RedactionTags";
+		int index;
+		String securityGroup = "securityGroup" + Utility.dynamicNameAppender();
+		String addName = "test" + Utility.dynamicNameAppender();
+		String RedactName = "new" + Utility.dynamicNameAppender();
+
+		List<String> docIDlist = new ArrayList<>();
+		String firnstDocname;
+
+		baseClass.stepInfo("Test case id :RPMXCON-52024");
+		baseClass.stepInfo(
+				"Verify the automatically selected audio redaction tag when shared annotation "
+				+ "layer with un-shared redactation tags in security groups and all propogated "
+				+ "documents are not released to security groups");
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Create security group
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(securityGroup);
+
+		// access to security group to REV
+		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkRelease(securityGroup);
+
+		annotationLayer.AddAnnotation(addName);
+		redact.AddRedaction(RedactName, Input.rev1FullName);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.waitForElement(securityGroupsPage.selectSGFromDropdown(securityGroup));
+		securityGroupsPage.selectSGFromDropdown(securityGroup).waitAndClick(10);
+		securityGroupsPage.clickOnAnnotationLinkAndSelectAnnotation(addName);
+		securityGroupsPage.clickOnReductionTagAndSelectReduction(RedactName);
+		loginPage.logout();
+
+		// Login as USER
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		baseClass.selectsecuritygroup(securityGroup);
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		System.out.println(firnstDocname);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+
+		// Validate audio docs eye icon with persistent hits
+		docViewPage.audioReduction(RedactName);
+
+		index = baseClass.getIndex(docViewPage.getAudioRedactionTableHeader(), headerName);
+
+		// AfterSave Default Selection
+		String defautTagSelection = docViewPage.getAudioRedactionColumnValue(index).getText();
+		baseClass.textCompareEquals(defautTagSelection, RedactName,
+				"After Save : Customized Redaction Tag is displayed", "After Save : invalid redaction tag selected");
+
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+
+		// Login as USER
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as : " + Input.rev1FullName);
+		baseClass.selectsecuritygroup(Input.securityGroup);
+
+		// Audio Search
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+		baseClass.passedStep("launched DocVIew via Search");
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		firnstDocname = miniDocListpage.docToCHoose(docIDlist.size(), docIDlist);
+		baseClass.stepInfo("Current Document Viewed : " + firnstDocname);
+		System.out.println(firnstDocname);
+
+		// adding redactions
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocview_RedactionsTab());
+		docViewPage.getDocview_RedactionsTab().waitAndClick(10);
+		baseClass.waitForElement(docViewPage.getDocview_RedactionsTab_Add());
+		docViewPage.getDocview_RedactionsTab_Add().waitAndClick(10);
+
+		// Check Default Selection
+		String defautTagSelections = baseClass.getCurrentDropdownValue(docViewPage.getDocview_AudioRedactions());
+		baseClass.textCompareEquals(defautTagSelections, Input.defaultRedactionTag,
+				"In default : Application automatically selected the ‘Default Redaction Tag’",
+				"In default : invalid redaction tag selected");
+		
+		// Audio Redaction Tag deletion
+		docViewPage.deleteAudioRedactionTag();
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 19/07/2022 Modified by: Baskar
+	 * Description:Verify that when document present in different save searches 
+	 *             with common term then, should not display repetitive search term 
+	 *             on persistent hits panel on completing the document after applying stamp
+	 * 
+	 */
+	@Test(description = "RPMXCON-51809", enabled = true, groups = { "regression" })
+	public void verifyPersistentFromSaveSearchToAssgn() throws InterruptedException, ParseException {
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		MiniDocListPage miniDocListpage = new MiniDocListPage(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
+		String commonDocName = "";
+		Set<String> hash_Set = new HashSet<String>();
+		List<String> docIDlist = new ArrayList<>();
+		List<String> docIDlistT = new ArrayList<>();
+		String audioSearchInput = "interview";
+		String audioSearchInput1 = "interview six";
+		String[] stringDatas = { audioSearchInput, audioSearchInput1 };
+		String SearchName = "SearchName" + Utility.dynamicNameAppender();
+		String SearchName1 = "SearchName" + Utility.dynamicNameAppender();
+		String assignmentName = "Assign" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51809");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, "
+				+ "should not display repetitive search term on persistent hits panel on "
+				+ "completing the document after applying stamp");
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as : " + Input.rmu1FullName);
+
+		// Audio Search
+		int purehit=sessionSearch.audioSearch(audioSearchInput, Input.language);
+		sessionSearch.saveSearch(SearchName);
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlist = miniDocListpage.getDocListDatas();
+		hash_Set = baseClass.addListIntoSet(docIDlist);
+		baseClass.selectproject();
+
+		// Audio Search
+		sessionSearch.audioSearch(audioSearchInput1, Input.language);
+		sessionSearch.saveSearch(SearchName1);
+
+
+		// Launch DocVia via Search
+		sessionSearch.ViewInDocViews();
+
+		// Main method
+		docIDlistT = miniDocListpage.getDocListDatas();
+		baseClass.stepInfo("Select a document present in both the searches ");
+		commonDocName = docViewPage.pickFirstDuplicate(docIDlistT, hash_Set);
+
+		// Launch DocVia via Saved Search
+		saveSearch.savedSearch_Searchandclick(SearchName);
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.assignmentDistributingToReviewerManager();
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_Searchandclick(SearchName1);
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		assignmentPage.assignDocstoExisting(assignmentName);
+		driver.waitForPageToBeReady();
+		
+		//impersonating to reviewer
+		baseClass.impersonateRMUtoReviewer();
+		
+		// selecting assignment reviewer dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		
+		// Persistant data to check
+		miniDocListpage.getDocListDatas();
+		baseClass.waitForElement(miniDocListpage.getDociD(commonDocName));
+		miniDocListpage.getDociD(commonDocName).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		docViewPage.clickClockIconMiniDocList();
+		baseClass.waitForElement(docViewPage.getDocView_CurrentDocId());
+		String docID = docViewPage.getDocView_CurrentDocId().getText();
+		baseClass.stepInfo("Current viewed document : " + docID);
+		baseClass.textCompareEquals(commonDocName, docID,
+				"User on audio doc view and selected document is same as on audio doc view", "Audio DocView failed");
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+		// verifySearchTermlist
+		docViewPage.verifySearchTermlist(stringDatas, "equalsP", 1,
+				"search term not been displayed repetitively on persistent hit panel",
+				"search term displayed repetitively on persistent hit panel");
+		
+		// complete the document
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		String secondID=docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(secondID, docID);
+		baseClass.passedStep("Document navigated to next docs from minidoclist");
+		softAssertion.assertAll();
+
+		loginPage.logout();
+
+	}
 
 
 	@AfterMethod(alwaysRun = true)
