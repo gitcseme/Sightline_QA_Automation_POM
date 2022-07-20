@@ -6705,12 +6705,8 @@ public class ProductionPage {
 	 *              Complete"
 	 */
 	public void fillingPrivGuardPage() {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnProductionGuardMarkComplete().Visible();
-			}
-		}), Input.wait30);
-		getbtnProductionGuardMarkComplete().waitAndClick(5);
+		base.waitForElement(getbtnProductionGuardMarkComplete());
+		getbtnProductionGuardMarkComplete().waitAndClick(10);
 
 		if (getOkButton().isElementAvailable(3)) {
 			getOkButton().waitAndClick(5);
