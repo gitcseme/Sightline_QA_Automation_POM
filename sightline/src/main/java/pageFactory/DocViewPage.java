@@ -7280,7 +7280,7 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().Click();
 
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 
 	}
 

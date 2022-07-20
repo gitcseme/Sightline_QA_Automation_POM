@@ -4370,16 +4370,8 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		
+		SelectCodingform(assignmentName);
 
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
@@ -5950,16 +5942,8 @@ public class AssignmentsPage {
 		}
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
+		
+		SelectCodingform(assignmentName);
 
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
@@ -6258,17 +6242,7 @@ public class AssignmentsPage {
 		}
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAssignmentCodingFormDropDown().Visible();
-				}
-			}), Input.wait60);
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		} catch (Exception e) {
-			getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-		}
-
+		SelectCodingform(assignmentName);
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
 			getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
