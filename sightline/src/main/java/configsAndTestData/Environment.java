@@ -49,4 +49,8 @@ public class Environment {
 	public String ingestDataProject;
 	public String largeVolDataProject;
 	
+	//Added by sowndarya
+	public String da1FullName;
+
+	
 }

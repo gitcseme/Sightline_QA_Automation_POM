@@ -302,6 +302,8 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		String projectName = "AAA"+Utility.dynamicNameAppender();
 		
 		//create a project and filter the project
+		driver.waitForPageToBeReady();
+		dash.waitForDomainDashBoardIsReady();
 		base.clearBullHornNotification();
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
@@ -311,6 +313,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		
 		//verify is available
 		driver.waitForPageToBeReady();
+		dash.waitForDomainDashBoardIsReady();
 		dash.enableInActiveProject();
 		dash.filterProject(projectName);
 		driver.waitForPageToBeReady();
@@ -330,6 +333,8 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		projectName = "AAA"+Utility.dynamicNameAppender();
 		
 		//create a project and filter the project
+		driver.waitForPageToBeReady();
+		dash.waitForDomainDashBoardIsReady();
 		base.clearBullHornNotification();
 		dash.create_a_project_From_Domain(projectName);
 		base.waitForNotification();
@@ -341,6 +346,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		
 		//verify project is availavle
 		driver.waitForPageToBeReady();
+		dash.waitForDomainDashBoardIsReady();
 		dash.enableInActiveProject();
 		dash.filterProject(projectName);
 		driver.waitForPageToBeReady();

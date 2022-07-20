@@ -454,7 +454,7 @@ public void verifyDatFiledWithTiffPageCount() throws Exception {
 		lines.add(line);
 	}
 	System.out.println(lines.get(1));
-	String[] arrOfStr = lines.get(1).split("þþ");
+	String[] arrOfStr = lines.get(1).split("þ");
 	String output = arrOfStr[1];
 	if (TiffPageCount == Integer.parseInt(output)) {
 		base.passedStep("Tiff page count is displayed as expected");
@@ -591,6 +591,319 @@ public void verifyingTheTiffPageContentInGeneratedProduction() throws Exception 
 
 }
 
+/**
+ * @author Brundha.T TestCase Id:RPMXCON-63189 Date:7/19/2022
+ * @Description:Verify that template should display with default native
+ *                     placeholder by default under TIFF/PDF section and
+ *                     production should be generated successfully using same
+ *                     template
+ **/
+
+@Test(description = "RPMXCON-63189", enabled = true ,groups = { "regression" })
+public void verifyTheProductionGenerationUsingTemplate() throws Exception {
+
+	base = new BaseClass(driver);
+	base.stepInfo("Test case Id:RPMXCON-63189- Production component");
+	base.stepInfo(
+			"Verify that template should display with default native placeholder by default under TIFF/PDF section and production should be generated successfully using same template");
+	UtilityLog.info(Input.prodPath);
+
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = "P" + Utility.dynamicNameAppender();
+	String prefixID1 = "P" + Utility.dynamicNameAppender();
+	String suffixID = "S" + Utility.dynamicNameAppender();
+	String suffixID2 = "S" + Utility.dynamicNameAppender();
+	String Templatename = "Temp" + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	this.driver.getWebDriver().get(Input.url + "Search/Searches");
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.addNewSearch();
+	sessionSearch.SearchMetaData(Input.docFileType, Input.MetaDataFileType);
+	sessionSearch.addPureHit();
+
+	sessionSearch.ViewInDocList();
+	DocListPage doclist = new DocListPage(driver);
+	doclist.documentSelection(6);
+	doclist.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProductionAndSave(productionname);
+	page.fillingDATSection();
+	page.verifyingTheDefaultSelectedOptionInNative();
+	page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+	page.verifyingNativeSectionFileType(Input.NativeFileType);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+
+	driver.waitForPageToBeReady();
+	page = new ProductionPage(driver);
+	String productionname1 = "p" + Utility.dynamicNameAppender();
+	page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
+	page.verifyingComponentTabSection();
+	driver.waitForPageToBeReady();
+	page = new ProductionPage(driver);
+	page.baseInfoLoadTemplate(productionname1, Templatename);
+	page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
+	page.getCheckBoxCheckedVerification(page.chkIsTIFFSelected());
+	page.verifyingTheDefaultSelectedOptionInNative();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSorting(prefixID1, suffixID2, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname1);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	loginPage.logout();
+}
+
+/**
+ * @author Brundha Test case id-RPMXCON-47967  Date:7/19/2022
+ * @Description To Verify Native Path are populated in an Export/Production
+ * 
+ */
+@Test(description = "RPMXCON-47967", enabled = true, groups = { "regression" })
+
+public void verifyNativePathInGenerationOfDATFile() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+
+	base.stepInfo("RPMXCON-47967 -Production Component");
+	base.stepInfo("To Verify Native Path are populated in an Export/Production");
+
+	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String productionname = "p" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.addDATFieldAtSecondRow(Input.DatFieldClassification, Input.DatSourceClassification, Input.randomText);
+	page.fillingNativeSection();
+	page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	base.waitTime(2);
+	page.extractFile();
+	driver.waitForPageToBeReady();
+	File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_DAT.dat");
+	page.isdatFileExist();
+
+	String line;
+	List<String> lines = new ArrayList<>();
+	BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+	while ((line = brReader.readLine()) != null) {
+		lines.add(line);
+	}
+	for (String a : lines) {
+		System.out.println(a);
+	}
+	String NativePath = "Z:\\VOL0001\\Natives\\0001";
+	base.compareTextViaContains(lines.get(4), NativePath, "Native path is dispalyed as expected", "Native path is not displayed in DAT file");
+	brReader.close();
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+	loginPage.logout();
+}
+
+/**
+ * @author Brundha Test case id-RPMXCON-47940  Date:7/19/2022
+ * @Description To Verify in production, branding based on the tag types
+ * 
+ */
+
+@Test(description = "RPMXCON-47940", enabled = true, groups = { " regression" })
+
+public void tiffSectionWithBrandingTags() throws Exception {
+	base.stepInfo("Test case Id: RPMXCON-47940- Production Component");
+
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo(
+			"#### To Verify in production, branding based on the tag types ####");
+
+	String tagname = "tag" + Utility.dynamicNameAppender();
+	String productionname = "production" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	int FirstFile = Integer.valueOf(beginningBates);
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.verifyTheTagOnLeftBranding(tagname, Input.tagNamePrev);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionWithTag(tagname);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+
+	page.extractFile();
+	int LastFile = PureHit + FirstFile;
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	driver.waitForPageToBeReady();
+	File TiffFile = new File(
+			home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+	if (TiffFile.exists()) {
+		base.passedStep("Tiff  file is displayed as expected");
+	} else {
+		base.failedStep("Tiff file is not displayed as expected");}
+	
+	page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, LastFile, prefixID, suffixID, Input.tagNamePrev);
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	loginPage.logout();
+}
+
+
+
+
+
+/**
+ * @author Brundha.T 
+ * TestCase Id :RPMXCON-47943  Date:7/19/2022
+ *  Description :To Verify Include Families Doc counts should get Generated in Production
+ *        
+ * 
+ */
+@Test(description = "RPMXCON-47943", enabled = true, groups = { "regression" })
+public void verifyingIncludingFamilyDocsProducedInGenratedFile() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-47943 -Production Component");
+	base.stepInfo("To Verify Include Families Doc counts should get Generated in Production");
+	String foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	BaseClass base = new BaseClass(driver);
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	int PureHit=sessionSearch.basicContentSearch(Input.telecaSearchString);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingTIFFSectionPrivDocs(tagname,Input.tagNamePrev);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	driver.scrollingToBottomofAPage();
+	base.waitForElement(page.getIncludeFamilies());
+	page.getIncludeFamilies().Click();
+	driver.scrollPageToTop();
+	page.getMarkCompleteLink().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	String DocCount = page.getDocumentSelectionLink().getText();
+	System.out.println(DocCount);
+	if(Integer.valueOf(DocCount)!=PureHit) {
+		base.passedStep("Family Documents are included");
+	}else {
+		base.failedStep("Family Documents are not included");}
+	driver.scrollPageToTop();
+	page.getNextButton().waitAndClick(10);
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	base.waitTime(2);
+	page.deleteFiles();
+	page.extractFile();
+	driver.waitForPageToBeReady();
+	File dir = new File(home + "/Downloads/VOL0001/Natives/0001/");
+	File[] dir_contents = dir.listFiles();
+	System.out.println(dir_contents.length);
+	int NativeFile = dir_contents.length;
+	
+	if (Integer.valueOf(DocCount) .equals(NativeFile)) {
+		base.passedStep("Family Document is included in generated file");
+	} else {
+		base.failedStep("Family Document is not included");
+	}
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+
+	loginPage.logout();
+
+}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

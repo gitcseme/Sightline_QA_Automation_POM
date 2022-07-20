@@ -51,15 +51,15 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
-	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
+	<indexingWarningMessage>As part of indexing step, index for metadata,text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
 	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
-   	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
-   	<docIdKey>DOCID</docIdKey>
-   	<selectNativeFile>natives.lst</selectNativeFile>
-   	<selectTextFile>text.lst</selectTextFile>
-   	<selectMp3File>MP3 Files.LST</selectMp3File>
-   	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
-   	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED</skippedAnalyticMessage>
+	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
+	<docIdKey>DOCID</docIdKey>
+	<selectNativeFile>natives.lst</selectNativeFile>
+	<selectTextFile>text.lst</selectTextFile>
+	<selectMp3File>MP3 Files.LST</selectMp3File>
+	<audioDatFile>0002_H13696_1.csv.rpt_UPDATE.DAT</audioDatFile>
+	<skippedAnalyticMessage>ANALYTICS_INGESTION_SKIPPED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_SKIPPED</skippedAnalyticMessage>
 	<completedAnalyticMessage>ANALYTICS_INGESTION_COMPLETED, ANALYTICS_INDEXING_SKIPPED, ANALYTICS_STAGING_COMPLETED, ES_INDEXING_COMPLETED</completedAnalyticMessage>
 	<kickOffAnalytics>Kick Off Analytics Automatically</kickOffAnalytics>
 	<incrementalAnalytics>Run Incremental Analytics for New Small Data</incrementalAnalytics>
@@ -159,7 +159,6 @@
 	<projectName02>Indium_Regressionrun</projectName02>
 	<searchDocFileType>.tiff</searchDocFileType>
 
-
 	<!-- DocView Coding Form -->
 	<savedName>AttachData</savedName>
 	<codingFormName>Default Project Coding Form</codingFormName>
@@ -170,7 +169,8 @@
 	<reviewerName>MalayalaBaskar</reviewerName>
 	<stampColours>BLACK</stampColours>
 	<stampSelection>YELLOW</stampSelection>
-	<oneHourAudio>ID00001247</oneHourAudio>
+	<oneHourAudio>2ID00000164</oneHourAudio>
+	
 
 
 	<!-- Sowndariya Indium -->
@@ -426,7 +426,8 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains
+	</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -438,7 +439,8 @@
 	<docBasic>Doc Basic</docBasic>
 
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
+	<exText>The configured format is applicable only to OCRed text and
+		production generated text, and not to ingested text.</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>H16135-0188-001099</paginationDocId>
@@ -487,7 +489,8 @@
 	<Images5DocsLst>Images - 5Docs.lst</Images5DocsLst>
 	<newdateformat_5Docs>DAT4_STC_09172014_newdateformat_5Docs.dat</newdateformat_5Docs>
 	<JanMultiPTIFF>16JanMultiPTIFF</JanMultiPTIFF>
-	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file</GNon_searchable_PDF_Load_file>
+	<GNon_searchable_PDF_Load_file>GNon_searchable_PDF_Load_file
+	</GNon_searchable_PDF_Load_file>
 	<BEbomDat>00 16BEbom.dat</BEbomDat>
 	<MP3_OverlayLst>MP3_Overlay.lst</MP3_OverlayLst>
 	<ingestionAutomationAllSource>Automation_AllSources</ingestionAutomationAllSource>
@@ -496,7 +499,7 @@
 	<ProjectAdministrator>Project Administrator</ProjectAdministrator>
 	<ReviewManager>Review Manager</ReviewManager>
 	<Reviewer>Reviewer</Reviewer>
-	
+
 	<!-- Added by Brundha -->
 	<documentID>ID00004969</documentID>
 	<telecaSearchString>teleca</telecaSearchString>
@@ -506,7 +509,7 @@
 	<fileGroup>ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016</fileGroup>
 	<document>H136960002001015</document>
 	<fileTypeInNativeDocs>Word / Text Files (.doc, .txt, .rtf, etc.)</fileTypeInNativeDocs>
-   <filterMonth>Dec</filterMonth>
+	<filterMonth>Dec</filterMonth>
 	<filterYear>2021</filterYear>
 	<userRole>Review Manager</userRole>
 	<nativeFileName>F10A_GD_994_Native_Text_ForProduction_20220429095107596</nativeFileName>
@@ -519,10 +522,14 @@
 	<ingestionPrjt>Indium_IngestionFix</ingestionPrjt>
 	<AutomationAllSources>8B61_Automation_AllSources_20220506060704110</AutomationAllSources>
 	<sourceDocument>STC4_00000739</sourceDocument>
+	<DatFieldClassification>File Path</DatFieldClassification>
+	<DatSourceClassification>NativePath</DatSourceClassification>
+	<MetaDataFileType>Spreadsheet</MetaDataFileType>
+	<NativeFileType>Multimedia</NativeFileType>
 	<!-- Added by Baskar Created date - 30/11/2021 -->
 	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
 	<TiffImages>F10A_Tiff_Images_20220507074948253</TiffImages>
-<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
+	<advancedOptionText>Generate Only Preview Pages for Excel Docs (Not Implemented):</advancedOptionText>
 
 	<!-- Added by Gopinath Created date - 03/12/2021 -->
 	<thankyouText>thank you</thankyouText>
@@ -605,7 +612,7 @@
 	<nearDupeDocId02>STC4_00000877</nearDupeDocId02>
 	<nearDupeDocId03>T1862D</nearDupeDocId03>
 	<nearDupeDocIdForReviewer01>ICE010058-9-00000007</nearDupeDocIdForReviewer01>
-	<nearDupeDocIdForReviewer02>H16135-0188-003146</nearDupeDocIdForReviewer02>
+	<nearDupeDocIdForReviewer02>H16135-0188-003146	</nearDupeDocIdForReviewer02>
 	<nearDupeDocIdForReviewer03>ICE010058-21-00000010</nearDupeDocIdForReviewer03>
 	<threadMapDocId01>H16135-0188-003979</threadMapDocId01>
 	<threadMapWithNonEmailAttachment>H16135-0188-001001</threadMapWithNonEmailAttachment>
@@ -732,7 +739,7 @@
 	<ingDocFileSize>DocFileSize</ingDocFileSize>
 	<ingDocFileType>DocFileType</ingDocFileType>
 	<lessThan500PagesDocId>H16135-0188-001092</lessThan500PagesDocId>
-	<d500PagesDocId>H16135-0188-001166</d500PagesDocId>
+	<d500PagesDocId>113ID00000170</d500PagesDocId>
 
 	<!-- Added by Gopinath Created date - 21/03/2022 -->
 	<iceSourceSystem>ICE</iceSourceSystem>
@@ -764,25 +771,25 @@
 	<warningMsgDocId>ID00002019</warningMsgDocId>
 	<externalLinkDocId>ID00000168</externalLinkDocId>
 
-<!-- Added by Gopinath Created date - 28/04/2022 -->
+	<!-- Added by Gopinath Created date - 28/04/2022 -->
 	<telecom>telecom</telecom>
 	<regressionRun>Indium_Regressionrun</regressionRun>
 	<sourceBlank>ID00005105</sourceBlank>
 	<sourceParentBlank>ID00005117</sourceParentBlank>
 	<ingestionOneHour>ID00001298</ingestionOneHour>
 	<ingestionLessThanHour>ID00001294</ingestionLessThanHour>
-	
+
 	<!-- Added by Iyappan -->
 	<docAudioId1>H136960002001058</docAudioId1>
 	<docAudioId2>H136960002001067</docAudioId2>
-	
+
 	<!-- Added By Raghuram -->
 	<preBuilt>Pre-Built Models</preBuilt>
 	<preBuiltHelpText>Disclaimer: These Pre-Built Models have been developed by our experts and refined over the years based on our consulting experience in actual client projects. Each saved search can be leveraged as a starting point to filter your data based on common keywords and concept search queries and can be run as-is or modified based on requirements for your project. These Pre-Built Models are provided by default in DRAFT state at the beginning of each project and can be executed on the fly. We will continue to expand and refine these models regularly as advised by our experts.</preBuiltHelpText>
-    <DEPIPTheft>DEP IP Theft</DEPIPTheft>
-    <Discrimination>Discrimination</Discrimination>
-    <FCPA>FCPA</FCPA>
-    <Harassment>Harassment</Harassment>
+	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
+	<Discrimination>Discrimination</Discrimination>
+	<FCPA>FCPA</FCPA>
+	<Harassment>Harassment</Harassment>
 	
 	 <!-- Added By Aathith , Client Page Details -->
     <FilterByType>Filter By Type</FilterByType>

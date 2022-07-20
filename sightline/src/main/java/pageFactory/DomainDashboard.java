@@ -488,7 +488,7 @@ public class DomainDashboard {
 		 getSearchProject().SendKeys(projectName+Keys.ENTER);
 		 base.hitKey(KeyEvent.VK_ENTER);
 		 driver.waitForPageToBeReady();
-		 if(base.text(projectName).isDisplayed()) {
+		 if(base.text(projectName).isElementAvailable(5)) {
 			 break;
 		 }
 	 }
@@ -515,6 +515,7 @@ public class DomainDashboard {
 	  */
 	 public void create_a_project_From_Domain(String projectname) {
 		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getCreateNewProjectBtn());
 		 getCreateNewProjectBtn().waitAndClick(10);
 		 driver.waitForPageToBeReady();
@@ -748,7 +749,7 @@ public class DomainDashboard {
 
 			if (bgCountAfter > bgCountBefore) {
 				getBullHornIcon().waitAndClick(10);
-
+				base.waitForElement(getNotificationMsg());
 				String downloadMsg = getNotificationMsg().getText();
 				String expected = "Project " + projectName + " creation successful.";
 				String failMsg = "Download Notification is not As Expected";
