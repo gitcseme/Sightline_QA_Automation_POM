@@ -936,6 +936,7 @@ public class Input {
 		pa2FullName = envConfig.getPa2FullName();
 		rmu2FullName = envConfig.getRmu2FullName();
 		rev2FullName = envConfig.getRev2FullName();
+		da1FullName= envConfig.getDa1FullName();
 		prodPath = envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
 
@@ -959,6 +960,7 @@ public class Input {
 			ICEProjectName = envConfig.getICEProjectName();
 			da1userName = envConfig.getDa1userName();
 			da1password = envConfig.getDa1password();
+			
 		} else {
 			projectName = envConfig.getProjectName();
 			ICEProjectName = envConfig.getICEProjectName();
@@ -979,7 +981,7 @@ public class Input {
 			rmu2password = envConfig.getRmu2password();
 			rev2userName = envConfig.getRev2userName();
 			rev2password = envConfig.getRev2password();
-			da1FullName= envConfig.getDa1FullName();
+			
 			}
 		// Test data-------------------------------------------------------------
 
