@@ -1905,6 +1905,10 @@ public class SessionSearch {
 	public Element getBulkAssignAssignDocumentsButton() {
 		return driver.FindElementByXPath("//*[@id='toAssign']/following-sibling::i");
 	}
+	
+	public Element getWorkProductSearchResult() {
+		return driver.FindElementByXPath("//td[text()='Work Product']/parent::tr//span[@class='badge']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

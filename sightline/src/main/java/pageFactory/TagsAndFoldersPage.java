@@ -2736,5 +2736,36 @@ public class TagsAndFoldersPage {
 		}
 
 	}
+	
+	/**
+	 * @author
+	 * @param createTag
+	 * @param username
+	 * @param tagName
+	 * @param securityGroup
+	 * @param deleteTag
+	 * @param expectedUserRole
+	 * @param additional
+	 * @param additional1
+	 * @throws InterruptedException
+	 * @description - tag Creation/Deletion Based On User role
+	 */
+	public void tagCreationDeletionBasedOnUser(Boolean createTag, String username, String tagName, String securityGroup,
+			Boolean deleteTag, String expectedUserRole, Boolean additional, String additional1)
+			throws InterruptedException {
+		if (createTag) {
+			if (username.equals(expectedUserRole)) {
+				CreateTag(tagName, securityGroup);
+			}
+		}
+
+		if (deleteTag) {
+			if (username.equals(expectedUserRole)) {
+				navigateToTagsAndFolderPage();
+				DeleteTag(tagName, securityGroup);
+			}
+		}
+	}
+
 
 }
