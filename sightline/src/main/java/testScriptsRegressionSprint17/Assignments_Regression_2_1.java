@@ -109,6 +109,66 @@ public class Assignments_Regression_2_1 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @throws InterruptedException
+	 * @Date: 07/13/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To verify that only assigned documents are displayed in Mini
+	 *              DocList. RPMXCON-54045
+	 */
+	@Test(description = "RPMXCON-54045", enabled = true, groups = { "regression" })
+	public void verifyThatOnlyAssignedDocumentsDisplayedInMiniDocList() throws InterruptedException {
+
+		String assgngrpName = "assgnGrp" + Utility.dynamicNameAppender();
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-54045");
+		baseClass.stepInfo("To verify that only assigned documents are displayed in Mini DocList");
+
+		// Login as Reviewer Manager
+		baseClass.stepInfo("**Step-1 Login to RPMX as RMU**");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// creating assignment Group
+		baseClass.stepInfo("**Step-2 & 3 Go to Manage --> Assignment and Select Assignment Group from tree view**");
+		assignPage.navigateToAssignmentsPage();
+		assignPage.createCascadeAssgnGroupWithSortBymetadata(assgngrpName);
+		baseClass.stepInfo("Assignment Group is Created");
+
+		// creating assignment under newly created Assignment group
+		assignPage.selectAssignmentGroup(assgngrpName);
+		assignPage.createAssignmentFromAssgnGroup(assignmentName, Input.codeFormName);
+
+		// assign documents to created assignment
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// assigning reviewers to the Assignment and distributing the documents to the
+		// reviewers
+		baseClass.stepInfo(
+				"**Step-4 Select Assignment from grid view which has documents and Reviewers assigned.    Select Edit Assignment from Action Dropdown**");
+		assignPage.selectAssignmentGroup(assgngrpName);
+		assignPage.getSelectAssignment(assignmentName).waitAndClick(5);
+		assignPage.getAssignmentActionDropdown().waitAndClick(10);
+		assignPage.assignmentActions("Edit");
+
+		baseClass.stepInfo("**Step-5 Select Manage Reviewer tab**");
+		assignPage.add2ReviewerAndDistribute();
+		baseClass.passedStep("reviewers assigned to the Assignment and documents distributed to the reviewers");
+
+		// verifying the count of document assigned to the reviewer with count of
+		// documents listed in mini docList
+		baseClass.stepInfo(
+				"**Step-6 Select Reviewers from Grid View which has documents assigned.    From Action dropdown select View All Docs in DocView.    Verify that only assigned documents to reviewer should be displayed in Mini DocList.**");
+		assignPage.Assignment_ManageRevtab_ViewinDocView();
+		baseClass.passedStep(
+				"verified that count of documents assigned to reviewer match with count of documents listed in Mini DocList");
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },

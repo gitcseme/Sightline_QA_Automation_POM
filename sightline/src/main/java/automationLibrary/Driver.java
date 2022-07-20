@@ -495,4 +495,16 @@ public class Driver {
 		String attributeValue = (String) js.executeScript(attribute);
 		return attributeValue;
 	}
+	
+	/**
+	 * @author Raghuram.A
+	 * @Description : method to return attribute value in boolean using javascript
+	 * @param attribute
+	 * @return
+	 */
+	public Boolean verifyElementPresence(String attribute) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		Boolean attributeValue = (Boolean) js.executeScript(attribute);
+		return attributeValue;
+	}
 }

@@ -2012,9 +2012,10 @@ public class AssignmentsPage {
 
 		String count = getAssgn_ManageRev_revdoccount().getText();
 		System.out.println(count);
-
-		getAssgn_ManageRev_selectrev().waitAndClick(10);
-
+		Actions action = new Actions(driver.getWebDriver());
+		bc.waitTime(2);
+		action.moveToElement(getAssgn_ManageRev_selectrev().getWebElement()).click().build().perform();
+		bc.waitTime(2);
 		getAssgn_ManageRev_Action().waitAndClick(10);
 
 		Assert.assertTrue(getAssgn_ManageRev_Action_ViewDocview().isDisplayed());
@@ -9955,7 +9956,11 @@ public class AssignmentsPage {
 			bc.waitTime(1);
 			getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			bc.waitTime(1);
+			try {
 			sortOrderNxtBtn().ScrollTo();
+			}catch(Exception e) {
+				
+			}
 			sortOrderNxtBtn().waitAndClick(5);
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
 				sortCodeFormOrderSaveBtn().waitAndClick(5);
