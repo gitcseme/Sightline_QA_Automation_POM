@@ -225,6 +225,10 @@ public class BatchRedactionRegression {
 		session.saveSearch(savedsearch);
 		System.out.println(savedsearch);
 		batch.savedSearchBatchRedaction(savedsearch);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
+
+		batch.verifyHistoryStatus(savedsearch);
+		
 		// Rename Saved Search
 		saveSearch.renameSavedSearch(savedsearch, searchName1);
 		System.out.println(searchName1);
@@ -269,7 +273,13 @@ public class BatchRedactionRegression {
 		// Login as a RMU
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		base.stepInfo("Test case Id:RPMXCON-53470");
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName3);
+		System.out.println(searchName3);
+		batch.savedSearchBatchRedaction(searchName3);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
 
+		batch.verifyHistoryStatus(searchName3);
 		// Delete Saved Search
 		saveSearch.SaveSearchDelete(searchName3);
 
@@ -288,8 +298,8 @@ public class BatchRedactionRegression {
 		base.stepInfo(batch.getRollbackMsg(searchName3).getText());
 
 		// Delete Search
-		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
-		saveSearch.deleteSearch(searchName2, Input.mySavedSearch, "Yes");
+		//saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		//saveSearch.deleteSearch(searchName2, Input.mySavedSearch, "Yes");
 
 		login.logout();
 
@@ -533,9 +543,12 @@ public class BatchRedactionRegression {
 		// create new search
 		session.basicContentSearch(Input.testData1);
 		session.saveSearch(search_Name);
+		batch.savedSearchBatchRedaction(search_Name);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
 
+		batch.verifyHistoryStatus(search_Name);
 		saveSearch.savedSearch_Searchandclick(search_Name);
-		saveSearch.getDocView_button().waitAndClick(10);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 
 		// Edit Profile Language to German
@@ -1415,11 +1428,12 @@ public class BatchRedactionRegression {
 		security.AddSecurityGroup(securityGroup);
 
 		driver.waitForPageToBeReady();
+		security.navigateToSecurityGropusPageURL();
 		security.selectSecurityGroup(securityGroup);
 		annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
 
-		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		security.navigateToSecurityGropusPageURL();
 		security.selectSecurityGroup(securityGroup);
 		security.assignAnnotationToSG(layer);
 
