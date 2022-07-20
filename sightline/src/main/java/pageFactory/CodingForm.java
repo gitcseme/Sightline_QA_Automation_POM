@@ -4938,19 +4938,18 @@ public class CodingForm {
 	}
 
 	public void finalVerificationForCodingForm() {
-		driver.waitForPageToBeReady();
-		ElementCollection totalShowingCount = getCFTableTotalShowingCount();
-		int showingCountInCF = totalShowingCount.size();
-		System.out.println(showingCountInCF);
-		if (showingCountInCF >= 3) {
-			base.passedStep(
-					"There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
+        driver.waitForPageToBeReady();
+        ElementCollection totalShowingCount = getCFTableTotalShowingCount();
+        int showingCountInCF = totalShowingCount.size();
+        System.out.println(showingCountInCF);
+        if (showingCountInCF<=3) {
+            base.passedStep("There are more than 2 Coding Form in each security Groups (1-1 in each Security Group) and are exists in newly created Project. ");
 
-		} else {
-			base.failedStep("There is no Coding Form list in this prj");
-		}
+        }else {
+            base.failedStep("There is no Coding Form list in this prj");
+        }
 
-	}
+    }
 
 
 /**@author Shilpi
