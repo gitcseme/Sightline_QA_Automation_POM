@@ -625,6 +625,10 @@ public class Input {
 	public static String TiffImages;
 	public static String advancedOptionText;
 	public static String sourceDocument;
+	public static String DatFieldClassification;
+	public static String DatSourceClassification;
+	public static String MetaDataFileType;
+	public static String NativeFileType;
 	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
@@ -1536,6 +1540,10 @@ public class Input {
 		TiffImages=testData.getTiffImages();
 		advancedOptionText=testData.getAdvancedOptionText();
 		sourceDocument=testData.getSourceDocument();
+		DatFieldClassification=testData.getDatFieldClassification();
+		DatSourceClassification=testData.getDatSourceClassification();
+		MetaDataFileType=testData.getMetaDataFileType();
+		NativeFileType=testData.getNativeFileType();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();
