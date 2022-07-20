@@ -87,7 +87,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * redaction
 	 */
 
-	@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"},priority = 0)
+	@Test(description = "RPMXCON-52238,RPMXCON-52239", groups={"regression"})
 	public void VerifyProjectAdminPrintDocWithoutRedaction() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52238, RPMXCON-52239");
@@ -177,7 +177,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * different SG
 	 */
 
-	@Test(groups={"regression"},priority = 3)
+	@Test(description = "RPMXCON 51990",groups={"regression"})
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
 		Input in = new Input();
 		in.loadEnvConfig();
@@ -239,7 +239,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * different SG
 	 */
 
-	@Test(groups={"regression"},priority = 1)
+	@Test(description = "RPMXCON 51991",groups={"regression"})
 	public void verifyTextRemarksRMU1RMU2() throws Exception {
 
 		Input in = new Input();
