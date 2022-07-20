@@ -768,6 +768,75 @@ public class O365_Regression_2_1 {
 		// Logout
 		login.logout();
 	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that from Collection Wizard user should be 
+	 * able to add new source location 'Create New collection' > 'Set up a source location' link.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60603", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCollectionWizardSetupASourceLocationToAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60603 - O365");
+		base.stepInfo(
+				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
+
+		String[][] userRolesData = { { username, fullname } };
+		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// to verify source location is present or not
+		source.verifySourceLocationIsNotPresent();
+		
+		//To add New Source Location
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		base.waitForElement(collection.getNewCollectionBtn());
+		collection.getNewCollectionBtn().waitAndClick(5);
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// Logout
+		login.logout();
+		
+	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that from Collection Wizard user should 
+	 * be able to add new source location on click of 'Start a collection' > 'Add New Source Location' button
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60604", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60604 - O365");
+		base.stepInfo(
+				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
+
+		String[][] userRolesData = { { username, fullname } };
+		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		//To add New Source Location
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		base.waitForElement(collection.getStartALinkCollection());
+		collection.getStartALinkCollection().waitAndClick(5);
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// Logout
+		login.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

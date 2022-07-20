@@ -89,6 +89,11 @@ public class CollectionPage {
 	public ElementCollection getListOfSrcLoc() {
 		return driver.FindElementsByXPath("//div[@id='divSourceLocations']//div[@class='popout text-wrap']");
 	}
+	
+	//Added by Mohan
+	public Element getStartALinkCollection() {
+		return driver.FindElementByXPath("//a[text()='Start a collection']");
+	}
 
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
