@@ -142,13 +142,13 @@ public class CloningProject_Regression01 {
 		        UtilityLog.info("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 		        CodingForm codingForm = new CodingForm(driver);
 		        codingForm.navigateToCodingFormPage();
-		        codingForm.validateTotalShowingCountInCF();
 		        loginPage.logout();
 
 		        loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		        UtilityLog.info("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		        projectPage.navigateToProductionPage();
-		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName,"0");
+		        projectPage.selectProjectToBeCopied(projectName, Input.domainName,Input.projectName02,"0");
+		        DataSets data = new DataSets(driver);
 		        data.getNotificationMessage(0,projectName);
 
 		        UserManagement users = new UserManagement(driver);
