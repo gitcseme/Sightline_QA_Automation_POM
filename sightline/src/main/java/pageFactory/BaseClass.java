@@ -315,6 +315,15 @@ public class BaseClass {
 	public Element getSelectProjectTo(String project) {
 		return driver.FindElementByXPath("//select[@id='ddlAvailableProjects']/option[text()='"+project+"']");
 	}
+	
+	//add by Aathith
+	public Element getSelectDomain(String Domain) {
+		return driver.FindElementByXPath("//select[@id='ddlAvailableDomains']/option[text()='"+Domain+"']");
+	}
+	
+	public Element getLoginedUserRole() {
+		return driver.FindElementByXPath("//span[@class='badge bg-color-greenLight']");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -3909,5 +3918,14 @@ public class BaseClass {
 				E.printStackTrace(pw);
 				UtilityLog.info(sw.toString());
 			}
+		}
+	
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @return current logined user role
+		 * @Description get current logined user role
+		 */
+		public String getCurrentLoginedUserRole() {
+			return getLoginedUserRole().getText().trim();
 		}
 }

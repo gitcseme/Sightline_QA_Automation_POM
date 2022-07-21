@@ -297,6 +297,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		
 		base = new BaseClass(driver);
 		dash = new DomainDashboard(driver);
+		project = new ProjectPage(driver);
 		softAssertion = new SoftAssert();
 		
 		String projectName = "AAA"+Utility.dynamicNameAppender();
@@ -305,7 +306,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		driver.waitForPageToBeReady();
 		dash.waitForDomainDashBoardIsReady();
 		base.clearBullHornNotification();
-		dash.create_a_project_From_Domain(projectName);
+		project.AddDomainProjectViaDaUser(projectName);
 		base.waitForNotification();
 		dash.naviageToDomainDashBoardPage();
 		dash.getNotificationMessage(0, projectName);
@@ -336,7 +337,7 @@ public class DomainDashBoard_ProjectCreation_Regression_01 {
 		driver.waitForPageToBeReady();
 		dash.waitForDomainDashBoardIsReady();
 		base.clearBullHornNotification();
-		dash.create_a_project_From_Domain(projectName);
+		project.AddDomainProjectViaDaUser(projectName);
 		base.waitForNotification();
 		dash.getNotificationMessage(0, projectName);
 		dash.naviageToDomainDashBoardPage();
