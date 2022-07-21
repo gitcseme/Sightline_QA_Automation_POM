@@ -5,6 +5,7 @@
         <SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
         <domainName>Automation_Regression_BackUp</domainName>
         <projectName>AutomationRegressionBackup</projectName>
+        <ICEProjectName>Automation_Consilio</ICEProjectName>
         <additionalDataProject>AutomationAdditionalDataProject</additionalDataProject>
         <ingestDataProject>AutomationIngestionProject</ingestDataProject>
         <largeVolDataProject>AutomationHighVolumeProject</largeVolDataProject>
