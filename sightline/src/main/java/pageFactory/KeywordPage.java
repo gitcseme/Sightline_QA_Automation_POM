@@ -396,9 +396,9 @@ public class KeywordPage {
 
         	 driver.waitForPageToBeReady();
         	 base.waitForElement(getKeywordSecurityGroupList());
-        	 if (userName.contains("RMU")&&!getKeywordSecurityGroupList().Enabled()) {
+        	 if (userName.contains(Input.rmu2userName)&&!getKeywordSecurityGroupList().Enabled()) {
 				base.passedStep("Security group under RMU is added is  displayed as read only and selected are on the Manage Keywords page.");
-			}else if (userName.contains("PA")&&getKeywordSecurityGroupList().Enabled()) {
+			}else if (userName.contains(Input.pa2userName)&&getKeywordSecurityGroupList().Enabled()) {
 				base.passedStep("Security group under RMU is added is displayed as read only and selected are on the Manage Keywords page.");
 			}else {
 				base.failedStep("Security group under RMU is added is not displayed as read only and selected are not on the Manage Keywords page.");
