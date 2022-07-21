@@ -184,7 +184,88 @@ public class AdvancedSearch_Regression2_7 {
 		loginPage.logout();
 
 	}
-
+	
+	/**
+	 * Author :Jayanthi  TestCase Id:RPMXCON-57171 
+	 * Description :Verify that - Application returns all the documents which are available under selected group
+	 *  with NOT operator and production optional filters - Date Range in search result. 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57171",groups = { "regression" })
+	public void verifyDocumentWithORProdOptFiltersDateRange() throws InterruptedException{
+		baseClass.stepInfo("Test case Id: RPMXCON-57171");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available "
+				+ "under selected group with NOT operator and production optional filters - Date Range in search result");
+		//login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionSearch.switchToWorkproduct();
+		baseClass.stepInfo("Configure query with  production status with date range ");
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null,true);
+		sessionSearch.serarchWP();
+		int pureHit_Prod=Integer.parseInt( sessionSearch.verifyPureHitsCount());
+		
+		baseClass.selectproject();
+		sessionSearch.switchToWorkproduct();
+		baseClass.stepInfo("Configured query with security group NOT production status with date");
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(Input.securityGroup, "NOT", true);
+		sessionSearch.serarchWP();
+		baseClass.stepInfo("Searched query and verifying search result");
+		int pureHit_SG_OR_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
+		
+		int countinSG = sessionSearch.verifyDocsCountAvailableInSg();
+		int expectedCount = countinSG - pureHit_Prod;
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(pureHit_SG_OR_Prod, expectedCount);
+		assertion.assertAll();
+		baseClass.stepInfo("Sucessfully verified that - Application returns all the documents which are available under selected group with NOT operator and "
+				+ "production optional filters - status with Date Range  in search result.");
+		loginPage.logout();		
+	}
+	/**
+	 * Author :Jayanthi  TestCase Id:RPMXCON-57170 
+	 * Description :Verify that - Application returns all the documents which are available under selected group with NOT operator 
+	 * and production optional filters - status  in search result. 
+	 * 
+	 */
+	@Test(description ="RPMXCON-57170",groups = { "regression" })
+	public void verifyDocumentWithNOTProdOptFiltersStatus() throws InterruptedException{
+		baseClass.stepInfo("Test case Id: RPMXCON-57170");
+		baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected group with NOT operator and "
+				+ "production optional filters - status  in search result.");
+		//login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionSearch.switchToWorkproduct();
+		//getting pure hit count by selecting prod status as true.
+		baseClass.stepInfo("Configure query with  production status as true. ");
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null,false);
+		sessionSearch.serarchWP();
+		int pureHit_Prod=Integer.parseInt( sessionSearch.verifyPureHitsCount());
+		
+		baseClass.selectproject();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(Input.securityGroup, "NOT", false);
+		baseClass.stepInfo("Configured query with securitygroups: "
+				+ "[ name: [\"Default Security Group\"] ]  NOT   productions: [produced: \"true\" ]  ");
+		sessionSearch.serarchWP();
+		int pureHit_SG_OR_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
+		
+		//calculating expected doc count.
+		int countinSG = sessionSearch.verifyDocsCountAvailableInSg();
+		int expectedCount = countinSG - pureHit_Prod;
+		
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(pureHit_SG_OR_Prod, expectedCount);
+		assertion.assertAll();
+		baseClass.stepInfo(
+				"Sucessfully verified that - Application returns all the documents which are available under selected group with NOT operator and "
+						+ "production optional filters - status  in search result.");
+		loginPage.logout();
+	}
+	
+	
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
