@@ -95,7 +95,7 @@ public class Dashboard {
 	}
 
 	public Element selectSpecificReviewer() {
-		return driver.FindElementByXPath("//select[@id='UserList']//option");
+		return driver.FindElementByXPath("//select[@id='UserList']");
 	}
 
 	public Element mostToDoDocs_InsideWidget() {
@@ -148,26 +148,66 @@ public class Dashboard {
 	}
 
 	public Element getAssignmentData(String assignmentName, int i) {
-		return driver.FindElementByXPath("//strong[text()='" + assignmentName + "']//..//..//..//td["+ i +"]");
+		return driver.FindElementByXPath("//strong[text()='" + assignmentName + "']//..//..//..//td[" + i + "]");
 	}
 
 	public ElementCollection getAssignmentsTableName() {
 		return driver.FindElementsByXPath("//table[@id='dt_basic']//th");
 	}
-	
-	
+
 	public Element getCenterStyle() {
-		return driver.FindElementByXPath("\\#taskbasic > tbody >tr:first-child > td > div.col-md-12\\).style.getPropertyValue('left')");
+		return driver.FindElementByXPath(
+				"\\#taskbasic > tbody >tr:first-child > td > div.col-md-12\\).style.getPropertyValue('left')");
 	}
 
 	public ElementCollection getReviewerProgressTableName() {
 		return driver.FindElementsByXPath("//table[@id='ReviewerTable']//th");
 	}
-	
-	public ElementCollection getReviewerProgressData() {
-		return driver.FindElementsByXPath("//table[@id='ReviewerTable']//tbody//tr");
+
+	public Element getReviewerProgressData(int i) {
+		return driver.FindElementByXPath("//table[@id='ReviewerTable']//tbody//tr//td[" + i + "]");
+	}
+
+	public Element getReviewerProgressName(String fullName) {
+		return driver.FindElementByXPath("//table[@id='ReviewerTable']//tbody//td[text()='"+ fullName +"']");
 	}
 	
+	public Element get1LR_completedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='1LR']//..//ul//span[@class='txt-green']");
+	}
+
+	public Element get2LR_completedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='2LR']//..//ul//span[@class='txt-green']");
+	}
+
+	public Element getQC_completedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='QC']//..//ul//span[@class='txt-green']");
+	}
+
+	public Element get1LR_distirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='1LR']//..//ul//span[@class='txt-yellow']");
+	}
+
+	public Element get2LR_distirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='2LR']//..//ul//span[@class='txt-yellow']");
+	}
+
+	public Element getQC_distirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='QC']//..//ul//span[@class='txt-yellow']");
+	}
+
+	public Element get1LR_notDistirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='1LR']//..//ul//span[@class='txt-red']");
+	}
+
+	public Element get2LR_notDistirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='2LR']//..//ul//span[@class='txt-red']");
+	}
+
+	public Element getQC_notDistirbutedPercent() {
+		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='QC']//..//ul//span[@class='txt-red']");
+	}
+
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;
@@ -317,78 +357,82 @@ public class Dashboard {
 			base.passedStep("Assignment created with name as : " + assignmentName);
 		}
 		List<String> availableListofElements = base.availableListofElements(getAssignmentsTableName());
-		
+
 		int size = getAssignmentsTableName().size();
-		String data ;
+		String data;
 		System.out.println(size);
 		for (int i = 1; i <= size; i++) {
 			base.waitForElement(getAssignmentData(assignmentName, i));
 			driver.waitForPageToBeReady();
 			data = getAssignmentData(assignmentName, i).getText();
 			System.out.println(data);
-			
-			base.passedStep("Assignment " + availableListofElements.get(i-1) + " : " + data);
+
+			base.passedStep("Assignment " + availableListofElements.get(i - 1) + " : " + data);
 
 		}
 
 	}
-	
+
 	/**
 	 * @authorSowndarya.velraj
 	 * @Description : To verify Reviewer progress data
 	 */
-	public void verifyReviewerProgressData(String assignmentName) {
+	public void verifyReviewerProgressData(String fullName) {
 
 		List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
-		
+
 		int size = getReviewerProgressTableName().size();
-		System.out.println(size);
+		String data;
+//		System.out.println(size);
 		for (int i = 1; i <= size; i++) {
-			base.waitForElementCollection(getReviewerProgressData());
-			String data = getReviewerProgressData().toString();
 			driver.waitForPageToBeReady();
-			System.out.println(data);
-			
-			base.passedStep("Reviewer Progress " + availableListofElements.get(i-1) + " : " + data);
+			String userName = getReviewerProgressName(fullName).getText();
+			base.waitForElement(getReviewerProgressData(i));
+			data = getReviewerProgressData(i).getText();
+			if (fullName.equalsIgnoreCase(userName)) {
+				base.passedStep("Reviewer Progress " + availableListofElements.get(i - 1) + " : " + data);
+			}
 
 		}
 
 	}
-	
+
 	/**
 	 * @authorSowndarya.velraj
 	 * @Description : To check image is in center
 	 */
-	public String checkIMageAtCenter()
-	{
+	public String checkIMageAtCenter() {
 		String jsQuery = "return document.querySelector(\"#taskbasic > tbody >tr:first-child > td > div.col-md-12\").style.getPropertyValue('left')";
-        System.out.println(jsQuery);
-        String fitSize = driver.findAttributeValueViaJS(jsQuery);
-        System.out.println(fitSize);
-        return fitSize;
+		System.out.println(jsQuery);
+		String fitSize = driver.findAttributeValueViaJS(jsQuery);
+		System.out.println(fitSize);
+		return fitSize;
 	}
-	
+
 	/**
-	 * @throws AWTException 
+	 * @throws AWTException
 	 * @authorSowndarya.velraj
 	 * @Description : To customize Reviewer Progress Widget
 	 */
-	public void select4Reviewers_ReviewerProgressWidget( String user1,String user2,String user3,String user4, String assignmentName) throws AWTException {
+	public void select4Reviewers_ReviewerProgressWidget(String[] reviewers,String assignmentName) throws AWTException {
 
 		driver.waitForPageToBeReady();
 		reviewerProgress_gearIcon().waitAndClick(10);
 		base.stepInfo("Select Reviewers");
+
+		Robot r = new Robot();
+		selectReviewers_selectReviewers().waitAndClick(10);
+		base.waitForElement(selectSpecificReviewer());
 		
-			selectReviewers_selectReviewers().waitAndClick(10);
-			base.waitForElement(selectSpecificReviewer());
-			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user1);
-			Robot r= new Robot();
+		selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[0]);
+		for (int i = 1; i < reviewers.length; i++) {
 			r.keyPress(KeyEvent.VK_CONTROL);
-			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user2);
-			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user3);
-			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(user4);
+			selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[i]);
 			r.keyRelease(KeyEvent.VK_CONTROL);
+			base.waitTime(5);
+		}
 		
+
 		base.stepInfo("selecting assignment");
 		arrow_selectAssignment().waitAndClick(10);
 		base.waitForElement(selectAssignment_CustomizeWidget(assignmentName));

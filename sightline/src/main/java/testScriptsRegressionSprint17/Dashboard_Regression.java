@@ -203,12 +203,12 @@ public class Dashboard_Regression {
 	@Test(description = "RPMXCON-54212", enabled = true, groups = { "regression" })
 	public void verifyEyeToEyeWidget() throws Exception {
 
-		//verified with Edge for the same in local
+		// verified with Edge for the same in local
 		baseClass.stepInfo("Test case Id:RPMXCON-54212 Dashboard Component Sprint 17");
 		baseClass.stepInfo("To verify that details in End to End is displayed correctly.");
 		UtilityLog.info(Input.prodPath);
-		
-		//Adding End to End Widget 
+
+		// Adding End to End Widget
 		Dashboard dashBoard = new Dashboard(driver);
 		dashBoard.AddNewWidgetToDashboard(Input.EndtoEnd);
 		System.out.println("Released Count :" + dashBoard.releasedCount_EndToEnd().getText());
@@ -216,13 +216,13 @@ public class Dashboard_Regression {
 		System.out.println("Reviewed Count :" + dashBoard.reviewedCount_EndToEnd().getText());
 		System.out.println("Total produced Count :" + dashBoard.totalProducedCount().getText());
 
-		//Verifying Overall image is centered within the widget.
-	    baseClass.waitTime(4);
-	    String expected="50%";
-        String actual = dashBoard.checkIMageAtCenter();
-        softAssertion = new SoftAssert();
-        softAssertion.assertEquals(actual, expected);
-        softAssertion.assertAll();
+		// Verifying Overall image is centered within the widget.
+		baseClass.waitTime(4);
+		String expected = "50%";
+		String actual = dashBoard.checkIMageAtCenter();
+		softAssertion = new SoftAssert();
+		softAssertion.assertEquals(actual, expected);
+		softAssertion.assertAll();
 
 	}
 
@@ -243,7 +243,6 @@ public class Dashboard_Regression {
 		Dashboard dashBoard = new Dashboard(driver);
 
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
-		;
 
 		sessionsearch.basicContentSearch(Input.testData1);
 		sessionsearch.verifyPureHitsCount();
@@ -262,4 +261,178 @@ public class Dashboard_Regression {
 		dashBoard.verifyAssignmentData(assignmentName);
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-54577
+	 * @Description:PAU and DAU users should be included for "Reviewer Progress"
+	 *                  widget on RMU Dashboard(Impersonate form SystemAdmin/PAU/DAU
+	 *                  to RMU)
+	 **/
+	@Test(description = "RPMXCON-54576", enabled = true, groups = { "regression" })
+	public void verifyReviewerProgressOnDashboard() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54576 Dashboard Component Sprint 17");
+		baseClass.stepInfo("PAU and DAU users should be included for Reviewer Progress widget on RMU Dashboard");
+
+		UtilityLog.info(Input.prodPath);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		Dashboard dashBoard = new Dashboard(driver);
+
+		String assignmentName = "Assignment2662266";
+		String[] reviewers = {Input.pa1FullName,Input.rmu1FullName,Input.rev1FullName,Input.da1FullName};
+		String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
+
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSearchName);
+		sessionsearch.bulkAssign();
+		// create Assignment and disturbute docs
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		agnmt.add4ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
+		
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.reviewerProgress);
+		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
+		dashBoard.verifyReviewerProgressData(Input.pa1FullName);
+		dashBoard.verifyReviewerProgressData(Input.rmu1FullName);
+		dashBoard.verifyReviewerProgressData(Input.rev1FullName);
+		dashBoard.verifyReviewerProgressData(Input.da1userName);
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-54196
+	 * @Description:PAU and DAU users should be considered in "Total Review
+	 *                  Progress" widget on RMU Dashboard
+	 **/
+
+	@Test(description = "RPMXCON-54196", enabled = true, groups = { "regression" })
+	public void verifyTotalReviewProgress_RMUDashboard() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54196 Dashboard Component Sprint 17");
+		baseClass.stepInfo("PAU and DAU users should be considered in Total Review Progress widget on RMU Dashboard");
+		UtilityLog.info(Input.prodPath);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		Dashboard dashBoard = new Dashboard(driver);
+
+		// perform search and bulk assign
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+
+		// create assignment with 1LR classification and distribute documents to
+		// reviewer
+		String assignmentName = "Aassignment" + Utility.dynamicNameAppender();
+		agnmt.createAssignmentWithClassification(assignmentName, "1LR", Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(assignmentName + " assignment opened in edit mode");
+		agnmt.distributeToPAUandDAU();
+		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
+
+		// perform search and bulk assign
+		baseClass.selectproject();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+
+		// create assignment with 2LR classification and distribute documents to
+		// reviewer
+		String assignmentName2 = "Bassignment" + Utility.dynamicNameAppender();
+		agnmt.createAssignmentWithClassification(assignmentName2, "2LR", Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName2);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName2);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(assignmentName2 + " assignment opened in edit mode");
+		agnmt.distributeToPAUandDAU();
+		baseClass.stepInfo(assignmentName2 + " Assignment Created and distributed to DA/PA/RMU/Rev");
+
+		// perform search and bulk assign
+		baseClass.selectproject();
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+
+		// create assignment with 1LR classification and distribute documents to
+		// reviewer
+		String assignmentName3 = "Ctassignment" + Utility.dynamicNameAppender();
+		agnmt.createAssignmentWithClassification(assignmentName3, "QC", Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.stepInfo("Created a assignment " + assignmentName3);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName3);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo(assignmentName3 + " assignment opened in edit mode");
+		agnmt.distributeToPAUandDAU();
+		baseClass.stepInfo(assignmentName3 + " Assignment Created and distributed to DA/PA/RMU/Rev");
+
+		baseClass.stepInfo("created Assignments with classifications 1LR : "+ assignmentName+" 2LR :"+assignmentName2+" QC :"+assignmentName3);
+		// adding total review progress widget
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
+
+		// 1LR classification details
+		baseClass.passedStep("1LR completed percent" + dashBoard.get1LR_completedPercent().getText());
+		baseClass.passedStep("1LR Distributed percent" + dashBoard.get1LR_distirbutedPercent().getText());
+		baseClass.passedStep("1LR Not Distributed percent" + dashBoard.get1LR_notDistirbutedPercent().getText());
+
+		// 2LR classification details
+		driver.waitForPageToBeReady();
+		baseClass.passedStep("2LR completed percent" + dashBoard.get2LR_completedPercent().getText());
+		baseClass.passedStep("2LR Distributed percent" + dashBoard.get2LR_distirbutedPercent().getText());
+		baseClass.passedStep("2LR Not Distributed percent" + dashBoard.get2LR_notDistirbutedPercent().getText());
+
+		// QC classification details
+		driver.waitForPageToBeReady();
+		baseClass.passedStep("QC completed percent" + dashBoard.getQC_completedPercent().getText());
+		baseClass.passedStep("QC Distributed percent" + dashBoard.getQC_distirbutedPercent().getText());
+		baseClass.passedStep("QC Not Distributed percent" + dashBoard.getQC_notDistirbutedPercent().getText());
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-54196
+	 * @Description:PAU and DAU users should be included for "Reviewer Productivity" widget on RMU Dashboard
+	 **/
+
+	@Test(description = "RPMXCON-54196", enabled = true, groups = { "regression" })
+	public void verifyReviewerProductivity_RMUDashboard() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54196 Dashboard Component Sprint 17");
+		baseClass.stepInfo("PAU and DAU users should be included for Reviewer Productivity widget on RMU Dashboard");
+		UtilityLog.info(Input.prodPath);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		Dashboard dashBoard = new Dashboard(driver);
+
+		String assignmentName = "Assignment"+Utility.dynamicNameAppender();
+		String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
+		String[] reviewers = {Input.pa1FullName,Input.rmu1FullName,Input.rev1FullName,Input.da1FullName};
+
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSearchName);
+		sessionsearch.bulkAssign();
+		// create Assignment and disturbute docs
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		agnmt.add4ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
+		
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
+		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
+		
+	}
 }
