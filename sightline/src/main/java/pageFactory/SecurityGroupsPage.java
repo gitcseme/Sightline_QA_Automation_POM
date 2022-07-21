@@ -425,6 +425,14 @@ public class SecurityGroupsPage {
 		return driver.FindElementById("btnRegenerateEmail");
 	}
 
+	public Element getSG_AnnotationLayer(String annotation) {
+		return driver
+				.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + annotation + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSGAddAnnonationLayer() {
+		return driver.FindElementByXPath("//*[@id='annotationJSTree_Selected']/ul/li/ul/li[1]");
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1430,5 +1438,38 @@ public class SecurityGroupsPage {
 		} else {
 			bc.failedMessage("folder is not displayed");
 		}
+	}
+	
+	/*
+	 * @author Vijaya.Rani
+	 * 
+	 */
+	public void addAnnotationlayertosg(String securityGroup, String annotation) throws InterruptedException {
+
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		bc.waitForElement(getSecurityGroupList());
+		getSecurityGroupList().selectFromDropdown().selectByVisibleText(securityGroup);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSG_AnnLayerbutton().Visible();
+			}
+		}), Input.wait30);
+		getSG_AnnLayerbutton().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSG_AnnotationLayer(annotation).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(annotation);
+		bc.waitTime(5);
+		bc.waitTillElemetToBeClickable(getSG_AnnotationLayer(annotation));
+		getSG_AnnotationLayer(annotation).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_AddAnnLayer_Right().waitAndClick(5);
+
+		getSG_AnnSaveButton().waitAndClick(15);
+		bc.VerifySuccessMessage("Your selections were saved successfully");
+		bc.CloseSuccessMsgpopup();
 	}
 }

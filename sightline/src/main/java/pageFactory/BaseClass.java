@@ -3910,4 +3910,42 @@ public class BaseClass {
 				UtilityLog.info(sw.toString());
 			}
 		}
+		
+		public void impersonateSAtoRMU(String projectName) throws InterruptedException {
+			getSignoutMenu().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait60);
+			getChangeRole().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait60);
+			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+			Thread.sleep(3000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAvlDomain().Visible();
+				}
+			}), Input.wait30);
+			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+			Thread.sleep(3000);
+			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+			Thread.sleep(3000);
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			getSaveChangeRole().Click();
+			System.out.println("Impersnated from SA to RMU");
+			UtilityLog.info("Impersnated from SA to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
 }
