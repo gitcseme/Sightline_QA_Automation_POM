@@ -791,6 +791,12 @@ public class UserManagement {
 		return driver.FindElementByXPath("//a[text()='Delete']");
 	}
 
+	// jeevitha
+	public Element getFunctionTable() {
+		return driver.FindElementByXPath(
+				"// li[@class='active']//a[normalize-space()='Functionality']//..//parent::ul//following-sibling::div[@id='myTabContent1']");
+	}
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -2358,12 +2364,14 @@ public class UserManagement {
 			getDataSet().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
+			System.out.println("First cond");
 		}
 		if (flagChecked == false && status == "true") {
 			bc.waitForElement(getDataSet());
 			getDataSet().waitAndClick(5);
 			bc.waitForElement(getSaveEditUser());
 			getSaveEditUser().waitAndClick(10);
+			System.out.println("Second cond");
 			bc.stepInfo("DataSet checkbox is checked");
 		}
 
@@ -3290,7 +3298,7 @@ public class UserManagement {
 	/**
 	 * @author Raghuram.A
 	 * @Date: 07/18/22
-	 * @Modified date:N/A
+	 * @Modified date:21/07/22
 	 * @Modified by: N/A
 	 * @param userRolesData
 	 * @param dataSetsAccess
@@ -3368,6 +3376,11 @@ public class UserManagement {
 						"Pass");
 			}
 
+			// unCheckValidation
+			if (checkUpdateCollections.equalsIgnoreCase("unCheckValidation")) {
+				uncheckDataCollectionsStatusCheck();
+			}
+
 			// Save Action
 			if (saveAction) {
 				actionsToTake(enableOrdisable, userRolesData[i][2]);
@@ -3414,6 +3427,31 @@ public class UserManagement {
 		}
 	}
 
+	public void uncheckDataCollectionsStatusCheck() {
+		// verify default collection access
+		if (driver.verifyElementPresence("return document.querySelector(\"#chkCanDataSets\").checked")) {
+			bc.stepInfo("DataSets checkbox is Checked");
+			getComponentName("Datasets").waitAndClick(5);
+			driver.waitForPageToBeReady();
+			bc.waitTime(2);
+			bc.stepInfo("Action : DataSets checkbox is clicked and Unchecked");
+		} else {
+			bc.stepInfo("DataSets checkbox is un-Checked");
+		}
+
+		bc.printResutInReport(
+				driver.verifyElementPresence("return document.querySelector(\"#chkCanCollections\").checked"),
+				"Collections option is NOT Enabled when “Datasets” access control on \"bulk user access control\" Screen in unchecked",
+				"Collections option is checked when User un-selects “Datasets” access control on \"bulk user access control\" Screen",
+				"Fail");
+
+		// Collection option disabled check
+		bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentNameDisabled("Collections")),
+				" Collections option is not available Under “Datasets” access control on bulk user access control screen. [Disabled] ",
+				"Collections option is  available Under “Datasets” access control on bulk user access control screen. [Enabled]",
+				"Pass");
+	}
+
 	/**
 	 * @author Raghuram.A
 	 * @Date: 07/18/22
@@ -3444,6 +3482,7 @@ public class UserManagement {
 			e.printStackTrace();
 		}
 	}
+
 	
 	/**
 	 * @author Vijaya.rani
@@ -3470,3 +3509,78 @@ public class UserManagement {
 	}
 
 }
+
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify collection button of function tab
+	 * @param save
+	 * @param disableCollection
+	 * @throws Exception
+	 */
+	public void verifyCollectionButton(boolean save, boolean disableCollection) throws Exception {
+		boolean datasetCB = getComponentCheckBoxStatus("Datasets").isElementAvailable(3);
+		boolean disabledcollectionCB = getComponentNameDisabled("Collections").isElementAvailable(3);
+
+		if (!datasetCB && disabledcollectionCB) {
+			bc.passedStep(" Dataset Checkbox Are unchecked initially & Collections is Disabled");
+		} else if (datasetCB && !disabledcollectionCB) {
+			bc.waitForElement(getComponentCheckBoxClick("Datasets"));
+			getComponentCheckBoxClick("Datasets").waitAndClick(5);
+			bc.stepInfo("Dataset checkboc is unchecked now");
+		}
+
+		getComponentCheckBoxClick("Datasets").waitAndClick(10);
+		bc.stepInfo("Dataset Checkbox is checked");
+
+		bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentNameDisabled("Collections")),
+				"By default Collections option is checked when User Selected “Datasets”",
+				"By default Collections checkbox is unchecked when User Selected “Datasets”", "Fail");
+
+		if (disableCollection) {
+			getComponentCheckBoxClick("Collections").waitAndClick(5);
+			bc.stepInfo("collection checkbox is Enabled & Collections is Unchecked now");
+		}
+
+		if (save) {
+			saveButtonOfFunctionTab();
+			bc.CloseSuccessMsgpopup();
+		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : navigate to function tab
+	 * @param username
+	 * @param loginUser
+	 * @param projectName
+	 * @param filter
+	 * @throws Exception
+	 */
+	public void navigateToFunctionTab(String username, String loginUser, String projectName, boolean filter)
+			throws Exception {
+		driver.waitForPageToBeReady();
+		if (filter) {
+			filterByName(username);
+		}
+		
+		if (loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
+			editLoginUser();
+		} else {
+			editFunctionality(projectName);
+		}
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getFunctionalityTab());
+		getFunctionalityTab().waitAndClick(5);
+
+		if (getFunctionTable().isElementAvailable(10)) {
+			bc.passedStep("Functionality TAB is Opened");
+		} else {
+			bc.failedStep("Functionality TAB is Not Availble");
+		}
+		driver.waitForPageToBeReady();
+	}
+}
+

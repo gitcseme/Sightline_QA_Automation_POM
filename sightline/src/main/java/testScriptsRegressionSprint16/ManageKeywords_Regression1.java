@@ -160,7 +160,7 @@ public class ManageKeywords_Regression1 {
 		
 		//Verify Manage Keyowrd Page for RMU
 		keyWord.navigateToKeywordPage();
-		keyWord.verifyManageKeywordPageRMUAndPA("RMU");
+		keyWord.verifyManageKeywordPageRMUAndPA(Input.rmu2userName);
 		loginPage.logout();
 		
 		// Login As PA
@@ -169,7 +169,7 @@ public class ManageKeywords_Regression1 {
 
 		// Verify Manage Keyowrd Page for PA
 		keyWord.navigateToKeywordPage();
-		keyWord.verifyManageKeywordPageRMUAndPA("PA");
+		keyWord.verifyManageKeywordPageRMUAndPA(Input.pa2userName);
 		loginPage.logout();
 	}
 	
