@@ -889,9 +889,6 @@ public class Input {
 
 		newProject = config.getNewProject();
 		ingestion = config.getIngestion();
-		suite = config.getSuite();
-		numberOfDataSets = config.getNumberOfDataSets();
-		browserName = config.getBrowserName();
 		screenShotOnPass = config.getScreenShotOnPass();
 		screenShotOnFail = config.getScreenShotOnFail();
 		batchFilesPath = config.getBatchFilesPath();
