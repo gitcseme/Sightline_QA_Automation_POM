@@ -4752,7 +4752,9 @@ public class DocViewPage {
 		}
 		getSaveDoc().waitAndClick(30);
 
+		//success message added on saving coding form
 		base.VerifySuccessMessage("Applied coding saved successfully");
+		
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 		 * getDocView_Analytics_Threaded().Displayed() ;}}), Input.wait30);

@@ -1803,6 +1803,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		
 		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
@@ -1868,6 +1869,8 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		
+		//select coding form from assignment popup
 		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
