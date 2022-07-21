@@ -921,7 +921,15 @@ public class Input {
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
 		// Added by krishna - new projects
 
-		
+		if (mode) {
+			browserName = System.getProperty("browser");
+			suite = System.getProperty("testType");
+			numberOfDataSets = Integer.parseInt(System.getProperty("noOfDataSet"));
+		} else {
+			suite = config.getSuite();
+			numberOfDataSets = config.getNumberOfDataSets();
+			browserName = config.getBrowserName();
+		}
 
 		/*
 		 * Ingestion Data
@@ -957,29 +965,29 @@ public class Input {
 		
 
 		if (mode) {
-			projectName = envConfig.getProjectName();
-			domainName = envConfig.getDomainName();
-			sa1userName = envConfig.getSa1userName();
-			sa1password = envConfig.getSa1password();
-			pa1userName = envConfig.getPa1userName();
-			pa1password = envConfig.getPa1password();
-			rmu1userName = envConfig.getRmu1userName();
-			rmu1password = envConfig.getRmu1password();
-			rev1userName = envConfig.getRev1userName();
-			rev1password = envConfig.getRev1password();
-			pa2userName = envConfig.getPa2userName();
-			pa2password = envConfig.getPa2password();
-			rmu2userName = envConfig.getRmu2userName();
-			rmu2password = envConfig.getRmu2password();
-			rev2userName = envConfig.getRev2userName();
-			rev2password = envConfig.getRev2password();
-			ICEProjectName = envConfig.getICEProjectName();
-			da1userName = envConfig.getDa1userName();
-			da1password = envConfig.getDa1password();
-			additionalDataProject = envConfig.getAdditionalDataProject();
-			ingestDataProject = envConfig.getIngestDataProject();
-			largeVolDataProject = envConfig.getLargeVolDataProject();
-			prodPath = envConfig.getProdpath();
+			projectName = System.getProperty("projectName");
+			ICEProjectName = System.getProperty("ICEProjectName");
+			domainName = System.getProperty("domainName");
+			da1userName = System.getProperty("da1userName");
+			da1password = System.getProperty("da1password");
+			sa1userName = System.getProperty("sa1userName");
+			sa1password = System.getProperty("sa1password");
+			pa1userName = System.getProperty("pa1userName");
+			pa1password = System.getProperty("pa1password");
+			rmu1userName = System.getProperty("rmu1userName");
+			rmu1password = System.getProperty("rmu1password");
+			rev1userName = System.getProperty("rev1userName");
+			rev1password = System.getProperty("rev1password");
+			pa2userName = System.getProperty("pa2userName");
+			pa2password = System.getProperty("pa2password");
+			rmu2userName = System.getProperty("rmu2userName");
+			rmu2password = System.getProperty("rmu2password");
+			rev2userName = System.getProperty("rev2userName");
+			rev2password = System.getProperty("rev2password");
+			additionalDataProject = System.getProperty("additionalDataProject");
+			ingestDataProject = System.getProperty("ingestDataProject");
+			largeVolDataProject = System.getProperty("largeVolDataProject");
+			prodPath = System.getProperty("prodpath");
 			
 		} else {
 			projectName = envConfig.getProjectName();
