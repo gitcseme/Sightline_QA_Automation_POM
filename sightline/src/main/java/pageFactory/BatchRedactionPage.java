@@ -602,12 +602,20 @@ public class BatchRedactionPage {
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			System.out.println("Clicked on View Report");
 			base.stepInfo("Clicked on View Report");
-		} else {
+		} else  {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
 			getMySavedSearchTextbox(searchname).Selected();
-			getViewReportForSavedSearch(searchname).waitAndClick(20);
+			if (getViewReportForSavedSearch(searchname).Displayed()) {
+				getViewReportForSavedSearch(searchname).waitAndClick(10);
+				softassert.assertTrue(true);
+				base.passedStep(
+						"Analyze completed and Verify that \"View Report & Apply Redactions\" button appeared.");
+			} else {
+				softassert.assertFalse(false);
+				base.failedStep("\"View Report & Apply Redactions\" button not appeared");
+			}
 		}
 
 		// verify Pre-Redaction report Popup
@@ -1675,6 +1683,7 @@ public class BatchRedactionPage {
 		// Click on redact button
 		base.waitForElement(getPopUpRedactButton());
 		getPopUpRedactButton().waitAndClick(15);
+
 
 		// verify Popup Message
 		String Expected = "Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions.";
