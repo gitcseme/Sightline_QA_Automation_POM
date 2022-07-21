@@ -298,7 +298,7 @@ public class BatchRedactionRegression {
 		base.stepInfo(batch.getRollbackMsg(searchName3).getText());
 
 		// Delete Search
-		//saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		saveSearch.deleteSearch(searchName3, Input.mySavedSearch, "Yes");
 		//saveSearch.deleteSearch(searchName2, Input.mySavedSearch, "Yes");
 
 		login.logout();
