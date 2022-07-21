@@ -875,27 +875,17 @@ public class Input {
 		UtilityLog.info("*****************************************************");
 		// Common Data-------------------------------------------------------------
 		config = (ConfigMain) new ConfigLoader().load("ConfigMain");
-		// Reading from Config Main File
-		envConfig = (Environment) new ConfigLoader().load(config.getEnv());
-		// Reading from Jenkins
-		// envConfig = (Environment) new
-		// ConfigLoader().load(System.getProperty("tEnvironment"));
-		System.out.println("Running scripts on " + config.getEnv() + " Environment");
-		UtilityLog.info("Running scripts on " + config.getEnv() + " Environment");
-		
-		// Common Data-------------------------------------------------------------
-				config = (ConfigMain) new ConfigLoader().load("ConfigMain");
-				if (mode) {
-					// Reading from Jenkins
-					envConfig = (Environment) new ConfigLoader().load(System.getProperty("environment"));
-					System.out.println("Running scripts on " + System.getProperty("environment") + " Environment");
-					UtilityLog.info("Running scripts on " + System.getProperty("environment") + " Environment");
-				} else {
-					// Reading from Config Main File
-					envConfig = (Environment) new ConfigLoader().load(config.getEnv());
-					System.out.println("Running scripts on " + config.getEnv() + " Environment");
-					UtilityLog.info("Running scripts on " + config.getEnv() + " Environment");
-				}
+		if (mode) {
+			// Reading from Jenkins
+			envConfig = (Environment) new ConfigLoader().load(System.getProperty("environment"));
+			System.out.println("Running scripts on " + System.getProperty("environment") + " Environment");
+			UtilityLog.info("Running scripts on " + System.getProperty("environment") + " Environment");
+		} else {
+			// Reading from Config Main File
+			envConfig = (Environment) new ConfigLoader().load(config.getEnv());
+			System.out.println("Running scripts on " + config.getEnv() + " Environment");
+			UtilityLog.info("Running scripts on " + config.getEnv() + " Environment");
+		}
 
 		newProject = config.getNewProject();
 		ingestion = config.getIngestion();
