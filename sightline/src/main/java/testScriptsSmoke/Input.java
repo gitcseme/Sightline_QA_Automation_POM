@@ -882,6 +882,20 @@ public class Input {
 		// ConfigLoader().load(System.getProperty("tEnvironment"));
 		System.out.println("Running scripts on " + config.getEnv() + " Environment");
 		UtilityLog.info("Running scripts on " + config.getEnv() + " Environment");
+		
+		// Common Data-------------------------------------------------------------
+				config = (ConfigMain) new ConfigLoader().load("ConfigMain");
+				if (mode) {
+					// Reading from Jenkins
+					envConfig = (Environment) new ConfigLoader().load(System.getProperty("environment"));
+					System.out.println("Running scripts on " + System.getProperty("environment") + " Environment");
+					UtilityLog.info("Running scripts on " + System.getProperty("environment") + " Environment");
+				} else {
+					// Reading from Config Main File
+					envConfig = (Environment) new ConfigLoader().load(config.getEnv());
+					System.out.println("Running scripts on " + config.getEnv() + " Environment");
+					UtilityLog.info("Running scripts on " + config.getEnv() + " Environment");
+				}
 
 		newProject = config.getNewProject();
 		ingestion = config.getIngestion();
@@ -907,9 +921,7 @@ public class Input {
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
 		// Added by krishna - new projects
 
-		additionalDataProject = envConfig.getAdditionalDataProject();
-		ingestDataProject = envConfig.getIngestDataProject();
-		largeVolDataProject = envConfig.getLargeVolDataProject();
+		
 
 		/*
 		 * Ingestion Data
@@ -941,8 +953,8 @@ public class Input {
 		rmu2FullName = envConfig.getRmu2FullName();
 		rev2FullName = envConfig.getRev2FullName();
 		da1FullName= envConfig.getDa1FullName();
-		prodPath = envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
+		
 
 		if (mode) {
 			projectName = envConfig.getProjectName();
@@ -964,6 +976,10 @@ public class Input {
 			ICEProjectName = envConfig.getICEProjectName();
 			da1userName = envConfig.getDa1userName();
 			da1password = envConfig.getDa1password();
+			additionalDataProject = envConfig.getAdditionalDataProject();
+			ingestDataProject = envConfig.getIngestDataProject();
+			largeVolDataProject = envConfig.getLargeVolDataProject();
+			prodPath = envConfig.getProdpath();
 			
 		} else {
 			projectName = envConfig.getProjectName();
@@ -985,6 +1001,10 @@ public class Input {
 			rmu2password = envConfig.getRmu2password();
 			rev2userName = envConfig.getRev2userName();
 			rev2password = envConfig.getRev2password();
+			additionalDataProject = envConfig.getAdditionalDataProject();
+			ingestDataProject = envConfig.getIngestDataProject();
+			largeVolDataProject = envConfig.getLargeVolDataProject();
+			prodPath = envConfig.getProdpath();
 			
 			}
 		// Test data-------------------------------------------------------------
