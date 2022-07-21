@@ -4371,7 +4371,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		
-		SelectCodingform(assignmentName);
+		SelectCodingform(codingForm);
 
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
@@ -5943,7 +5943,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		
-		SelectCodingform(assignmentName);
+		SelectCodingform(codingForm);
 
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
@@ -6242,7 +6242,7 @@ public class AssignmentsPage {
 		}
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		SelectCodingform(assignmentName);
+		SelectCodingform(codingForm);
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
 			getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);

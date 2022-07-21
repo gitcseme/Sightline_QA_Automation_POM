@@ -4748,7 +4748,7 @@ public class DocViewPage {
 		}
 		getSaveDoc().waitAndClick(30);
 
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 		 * getDocView_Analytics_Threaded().Displayed() ;}}), Input.wait30);
@@ -5708,7 +5708,7 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveBtn());
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 	}
 
 	/**
@@ -5778,7 +5778,7 @@ public class DocViewPage {
 		getCodingFormSaveBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.stepInfo("After editing the coding form of the document");
-		base.passedStep("Expected message - Document saved successfully ");
+		base.passedStep("Expected message - Applied coding saved successfully ");
 		base.waitForElement(getCodeSameAsLast());
 		getCodeSameAsLast().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -5811,7 +5811,7 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveBtn());
 		base.waitTillElemetToBeClickable(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 
 		base.waitForElement(getCodeSameAsLast());
 		base.waitTillElemetToBeClickable(getCodeSameAsLast());
@@ -8446,7 +8446,7 @@ public class DocViewPage {
 		getCodingStampLastIcon(lastIcon).waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		reusableDocView.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		for (int j = 4; j <= 4; j++) {
@@ -8478,7 +8478,7 @@ public class DocViewPage {
 		selectCodingFormCheckBoxes("Not_Responsive").waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		reusableDocView.clickCodeSameAsLast();
 		base.stepInfo("Document is sync fot both parent and child window in minidoclist");
 		reusableDocView.deleteStampColour(lastIcons);
@@ -8528,7 +8528,7 @@ public class DocViewPage {
 		getCodingStampLastIcon(lastIcon).waitAndClick(10);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		driver.waitForPageToBeReady();
 		String principalText = getVerifyPrincipalDocument().getText().trim();
 		for (int j = 2; j <= 2; j++) {
@@ -8574,7 +8574,7 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		reusableDocView.clickCodeSameAsLast();
 		driver.waitForPageToBeReady();
 		base.waitForElement(getVerifyPrincipalDocument());
@@ -9869,7 +9869,7 @@ public class DocViewPage {
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
@@ -9957,7 +9957,7 @@ public class DocViewPage {
 		getCodingFormSaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		reusableDocView.clickGearIconOpenAnalyticalPanel();
 		String parentWindow = reusableDocView.switchTochildWindow();
 		// no docs 1
@@ -12547,7 +12547,7 @@ public class DocViewPage {
 		softAssertion.assertEquals("Edited and save with save button", getAttribute);
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		for (int i = 5; i <= 5; i++) {
 			getClickDocviewID(i).waitAndClick(5);
 		}
@@ -15193,7 +15193,7 @@ public class DocViewPage {
 		base.waitForElement(getDocView_CodingFormComments());
 		getDocView_CodingFormComments().SendKeys("Reviewed");
 		getSaveAndNextButton().waitAndClick(5);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
@@ -15203,7 +15203,7 @@ public class DocViewPage {
 		base.waitForElement(getMetaDataInputInDocView());
 		getMetaDataInputInDocView().SendKeys("Reviewed");
 		getSaveAndNextButton().waitAndClick(5);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
@@ -15216,7 +15216,7 @@ public class DocViewPage {
 		getSaveAndNextButton().waitAndClick(5);
 		driver.close();
 		reusableDocView.switchToNewWindow(1);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
@@ -15229,7 +15229,7 @@ public class DocViewPage {
 		getSaveAndNextButton().waitAndClick(5);
 		driver.close();
 		reusableDocView.switchToNewWindow(1);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
@@ -15805,7 +15805,7 @@ public class DocViewPage {
 		// base.CloseSuccessMsgpopup();
 		reusableDocView.verifySavedStamp(comment);
 		driver.waitForPageToBeReady();
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		softAssertion.assertAll();
 	}
 
@@ -18373,7 +18373,7 @@ public class DocViewPage {
 		String firstDoc = getVerifyPrincipalDocument().getText();
 		editCodingForm(comment);
 		codingFormSaveAndNext();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		String secDoc = getVerifyPrincipalDocument().getText();
 		softAssertion.assertNotEquals(firstDoc, secDoc);
 		softAssertion.assertAll();
@@ -18448,7 +18448,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		editCodingForm(comment);
 		codingFormSaveAndNext();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		boolean flag = getChainVerifyInAnalDocs().isDisplayed();
 		softAssertion.assertFalse(flag);
 		softAssertion.assertAll();
@@ -19382,7 +19382,7 @@ public class DocViewPage {
 		clickGearIconOpenCodingFormChildWindow();
 		switchToNewWindow(2);
 		editCodingFormSavedStampBtnChildWindow(lastIcon);
-		System.out.println("document saved successfully");
+		System.out.println("Applied coding saved successfully");
 		driver.waitForPageToBeReady();
 		closeWindow(1);
 		switchToNewWindow(1);
@@ -19558,7 +19558,7 @@ public class DocViewPage {
 		base.stepInfo("Document is saved with the last applied coding of  the document..");
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
@@ -20702,7 +20702,7 @@ public class DocViewPage {
 //		}
 		base.waitForElement(getCodingFormSaveButton());
 		getCodingFormSaveButton().waitAndClick(5);
-		base.stepInfo("Document saved successfully");
+		base.stepInfo("Applied coding saved successfully");
 		driver.waitForPageToBeReady();
 	}
 
@@ -20873,7 +20873,7 @@ public class DocViewPage {
 		softAssertion.assertTrue(true, "Coding stamp saved successfully");
 		lastAppliedStamp(Input.stampSelection);
 		codingFormSaveButton();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		driver.waitForPageToBeReady();
 		softAssertion.assertAll();
 	}
@@ -21754,7 +21754,7 @@ public class DocViewPage {
 		// validation of saved stamp
 		verifyingComments(comment);
 		codingFormSaveButton();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		base.CloseSuccessMsgpopup();
 		verifyThatIsLastDoc();
 		getDocView_NumTextBox().SendKeys("3" + Keys.ENTER);
@@ -22480,7 +22480,7 @@ public class DocViewPage {
 		boolean flag = getReadOnlyTextBox(projectFieldName).Displayed();
 		driver.scrollPageToTop();
 		codingFormSaveAndNext();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		base.stepInfo("Coding form values loaded while clicking the saved stamp in parent window ");
 		softAssertion.assertTrue(flag);
 		clickGearIconOpenCodingFormChildWindow();
@@ -22493,7 +22493,7 @@ public class DocViewPage {
 		driver.scrollPageToTop();
 		codingFormSaveAndNext();
 		childWindowToParentWindowSwitching(parent);
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 		base.stepInfo("Coding form values loaded while clicking the saved stamp in parent window ");
 		softAssertion.assertTrue(flagOne);
 		softAssertion.assertAll();
@@ -23146,7 +23146,7 @@ public class DocViewPage {
 				base.waitForElement(getCodingFormSaveBtn());
 				getCodingFormSaveBtn().waitAndClick(10);
 				driver.waitForPageToBeReady();
-				base.VerifySuccessMessage("Document saved successfully");
+				base.VerifySuccessMessage("Applied coding saved successfully");
 				base.CloseSuccessMsgpopup();
 			}
 		}
@@ -26633,7 +26633,7 @@ public class DocViewPage {
 		String character4000 = passingLengthCharacter(big);
 		getReadOnlyTextBox(bit).SendKeys(character4000);
 		codingFormSaveButton();
-		base.VerifySuccessMessage("Document saved successfully");
+		base.VerifySuccessMessage("Applied coding saved successfully");
 	}
 
 	/**
