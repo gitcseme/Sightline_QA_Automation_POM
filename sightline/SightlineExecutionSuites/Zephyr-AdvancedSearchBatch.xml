@@ -14,6 +14,7 @@
 <class name= "testScriptsRegression.AdvancedSearch_Regression3" />
 <class name= "testScriptsRegression.AdvancedSearch_Regression4" />
 <class name= "testScriptsRegression.ModifySearchInAdvancedSearch_Regression" />
+</classes>
 </test>
 
 
