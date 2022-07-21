@@ -768,15 +768,17 @@ public class O365_Regression_2_1 {
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that from Collection Wizard user should be 
-	 * able to add new source location 'Create New collection' > 'Set up a source location' link.
+	 * @Description : Verify that from Collection Wizard user should be able to add
+	 *              new source location 'Create New collection' > 'Set up a source
+	 *              location' link.
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60603", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyCollectionWizardSetupASourceLocationToAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+	public void verifyCollectionWizardSetupASourceLocationToAddNewSourceLocation(String username, String password,
+			String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60603 - O365");
 		base.stepInfo(
@@ -795,8 +797,8 @@ public class O365_Regression_2_1 {
 
 		// to verify source location is present or not
 		source.verifySourceLocationIsNotPresent();
-		
-		//To add New Source Location
+
+		// To add New Source Location
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		base.waitForElement(collection.getNewCollectionBtn());
 		collection.getNewCollectionBtn().waitAndClick(5);
@@ -804,17 +806,19 @@ public class O365_Regression_2_1 {
 
 		// Logout
 		login.logout();
-		
+
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that from Collection Wizard user should 
-	 * be able to add new source location on click of 'Start a collection' > 'Add New Source Location' button
+	 * @Description : Verify that from Collection Wizard user should be able to add
+	 *              new source location on click of 'Start a collection' > 'Add New
+	 *              Source Location' button
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60604", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+	public void verifyCollectionWizardClickOnStartACollectionToAddNewSourceLocation(String username, String password,
+			String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60604 - O365");
 		base.stepInfo(
@@ -828,7 +832,7 @@ public class O365_Regression_2_1 {
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
-		//To add New Source Location
+		// To add New Source Location
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		base.waitForElement(collection.getStartALinkCollection());
 		collection.getStartALinkCollection().waitAndClick(5);
@@ -836,6 +840,121 @@ public class O365_Regression_2_1 {
 
 		// Logout
 		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that - By default Collections option is checked when
+	 *              User selected “Datasets” access control on “Edit User >>
+	 *              Functionality” TAB.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60709", enabled = true, groups = { "regression" })
+	public void verifyByDefaultCollIsEnabled() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60709 - O365");
+		base.stepInfo(
+				"Verify that - By default Collections option is checked when User selected “Datasets” access control on “Edit User >> Functionality” TAB.");
+
+		// Login as SA
+		base.stepInfo("**Step-1 & 2 Login to Application with SysAdmin**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// verify collection button by default is checked when dataset is checked for PA
+		userManagement.navigateToFunctionTab(Input.pa1userName, "SA", Input.projectName, true);
+		userManagement.verifyCollectionButton(true, false);
+
+		// verify collection button by default is checked when dataset is checked for
+		// RMU
+		driver.Navigate().refresh();
+		userManagement.navigateToFunctionTab(Input.rmu1userName, "SA", Input.projectName, true);
+		userManagement.verifyCollectionButton(true, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that - after upgradation if 'Datasets' is selected then
+	 *              “Collections” access control also gets selected on “Edit” User
+	 *              Screen
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60720", enabled = true, groups = { "regression" })
+	public void verifyCLickAndUnclickOfColl() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60720 - O365");
+		base.stepInfo(
+				"Verify that - after upgradation if 'Datasets' is selected then “Collections” access control also gets selected on “Edit” User Screen");
+
+		// Login as SA
+		base.stepInfo("**Step-1 & 2 Login to Application with SysAdmin**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		// verify collection button by default is checked when dataset is checked for PA
+		userManagement.navigateToFunctionTab(Input.pa1userName, "SA", Input.projectName, true);
+		userManagement.verifyCollectionButton(true, true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that After upgradation if 'Datasets' is selected then
+	 *              “Collections” access control also gets selected on “bulk user
+	 *              access control\" Screen
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60723", enabled = true, groups = { "regression" })
+	public void verifyCollInBulkUserScreen() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60723 - O365");
+		base.stepInfo(
+				"Verify that After upgradation if 'Datasets' is selected then “Collections” access control also gets selected on “bulk user access control\" Screen");
+
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", Input.pa1FullName } };
+
+		// Login as SA
+		base.stepInfo(
+				"**Step-1 & 2 Pre-requisite : At least one PA User should exists and Login to Application with SysAdmin**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		userManagement.verifyCollectionAndDatasetsAccessForUsersViaBulkAssign(userRolesData, true, true, "Yes", false,
+				"", false, false, false);
+
+		// Logout
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that when “Datasets” access control is NOT checked then
+	 *              'Collections' option is also Un-checked on \"bulk user access
+	 *              control\" Screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60718", enabled = true, groups = { "regression" })
+	public void verifyWhenDatasetIsUnchecked() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60718 - O365");
+		base.stepInfo(
+				"Verify that when “Datasets” access control is NOT checked then 'Collections' option is also Un-checked on \"bulk user access control\" Screen.");
+
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", Input.pa1FullName },
+				{ Input.rmu1userName, "Review Manager", Input.rmu1FullName } };
+
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		userManagement.verifyCollectionAndDatasetsAccessForUsersViaBulkAssign(userRolesData, true, false,
+				"unCheckValidation", false, "", false, false, false);
+
+		// Logout
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
