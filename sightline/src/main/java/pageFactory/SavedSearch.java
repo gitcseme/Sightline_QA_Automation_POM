@@ -997,7 +997,7 @@ public class SavedSearch {
 	}
 
 	public Element currentClickedNode() {
-		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']");
+		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-themeicon']");
 	}
 
 	public Element getLastCreatedSearchGroup(String rtFolder) {

@@ -4,6 +4,9 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -36,6 +39,9 @@ public class AdvancedSearch_Regression2_6 {
 	BaseClass baseClass;
 	Input in;
 
+	// Global variable name for the class
+	String tagName = "tagName" + Utility.dynamicNameAppender();
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -55,6 +61,13 @@ public class AdvancedSearch_Regression2_6 {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 
+	}
+
+	@DataProvider(name = "paRmuRevUsers")
+	public Object[][] paRmuRevUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+		return users;
 	}
 
 	/**
@@ -267,6 +280,67 @@ public class AdvancedSearch_Regression2_6 {
 		// logout
 		loginPage.logout();
 
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/20/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that while Searching Audio with Workproduct searches-
+	 *              configured Audio search settings does not revert back to
+	 *              inappropriate setting in \"Audio\" block on \"Advanced Search\"
+	 *              screen. RPMXCON-48159
+	 */
+	@Test(description = "RPMXCON-48159", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
+	public void verifySearchingAudioWithWorkProductNotRevertBackToInappropriateSetting(String username, String password,
+			String User) throws InterruptedException {
+		List<String> searchString = new ArrayList<String>();
+		String language = Input.language;
+		int thresholdInput = 65;
+		String operator = "ALL";
+		String location = "Within:";
+		String seconds = "5";
+		searchString.add(Input.audioSearchString1);
+		searchString.add(Input.audioSearch);
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("RPMXCON-48159 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that while Searching Audio with Workproduct searches- configured Audio search settings does not revert back to inappropriate setting in \"Audio\" block on \"Advanced Search\" screen");
+
+		// create tag
+		tagPage.tagCreationDeletionBasedOnUser(true, User, tagName, Input.securityGroup, false, "PA", null,
+				"additional");
+
+		// configure audio search
+		baseClass.stepInfo("Configuring Audio Search Block.");
+		String thresholdValue = sessionSearch.configureAudioSearchBlock(searchString.get(0), searchString.get(1),
+				language, thresholdInput, operator, location, seconds);
+
+		// configure Tag workproduct search
+		baseClass.stepInfo("Configuring WorkProduct search Block Tag.");
+		sessionSearch.workProductSearch("tag", tagName, true);
+		// perform search
+		sessionSearch.serarchWP();
+
+		// validating audio search result
+		sessionSearch.validateAudioSearchResult(searchString, operator, language, seconds, thresholdValue);
+
+		// validating Tag WorkProduct search Result
+		String actualTagSearchResult = sessionSearch.getWorkProductSearchResult().getText();
+		baseClass.compareTextViaContains(actualTagSearchResult, tagName,
+				"Tag Name selected while configuring the Search matches with the Tag Name appears in the search Result",
+				"Tag Name selected while configuring the Search doesn't matches with the Tag Name appears in the search Result");
+
+		// delete tag
+		tagPage.tagCreationDeletionBasedOnUser(false, User, tagName, Input.securityGroup, true, "RMU", null,
+				"additional");
+
+		// logOut
+		loginPage.logout();
 	}
 
 	@DataProvider(name = "Users")

@@ -74,6 +74,10 @@
 		<rmu2password>${rmu2password}</rmu2password>
 		<rev2userName>${rev2userName}</rev2userName>
 		<rev2password>${rev2password}</rev2password>
+		<additionalDataProject>${additionalDataProject}</additionalDataProject>
+        <ingestDataProject>${ingestDataProject}</ingestDataProject>
+        <largeVolDataProject>${largeVolDataProject}</largeVolDataProject>
+        <prodpath>${prodpath}</prodpath>
 	</systemPropertyVariables> 
 
 <suiteXmlFiles>

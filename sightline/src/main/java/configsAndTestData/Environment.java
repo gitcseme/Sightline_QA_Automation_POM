@@ -1,8 +1,5 @@
 package configsAndTestData;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +17,7 @@ public class Environment {
 	public String domainName;
 	public String sa1userName;
 	public String sa1password;
-    public String da1userName;
+	public String da1userName;
 	public String da1password;
 	public String pa1userName;
 	public String pa1password;
@@ -48,9 +45,8 @@ public class Environment {
 	public String additionalDataProject;
 	public String ingestDataProject;
 	public String largeVolDataProject;
-	
-	//Added by sowndarya
+
+	// Added by sowndarya
 	public String da1FullName;
 
-	
 }

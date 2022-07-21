@@ -3550,6 +3550,9 @@ public class DocViewPage {
 	public Element getRemarkBlockDisplayed() {
 		return driver.FindElementByXPath("//div[@class='remarks-tab col-md-2 active']");
 	}
+	public ElementCollection getMetaDataText(int count) {
+		return driver.FindElementsByXPath("//table[@id='MetaDataDT']//tr//td['"+count+"']");
+	}
 
 	public DocViewPage(Driver driver) {
 

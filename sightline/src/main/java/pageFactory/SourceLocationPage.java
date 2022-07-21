@@ -43,7 +43,30 @@ public class SourceLocationPage {
 	public ElementCollection getColumnValues(int i) {
 		return driver.FindElementsByXPath("//tr[@role='row']//td[" + i + "]");
 	}
-
+	public Element getSetUpASourceLocation() {
+		return driver.FindElementById("divAddNewSourceLocation");
+	}
+	
+	public Element getSetUpASourceLocationLink() {
+		return driver.FindElementByXPath("//a[text()='Set up a source location']");
+	}
+	
+	
+	public ElementCollection getSourceLocationListTable() {
+		return driver.FindElementsByXPath("//*[@id='dtSourceList']//tbody//tr");
+	}
+	
+	
+	public Element getSetUpASourceLocationDeleteButton() {
+		return driver.FindElementByXPath("//*[@id='dtSourceList']//tr[1]//a[text()='Delete']");
+	}
+	
+	public Element getSetUpASourceLocationDeleteYesButton() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+	
+	
+	
 	public SourceLocationPage(Driver driver) {
 		this.driver = driver;
 		base = new BaseClass(driver);
@@ -103,5 +126,56 @@ public class SourceLocationPage {
 		}
 		return elementNames;
 	}
+	
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description To Verify Source Location link is present in Collections Page.
+	 * 
+	 */
+	public void verifySourceLocationIsNotPresent() {
+
+		
+		driver.waitForPageToBeReady();
+		
+		if (getSetUpASourceLocation().isElementAvailable(5)) {
+			base.stepInfo("The Set Up for Source link is present in New Collection Page");
+			
+		}else {
+			driver.Navigate().to("https://sightlinept.consilio.com/Collection/SourceLocation");
+			
+			ElementCollection locationListTable = getSourceLocationListTable();
+			int locationListSize = locationListTable.size();
+			System.out.println(locationListSize);
+			
+			for (int i = 0; i < locationListSize; i++) {
+				driver.waitForPageToBeReady();
+				base.waitTime(2);
+				if (getSetUpASourceLocationDeleteButton().isElementAvailable(5)) {
+					
+					base.waitForElement(getSetUpASourceLocationDeleteButton());
+					getSetUpASourceLocationDeleteButton().waitAndClick(5);
+					
+					base.waitForElement(getSetUpASourceLocationDeleteYesButton());
+					getSetUpASourceLocationDeleteYesButton().waitAndClick(5);
+					
+					base.VerifySuccessMessage("Source Location deleted successfully");
+					
+				}else {
+					base.stepInfo("All Source Locations are deleted successfully");
+					base.passedStep("Source Location Link is Available now");
+				}
+				
+				
+			}
+			
+		}
+		
+		
+	}
+	
+	
+
 
 }

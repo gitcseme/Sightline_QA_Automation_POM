@@ -109,7 +109,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getSelectAssignment(String assignmentName) {
-		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "']");
+		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']");
 	}
 
 	// change this name to pop or smtg
@@ -8371,8 +8371,9 @@ public class AssignmentsPage {
 	 * @description This method verifies the assignment is selected or not
 	 */
 	public void Checkclickedstatus(String assignmentName1) {
-
+		driver.waitForPageToBeReady();
 		if (!getSelectAssignment(assignmentName1).GetAttribute("class").contains("highlight")) {
+			
 			getSelectAssignment(assignmentName1).Click();
 		} else {
 			bc.stepInfo("Assignments is already in clicked state");

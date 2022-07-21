@@ -238,7 +238,7 @@ public class BatchRedactionRegression3 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
-		security.selectSecurityGroup(securityGroup);
+		
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
 		redact.AddRedaction(tagName, "RMU");
@@ -249,6 +249,7 @@ public class BatchRedactionRegression3 {
 		security.selectSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
 		security.assignAnnotationToSG(layer);
+		security.selectSecurityGroup(securityGroup);
 		security.assignRedactionTagtoSG(tagName);
 
 		// access to security group to Rmu
@@ -348,7 +349,7 @@ public class BatchRedactionRegression3 {
 		driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
 		security.AddSecurityGroup(securityGroup);
 		driver.waitForPageToBeReady();
-		security.selectSecurityGroup(securityGroup);
+		
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		annotation.AddAnnotation(layer);
 
@@ -386,6 +387,7 @@ public class BatchRedactionRegression3 {
 		// Login as a RMU
 
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		base.selectproject();
 		base.selectsecuritygroup(securityGroup);
 
 		// Create saved search
@@ -1424,6 +1426,8 @@ public class BatchRedactionRegression3 {
 		// add SG and assign annotation and redaction tag
 		sgpage.navigateToSecurityGropusPageURL();
 		sgpage.AddSecurityGroup(securityGroup);
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.selectSecurityGroup(securityGroup);
 		sgpage.assignRedactionTagtoSG(Input.defaultRedactionTag);
 		annotation.AddAnnotation(Annotation);
 		sgpage.navigateToSecurityGropusPageURL();

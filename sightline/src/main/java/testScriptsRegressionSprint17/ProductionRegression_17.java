@@ -455,7 +455,7 @@ public void verifyDatFiledWithTiffPageCount() throws Exception {
 	}
 	System.out.println(lines.get(1));
 	String[] arrOfStr = lines.get(1).split("þ");
-	String output = arrOfStr[1];
+	String output = arrOfStr[3];
 	if (TiffPageCount == Integer.parseInt(output)) {
 		base.passedStep("Tiff page count is displayed as expected");
 	} else {
@@ -581,7 +581,7 @@ public void verifyingTheTiffPageContentInGeneratedProduction() throws Exception 
 	String firstFile = prefixID + beginningBates + suffixID;
 	File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
 	page.isfileisExists(file);
-	page.OCR_Verification_In_Generated_Tiff_tess4j(file,Input.testData1);
+	page.OCR_Verification_In_Generated_Tiff_tess4j(file,"Crammer");
 	
 	tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
@@ -633,7 +633,7 @@ public void verifyTheProductionGenerationUsingTemplate() throws Exception {
 	ProductionPage page = new ProductionPage(driver);
 	page = new ProductionPage(driver);
 	String beginningBates = page.getRandomNumber(2);
-
+    driver.waitForPageToBeReady();
 	String productionname = "p" + Utility.dynamicNameAppender();
 	page.selectingDefaultSecurityGroup();
 	page.addANewProductionAndSave(productionname);
@@ -828,7 +828,7 @@ public void tiffSectionWithBrandingTags() throws Exception {
  * 
  */
 @Test(description = "RPMXCON-47943", enabled = true, groups = { "regression" })
-public void verifyingIncludingFamilyDocsProducedInGenratedFile() throws Exception {
+public void asVerifyingIncludingFamilyDocsProducedInGenratedFile() throws Exception {
 
 	UtilityLog.info(Input.prodPath);
 	base.stepInfo("RPMXCON-47943 -Production Component");
@@ -866,7 +866,7 @@ public void verifyingIncludingFamilyDocsProducedInGenratedFile() throws Exceptio
 	page.getIncludeFamilies().Click();
 	driver.scrollPageToTop();
 	page.getMarkCompleteLink().waitAndClick(10);
-	driver.waitForPageToBeReady();
+	base.waitTime(2);
 	String DocCount = page.getDocumentSelectionLink().getText();
 	System.out.println(DocCount);
 	if(Integer.valueOf(DocCount)!=PureHit) {
@@ -891,7 +891,7 @@ public void verifyingIncludingFamilyDocsProducedInGenratedFile() throws Exceptio
 	System.out.println(dir_contents.length);
 	int NativeFile = dir_contents.length;
 	
-	if (Integer.valueOf(DocCount) .equals(NativeFile)) {
+	if (Integer.valueOf(DocCount) <=(NativeFile)) {
 		base.passedStep("Family Document is included in generated file");
 	} else {
 		base.failedStep("Family Document is not included");
