@@ -3,6 +3,9 @@ package testScriptsRegressionSprint17;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -168,8 +171,159 @@ public class Assignments_Regression_2_1 {
 		// logOut
 		loginPage.logout();
 	}
+  
 	/**
-	 * @author Jayanthi.Ganesan
+	 * @author Iyappan.Kasinathan
+	 * @description Verifying the Live sequence in Assignment group and Assignment
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-49088",enabled = true, groups = { "regression" })
+	public void verifyCascadedLiveSequenceOrderChangesInAssignment() throws InterruptedException, ParseException, IOException {
+		baseClass.stepInfo("Verifying the Live sequence in Assignment group and Assignment");
+		baseClass.stepInfo("Test case Id:RPMXCON-49088");
+		String assignmentGroup = "assgnGrp" + Utility.dynamicNameAppender();
+		SoftAssert sa = new SoftAssert();
+		List<String> ListeBeforAlteredInAssgnGrp = new ArrayList<>();
+		List<String> ListeAfterAlteredInAssgnGrp = new ArrayList<>();
+		List<String> ListInAssgnmnt = new ArrayList<>();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.createCascadeNonCascadeAssgnGroup_withoutSave(assignmentGroup,"Yes");		
+		ListeBeforAlteredInAssgnGrp =baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+		assignPage.dragAndDropLiveSequenceFromTopToBottom(" Email Threads"," DocID");
+		ListeAfterAlteredInAssgnGrp =baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+		sa.assertNotEquals(ListeBeforAlteredInAssgnGrp, ListeAfterAlteredInAssgnGrp);
+		baseClass.waitTillElemetToBeClickable(assignPage.SaveButton());
+		assignPage.SaveButton().waitAndClick(10);
+		assignPage.selectAssignmentGroup(assignmentGroup);
+		baseClass.waitForElement(assignPage.getAssignmentActionDropdown());
+		assignPage.getAssignmentActionDropdown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(assignPage.getAssignmentAction_NewAssignment());
+		baseClass.waitTillElemetToBeClickable(assignPage.getAssignmentAction_NewAssignment());
+		assignPage.getAssignmentAction_NewAssignment().waitAndClick(20);
+		ListInAssgnmnt =baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+		sa.assertEquals(ListeAfterAlteredInAssgnGrp, ListInAssgnmnt);
+		sa.assertAll();
+		baseClass.passedStep("The order of live sequence cascadedly reflected in assignment page");
+		assignPage.DeleteAssgnGroup(assignmentGroup);
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description To verify that validations are displayed if Mandatory fields are not entered on \"New Assignment\" page
+	 * @throws InterruptedException
+	 * @throws ParseException-
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-53603",enabled = true, groups = { "regression" })
+	public void verifyMandatoryFieldValidations() throws InterruptedException, ParseException, IOException {
+		baseClass.stepInfo("To verify that validations are displayed if Mandatory fields are not entered on \"New Assignment\" page");
+		baseClass.stepInfo("Test case Id:RPMXCON-53603");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		baseClass.waitForElement(assignPage.getAssignmentActionDropdown());
+		assignPage.getAssignmentActionDropdown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(assignPage.getAssignmentAction_NewAssignment());
+		baseClass.waitTillElemetToBeClickable(assignPage.getAssignmentAction_NewAssignment());
+		assignPage.getAssignmentAction_NewAssignment().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(assignPage.SaveButton());
+		assignPage.SaveButton().waitAndClick(10);
+		assignPage.validateErrorMessage(assignPage.getQB_AssignemntName_ErrorMSg(), "Name required");
+		assignPage.validateErrorMessage(assignPage.getCodingForm_AssignemntName_ErrorMSg(), "Please select Coding Form");
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description To verify that alphanumeric are accepted in "Assignment Group Name" and "Assignment Name" fields
+	 * @throws InterruptedException
+	 * @throws ParseException-
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-53592",enabled = true, groups = { "regression" })
+	public void verifyAgnmtNameAcceptsAlphaNumericValues() throws InterruptedException, ParseException, IOException {
+		baseClass.stepInfo("To verify that alphanumeric are accepted in \"Assignment Group Name\" and \"Assignment Name\" fields");
+		baseClass.stepInfo("Test case Id:RPMXCON-53592");
+		ArrayList<String> splCharacters = new ArrayList<String>(Arrays.asList("!", "@", "#","$","%","^","&","*","(",")"));
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String assignmentGroup1 = "agnmntGrp"+Utility.dynamicNameAppender();
+		String assignment1 = "agnmnt"+Utility.dynamicNameAppender();
+	    this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+	    assignPage.createCascadeNonCascadeAssgnGroup(assignmentGroup1,"Yes");
+	    if(assignPage.getAssgnGrp_Select(assignmentGroup1).isElementAvailable(5)) {
+	    	baseClass.passedStep("The assignment group added with alpha numeric naming convention created successfully");
+	    }else {
+	    	baseClass.failedStep("The assignment group doesn't accept alpha numeric values");
+	    }
+	    baseClass.stepInfo("Successfully verifed the assignment group accepted the alpha numeric values");
+		for(String value: splCharacters) {
+			String assignmentGroup = "agnmntGrp"+value;
+		    this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		    assignPage.createCascadeNonCascadeAssgnGroup_withoutSave(assignmentGroup,"Yes");
+		    assignPage.validateErrorMessage(assignPage.getQB_AssignemntName_ErrorMSg(), "Please enter an assignment name without using special characters");
+		}
+		baseClass.stepInfo("Successfully verifed the assignment group not accepting the special characters");
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+	    assignPage.createAssignment(assignment1,Input.codingFormName);
+	    this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+	    assignPage.selectAssignmentToView(assignment1);
+	    if(assignPage.getSelectAssignment(assignment1).isElementAvailable(5)) {
+	    	baseClass.passedStep("The assignment added with alpha numeric naming convention created successfully");
+	    }else {
+	    	baseClass.failedStep("The assignment name doesn't accept alpha numeric values");
+	    }
+	    baseClass.stepInfo("Successfully verifed the assignment name accepted the alpha numeric values");
+		for(String value: splCharacters) {
+			String assignment = "agnmnt"+value;
+		    this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		    assignPage.createAssignment_withoutSave(assignment,Input.codingFormName);
+		    assignPage.validateErrorMessage(assignPage.getQB_AssignemntName_ErrorMSg(), "Please enter an assignment name without using special characters");
+		}
+		assignPage.deleteAssignment(assignment1);
+		baseClass.waitTime(3);
+		assignPage.DeleteAssgnGroup(assignmentGroup1);
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description To verify that RMU can delete the assignment to which documents are associated.
+	 * @throws InterruptedException
+	 * @throws ParseException-
+	 * @throws IOException
+	 */
+	@Test(description ="RPMXCON-53609",enabled = true, groups = { "regression" })
+	public void verifyRMUDeletesAssgnmnt() throws InterruptedException, ParseException, IOException {
+		baseClass.stepInfo("To verify that RMU can delete the assignment to which documents are associated.");
+		baseClass.stepInfo("Test case Id:RPMXCON-53609");
+		SessionSearch search = new SessionSearch(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		search.basicContentSearch(Input.TallySearch);
+		search.bulkAssignExisting(assignmentName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		assignPage.add3ReviewerAndDistribute();
+		this.driver.getWebDriver().get(Input.url + "/Dashboard/Dashboard");
+		baseClass.waitTillElemetToBeClickable(assignPage.getAssignmentsInreviewerPg());
+		assignPage.getAssignmentsInreviewerPg().waitAndClick(10);
+		baseClass.waitForElement(assignPage.getAssignmentsCompletedCountInreviewerPg(assignmentName));
+		String docs = assignPage.getAssignmentsCompletedCountInreviewerPg(assignmentName).getText();
+		int count = Integer.parseInt(docs);
+		if(count>=0) {
+			baseClass.passedStep("Completed coloumn value shows only numeric values");
+		}else {
+			baseClass.failedStep("Completed coloumn value not displayed the values as expected");
+		}
+		assignPage.deleteSelectedAgnmt(assignmentName);
+		
+	}
+
+  /**
+  	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
 	 * @Description :To verify that validation is displayed if there is zero documents assigned 
 	 * and RMU selects View All Docs In DocList.

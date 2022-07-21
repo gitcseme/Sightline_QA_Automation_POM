@@ -1475,12 +1475,21 @@ public class AssignmentsPage {
 	public Element getQB_AssignemntName_ErrorMSg() {
 		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
 	}
+
 	public Element getSelectUserToAssignAsReviewer(String userName) {
 		return driver.FindElementByXPath(
 				"//*[@id='divNotAssignedUsers']//div[contains(.,'" +userName + "')]/../div/label");
 	}
 	public Element getAssignmentActionManageTab_ViewinDocList() {
 		return driver.FindElementByXPath("//a[text()='View in Doc List']");
+
+	//Added by Iyappan
+	public ElementCollection getLiveSequenceMetadatas() {
+		return driver.FindElementsByXPath("//ol[@class='dd-list']//i/parent::span");
+	}
+	public Element getCodingForm_AssignemntName_ErrorMSg() {
+		return driver.FindElementByXPath("//span[@id='hidCodingFormList-error']");
+
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -10196,5 +10205,45 @@ public class AssignmentsPage {
 		bc.waitForElement(getAdduserBtn());
 		bc.waitTillElemetToBeClickable(getAdduserBtn());
 		getAdduserBtn().waitAndClick(10);
+
+    /*
+	 * @author Iyappan.Kasinathan
+	 * @description This method alters the order of live sequence
+	 * @param metaData
+	 * @param metaData2
+	 * @throws InterruptedException
+	 */
+	public void dragAndDropLiveSequenceFromTopToBottom(String metaData,String metaData2) throws InterruptedException {
+		System.out.println(metaData);
+		driver.waitForPageToBeReady();
+		Actions actions = new Actions(driver.getWebDriver());
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		wait.until(ExpectedConditions.elementToBeClickable(liveSequenceSorts(metaData).getWebElement()));
+		bc.waitForElement((liveSequenceSorts(metaData)));
+		actions.clickAndHold((liveSequenceSorts(metaData)).getWebElement());
+		System.out.println("Click and hold performed");
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,10);
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,30);
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,20).build().perform();
+		actions.release();
+		actions.build().perform();
+
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method verifies the error message
+	 * @param element
+	 * @param expectedMsg
+	 */
+	public void validateErrorMessage(Element element,String expectedMsg) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(element);
+		String value = element.getText();
+		if(value.equals(expectedMsg)) {
+			bc.passedStep("Error message is displayed as "+value+" as expected");
+		}else {
+			bc.failedStep("Error message is not displayed as expected");
+		}
+
 	}
 }
