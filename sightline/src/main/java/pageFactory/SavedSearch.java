@@ -177,6 +177,7 @@ public class SavedSearch {
 	public Element getToDocView() {
 		return driver.FindElementById("document-btn");
 	}
+
 	public Element getToDocViewoption() {
 		return driver.FindElementByXPath("//span[contains(text(),'Doc View')]");
 	}
@@ -759,6 +760,9 @@ public class SavedSearch {
 	}
 
 	// added by Mohan
+	public ElementCollection getTreeNodesCounts() {
+		return driver.FindElementsByXPath("//*[@id='jsTreeSavedSearch']//li");
+	}
 
 	public Element getSavedSearchTableDraftName() {
 		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']//td[contains(text(),'DRAFT')]");
@@ -8129,7 +8133,7 @@ public class SavedSearch {
 
 	/**
 	 * @Author Jeevitha
-	 * @Decsription  : verify Notification of saved search screen
+	 * @Decsription : verify Notification of saved search screen
 	 * @param initialCount
 	 * @param size
 	 * @return
@@ -8144,10 +8148,10 @@ public class SavedSearch {
 				String completeStatus = getNotificationStatus(i).getText();
 				base.stepInfo("Recieved Notification : " + completeStatus);
 				String[] notify = completeStatus.split(" ");
-				int count=notify.length;
+				int count = notify.length;
 				System.out.println(count);
-				String lastID = notify[count-3];
-				String status = notify[count-1];
+				String lastID = notify[count - 3];
+				String status = notify[count - 1];
 				System.out.println("Id : " + lastID);
 				base.stepInfo("Id : " + lastID);
 				System.out.println("Status : " + status);
@@ -8157,7 +8161,7 @@ public class SavedSearch {
 			}
 		} else {
 			base.failedStep("Didnot recieve Notification");
-	}
+		}
 		return id;
 	}
 
@@ -8169,7 +8173,7 @@ public class SavedSearch {
 	 */
 	public void performReleaseAction(String securityGroup, boolean release) {
 		String expected = "Records saved successfully";
-		 int Bgcount = base.initialBgCount();
+		int Bgcount = base.initialBgCount();
 		base.waitForElement(getReleaseIcon());
 		getReleaseIcon().waitAndClick(5);
 
@@ -8198,11 +8202,27 @@ public class SavedSearch {
 				return base.initialBgCount() == Bgcount + 1;
 			}
 		}), Input.wait60);
-		 int afterBgcount = base.initialBgCount();
-		if(afterBgcount>Bgcount) {
+		int afterBgcount = base.initialBgCount();
+		if (afterBgcount > Bgcount) {
 			base.stepInfo("Recieved Notification");
 		}
 
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: to verify the count of Tree node in Saved Search
+	 * @return
+	 */
+	public int verifyTreeNodeCount() {
+
+		driver.waitForPageToBeReady();
+
+		ElementCollection treeNodesCounts = getTreeNodesCounts();
+		int size = treeNodesCounts.size();
+		System.out.println(size);
+
+		return size;
 	}
 
 }

@@ -1129,6 +1129,11 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
+	
+	public Element getSavedSearchTreeNode() {
+		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//li[4]//a");
+	}
+	
 	public Element getSavedSearchGroupName(String name) {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
 	}
@@ -5525,9 +5530,11 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 		try {
-			base.waitForElement(getSaveSearchPopupFolderName(groupName));
-			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+			driver.waitForPageToBeReady();
+			base.waitTime(4);
+			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(5)) {
 				base.stepInfo(groupName + " : is present");
+				base.waitTillElemetToBeClickable(getSaveSearchPopupFolderName(groupName));
 				getSaveSearchPopupFolderName(groupName).waitAndClick(10);
 			} else {
 				System.out.println(groupName + " : SG not available");
@@ -5538,10 +5545,11 @@ public class SessionSearch {
 			base.stepInfo(groupName + " : SG not available");
 		}
 
-		base.waitTillElemetToBeClickable(getSaveSearch_Name());
+		base.waitForElement(getSaveSearch_Name());
+		getSaveSearch_Name().Click();
 		getSaveSearch_Name().SendKeys(searchName);
 
-		// base.waitForElement(getSaveSearch_SaveButton());
+		base.waitForElement(getSaveSearch_SaveButton());
 		getSaveSearch_SaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 
@@ -12553,10 +12561,12 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 			base.selectproject();
 			basicContentSearch(Input.testData1);
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			saveSearchAtAnyRootGroup("Donot Delete2"+ Utility.dynamicNameAppender(), searchGroup);
 			driver.waitForPageToBeReady();
 			base.selectproject();
 			basicContentSearch(Input.searchString2);
+			base.waitTime(3);
 			saveSearchAtAnyRootGroup("Donot Delete3"+ Utility.dynamicNameAppender(), searchGroup);
 			
 			base.stepInfo("Saved search list is creted with more than 3 save searches");
@@ -12564,6 +12574,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		
 	}
 	
+
 	/**
 	 * @author: Jayanthi
 	 * @description: this method will get the doc count available under SG .
@@ -12582,4 +12593,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		}
 		return expectedCount;
 	}
+
+	
+
 }
