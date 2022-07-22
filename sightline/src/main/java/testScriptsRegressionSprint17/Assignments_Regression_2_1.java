@@ -41,8 +41,8 @@ public class Assignments_Regression_2_1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+	//	in = new Input();
+	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -171,6 +171,7 @@ public class Assignments_Regression_2_1 {
 		// logOut
 		loginPage.logout();
 	}
+  
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description Verifying the Live sequence in Assignment group and Assignment
@@ -321,6 +322,44 @@ public class Assignments_Regression_2_1 {
 		
 	}
 
+  /**
+  	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 * @Description :To verify that validation is displayed if there is zero documents assigned 
+	 * and RMU selects View All Docs In DocList.
+	 */
+	@Test(description = "RPMXCON-54050", enabled = true, groups = { "regression" })
+	public void verifyValidations_ViewInDocList() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54050");
+		baseClass.stepInfo("To verify that validation is displayed if there is zero documents "
+				+ "assigned and RMU selects View All Docs In DocList.");
+		String assgnName = "Assgn" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// performing basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// performing bulk assign action
+		sessionSearch.bulkAssign();
+		assignPage.assignmentCreationAsPerCf(assgnName, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment and bulk assigned docs with name  -"+assgnName);
+		String userToAdd[] = { Input.rev1userName };
+		assignPage.assignReviewers(userToAdd);
+
+		assignPage.getAssignment_ManageReviewersTab().waitAndClick(10);
+		assignPage.getAssgn_ManageRev_selectReviewer(Input.rev1userName).waitAndClick(10);
+		assignPage.selectActionsInManageRev(assignPage.getAssignmentActionManageTab_ViewinDocList());
+
+		baseClass.VerifyWarningMessage("No documents available to do the selected action");
+		baseClass.stepInfo("If there is zero documents "
+				+ "assigned and RMU selects View All Docs In DocList  validation is displayed and verified.");
+		assignPage.deleteAssgnmntUsingPagination(assgnName);
+		// logout
+		loginPage.logout();
+	}
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
