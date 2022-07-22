@@ -1038,6 +1038,9 @@ public class IngestionPage_Indium {
 	public Element getActionDelete() {
 		return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']//a[text()='Delete']");
 	}
+	public Element getActionRollBack() {
+		return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']//a[text()='Rollback']");
+	}
 
 	public Element backButton() {
 		return driver.FindElementByXPath("//*[@class='ui-dialog-buttonset']//button[text()='Back']");
@@ -4097,7 +4100,9 @@ public class IngestionPage_Indium {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getIngestion_IngestionType());
+		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(Input.ingestionType);
 		base.stepInfo("Select Source system");
 		base.waitForElement(getSpecifySourceSystem());
 		getSpecifySourceSystem().selectFromDropdown().selectByVisibleText("TRUE");
@@ -11053,6 +11058,96 @@ public class IngestionPage_Indium {
 			selectValueFromEnabledFirstThreeSourceDATFields(field2,field3,field4);
 			clickOnPreviewAndRunButton();
 			base.passedStep("Ingestion started successfully");
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of ingestion after roll back            
+		 */
+		public void VerifyDraftIngestionStatusAfterRollback() {
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByDRAFT());
+			getFilterByDRAFT().waitAndClick(10);
+
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+
+			for (int i = 0; i < 60; i++) {
+				base.waitTime(3);
+				String status = getStatus(1).getText().trim();
+
+				if (status.contains("Draft")) {
+					base.passedStep("Draft completed");
+					break;
+				} else if (status.contains("In Progress")) {
+					base.waitTime(5);
+					getRefreshButton().waitAndClick(10);
+				} else {
+					base.failedStep("rollback failed");
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the status of ingestion after rollback            
+		 */
+		public void rollBackIngestionUsingActionMenu() {
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(5);
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(5);
+			base.waitForElement(getActionRollBack());
+			getActionRollBack().waitAndClick(5);
+			if (getApproveMessageOKButton().isElementAvailable(5)) {
+				getApproveMessageOKButton().waitAndClick(10);
+				base.passedStep("Clicked on OK button to rollback ingestion");
+			}
+			base.VerifySuccessMessage("Rollback of this ingestion has been started. Refresh the page to view for updated status.");
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will rollback and delete ingestion using action dropdown menu            
+		 */
+		
+		public void performRollbackAndDeletIngestion() {
+			rollBackIngestionUsingActionMenu();
+			VerifyDraftIngestionStatusAfterRollback();
+			deleteIngestion();
+		}
+		
+		/**
+		 * @author: Arun Created Date: 22/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the ingestion detail popup display 
+		 * when clicking ingestion name link        
+		 */
+		
+		public void performClickOnIngestionNameLinkAndCloseButton() {
+			if(getIngestionDetailPopup(1).isElementAvailable(5)) {
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(getCloseButton());
+				if(getRunCopying().isElementAvailable(10) ) {
+					base.passedStep("Ingestion detail popup displayed");	
+				}
+				else {
+					base.failedStep("after clicking ingestion name, ingestion popup not displayed");
+				}
+			}
+			else {
+				base.failedStep("No ingestion tile present in home page");
+			}
+			base.stepInfo("Clicking close button");
+			getCloseButton().waitAndClick(5);
+			if(!getActionDropdownArrow().isElementAvailable(10)) {
+				base.passedStep("Ingestion detail popup closed and homepage displayed");
+			}
+			else {
+				base.failedStep("Ingestion detail popup not closed after clicking close button");
+			}
 		}
 				
 		
