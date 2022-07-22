@@ -3532,7 +3532,7 @@ public class UserManagement {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
 		}
-	}
+	
 
 }
 
@@ -3739,7 +3739,7 @@ public class UserManagement {
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
 	}
-}
+
 
 }
 
