@@ -550,6 +550,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		sessionSearch = new SessionSearch(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		sessionSearch.navigateToSessionSearchPageURL();
