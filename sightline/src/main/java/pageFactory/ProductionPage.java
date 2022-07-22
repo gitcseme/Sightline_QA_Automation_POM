@@ -20786,6 +20786,17 @@ public void verifyingComponentTabSection() {
 		base.waitForElement(getCloseIconInManageTemplate());
 		getCloseIconInManageTemplate().Click();
 	}
+/**
+ * @author Brundha.T
+ * @param fieldValue
+ * @Description:filling slip sheet in tiff section
+ */
+public void fillingSlipSheetInTiffSection(String fieldValue) {
+	driver.waitForPageToBeReady();
+	base.waitForElement(getCalculatedCheckBoxSelection(fieldValue));
+	base.clickButton(getCalculatedCheckBoxSelection(fieldValue));
+	base.clickButton(getAddSelected());
+}
 }
 
 
