@@ -1,5 +1,7 @@
 package testScriptsRegressionSprint17;
 
+import static org.testng.Assert.assertEquals;
+
 import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -19,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -38,6 +41,7 @@ public class AdvancedSearch_Regression2_6 {
 	AssignmentsPage assignPage;
 	BaseClass baseClass;
 	Input in;
+	SoftAssert assertion;
 
 	// Global variable name for the class
 	String tagName = "tagName" + Utility.dynamicNameAppender();
@@ -60,13 +64,15 @@ public class AdvancedSearch_Regression2_6 {
 		tagPage = new TagsAndFoldersPage(driver);
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
+		assertion = new SoftAssert();
 
 	}
 
 	@DataProvider(name = "paRmuRevUsers")
 	public Object[][] paRmuRevUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+//				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } 
+		};
 		return users;
 	}
 
@@ -341,6 +347,80 @@ public class AdvancedSearch_Regression2_6 {
 
 		// logOut
 		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that User Navigates from Advanced Search result to
+	 *              Document list screen [RPMXCON-
+	 * @param username
+	 * @param password
+	 * @param User
+	 * @throws ParseException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-57082", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
+	public void verifyDoclIstPage_Adv(String username, String password, String User) throws ParseException, Exception {
+		String expectedTxt = "SESSIONSEARCH";
+		DocListPage doclist = new DocListPage(driver);
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57082  Advanced Search");
+		baseClass.stepInfo("Verify that User Navigates from Advanced Search result to Document list screen");
+
+		// configure content query & view in doclist
+		sessionSearch.advancedContentSearch(Input.searchString5);
+		sessionSearch.ViewInDocList();
+
+		// verify text in Source Criteria Panel
+		driver.waitForPageToBeReady();
+		doclist.verifySourceCriteriaPanel(expectedTxt);
+
+		// logOut
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify as an user login into the Application, I will get
+	 *              the search result for near dupes, when I will search some query
+	 *              along with multiple Redaction tags filter applied from work
+	 *              product tab of advanced search
+	 * @param username
+	 * @param password
+	 * @param User
+	 * @throws ParseException
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-57071", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
+	public void verifySearchResultForNearDupe(String username, String password, String User)
+			throws ParseException, Exception {
+		String expectedTxt = "SESSIONSEARCH";
+		DocListPage doclist = new DocListPage(driver);
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57071  Advanced Search");
+		baseClass.stepInfo(
+				"To verify as an user login into the Application, I will get the search result for near dupes, when I will search some query along with multiple Redaction tags filter applied from work product tab of advanced search");
+
+		// Select Redaction Tag in workproduct
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.workProductSearch("redactions", Input.defaultRedactionTag, false);
+		sessionSearch.saveAndReturnPureHitCount();
+
+		// verify near dupe is count is displayed
+		String nearDup = sessionSearch.verifyNearDupeCount();
+		assertion.assertNotEquals(nearDup, "");
+		assertion.assertAll();
+
+		// logOut
+		loginPage.logout();
+
 	}
 
 	@DataProvider(name = "Users")

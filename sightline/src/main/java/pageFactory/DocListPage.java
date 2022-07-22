@@ -1375,6 +1375,11 @@ public class DocListPage {
 
 	}
 
+	//jeevitha
+	public Element getSourcePanel() {
+		return driver.FindElementByXPath("//div[@id='accordion']//div[@class='panel-body']");
+	}
+	
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
@@ -6059,6 +6064,23 @@ public class DocListPage {
 			base.failedStep(
 					"Documents is filtered based on the applied " + emailvalue + " and DocFileSize is not displayed.");
 		}
+	}
+	
+	/**
+	 * @author Jeevitha
+	 * @Description : verify source Criteria panel text
+	 * @param expectedTxt
+	 */
+	public void verifySourceCriteriaPanel(String expectedTxt) {
+		if(getHeaderText().isElementAvailable(10)) {
+			base.stepInfo("DocList Page is Displayed");
+		}else {
+			base.failedStep("Doclist page is not displayed");
+		}
+		String actualTxt=getSourcePanel().getText();
+		String passMsg=expectedTxt+" : is Displayed in Source criteria panel";
+		String failMsg="expectedTxt is not displayed";
+		base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
 	}
 
 }
