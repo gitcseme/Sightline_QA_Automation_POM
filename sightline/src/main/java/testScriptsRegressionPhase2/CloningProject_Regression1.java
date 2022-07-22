@@ -51,6 +51,9 @@ public class CloningProject_Regression1 {
 	ProjectPage projectPage;
 	DataSets data;
 	String projectName;
+	int treeNodeCount;
+	String savedSearchTreeNode;
+	String securityName;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -70,13 +73,45 @@ public class CloningProject_Regression1 {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		SavedSearch savedSearch = new SavedSearch(driver);
-		savedSearch.navigateToSSPage();
+		savedsearch = new SavedSearch(driver);
+		SecurityGroupsPage securityGroupsPage = new SecurityGroupsPage(driver);
+		securityName = "Security_Group"+ Utility.dynamicNameAppender();
+		savedsearch.navigateToSSPage();
+		treeNodeCount = savedsearch.verifyTreeNodeCount();
+		if (treeNodeCount>4) {
+			if (sessionSearch.getSavedSearchTreeNode().isElementAvailable(5)) {
+				savedSearchTreeNode = sessionSearch.getSavedSearchTreeNode().getText();
+				System.out.println(savedSearchTreeNode);
+				driver.waitForPageToBeReady();
+				sessionSearch.verifySavedSearchTermsForCloningProject(savedSearchTreeNode);
+			}else {
+				baseClass.failedStep("Count is miss match");
+			}
+		}
+		else if (treeNodeCount<4) {
+			
+		
+			securityGroupsPage.navigateToSecurityGropusPageURL();
+			securityGroupsPage.AddSecurityGroup(securityName);
+			driver.waitForPageToBeReady();
+			savedsearch.navigateToSSPage();
+			sessionSearch.validateSavedSearchNode();
+			sessionSearch.verifySavedSearchTermsForCloningProject(securityName);
+			
+		}
+		
+		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
 		sessionSearch.verifySavedSearchTermsForCloningProject("Shared With Project");
+		driver.waitForPageToBeReady();
+		savedsearch.navigateToSSPage();
+		sessionSearch.validateSavedSearchNode();
 		sessionSearch.verifySavedSearchTermsForCloningProject("My Saved");
+		driver.waitForPageToBeReady();
+		savedsearch.navigateToSSPage();
+		sessionSearch.validateSavedSearchNode();
 		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Default");
-		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with demoSg5021561");
+		
 		
 		loginPage.logout();
 		
@@ -216,8 +251,15 @@ public class CloningProject_Regression1 {
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
-		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with demoSg5021561");
+		
+		if (treeNodeCount>4) {
+			saveSearch.navigateToSSPage();
+			saveSearch.verifySavedSearchDetailsForCloningProject(savedSearchTreeNode);
+		}else if (treeNodeCount<4) {
+			saveSearch.navigateToSSPage();
+			saveSearch.verifySavedSearchDetailsForCloningProject(securityName);
+		}
+		
 
 		loginPage.logout();
 
@@ -294,7 +336,6 @@ public class CloningProject_Regression1 {
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
@@ -305,13 +346,13 @@ public class CloningProject_Regression1 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
 	@AfterClass(alwaysRun = true)
-
 	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
 
+		UtilityLog.info("******Execution completed for " + this.getClass().getSimpleName() + "********");
 	}
 
 }
