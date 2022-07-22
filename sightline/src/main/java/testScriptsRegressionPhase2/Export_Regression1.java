@@ -618,87 +618,87 @@ public class Export_Regression1 {
 							loginPage.logout();
 						}
 
-						/**
-						 * @author Brundha RPMXCON-48067
-						 * @Description To Verify selection of one or more tags without selecting any
-						 *              file types for placeholdering a set of documents.(For Export).
-						 * 
-						 */
-						@Test(description = "RPMXCON-48067", enabled = true, groups = { "regression" }, priority = 11)
-						public void verifyingPlaceholderTextInGeneratedFile() throws Exception {
+						 /**
+                         * @author Brundha RPMXCON-48067
+                         * @Description To Verify selection of one or more tags without selecting any
+                         *              file types for placeholdering a set of documents.(For Export).
+                         * 
+                         */
+                        @Test(description = "RPMXCON-48067", enabled = true, groups = { "regression" }, priority = 11)
+                        public void verifyingPlaceholderTextInGeneratedFile() throws Exception {
 
-							base = new BaseClass(driver);
-							UtilityLog.info(Input.prodPath);
-							base.stepInfo("RPMXCON-48067 -Export Component");
-							base.stepInfo(
-									"To Verify selection of one or more tags without selecting any file types for placeholdering a set of documents.(For Export).");
+                            base = new BaseClass(driver);
+                            UtilityLog.info(Input.prodPath);
+                            base.stepInfo("RPMXCON-48067 -Export Component");
+                            base.stepInfo(
+                                    "To Verify selection of one or more tags without selecting any file types for placeholdering a set of documents.(For Export).");
 
-							String foldername = "FolderProd" + Utility.dynamicNameAppender();
-							String tagname1 = "Tag" + Utility.dynamicNameAppender();
-							String tagname2 = "Tag" + Utility.dynamicNameAppender();
-							String newExport = "Ex" + Utility.dynamicNameAppender();
-							String prefixID = "p" + Utility.dynamicNameAppender();
-							String suffixID = "S" + Utility.dynamicNameAppender();
+                            String foldername = "FolderProd" + Utility.dynamicNameAppender();
+                            String tagname1 = "Tag" + Utility.dynamicNameAppender();
+                            String tagname2 = "Tag" + Utility.dynamicNameAppender();
+                            String newExport = "Ex" + Utility.dynamicNameAppender();
+                            String prefixID = "p" + Utility.dynamicNameAppender();
+                            String suffixID = "S" + Utility.dynamicNameAppender();
 
-							TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-							tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-							tagsAndFolderPage.createNewTagwithClassification(tagname1, "Select Tag Classification");
-							tagsAndFolderPage.createNewTagwithClassification(tagname2, "Select Tag Classification");
+                            TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+                            tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+                            tagsAndFolderPage.createNewTagwithClassification(tagname1, "Select Tag Classification");
+                            tagsAndFolderPage.createNewTagwithClassification(tagname2, "Select Tag Classification");
 
-							SessionSearch sessionSearch = new SessionSearch(driver);
-							int purehit = sessionSearch.basicContentSearch(Input.testData1);
-							sessionSearch.bulkFolderExisting(foldername);
-							sessionSearch.bulkTagExisting(tagname1);
+                            SessionSearch sessionSearch = new SessionSearch(driver);
+                            int purehit = sessionSearch.basicContentSearch(Input.testData1);
+                            sessionSearch.bulkFolderExisting(foldername);
+                            sessionSearch.bulkTagExisting(tagname1);
 
-							ProductionPage page = new ProductionPage(driver);
-							String productionname = "p" + Utility.dynamicNameAppender();
-							String subBates = page.getRandomNumber(2);
-							page.selectingDefaultSecurityGroup();
-							String text = page.getProdExport_ProductionSets().getText();
-							if (text.contains("Export Set")) {
-								page.selectExportSetFromDropDown();
-							} else {
-								page.createNewExport(newExport);
-							}
-							page.addANewExport(productionname);
-							page.fillingDATSection();
-							page.selectGenerateOption(false);
-							page.nativePlaceholderWithTwoTags(false, tagname1, tagname2);
-							page.navigateToNextSection();
-							page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
-							page.navigateToNextSection();
-							page.fillingDocumentSelectionPage(foldername);
-							page.navigateToNextSection();
-							page.fillingPrivGuardPage();
-							page.fillingExportLocationPage(productionname);
-							page.navigateToNextSection();
-							page.fillingSummaryAndPreview();
-							page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-							page.getCopyPath().waitAndClick(10);
+                            ProductionPage page = new ProductionPage(driver);
+                            String productionname = "p" + Utility.dynamicNameAppender();
+                            String subBates = page.getRandomNumber(2);
+                            page.selectingDefaultSecurityGroup();
+                            String text = page.getProdExport_ProductionSets().getText();
+                            if (text.contains("Export Set")) {
+                                page.selectExportSetFromDropDown();
+                            } else {
+                                page.createNewExport(newExport);
+                            }
+                            page.addANewExport(productionname);
+                            page.fillingDATSection();
+                            page.selectGenerateOption(false);
+                            page.nativePlaceholderWithTwoTags(false, tagname1, tagname2);
+                            page.navigateToNextSection();
+                            page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+                            page.navigateToNextSection();
+                            page.fillingDocumentSelectionPage(foldername);
+                            page.navigateToNextSection();
+                            page.fillingPrivGuardPage();
+                            page.fillingExportLocationPage(productionname);
+                            page.navigateToNextSection();
+                            page.fillingSummaryAndPreview();
+                            page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+                            page.getCopyPath().waitAndClick(10);
 
-							String actualCopedText = page.getCopiedTextFromClipBoard();
-							String parentTab = page.openNewTab(actualCopedText);
-							page.goToImageFiles();
-							driver.waitForPageToBeReady();
-							for (int i = 2; i < purehit; i++) {
-								page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
-							}
+                            String actualCopedText = page.getCopiedTextFromClipBoard();
+                            String parentTab = page.openNewTab(actualCopedText);
+                            page.goToImageFiles();
+                            driver.waitForPageToBeReady();
+                            for (int i = 2; i < purehit; i++) {
+                                page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+                            }
 
-							driver.waitForPageToBeReady();
-							for (int i = 2; i < purehit; i++) {
-								File imageFile = new File(Input.fileDownloadLocation + prefixID + "0" + "(" + i + ")" + suffixID + ".tiff");
-								page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
-							}
-							driver.close();
-							driver.getWebDriver().switchTo().window(parentTab);
+                            driver.waitForPageToBeReady();
+                            for (int i = 2; i < purehit; i++) {
+                                File imageFile = new File(Input.fileDownloadLocation + prefixID +  "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
+                                page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
+                            }
+                            driver.close();
+                            driver.getWebDriver().switchTo().window(parentTab);
 
-							// delete tags and folders
-							tagsAndFolderPage = new TagsAndFoldersPage(driver);
-							tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
-							tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
-							loginPage.logout();
+                            // delete tags and folders
+                            tagsAndFolderPage = new TagsAndFoldersPage(driver);
+                            tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+                            tagsAndFolderPage.DeleteTagWithClassification(tagname1, Input.securityGroup);
+                            loginPage.logout();
 
-						}
+                        }
 						/**
 						 * @author Brundha RPMXCON-47977
 						 * @Description To Verify Count displayed for "Documents with Multiple Branding

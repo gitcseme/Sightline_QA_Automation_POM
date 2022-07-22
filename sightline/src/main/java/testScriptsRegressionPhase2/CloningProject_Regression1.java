@@ -94,23 +94,27 @@ public class CloningProject_Regression1 {
 			securityGroupsPage.navigateToSecurityGropusPageURL();
 			securityGroupsPage.AddSecurityGroup(securityName);
 			driver.waitForPageToBeReady();
+			
 			savedsearch.navigateToSSPage();
 			sessionSearch.validateSavedSearchNode();
 			sessionSearch.verifySavedSearchTermsForCloningProject(securityName);
 			
 		}
 		
+		baseClass.selectproject();
 		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
-		sessionSearch.verifySavedSearchTermsForCloningProject("Shared With Project");
+		sessionSearch.verifySavedSearchTermsForCloningProject(Input.shareSearchPA);
 		driver.waitForPageToBeReady();
+		baseClass.selectproject();
 		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
-		sessionSearch.verifySavedSearchTermsForCloningProject("My Saved");
+		sessionSearch.verifySavedSearchTermsForCloningProject(Input.mySavedSearch);
 		driver.waitForPageToBeReady();
+		baseClass.selectproject();
 		savedsearch.navigateToSSPage();
 		sessionSearch.validateSavedSearchNode();
-		sessionSearch.verifySavedSearchTermsForCloningProject("Shared with Default");
+		sessionSearch.verifySavedSearchTermsForCloningProject(Input.shareSearchDefaultSG);
 		
 		
 		loginPage.logout();
@@ -158,7 +162,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared With Project");
+		saveSearch.verifySavedSearchDetailsForCloningProject(Input.shareSearchPA);
 
 		loginPage.logout();
 
@@ -181,7 +185,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("My Saved");
+		saveSearch.verifySavedSearchDetailsForCloningProject(Input.mySavedSearch);
 
 		loginPage.logout();
 
@@ -202,7 +206,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("My Saved");
+		saveSearch.verifySavedSearchDetailsForCloningProject(Input.mySavedSearch);
 
 		loginPage.logout();
 
@@ -228,7 +232,7 @@ public class CloningProject_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
 		SavedSearch saveSearch = new SavedSearch(driver);
 		saveSearch.navigateToSSPage();
-		saveSearch.verifySavedSearchDetailsForCloningProject("Shared with Default");
+		saveSearch.verifySavedSearchDetailsForCloningProject(Input.shareSearchDefaultSG);
 
 		loginPage.logout();
 

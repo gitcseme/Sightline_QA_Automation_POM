@@ -1481,7 +1481,7 @@ public class AssignmentsPage {
 				"//*[@id='divNotAssignedUsers']//div[contains(.,'" +userName + "')]/../div/label");
 	}
 	public Element getAssignmentActionManageTab_ViewinDocList() {
-		return driver.FindElementByXPath("//a[text()='View in Doc List']");
+		return driver.FindElementByXPath("//a[text()='View in Doc List']");}
 
 	//Added by Iyappan
 	public ElementCollection getLiveSequenceMetadatas() {
@@ -10208,6 +10208,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getAdduserBtn());
 		bc.waitTillElemetToBeClickable(getAdduserBtn());
 		getAdduserBtn().waitAndClick(10);
+	}
 
     /*
 	 * @author Iyappan.Kasinathan

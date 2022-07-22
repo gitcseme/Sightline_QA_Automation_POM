@@ -7960,7 +7960,7 @@ public class SavedSearch {
 		base.waitForElement(getCountofDocs());
 		String docsCount = getCountofDocs().getText();
 		System.out.println(docsCount);
-		if (draftName.contains("D") && docsCount.isEmpty()) {
+		if (draftName.equals("DRAFT") && docsCount.isEmpty()) {
 			base.passedStep("Copied searches is in 'DRAFT' state and doesn't have any counts associated with them. ");
 		} else {
 			base.failedStep("The req fields are not present in the saved search list");
