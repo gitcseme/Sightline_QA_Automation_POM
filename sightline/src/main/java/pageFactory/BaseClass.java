@@ -3928,6 +3928,7 @@ public class BaseClass {
 		 */
 		public String getCurrentLoginedUserRole() {
 			return getLoginedUserRole().getText().trim();
+		}
 
 		
 		public void impersonateSAtoRMU(String projectName) throws InterruptedException {
