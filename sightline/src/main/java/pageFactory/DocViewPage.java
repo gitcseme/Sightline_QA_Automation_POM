@@ -16413,12 +16413,14 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			String panelItemValue = null;
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getNonAudioRemarkBtn().isElementAvailable(10);
-				}
-			}), Input.wait60);
-			getNonAudioRemarkBtn().waitAndClick(10);
+			if(getRemarkBlockDisplayed().isElementAvailable(5)) {
+				System.out.println("add remark Block is already available");
+			}else {
+			driver.waitForPageToBeReady();
+			base.waitTime(2);
+			base.waitForElement(getNonAudioRemarkBtn());
+			getNonAudioRemarkBtn().waitAndClick(9);
+			}
 			driver.waitForPageToBeReady();
 			List<WebElement> remarkPanelItems = getRemarkPanelItems().FindWebElements();
 			List<WebElement> deleteRmarks = getDeleteRemarks().FindWebElements();
@@ -26696,6 +26698,8 @@ public class DocViewPage {
 			}
 
 			if (getDocView_Remark_DeleteIcon().isElementAvailable(2)) {
+				driver.waitForPageToBeReady();
+				base.waitTime(3);
 				getDocView_Remark_DeleteIcon().waitAndClick(10);
 				base.getPopupYesBtn().waitAndClick(5);
 			} else {
