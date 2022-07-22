@@ -786,6 +786,10 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox disableCanCollections' and normalize-space()='" + componentName + "']");
 	}
+	
+	public Element getDeleteBtn() {
+		return driver.FindElementByXPath("//a[text()='Delete']");
+	}
 
 	// jeevitha
 	public Element getFunctionTable() {
@@ -3505,6 +3509,34 @@ public class UserManagement {
 		}
 	}
 
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description : Method for deleting added user.
+	 * @param firstName : firstName is String value that first name of user need to
+	 *                  delete.
+	 */
+	public void deleteUser() {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDeleteBtn().Visible();
+				}
+			}), Input.wait30);
+			getDeleteBtn().isElementAvailable(5);
+			getDeleteBtn().waitAndClick(5);
+			getConfirmDelete().isElementAvailable(5);
+			getConfirmDelete().waitAndClick(5);
+			bc.VerifySuccessMessage("User has been deactivated");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
+		}
+	}
+
+}
+
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify collection button of function tab
@@ -3576,6 +3608,7 @@ public class UserManagement {
 		}
 		driver.waitForPageToBeReady();
 	}
+
 	
 	/**
 	 * @author Aathith.Senthilkumar
@@ -3707,3 +3740,7 @@ public class UserManagement {
 		driver.Manage().window().maximize();
 	}
 }
+
+}
+
+

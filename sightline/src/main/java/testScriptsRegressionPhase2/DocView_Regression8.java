@@ -286,7 +286,7 @@ public class DocView_Regression8 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String docid = Input.DocIdCopyPaste;
-		String docid1 = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -414,7 +414,7 @@ public class DocView_Regression8 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String docid = Input.DocIdCopyPaste;
-		String docid1 = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -520,7 +520,7 @@ public class DocView_Regression8 {
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String docid = Input.DocIdCopyPaste;
-		String docid1 = Input.DocIdCopyPaste;
+		String docid1 = Input.DocIdCopyPaste1;
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);

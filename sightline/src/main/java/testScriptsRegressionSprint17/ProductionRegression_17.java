@@ -1,6 +1,7 @@
 
 package testScriptsRegressionSprint17;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,7 +11,11 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract1;
+import net.sourceforge.tess4j.TesseractException;
+import javax.imageio.ImageIO;
+import net.sourceforge.tess4j.util.LoadLibs;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -22,6 +27,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import net.sourceforge.tess4j.Tesseract1;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -905,6 +911,255 @@ public void asVerifyingIncludingFamilyDocsProducedInGenratedFile() throws Except
 
 }
 
+/**
+ * @author Brundha.T Date:7/21/2022 TestCase Id :RPMXCON-48030 Description :To
+ *         Verify "No Rotation" is selected, pages are not rotated and are
+ *         branded in the existing layout.(portrait/landscape layout remains as
+ *         it is).
+ * 
+ */
+@Test(description = "RPMXCON-48030", enabled = true, groups = { "regression" })
+public void verifyTheNonRotatedDocumentInTiffImage() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-48030 -Production Component");
+	base.stepInfo(
+			"To Verify 'No Rotation' is selected, pages are not rotated and are branded in the existing layout.(portrait/landscape layout remains as it is).");
+	String foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	BaseClass base = new BaseClass(driver);
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.telecaSearchString);
+	sessionSearch.bulkFolderExisting(foldername);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingTIFFSectionPrivDocs(tagname, Input.tagNamePrev);
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	page.extractFile();
+	System.out.println("Unzipped the downloaded files");
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	String firstFile = prefixID + beginningBates + suffixID;
+	File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
+
+	BufferedImage bimg = ImageIO.read(file);
+	int width = bimg.getWidth();
+	int height = bimg.getHeight();
+	if (width < height) {
+		base.passedStep("Tiff image is not rotated as expected");
+	} else {
+		base.failedStep("Tiff image is rotated");
+	}
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+
+	loginPage.logout();
+
+}
+
+/**
+ * @author Brundha.T Date:7/21/2022 TestCase Id :RPMXCON-48205 Description :To
+ *         Verify In Productions, Date format of the DateOnly fields should not
+ *         include time portion
+ * 
+ */
+@Test(description = "RPMXCON-48205", enabled = true, groups = { "regression" })
+public void verifyingMasterDateOnlyInDownloadedFile() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	BaseClass base = new BaseClass(driver);
+	base.stepInfo("RPMXCON-48205 -Production Component");
+	base.stepInfo("To Verify In Productions, Date format of the DateOnly fields should not include time portion");
+
+	String foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.selectGenerateOption(false);
+	page.slipSheetToggleEnable();
+	page.fillingSlipSheetInTiffSection("MasterDateDateOnly");
+	page.fillingSlipSheetInTiffSection("DocID");
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	page.extractFile();
+	driver.waitForPageToBeReady();
+	String home = System.getProperty("user.home");
+	String firstFile = prefixID + beginningBates + suffixID;
+	File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".ss.tiff");
+
+	ITesseract instance = new Tesseract1();
+	File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+	instance.setDatapath(tessDataFolder.getPath());
+	driver.waitForPageToBeReady();
+	String result = instance.doOCR(file);
+	System.out.println(result);
+
+	String[] MasterDateDateOnly = result.split(":");
+	String Output = MasterDateDateOnly[1];
+
+	String MasterDate = Output.trim().replaceAll("[a-zA-Z]", "");
+	int MasterDateSize = MasterDate.length();
+	if (MasterDateSize >= 11) {
+		base.passedStep("MasterDateOnly displayed as expected");
+	} else {
+		base.failedStep("MasterDate is not displayed as expected");
+	}
+
+	tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+	tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+	loginPage.logout();
+
+}
+
+/**
+ * @author Brundha.T Date:7/21/2022 TestCase Id :RPMXCON-47980 Description :To
+ *         Verify In Productions, Document Level Numbering options Sub-bates
+ *         number and min. number length should not be mandatory
+ * 
+ */
+@Test(description = "RPMXCON-47980", enabled = true, groups = { "regression" })
+public void productionGenerationWithoutDocumentLevel() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-47980 -Production Component");
+	base.stepInfo(
+			"To Verify In Productions, Document Level Numbering options Sub-bates number and min. number length should not be mandatory");
+	String foldername = "FolderProd" + Utility.dynamicNameAppender();
+	String prefixID = Input.randomText + Utility.dynamicNameAppender();
+	String suffixID = Input.randomText + Utility.dynamicNameAppender();
+	 base = new BaseClass(driver);
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	ProductionPage page = new ProductionPage(driver);
+	String beginningBates = page.getRandomNumber(2);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	driver.waitForPageToBeReady();
+	page.getNumbering_Document_RadioButton().waitAndClick(10);
+	page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopup();
+	loginPage.logout();
+}
+
+/**
+ * @author Brundha.T Date:7/21/2022 TestCase Id :RPMXCON-48286 Description :To
+ *         Verify In Production , Selection of PDF or TIFF for Rotation on
+ *         Component Page should not throw any error message.
+ * 
+ */
+@Test(description = "RPMXCON-48286", enabled = true, groups = { "regression" })
+public void verifyingSuccessMessageInComponentTab() throws Exception {
+
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-48286 -Production Component");
+	base.stepInfo(
+			"To Verify In Production , Selection of PDF or TIFF for Rotation on Component Page should not throw any error message.");
+	
+	String tagname = "Tag" + Utility.dynamicNameAppender();
+	BaseClass base = new BaseClass(driver);
+
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(Input.testData1);
+	sessionSearch.bulkTagExisting(tagname);
+
+	ProductionPage page = new ProductionPage(driver);
+	String productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.fillingNativeSection();
+	page.fillingPDFSection(tagname,Input.searchString1);
+	page.getRotationLandScapeDropdown().waitAndClick(10);
+	driver.scrollPageToTop();
+	base.waitTillElemetToBeClickable(page.getMarkCompleteLink());
+	page.getMarkCompleteLink().waitAndClick(10);
+	if (page.gettext("Rotation sections in PDF and TIFF components must have the same configuration").isElementAvailable(2)) {
+		base.failedStep("Error Message is Displayed");
+	}else if (base.getSuccessMsgHeader().isElementAvailable(2)) {
+		base.passedStep("Success message is displayed as expected");
+		base.VerifySuccessMessage("Mark Complete successful");
+		page.getNextButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.visibleCheck("Numbering and Sorting");
+	}
+
+	loginPage.logout();
+}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

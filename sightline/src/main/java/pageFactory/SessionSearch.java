@@ -1129,6 +1129,11 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
+	
+	public Element getSavedSearchTreeNode() {
+		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//li[4]//a");
+	}
+	
 	public Element getSavedSearchGroupName(String name) {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
 	}
@@ -5525,9 +5530,11 @@ public class SessionSearch {
 			UtilityLog.info("Radio button already selected");
 		}
 		try {
-			base.waitForElement(getSaveSearchPopupFolderName(groupName));
-			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(3)) {
+			driver.waitForPageToBeReady();
+			base.waitTime(4);
+			if (getSaveSearchPopupFolderName(groupName).isElementAvailable(5)) {
 				base.stepInfo(groupName + " : is present");
+				base.waitTillElemetToBeClickable(getSaveSearchPopupFolderName(groupName));
 				getSaveSearchPopupFolderName(groupName).waitAndClick(10);
 			} else {
 				System.out.println(groupName + " : SG not available");
@@ -5538,10 +5545,11 @@ public class SessionSearch {
 			base.stepInfo(groupName + " : SG not available");
 		}
 
-		base.waitTillElemetToBeClickable(getSaveSearch_Name());
+		base.waitForElement(getSaveSearch_Name());
+		getSaveSearch_Name().Click();
 		getSaveSearch_Name().SendKeys(searchName);
 
-		// base.waitForElement(getSaveSearch_SaveButton());
+		base.waitForElement(getSaveSearch_SaveButton());
 		getSaveSearch_SaveButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 
@@ -12206,8 +12214,12 @@ public class SessionSearch {
 	 */
 	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,Boolean productionDate) throws InterruptedException{
 		driver.waitForPageToBeReady();
-		selectSecurityGinWPS(securityGroup);
-		selectOperator(operator);
+		if (!(securityGroup == null)) {
+			selectSecurityGinWPS(securityGroup);
+		}
+		if (!(operator == null)) {
+			selectOperator(operator);
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getProductionBtn().Visible() && getProductionBtn().Enabled();
@@ -12549,16 +12561,39 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 			base.selectproject();
 			basicContentSearch(Input.testData1);
 			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			saveSearchAtAnyRootGroup("Donot Delete2"+ Utility.dynamicNameAppender(), searchGroup);
 			driver.waitForPageToBeReady();
 			base.selectproject();
 			basicContentSearch(Input.searchString2);
+			base.waitTime(3);
 			saveSearchAtAnyRootGroup("Donot Delete3"+ Utility.dynamicNameAppender(), searchGroup);
 			
 			base.stepInfo("Saved search list is creted with more than 3 save searches");
 		}
 		
 	}
+	
+
+	/**
+	 * @author: Jayanthi
+	 * @description: this method will get the doc count available under SG .
+	 */
+	public int verifyDocsCountAvailableInSg() {
+		int expectedCount = 0;
+		driver.waitForPageToBeReady();
+		if (getCountUniqueDocId().isElementAvailable(10)) {
+			String label = getCountUniqueDocId().getText();
+			String countlabel = label.substring(label.indexOf(":"));
+			expectedCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+			base.stepInfo("Count available in selected security group "+expectedCount);
+
+		} else {
+			base.failedMessage("Uniques docs count under Selected SG is not displayed.");
+		}
+		return expectedCount;
+	}
+
+	
+
 }
-	 
-		

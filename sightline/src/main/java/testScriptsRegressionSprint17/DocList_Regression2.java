@@ -140,6 +140,37 @@ public class DocList_Regression2 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:21/07/2022 RPMXCON-54224
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description To verify that multi value fields should be displayed on Custom column configuration.
+	 */
+	@Test(description = "RPMXCON-54224", enabled = true, groups = { "regression" })
+	public void verifyMutliValueFieldaDisplayCustomColumn() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54224");
+		baseClass.stepInfo(
+				"To verify that multi value fields should be displayed on Custom column configuration.");
+		sessionSearch = new SessionSearch(driver);
+		DocListPage docList = new DocListPage(driver);
+		String[] emailValue = { "EmailAuthorNameAndAddress", "EmailAuthorName", "EmailAuthorAddress" ,"EmailToNamesAndAddresses", "EmailToNames", "EmailToAddresses" ,"EmailCCNamesAndAddresses", "EmailCCNames", "EmailCCAddresses" };
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+	
+		baseClass.stepInfo("Select colunm In doclist EmailAuthorNames and EmailAuthorAddress");
+		docList.SelectColumnDisplayByRemovingAddNewValues(emailValue);
+		
+		baseClass.passedStep("Multi value fields is displayed.user select any multivalued field the in grid it is displayed proper with \";\" delimiter Successfully.");
+		
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
