@@ -12242,8 +12242,12 @@ public class SessionSearch {
 	 */
 	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,Boolean productionDate) throws InterruptedException{
 		driver.waitForPageToBeReady();
-		selectSecurityGinWPS(securityGroup);
-		selectOperator(operator);
+		if (!(securityGroup == null)) {
+			selectSecurityGinWPS(securityGroup);
+		}
+		if (!(operator == null)) {
+			selectOperator(operator);
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getProductionBtn().Visible() && getProductionBtn().Enabled();
@@ -12598,6 +12602,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		
 	}
 	
+
 	/**
 	 * @author
 	 * @Date: 07/22/22
@@ -12705,7 +12710,28 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		}
 		base.passedStep("Tiles are Present in Sequence.");
 	}
+
+
+	/**
+	 * @author: Jayanthi
+	 * @description: this method will get the doc count available under SG .
+	 */
+	public int verifyDocsCountAvailableInSg() {
+		int expectedCount = 0;
+		driver.waitForPageToBeReady();
+		if (getCountUniqueDocId().isElementAvailable(10)) {
+			String label = getCountUniqueDocId().getText();
+			String countlabel = label.substring(label.indexOf(":"));
+			expectedCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+			base.stepInfo("Count available in selected security group "+expectedCount);
+
+		} else {
+			base.failedMessage("Uniques docs count under Selected SG is not displayed.");
+		}
+		return expectedCount;
+	}
+
+
 	
+
 }
-	 
-		

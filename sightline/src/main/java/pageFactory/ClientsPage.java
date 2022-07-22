@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
@@ -57,7 +58,25 @@ public class ClientsPage {
 	public Element getDescending() {
 		return driver.FindElementByXPath("//th[@aria-sort='descending']");
 	}
-  
+	
+	public Element getClientEditBtn(String client){ 
+    	return driver.FindElementByXPath("//*[@id='EntityDataTable']/tbody/tr/td[text()='"+client+"']/../td/a[text()='Edit']"); 
+	}
+ 
+	public ElementCollection getClientTableHeaders(){ 
+    	return driver.FindElementsByXPath("//*[@id='EntityDataTable']/thead/tr/th"); 
+	}
+	public Element getClientTableValue(int row ,int column){ 
+    	return driver.FindElementByXPath("//*[@id='EntityDataTable']/tbody/tr["+row+"]/td["+column+"]"); 
+	}
+	public Element getClientTableValue(String rowName ,int column){ 
+    	return driver.FindElementByXPath("//*[@id='EntityDataTable']/tbody/tr/td[text()='"+rowName+"']/../td["+column+"]"); 
+	}
+
+ public Element selectEntityType(){ 
+	 return driver.FindElementById("ddlEntityType"); 
+ }
+	
     //Annotation Layer added successfully
     public ClientsPage(Driver driver){
 
@@ -351,5 +370,19 @@ public class ClientsPage {
 	  	
 	  }
 	     
+	 /**
+	  * @author Aathith.Senthilkumar
+	  * @param clientType
+	  * @Description filter the client by Type
+	  */
+	 public void filterClientByType(String clientType) {
+		 driver.waitForPageToBeReady();
+		 bc.waitForElement(selectEntityType());
+		 selectEntityType().selectFromDropdown().selectByVisibleText(clientType);
+		 bc.waitForElement(getFilterButton());
+		 getFilterButton().waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 bc.stepInfo(clientType+" entity was filtered");
+	 }
  
  }

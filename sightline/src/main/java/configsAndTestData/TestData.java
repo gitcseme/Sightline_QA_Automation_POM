@@ -279,6 +279,10 @@ public class TestData {
 	public String missedDocs;
 	public String text;
 	public String datLoadFile3;
+	public String emailTextFile;
+	public String documentIdKey;
+	public String custIdKey;
+	public String fieldMappingWarningMessage;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

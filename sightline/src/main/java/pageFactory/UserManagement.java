@@ -786,11 +786,40 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox disableCanCollections' and normalize-space()='" + componentName + "']");
 	}
+	
+	public Element getDeleteBtn() {
+		return driver.FindElementByXPath("//a[text()='Delete']");
+	}
 
 	// jeevitha
 	public Element getFunctionTable() {
 		return driver.FindElementByXPath(
 				"// li[@class='active']//a[normalize-space()='Functionality']//..//parent::ul//following-sibling::div[@id='myTabContent1']");
+	}
+	
+	//Add by Aathith
+	public Element getLeftArrowForProject() {
+		return driver.FindElementById("btnLeftUserMaapping");
+	}
+	
+	public Element getDomainRole(String role) {
+		return driver.FindElementByXPath("//select[@id='lstRoles']/option[text()='"+role+"']");
+	}
+	
+	public Element getUnAssignedUser(String unAssignedUser) {
+		return driver.FindElementByXPath("//select[@id='lstDomains']/option[text()='"+unAssignedUser+"']");
+	}
+	
+	public Element getAssignUserProject(String project) {
+		return driver.FindElementByXPath("//select[@id='lstProjects']/option[@title='"+project+"']");
+	}
+	
+	public Element getAssigenedUserName(String FullName) {
+		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + FullName + "')]");
+	}
+	
+	public ElementCollection getAllDomainsInAssignUser() {
+		return driver.FindElementsByXPath("//select[@id='lstDomains']/option");
 	}
 
 	public UserManagement(Driver driver) {
@@ -2126,8 +2155,9 @@ public class UserManagement {
 		bc.waitForElement(getSelectDomainname());
 		getSelectDomainname().selectFromDropdown().selectByVisibleText(domainName);
 
-		if (getAssignedDomain(AssigedUserName).isElementAvailable(3)) {
-			getSelectuserassignindomain().selectFromDropdown().selectByVisibleText(AssigedUserName);
+		if (getAssignedDomain(AssigedUserName).isElementAvailable(15)) {
+			driver.scrollingToElementofAPage(getAssignedDomain(AssigedUserName));
+			getAssignedDomain(AssigedUserName).waitAndClick(10);
 			getLeftBtndomainuser().waitAndClick(10);
 		}
 
@@ -3479,6 +3509,34 @@ public class UserManagement {
 		}
 	}
 
+	
+	/**
+	 * @author Vijaya.rani
+	 * @Description : Method for deleting added user.
+	 * @param firstName : firstName is String value that first name of user need to
+	 *                  delete.
+	 */
+	public void deleteUser() {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDeleteBtn().Visible();
+				}
+			}), Input.wait30);
+			getDeleteBtn().isElementAvailable(5);
+			getDeleteBtn().waitAndClick(5);
+			getConfirmDelete().isElementAvailable(5);
+			getConfirmDelete().waitAndClick(5);
+			bc.VerifySuccessMessage("User has been deactivated");
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
+		}
+	}
+
+}
+
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify collection button of function tab
@@ -3550,4 +3608,139 @@ public class UserManagement {
 		}
 		driver.waitForPageToBeReady();
 	}
+
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a Assign user Tab
+	 */
+	public void openAssignUser() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignUserButton());
+		getAssignUserButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Assign user popup is opened");
+		bc.waitForElement(getSelectDomainname());
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open a project tab in Assign user
+	 */
+	public void goToProjectTabInAssignUser() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getProjectTab());
+		getProjectTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("moved to project tab");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectName
+	 * @Description select project from assign user tab
+	 */
+	public void selectProjectInAssignUser(String projectName) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignUserProject(projectName));
+		getAssignUserProject(projectName).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo(projectName+" was select in assign project tab");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param role
+	 * @Description select role from Assign user tab
+	 */
+	public void selectRoleInAssignUser(String role) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDomainRole(role));
+		getDomainRole(role).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo(role+" was selected in assign project tab");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param securtyGroup
+	 * @Description select security group in assign user tab
+	 */
+	public void selectSecuriyGroup(String securtyGroup) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDomainSG());
+		getDomainSG().selectFromDropdown().selectByVisibleText(Input.securityGroup);
+		driver.waitForPageToBeReady();
+		bc.stepInfo(securtyGroup+" was select in assign project tab");
+	}
+	
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectName
+	 * @param role
+	 * @param unAssigedUserName
+	 * @Desctiption Assign user to that project
+	 */
+	public void AssignUserToProject(String projectName,String role, String unAssigedUserName) {
+		
+		openAssignUser();
+		goToProjectTabInAssignUser();
+		selectProjectInAssignUser(projectName);
+		selectRoleInAssignUser(role);
+		
+		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+			selectSecuriyGroup(Input.securityGroup);
+		}
+
+		bc.waitForElement(getUnAssignedDomainUser());
+		bc.waitTime(5);
+		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
+		bc.waitForElement(getDomainUserRightArrow());
+		
+		getDomainUserRightArrow().waitAndClick(10);
+		driver.Manage().window().fullscreen();
+		getsavedomainuser().waitAndClick(10);
+		
+		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.stepInfo(projectName+" was assigned to the user "+ role +" to the user " + unAssigedUserName);
+		driver.Navigate().refresh();
+		driver.Manage().window().maximize();
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectName
+	 * @param role
+	 * @param AssigedUserName
+	 * @Description Unassign user to the that project
+	 */
+	public void UnAssignUserToProject(String projectName,String role, String AssigedUserName) {
+		
+		openAssignUser();
+		goToProjectTabInAssignUser();
+		selectProjectInAssignUser(projectName);
+		selectRoleInAssignUser(role);
+		
+		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+			selectSecuriyGroup(Input.securityGroup);
+		}
+		
+		bc.waitForElement(getCheckingAssignedUserSG(AssigedUserName));
+		driver.scrollingToElementofAPage(getCheckingAssignedUserSG(AssigedUserName));
+		getCheckingAssignedUserSG(AssigedUserName).waitAndClick(10);
+		bc.waitForElement(getLeftArrowForProject());
+		getLeftArrowForProject().waitAndClick(10);
+
+		driver.Manage().window().fullscreen();
+		getsavedomainuser().waitAndClick(10);
+		bc.VerifySuccessMessage("User Mapping Successful");
+		bc.stepInfo(projectName+" was unassigend to the user "+role+" to the user"+AssigedUserName);
+		driver.Navigate().refresh();
+		driver.Manage().window().maximize();
+	}
 }
+
+}
+
+

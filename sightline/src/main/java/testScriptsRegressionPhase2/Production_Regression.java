@@ -553,6 +553,7 @@ public class Production_Regression {
 		sessionSearch = new SessionSearch(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
+		sessionSearch = new SessionSearch(driver);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch.ViewInDocList();

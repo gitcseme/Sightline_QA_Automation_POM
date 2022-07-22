@@ -165,6 +165,30 @@ public class ProjectPage {
 	public Element getIsProjectActiveBtn() {
 		return driver.FindElementByXPath("//i[@id='Isactive']");
 	}
+	
+	public Element getGeneralTab() {
+		return driver.FindElementById("liGeneralTab");
+	}
+	
+	public Element getProjectTableHeaderValue(int column) {
+		return driver.FindElementByXPath("//*[@id='ProjectDataTable']/thead/tr/th["+column+"]");
+	}
+	
+	public Element getEditProject(String projectName) {
+		return driver.FindElementByXPath("//*[@id='ProjectDataTable']/tbody/tr/td[text()='"+projectName+"']/../td/a[text()='Edit']");
+	}
+	
+	public Element getVerifyInputValues(String value) {
+		return driver.FindElementByXPath("//input[@value='"+value+"']");
+	}
+	
+	public Element getFirmTextBox() {
+		return driver.FindElementByXPath("//input[@id='Firm' and @type='text']");
+	}
+	
+	public Element getCorpClientTextBox() {
+		return driver.FindElementByXPath("//input[@id='CorpClient' and @type='text']");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -843,4 +867,59 @@ public class ProjectPage {
         getButtonSaveProject().Click();
 
 }
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectname
+	 * @Description add a domian project for DA user
+	 */
+	public void AddDomainProjectViaDaUser(String projectname) {
+		navigateToProductionPage();
+		bc.waitForElement(getAddProjectBtn());
+		getAddProjectBtn().waitAndClick(10);
+		bc.waitForElement(getProjectName());
+		 getProjectName().SendKeys(projectname);
+		 driver.scrollingToBottomofAPage();
+		 driver.waitForPageToBeReady();
+		 bc.waitForElement(getButtonSaveProject());
+		 getButtonSaveProject().waitAndClick(10);
+		 driver.waitForPageToBeReady();
+		 bc.stepInfo(projectname+ " was added" );
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return temporay Project name
+	 * @Description check that temporary project is available, is yes return project name else create project
+	 */
+	public String checkTempDomainProjectIsAvailable() {
+		String tempProject = "TemporayDomainProject";
+		filterTheProject(tempProject);
+		if(!bc.text(tempProject).isElementAvailable(3)) {
+			bc.clearBullHornNotification();
+			System.out.println(bc.getCurrentLoginedUserRole());
+			if(bc.getCurrentLoginedUserRole().equalsIgnoreCase(Input.SystemAdministrator)) {
+				AddDomainProject(tempProject, Input.domainName);
+			}else {
+				AddDomainProjectViaDaUser(tempProject);
+			}
+			bc.waitForNotification();
+		}
+		return tempProject;
+		
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param project
+	 * @Description click edit the Project
+	 */
+	public void editProject(String project) {
+		driver.waitForPageToBeReady();
+		filterTheProject(project);
+		bc.waitForElement(getEditProject(project));
+		getEditProject(project).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo(project+" was clicked on edit");
+	}
 }

@@ -1475,12 +1475,21 @@ public class AssignmentsPage {
 	public Element getQB_AssignemntName_ErrorMSg() {
 		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
 	}
+
+	public Element getSelectUserToAssignAsReviewer(String userName) {
+		return driver.FindElementByXPath(
+				"//*[@id='divNotAssignedUsers']//div[contains(.,'" +userName + "')]/../div/label");
+	}
+	public Element getAssignmentActionManageTab_ViewinDocList() {
+		return driver.FindElementByXPath("//a[text()='View in Doc List']");
+
 	//Added by Iyappan
 	public ElementCollection getLiveSequenceMetadatas() {
 		return driver.FindElementsByXPath("//ol[@class='dd-list']//i/parent::span");
 	}
 	public Element getCodingForm_AssignemntName_ErrorMSg() {
 		return driver.FindElementByXPath("//span[@id='hidCodingFormList-error']");
+
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -7603,8 +7612,10 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_Action().waitAndClick(10);
 		bc.waitTillElemetToBeClickable(actions);
 		actions.waitAndClick(10);
+		if(bc.getYesBtn().isElementAvailable(2)) {
 		bc.waitTillElemetToBeClickable(bc.getYesBtn());
 		bc.getYesBtn().waitAndClick(5);
+		}
 //		} catch (Exception e) {
 //			bc.failedStep("Failed to select action functions");
 //		}
@@ -10176,6 +10187,29 @@ public class AssignmentsPage {
 
 	}
 	/**
+	 * @author Jayanthi.Ganesan
+	 * @param reviewersListToAssign
+	 */
+	
+	public void assignReviewers(String[] reviewersListToAssign) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		bc.waitTillElemetToBeClickable(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		bc.waitTillElemetToBeClickable(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		for (int i = 0; i < reviewersListToAssign.length; i++) {
+			bc.waitForElement(getSelectUserToAssignAsReviewer(reviewersListToAssign[i]));
+			getSelectUserToAssignAsReviewer(reviewersListToAssign[i]).WaitUntilPresent().ScrollTo();
+			getSelectUserToAssignAsReviewer(reviewersListToAssign[i]).waitAndClick(10);
+			bc.stepInfo("Selected user " + reviewersListToAssign[i] + " as reviewer .");
+		}
+		bc.waitForElement(getAdduserBtn());
+		bc.waitTillElemetToBeClickable(getAdduserBtn());
+		getAdduserBtn().waitAndClick(10);
+
+    /*
 	 * @author Iyappan.Kasinathan
 	 * @description This method alters the order of live sequence
 	 * @param metaData
@@ -10213,6 +10247,61 @@ public class AssignmentsPage {
 		}else {
 			bc.failedStep("Error message is not displayed as expected");
 		}
+
+	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @description: To create Assignmnets with classification
+	 * @param assignmentName,codingForm,classification
+	 */
+	public void createAssignmentWithClassification(String assignmentName, String classification,String codingForm) throws InterruptedException {
+			try {
+				bc.waitForElement(dashBoardPageTitle());
+				bc.waitForElement(getAssignmentName());
+				driver.waitForPageToBeReady();
+				getAssignmentName().SendKeys(assignmentName);
+				driver.waitForPageToBeReady();
+				getParentAssignmentGroupName().isDisplayed();
+				getSelectedClassification().selectFromDropdown().selectByVisibleText(classification);
+				SelectCodingform(codingForm);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				bc.failedStep(
+						"Exception occcured while creating new assignment for bulk assign operation" + e.getMessage());
+			}
+		}
+	
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description: Add 2 reviewers and distributed docs to
+	 *               them(PA/DA).
+	 */
+	public void distributeToPAUandDAU() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		//assign to pa
+		driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+		getSelectUserToAssignPA().waitAndClick(5);
+		//assign to dau
+		getSelectDAUserToAssign().ScrollTo();
+		getSelectDAUserToAssign().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Record saved successfully");
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		//distribute docs
+		getSelectUserInDistributeTabsPA().waitAndClick(5);
+		getSelectUserInDistributeTabsDA().waitAndClick(5);
+		bc.CloseSuccessMsgpopup();
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo("Documents are distributed to four reviewers successfully");
+
 	}
 }
 
