@@ -522,6 +522,298 @@ public class DomainManagement_Regression_03 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that Domain dropdown presents the list of all domains in 'Assign Users'-Domain
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53016",enabled = true, groups = {"regression" })
+	public void verifyDomainDropPresentInAssignUser() throws InterruptedException  {
+		
+		base.stepInfo("Test case Id: RPMXCON-53016");
+		base.stepInfo("To verify that Domain dropdown presents the list of all domains in 'Assign Users'-Domain");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		
+		user.openAssignUser();
+		if(user.getSelectDomainname().isDisplayed()) {
+			base.passedStep("Assign user popup opened");
+		}else {
+			base.failedStep("Assign user popup not displayed");
+		}
+		user.getSelectDomainname().waitAndClick(10);
+		if(user.getAllDomainsInAssignUser().isElementAvailable(10)) {
+			base.passedStep("All Domains should be displayed in the list");
+		}else {
+			base.failedStep("domain value not displayed");
+		}
+		
+		base.passedStep("verified that Domain dropdown presents the list of all domains in 'Assign Users'-Domain");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that for 'Not a Domain' type project list should be displayed of Not a Domain type
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52907",enabled = true, groups = {"regression" })
+	public void verifyzDomainProjectInNotDomain() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-52907");
+		base.stepInfo("Verify that for 'Not a Domain' type project list should be displayed of Not a Domain type");
+		
+		//pre-req assign nondomain projet to da user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.filterByName(Input.da1userName);
+		String userName = user.getfirstUserName();
+		user.AssignUserToProject(Input.NonDomainProject, Input.ProjectAdministrator, userName);
+		loginPage.logout();
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		
+		//open impersonate tab
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		
+		//verify not a domain availability
+		base.selectImpersonateRole(Input.ProjectAdministrator);
+		base.stepInfo("Select role as Project Admin  Check domain drop down from the pop up");
+		base.selectImpersonateDomain("Not a Domain");
+		base.stepInfo("Select \"Not a Domain\" from the domain dropdown,");
+		if(base.getSelectDomain("Not a Domain").isDisplayed()) {
+			base.passedStep("When the user selects \"not a domain\" from the domain dropdown, "
+					+ "the project dropdown is list non-domain type projects for which this user has access to. (is a PAU or RMU or reviewer).");
+		}else {
+			base.failedStep("Not a Domain verification failed");
+		}
+		
+		base.passedStep("Verified that for 'Not a Domain' type project list is displayed of Not a Domain type");
+		loginPage.logout();
+		
+		//restore default
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.UnAssignUserToProject(Input.NonDomainProject, Input.ProjectAdministrator, userName);
+		loginPage.logout();
+	}
+	
+	
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that unassigned users list should displays users which are currently do not have any roles in selected project
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52941",enabled = true, groups = {"regression" })
+	public void verifyUnAssignedUserList() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-52941");
+		base.stepInfo("To verify that unassigned users list should displays users which are currently do not have any roles in selected project");
+		
+		//login as Sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//get da and pa user name
+		user.filterByName(Input.da1userName);
+		String daUser = user.getfirstUserName();
+		user.filterByName(Input.pa1userName);
+		String paUser = user.getfirstUserName();
+		
+		//verification
+		user.openAssignUser();
+		user.goToProjectTabInAssignUser();
+		user.selectProjectInAssignUser(Input.projectName);
+		if(!user.getUnAssignedUser(daUser).isElementAvailable(1)&&!user.getUnAssignedUser(paUser).isElementAvailable(1)) {
+			base.passedStep("List of users is display which are currently do not have any role (including Domain Admin) in selected Project ");
+		}else {
+			base.failedStep("unassigned user verifcation failed");
+		}
+		
+		base.passedStep("verified that unassigned users list should displays users which are currently do not have any roles in selected project");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that the Assign User popup should present with two tabs - "Domains", "Projects" for System Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53009",enabled = true, groups = {"regression" })
+	public void verifyAssignUserhasDomainAndProjectTab() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-53009");
+		base.stepInfo("To verify that the Assign User popup should present with two tabs - \"Domains\", \"Projects\" for System Admin");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		user.openAssignUser();
+		if(user.getDomaintab().isDisplayed()&&user.getProjectTab().isDisplayed()) {
+			base.passedStep("Two tabs was present as 'Domains and 'Projects'");
+		}else {
+			base.failedStep("tab verificati0n failed");
+		}
+		
+		base.passedStep("verified that the Assign User popup should present with two tabs - \"Domains\", \"Projects\" for System Admin");
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that System Admin can assign the users from the Unassigned users list
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53020",enabled = true, groups = {"regression" })
+	public void verifySysAdminAssignUnAssigendUser() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		client = new ClientsPage(driver);
+		dash = new DomainDashboard(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-53020");
+		base.stepInfo("To verify that System Admin can assign the users from the Unassigned users list");
+		
+		//login as da
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//get domain name
+		client.navigateToClientPage();
+		driver.waitForPageToBeReady();
+		client.filterClientByType("Domain");
+		String DomainName = client.getClientTableValue(1, base.getIndex(client.getClientTableHeaders(), "NAME")).getText().trim();
+		
+		//get domain user name
+		user.navigateToUsersPAge();
+		user.filterByName(Input.da1userName);
+		String unAssignUser = user.getfirstUserName();
+		
+		//assign user
+		user.openAssignUser();
+		user.AssignUserToDomain(DomainName, unAssignUser);
+		
+		//verify 
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		driver.waitForPageToBeReady();
+		dash.waitForDomainDashBoardIsReady();
+		
+		if(base.text(DomainName).isElementAvailable(5)) {
+			base.passedStep(DomainName+" domain was assigened succesfully");
+		}else {
+			base.failedStep("domain verification failed");
+		}
+		if(base.text("Active Projects").isElementAvailable(5)) {
+			base.passedStep("It was redirect to Domain landing page");
+		}else {
+			base.failedStep("landing page verification failed");
+		}
+		
+		//restore default
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.unAssignUserToDomain(DomainName, unAssignUser);
+		
+		base.passedStep("verified that System Admin can assign the users from the Unassigned users list");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 07/21/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate modifying all editable field values and save changes for a domain project by Domain Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52960",enabled = true, groups = {"regression" })
+	public void validateAllEditableFied() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		project = new ProjectPage(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-52960");
+		base.stepInfo("Validate modifying all editable field values and save changes for a domain project by Domain Admin");
+		
+		String ModifyName = Input.randomText + Utility.dynamicNameAppender();
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		//action edit
+		project.navigateToProductionPage();
+		String projectName = project.checkTempDomainProjectIsAvailable();
+		project.editProject(projectName);
+		
+		//modification
+		project.getProjectName().SendKeys(ModifyName);
+		project.getFirmTextBox().SendKeys(ModifyName);
+		project.getCorpClientTextBox().SendKeys(ModifyName);
+		if(!project.getVerifyInputValues(ModifyName).isElementAvailable(1)) {
+			base.passedStep("The folder names will not be updated to reflect the change, and will remain the same");
+		}else {
+			base.failedStep("not update verification failed");
+		}
+		project.getButtonSaveProject().waitAndClick(10);
+		base.VerifySuccessMessage("Project updated successfully");
+		
+		//verify
+		project.editProject(ModifyName);
+		if(project.getVerifyInputValues(ModifyName).isElementPresent()) {
+			base.passedStep("Updated changes was reflect");
+		}else {
+			base.failedStep("updated the verification failed");
+		}
+		
+		//restore default name
+		project.getProjectName().SendKeys(projectName);
+		project.getButtonSaveProject().waitAndClick(10);
+		
+		base.passedStep("Validated modifying all editable field values and save changes for a domain project by Domain Admin");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

@@ -315,6 +315,15 @@ public class BaseClass {
 	public Element getSelectProjectTo(String project) {
 		return driver.FindElementByXPath("//select[@id='ddlAvailableProjects']/option[text()='"+project+"']");
 	}
+	
+	//add by Aathith
+	public Element getSelectDomain(String Domain) {
+		return driver.FindElementByXPath("//select[@id='ddlAvailableDomains']/option[text()='"+Domain+"']");
+	}
+	
+	public Element getLoginedUserRole() {
+		return driver.FindElementByXPath("//span[@class='badge bg-color-greenLight']");
+	}
 
 	public BaseClass(Driver driver) {
 
@@ -3909,5 +3918,54 @@ public class BaseClass {
 				E.printStackTrace(pw);
 				UtilityLog.info(sw.toString());
 			}
+		}
+
+	
+		/**
+		 * @author Aathith.Senthilkumar
+		 * @return current logined user role
+		 * @Description get current logined user role
+		 */
+		public String getCurrentLoginedUserRole() {
+			return getLoginedUserRole().getText().trim();
+
+		
+		public void impersonateSAtoRMU(String projectName) throws InterruptedException {
+			getSignoutMenu().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait60);
+			getChangeRole().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait60);
+			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+			Thread.sleep(3000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAvlDomain().Visible();
+				}
+			}), Input.wait30);
+			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+			Thread.sleep(3000);
+			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+			Thread.sleep(3000);
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			getSaveChangeRole().Click();
+			System.out.println("Impersnated from SA to RMU");
+			UtilityLog.info("Impersnated from SA to RMU");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+
 		}
 }

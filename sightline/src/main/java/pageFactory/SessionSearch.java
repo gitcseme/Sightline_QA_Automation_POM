@@ -1914,6 +1914,34 @@ public class SessionSearch {
 	public Element getWorkProductSearchResult() {
 		return driver.FindElementByXPath("//td[text()='Work Product']/parent::tr//span[@class='badge']");
 	}
+	
+	public Element getThreadedDocumentsAddBtn() {
+		return driver.FindElementByXPath(
+				"(//*[@data-original-title='Threaded Documents']//i[contains(@class,'addTile')])[last()]");
+	}
+
+	public Element getNearDuplicatesAddBtn() {
+		return driver.FindElementByXPath(
+				"(//*[@data-original-title='Near Duplicates']//i[contains(@class,'addTile')])[last()]");
+	}
+
+	public Element getFamilyMembersAddBtn() {
+		return driver.FindElementByXPath(
+				"(//*[@data-original-title='Family Members']//i[contains(@class,'addTile')])[last()]");
+	}
+
+	public Element getConceptuallySimilarAddBtn() {
+		return driver.FindElementByXPath(
+				"(//*[@data-original-title='Conceptually Similar']//i[contains(@class,'addTile')])[last()]");
+	}
+
+	public ElementCollection getRemoveTilesBtn() {
+		return driver.FindElementsByXPath("//i[@title='Remove from Selected Results']");
+	}
+
+	public ElementCollection getAllTilesName() {
+		return driver.FindElementsByXPath("(//ul[@id='gallery'])[last()]//li/a");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -12214,8 +12242,12 @@ public class SessionSearch {
 	 */
 	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,Boolean productionDate) throws InterruptedException{
 		driver.waitForPageToBeReady();
-		selectSecurityGinWPS(securityGroup);
-		selectOperator(operator);
+		if (!(securityGroup == null)) {
+			selectSecurityGinWPS(securityGroup);
+		}
+		if (!(operator == null)) {
+			selectOperator(operator);
+		}
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getProductionBtn().Visible() && getProductionBtn().Enabled();
@@ -12570,7 +12602,136 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		
 	}
 	
+
+	/**
+	 * @author
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param addPureHit
+	 * @param addThreadedDocuments
+	 * @param addNearDuplicates
+	 * @param addFamilyMembers
+	 * @param playConceptual
+	 * @param addconceptuallySimilar
+	 * @throws InterruptedException
+	 */
+	public void addingAllTilesToShoppingCart(String addPureHit, String addThreadedDocuments, String addNearDuplicates,
+			String addFamilyMembers, String playConceptual, String addconceptuallySimilar) throws InterruptedException {
+
+		if (addPureHit.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getCurrentPureHitAddBtn());
+			getCurrentPureHitAddBtn().waitAndClick(5);
+			base.stepInfo("Added pureHit");
+		}
+		if (addThreadedDocuments.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getThreadedDocumentsAddBtn());
+			getThreadedDocumentsAddBtn().waitAndClick(5);
+			base.stepInfo("Added Threaded doc count");
+		}
+		if (addNearDuplicates.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getNearDuplicatesAddBtn());
+			getNearDuplicatesAddBtn().waitAndClick(5);
+			base.stepInfo("Added Near Dupes Count");
+		}
+		if (addFamilyMembers.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getFamilyMembersAddBtn());
+			getFamilyMembersAddBtn().waitAndClick(5);
+			base.stepInfo("Added Family Members Count");
+		}
+		if (playConceptual.equalsIgnoreCase("Yes")) {
+			base.waitForElement(getConceptualCountPlayButton());
+			getConceptualCountPlayButton().waitAndClick(5);
+			verifyConceptuallySimilarCount();
+			base.stepInfo("Added Conceptual Similar count");
+			if (addconceptuallySimilar.equalsIgnoreCase("Yes")) {
+				base.waitForElement(getConceptuallySimilarAddBtn());
+				getConceptuallySimilarAddBtn().waitAndClick(5);
+				base.stepInfo("Added Conceptual Similar count");
+			}
+		}
+	}
+
+	/**
+	 * @author
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description : perform Adv Search and AddToCart 'n' times
+	 * @param limit
+	 * @throws InterruptedException
+	 */
+	public void performAdvSearchandAddToCart(int limit) throws InterruptedException {
+		for (int i = 1; i <= limit; i++) {
+			base.stepInfo("Adding tiles for search " + i);
+			base.waitTime(3);
+			getModifyASearch_Current().waitAndClick(5);
+			getAdvanceSearch_btn_Current().waitAndClick(5);
+			addingAllTilesToShoppingCart("yes", "yes", "yes", "yes", "yes", "no");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @description : remove All Added Tiles
+	 */
+	public void removeAllAddedTiles() {
+		List<WebElement> Removetiles = getRemoveTilesBtn().FindWebElements();
+
+		System.out.println("list size : " + Removetiles.size());
+		for (int i = 0; i < Removetiles.size(); i++) {
+			base.waitTime(2);
+			Removetiles.get(i).click();
+		}
+		base.failedMessage("All the tiles in the shopping cart is removed.");
+	}
+
+	/**
+	 * @author
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param actualSequenceOfTiless
+	 * @param tilesNameInSequence
+	 * @description : verify Tiles Present In Expected Sequence
+	 */
+	public void verifyTilesPresentInSequence(List<String> actualSequenceOfTiless, String[] tilesNameInSequence) {
+		for (int i = 0; i < actualSequenceOfTiless.size(); i++) {
+			if (tilesNameInSequence[i].equalsIgnoreCase(actualSequenceOfTiless.get(i))) {
+				System.out.println(actualSequenceOfTiless.get(i));
+				base.stepInfo(i + 1 + " : Expected - " + tilesNameInSequence[i]);
+				base.stepInfo(i + 1 + " : Actual - " + actualSequenceOfTiless.get(i));
+			} else {
+				base.failedStep("Tiles are not present in Sequence.");
+			}
+		}
+		base.passedStep("Tiles are Present in Sequence.");
+	}
+
+
+	/**
+	 * @author: Jayanthi
+	 * @description: this method will get the doc count available under SG .
+	 */
+	public int verifyDocsCountAvailableInSg() {
+		int expectedCount = 0;
+		driver.waitForPageToBeReady();
+		if (getCountUniqueDocId().isElementAvailable(10)) {
+			String label = getCountUniqueDocId().getText();
+			String countlabel = label.substring(label.indexOf(":"));
+			expectedCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+			base.stepInfo("Count available in selected security group "+expectedCount);
+
+		} else {
+			base.failedMessage("Uniques docs count under Selected SG is not displayed.");
+		}
+		return expectedCount;
+	}
+
+
 	
+
 }
-	 
-		
