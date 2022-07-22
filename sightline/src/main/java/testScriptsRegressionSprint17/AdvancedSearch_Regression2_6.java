@@ -76,7 +76,7 @@ public class AdvancedSearch_Regression2_6 {
 	 *                 with workproduct 'Tag' is not working:1
 	 * @throws InterruptedException
 	 */
-	@Test(description = "RPMXCON-49048", groups = { "regression" })
+	@Test(description = "RPMXCON-49048", enabled = true,groups = { "regression" })
 	public void verifyTagCount_Tally() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-49048");
 		baseClass.stepInfo("To Verify Regression Issue: After bulk tagging, Session search with workproduct 'Tag' "
@@ -338,6 +338,187 @@ public class AdvancedSearch_Regression2_6 {
 		// delete tag
 		tagPage.tagCreationDeletionBasedOnUser(false, User, tagName, Input.securityGroup, true, "RMU", null,
 				"additional");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that tiles sequence remains as it is when user clicks
+	 *              on Run icon and Unpinned multiple tiles from Shopping cart in
+	 *              Advanced Search Result.. RPMXCON-48521
+	 */
+	@Test(description = "RPMXCON-48521", enabled = true, groups = { "regression" })
+	public void verifyTilesSequenceRemainsWhenUserClicksRunIconAndUnpinnedMultipleTitlesFromCartAndRefreshPage()
+			throws InterruptedException {
+
+		String[] tilesNameInSequence = { "Docs That Met Your Criteria", "Threaded Documents", "Near Duplicates",
+				"Family Members", "Conceptually Similar" };
+
+		// login as Users
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48521 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that tiles sequence remains as it is when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.");
+
+		// configure and performing search
+		baseClass.stepInfo("**Step-2 Configure valid Query  like     CustodianName: Andrew**");
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+
+		// adding all tiles to cart and click conceptual play button
+		baseClass.stepInfo(
+				"**Step-3 & 4 & 5 Click on \"Search\" button and wait till when all results are ready and Now Drag all tiles except Conceptual into Shopping cartand Click on Run Icon on Conceptual tile**");
+		sessionSearch.addingAllTilesToShoppingCart("yes", "yes", "yes", "yes", "yes", "no");
+		baseClass.stepInfo(
+				"all tiles are added to shopping cart except Conceptual tile and Conceptual paly button is clicked");
+
+		// Adding all tiles to cart and click conceptual play button
+		baseClass.stepInfo("**Step-6 Repeat Step 3 to Step 6 - thrice**");
+		sessionSearch.performAdvSearchandAddToCart(3);
+		baseClass.stepInfo(
+				"thrice Performed adding all tiles to shopping cart except Conceptual tile and Conceptual paly button is clicked");
+
+		// remove all tiles from cart
+		baseClass.stepInfo("**Step-7 Now Unpinned - all tiles from Shopping cart**");
+		sessionSearch.removeAllAddedTiles();
+
+		// Refresh
+		baseClass.stepInfo("**Step-8 Now Refresh (F5) page**");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo(
+				"**Step-9 In Session Search - Verify that After Refresh - tiles sequence remains as it is when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.**");
+		List<String> actualSequenceOfTiless = baseClass
+				.availableListofElementsWithAttributeValues(sessionSearch.getAllTilesName(), "data-original-title");
+
+		sessionSearch.verifyTilesPresentInSequence(actualSequenceOfTiless, tilesNameInSequence);
+		baseClass.passedStep(
+				"Verified that After Refresh tiles sequence remains as it is when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that tiles sequence remains as it is when user clicks
+	 *              on Run icon and Unpinned multiple tiles from Shopping cart in
+	 *              Advanced Search Result. RPMXCON-48469
+	 */
+	@Test(description = "RPMXCON-48469", enabled = true, groups = { "regression" })
+	public void verifyTilesRemainsWhenUserClicksRunIconAndUnpinnedMultipleTitlesFromCart() throws InterruptedException {
+
+		String[] tilesNameInSequence = { "Docs That Met Your Criteria", "Threaded Documents", "Near Duplicates",
+				"Family Members", "Conceptually Similar" };
+
+		// login as Users
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48469 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that tiles sequence remains as it is when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.");
+
+		// configure and performing search
+		baseClass.stepInfo("**Step-2 Configure valid Query  like     CustodianName: Andrew**");
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+
+		// adding all tiles to cart and click conceptual play button
+		baseClass.stepInfo(
+				"**Step-3 & 4 & 5 Click on \"Search\" button and wait till when all results are ready and Now Drag all tiles except Conceptual into Shopping cartand Click on Run Icon on Conceptual tile**");
+		sessionSearch.addingAllTilesToShoppingCart("yes", "yes", "yes", "yes", "yes", "no");
+		baseClass.stepInfo(
+				"all tiles are added to shopping cart except Conceptual tile and Conceptual paly button is clicked");
+
+		// Adding all tiles to cart and click conceptual play button
+		baseClass.stepInfo("**Step-6 Repeat Step 3 to Step 6 - thrice**");
+		sessionSearch.performAdvSearchandAddToCart(3);
+		baseClass.stepInfo(
+				"thrice Performed adding all tiles to shopping cart except Conceptual tile and Conceptual paly button is clicked");
+
+		// remove all tiles from cart
+		baseClass.stepInfo("**Step-7 Now Unpinned - all tiles from Shopping cart**");
+		sessionSearch.removeAllAddedTiles();
+
+		// verifying the tiles sequence
+		baseClass.stepInfo(
+				"**Step-9 In Session Search - Verify that tiles sequence remains as it is  when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.**");
+		baseClass.waitTime(3);
+		List<String> actualSequenceOfTiless = baseClass
+				.availableListofElementsWithAttributeValues(sessionSearch.getAllTilesName(), "data-original-title");
+		sessionSearch.verifyTilesPresentInSequence(actualSequenceOfTiless, tilesNameInSequence);
+		baseClass.passedStep(
+				"Verified that After Refresh tiles sequence remains as it is when user clicks on Run icon and Unpinned multiple tiles from Shopping cart in Advanced Search Result.");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @authorS
+	 * @throws Exception
+	 * @Date: 07/22/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that tiles sequence remains as it is when user clicks
+	 *              on Run icon and Unpinned multiple tiles from Shopping cart in
+	 *              Advanced Search Result. RPMXCON-48469
+	 */
+	@Test(description = "RPMXCON-48229", enabled = true, groups = { "regression" })
+	public void verifyDeletReviewerRemarksForNonAudioDocumentsInAdvancedSearch() throws Exception {
+
+		String selectField = "Remark";
+		DocViewPage docView = new DocViewPage(driver);
+		int countBeforeRemarkDelet = 1;
+		int countAfterRemarkDelet = 0;
+
+		// login as Users
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48229 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that deleted reviewer remarks for Non-audio documents is working correctly in  Advanced Search.");
+
+		// performing metaData search and adding pureHit to cart and viewing in docView
+		baseClass.stepInfo(
+				"**Step-3 & 4 & 5 Select \"Remarks\"  from \"Comment Fields / Remarks\" combo box and Enter Same Remark in \"Remark\" Text box which we mentioned in Prerequisite :  and Click on Search      **");
+		sessionSearch.advancedMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		baseClass.stepInfo("performing advanced metadata search.");
+		sessionSearch.viewInDocView();
+
+		// adding remark and performing search using remark
+		docView.addRemarkByText(Input.reviewed);
+		baseClass.stepInfo("adding Remark to document");
+		baseClass.selectproject();
+		int pureHit1 = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+		baseClass.digitCompareEquals(countBeforeRemarkDelet, pureHit1, "pureHit match with the count of remark added",
+				"pureHit doesn't match with the count of remark added");
+
+		// performing search using remark
+		baseClass.stepInfo("**Step-6 Delete the remarks for the documents (refer TC12266 for deleting remarks)**");
+		sessionSearch.viewInDocView();
+		docView.deleteReamark(Input.reviewed);
+		baseClass.selectproject();
+		
+		baseClass.stepInfo("**Step-7 Navigate to Advanced search and Select \"Remarks\"  from \"Comment Fields / Remarks\" combo box**");
+		int pureHitAfterDelet = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch(selectField, Input.reviewed);
+
+		// verifying that Application should display the latest count excluding the
+		// documents for which remarks are deleted
+		baseClass.stepInfo("**Step-8 Enter Same Remark in \"Remark\" Text box as before -> click on Search**");
+		baseClass.digitCompareEquals(countAfterRemarkDelet, pureHitAfterDelet,
+				"Verified that Application displaying the latest count excluding the documents for which remarks are deleted",
+				"pureHit doesn't match with the count of remark After deletion");
 
 		// logOut
 		loginPage.logout();
