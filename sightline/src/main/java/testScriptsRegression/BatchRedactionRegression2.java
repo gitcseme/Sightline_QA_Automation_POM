@@ -443,7 +443,7 @@ public class BatchRedactionRegression2 {
 		// verify History status
 		batch.verifyBatchHistoryStatus(searchName);
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 		DCRedactions.verifyRedactionsSubMenu();
@@ -451,6 +451,7 @@ public class BatchRedactionRegression2 {
 		redact.DeleteRedaction(tagName);
 
 		// Delete Search
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();
 
