@@ -397,6 +397,10 @@ public class Input {
 	public static String missedDocs;
 	public static String text;
 	public static String datLoadFile3;
+	public static String emailTextFile;
+	public static String documentIdKey;
+	public static String custIdKey;
+	public static String fieldMappingWarningMessage;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1288,6 +1292,10 @@ public class Input {
 		missedDocs = testData.getMissedDocs();
 		text = testData.getText();
 		datLoadFile3 = testData.getDatLoadFile3();
+		emailTextFile = testData.getEmailTextFile();
+		documentIdKey = testData.getDocumentIdKey();
+		custIdKey = testData.getCustIdKey();
+		fieldMappingWarningMessage = testData.getFieldMappingWarningMessage();;
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

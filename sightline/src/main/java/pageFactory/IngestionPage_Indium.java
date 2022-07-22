@@ -10957,6 +10957,103 @@ public class IngestionPage_Indium {
 
 		}
 		
+		/**
+		 * @author:Arunkumar Created Date: 21/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will copy the ingestion which already started
+		 * @param: type
+		 * @param: docKey
+		 *               
+		 */
+		public void copyIngestionAndVerifyDetailsRetained(String type,String docKey) {
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getIngestionDetailPopup(1).waitAndClick(5);
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(5);
+			base.waitForElement(getActionCopy());
+			getActionCopy().waitAndClick(5);
+			base.waitForElement(getIngestion_IngestionType());
+			String ingestionType = getIngestion_IngestionType().selectFromDropdown().getFirstSelectedOption().getText();
+			if(getIngestion_IngestionType().isElementAvailable(10) && ingestionType.equalsIgnoreCase(type)) {
+				base.passedStep("Copy action performed successfully and source setting retained");
+			}
+			else {
+				base.failedStep("Copy action not performed");
+			}		
+			//configure and mapping section
+			String key = getMappingSourceField(1).selectFromDropdown().getFirstSelectedOption().getText();
+			if(key.equalsIgnoreCase(docKey)) {
+				base.passedStep("source field in mapping section retained from the ingestion copied from");
+			}
+			else {
+				base.failedStep("not retained");
+			}
+		}
 		
+		/**
+		 * @author: Arun Created Date: 21/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify warning message for different source field in dat/folder
+		 * @param: mapping
+		 * @param: sourceFolder
+		 * @param: datFile
+		 * @param: docKey
+		 * @param: textFile
+		 *               
+		 */
+
+		public void verifyWarningMessageForCurrentAndCopiedIngestion(boolean mapping,String sourceFolder, String datFile,
+				String docKey,String textFile) {
+			if(mapping) {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+				base.waitTime(2);
+				selectDATSource(datFile, docKey);
+				selectTextSource(textFile,false);
+				driver.scrollPageToTop();
+				base.waitForElement(getNextButton());
+				getNextButton().waitAndClick(10);
+				if(!mappingWarningMessage().isElementAvailable(10)) {
+					base.passedStep("warning message not displayed when current and copied ingestion data matched");
+				}
+				else {
+					base.failedStep("warning message displayed");
+				}
+			}
+			else {
+				getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(sourceFolder);
+				base.waitTime(2);
+				selectDATSource(datFile, docKey);
+				selectTextSource(textFile,false);
+				driver.scrollPageToTop();
+				base.waitForElement(getNextButton());
+				getNextButton().waitAndClick(10);
+				if(mappingWarningMessage().isElementAvailable(10)) {
+					String warningMessage = mappingWarningMessage().getText();
+					if (warningMessage.contains(Input.fieldMappingWarningMessage)) {
+						base.passedStep("warning message displayed if configure mapping is not matched");
+					} else {
+						base.failedStep("warning message not displayed if configure mapping is not matched");
+					}
+					warningMessageCancelButton().waitAndClick(5);
+					getNextButton().waitAndClick(10);
+					getApproveMessageOKButton().waitAndClick(5);
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 21/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will map the mandatory field mappings and start ingestion
+		 * @param: field2
+		 * @param: field3
+		 * @param: field4
+		 *               
+		 */
+		
+		public void configureMandatoryMappingAndRunIngestion(String field2,String field3,String field4) {
+			selectValueFromEnabledFirstThreeSourceDATFields(field2,field3,field4);
+			clickOnPreviewAndRunButton();
+			base.passedStep("Ingestion started successfully");
+		}
 				
+		
 }

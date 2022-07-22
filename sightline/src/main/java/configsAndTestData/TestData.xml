@@ -51,8 +51,8 @@
 	<multiwordText>will be</multiwordText>
 	<query>B2F9_QA_EmailConcatenatedData_SS_20211205210214306</query>
 	<miniDocListID>H16135-0188-002287</miniDocListID>
-	<indexingWarningMessage>As part of indexing step, index for metadata,text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
-	<mappingWarningMessage>Unique Document Code doesnot match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
+	<indexingWarningMessage>As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?</indexingWarningMessage>
+	<mappingWarningMessage>Unique Document Code does not match with the previously ingested documents. Existing mappings will be reset. Do you want to continue?</mappingWarningMessage>
 	<audio96DocsFolder>Audio96Docs</audio96DocsFolder>
 	<docIdKey>DOCID</docIdKey>
 	<selectNativeFile>natives.lst</selectNativeFile>
@@ -92,6 +92,11 @@
 	<missedDocs>MISSED DOCS</missedDocs>
 	<text>Text</text>
 	<datLoadFile3>DAT4_STC_newdateformat1.dat</datLoadFile3>
+	<emailTextFile>EmailDataText.lst</emailTextFile>
+	<documentIdKey>DocumentID</documentIdKey>
+	<custIdKey>CustID</custIdKey>
+	<fieldMappingWarningMessage>Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?</fieldMappingWarningMessage>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

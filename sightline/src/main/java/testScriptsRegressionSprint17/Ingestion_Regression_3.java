@@ -536,6 +536,72 @@ public class Ingestion_Regression_3 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47586
+	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is not matched 
+	 * between Current and Copied Ingestion then Warning message should displayed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47586",enabled = true, groups = { "regression" })
+	public void verifyConfigureMappingWarningWhenMappingNotMatched() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47586");
+		baseClass.stepInfo("verify configure mapping warning message when mapping not matched");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		baseClass.stepInfo("Configure mapping and run ingestion");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
+		baseClass.stepInfo("Verify available option in settings");
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.verifyOptionsAvailableInIngestionSetting();
+		baseClass.stepInfo("Copy ingestion and check details");
+		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
+		baseClass.stepInfo("verify warning message");
+		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(false, Input.IngestionEmailDataFolder,
+				Input.emailDatFile, Input.documentIdKey, Input.emailTextFile);
+		baseClass.stepInfo("Fill the mandatory fields and run ingestion");
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentIdKey,Input.documentIdKey,Input.custIdKey);
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47585
+	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is matched 
+	 * between Current and Copied Ingestion then Warning message should not displayed. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47585",enabled = true, groups = { "regression" })
+	public void verifyConfigureMappingWhenMappingMatched() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47585");
+		baseClass.stepInfo("verify configure mapping warning message when mapping matched");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		baseClass.stepInfo("Configure mapping and run ingestion");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
+		baseClass.stepInfo("Verify available option in settings");
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.verifyOptionsAvailableInIngestionSetting();
+		baseClass.stepInfo("Copy ingestion and check details");
+		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
+		baseClass.stepInfo("verify warning message");
+		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(true, Input.UniCodeFilesFolder,
+				Input.datLoadFile1,Input.documentKey , Input.textFile1);
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.passedStep("Verified that application will move ahead to run ingestion if mapping is matched");
+		loginPage.logout();
+	}
 
 	
 	
