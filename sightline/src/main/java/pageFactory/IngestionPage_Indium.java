@@ -1298,6 +1298,12 @@ public class IngestionPage_Indium {
 	public ElementCollection configureMappingRows() {
 		return driver.FindElementsByXPath("//tbody[@id='tblBody']//tr");
 	}
+	public Element getShowAllCheckbox() {
+		return driver.FindElementByXPath("//input[@id='chkshowall']//following-sibling::i");
+	}
+	public Element gridViewColumn(String value) {
+		return driver.FindElementByXPath("//table[@role='grid']//th[contains(text(),'"+value+"')]");
+	}
 	
 	
 	public IngestionPage_Indium(Driver driver) {
@@ -11148,6 +11154,47 @@ public class IngestionPage_Indium {
 			else {
 				base.failedStep("Ingestion detail popup not closed after clicking close button");
 			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 25/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will apply filter for published ingestion status            
+		 */
+		
+		public void applyPublishedFilter() {
+			navigateToIngestionPage();
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(5);
+			base.waitForElement(getFilterByPUBLISHED());
+			getFilterByPUBLISHED().waitAndClick(5);
+			getRefreshButton().waitAndClick(5);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 25/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the available fields in grid view table            
+		 */
+		
+		public void validateColumnsPresentInGridViewTable() {
+			
+			//validate columns available in grid view table
+			String[] fields ={"Project","Ingestion Name","Ingestion Type","% Complete","Start Date",
+					"End Date","Source Docs","Ingested Docs","Errors","Last Modified By","Last Modified Date",
+					"Ingestion Status","Action"};
+			
+			base.waitForElement(getIngestion_GridView());
+			getIngestion_GridView().waitAndClick(5);
+			base.waitTime(3);
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			for(int i =0;i<fields.length;i++) {
+				if(gridViewColumn(fields[i]).isElementAvailable(5)) {
+					base.passedStep("'"+fields[i]+"' present in grid view tabular column");
+				}
+				else {
+					base.failedStep("'"+fields[i]+"' not present in the grid view tabular column");
+				}
+			}	
 		}
 				
 		

@@ -652,6 +652,60 @@ public class Ingestion_Regression_3 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47297
+	 * Description :If ‘Add Only’ option is selected, DoC ID, Custodian, ParentDocID and Datasource
+	 * fields must be selected in the mapping.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47297",enabled = true, groups = { "regression" })
+	public void verifyFieldsSelectedInMapping() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47297");
+		baseClass.stepInfo("verify that mandatory fields must be selected in mapping");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,
+				Input.datLoadFile1);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("verify mandatory mapping fields and auto mapping for SourceDocID");
+		ingestionPage.validateMappingSectionMandatoryFieldWarningMessage();
+		String key = ingestionPage.getMappingSourceField(1).selectFromDropdown().getFirstSelectedOption().getText();
+		if(key.equalsIgnoreCase(Input.documentKey)) {
+			baseClass.passedStep("Destination 'SourceDocID' is auto mapped with DocID.");
+		}
+		else {
+			baseClass.failedStep("SourceDocID source field not auto mapped");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47364
+	 * Description :To verify that in Grid view, information of tiles are displayed in tabular with the
+	 * required columns
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47364",enabled = true, groups = { "regression" })
+	public void verifyGridViewInformation() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47364");
+		baseClass.stepInfo("Validate the columns available in grid view table");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Click on show all and grid view button");
+		ingestionPage.navigateToIngestionPage();
+		baseClass.waitForElement(ingestionPage.getShowAllCheckbox());
+		ingestionPage.getShowAllCheckbox().waitAndClick(5);
+		baseClass.passedStep("Validate columns displayed in grid view table");
+		ingestionPage.validateColumnsPresentInGridViewTable();
+		loginPage.logout();
+		
+	}
+	
 
 	
 	
