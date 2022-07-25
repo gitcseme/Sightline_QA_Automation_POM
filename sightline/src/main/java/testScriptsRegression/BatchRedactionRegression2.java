@@ -398,7 +398,7 @@ public class BatchRedactionRegression2 {
 		// verify History status
 		batch.verifyBatchHistoryStatus(searchName);
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 		DCRedactions.verifyRedactionsSubMenu();
@@ -887,6 +887,7 @@ public class BatchRedactionRegression2 {
 
 		// Check Analyse btn After search is saved
 		batch.loadBatchRedactionPage(newNode);
+		
 		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 		batch.performViewReportAndApplyRedactions(newNode);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
@@ -1171,11 +1172,13 @@ public class BatchRedactionRegression2 {
 		// search query and save in node
 		int purehit = session.basicContentSearch(Input.testData1);
 		session.saveSearchInNewNode(searchName, newNode);
-
+		
 		// Check Analyse btn Before batch readction
 		batch.loadBatchRedactionPage(newNode);
+		
 		batch.performAnalysisGroupForRedcation(searchName, newNode, purehit, false, true);
 		batch.performViewReportAndApplyRedactions(newNode);
+		Thread.sleep(2000);
 		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, "Yes");
 
 		// verify History status
