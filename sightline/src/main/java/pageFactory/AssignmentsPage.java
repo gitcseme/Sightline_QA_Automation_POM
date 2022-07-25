@@ -1491,6 +1491,25 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//span[@id='hidCodingFormList-error']");
 
 	}
+	public Element getReviewerPopupCloseBtn() {
+		return driver.FindElementByXPath("//header[contains(text(),'Add Reviewers')]//button[@class='close']");
+	}
+	public Element getCategoryStatus() {
+		return driver.FindElementByXPath("//a[text()='Category']/parent::li");
+	}
+	public Element getunderAvailableCriteria(String data) {
+		return driver.FindElementByXPath("//div[@id='nestable']//span[text()='"+ data +"']//i");
+	}
+	
+    public Element getDropElement() {
+		return driver.FindElementByCssSelector("div[id='nestable2']");
+	}
+    public Element getSelectAssignedMDinAssignPage(String metaData) {
+		return driver.FindElementByXPath("//select[@id='AssignedMetaData']//option[text()='" + metaData + "']");
+	}
+	public Element getMetadataFielOkBtn() {
+		return driver.FindElementById("MetaDataSave");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -10210,7 +10229,7 @@ public class AssignmentsPage {
 		getAdduserBtn().waitAndClick(10);
 	}
 
-    /*
+    /**
 	 * @author Iyappan.Kasinathan
 	 * @description This method alters the order of live sequence
 	 * @param metaData
@@ -10303,6 +10322,116 @@ public class AssignmentsPage {
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method is used to verify the user is present in reviewer popup
+	 * @param reviewer
+	 */
+	public void verifyUserInReviewerTab(String reviewer) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		bc.waitTillElemetToBeClickable(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		bc.waitTillElemetToBeClickable(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.stepInfo("Reviewer popup is opened");
+		if(getSelectUserToAssign(reviewer).isElementAvailable(5)) {
+			bc.passedStep("Expected user is displayed in reviewer popup");
+		}else {
+			bc.failedStep("Expected user is not displayed in reviewer popup");
+		}
+		bc.waitTillElemetToBeClickable(getReviewerPopupCloseBtn());
+		getReviewerPopupCloseBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if(getReviewerPopupCloseBtn().isDisplayed()) {
+			bc.failedStep("Reviewer popup not closed successfully");
+		}else {
+			bc.passedStep("Reviewer popup is closed successfully");
+		}
+		
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param metaData
+	 * @throws InterruptedException
+	 */
+	public void dragAndDropLiveSeqfrmAvailableCrit(String metaData) throws InterruptedException {
+		System.out.println(metaData);
+		driver.waitForPageToBeReady();
+		Actions actions = new Actions(driver.getWebDriver());
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 30);
+		wait.until(ExpectedConditions.elementToBeClickable(getunderAvailableCriteria(metaData).getWebElement()));
+		bc.waitForElement((getunderAvailableCriteria(metaData)));
+		actions.clickAndHold((getunderAvailableCriteria(metaData)).getWebElement());
+		System.out.println("Click and hold performed");
+		actions.moveToElement((getDropElement()).getWebElement());
+		actions.moveToElement((dragElement(metaData)).getWebElement(), 0, -45);
+		actions.release(getDropElement().getWebElement());
+		actions.release();
+		actions.build().perform();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method enables all toggles
+	 */
+	public void enableAllToogleUnderPresentationControl() {
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		String[] elementNamesEnabled = { "Display Mini DocList", "Allow reviewers to pop out panels",
+				"Allow reviewers to folder documents", "Allow reviewers to edit Reviewer Remarks",
+				"Show Default View Tab", "Enable Highlighting", "Allow reviewers to override Optimized Sort",
+				"Allow reviewers to print docs to PDF", "Allow reviewers to download natives",
+				"Allow access to full DocList", "Display Analytics Panel",
+				"Display the Email Thread Map Tab of Analytics Panel", "Display the Near Dupes Tab of Analytics Panel",
+				"Display Folders Tab", "Allow access to Coding Stamps", "Display Assignment Progress Bar",
+				"Allow reviewers to see productions/images", "Allow reviewers to apply redactions",
+				"Display the Family Members Tab of Analytics Panel",
+				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel", "Display Document History Tab", "Allow users to save without completing",
+				"Complete When Coding Stamp Applied", "Save the coding form automatically when switched to different coding form"};
+
+		// To Enable All Toogle
+		for (int D = 0; D < elementNamesEnabled.length; D++) {
+			driver.waitForPageToBeReady();
+			String value = getPresentationControlToggles(elementNamesEnabled[D]).GetAttribute("Class");
+			if(value.equalsIgnoreCase("false")) {
+				getPresentationControlToggles(elementNamesEnabled[D]).waitAndClick(5);
+				
+			}}
+		
+		// To Verify All Toogle is Enable or Not
+		for (int i = 0; i < elementNamesEnabled.length; i++) {
+			driver.waitForPageToBeReady();
+			String status = getPresentationControlToggles(elementNamesEnabled[i]).GetAttribute("Class");
+			if(status.equalsIgnoreCase("false")) {
+			bc.failedStep("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
+			System.out.println("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
+			}
+			}
+		}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @param instruction
+	 * @param selectAssignedMetaData
+	 */
+	public void configInstructionKeywordMDFieldinAssignPage(String instruction, String selectAssignedMetaData) {
+		driver.scrollingToBottomofAPage();		
+		bc.waitForElement(configureButton());
+		configureButton().waitAndClick(3);
+		bc.waitForElement(instructionTextBox());
+		instructionTextBox().SendKeys(instruction);	
+		instructionOkButton().waitAndClick(2);
+		bc.stepInfo("Instruction Successfully Configured For The Assignment");	
+		verifyAddedKeywordsChecked();
+		bc.stepInfo("KeyWords Successfully Configured For The Assignment");
+		bc.waitForElement(GetSelectMetaDataBtn());
+		GetSelectMetaDataBtn().waitAndClick(3);
+		bc.waitForElement(getSelectAssignedMDinAssignPage(selectAssignedMetaData));
+		getSelectAssignedMDinAssignPage(selectAssignedMetaData).waitAndClick(3);
+		bc.waitForElement(getMetadataFielOkBtn());
+		getMetadataFielOkBtn().waitAndClick(3);
+		bc.stepInfo("MetaData Field Successfully Configured For The Assignment");	
 	}
 }
 
