@@ -112,6 +112,7 @@ public class Ingestion_Regression_3 {
 		docList= new DocListPage(driver);
 		dataSets = new DataSets(driver);
 		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		String ingestionName = null;
 		//Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -120,13 +121,13 @@ public class Ingestion_Regression_3 {
 		System.out.println(status);
 		if (status == false) {
 		ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
-		ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		ingestionName =ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.UniCodeFilesFolder);
 		}
 		baseClass.stepInfo("Search text file and save the result");
-		dataSets.navigateToDataSetsPage();
-		dataSets.selectDataSetWithName(Input.UniCodeFilesFolder);
-		String docId=docList.getDocumetId();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, Input.docId);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
 		sessionSearch.saveSearch(BasicSearchName);
 		baseClass.stepInfo("Unpublish the text file");
 		ingestionPage.navigateToUnPublishPage();
@@ -138,9 +139,9 @@ public class Ingestion_Regression_3 {
 		ingestionPage.runFullAnalysisAndPublish();
 		baseClass.stepInfo("search for overlaid text file");
 		baseClass.selectproject();
-		sessionSearch.basicSearchWithMetaDataQuery(docId, Input.docId);
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
 		int Count =Integer.parseInt(sessionSearch.getPureHitsCount().getText());
-		if(Count==1) {
+		if(Count==5) {
 			baseClass.passedStep("user can view the search result of text file after publish is done");
 		}
 		else {
@@ -620,7 +621,7 @@ public class Ingestion_Regression_3 {
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
-		ingestionPage.performRollbackAndDeletIngestion();
+		ingestionPage.performRollbackAndDeleteIngestion();
 		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
 		loginPage.logout();
 	}
