@@ -517,6 +517,7 @@ public class DomainDashboard {
 		 driver.waitForPageToBeReady();
 		 waitForDomainDashBoardIsReady();
 		 base.waitForElement(getCreateNewProjectBtn());
+		 base.waitTillElemetToBeClickable(getCreateNewProjectBtn());
 		 getCreateNewProjectBtn().waitAndClick(10);
 		 driver.waitForPageToBeReady();
 		 base.waitForElement(getProjectName());

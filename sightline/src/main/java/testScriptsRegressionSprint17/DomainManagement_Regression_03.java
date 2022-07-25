@@ -230,6 +230,7 @@ public class DomainManagement_Regression_03 {
 		//login as sa
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Login as a da user :"+Input.da1userName);
+		base.selectproject(Input.domainName);
 		
 		base = new BaseClass(driver);
 		user = new UserManagement(driver);
