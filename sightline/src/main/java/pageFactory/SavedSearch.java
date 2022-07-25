@@ -1001,7 +1001,7 @@ public class SavedSearch {
 	}
 
 	public Element currentClickedNode() {
-		return driver.FindElementByXPath("//i[@class='jstree-icon jstree-themeicon']");
+		return driver.FindElementByXPath("//a[@class='jstree-anchor jstree-clicked']");
 	}
 
 	public Element getLastCreatedSearchGroup(String rtFolder) {
@@ -3302,6 +3302,7 @@ public class SavedSearch {
 		List<String> newNodeList = new ArrayList<>();
 		for (int i = 1; i <= size; i++) {
 			// Create SearchGroup
+			
 			base.waitForElement(getSavedSearchNewGroupButton());
 			getSavedSearchNewGroupButton().waitAndClick(2);
 			base.waitTime(2);// to handle wait for observing the text

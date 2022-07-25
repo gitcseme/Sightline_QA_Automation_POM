@@ -236,8 +236,8 @@ public class BatchRedactionRegression {
 		// Rollback Saved Search
 		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
 
-		base.waitForElement(batch.getRollbackbtn(searchName1));
-		batch.getRollbackbtn(searchName1).waitAndClick(10);
+		base.waitForElement(batch.getRollbackbtn(savedsearch));
+		batch.getRollbackbtn(savedsearch).waitAndClick(10);
 
 		base.waitForElement(batch.getPopupYesBtn());
 		batch.getPopupYesBtn().waitAndClick(20);
@@ -246,13 +246,13 @@ public class BatchRedactionRegression {
 		System.out.println("Rollback done successfully");
 
 		// Verify Rollback Success message
-		base.waitForElement(batch.getRollbackMsg(searchName1));
-		System.out.println(batch.getRollbackMsg(searchName1).getText());
-		base.stepInfo(batch.getRollbackMsg(searchName1).getText());
+		base.waitForElement(batch.getRollbackMsg(savedsearch));
+		System.out.println(batch.getRollbackMsg(savedsearch).getText());
+		base.stepInfo(batch.getRollbackMsg(savedsearch).getText());
 
 		// Click On CLickHereReport Btn And Verify FIle Name.
-		base.waitForElement(batch.getClickHereReportbtn(searchName1));
-		batch.getClickHereReportbtn(searchName1).Click();
+		base.waitForElement(batch.getClickHereReportbtn(savedsearch));
+		batch.getClickHereReportbtn(savedsearch).Click();
 		String fileName = batch.verifyBatchRedactionFileDownload();
 		System.out.println("The downloaded File is " + fileName);
 		base.stepInfo("The downloaded File is " + fileName);
@@ -298,7 +298,7 @@ public class BatchRedactionRegression {
 		base.stepInfo(batch.getRollbackMsg(searchName3).getText());
 
 		// Delete Search
-		saveSearch.deleteSearch(searchName3, Input.mySavedSearch, "Yes");
+		//saveSearch.deleteSearch(searchName3, Input.mySavedSearch, "Yes");
 		//saveSearch.deleteSearch(searchName2, Input.mySavedSearch, "Yes");
 
 		login.logout();
@@ -1110,7 +1110,7 @@ public class BatchRedactionRegression {
 
 		// Create saved search and navigate to doc view
 		redact.AddRedaction(tagName, "RMU");
-		int purehit = session.basicContentSearch(Input.stampSelection);
+		session.basicContentSearch(Input.stampSelection);
 		session.saveSearch(search);
 		session.ViewInDocView();
 
@@ -1177,7 +1177,7 @@ public class BatchRedactionRegression {
 		base.stepInfo("Test case Id:RPMXCON-53418");
 
 		// Create saved search
-		int purehit = session.basicContentSearch(Input.testData1);
+		 session.basicContentSearch(Input.testData1);
 		session.saveSearch(searchName);
 
 		// Verify Analyze Report and View Report driver.waitForPageToBeReady();
@@ -1209,7 +1209,7 @@ public class BatchRedactionRegression {
 		// login as RMU
 		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 		batch.verifyBatchReductionMenuFlow(assignName);
-
+		driver.Navigate().refresh();
 		login.logout();
 	}
 
