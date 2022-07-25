@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint17;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -21,6 +22,8 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocViewPage;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -41,8 +44,8 @@ public class Assignments_Regression_2_1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	in = new Input();
-	//	in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -208,6 +211,7 @@ public class Assignments_Regression_2_1 {
 		sa.assertEquals(ListeAfterAlteredInAssgnGrp, ListInAssgnmnt);
 		sa.assertAll();
 		baseClass.passedStep("The order of live sequence cascadedly reflected in assignment page");
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		assignPage.DeleteAssgnGroup(assignmentGroup);
 		loginPage.logout();
 	}
@@ -358,6 +362,219 @@ public class Assignments_Regression_2_1 {
 				+ "assigned and RMU selects View All Docs In DocList  validation is displayed and verified.");
 		assignPage.deleteAssgnmntUsingPagination(assgnName);
 		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws AWTException
+	 * @description: To verify that RMU is able to add Add Reviewers pop on click of Add Reviewer button
+	 */
+	@Test(description ="RPMXCON-53621",enabled = true, groups = { "regression" })
+	public void verifyRmuAbleToAddReviewersAndClosePopup() throws InterruptedException, AWTException {
+		baseClass.stepInfo("To verify that RMU is able to add Add Reviewers pop on click of Add Reviewer button");
+		baseClass.stepInfo("Test case Id: RPMXCON-53621");
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		String userToAdd[] = { Input.rev1userName };
+		assignPage.assignReviewers(userToAdd);
+		assignPage.getAssignment_ManageReviewersTab().waitAndClick(10);
+		if(assignPage.getAssgn_ManageRev_selectReviewer(Input.rev1userName).isElementAvailable(5)) {
+			baseClass.passedStep("Selected reviewr from reviewer popup displayed in manage reviewers table");
+		}else {
+			baseClass.failedStep("Selected reviewr from reviewer popup not displayed in manage reviewers table");
+		}
+		assignPage.verifyUserInReviewerTab(Input.rmu1userName);
+		assignPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws AWTException
+	 * @description: To verify that in "DOCUMENT PRESENTATION SEQUENCE" different sequence options are displayed as per selection of tab by RMU.
+	 */
+	@Test(description ="RPMXCON-53599",enabled = true, groups = { "regression" })
+	public void verifySequeceOptionsDisplayedAsPerSelection() throws InterruptedException, AWTException {
+		baseClass.stepInfo("To verify that in \"DOCUMENT PRESENTATION SEQUENCE\" different sequence options are displayed as per selection of tab by RMU.");
+		baseClass.stepInfo("Test case Id: RPMXCON-53599");
+		SoftAssert sa = new SoftAssert();
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		ArrayList<String> expectedLiveSequenceOrder = new ArrayList<String>(Arrays.asList("Email Threads", "Family Members", "Near Duplicate Docs","DocID"));
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignPage.createAssignment_withoutSave(assignmentName, Input.codeFormName);
+		sa.assertEquals(assignPage.getCategoryStatus().GetAttribute("aria-expanded"),"true","Category tab is not selected as default");
+		baseClass.passedStep("DOCUMENT PRESENTATION SEQUENCE default tab is selected as \"Category\" as expected");
+		List<String> actualLiveSequenceOrder = baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+		sa.assertEquals(expectedLiveSequenceOrder, actualLiveSequenceOrder,"The order of the live sequence are not displayed as expected");
+		baseClass.passedStep("The order of the live sequence are displayed as expected");
+		assignPage.sortBymetaDataBtn().waitAndClick(5);
+		baseClass.waitTillElemetToBeClickable(assignPage.SelectMetadata());
+		assignPage.SelectMetadata().waitAndClick(3);
+		if(assignPage.SelectMetadataFromDropDown("DocFileName").isElementAvailable(5)) {
+			baseClass.passedStep("Metadatas are displayed in the dropdown as expected");			
+		}else {
+			baseClass.failedStep("Metadatas are not displayed in the dropdown as expected");
+		}
+		sa.assertAll();
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description Verify the Default live sequence while creating the new assignment through bulk actions
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-49087", enabled = true, groups = { "regression" })
+	public void verifyDefLivSeqinAssignCrtThrBulkAction() throws InterruptedException {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+        
+        baseClass.stepInfo("Test case Id: RPMXCON-49087 Assignments");
+		baseClass.stepInfo(
+				"Verify the Default live sequence while creating the new assignment through bulk actions");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As : " + Input.rmu1userName);		
+		search.basicContentSearch(Input.searchString1);
+		search.bulkAssignWithNewAssignment();
+		
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);		
+		agnmt.VerifyLiveSequence();
+		baseClass.stepInfo("The live sequence order Displayed Email, then Family Members, then Near Dupes and then DocID "
+				+ "In New Assignment Page");
+		
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(5);	
+		baseClass.stepInfo("Assignment Created Through Bulk Action");
+		
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.stepInfo("Assignment Opened In Edit Assignment Page");
+		agnmt.VerifyLiveSequence();
+		baseClass.stepInfo("The Live Sequence Order Displays As We Expected In Edit Assignment Page");
+		
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		baseClass.passedStep("Successfully Verified That - the Default live sequence while creating the new assignment through bulk actions");
+		loginPage.logout();		
+	}
+
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description Verify that in DOCUMENT PRESENTATION SEQUENCE  RMU is able to drag and drop the sequencing options in Category tab
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+    @Test(description = "RPMXCON-53745", enabled = true, groups = { "regression" })
+	public void verifyRMUCanDDSeqOptionsInCategoryTab() throws InterruptedException, ParseException, IOException {
+		String assgnGrp = "AR3assignGrp" + Utility.dynamicNameAppender();
+		
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		LoginPage loginPage = new LoginPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53745 Assignments");
+		baseClass.stepInfo(
+				"Verify that in DOCUMENT PRESENTATION SEQUENCE  RMU is able to drag and drop the sequencing options in Category tab");	
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+		agnmt.navigateToAssignmentsPage();
+		agnmt.createCascadeNonCascadeAssgnGroup_withoutSave(assgnGrp, "No");
+		driver.scrollingToElementofAPage(agnmt.CatogeryTabClicked());
+		baseClass.ValidateElement_Presence(agnmt.CatogeryTabClicked(), "Category Tab is selected as Default");
+		baseClass.ValidateElement_Presence(agnmt.getAssgn_DocSequence_SortbyMetadata(), "Sort By MetaData Tab");
+		baseClass.stepInfo("Verified that DOCUMENT PRESENTATION SEQUENCE default tab is selected as Category and other tab Sort By Metadata are also available.");
+		driver.scrollingToBottomofAPage();
+		
+		agnmt.dragAndDropLiveSequence(" Email Threads");
+		baseClass.ValidateElement_Presence(agnmt.getunderAvailableCriteria(" Email Threads"), "Email Threads");
+		baseClass.stepInfo("Email Threads Successfully Dragged From Live Sequence to Available Criteria");
+		agnmt.dragAndDropLiveSeqfrmAvailableCrit(" Email Threads");
+		baseClass.ValidateElement_Presence(agnmt.liveSequenceSorts(" Email Threads"), "Email Threads");
+		baseClass.stepInfo("Email Threads Successfully Dragged From Available Criteria to Live Sequence");
+		
+		agnmt.dragAndDropLiveSequence(" Family Members");
+		baseClass.ValidateElement_Presence(agnmt.getunderAvailableCriteria(" Family Members"), "Family Members");
+		baseClass.stepInfo("Family Members Successfully Dragged From Live Sequence to Available Criteria");
+		agnmt.dragAndDropLiveSeqfrmAvailableCrit(" Family Members");
+		baseClass.ValidateElement_Presence(agnmt.liveSequenceSorts(" Family Members"), "Family Members");
+		baseClass.stepInfo("Email Threads Successfully Dragged From Available Criteriae to Live Sequence");
+		
+		agnmt.dragAndDropLiveSequence(" Near Duplicate Docs");
+		baseClass.ValidateElement_Presence(agnmt.getunderAvailableCriteria(" Near Duplicate Docs"), "Near Duplicate Docs");
+		baseClass.stepInfo("Near Duplicate Docs Successfully Dragged From Live Sequence to Available Criteria");
+		agnmt.dragAndDropLiveSeqfrmAvailableCrit(" Near Duplicate Docs");
+		baseClass.ValidateElement_Presence(agnmt.liveSequenceSorts(" Near Duplicate Docs"), "Near Duplicate Docs");
+		baseClass.stepInfo("Near Duplicate Docs Successfully Dragged From Available Criteriae to Live Sequence");
+		
+		agnmt.dragAndDropLiveSequence(" DocID");
+		baseClass.ValidateElement_Presence(agnmt.getunderAvailableCriteria(" DocID"), "DocID");
+		baseClass.stepInfo("DocID Successfully Dragged From Live Sequence to Available Criteria");
+		agnmt.dragAndDropLiveSeqfrmAvailableCrit(" DocID");
+		baseClass.ValidateElement_Presence(agnmt.liveSequenceSorts(" DocID"), "DocID");
+		baseClass.stepInfo("DocID Successfully Dragged From Available Criteriae to Live Sequence");
+		
+		baseClass.passedStep("Verified that - in DOCUMENT PRESENTATION SEQUENCE  RMU is able to drag and drop the sequencing options in Category tab");
+		loginPage.logout();
+	}
+    /**
+     * @author Iyappan.Kasinathan
+     * @description Verify that assignments functionality is working correctly and Properly
+     * @throws Exception
+     */
+    @Test(description = "RPMXCON-54271", enabled = true, groups = { "regression" })
+	public void verifyAssignFunctionalityWorkingProperly() throws Exception {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		String keywordName = "key"+Utility.dynamicNameAppender();
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		KeywordPage	keyword = new KeywordPage(driver);
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);		
+		baseClass.stepInfo("Test case Id: RPMXCON-54271");
+		baseClass.stepInfo("Verify that assignments functionality is working correctly and Properly");
+		baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+		keyword.navigateToKeywordPage();
+		keyword.addKeywordWithColor(keywordName, "Blue");
+		
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codeFormName);	
+		
+		baseClass.waitForElement(agnmt.getAssgnGrp_Create_DrawPoolCount());
+		agnmt.getAssgnGrp_Create_DrawPoolCount().SendKeys("2500");
+		
+		agnmt.configInstructionKeywordMDFieldinAssignPage(Input.searchString1, Input.metaDataName);
+		agnmt.enableAllToogleUnderPresentationControl();	
+		baseClass.stepInfo("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Enabled and Green in Color");
+		System.out.println("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Enabled and Green in Color");
+		baseClass.waitTime(2);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().Click();
+		
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		baseClass.stepInfo("Documents Assigned To Assignments Successfully");	
+	
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.distributeTheGivenDocCountToReviewer("10");	
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().Click();
+		baseClass.VerifySuccessMessage("Assignment updated successfully");
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Logged in as reviewer user");
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		baseClass.stepInfo("Document Successfully Distributed to the User");	
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		baseClass.passedStep("Verified That - Assignments Functionality is Working Correctly and Properly");
 		loginPage.logout();
 	}
 	@DataProvider(name = "Users")
