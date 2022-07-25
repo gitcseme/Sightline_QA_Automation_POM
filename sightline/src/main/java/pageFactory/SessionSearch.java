@@ -45,7 +45,7 @@ public class SessionSearch {
 	Categorization categorize;
 	UserManagement userManage;
 	AssignmentsPage assignPage;
-	
+
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
 
@@ -105,10 +105,15 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+
+	public ElementCollection getSearchPanelCount() {
+		return driver.FindElementsByXPath("//ul[@id='sessionSearchList']//li");
+	}
+
 	public Element getWarningMsg() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//div[contains(@style,'overflow')]");
 	}
-	
+
 	public Element getAnalysisOfCommExplorer() {
 		return driver.FindElementByXPath("//li[@id='CommunicationsExplorerOpt']");
 	}
@@ -334,9 +339,11 @@ public class SessionSearch {
 	public Element getSearchCriteriaValue() {
 		return driver.FindElementByXPath("//td[@class='value']//span");
 	}
+
 	public Element getCountUniqueDocId() {
 		return driver.FindElementByXPath("//h1[@class='page-title']//label");
 	}
+
 	public Element getMasterDate() {
 		return driver.FindElementByXPath("//td[@class=' formatDate']");
 	}
@@ -1065,7 +1072,7 @@ public class SessionSearch {
 	}
 
 	public Element getEditSessionSearchTextField(int searchNum, String searchName) {
-		return driver.FindElementByXPath("//div[@lang='b" + searchNum
+		return driver.FindElementByXPath("//div[@lang='" + searchNum
 				+ "']//span[@class='editable editable-pre-wrapped editable-click' and text()='" + searchName + "']");
 	}
 
@@ -1129,23 +1136,23 @@ public class SessionSearch {
 	// end
 
 	// Added by Mohan
-	
+
 	public Element getSavedSearchTreeNode() {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//li[4]//a");
 	}
-	
+
 	public Element getSavedSearchGroupName(String name) {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(text(),'" + name + "')]");
 	}
-	
+
 	public ElementCollection getCounts() {
 		return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody/tr");
 	}
-	
+
 	public ElementCollection getSavedSearchTermsListEmpty() {
 		return driver.FindElementsByXPath("//td[text()='Your query returned no data']");
 	}
-	
+
 	public Element getSavedSearchNodeCount() {
 		return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//ul//li");
 	}
@@ -1864,45 +1871,48 @@ public class SessionSearch {
 	public Element getPureHit_UsingLast() {
 		return driver.FindElementByXPath("(//a[@id='001']/span/count)[last()]");
 	}
+
 	public Element getSearchString2(int i) {
-		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input["+i+"]");
+		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input[" + i + "]");
 	}
-	
+
 //Added by Krishna
-	
+
 	public Element getAdvScrnSearchLabel(String i) {
 		return driver.FindElementByXPath("//div[@class='col-md-6']//span[text()='Search ']//span[text()='" + i + "']");
 	}
-	
 
 	public Element getConceptualTileHit(int i) {
-		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()="+ i +"]");
+		return driver.FindElementByXPath(".//*[@id='005']/span/count[text()=" + i + "]");
 	}
-	
+
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
-	
+
 	public Element getSelectSgPopup() {
-        return driver.FindElementById("Edit User Group");
-    }
-	
-	public Element getBellyBandTitleLabel() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']//child::span[text()='This search is in progress']");
+		return driver.FindElementById("Edit User Group");
 	}
 
-	public Element getIWantToWaitPopup(){
+	public Element getBellyBandTitleLabel() {
+		return driver.FindElementByXPath(
+				"//div[@class='MessageBoxMiddle']//child::span[text()='This search is in progress']");
+	}
+
+	public Element getIWantToWaitPopup() {
 		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' I want to wait']");
 	}
-	
+
 	public Element getWhenPureHitsAreReadyPopup() {
-		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[text()=' When Pure Hits are ready']");
+		return driver.FindElementByXPath(
+				"//div[@class='MessageBoxButtonSection']//button[text()=' When Pure Hits are ready']");
 	}
-	
+
 	public Element getExecutedStatusinLHS(int searchNum) {
-		return driver.FindElementByXPath("//li[@lang='tabs-"+searchNum+"']//a//span[@id='idLastExecuted' and contains(text(),'Executed')]");
+		return driver.FindElementByXPath(
+				"//li[@lang='tabs-" + searchNum + "']//a//span[@id='idLastExecuted' and contains(text(),'Executed')]");
 	}
-	
+
 	public Element getBulkAssignSelectedExistingAssignment() {
 		return driver.FindElementByXPath("//li[@class='active']/a[@id='tabBasicToExtAssigmnment']");
 	}
@@ -1910,11 +1920,11 @@ public class SessionSearch {
 	public Element getBulkAssignAssignDocumentsButton() {
 		return driver.FindElementByXPath("//*[@id='toAssign']/following-sibling::i");
 	}
-	
+
 	public Element getWorkProductSearchResult() {
 		return driver.FindElementByXPath("//td[text()='Work Product']/parent::tr//span[@class='badge']");
 	}
-	
+
 	public Element getThreadedDocumentsAddBtn() {
 		return driver.FindElementByXPath(
 				"(//*[@data-original-title='Threaded Documents']//i[contains(@class,'addTile')])[last()]");
@@ -1948,7 +1958,7 @@ public class SessionSearch {
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
 		base = new BaseClass(driver);
 		docViewMetaDataPage = new DocViewMetaDataPage(driver);
-		
+
 		softAssert = new SoftAssert();
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
@@ -2238,11 +2248,11 @@ public class SessionSearch {
 					+ "2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).\r\n"
 					+ "\r\n" + "Does your query reflect your intent?\r\n"
 					+ "Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
-			
+
 			String actualMsg = getWarningMsg().getText();
 			System.out.println(actualMsg);
 			base.stepInfo(actualMsg);
-			
+
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
 
 		}
@@ -3309,14 +3319,14 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000); // App Synch
 
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
+		} else {
 			System.out.println("View is not found");
-			}
-		
+		}
+
 		base.waitTime(3); // added for stabilization
 
 		System.out.println("Navigated to docView to view docs");
@@ -3813,7 +3823,7 @@ public class SessionSearch {
 				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
-		String finalCnt=getFinalCount().getText();
+		String finalCnt = getFinalCount().getText();
 		getFinalizeButton().Click();
 
 		getTallyContinue().waitAndClick(10);
@@ -3826,8 +3836,8 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		System.out.println("Bulk Tag is done, Tag is : " + TagName);
-        base.stepInfo("Bulk Tag is done for "+finalCnt+" docs with  Tag name  : " + TagName);
-        return finalCnt;
+		base.stepInfo("Bulk Tag is done for " + finalCnt + " docs with  Tag name  : " + TagName);
+		return finalCnt;
 	}
 
 	public void saveSearchAdvanced(String searchName) {
@@ -4599,7 +4609,6 @@ public class SessionSearch {
 		UtilityLog.info("Saved search with name - " + searchName);
 	}
 
-	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param assignMentName
@@ -4648,6 +4657,7 @@ public class SessionSearch {
 		driver.scrollPageToTop();
 		return reviwersList;
 	}
+
 	/**
 	 * @author Jayanthi Ganesan modified date-26/11/21
 	 * @param assignmentGroup
@@ -4706,14 +4716,14 @@ public class SessionSearch {
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(10);
 
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
+		} else {
 			System.out.println("View is not found");
-			}
-		
+		}
+
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");
 	}
@@ -4820,13 +4830,12 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(10);
 		Thread.sleep(1000);
 
-
 //		if (getDocViewAction().isElementAvailable(6)) {
 //			getDocViewAction().waitAndClick(10);
 //		} else {
 //			getDocViewActionDL().Click();
 //		}
-		
+
 		if (getViewBtn().isElementAvailable(2)) {
 			driver.waitForPageToBeReady();
 
@@ -5205,7 +5214,7 @@ public class SessionSearch {
 		try {
 			driver.waitForPageToBeReady();
 			base.stepInfo("Current search string : " + searchString2);
-			getEditSessionSearchTextField(searchNum, searchString2).Click();
+			getEditSessionSearchTextField(searchNum, searchString2).waitAndClick(10);
 //			getTextAreaEdit().Clear();
 			getTextAreaEdit().SendKeys(editSearch);
 			base.stepInfo("Modified search string : " + editSearch);
@@ -6086,27 +6095,27 @@ public class SessionSearch {
 	 */
 
 	public void createRemarks(String RemarksName) {
-        DocViewRedactions docViewRedact = new DocViewRedactions(driver);
-        driver.waitForPageToBeReady();
-        base.waitTillElemetToBeClickable(docViewRedact.remarksIcon());
-        docViewRedact.remarksIcon().waitAndClick(25);
-        base.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
-        driver.waitForPageToBeReady();
-        Actions actions = new Actions(driver.getWebDriver());
-        docViewRedact.getDocView_Redactrec_textarea().ScrollTo();
-        actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
-                .moveByOffset(40, 40).release().build().perform();
-        base.stepInfo("text for remarks has been selected");
-        actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
-        actions.click().build().perform();
-        actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
-        actions.click();
-        actions.sendKeys(RemarksName);
-        actions.build().perform();
-        actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
-        actions.click().build().perform();
-        base.stepInfo("Remarks added sucessfully " + RemarksName);
-    }
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(docViewRedact.remarksIcon());
+		docViewRedact.remarksIcon().waitAndClick(25);
+		base.waitTillElemetToBeClickable(docViewRedact.getDocView_Redactrec_textarea());
+		driver.waitForPageToBeReady();
+		Actions actions = new Actions(driver.getWebDriver());
+		docViewRedact.getDocView_Redactrec_textarea().ScrollTo();
+		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 10, 10).clickAndHold()
+				.moveByOffset(40, 40).release().build().perform();
+		base.stepInfo("text for remarks has been selected");
+		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
+		actions.click();
+		actions.sendKeys(RemarksName);
+		actions.build().perform();
+		actions.moveToElement(docViewRedact.saveRemarksBtn().getWebElement());
+		actions.click().build().perform();
+		base.stepInfo("Remarks added sucessfully " + RemarksName);
+	}
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -8004,21 +8013,21 @@ public class SessionSearch {
 		Thread.sleep(2000);// required
 		getBulkActionButton().waitAndClick(5);
 		Thread.sleep(2000);// // required
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
+		} else {
 			System.out.println("View is not found");
-			}
-		
+		}
+
 		base.waitForElement(getDocViewAction());
 		getDocViewAction().waitAndClick(5);
-	
+
 		System.out.println("Navigated to docView to view docs");
 		UtilityLog.info("Navigated to docView to view docs");
 	}
-	
+
 	/**
 	 * @author Jeevitha Description : advanceWorkProduct
 	 */
@@ -8601,7 +8610,6 @@ public class SessionSearch {
 			getDocViewAction().waitAndClick(10);
 			base.waitTime(3); // added for stabilization
 		}
-		
 
 		/*
 		 * base.waitForElement(getFMHitsCount()); // verify counts for all the tiles
@@ -9037,7 +9045,7 @@ public class SessionSearch {
 				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait60);
-		String finalCnt= getFinalCount().getText();
+		String finalCnt = getFinalCount().getText();
 		base.waitForElement(getFinalizeButton());
 		base.waitTillElemetToBeClickable(getFinalizeButton());
 
@@ -9048,9 +9056,9 @@ public class SessionSearch {
 
 //			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //					bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-		System.out.println("Bulk folder is done for "+finalCnt+", folder name is : " + folderName);
-        base.stepInfo("Bulk folder is done for "+finalCnt+" docs with folder name  : " + folderName);
-        return finalCnt;
+		System.out.println("Bulk folder is done for " + finalCnt + ", folder name is : " + folderName);
+		base.stepInfo("Bulk folder is done for " + finalCnt + " docs with folder name  : " + folderName);
+		return finalCnt;
 	}
 
 	public void advancedNewContentSearch1(String SearchString) {
@@ -9949,7 +9957,7 @@ public class SessionSearch {
 	 */
 	public void bulkAssignWithNewAssignmentWithPersistantHit(String assignmentName, String codingForm)
 			throws InterruptedException {
-		AssignmentsPage assignPage   = new AssignmentsPage(driver);
+		AssignmentsPage assignPage = new AssignmentsPage(driver);
 		driver.waitForPageToBeReady();
 		if (getPureHitAddButton().isDisplayed()) {
 			base.waitForElement(getPureHitAddButton());
@@ -11204,11 +11212,11 @@ public class SessionSearch {
 	 */
 	public void verifyNotificationAndNavigateBackGroundTaskPg(int bgCount) {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return base.initialBgCount() == bgCount + 1;
-			}
-		}), Input.wait60);
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return base.initialBgCount() == bgCount + 1;
+//			}
+//		}), Input.wait60);
 		base.waitForElement(getBullHornIcon());
 		getBullHornIcon().waitAndClick(20);
 		base.waitForElement(getViewAllBtn());
@@ -12095,7 +12103,6 @@ public class SessionSearch {
 
 	}
 
-
 	/**
 	 * @Author Jeevitha
 	 * 
@@ -12132,10 +12139,10 @@ public class SessionSearch {
 		}
 	}
 
-
 	/**
 	 * @author: Arun Created Date: 29/06/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will navigate to perform metadata search in advanced search 
+	 * @description: this method will navigate to perform metadata search in
+	 *               advanced search
 	 */
 	public void navigateToAdvancedMetaDataSearch() {
 		navigateToSessionSearchPageURL();
@@ -12153,11 +12160,13 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getAdvanceSearch_MetadataBtn().waitAndClick(5);
-		
+
 	}
+
 	/**
 	 * @author: Arun Created Date: 29/06/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify options available on DocDateDateOnly field
+	 * @description: this method will verify options available on DocDateDateOnly
+	 *               field
 	 */
 	public void verifyOptionsDisplayForDocDateDateOnlyField() {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -12167,32 +12176,33 @@ public class SessionSearch {
 		}), Input.wait30);
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(Input.DocDateDateOnly);
 		base.stepInfo("Verifying the options available for 'DocDateDateOnly'");
-		 List<WebElement> availableOptions =getMetaOption().selectFromDropdown().getOptions();
+		List<WebElement> availableOptions = getMetaOption().selectFromDropdown().getOptions();
 		int size = availableOptions.size();
-		for(int i=0;i<size;i++) {
+		for (int i = 0; i < size; i++) {
 			String option = availableOptions.get(i).getAttribute("value");
-			if(option.equalsIgnoreCase(Input.is)) {
-				if(getMetaDataSearchText1().isElementAvailable(10) &&
-						!getMetaDataSearchText2().isElementAvailable(10)) {
+			if (option.equalsIgnoreCase(Input.is)) {
+				if (getMetaDataSearchText1().isElementAvailable(10)
+						&& !getMetaDataSearchText2().isElementAvailable(10)) {
 					base.passedStep("'IS' option available with single textbox");
 				}
 			}
-			if(option.equalsIgnoreCase(Input.range)) {
+			if (option.equalsIgnoreCase(Input.range)) {
 				getMetaOption().selectFromDropdown().selectByVisibleText(Input.range);
-				if(getMetaDataSearchText1().isElementAvailable(10) &&
-						getMetaDataSearchText2().isElementAvailable(10)) {
+				if (getMetaDataSearchText1().isElementAvailable(10)
+						&& getMetaDataSearchText2().isElementAvailable(10)) {
 					base.passedStep("'RANGE' option available with two textboxes");
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will add the pure hit tile to shopping cart and navigate to required page
+	 * @description: this method will add the pure hit tile to shopping cart and
+	 *               navigate to required page
 	 */
 	public void addPureHitAndNavigate(String navigate) {
-		 
+
 		driver.waitForPageToBeReady();
 
 		if (getPureHitAddBtn().isElementAvailable(2)) {
@@ -12202,45 +12212,45 @@ public class SessionSearch {
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 		base.passedStep("Pure hit added to the shopping cart");
-		if(navigate.equalsIgnoreCase("Categorize")) {
+		if (navigate.equalsIgnoreCase("Categorize")) {
 			categorize = new Categorization(driver);
 			categorize.navigateToCategorizePage();
 			base.passedStep("Navigated to categorize page");
-		}
-		else if(navigate.equalsIgnoreCase("Users")) {
+		} else if (navigate.equalsIgnoreCase("Users")) {
 			userManage = new UserManagement(driver);
 			userManage.navigateToUsersPAge();
 			base.passedStep("Navigated to users page");
-		}
-		else if(navigate.equalsIgnoreCase("Assignment")) {
+		} else if (navigate.equalsIgnoreCase("Assignment")) {
 			assignPage = new AssignmentsPage(driver);
 			assignPage.navigateToAssignmentsPage();
 			base.passedStep("Navigated to Assignment page");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 30/06/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will navigate to search page and check tile retained status
+	 * @description: this method will navigate to search page and check tile
+	 *               retained status
 	 */
 	public void navigateToSearchPageAndVerifyTileStatus() {
 		navigateToSessionSearchPageURL();
 		driver.waitForPageToBeReady();
-		if(getRemoveAddBtn().isElementAvailable(10)) {
+		if (getRemoveAddBtn().isElementAvailable(10)) {
 			base.passedStep("Dropped tiles retained in shopping cart when navigating back to search page");
-		}
-		else {
+		} else {
 			base.failedStep("Dropped tiles not retained in shopping cart when navigating back to search page");
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 01/07/2022 Modified by: NA Modified Date: NA
-	 * @throws InterruptedException 
-	 * @description: this method will create query with SG OR operator with production status/date
+	 * @throws InterruptedException
+	 * @description: this method will create query with SG OR operator with
+	 *               production status/date
 	 */
-	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,Boolean productionDate) throws InterruptedException{
+	public void configureQueryWithSecurityGroupAndProductionStatus(String securityGroup, String operator,
+			Boolean productionDate) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		if (!(securityGroup == null)) {
 			selectSecurityGinWPS(securityGroup);
@@ -12254,7 +12264,7 @@ public class SessionSearch {
 			}
 		}), Input.wait30);
 		getProductionBtn().Click();
-		if(productionDate) {
+		if (productionDate) {
 			selectDate("From Date");
 			selectDate("To Date");
 		}
@@ -12268,29 +12278,30 @@ public class SessionSearch {
 		base.passedStep("Inserted query");
 		driver.scrollPageToTop();
 	}
-	
-	
+
 	/**
 	 * @author: Arun Created Date: 01/07/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the doc count available under SG with search result
+	 * @description: this method will verify the doc count available under SG with
+	 *               search result
 	 */
 	public void verifyDocsCountAvailableInSgWithSearchResult() {
 		serarchWP();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Get count available in selected security group");
 		if (getCountUniqueDocId().isElementAvailable(10)) {
-		String label = getCountUniqueDocId().getText();
-		String countlabel= label.substring(label.indexOf(":"));
-		int expectedCount = Integer.parseInt(countlabel.replace(",","").replace(": ", ""));
-		int actualCount = Integer.parseInt(verifyPureHitsCount());
-		if(actualCount <=expectedCount) {
-			base.passedStep("Application returns all the documents which are available under selected security group in search result.");	
+			String label = getCountUniqueDocId().getText();
+			String countlabel = label.substring(label.indexOf(":"));
+			int expectedCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
+			int actualCount = Integer.parseInt(verifyPureHitsCount());
+			if (actualCount <= expectedCount) {
+				base.passedStep(
+						"Application returns all the documents which are available under selected security group in search result.");
+			} else {
+				base.failedStep("Application not returned all the documents which are available");
+			}
 		}
-		else {
-			base.failedStep("Application not returned all the documents which are available");
-		}
-	  }		
 	}
+
 	/**
 	 * @Author Brundha
 	 * @Description: To Create Metadata basic search
@@ -12299,7 +12310,7 @@ public class SessionSearch {
 	 * @param val2
 	 * @return
 	 */
-	public int metaDataSearchInBasicSearch(String metaDataField, String val1,String val2) {
+	public int metaDataSearchInBasicSearch(String metaDataField, String val1, String val2) {
 		// Enter search string
 		base.waitForElement(getBasicSearch_MetadataBtn());
 		getBasicSearch_MetadataBtn().waitAndClick(3);
@@ -12314,11 +12325,12 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(3);
 		driver.waitForPageToBeReady();
 		getSearchString2(2).getWebElement().sendKeys(Keys.ENTER + val2);
-		
-		if(getTallyContinue().isElementAvailable(2)) {
+
+		if (getTallyContinue().isElementAvailable(2)) {
 			getTallyContinue().waitAndClick(10);
-		}else {
-			driver.waitForPageToBeReady();}
+		} else {
+			driver.waitForPageToBeReady();
+		}
 		base.waitForElement(getSearchButton());
 		getSearchButton().waitAndClick(3);
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -12329,67 +12341,65 @@ public class SessionSearch {
 		getPureHitsCount().waitAndClick(15);
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		return pureHit;
-	}	
-	
-public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
-		
-		if(getAdvScrnSearchLabel(SearchTabNo).Visible()){
+	}
+
+	public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
+
+		if (getAdvScrnSearchLabel(SearchTabNo).Visible()) {
 			base.waitForElement(getQueryFromTextBox());
 			String actText = getQueryFromTextBox().getText();
 			String expText = query;
 			SoftAssert asserts = new SoftAssert();
 			asserts.assertEquals(expText, actText);
-			base.passedStep(query + " present in search " +SearchTabNo); 
-		}else {
-			base.failedStep(SearchTabNo + "is Not Visible"); 
+			base.passedStep(query + " present in search " + SearchTabNo);
+		} else {
+			base.failedStep(SearchTabNo + "is Not Visible");
 		}
 	}
 
-
 	/**
 	 * @author: Arun Created Date: 07/07/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the search result for master date metadata using range operator
+	 * @description: this method will verify the search result for master date
+	 *               metadata using range operator
 	 * @param range1--from date (year)
-	 * @param range2-- to date (year)
+	 * @param range2--     to date (year)
 	 */
-	public void verifyMasterDateSearchResults(String range1,String range2) {
-		
+	public void verifyMasterDateSearchResults(String range1, String range2) {
+
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		base.stepInfo("pure hit count for search result '"+pureHit+"'");
+		base.stepInfo("pure hit count for search result '" + pureHit + "'");
 		String masterDate = getMasterDate().getText();
-		base.stepInfo(" master date search result details'"+masterDate+"'");
-		if(pureHit>0 && getMasterDate().isElementAvailable(10) &&
-				masterDate.contains(range1) || masterDate.contains(range2)) {
+		base.stepInfo(" master date search result details'" + masterDate + "'");
+		if (pureHit > 0 && getMasterDate().isElementAvailable(10) && masterDate.contains(range1)
+				|| masterDate.contains(range2)) {
 			base.passedStep("Search results and Master date details displayed on advanced search screen");
-		}
-		else {
+		} else {
 			base.failedStep("Search results and Master date details not present, please check the range");
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 07/07/2022 Modified by: NA Modified Date: NA
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @description: this method will verify the conceptual tile run result status
 	 */
 	public void verifySearchResultAndConceptualTileReturnResult() throws InterruptedException {
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		base.stepInfo("pure hit count for search result '"+pureHit+"'");
-		if(pureHit>0) {
+		base.stepInfo("pure hit count for search result '" + pureHit + "'");
+		if (pureHit > 0) {
 			base.passedStep("Search results returned for the configured query");
-		}
-		else {
+		} else {
 			base.failedStep("Search results not returned for the configured query");
 		}
 		int conceptPureHit = runAndVerifyConceptualSearch();
-		
-		if(getConceptualTileHit(conceptPureHit).Visible()) {
-			base.passedStep("Verified that Conceptual tile return the result for work product search in Advanced  Search Screen");
-		}else {
+
+		if (getConceptualTileHit(conceptPureHit).Visible()) {
+			base.passedStep(
+					"Verified that Conceptual tile return the result for work product search in Advanced  Search Screen");
+		} else {
 			base.failedStep("Still conceptual results Loading on the Screen");
 		}
 	}
-
 
 	/**
 	 * @author Raghuram.A
@@ -12492,83 +12502,81 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		Reporter.log("Saved the search with name '" + searchName + "'", true);
 		UtilityLog.info("Saved search with name - " + searchName);
 
+	}
+
+	public void verifyAllTilesResultsinAdvSrcScrn() throws InterruptedException {
+
+		SoftAssert softAssert = new SoftAssert();
+		// Getting Result From PureHit Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		base.waitTime(60);
+		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		softAssert.assertNotNull(pureHit, "Pure Hit Tile Successfully Returned the Results");
+		System.out.println("PureHit Count :" + pureHit);
+
+		// Getting Result From Thread Count Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getThreadedCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+
+		int threadCount = Integer.parseInt(getThreadedCount().getText());
+		softAssert.assertNotNull(threadCount, "Thread Tile Successfully Returned the Results");
+		System.out.println("ThreadCount :" + threadCount);
+
+		// Getting Result From NearDuplicate Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNearDupeCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+
+		int nearDuplicate = Integer.parseInt(getNearDupeCount().getText());
+		softAssert.assertNotNull(nearDuplicate, "Near Duplicate Tile Successfully Returned the Results");
+		System.out.println("Near Duplocate Count :" + nearDuplicate);
+
+		// Getting Result From Family Count Tile
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFamilyCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+
+		int familyMember = Integer.parseInt(getFamilyCount().getText());
+		softAssert.assertNotNull(familyMember, "Family Member Tile Successfully Returned the Results");
+		System.out.println("Family Member Count :" + familyMember);
 
 	}
-	
-	public void verifyAllTilesResultsinAdvSrcScrn() throws InterruptedException{
-
-        SoftAssert softAssert = new SoftAssert();
-        // Getting Result From PureHit Tile
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
-            }
-        }), Input.wait120);    
-        base.waitTime(60);
-        int pureHit = Integer.parseInt(getPureHitsCount().getText());
-        softAssert.assertNotNull(pureHit, "Pure Hit Tile Successfully Returned the Results");
-        System.out.println("PureHit Count :" + pureHit);
-
-        // Getting Result From Thread Count Tile
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return getThreadedCount().getText().matches("-?\\d+(\\.\\d+)?");
-            }
-        }), Input.wait120);
-
-        int threadCount = Integer.parseInt(getThreadedCount().getText());
-        softAssert.assertNotNull(threadCount, "Thread Tile Successfully Returned the Results");
-        System.out.println("ThreadCount :" + threadCount);
-
-        // Getting Result From NearDuplicate Tile
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return getNearDupeCount().getText().matches("-?\\d+(\\.\\d+)?");
-            }
-        }), Input.wait120);
-
-        int nearDuplicate = Integer.parseInt(getNearDupeCount().getText());
-        softAssert.assertNotNull(nearDuplicate, "Near Duplicate Tile Successfully Returned the Results");
-        System.out.println("Near Duplocate Count :" + nearDuplicate);
-
-        // Getting Result From Family Count Tile
-        driver.WaitUntil((new Callable<Boolean>() {
-            public Boolean call() {
-                return getFamilyCount().getText().matches("-?\\d+(\\.\\d+)?");
-            }
-        }), Input.wait120);
-
-        int familyMember = Integer.parseInt(getFamilyCount().getText());
-        softAssert.assertNotNull(familyMember, "Family Member Tile Successfully Returned the Results");
-        System.out.println("Family Member Count :" + familyMember);
-
-    }      	
-	
 
 	public void verifyBellyBandOptions() {
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getBellyBandTitleLabel().isElementAvailable(10);
 			}
 		}), Input.wait120);
 		base.stepInfo("Belly Band PopUpSuccessfully Opened");
-		
-		if (getWhenAllResultsAreReadyPopUp().isElementAvailable(5) && getWhenPureHitsAreReadyPopup().isElementAvailable(06) &&
-				getIWantToWaitPopup().isElementAvailable(5)) {
+
+		if (getWhenAllResultsAreReadyPopUp().isElementAvailable(5)
+				&& getWhenPureHitsAreReadyPopup().isElementAvailable(06)
+				&& getIWantToWaitPopup().isElementAvailable(5)) {
 			base.passedStep("All Three Options are Present in BellyBand When Search Goes BackGround");
 			System.out.println("All Three Options are Present in BellyBand When Search Goes BackGround");
-			
-			}else {
-				base.failedStep("All Three Options Not Present in BellyBand When Search Goes BackGround");
-				System.out.println("All Three Options Not Present in BellyBand When Search Goes BackGround");
-			}
+
+		} else {
+			base.failedStep("All Three Options Not Present in BellyBand When Search Goes BackGround");
+			System.out.println("All Three Options Not Present in BellyBand When Search Goes BackGround");
 		}
-	
-	
+	}
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @descripton: To Verify Cloning project saved search terms
 	 */
 	public void verifySavedSearchTermsForCloningProject(String searchGroup) throws InterruptedException {
@@ -12578,30 +12586,28 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		ElementCollection counts = getCounts();
 		int size = counts.size();
 		System.out.println(size);
-		if (size >3) {
+		if (size > 3) {
 			base.passedStep("Saved Search list contains more than 3 save searches");
-		}else if (getSavedSearchTermsListEmpty().isElementAvailable(5)|| size<3) {
-			
-		
+		} else if (getSavedSearchTermsListEmpty().isElementAvailable(5) || size < 3) {
+
 			basicContentSearch(Input.searchString1);
-			saveSearchAtAnyRootGroup("Donot Delete1"+ Utility.dynamicNameAppender(), searchGroup);
+			saveSearchAtAnyRootGroup("Donot Delete1" + Utility.dynamicNameAppender(), searchGroup);
 			driver.waitForPageToBeReady();
 			base.selectproject();
 			basicContentSearch(Input.testData1);
 			driver.waitForPageToBeReady();
 			base.waitTime(3);
-			saveSearchAtAnyRootGroup("Donot Delete2"+ Utility.dynamicNameAppender(), searchGroup);
+			saveSearchAtAnyRootGroup("Donot Delete2" + Utility.dynamicNameAppender(), searchGroup);
 			driver.waitForPageToBeReady();
 			base.selectproject();
 			basicContentSearch(Input.searchString2);
 			base.waitTime(3);
-			saveSearchAtAnyRootGroup("Donot Delete3"+ Utility.dynamicNameAppender(), searchGroup);
-			
+			saveSearchAtAnyRootGroup("Donot Delete3" + Utility.dynamicNameAppender(), searchGroup);
+
 			base.stepInfo("Saved search list is creted with more than 3 save searches");
 		}
-		
+
 	}
-	
 
 	/**
 	 * @author
@@ -12711,7 +12717,6 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		base.passedStep("Tiles are Present in Sequence.");
 	}
 
-
 	/**
 	 * @author: Jayanthi
 	 * @description: this method will get the doc count available under SG .
@@ -12723,7 +12728,7 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 			String label = getCountUniqueDocId().getText();
 			String countlabel = label.substring(label.indexOf(":"));
 			expectedCount = Integer.parseInt(countlabel.replace(",", "").replace(": ", ""));
-			base.stepInfo("Count available in selected security group "+expectedCount);
+			base.stepInfo("Count available in selected security group " + expectedCount);
 
 		} else {
 			base.failedMessage("Uniques docs count under Selected SG is not displayed.");
@@ -12731,7 +12736,50 @@ public void verifyQueryPresentinSearchbox(String SearchTabNo, String query) {
 		return expectedCount;
 	}
 
-
 	
+	/**
+	 * @Author Jeevitha
+	 */
+	public void verifyWarningMessage(boolean search, int MessageNumber) {
+		if (search) {
+			base.waitForElement(getAdvanceSearch_btn_Current());
+			getAdvanceSearch_btn_Current().waitAndClick(10);
+		}
+		if (MessageNumber == 1) {
+			if (getWarningAudioBlackListChar_Header().isDisplayed()) {
+				String header = getWarningAudioBlackListChar_Header().getText();
+				softAssert.assertEquals(header, "Possible Wrong Query Alert");
+				base.stepInfo("Displayed Header is : " + header);
+				System.out.println("Displayed Header is : " + header);
+			}
 
+			String msg = "Only alphanumeric characters and hyphens (-) can be specified in an audio search term";
+			base.waitTime(2);
+			base.waitForElement(getWarningAudioBlackListChar_Message());
+			String actualMsg = getWarningAudioBlackListChar_Message().getText();
+			System.out.println(actualMsg);
+			base.stepInfo(actualMsg);
+
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+		}
+		softAssert.assertAll();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 */
+	public void verifyCopyToNewSearch() {
+		int initialSize = getSearchPanelCount().size();
+
+		base.waitForElement(getAdvSearchCopyToNewSearch());
+		getAdvSearchCopyToNewSearch().waitAndClick(10);
+		base.stepInfo("Clicked : copy to new search Btn");
+		driver.waitForPageToBeReady();
+		int afterSize = getSearchPanelCount().size();
+		if (initialSize < afterSize) {
+			base.passedStep("New Search is Created");
+		} else {
+			base.failedStep("New Search is not Created");
+		}
+	}
 }
