@@ -37,8 +37,8 @@
         <rmu1password></rmu1password>
         
         <rmu2FullName>Consilio RMU2 Automation</rmu2FullName>
-        <rmu2userName>arunkumar.athimoolam@indiumsoft.com</rmu2userName>
-        <rmu2password>Consilio@321</rmu2password>
+        <rmu2userName></rmu2userName>
+        <rmu2password></rmu2password>
         
         <!-- Consilio REVU Automation -->
         <rev1FullName>Consilio REVU1 Automation</rev1FullName>

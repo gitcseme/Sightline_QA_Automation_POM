@@ -26,6 +26,7 @@ import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
@@ -33,6 +34,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.ProjectPage;
 import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -357,6 +359,120 @@ public class SecurityGroups_Regression3 {
 		baseClass.passedStep("Warning message is displayed successfully");
 		softassert.assertAll();
 	}
+	
+	/**
+	 * @Author Krishna Date: 21/07/2022
+	 * @Description : Verify if PAU impersonate as Reviewer, he should able to
+	 *              impersonate back as PAU in other project in which he is PAU
+	 * @param :
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54913", enabled = true, groups = { "regression" })
+	public void verifyPAUImpersonateToREVAbleToBackPAU() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54913");
+		baseClass.stepInfo(
+				"Verify if RMU is select the other project in which he is PAU role, it should take to SG in the that project");
+		docexp = new DocExplorerPage(driver);
+		DataSets data = new DataSets(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
+		String projectName = "CreateProject" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+		// create project
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "1");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		data.getNotificationMessage(0, projectName);
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.rev1FullName, "Reviewer", "", false, false);
+		System.out.println(projectName);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		if (assignmentPage.getAssignmentsInreviewerPg().isDisplayed()) {
+			baseClass.passedStep("Redirect to reviewer home page is successfully");
+		} else {
+			baseClass.failedStep("will not redirect to homepage");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.impersonateReviewertoPA(projectName);
+		baseClass.stepInfo("selected other project");
+		baseClass.selectproject(projectName);
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep(projectName + ".. Redirect to PAU home page is successfully");
+		} else {
+			baseClass.failedStep("will not Redirect to homepage");
+		}
+	}
+	
+	/**
+	 * @Author Krishna Date: 20/07/2022
+	 * @Description : Verify if RMU is select the other project in which he is PAU
+	 *              role, it should take to SG in the that project
+	 * @param :
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54847", enabled = true, groups = { "regression" })
+	public void verifyRmuSelectOtherProjectInPaRoleTakeToSg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54847");
+		baseClass.stepInfo(
+				"Verify if RMU is select the other project in which he is PAU role, it should take to SG in the that project");
+		docexp = new DocExplorerPage(driver);
+		DataSets data = new DataSets(driver);
+		ProjectPage projectPage = new ProjectPage(driver);
+		String projectName = "SecurityGroupProject" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+
+		// create project
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "1");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		data.getNotificationMessage(0, projectName);
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.rev1FullName, "Reviewer", "", false, false);
+		System.out.println(projectName);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.impersonatePAtoReviewer();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(assignmentPage.getAssignmentsInreviewerPg());
+		if (assignmentPage.getAssignmentsInreviewerPg().isDisplayed()) {
+			baseClass.passedStep("Redirect to reviewer home page successfully");
+		} else {
+			baseClass.failedStep("will not redirect to homepage");
+		}
+
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.selectproject(projectName);
+		baseClass.stepInfo(projectName + "..is select from header dropdown");
+		if (assignmentPage.getAssignmentsInreviewerPg().isDisplayed()) {
+			baseClass.passedStep("Redirect to reviewer home page successfully");
+		} else {
+			baseClass.failedStep("will not redirect to homepage");
+		}
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as " + Input.pa1FullName);
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep("Redirect to PAU home page successfully");
+		} else {
+			baseClass.failedStep("will not Redirect to homepage");
+		}
+
+	}
+
 
 
 }
