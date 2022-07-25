@@ -3,6 +3,7 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -742,6 +743,9 @@ public class UserManagement {
 
 	public Element getUserListNextButton() {
 		return driver.FindElementByXPath("//a[text()='Next']");
+	}
+	public Element getUserPaginationNextButton() {
+		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
 
 	public ElementCollection getAssgnPaginationCount() {
@@ -2718,8 +2722,25 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		System.out.println(count);
+		for (int i = 0; i < count; i++) {
+			if (getEditButtonFromUserManagentPage(projectName).isElementAvailable(5)) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+				break;
+			}else {
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(5);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+			
+		}
 
 		if (role.contains("Reviewer")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2797,8 +2818,25 @@ public class UserManagement {
 		bc.waitForElement(getFilerApplyBtn());
 		getFilerApplyBtn().waitAndClick(5);
 
-		bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
-		getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		System.out.println(count);
+		for (int i = 0; i < count; i++) {
+			if (getEditButtonFromUserManagentPage(projectName).isElementAvailable(5)) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+				break;
+			}else {
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(5);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+			
+		}
 
 		if (role.contains("Reviewer") || (role.contains("Review Manager"))) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2853,6 +2891,110 @@ public class UserManagement {
 
 				bc.VerifySuccessMessage("User profile was successfully modified");
 			}
+		} else {
+			bc.failedStep("User is unable to edit the details of the user");
+		}
+
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To change role from Reviewer and Reviewer Manager to PA and
+	 *               Reviewer Manager
+	 * @param username
+	 * @param role
+	 */
+	public void editRoleOfAnUserSAForManage(String username, String role, String manageButton,String projectName) {
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getUserNameFilter());
+		getUserNameFilter().SendKeys(username);
+		bc.waitForElement(getSelectRoleToFilter());
+		getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		bc.waitForElement(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAssgnPaginationCount().Visible();
+			}
+		}), Input.wait30);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		System.out.println(count);
+		for (int i = 0; i < count; i++) {
+			if (getEditButtonFromUserManagentPage(projectName).isElementAvailable(5)) {
+				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
+				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
+				break;
+			}else {
+				driver.scrollingToBottomofAPage();
+				getUserPaginationNextButton().waitAndClick(5);
+				bc.stepInfo("Expected assignment not found in the page " + i);
+			}
+			
+		}
+		
+
+		if (role.contains("Project Administrator")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Review Manager");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getSecurityTab());
+			getSecurityTab().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+			bc.waitForElement(getFunctionalityButton());
+			getFunctionalityButton().waitAndClick(5);
+			
+			if (manageButton.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			} else if (manageButton.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
+
+			
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+			bc.VerifySuccessMessage("User profile was successfully modified");
+			bc.passedStep("Manage is checked and enabled and Save button is clicked");
+
+		} else if (role.contains("Review Manager")) {
+			bc.waitForElement(getUserChangeDropDown());
+			getUserChangeDropDown().selectFromDropdown().selectByVisibleText("Project Administrator");
+
+			if (getConfirmTab().isElementAvailable(5)) {
+				bc.waitForElement(getConfirmTab());
+				getConfirmTab().waitAndClick(5);
+			}
+
+
+			bc.waitForElement(getFunctionalityTab());
+			getFunctionalityTab().waitAndClick(5);
+			
+			if (manageButton.contains("0")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			} else if (manageButton.contains("1")) {
+				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
+				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
+			}
+
+			
+
+				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+
+				bc.VerifySuccessMessage("User profile was successfully modified");
+			
 		} else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
@@ -3187,6 +3329,7 @@ public class UserManagement {
 					}
 
 					// Launch functionality pop-up
+					bc.waitForElement(getFunctionalityTab());
 					getFunctionalityTab().waitAndClick(5);
 
 					bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentName("Collections")), "For "

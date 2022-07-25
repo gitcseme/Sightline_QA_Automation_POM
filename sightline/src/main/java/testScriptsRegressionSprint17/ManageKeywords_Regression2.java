@@ -250,21 +250,23 @@ public class ManageKeywords_Regression2 {
 		
 		//Navigate to Users Page
 		UserManagement userManagement = new UserManagement(driver);
-		userManagement.editRoleFromPAUToRMU(Input.pa1userName, "Project Administrator","1",Input.projectName);
+		userManagement.editRoleOfAnUserSAForManage(Input.pa2userName, "Project Administrator","1",Input.projectName);
 		
 		loginPage.logout();
 		
 		// Login As PA from RMU
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.pa1userName + "");
-		// Keyword cannot be created
+		loginPage.loginToSightLine(Input.pa2userName, Input.pa2password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.pa2userName + "");
 		
-
+		// Keyword cannot be created
+		driver.waitForPageToBeReady();
 		if (userManagement.getManageBtn().isDisplayed()) {
 			baseClass.failedStep(" User have access to Manage > Keywords page.");
 		} else {
 			baseClass.passedStep("User doesn't have access to Manage > Keywords page.");
 		}
+		
+		
 		loginPage.logout();
 		
 		
@@ -275,7 +277,7 @@ public class ManageKeywords_Regression2 {
 		baseClass.stepInfo("User successfully logged into slightline webpage as SA with " + Input.sa1userName + "");
 		
 		//Navigate to Users Page
-		userManagement.editRoleFromPAUToRMU(Input.pa1userName, "Review Manager","1",Input.projectName);
+		userManagement.editRoleOfAnUserSAForManage(Input.pa2userName, "Review Manager","1",Input.projectName);
 		baseClass.stepInfo("User had changed the access to original name");
 		loginPage.logout();
 		
