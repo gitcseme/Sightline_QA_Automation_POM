@@ -602,6 +602,55 @@ public class Ingestion_Regression_3 {
 		baseClass.passedStep("Verified that application will move ahead to run ingestion if mapping is matched");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 22/07/2022 TestCase Id:RPMXCON-47375
+	 * Description :To verify that ingestion which is Rolled back can be deleted. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47375",enabled = true, groups = { "regression" })
+	public void verifyRollbackAndDeleteIngestion() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47375");
+		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and Perform Catalogging");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
+		ingestionPage.performRollbackAndDeletIngestion();
+		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 22/07/2022 TestCase Id:RPMXCON-47368
+	 * Description :To verify that selection of Close button, redirects to Ingestion Home page
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47368",enabled = true, groups = { "regression" })
+	public void verifyCloseButtonRedirectsToHomePage() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47368");
+		baseClass.stepInfo("verify that selection of Close button redirects to Ingestion Home page");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Navigate to Ingestion home page");
+		ingestionPage.navigateToIngestionPage();
+		baseClass.waitForElement(ingestionPage.getFilterByButton());
+		ingestionPage.getFilterByButton().waitAndClick(5);
+		baseClass.waitForElement(ingestionPage.getFilterByPUBLISHED());
+		ingestionPage.getFilterByPUBLISHED().waitAndClick(5);
+		ingestionPage.getRefreshButton().waitAndClick(5);
+		baseClass.stepInfo("Click on ingestion Name link and close button");
+		ingestionPage.performClickOnIngestionNameLinkAndCloseButton();
+		loginPage.logout();
+		
+	}
+	
 
 	
 	
