@@ -11114,7 +11114,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will rollback and delete ingestion using action dropdown menu            
 		 */
 		
-		public void performRollbackAndDeletIngestion() {
+		public void performRollbackAndDeleteIngestion() {
 			rollBackIngestionUsingActionMenu();
 			VerifyDraftIngestionStatusAfterRollback();
 			deleteIngestion();

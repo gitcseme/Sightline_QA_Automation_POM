@@ -3969,4 +3969,55 @@ public class BaseClass {
 			}
 
 		}
+		/**
+		 * @author Krishna Description : Impersonate Reviewer to PA
+		 */
+		public void impersonateReviewertoPA(String projectName) {
+			try {
+				getSignoutMenu().Click();
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getChangeRole().Visible();
+					}
+				}), Input.wait60);
+				getChangeRole().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSelectRole().Visible();
+					}
+				}), Input.wait60);
+				getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+
+				Thread.sleep(1000);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getAvlDomain().Visible();
+					}
+				}), Input.wait30);
+				getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+				Thread.sleep(1000);
+
+				getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+				Thread.sleep(1000);
+
+				getSaveChangeRole().waitAndClick(5);
+				System.out.println("Impersnated from Reviewer to PA");
+
+				UtilityLog.info("Impersnated from Reviewer to PA");
+
+				if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+					try {
+						getGlobalMessagePopUpClose().waitAndClick(5);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			} catch (Exception E) {
+				E.printStackTrace(pw);
+				UtilityLog.info(sw.toString());
+			}
+		}
 }
