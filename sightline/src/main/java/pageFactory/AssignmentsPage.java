@@ -10433,5 +10433,68 @@ public class AssignmentsPage {
 		getMetadataFielOkBtn().waitAndClick(3);
 		bc.stepInfo("MetaData Field Successfully Configured For The Assignment");	
 	}
-}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @Description-This method will assign documents to assignments using sample
+	 *                   methods and verify the Doc counts assigned in manage
+	 *                   assignment page.
+	 * @param assignmentName
+	 * @param sampleMethod
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public void assignwithSamplemethod(String assignmentName, String samplemethod, String countToAssign)
+			throws NumberFormatException, InterruptedException {
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getStartingCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		VerifySampleMethodDDOptions();
+		if (samplemethod.equalsIgnoreCase("Percentage")) {
+			getsampleMethod().selectFromDropdown().selectByVisibleText("Percent of Selected Docs");
+			getCountToAssign().SendKeys(countToAssign);
+			long PercentageOfDocAssigned = calculatePercentageOfDocAlloted();
+			System.out.println(PercentageOfDocAssigned);
+			bc.stepInfo("Bulk assigned using sample method/Precentage with precentage of " + " doc count  -"
+					+ countToAssign + "% /" + PercentageOfDocAssigned);
+			getPersistCB_ExistAssgn().waitAndClick(5);
+
+		} else if (samplemethod.equalsIgnoreCase("c")) {
+			getsampleMethod().selectFromDropdown().selectByVisibleText("Count of Selected Docs");
+			getCountToAssign().SendKeys(countToAssign);
+			bc.stepInfo(
+					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
+		}
+		bc.waitForElement(getSelectAssignmentToBulkAssign(assignmentName));
+		getSelectAssignmentToBulkAssign(assignmentName).waitAndClick(20);
+		getContinueBulkAssign().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		String FinalCount = getFinalCount().getText();
+
+		getFinalizeButton().Click();
+		bc.VerifySuccessMessage(
+				"Bulk Assign has been added to background process. You will get notification on completion.");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		int ExpectedDocCount = Integer.parseInt(FinalCount);
+		int ActualDocCount = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName));
+		assertion.assertEquals(ActualDocCount, ExpectedDocCount);
+		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets using " + samplemethod + "");
+
+		assertion.assertAll();
+	}
+}
