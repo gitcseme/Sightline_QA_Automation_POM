@@ -583,6 +583,149 @@ public class Assignments_Regression_2_1 {
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
 	}
+	
+	 /**
+     * @author Krishna
+     * @description Verify that - After impersonation (Project Admin to RMU)- Application disallow special characters in New Assignments screen.
+     * @throws Exception
+     */
+	
+	@Test(description = "RPMXCON-54437", groups = { "regression" })
+	public void verifyErrorMsgForSpclCharNewAssignScrPAtoRMU() throws InterruptedException {
+
+		String dataSet[][] = { { "AssignmentNameWith<test" }, { "AssignmentNameWith(test" },
+				{ "AssignmentNameWith)test" }, { "AssignmentNameWith[test" }, { "AssignmentNameWith]test" },
+				{ "AssignmentNameWith{test" }, { "AssignmentNameWith}test" }, { "AssignmentNameWith:test" },
+				{ "AssignmentNameWith\"test" }, { "AssignmentNameWith'test" }, { "AssignmentNameWith~test" },
+				{ "AssignmentNameWith*test" }, { "AssignmentNameWith?test" }, { "AssignmentNameWith&test" },
+				{ "AssignmentNameWith$test" }, { "AssignmentNameWith#test" }, { "AssignmentNameWith@test" },
+				{ "AssignmentNameWith!test" }, { "AssignmentNameWith-test" }, { "AssignmentNameWith_test" } };
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54437");
+		baseClass.stepInfo(
+				"Verify that - After impersonation (Project Admin to RMU)- Application disallow special characters in New Assignments screen.");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged In As :" + Input.pa1userName);
+		baseClass.impersonatePAtoRMU();
+
+		agnmt.navigateToAssignmentsPage();
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+
+			String renameAssign = dataSet[i][j];
+			agnmt.selectAssignmentGroup("Root");
+			agnmt.NavigateToNewEditAssignmentPage("New");
+			baseClass.waitForElement(agnmt.getAssignmentName());
+			agnmt.getAssignmentName().SendKeys(renameAssign);
+			agnmt.getAssignmentSaveButton().waitAndClick(5);
+			agnmt.verifyErrorMsginAssignmentName();
+		}
+		baseClass.passedStep(
+				"Verified - that After impersonation (Project Admin to RMU)- Application disallow special characters in New Assignments screen");
+		loginPage.logout();
+	}
+	
+
+	 /**
+    * @author Krishna
+    * @description Verify that - After impersonation (Project Admin to RMU)- Application disallow special characters in New Assignments screen.
+    * @throws Exception
+    */
+
+	@Test(description = "RPMXCON-54438", groups = { "regression" })
+	public void verifyErrorMsgForSpclCharEditAssignScrPAtoRMU() throws InterruptedException {
+
+		String dataSet[][] = { { "AssignmentNameWith<test" }, { "AssignmentNameWith(test" },
+				{ "AssignmentNameWith)test" }, { "AssignmentNameWith[test" }, { "AssignmentNameWith]test" },
+				{ "AssignmentNameWith{test" }, { "AssignmentNameWith}test" }, { "AssignmentNameWith:test" },
+				{ "AssignmentNameWith\"test" }, { "AssignmentNameWith'test" }, { "AssignmentNameWith~test" },
+				{ "AssignmentNameWith*test" }, { "AssignmentNameWith?test" }, { "AssignmentNameWith&test" },
+				{ "AssignmentNameWith$test" }, { "AssignmentNameWith#test" }, { "AssignmentNameWith@test" },
+				{ "AssignmentNameWith!test" }, { "AssignmentNameWith-test" }, { "AssignmentNameWith_test" } };
+
+		String assignmentName = "assignment" + Utility.dynamicNameAppender();
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54438");
+		baseClass.stepInfo(
+				"Verify that - After impersonation (Project Admin to RMU)- Application disallow special characters in Edit Assignments screen");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As :" + Input.rmu1userName);
+
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged In As :" + Input.pa1userName);
+		baseClass.impersonatePAtoRMU();
+
+		agnmt.navigateToAssignmentsPage();
+		agnmt.editAssignment(assignmentName);
+
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+
+			String renameAssign = dataSet[i][j];
+			baseClass.waitForElement(agnmt.getAssignmentName());
+			agnmt.getAssignmentName().SendKeys(renameAssign);
+			driver.scrollPageToTop();
+			baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+			agnmt.getAssignmentSaveButton().waitAndClick(5);
+			agnmt.verifyErrorMsginAssignmentName();
+		}
+		baseClass.passedStep(
+				"Verified - that After impersonation (Project Admin to RMU)- Application disallow special characters in Edit Assignments screen");
+		loginPage.logout();
+	}
+	
+
+	 /**
+    * @author Krishna
+    * @description Verify that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.
+    * @throws Exception
+    */
+
+	@Test(description = "RPMXCON-54439", groups = { "regression" })
+	public void verifyErrorMsgForSpclCharNewAssignScr() throws InterruptedException {
+
+		String dataSet[][] = { { "AssignmentNameWith<test" }, { "AssignmentNameWith(test" },
+				{ "AssignmentNameWith)test" }, { "AssignmentNameWith[test" }, { "AssignmentNameWith]test" },
+				{ "AssignmentNameWith{test" }, { "AssignmentNameWith}test" }, { "AssignmentNameWith:test" },
+				{ "AssignmentNameWith\"test" }, { "AssignmentNameWith'test" }, { "AssignmentNameWith~test" },
+				{ "AssignmentNameWith*test" }, { "AssignmentNameWith?test" }, { "AssignmentNameWith&test" },
+				{ "AssignmentNameWith$test" }, { "AssignmentNameWith#test" }, { "AssignmentNameWith@test" },
+				{ "AssignmentNameWith!test" }, { "AssignmentNameWith-test" }, { "AssignmentNameWith_test" } };
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54439");
+		baseClass.stepInfo(
+				"Verify that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+
+		agnmt.navigateToAssignmentsPage();
+		for (int i = 0; i < dataSet.length; i++) {
+			int j = 0;
+
+			String renameAssign = dataSet[i][j];
+			agnmt.selectAssignmentGroup("Root");
+			agnmt.NavigateToNewEditAssignmentPage("New");
+			baseClass.copyandPasteString(renameAssign, agnmt.getAssignmentName());
+			agnmt.getAssignmentSaveButton().waitAndClick(5);
+			agnmt.verifyErrorMsginAssignmentName();
+		}
+		baseClass.passedStep(
+				"Verified - that Application disallow special characters in New Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
