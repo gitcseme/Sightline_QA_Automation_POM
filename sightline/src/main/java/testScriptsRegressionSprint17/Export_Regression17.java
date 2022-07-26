@@ -115,22 +115,8 @@ public class Export_Regression17 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.getCopyPath().waitAndClick(10);
+		page.verifyingExportFile(purehit,prefixID,suffixID,subBates,Input.searchString4);
 
-		String actualCopedText = page.getCopiedTextFromClipBoard();
-		String parentTab = page.openNewTab(actualCopedText);
-		page.goToImageFiles();
-		driver.waitForPageToBeReady();
-		for (int i = 2; i < purehit; i++) {
-			page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
-		}
-
-		driver.waitForPageToBeReady();
-		for (int i = 2; i < purehit; i++) {
-			File imageFile = new File(Input.fileDownloadLocation + prefixID + "0" + "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
-			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
-		}
-		driver.close();
-		driver.getWebDriver().switchTo().window(parentTab);
 
 		// delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -205,23 +191,11 @@ public class Export_Regression17 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.getCopyPath().waitAndClick(10);
-
-		String actualCopedText = page.getCopiedTextFromClipBoard();
-		String parentTab = page.openNewTab(actualCopedText);
-		page.goToImageFiles();
-		driver.waitForPageToBeReady();
-		for (int i = 2; i <= doc; i++) {
-			page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
-		}
-
-		driver.waitForPageToBeReady();
-		for (int i = 2; i <=doc; i++) {
-			File imageFile = new File(Input.fileDownloadLocation + prefixID + "0" + "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
-			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, ActualText);
-		}
-		driver.close();
-		driver.getWebDriver().switchTo().window(parentTab);
-
+		page.verifyingExportFile(doc,prefixID,suffixID,subBates,ActualText);
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		page = new ProductionPage(driver);
 		String productionname1 = "p" + Utility.dynamicNameAppender();
 		String subBates1 = page.getRandomNumber(2);
@@ -245,23 +219,7 @@ public class Export_Regression17 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.getCopyPath().waitAndClick(10);
-
-		String actualCopiedText = page.getCopiedTextFromClipBoard();
-		String parentTabs = page.openNewTab(actualCopiedText);
-		page.goToImageFiles();
-		driver.waitForPageToBeReady();
-		for (int i = 2; i <= doc; i++) {
-			page.getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates1).waitAndClick(10);
-		}
-
-		driver.waitForPageToBeReady();
-		for (int i = 2; i <= doc; i++) {
-			File imageFile = new File(Input.fileDownloadLocation + prefixID +  "0" + "(" + i + ")"+suffixID + ".000" + subBates1 + ".tiff");
-			page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, ActualText);
-			
-		}
-		driver.close();
-		driver.getWebDriver().switchTo().window(parentTabs);
+		page.verifyingExportFile(doc,prefixID,suffixID,subBates,ActualText);
 
 		// delete tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);

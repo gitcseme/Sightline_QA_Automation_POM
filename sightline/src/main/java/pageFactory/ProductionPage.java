@@ -3118,6 +3118,9 @@ public class ProductionPage {
 	public Element getCloseIconInManageTemplate() {
 		return driver.FindElementByXPath("//button[contains(@class,'close')]");
 	}
+	
+	
+	//button[contains(@class,'close')]
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20796,6 +20799,53 @@ public void fillingSlipSheetInTiffSection(String fieldValue) {
 	base.waitForElement(getCalculatedCheckBoxSelection(fieldValue));
 	base.clickButton(getCalculatedCheckBoxSelection(fieldValue));
 	base.clickButton(getAddSelected());
+}
+/**
+ * 
+ * @param purehit
+ * @param prefixID
+ * @param suffixID
+ * @param subBates
+ * @param verificationText
+ * @throws UnsupportedFlavorException
+ * @throws IOException
+ * @Description: verifying Extract copypath file
+ */
+public void verifyingExportFile(int purehit,String prefixID,String suffixID,String subBates,String verificationText  ) throws UnsupportedFlavorException, IOException {
+	String actualCopedText =getCopiedTextFromClipBoard();
+	String parentTab =openNewTab(actualCopedText);
+	goToImageFiles();
+	driver.waitForPageToBeReady();
+	driver.waitForPageToBeReady();
+	if(getFirstImageFile(prefixID + "(" + 2 + ")" + suffixID, subBates).isElementAvailable(2)) {
+		for (int i = 2; i < purehit; i++) {
+			getFirstImageFile(prefixID +"(" + i + ")" + suffixID, subBates).waitAndClick(10);
+		}
+
+		driver.waitForPageToBeReady();
+		for (int i = 2; i < purehit; i++) {
+			File TiffFile = new File(Input.fileDownloadLocation + prefixID +"(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
+			OCR_Verification_In_Generated_Tiff_tess4j(TiffFile,verificationText);
+		}
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
+		
+		
+	}
+	else if(getFirstImageFile(prefixID + "0" + "(" + 2 + ")" + suffixID, subBates).isElementAvailable(2)) {
+	for (int i = 2; i < purehit; i++) {
+		getFirstImageFile(prefixID + "0" + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+	}
+
+	driver.waitForPageToBeReady();
+	for (int i = 2; i < purehit; i++) {
+		File TiffFile = new File(Input.fileDownloadLocation + prefixID + "0" + "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
+		OCR_Verification_In_Generated_Tiff_tess4j(TiffFile,verificationText);
+	}
+	driver.close();
+	driver.getWebDriver().switchTo().window(parentTab);
+	
+}
 }
 }
 
