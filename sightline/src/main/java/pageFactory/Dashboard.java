@@ -62,6 +62,19 @@ public class Dashboard {
 		return driver.FindElementByXPath("//span[contains(text(),'Reviewer Progress')]//..//i[@id='OpenPop']");
 	}
 
+	public Element reviewerProductivity_gearIcon() {
+		return driver.FindElementByXPath("//i[@id='OpenReviewProductivityPop']");
+	}
+
+	public Element getSelectReviewersChkbox() {
+		return driver.FindElementByXPath("//label[contains(normalize-space(),'Select Reviewers :')]");
+	}
+
+	public Element getSelectReviewersRadioBtn() {
+		return driver.FindElementByXPath(
+				"//div[@id='Subradiobutton']//label[contains(normalize-space(),'Select Reviewers.')]");
+	}
+
 	public Element selectReviewers_mostToDoDocs() {
 		return driver.FindElementByXPath(
 				"//p[contains(text(),'Select Reviewers')]//..//label[contains(normalize-space(),'Most To Do Docs')]");
@@ -96,6 +109,14 @@ public class Dashboard {
 
 	public Element selectSpecificReviewer() {
 		return driver.FindElementByXPath("//select[@id='UserList']");
+	}
+
+	public Element selectSpecificReviewer_reviewProductivity() {
+		return driver.FindElementByXPath("//select[@id='UserList-rpd']");
+	}
+
+	public Element btnSave_reviewProductivity() {
+		return driver.FindElementByXPath("//form[@id='Edit User Group']//button[@id='btnReviewerProductivityFilter']");
 	}
 
 	public Element mostToDoDocs_InsideWidget() {
@@ -169,9 +190,9 @@ public class Dashboard {
 	}
 
 	public Element getReviewerProgressName(String fullName) {
-		return driver.FindElementByXPath("//table[@id='ReviewerTable']//tbody//td[text()='"+ fullName +"']");
+		return driver.FindElementByXPath("//table[@id='ReviewerTable']//tbody//td[text()='" + fullName + "']");
 	}
-	
+
 	public Element get1LR_completedPercent() {
 		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='1LR']//..//ul//span[@class='txt-green']");
 	}
@@ -206,6 +227,19 @@ public class Dashboard {
 
 	public Element getQC_notDistirbutedPercent() {
 		return driver.FindElementByXPath("//div[@id='oneLRdiv']//h6[text()='QC']//..//ul//span[@class='txt-red']");
+	}
+
+	public ElementCollection listOfReviewers() {
+		return driver.FindElementsByXPath("//table[@id='taskbasic']//strong");
+	}
+
+	public ElementCollection getReviewerProgressNameList(int indexNum) {
+		return driver.FindElementsByXPath("//table[@id='ReviewerTable']//tbody//td[" + indexNum + "]");
+	}
+
+	public Element getReviewerProgressNameListRespectiveDetails(String name, int indexNum) {
+		return driver.FindElementByXPath(
+				"//table[@id='ReviewerTable']//tbody//td[text()='" + name + "']//..//td[" + indexNum + "]");
 	}
 
 	public Dashboard(Driver driver) {
@@ -373,29 +407,48 @@ public class Dashboard {
 
 	}
 
-	/**
-	 * @authorSowndarya.velraj
-	 * @Description : To verify Reviewer progress data
-	 */
-	public void verifyReviewerProgressData(String fullName) {
+	   /**
+     * @authorSowndarya.velraj
+     * @Description : To verify Reviewer progress data
+     */
+    public void verifyReviewerProgressData(String[] fullName) {
 
-		List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
+        // Collection list for table header
+        base.waitForElementCollection(getReviewerProgressTableName());
+        List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
 
-		int size = getReviewerProgressTableName().size();
-		String data;
-//		System.out.println(size);
-		for (int i = 1; i <= size; i++) {
-			driver.waitForPageToBeReady();
-			String userName = getReviewerProgressName(fullName).getText();
-			base.waitForElement(getReviewerProgressData(i));
-			data = getReviewerProgressData(i).getText();
-			if (fullName.equalsIgnoreCase(userName)) {
-				base.passedStep("Reviewer Progress " + availableListofElements.get(i - 1) + " : " + data);
-			}
+        // Column header List size
+        int size = getReviewerProgressTableName().size();
+        System.out.println(size);
 
-		}
+        // Get index for the respective header
+        int indexNo = base.getIndex(getReviewerProgressTableName(), "NAME");
+        System.out.println(indexNo);
 
-	}
+        // Get the collection list of available users
+        List<String> availableListofUsers = base.availableListofElements(getReviewerProgressNameList(indexNo));
+
+        base.printListString(availableListofUsers);
+
+        base.compareArraywithDataList(fullName, availableListofUsers, true, "Only the assigned Reviewers are present",
+                "Additional reviewers are displayed apart from the assigned Reviewers");
+
+        // Data iteration and verification
+        for (int j = 0; j <= availableListofUsers.size() - 1; j++) {
+            base.stepInfo("For : " + availableListofUsers.get(j));
+            for (int i = 1; i <= size; i++) {
+                driver.waitForPageToBeReady();
+                String exactData = getReviewerProgressNameListRespectiveDetails(fullName[j], i).getText();
+                if (!exactData.isEmpty()) {
+                    base.passedStep(availableListofElements.get(i - 1) + " : " + exactData);
+                } else {
+                    base.failedStep(availableListofElements.get(i - 1) + " - is empty");
+                }
+            }
+        }
+    }
+
+	
 
 	/**
 	 * @authorSowndarya.velraj
@@ -414,7 +467,7 @@ public class Dashboard {
 	 * @authorSowndarya.velraj
 	 * @Description : To customize Reviewer Progress Widget
 	 */
-	public void select4Reviewers_ReviewerProgressWidget(String[] reviewers,String assignmentName) throws AWTException {
+	public void select4Reviewers_ReviewerProgressWidget(String[] reviewers, String assignmentName) throws AWTException {
 
 		driver.waitForPageToBeReady();
 		reviewerProgress_gearIcon().waitAndClick(10);
@@ -423,7 +476,7 @@ public class Dashboard {
 		Robot r = new Robot();
 		selectReviewers_selectReviewers().waitAndClick(10);
 		base.waitForElement(selectSpecificReviewer());
-		
+
 		selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[0]);
 		for (int i = 1; i < reviewers.length; i++) {
 			r.keyPress(KeyEvent.VK_CONTROL);
@@ -431,7 +484,6 @@ public class Dashboard {
 			r.keyRelease(KeyEvent.VK_CONTROL);
 			base.waitTime(5);
 		}
-		
 
 		base.stepInfo("selecting assignment");
 		arrow_selectAssignment().waitAndClick(10);
@@ -439,5 +491,37 @@ public class Dashboard {
 		selectAssignment_CustomizeWidget(assignmentName).waitAndClick(10);
 		base.waitForElement(btnSave_customizeWidget());
 		btnSave_customizeWidget().waitAndClick(10);
+	}
+
+	/**
+	 * @throws AWTException
+	 * @authorSowndarya.velraj
+	 * @Description : To customize Reviewer Progress Widget
+	 */
+	public void select4Reviewers_reviewerProductivityWidget(String[] reviewers, String assignmentName)
+			throws AWTException {
+
+		driver.waitForPageToBeReady();
+		reviewerProductivity_gearIcon().waitAndClick(10);
+		base.stepInfo("Select Reviewers");
+
+		base.waitForElement(getSelectReviewersChkbox());
+		getSelectReviewersChkbox().waitAndClick(10);
+		Robot r = new Robot();
+
+		base.waitForElement(getSelectReviewersRadioBtn());
+		getSelectReviewersRadioBtn().waitAndClick(10);
+
+		base.waitForElement(selectSpecificReviewer_reviewProductivity());
+		selectSpecificReviewer_reviewProductivity().selectFromDropdown().selectByVisibleText(reviewers[0]);
+
+		for (int i = 1; i < reviewers.length; i++) {
+			r.keyPress(KeyEvent.VK_CONTROL);
+			selectSpecificReviewer_reviewProductivity().selectFromDropdown().selectByVisibleText(reviewers[i]);
+			r.keyRelease(KeyEvent.VK_CONTROL);
+		}
+
+		base.waitForElement(btnSave_reviewProductivity());
+		btnSave_reviewProductivity().waitAndClick(10);
 	}
 }
