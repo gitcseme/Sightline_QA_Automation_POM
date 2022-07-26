@@ -2637,6 +2637,7 @@ public class IngestionPage_Indium {
 	public void selectDATSource(String loadFile, String documentKey) {
 		try {
 			driver.scrollingToBottomofAPage();
+			base.waitTime(2);
 			driver.waitForPageToBeReady();
 			getSourceSelectionDATLoadFile().ScrollTo();
 			base.waitForElement(getSourceSelectionDATLoadFile());
@@ -2663,6 +2664,7 @@ public class IngestionPage_Indium {
 	public void selectNativeSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
+			base.waitTime(2);
 			driver.waitForPageToBeReady();
 			getNativeLoadFileCheckBox().ScrollTo();
 			getNativeLoadFileCheckBox().isElementAvailable(15);
@@ -2691,6 +2693,7 @@ public class IngestionPage_Indium {
 	public void selectTextSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
+			base.waitTime(2);
 			driver.waitForPageToBeReady();
 			getTextCheckBox().ScrollTo();
 			getTextCheckBox().isElementAvailable(15);
@@ -2719,6 +2722,7 @@ public class IngestionPage_Indium {
 	public void selectPDFSource(String loadFile, boolean pathInDATFileflag) {
 		try {
 			driver.scrollingToBottomofAPage();
+			base.waitTime(2);
 			driver.waitForPageToBeReady();
 			getPDFCheckBoxButton().ScrollTo();
 			getPDFCheckBoxButton().isElementAvailable(15);
@@ -5309,8 +5313,8 @@ public class IngestionPage_Indium {
 	public void ingestionIndexing(String dataset) {
 
 		getRefreshButton().waitAndClick(10);
-
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		base.waitTime(2);
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
 
@@ -6702,7 +6706,9 @@ public class IngestionPage_Indium {
 	 * @description: this method is used to unpublish saved search.
 	 */
 	public void unpublish(String savedSearch) {
+		releaseAllIngestedDocsFromSecurityGroup();			
 		try {
+			driver.getWebDriver().get(Input.url + "Ingestion/UnPublish");
 			driver.waitForPageToBeReady();
 			base.waitTime(2);
 			savedSearch(savedSearch).isElementAvailable(15);
@@ -6840,25 +6846,11 @@ public class IngestionPage_Indium {
 
 	public void ignoreErrorsAndCatlogging() {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByFAILED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByFAILED());
 		getFilterByFAILED().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCATALOGED().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getFilterByCATALOGED());
 		getFilterByCATALOGED().waitAndClick(10);
 
 		// catlogging
@@ -7017,7 +7009,7 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(10);
 		base.waitTime(2);
 		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-
+		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
 		base.waitForElement(getRunIndexing());
 		if (type.equalsIgnoreCase("source")) {
@@ -7061,8 +7053,9 @@ public class IngestionPage_Indium {
 	 *               performing rollback
 	 */
 	public void verifyValueInCopyingSectionAfterRollback(String term) {
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
-
+		base.waitForElement(getIngestionDetailPopup(1));
+		getIngestionDetailPopup(1).waitAndClick(10);
+		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
 		base.waitTime(1);
 		int count = Integer.parseInt(copyTableDataValue(term, 1).getText());
@@ -9246,7 +9239,7 @@ public class IngestionPage_Indium {
 		}), Input.wait30);
 
 		getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(Input.multiValue);
-		base.waitTime(1);
+		base.waitTime(2);
 		selectDATSource(datFile, datKey);
 		
 		base.waitTime(2);
@@ -10033,7 +10026,7 @@ public class IngestionPage_Indium {
 			getRefreshButton().waitAndClick(10);
 			base.waitTime(2);
 			
-			String ingestionName =getIngestionDetailPopup(1).getText();
+			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 
 			getIngestionDetailPopup(1).waitAndClick(10);
 			base.waitTime(2);
@@ -10075,12 +10068,9 @@ public class IngestionPage_Indium {
 		 */
 		public void verifyOptionsAvailableInIngestionSetting() {
 			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionSettingGearIcon().Visible();
-				}
-			}), Input.wait60);
+			base.waitForElement(getIngestionSettingGearIcon());
 			getIngestionSettingGearIcon().waitAndClick(10);
+			base.waitTime(2);
 			if (getIngestionOpenWizardbutton().Visible() && getIngestionCopyButton().Visible()
 					&& getIngestionDeleteButton().Visible() && getIngestionRollbackbutton().Visible()) {
 				base.passedStep("Ingestion settings have Edit,Copy,Rollback and Delete option available");
@@ -10165,7 +10155,7 @@ public class IngestionPage_Indium {
 					return getIngestionDetailPopup(1).Displayed();
 				}
 			}), Input.wait30);
-			String ingestionName =getIngestionDetailPopup(1).getText();
+			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 			approveIngestion(1);
 			runFullAnalysisAndPublish();
 			return ingestionName;
@@ -10823,7 +10813,7 @@ public class IngestionPage_Indium {
 			ignoreErrorsAndCopying();
 			ingestionIndexing(dataset);
 			base.waitForElement(getIngestionDetailPopup(1));
-			String ingestionName =getIngestionDetailPopup(1).getText();
+			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 			approveIngestion(1);
 			return ingestionName;
 		}
@@ -11195,6 +11185,20 @@ public class IngestionPage_Indium {
 					base.failedStep("'"+fields[i]+"' not present in the grid view tabular column");
 				}
 			}	
+		}
+		
+		/**
+		 * @author: Arun Created Date: 26/07/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will unrelease all the ingested docs from security group            
+		 */
+		
+		public void releaseAllIngestedDocsFromSecurityGroup() {
+			// unreleasing the documents from security group
+			base.selectproject();
+			driver.waitForPageToBeReady();
+			SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchStringStar);
+			search.unReleaseDocsFromSecuritygroup(Input.securityGroup);
 		}
 				
 		
