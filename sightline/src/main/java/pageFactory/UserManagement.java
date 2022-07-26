@@ -744,6 +744,7 @@ public class UserManagement {
 	public Element getUserListNextButton() {
 		return driver.FindElementByXPath("//a[text()='Next']");
 	}
+
 	public Element getUserPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
@@ -790,7 +791,7 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"//label[@class='checkbox disableCanCollections' and normalize-space()='" + componentName + "']");
 	}
-	
+
 	public Element getDeleteBtn() {
 		return driver.FindElementByXPath("//a[text()='Delete']");
 	}
@@ -800,30 +801,35 @@ public class UserManagement {
 		return driver.FindElementByXPath(
 				"// li[@class='active']//a[normalize-space()='Functionality']//..//parent::ul//following-sibling::div[@id='myTabContent1']");
 	}
-	
-	//Add by Aathith
+
+	// Add by Aathith
 	public Element getLeftArrowForProject() {
 		return driver.FindElementById("btnLeftUserMaapping");
 	}
-	
+
 	public Element getDomainRole(String role) {
-		return driver.FindElementByXPath("//select[@id='lstRoles']/option[text()='"+role+"']");
+		return driver.FindElementByXPath("//select[@id='lstRoles']/option[text()='" + role + "']");
 	}
-	
+
 	public Element getUnAssignedUser(String unAssignedUser) {
-		return driver.FindElementByXPath("//select[@id='lstDomains']/option[text()='"+unAssignedUser+"']");
+		return driver.FindElementByXPath("//select[@id='lstDomains']/option[text()='" + unAssignedUser + "']");
 	}
-	
+
 	public Element getAssignUserProject(String project) {
-		return driver.FindElementByXPath("//select[@id='lstProjects']/option[@title='"+project+"']");
+		return driver.FindElementByXPath("//select[@id='lstProjects']/option[@title='" + project + "']");
 	}
-	
+
 	public Element getAssigenedUserName(String FullName) {
-		return driver.FindElementByXPath("//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + FullName + "')]");
+		return driver.FindElementByXPath(
+				"//select[@id='AssignedUsersForDomain']//option[contains(text(),'" + FullName + "')]");
 	}
-	
+
 	public ElementCollection getAllDomainsInAssignUser() {
 		return driver.FindElementsByXPath("//select[@id='lstDomains']/option");
+	}
+
+	public Element getAssgnPaginationNextButton() {
+		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
 
 	public UserManagement(Driver driver) {
@@ -2734,12 +2740,12 @@ public class UserManagement {
 				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
 				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 				break;
-			}else {
+			} else {
 				driver.scrollingToBottomofAPage();
 				getUserPaginationNextButton().waitAndClick(5);
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
-			
+
 		}
 
 		if (role.contains("Reviewer")) {
@@ -2830,12 +2836,12 @@ public class UserManagement {
 				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
 				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 				break;
-			}else {
+			} else {
 				driver.scrollingToBottomofAPage();
 				getUserPaginationNextButton().waitAndClick(5);
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
-			
+
 		}
 
 		if (role.contains("Reviewer") || (role.contains("Review Manager"))) {
@@ -2896,7 +2902,7 @@ public class UserManagement {
 		}
 
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To change role from Reviewer and Reviewer Manager to PA and
@@ -2904,7 +2910,7 @@ public class UserManagement {
 	 * @param username
 	 * @param role
 	 */
-	public void editRoleOfAnUserSAForManage(String username, String role, String manageButton,String projectName) {
+	public void editRoleOfAnUserSAForManage(String username, String role, String manageButton, String projectName) {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getUserNameFilter());
@@ -2926,14 +2932,13 @@ public class UserManagement {
 				bc.waitForElement(getEditButtonFromUserManagentPage(projectName));
 				getEditButtonFromUserManagentPage(projectName).waitAndClick(10);
 				break;
-			}else {
+			} else {
 				driver.scrollingToBottomofAPage();
 				getUserPaginationNextButton().waitAndClick(5);
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
-			
+
 		}
-		
 
 		if (role.contains("Project Administrator")) {
 			bc.waitForElement(getUserChangeDropDown());
@@ -2949,7 +2954,7 @@ public class UserManagement {
 
 			bc.waitForElement(getFunctionalityButton());
 			getFunctionalityButton().waitAndClick(5);
-			
+
 			if (manageButton.contains("0")) {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
@@ -2959,7 +2964,6 @@ public class UserManagement {
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 			}
 
-			
 			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
 			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 
@@ -2975,10 +2979,9 @@ public class UserManagement {
 				getConfirmTab().waitAndClick(5);
 			}
 
-
 			bc.waitForElement(getFunctionalityTab());
 			getFunctionalityTab().waitAndClick(5);
-			
+
 			if (manageButton.contains("0")) {
 				bc.waitForElement(getSelectFuctionalitiesCheckBox("Manage"));
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
@@ -2988,13 +2991,11 @@ public class UserManagement {
 				getSelectFuctionalitiesCheckBox("Manage").waitAndClick(5);
 			}
 
-			
+			bc.waitForElement(getSaveButtonInFuctionalitiesTab());
+			getSaveButtonInFuctionalitiesTab().waitAndClick(5);
 
-				bc.waitForElement(getSaveButtonInFuctionalitiesTab());
-				getSaveButtonInFuctionalitiesTab().waitAndClick(5);
+			bc.VerifySuccessMessage("User profile was successfully modified");
 
-				bc.VerifySuccessMessage("User profile was successfully modified");
-			
 		} else {
 			bc.failedStep("User is unable to edit the details of the user");
 		}
@@ -3293,21 +3294,24 @@ public class UserManagement {
 	public void verifyCollectionAndDatasetsAccessForUsers(String[][] userRolesData, Boolean dataSetsAccess,
 			Boolean collectionsAccess, String checkUpdateCollections) throws Exception {
 		for (int i = 0; i < userRolesData.length; i++) {
+
+			String actionUser = userRolesData[i][2];
 			// Select the respective user
 			bc.stepInfo("Checking for the role : " + userRolesData[i][1]);
 			passingUserName(userRolesData[i][0]);
 			applyFilter();
-			if (userRolesData[i][1].equalsIgnoreCase("PA") || userRolesData[i][1].equalsIgnoreCase("RMU")) {
+			if (actionUser.equalsIgnoreCase("Project Administrator") || actionUser.equalsIgnoreCase("Review Manager")) {
 				editLoginUser();
 			} else {
-				editFunctionality(Input.projectName);
+				selectEditUserUsingPagination(Input.projectName, false, "");
 			}
 
 			// Launch functionality pop-up
 			getFunctionalityTab().waitAndClick(5);
 
 			// Access validations
-			if (userRolesData[i][1].equalsIgnoreCase("PA") || userRolesData[i][1].equalsIgnoreCase("RMU")) {
+			if (userRolesData[i][1].equalsIgnoreCase("Project Administrator")
+					|| userRolesData[i][1].equalsIgnoreCase("Review Manager")) {
 				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Datasets")),
 						"DataSets option has access", "Datasets option is blocked", "Fail");
 
@@ -3321,11 +3325,12 @@ public class UserManagement {
 				driver.waitForPageToBeReady();
 
 				if (checkUpdateCollections.equals("Yes") && actionTaken == true) {
-					if (userRolesData[i][1].equalsIgnoreCase("PA") || userRolesData[i][1].equalsIgnoreCase("RMU")) {
+					if (actionUser.equalsIgnoreCase("Project Administrator")
+							|| actionUser.equalsIgnoreCase("Review Manager")) {
 						editLoginUser();
 					} else {
 						// Edit functionality
-						editFunctionality(Input.projectName);
+						selectEditUserUsingPagination(Input.projectName, false, "");
 					}
 
 					// Launch functionality pop-up
@@ -3351,7 +3356,7 @@ public class UserManagement {
 							"Pass");
 				}
 
-			} else if (userRolesData[i][1].equalsIgnoreCase("REV")) {
+			} else if (userRolesData[i][1].equalsIgnoreCase("Reviewer")) {
 				bc.printResutInReport(bc.ValidateElement_PresenceReturn(getComponentBoxBlocked("Datasets")),
 						"DataSets option is blocked", "Datasets option has Access", "Pass");
 
@@ -3652,7 +3657,6 @@ public class UserManagement {
 		}
 	}
 
-	
 	/**
 	 * @author Vijaya.rani
 	 * @Description : Method for deleting added user.
@@ -3675,10 +3679,8 @@ public class UserManagement {
 			e.printStackTrace();
 			bc.failedStep("Exception occured while deleting added user" + e.getLocalizedMessage());
 		}
-	
 
-}
-
+	}
 
 	/**
 	 * @Author Jeevitha
@@ -3733,7 +3735,7 @@ public class UserManagement {
 		if (filter) {
 			filterByName(username);
 		}
-		
+
 		if (loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
 			editLoginUser();
 		} else {
@@ -3752,7 +3754,6 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 	}
 
-	
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description open a Assign user Tab
@@ -3765,7 +3766,7 @@ public class UserManagement {
 		bc.stepInfo("Assign user popup is opened");
 		bc.waitForElement(getSelectDomainname());
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description open a project tab in Assign user
@@ -3777,7 +3778,7 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		bc.stepInfo("moved to project tab");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -3788,9 +3789,9 @@ public class UserManagement {
 		bc.waitForElement(getAssignUserProject(projectName));
 		getAssignUserProject(projectName).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		bc.stepInfo(projectName+" was select in assign project tab");
+		bc.stepInfo(projectName + " was select in assign project tab");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param role
@@ -3801,9 +3802,9 @@ public class UserManagement {
 		bc.waitForElement(getDomainRole(role));
 		getDomainRole(role).waitAndClick(10);
 		driver.waitForPageToBeReady();
-		bc.stepInfo(role+" was selected in assign project tab");
+		bc.stepInfo(role + " was selected in assign project tab");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param securtyGroup
@@ -3814,10 +3815,9 @@ public class UserManagement {
 		bc.waitForElement(getDomainSG());
 		getDomainSG().selectFromDropdown().selectByVisibleText(Input.securityGroup);
 		driver.waitForPageToBeReady();
-		bc.stepInfo(securtyGroup+" was select in assign project tab");
+		bc.stepInfo(securtyGroup + " was select in assign project tab");
 	}
-	
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -3825,14 +3825,14 @@ public class UserManagement {
 	 * @param unAssigedUserName
 	 * @Desctiption Assign user to that project
 	 */
-	public void AssignUserToProject(String projectName,String role, String unAssigedUserName) {
-		
+	public void AssignUserToProject(String projectName, String role, String unAssigedUserName) {
+
 		openAssignUser();
 		goToProjectTabInAssignUser();
 		selectProjectInAssignUser(projectName);
 		selectRoleInAssignUser(role);
-		
-		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+
+		if (!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
 			selectSecuriyGroup(Input.securityGroup);
 		}
 
@@ -3840,17 +3840,17 @@ public class UserManagement {
 		bc.waitTime(5);
 		getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(unAssigedUserName);
 		bc.waitForElement(getDomainUserRightArrow());
-		
+
 		getDomainUserRightArrow().waitAndClick(10);
 		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
-		
+
 		bc.VerifySuccessMessage("User Mapping Successful");
-		bc.stepInfo(projectName+" was assigned to the user "+ role +" to the user " + unAssigedUserName);
+		bc.stepInfo(projectName + " was assigned to the user " + role + " to the user " + unAssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param projectName
@@ -3858,17 +3858,17 @@ public class UserManagement {
 	 * @param AssigedUserName
 	 * @Description Unassign user to the that project
 	 */
-	public void UnAssignUserToProject(String projectName,String role, String AssigedUserName) {
-		
+	public void UnAssignUserToProject(String projectName, String role, String AssigedUserName) {
+
 		openAssignUser();
 		goToProjectTabInAssignUser();
 		selectProjectInAssignUser(projectName);
 		selectRoleInAssignUser(role);
-		
-		if(!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
+
+		if (!role.equalsIgnoreCase(Input.ProjectAdministrator)) {
 			selectSecuriyGroup(Input.securityGroup);
 		}
-		
+
 		bc.waitForElement(getCheckingAssignedUserSG(AssigedUserName));
 		driver.scrollingToElementofAPage(getCheckingAssignedUserSG(AssigedUserName));
 		getCheckingAssignedUserSG(AssigedUserName).waitAndClick(10);
@@ -3878,12 +3878,34 @@ public class UserManagement {
 		driver.Manage().window().fullscreen();
 		getsavedomainuser().waitAndClick(10);
 		bc.VerifySuccessMessage("User Mapping Successful");
-		bc.stepInfo(projectName+" was unassigend to the user "+role+" to the user"+AssigedUserName);
+		bc.stepInfo(projectName + " was unassigend to the user " + role + " to the user" + AssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
 	}
 
+	/**
+	 * @author Raghuram.A
+	 * @param projectName
+	 */
+	public void selectEditUserUsingPagination(String projectName, Boolean additional1, String additional2) {
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		bc.waitTime(3);
+		int count = ((getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			if (getSelectUserToEdit(projectName).isElementAvailable(5)) {
+				driver.scrollingToElementofAPage(getSelectUserToEdit(projectName));
+				getSelectUserToEdit(projectName).waitAndClick(10);
+				driver.scrollPageToTop();
+				System.out.println("Expected User found in the page " + i);
+				break;
+			} else {
+				driver.scrollingToBottomofAPage();
+				getAssgnPaginationNextButton().waitAndClick(10);
+				System.out.println("Expected User not found in the page " + i);
+			}
+		}
+	}
 
 }
-
-
