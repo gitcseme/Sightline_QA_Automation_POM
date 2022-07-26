@@ -216,6 +216,7 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 	DocViewRedactions redact = new DocViewRedactions(driver);
 	
 	redact.deleteAllAppliedRedactions();
+	base.waitTime(2);
 	redact.clickOnAddRedactionForAudioDocument();
 	redact.addAudioRedaction(Input.startTime, Input.endTime, redactiontag);
 
@@ -966,10 +967,11 @@ public void verifyTheNonRotatedDocumentInTiffImage() throws Exception {
 	String home = System.getProperty("user.home");
 	String firstFile = prefixID + beginningBates + suffixID;
 	File file = new File(home + "/Downloads/VOL0001/Images/0001/" + firstFile + ".tiff");
-
+	driver.waitForPageToBeReady();
 	BufferedImage bimg = ImageIO.read(file);
 	int width = bimg.getWidth();
 	int height = bimg.getHeight();
+	driver.waitForPageToBeReady();
 	if (width < height) {
 		base.passedStep("Tiff image is not rotated as expected");
 	} else {
