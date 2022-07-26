@@ -20,7 +20,9 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
+import pageFactory.DomainDashboard;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -69,6 +71,150 @@ public class SecurityGroup_Regression2 {
 		loginPage = new LoginPage(driver);
 
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/07/2022 RPMXCON-54828
+	 * @throws Exception
+	 * @Description Verify if SAU impersonate as DAU, clicking on project should
+	 *              redirect to default security group and select the domain project
+	 *              from header drop down, clicking on Back to dashboard , it should
+	 *              redirect to last access Domain Dashboard page.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54828", enabled = true, groups = { "regression" })
+	public void verifySAImpersonateAsDAAccessDomainDashBoardPage() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54828");
+		baseClass.stepInfo(
+				"Verify if SAU impersonate as DAU, clicking on project should redirect to default security group and select the domain project from header drop down, clicking on Back to dashboard , it should redirect to last access Domain Dashboard page.");
+
+		userManage = new UserManagement(driver);
+		DataSets data = new DataSets(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		String projectName = "DAProject" + Utility.dynamicNameAppender();
+
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
+		data.getNotificationMessage(0, projectName);
+
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", "Default Security Group",
+				false, true);
+		
+		baseClass.stepInfo("Impersonate SA to DA");
+		baseClass.impersonateSAtoDA();
+
+		baseClass.stepInfo("Verify it is domain dashboard page");
+		if (domainDash.getDataRefresh_info().isDisplayed()) {
+			baseClass.passedStep("Application is navigate to Domain Dashboard page Successfully");
+		} else {
+			baseClass.failedStep("Application is not navigate to Domain Dashboard page   ");
+		}
+
+		baseClass.stepInfo("Click on any project");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
+		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+
+		baseClass.stepInfo("verify default security group in selected project");
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It is redirect to default SG in selected project successfully ");
+		} else {
+			baseClass.failedStep("It is not redirect to default SG in selected project ");
+		}
+
+		baseClass.stepInfo("Select Another project");
+		baseClass.selectproject(projectName);
+		
+		baseClass.stepInfo("verify default security group in selected project");
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It is redirect to default SG in selected project successfully ");
+		} else {
+			baseClass.failedStep("It is not redirect to default SG in selected project ");
+		}
+
+		// validation for back button
+		baseClass.stepInfo("Click on back Button");
+		driver.Navigate().back();
+
+		baseClass.stepInfo("Verify last access for domain dashboard ");
+		if (domainDash.getDataRefresh_info().isDisplayed()) {
+			baseClass.passedStep("It is redirect to last access domain dashboard ");
+		} else {
+			baseClass.failedStep("It is not redirect to last access domain dashboard");
+
+		}
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/07/2022 RPMXCON-54774
+	 * @throws Exception
+	 * @Description Verify that when DAU Changes the SG in SG Dropdown then it
+	 *              should take the corresponding SG in the same project.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54774", enabled = true, groups = { "regression" })
+	public void verifyRmuChangeSgFromDropDownTheSameProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54774");
+		baseClass.stepInfo(
+				"Verify that when DAU Changes the SG in SG Dropdown then it should take the corresponding SG in the same project.");
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SoftAssert softassert = new SoftAssert();
+		DocViewMetaDataPage docViewMetaData = new DocViewMetaDataPage(driver);
+
+		// Login as PAU
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// Create security group
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.AddSecurityGroup(SGname);
+		baseClass.stepInfo("Added new Security group");
+		loginPage.logout();
+
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+
+		baseClass.stepInfo("Click on any project");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
+		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+
+		baseClass.stepInfo("verify default security group in selected project");
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("As user to DSG by default");
+		} else {
+			baseClass.failedStep("It is not  to default SG by default ");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewMetaData.getSecurityGroup(SGname));
+		softassert.assertTrue(docViewMetaData.getSecurityGroup(SGname).isElementAvailable(5));
+		if (docViewMetaData.getSecurityGroup(SGname).isElementAvailable(5)) {
+			baseClass.passedStep("corressponding " + SGname + "on the same project is displayed successfully");
+
+		} else {
+			baseClass.failedStep("SG not displayed");
+		}
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sgpage.deleteSecurityGroups(SGname);
+		baseClass.stepInfo("Added Security group has been deleted");
+		loginPage.logout();
+	}
+
 	
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/07/2022 RPMXCON-47098
