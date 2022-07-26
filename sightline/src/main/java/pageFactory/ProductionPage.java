@@ -3120,7 +3120,9 @@ public class ProductionPage {
 	}
 	
 	
-	//button[contains(@class,'close')]
+	public Element verifyingPrivilegedTag(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']/..");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20847,6 +20849,35 @@ public void verifyingExportFile(int purehit,String prefixID,String suffixID,Stri
 	
 }
 }
+
+/**
+ * @author Brundha.T
+ * @param TagName
+ * @param TagName1
+ * @param Tag
+ * Description: Method to verify enabled tag in privileged toggle:
+ */
+	public void verifyPrivTagSelectionAndDisableOfOtherTag(String TagName,String TagName1,String Tag) {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		getTIFFTab().waitAndClick(10);
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().waitAndClick(10);
+		driver.scrollingToElementofAPage(verifyingPrivilegedTag(TagName));
+		String ActualText=verifyingPrivilegedTag(TagName).GetAttribute("iscascadeenabled");
+		base.textCompareEquals(ActualText, "true","Privileged tag is enabled as expected", "Privileged tag is disabled");
+		
+		driver.scrollingToElementofAPage(verifyingPrivilegedTag(TagName1));
+		String ActualTextInTab=verifyingPrivilegedTag(TagName1).GetAttribute("iscascadeenabled");
+		base.textCompareEquals(ActualTextInTab, "false","Other Tags are disabled as expected", "Other Tags are not disabled as expecetd");
+		
+		driver.scrollingToElementofAPage(verifyingPrivilegedTag(Tag));
+		String ActualTextInTag=verifyingPrivilegedTag(Tag).GetAttribute("iscascadeenabled");
+		base.textCompareEquals(ActualTextInTag, "false","Other Tags are disabled as expected", "Other Tags are not disabled as expecetd");
+		
+	}
 }
 
 
