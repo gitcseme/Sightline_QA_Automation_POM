@@ -151,7 +151,10 @@ public class NotificationRegression {
 	@Test(description = "RPMXCON-53865", enabled = true, groups = { "regression" })
 	public void verifyNotifyForReleasingSearch() throws InterruptedException, Exception {
 		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String securityGroup = "Security" + UtilityLog.dynamicNameAppender();
 
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		
 		base.stepInfo("Test case Id: RPMXCON-53865 Notification");
 		base.stepInfo(
 				"To verify, as an Project admin user, I will get an notification when I will perform Bulk Unrelease from saved search");
@@ -160,6 +163,10 @@ public class NotificationRegression {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in as : " + Input.pa1FullName);
 
+		// add security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
 		// configure query and save
 		session.basicContentSearch(Input.searchString2);
 		session.saveSearch(searchName);
@@ -167,18 +174,20 @@ public class NotificationRegression {
 		// select search
 		saveSearch.savedSearch_Searchandclick(searchName);
 
-		// bulk unrelease the doc
-		int initialBg = base.initialBgCount();
-		saveSearch.performReleaseAction(Input.securityGroup, false);
+		// bulk release the doc
+		saveSearch.performReleaseAction(securityGroup, true);
 
+		// unrelease  to SG 
+		int initialBg = base.initialBgCount();
+		saveSearch.performReleaseAction(securityGroup, true);
+		
 		// verify notification
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
-
-		// release back to SG & Delete Search
-		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.performReleaseAction(Input.securityGroup, true);
+		
+		//delete search & SG
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, Input.yesButton);
-
+		security.deleteSecurityGroups(securityGroup);
+		
 		// logout
 		login.logout();
 	}
@@ -228,6 +237,9 @@ public class NotificationRegression {
 		base.checkNotificationCount(initialBg, 1);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 
+		// logout
+		login.logout();
+
 	}
 
 	/**
@@ -240,7 +252,11 @@ public class NotificationRegression {
 	 */
 	@Test(description = "RPMXCON-53867", enabled = true, groups = { "regression" })
 	public void verifyBulkUnreleaseNotification_FromSecurityGroup() throws InterruptedException, Exception {
+		String securityGroup = "Security" + Utility.dynamicNameAppender();
+
 		DocListPage docList = new DocListPage(driver);
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
 		base.stepInfo("Test case Id: RPMXCON-53867 Notification Component - Sprint 17");
 		base.stepInfo(
 				"To verify, As an Project admin user login, I will get an notification when I will perform Bulk UnRelease from Doc List page");
@@ -249,19 +265,29 @@ public class NotificationRegression {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in as : " + Input.pa1FullName);
 
+		// add security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
 		// perform search and bulk release to security group
 		session.basicContentSearch(Input.testData1);
-		session.bulkRelease(Input.securityGroup);
+		session.bulkRelease(securityGroup);
 
 		// navigate to doclist and perform bulk unrelease
 		session.ViewInDocList();
 		int initialBg = base.initialBgCount();
 		docList.documentSelection(4);
-		docList.bulkUnRelease(Input.securityGroup);
+		docList.bulkUnRelease(securityGroup);
 
 		// verify notification for bulk unassign
 		base.checkNotificationCount(initialBg, 1);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+		// delete security group
+		security.deleteSecurityGroups(securityGroup);
+
+		// logout
+		login.logout();
 
 	}
 
@@ -275,6 +301,9 @@ public class NotificationRegression {
 	 */
 	@Test(description = "RPMXCON-53864", enabled = true, groups = { "regression" })
 	public void verifyBulkUnreleaseFromCurrentSearch() throws InterruptedException, Exception {
+		String securityGroup = "Security" + Utility.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+
 		base.stepInfo("Test case Id: RPMXCON-53864 Notification Component - Sprint 17");
 		base.stepInfo(
 				"To verify, as an Project admin user, I will get an notification when I will perform Bulk Unrelease from current search");
@@ -283,20 +312,31 @@ public class NotificationRegression {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("logged in as : " + Input.pa1FullName);
 
+		// add security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+
 		// perform search and bulk release to security group
 		session.basicContentSearch(Input.testData1);
-		session.bulkRelease(Input.securityGroup);
+		session.bulkRelease(securityGroup);
 		System.out.println("release done");
 
 		// //perform bulk unrelease from current search
 		base.selectproject();
 		session.basicContentSearch(Input.testData1);
 		int initialBg = base.initialBgCount();
-		session.unReleaseDocsFromSecuritygroup(Input.securityGroup);
+		session.unReleaseDocsFromSecuritygroup(securityGroup);
 
 		// verify notification for bulk unassign
 		base.checkNotificationCount(initialBg, 1);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+		// delete security group
+		security.deleteSecurityGroups(securityGroup);
+
+		// logout
+		login.logout();
+
 	}
 
 	/**
@@ -343,18 +383,24 @@ public class NotificationRegression {
 			base.passedStep("Doesn't show same notification after re-login the session");
 		}
 
+		// logout
+		login.logout();
+
 	}
-	
+
 	/**
 	 * @Author : Sowndarya.velraj
-	 * @Description :To Verify, As a RM user login, After seeing the Notification, it should not show the same notification after re-login the session[RPMXCON-53588]
+	 * @Description :To Verify, As a RM user login, After seeing the Notification,
+	 *              it should not show the same notification after re-login the
+	 *              session[RPMXCON-53588]
 	 * @throws InterruptedException
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-53588", enabled = true, groups = { "regression" })
 	public void verifyNotificationAfterReLogin_RMU() throws InterruptedException, Exception {
 		base.stepInfo("Test case Id: RPMXCON-53588 Notification Component - Sprint 17");
-		base.stepInfo("To Verify, As a RM user login, After seeing the Notification, it should not show the same notification after re-login the session");
+		base.stepInfo(
+				"To Verify, As a RM user login, After seeing the Notification, it should not show the same notification after re-login the session");
 
 		// Login as User
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -385,6 +431,9 @@ public class NotificationRegression {
 		} else {
 			base.passedStep("Doesn't show same notification after re-login the session");
 		}
+
+		// logout
+		login.logout();
 
 	}
 

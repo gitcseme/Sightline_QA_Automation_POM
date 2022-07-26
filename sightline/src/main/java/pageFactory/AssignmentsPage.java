@@ -10433,5 +10433,19 @@ public class AssignmentsPage {
 		getMetadataFielOkBtn().waitAndClick(3);
 		bc.stepInfo("MetaData Field Successfully Configured For The Assignment");	
 	}
+	
+	public void verifyErrorMsginAssignmentName(){
+		String expErrorMSg = "Please enter an assignment name without using special characters";
+		
+		if(	getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
+			String actualMsg=getQB_AssignemntName_ErrorMSg().getText();
+			bc.textCompareEquals(actualMsg, expErrorMSg, "ErrorAlert for assignment name with special chars Displayed as expected ",
+					"ErrorAlert Displayed for assignment name with special chars is not as expected");
+			}else {
+				
+				bc.failedStep("After entering Assginment name with special chars Error message not displayed ");
+						
+			}
+	}
 }
 

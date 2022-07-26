@@ -3,6 +3,9 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
@@ -4026,6 +4029,7 @@ public class BaseClass {
 			}
 		}
 		
+
 		public void impersonateSAtoPA(String projectName) throws InterruptedException {
 			getSignoutMenu().waitAndClick(20);
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -4064,5 +4068,20 @@ public class BaseClass {
 					// TODO: handle exception
 				}
 			}
+
+		public void copyandPasteString(String textToCopy, Element element) {
+			Actions action = new Actions(driver.getWebDriver());
+			 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			    StringSelection str = new StringSelection(textToCopy);
+			   clipboard.setContents(str, null );
+			   
+			   waitForElement(element);
+			   element.waitAndClick(5);
+			   element.Clear();
+			   action.keyDown(Keys.CONTROL);
+			   action.sendKeys("v");
+			   action.keyUp(Keys.CONTROL);
+			   action.build().perform();
+
 		}
 }
