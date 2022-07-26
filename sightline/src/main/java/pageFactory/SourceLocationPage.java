@@ -65,6 +65,12 @@ public class SourceLocationPage {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
 	
+	public Element getDataSourceName(String sourceName) {
+		return driver.FindElementByXPath("//table[@id='dtSourceList']//tr//td[text()='"+sourceName+"']");
+	}
+	
+	
+	
 	
 	
 	public SourceLocationPage(Driver driver) {
@@ -175,6 +181,22 @@ public class SourceLocationPage {
 		
 	}
 	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify source location name in source location page.
+	 * @param sourceName
+	 */
+	public void verifySourceLocationName(String sourceName) {
+
+		base.waitForElement(getDataSourceName(sourceName));
+		String dataSourceName = getDataSourceName(sourceName).getText();
+		System.out.println(dataSourceName);
+		softassert.assertEquals(sourceName, dataSourceName);
+		softassert.assertAll();
+		base.passedStep("Newly added  source location entry is appeared on “Source Locations “screen(grid).");
+
+	}
 	
 
 

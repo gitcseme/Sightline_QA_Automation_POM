@@ -956,6 +956,74 @@ public class O365_Regression_2_1 {
 		login.logout();
 
 	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that User can access 'Manage Collections' 
+	 * screen navigating through Dataset >> Manage Collections menu item.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60962", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyManageCollectionScreenNavigateToManageCollectionPage(String username, String password,
+			String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60962 - O365");
+		base.stepInfo(
+				"Verify that User can access 'Manage Collections' screen navigating through Dataset >> Manage Collections menu item.");
+
+		String[][] userRolesData = { { username, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// To add New Source Location
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyCollectionPage();
+
+		// Logout
+		login.logout();
+	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that application is allowing to 
+	 * add a new source location from Collections >> Set up Source >> Add New Source Location screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60852", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCollectionWizardAddNewSourceLocation(String username, String password,
+			String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60852 - O365");
+		base.stepInfo(
+				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
+
+		String[][] userRolesData = { { username, fullname } };
+		String dataname = "Enron Office 1" + Utility.randomCharacterAppender(3);
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// To add New Source Location
+		base.waitForElement(collection.getNewCollectionBtn());
+		collection.getNewCollectionBtn().waitAndClick(5);
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+		
+		//To verify source name entered
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.verifySourceLocationName(dataname);
+
+		// Logout
+		login.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

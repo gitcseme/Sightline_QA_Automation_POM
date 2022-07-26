@@ -94,6 +94,12 @@ public class CollectionPage {
 	public Element getStartALinkCollection() {
 		return driver.FindElementByXPath("//a[text()='Start a collection']");
 	}
+	
+	public ElementCollection getCollectionPageFirstRowValue() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']//tr//th[@aria-controls=\"dtCollectionList\"]");
+	}
+	
+	
 
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
@@ -300,5 +306,27 @@ public class CollectionPage {
 		String actualTab = getNewCollPageHeader().getText();
 		base.compareTextViaContains(actualTab, expectedTab, "Navigated Tab is : " + actualTab,
 				"Navigated Tab is : " + actualTab);
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: Verify Collection Page
+	 */
+	public void verifyCollectionPage() {
+
+		driver.waitForPageToBeReady();
+		getCollectionPageFirstRowValue().isElementAvailable(5);
+		ElementCollection collection = getCollectionPageFirstRowValue();
+		int collectionPage = collection.size();
+		System.out.println(collectionPage);
+		
+		if (collectionPage>3) {
+			base.passedStep("Manage Collections screen is opened successfully");
+			
+		}else {
+			base.failedStep("Manage Collections screen is not opened");
+		}
+		
 	}
 }
