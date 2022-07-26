@@ -922,4 +922,93 @@ public class ProjectPage {
 		driver.waitForPageToBeReady();
 		bc.stepInfo(project+" was clicked on edit");
 	}
+	
+	/**
+	 * @author Vijaya.Rani
+	 * @Description : Project to be copied IN DA
+	 */
+	public void selectProjectToBeCopiedInDA(String projectname, String copyProjectName,
+			String toggleNo) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddProjectBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddProjectBtn().Click();
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectName().Visible();
+			}
+		}), Input.wait30);
+		getProjectName().SendKeys(projectname);
+
+		driver.scrollingToBottomofAPage();
+
+		bc.waitForElement(getCopyProjectName());
+		getCopyProjectName().selectFromDropdown().selectByVisibleText(copyProjectName);
+
+		if (toggleNo.equals("1")) {
+			String user = getUserToggleButton().GetAttribute("data-swchoff-text");
+			if (user.contains("OFF")) {
+				getUserToggleButton().waitAndClick(5);
+			}
+
+		}
+
+		else if (toggleNo.equals("2")) {
+			String savedSearch = getSavedSearchToggleButton().GetAttribute("data-swchoff-text");
+			if (savedSearch.contains("OFF")) {
+				getSavedSearchToggleButton().waitAndClick(5);
+			}
+
+		}
+
+		else if (toggleNo.equals("3")) {
+			String assignment = getAssignmnetToggleButton().GetAttribute("data-swchoff-text");
+			if (assignment.contains("OFF")) {
+				getAssignmnetToggleButton().waitAndClick(5);
+			}
+
+		}
+
+		else if (toggleNo.equals("4")) {
+			String user = getUserToggleButton().GetAttribute("data-swchoff-text");
+			if (user.contains("OFF")) {
+				getUserToggleButton().waitAndClick(5);
+				getSavedSearchToggleButton().waitAndClick(5);
+			} else if (toggleNo.equals("0")) {
+				bc.stepInfo("The test case doesn't need Toggle to be enabled");
+			}
+
+		} else {
+			bc.stepInfo("The required toggle is not visible");
+		}
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		System.out.println(Bgcount);
+		UtilityLog.info(Bgcount);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getButtonSaveProject().Visible();
+			}
+		}), Input.wait30);
+		driver.scrollingToBottomofAPage();
+		getButtonSaveProject().Click();
+
+		bc.VerifySuccessMessage(
+				"Project is being created. A notification is provided to you once it is complete in the upper right hand corner.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait120 + Input.wait60);
+		System.out.println(bc.initialBgCount());
+		UtilityLog.info(bc.initialBgCount());
+
+	}
+
 }

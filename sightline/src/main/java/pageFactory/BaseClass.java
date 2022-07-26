@@ -780,6 +780,12 @@ public class BaseClass {
 				return getSelectProjectTo().Visible();
 			}
 		}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
 		getSaveChangeRole().waitAndClick(5);
@@ -794,7 +800,6 @@ public class BaseClass {
 			}
 		}
 	}
-
 	public void selectdomain(final String domain) {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -4018,6 +4023,46 @@ public class BaseClass {
 			} catch (Exception E) {
 				E.printStackTrace(pw);
 				UtilityLog.info(sw.toString());
+			}
+		}
+		
+		public void impersonateSAtoPA(String projectName) throws InterruptedException {
+			getSignoutMenu().waitAndClick(20);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getChangeRole().Visible();
+				}
+			}), Input.wait30);
+			getChangeRole().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectRole().Visible();
+				}
+			}), Input.wait30);
+			getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+			Thread.sleep(3000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAvlDomain().Visible();
+				}
+			}), Input.wait30);
+			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+			Thread.sleep(3000);
+
+			getSelectProjectTo().selectFromDropdown().selectByVisibleText(projectName);
+
+			getSaveChangeRole().waitAndClick(5);
+			System.out.println("Impersnated from SA to PA");
+			UtilityLog.info("Impersnated from SA to PA");
+
+			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+				try {
+					getGlobalMessagePopUpClose().waitAndClick(5);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 		}
 }

@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -17,6 +18,7 @@ public class AnnotationLayer {
 
 	Driver driver;
 	BaseClass base;
+	SoftAssert softAssertion;
 
 	public Element getAddAnnotationLayerBtn() {
 		return driver.FindElementById("btnAddAnnotation");
@@ -74,6 +76,14 @@ public class AnnotationLayer {
 
 	public Element getAnnotation_Layers() {
 		return driver.FindElementByXPath("//table[@id='AnnotationsDatatable']");
+	}
+
+	public Element getSelectSecurityGroup() {
+		return driver.FindElementById("ddlSecurityGroup");
+	}
+	
+	public Element getDefaultAnnotation_Layers() {
+		return driver.FindElementByXPath("//table[@id='AnnotationsDatatable']/tbody/tr/td");
 	}
 
 	// Annotation Layer added successfully
@@ -272,6 +282,27 @@ public class AnnotationLayer {
 			base.failedStep("Navigaing to Annotations Layer page is failed" + e.getLocalizedMessage());
 		}
 
+	}
+	/**
+	 * @author Vijaya.Rani
+	 * @Description : Creat Annotation Layer In Default Security Group
+	 */
+	public void verifyAnnotationLayerInDSG(String sg) {
+		
+		try {
+			this.driver.getWebDriver().get(Input.url + "Annotations/Annotations");
+			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(sg);
+			String actualString ="Default Annotation Layer";
+            String ExpectedString =getDefaultAnnotation_Layers().getText();
+            System.out.println(ExpectedString);
+            softAssertion.assertEquals(actualString,ExpectedString);
+            base.passedStep("Default Annotation Layer is displayed");
+            softAssertion.assertAll();
+			
+		} catch (Exception e) {
+			Reporter.log("Annotation layer " + sg + " added!", true);
+			UtilityLog.info("Annotation layer already exist");
+		}
 	}
 
 }
