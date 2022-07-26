@@ -65,8 +65,8 @@ public class O365_Regression_2_1 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
 
@@ -87,7 +87,8 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that for PAU\\RMU - Collections option is available Under “Datasets” access control on “Edit User >> Functionality” TAB.  ");
 
-		String[][] userRolesData = { { Input.pa1userName, "PA" }, { Input.rmu1userName, "RMU" } };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" },
+				{ Input.rmu1userName, "Review Manager", "SA" } };
 
 		// Login as SA
 		base.stepInfo("**Step-1 & 2 Login to Application with SysAdmin**");
@@ -121,7 +122,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that for Reviewer - Collections option is NOT available Under “Datasets” access control on “Edit User >> Functionality” TAB.  ");
 
-		String[][] userRolesData = { { Input.rev1userName, "REV" } };
+		String[][] userRolesData = { { Input.rev1userName, "Reviewer", "SA" } };
 
 		// Login as SA
 		base.stepInfo("**Step-1 & 2 Login to Application with SysAdmin**");
@@ -155,7 +156,8 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that User can Navigate to 'Collections' and 'Source Locations' screens when User gave Collection’s access control permission from Edit User screen");
 
-		String[][] userRolesData = { { Input.pa1userName, "PA" }, { Input.rmu1userName, "RMU" } };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" },
+				{ Input.rmu1userName, "Review Manager", "SA" } };
 
 		// Login as SA
 		base.stepInfo(
@@ -212,7 +214,8 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that 'Collections' and 'Source Locations' options does not appear when User does not give Collection’s access control permission from Edit User Screen");
 
-		String[][] userRolesData = { { Input.pa1userName, "PA" }, { Input.rmu1userName, "RMU" } };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" },
+				{ Input.rmu1userName, "Review Manager", "SA" } };
 
 		// Login as SA
 		base.stepInfo(
@@ -260,7 +263,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify the attributes from the 'Add Source Location' pop up should be Data Source Type, Data Source Name, Tenant ID, Application ID and Application Secret Key");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -293,7 +296,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that error messages should be displayed for the blank required fields on click of 'Save'");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -332,7 +335,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location on click of 'Create New Collection' > 'Add New Source Location' button");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -377,7 +380,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that once source selection is configured succesfully with connection to the source location, the user should be taken to the next intended step of the collection wizard");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -397,7 +400,7 @@ public class O365_Regression_2_1 {
 		collection.verifyAddedSourceLocation(dataname, null);
 
 		// click created source location and verify navigated page
-		collection.verifyCollectionInfoPage(dataname, null, false);
+		collection.verifyCollectionInfoPage(dataname, "", false);
 
 		// delete created source location
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
@@ -424,7 +427,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that once source selection is configured succesfully with connection to the source location, the user should be taken to the next intended step of the collection wizard");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -473,7 +476,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo("Test case Id: RPMXCON-60529 - O365");
 		base.stepInfo("Verify that collection wizard should list all configured source locations in the project");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -501,6 +504,9 @@ public class O365_Regression_2_1 {
 		// delete created source location
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
 		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
 	}
 
 	/**
@@ -690,7 +696,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that user can configure the new collection with selection of the existing source location");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -742,7 +748,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location 'Start a collection' > 'Set up a source location' link");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -784,7 +790,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
 
 		// Login as User
@@ -824,7 +830,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 		String dataname = "NewMicrosoftO365" + Utility.dynamicNameAppender();
 
 		// Login as User
@@ -956,11 +962,11 @@ public class O365_Regression_2_1 {
 		login.logout();
 
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that User can access 'Manage Collections' 
-	 * screen navigating through Dataset >> Manage Collections menu item.
+	 * @Description : Verify that User can access 'Manage Collections' screen
+	 *              navigating through Dataset >> Manage Collections menu item.
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60962", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
@@ -971,7 +977,7 @@ public class O365_Regression_2_1 {
 		base.stepInfo(
 				"Verify that User can access 'Manage Collections' screen navigating through Dataset >> Manage Collections menu item.");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 
 		// Login as User
 		login.loginToSightLine(username, password);
@@ -985,22 +991,23 @@ public class O365_Regression_2_1 {
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that application is allowing to 
-	 * add a new source location from Collections >> Set up Source >> Add New Source Location screen.
+	 * @Description : Verify that application is allowing to add a new source
+	 *              location from Collections >> Set up Source >> Add New Source
+	 *              Location screen.
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60852", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyCollectionWizardAddNewSourceLocation(String username, String password,
-			String fullname) throws Exception {
+	public void verifyCollectionWizardAddNewSourceLocation(String username, String password, String fullname)
+			throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60852 - O365");
 		base.stepInfo(
 				"Verify that from Collection Wizard user should be able to add new source location 'Create New collection' > 'Set up a source location' link");
 
-		String[][] userRolesData = { { username, fullname } };
+		String[][] userRolesData = { { username, fullname, fullname } };
 		String dataname = "Enron Office 1" + Utility.randomCharacterAppender(3);
 
 		// Login as User
@@ -1015,8 +1022,8 @@ public class O365_Regression_2_1 {
 		base.waitForElement(collection.getNewCollectionBtn());
 		collection.getNewCollectionBtn().waitAndClick(5);
 		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
-		
-		//To verify source name entered
+
+		// To verify source name entered
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
 		source.verifySourceLocationName(dataname);
 
