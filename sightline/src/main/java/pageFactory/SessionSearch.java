@@ -3416,6 +3416,10 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelease_ButtonRelease().waitAndClick(20);
+		
+		if(getTallyContinue().isElementAvailable(5)) {
+			getTallyContinue().waitAndClick(10);
+		}
 
 		if (getFinalizeButton().isDisplayed()) {
 

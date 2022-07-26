@@ -3221,6 +3221,11 @@ public class DocListPage {
 		search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Click();
 		base.waitForElement(search.getBulkRelease_ButtonRelease());
 		search.getBulkRelease_ButtonRelease().Click();
+		
+		if(getPopUpOkBtn().isElementAvailable(5)) {
+			getPopUpOkBtn().waitAndClick(10);
+		}
+		
 		base.waitForElement(search.getFinalizeButton());
 		search.getFinalizeButton().waitAndClick(30);
 		base.VerifySuccessMessage("Records saved successfully");
@@ -3553,6 +3558,11 @@ public class DocListPage {
 			base.waitForElement(getUnreleaseButton());
 			base.waitTillElemetToBeClickable(getUnreleaseButton());
 			getUnreleaseButton().Click();
+			
+			if(getPopUpOkBtn().isElementAvailable(5)) {
+				getPopUpOkBtn().waitAndClick(10);
+			}
+			
 			base.VerifySuccessMessage("Records saved successfully");
 			base.passedStep("performed bulk unrelease successfully");
 			System.out.println("performed bulk unrelease successfully");
@@ -5796,6 +5806,7 @@ public class DocListPage {
 		search.getBulkRelDefaultSecurityGroup_CheckBox(securityGroupName).Click();
 		base.waitForElement(getReleaseBtn());
 		getReleaseBtn().Click();
+		
 		getFinalizeButton().Click();
 		base.VerifySuccessMessage("Records saved successfully");
 		base.passedStep("performed bulk release successfully");
