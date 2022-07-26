@@ -57,12 +57,209 @@ public class Ingestion_Regression_3 {
 	}
 	
 	/**
+	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47364
+	 * Description :To verify that in Grid view, information of tiles are displayed in tabular with the
+	 * required columns
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47364",enabled = true, groups = { "regression" })
+	public void TCA1verifyGridViewInformation() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47364");
+		baseClass.stepInfo("Validate the columns available in grid view table");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Click on show all and grid view button");
+		ingestionPage.navigateToIngestionPage();
+		baseClass.waitForElement(ingestionPage.getShowAllCheckbox());
+		ingestionPage.getShowAllCheckbox().waitAndClick(5);
+		baseClass.passedStep("Validate columns displayed in grid view table");
+		ingestionPage.validateColumnsPresentInGridViewTable();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47297
+	 * Description :If ‘Add Only’ option is selected, DoC ID, Custodian, ParentDocID and Datasource
+	 * fields must be selected in the mapping.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47297",enabled = true, groups = { "regression" })
+	public void TCA2verifyFieldsSelectedInMapping() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47297");
+		baseClass.stepInfo("verify that mandatory fields must be selected in mapping");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,
+				Input.datLoadFile1);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		baseClass.stepInfo("verify mandatory mapping fields and auto mapping for SourceDocID");
+		ingestionPage.validateMappingSectionMandatoryFieldWarningMessage();
+		String key = ingestionPage.getMappingSourceField(1).selectFromDropdown().getFirstSelectedOption().getText();
+		if(key.equalsIgnoreCase(Input.documentKey)) {
+			baseClass.passedStep("Destination 'SourceDocID' is auto mapped with DocID.");
+		}
+		else {
+			baseClass.failedStep("SourceDocID source field not auto mapped");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47578
+	 * Description :To verify that in "Source & Overwrite Settings" section, the source selection is changed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47578",enabled = true, groups = { "regression" })
+	public void TCA3verifySourceSelectionInSourceSettings() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47578");
+		baseClass.stepInfo("verify that in 'Source & Overwrite Settings'section, the source selection is changed.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and verify available file option checkboxes");
+		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
+		ingestionPage.navigateToIngestionPage();
+		ingestionPage.verifyDifferentFileTypesAvailability();
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, Input.sourceLocation, Input.UniCodeFilesFolder);
+		baseClass.stepInfo("verify file path,load file and IS DAT options status");
+		ingestionPage.verifyDatAndRemainingFileFieldOptionsAvailability(Input.datLoadFile1);
+		ingestionPage.verifyOtherFileFieldOptionAndDropdownValueAvailability();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47581
+	 * Description :To verify that row population in the Configure Mapping will be as per the fields 
+	 * available in the DAT file.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47581",enabled = true, groups = { "regression" })
+	public void TCA4verifyRowPopulationInConfigureMappingSection() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47581");
+		baseClass.stepInfo("verify that row population in the Configure Mapping section.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details and click on Next");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat);
+		baseClass.stepInfo("Verify row auto populated in configure mapping section");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		if(ingestionPage.configureMappingRows().isElementAvailable(10)) {
+			int rows = ingestionPage.configureMappingRows().size();
+			baseClass.passedStep("Number of rows auto populated in configure mapping -'"+rows+"'");
+		}
+		else {
+			baseClass.failedStep("Rows not populated or the configure mapping section not enabled");
+		}
+		baseClass.passedStep("Source field gets auto populated as per the fields available in the DAT file.");
+		loginPage.logout();	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47586
+	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is not matched 
+	 * between Current and Copied Ingestion then Warning message should displayed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47586",enabled = true, groups = { "regression" })
+	public void TCA5verifyConfigureMappingWarningWhenMappingNotMatched() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47586");
+		baseClass.stepInfo("verify configure mapping warning message when mapping not matched");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		baseClass.stepInfo("Configure mapping and run ingestion");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
+		baseClass.stepInfo("Verify available option in settings");
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.verifyOptionsAvailableInIngestionSetting();
+		baseClass.stepInfo("Copy ingestion and check details");
+		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
+		baseClass.stepInfo("verify warning message");
+		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(false, Input.IngestionEmailDataFolder,
+				Input.emailDatFile, Input.documentIdKey, Input.emailTextFile);
+		baseClass.stepInfo("Fill the mandatory fields and run ingestion");
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentIdKey,Input.documentIdKey,Input.custIdKey);
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47585
+	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is matched 
+	 * between Current and Copied Ingestion then Warning message should not displayed. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47585",enabled = true, groups = { "regression" })
+	public void TCA6verifyConfigureMappingWhenMappingMatched() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47585");
+		baseClass.stepInfo("verify configure mapping warning message when mapping matched");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and click next button");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
+		baseClass.stepInfo("Configure mapping and run ingestion");
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
+		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
+		baseClass.stepInfo("Verify available option in settings");
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.verifyOptionsAvailableInIngestionSetting();
+		baseClass.stepInfo("Copy ingestion and check details");
+		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
+		baseClass.stepInfo("verify warning message");
+		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(true, Input.UniCodeFilesFolder,
+				Input.datLoadFile1,Input.documentKey , Input.textFile1);
+		ingestionPage.clickOnPreviewAndRunButton();
+		baseClass.passedStep("Verified that application will move ahead to run ingestion if mapping is matched");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 22/07/2022 TestCase Id:RPMXCON-47375
+	 * Description :To verify that ingestion which is Rolled back can be deleted. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47375",enabled = true, groups = { "regression" })
+	public void TCA7verifyRollbackAndDeleteIngestion() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47375");
+		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion and Perform Catalogging");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
+		ingestionPage.performRollbackAndDeleteIngestion();
+		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
+		loginPage.logout();
+	}
+	
+	/**
 	 * Author :Arunkumar date: 12/07/2022 TestCase Id:RPMXCON-48291
 	 * Description :To verify In Ingestion, Copy ,ASCII(59) should be default New Line delimiter.
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48291",enabled = true, groups = { "regression" })
-	public void verifyDefaultNewLineDelimiter() throws InterruptedException {
+	public void TCA8verifyDefaultNewLineDelimiter() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48291");
 		baseClass.stepInfo("verify In Ingestion, Copy ,ASCII(59) should be default New Line delimiter.");
@@ -105,7 +302,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48626",enabled = true, groups = { "regression" })
-	public void verifyResultOfOverlaidText() throws InterruptedException {
+	public void TCA9verifyResultOfOverlaidText() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48626");
 		baseClass.stepInfo("verify that after the publish is been done,user can view the search result for overlaid text");
@@ -156,7 +353,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47824",enabled = true, groups = { "regression" })
-	public void verifyOverlayIngestionOfSameFiles() throws InterruptedException {
+	public void TCB1verifyOverlayIngestionOfSameFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47824");
 		baseClass.stepInfo("verify overlay ingestion of the same files, which are already ingested");
@@ -184,7 +381,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48595",enabled = true, groups = { "regression" })
-	public void verifyOverlayIngestionOfAudioWithTextFiles() throws InterruptedException {
+	public void TCB2verifyOverlayIngestionOfAudioWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48595");
 		baseClass.stepInfo("Verify the Analytics process should take places when Audio files with Text files are overlayed.");
@@ -225,7 +422,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48596",enabled = true, groups = { "regression" })
-	public void verifyOverlayIngestionOfTiffWithTextFiles() throws InterruptedException {
+	public void TCB3verifyOverlayIngestionOfTiffWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48596");
 		baseClass.stepInfo("Verify the Analytics process should take places when Tiff files and Text files are overlayed.");
@@ -266,7 +463,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48599",enabled = true, groups = { "regression" })
-	public void verifyOverlayIngestionOfNativeWithTextFiles() throws InterruptedException {
+	public void TCB4verifyOverlayIngestionOfNativeWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48599");
 		baseClass.stepInfo("Verify the Analytics process should take places when Native files and Text files are overlayed.");
@@ -307,7 +504,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48629",enabled = true, groups = { "regression" })
-	public void verifyOverlayWhenDocsUnpublished() throws InterruptedException {
+	public void TCB5verifyOverlayWhenDocsUnpublished() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48629");
 		baseClass.stepInfo("verify that user can overlay text only when all the docs being overlaid are unpublished");
@@ -350,7 +547,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49257",enabled = true, groups = { "regression" })
-	public void verifyTotalUniqueDocsCountIngestedAndPublished() throws InterruptedException {
+	public void TCB6verifyTotalUniqueDocsCountIngestedAndPublished() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49257");
 		baseClass.stepInfo("verify that ingestions page should present the unique number of docs ingested and published");
@@ -416,7 +613,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48608",enabled = true, groups = { "regression" })
-	public void verifyCountOfTextFilesWhenOverlay() throws InterruptedException {
+	public void TCB7verifyCountOfTextFilesWhenOverlay() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48608");
 		baseClass.stepInfo("Verify that ingestion detail popup reflect the count of text files.");
@@ -465,7 +662,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49019",enabled = true, groups = { "regression" })
-	public void verifyPerformingIngestionAnalyticsFor500Docs() throws InterruptedException {
+	public void TCB8verifyPerformingIngestionAnalyticsFor500Docs() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49019");
 		baseClass.stepInfo("Verify ingesting 500 documents and do analytics these documents.");
@@ -483,148 +680,6 @@ public class Ingestion_Regression_3 {
 		loginPage.logout();
 	}
 	
-	/**
-	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47581
-	 * Description :To verify that row population in the Configure Mapping will be as per the fields 
-	 * available in the DAT file.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47581",enabled = true, groups = { "regression" })
-	public void verifyRowPopulationInConfigureMappingSection() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47581");
-		baseClass.stepInfo("verify that row population in the Configure Mapping section.");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion details and click on Next");
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
-				Input.YYYYMMDDHHMISSDat);
-		baseClass.stepInfo("Verify row auto populated in configure mapping section");
-		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
-		if(ingestionPage.configureMappingRows().isElementAvailable(10)) {
-			int rows = ingestionPage.configureMappingRows().size();
-			baseClass.passedStep("Number of rows auto populated in configure mapping -'"+rows+"'");
-		}
-		else {
-			baseClass.failedStep("Rows not populated or the configure mapping section not enabled");
-		}
-		baseClass.passedStep("Source field gets auto populated as per the fields available in the DAT file.");
-		loginPage.logout();	
-	}
-	
-	/**
-	 * Author :Arunkumar date: 20/07/2022 TestCase Id:RPMXCON-47578
-	 * Description :To verify that in "Source & Overwrite Settings" section, the source selection is changed.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47578",enabled = true, groups = { "regression" })
-	public void verifySourceSelectionInSourceSettings() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47578");
-		baseClass.stepInfo("verify that in 'Source & Overwrite Settings'section, the source selection is changed.");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion and verify available file option checkboxes");
-		ingestionPage.validateIngestionWizardMandatoryFieldWarningMessage();
-		ingestionPage.navigateToIngestionPage();
-		ingestionPage.verifyDifferentFileTypesAvailability();
-		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.sourceSystem, Input.sourceLocation, Input.UniCodeFilesFolder);
-		baseClass.stepInfo("verify file path,load file and IS DAT options status");
-		ingestionPage.verifyDatAndRemainingFileFieldOptionsAvailability(Input.datLoadFile1);
-		ingestionPage.verifyOtherFileFieldOptionAndDropdownValueAvailability();
-		loginPage.logout();
-		
-	}
-	
-	/**
-	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47586
-	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is not matched 
-	 * between Current and Copied Ingestion then Warning message should displayed.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47586",enabled = true, groups = { "regression" })
-	public void verifyConfigureMappingWarningWhenMappingNotMatched() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47586");
-		baseClass.stepInfo("verify configure mapping warning message when mapping not matched");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion and click next button");
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
-		baseClass.stepInfo("Configure mapping and run ingestion");
-		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
-		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
-		baseClass.stepInfo("Verify available option in settings");
-		ingestionPage.verifyDetailsAfterStartedIngestion();
-		ingestionPage.verifyOptionsAvailableInIngestionSetting();
-		baseClass.stepInfo("Copy ingestion and check details");
-		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
-		baseClass.stepInfo("verify warning message");
-		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(false, Input.IngestionEmailDataFolder,
-				Input.emailDatFile, Input.documentIdKey, Input.emailTextFile);
-		baseClass.stepInfo("Fill the mandatory fields and run ingestion");
-		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentIdKey,Input.documentIdKey,Input.custIdKey);
-		loginPage.logout();
-		
-		
-	}
-	
-	/**
-	 * Author :Arunkumar date: 21/07/2022 TestCase Id:RPMXCON-47585
-	 * Description :To verify that on "Copy Ingestion" once the Configure mapping is matched 
-	 * between Current and Copied Ingestion then Warning message should not displayed. 
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47585",enabled = true, groups = { "regression" })
-	public void verifyConfigureMappingWhenMappingMatched() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47585");
-		baseClass.stepInfo("verify configure mapping warning message when mapping matched");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion and click next button");
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,Input.datLoadFile1);
-		baseClass.stepInfo("Configure mapping and run ingestion");
-		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
-		ingestionPage.configureMandatoryMappingAndRunIngestion(Input.documentKey,Input.documentKey,Input.custodian);
-		baseClass.stepInfo("Verify available option in settings");
-		ingestionPage.verifyDetailsAfterStartedIngestion();
-		ingestionPage.verifyOptionsAvailableInIngestionSetting();
-		baseClass.stepInfo("Copy ingestion and check details");
-		ingestionPage.copyIngestionAndVerifyDetailsRetained(Input.ingestionType,Input.documentKey);
-		baseClass.stepInfo("verify warning message");
-		ingestionPage.verifyWarningMessageForCurrentAndCopiedIngestion(true, Input.UniCodeFilesFolder,
-				Input.datLoadFile1,Input.documentKey , Input.textFile1);
-		ingestionPage.clickOnPreviewAndRunButton();
-		baseClass.passedStep("Verified that application will move ahead to run ingestion if mapping is matched");
-		loginPage.logout();
-	}
-	
-	/**
-	 * Author :Arunkumar date: 22/07/2022 TestCase Id:RPMXCON-47375
-	 * Description :To verify that ingestion which is Rolled back can be deleted. 
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47375",enabled = true, groups = { "regression" })
-	public void verifyRollbackAndDeleteIngestion() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47375");
-		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion and Perform Catalogging");
-		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
-		ingestionPage.ignoreErrorsAndCatlogging();
-		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
-		ingestionPage.performRollbackAndDeleteIngestion();
-		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
-		loginPage.logout();
-	}
 	
 	/**
 	 * Author :Arunkumar date: 22/07/2022 TestCase Id:RPMXCON-47368
@@ -632,7 +687,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47368",enabled = true, groups = { "regression" })
-	public void verifyCloseButtonRedirectsToHomePage() throws InterruptedException {
+	public void TCB9verifyCloseButtonRedirectsToHomePage() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47368");
 		baseClass.stepInfo("verify that selection of Close button redirects to Ingestion Home page");
@@ -651,64 +706,7 @@ public class Ingestion_Regression_3 {
 		loginPage.logout();
 		
 	}
-	
-	/**
-	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47297
-	 * Description :If ‘Add Only’ option is selected, DoC ID, Custodian, ParentDocID and Datasource
-	 * fields must be selected in the mapping.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47297",enabled = true, groups = { "regression" })
-	public void verifyFieldsSelectedInMapping() throws InterruptedException {
 		
-		baseClass.stepInfo("Test case Id: RPMXCON-47297");
-		baseClass.stepInfo("verify that mandatory fields must be selected in mapping");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Add new ingestion and click next button");
-		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.UniCodeFilesFolder,
-				Input.datLoadFile1);
-		ingestionPage.verifySourceSectionStatusAfterClickingNextButton();
-		baseClass.stepInfo("verify mandatory mapping fields and auto mapping for SourceDocID");
-		ingestionPage.validateMappingSectionMandatoryFieldWarningMessage();
-		String key = ingestionPage.getMappingSourceField(1).selectFromDropdown().getFirstSelectedOption().getText();
-		if(key.equalsIgnoreCase(Input.documentKey)) {
-			baseClass.passedStep("Destination 'SourceDocID' is auto mapped with DocID.");
-		}
-		else {
-			baseClass.failedStep("SourceDocID source field not auto mapped");
-		}
-		loginPage.logout();
-	}
-	
-	/**
-	 * Author :Arunkumar date: 25/07/2022 TestCase Id:RPMXCON-47364
-	 * Description :To verify that in Grid view, information of tiles are displayed in tabular with the
-	 * required columns
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-47364",enabled = true, groups = { "regression" })
-	public void verifyGridViewInformation() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-47364");
-		baseClass.stepInfo("Validate the columns available in grid view table");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("Click on show all and grid view button");
-		ingestionPage.navigateToIngestionPage();
-		baseClass.waitForElement(ingestionPage.getShowAllCheckbox());
-		ingestionPage.getShowAllCheckbox().waitAndClick(5);
-		baseClass.passedStep("Validate columns displayed in grid view table");
-		ingestionPage.validateColumnsPresentInGridViewTable();
-		loginPage.logout();
-		
-	}
-	
-
-	
-	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
