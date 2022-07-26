@@ -8186,18 +8186,28 @@ public class SavedSearch {
 		if (release) {
 			base.waitForElement(getReleaseBtn());
 			getReleaseBtn().waitAndClick(5);
+			
+			if(getContinueButton().isElementAvailable(5)) {
+				getContinueButton().waitAndClick(10);
+			}
 
 			// Finalize release button
 			base.waitForElement(getFinalizeReleaseButtonfromPopup());
 			getFinalizeReleaseButtonfromPopup().waitAndClick(6);
 			base.stepInfo("Released to SG : " + securityGroup);
-			base.VerifySuccessMessage(expected);
+		
 		} else {
 			base.waitForElement(getUnreleaseBtn());
 			getUnreleaseBtn().waitAndClick(10);
 			base.stepInfo("Unreleased From SG : " + securityGroup);
-			base.VerifySuccessMessage(expected);
+			if(getContinueButton().isElementAvailable(5)) {
+				getContinueButton().waitAndClick(10);
+			}
 		}
+		
+		
+		
+		base.VerifySuccessMessage(expected);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return base.initialBgCount() == Bgcount + 1;
