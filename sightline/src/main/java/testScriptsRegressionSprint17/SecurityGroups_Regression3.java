@@ -207,7 +207,6 @@ public class SecurityGroups_Regression3 {
 		softassert.assertTrue(sgpage.getSelectedTagsCheckBox(foldername).isElementAvailable(5)
 				&& sgpage.getSelectedTagsCheckBox(foldername1).isElementAvailable(5));
 		baseClass.passedStep(foldername + foldername1 + "...After cancelled Tags is displayed on selected list.");
-		softassert.assertAll();
 		sgpage.deleteSecurityGroups(SGname);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(foldername);
