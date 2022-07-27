@@ -706,6 +706,83 @@ public class Ingestion_Regression_3 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Arunkumar date: 27/07/2022 TestCase Id:RPMXCON-49331
+	 * Description :verify that if Ingestion failed in Cataloging, then user can export the error details successfully
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49331",enabled = true, groups = { "regression" })
+	public void verifyExportErrorDetails() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49331");
+		baseClass.stepInfo("Verify that if Ingestion failed in Cataloging, then user can export the error details successfully");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			ingestionPage.publishAddonlyIngestion(Input.AllSourcesFolder);	
+		}
+		baseClass.stepInfo("Perform add only ingestion with NUIX source system");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType,Input.nuix, 
+				Input.sourceLocation, Input.AllSourcesFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator, Input.textQualifier, Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.DATFile1,Input.prodBeg);
+		baseClass.stepInfo("Selecting Native file");
+		ingestionPage.selectNativeSource(Input.NativeFile, false);
+		baseClass.stepInfo("Selecting Text file");
+		ingestionPage.selectTextSource(Input.TextFile, false);
+		baseClass.stepInfo("Selecting Pdf file");
+		ingestionPage.selectPDFSource(Input.PDFFile, false);
+		baseClass.stepInfo("Selecting Mp3 file");
+		ingestionPage.selectMP3VarientSource(Input.MP3File, false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ingestionAtCatlogState(Input.AllSourcesFolder);
+		baseClass.stepInfo("verify Export error details");
+		ingestionPage.exportErrorDetails();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 27/07/2022 TestCase Id:RPMXCON-46886
+	 * Description :To Verify Ingestion rollback for Audio indexed & non Audio Indexed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-46886",enabled = true, groups = { "regression" })
+	public void verifyIngestionRollbackForAudio() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-46886");
+		baseClass.stepInfo("Verify Ingestion rollback for Audio indexed & non Audio Indexed.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion");
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		baseClass.stepInfo("perform indexing without selecting audio");
+		ingestionPage.startIndexing(false,null);
+		ingestionPage.validateIndexingStatus();
+		ingestionPage.rollBackIngestion();
+		baseClass.stepInfo("perform add only ingestion till copying stage");
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		baseClass.stepInfo("perform indexing with audio");
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.rollBackIngestion();
+		baseClass.passedStep("Roll back performed successfully for both audio and non audio indexed");
+		loginPage.logout();
+		}
+	
+	
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

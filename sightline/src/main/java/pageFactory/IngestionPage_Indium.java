@@ -1304,6 +1304,9 @@ public class IngestionPage_Indium {
 	public Element gridViewColumn(String value) {
 		return driver.FindElementByXPath("//table[@role='grid']//th[contains(text(),'"+value+"')]");
 	}
+	public Element exportErrorButton() {
+		return driver.FindElementById("btnexportingestionerror");
+	}
 	
 	
 	public IngestionPage_Indium(Driver driver) {
@@ -2622,6 +2625,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getDATDelimitersNewLine());
 			getDATDelimitersNewLine().isElementAvailable(15);
 			getDATDelimitersNewLine().selectFromDropdown().selectByVisibleText(multiValue);
+			base.waitTime(2);
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while selecting DAT delimiters." + e.getLocalizedMessage());
@@ -2638,7 +2642,7 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			base.waitTime(2);
-			driver.waitForPageToBeReady();
+			base.waitForElement(getSourceSelectionDATLoadFile());
 			getSourceSelectionDATLoadFile().ScrollTo();
 			base.waitForElement(getSourceSelectionDATLoadFile());
 			getSourceSelectionDATLoadFile().isElementAvailable(15);
@@ -3464,6 +3468,8 @@ public class IngestionPage_Indium {
 		base.stepInfo("Click on add new ingestion button");
 		base.waitForElement(getAddanewIngestionButton());
 		getAddanewIngestionButton().waitAndClick(10);
+		base.waitForElement(getIngestion_IngestionType());
+		getIngestion_IngestionType().selectFromDropdown().selectByVisibleText(Input.ingestionType);
 
 		base.stepInfo("Select Source system");
 		base.waitForElement(getSpecifySourceSystem());
@@ -9272,6 +9278,10 @@ public class IngestionPage_Indium {
 			base.stepInfo("Selecting Translation file");
 			selectOtherSource(type, file, false);
 		}
+		if (type.contains("null")) {
+			System.out.println("no other file required");
+		}
+		
 		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -11200,6 +11210,65 @@ public class IngestionPage_Indium {
 			search.basicContentSearch(Input.searchStringStar);
 			search.unReleaseDocsFromSecuritygroup(Input.securityGroup);
 		}
-				
 		
+		
+		/**
+		 * @author: Arun Created Date: 27/07/2022 Modified by: NA Modified Date: NA
+		 * @throws InterruptedException 
+		 * @description: this method will export ingestion errors            
+		 */
+		
+		public void exportErrorDetails() throws InterruptedException {
+			getRefreshButton().waitAndClick(5);
+			base.waitTime(2);
+			String status = getStatus(1).getText().trim();
+			int count = base.initialBgCount();
+			if (status.contains("Failed")) {
+				base.waitForElement(getIngestionDetailPopup(1));
+				getIngestionDetailPopup(1).waitAndClick(5);
+				base.waitForElement(getActionDropdownArrow());
+				base.waitForElement(errorCountCatalogingStage());
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitTime(3);
+				base.waitForElement(exportErrorButton());
+				exportErrorButton().waitAndClick(5);
+				base.VerifySuccessMessage("Your report has been pushed into the background, and you will get a notification (in the upper right-hand corner \"bullhorn\" icon when your report is completed and ready for viewing.");
+				base.waitForElement(getCloseButton());
+				getCloseButton().waitAndClick(5);
+				ReportsPage report = new ReportsPage(driver);
+				report.downLoadReport(count);
+				base.passedStep("User can export all errors successfully");
+			}
+			else {
+				base.failedStep("Ingestion not present in failed stage.");
+			}
+			
+		}
+		/**
+		 * @author: Arun Created Date: 27/07/2022 Modified by: NA Modified Date: NA
+		 * @throws InterruptedException 
+		 * @description: this method will verify the status of indexing process         
+		 */
+		public void validateIndexingStatus() {
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByINDEXED());
+			getFilterByINDEXED().waitAndClick(10);
+			getRefreshButton().waitAndClick(5);
+			for (int i = 0; i < 50; i++) {
+				base.waitTime(2);
+				String status = getStatus(1).getText().trim();
+				if (status.contains("Indexed")) {
+					base.passedStep("Indexing completed");
+					break;
+				} else if (status.contains("failed")) {
+					base.failedStep("Ingestion failed");
+				} else {
+					base.waitTime(10);
+					getRefreshButton().waitAndClick(5);
+				}
+			}
+
+		}
+				
 }
