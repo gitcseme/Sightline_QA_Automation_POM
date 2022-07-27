@@ -12831,6 +12831,5 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(5);
 		driver.scrollPageToTop();
-
 	}
 }

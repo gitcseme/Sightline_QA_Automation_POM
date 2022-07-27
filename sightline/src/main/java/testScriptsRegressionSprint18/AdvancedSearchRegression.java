@@ -283,7 +283,6 @@ public class AdvancedSearchRegression {
 		loginPage.logout();
 
 	}
-
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description:Verify that - Application returns all the documents which are
