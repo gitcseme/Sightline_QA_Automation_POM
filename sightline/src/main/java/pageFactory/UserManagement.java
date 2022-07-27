@@ -764,9 +764,9 @@ public class UserManagement {
 	}
 
 	public Element getComponentBoxBlocked(String componentName) {
-		return driver.FindElementByXPath(
-				"//label[@class='checkbox' and normalize-space()='" + componentName + "']//i[@class='BackgroundGrey']");
-	}
+        return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName
+                + "']//i[@style='background-color: grey;']");
+    }
 
 	public Element getComponentCheckBoxClick(String componentName) {
 		return driver.FindElementByXPath(
