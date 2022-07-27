@@ -192,7 +192,7 @@ public class BatchRedactionRegression3 {
 
 		// Traverse from Saved search To Doc view
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 		DCRedactions.verifyRedactionsSubMenu();
@@ -525,7 +525,7 @@ public class BatchRedactionRegression3 {
 
 		// Traverse from Saved search To Doc view
 		saveSearch.savedSearch_Searchandclick(searchName);
-		saveSearch.getDocView_button().waitAndClick(20);
+		saveSearch.docViewFromSS("View in DocView");
 		driver.waitForPageToBeReady();
 		docview.verifyRedactionPanel();
 
@@ -1739,6 +1739,7 @@ public class BatchRedactionRegression3 {
 		base.selectsecuritygroup(securityGroupName);
 
 		// verifying the Informative/Error message
+		
 		batch.verifyInformativeErrorMessage();
 
 		// chaning the language into German
@@ -1770,6 +1771,7 @@ public class BatchRedactionRegression3 {
 	 * @throws Exception
 	 */
 	@Test(description ="RPMXCON-53502",enabled = true, groups = { "regression" } )
+	
 	public void verifyRedactionNavigationIconAndDeleteIcon1() throws Exception {
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
@@ -1936,6 +1938,7 @@ public class BatchRedactionRegression3 {
 
 		base.stepInfo("Test case Id:RPMXCON-53520 Batch Redaction");
 		base.stepInfo(
+				
 				"Localization : Verify that Relevant re-analyzed message appears on \"Batch Redaction\" screen when user clicks on \"Analyze Search for Redactions\" - having same document at the same time on 2 different TABS");
 
 		// Create saved search
