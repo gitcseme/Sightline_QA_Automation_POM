@@ -142,7 +142,7 @@ public class DocviewAudio_Regression {
 		sessionSearch.ViewInDocListWithOutPureHit();
 
 		// selecting all documents in DocList
-		docListPage.selectingAllDocFromAllPagesAndAllChildren();
+		docListPage.selectingAllDocuments();
 		baseClass.stepInfo("Selecting all document from doclist to docview page");
 
 		// view selected documents in DocList
@@ -185,7 +185,7 @@ public class DocviewAudio_Regression {
 
 		// verifying the audio hits and triangular arrow Icon
 		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
-		docViewPage.getAudioPersistantHitEyeIcon().Click();
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, audioSearchInput1);
 		loginPage.logout();
 
@@ -234,7 +234,7 @@ public class DocviewAudio_Regression {
 		// access to security group to REV
 		userManagement.assignAccessToSecurityGroups(securityGroup, Input.rev1userName);
 
-		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.bulkRelease(securityGroup);
 
 		annotationLayer.AddAnnotation(addName);
