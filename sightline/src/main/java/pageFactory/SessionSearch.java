@@ -12786,4 +12786,51 @@ public class SessionSearch {
 			base.failedStep("New Search is not Created");
 		}
 	}
+
+	/**
+	 * @author Jayanthi
+	 * @Description: Selecting assignments with distributed To/Status/Data Range
+	 *               filters.
+	 */
+	public void selectAssignmentAndReviewers_Status_dateRange(String assignMentName, String reviewer, String RMU,
+			String PA, String status, boolean date) throws InterruptedException, AWTException {
+
+		base.waitForElement(getWP_assignmentsBtn());
+		getWP_assignmentsBtn().Click();
+
+		base.waitForElement(selectReviewerInAssgnWP(reviewer));
+		selectReviewerInAssgnWP(reviewer).waitAndClick(10);
+		if (RMU != null) {
+			base.waitForElement(selectReviewerInAssgnWP(RMU));
+			selectReviewerInAssgnWP(RMU).waitAndClick(10);
+		}
+		if (PA != null) {
+			base.waitForElement(selectReviewerInAssgnWP(PA));
+			selectReviewerInAssgnWP(PA).waitAndClick(10);
+		}
+
+		base.passedStep("The distributed list of users are selected.");
+
+		driver.scrollingToBottomofAPage();
+		selectStatusInAssgnWp(status).waitAndClick(2);
+		if (date) {
+			selectDate("From Date");
+			selectDate("To Date");
+		}
+		System.out.println(getTree().FindWebElements().size());
+		UtilityLog.info(getTree().FindWebElements().size());
+		for (WebElement iterable_element : getTree().FindWebElements()) {
+			if (iterable_element.getText().contains(assignMentName)) {
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				driver.scrollingToBottomofAPage();
+				System.out.println(iterable_element.getText());
+				UtilityLog.info(iterable_element.getText());
+				iterable_element.click();
+			}
+		}
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		driver.scrollPageToTop();
+
+	}
 }
