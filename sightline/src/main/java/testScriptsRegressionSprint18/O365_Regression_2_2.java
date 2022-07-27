@@ -63,7 +63,8 @@ public class O365_Regression_2_2 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+		Object[][] users = { 
+//				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
@@ -135,6 +136,42 @@ public class O365_Regression_2_2 {
 		// Logout
 		login.logout();
 
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that mandatory fields display with red asterisk on
+	 *              "Source Location" screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60812", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyColorOfAsterisk(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60812 - O365");
+		base.stepInfo("Verify that mandatory fields display with red asterisk on \"Source Location\" screen.");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// verify Add new source Pop up Attributes
+		collection.verifyAddNewSourcePopupAttributes();
+
+		// Verify Error Message In Add new source Popup
+		driver.Navigate().refresh();
+		collection.performAddNewSource(null, "", "", "", "");
+
+		// Logout
+		login.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)

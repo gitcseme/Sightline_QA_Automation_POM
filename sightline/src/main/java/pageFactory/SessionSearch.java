@@ -105,6 +105,9 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+	public Element getErrorMsg() {
+		return driver.FindElementByXPath("//div[@id='validationErrMsg']");
+	}
 
 	public ElementCollection getSearchPanelCount() {
 		return driver.FindElementsByXPath("//ul[@id='sessionSearchList']//li");
@@ -12831,5 +12834,23 @@ public class SessionSearch {
 		base.waitForElement(getMetaDataInserQuery());
 		getMetaDataInserQuery().waitAndClick(5);
 		driver.scrollPageToTop();
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Error Messagein save search popup
+	 * @param expectedMsg
+	 */
+
+	public void verifyErrorMsgInSavePopUp(String expectedMsg) {
+		
+		if (getErrorMsg().isElementAvailable(10)) {
+			String actualMsg = getErrorMsg().getText();
+			String passMsg = "Displayed Error Msg : " + actualMsg;
+			String failMsg = "Error Message is Not As Expected";
+			base.compareTextViaContains(actualMsg, expectedMsg, passMsg, failMsg);
+		} else {
+			base.failedStep("Error Message is Not Displayed");
+		}
 	}
 }
