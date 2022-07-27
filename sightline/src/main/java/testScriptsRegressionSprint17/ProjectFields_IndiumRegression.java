@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -297,12 +298,14 @@ public class ProjectFields_IndiumRegression {
 		// cloning the project
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "");
+//		baseClass.waitTime(200);
 		data.getNotificationMessage(0, projectName);
 		baseClass.stepInfo("Cloning a project");
 
 		// giveing access to pa and rmu user for new project
 		UserManagement users = new UserManagement(driver);
 		users.navigateToUsersPAge();
+		baseClass.waitTime(3);
 		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "",
 				false, false);
 		baseClass.stepInfo("Access to PA user");
@@ -311,22 +314,30 @@ public class ProjectFields_IndiumRegression {
 		baseClass.stepInfo("Access to RMU user");
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(userManagementPage.getBulkUserAccessTab());
 		userManagementPage.getBulkUserAccessTab().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getSelectRollId());
 		userManagementPage.getSelectRollId().selectFromDropdown().selectByVisibleText("Project Administrator");
 		userManagementPage.defaultSelectionCheckboxForAllRole(true, true, true, false, true, true, true, true, true,
 				true, true, true, true, true, true);
 		driver.scrollingToElementofAPage(userManagementPage.getEnableRadioBtn());
 		userManagementPage.getEnableRadioBtn().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getSelectingProject());
 		userManagementPage.getSelectingProject().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getSelectDropProject(projectName));
 		userManagementPage.getSelectDropProject(projectName).waitAndClick(10);
 		driver.scrollingToElementofAPage(userManagementPage.getSelectBulkUser(Input.pa1FullName));
+		baseClass.waitForElement(userManagementPage.getSelectBulkUser(Input.pa1FullName));
 		userManagementPage.getSelectBulkUser(Input.pa1FullName).waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getBulkUserSaveBtn());
 		userManagementPage.getBulkUserSaveBtn().waitAndClick(5);
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
 		loginPage.logout();
 
 		// login as pa
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,projectName);
+		baseClass.selectproject(projectName);
+		driver.waitForPageToBeReady();
 		
 		// Ingestioning the documents
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
@@ -344,12 +355,25 @@ public class ProjectFields_IndiumRegression {
 		// access to security group to RMU
 		userManagementPage.assignAccessToSecurityGroups(securityGroup, Input.rmu1userName);
 		sessionSearch.basicContentSearch(ingestionFullName);
-		sessionSearch.viewInDocView();
+		sessionSearch.ViewInDocView();
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String docId=docViewPage.getVerifyPrincipalDocument().getText();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.bulkRelease(securityGroup);
+		baseClass.waitForElement(sessionSearch.getBulkActionButton());
+		sessionSearch.getBulkActionButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionSearch.getBulkReleaseAction());
+		sessionSearch.getBulkReleaseAction().waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox(securityGroup));
+		sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox(securityGroup).waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getBulkRelease_ButtonRelease());
+		sessionSearch.getBulkRelease_ButtonRelease().waitAndClick(20);
+		if (sessionSearch.getFinalizeButton().isDisplayed()) {
+			baseClass.waitForElement(sessionSearch.getFinalizeButton());
+			sessionSearch.getFinalizeButton().waitAndClick(10);
+
+		}
 		
 		//logout
 		loginPage.logout();
@@ -362,12 +386,13 @@ public class ProjectFields_IndiumRegression {
 		driver.waitForPageToBeReady();
 		
 		// validating the metadatafield
-		List<String> ecpected=Arrays.asList("AllProductionBatesRanges","AppointmentEndDate","AppointmentEndDateOnly","AppointmentStartDate","AppointmentStartDateOnly","AttachCount","AttachDocIDs","Container","CreateDate",
+		List<String> expected;
+		expected=Arrays.asList("AllCustodians","AllProductionBatesRanges","AppointmentEndDate","AppointmentEndDateOnly","AppointmentStartDate","AppointmentStartDateOnly","AttachCount","AttachDocIDs","Container","CreateDate",
 				"CustodianName","DataSource","DateAccessedDateOnly","DateCreatedDateOnly","DateEditedDateOnly","DateModifiedDateOnly","DatePrintedDateOnly","DateReceivedDateOnly","DateSavedDateOnly",
 				"DocDate","DocDateDateOnly","DocFileExtension","DocFileExtensionCorrected","DocFileName","DocFileSize","DocFileType","DocID","DocLanguages","DocPages","DocPrimaryLanguage",
 				"DupeCount","DupeCustodianCount","DupeCustodians","EmailAllDomainCount","EmailAllDomains","EmailAuthorAddress","EmailAuthorDomain","EmailAuthorName","EmailAuthorNameAndAddress","EmailBCCAddresses","EmailBCCNames",
 				"EmailBCCNamesAndAddresses","EmailCCAddresses","EmailCCNames","EmailCCNamesAndAddresses",
-				"EmailConversationIndex","EmailFamilyConversationIndex","EmailDateSentDateOnly","EmailDateSentTimeOnly","EmailDuplicateDocIDs","EmailInclusiveReason","EmailInclusiveScore",  
+				"EmailConversationIndex","EmailDateSentDateOnly","EmailDateSentTimeOnly","EmailDuplicateDocIDs","EmailFamilyConversationIndex","EmailInclusiveReason","EmailInclusiveScore",  
 				"EmailMessageID","EmailMessageType","EmailReceivedDate","EmailRecipientAddresses","EmailRecipientCount","EmailRecipientDomainCount","EmailRecipientDomains",  
 				"EmailRecipientNames","EmailSentDate","EmailSubject","EmailThreadID","EmailToAddresses","EmailToNames","EmailToNamesAndAddresses","ExcelProtectedSheets","ExcelProtectedWorkbook","ExceptionDescription",
 				"ExceptionResolution","ExceptionStatus","FamilyID","FamilyMemberCount","FamilyRelationship","FileDescription","FullPath","HiddenProperties","LastAccessDate","LastEditDate","LastModifiedDate",
@@ -375,14 +400,25 @@ public class ProjectFields_IndiumRegression {
 				"SourceAttachDocIDs","SourceDocID","SourceParentDocID","VideoPlayerReady");
 		baseClass.waitForElementCollection(docViewPage.getMetaDataText(1));
 		List<WebElement> data=docViewPage.getMetaDataText(1).FindWebElements();
+		Set<String> duplicate = new LinkedHashSet<String>();
 		for (WebElement allElement : data) {
 			String metaDataText=allElement.getText();
 			System.out.println(metaDataText);
-			boolean flag=ecpected.contains(metaDataText);
-			softAssertion.assertTrue(flag);
+			boolean flag=expected.contains(metaDataText);
+			if (flag) {
+				duplicate.add(metaDataText);
+				System.out.println(duplicate);
+			}
+		}
+		if (duplicate.toString().contains(expected.toString())) {
+			baseClass.passedStep("Metadata fields are dispalyed correctly, when user created new project.with new security group with ingestion");
+			System.out.println(duplicate.toString());
+			System.out.println(expected.toString());
+		}
+		else {
+			baseClass.failedStep("Metadata fields are not displayed as expected");
 		}
 		softAssertion.assertAll();
-		baseClass.passedStep("Metadata fields are dispalyed correctly, when user created new project.with new security group with ingestion");
 		loginPage.logout();
 	}
 	
@@ -425,7 +461,9 @@ public class ProjectFields_IndiumRegression {
 		baseClass.stepInfo("Access to RMU user");
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(userManagementPage.getBulkUserAccessTab());
 		userManagementPage.getBulkUserAccessTab().waitAndClick(5);
+		userManagementPage.getSelectRollId().waitAndClick(5);
 		userManagementPage.getSelectRollId().selectFromDropdown().selectByVisibleText("Project Administrator");
 		userManagementPage.defaultSelectionCheckboxForAllRole(true, true, true, false, true, true, true, true, true,
 				true, true, true, true, true, true);
@@ -458,8 +496,19 @@ public class ProjectFields_IndiumRegression {
 		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
 		String docId=docViewPage.getVerifyPrincipalDocument().getText();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		sessionSearch.bulkRelease("Default Security Group");
-		
+		driver.waitForPageToBeReady();
+		sessionSearch.getBulkActionButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		sessionSearch.getBulkReleaseAction().waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group"));
+		sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").waitAndClick(10);
+		baseClass.waitForElement(sessionSearch.getBulkRelease_ButtonRelease());
+		sessionSearch.getBulkRelease_ButtonRelease().waitAndClick(20);
+		if (sessionSearch.getFinalizeButton().isDisplayed()) {
+			baseClass.waitForElement(sessionSearch.getFinalizeButton());
+			sessionSearch.getFinalizeButton().waitAndClick(10);
+
+		}
 		//logout
 		loginPage.logout();
 		

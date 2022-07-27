@@ -3468,6 +3468,8 @@ public class AssignmentsPage {
 		getAssgn_NewAssignmnet().waitAndClick(5);
 		bc.waitForElement(getbulkassgnpopup());
 		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
+		bc.waitForElement(getPersistCB_NewAssgn());	
+		getPersistCB_NewAssgn().waitAndClick(15);
 		try {
 			bc.waitForElement(getContinueBulkAssign());
 			bc.waitTillElemetToBeClickable(getContinueBulkAssign());
