@@ -219,7 +219,7 @@ public class Export_Regression17 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.getCopyPath().waitAndClick(10);
-		page.verifyingExportFile(doc,prefixID,suffixID,subBates,ActualText);
+		page.verifyingExportFile(doc,prefixID,suffixID,subBates1,ActualText);
 
 		// delete tag
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);

@@ -685,7 +685,7 @@ public class DocViewRedactions {
 	}
 
 	public Element getAudioRedactSave() {
-		return driver.FindElementByXPath("//a[@id='btnSave']//i");
+		return driver.FindElementByXPath("//a[@id='btnSave']");
 	}
 
 	public Element getDeleteAudioRedactYesButton() {
@@ -1913,7 +1913,7 @@ public void popOutCodingFormChildWindow() {
 	 *                     for redaction dropdown)
 	 */
 	public void addAudioRedaction(String startTime, String endTime, String redactionTag) {
-		try {
+		
 			base = new BaseClass(driver);
 			clickOnAddRedactionForAudioDocument();
 			List<WebElement> timeTextFields = driver.getWebDriver()
@@ -1923,7 +1923,8 @@ public void popOutCodingFormChildWindow() {
 			base.waitForElement(getAudioRedactDropdown());
 			base.waitTillElemetToBeClickable(getAudioRedactDropdown());
 			getAudioRedactDropdown().selectFromDropdown().selectByVisibleText(redactionTag);
-			getAudioRedactSave().waitAndFind(10);
+			getAudioRedactSave().waitAndFind(5);
+			getAudioRedactSave().waitAndClick(5);
 			base.waitForElement(base.getSuccessMsg());
 			base.getSuccessMsg().waitAndFind(10);
 			Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,
@@ -1932,11 +1933,7 @@ public void popOutCodingFormChildWindow() {
 				base.passedStep("Success message is displayed successfully");
 				base.passedStep("Audio redaction added successfully");
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occcured while adding audio redaction" + e.getMessage());
-
-		}
+		
 	}
 
 	/**

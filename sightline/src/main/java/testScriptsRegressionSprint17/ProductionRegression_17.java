@@ -189,13 +189,13 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 			"To Verify Availability of MP3 Files Option In Production Component Section under Advance Production Component.");
 
 	String redactiontag = "Redaction" + Utility.dynamicNameAppender();
-	String foldername = "Folder" + Utility.dynamicNameAppender();
+	String tagname = "Folder" + Utility.dynamicNameAppender();
 	String productionname = "p" + Utility.dynamicNameAppender();
 	String prefixID = Input.randomText + Utility.dynamicNameAppender();
 	String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	tagsAndFolderPage.createNewTagwithClassification(tagname,"Select Tag Classification");
 
 	RedactionPage redactionpage = new RedactionPage(driver);
 	driver.waitForPageToBeReady();
@@ -204,22 +204,29 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 	System.out.println("First Redaction Tag is created" + redactiontag);
 
 	SessionSearch sessionSearch = new SessionSearch(driver);
-	sessionSearch.audioSearch("morning", "North American English");
-	sessionSearch.bulkFolderExisting(foldername);
+	sessionSearch.audioSearch(Input.audioSearch, Input.audioLanguage);
 	driver.waitForPageToBeReady();
-	sessionSearch.ViewInDocViewWithoutPureHit();
-
-	DocViewPage docViewPage = new DocViewPage(driver);
-	docViewPage.navigateToDocViewPageURL();
-	docViewPage.documentSelection(3); 
+	sessionSearch.ViewInDocView();
 
 	DocViewRedactions redact = new DocViewRedactions(driver);
+	DocViewPage docViewPage = new DocViewPage(driver);
+	docViewPage.navigateToDocViewPageURL();
+	base.waitTime(2);
+	docViewPage.documentSelection(4); 
+	
 	
 	redact.deleteAllAppliedRedactions();
-	base.waitTime(2);
+	driver.waitForPageToBeReady();
 	redact.clickOnAddRedactionForAudioDocument();
 	redact.addAudioRedaction(Input.startTime, Input.endTime, redactiontag);
 
+	driver.waitForPageToBeReady();
+	docViewPage.getViewDocAllList().waitAndClick(10);
+	driver.waitForPageToBeReady();
+	DocListPage doclist = new DocListPage(driver);
+	doclist.documentSelection(4);
+	doclist.bulkTagExisting(tagname);
+	
 	loginPage.logout();
 	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
@@ -232,7 +239,7 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 	page.navigateToNextSection();
 	page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 	page.navigateToNextSection();
-	page.fillingDocumentSelectionPage(foldername);
+	page.fillingDocumentSelectionWithTag(tagname);
 	page.navigateToNextSection();
 	page.fillingPrivGuardPage();
 	page.fillingProductionLocationPage(productionname);
