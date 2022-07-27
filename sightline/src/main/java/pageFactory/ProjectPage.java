@@ -683,7 +683,10 @@ public class ProjectPage {
 	 	 getSearchProjectName().SendKeys(projectName);
 	 	 
 	 	bc.waitForElement(getProjectFilterButton());
-	 	getProjectFilterButton().Click(); 	 
+	 	bc.waitTillElemetToBeClickable(getProjectFilterButton());
+	 	getProjectFilterButton().waitAndClick(10);
+	 	driver.waitForPageToBeReady();
+	 	bc.stepInfo(projectName+" was filtered");
 	 	
    }
 	
