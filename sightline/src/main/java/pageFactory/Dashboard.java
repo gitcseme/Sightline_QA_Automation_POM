@@ -5,12 +5,6 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.internal.FindsByXPath;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -407,48 +401,46 @@ public class Dashboard {
 
 	}
 
-	   /**
-     * @authorSowndarya.velraj
-     * @Description : To verify Reviewer progress data
-     */
-    public void verifyReviewerProgressData(String[] fullName) {
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To verify Reviewer progress data
+	 */
+	public void verifyReviewerProgressData(String[] fullName) {
 
-        // Collection list for table header
-        base.waitForElementCollection(getReviewerProgressTableName());
-        List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
+		// Collection list for table header
+		base.waitForElementCollection(getReviewerProgressTableName());
+		List<String> availableListofElements = base.availableListofElements(getReviewerProgressTableName());
 
-        // Column header List size
-        int size = getReviewerProgressTableName().size();
-        System.out.println(size);
+		// Column header List size
+		int size = getReviewerProgressTableName().size();
+		System.out.println(size);
 
-        // Get index for the respective header
-        int indexNo = base.getIndex(getReviewerProgressTableName(), "NAME");
-        System.out.println(indexNo);
+		// Get index for the respective header
+		int indexNo = base.getIndex(getReviewerProgressTableName(), "NAME");
+		System.out.println(indexNo);
 
-        // Get the collection list of available users
-        List<String> availableListofUsers = base.availableListofElements(getReviewerProgressNameList(indexNo));
+		// Get the collection list of available users
+		List<String> availableListofUsers = base.availableListofElements(getReviewerProgressNameList(indexNo));
 
-        base.printListString(availableListofUsers);
+		base.printListString(availableListofUsers);
 
-        base.compareArraywithDataList(fullName, availableListofUsers, true, "Only the assigned Reviewers are present",
-                "Additional reviewers are displayed apart from the assigned Reviewers");
+		base.compareArraywithDataList(fullName, availableListofUsers, true, "Only the assigned Reviewers are present",
+				"Additional reviewers are displayed apart from the assigned Reviewers");
 
-        // Data iteration and verification
-        for (int j = 0; j <= availableListofUsers.size() - 1; j++) {
-            base.stepInfo("For : " + availableListofUsers.get(j));
-            for (int i = 1; i <= size; i++) {
-                driver.waitForPageToBeReady();
-                String exactData = getReviewerProgressNameListRespectiveDetails(fullName[j], i).getText();
-                if (!exactData.isEmpty()) {
-                    base.passedStep(availableListofElements.get(i - 1) + " : " + exactData);
-                } else {
-                    base.failedStep(availableListofElements.get(i - 1) + " - is empty");
-                }
-            }
-        }
-    }
-
-	
+		// Data iteration and verification
+		for (int j = 0; j <= availableListofUsers.size() - 1; j++) {
+			base.stepInfo("For : " + availableListofUsers.get(j));
+			for (int i = 1; i <= size; i++) {
+				driver.waitForPageToBeReady();
+				String exactData = getReviewerProgressNameListRespectiveDetails(fullName[j], i).getText();
+				if (!exactData.isEmpty()) {
+					base.passedStep(availableListofElements.get(i - 1) + " : " + exactData);
+				} else {
+					base.failedStep(availableListofElements.get(i - 1) + " - is empty");
+				}
+			}
+		}
+	}
 
 	/**
 	 * @authorSowndarya.velraj
@@ -475,7 +467,10 @@ public class Dashboard {
 
 		Robot r = new Robot();
 		selectReviewers_selectReviewers().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		base.waitForElement(selectSpecificReviewer());
+		selectSpecificReviewer().ScrollTo();
+		;
 
 		selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[0]);
 		for (int i = 1; i < reviewers.length; i++) {

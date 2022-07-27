@@ -3,10 +3,8 @@ package testScriptsRegressionSprint17;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.Iterator;
 import java.util.List;
 
-import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -17,8 +15,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
-import automationLibrary.Element;
-import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -261,8 +257,6 @@ public class Dashboard_Regression {
 		dashBoard.verifyAssignmentData(assignmentName);
 	}
 
-
-
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-54574
@@ -395,7 +389,7 @@ public class Dashboard_Regression {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(assignmentName + " assignment opened in edit mode");
-		agnmt.distributeToPAUandDAU();
+		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA");
 
 		// perform search and bulk assign
@@ -403,6 +397,7 @@ public class Dashboard_Regression {
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
+		driver.waitForPageToBeReady();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
 
 		// create assignment with 2LR classification and distribute documents to
@@ -414,7 +409,7 @@ public class Dashboard_Regression {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName2);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(assignmentName2 + " assignment opened in edit mode");
-		agnmt.distributeToPAUandDAU();
+		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName2 + " Assignment Created and distributed to DA/PA");
 
 		// perform search and bulk assign
@@ -433,12 +428,23 @@ public class Dashboard_Regression {
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName3);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo(assignmentName3 + " assignment opened in edit mode");
-		agnmt.distributeToPAUandDAU();
+		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName3 + " Assignment Created and distributed to DA/PA");
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.impersonateDAtoRMU();
+
+		// navigating from Dashboard to DocView
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName2);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName3);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
 		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
 				+ assignmentName2 + " QC :" + assignmentName3);
 		// adding total review progress widget
@@ -467,6 +473,21 @@ public class Dashboard_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 
+		// navigating from Dashboard to DocView
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName2);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName3);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
+				+ assignmentName2 + " QC :" + assignmentName3);
+		// adding total review progress widget
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
+
 		// 1LR classification details
 		driver.waitForPageToBeReady();
 		baseClass.waitTime(2);
@@ -489,6 +510,23 @@ public class Dashboard_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(2);
+		// navigating from Dashboard to DocView
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName2);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		docViewPage.selectAssignmentfromDashborad(assignmentName3);
+		docViewPage.CompleteTheDocumentInMiniDocList(3);
+		baseClass.stepInfo("Doc is viewed in the docView Successfully");
+
+		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
+				+ assignmentName2 + " QC :" + assignmentName3);
+		// adding total review progress widget
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
 
 		// 1LR classification details
 		driver.waitForPageToBeReady();
@@ -555,8 +593,7 @@ public class Dashboard_Regression {
 		String failMsg = "Reviewers list is not displayed with assigned reviewers";
 		baseClass.compareArraywithDataList(reviewers, availableListofElements, true, passMsg, failMsg);
 	}
-	
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-54576
@@ -632,12 +669,12 @@ public class Dashboard_Regression {
 		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
 		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		driver.waitForPageToBeReady();
 		baseClass.impersonatePAtoRMU();
-		
+
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.reviewerProgress);
 		driver.scrollPageToTop();
@@ -645,12 +682,12 @@ public class Dashboard_Regression {
 		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
 		dashBoard.verifyReviewerProgressData(reviewersToUpperCase);
 		baseClass.passedStep("Impersonated from PA to RMU and verified the widget");
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		driver.waitForPageToBeReady();
 		baseClass.impersonateDAtoRMU();
-		
+
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.reviewerProgress);
 		driver.scrollPageToTop();
@@ -659,7 +696,7 @@ public class Dashboard_Regression {
 		dashBoard.verifyReviewerProgressData(reviewersToUpperCase);
 
 		baseClass.passedStep("Impersonated from DA to RMU and verified the widget");
-		
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		driver.waitForPageToBeReady();
@@ -671,7 +708,7 @@ public class Dashboard_Regression {
 		driver.waitForPageToBeReady();
 		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
 		dashBoard.verifyReviewerProgressData(reviewersToUpperCase);
-		
+
 		baseClass.passedStep("Impersonated from SA to RMU and verified the widget");
 
 	}
