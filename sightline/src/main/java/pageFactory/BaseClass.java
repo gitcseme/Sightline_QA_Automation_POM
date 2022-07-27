@@ -4068,6 +4068,8 @@ public class BaseClass {
 					// TODO: handle exception
 				}
 			}
+			
+		}
 
 		public void copyandPasteString(String textToCopy, Element element) {
 			Actions action = new Actions(driver.getWebDriver());

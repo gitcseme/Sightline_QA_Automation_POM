@@ -97,6 +97,7 @@ public class SecurityGroup_Regression2 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
+		driver.waitForPageToBeReady();
 		projectPage.navigateToProductionPage();
 		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
 		data.getNotificationMessage(0, projectName);
@@ -117,6 +118,7 @@ public class SecurityGroup_Regression2 {
 		}
 
 		baseClass.stepInfo("Click on any project");
+		baseClass.waitTime(10);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
 		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
@@ -186,6 +188,7 @@ public class SecurityGroup_Regression2 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
 		baseClass.stepInfo("Click on any project");
+		baseClass.waitTime(10);
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
 		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
@@ -320,6 +323,7 @@ public class SecurityGroup_Regression2 {
 		sgpage.AddSecurityGroup(SGname);
 		baseClass.stepInfo("new Security group is created");
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("seclect created SecurityGroup and Annotationlayer save it");
 		sgpage.addAnnotationlayertosg(SGname, annoName);
 		baseClass.passedStep("Newly created annotation layer is mapped to the newly created security group");

@@ -103,6 +103,7 @@ public class SecurityGruop_Regression1 {
 		System.out.println(tagnameprev);
 
 		baseClass.stepInfo("Navigate to Security Group Page");
+		driver.waitForPageToBeReady();
 		sgpage.navigateToSecurityGropusPageURL();
 
 		driver.waitForPageToBeReady();
@@ -157,11 +158,12 @@ public class SecurityGruop_Regression1 {
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
+		driver.waitForPageToBeReady();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSectionPrivDocs(tagname, Input.tagNameTechnical);
+		page.fillingTIFFSectionPrivDocs(tagname,Input.tagNameTechnical);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -196,6 +198,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
+		driver.waitForPageToBeReady();
 		userManage.selectRoleBulkUserAccessControl("Review Manager", Input.projectName, Input.securityGroup);
 
 		if (userManage.getBulkProduction().Enabled()) {
@@ -211,9 +214,11 @@ public class SecurityGruop_Regression1 {
 
 		// Navigate to user Page
 		baseClass.stepInfo("Navigate to Users Page");
+		driver.waitForPageToBeReady();
 		userManage.navigateToUsersPAge();
 
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
+		driver.waitForPageToBeReady();
 		userManage.selectRoleBulkUserAccessControlForPA("Review Manager", Input.securityGroup);
 
 		if (userManage.getBulkProduction().Enabled()) {
@@ -246,6 +251,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
+		driver.waitForPageToBeReady();
 		userManage.selectRoleBulkUserAccessControl("Review Manager", Input.projectName, Input.securityGroup);
 		if (userManage.getBulkProduction().Enabled()) {
 			baseClass.passedStep("By Default Productions rights is checked successfullly");
@@ -254,6 +260,7 @@ public class SecurityGruop_Regression1 {
 		}
 		userManage.defaultSelectionCheckboxForAllRole(true, true, false, true, true, true, true, false, false, false,
 				false, false, false, false, false);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(userManage.getDisableRadioBtn());
 		userManage.getDisableRadioBtn().waitAndClick(5);
 		userManage.selectBulkAccessUsers(users);
@@ -277,6 +284,7 @@ public class SecurityGruop_Regression1 {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
+		driver.waitForPageToBeReady();
 		userManage.selectRoleBulkUserAccessControl("Review Manager", Input.projectName, Input.securityGroup);
 		baseClass.waitForElement(userManage.getEnableRadioBtn());
 		userManage.getEnableRadioBtn().waitAndClick(5);
@@ -302,6 +310,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 		// Navigate to user Page
 		baseClass.stepInfo("Navigate to Users Page");
+		driver.waitForPageToBeReady();
 		userManage.navigateToUsersPAge();
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
 		userManage.selectRoleBulkUserAccessControlForPA("Review Manager", Input.securityGroup);
@@ -312,6 +321,7 @@ public class SecurityGruop_Regression1 {
 		}
 		userManage.defaultSelectionCheckboxForAllRole(true, true, false, true, true, true, true, false, false, false,
 				false, false, false, false, false);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(userManage.getDisableRadioBtn());
 		userManage.getDisableRadioBtn().waitAndClick(5);
 		userManage.selectBulkAccessUsers(users);
@@ -325,6 +335,7 @@ public class SecurityGruop_Regression1 {
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		driver.waitForPageToBeReady();
 		if (!page.getbtnProductions().isDisplayed()) {
 			baseClass.passedStep("Productions menu is not displayed for RMU user");
 		} else {
@@ -336,7 +347,9 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 		baseClass.stepInfo("Select Bulk User Control Apply RMU");
 		baseClass.stepInfo("Navigate to Users Page");
+		driver.waitForPageToBeReady();
 		userManage.navigateToUsersPAge();
+		driver.waitForPageToBeReady();
 		userManage.selectRoleBulkUserAccessControlForPA("Review Manager", Input.securityGroup);
 		baseClass.waitForElement(userManage.getEnableRadioBtn());
 		userManage.getEnableRadioBtn().waitAndClick(5);
@@ -383,6 +396,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.passedStep("User with role is displayed on Assigned users list");
 
 		baseClass.stepInfo("Navigate to users Page");
+		driver.waitForPageToBeReady();
 		userManage.navigateToUsersPAge();
 		userManage.passingUserName(Input.rmu1userName);
 		userManage.applyFilter();
@@ -449,11 +463,12 @@ public class SecurityGruop_Regression1 {
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
+		driver.waitForPageToBeReady();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
-		page.fillingTIFFSectionPrivDocs(tagname, Input.tagNameTechnical);
+		page.fillingTIFFSectionPrivDocs(tagname,Input.tagNameTechnical);
 		page.navigateToNextSection();
 		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -489,6 +504,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
 		baseClass.stepInfo("Impersonate DA to RMU");
+		driver.waitForPageToBeReady();
 		baseClass.impersonateDAtoRMU();
 
 		String actualString = "Default Security Group";
@@ -503,6 +519,7 @@ public class SecurityGruop_Regression1 {
 		baseClass.stepInfo("Click on back Button");
 		driver.Navigate().back();
 
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Verify last access for domain dashboard ");
 		if (domainDash.getDataRefresh_info().isDisplayed()) {
 			baseClass.passedStep("It is redirect to last access domain dashboard ");
