@@ -64,7 +64,7 @@ public class O365_Regression_2_2 {
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { 
-//				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
