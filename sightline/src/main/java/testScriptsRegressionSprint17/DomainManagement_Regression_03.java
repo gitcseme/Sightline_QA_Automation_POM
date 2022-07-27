@@ -116,7 +116,7 @@ public class DomainManagement_Regression_03 {
 		base.passedStep("Error message was displayed");
 		
 		//remove added cred
-		userManage.deleteUser(Input.randomText);
+		userManage.deleteAddedUser(Input.randomText);
 		
 		base.passedStep("Verified error message should be displayed when system admin adds the "
 				+ "domain user whose password is not set and link to set password is active");
@@ -574,6 +574,7 @@ public class DomainManagement_Regression_03 {
 		
 		base = new BaseClass(driver);
 		user = new UserManagement(driver);
+		dash = new DomainDashboard(driver);
 		
 		base.stepInfo("Test case Id: RPMXCON-52907");
 		base.stepInfo("Verify that for 'Not a Domain' type project list should be displayed of Not a Domain type");
@@ -581,15 +582,18 @@ public class DomainManagement_Regression_03 {
 		//pre-req assign nondomain projet to da user
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		user.filterByName(Input.da1userName);
+		boolean flag = base.text(Input.NonDomainProject).isElementAvailable(2);
 		String userName = user.getfirstUserName();
+		if(!flag) {
 		user.AssignUserToProject(Input.NonDomainProject, Input.ProjectAdministrator, userName);
+		}
 		loginPage.logout();
 		
 		//login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Login as a da user :"+Input.da1userName);
 		
-		base = new BaseClass(driver);
+		dash.waitForDomainDashBoardIsReady();
 		
 		//open impersonate tab
 		base.openImpersonateTab();
