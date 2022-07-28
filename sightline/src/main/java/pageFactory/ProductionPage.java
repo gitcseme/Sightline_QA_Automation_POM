@@ -19636,7 +19636,7 @@ public class ProductionPage {
 		File file = new File(home + "/Downloads/" + name + ".zip");
 		File file1 = new File(Input.fileDownloadLocation + name + ".zip");
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 150; i++) {
 			base.waitTime(1);
 			driver.waitForPageToBeReady();
 			if (file.exists()) {
