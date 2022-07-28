@@ -873,6 +873,7 @@ public class O365_Regression_2_1 {
 		// verify collection button by default is checked when dataset is checked for
 		// RMU
 		driver.Navigate().refresh();
+		base.waitTime(5);
 		userManagement.navigateToFunctionTab(Input.rmu1userName, "SA", Input.projectName, true);
 		userManagement.verifyCollectionButton(true, false);
 
