@@ -387,7 +387,7 @@ public class SecurityGroup_Regression1 {
 
    			projectPage.navigateToProductionPage();
    			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(10);
+   			baseClass.waitTime(5);
    			data.getNotificationMessage(0, projectName);
 
    			UserManagement users = new UserManagement(driver);
@@ -446,7 +446,7 @@ public class SecurityGroup_Regression1 {
 
    			projectPage.navigateToProductionPage();
    			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(10);
+   			baseClass.waitTime(5);
    			data.getNotificationMessage(0, projectName);
 
    			UserManagement users = new UserManagement(driver);
@@ -460,7 +460,7 @@ public class SecurityGroup_Regression1 {
    			
    			baseClass.stepInfo("Click on any project");
    			driver.waitForPageToBeReady();
-   			baseClass.waitTime(10);
+   			baseClass.waitTime(5);
    			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
    			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
    			
@@ -518,7 +518,7 @@ public class SecurityGroup_Regression1 {
 
    			projectPage.navigateToProductionPage();
    			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(10);
+   			baseClass.waitTime(5);
    			data.getNotificationMessage(0, projectName);
 
    			UserManagement users = new UserManagement(driver);
@@ -532,7 +532,7 @@ public class SecurityGroup_Regression1 {
    			
    			baseClass.stepInfo("Click on any project");
    			driver.waitForPageToBeReady();
-   			baseClass.waitTime(10);
+   			baseClass.waitTime(5);
    			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
    			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
    			
