@@ -212,7 +212,7 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 	DocViewPage docViewPage = new DocViewPage(driver);
 	docViewPage.navigateToDocViewPageURL();
 	base.waitTime(2);
-	docViewPage.documentSelection(4); 
+	docViewPage.documentSelection(3); 
 	
 	
 	redact.deleteAllAppliedRedactions();
@@ -224,7 +224,7 @@ public void asVerifyProductionGeneratedwithNonRedactedArea() throws Exception {
 	docViewPage.getViewDocAllList().waitAndClick(10);
 	driver.waitForPageToBeReady();
 	DocListPage doclist = new DocListPage(driver);
-	doclist.documentSelection(4);
+	doclist.documentSelection(1);
 	doclist.bulkTagExisting(tagname);
 	
 	loginPage.logout();
