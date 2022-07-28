@@ -116,7 +116,8 @@ public class DomainManagement_Regression_03 {
 		base.passedStep("Error message was displayed");
 		
 		//remove added cred
-		userManage.deleteAddedUser(Input.randomText);
+		userManage.filterByName(email);
+		userManage.deleteUser();
 		
 		base.passedStep("Verified error message should be displayed when system admin adds the "
 				+ "domain user whose password is not set and link to set password is active");
