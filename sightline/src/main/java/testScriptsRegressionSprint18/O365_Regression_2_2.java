@@ -3,6 +3,7 @@ package testScriptsRegressionSprint18;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.HashMap;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -25,7 +26,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class O365_Regression_2_2 {
-	
+
 	Driver driver;
 	LoginPage login;
 	BaseClass base;
@@ -63,12 +64,11 @@ public class O365_Regression_2_2 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { 
-				{ Input.pa1userName, Input.pa1password, "Project Administrator" },
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
 				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
 		return users;
 	}
-	
+
 	/**
 	 * @Author Mohan
 	 * @Description : Verify that User can access 'Manage Collections' screen
@@ -137,7 +137,7 @@ public class O365_Regression_2_2 {
 		login.logout();
 
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : Verify that mandatory fields display with red asterisk on
@@ -173,7 +173,90 @@ public class O365_Regression_2_2 {
 		// Logout
 		login.logout();
 	}
-	
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 07/28/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that user can edit the collection in draft mode which
+	 *              is configured with source location. RPMXCON-60616
+	 */
+	@Test(description = "RPMXCON-60616", enabled = true, groups = { "regression" })
+	public void editCollectionDraftCheck() throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60616 - O365");
+		base.stepInfo(
+				"Verify that user can edit the collection in draft mode which is configured with source location");
+		base.stepInfo("**Step-1 Pre-requisites: User should have Dataset, Collection rights should be checked\r\n"
+				+ "\r\n" + "		Collection should be configured with the source location/data source**");
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigate to Collection page
+		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
+				"");
+
+		// navigate to Collection page and get the data
+		base.stepInfo("**Step-4 Click the 'Actions' link for the collection in Draft mode and select Edit action**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+
+		// Edit Verifications
+		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionID, "Edit").waitAndClick(5);
+		base.waitForElement(collection.getCollectioName());
+		collection.verifyCurrentTab("Collection Information");
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionID, "Collection id is retained ",
+				"Collection id not retained");
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// navigate to Collection page and Deletion
+		base.stepInfo("Initiation collection  deletion");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.collectionDeletion(collectionID);
+
+		// Logout
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

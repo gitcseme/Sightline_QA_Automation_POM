@@ -324,7 +324,18 @@
 	<analyzeAt3>Analyze at 3rd Level</analyzeAt3>
 	<collectionPageUrl>Collection/Collections</collectionPageUrl>
 	<sourceLocationPageUrl>Collection/SourceLocation</sourceLocationPageUrl>
-
+	<collectionDataEmailId>Raghuram.A@consiliotest.com</collectionDataEmailId>
+	<collectionDataFirstName>Raghuram</collectionDataFirstName>
+	<collectionDataLastName>A</collectionDataLastName>
+	<collectionDataselectedApp>Outlook Mail</collectionDataselectedApp>
+	<collectionDataHeader1>Custodian Name</collectionDataHeader1>
+	<collectionDataHeader2>Selected App</collectionDataHeader2>
+	<collectionDataHeader3>Custodian Email</collectionDataHeader3>
+	<collectionDataHeader4>Dataset Name</collectionDataHeader4>
+	<collectionDataHeader5>Selected Folders</collectionDataHeader5>
+	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
+	<collectionIdHeader>Collection Id</collectionIdHeader>
+	<collectionStatusHeader>Collection Status</collectionStatusHeader>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 
