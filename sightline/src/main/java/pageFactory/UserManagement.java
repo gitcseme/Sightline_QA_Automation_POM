@@ -3739,7 +3739,7 @@ public class UserManagement {
 		if (loginUser.equalsIgnoreCase("PA") || loginUser.equalsIgnoreCase("RMU")) {
 			editLoginUser();
 		} else {
-			editFunctionality(projectName);
+			selectEditUserUsingPagination(Input.projectName, false, "");
 		}
 
 		driver.waitForPageToBeReady();
