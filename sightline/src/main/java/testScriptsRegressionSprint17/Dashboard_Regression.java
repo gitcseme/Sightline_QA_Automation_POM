@@ -365,7 +365,6 @@ public class Dashboard_Regression {
 
 	@Test(description = "RPMXCON-54575", enabled = true, groups = { "regression" })
 	public void verifyTotalReviewProgress_Impersonate() throws Exception {
-
 		baseClass.stepInfo("Test case Id:RPMXCON-54575 Dashboard Component Sprint 17");
 		baseClass.stepInfo(
 				"PAU and DAU users should be considered in Total Review Progress widget on RMU Dashboard (SystemAdmin/PAU/DAU users impersonate to RMU)");
