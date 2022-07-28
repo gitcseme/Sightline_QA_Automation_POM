@@ -78,7 +78,6 @@ public class Dashboard_Regression {
 
 	public void close() {
 		System.out.println("******TEST CASES FOR DOCVIEW EXECUTED******");
-
 	}
 
 	/**
