@@ -374,14 +374,12 @@ public class Dashboard_Regression {
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		Dashboard dashBoard = new Dashboard(driver);
 
-		// perform search and bulk assign
+		// create assignment with 1LR classification and distribute documents to
+		// reviewer
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-
-		// create assignment with 1LR classification and distribute documents to
-		// reviewer
 		String assignmentName = "Aassignment" + Utility.dynamicNameAppender();
 		agnmt.createAssignmentWithClassification(assignmentName, "1LR", Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
@@ -392,16 +390,13 @@ public class Dashboard_Regression {
 		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA");
 
-		// perform search and bulk assign
+		// create assignment with 2LR classification and distribute documents to
+		// reviewer
 		baseClass.selectproject();
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
-		driver.waitForPageToBeReady();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-
-		// create assignment with 2LR classification and distribute documents to
-		// reviewer
 		String assignmentName2 = "Bassignment" + Utility.dynamicNameAppender();
 		agnmt.createAssignmentWithClassification(assignmentName2, "2LR", Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
@@ -412,15 +407,12 @@ public class Dashboard_Regression {
 		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName2 + " Assignment Created and distributed to DA/PA");
 
-		// perform search and bulk assign
+		// create assignment with QC classification and distribute documents to reviewer
 		baseClass.selectproject();
 		sessionsearch.basicContentSearch(Input.searchString1);
 		sessionsearch.verifyPureHitsCount();
 		sessionsearch.bulkAssign();
 		agnmt.FinalizeAssignmentAfterBulkAssign();
-
-		// create assignment with 1LR classification and distribute documents to
-		// reviewer
 		String assignmentName3 = "Cassignment" + Utility.dynamicNameAppender();
 		agnmt.createAssignmentWithClassification(assignmentName3, "QC", Input.codeFormName);
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
@@ -431,22 +423,12 @@ public class Dashboard_Regression {
 		agnmt.add4ReviewerAndDistribute();
 		baseClass.stepInfo(assignmentName3 + " Assignment Created and distributed to DA/PA");
 
+		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
+				+ assignmentName2 + " QC :" + assignmentName3);
+
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.impersonateDAtoRMU();
-
-		// navigating from Dashboard to DocView
-		DocViewPage docViewPage = new DocViewPage(driver);
-		docViewPage.selectAssignmentfromDashborad(assignmentName);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName2);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName3);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-
-		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
-				+ assignmentName2 + " QC :" + assignmentName3);
 		// adding total review progress widget
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
@@ -473,17 +455,6 @@ public class Dashboard_Regression {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 
-		// navigating from Dashboard to DocView
-		docViewPage.selectAssignmentfromDashborad(assignmentName);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName2);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName3);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-
-		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
-				+ assignmentName2 + " QC :" + assignmentName3);
 		// adding total review progress widget
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
@@ -511,19 +482,6 @@ public class Dashboard_Regression {
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
 		baseClass.impersonateSAtoRMU();
 
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(2);
-		// navigating from Dashboard to DocView
-		docViewPage.selectAssignmentfromDashborad(assignmentName);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName2);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		docViewPage.selectAssignmentfromDashborad(assignmentName3);
-		docViewPage.CompleteTheDocumentInMiniDocList(3);
-		baseClass.stepInfo("Doc is viewed in the docView Successfully");
-
-		baseClass.stepInfo("created Assignments with classifications 1LR : " + assignmentName + " 2LR :"
-				+ assignmentName2 + " QC :" + assignmentName3);
 		// adding total review progress widget
 		dashBoard.navigateToDashboard();
 		dashBoard.AddNewWidgetToDashboard(Input.TotalReviewProgress);
