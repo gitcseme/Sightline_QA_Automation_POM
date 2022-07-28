@@ -3,6 +3,7 @@ package pageFactory;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import java.util.List;
 
 import org.testng.asserts.SoftAssert;
@@ -236,6 +237,11 @@ public class Dashboard {
 				"//table[@id='ReviewerTable']//tbody//td[text()='" + name + "']//..//td[" + indexNum + "]");
 	}
 
+	public Element cancelDeleteWidgetIcon() {
+		return driver.FindElementByXPath("//a[@id='wCancel']");
+	}
+
+	
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;
@@ -298,6 +304,35 @@ public class Dashboard {
 			driver.scrollingToBottomofAPage();
 			btnAddToDashboard().waitAndClick(10);
 			base.stepInfo("New widget is added");
+		}
+
+	}
+
+	/**
+	 * @authorSowndarya.velraj
+	 * @Description : To add new widget "Reviewer Progress" in the dashboard
+	 */
+	public void DeleteWidgetFromDashboard() {
+
+		navigateToDashboard();
+		driver.Navigate().refresh();
+		base.waitForElementCollection(countOfWidget());
+		int count = countOfWidget().size();
+		System.out.println("count of widget from dashboard: " + count);
+
+		for (int i = count; i > 0 ; i--) {
+
+			base.waitForElement(dashboardWidgetIcon());
+			dashboardWidgetIcon().waitAndClick(10);
+			selectProjectName(Input.projectName).ScrollTo();
+			base.waitForElement(btndeleteWidgetInDashboard());
+			btndeleteWidgetInDashboard().waitAndClick(10);
+
+			base.waitForElement(btnYes_deleteWidget());
+			btnYes_deleteWidget().waitAndClick(10);
+			base.VerifySuccessMessage("Widget Deleted");
+			cancelDeleteWidgetIcon().ScrollTo();
+			cancelDeleteWidgetIcon().waitAndClick(10);
 		}
 
 	}
