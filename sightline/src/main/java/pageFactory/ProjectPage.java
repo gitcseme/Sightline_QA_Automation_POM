@@ -189,6 +189,21 @@ public class ProjectPage {
 	public Element getCorpClientTextBox() {
 		return driver.FindElementByXPath("//input[@id='CorpClient' and @type='text']");
 	}
+	public Element getProjectEdits() {
+		return driver.FindElementByXPath("//table[@id='ProjectDataTable']//tbody//td/a");
+	}
+	public Element getErrorMsgForProjectName() {
+		return driver.FindElementByXPath("//span[@id='txtproject-error']");
+	}
+	public Element getModifyValidateName(String modifyName) {
+		return driver.FindElementByXPath("//table[@id='ProjectDataTable']//tbody//td[text()='"+modifyName+"']");
+	}
+	public Element getIntialBullCount() {
+		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']/../b");
+	}
+	public Element getEditProjectWindow() {
+		return driver.FindElementByXPath("//h1[normalize-space()='Edit Project']");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {

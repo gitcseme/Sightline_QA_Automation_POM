@@ -625,7 +625,7 @@ public class DataSets {
 	 * @description: Get notification msg whether the proj is cloned successfully.
 	 * @param bgCountBefore
 	 */
-	public void getNotificationMessage(int bgCountBefore, String projectName) {
+	public int getNotificationMessage(int bgCountBefore, String projectName) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -644,6 +644,7 @@ public class DataSets {
 		} else {
 			driver.Navigate().refresh();
 		}
+		return bgCountAfter;
 	}
 
 	/**
