@@ -327,6 +327,18 @@ public class TestData {
 	public String analyzeAt3;
 	public String collectionPageUrl;
 	public String sourceLocationPageUrl;
+	public String collectionDataEmailId;
+	public String collectionDataFirstName;
+	public String collectionDataLastName;
+	public String collectionDataselectedApp;
+	public String collectionDataHeader1;
+	public String collectionDataHeader2;
+	public String collectionDataHeader3;
+	public String collectionDataHeader4;
+	public String collectionDataHeader5;
+	public String collectionDataHeader6;
+	public String collectionIdHeader;
+	public String collectionStatusHeader;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

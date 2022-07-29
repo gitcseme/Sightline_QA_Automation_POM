@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
@@ -4085,5 +4086,45 @@ public class BaseClass {
 			   action.keyUp(Keys.CONTROL);
 			   action.build().perform();
 
+		}
+		
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 07/28/22
+		 * @ModifiedOn : N/A
+		 * @ModifiedBy : N/A
+		 * @param dataPair - hash map data to print
+		 */
+		public void printHashMapDetails(HashMap<String, Integer> dataPair) {
+			// Using For Each loop to print HashMap
+			stepInfo("--------------------------------");
+			for (String key : dataPair.keySet()) {
+				System.out.println(key + " = " + dataPair.get(key));
+				stepInfo(key + " = " + dataPair.get(key));
+			}
+			stepInfo("--------------------------------");
+		}
+
+		/**
+		 * @author Raghuram.A
+		 * @Description : only for single data ( modification to be done based on future
+		 *              req )
+		 * @param colllectionData
+		 * @param expectedKey
+		 * @param additional
+		 * @return
+		 */
+		public String returnKey(HashMap<String, String> colllectionData, String expectedKey, Boolean additional) {
+			String dataName = null;
+			// Invoke keySet() on the HashMap object to get the keys as a set
+			Set<String> keys = colllectionData.keySet();
+			if (expectedKey.equalsIgnoreCase("")) {
+				for (String key : keys) {
+					System.out.println(key);
+					dataName = key;
+				}
+			}
+
+			return dataName;
 		}
 }
