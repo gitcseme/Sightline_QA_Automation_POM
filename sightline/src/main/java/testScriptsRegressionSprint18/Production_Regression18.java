@@ -296,6 +296,78 @@ public class Production_Regression18 {
 		loginPage.logout();
 		
 			}
+	
+	/**
+	 * @author Brundha.T Date:7/28/2022 TestCase Id :RPMXCON-63062 Description
+	 *         :Verify that for new production in TIFF/PDF section native
+	 *         placeholdering should be enabled by default with requested text for
+	 *         spreadsheets and multimedia files
+	 * 
+	 */
+	@Test(description = "RPMXCON-63062", enabled = true, groups = { "regression" })
+	public void verifyNativeFileWithRequestedText() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-63062 -Production Component");
+		base.stepInfo(
+				"Verify that for new production in TIFF/PDF section native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files");
+
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProductionAndSave(productionname);
+		page.fillingDATSection();
+		page.verifyingTheDefaultSelectedOptionInNative();
+		page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+		page.verifyingNativeSectionFileType(Input.NativeFileType);
+		
+		page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProductionAndSave(productionname1);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		driver.waitForPageToBeReady();
+		String ActualText = page.getNativeDocsPlaceholderText().getText();
+		String ExpectedText = "Document Produced in Native Format.";
+		base.textCompareEquals(ActualText, ExpectedText, "Default text in native placeholder is displayed as expected",
+				"Text is not Displayed as expected");
+		page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+		page.verifyingNativeSectionFileType(Input.NativeFileType);
+
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * @author Brundha.T Date:7/28/2022 TestCase Id :RPMXCON-49963 Description
+	 *   Verify that RED text should be displayed in Abbreviated Text box in TIFF/PDF
+	 * 
+	 */
+	@Test(description = "RPMXCON-49963", enabled = true, groups = { "regression" })
+	public void verifyRedTextInBurnRedactionToggle() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-49963 -Production Component");
+		base.stepInfo("Verify that RED text should be displayed in Abbreviated Text box in TIFF/PDF");
+
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProductionAndSave(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.burnRedactionWithRedactionTagInTiffSection(Input.defaultRedactionTag);
+		driver.waitForPageToBeReady();
+		String BurnRedactionText=page.getBurnRedactionText().GetAttribute("value");
+		base.textCompareEquals(BurnRedactionText, Input.stampRed,"BurnRedaction abbreviated text is displayed ","Text is not displayed");
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
