@@ -831,6 +831,18 @@ public class UserManagement {
 	public Element getAssgnPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
+	
+	public ElementCollection getAllBlockedUserRightInFuncnalityTab() {
+		return driver.FindElementsByXPath("//i[@style='background-color: grey;']");
+	}
+	
+	public Element getDetailsTab() {
+		return driver.FindElementByXPath("//a[text()='Details']");
+	}
+	
+	public Element selectProject() {
+		return driver.FindElementById("ddlProject");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -3906,6 +3918,30 @@ public class UserManagement {
 				System.out.println("Expected User not found in the page " + i);
 			}
 		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description click functionality tab on edit user role tab
+	 */
+	public void clickFunctionnalityTab() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getFunctionalityTab());
+		getFunctionalityTab().waitAndClick(5);
+		bc.stepInfo("navigated to fuctionality tab");
+		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description click Details tab on edit user tab
+	 */
+	public void clickDetailsTAb() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDetailsTab());
+		getDetailsTab().waitAndClick(5);
+		bc.stepInfo("details tab was clicked");
+		driver.waitForPageToBeReady();
 	}
 
 }

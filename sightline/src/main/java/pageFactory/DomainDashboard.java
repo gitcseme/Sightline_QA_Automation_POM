@@ -793,4 +793,20 @@ public class DomainDashboard {
 			driver.Navigate().refresh();
 		}
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description go to first project on the domain dashboard web table
+	 */
+	public void goToFirstProject() {
+		 driver.waitForPageToBeReady();
+		 waitForDomainDashBoardIsReady();
+		 base.waitForElement(getFirstHyperLink());
+		 getFirstHyperLink().waitAndClick(5);
+		 base.waitForElement(getFirstGoToProject());
+		 getFirstGoToProject().waitAndClick(5);
+		 base.stepInfo("Go to first project of the domaindashboard page");
+		 driver.waitForPageToBeReady();
+		 
+	 }
 }
