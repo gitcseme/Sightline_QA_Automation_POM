@@ -492,6 +492,14 @@ public class O365_Regression_2_2 {
 		// verify Error Message
 		base.VerifyErrorMessage(expectedErrorMsg);
 
+		//enter new collection name
+		collection.getCollectioName().waitAndClick(10);
+		collection.getCollectioName().SendKeys(collectionNewName);
+		base.stepInfo("Entered New Collection Name : "+collectionNewName);
+
+		// initiate collection process & click next Btn
+		collection.selectInitiateCollectionOrClickNext(false, true, true);
+
 		// navigate to Collection page and Deletion
 		base.stepInfo("Initiate collection  deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
