@@ -3140,6 +3140,9 @@ public class ProductionPage {
 	public Element getBurnRedactionText() {
 		return driver.FindElementByXPath("//span[text()='Abbreviated Text:']//following-sibling::input");
 	}
+	public Element getBurnRedaction_InsertMetaData() {
+		return driver.FindElementByXPath("//div[@id='divRedaction']//a[text()='Insert Metadata Field']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;

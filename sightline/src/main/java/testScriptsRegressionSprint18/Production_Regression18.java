@@ -368,6 +368,135 @@ public class Production_Regression18 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @author Brundha.T Date:7/29/2022 TestCase Id :RPMXCON-47869 Description
+	 *  To Verify in production, the DAT check box selection is mandatory to Save the Production Component Section
+	 * 
+	 */
+	@Test(description = "RPMXCON-47869", enabled = true, groups = { "regression" })
+	public void verifyingDATSectionIsMandatoryForProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-47869 -Production Component");
+		base.stepInfo("To Verify in production, the DAT check box selection is mandatory to Save the Production Component Section");
+
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		base.ValidateElement_Presence(page.getAddNewProductionbutton(),"Production Page");
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		driver.scrollPageToTop();
+		base.waitForElement(page.getDATChkBox());
+		page.getDATChkBox().Click();
+		page.getMarkCompleteLink().Click();
+		base.VerifyErrorMessage("Selection of the DAT component is mandatory for a production.");
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @author Brundha.T Date:7/29/2022 TestCase Id :RPMXCON-47874 Description
+	 *  To Verify Redaction section of TIFF and PDF components, Insert Metadata field options availability.
+	 * 
+	 */
+	@Test(description = "RPMXCON-47874", enabled = true, groups = { "regression" })
+	public void verifyingInsertMetaDataInRedaction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-47874 -Production Component");
+		base.stepInfo("To Verify Redaction section of TIFF and PDF components, Insert Metadata field options availability.");
+
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProductionAndSave(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(false);
+		page.verifyPlaceholderTextInBurnRedaction(Input.defaultRedactionTag);
+		page. gettextRedactionPlaceHolder().Clear();
+		page.getBurnRedaction_InsertMetaData().waitAndClick(3);
+		page.getNativeMetaDataFieldDropdown().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+		page.getPopUpOkButtonInserMetaData().waitAndClick(3);
+		String PaceholderText=page. gettextRedactionPlaceHolder().getText();
+		base.compareTextViaContains(PaceholderText,Input.batesNumber,"Placeholder text is with Inserted meta data", "Placeholder is not updated with metadata");
+		loginPage.logout();
+
+	}
+	
+	
+	/**
+	 * @author Brundha.T Date:7/29/2022 TestCase Id :RPMXCON-48862 Description
+	 * To verify that user can add "space" in DAT fields
+	 * 
+	 */
+	@Test(description = "RPMXCON-48862", enabled = true, groups = { "regression" })
+	public void verifyingDatField() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass baseClass = new BaseClass(driver);
+		base.stepInfo("RPMXCON-48862 -Production Component");
+		base.stepInfo("To verify that user can add 'space' in DAT fields");
+
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		base.ValidateElement_Presence(page.getAddNewProductionbutton(),"Production Page");
+		page.addANewProduction(productionname);
+		baseClass.waitForElement(page.getDATChkBox());
+		page.getDATChkBox().Click();
+		page.getDATTab().Click();
+		driver.waitForPageToBeReady();
+		page.getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+		page.getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+		baseClass.waitForElement(page.getDAT_DATField1());
+		page.getDAT_DATField1().SendKeys(Input.conceptualSearchString1);
+		page.getMarkCompleteLink().Click();
+		baseClass.VerifySuccessMessage("Mark Complete successful");
+		page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
+		base.passedStep("verified that user can add 'space' in DAT fields");
+		
+		loginPage.logout();
+	}
+	/**
+	 * @author Brundha.T Date:7/29/2022 TestCase Id :RPMXCON-48863 Description
+	 * To verify that user can add "underscore" in DAT fields
+	 * 
+	 */
+	@Test(description = "RPMXCON-48863", enabled = true, groups = { "regression" })
+	public void verifyingDatFieldInComponentTab() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass baseClass = new BaseClass(driver);
+		base.stepInfo("RPMXCON-48863 -Production Component");
+		base.stepInfo("To verify that user can add 'underscore' in DAT fields");
+		String BatesNumber = "A_Author" + Utility.dynamicNameAppender();
+		
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		base.ValidateElement_Presence(page.getAddNewProductionbutton(),"Production Page");
+		page.addANewProduction(productionname);
+		baseClass.waitForElement(page.getDATChkBox());
+		page.getDATChkBox().Click();
+		page.getDATTab().Click();
+		driver.waitForPageToBeReady();
+		page.getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+		page.getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+		page.getDAT_DATField1().SendKeys(BatesNumber);
+		page.getMarkCompleteLink().Click();
+		baseClass.VerifySuccessMessage("Mark Complete successful");
+		page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
+		base.passedStep("verified that user can add 'underscore' in DAT fields");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
