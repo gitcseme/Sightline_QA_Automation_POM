@@ -672,4 +672,110 @@ public class Dashboard_Regression {
 
 	}
 	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA 
+	 * TESTCASE No:RPMXCON-54192
+	 * @Description:To verify that if RMU can view the details on Reviewer Progress widget on selecting specific RU.
+	 * TESTCASE No:RPMXCON-54188
+	 * @Description:To verify that RMU is able to view Review Progress By Reviewer widget on Dashboard.
+	 **/
+
+	@Test(description = "RPMXCON-54192", enabled = true, groups = { "regression" })
+	public void verifyReviewerProgressDetails() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54192 Dashboard Component Sprint 17");
+		baseClass.stepInfo("To verify that if RMU can view the details on Reviewer Progress widget on selecting specific RU.");
+		
+		baseClass.stepInfo("Test case Id:RPMXCON-54188 Dashboard Component Sprint 17");
+		baseClass.stepInfo("To verify that RMU is able to view Review Progress By Reviewer widget on Dashboard.");
+		UtilityLog.info(Input.prodPath);
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		Dashboard dashBoard = new Dashboard(driver);
+
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String[] reviewers = { Input.pa1FullName, Input.rmu1FullName};
+		String[] reviewersToUpperCase = { Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase()};
+		String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
+
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSearchName);
+		sessionsearch.bulkAssign();
+		// create Assignment and disturbute docs
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		agnmt.add4ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
+
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.reviewerProgress);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
+		dashBoard.verifyReviewerProgressData(reviewersToUpperCase);
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-54190
+	 * @Description:To verify that RMU is able to view "Customize Widget" pop up and criteria in it.
+	 **/
+
+	@Test(description = "RPMXCON-54190", enabled = true, groups = { "regression" })
+	public void verifyCustomizeWidget() throws Exception {
+
+		baseClass.stepInfo("Test case Id:RPMXCON-54190 Dashboard Component Sprint 17");
+		baseClass.stepInfo("To verify that RMU is able to view Customize Widget pop up and criteria in it.");
+		UtilityLog.info(Input.prodPath);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		Dashboard dashBoard = new Dashboard(driver);
+
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
+		String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName};
+		String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase()};
+
+		sessionsearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.verifyPureHitsCount();
+		sessionsearch.saveSearch(SaveSearchName);
+		sessionsearch.bulkAssign();
+		// create Assignment and disturbute docs
+		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+		agnmt.add4ReviewerAndDistribute();
+		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to PA/RMU");
+
+		dashBoard.navigateToDashboard();
+		dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
+		dashBoard.select4Reviewers_reviewerProductivityWidget(listOfReviewers, assignmentName);
+
+		baseClass.waitForElementCollection(dashBoard.listOfReviewers());
+		int size = dashBoard.listOfReviewers().size();
+
+		List<String> availableListofElements = baseClass.availableListofElements(dashBoard.listOfReviewers());
+		String passMsg = "Reviewers list should include associated PAU, RMU to the project";
+		String failMsg = "Reviewers list is not displayed with assigned reviewers";
+		baseClass.compareArraywithDataList(reviewers, availableListofElements, true, passMsg, failMsg);
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-54186
+	 * @Description:To verify that added widget on the dashboard can be removed.
+	 **/
+
+	@Test(description = "RPMXCON-54186", enabled = true, groups = { "regression" })
+	public void verifyDeleteWidget() throws Exception {
+		baseClass.stepInfo("Test case Id:RPMXCON-54186 Dashboard Component Sprint 17");
+		baseClass.stepInfo("To verify that added widget on the dashboard can be removed.");
+		UtilityLog.info(Input.prodPath);
+		Dashboard dashBoard = new Dashboard(driver);
+		dashBoard.navigateToDashboard();
+		dashBoard.DeleteWidgetFromDashboard();
+		
+	}
+
 }
