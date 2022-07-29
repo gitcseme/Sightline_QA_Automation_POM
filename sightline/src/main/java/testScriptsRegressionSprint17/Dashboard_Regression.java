@@ -73,7 +73,6 @@ public class Dashboard_Regression {
 			loginPage.quitBrowser();
 		}
 	}
-
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
@@ -621,6 +620,7 @@ public class Dashboard_Regression {
 		baseClass.stepInfo("Search for text input completed");
 		sessionsearch.verifyPureHitsCount();
 		sessionsearch.saveSearch(SaveSearchName);
+		driver.waitForPageToBeReady();
 		sessionsearch.bulkAssign();
 		// create Assignment and disturbute docs
 		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
@@ -643,6 +643,7 @@ public class Dashboard_Regression {
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		baseClass.impersonateDAtoRMU();
 
 		dashBoard.navigateToDashboard();
@@ -650,6 +651,7 @@ public class Dashboard_Regression {
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
 		dashBoard.select4Reviewers_ReviewerProgressWidget(reviewers, assignmentName);
+		driver.waitForPageToBeReady();
 		dashBoard.verifyReviewerProgressData(reviewersToUpperCase);
 
 		baseClass.passedStep("Impersonated from DA to RMU and verified the widget");
@@ -669,7 +671,6 @@ public class Dashboard_Regression {
 		baseClass.passedStep("Impersonated from SA to RMU and verified the widget");
 
 	}
-	
 	
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA 
@@ -776,4 +777,5 @@ public class Dashboard_Regression {
 		dashBoard.DeleteWidgetFromDashboard();
 		
 	}
+
 }

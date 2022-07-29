@@ -3555,6 +3555,12 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//table[@id='MetaDataDT']//tr//td['"+count+"']");
 	}
 
+	//added by shilpi for fixing
+	public Element getDocViewBackGroundTask1() {return driver.FindElementByXPath("//ul[@class='notification-body']/descendant::a[1]");
+
+	}
+	
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -25586,19 +25592,33 @@ public class DocViewPage {
 				base.failedStep("Document printing unsucessful");
 			}
 			base.waitTime(3);
-			String lastThreeDigitsOfDocId = docId.substring(docId.length() - 1, docId.length());
-			List<WebElement> listOfBackgroundTasks = getDocViewBackGroundTasks().FindWebElements();
+			base.waitForElement(getSelectedDocIdMiniDocList());
+			String  Docid=getDocViewSelectedDocId().getText().trim();
+			
+			String lastDigitsOfDocId = Docid.substring(Docid.length() - 4);
+			String actualmsg = getDocViewBackGroundTask1().getText();
+			System.out.println(actualmsg);
 			boolean printedDocInNotification = false;
+			if(getDocViewBackGroundTask1().getText().contains("Your printed document with DocID "+lastDigitsOfDocId+" is ready.  Click here to view."));
+			{
+				base.passedStep("Document printed and added into background tasks");
+				printedDocInNotification = true;
+				
+			}
+			/*
+			List<WebElement> listOfBackgroundTasks = getDocViewBackGroundTasks().FindWebElements();
+			
 			for (WebElement element : listOfBackgroundTasks) {
 
-				if (element.getText().contains(lastThreeDigitsOfDocId)) {
+				if (element.getText().contains(Docid)) {
 					base.passedStep("Document printed and added into background tasks");
 					printedDocInNotification = true;
 					break;
 				}
 			}
+			*/
 			if (printedDocInNotification == false) {
-				base.failedStep("printed doc ot added into background tasks");
+				base.failedStep("printed doc not added into background tasks");
 			}
 			getDocViewNotificationBellIcon().waitAndClick(3);
 		} catch (Exception e) {

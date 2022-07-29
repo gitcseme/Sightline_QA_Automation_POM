@@ -445,6 +445,18 @@ public class Input {
 	public static String analyzeAt3;
 	public static String collectionPageUrl;
 	public static String sourceLocationPageUrl;
+	public static String collectionDataEmailId;
+	public static String collectionDataFirstName;
+	public static String collectionDataLastName;
+	public static String collectionDataselectedApp;
+	public static String collectionDataHeader1;
+	public static String collectionDataHeader2;
+	public static String collectionDataHeader3;
+	public static String collectionDataHeader4;
+	public static String collectionDataHeader5;
+	public static String collectionDataHeader6;
+	public static String collectionIdHeader;
+	public static String collectionStatusHeader;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1340,6 +1352,18 @@ public class Input {
 		analyzeAt3 = testData.getAnalyzeAt3();
 		collectionPageUrl = testData.getCollectionPageUrl();
 		sourceLocationPageUrl = testData.getSourceLocationPageUrl();
+		collectionDataEmailId = testData.getCollectionDataEmailId();
+		collectionDataFirstName = testData.getCollectionDataFirstName();
+		collectionDataLastName = testData.getCollectionDataLastName();
+		collectionDataselectedApp = testData.getCollectionDataselectedApp();
+		collectionDataHeader1 = testData.getCollectionDataHeader1();
+		collectionDataHeader2 = testData.getCollectionDataHeader2();
+		collectionDataHeader3 = testData.getCollectionDataHeader3();
+		collectionDataHeader4 = testData.getCollectionDataHeader4();
+		collectionDataHeader5 = testData.getCollectionDataHeader5();
+		collectionDataHeader6 = testData.getCollectionDataHeader6();
+		collectionIdHeader = testData.getCollectionIdHeader();
+		collectionStatusHeader = testData.getCollectionStatusHeader();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

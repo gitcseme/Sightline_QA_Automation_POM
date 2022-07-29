@@ -3123,6 +3123,23 @@ public class ProductionPage {
 	public Element verifyingPrivilegedTag(String tag) {
 		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']/..");
 	}
+	public Element getDownloadDisabledMsg() {
+		return driver.FindElementByXPath("//div[@id='divDownloadDisabled']//span");
+	}
+	
+	public Element getLoadFileLink() {
+		return driver.FindElementByXPath("//a[text()='Load Files/']");
+	}
+	public Element getDatFileLink(String ProdName) {
+		return driver.FindElementByXPath("//a[contains(text(),'"+ProdName+"')]");
+	}
+	public Element getDATFileText() {
+		return driver.FindElementByXPath("//body//pre");
+	}
+	
+	public Element getBurnRedactionText() {
+		return driver.FindElementByXPath("//span[text()='Abbreviated Text:']//following-sibling::input");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20876,6 +20893,29 @@ public void verifyingExportFile(int purehit,String prefixID,String suffixID,Stri
 		driver.scrollingToElementofAPage(verifyingPrivilegedTag(Tag));
 		String ActualTextInTag=verifyingPrivilegedTag(Tag).GetAttribute("iscascadeenabled");
 		base.textCompareEquals(ActualTextInTag, "false","Other Tags are disabled as expected", "Other Tags are not disabled as expecetd");
+		
+	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param purehit
+	 * @param prefixID
+	 * @param suffixID
+	 * @param subBates
+	 * @param searchString
+	 * Description:verifying Image file in generated export
+	 */
+	public void verifyTiffFile(int purehit,String prefixID, String suffixID, String subBates, String searchString) {
+		driver.waitForPageToBeReady();
+	    for (int i = 2; i < purehit; i++) {
+	       getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).waitAndClick(10);
+	    }
+
+	    driver.waitForPageToBeReady();
+	    for (int i = 2; i < purehit; i++) {
+	        File imageFile = new File(Input.fileDownloadLocation + prefixID +  "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
+	        OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
+	    }
 		
 	}
 }

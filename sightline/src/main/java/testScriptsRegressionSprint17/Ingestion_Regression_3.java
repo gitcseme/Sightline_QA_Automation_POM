@@ -348,12 +348,51 @@ public class Ingestion_Regression_3 {
 	}
 	
 	/**
+	 * Author :Arunkumar date: 27/07/2022 TestCase Id:RPMXCON-46886
+	 * Description :To Verify Ingestion rollback for Audio indexed & non Audio Indexed.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-46886",enabled = true, groups = { "regression" })
+	public void TCB1verifyIngestionRollbackForAudio() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-46886");
+		baseClass.stepInfo("Verify Ingestion rollback for Audio indexed & non Audio Indexed.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		System.out.println(status);
+		if (status == false) {
+		baseClass.stepInfo("perform add only ingestion");
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		baseClass.stepInfo("perform indexing without selecting audio");
+		ingestionPage.startIndexing(false,null);
+		ingestionPage.validateIndexingStatus();
+		ingestionPage.rollBackIngestion();
+		baseClass.stepInfo("perform add only ingestion till copying stage");
+		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		baseClass.stepInfo("perform indexing with audio");
+		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
+		ingestionPage.rollBackIngestion();
+		baseClass.passedStep("Roll back performed successfully for both audio and non audio indexed");
+		loginPage.logout();
+		}
+		else {
+			baseClass.failedMessage("Add only ingestion for the dataset already present in the current project");;
+		}
+		}
+	
+	/**
 	 * Author :Arunkumar date: 12/07/2022 TestCase Id:RPMXCON-47824
 	 * Description :Verify overlay of the same files, which are already ingested and available in Production DB.
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47824",enabled = true, groups = { "regression" })
-	public void TCB1verifyOverlayIngestionOfSameFiles() throws InterruptedException {
+	public void TCB2verifyOverlayIngestionOfSameFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47824");
 		baseClass.stepInfo("verify overlay ingestion of the same files, which are already ingested");
@@ -381,7 +420,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48595",enabled = true, groups = { "regression" })
-	public void TCB2verifyOverlayIngestionOfAudioWithTextFiles() throws InterruptedException {
+	public void TCB3verifyOverlayIngestionOfAudioWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48595");
 		baseClass.stepInfo("Verify the Analytics process should take places when Audio files with Text files are overlayed.");
@@ -422,7 +461,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48596",enabled = true, groups = { "regression" })
-	public void TCB3verifyOverlayIngestionOfTiffWithTextFiles() throws InterruptedException {
+	public void TCB4verifyOverlayIngestionOfTiffWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48596");
 		baseClass.stepInfo("Verify the Analytics process should take places when Tiff files and Text files are overlayed.");
@@ -463,7 +502,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48599",enabled = true, groups = { "regression" })
-	public void TCB4verifyOverlayIngestionOfNativeWithTextFiles() throws InterruptedException {
+	public void TCB5verifyOverlayIngestionOfNativeWithTextFiles() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48599");
 		baseClass.stepInfo("Verify the Analytics process should take places when Native files and Text files are overlayed.");
@@ -504,7 +543,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48629",enabled = true, groups = { "regression" })
-	public void TCB5verifyOverlayWhenDocsUnpublished() throws InterruptedException {
+	public void TCB6verifyOverlayWhenDocsUnpublished() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48629");
 		baseClass.stepInfo("verify that user can overlay text only when all the docs being overlaid are unpublished");
@@ -547,7 +586,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49257",enabled = true, groups = { "regression" })
-	public void TCB6verifyTotalUniqueDocsCountIngestedAndPublished() throws InterruptedException {
+	public void TCB7verifyTotalUniqueDocsCountIngestedAndPublished() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49257");
 		baseClass.stepInfo("verify that ingestions page should present the unique number of docs ingested and published");
@@ -613,7 +652,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48608",enabled = true, groups = { "regression" })
-	public void TCB7verifyCountOfTextFilesWhenOverlay() throws InterruptedException {
+	public void TCB8verifyCountOfTextFilesWhenOverlay() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48608");
 		baseClass.stepInfo("Verify that ingestion detail popup reflect the count of text files.");
@@ -662,7 +701,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49019",enabled = true, groups = { "regression" })
-	public void TCB8verifyPerformingIngestionAnalyticsFor500Docs() throws InterruptedException {
+	public void TCB9verifyPerformingIngestionAnalyticsFor500Docs() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49019");
 		baseClass.stepInfo("Verify ingesting 500 documents and do analytics these documents.");
@@ -687,7 +726,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47368",enabled = true, groups = { "regression" })
-	public void TCB9verifyCloseButtonRedirectsToHomePage() throws InterruptedException {
+	public void TCC1verifyCloseButtonRedirectsToHomePage() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47368");
 		baseClass.stepInfo("verify that selection of Close button redirects to Ingestion Home page");
@@ -713,7 +752,7 @@ public class Ingestion_Regression_3 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49331",enabled = true, groups = { "regression" })
-	public void verifyExportErrorDetails() throws InterruptedException {
+	public void TCC2verifyExportErrorDetails() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49331");
 		baseClass.stepInfo("Verify that if Ingestion failed in Cataloging, then user can export the error details successfully");
@@ -749,39 +788,6 @@ public class Ingestion_Regression_3 {
 		ingestionPage.exportErrorDetails();
 		loginPage.logout();
 	}
-	
-	/**
-	 * Author :Arunkumar date: 27/07/2022 TestCase Id:RPMXCON-46886
-	 * Description :To Verify Ingestion rollback for Audio indexed & non Audio Indexed.
-	 * @throws InterruptedException
-	 */
-	@Test(description ="RPMXCON-46886",enabled = true, groups = { "regression" })
-	public void verifyIngestionRollbackForAudio() throws InterruptedException {
-		
-		baseClass.stepInfo("Test case Id: RPMXCON-46886");
-		baseClass.stepInfo("Verify Ingestion rollback for Audio indexed & non Audio Indexed.");
-		// Login as PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		ingestionPage = new IngestionPage_Indium(driver);
-		baseClass.stepInfo("perform add only ingestion");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		baseClass.stepInfo("perform indexing without selecting audio");
-		ingestionPage.startIndexing(false,null);
-		ingestionPage.validateIndexingStatus();
-		ingestionPage.rollBackIngestion();
-		baseClass.stepInfo("perform add only ingestion till copying stage");
-		ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
-		ingestionPage.ignoreErrorsAndCatlogging();
-		ingestionPage.ignoreErrorsAndCopying();
-		baseClass.stepInfo("perform indexing with audio");
-		ingestionPage.ingestionIndexing(Input.AllSourcesFolder);
-		ingestionPage.rollBackIngestion();
-		baseClass.passedStep("Roll back performed successfully for both audio and non audio indexed");
-		loginPage.logout();
-		}
-	
 	
 		
 	@AfterMethod(alwaysRun = true)

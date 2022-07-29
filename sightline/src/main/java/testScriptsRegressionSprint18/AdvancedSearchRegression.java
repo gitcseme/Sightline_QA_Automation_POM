@@ -45,14 +45,14 @@ public class AdvancedSearchRegression {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		//in = new Input();
-		//in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		// Open browser
 		driver = new Driver();
 
 		sessionSearch = new SessionSearch(driver);
 		loginPage = new LoginPage(driver);
-		baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver); 
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -341,6 +341,91 @@ public class AdvancedSearchRegression {
 						+ "AND operator in search result.");
 
 		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(description = "RPMXCON-57167", groups = { "regression" }, enabled = true)
+	public void verifyDocsCntAssgnments_AND() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57167");
+		baseClass.stepInfo("Verify that - Application returns all the documents which are available under "
+				+ "selected group and Assignments with AND operator in search result.");
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("**Pre Requesite Assignment Creation**");
+
+		agnmt.createAssignment(assignmentName, Input.codeFormName);
+		sessionSearch.basicContentSearch(Input.testData1);
+		String assignedPureHitCount = sessionSearch.verifyPureHitsCount();
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		baseClass.selectproject();
+		sessionSearch.navigateToAdvancedSearchPage();
+		// Adding WP tag into search text box
+		sessionSearch.workProductSearch("tag", tagName, true);
+		baseClass.stepInfo(
+				"Inserting a query with  a Tag " + tagName + "and Count of docs avail in that tag is " + tagHitsCount);
+		// Adding Operator into search text box
+		sessionSearch.selectOperator("AND");
+		baseClass.stepInfo("Selecting AND Operator");
+
+		// Adding WP assignment into search text box
+		baseClass.stepInfo("Selecting  assignment into Query");
+		sessionSearch.workProductSearch("assignments", assignmentName, false);
+		baseClass.stepInfo(
+				"Configured a Query with TagName:[ " + tagName + "] AND  Assignments:[" + assignmentName + "]");
+
+		sessionSearch.serarchWP();
+		driver.waitForPageToBeReady();
+		String PureHitCount = sessionSearch.verifyPureHitsCount();
+		baseClass.stepInfo("Pure hits count value after Configuring a Query with TagName:[ " + tagName
+				+ "] AND  Assignments:[" + assignmentName + "] is " + PureHitCount);
+		SoftAssert assertion = new SoftAssert();
+		// validation of pure hits
+		assertion.assertEquals(PureHitCount, assignedPureHitCount);
+		assertion.assertAll();
+		baseClass.passedStep("Application   returned all the documents which are available under "
+				+ "selected  group in search result   for the configured query." + PureHitCount);
+		baseClass.passedStep(
+				"Sucessfully Verified that - Application returns all the documents which are available under selected group and Assignment "
+						+ "with AND operator in search result.");
+
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(description = "RPMXCON-53947", groups = { "regression" }, enabled = true)
+	public void verifyPersistentSeachHit() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53947");
+		baseClass.stepInfo(
+				"To verify that RMU is able to view Persistent Search Hits option on Assign/Unassign pop up.");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Performing basic content search and dragging pure hit to cart.");
+		sessionSearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Clicking on bulk assign button");
+		sessionSearch.bulkAssign();
+		baseClass.stepInfo(
+				"Verification of Persistent Search Hits option for Existing assignment Tab on Assign/Unassign pop up.");
+		agnmt.verifyPersistentHitIcon(true);
+		baseClass.stepInfo(
+				"Verification of Persistent Search Hits option for new assignments tab on Assign/Unassign pop up.");
+		agnmt.verifyPersistentHitIcon(false);
 
 	}
 

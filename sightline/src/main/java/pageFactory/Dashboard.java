@@ -501,11 +501,13 @@ public class Dashboard {
 		base.stepInfo("Select Reviewers");
 
 		Robot r = new Robot();
+		base.waitTime(2);
+		selectReviewers_selectReviewers().ScrollTo();
 		selectReviewers_selectReviewers().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.waitForElement(selectSpecificReviewer());
 		selectSpecificReviewer().ScrollTo();
-		;
+		
 
 		selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[0]);
 		for (int i = 1; i < reviewers.length; i++) {
