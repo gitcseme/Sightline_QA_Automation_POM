@@ -497,7 +497,7 @@ public class DocExplorer_Regression1 {
 				loginPage.logout();
 				loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 				
-				baseClass.stepInfo("Basic  content search ");
+					baseClass.stepInfo("Basic  content search ");
 				session.basicContentSearch(Input.searchText.toLowerCase());
 				
 				baseClass.stepInfo("View serached dos in Docview");

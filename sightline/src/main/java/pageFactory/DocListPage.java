@@ -559,7 +559,7 @@ public class DocListPage {
 	}
 
 	public Element getPDFOptionToDownload() {
-		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']//li[2]//a");
+		return driver.FindElementByXPath("//ul[@id='documentTypeDropDown']//a");
 	}
 
 	public Element getFirstRowFileName() {
