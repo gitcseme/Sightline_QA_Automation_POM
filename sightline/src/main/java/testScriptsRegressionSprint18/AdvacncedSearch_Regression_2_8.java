@@ -4,6 +4,9 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -72,6 +75,13 @@ public class AdvacncedSearch_Regression_2_8 {
 
 	}
 
+	@DataProvider(name = "paRmuRevUsers")
+	public Object[][] paRmuRevUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+		return users;
+	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description:Verify that - Application returns all the documents which are
@@ -121,11 +131,12 @@ public class AdvacncedSearch_Regression_2_8 {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description:Verify that - Application returns all the documents which are
-	 *                     available under selected group and Assignments - Distributed
-	 *                     status with OR operator in search result.
+	 *                     available under selected group and Assignments -
+	 *                     Distributed status with OR operator in search result.
 	 */
 	@Test(description = "RPMXCON-57161", groups = { "regression" }, enabled = true)
 	public void verifyDocsCntDistributedAssgnments_OR() throws InterruptedException, AWTException {
@@ -133,24 +144,23 @@ public class AdvacncedSearch_Regression_2_8 {
 		baseClass.stepInfo("Test case Id: RPMXCON-57161");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group and Assignments - "
-				+ "distributed with OR operator in search result.");
+						+ "distributed with OR operator in search result.");
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
-		
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
-		
+
 		baseClass.stepInfo("Pre Requesite Assignment Creation/Docs distribution.");
 		agnmt.createAssignment(assignmentName, Input.codeFormName);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkAssignExisting(assignmentName);
-		
-		
+
 		baseClass.selectproject();
 		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
 		agnmt.addReviewerAndDistributeDocs();
-		 
-		 baseClass.selectproject();
+
+		baseClass.selectproject();
 		sessionSearch.navigateToAdvancedSearchPage();
 		// Adding WP tag into search text box
 		sessionSearch.workProductSearch("tag", tagName, true);
@@ -162,14 +172,15 @@ public class AdvacncedSearch_Regression_2_8 {
 
 		// Adding WP assignment Assigned status into search text box
 		baseClass.stepInfo("Selecting distributed status assignment into Query");
-		sessionSearch.selectAssignmentInWPSWthFilters(assignmentName,Input.rev1userName,null);
-		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] OR  Assignments:["+assignmentName+":DistributedTo]");
+		sessionSearch.selectAssignmentInWPSWthFilters(assignmentName, Input.rev1userName, null);
+		baseClass.stepInfo("Configured a Query with TagName:[ " + tagName + "] OR  Assignments:[" + assignmentName
+				+ ":DistributedTo]");
 
 		sessionSearch.serarchWP();
 		driver.waitForPageToBeReady();
 		String PureHitCount = sessionSearch.verifyPureHitsCount();
 		baseClass.stepInfo("Pure hits count value after Configuring a Query with TagName:[ " + tagName
-				+ "] OR  Assignments:["+assignmentName+":DistributedTo] is " + PureHitCount);
+				+ "] OR  Assignments:[" + assignmentName + ":DistributedTo] is " + PureHitCount);
 		SoftAssert assertion = new SoftAssert();
 		// validation of pure hits
 		assertion.assertEquals(PureHitCount, tagHitsCount);
@@ -184,27 +195,27 @@ public class AdvacncedSearch_Regression_2_8 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Jayanthi  TestCase Id:RPMXCON-57171 
-	 * Description :Verify that - Application returns all the documents which are available under selected group
-	 *  with NOT operator and production optional filters - Date Range in search result. 
+	 * Author :Jayanthi TestCase Id:RPMXCON-57171 Description :Verify that -
+	 * Application returns all the documents which are available under selected
+	 * group with NOT operator and production optional filters - Date Range in
+	 * search result.
 	 * 
 	 */
-	@Test(description ="RPMXCON-57171",groups = { "regression" })
-	public void prod_verifyDocumentWithORProdOptFiltersDateRange() throws InterruptedException{
+	@Test(description = "RPMXCON-57171", groups = { "regression" })
+	public void prod_verifyDocumentWithORProdOptFiltersDateRange() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-57171");
-		baseClass.stepInfo(
-				"Verify that - Application returns all the documents which are available "
+		baseClass.stepInfo("Verify that - Application returns all the documents which are available "
 				+ "under selected group with NOT operator and production optional filters - Date Range in search result");
-		//login as PA
+		// login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		sessionSearch.switchToWorkproduct();
 		baseClass.stepInfo("Configure query with  production status with date range ");
-		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null,true);
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null, true);
 		sessionSearch.serarchWP();
-		int pureHit_Prod=Integer.parseInt( sessionSearch.verifyPureHitsCount());
-		
+		int pureHit_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
+
 		baseClass.selectproject();
 		sessionSearch.switchToWorkproduct();
 		baseClass.stepInfo("Configured query with security group NOT production status with date");
@@ -212,37 +223,41 @@ public class AdvacncedSearch_Regression_2_8 {
 		sessionSearch.serarchWP();
 		baseClass.stepInfo("Searched query and verifying search result");
 		int pureHit_SG_OR_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
-		
+
 		int countinSG = sessionSearch.verifyDocsCountAvailableInSg();
 		int expectedCount = countinSG - pureHit_Prod;
 		SoftAssert assertion = new SoftAssert();
 		// validation of pure hits
 		assertion.assertEquals(pureHit_SG_OR_Prod, expectedCount);
 		assertion.assertAll();
-		baseClass.stepInfo("Sucessfully verified that - Application returns all the documents which are available under selected group with NOT operator and "
-				+ "production optional filters - status with Date Range  in search result.");
-		loginPage.logout();		
+		baseClass.stepInfo(
+				"Sucessfully verified that - Application returns all the documents which are available under selected group with NOT operator and "
+						+ "production optional filters - status with Date Range  in search result.");
+		loginPage.logout();
 	}
+
 	/**
-	 * Author :Jayanthi  TestCase Id:RPMXCON-57170 
-	 * Description :Verify that - Application returns all the documents which are available under selected group with NOT operator 
-	 * and production optional filters - status  in search result. 
+	 * Author :Jayanthi TestCase Id:RPMXCON-57170 Description :Verify that -
+	 * Application returns all the documents which are available under selected
+	 * group with NOT operator and production optional filters - status in search
+	 * result.
 	 * 
 	 */
-	@Test(description ="RPMXCON-57170",groups = { "regression" })
-	public void prod_VerifyDocumentWithNOTProdOptFiltersStatus() throws InterruptedException{
+	@Test(description = "RPMXCON-57170", groups = { "regression" })
+	public void prod_VerifyDocumentWithNOTProdOptFiltersStatus() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-57170");
-		baseClass.stepInfo("Verify that - Application returns all the documents which are available under selected group with NOT operator and "
-				+ "production optional filters - status  in search result.");
-		//login as PA
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with NOT operator and "
+						+ "production optional filters - status  in search result.");
+		// login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		sessionSearch.switchToWorkproduct();
-		//getting pure hit count by selecting prod status as true.
+		// getting pure hit count by selecting prod status as true.
 		baseClass.stepInfo("Configure query with  production status as true. ");
-		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null,false);
+		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(null, null, false);
 		sessionSearch.serarchWP();
-		int pureHit_Prod=Integer.parseInt( sessionSearch.verifyPureHitsCount());
-		
+		int pureHit_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
+
 		baseClass.selectproject();
 		sessionSearch.switchToWorkproduct();
 		sessionSearch.configureQueryWithSecurityGroupAndProductionStatus(Input.securityGroup, "NOT", false);
@@ -250,11 +265,11 @@ public class AdvacncedSearch_Regression_2_8 {
 				+ "[ name: [\"Default Security Group\"] ]  NOT   productions: [produced: \"true\" ]  ");
 		sessionSearch.serarchWP();
 		int pureHit_SG_OR_Prod = Integer.parseInt(sessionSearch.verifyPureHitsCount());
-		
-		//calculating expected doc count.
+
+		// calculating expected doc count.
 		int countinSG = sessionSearch.verifyDocsCountAvailableInSg();
 		int expectedCount = countinSG - pureHit_Prod;
-		
+
 		SoftAssert assertion = new SoftAssert();
 		// validation of pure hits
 		assertion.assertEquals(pureHit_SG_OR_Prod, expectedCount);
@@ -264,8 +279,60 @@ public class AdvacncedSearch_Regression_2_8 {
 						+ "production optional filters - status  in search result.");
 		loginPage.logout();
 	}
-	
-	
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/28/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that while Searching Audio with Conceptual searches-
+	 *              configured Audio search settings does not revert back to
+	 *              inappropriate setting in \"Audio\" block on \"Advanced Search\"
+	 *              screen. RPMXCON-48160
+	 */
+	@Test(description = "RPMXCON-48160", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
+	public void verifySearchingAudioWithConceptualSearchesNotRevertBackInappropriateSetting(String username,
+			String password, String User) throws InterruptedException {
+		List<String> searchString = new ArrayList<String>();
+		String conceptualSearchString = "sample";
+		String language = Input.language;
+		int thresholdInput = 65;
+		String operator = "ALL";
+		String location = "Within:";
+		String seconds = "5";
+		searchString.add(Input.audioSearchString1);
+		searchString.add(Input.audioSearch);
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("RPMXCON-48160 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that while Searching Audio with Conceptual searches-  configured Audio search settings does not revert back to inappropriate setting in \"Audio\" block  on \"Advanced Search\" screen");
+
+		// configure audio search
+		baseClass.stepInfo("Configuring Audio Search Block.");
+		String thresholdValue = sessionSearch.configureAudioSearchBlock(searchString.get(0), searchString.get(1),
+				language, thresholdInput, operator, location, seconds);
+
+		// performing Conceptual Search
+		baseClass.stepInfo("Configuring Conceptual Search.");
+		sessionSearch.advancedSearchConceptual(conceptualSearchString);
+		sessionSearch.serarchWP();
+
+		// validating audio search result
+		sessionSearch.validateAudioSearchResult(searchString, operator, language, seconds, thresholdValue);
+
+		// validating Conceptual search Result
+		String actualTagSearchResult = sessionSearch.getConceptualSearchResult().getText();
+		baseClass.compareTextViaContains(actualTagSearchResult, conceptualSearchString,
+				"actual Conceptual search String Present in Adavnced search Result Page Match with the Expected Search String.",
+				"actual search String doesn't match with the Expected Search String.");
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },

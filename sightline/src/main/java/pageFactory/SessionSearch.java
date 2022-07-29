@@ -1955,6 +1955,10 @@ public class SessionSearch {
 	public ElementCollection getAllTilesName() {
 		return driver.FindElementsByXPath("(//ul[@id='gallery'])[last()]//li/a");
 	}
+	
+	public Element getConceptualSearchResult() {
+		return driver.FindElementByXPath("//td[text()='Conceptual']/parent::tr//span[@class='badge']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
