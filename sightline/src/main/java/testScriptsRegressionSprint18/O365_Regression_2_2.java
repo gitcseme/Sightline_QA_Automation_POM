@@ -64,8 +64,8 @@ public class O365_Regression_2_2 {
 
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
-				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "Review Manager" },
+				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, };
 		return users;
 	}
 
@@ -255,6 +255,250 @@ public class O365_Regression_2_2 {
 		// Logout
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that 'Office 365' gets selected in \"Data Source Type\"
+	 *              dropdown by default on Collections >> Add New Source Location UI
+	 *              screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60810", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyDefaultSourceType(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60810 - O365");
+		base.stepInfo(
+				"Verify that 'Office 365' gets selected in \"Data Source Type\" dropdown by default on Collections >> Add New Source Location UI screen.");
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		// Assigning Collection Access to User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Verify by default Microsoft 365 is selected and Add new source location
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// verify Added source location is displayed
+		collection.verifyAddedSourceLocation(dataname, null);
+
+		// delete created source location
+		dataSets.navigateToDataSets("Source", "Collection/SourceLocation");
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that 'Office 365' gets selected in "Data Source Type"
+	 *              dropdown by default on Dataset >> Source Location >> "Add New
+	 *              Source Location" screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60809", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyDefaultSourceTypeInSrcePage(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60809 - O365");
+		base.stepInfo(
+				"Verify that 'Office 365' gets selected in \"Data Source Type\" dropdown by default on Dataset >> Source Location >> \"Add New Source Location\" screen.");
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		// Assigning Collection Access to User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Source", "Collection/SourceLocation");
+
+		// Verify by default Microsoft 365 is selected and Add new source location
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// delete created source location
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @return
+	 * @Author Jeevitha
+	 * @Description : Verify that user should be able to ‘Save’ the collection as a
+	 *              draft
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60970", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public String verifyUserAbleToSaveCollectionAsDraft(String username, String password, String fullname)
+			throws Exception {
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60970 - O365");
+		base.stepInfo("Verify that user should be able to ‘Save’ the collection as a draft");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+
+		// Logout
+		login.logout();
+		return dataName;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that user can configure the collection with
+	 *              ‘Automatically Initiate processing’ and can move to ‘Next’ step
+	 *              of collection
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60651", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAutoInitiateProcess(String username, String password, String fullname) throws Exception {
+		String dataname = "Automation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60651 - O365");
+		base.stepInfo(
+				"Verify that user can configure the collection with ‘Automatically Initiate processing’ and can move to ‘Next’ step of collection");
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		// Assigning Collection Access to User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		collection.verifyCollectionInfoPage(srcLocation, dataname, false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that error message should be displayed if user adds
+	 *              collection name same as of existing collection
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60649", enabled = true, groups = { "regression" })
+	public void verifErroMsgWhenEnteringSameColName() throws Exception {
+		String expectedErrorMsg = "16001000009 : Collection already exists. Please enter unique name.";
+
+		// Create Collection
+		String collectionName = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator");
+
+		base.stepInfo("--------------------------------------------");
+		base.stepInfo("Test case Id: RPMXCON-60649 - O365");
+		base.stepInfo(
+				"Verify that error message should be displayed if user adds collection name same as of existing collection");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		collection.verifyCollectionInfoPage(srcLocation, collectionName, false);
+
+		// initiate collection process & click next Btn
+		collection.selectInitiateCollectionOrClickNext(false, true, false);
+
+		// verify Error Message
+		base.VerifyErrorMessage(expectedErrorMsg);
+
+		// navigate to Collection page and Deletion
+		base.stepInfo("Initiate collection  deletion");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.deleteUsingCollectionName(collectionName);
+
+		// Logout
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)

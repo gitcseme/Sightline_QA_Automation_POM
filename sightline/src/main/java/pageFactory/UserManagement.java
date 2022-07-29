@@ -797,6 +797,10 @@ public class UserManagement {
 	}
 
 	// jeevitha
+	public Element getLastPageNum() {
+		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
+	}
+	
 	public Element getFunctionTable() {
 		return driver.FindElementByXPath(
 				"// li[@class='active']//a[normalize-space()='Functionality']//..//parent::ul//following-sibling::div[@id='myTabContent1']");
@@ -843,6 +847,7 @@ public class UserManagement {
 	}
 	public Element getConfirmMsg() {
 		return driver.FindElementByXPath("//span[text()='User Mapping']//..//p");
+	}
 	
 	public ElementCollection getAllBlockedUserRightInFuncnalityTab() {
 		return driver.FindElementsByXPath("//i[@style='background-color: grey;']");
@@ -3913,12 +3918,15 @@ public class UserManagement {
 	/**
 	 * @author Raghuram.A
 	 * @param projectName
+	 * @modified By : Jeevitha On 29/07/22
 	 */
 	public void selectEditUserUsingPagination(String projectName, Boolean additional1, String additional2) {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 		bc.waitTime(3);
-		int count = ((getAssgnPaginationCount().size()) - 2);
+//		int count = ((getAssgnPaginationCount().size()) - 2);
+		String lastPageNum = getLastPageNum().getText();
+		int count = Integer.parseInt(lastPageNum);
 		for (int i = 0; i < count; i++) {
 			driver.waitForPageToBeReady();
 			if (getSelectUserToEdit(projectName).isElementAvailable(5)) {

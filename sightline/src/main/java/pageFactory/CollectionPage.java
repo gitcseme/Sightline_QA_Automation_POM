@@ -16,6 +16,7 @@ public class CollectionPage {
 	BaseClass base;
 
 	// Added BY Jeevitha
+
 	public Element getNewCollectionBtn() {
 		return driver.FindElementByXPath("//input[@id='btnNewCollection']");
 	}
@@ -95,6 +96,24 @@ public class CollectionPage {
 
 	public ElementCollection getListOfSrcLoc() {
 		return driver.FindElementsByXPath("//div[@id='divSourceLocations']//div[@class='popout text-wrap']");
+	}
+
+	public Element getAutomaticInitiate_Btn() {
+		return driver.FindElementByXPath("//label[@id='BoxAuto']");
+	}
+
+	public Element getDonotAutomaticInitiate_Btn() {
+		return driver.FindElementByXPath("//label[@id='BoxManual']");
+	}
+
+	public Element getCollectionAction(String collectionName) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='Actions ']");
+	}
+
+	public Element getCollectionActionList(String collectionName, String actionType) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='"+actionType +"']");
 	}
 
 	// Added by Mohan
@@ -855,8 +874,8 @@ public class CollectionPage {
 	 */
 	public HashMap<String, String> dataSetsCreationBasedOntheGridAvailability(String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
-			String selectedFolder, String[] headerList, String expectedStatus, String creationType, int retryAttempt,Boolean additional1,
-			String additional2) {
+			String selectedFolder, String[] headerList, String expectedStatus, String creationType, int retryAttempt,
+			Boolean AutoInitiate, String additional2) {
 
 		String dataName = "Automation" + Utility.dynamicNameAppender();
 		String creationStatus = "0";
@@ -875,7 +894,10 @@ public class CollectionPage {
 			String dataSourceName = selectSourceFromTheListAvailable();
 
 			// click created source location and verify navigated page
-			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, true);
+			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
+
+			// initiate collection process
+			selectInitiateCollectionOrClickNext(AutoInitiate, true, true);
 
 			// Add DataSets
 			String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
@@ -905,4 +927,42 @@ public class CollectionPage {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : selects Initiate process And Clicks next button
+	 * @param Automatic
+	 * @param Next
+	 * @param verifyTab
+	 */
+	public void selectInitiateCollectionOrClickNext(boolean Automatic, boolean Next, boolean verifyTab) {
+		if (Automatic) {
+			getAutomaticInitiate_Btn().waitAndClick(10);
+			base.stepInfo("Selected : Automatially Initiate process");
+		} else {
+			getDonotAutomaticInitiate_Btn().waitAndClick(10);
+			base.stepInfo("Selected : Do Not Automatially Initiate process");
+		}
+
+		if (Next) {
+			getNextBtn().waitAndClick(10);
+			base.stepInfo("Clicked Next Button");
+			if (verifyTab)
+				verifyCurrentTab("Dataset Selection");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : delete collection using collection name
+	 * @param collectionName
+	 */
+	public void deleteUsingCollectionName(String collectionName) {
+		if (getCollectionAction(collectionName).isElementAvailable(5)) {
+			getCollectionAction(collectionName).waitAndClick(5);
+			getCollectionActionList(collectionName, "Delete").waitAndClick(10);
+			confirmationAction("Delete", "Yes", "The collection has been deleted successfully.");
+		}else {
+			base.failedStep(collectionName +" : is not avialable");
+		}
+	}
 }
