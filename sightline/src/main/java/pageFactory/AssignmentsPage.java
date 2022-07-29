@@ -10515,4 +10515,20 @@ public class AssignmentsPage {
 
 		assertion.assertAll();
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param existing [Should be true if we need to check for existing assign tab]
+	 */
+	
+	public void verifyPersistentHitIcon(boolean existing) {
+		if(existing) {
+			bc.ValidateElement_Presence(getPersistCB_ExistAssgn(), "Persistant search option present in existing assign tab.");
+			
+		}else {
+			bc.waitTime(1);
+			getBulkAssign_NewAssignment().waitAndClick(20);
+			bc.ValidateElement_Presence(getPersistCB_NewAssgn(), "Persistant search option present in New assign tab.");
+		}
+	}
+
 }
