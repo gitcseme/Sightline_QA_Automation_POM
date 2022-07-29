@@ -301,7 +301,8 @@ public class SecurityGroup_Regression2 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
 		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
+		driver.waitForPageToBeReady();
 		baseClass.waitTime(10);
 		data.getNotificationMessage(0, projectName);
 
