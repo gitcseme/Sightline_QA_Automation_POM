@@ -329,14 +329,15 @@ public class DomainManagement_Regression_03 {
 	@Test(description = "RPMXCON-52901",enabled = true, groups = {"regression" })
 	public void verifyDomainAdminSelectProjectAdmin() throws InterruptedException  {
 		
+		dash = new DomainDashboard(driver);
+		
 		base.stepInfo("Test case Id: RPMXCON-52901");
 		base.stepInfo("Verify when Domain Admin selects role as 'Project Administrator' from Change Role pop up");
 		
 		//login as da
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Login as a da user :"+Input.da1userName);
-		
-		base = new BaseClass(driver);
+		dash.waitForDomainDashBoardIsReady();
 		
 		base.openImpersonateTab();
 		if(base.getSelectRole().isDisplayed()) {
@@ -348,7 +349,7 @@ public class DomainManagement_Regression_03 {
 		base.selectImpersonateDomain(Input.domainName);
 		base.selectImpersonateProject(Input.projectName);
 		base.stepInfo("'Project Administrator' role was selected and Domain,");
-		if(base.getSelectRole(Input.ProjectAdministrator).isDisplayed()) {
+		if(base.getSelectRole(Input.ProjectAdministrator).isElementAvailable(8)) {
 			base.passedStep("Project drop down was displayed  ");
 		}else {
 			base.failedStep("verification failed");
