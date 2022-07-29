@@ -60,7 +60,7 @@ public class DomainManagement_Regression_04 {
 	
 	/**
 	 * @Author :Aathith 
-	 * date: NA
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :Verify after domain user impersonated down as a project admin into the "clicked project",he should be able to impersonate down to Reviewer
@@ -95,7 +95,7 @@ public class DomainManagement_Regression_04 {
 
 	/**
 	 * @Author :Aathith 
-	 * date: 
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :To verify user rights from Edit User > Functionality tab when Sys Admin changes role of Domain Admin 
@@ -165,7 +165,7 @@ public class DomainManagement_Regression_04 {
 	
 	/**
 	 * @Author :Aathith 
-	 * date: 
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :To verify user rights from Edit User > Functionality tab when Sys Admin changes role of Domain Admin
@@ -236,7 +236,7 @@ public class DomainManagement_Regression_04 {
 	
 	/**
 	 * @Author :Aathith 
-	 * date: 
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :To verify user rights from Edit User > Functionality tab when Sys Admin changes role of Domain Admin[assigned to single domain/non-domain project] user to Reviewer
@@ -305,7 +305,7 @@ public class DomainManagement_Regression_04 {
 	
 	/**
 	 * @Author :Aathith 
-	 * date: 
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :To verify user rights from Edit User > Functionality tab when Sys Admin changes role of Project Admin[assigned to single domain/non-domain project] user to Domain Admin
@@ -374,7 +374,7 @@ public class DomainManagement_Regression_04 {
 	
 	/**
 	 * @Author :Aathith 
-	 * date: NA
+	 * date: 07/29/2022
 	 * Modified date:NA 
 	 * Modified by:
 	 * @Description :Verify after domain user impersonated down as a project admin into the "clicked project",all existing menu items should display as usual
@@ -406,7 +406,7 @@ public class DomainManagement_Regression_04 {
 		softAssertion.assertEquals((boolean)base.text("Categorize").isElementAvailable(3), true);
 		base.passedStep("Menu links should be visible as:-   Manage Search Reports production Batch Print Categorize");
 		
-		//verify seach result
+		//verify search result
 		search.navigateToSessionSearchPageURL();
 		softAssertion.assertNotEquals(search.basicContentSearch(Input.testData1), 0);
 		base.passedStep("Search results is display properly.");
