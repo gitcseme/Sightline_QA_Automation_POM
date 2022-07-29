@@ -4124,7 +4124,62 @@ public class BaseClass {
 					dataName = key;
 				}
 			}
-
 			return dataName;
+		}
+		
+		/**
+		 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
+		 * @Description:This method used to pass length character 
+		 * @param size passing count
+		 */
+		public String passingCharacterBasedOnSize(int size) {
+			char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+			StringBuilder sb = new StringBuilder(4000);
+			Random random = new Random();
+			for (int i = 0; i < size; i++) {
+				char c = chars[random.nextInt(chars.length)];
+				sb.append(c);
+			}
+			String output = sb.toString();
+			return output;
+		}
+		
+		/**
+		 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
+		 * @Description:This method used to pass length character with hyphen,underscore and space. 
+		 * @param size passing count
+		 */
+		public String passingCharacterUsingCombination(int size) {
+			char[] chars = "abcde fghi-jklmnopq_rstuvwxyz".toCharArray();
+			StringBuilder sb = new StringBuilder(4000);
+			Random random = new Random();
+			for (int i = 0; i < size; i++) {
+				char c = chars[random.nextInt(chars.length)];
+				sb.append(c);
+			}
+			String output = sb.toString();
+			return output;
+		}
+		
+		/**
+		 * @author Indium-Baskar date: 28/07/2022 Modified date: 2/07/2022
+		 * @Description:This method used check to check dropdown value exists based on passing string in parameter
+		 * @param dropDownElement 
+		 * @param dropDownValue 
+		 */
+		public boolean dropDownValueCheck(Element dropDownElement,String dropDownValue ) {
+		String valueBeingChecked=dropDownValue;
+		boolean flag=false;
+		WebElement dropdown = dropDownElement.getWebElement();
+		Select DrpDwnSel=new Select(dropdown);
+		List<WebElement> DrpDwnList=DrpDwnSel.getOptions();
+		for (WebElement webElement : DrpDwnList) {
+			 if (webElement.getText().contains(valueBeingChecked)){
+				 passedStep(dropDownValue+"value displayed in dropdown");
+		         flag=true;
+		         break;
+		         }
+		}
+		return flag;
 		}
 }

@@ -831,6 +831,18 @@ public class UserManagement {
 	public Element getAssgnPaginationNextButton() {
 		return driver.FindElementByCssSelector("li[class='paginate_button next'] a");
 	}
+	public Element getRoleName() {
+		return driver.FindElementByXPath("//table[@id='dtUserList']//td[text()='"+Input.projectName+"']//..//td[@class=' spacenowrap']");
+	}
+	public Element getSelctRole() {
+		return driver.FindElementByXPath("//select[@id='ddlAllRoles']");
+	}
+	public Element getsingleSelectDomain() {
+		return driver.FindElementByXPath("//label[normalize-space()= 'Domain:']//..//label[text()='"+Input.domainName+"']");
+	}
+	public Element getConfirmMsg() {
+		return driver.FindElementByXPath("//span[text()='User Mapping']//..//p");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -2561,7 +2573,7 @@ public class UserManagement {
 	 * @param rollStatus
 	 */
 
-	public void ProjectSelectionForUser(String selectProject, String fullName, String roll, String account,
+	public boolean ProjectSelectionForUser(String selectProject, String fullName, String roll, String account,
 			boolean status, boolean rollStatus) {
 		bc.waitForElement(getAssignUserButton());
 		getAssignUserButton().waitAndClick(5);
@@ -2589,6 +2601,7 @@ public class UserManagement {
 			getsavedomainuser().waitAndClick(5);
 			bc.stepInfo("User successfullt added into the project");
 		}
+		return projectStatus;
 
 	}
 
@@ -3858,7 +3871,7 @@ public class UserManagement {
 	 * @param AssigedUserName
 	 * @Description Unassign user to the that project
 	 */
-	public void UnAssignUserToProject(String projectName, String role, String AssigedUserName) {
+	public boolean UnAssignUserToProject(String projectName, String role, String AssigedUserName) {
 
 		openAssignUser();
 		goToProjectTabInAssignUser();
@@ -3870,6 +3883,7 @@ public class UserManagement {
 		}
 
 		bc.waitForElement(getCheckingAssignedUserSG(AssigedUserName));
+		boolean flag=getCheckingAssignedUserSG(AssigedUserName).isElementAvailable(3);
 		driver.scrollingToElementofAPage(getCheckingAssignedUserSG(AssigedUserName));
 		getCheckingAssignedUserSG(AssigedUserName).waitAndClick(10);
 		bc.waitForElement(getLeftArrowForProject());
@@ -3881,6 +3895,7 @@ public class UserManagement {
 		bc.stepInfo(projectName + " was unassigend to the user " + role + " to the user" + AssigedUserName);
 		driver.Navigate().refresh();
 		driver.Manage().window().maximize();
+		return flag;
 	}
 
 	/**
