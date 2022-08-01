@@ -96,7 +96,7 @@
 	<documentIdKey>DocumentID</documentIdKey>
 	<custIdKey>CustID</custIdKey>
 	<fieldMappingWarningMessage>Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?</fieldMappingWarningMessage>
-	
+	<datFileASCII>ascii dat.dat</datFileASCII>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
