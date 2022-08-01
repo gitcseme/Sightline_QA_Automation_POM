@@ -511,7 +511,7 @@ public class Dashboard_Regression {
 	 *                  widget on RMU Dashboard
 	 **/
 
-	@Test(description = "RPMXCON-54573", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-54573", enabled = false, groups = { "regression" })
 	public void verifyReviewerProductivity_RMUDashboard() throws Exception {
 
 		baseClass.stepInfo("Test case Id:RPMXCON-54573 Dashboard Component Sprint 17");
