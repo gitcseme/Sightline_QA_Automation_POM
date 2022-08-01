@@ -100,11 +100,24 @@ public class DomainManagement_Regression {
 
 		// verify role not change
 		baseClass.waitTime(4);
-		userManage.editFunctionality(Input.projectName);
-		String currentRole = baseClass.getCurrentDropdownValue(userManage.getSelectRole());
+		driver.scrollingToBottomofAPage();
+		int count = ((userManage.getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			Boolean status = userManage.getSelectUserToEdit(Input.projectName).isElementAvailable(5);
+			if (status == true) {
+				userManage.editFunctionality(Input.projectName);
+				break;
+			}
+			 else {
+				userManage.getUserListNextButton().isElementAvailable(5);
+				userManage.getUserListNextButton().waitAndClick(5);
+			}
+		}
+		
+		String currentRole = baseClass.getCurrentDropdownValue(userManage.getSelctRole());
 		softAssertion.assertEquals(role, currentRole);
 		baseClass.passedStep("Popup window opened for " + role + "");
-		userManage.getSelectRole().selectFromDropdown().selectByIndex(5);
+		userManage.getSelctRole().selectFromDropdown().selectByIndex(5);
 		String warningmsg = userManage.getbellyBandMsg().getText().trim();
 		softAssertion.assertEquals(warningmsg,
 				"The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
@@ -131,7 +144,7 @@ public class DomainManagement_Regression {
 	 * @Description :Validate Project Name field value for a non-domain project in
 	 *              edit mode by System Admin
 	 */
-	@Test(description = "RPMXCON-53054", enabled = true, groups = { "regression" })
+    @Test(description = "RPMXCON-53054", enabled = true, groups = { "regression" })
 	public void verifyNonDomainProjectNameModify() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-53054");
@@ -148,10 +161,12 @@ public class DomainManagement_Regression {
 
 		// passing non-domain project name
 		this.driver.getWebDriver().get(Input.url + "Project/Project");
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(projectPage.getSearchProjectName());
 		projectPage.getSearchProjectName().SendKeys(Input.NonDomainProject);
 		baseClass.waitForElement(projectPage.getProjectFilterButton());
 		projectPage.getProjectFilterButton().waitAndClick(5);
+		baseClass.waitTime(2);
 		baseClass.waitForElement(projectPage.getProjectEdits());
 		projectPage.getProjectEdits().waitAndClick(5);
 
@@ -177,20 +192,24 @@ public class DomainManagement_Regression {
 		projectPage.getProjectName().SendKeys(specialCharacter);
 		baseClass.waitForElement(projectPage.getEditProjectWindow());
 		projectPage.getEditProjectWindow().waitAndClick(5);
+		baseClass.waitTime(3);
 		boolean errorFlag = projectPage.getErrorMsgForProjectName().isElementAvailable(2);
 		softAssertion.assertTrue(errorFlag);
 		baseClass.stepInfo("Error message displaying for special character name");
 		String output = baseClass.passingCharacterUsingCombination(255);
 		baseClass.waitForElement(projectPage.getProjectName());
 		projectPage.getProjectName().SendKeys(output);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(projectPage.getButtonSaveProject());
 		projectPage.getButtonSaveProject().waitAndClick(5);
 		baseClass.waitTime(5);
 		this.driver.getWebDriver().get(Input.url + "Project/Project");
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(projectPage.getSearchProjectName());
 		projectPage.getSearchProjectName().SendKeys(output);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(projectPage.getProjectFilterButton());
-		projectPage.getProjectFilterButton().waitAndClick(5);
+		projectPage.getProjectFilterButton().waitAndClick(10);
 		baseClass.waitForElement(projectPage.getModifyValidateName(output));
 		boolean modifyName = projectPage.getModifyValidateName(output).isElementAvailable(3);
 		softAssertion.assertTrue(modifyName);
@@ -235,6 +254,7 @@ public class DomainManagement_Regression {
 		System.out.println(count);
 		projectPage.AddDomainProjectViaDaUser(newProject);
 		projectPage.waitTillProjectCreated();
+		baseClass.waitTime(500);
 		baseClass.stepInfo("Creating first project");
 
 		// validating the bull icon count for first project creation
@@ -244,11 +264,12 @@ public class DomainManagement_Regression {
 			}
 		}), Input.wait120);
 		final int bgCountAfter = baseClass.initialBgCount();
-		softAssertion.assertEquals(bgCountAfter, count + 1);
+		softAssertion.assertEquals(bgCountAfter,Integer.parseInt(count) + 1);
 
 		// creating new project again
 		projectPage.AddDomainProjectViaDaUser(newProjectTwo);
 		projectPage.waitTillProjectCreated();
+		baseClass.waitTime(500);
 		baseClass.stepInfo("Creating second project");
 
 		// validating the second project creation counts
@@ -292,12 +313,13 @@ public class DomainManagement_Regression {
 		System.out.println(count);
 		projectPage.AddDomainProjectViaDaUser(newProject);
 		projectPage.waitTillProjectCreated();
+		baseClass.waitTime(500);
 		baseClass.stepInfo("Creating  project from da user");
 
 		// validating the project creation counts with project name
 		int countTwo = data.getNotificationMessage(Integer.parseInt(count), newProject);
-		softAssertion.assertEquals(Integer.parseInt(count + 1), countTwo);
-		System.out.println(Integer.parseInt(count + 1));
+		softAssertion.assertEquals(Integer.parseInt(count)+1, countTwo);
+		System.out.println(Integer.parseInt(count)+1);
 		System.out.println(countTwo);
 		softAssertion.assertAll();
 		baseClass.passedStep("Project  created successfully after impersonate from sa to da");
@@ -449,8 +471,8 @@ public class DomainManagement_Regression {
 		projectPage = new ProjectPage(driver);
 		softAssertion = new SoftAssert();
 		data = new DataSets(driver);
-		String firstName = Input.randomText + Utility.dynamicNameAppender();
-		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String firstName = "first" + Utility.dynamicNameAppender();
+		String lastName = "last" + Utility.dynamicNameAppender();
 		String role = Input.ProjectAdministrator;
 		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
 		String fullName = firstName + ' ' + lastName;
@@ -463,6 +485,7 @@ public class DomainManagement_Regression {
 		System.out.println(count);
 		projectPage.AddDomainProjectViaDaUser(newProject);
 		projectPage.waitTillProjectCreated();
+		baseClass.waitTime(350);
 		loginPage.logout();
 
 		// login as
@@ -474,20 +497,24 @@ public class DomainManagement_Regression {
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		userManage.createNewUser(firstName, lastName, role, emailId, Input.domainName,newProject);
 		userManage.UnAssignUserToProject(newProject, role, fullName);
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(userManage.getAssignUserButton());
 		userManage.getAssignUserButton().waitAndClick(5);
 		baseClass.waitForElement(userManage.getProjectTab());
 		userManage.getProjectTab().waitAndClick(5);
 		baseClass.waitForElement(userManage.getAssignUserProjectDrp_Dwn());
 		userManage.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.getSelectDropProject(newProject));
 		userManage.getSelectDropProject(newProject).waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.getUnAssignedDomainUser());
 		userManage.getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
 		baseClass.waitForElement(userManage.getDomainRole());
 		userManage.getDomainRole().selectFromDropdown().selectByVisibleText(role);
 		baseClass.waitForElement(userManage.getDomainUserRightArrow());
 		userManage.getDomainUserRightArrow().waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.gettDomainBtn());
 		userManage.gettDomainBtn().waitAndClick(5);
 		baseClass.waitForElement(userManage.getConfirmMsg());
@@ -497,24 +524,30 @@ public class DomainManagement_Regression {
 		baseClass.getYesBtn().waitAndClick(5);
 		baseClass.waitForElement(userManage.getDomainUserCancelButton());
 		userManage.getDomainUserCancelButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
 		boolean userPresent=userManage.UnAssignUserToProject(newProject, role, fullName);
 		softAssertion.assertTrue(userPresent);
 		baseClass.stepInfo("When user clicked Yes button get saved in userlists");
 		
 		// validation for No buttons
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(userManage.getAssignUserButton());
 		userManage.getAssignUserButton().waitAndClick(5);
 		baseClass.waitForElement(userManage.getProjectTab());
 		userManage.getProjectTab().waitAndClick(5);
 		baseClass.waitForElement(userManage.getAssignUserProjectDrp_Dwn());
 		userManage.getAssignUserProjectDrp_Dwn().waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.getSelectDropProject(newProject));
 		userManage.getSelectDropProject(newProject).waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.getUnAssignedDomainUser());
 		userManage.getUnAssignedDomainUser().selectFromDropdown().selectByVisibleText(fullName);
 		baseClass.waitForElement(userManage.getDomainRole());
 		userManage.getDomainRole().selectFromDropdown().selectByVisibleText(role);
+		baseClass.waitForElement(userManage.getDomainUserRightArrow());
 		userManage.getDomainUserRightArrow().waitAndClick(5);
+		baseClass.waitTime(3);
 		baseClass.waitForElement(userManage.gettDomainBtn());
 		userManage.gettDomainBtn().waitAndClick(5);
 		String confirmMsgNo=userManage.getConfirmMsg().getText();
@@ -527,7 +560,6 @@ public class DomainManagement_Regression {
 		userManage.goToProjectTabInAssignUser();
 		userManage.selectProjectInAssignUser(newProject);
 		userManage.selectRoleInAssignUser(role);
-		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(fullName));
 		boolean projectNotPresent=userManage.getCheckingAssignedUserSG(fullName).isElementAvailable(3);
 		softAssertion.assertFalse(projectNotPresent);
 		baseClass.passedStep("When user pressed no button , not get saved the edit values");
