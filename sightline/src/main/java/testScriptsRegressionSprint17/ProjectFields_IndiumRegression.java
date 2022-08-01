@@ -276,7 +276,7 @@ public class ProjectFields_IndiumRegression {
 	 * @Author :Baskar Date:13/07/2022
 	 * @Description : Verify list of project fields that are automatically released to New Security Group
 	 */
-	@Test(description = "RPMXCON-55930", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-55930", enabled = true, groups = { "regression" })
 	public void verifyMetaDataFieldsInDocView() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-55930");
 		baseClass.stepInfo(
@@ -426,7 +426,7 @@ public class ProjectFields_IndiumRegression {
 	 * @Author :Baskar Date:13/07/2022
 	 * @Description : Verify list of project fields that are automatically released to Default Security Group
 	 */
-	@Test(description = "RPMXCON-55929", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-55929", enabled = true, groups = { "regression" })
 	public void verifyMetaDataFieldsInDocViewDSG() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-55929");
 		baseClass.stepInfo(
