@@ -10634,10 +10634,10 @@ public class SessionSearch {
 		Actions action = new Actions(driver.getWebDriver());
 		action.clickAndHold(GetCurrentSliderConfidenceThreshold().getWebElement());
 		if (ThresholdValue.equalsIgnoreCase("max")) {
-			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), 115, 0);
+			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), 145, 0);
 		}
 		if (ThresholdValue.equalsIgnoreCase("min")) {
-			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), -115, 0);
+			action.moveToElement(GetCurrentSliderConfidenceThreshold().getWebElement(), -145, 0);
 		}
 		action.release();
 		action.build().perform();

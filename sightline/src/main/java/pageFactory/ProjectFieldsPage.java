@@ -166,6 +166,7 @@ public class ProjectFieldsPage {
 	
 	
 	
+	
 
 	// Annotation Layer added successfully
 	public ProjectFieldsPage(Driver driver) {
@@ -611,7 +612,6 @@ public class ProjectFieldsPage {
 			getFieldDescriptionTextArea().SendKeys(description);
 			base.waitForElement(getSaveButton());
 			getSaveButton().waitAndClick(10);
-			base.VerifySuccessMessage("Edit Project Field successful");
 			base.passedStep(fieldName + " field description edited successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
