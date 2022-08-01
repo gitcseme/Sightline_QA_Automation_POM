@@ -946,6 +946,7 @@ public class CollectionPage {
 		if (Next) {
 			getNextBtn().waitAndClick(10);
 			base.stepInfo("Clicked Next Button");
+			driver.waitForPageToBeReady();
 			if (verifyTab)
 				verifyCurrentTab("Dataset Selection");
 		}

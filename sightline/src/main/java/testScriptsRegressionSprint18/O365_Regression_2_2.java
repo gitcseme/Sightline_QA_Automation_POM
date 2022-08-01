@@ -461,6 +461,7 @@ public class O365_Regression_2_2 {
 	@Test(description = "RPMXCON-60649", enabled = true, groups = { "regression" })
 	public void verifErroMsgWhenEnteringSameColName() throws Exception {
 		String expectedErrorMsg = "16001000009 : Collection already exists. Please enter unique name.";
+		String collectionNewName = "Collection" + Utility.dynamicNameAppender();
 
 		// Create Collection
 		String collectionName = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
@@ -492,10 +493,10 @@ public class O365_Regression_2_2 {
 		// verify Error Message
 		base.VerifyErrorMessage(expectedErrorMsg);
 
-		//enter new collection name
+		// enter new collection name
 		collection.getCollectioName().waitAndClick(10);
 		collection.getCollectioName().SendKeys(collectionNewName);
-		base.stepInfo("Entered New Collection Name : "+collectionNewName);
+		base.stepInfo("Entered New Collection Name : " + collectionNewName);
 
 		// initiate collection process & click next Btn
 		collection.selectInitiateCollectionOrClickNext(false, true, true);
