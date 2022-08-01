@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -98,6 +99,76 @@ public class Assignments_Regression_2_2 {
 
 		// logout
 		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @Description :To verify that created Coding Form is displayed on Coding Form field for Assignment.
+	 */
+	@Test(description = "RPMXCON-53970", enabled = true, groups = { "regression" })
+	public void verifyCreatedCfDisplayedInAssignment() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-53970");
+		baseClass.stepInfo("To verify that created Coding Form is displayed on Coding Form field for Assignment.");
+		String assignmentName = "Assgn" + Utility.dynamicNameAppender();
+		String cfName = "cf"+Utility.dynamicNameAppender();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		CodingForm codingForm = new CodingForm(driver);
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    baseClass.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(cfName);
+	    codingForm.CreateCodingFormWithParameter(cfName,"Responsive",null,null,"tag");
+	    codingForm.addcodingFormAddButton();
+	    codingForm.saveCodingForm();
+	    assignPage.createAssignment_withoutSave(assignmentName, cfName);
+	    baseClass.passedStep("Newly created codingform displayed in assignment successfully");
+	    codingForm.deleteCodingForm(cfName, cfName);
+	    loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException
+	 * @Description :To verify that Coding form field is displayed for Assignment only
+	 */
+	@Test(description = "RPMXCON-53964", enabled = true, groups = { "regression" })
+	public void verifyCfFieldDisplayedInAssignment() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-53964");
+		baseClass.stepInfo("To verify that Coding form field is displayed for Assignment only");
+		String assignmentName = "Assgn" + Utility.dynamicNameAppender();
+		String assignmentGrpName = "AssgnGrp" + Utility.dynamicNameAppender();
+		System.out.println(assignmentGrpName);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.createCascadeNonCascadeAssgnGroup_withoutSave(assignmentGrpName, "Yes");
+		if(assignPage.getSelectSortCodingForm_Tab().isDisplayed()==false) {
+			baseClass.passedStep("Coding form field is not displayed in new assignment group page");
+		}else {
+			baseClass.failedStep("Coding form field is displayed in new assignment group page");
+		}
+		baseClass.waitTillElemetToBeClickable(assignPage.SaveButton());
+		assignPage.SaveButton().waitAndClick(10);
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.editAssgnGrp(assignmentGrpName,"No");
+		if(assignPage.getSelectSortCodingForm_Tab().isDisplayed()==false) {
+			baseClass.passedStep("Coding form field is not displayed in edit assignment group page");
+		}else {
+			baseClass.failedStep("Coding form field is displayed in edit assignment group page");
+		}
+		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignPage.DeleteAssgnGroup(assignmentGrpName);		
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		baseClass.passedStep("Coding form fiels is displayed in new assignment page");
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		if(assignPage.getSelectSortCodingForm_Tab().isDisplayed()) {
+			baseClass.passedStep("Coding form field is displayed in edit assignment page");
+		}else {
+			baseClass.failedStep("Coding form field is not displayed in edit assignment page");
+		}
+		assignPage.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+		
 	}
 
 	@DataProvider(name = "Users")
