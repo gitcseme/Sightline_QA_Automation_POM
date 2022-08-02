@@ -892,6 +892,21 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
+	public Element emailToAuthorNameAddress() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DATFieldMappingDataList[1].SelectedSourceId']//option[text()='EmailToNamesAndAddresses']");
+	}
+	
+	public Element EmailBCCNamesAndAddresses() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DATFieldMappingDataList[1].SelectedSourceId']//option[text()='EmailBCCNamesAndAddresses']");
+	}
+	public Element EmailCCNamesAndAddresses() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DATFieldMappingDataList[1].SelectedSourceId']//option[text()='EmailCCNamesAndAddresses']");
+	}
+	
+	public Element emailAuthorNameAddress() {
+		return driver.FindElementByXPath("//select[@name='DATComponentModelData.DATFieldMappingDataList[1].SelectedSourceId']//option[text()='EmailAuthorNameAndAddress']");
+	}
+	
 	public Element getSelect_Can_RedactionStyle_Dropdown() {
 		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Can']");
 	}
