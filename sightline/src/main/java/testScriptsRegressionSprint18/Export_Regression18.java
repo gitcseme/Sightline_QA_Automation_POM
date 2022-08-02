@@ -209,7 +209,119 @@ public class Export_Regression18 {
 		loginPage.logout();
 
 	}
+	/**
+	 * @author Brundha RPMXCON-50729 Date:8/02/2022
+	 * @Description Verify that Preview option is not available if TIFF/PDF is not selected in Productionp-Export
+	 */
+	@Test(description = "RPMXCON-50729", enabled = true, groups = { "regression" })
+	public void verifyingMP3WithPreviewBtnDisabled() throws Exception {
 
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50729 -Export component");
+		base.stepInfo(
+				"Verify that Preview option is not available if TIFF/PDF is not selected in Productionp-Export");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingMP3FileWithBurnRedaction();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		if(!page.getbtnPreview().isElementAvailable(2)) {
+			base.passedStep("Preview button is not displayed as expected");
+		}else {
+			base.failedStep("Preview button is  displayed");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Brundha RPMXCON-50728 Date:8/02/2022
+	 * @Description Verify that if user selects the 'Genrate TIFF' option in Production-Export then preview document should be displays
+	 */
+	@Test(description = "RPMXCON-50728", enabled = true, groups = { "regression" })
+	public void verifyingTIFFFWithPreviewBtnEnabled() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50728 -Export component");
+		base.stepInfo(
+				"Verify that if user selects the 'Genrate TIFF' option in Production-Export then preview document should be displays");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionWithBranding(tagname,Input.searchString4, Input.tagNamePrev);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		page.viewingPreviewInSummaryTab();
+		page.verifyingPdfgeneration(Input.searchString4);
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

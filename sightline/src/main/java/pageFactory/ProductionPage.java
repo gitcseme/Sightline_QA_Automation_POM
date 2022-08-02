@@ -5,11 +5,13 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20919,6 +20921,55 @@ public void verifyingExportFile(int purehit,String prefixID,String suffixID,Stri
 	        File imageFile = new File(Input.fileDownloadLocation + prefixID +  "(" + i + ")"+ suffixID + ".000" + subBates + ".tiff");
 	        OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
 	    }
+		
+	}
+	/**
+	 * @author Brundha.T
+	 * @param i
+	 * @param classification
+	 * @param sourceField
+	 * @Description filling Dat Section
+	 */
+	public void addingDatField(int i, String classification, String sourceField,String BatesNumber) {
+		getDATChkBox().Click();
+		base.waitForElement(getDATTab());
+		getDATTab().Click();
+		base.waitForElement(getDAT_FieldClassification(i));
+		getDAT_FieldClassification(i).selectFromDropdown().selectByVisibleText(classification);
+		getDAT_SourceField(i).selectFromDropdown().selectByVisibleText(sourceField);
+		getDAT_DATField(i).waitAndClick(3);
+		driver.waitForPageToBeReady();
+		getDAT_DATField(i).SendKeys(BatesNumber);
+		base.stepInfo(i + "th Dat section is filled");
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param DatFile
+	 * @param value
+	 * @param value1
+	 * @param CompareString
+	 * @throws IOException
+	 * Description:verifying downloaded dat file
+	 */
+	public void verifyingDATFile(File DatFile,int value,int value1,String CompareString ) throws IOException {
+		String line;
+		List<String> lines = new ArrayList<>();
+		BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+		while ((line = brReader.readLine()) != null) {
+			lines.add(line);
+		}
+		driver.waitForPageToBeReady();
+		String[] arrOfStr = lines.get(value).split("þ");
+		String OutputDatValue = arrOfStr[value1];
+		System.out.println(OutputDatValue);
+		if (CompareString.equals(OutputDatValue)) {
+			base.passedStep(""+OutputDatValue+" is displayed in DAT File");
+		} else {
+			base.failedStep(""+OutputDatValue+" is not displayed in DAT File");
+		}
+
+		brReader.close();
 		
 	}
 }
