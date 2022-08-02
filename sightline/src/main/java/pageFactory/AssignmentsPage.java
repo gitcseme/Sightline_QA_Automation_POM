@@ -10480,7 +10480,7 @@ public class AssignmentsPage {
 					+ countToAssign + "% /" + PercentageOfDocAssigned);
 			getPersistCB_ExistAssgn().waitAndClick(5);
 
-		} else if (samplemethod.equalsIgnoreCase("c")) {
+		} else if (samplemethod.equalsIgnoreCase("Count of Selected Docs")) {
 			getsampleMethod().selectFromDropdown().selectByVisibleText("Count of Selected Docs");
 			getCountToAssign().SendKeys(countToAssign);
 			bc.stepInfo(
@@ -10511,7 +10511,7 @@ public class AssignmentsPage {
 		int ExpectedDocCount = Integer.parseInt(FinalCount);
 		int ActualDocCount = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName));
 		assertion.assertEquals(ActualDocCount, ExpectedDocCount);
-		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets using " + samplemethod + "");
+		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets[DocCount found in assignment page is "+ActualDocCount+"] using " + samplemethod + "");
 
 		assertion.assertAll();
 	}
@@ -10531,4 +10531,7 @@ public class AssignmentsPage {
 		}
 	}
 
+
+	
+	
 }

@@ -12857,4 +12857,52 @@ public class SessionSearch {
 			base.failedStep("Error Message is Not Displayed");
 		}
 	}
+
+	public Element getBulkAssign_NewAssignment() {
+		return driver.FindElementByXPath("//li[@id='tabnewAssignment']//a[text()='New Assignment']");
+	}
+
+	public Element getUnassign_ExistingAssignButton() {
+		return driver.FindElementByXPath("//li[@class='existingunassignment active']/a[@id='tabExitingUnAssign']");
+	}
+
+	public ElementCollection getUnassign_ExistingAssignments() {
+		return driver.FindElementsByXPath("//*[@id='jstreeUnAssign']//a");
+	}
+	public Element getUnAssignRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='toUnassign']/parent::label/i");
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will verify if user selects un-assign
+	 *         option then only existing tab displayed with assignments to select
+	 *         for un-assign.
+	 */
+	public void verifyUnAssignOptions() {
+		base.waitForElement(getUnAssignRadioBtn());
+		base.stepInfo("Assign/UnAssign pop up displayed");
+		getUnAssignRadioBtn().Click();
+		String BulkAssign_Existing = getBulkAssignSelectedExistingAssignment().GetAttribute("style");
+		System.out.println(BulkAssign_Existing);
+		String BulkAssign_New = getBulkAssign_NewAssignment().GetAttribute("style");
+		System.out.println(BulkAssign_New);
+		String BulkUnAssign_Existing = getUnassign_ExistingAssignButton().GetAttribute("style");
+		System.out.println(BulkUnAssign_Existing);
+		if (BulkAssign_Existing.contains("display: none;") && BulkAssign_New.contains("display: none;")
+				&& BulkUnAssign_Existing.equals("")) {
+			base.passedStep("If user click unassign tab Only existing assign tab is displayed");
+			List<WebElement> elementList = null;
+			elementList = getUnassign_ExistingAssignments().FindWebElements();
+			if (elementList.size() > 1) {
+				base.passedStep(" Existing Assignments tab  loaded and " + " all the existing assignments  displayed");
+			} else {
+				base.failedStep(
+						" Existing Assignments tab not loaded and " + " all the existing assignments not displayed");
+			}
+		} else {
+			base.failedStep("If user click unassign tab Only existing assign tab is displayed");
+		}
+
+	}
+
 }
