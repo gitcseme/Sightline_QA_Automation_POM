@@ -52,7 +52,7 @@ public class AdvancedSearchRegression {
 
 		sessionSearch = new SessionSearch(driver);
 		loginPage = new LoginPage(driver);
-		baseClass = new BaseClass(driver); 
+		baseClass = new BaseClass(driver);
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -85,6 +85,13 @@ public class AdvancedSearchRegression {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "\"Good Morn!ing2\"" },
 				{ Input.pa1userName, Input.pa1password, "\"Good Morn~ing1\"" },
 				{ Input.rev1userName, Input.rev1password, "\"Good Morn@ing3\"" } };
+		return users;
+	}
+
+	@DataProvider(name = "paRmuRevUsers")
+	public Object[][] paRmuRevUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
 		return users;
 	}
 
@@ -283,6 +290,7 @@ public class AdvancedSearchRegression {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @description:Verify that - Application returns all the documents which are
@@ -427,6 +435,59 @@ public class AdvancedSearchRegression {
 				"Verification of Persistent Search Hits option for new assignments tab on Assign/Unassign pop up.");
 		agnmt.verifyPersistentHitIcon(false);
 
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 07/28/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that while Searching Audio with Conceptual searches-
+	 *              configured Audio search settings does not revert back to
+	 *              inappropriate setting in \"Audio\" block on \"Advanced Search\"
+	 *              screen. RPMXCON-48160
+	 */
+	@Test(description = "RPMXCON-48160", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
+	public void verifySearchingAudioWithConceptualSearchesNotRevertBackInappropriateSetting(String username,
+			String password, String User) throws InterruptedException {
+		List<String> searchString = new ArrayList<String>();
+		String conceptualSearchString = "sample";
+		String language = Input.language;
+		int thresholdInput = 65;
+		String operator = "ALL";
+		String location = "Within:";
+		String seconds = "5";
+		searchString.add(Input.audioSearchString1);
+		searchString.add(Input.audioSearch);
+
+		// login as User
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("RPMXCON-48160 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that while Searching Audio with Conceptual searches-  configured Audio search settings does not revert back to inappropriate setting in \"Audio\" block  on \"Advanced Search\" screen");
+
+		// configure audio search
+		baseClass.stepInfo("Configuring Audio Search Block.");
+		String thresholdValue = sessionSearch.configureAudioSearchBlock(searchString.get(0), searchString.get(1),
+				language, thresholdInput, operator, location, seconds);
+
+		// performing Conceptual Search
+		baseClass.stepInfo("Configuring Conceptual Search.");
+		sessionSearch.advancedSearchConceptual(conceptualSearchString);
+		sessionSearch.serarchWP();
+
+		// validating audio search result
+		sessionSearch.validateAudioSearchResult(searchString, operator, language, seconds, thresholdValue);
+
+		// validating Conceptual search Result
+		String actualTagSearchResult = sessionSearch.getConceptualSearchResult().getText();
+		baseClass.compareTextViaContains(actualTagSearchResult, conceptualSearchString,
+				"actual Conceptual search String Present in Adavnced search Result Page Match with the Expected Search String.",
+				"actual search String doesn't match with the Expected Search String.");
+
+		// logOut
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
