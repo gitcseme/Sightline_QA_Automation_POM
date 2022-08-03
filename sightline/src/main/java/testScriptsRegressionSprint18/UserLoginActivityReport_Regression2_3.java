@@ -19,8 +19,6 @@ import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.UserLoginActivityReport;
 import pageFactory.Utility;
-import retry.CustomTestNGListener;
-import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
 public class UserLoginActivityReport_Regression2_3 {
 	Driver driver;
