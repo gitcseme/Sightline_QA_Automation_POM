@@ -88,7 +88,7 @@ public class UserLoginActivityReport_Regression2_3 {
 		}else {
 			userLoginActivityRptPg.verifyLoggedOutUserNotPresent(Input.pa1userName);
 		}
-		bc.passedStep("Suuccessfully verifed the user is not displayed when user logged out from application");
+		bc.passedStep("Successfully verifed the user is not displayed when user logged out from application");
 		lp.logout();
 	}
 	/**
