@@ -417,6 +417,90 @@ public class DomainManagement_Regression_04 {
 		
 	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/02/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that error message should be displayed when domain is not selected while creating domain user by System Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52789",enabled = true, groups = {"regression" })
+	public void verifyErrorMsgSelectDomain() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-52789");
+		base.stepInfo("Verify that error message should be displayed when domain is not selected while creating domain user by System Admin");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		
+		//add new user popup open
+		user.openAddNewUserPopUp();
+		softAssertion.assertTrue((boolean)user.getFirstName().isDisplayed());
+		base.passedStep("Add New User pop up was open");
+		
+		//select add details
+		user.getFirstName().SendKeys(Input.randomText);
+		user.getLastName().SendKeys(Input.randomText);
+		user.getSelectRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		user.getEmail().SendKeys(Input.da1userName);
+		user.getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		user.getSave().waitAndClick(5);
+		
+		//verify error message
+		softAssertion.assertTrue((boolean)base.text("You must specify a domain").isDisplayed());
+		base.passedStep("Error message was displayed to select domain");
+		
+		softAssertion.assertAll();
+		base.passedStep("Verified that error message should be displayed when domain is not selected while creating domain user by System Admin");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/02/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that unassigned User List, should contain all other users in the system which are not associated to selected Domain
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53019",enabled = true, groups = {"regression" })
+	public void verifyUnAssignedUser() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-53019");
+		base.stepInfo("To verify that unassigned User List, should contain all other users in the system which are not associated to selected Domain");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//open assing tab
+		user.openAssignUser();
+		user.getSelectDomainname().selectFromDropdown().selectByVisibleText(Input.domainName);
+		driver.waitForPageToBeReady();
+		
+		//get unassigned userNmae
+		String[] username = user.getNthUnAssignedUser(1).getText().trim().split(" ");
+		user.getPopUpCloseBtn().waitAndClick(5);
+		
+		//verify that user not assigned in that domain
+		user.filterByName(username[0]);
+		softAssertion.assertFalse((boolean)base.text(Input.domainName).isDisplayed());
+		base.passedStep("List of users displays the users who are not assigned with any role to Selected Domain");
+		
+		softAssertion.assertAll();
+		base.passedStep("veriiedy that unassigned User List, should contain all other users in the system which are not associated to selected Domain");
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

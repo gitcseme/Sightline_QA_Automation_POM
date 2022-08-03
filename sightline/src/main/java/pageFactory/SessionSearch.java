@@ -105,6 +105,19 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
+
+	public Element getFromBatesBtn() {
+		return driver.FindElementByXPath("//input[@id='BatesFrom']");
+	}
+
+	public Element getToBatesBtn() {
+		return driver.FindElementByXPath("//input[@id='BatesTo']");
+	}
+
+	public Element getSearchTerm() {
+		return driver.FindElementByXPath("(//td[@class='value']//input)[last()]");
+	}
+
 	public Element getErrorMsg() {
 		return driver.FindElementByXPath("//div[@id='validationErrMsg']");
 	}
@@ -1955,7 +1968,7 @@ public class SessionSearch {
 	public ElementCollection getAllTilesName() {
 		return driver.FindElementsByXPath("(//ul[@id='gallery'])[last()]//li/a");
 	}
-	
+
 	public Element getConceptualSearchResult() {
 		return driver.FindElementByXPath("//td[text()='Conceptual']/parent::tr//span[@class='badge']");
 	}
@@ -3423,8 +3436,8 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelease_ButtonRelease().waitAndClick(20);
-		
-		if(getTallyContinue().isElementAvailable(5)) {
+
+		if (getTallyContinue().isElementAvailable(5)) {
 			getTallyContinue().waitAndClick(10);
 		}
 
@@ -12747,7 +12760,6 @@ public class SessionSearch {
 		return expectedCount;
 	}
 
-	
 	/**
 	 * @Author Jeevitha
 	 */
@@ -12839,7 +12851,7 @@ public class SessionSearch {
 		getMetaDataInserQuery().waitAndClick(5);
 		driver.scrollPageToTop();
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Error Messagein save search popup
@@ -12847,7 +12859,7 @@ public class SessionSearch {
 	 */
 
 	public void verifyErrorMsgInSavePopUp(String expectedMsg) {
-		
+
 		if (getErrorMsg().isElementAvailable(10)) {
 			String actualMsg = getErrorMsg().getText();
 			String passMsg = "Displayed Error Msg : " + actualMsg;
@@ -12902,6 +12914,56 @@ public class SessionSearch {
 		} else {
 			base.failedStep("If user click unassign tab Only existing assign tab is displayed");
 		}
+
+
+	/**
+	 * @Author Jeevitha
+	 * @Description  : enters production Date/Bates Range in Work Product
+	 * @param productionDate
+	 * @param Bates
+	 * @param FromDate
+	 * @param FromBates
+	 * @param ToBates
+	 * @throws InterruptedException
+	 */
+	public void selectWPWithProdBatesAndDateRange(boolean productionDate, boolean Bates, String FromDate, String FromBates,
+			String ToBates) throws InterruptedException {
+
+		base.waitForElement(getProductionBtn());
+		getProductionBtn().waitAndClick(5);
+		if (productionDate) {
+			driver.waitForPageToBeReady();
+			date("From Date").SendKeys(FromDate);
+			selectDate("To Date");
+		}
+
+		if (Bates) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFromBatesBtn());
+			getFromBatesBtn().SendKeys(FromBates);
+
+			driver.waitForPageToBeReady();
+			getToBatesBtn().SendKeys(ToBates);
+		}
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(5);
+		base.stepInfo("Inserted Query");
+
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * @AUthor Jeevitha
+	 * @Description  :returns configured query in dome value
+	 * @return
+	 */
+	public String configuredQuery() {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		String searchTerm = getSearchTerm().GetAttribute("value");
+		base.passedStep("Configured query is : " + searchTerm);
+		return searchTerm;
 
 	}
 
