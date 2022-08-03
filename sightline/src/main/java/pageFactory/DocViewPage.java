@@ -3560,6 +3560,13 @@ public class DocViewPage {
 
 	}
 	
+	public Element getDocViewDrpDwnCf() {
+		return driver.FindElementByXPath("//select[@id='codingFormList']");
+	}
+	public Element getDocViewDrpDwnCfChild() {
+		return driver.FindElementByXPath("//select[@id='codingFormListChild']");
+	}
+	
 	
 	public DocViewPage(Driver driver) {
 

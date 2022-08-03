@@ -2,9 +2,11 @@ package testScriptsRegressionSprint18;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -663,6 +665,468 @@ public class DomainManagement_Regression {
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify that Project Admin user(s) should be listed 
+	 *               under the non-domain project user list page
+	 */
+	@Test(description = "RPMXCON-53037", enabled = true, groups = { "regression" })
+	public void verifyNonDomainProjectAccessForPAFromPAUser() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53037");
+		baseClass.stepInfo(
+				"Verify that Project Admin user(s) should be listed under "
+				+ "the non-domain project user list page");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating the project access has how many user
+		baseClass.stepInfo("Validation for Yes button confirmation");
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.NonDomainProject);
+		List<WebElement> data=userManage.getAssignedUserListPA().FindWebElements();
+		List<String> splitValue=new ArrayList<String>();
+		String[] data1=null;
+		for (WebElement webElement : data) {
+			String assignUser= webElement.getText();
+			System.out.println(assignUser);
+			String[] split=assignUser.split("\\|\\|");
+			data1=split[0].split(" ");
+			splitValue.add(data1[0]);
+			
+		}
+		System.out.println(splitValue);
+		baseClass.waitForElement(userManage.getDomainUserCancelButton());
+		userManage.getDomainUserCancelButton().waitAndClick(5);
+		baseClass.stepInfo("Taking user list from sa user for non-domain project");
+		loginPage.logout();
+		
+		// login as
+		// verify from pa user , user name listed
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.pa1userName);
+		baseClass.selectproject(Input.NonDomainProject);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.stepInfo("From pa user, taking user list for project admin");
+		List<WebElement> firstName=userManage.getPAUserName(1).FindWebElements();
+		List<String> firstValue=new ArrayList<String>();
+		for (WebElement webElement : firstName) {
+			String assignUser= webElement.getText();
+			System.out.println(assignUser);
+			firstValue.add(assignUser);
+		}
+		System.out.println(firstName);
+		softAssertion.assertEquals(splitValue.toString(), firstValue.toString());
+		baseClass.passedStep("Who have Non-domain project access displayed in Pa user");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify that Project Admin user(s) should be listed under the domain project user list page
+	 */
+	@Test(description = "RPMXCON-53038", enabled = true, groups = { "regression" })
+	public void verifyDomainProjectAccessForPAFromPAUser() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53038");
+		baseClass.stepInfo(
+				"Verify that Project Admin user(s) should be listed under the domain project user list page");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating the project access has how many user
+		baseClass.stepInfo("Validation for Yes button confirmation");
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.projectName);
+		baseClass.waitTime(3);
+		List<WebElement> data=userManage.getAssignedUserListPA().FindWebElements();
+		List<String> splitValue=new ArrayList<String>();
+		String[] data1=null;
+		for (WebElement webElement : data) {
+			String assignUser= webElement.getText();
+			System.out.println(assignUser);
+			String[] split=assignUser.split("\\|\\|");
+			data1=split[0].split(" ");
+			splitValue.add(data1[0]);
+		}
+		System.out.println(splitValue);
+		baseClass.waitForElement(userManage.getDomainUserCancelButton());
+		userManage.getDomainUserCancelButton().waitAndClick(5);
+		baseClass.stepInfo("Taking user list from sa user for domain project");
+		loginPage.logout();
+		
+		// login as
+		// verify from pa user , user name listed
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.pa1userName);
+		baseClass.selectproject(Input.projectName);
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.stepInfo("From pa user, taking user list for project admin");
+		List<String> firstValue=new ArrayList<String>();
+		
+		baseClass.waitTime(4);
+		driver.scrollingToBottomofAPage();
+		String count=userManage.getPaginationLastNumber().getText().toString();	
+		int foo = Integer.parseInt(count);
+		for (int i = 0; i<foo; i++) {
+			boolean status=userManage.getPAUserName(1).isElementAvailable(4);
+			if (status == true) {
+				baseClass.waitTime(3);
+				List<WebElement> firstNames =userManage.getPAUserName(1).FindWebElements();
+				for (WebElement webElement : firstNames) {
+					String assignUser= webElement.getText();
+					System.out.println(assignUser);
+					String[] split=assignUser.split("\\|\\|");
+					String[] nameSplit=split[0].split(" ");
+					firstValue.add(nameSplit[0]);
+					System.out.println(firstValue);
+				}
+					if (userManage.getUserPaginationNextButton().isElementAvailable(5)) {
+						userManage.getUserPaginationNextButton().waitAndClick(5);
+						
+					}
+				}
+		
+			}
+		System.out.println(splitValue);
+		System.out.println(firstValue);
+		softAssertion.assertEquals(splitValue.toString().toLowerCase(), firstValue.toString().toLowerCase());
+		baseClass.passedStep("Who have domain project access displayed in Pa user fot project admin");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify Unassigned users list on selection of domain when PA/RMU/Reviewer 
+	 *               user is unassigned from non-domain project and saved
+	 */
+	@Test(description = "RPMXCON-53053", enabled = true, groups = { "regression" })
+	public void verifyUnAssignuserListForNonDomain() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53053");
+		baseClass.stepInfo(
+				"Verify Unassigned users list on selection of domain when PA/RMU/Reviewer "
+				+ "user is unassigned from non-domain project and saved");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String fullName = firstName + ' ' + lastName;
+		System.out.println(fullName);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating project tab for confirmation message
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.createNewUser(firstName, lastName, role, emailId, Input.domainName,Input.NonDomainProject);
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.NonDomainProject);
+		userManage.selectRoleInAssignUser(role);
+		
+		// validating assigned user list for non-domain project
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(fullName));
+		boolean projectNotPresent=userManage.getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		softAssertion.assertTrue(projectNotPresent);
+		System.out.println(projectNotPresent);
+		baseClass.stepInfo("When non-domain project selected, assigned user displayed in assigned userlist");
+		userManage.getCheckingAssignedUserSG(fullName).waitAndClick(5);
+		baseClass.waitForElement(userManage.getLeftArrowForProject());
+		userManage.getLeftArrowForProject().waitAndClick(10);
+		userManage.getsavedomainuser().waitAndClick(10);
+		
+		// again validating assign user from domain tab
+		baseClass.stepInfo("validating from domain tab");
+		userManage.openAssignUser();
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flag=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flag);
+		
+		// selecting domain from dropdown
+		baseClass.stepInfo("validating from domain tab after selecting dropdown domain name");
+		baseClass.waitForElement(userManage.getSelectDomainname());
+		userManage.getSelectDomainname().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flagOne=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flagOne);
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify Unassinged users list on selection of domain when PA/RMU/Reviewer 
+	 *               user is unassigned from domain project and saved
+	 */
+	@Test(description = "RPMXCON-53054", enabled = true, groups = { "regression" })
+	public void verifyUnAssignuserListForDomain() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53054");
+		baseClass.stepInfo(
+				"Verify Unassinged users list on selection of domain when PA/RMU/Reviewer "
+				+ "user is unassigned from domain project and saved");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String fullName = firstName + ' ' + lastName;
+		System.out.println(fullName);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating project tab for confirmation message
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.createNewUser(firstName, lastName, role, emailId, Input.domainName,Input.projectName);
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.projectName);
+		userManage.selectRoleInAssignUser(role);
+		
+		// validating assigned user list for non-domain project
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(fullName));
+		boolean projectNotPresent=userManage.getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		softAssertion.assertTrue(projectNotPresent);
+		System.out.println(projectNotPresent);
+		baseClass.stepInfo("When domain project selected, assigned user displayed in assigned userlist");
+		userManage.getCheckingAssignedUserSG(fullName).waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getLeftArrowForProject());
+		userManage.getLeftArrowForProject().waitAndClick(10);
+		userManage.getsavedomainuser().waitAndClick(10);
+		
+		// again validating assign user from domain tab
+		baseClass.stepInfo("validating from domain tab");
+		userManage.openAssignUser();
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flag=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flag);
+		
+		// selecting domain from dropdown
+		baseClass.stepInfo("validating from domain tab after selecting dropdown domain name");
+		baseClass.waitForElement(userManage.getSelectDomainname());
+		userManage.getSelectDomainname().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flagOne=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flagOne);
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify Unassinged users list on selection of domain when PA/RMU/Reviewer 
+	 *               user is unassigned from non-domain project moved to Domains tab
+	 */
+	@Test(description = "RPMXCON-53055", enabled = true, groups = { "regression" })
+	public void verifyUnAssignuserListForNonDomainConfirmMsg() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53055");
+		baseClass.stepInfo(
+				"Verify Unassinged users list on selection of domain when PA/RMU/Reviewer "
+				+ "user is unassigned from non-domain project moved to Domains tab");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String fullName = firstName + ' ' + lastName;
+		System.out.println(fullName);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating project tab for confirmation message
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.createNewUser(firstName, lastName, role, emailId, Input.domainName,Input.NonDomainProject);
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.NonDomainProject);
+		userManage.selectRoleInAssignUser(role);
+		
+		// validating assigned user list for non-domain project
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(fullName));
+		boolean projectNotPresent=userManage.getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		softAssertion.assertTrue(projectNotPresent);
+		System.out.println(projectNotPresent);
+		baseClass.stepInfo("When non-domain project selected, assigned user displayed in assigned userlist");
+		userManage.getCheckingAssignedUserSG(fullName).waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getLeftArrowForProject());
+		userManage.getLeftArrowForProject().waitAndClick(10);
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getConfirmMsg());
+		String confirmMsg=userManage.getConfirmMsg().getText();
+		softAssertion.assertEquals(confirmMsg, "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?");
+		baseClass.waitForElement(baseClass.getYesBtn());
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getDomainUserCancelButton());
+		userManage.getDomainUserCancelButton().waitAndClick(5);
+		
+		// again validating assign user from domain tab
+		baseClass.stepInfo("validating from domain tab");
+		userManage.openAssignUser();
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flag=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flag);
+		
+		// selecting domain from dropdown
+		baseClass.stepInfo("validating from domain tab after selecting dropdown domain name");
+		baseClass.waitForElement(userManage.getSelectDomainname());
+		userManage.getSelectDomainname().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flagOne=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flagOne);
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @throws Exception
+	 * @Author :Baskar date: NA Modified date:NA Modified by:
+	 * @Description :Verify Unassinged users list on selection of domain when PA/RMU/Reviewer 
+	 *               user is unassigned from domain project moved to Domains tab
+	 */
+	@Test(description = "RPMXCON-53056", enabled = true, groups = { "regression" })
+	public void verifyUnAssignuserListForDomainConfirmMsg() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-53056");
+		baseClass.stepInfo(
+				"Verify Unassinged users list on selection of domain when PA/RMU/Reviewer "
+				+ "user is unassigned from domain project moved to Domains tab");
+		baseClass = new BaseClass(driver);
+		userManage = new UserManagement(driver);
+		doamain = new DomainDashboard(driver);
+		projectPage = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		data = new DataSets(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = Input.ProjectAdministrator;
+		String emailId = Input.randomText + Utility.dynamicNameAppender() + "@consilio.com";
+		String fullName = firstName + ' ' + lastName;
+		System.out.println(fullName);
+		
+		// login as
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Login as a sa user :" + Input.sa1userName);
+		driver.waitForPageToBeReady();
+
+		// validating project tab for confirmation message
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		userManage.createNewUser(firstName, lastName, role, emailId, Input.domainName,Input.projectName);
+		userManage.openAssignUser();
+		userManage.goToProjectTabInAssignUser();
+		userManage.selectProjectInAssignUser(Input.projectName);
+		userManage.selectRoleInAssignUser(role);
+		
+		// validating assigned user list for non-domain project
+		baseClass.waitForElement(userManage.getCheckingAssignedUserSG(fullName));
+		boolean projectNotPresent=userManage.getCheckingAssignedUserSG(fullName).isElementAvailable(3);
+		softAssertion.assertTrue(projectNotPresent);
+		System.out.println(projectNotPresent);
+		baseClass.stepInfo("When domain project selected, assigned user displayed in assigned userlist");
+		userManage.getCheckingAssignedUserSG(fullName).waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getLeftArrowForProject());
+		userManage.getLeftArrowForProject().waitAndClick(10);
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		
+		// validation for yes button
+		baseClass.stepInfo("Validation for Yes button confirmation");
+		baseClass.waitForElement(userManage.getConfirmMsg());
+		String confirmMsg=userManage.getConfirmMsg().getText();
+		softAssertion.assertEquals(confirmMsg, "You have not saved your edits. If you do not save, you will lose your changes. Do you want to save your changes?");
+		baseClass.waitForElement(baseClass.getYesBtn());
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.waitForElement(userManage.getDomainUserCancelButton());
+		userManage.getDomainUserCancelButton().waitAndClick(5);
+		
+		// again validating assign user from domain tab
+		baseClass.stepInfo("validating from domain tab");
+		userManage.openAssignUser();
+		baseClass.waitForElement(userManage.gettDomainBtn());
+		userManage.gettDomainBtn().waitAndClick(5);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flag=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flag);
+		
+		// selecting domain from dropdown
+		baseClass.stepInfo("validating from domain tab after selecting dropdown domain name");
+		baseClass.waitForElement(userManage.getSelectDomainname());
+		userManage.getSelectDomainname().selectFromDropdown().selectByVisibleText(Input.domainName);
+		baseClass.waitTime(3);
+		baseClass.waitForElement(userManage.getSelectusertoassignindomain());
+		boolean flagOne=baseClass.dropDownValueCheck(userManage.getSelectusertoassignindomain(), fullName);
+		softAssertion.assertTrue(flagOne);
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
