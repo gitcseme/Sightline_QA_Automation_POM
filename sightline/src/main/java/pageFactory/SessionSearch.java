@@ -1972,6 +1972,21 @@ public class SessionSearch {
 	public Element getConceptualSearchResult() {
 		return driver.FindElementByXPath("//td[text()='Conceptual']/parent::tr//span[@class='badge']");
 	}
+	
+	public Element getBulkAssign_NewAssignment() {
+		return driver.FindElementByXPath("//li[@id='tabnewAssignment']//a[text()='New Assignment']");
+	}
+
+	public Element getUnassign_ExistingAssignButton() {
+		return driver.FindElementByXPath("//li[@class='existingunassignment active']/a[@id='tabExitingUnAssign']");
+	}
+
+	public ElementCollection getUnassign_ExistingAssignments() {
+		return driver.FindElementsByXPath("//*[@id='jstreeUnAssign']//a");
+	}
+	public Element getUnAssignRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='toUnassign']/parent::label/i");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -12870,20 +12885,7 @@ public class SessionSearch {
 		}
 	}
 
-	public Element getBulkAssign_NewAssignment() {
-		return driver.FindElementByXPath("//li[@id='tabnewAssignment']//a[text()='New Assignment']");
-	}
-
-	public Element getUnassign_ExistingAssignButton() {
-		return driver.FindElementByXPath("//li[@class='existingunassignment active']/a[@id='tabExitingUnAssign']");
-	}
-
-	public ElementCollection getUnassign_ExistingAssignments() {
-		return driver.FindElementsByXPath("//*[@id='jstreeUnAssign']//a");
-	}
-	public Element getUnAssignRadioBtn() {
-		return driver.FindElementByXPath("//input[@id='toUnassign']/parent::label/i");
-	}
+	
 
 	/**
 	 * @author Jayanthi.Ganesan This method will verify if user selects un-assign
@@ -12914,6 +12916,7 @@ public class SessionSearch {
 		} else {
 			base.failedStep("If user click unassign tab Only existing assign tab is displayed");
 		}
+	}
 
 
 	/**

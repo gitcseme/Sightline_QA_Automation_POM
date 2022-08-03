@@ -874,7 +874,7 @@ public class UserManagement {
 	
 	public Element getPaginationLastNumber() {
 		return driver.FindElementByXPath("(//div[@id='dtUserList_paginate']//li[@class='paginate_button ']//a)[last()]");
-
+	}
 	public Element getNthUnAssignedUser(int n) {
 		return driver.FindElementByXPath("(//*[@id='UnAssignedUsersForDomain']/option)["+n+"]");
 
