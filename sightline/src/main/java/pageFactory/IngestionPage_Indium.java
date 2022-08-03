@@ -4621,7 +4621,6 @@ public class IngestionPage_Indium {
 		if (getApproveMessageOKButton().isElementAvailable(10)) {
 			getApproveMessageOKButton().Click();
 		}
-		getApproveMessageOKButton().waitAndClick(3);
 
 		base.stepInfo("'Preview Documents' pop up is opened successfully");
 		driver.waitForPageToBeReady();
