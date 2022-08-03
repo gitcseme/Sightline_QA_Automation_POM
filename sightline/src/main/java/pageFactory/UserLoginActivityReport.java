@@ -96,6 +96,15 @@ public class UserLoginActivityReport {
 	public Element getExportReport() {
 		return driver.FindElementByXPath("//i[@id='exportExcel']");
 	}
+	public Element getSettingsIcon() {
+		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
+	}
+	public Element getColumn(String value) {
+		return driver.FindElementByXPath("//span[text()='"+value+"']");
+	}
+	public Element getColoumnHeaderValue(String value) {
+		return driver.FindElementByXPath("//th[text()='"+value+"']");
+	}
 
 
 	public UserLoginActivityReport(Driver driver) {
@@ -192,7 +201,7 @@ public class UserLoginActivityReport {
 	 */
 	public void applyChanges() {
 		base.waitTillElemetToBeClickable(applyChangesBtn());
-		applyChangesBtn().Click();
+		applyChangesBtn().waitAndClick(10);
 		base.stepInfo("Changes applied successfully");
 	}
 	/**
@@ -368,6 +377,20 @@ public class UserLoginActivityReport {
 		 base.waitTillElemetToBeClickable(getExportReport());
 		 getExportReport().waitAndClick(10);
 		 base.VerifySuccessMessage("Your report has been pushed into the background, and you will get a notification (in the upper right-hand corner \"bullhorn\" icon when your report is completed and ready for viewing.");
+	 }
+	
+	 /**
+	  * @author Iyappan.Kasinathan
+	  * @param user
+	  * @description This method is used to verify the current logged in user is presentlogged out user is not present
+	  */
+	 public void verifyLoggedOutUserNotPresent(String user) {
+		 driver.waitForPageToBeReady();
+		 if(getCurrentLoggedInUser(user).isElementAvailable(5)==false) {
+			 base.passedStep("The logged out user not present in currently logged in user report page");
+		 }else {
+			 base.failedStep("The logged out user is present in currently logged in user report page");
+		 }		 
 	 }
 		
 }
