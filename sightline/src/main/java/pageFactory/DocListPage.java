@@ -1380,6 +1380,9 @@ public class DocListPage {
 		return driver.FindElementByXPath("//div[@id='accordion']//div[@class='panel-body']");
 	}
 	
+	public Element getDocListPerviewBtn() {
+		return driver.FindElementByXPath("//a[text()='Preview Document']");
+	}
 	public DocListPage(Driver driver) {
 
 		this.driver = driver;
