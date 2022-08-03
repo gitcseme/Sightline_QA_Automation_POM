@@ -1417,6 +1417,28 @@ public class CodingForm {
 		return driver.FindElementByXPath("//table[@id='CodingFormDataTable']/tbody//..//td[text()='"+cfName+"']");
 	}
 
+	public ElementCollection getCfChecBoxUsingSize() {
+		return driver.FindElementsByXPath("//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm']//..//i");
+	}
+
+	public ElementCollection getCfUnChecBoxUsingSize() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm'] [@checked]//..//i");
+	}
+
+	public ElementCollection getAssignedCfName() {
+		return driver.FindElementsByXPath(
+				"//table[@id='dtCodingFormList']//tbody//tr//input[@name='selectCodingForm']//..//i//ancestor::td");
+	}
+
+	public Element getStep1CfPopUp() {
+		return driver.FindElementByXPath("//span[text()='Step 01 : Add / Remove Coding Forms in this Security Group']");
+	}
+
+	public Element getStep2CfPopUp() {
+		return driver.FindElementByXPath("//span[text()='Step 02: Sort Coding Form Order']");
+	}
+
 
 	
 	
@@ -5036,8 +5058,96 @@ public class CodingForm {
        }
        else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
 		}
- 
  }
+ 
+ 
+
+/**
+* @author Malayala.Seenivasan
+* @description this method used to check 15 checkbox
+*/
+public List<String> checkingBelow15CFCheckboxForSG() {
+	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 base.waitForElement(getSetCFButton());
+	 getSetCFButton().ScrollTo();
+	 getSetCFButton().waitAndClick(10);
+	 base.waitForElement(getStep1CfPopUp());
+	 boolean flagPopup1=getStep1CfPopUp().isElementAvailable(2);
+	 base.stepInfo("Step 01 : Add / Remove Coding Forms in this Security Group");
+	 softAssertion.assertTrue(flagPopup1);
+	 int unCheck=getCfUnChecBoxUsingSize().size();
+	 for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+	 }
+	 int count=getCfChecBoxUsingSize().size();
+	 for (int i = 0; i < count; i++) {
+		List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
+		element.get(i).click();
+		// if more than 15 we can able to configure to sg
+		if (count>=15) {
+			break;
+		}
+	}
+	 List<String> name=new ArrayList<String>();
+	 List<WebElement> element=getAssignedCfName().FindWebElements();
+	 for (WebElement assignedName : element) {
+		 name.add(assignedName.getText().trim().toString());
+	}
+	 softAssertion.assertAll();
+	 return name;
+	
+	 
+}
+
+/**
+* @author Malayala.Seenivasan
+* @description this method used to default sg
+*/
+
+public void makingDefaultCfToSg(String CFName) {
+	    base.waitTime(1);
+		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
+		base.waitTime(1);
+		assgnpage.sortOrderNxtBtn().ScrollTo();
+		assgnpage.sortOrderNxtBtn().Click();
+		base.waitForElement(getStep2CfPopUp());
+		boolean flagPopup2=getStep2CfPopUp().isElementAvailable(2);
+		softAssertion.assertTrue(flagPopup2);
+		base.stepInfo("Step 02: Sort Coding Form Order");
+		if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
+			assgnpage.sortCodeFormOrderSaveBtn().Click();
+			base.waitTime(2);
+			base.passedStep("Coding Form applied successfully");
+		} else {
+			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+		}
+}
+
+/**
+* @author Malayala.Seenivasan
+* @description this method used to validate the default from manage screen
+*/
+
+public void validatingDefaultSgFromManageScreen(String CFName) {
+	 
+		base.waitForElement(getManageCodingFormButton());
+		if (getManageCodingFormButton().Displayed()) {
+			base.waitForElement(getCodingForm_Search());
+			getCodingForm_Search().SendKeys(CFName);
+			System.out.println(getSFFormCol(CFName).getText());
+			String expected=getSFFormCol(CFName).getText().trim();
+			String actual="YES (Default)";
+			System.out.println(expected);
+			System.out.println(actual);
+			softAssertion.assertEquals(actual.toLowerCase(),expected.toLowerCase());
+			softAssertion.assertAll();
+			base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+		} else {
+			base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+		}
+	 
+}
 }
 
 

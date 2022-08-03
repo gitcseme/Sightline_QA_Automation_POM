@@ -860,6 +860,20 @@ public class UserManagement {
 	public Element selectProject() {
 		return driver.FindElementById("ddlProject");
 	}
+	
+	public ElementCollection getAssignedUserListPA() {
+		return driver.FindElementsByXPath("//select[@id='AssignedUser']//option[contains(@title,' Project Administrator')]");
+	}
+	public ElementCollection getPAUserName(int count) {
+		return driver.FindElementsByXPath("//table[@id='dtUserList']//td[text()='Project Administrator']//..//td["+count+"]");
+	}
+	public ElementCollection getUnAssignedDomainUserList() {
+		return driver.FindElementsByXPath("//select[@id='UnAssignedUser']//option");
+	}
+	
+	public Element getPaginationLastNumber() {
+		return driver.FindElementByXPath("(//div[@id='dtUserList_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
 
 	public UserManagement(Driver driver) {
 
