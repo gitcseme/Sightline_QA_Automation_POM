@@ -110,7 +110,57 @@ public class Ingestion_Regression_4 {
 			baseClass.passedStep("Ingestion executed successfully");
 		}
 	}
-
+	
+	/**
+	 * Author :Arunkumar date: 02/08/2022 TestCase Id:RPMXCON-47580
+	 * Description :To Verify: No of Headers in DAT and No. of headers in Destination field in Configure mapping page. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47580",enabled = true, groups = { "regression" })
+	public void verifyNumberOfHeaderInDatAndDestinationField() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47580");
+		baseClass.stepInfo("Verify: No of Headers in DAT and No. of headers in Destination field in Configure mapping page.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details and click on Next");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.HiddenPropertiesFolder,
+				Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton(); 
+		baseClass.stepInfo("verify number of headers in dat and destination field");  
+		int numberOfHeaders = ingestionPage.configureMappingRows().size();
+		if(ingestionPage.getMappingDestinationField(numberOfHeaders).isElementAvailable(10)) {
+			baseClass.passedStep("Number of headers in dat file matches the destination field in configure mapping page");
+		}
+		else {
+			baseClass.failedStep("Number of headers in dat file not matched with destination field");
+		}
+		loginPage.logout();	
+	}
+	
+	/**
+	 * Author :Arunkumar date: 03/08/2022 TestCase Id:RPMXCON-47302
+	 * Description :Verify the Preview of Ingestion display for first 50 records with valid inputs. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47302",enabled = true, groups = { "regression" })
+	public void verifyIngestionRecordPreviewDetails() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47302");
+		baseClass.stepInfo("Verify the Preview of Ingestion display for first 50 records with valid inputs.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion details and click on Next");
+		ingestionPage.sourceSelectionAndIngestionTypeSectionOnlyWithDATfile(Input.AllSourcesFolder,Input.DATFile1);
+		ingestionPage.verifySourceSectionStatusAfterClickingNextButton(); 
+		ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg,Input.prodBeg,Input.custodian);
+		baseClass.stepInfo("verify 50 record preview details in popup");
+		ingestionPage.verifyHeaderCountInPreviewRecordPopupPage();
+		ingestionPage.validateRecordsCountInIngestionPreviewScreen();
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
