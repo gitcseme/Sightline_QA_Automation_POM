@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.testng.ITestResult;
@@ -488,7 +489,7 @@ public class AdvancedSearchRegression {
 		// logOut
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @Description : Verify that - Application returns all the documents which are
@@ -496,16 +497,16 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Date Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57165",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
-	public void verifySgAndProdDate(String username,String Password,String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57165", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdDate(String username, String Password, String LoginUser) throws Exception {
 		String fromDate = "2022/07/01";
 
 		baseClass.stepInfo("Test case Id: RPMXCON-57165 Advanced Search");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with AND operator and production optional filters - Date Range in search result.");
 
-		loginPage.loginToSightLine(username,Password);
-		baseClass.stepInfo("Logged In As : "+LoginUser);
+		loginPage.loginToSightLine(username, Password);
+		baseClass.stepInfo("Logged In As : " + LoginUser);
 
 		// Select Work production Security group & "And" Operator
 		sessionSearch.switchToWorkproduct();
@@ -532,8 +533,8 @@ public class AdvancedSearchRegression {
 	 *              result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57164",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
-	public void verifyWPWithProd(String username,String Password,String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57164", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifyWPWithProd(String username, String Password, String LoginUser) throws Exception {
 		String prodName = "Production" + Utility.dynamicNameAppender();
 		ProductionPage production = new ProductionPage(driver);
 
@@ -541,8 +542,8 @@ public class AdvancedSearchRegression {
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with AND operator in search result.");
 
-		loginPage.loginToSightLine(username,Password);
-		baseClass.stepInfo("Logged In As : "+LoginUser);
+		loginPage.loginToSightLine(username, Password);
+		baseClass.stepInfo("Logged In As : " + LoginUser);
 
 		// create Production to select in WP
 		production.navigateToProductionPage();
@@ -573,15 +574,15 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Bates Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57160",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
-	public void verifySgAndProdBatesRange(String username,String Password,String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57160", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdBatesRange(String username, String Password, String LoginUser) throws Exception {
 		String batesRange = "SP23571PS";
 		baseClass.stepInfo("Test case Id: RPMXCON-57160 Advanced Search");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with OR operator and production optional filters - Bates Range in search result.");
 
-		loginPage.loginToSightLine(username,Password);
-		baseClass.stepInfo("Logged In As : "+LoginUser);
+		loginPage.loginToSightLine(username, Password);
+		baseClass.stepInfo("Logged In As : " + LoginUser);
 
 		// Select Work production Security group & "And" Operator
 		sessionSearch.switchToWorkproduct();
@@ -599,6 +600,220 @@ public class AdvancedSearchRegression {
 		// logout
 		loginPage.logout();
 
+	}
+
+///////////////////// -------------New updates
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 08/2/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that pure hit tile does not get corrupted (CSS Removed)
+	 *              in shopping cart when search goes to BackGround and User select
+	 *              \"I Want to Wait\" on Advanced Search Screen. RPMXCON-48656
+	 */
+	@Test(description = "RPMXCON-48656", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyPureHitTileNotCorruptedInShoppingCart(String userName, String password) {
+
+		// login as PA
+		loginPage.loginToSightLine(userName, password);
+		baseClass.selectproject(Input.highVolumeProject);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48656");
+		baseClass.stepInfo(
+				"Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User select \"I Want to Wait\" on Advanced Search Screen");
+
+		// configuring and performing metaData Search
+		baseClass.stepInfo("configuring and performing metaData Search.");
+		sessionSearch.advancedMetaDataForDraft(Input.metaDataName, null, Input.searchStringStar, null);
+		sessionSearch.getAdvanceSearch_btn_Current().waitAndClick(5);
+
+		// click 'I Want TO Wait' Button
+		baseClass.stepInfo("Clicking 'I Want TO Wait' Button.");
+		sessionSearch.handleIWantToWaitInBellyBandPopup(30);
+
+		// click 'When Pure Hits Are Ready' Button
+		baseClass.stepInfo("Clicking 'When Pure Hits Are Ready' Button");
+		sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(30);
+		sessionSearch.handleIWantToWaitInBellyBandPopup(30);
+
+		// Moving Pure Hit tile into Shipping cart
+		sessionSearch.addPureHit();
+		String expectedpureHit = sessionSearch.verifyPureHitsCount();
+		// waiting for other Titles to Appear
+		baseClass.stepInfo("waiting for other Titles to Appear.");
+		sessionSearch.handleWhenAllResultsBtnInUncertainPopup();
+		sessionSearch.verifyThreadedCount();
+		sessionSearch.verifyNearDupeCount();
+		sessionSearch.verifyFamilyount();
+
+		// Verify that pure hit tile does not get corrupted (CSS Removed) in shopping
+		// cart
+		assertion.assertEquals(expectedpureHit, sessionSearch.verifyPureHitsCount());
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Verify that pure hit tile does not get corrupted (CSS Removed) in shopping cart when search goes to BackGround and User Select \"When All Results Are Ready\" on Advanced Search Screen");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 08/2/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that configured query with MasterDate and range
+	 *              operator get inserted properly into Advanced Search Query
+	 *              builder screen. RPMXCON-57055
+	 */
+	@Test(description = "RPMXCON-57055", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyConfigureQueryMasterDateAndRangeOperatorInsertedProperlyInAdvancedSearch(String username,
+			String password) {
+
+		String fromDate = "2015-01-01";
+		String toDate = "2015-05-04";
+
+		// login as PA
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57055");
+		baseClass.stepInfo(
+				"Verify that configured query with MasterDate  and range operator get inserted properly into Advanced Search Query builder screen");
+
+		// Configuring MetaData Search Query
+		baseClass.stepInfo("Configuring MetaData Search Query.");
+		sessionSearch.advancedMetaDataForDraft(Input.masterDateText, "RANGE", fromDate, toDate);
+
+		// getting the actual configured search query in Advanced Search Query builder
+		// screen
+		String actualConfiguredQuery = sessionSearch.getSavedSearchQueryAS().getText();
+
+		// Verify that configured query with Document File Size and range operator get
+		// inserted properly into Advanced Search Query builder screen
+		baseClass.compareTextViaContains(
+				actualConfiguredQuery, Input.masterDateText, "MetaData '" + Input.masterDateText
+						+ "' is present in the configure Search Query '" + actualConfiguredQuery + "'.",
+				"expected metaData is not present in configure search query");
+		baseClass.compareTextViaContains(
+				actualConfiguredQuery, fromDate, "From Date value '" + fromDate
+						+ "' is present in the configure Search Query '" + actualConfiguredQuery + "'.",
+				"expected From Date value is not present in configure search query");
+		baseClass.compareTextViaContains(
+				actualConfiguredQuery, toDate, "To Date value '" + toDate
+						+ "' is present in the configure Search Query '" + actualConfiguredQuery + "'.",
+				"expected To Date value is not present in configure search query");
+		baseClass.passedStep(
+				"Verified that configured query with MasterDate  and range operator get inserted properly into Advanced Search Query builder screen.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 08/2/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To verify an an PA user login, I will be able to select all
+	 *              the Redaction Tags from Redaction Tag column under Work Product
+	 *              tab & set that as a search criteria for advanced search.
+	 *              RPMXCON-57045
+	 */
+	@Test(description = "RPMXCON-57045", enabled = true, groups = { "regression" })
+	public void verifyPAUserAbleToSelectAllRedactionTagsInAdvancedSearch() throws Exception {
+
+		String tagName1 = "tagName" + Utility.dynamicNameAppender();
+		String tagName2 = "tagName" + Utility.dynamicNameAppender();
+		List<String> tagNameList = new ArrayList<String>(Arrays.asList(tagName1, tagName2));
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57045");
+		baseClass.stepInfo(
+				"To verify an an PA user login, I will be able to select all the Redaction Tags from Redaction Tag column under Work Product tab & set that as a search criteria for advanced search");
+
+		// creating the tags
+		tagPage.CreateTag(tagName1, Input.securityGroup);
+		tagPage.CreateTag(tagName2, Input.securityGroup);
+
+		// configuring the workProduct search Query by inserting multiple tags
+		sessionSearch.navigateToAdvancedSearchPage();
+		baseClass.stepInfo("configuring the workProduct search Query by inserting multiple tags.");
+		sessionSearch.selectMultipleTagsInASwp(tagNameList);
+
+		// getting the actual Configure Search Query
+		String actualConfiguredQuery = sessionSearch.getQueryTextArea().getText();
+
+		// verify Selected Redaction Tags will be now inserted as a search criteria for
+		// advanced search
+		assertion.assertEquals(actualConfiguredQuery.contains(tagName1), true);
+		assertion.assertEquals(actualConfiguredQuery.contains(tagName2), true);
+		assertion.assertAll();
+		baseClass
+				.passedStep("verified that Selected Redaction Tags inserted as a search criteria for advanced search.");
+
+		// Initiating Tag deletion
+		baseClass.stepInfo("Initiating  tag deletion");
+		tagPage.navigateToTagsAndFolderPage();
+		tagPage.DeleteTag(tagName1, Input.securityGroup);
+		tagPage.DeleteTag(tagName2, Input.securityGroup);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @throws Exception
+	 * @Date: 08/2/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that UnFolder works properly using Bulk Folder Action
+	 *              in Advanced Search Screen. RPMXCON-57183
+	 */
+	@Test(description = "RPMXCON-57183", enabled = true, groups = { "regression" })
+	public void verifyUnfolderWorksUsingBulkFolderActionInAdvancedSearch() throws Exception {
+
+		String folderName = "myFolder" + Utility.dynamicNameAppender();
+		int docCountAfterUnfold = 0;
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57183");
+		baseClass.stepInfo("Verify that UnFolder works properly using Bulk Folder Action in Advanced Search Screen");
+
+		// performing content search
+		int pureHit = sessionSearch.advancedContentSearch(Input.searchString1);
+
+		// performing bulk folder action
+		sessionSearch.bulkFolder(folderName);
+
+		// verifying the document count before unfolder action
+		tagPage.navigateToTagsAndFolderPage();
+		tagPage.selectingFolderAndVerifyingTheDocCount(folderName, pureHit);
+
+		// performing unfolder action on created folder
+		sessionSearch.navigateToSearchPageAndVerifyTileStatus();
+		baseClass.stepInfo("Performing Unfolder action");
+		sessionSearch.bulkUnFolder(folderName);
+
+		// Verify that UnFolder works properly using Bulk Folder Action in Advanced
+		// Search Screen
+		tagPage.navigateToTagsAndFolderPage();
+		tagPage.selectingFolderAndVerifyingTheDocCount(folderName, docCountAfterUnfold);
+		baseClass.stepInfo("Verified that UnFolder works properly using Bulk Folder Action in Advanced Search Screen.");
+
+		// delete folder
+		tagPage.DeleteFolder(folderName, "All Groups");
+
+		// logout
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
