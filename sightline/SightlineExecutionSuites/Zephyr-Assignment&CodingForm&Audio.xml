@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-Assignment&CodingForm&Audio" preserve-order="true">
+<suite name="Zephyr-Assignment-CodingForm-Audio" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Zephyr-Assignment&CodingForm&Audio">
+<test name="Zephyr-Assignment-CodingForm-Audio">
 <classes>
 <class name="testScriptsSmoke.Input" />
 <class name= "testScriptsRegression.Assignment_Regression1" />
