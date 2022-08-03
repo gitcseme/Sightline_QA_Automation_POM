@@ -126,7 +126,13 @@
 
 		</dependency>
 
-
+	<!-- https://mvnrepository.com/artifact/com.atlassian.fugue/fugue -->
+<dependency>
+    <groupId>com.atlassian.fugue</groupId>
+    <artifactId>fugue</artifactId>
+    <version>3.0.0-m007</version>
+    <scope>provided</scope>
+</dependency>
 
 
 		<dependency>
