@@ -88,10 +88,69 @@ public class UserLoginActivityReport_Regression2_3 {
 		}else {
 			userLoginActivityRptPg.verifyLoggedOutUserNotPresent(Input.pa1userName);
 		}
-		bc.passedStep("Suuccessfully verifed the user is not displayed when user logged out from application");
+		bc.passedStep("Successfully verifed the user is not displayed when user logged out from application");
 		lp.logout();
 	}
-	
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException 
+	 * @throws ParseException 
+	 * @description: Verify that for PA user, by default user login activity report should present currently logged in PAUs, RMUs and reviewers in project
+	 */
+	@Test(description = "RPMXCON-58564",groups = {"regression" },enabled = true)
+	public void verifyLoggedInUserPresentByPA() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-58564");
+		bc.stepInfo("Verify that for PA user, by default user login activity report should present currently logged in PAUs, RMUs and reviewers in project");	
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.get(Input.url);
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		this.driver.get(Input.url);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.pa1userName);
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.rmu1userName);
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.rev1userName);
+		if(userLoginActivityRptPg.getOnlyShowActivity("Current Logged-in Users").isElementAvailable(5)) {
+			bc.passedStep("Logged in users alone show in current logged in activity report");
+		}else {
+			bc.failedStep("Logged in users not show in current logged in activity report");
+		}		
+		lp.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException 
+	 * @throws ParseException 
+	 * @description: Verify that for RMU user, by default user login activity report should present currently logged in RMUs and reviewers in the assigned security group
+	 */
+	@Test(description = "RPMXCON-58565",groups = {"regression" },enabled = true)
+	public void verifyLoggedInUserPresentByRmu() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-58565");
+		bc.stepInfo("Verify that for RMU user, by default user login activity report should present currently logged in RMUs and reviewers in the assigned security group");	
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		this.driver.get(Input.url);
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		this.driver.get(Input.url);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		if(userLoginActivityRptPg.getCurrentLoggedInUser(Input.pa1userName).isElementAvailable(5)==false) {
+			bc.passedStep("PA user is not displayed in the report when loggen in as RMU");
+		}else {
+			bc.failedStep("PA user is displayed in the report when loggen in as RMU");
+		}
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.rmu1userName);
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.rev1userName);
+		if(userLoginActivityRptPg.getOnlyShowActivity("Current Logged-in Users").isElementAvailable(5)) {
+			bc.passedStep("Logged in users alone show in current logged in activity report");
+		}else {
+			bc.failedStep("Logged in users not show in current logged in activity report");
+		}		
+		lp.logout();
+	}
 	
 
 	
