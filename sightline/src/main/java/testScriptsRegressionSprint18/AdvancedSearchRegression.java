@@ -19,13 +19,12 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
-import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
-import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -488,6 +487,118 @@ public class AdvancedSearchRegression {
 
 		// logOut
 		loginPage.logout();
+	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that - Application returns all the documents which are
+	 *              available under selected group with AND operator and production
+	 *              optional filters - Date Range in search result.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-57165",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdDate(String username,String Password,String LoginUser) throws Exception {
+		String fromDate = "2022/07/01";
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57165 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with AND operator and production optional filters - Date Range in search result.");
+
+		loginPage.loginToSightLine(username,Password);
+		baseClass.stepInfo("Logged In As : "+LoginUser);
+
+		// Select Work production Security group & "And" Operator
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+		sessionSearch.selectOperator("AND");
+
+		// Enter Production date Range
+		sessionSearch.selectWPWithProdBatesAndDateRange(true, false, fromDate, "", "");
+
+		// verify Purehit for configured query
+		int purehit = sessionSearch.saveAndReturnPureHitCount();
+		sessionSearch.configuredQuery();
+		baseClass.stepInfo("Purehit is : " + purehit);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that - Application returns all the documents which are
+	 *              available under selected group with AND operator in search
+	 *              result.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-57164",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifyWPWithProd(String username,String Password,String LoginUser) throws Exception {
+		String prodName = "Production" + Utility.dynamicNameAppender();
+		ProductionPage production = new ProductionPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57164 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with AND operator in search result.");
+
+		loginPage.loginToSightLine(username,Password);
+		baseClass.stepInfo("Logged In As : "+LoginUser);
+
+		// create Production to select in WP
+		production.navigateToProductionPage();
+		production.addANewProductionAndSave(prodName);
+
+		// Select Tag in Work product & "AND" operator
+		driver.waitForPageToBeReady();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectTagInASwp(tagName);
+		sessionSearch.selectOperator("AND");
+
+		// Select production
+		sessionSearch.selectProductionstInASwp(prodName);
+
+		// verify purehit for configured query
+		int purehit = sessionSearch.saveAndReturnPureHitCount();
+		sessionSearch.configuredQuery();
+		baseClass.stepInfo("Purehit is : " + purehit);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that - Application returns all the documents which are
+	 *              available under selected group with OR operator and production
+	 *              optional filters - Bates Range in search result.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-57160",dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdBatesRange(String username,String Password,String LoginUser) throws Exception {
+		String batesRange = "SP23571PS";
+		baseClass.stepInfo("Test case Id: RPMXCON-57160 Advanced Search");
+		baseClass.stepInfo(
+				"Verify that - Application returns all the documents which are available under selected group with OR operator and production optional filters - Bates Range in search result.");
+
+		loginPage.loginToSightLine(username,Password);
+		baseClass.stepInfo("Logged In As : "+LoginUser);
+
+		// Select Work production Security group & "And" Operator
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectSecurityGinWPS(Input.securityGroup);
+		sessionSearch.selectOperator("OR");
+
+		// Enter Production Bates Range
+		sessionSearch.selectWPWithProdBatesAndDateRange(false, true, "", batesRange, batesRange);
+
+		// verify Purehit for configured query
+		int purehit = sessionSearch.saveAndReturnPureHitCount();
+		sessionSearch.configuredQuery();
+		baseClass.stepInfo("Purehit is : " + purehit);
+
+		// logout
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
