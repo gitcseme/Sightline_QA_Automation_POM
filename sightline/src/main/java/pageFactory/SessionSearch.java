@@ -2521,7 +2521,7 @@ public class SessionSearch {
 
 		// look for warnings, in case of proximity search
 		try {
-			if (getTallyContinue().isElementAvailable(2)) {
+			if (getTallyContinue().isElementAvailable(10)) {
 				getTallyContinue().waitAndClick(10);
 			}
 			Thread.sleep(4000);
@@ -12968,6 +12968,73 @@ public class SessionSearch {
 		base.passedStep("Configured query is : " + searchTerm);
 		return searchTerm;
 
+	}
+
+	/**
+	 * @author S
+	 * @Date: 02/08/22
+	 * @Description :handle I Want To Wait In BellyBandPopup
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param waitTime
+	 */
+	public void handleIWantToWaitInBellyBandPopup(int waitTime) {
+		if (getIWantToWaitPopup().isElementAvailable(waitTime)) {
+			getIWantToWaitPopup().waitAndClick(3);
+			System.out.println("*** Clicked 'I Want To Wait' Button ***");
+		}
+	}
+
+	/**
+	 * @author
+	 * @Description :handleWhenPureHitsAreReadyInBellyBandPopup
+	 * @Date: 02/08/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param waitTime
+	 */
+	public void handleWhenPureHitsAreReadyInBellyBandPopup(int waitTime) {
+		if (getWhenPureHitsAreReadyPopup().isElementAvailable(waitTime)) {
+			getWhenPureHitsAreReadyPopup().waitAndClick(3);
+			System.out.println("*** Clicked 'When PureHit Are Ready' Button ***");
+			String ID = getWhenAllResultsAreReadyID().getText();
+			base.stepInfo(" When Pure Hits are ready Clicked And Generated ID is: " + ID);
+			getBulkTagConfirmationButton().waitAndClick(3);
+		} else {
+			base.stepInfo("Page Loaded and PopUp Did not Appear");
+		}
+	}
+
+	/**
+	 * @author
+	 * @Date: 02/08/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @param tagNameList
+	 */
+	public void selectMultipleTagsInASwp(List<String> tagNameList) {
+
+		base.waitForElement(getWorkproductBtn());
+		getWorkproductBtn().Click();
+		base.stepInfo("Switched to Advanced search - Work product");
+		base.waitForElement(getWP_TagBtn());
+		getWP_TagBtn().Click();
+		driver.waitForPageToBeReady();
+		System.out.println(getTree().FindWebElements().size());
+		UtilityLog.info(getTree().FindWebElements().size());
+		for (String tagName : tagNameList) {
+			for (WebElement iterable_element : getTree().FindWebElements()) {
+				if (iterable_element.getText().contains(tagName)) {
+					new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+					driver.scrollingToBottomofAPage();
+					iterable_element.click();
+					break;
+				}
+			}
+		}
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
+		driver.scrollPageToTop();
 	}
 
 }
