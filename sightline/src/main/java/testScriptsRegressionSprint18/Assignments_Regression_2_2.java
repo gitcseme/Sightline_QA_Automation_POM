@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint18;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -170,7 +171,58 @@ public class Assignments_Regression_2_2 {
 		loginPage.logout();
 		
 	}
+	/**
+	 * @author jayanthi
+	 * @throws InterruptedException
+	 * @Description :To verify that RMU can assign the documents from Saved Search.
+	 */
+	@Test(description = "RPMXCON-53643", enabled = true, groups = { "regression" })
+	public void verifyassignedDocsCount_savedsearch() throws InterruptedException {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-53643");
+		baseClass.stepInfo("To verify that RMU can assign the documents from Saved Search.");
+		String assgnName = "Assgn" + Utility.dynamicNameAppender();
+		String searchName = "searchAssgn" + Utility.dynamicNameAppender();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("**Pre REq-Creating Assignment**");
+		// creating assignment
+		assignPage.createAssignment(assgnName, Input.codeFormName);
+		baseClass.stepInfo("Created Assignment with name  -" + assgnName);
+		// performing basic search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		String countToAssing = sessionSearch.verifyPureHitsCount();
+		sessionSearch.saveSearch(searchName);
+		baseClass.stepInfo("Saved the search with name "+searchName);
+		// performing bulk assign action and verifying doc count in assignment page.
+		sessionSearch.bulkAssign();
+		assignPage.assignwithSamplemethod(assgnName, "Count of Selected Docs", countToAssing);
+
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 *  Verify that when the radio button selected is to Unassign documents,
+	 *  only the Existing Assignment(s) tab appears
+	 */
+	@Test(description = "RPMXCON-54321", groups = { "regression" }, enabled = true)
+	public void verifyUnAssignOptions() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54321");
+		baseClass.stepInfo("Verify that when the radio button selected is to Unassign documents, only the"
+				+ " Existing Assignment(s) tab appears");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		baseClass.stepInfo("Performing basic content search and dragging pure hit to cart.");
+		sessionSearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Clicking on bulk assign button");
+		sessionSearch.bulkAssign();
+		sessionSearch.verifyUnAssignOptions();
+		
+	}
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },
