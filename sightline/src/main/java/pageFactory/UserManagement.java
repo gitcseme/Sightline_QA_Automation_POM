@@ -860,6 +860,10 @@ public class UserManagement {
 	public Element selectProject() {
 		return driver.FindElementById("ddlProject");
 	}
+	
+	public Element getNthUnAssignedUser(int n) {
+		return driver.FindElementByXPath("(//*[@id='UnAssignedUsersForDomain']/option)["+n+"]");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -3966,5 +3970,16 @@ public class UserManagement {
 		bc.stepInfo("details tab was clicked");
 		driver.waitForPageToBeReady();
 	}
-
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open add new user popup
+	 */
+	public void openAddNewUserPopUp() {
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(getAddUserBtn());
+		getAddUserBtn().waitAndClick(5);
+		bc.waitForElement(getFirstName());
+		bc.stepInfo("add new user pop was opened");
+	}
 }
