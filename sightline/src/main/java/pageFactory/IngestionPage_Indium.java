@@ -1307,6 +1307,12 @@ public class IngestionPage_Indium {
 	public Element exportErrorButton() {
 		return driver.FindElementById("btnexportingestionerror");
 	}
+	public Element mappingRowDeleteButton() {
+		return driver.FindElementByXPath("//a[@class='delete-row']//i");	
+	}
+	public ElementCollection getIngestionPreviewRecords() {
+		return driver.FindElementsByXPath("//div[@id='previewRecords']//table//tbody//tr");
+	}
 	
 	
 	public IngestionPage_Indium(Driver driver) {
@@ -3531,7 +3537,10 @@ public class IngestionPage_Indium {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.IngestionEmailDataFolder);
 		} else if (dataset.contains("CJK_GermanAudioTestData") || dataset.contains("CJK_JapaneseAudioTestData")) {
 			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.CJK_FrenchAudioTestDataFolder);
+		} else if (dataset.contains("AttachDocument")) {
+			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText("AttachDocument");
 		}
+			
 		base.waitTime(2);
 		base.waitForElement(getDATDelimitersFieldSeparator());
 		getDATDelimitersFieldSeparator().selectFromDropdown().selectByVisibleText(Input.fieldSeperator);
@@ -3548,7 +3557,9 @@ public class IngestionPage_Indium {
 		getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(DATFile);
 		base.waitForElement(getSourceSelectionDATKey());
 		base.waitTime(2);
-		if (dataset.contains("Collection1K_Tally")) {
+		if (dataset.contains("AttachDocument")) {
+			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("SourceDocID");
+		} else if (dataset.contains("Collection1K_Tally")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
 		} else if (dataset.contains("20Family_20Threaded")) {
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText("DocID");
@@ -4599,33 +4610,26 @@ public class IngestionPage_Indium {
 	}
 
 	/**
-	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: NA
+	 * @author: Arun Created Date: 23/03/2022 Modified by: NA Modified Date: 03/08/2022
 	 * @description: this method will verify the count matching in header section
 	 *               pop up with mapping section
 	 */
 	public void verifyHeaderCountInPreviewRecordPopupPage() {
 		driver.waitForPageToBeReady();
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getPreviewRun().Visible();
-			}
-		}), Input.wait30);
-		getPreviewRun().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
-		getApproveMessageOKButton().waitAndClick(10);
+		base.waitForElement(getPreviewRun());
+		getPreviewRun().waitAndClick(2);
+		if (getApproveMessageOKButton().isElementAvailable(10)) {
+			getApproveMessageOKButton().Click();
+		}
 
 		base.stepInfo("'Preview Documents' pop up is opened successfully");
-
+		driver.waitForPageToBeReady();
 		int headerSectionCount = previewRecordPopupHeaderFields().size();
-
+		base.waitForElement(goBackButton());
+		goBackButton().Click();
+		base.waitForElement(getPreviewRun());
 		int mappedFieldCount = mappedSourceFields(1).size();
-
+		
 		if (mappedFieldCount == headerSectionCount) {
 			base.passedStep(
 					"Headers in preview record popup page count matched with mapped field in configuring section");
@@ -4633,6 +4637,7 @@ public class IngestionPage_Indium {
 			base.failedStep(
 					"Headers in preview record popup page count not matched with mapped field in configuring section");
 		}
+		
 
 	}
 
@@ -10494,6 +10499,38 @@ public class IngestionPage_Indium {
 				} else {
 					base.waitTime(10);
 					getRefreshButton().waitAndClick(5);
+				}
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 03/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will delete the row of repeated mappings        
+		 */
+		public void deleteRepeatedMappingRow() {
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(mappingRowDeleteButton());
+			mappingRowDeleteButton().waitAndClick(2);
+			if (getApproveMessageOKButton().isElementAvailable(10)) {
+				getApproveMessageOKButton().Click();
+			}
+		}
+		
+		/**
+		 * @author: Arun Created Date: 03/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will validate the records count displayed in ingestion preview pop up        
+		 */
+		public void validateRecordsCountInIngestionPreviewScreen() {
+			base.waitForElement(getPreviewRun());
+			getPreviewRun().Click();
+			base.waitForElement(goBackButton());
+			if(getIngestionPreviewRecords().isElementAvailable(10)) {
+				int recordsCount = getIngestionPreviewRecords().size();
+				if(recordsCount==50) {
+					base.passedStep("Ingestion preview record pop up displayed 50 records");
+				}
+				else {
+					base.failedStep("Preview record not displayed 50 records");
 				}
 			}
 		}
