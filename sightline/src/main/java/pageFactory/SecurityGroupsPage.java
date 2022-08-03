@@ -433,6 +433,16 @@ public class SecurityGroupsPage {
 	public Element getSGAddAnnonationLayer() {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree_Selected']/ul/li/ul/li[1]");
 	}
+	
+	public Element getProjectFieldCheckBox(String field) {
+		return driver.FindElementByXPath(
+				"//*[@id='fieldJSTree']//a[text()='" + field + "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+	public Element getSG_Field_Right() {
+		return driver.FindElementByXPath("//*[@onclick='FieldRightShift();']");
+	}
+	
+	
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1471,5 +1481,29 @@ public class SecurityGroupsPage {
 		getSG_AnnSaveButton().waitAndClick(15);
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 		bc.CloseSuccessMsgpopup();
+	}
+	
+	/**
+	 * @author Krishna date:Modified date:
+	 * @Description: verify selected Project filed available field and assign
+	 *               selected fields
+	 */
+	public void verifySelectedProjectField(String field) {
+		driver.waitForPageToBeReady();
+		SoftAssert softassert = new SoftAssert();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProjectFieldCheckBox(field).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(field);
+		softassert.assertTrue((getProjectFieldCheckBox(field).isDisplayed()));
+		bc.passedStep("Project' list is getting populated for ProjectFields is successfully");
+		bc.waitTime(5);
+		bc.waitTillElemetToBeClickable(getProjectFieldCheckBox(field));
+		getProjectFieldCheckBox(field).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSG_Field_Right().waitAndClick(5);
+		bc.passedStep("Field is displayed on all available list ");
 	}
 }

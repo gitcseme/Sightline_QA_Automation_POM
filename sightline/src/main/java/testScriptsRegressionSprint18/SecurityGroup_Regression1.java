@@ -21,6 +21,7 @@ import pageFactory.DocExplorerPage;
 import pageFactory.DomainDashboard;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -559,6 +560,95 @@ public class SecurityGroup_Regression1 {
    			loginPage.logout();
    		}
    		
+   		/**
+   		 * @Author Krishna Date: 3/08/2022
+   		 * @Description : In Manage Security Group- 'Available in Project' list is
+   		 *              getting populated for WorkProducts and ProjectFields
+   		 * @param :
+   		 * @throws InterruptedException
+   		 */
+   		@Test(description = "RPMXCON-54977", enabled = true, groups = { "regression" })
+   		public void verifySgAvaibleProjectInListProjectFields() throws Exception {
+
+   			baseClass.stepInfo("Test case Id: RPMXCON-54977");
+   			baseClass.stepInfo(
+   					"In Manage Security Group- 'Available in Project' list is getting populated for WorkProducts and ProjectFields");
+   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+   			
+   			// Login as PA
+   			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+   			baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+   			ProjectFieldsPage projectFields = new ProjectFieldsPage(driver);
+   			String random = Input.randomText + String.valueOf(utility.dynamicNameAppender());
+   			final String random1 = random;
+   			final String random2 = random;
+
+   			baseClass.stepInfo("Navigate To Project Field sPage");
+   			projectFields.navigateToProjectFieldsPage();
+   			baseClass.stepInfo("Add a new project field as project administrator");
+   			projectFields.addProjectField(random1, random2, Input.fldClassification, Input.fldDescription, Input.fieldType,
+   					Input.fieldLength);
+   			sgpage.navigateToSecurityGropusPageURL();
+   			baseClass.stepInfo("navigated to security group as expected");
+
+   			sgpage.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
+   			sgpage.verifySelectedProjectField(random1);
+   			if (sgpage.getSG_GenerateEmailRadioButton(1).isDisplayed()) {
+   				baseClass.passedStep(
+   						"Use Project-level Email Inclusive and Email Duplicate Data option button is checked as per the config as expected.");
+   			} else {
+   				baseClass.failedStep("Data option button is not expected");
+   			}
+   		}
+
+   		/**
+   		 * @Author Krishna Date: 3/08/2022
+   		 * @Description :Verify that as DA user, clicking on project should redirect to
+   		 *              default security group and select the other domain project from
+   		 *              header drop down in which DAU is RMU, on clicking on Back to
+   		 *              Dashboard shall take the user to the last accessed domain
+   		 *              dashboard
+   		 * @param :
+   		 * @throws InterruptedException
+   		 */
+   		@Test(description = "RPMXCON-54826", enabled = true, groups = { "regression" })
+   		public void verifyDAClickingProjectWhichRmuBackToDashBoard() throws Exception {
+
+   			baseClass.stepInfo("Test case Id: RPMXCON-54826");
+   			baseClass.stepInfo(
+   					"Verify that as DA user, clicking on project should redirect to default security group and select the other domain project from header drop down in which DAU is RMU, on clicking on Back to Dashboard shall take the user to the last accessed domain dashboard");
+   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+   			DomainDashboard domainDash = new DomainDashboard(driver);
+   			// Login As DA
+   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+   			baseClass.stepInfo("Click on any project");
+   			driver.waitForPageToBeReady();
+   			baseClass.waitTime(5);
+   			baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.projectName));
+   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
+   			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+   			baseClass.stepInfo("verify default security group in selected project");
+   			
+   			driver.waitForPageToBeReady();
+   			String actualString = "Default Security Group";
+   			String ExpectedString = baseClass.getsgNames().getText();
+   			System.out.println(ExpectedString);
+   			if (actualString.equals(ExpectedString)) {
+   				baseClass.passedStep("As user to DSG by default in selected project");
+   			} else {
+   				baseClass.failedStep("It is not  to default SG by default ");
+   			}
+
+   			baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
+   			sgpage.backToDomain().waitAndClick(5);
+   			baseClass.waitTime(5);
+   			if (sgpage.daFirstBlock().isDisplayed()) {
+   				baseClass.passedStep("Navigated back to user to the last accessed domain dashboard page");
+   			} else {
+   				baseClass.failedStep("Not Navigated back to domain home page");
+   			}
+   		}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
