@@ -401,6 +401,7 @@ public class Input {
 	public static String documentIdKey;
 	public static String custIdKey;
 	public static String fieldMappingWarningMessage;
+	public static String datFileASCII;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1307,7 +1308,8 @@ public class Input {
 		emailTextFile = testData.getEmailTextFile();
 		documentIdKey = testData.getDocumentIdKey();
 		custIdKey = testData.getCustIdKey();
-		fieldMappingWarningMessage = testData.getFieldMappingWarningMessage();;
+		fieldMappingWarningMessage = testData.getFieldMappingWarningMessage();
+		datFileASCII = testData.getDatFileASCII();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

@@ -410,6 +410,85 @@ public class DomainManagement_ProjectCreation_Regresssion_01 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/02/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Validate modifying all editable field values and save changes for a domain project by Domain Admin
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53000",enabled = true, groups = {"regression" })
+	public void verifyNotificationForProjectCompletionInDa() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		project = new ProjectPage(driver);
+		dash = new DomainDashboard(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-53000");
+		base.stepInfo("Verify that notification should be received upon completion of the project successfully with DA User");
+		
+		String name = Input.randomText + Utility.dynamicNameAppender();
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		project.navigateToProductionPage();
+		base.clearBullHornNotification();
+		project.AddDomainProjectViaDaUser(name);
+		base.waitForNotification();
+		dash.getNotificationMessage(0, name);
+		
+		base.passedStep("Verify that notification should be received upon completion of the project successfully with DA User");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/02/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify user must be able to click on Notification once background task get completed.
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53005",enabled = true, groups = {"regression" })
+	public void verifyUserAbleToClickNotification() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		dash = new DomainDashboard(driver);
+		project = new ProjectPage(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-53005");
+		base.stepInfo("Verify user must be able to click on Notification once background task get completed.");
+		
+		String ProjectName = Input.randomText + Utility.dynamicNameAppender();
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		driver.waitForPageToBeReady();
+		project.navigateToProductionPage();
+		base.clearBullHornNotification();
+		project.AddDomainProjectViaDaUser(ProjectName);
+		dash.naviageToDomainDashBoardPage();
+		base.waitForNotification();
+		String currentURL = driver.getWebDriver().getCurrentUrl();
+		dash.getNotificationMessage(0, ProjectName);
+		base.clickFirstBackRoundTask();
+		driver.waitForPageToBeReady();
+		base.passedStep("Any entry in the Background Tasks Page are clickable");
+		String currentURL1 = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertNotEquals(currentURL, currentURL1);
+		softAssertion.assertAll();
+		base.passedStep("and will take the user to the respective page.");
+		
+		base.passedStep("Verify user must be able to click on Notification once background task get completed.");
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
