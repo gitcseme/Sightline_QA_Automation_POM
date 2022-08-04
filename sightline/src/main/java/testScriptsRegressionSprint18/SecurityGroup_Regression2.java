@@ -65,6 +65,55 @@ public class SecurityGroup_Regression2 {
 		loginPage = new LoginPage(driver);
 
 	}
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/07/2022 RPMXCON-54819
+	 * @throws Exception
+	 * @Description Verify that if SAU impersonate as DAU,clicking on project in Domain Dashboard, it should take to Default
+	 * SG and changing the project from header drop down should take to Default SG in the selected project.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54819", enabled = true, groups = { "regression" })
+	public void verifySAImpersonateDASelectProjectDefaultSG() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54819");
+		baseClass.stepInfo(
+				"Verify that if SAU impersonate as DAU,clicking on project in Domain Dashboard, it should take to Default SG and changing the project from header drop down should take to Default SG in the selected project.");
+
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+		
+		baseClass.stepInfo("Impersonate SA to DA");
+		baseClass.impersonateSAtoDA();
+		
+		baseClass.stepInfo("Click on any project");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
+		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
+		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		baseClass.stepInfo("Select project");
+		baseClass.selectproject();
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("Default SG in the selected project is displayed successfully");
+		} else {
+			baseClass.failedStep("Default SG in the selected project is not display");
+		}
+		loginPage.logout();
+	}
+
 	
 	/**
 	 * @author Vijaya.Rani ModifyDate:01/08/2022 RPMXCON-54830
@@ -154,6 +203,7 @@ public class SecurityGroup_Regression2 {
 
 		baseClass.stepInfo("Click on any project");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
 		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
 		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
 
