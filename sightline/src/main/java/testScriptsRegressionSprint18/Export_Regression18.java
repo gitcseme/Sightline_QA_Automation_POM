@@ -322,6 +322,104 @@ public class Export_Regression18 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha RPMXCON-50727 Date:8/04/2022
+	 * @Description Verify that if user selects the 'Genrate PDF' option in
+	 *              Production-Export then Preview document will be standard
+	 *              template file
+	 */
+	@Test(description = "RPMXCON-50727", enabled = true, groups = { "regression" })
+	public void verifyingPDFWithPreviewBtnEnabled() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50727 -Export component");
+		base.stepInfo(
+				"Verify that if user selects the 'Genrate PDF' option in Production-Export then Preview document will be standard template file");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSection(tagname, Input.searchString4);
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingExportLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		page.viewingPreviewInSummaryTab();
+		page.verifyingPdfgeneration(Input.searchString4);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha RPMXCON-63063 Date:8/04/2022
+	 * @Description Verify that for new export in TIFF/PDF section native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files
+	 */
+	@Test(description = "RPMXCON-63063", enabled = true, groups = { "regression" })
+	public void verifyingDefaultEnabledOptionInTIFFSection() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-63063 -Export component");
+		base.stepInfo("Verify that for new export in TIFF/PDF section native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files");
+
+		String newExport = "Ex" + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExportAndSave(productionname);
+		page.verifyingTheDefaultSelectedOptionInNative();
+		page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+		page.verifyingNativeSectionFileType(Input.NativeFileType);
+		
+		page.navigatingToProductionHomePage();
+		page.selectExportSetFromDropDown();
+		page.addANewExportAndSave(productionname1);
+		page.selectGenerateOption(true);
+		driver.waitForPageToBeReady();
+		String ActualText = page.getNativeDocsPlaceholderText().getText();
+		String ExpectedText = "Document Produced in Native Format.";
+		base.textCompareEquals(ActualText, ExpectedText, "Default text in native placeholder is displayed as expected","Text is not Displayed as expected");
+		page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+		page.verifyingNativeSectionFileType(Input.NativeFileType);
+
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

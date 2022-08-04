@@ -3183,7 +3183,13 @@ public class ProductionPage {
 	public Element getBurnRedaction_InsertMetaData() {
 		return driver.FindElementByXPath("//div[@id='divRedaction']//a[text()='Insert Metadata Field']");
 	}
+	public Element getTranslationLSTToggle(String Value) {
+		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)["+Value+"()]");
+	}
 
+	public Element getAdvancedArrow(String Value) {
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])["+Value+"()]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21028,4 +21034,64 @@ public class ProductionPage {
 		
 		return textBoxValue;
 	}
+	
+	/**
+	 * @author Brundha.T Date:8/04/2022 
+	 * Description:Navigating to production home  page
+	 *        
+	 */
+	public void navigatingToProductionHomePage() {
+		base.waitTime(1);
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+
+	}
+
+	/**
+	 * @author Brundha.T Date:8/04/2022 
+	 * Description:Filling basic info page
+	 */
+	public void fillingBasicInfo(String productionname) {
+		getProductionName().Clear();
+		getProductionName().SendKeys(productionname);
+
+	}
+
+	/**
+	 * @author Brundha.T  Date:8/04/2022
+	 * @param ele
+	 * @param ActualColor Description: Method to verify toggle
+	 */
+
+	public void verifyingToggleEnabledOrDisabled(Element ele, String ActualColor) {
+		driver.waitForPageToBeReady();
+		String color = ele.GetCssValue("background-color");
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		if (ActualColor.equals(ExpectedColor)) {
+			base.passedStep("" + color + " is displayed as expecetd");
+		} else {
+			base.failedStep("" + color + " is  not displayed as expecetd");
+		}
+	}
+
+	/**
+	 * @author Brundha.T Date:8/04/2022 
+	 * @param exportname
+	 * @Description:  method selects export set from dropdown and creates a new
+	 *                   export in Production homepage.
+	 */
+	public void addANewExportAndSave(String exportname) throws InterruptedException {
+
+		getAddNewExport().Click();
+		driver.waitForPageToBeReady();
+		getProductionName().SendKeys(exportname);
+		getProductionDesc().SendKeys(exportname);
+		getSaveOption().waitAndClick(2);
+		driver.scrollPageToTop();
+		getBasicInfoMarkComplete().waitAndClick(2);
+		base.stepInfo("New Export is added");
+	}
+
 }
