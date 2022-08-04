@@ -893,6 +893,30 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	
+	public Element btnBackToSource(){
+		return driver.FindElementByXPath("//div[@id='criteria']//a[text()='Back to Source']");
+	}
+	
+	public Element countOfNumberOfMP3(){
+		return driver.FindElementByXPath("//label[contains(text(),'Number of MP3 Files: ')]//following-sibling::label");
+	}
+	
+	public Element productionSetRadioBtn(){
+		return driver.FindElementByXPath("//div[@class='ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable']//input[@id='IsProductionSet']//parent::label//i");
+	}
+	
+	public Element selectSecurityGroup(String securityGroup) {
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='"+securityGroup+"']");
+	}
+	
+	public Element getProductionAndExportHeader() {
+		return driver.FindElementByXPath("//div[@id='content']//h1[contains(normalize-space(),'Productions and Exports')]");
+	}
+	
+	public Element getInProgressStatus() {
+		return driver.FindElementByXPath("//button[text()='In Progress']");
+	}
 
 	public Element emailToAuthorNameAddress() {
 		return driver.FindElementByXPath(
@@ -1333,8 +1357,9 @@ public class ProductionPage {
 	}
 
 	public Element getBtnMarkIncomplete() {
-		return driver.FindElementByXPath("btnGenerateMarkInComplete");
+		return driver.FindElementById("btnDocumentsSelectionMarkInComplete");
 	}
+
 
 	public Element getprod_Action_SaveTemplate_Reusable(String productionname) {
 		return driver.FindElementByXPath("//a[@title='" + productionname + "']/..//a[contains(.,'Save as Template')]");
@@ -6726,7 +6751,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @authorIndium-Sowndarya.Velraj
+	 * @authorIndium-Sowndarya.Velraj.Modified on 04/08/2022
 	 */
 	public void fillingDocumentSelectionPageExcludingFamilies(String foldername) {
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -6744,6 +6769,10 @@ public class ProductionPage {
 		getSelectFolder(foldername).Click();
 
 		driver.scrollingToBottomofAPage();
+
+		//excluding families
+		base.waitForElement(getIncludeFamilies());
+		getIncludeFamilies().Click();
 
 		driver.scrollPageToTop();
 		base.stepInfo("Document Selection Page section is filled");
@@ -8256,58 +8285,31 @@ public class ProductionPage {
 		}
 	}
 
+	/**
+	 * Modified by sowndarya.velraj on 04/08/2022
+	 */
 	public void CreateProductionSets(final String prodsetName) throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCreateProductionSet().Visible();
-			}
-		}), Input.wait30);
+
+		base.waitForElement(getCreateProductionSet());
 		getCreateProductionSet().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSetName().Visible();
-			}
-		}), Input.wait30);
-		getSetName().SendKeys("Demo");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCancelSet().Visible();
-			}
-		}), Input.wait30);
-		getCancelSet().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCreateProductionSet().Visible();
-			}
-		}), Input.wait30);
-		getCreateProductionSet().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSetName().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getSetName());
 		getSetName().SendKeys(prodsetName);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSaveSet().Visible();
-			}
-		}), Input.wait30);
+		
+		base.waitForElement(productionSetRadioBtn());
+		productionSetRadioBtn().waitAndClick(10);
+		
+		base.waitForElement(getSaveSet());
+		getSaveSet().ScrollTo();
 		getSaveSet().waitAndClick(10);
+		
 		BaseClass bc = new BaseClass(driver);
-		Thread.sleep(3000);
 		bc.VerifySuccessMessage("Production Set Added Successfully");
 		bc.CloseSuccessMsgpopup();
-		Thread.sleep(3000);
 		System.out.println("Verified created production set");
 
 	}
-
 	/**
 	 * @throws InterruptedException
 	 * @authorIndium-Sowndarya.Velraj
@@ -21092,6 +21094,17 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		getBasicInfoMarkComplete().waitAndClick(2);
 		base.stepInfo("New Export is added");
+	}
+	
+	/**
+	 * @authorIndium-Sowndarya.Velraj
+	 */
+	public void selectingCreatedSecurityGroup(String securityGroup) {
+		base.waitForElement(getSecurityGroupDropDown());
+		getSecurityGroupDropDown().waitAndClick(10);
+		base.waitForElement(selectSecurityGroup(securityGroup));
+		selectSecurityGroup(securityGroup).waitAndClick(10);
+
 	}
 
 }

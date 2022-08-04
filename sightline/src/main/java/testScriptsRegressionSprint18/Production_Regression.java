@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -20,6 +21,7 @@ import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -34,6 +36,7 @@ public class Production_Regression {
 	String foldername;
 	String tagname;
 	String productionname;
+	SoftAssert softAssertion;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -55,6 +58,7 @@ public class Production_Regression {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		softAssertion=new SoftAssert();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
@@ -350,6 +354,317 @@ public class Production_Regression {
 
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48498
+	 * @Description:To verify that after clicking on InComplete button on Production
+	 *                 Components, last selected Tags should be displayed.
+	 **/
+	@Test(description = "RPMXCON-48498", enabled = true, groups = { "regression" })
+	public void verifySelectedTags_MarkIncomplete() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48498 Production Component Sprint 18");
+		base.stepInfo(
+				"To verify that after clicking on InComplete button on Production Components, last selected Tags should be displayed.");
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTags(tagname);
+		page.getComponentsMarkComplete().waitAndClick(10);
+		page.getbtnComponentsMarkIncomplete().waitAndClick(10);
+		base.waitForElement(page.getNativeSelectTags());
+		page.getNativeSelectTags().waitAndClick(10);
+		base.waitForElement(page.getNativeCheckBox(tagname));
+		driver.waitForPageToBeReady();
+		page.getNativeCheckBox(tagname).GetAttribute("class").contains("clicked");
+		base.passedStep(
+				"after clicking on InComplete button on Production Components, last selected Tags should be displayed");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48942
+	 * @Description:To verify that after clicking on Generate button from
+	 *                 Production-Generate tab, user cannot click on the Generate
+	 *                 button again.
+	 **/
+	@Test(description = "RPMXCON-48942", enabled = true, groups = { "regression" })
+	public void verifyDisabledGenerateButton() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48942 Production Component Sprint 18");
+		base.stepInfo(
+				"To verify that after clicking on Generate button from Production-Generate tab, user cannot click on the Generate button again.");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().ScrollTo();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		page.getbtnProductionGenerate().GetAttribute("disabled").contains("disabled");
+		base.passedStep(
+				"verified that after clicking on Generate button from Production-Generate tab, user cannot click on the Generate button again");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48940
+	 * @Description:To verify that after clicking on Generate button from
+	 *                 Production-Generate tab, status should be changed to the In
+	 *                 Progress
+	 **/
+	@Test(description = "RPMXCON-48940", enabled = true, groups = { "regression" })
+	public void verifyInProgressStatus() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48940 Production Component Sprint 18");
+		base.stepInfo(
+				"To verify that after clicking on Generate button from Production-Generate tab, status should be changed to the In Progress");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().ScrollTo();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (page.getInProgressStatus().isDisplayed()) {
+			base.passedStep(
+					"verify that after clicking on Generate button from Production-Generate tab, status should be changed to the In Progress");
+		} else {
+			base.failedStep(
+					"After clicking on Generate button from Production-Generate tab, status has not changed to  In Progress");
+		}
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47810
+	 * @Description:To Verify 'Productions & Export' On Production & Export Home
+	 *                 page
+	 **/
+	@Test(description = "RPMXCON-47810", enabled = true, groups = { "regression" })
+	public void verifyProductionAndExport() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-47810 Production Component Sprint 18");
+		base.stepInfo("To Verify 'Productions & Export' On Production & Export Home page");
+		ProductionPage page = new ProductionPage(driver);
+		base = new BaseClass(driver);
+
+		base.stepInfo("Verify the page label as 'Productions & Export'");
+		page.getProductionAndExportHeader().isDisplayed();
+
+		base.stepInfo("Verify the Production create link");
+		page.getProdExportSet().isDisplayed();
+
+		base.stepInfo("Verify the already created Production drop down list");
+		List<String> lstOfProductionAndExportSet = base.availableListofElements(page.getSelectProdcutionOptions());
+		System.out.println(lstOfProductionAndExportSet);
+
+		base.stepInfo(
+				"Verify on selection of 'Production Set', the below label immediately changes to 'Production Set'.");
+		page.getProdExport_ProductionSets().waitAndClick(10);
+		page.getProdExport_ProductionSets().selectFromDropdown().selectByIndex(1);
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47847
+	 * @Description:To Verify the Create/Display/View of Template with newly created
+	 *                 Security Group.
+	 **/
+	@Test(description = "RPMXCON-47847", enabled = true, groups = { "regression" })
+	public void verifyTemplateInSecurityGroup() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-47847 Production Component Sprint 18");
+		base.stepInfo("To Verify the Create/Display/View of Template with newly created Security Group.");
+
+		String securityGroup = "Security" + UtilityLog.dynamicNameAppender();
+		String productionSet ="ProdSet"+ UtilityLog.dynamicNameAppender();
+		String template="Template"+  UtilityLog.dynamicNameAppender();
+		SecurityGroupsPage security = new SecurityGroupsPage(driver);
+		
+		// add new security group
+		security.navigateToSecurityGropusPageURL();
+		security.AddSecurityGroup(securityGroup);
+		
+		//select created security group
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingCreatedSecurityGroup(securityGroup);
+		
+		//create new production set
+		page.CreateProductionSets(productionSet);
+		page.navigateToProductionPageByNewProductionSet(productionSet);
+		
+		//create production and save as custom template
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.navigateToProductionPage();
+		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, template);
+		
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-49078
+	 * @Description:Production Document Selection to DocList
+	 **/
+	@Test(description = "RPMXCON-49078", enabled = true, groups = { "regression" })
+	public void DocumentSelectionVerification() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-49078 Production Component Sprint 18");
+		base.stepInfo("Production Document Selection to DocList");
+		
+		foldername = "Folder" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int purehit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		
+		//Document selection without including families
+		page.fillingDocumentSelectionPageExcludingFamilies(foldername);
+		String docCount = page.navigatingToDocViewPage();
+		softAssertion.assertEquals(docCount, purehit);
+		
+		//get back to source
+		page.btnBackToSource().waitAndClick(10);
+		page.getBackButton().waitAndClick(10);
+		
+		//Document selection including families
+		base.waitForElement(page.getbtnComponentsMarkIncomplete());
+		page.getBtnMarkIncomplete().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getIncludeFamilies());
+		page.getIncludeFamilies().waitAndClick(10);
+		driver.scrollPageToTop();
+		String docCountIncludingFamilies = page.navigatingToDocViewPage();
+		System.out.println(docCountIncludingFamilies);
+		base.passedStep("verified Production Document Selection to DocList");
+		
+	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48273
+	 * @Description:To Verify Number of MP3 Files should be shown even when the
+	 *                 count of MP3 Files among the selected document is 0.
+	 **/
+
+	@Test(description = "RPMXCON-48273", enabled = true, groups = { "regression" })
+	public void verifyMP3Count() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48273 Production Component Sprint 18");
+		base.stepInfo(
+				"To Verify Number of MP3 Files should be shown even when the count of MP3 Files among the selected document is 0.");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String MP3FilesCount = page.countOfNumberOfMP3().getText();
+		System.out.println(MP3FilesCount);
+		softAssertion.assertEquals(MP3FilesCount,"0");
+		softAssertion.assertAll();
+		base.passedStep("Verified Number of MP3 Files should be shown even when the count of MP3 Files among the selected document is 0.");
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
