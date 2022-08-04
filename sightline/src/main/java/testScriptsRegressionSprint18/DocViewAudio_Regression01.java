@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.BaseClass;
 import pageFactory.CollectionPage;
 import pageFactory.DataSets;
@@ -65,7 +66,7 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when Project Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52013", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52013", enabled = false, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsPA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52013 - DocViewAudio");
@@ -125,7 +126,7 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when Domain Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52012", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52012", enabled = false, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsDA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52012 - DocViewAudio");
@@ -183,14 +184,14 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when System Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52011", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-52011", enabled = false, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsSA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52011 - DocViewAudio");
 		base.stepInfo("Verify the automatically selection of the redaction tag for audio redaction when System Admin impersonates as RMU/Reviewer");
 
 
-		// Login as DA
+		// Login as SA
 		login.loginToSightLine(Input.sa1userName,Input.sa1password);
 		base.stepInfo("User successfully logged into slightline webpage " +Input.sa1userName + "");
 		
@@ -210,7 +211,7 @@ public class DocViewAudio_Regression01 {
 		//logout
 		login.logout();
 		
-		// Login as DA
+		// Login as SA
 		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		base.stepInfo("User successfully logged into slightline webpage " +Input.sa1userName + "");
 				
@@ -228,6 +229,339 @@ public class DocViewAudio_Regression01 {
 		docviewPage.audioRedactionUsingAudioRange(Input.defaultRedactionTag, 1, 2);
 
 		// logout
+		login.logout();
+		
+		
+		
+		
+		
+	}
+	
+	/**
+	 * @Author Mohan Venugopal
+	 * @Description : Verify that for SA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52003", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsSA() throws Exception {
+	
+		base.stepInfo("Test case Id: RPMXCON-52003 - DocViewAudio");
+		base.stepInfo("Verify that for SA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction");
+
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		
+		String annotationLayerName = "AudioRedaction"+Utility.randomCharacterAppender(3);
+		
+		//Pre-requsite.. Add an AnnotatioLayer under SG
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		annotationLayer.AddAnnotation(annotationLayerName);
+		
+		login.logout();
+		
+
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.sa1userName + "");
+		
+		//Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoRMU();
+		
+		//Navigate to Advance Search Page and search for audio docs
+		
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		
+		//Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+		
+		//Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+		
+		//logout
+		login.logout();
+		
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.sa1userName + "");
+
+		// Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoReviewer();
+
+		// Navigate to Advance Search Page and search for audio docs
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+
+		// Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+
+		// logout
+		login.logout();
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
+
+		// Pre-requsite.. Add an AnnotatioLayer under SG
+		annotationLayer.deleteAnnotationByPagination(annotationLayerName);
+
+		login.logout();
+		
+		
+		
+		
+		
+	}
+	
+	/**
+	 * @Author Mohan Venugopal
+	 * @Description : Verify that for SA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52004", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsWithEditAsSA() throws Exception {
+	
+		base.stepInfo("Test case Id: RPMXCON-52004 - DocViewAudio");
+		base.stepInfo("Verify that for SA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction");
+
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		
+		String annotationLayerName = "AudioRedaction"+Utility.randomCharacterAppender(3);
+		
+		//Pre-requsite.. Add an AnnotatioLayer under SG
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		annotationLayer.AddAnnotation(annotationLayerName);
+		
+		login.logout();
+		
+
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.sa1userName + "");
+		
+		//Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoRMU();
+		
+		//Navigate to Advance Search Page and search for audio docs
+		
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		
+		//Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+		
+		//Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithEditRedactionTag(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+		
+		//logout
+		login.logout();
+		
+		// Login as SA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.sa1userName + "");
+
+		// Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoReviewer();
+
+		// Navigate to Advance Search Page and search for audio docs
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+
+		// Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithEditRedactionTag(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+
+		// logout
+		login.logout();
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
+
+		// Pre-requsite.. Add an AnnotatioLayer under SG
+		annotationLayer.deleteAnnotationByPagination(annotationLayerName);
+
+		login.logout();
+		
+		
+		
+		
+		
+	}
+	
+	
+	/**
+	 * @Author Mohan Venugopal
+	 * @Description : Verify that for DA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52005", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsDA() throws Exception {
+	
+		base.stepInfo("Test case Id: RPMXCON-52005 - DocViewAudio");
+		base.stepInfo("Verify that for DA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction");
+
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		
+		String annotationLayerName = "AudioRedaction"+Utility.randomCharacterAppender(3);
+		
+		//Pre-requsite.. Add an AnnotatioLayer under SG
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		annotationLayer.AddAnnotation(annotationLayerName);
+		
+		login.logout();
+		
+
+		// Login as SA
+		login.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.da1userName + "");
+		
+		//Impersonate from PA to RMU and Reviewer
+		base.impersonateDAtoRMU();
+		
+		//Navigate to Advance Search Page and search for audio docs
+		
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		
+		//Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+		
+		//Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+		
+		//logout
+		login.logout();
+		
+		// Login as SA
+		login.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.da1userName + "");
+
+		// Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoReviewer();
+
+		// Navigate to Advance Search Page and search for audio docs
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+
+		// Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+
+		// logout
+		login.logout();
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
+
+		// Pre-requsite.. Add an AnnotatioLayer under SG
+		annotationLayer.deleteAnnotationByPagination(annotationLayerName);
+
+		login.logout();
+		
+		
+		
+		
+		
+	}
+	
+	/**
+	 * @Author Mohan Venugopal
+	 * @Description : Verify that for PA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-52007", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserShouldAllowOneRedactionTagForAudioDocsAsPA() throws Exception {
+	
+		base.stepInfo("Test case Id: RPMXCON-52007 - DocViewAudio");
+		base.stepInfo("Verify that for PA user after impersonation as RMU/Reviewer should allow to select only one redaction tag for audio redaction");
+
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		
+		String annotationLayerName = "AudioRedaction"+Utility.randomCharacterAppender(3);
+		
+		//Pre-requsite.. Add an AnnotatioLayer under SG
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		annotationLayer.AddAnnotation(annotationLayerName);
+		
+		login.logout();
+		
+
+		// Login as SA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		
+		//Impersonate from PA to RMU and Reviewer
+		base.impersonateDAtoRMU();
+		
+		//Navigate to Advance Search Page and search for audio docs
+		
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		
+		//Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+		
+		//Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+		
+		//logout
+		login.logout();
+		
+		// Login as SA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
+
+		// Impersonate from PA to RMU and Reviewer
+		base.impersonateSAtoReviewer();
+
+		// Navigate to Advance Search Page and search for audio docs
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		// Navigate to DocView Page
+		sessionSearch.ViewInDocViews();
+
+		// Click On redaction tag for the selected audio docs
+		docviewPage.audioRedactionUsingAudioRangeWithIndex(1, 1, 2);
+		base.passedStep("Only one redaction tag is selected for the redaction");
+
+		// logout
+		login.logout();
+		
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
+
+		// Pre-requsite.. Add an AnnotatioLayer under SG
+		annotationLayer.deleteAnnotationByPagination(annotationLayerName);
+
 		login.logout();
 		
 		
