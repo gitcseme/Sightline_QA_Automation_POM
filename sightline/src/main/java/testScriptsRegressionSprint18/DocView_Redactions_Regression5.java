@@ -99,7 +99,7 @@ public class DocView_Redactions_Regression5 {
 	 * PDF (with Uploaded Data set)
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 69)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocHighlightingForSearchablePdfDataSet() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51985");
@@ -167,6 +167,64 @@ public class DocView_Redactions_Regression5 {
 		baseClass.waitTime(3);
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
+	}
+	
+	/**
+	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
+	 * comments entered with < > * ; ‘ / ( ) # & from DocView
+	 * 
+	 */
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+	public void verifyErrorMsgDisplayedDocCommentEnteredFromDocView() throws Exception {
+		baseClass = new BaseClass(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-65057");
+		baseClass.stepInfo(
+				"Verify that error message should be displayed when document comments entered with < > * ; ‘ / ( ) # & from DocView");
+		DocViewPage docView = new DocViewPage(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String Specialchar = "< > * ; ‘ / ( ) #";
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as Rmu");
+		docexp = new DocExplorerPage(driver);
+		// DocExploer to viewindocView Page
+		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+		docexp.selectAllDocumentsFromCurrentPage();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
+		docView.editCodingForm(Specialchar);
+		docView.getCodingFormSaveThisForm().waitAndClick(3);
+		baseClass.stepInfo("edit codingform and Clicked save button");
+		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+		driver.Navigate().refresh();
+		baseClass.handleAlert();
+		driver.Navigate().refresh();
+		docView.editCodingForm(Specialchar);
+		docView.getSaveAndNextButton().waitAndClick(3);
+		baseClass.stepInfo("edit codingform and clicked save and next button");
+		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+		loginPage.logout();
+
+		// Create assignment and go to docview
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Reviewer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		driver.waitForPageToBeReady();
+		docView.editCodingForm(Specialchar);
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.stepInfo("edit codingform and clicked completed button");
+		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+
 	}
 
 }
