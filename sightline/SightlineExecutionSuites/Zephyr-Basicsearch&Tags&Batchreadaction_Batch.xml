@@ -9,7 +9,6 @@
 <test name="Zephyr-Basicsearch-Tags-Batchreadaction_Batch">
 <classes>
 <class name="testScriptsSmoke.Input" />
-
 <class name= "testScriptsRegression.BasicSearch_Regression1" />
 <class name= "testScriptsRegression.PerformanceTest_Regression" />
 <class name= "testScriptsRegression.BulkActions_Regression" />

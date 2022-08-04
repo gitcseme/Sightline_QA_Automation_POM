@@ -2,30 +2,28 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Zephyr-DocViewBatch1" preserve-order="true">
 
-    <listeners>
-		<listener class-name="executionMaintenance.TestListener" />
-	</listeners>
-	
+<listeners>
+<listener class-name="executionMaintenance.TestListener" />
+</listeners>	
     
-     <!-- *********************************************DocView************************************ --> 
-     
-      <test name="Zephyr-DocViewBatch1">
-        <classes>
-		     <class name="testScriptsSmoke.Input"></class>
-             <class name="testScriptsRegression.DocView_Regression1"></class>
-             <class name="testScriptsRegression.DocView_Regression2"></class>
-             <class name="testScriptsRegression.DocView_Regression4"></class>
-             <class name="testScriptsRegression.DocView_Regression5"></class>
-             <class name="testScriptsRegression.DocView_Sprint2_Regression"></class>
-             <class name="testScriptsRegression.DocView_Regression6"></class>
-             <class name="testScriptsRegression.DocView_ProductionFlow_Regression"></class>
-             <class name="testScriptsRegression.DocView_Regression3"></class>
-             <class name="testScriptsRegression.DocView_Regression3_2"></class>
-			<class name="testScriptsRegression.DocView_MiniDocList_DataProvider"></class>
-			<class name="testScriptsRegression.DocView_MiniDocList_Regression"></class>
+<!-- *********************************************DocView************************************ -->     
+<test name="Zephyr-DocViewBatch1">
+<classes>
+<class name="testScriptsSmoke.Input"></class>
+<class name="testScriptsRegression.DocView_Regression1"></class>
+<class name="testScriptsRegression.DocView_Regression2"></class>
+<class name="testScriptsRegression.DocView_Regression4"></class>
+<class name="testScriptsRegression.DocView_Regression5"></class>
+<class name="testScriptsRegression.DocView_Sprint2_Regression"></class>
+<class name="testScriptsRegression.DocView_Regression6"></class>
+<class name="testScriptsRegression.DocView_ProductionFlow_Regression"></class>
+<class name="testScriptsRegression.DocView_Regression3"></class>
+<class name="testScriptsRegression.DocView_Regression3_2"></class>
+<class name="testScriptsRegression.DocView_MiniDocList_DataProvider"></class>
+<class name="testScriptsRegression.DocView_MiniDocList_Regression"></class>
 	
-       </classes>
-    </test>
+</classes>
+</test>
 
 </suite>
 <!-- Suite -->
