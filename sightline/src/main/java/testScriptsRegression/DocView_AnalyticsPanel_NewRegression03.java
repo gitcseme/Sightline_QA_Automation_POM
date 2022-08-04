@@ -111,7 +111,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "Upload Set ZipDocviewNatives");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		// Select Configure Mini DocList Add AttachCount
@@ -159,7 +159,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "Upload Set ZipDocviewNatives");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		// Select Configure Mini DocList Add AttachCount
@@ -205,7 +205,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 
 		//baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "Upload Set ZipDocviewNatives");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		//Select Configure Mini DocList Add AttachCount
@@ -250,7 +250,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 		
 		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "Upload Set ZipDocviewNatives");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		//Select Configure Mini DocList Add AttachCount
@@ -292,7 +292,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	baseClass.stepInfo("User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
     baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-	sessionSearch.SearchMetaData("IngestionName", "Upload Set ZipDocviewNatives");
+	sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 	sessionSearch.ViewThreadedDocsInDocViews();
 
 	//Select Configure Mini DocList Add AttachCount

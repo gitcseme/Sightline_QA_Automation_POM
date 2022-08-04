@@ -163,6 +163,7 @@
 	<projectName01>AutomationAdditionalDataProject</projectName01>
 	<projectName02>Indium_Regressionrun</projectName02>
 	<searchDocFileType>.tiff</searchDocFileType>
+	<DocViewNativesIngestion>Upload Set ZipDocviewNatives</DocViewNativesIngestion>
 
 	<!-- DocView Coding Form -->
 	<savedName>AttachData</savedName>

@@ -799,4 +799,7 @@ public class TestData {
   	public String Actions;
   	public String Delete;
   	public String Edit;
+  	
+  	//Added by shilpi
+  	public String DocViewNativesIngestion;
 }
