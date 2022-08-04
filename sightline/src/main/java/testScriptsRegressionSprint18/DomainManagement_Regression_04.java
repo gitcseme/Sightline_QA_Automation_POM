@@ -3,6 +3,7 @@ package testScriptsRegressionSprint18;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -500,7 +501,264 @@ public class DomainManagement_Regression_04 {
 		loginPage.logout();
 		
 	}
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that manage user page should list each domain-user combination in a separate row
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53022",enabled = true, groups = {"regression" })
+	public void verifyDomainUserdInSeperateRow() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-53022");
+		base.stepInfo("Verify that manage user page should list each domain-user combination in a separate row");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		user.filterByName(Input.da1userName);
+		List<String> domainName = user.getTableCoumnValue("DOMAIN");
+		if(domainName.size()>1) {
+		softAssertion.assertNotEquals(domainName.get(0), domainName.get(1));
+		base.passedStep("Manage user page was list each domain-user combination in a separate row");
+		}else {
+			base.failedStep("please use multiDomain DA credential");
+		}
+		
+		softAssertion.assertAll();
+		base.passedStep("Veriiedy that manage user page should list each domain-user combination in a separate row");
+		loginPage.logout();
+		
+	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that System Admin can Unassigned users from the selected Domain
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53026",enabled = true, groups = {"regression" })
+	public void verifyUnAssigenuserSelectDomain() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		client = new ClientsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-53026");
+		base.stepInfo("To verify that System Admin can Unassigned users from the selected Domain");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//get domain name
+		client.navigateToClientPage();
+		driver.waitForPageToBeReady();
+		client.filterClientByType("Domain");
+		String DomainName = client.getClientTableValue(1, base.getIndex(client.getClientTableHeaders(), "NAME")).getText().trim();
+		
+		user.navigateToUsersPAge();
+		user.filterByName(Input.da1userName);
+		String userName = user.getfirstUserName();
+		boolean flag = base.text(DomainName).isElementAvailable(2);
+		if(!flag) {
+			user.AssignUserToDomain(DomainName, userName);
+		}
+		
+		//unAssign user
+		user.unAssignUserToDomain(DomainName, userName);
+		
+		//verify
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		softAssertion.assertFalse((boolean)base.getSelectProject(DomainName).isElementAvailable(1));
+		base.passedStep("It was displayed the selected Domain in that dropdown if user is assigned for multiple domains. If user is assigned only for one domain then he should not be login to application");
+		
+		softAssertion.assertAll();
+		base.passedStep("verified that System Admin can Unassigned users from the selected Domain");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :To verify that Client Name and Domain ID should not accepts any other special character except Dash,Underscore and space
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52772",enabled = true, groups = {"regression" })
+	public void VerifyClientAndDomainIDSpecialChar() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-52772");
+		base.stepInfo("To verify that Client Name and Domain ID should not accepts any other special character except Dash,Underscore and space");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		String DomainNameId = "!@#$%^&*";
+		String errorMsg = "You cannot specify any special characters in the field value";
+		
+		//add special character
+		client = new ClientsPage(driver);
+		client.addNewClientWithDomainType();
+		client.getEntityName().SendKeys(DomainNameId);
+		client.getDomainID().SendKeys(DomainNameId);
+		client.getSaveBtn().waitAndClick(3);
+		base.stepInfo("special character ade in the filed of domain name and domain id");
+		
+		softAssertion.assertEquals(client.getEntityNameErrorMsg().getText().trim(), errorMsg);
+		softAssertion.assertEquals(client.getEntityIdErrorMsg().getText().trim(), errorMsg);
+		base.passedStep("Inline message should be displayed as 'Special characters are not allowed' for Name And DomainId");
+		
+		softAssertion.assertAll();
+		base.passedStep("To verify that Client Name and Domain ID should not accepts any other special character except Dash,Underscore and space");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify error message should be displayed when system admin do not select domain when creating domain user
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52775",enabled = true, groups = {"regression" })
+	public void verifyErrorMsgDoNotSelectDomain() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-52775");
+		base.stepInfo("Verify error message should be displayed when system admin do not select domain when creating domain user");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		
+		//add new user popup open
+		user.openAddNewUserPopUp();
+		softAssertion.assertTrue((boolean)user.getFirstName().isDisplayed());
+		base.passedStep("Add New User pop up was open");
+		
+		//select add details
+		user.getFirstName().SendKeys(Input.randomText);
+		user.getLastName().SendKeys(Input.randomText);
+		user.getSelectRole().selectFromDropdown().selectByVisibleText(Input.DomainAdministrator);
+		softAssertion.assertTrue((boolean)base.text(Input.DomainAdministrator).isDisplayed());
+		base.passedStep("Domain Admin role was displayed in the Role drop down   ");
+		
+		user.getEmail().SendKeys(Input.da1userName);
+		user.getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		user.getSave().waitAndClick(5);
+		
+		//verify error message
+		softAssertion.assertTrue((boolean)base.text("You must specify a domain").isDisplayed());
+		base.passedStep("Error message was displayed to select domain");
+		
+		softAssertion.assertAll();
+		base.passedStep("Verify error message should be displayed when system admin do not select domain when creating domain user");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify when system admin adds existing user as domain user
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52776",enabled = true, groups = {"regression" })
+	public void verifySysadminAddExitingUser() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-52776");
+		base.stepInfo("Verify when system admin adds existing user as domain user");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		String email = Utility.randomCharacterAppender(6)+"@consilio.com";
+		
+		//create a user
+		user.createNewUser(Input.randomText, Input.randomText, Input.Reviewer, email, Input.domainName, Input.projectName);
+		
+		//parem for all user
+		user.createNewUser(Input.randomText, Input.randomText, Input.DomainAdministrator, email, Input.domainName, Input.projectName);
+		user.createNewUser(Input.randomText, Input.randomText, Input.ProjectAdministrator, email, Input.domainName, Input.projectName01);
+		user.createNewUser(Input.randomText, Input.randomText, Input.ReviewManager, email, Input.domainName, Input.projectName02);
+		user.createNewUser(Input.randomText, Input.randomText, Input.Reviewer, email, Input.domainName, Input.ingestionProjectName);
+		base.passedStep("User should be added successfully and success message should be displayed  for All the roles ");
+		
+		//remove added user
+		user.filterTodayCreatedUser();
+		user.filterByName(email);
+		user.deleteUser();
+		
+		base.passedStep("Verified when system admin adds existing user as domain user");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/04/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that when domain user is created entry will be shown in Pending Activation list
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-52783",enabled = true, groups = {"regression" })
+	public void verifyDomainAdminEntryPendingActivation() throws InterruptedException  {
+		
+		user = new UserManagement(driver);
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-52783");
+		base.stepInfo("Verify that when domain user is created entry will be shown in Pending Activation list");
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		String email = Utility.randomCharacterAppender(6)+"@consilio.com";
+		
+		//create a user
+		user.createNewUser(Input.randomText, Input.randomText, Input.DomainAdministrator, email, Input.domainName, Input.projectName);
+		
+		//verification
+		user.openUsersNotYetLoggedInPopUp();
+		softAssertion.assertTrue((boolean)base.text("First Name").isElementAvailable(3));
+		softAssertion.assertTrue((boolean)base.text("Last Name").isElementAvailable(3));
+		softAssertion.assertTrue((boolean)base.text("Email Address").isElementAvailable(3));
+		softAssertion.assertTrue((boolean)base.text("Resend").isElementAvailable(3));
+		base.passedStep("When domain user is created entry was displayed as follows->First Name,Last Name, Email Address, Resend button");
+		
+		//delete added user
+		user.getPopUpCloseBtn().waitAndClick(5);
+		user.filterTodayCreatedUser();
+		user.filterByName(email);
+		user.deleteUser();
+		
+		softAssertion.assertAll();
+		base.passedStep("Verified that when domain user is created entry will be shown in Pending Activation list");
+		loginPage.logout();
+		
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
