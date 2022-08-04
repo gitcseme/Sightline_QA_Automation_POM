@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -10529,6 +10530,25 @@ public class AssignmentsPage {
 			getBulkAssign_NewAssignment().waitAndClick(20);
 			bc.ValidateElement_Presence(getPersistCB_NewAssgn(), "Persistant search option present in New assign tab.");
 		}
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description This method is used verify the classification dd options
+	 * @return
+	 */
+	public List<String> verifyClassificationDDOptions() {
+    	List<String> actOptions = new ArrayList<String>();
+    	driver.waitForPageToBeReady();
+    	bc.waitForElement(getSelectedClassification());
+		Select select = new Select(getSelectedClassification().getWebElement());
+		List<WebElement> options = select.getOptions();		
+		for(int i=1; i<=options.size()-1; i++)
+		{
+		    System.out.println(options.get(i).getText());
+		    bc.stepInfo(options.get(i).getText());
+		    actOptions.add(options.get(i).getText());
+		}
+		return actOptions;
 	}
 
 

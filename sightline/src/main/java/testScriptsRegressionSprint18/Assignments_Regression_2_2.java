@@ -4,6 +4,10 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -17,7 +21,9 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.ClassificationPage;
 import pageFactory.CodingForm;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -222,6 +228,321 @@ public class Assignments_Regression_2_2 {
 		sessionSearch.bulkAssign();
 		sessionSearch.verifyUnAssignOptions();
 		
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description To verify that numbers set in \"Allowance of drawn document to:\" by RMU for Assignment, "
+				+ "that number of documents can be drawn from General Pool by RU on clicking \"Draw from Pool\"
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53884", enabled = true, groups = { "regression" })
+	public void verifyAllowOfDrawnGeneralPool() throws Exception {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+		String rev[] = { Input.rev1userName };
+		String expDocCount = "20";
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		SoftAssert sa = new SoftAssert();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53884 Assignments");
+		baseClass.stepInfo("To verify that numbers set in \"Allowance of drawn document to:\" by RMU for Assignment, "
+				+ "that number of documents can be drawn from General Pool by RU on clicking \"Draw from Pool\"");
+
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codingFormName);
+//		Draw pool Toggle Enable and making draw limit as 20
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", true);
+		baseClass.stepInfo("numbers set in Allowance of drawn document is 20");
+		search.basicContentSearch(Input.searchStringStar);
+		search.bulkAssign();
+		agnmt.assignwithSamplemethod(assignmentName, "Count of Selected Docs", "1000");
+		baseClass.stepInfo("Successfully 1000 documents are assigned to the Assignment");
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.assignReviewers(rev);
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		driver.waitForPageToBeReady();
+		agnmt.verifyDrawPoolToggledisplay(assignmentName, "enabled");
+		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
+		agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(3);
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(agnmt.getTotalDocsCountInReviewerDashboard(assignmentName));
+		String ActualDocs_value = agnmt.getTotalDocsCountInReviewerDashboard(assignmentName).getText().trim();
+		String TotslDocs = ActualDocs_value.substring(7, 9).trim();
+		sa.assertEquals(expDocCount, TotslDocs);
+		baseClass.passedStep(
+				"Successfully Verified That - numbers set in \"Allowance of drawn document to:\" by RMU for Assignment, "
+						+ "that number of documents can be drawn from General Pool by RU on clicking \"Draw from Pool");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		sa.assertAll();
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description To verify that draw from pool link will be dispalyed after the documents are completed
+	 *               for the assignment which was distributed manually.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53888", enabled = true, groups = { "regression" })
+	public void verifyDrawnPoolLinkafterCompleted() throws Exception {
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		SoftAssert sa = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53888 Assignments");
+		baseClass.stepInfo("To verify that draw from pool link will be dispalyed after the documents are completed "
+				+ "for the assignment which was distributed manually.");
+
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codingFormName);
+		agnmt.toggleEnableOrDisableOfAssignPage(true, false, agnmt.getAssgnGrp_Create_DrawPooltoggle(),
+				"Draw From Pool", true);
+
+		search.basicContentSearch(Input.searchString1);
+		search.bulkAssignExisting(assignmentName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		String docDistriCount = agnmt.distributeTheGivenDocCountToReviewer("2");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		agnmt.SelectAssignmentByReviewer(assignmentName);
+		for (int i = 1; i <= Integer.parseInt(docDistriCount); i++) {
+			docView.completeDocument(Input.randomText);
+		}
+		driver.waitForPageToBeReady();
+		agnmt.navigateBack(1);
+		driver.waitForPageToBeReady();
+		boolean drawLink = agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).isDisplayed();
+		sa.assertTrue(drawLink);
+		sa.assertAll();
+		baseClass.stepInfo(
+				"The Draw link is visible to the RU after marking the manually distributed documents as Completed.");
+		baseClass.passedStep(
+				"verified - that draw from pool link will be dispalyed after the documents are completed for the assignment which was distributed manually.");
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description verify that Total Documents displayed on Distribute Documents are correct if one/multiple assignments are selected while assigning the Assignments
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53645", enabled = true, groups = { "regression" })
+	public void verifyTotalDocDisonDDMultAssign() throws Exception {
+		String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();
+		String assignmentName2 = "AR2Assignment" + Utility.dynamicNameAppender();
+		String noToAssign = "1000";
+
+		LoginPage loginPage = new LoginPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		SoftAssert sa = new SoftAssert();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as :" + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id: RPMXCON-53645 Assignments");
+		baseClass.stepInfo("verify that Total Documents displayed on Distribute Documents are correct"
+				+ " if one/multiple assignments are selected while assigning the Assignments");
+		agnmt.createAssignment(assignmentName1, Input.codeFormName);
+		agnmt.createAssignment(assignmentName2, Input.codeFormName);
+
+		search.basicContentSearch(Input.searchStringStar);
+		baseClass.waitForElement(search.getDocsMetYourCriteriaLabel());
+		baseClass.dragAndDrop(search.getDocsMetYourCriteriaLabel(), search.getActionPad());
+		driver.waitForPageToBeReady();
+		search.bulkAssign();
+		baseClass.stepInfo("Assign/Unassign Docs pop up is displayed");
+		baseClass.waitForElement(search.getSelectAssignmentExisting(assignmentName1));
+		search.getSelectAssignmentExisting(assignmentName1).Click();
+		baseClass.stepInfo(assignmentName1 + "Selected in Assign Popup");
+		baseClass.waitForElement(search.getSelectAssignmentExisting(assignmentName2));
+		search.getSelectAssignmentExisting(assignmentName2).Click();
+		baseClass.stepInfo(assignmentName2 + "Selected in Assign Popup");
+
+		agnmt.VerifySampleMethodDDOptions();
+		baseClass.waitForElement(agnmt.getsampleMethod());
+		agnmt.getsampleMethod().selectFromDropdown().selectByVisibleText("Count of Selected Docs");
+		baseClass.stepInfo("Count of Selected Docs Option Selected in SampleMethod DD");
+		agnmt.getCountToAssign().SendKeys(noToAssign);
+		baseClass.stepInfo(noToAssign + "Entered in Number to Assign tab Successfully");
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		baseClass.waitTillElemetToBeClickable(search.getContinueButton());
+		baseClass.waitForElement(search.getContinueButton());
+		search.getContinueButton().waitAndClick(30);
+		baseClass.waitForElement(search.getFinalizeButton());
+		search.getFinalizeButton().waitAndClick(30);
+
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName1);
+		baseClass.waitForElement(agnmt.getDistributeTab());
+		agnmt.getDistributeTab().Click();
+		baseClass.waitForElement(agnmt.getEditAggn_Distribute_Totaldoc());
+		sa.assertEquals(noToAssign, agnmt.getEditAggn_Distribute_Totaldoc().getText());
+		baseClass.stepInfo("Distribute Documents is displayed and Total Documents is displayed as "
+				+ agnmt.getEditAggn_Distribute_Totaldoc().getText());
+
+		baseClass.waitForElement(agnmt.getAssignment_BackToManageButton());
+		agnmt.getAssignment_BackToManageButton().Click();
+
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName2);
+		baseClass.waitForElement(agnmt.getDistributeTab());
+		agnmt.getDistributeTab().Click();
+		baseClass.waitForElement(agnmt.getEditAggn_Distribute_Totaldoc());
+		sa.assertEquals(noToAssign, agnmt.getEditAggn_Distribute_Totaldoc().getText());
+		baseClass.stepInfo("Distribute Documents is displayed and Total Documents is displayed as 1000"
+				+ agnmt.getEditAggn_Distribute_Totaldoc().getText());
+		baseClass.passedStep("verified - that Total Documents displayed on Distribute Documents are correct "
+				+ "if one/multiple assignments are selected while assigning the Assignments");
+		agnmt.deleteAssgnmntUsingPagination(assignmentName1);
+		agnmt.deleteAssgnmntUsingPagination(assignmentName2);
+		sa.assertAll();
+
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description Verified that validations are displayed for fields Name, RateValue, RateType as Expected
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53613", enabled = true, groups = { "regression" })
+	public void verifyRateDDinClassPage() throws Exception {
+		LoginPage lp = new LoginPage(driver);
+		ClassificationPage clssp = new ClassificationPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		SoftAssert sa = new SoftAssert();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as :" + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id: RPMXCON-53613");
+		baseClass.stepInfo("To Verify Rate Dropdown");
+
+		clssp.navigateClassificationPage();
+		clssp.VerifyRateDDOptions();
+		clssp.verifyClassifactionFieldsErrorAlerts();
+		baseClass.stepInfo("Verified that validations are displayed for fields Name, RateValue, RateType as Expected");
+
+		// Verifying Name Field Error Message
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		clssp.getMaxQualified().selectFromDropdown().selectByVisibleText("--Select--");
+		baseClass.waitForElement(clssp.getClassificationNameQC());
+		clssp.updateQCClassificDetailsNotSave("!@#$%^&*()_+", "$ - AUD", "1");
+		sa.assertEquals(clssp.getClassificationNameQCErrormsg().getText(),
+				"You cannot specify any special characters in the field value");
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "1");
+		sa.assertFalse(clssp.getClassificationNameQCErrormsg().isElementAvailable(5));
+		clssp.updateQCClassificDetailsNotSave("1234565", "$ - AUD", "1");
+		sa.assertFalse(clssp.getClassificationNameQCErrormsg().isElementAvailable(5));
+		clssp.updateQCClassificDetailsNotSave("Minor", "$ - AUD", "1");
+		sa.assertFalse(clssp.getClassificationNameQCErrormsg().isElementAvailable(5));
+		baseClass.stepInfo("Verified that validations are displayed for Name Field as Expected");
+
+		// Verifying Rate Value Field Error Message
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		clssp.getMaxQualified().selectFromDropdown().selectByVisibleText("--Select--");
+		baseClass.waitForElement(clssp.getClassificationRatevalueQC());
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "!@#$%^&*()_+");
+		sa.assertEquals(clssp.getClassificationRatevalueErrormsgQC().getText(),
+				"The currency value specified is invalid.");
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "1RS");
+		sa.assertEquals(clssp.getClassificationRatevalueErrormsgQC().getText(),
+				"The currency value specified is invalid.");
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "1234565");
+		sa.assertFalse(clssp.getClassificationRatevalueErrormsgQC().isElementAvailable(5));
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "65.65");
+		sa.assertFalse(clssp.getClassificationRatevalueErrormsgQC().isElementAvailable(5));
+		clssp.updateQCClassificDetailsNotSave("1LR", "$ - AUD", "Dollar");
+		sa.assertEquals(clssp.getClassificationRatevalueErrormsgQC().getText(),
+				"The currency value specified is invalid.");
+		baseClass.stepInfo("Verified that validations are displayed for Rate Value Field as Expected");
+
+		// Verifying maxQualifiedFunctionality Working Properly
+		clssp.verifyMaxQualifiedFunctionality(1);
+		clssp.verifyMaxQualifiedFunctionality(2);
+		clssp.verifyMaxQualifiedFunctionality(3);
+		clssp.verifyMaxQualifiedFunctionality(4);
+		clssp.verifyMaxQualifiedFunctionality(5);
+
+		// Save Classification For Project And Verify that in New Assignment Page
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		clssp.getMaxQualified().selectFromDropdown().selectByValue(Integer.toString(2));
+		clssp.updateLevelClassificDetailsNotSave(1, "1LR", "$ - USD", "5");
+		clssp.updateLevelClassificDetailsNotSave(2, "2LR", "$ - USD", "10");
+		clssp.updateQCClassificDetailsNotSave("QC", "$ - USD", "15");
+		baseClass.waitForElement(clssp.getSaveBtn());
+		clssp.getSaveBtn().Click();
+		agnmt.navigateToAssignmentsPage();
+		agnmt.NavigateToNewEditAssignmentPage("new");
+
+		List<String> expOptions = new ArrayList<>(Arrays.asList("1LR", "2LR", "QC"));
+		List<String> actOptions = agnmt.verifyClassificationDDOptions();
+		baseClass.stepInfo(actOptions + " Options are available in classification DD");
+		sa.assertEquals(actOptions, expOptions);
+		baseClass.stepInfo("Verified that it displays following classifications:      a. 1LR      b. 2LR      c. QC");
+		sa.assertAll();
+		baseClass.passedStep("Successfully Verified Rate dropdown");
+		lp.logout();
+	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @description Verified that validations are displayed for fields Name, RateValue, RateType as Expected
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53616", enabled = true, groups = { "regression" })
+	public void verifyRMUCanDefineClassforProject() throws Exception {
+		String maxQualified = "2";
+		List<String> expOptions = new ArrayList<>(Arrays.asList("1LR", "2LR", "3LR"));
+
+		LoginPage lp = new LoginPage(driver);
+		ClassificationPage clssp = new ClassificationPage(driver);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		BaseClass baseClass = new BaseClass(driver);
+		SoftAssert sa = new SoftAssert();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as :" + Input.rmu1userName);
+		baseClass.stepInfo("Test case Id: RPMXCON-53616");
+		baseClass.stepInfo("To verify that if RMU define the Classification for project "
+				+ "then it is displayed while creating the assignment for that project.");
+		baseClass.selectproject();
+		clssp.navigateClassificationPage();
+		clssp.getMaxQualified().selectFromDropdown().selectByValue(maxQualified);
+		baseClass.stepInfo(maxQualified + " Selected in Max Qualified DropDown");
+		clssp.updateLevelClassificDetailsNotSave(1, "1LR", "$ - USD", "5");
+		clssp.updateLevelClassificDetailsNotSave(2, "2LR", "$ - USD", "10");
+		clssp.updateQCClassificDetailsNotSave("3LR", "$ - USD", "15");
+		baseClass.waitForElement(clssp.getSaveBtn());
+		clssp.getSaveBtn().Click();
+		baseClass.VerifySuccessMessage("Cancel");
+		baseClass.stepInfo("Classification for the project is saved Successfully");
+		agnmt.navigateToAssignmentsPage();
+		agnmt.NavigateToNewEditAssignmentPage("new");
+		baseClass.stepInfo("New AssignmentPage Displaying");
+
+		List<String> actOptions = agnmt.verifyClassificationDDOptions();
+		baseClass.stepInfo(actOptions + " Options are available in classification DD");
+		sa.assertEquals(actOptions, expOptions);
+		baseClass.stepInfo("Verified that it displays following classifications:      a. 1LR      b. 2LR      c. 3LR");
+		baseClass.passedStep("verified - that if RMU define the Classification for project then it is displayed "
+				+ "while creating the assignment for that project.");
+		sa.assertAll();
+		lp.logout();
 	}
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
