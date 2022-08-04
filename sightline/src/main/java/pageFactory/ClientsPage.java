@@ -73,9 +73,19 @@ public class ClientsPage {
     	return driver.FindElementByXPath("//*[@id='EntityDataTable']/tbody/tr/td[text()='"+rowName+"']/../td["+column+"]"); 
 	}
 
- public Element selectEntityType(){ 
-	 return driver.FindElementById("ddlEntityType"); 
- }
+	public Element selectEntityType(){ 
+		return driver.FindElementById("ddlEntityType"); 
+	}
+	
+	//Add by Aathith
+	public Element getEntityNameErrorMsg(){ 
+		 return driver.FindElementById("EntityLabel-error"); 
+	 }
+	 
+	 public Element getEntityIdErrorMsg(){ 
+		 return driver.FindElementById("entity_domainid-error"); 
+	 }
+ 	
 	
     //Annotation Layer added successfully
     public ClientsPage(Driver driver){

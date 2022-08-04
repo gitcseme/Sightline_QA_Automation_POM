@@ -880,6 +880,10 @@ public class UserManagement {
 
 	}
 
+	public Element getNotYetLoggedInUserBtn() {
+		return driver.FindElementById("PendingUser");
+	}
+	
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -2215,11 +2219,15 @@ public class UserManagement {
 
 		if (getAssignedDomain(AssigedUserName).isElementAvailable(15)) {
 			driver.scrollingToElementofAPage(getAssignedDomain(AssigedUserName));
-			getAssignedDomain(AssigedUserName).waitAndClick(10);
-			getLeftBtndomainuser().waitAndClick(10);
+			getAssignedDomain(AssigedUserName).waitAndClick(5);
+			getLeftBtndomainuser().waitAndClick(5);
+			if(getAssignedDomain(AssigedUserName).isElementAvailable(2)) {
+				getAssignedDomain(AssigedUserName).waitAndClick(5);
+				getLeftBtndomainuser().waitAndClick(5);
+			}
 		}
 
-		getsavedomainuser().waitAndClick(10);
+		getsavedomainuser().waitAndClick(5);
 		bc.VerifySuccessMessage("User Mapping Successful");
 		bc.stepInfo("Domain user unAssiged succesfully");
 
@@ -3996,5 +4004,33 @@ public class UserManagement {
 		getAddUserBtn().waitAndClick(5);
 		bc.waitForElement(getFirstName());
 		bc.stepInfo("add new user pop was opened");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description filter today created users
+	 */
+	public void filterTodayCreatedUser() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getManageFilterByDate());
+		getManageFilterByDate().SendKeys("" + Keys.ENTER);
+		bc.waitForElement(getFilerApplyBtn());
+		bc.waitTillElemetToBeClickable(getFilerApplyBtn());
+		getFilerApplyBtn().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("filtered today created users");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description open Not yet Logged in user popup
+	 */
+	public void openUsersNotYetLoggedInPopUp() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getNotYetLoggedInUserBtn());
+		bc.waitTillElemetToBeClickable(getNotYetLoggedInUserBtn());
+		getNotYetLoggedInUserBtn().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("open a pop for users not yet loggen in");
 	}
 }
