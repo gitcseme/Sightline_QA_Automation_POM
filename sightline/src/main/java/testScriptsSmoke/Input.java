@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -214,6 +214,7 @@ public class Input {
 	public static String projectName01;
 	public static String projectName02;
 	public static String searchDocFileType;
+	public static String DocViewNativesIngestion;
 
 	// DocView codingform Baskar Indium
 
@@ -1115,7 +1116,8 @@ public class Input {
 		projectName01 = testData.getProjectName01();
 		projectName02 = testData.getProjectName02();
 		searchDocFileType = testData.getSearchDocFileType();
-
+		DocViewNativesIngestion = testData.getDocViewNativesIngestion();
+		
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
 		codingFormName = testData.getCodingFormName();
