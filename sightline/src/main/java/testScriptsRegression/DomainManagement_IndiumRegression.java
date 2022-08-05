@@ -22,6 +22,7 @@ import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.DomainDashboard;
+import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -373,7 +374,8 @@ public class DomainManagement_IndiumRegression {
 		baseClass.impersonateDAtoPAforMultiDominUser();
 		driver.waitForPageToBeReady();
 		baseClass.verifyCurrentProject(Input.projectName);
-		baseClass.visibleCheck("Ingestions");
+		IngestionPage ip = new IngestionPage(driver);
+		baseClass.ValidateElement_Presence(ip.getIngestionleftmenu(), "Ingestions");
 		baseClass.stepInfo("Modified rights is saved for the user for the selected domain and is persisted");
 		baseClass.passedStep(
 				"Verified When a user is a domain admin in multiple domains, and when the user is edited to modify the rights for one domain,"
@@ -404,7 +406,7 @@ public class DomainManagement_IndiumRegression {
 		baseClass.impersonateDAtoPAforMultiDominUser();
 		driver.waitForPageToBeReady();
 		baseClass.verifyCurrentProject(Input.additionalDataProject);
-		baseClass.visibleCheck("Ingestions");
+		baseClass.ValidateElement_Presence(ip.getIngestionleftmenu(), "Ingestions");
 		baseClass.stepInfo("Modified rights is saved for the user for the selected domain and is persisted");
 		baseClass.passedStep(
 				"Verified When a user is a domain admin in multiple domains, and when the user is edited to modify the rights for one domain,"
