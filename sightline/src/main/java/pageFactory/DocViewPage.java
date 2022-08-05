@@ -198,7 +198,12 @@ public class DocViewPage {
 	public Element getDocview_AudioRedactions() {
 		return driver.FindElementById("ddlAudioRedactionTags");
 	}
-
+	
+	public ElementCollection getDocView_AudioRedactiionTagFields() {
+		return driver.FindElementsByXPath("//select[@id='ddlAudioRedactionTags']//option");
+	}
+	
+	
 	public Element getDocview_Redactionstags_Delete() {
 		return driver.FindElementById("btnDelete");
 	}
@@ -28295,9 +28300,11 @@ public class DocViewPage {
 		UtilityLog.info(newTime1);
 
 		// Enter time in start field
+		base.waitForElement(getDocview_AddRedactions_StartTime());
 		getDocview_AddRedactions_StartTime().SendKeys(newTime);
 
 		// Enter time in end field
+		base.waitForElement(getDocview_AddRedactions_EndTime());
 		getDocview_AddRedactions_EndTime().SendKeys(newTime1);
 	}
 
@@ -28452,5 +28459,162 @@ public class DocViewPage {
 		getDocView_AudioRemark_DeleteButton().waitAndClick(10);
 		getDocview_ButtonYes().waitAndClick(10);
 		base.VerifySuccessMessage("Record Deleted Successfully");
+	}
+	
+	/**
+	 * @author Mohan
+	 * @modifiededOn : 08/03/2022
+	 * @description: To add redactiontag by index.
+	 * @param redactionTag
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void audioRedactionUsingAudioRangeWithIndex(int redactionTag, int timeOne, int timeTwo)
+			throws InterruptedException, ParseException {
+		// adding redactions
+		driver.waitForPageToBeReady();
+		getDocview_RedactionsTab().waitAndClick(10);
+
+		// Audio Redaction Tag deletion
+		deleteAudioRedactionTag();
+
+		// click on + icon to add redactions
+		getDocview_RedactionsTab_Add().waitAndClick(10);
+		// Get Audio duration start and End time first
+		audioRedactionBasesOnTime(timeOne, timeTwo);
+
+		// Check Default Selection
+		String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+		base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+				"In default : Application automatically selected the ‘Default Redaction Tag’",
+				"In default : invalid redaction tag selected");
+		
+		//Get size of Redaction tag
+		int audioRedactionTagSize = getDocView_AudioRedactiionTagFields().size();
+		System.out.println(audioRedactionTagSize);
+
+		// select redaction tags
+		if (audioRedactionTagSize>1) {
+			base.waitForElement(getDocview_AudioRedactions());
+			getDocview_AudioRedactions().selectFromDropdown().selectByIndex(redactionTag);
+			driver.waitForPageToBeReady();
+
+		}else {
+			base.failedStep("No RedacionTag available in the Audio file");
+		}
+		
+		// click on save button
+		getSaveButton().waitAndClick(20);
+
+		// verify success message
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Record added Successfully");
+		base.CloseSuccessMsgpopup();
+		System.out.println("Redaction added successfully");
+		UtilityLog.info("Redaction added successfully");
+	}
+	
+	/**
+	 * @author Mohan
+	 * @modifiededOn : 08/03/2022
+	 * @description: To add redactiontag by index.
+	 * @param redactionTag
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void audioRedactionUsingAudioRangeWithEditRedactionTag(int redactionTag, int timeOne, int timeTwo)
+			throws InterruptedException, ParseException {
+		// adding redactions
+		driver.waitForPageToBeReady();
+		getDocview_RedactionsTab().waitAndClick(10);
+		
+		
+
+		if (getRedactionModify().isElementAvailable(5)) {
+			getRedactionModify().waitAndClick(5);
+			audioRedactionBasesOnTime(timeOne, timeTwo);
+			// Check Default Selection
+			String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+			base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+					"In default : Application automatically selected the ‘Default Redaction Tag’",
+					"In default : invalid redaction tag selected");
+
+			base.waitForElement(getDocview_AudioRedactions());
+			getDocview_AudioRedactions().selectFromDropdown().selectByIndex(1);
+			driver.waitForPageToBeReady();
+
+			
+			// click on save button
+			getSaveButton().waitAndClick(20);
+			
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage("Record Updated Successfully");
+			base.CloseSuccessMsgpopup();
+			
+		}else {
+			// click on + icon to add redactions
+			getDocview_RedactionsTab_Add().waitAndClick(10);
+			// Get Audio duration start and End time first
+			audioRedactionBasesOnTime(timeOne, timeTwo);
+
+			// Check Default Selection
+			String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+			base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+					"In default : Application automatically selected the ‘Default Redaction Tag’",
+					"In default : invalid redaction tag selected");
+			
+			//Get size of Redaction tag
+			int audioRedactionTagSize = getDocView_AudioRedactiionTagFields().size();
+			System.out.println(audioRedactionTagSize);
+
+			// select redaction tags
+			if (audioRedactionTagSize>1) {
+				base.waitForElement(getDocview_AudioRedactions());
+				getDocview_AudioRedactions().selectFromDropdown().selectByIndex(redactionTag);
+				driver.waitForPageToBeReady();
+
+			}else {
+				base.failedStep("No RedacionTag available in the Audio file");
+			}
+			
+			// click on save button
+			getSaveButton().waitAndClick(20);
+			
+			// verify success message
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage("Record added Successfully");
+			base.CloseSuccessMsgpopup();
+			
+			
+			driver.waitForPageToBeReady();
+			base.waitForElement(getRedactionModify());
+			getRedactionModify().waitAndClick(5);
+			audioRedactionBasesOnTime(timeOne, timeTwo);
+			// Check Default Selection
+			defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
+			base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
+					"In default : Application automatically selected the ‘Default Redaction Tag’",
+					"In default : invalid redaction tag selected");
+
+			base.waitForElement(getDocview_AudioRedactions());
+			getDocview_AudioRedactions().selectFromDropdown().selectByIndex(1);
+			driver.waitForPageToBeReady();
+
+			
+			// click on save button
+			getSaveButton().waitAndClick(20);
+			
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage("Record Updated Successfully");
+			base.CloseSuccessMsgpopup();
+			
+			
+
+			
+		}
+
+		
+		System.out.println("Redaction Updated successfully");
+		UtilityLog.info("Redaction Updated successfully");
 	}
 }
