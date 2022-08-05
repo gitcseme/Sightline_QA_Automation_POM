@@ -90,10 +90,19 @@ public class AdvancedSearchRegression {
 
 	@DataProvider(name = "paRmuRevUsers")
 	public Object[][] paRmuRevUsers() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rev1userName, Input.rev1password, "REV" }, { Input.rmu1userName, Input.rmu1password, "RMU" } };
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA" }, { Input.rev1userName, Input.rev1password, "REV" }, };
 		return users;
 	}
+
+	@DataProvider(name = "PaAndRevUser")
+	public Object[][] PaAndRevUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rev1userName, Input.rev1password, "REV" }, };
+		return users;
+	}
+	
+	
 
 	/**
 	 * @Author Jeevitha
@@ -497,7 +506,7 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Date Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57165", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-57165", dataProvider = "PaAndRevUser", groups = { "regression" }, enabled = true)
 	public void verifySgAndProdDate(String username, String Password, String LoginUser) throws Exception {
 		String fromDate = "2022/07/01";
 
@@ -574,7 +583,7 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Bates Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57160", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
+	@Test(description = "RPMXCON-57160", dataProvider = "PaAndRevUser", groups = { "regression" }, enabled = true)
 	public void verifySgAndProdBatesRange(String username, String Password, String LoginUser) throws Exception {
 		String batesRange = "SP23571PS";
 		baseClass.stepInfo("Test case Id: RPMXCON-57160 Advanced Search");
@@ -613,8 +622,8 @@ public class AdvancedSearchRegression {
 	 *              in shopping cart when search goes to BackGround and User select
 	 *              \"I Want to Wait\" on Advanced Search Screen. RPMXCON-48656
 	 */
-	@Test(description = "RPMXCON-48656", enabled = true, dataProvider = "Users", groups = { "regression" })
-	public void verifyPureHitTileNotCorruptedInShoppingCart(String userName, String password) {
+	@Test(description = "RPMXCON-48656", enabled = true, dataProvider = "paRmuRevUsers", groups = { "regression" })
+	public void verifyPureHitTileNotCorruptedInShoppingCart(String userName, String password,String loginUser) {
 
 		// login as PA
 		loginPage.loginToSightLine(userName, password);
@@ -669,9 +678,9 @@ public class AdvancedSearchRegression {
 	 *              operator get inserted properly into Advanced Search Query
 	 *              builder screen. RPMXCON-57055
 	 */
-	@Test(description = "RPMXCON-57055", dataProvider = "Users", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-57055", dataProvider = "paRmuRevUsers", enabled = true, groups = { "regression" })
 	public void verifyConfigureQueryMasterDateAndRangeOperatorInsertedProperlyInAdvancedSearch(String username,
-			String password) {
+			String password,String loginUser) {
 
 		String fromDate = "2015-01-01";
 		String toDate = "2015-05-04";
