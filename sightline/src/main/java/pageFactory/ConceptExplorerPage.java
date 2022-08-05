@@ -283,7 +283,7 @@ public class ConceptExplorerPage {
 	}
 
 	public Element getActiveFiltersElement() {
-		return driver.FindElementByXPath("//div[@id='activeFilters']//li[1]");
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li");
 	}
 
 	public Element getWaitForBgTaskToComplete() {
