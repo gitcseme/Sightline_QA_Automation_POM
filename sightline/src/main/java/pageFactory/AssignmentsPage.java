@@ -3966,7 +3966,7 @@ public class AssignmentsPage {
 	 *              concept.
 	 */
 	public void editAssignmentUsingPaginationConcept(final String assignmentName) throws InterruptedException {
-		bc.selectproject();
+
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 
 		bc.waitForElement(getNumberOfAssignmentsToBeShown());
@@ -10550,8 +10550,74 @@ public class AssignmentsPage {
 		}
 		return actOptions;
 	}
-
-
+	/**
+	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will create coding form and assignment with tag or folder
+	 * @param sg
+	 * @param codingFormName
+	 * @param assignmentName
+	 * @param searchstring
+	 * @param type
+	 * @param typename
+	 */
+	public void createTagOrFolderCodingFormAssignment(String sg,String codingFormName,String assignmentName,String searchstring,
+			String type,String typeName) throws InterruptedException {
+		driver.waitForPageToBeReady();
+		bc.selectsecuritygroup(sg);
+		CodingForm codingForm = new CodingForm(driver);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    driver.waitForPageToBeReady();
+	    bc.waitForElement(codingForm.getAddNewCodingFormBtn());
+		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
+		bc.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingFormName);
+	    codingForm.saveCodingForm();
+	    driver.waitForPageToBeReady();
+	    TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	    if(type.equalsIgnoreCase("tag")) {
+	    	tagsAndFolderPage.CreateTag(typeName, sg);
+	    }
+	    else if(type.equalsIgnoreCase("folder")) {
+	    	tagsAndFolderPage.CreateFolder(typeName, sg);
+	    }
+		createAssignment(assignmentName, codingFormName);
+		search = new SessionSearch(driver);
+		search.basicContentSearch(searchstring);
+		search.bulkAssignExisting(assignmentName);
+		editAssignmentUsingPaginationConcept(assignmentName);
+		addReviewerAndDistributeDocs();
+	}
 	
-	
+	/**
+	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select assignment and tag or folder popup to verify availability
+	 * @param sg
+	 * @param assignmentName
+	 * @param userName
+	 * @param type
+	 */
+	public void verifyTagOrFolderAvailabilityInAssignment(String sg,String assignmentName,String userName,String type) throws InterruptedException {
+		bc.selectsecuritygroup(sg);
+		editAssignmentUsingPaginationConcept(assignmentName);
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(userName));
+		getAssgn_ManageRev_selectReviewer(userName).waitAndClick(5);
+		getAssgn_ManageRev_Action().waitAndClick(5);
+		 if(type.equalsIgnoreCase("tag")) {
+			 	bc.waitForElement(getAssgn_ManageRev_Action_tagdoc());
+				getAssgn_ManageRev_Action_tagdoc().waitAndClick(5);
+		    }
+		 else if(type.equalsIgnoreCase("folder")) {
+			 bc.waitForElement(getAssgn_ManageRev_Action_folderdoc());
+			 getAssgn_ManageRev_Action_folderdoc().waitAndClick(5);
+			 
+		    }
+		if(bc.getYesBtn().isElementAvailable(10)) {
+		bc.getYesBtn().waitAndClick(2);
+		driver.waitForPageToBeReady();
+		}
+	}
+
 }
