@@ -26,7 +26,7 @@ import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
 public class DocExplorerPage {
-    
+
 	Driver driver;
 	Element element;
 	BaseClass bc;
@@ -350,11 +350,11 @@ public class DocExplorerPage {
 				"//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li["
 						+ folderNumber + "]/a");
 	}
-	// Added by Brundha 
+
+	// Added by Brundha
 	public Element getView() {
 		return driver.FindElementByXPath("//a[@class='submenu-a']");
 	}
-	
 
 	public Element getDocListCustodianName() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']/tbody/tr[1]/td[4]/div");
@@ -446,57 +446,92 @@ public class DocExplorerPage {
 				"//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
 						+ folderName + "']/../ul/descendant::li[" + subFolderNumber + "]/i");
 	}
-    
-	//Added By Vijaya.Rani
+
+	// Added By Vijaya.Rani
 	public Element getClickDocExplorerID(int row) {
 		return driver.FindElementByXPath("//*[@id='dtDocumentList']/tbody/tr[" + row + "]/td[1]/label/i");
 	}
-	
-	//Added by Gopinath - 16/03/2022
+
+	// Added by Gopinath - 16/03/2022
 	public Element getDocExplorerTabAfterDashBoard() {
-		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Dashboard']/../following-sibling::li/a[@title='Doc Explorer']");
+		return driver.FindElementByXPath(
+				"//ul[@id='LeftMenu']/li/a[@title='Dashboard']/../following-sibling::li/a[@title='Doc Explorer']");
 	}
-	
-	
+
 	public Element getDocExplorerAboveDatasets() {
-		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Datasets']/../preceding-sibling::li/a[@title='Doc Explorer']");
+		return driver.FindElementByXPath(
+				"//ul[@id='LeftMenu']/li/a[@title='Datasets']/../preceding-sibling::li/a[@title='Doc Explorer']");
 	}
-	
+
 	public Element getDocExplorerTab() {
 		return driver.FindElementByXPath("//ul[@id='LeftMenu']/li/a[@title='Doc Explorer']");
 	}
-	
-	//Added by Gopinath - 21/03/2022
+
+	// Added by Gopinath - 21/03/2022
 	public ElementCollection getDocExplorerFolders() {
-		return driver.FindElementsByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li/a");
-		
+		return driver.FindElementsByXPath(
+				"//ul[@class='jstree-container-ul jstree-children']/li/a[@id='-1_anchor']/following-sibling::ul[@class='jstree-children']/li/a");
+
 	}
-	
 
 	// Added by Gopinath - 08/04/2022
-		public Element getViewOn() {
-			return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
-		}
-		public Element getViewInDocViewLat() {
-			return driver.FindElementByXPath("//a[text()='View in DocView']");
-		}
-		public Element getViewInDocListLat() {
-			return driver.FindElementByXPath("//a[text()='View in DocList']");
-		}
+	public Element getViewOn() {
+		return driver.FindElementByXPath("//li[@class='dropdown-submenu']//a[text()='View']");
+	}
 
+	public Element getViewInDocViewLat() {
+		return driver.FindElementByXPath("//a[text()='View in DocView']");
+	}
+
+	public Element getViewInDocListLat() {
+		return driver.FindElementByXPath("//a[text()='View in DocList']");
+	}
 
 	public Element getPageNextButtonDisabled() {
 		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']");
 	}
 
-public Element getAllFoldersExpandButton() {
+	public Element getAllFoldersExpandButton() {
 		return driver.FindElementByXPath("//a[@id='-1_anchor']/preceding-sibling::i");
 	}
-	
-public Element getDocExpSubfolderExpandButtonLast(String folderName) {
-	return driver.FindElementByXPath("//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
-					+ folderName + "']/../ul/descendant::li[@class='jstree-node  jstree-leaf jstree-last']");
-}
+
+	public Element getDocExpSubfolderExpandButtonLast(String folderName) {
+		return driver.FindElementByXPath(
+				"//ul[@class='jstree-container-ul jstree-children']/li/a/following-sibling::ul/li/a[text()='"
+						+ folderName + "']/../ul/descendant::li[@class='jstree-node  jstree-leaf jstree-last']");
+	}
+
+	public Element getExportSchedulerButton() {
+		return driver.FindElementById("btnScheduler");
+	}
+
+	public Element getExportShareEmail() {
+		return driver.FindElementByXPath("//textarea[@id='txtEmail']");
+	}
+
+	public Element getExportEmailErrorMsg() {
+		return driver.FindElementById("ErrMsgdiv");
+	}
+
+	public Element getExportSumbitBtn() {
+		return driver.FindElementById("btnScheduleSubmit");
+	}
+
+	public Element getBulkReleaseBtn() {
+		return driver.FindElementById("idBulkRelease");
+	}
+
+	public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG) {
+		return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='" + SG + "']/../div[1]/label/i");
+	}
+
+	public Element getBulkRelease_ButtonRelease() {
+		return driver.FindElementById("btnRelease");
+	}
+
+	public Element getBulkRelease_ButtonUnRelease() {
+		return driver.FindElementByXPath("//button[@id='btnUnrelease']");
+	}
 
 	public DocExplorerPage(Driver driver) {
 
@@ -1060,7 +1095,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 					bc.waitTillElemetToBeClickable(getAllDocSelectedCheckBox());
 				}
 			}
-			if(getOkButton().isDisplayed()) {
+			if (getOkButton().isDisplayed()) {
 				bc.waitTillElemetToBeClickable(getOkButton());
 				getOkButton().Click();
 			} else {
@@ -1129,7 +1164,6 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 			getselectDoc(D).waitAndClick(10);
 		}
 	}
-
 
 	public void bulkFolderExisting(String folderName) throws InterruptedException {
 		Thread.sleep(3000);
@@ -1876,10 +1910,10 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 				return doclist.getPopUpOkBtn().Visible();
 			}
 		}), Input.wait30);
-		if(doclist.getPopUpOkBtn().isElementAvailable(5)) {
-		bc.waitTillElemetToBeClickable(doclist.getPopUpOkBtn());
-		doclist.getPopUpOkBtn().waitAndClick(5);
-		}else {
+		if (doclist.getPopUpOkBtn().isElementAvailable(5)) {
+			bc.waitTillElemetToBeClickable(doclist.getPopUpOkBtn());
+			doclist.getPopUpOkBtn().waitAndClick(5);
+		} else {
 			driver.Navigate().refresh();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -1901,7 +1935,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		getDocExp_actionButton().isElementAvailable(10);
 		getDocExp_actionButton().waitAndClick(10);
 		bc.waitTime(3);
-		if(getDocListAction().isDisplayed()) {
+		if (getDocListAction().isDisplayed()) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getDocListAction().Visible();
@@ -1919,14 +1953,13 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 			}
 			System.out.println("Navigated to doclist, to view docslist");
 			UtilityLog.info("Navigated to doclist, to view docslist");
-		}else {
+		} else {
 			Actions ac = new Actions(driver.getWebDriver());
 			ac.moveToElement(getViewOn().getWebElement()).build().perform();
 			bc.waitTime(2);
 			getViewInDocListLat().isElementAvailable(15);
 			getViewInDocListLat().Click();
 		}
-				
 
 	}
 
@@ -1983,7 +2016,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 					driver.waitForPageToBeReady();
 					int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
 					numberOfDocumentsInPage = numberOfDocumentsInPage + numberOfDocumentsInNextPage;
-				} 
+				}
 
 			}
 			if (CustodianNameInTree.contains(custodianNameInTable)) {
@@ -2184,22 +2217,19 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		try {
 			bc.waitForElement(getDocExp_SelectAllDocs());
 			getDocExp_SelectAllDocs().waitAndClick(5);
-			
+
 			try {
-		//	bc.waitForElement(doclist.getPopUpOkBtn());
-			if (doclist.getPopUpOkBtn().isElementAvailable(5)) {
-				bc.passedStep("popup is appeared with ok and cancel button after select all docs");
-			doclist.getPopUpOkBtn().waitAndClick(10);
+				// bc.waitForElement(doclist.getPopUpOkBtn());
+				if (doclist.getPopUpOkBtn().isElementAvailable(5)) {
+					bc.passedStep("popup is appeared with ok and cancel button after select all docs");
+					doclist.getPopUpOkBtn().waitAndClick(10);
+				} else {
+					bc.stepInfo("popup is not displayed after click on check box to select all docs");
 				}
-		 else {
-				bc.stepInfo("popup is not displayed after click on check box to select all docs");
-			}
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				System.out.println("No pop up displayed");
 			}
-		
+
 			bc.waitForElement(getDocExp_actionButton());
 			getDocExp_actionButton().waitAndClick(10);
 			bc.waitTime(2);
@@ -2270,7 +2300,8 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 					bc.waitTime(3);
 					folders.get(i).click();
 					ac.moveByOffset(50, 50).perform();
-					bc.passedStep("after mouse hover to the folder full name " + foldername + " is displayed in tool tip");
+					bc.passedStep(
+							"after mouse hover to the folder full name " + foldername + " is displayed in tool tip");
 					ac.moveToElement(folders.get(i));
 					ac.perform();
 					getFolderToolTip().isElementAvailable(10);
@@ -2298,7 +2329,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		}
 
 	}
- 
+
 	/**
 	 * @author Gopinath
 	 * @Description:method to verify doc Explorer folder level
@@ -2388,7 +2419,7 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 		}
 
 	}
-	
+
 	/**
 	 * @Author:Indium-sowndarya.Velraj Modify By:Vijaya.Rani Modify Date:10/03/2022
 	 * 
@@ -2397,254 +2428,405 @@ public Element getDocExpSubfolderExpandButtonLast(String folderName) {
 
 		bc.waitForElement(getDocExp_actionButton());
 		getDocExp_actionButton().waitAndClick(10);
-		if(getView().isDisplayed()) {
+		if (getView().isDisplayed()) {
 			driver.waitForPageToBeReady();
 			Actions act = new Actions(driver.getWebDriver());
 			act.moveToElement(getView().getWebElement()).build().perform();
-			}else {
+		} else {
 			System.out.println("View is not found");
-			}
-		
+		}
+
 		bc.waitForElement(getDocViewAction());
 		getDocViewAction().waitAndClick(5);
 	}
-/**
-* @author Gopinath
-* @Description method to verify DocExplorer view presented below the dash
-*              board in left menu panal
-*/
-public void verifyDocExplorerBelowDashBoard() {
-try {
-	driver.waitForPageToBeReady();
-	bc.waitForElement(getDocExplorerTabAfterDashBoard());
-	if (getDocExplorerTabAfterDashBoard().isDisplayed()) {
-		bc.passedStep("Doc explorer view is displayed below dash board from left menu");
-	} else {
-		bc.failedStep("Doc explorer view is not displayed after dash board fro left menu");
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-	bc.failedStep("Exception occured while verifying docExplorer view in left menu panal");
 
-}
-
-}
-
-/**
-* @author Gopinath
-* @Description method to verify docExplorer view presented above the datasets in left menu panal
-*/
-public void verifyDocExplorerAboveDatasets() {
-try {
-	bc.waitForElement(getDocExplorerAboveDatasets());
-	if (getDocExplorerAboveDatasets().isDisplayed()) {
-		bc.passedStep("Docexplorer view is displayed above the datasets in left menu");
-	} else {
-		bc.failedStep("Docexplorer view is not displayed above the datasets in left menu");
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-	bc.failedStep("Exception occured while verifying Doc explorer view in left menu panal");
-}
-} 
-
-/**
-* @author Gopinath
-* @Description: method to verify DocExplorer in left menu panal
-*/
-public void verifyDocExplorerInLeftMenu() {
-try {
-	driver.waitForPageToBeReady();
-	bc.waitForElement(getDocExplorerTab());
-	if (getDocExplorerTab().getWebElement().isDisplayed()) {
-		bc.passedStep("Doc Explorer is presented in left menu panal");
-
-	} else {
-		bc.failedStep("Doc explorer is not presented in left menu panal");
-	}
-} catch (Exception e) {
-	e.printStackTrace();
-	bc.stepInfo("Exception occured while verifying docExplorer tab");
-}
-}
-
-/**
- * @author Gopinath
- * @Description method to verify folders having zero doc are not displayed
- */
-public void verifyDOcExplorerNoZeroDocFolder() {
-	driver.waitForPageToBeReady();
-	bc.waitForElementCollection(getDocExplorerFolders());
-	for(int i=0;i<getDocExplorerFolders().size();i++) {
-		String folderName = getDocExplorerFolders().FindWebElements().get(i).getText();
-		String noOfDdocs = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
-		if(noOfDdocs.equals("0")) {
-			bc.failedStep(folderName+" folder having zero documents is displayed in doc explorer tree structure");
-			break;
-		}
-	}
-	bc.passedStep("folders with zero documents are not displayed");
-	
-}
-
-
-/**
- * @author : Gopinath
- * @Description : Method to verify custodian and corresponding data sets are displayed 
- * @param folderName
- */  
-public void verrifyDocExplorerFolder(String folderName) {
-	try {
-		getfolderFromTreeByName(folderName).ScrollTo();
-		bc.waitForElement(getfolderFromTreeByName(folderName));
-		if (getfolderFromTreeByName(folderName).isDisplayed()) {
-			String custName = getfolderFromTreeByName(folderName).getText();
-			if (custName.length() > 0) {
-				bc.passedStep("folder with custodian name is displayed in doc explorer tree structure ");
-			} else {
-				bc.failedStep("custodian name is not displayed");
-			}
-		} else {
-			bc.failedStep("folder is not displayed in doc explorer tree view");
-		}
-		bc.waitForElement(getDocExpFolderExpandbutton(folderName));
-		getDocExpFolderExpandbutton(folderName).waitAndClick(5);
-		bc.waitForElement(getDocExpSubFolderName(folderName, 1));
-		if (getDocExpSubFolderName(folderName, 1).isElementAvailable(5)
-				&& getDocExpSubFolderName(folderName, 1).isDisplayed()) {
-			bc.passedStep("After click on coustodian name corresponding datasets are expanded and displayed");
-		} else {
-			bc.failedStep("After click on coustodian name corresponding datasets are not displayed");
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
-		bc.failedStep("Exception occured while verifying custodian and datasets");
-	}
-
-}
-
-/**
- * @author Jayanthi.Ganesan This method will navigate from doc explorer page to
- *         Export page.
- */
-public void docExpToExport() {
-	bc.waitForElement(actionDropdown());
-	actionDropdown().waitAndClick(10);
-	bc.waitForElement(exportDataFromActionDropdown());
-	exportDataFromActionDropdown().waitAndClick(10);
-	driver.waitForPageToBeReady();
-}
-
-/**
- * @author 
- * @description: method to verify subfolders are displayed in doc explorer tree
- */
-public void verifySubFoldersDisplayed() {
-	bc.waitForElement(getAllFoldersExpandButton());
-	if (getAllFoldersExpandButton().isElementAvailable(5)) {
-		bc.passedStep("All folders littele Arrow button is displayed to indicating they have su folders");
-	} else {
-		bc.failedStep("All folders little Arrow button is not displayed");
-	}
-	bc.waitForElement(getFolderExpandButton("1"));
-	getFolderExpandButton("1").waitAndClick(5);
-	bc.waitForElement(getDocExplorerSubFolder());
-	if (getDocExplorerSubFolder().isDisplayed()) {
-		bc.passedStep("After click on arrow button subfolders are displayed");
-	} else {
-		bc.failedStep("Afetr click on arrow button subfolders are not displayed");
-	}
-
-}
-
-
-/**
- * @author
- * @Description:method to verify count of selected multiple folders in table
- * @param numberOfFolders
- */
-public void verifyMultiFoldersCount(int numberOfFolders) {
-	bc.waitForElement(getfolderFromTreeByNumber("2"));
-	int numberOfDocumentInFolders = 0;
-	for (int i = 3; i <= numberOfFolders + 1; i++) {
-		bc.waitForElement(getfolderFromTreeByNumber(String.valueOf(i)));
-		String CustodianNameInTree = getfolderFromTreeByNumber(String.valueOf(i)).getText();
-		String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,
-				CustodianNameInTree.indexOf(")"));
-		if (numberOfDocumentInFolder.contains(",")) {
-			numberOfDocumentInFolder = numberOfDocumentInFolder.replace(",", "");
-		}
-		numberOfDocumentInFolders = numberOfDocumentInFolders + Integer.parseInt(numberOfDocumentInFolder);
-	}
-
-	int docCountIntable = docCountInTable();
-	if (docCountIntable == numberOfDocumentInFolders) {
-		bc.stepInfo(
-				"Document count from the right side is same as the count displayed for the selected multiple folders in tree view");
-	} else {
-		bc.failedStep(
-				"Document count from the right is not equal to the count displayed for the selected multiple folders in tree view");
-	}
-}
-
-
-
-/**
- * @author 
- * @Description:method to get the count of documents in a table
- * @return (number of documents in table)
- */
-public int docCountInTable() {
-	
-	bc.waitForElementCollection(getDocListInPage());
-	int numberOfDocumentsInTable = getDocListInPage().FindWebElements().size();
-
-	while (true) {
-		if (getPageNextButtonDisabled().isElementAvailable(3)) {
-			break;
-		} else {
-			bc.waitForElement(getDocLictPaginationNextButton());
-			getDocLictPaginationNextButton().waitAndClick(3);
+	/**
+	 * @author Gopinath
+	 * @Description method to verify DocExplorer view presented below the dash board
+	 *              in left menu panal
+	 */
+	public void verifyDocExplorerBelowDashBoard() {
+		try {
 			driver.waitForPageToBeReady();
-			int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
-			numberOfDocumentsInTable = numberOfDocumentsInTable + numberOfDocumentsInNextPage;
+			bc.waitForElement(getDocExplorerTabAfterDashBoard());
+			if (getDocExplorerTabAfterDashBoard().isDisplayed()) {
+				bc.passedStep("Doc explorer view is displayed below dash board from left menu");
+			} else {
+				bc.failedStep("Doc explorer view is not displayed after dash board fro left menu");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verifying docExplorer view in left menu panal");
+
 		}
 
 	}
-	return numberOfDocumentsInTable;
-}
 
-/**
- * @author 
- * @Description:Method to verify arrow button is not displayed for the folder which are not having sub folders
- * @param folderName
- */
-public void verifyArrowButtonNotDisplayed(String folderName) {
-	bc.waitForElement(getDocExpFolderExpandbutton(folderName));
-	getDocExpFolderExpandbutton(folderName).waitAndClick(5);
-	int folderNumer=0;
-	String folder="";;
-	boolean flag=true;
-	while(true) {
-		folderNumer=folderNumer+1;
-		bc.waitForElement(getDoxExpSubFoldarExpandbutton(folderName, folderNumer));
-		getDoxExpSubFoldarExpandbutton(folderName, folderNumer).waitAndClick(5);
-		bc.waitTime(2);
-		if(!getDocExpSubfolderExpandButtonLast(folderName).isElementAvailable(3)) {
-			if(!getDocExpSubFolderName(folderName, folderNumer+1).isElementAvailable(5)) {
-				 folder =folder+ getDocExpSubFolderName(folderName, folderNumer).getText();
-				flag=false;
+	/**
+	 * @author Gopinath
+	 * @Description method to verify docExplorer view presented above the datasets
+	 *              in left menu panal
+	 */
+	public void verifyDocExplorerAboveDatasets() {
+		try {
+			bc.waitForElement(getDocExplorerAboveDatasets());
+			if (getDocExplorerAboveDatasets().isDisplayed()) {
+				bc.passedStep("Docexplorer view is displayed above the datasets in left menu");
+			} else {
+				bc.failedStep("Docexplorer view is not displayed above the datasets in left menu");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verifying Doc explorer view in left menu panal");
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @Description: method to verify DocExplorer in left menu panal
+	 */
+	public void verifyDocExplorerInLeftMenu() {
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getDocExplorerTab());
+			if (getDocExplorerTab().getWebElement().isDisplayed()) {
+				bc.passedStep("Doc Explorer is presented in left menu panal");
+
+			} else {
+				bc.failedStep("Doc explorer is not presented in left menu panal");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.stepInfo("Exception occured while verifying docExplorer tab");
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @Description method to verify folders having zero doc are not displayed
+	 */
+	public void verifyDOcExplorerNoZeroDocFolder() {
+		driver.waitForPageToBeReady();
+		bc.waitForElementCollection(getDocExplorerFolders());
+		for (int i = 0; i < getDocExplorerFolders().size(); i++) {
+			String folderName = getDocExplorerFolders().FindWebElements().get(i).getText();
+			String noOfDdocs = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+			if (noOfDdocs.equals("0")) {
+				bc.failedStep(folderName + " folder having zero documents is displayed in doc explorer tree structure");
 				break;
 			}
-		}else {
-			break;
+		}
+		bc.passedStep("folders with zero documents are not displayed");
+
+	}
+
+	/**
+	 * @author : Gopinath
+	 * @Description : Method to verify custodian and corresponding data sets are
+	 *              displayed
+	 * @param folderName
+	 */
+	public void verrifyDocExplorerFolder(String folderName) {
+		try {
+			getfolderFromTreeByName(folderName).ScrollTo();
+			bc.waitForElement(getfolderFromTreeByName(folderName));
+			if (getfolderFromTreeByName(folderName).isDisplayed()) {
+				String custName = getfolderFromTreeByName(folderName).getText();
+				if (custName.length() > 0) {
+					bc.passedStep("folder with custodian name is displayed in doc explorer tree structure ");
+				} else {
+					bc.failedStep("custodian name is not displayed");
+				}
+			} else {
+				bc.failedStep("folder is not displayed in doc explorer tree view");
+			}
+			bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+			getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+			bc.waitForElement(getDocExpSubFolderName(folderName, 1));
+			if (getDocExpSubFolderName(folderName, 1).isElementAvailable(5)
+					&& getDocExpSubFolderName(folderName, 1).isDisplayed()) {
+				bc.passedStep("After click on coustodian name corresponding datasets are expanded and displayed");
+			} else {
+				bc.failedStep("After click on coustodian name corresponding datasets are not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occured while verifying custodian and datasets");
+		}
+
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will navigate from doc explorer page to
+	 *         Export page.
+	 */
+	public void docExpToExport() {
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(10);
+		bc.waitForElement(exportDataFromActionDropdown());
+		exportDataFromActionDropdown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author
+	 * @description: method to verify subfolders are displayed in doc explorer tree
+	 */
+	public void verifySubFoldersDisplayed() {
+		bc.waitForElement(getAllFoldersExpandButton());
+		if (getAllFoldersExpandButton().isElementAvailable(5)) {
+			bc.passedStep("All folders littele Arrow button is displayed to indicating they have su folders");
+		} else {
+			bc.failedStep("All folders little Arrow button is not displayed");
+		}
+		bc.waitForElement(getFolderExpandButton("1"));
+		getFolderExpandButton("1").waitAndClick(5);
+		bc.waitForElement(getDocExplorerSubFolder());
+		if (getDocExplorerSubFolder().isDisplayed()) {
+			bc.passedStep("After click on arrow button subfolders are displayed");
+		} else {
+			bc.failedStep("Afetr click on arrow button subfolders are not displayed");
+		}
+
+	}
+
+	/**
+	 * @author
+	 * @Description:method to verify count of selected multiple folders in table
+	 * @param numberOfFolders
+	 */
+	public void verifyMultiFoldersCount(int numberOfFolders) {
+		bc.waitForElement(getfolderFromTreeByNumber("2"));
+		int numberOfDocumentInFolders = 0;
+		for (int i = 3; i <= numberOfFolders + 1; i++) {
+			bc.waitForElement(getfolderFromTreeByNumber(String.valueOf(i)));
+			String CustodianNameInTree = getfolderFromTreeByNumber(String.valueOf(i)).getText();
+			String numberOfDocumentInFolder = CustodianNameInTree.substring(CustodianNameInTree.indexOf("(") + 1,
+					CustodianNameInTree.indexOf(")"));
+			if (numberOfDocumentInFolder.contains(",")) {
+				numberOfDocumentInFolder = numberOfDocumentInFolder.replace(",", "");
+			}
+			numberOfDocumentInFolders = numberOfDocumentInFolders + Integer.parseInt(numberOfDocumentInFolder);
+		}
+
+		int docCountIntable = docCountInTable();
+		if (docCountIntable == numberOfDocumentInFolders) {
+			bc.stepInfo(
+					"Document count from the right side is same as the count displayed for the selected multiple folders in tree view");
+		} else {
+			bc.failedStep(
+					"Document count from the right is not equal to the count displayed for the selected multiple folders in tree view");
 		}
 	}
-	if(flag==true) {
-		bc.passedStep("Arror button is not displayed for the  folder which is not having sub folders");
-	}else {
-		bc.failedStep("Arror button is   displayed for the folder '"+folder+"' which is not having sub folders");
+
+	/**
+	 * @author
+	 * @Description:method to get the count of documents in a table
+	 * @return (number of documents in table)
+	 */
+	public int docCountInTable() {
+
+		bc.waitForElementCollection(getDocListInPage());
+		int numberOfDocumentsInTable = getDocListInPage().FindWebElements().size();
+
+		while (true) {
+			if (getPageNextButtonDisabled().isElementAvailable(3)) {
+				break;
+			} else {
+				bc.waitForElement(getDocLictPaginationNextButton());
+				getDocLictPaginationNextButton().waitAndClick(3);
+				driver.waitForPageToBeReady();
+				int numberOfDocumentsInNextPage = getDocListInPage().FindWebElements().size();
+				numberOfDocumentsInTable = numberOfDocumentsInTable + numberOfDocumentsInNextPage;
+			}
+
+		}
+		return numberOfDocumentsInTable;
 	}
-}
+
+	/**
+	 * @author
+	 * @Description:Method to verify arrow button is not displayed for the folder
+	 *                     which are not having sub folders
+	 * @param folderName
+	 */
+	public void verifyArrowButtonNotDisplayed(String folderName) {
+		bc.waitForElement(getDocExpFolderExpandbutton(folderName));
+		getDocExpFolderExpandbutton(folderName).waitAndClick(5);
+		int folderNumer = 0;
+		String folder = "";
+		;
+		boolean flag = true;
+		while (true) {
+			folderNumer = folderNumer + 1;
+			bc.waitForElement(getDoxExpSubFoldarExpandbutton(folderName, folderNumer));
+			getDoxExpSubFoldarExpandbutton(folderName, folderNumer).waitAndClick(5);
+			bc.waitTime(2);
+			if (!getDocExpSubfolderExpandButtonLast(folderName).isElementAvailable(3)) {
+				if (!getDocExpSubFolderName(folderName, folderNumer + 1).isElementAvailable(5)) {
+					folder = folder + getDocExpSubFolderName(folderName, folderNumer).getText();
+					flag = false;
+					break;
+				}
+			} else {
+				break;
+			}
+		}
+		if (flag == true) {
+			bc.passedStep("Arror button is not displayed for the  folder which is not having sub folders");
+		} else {
+			bc.failedStep(
+					"Arror button is   displayed for the folder '" + folder + "' which is not having sub folders");
+		}
+	}
+
+	public void docExloerExportData(String fullName, String emailname) throws Exception {
+
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(exportDataFromActionDropdown());
+		exportDataFromActionDropdown().waitAndClick(5);
+		bc.stepInfo("Export pop up is open Successfully");
+
+		bc.waitForElement(exportWindow_AllCustodiansCheckbox());
+		exportWindow_AllCustodiansCheckbox().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(exportWindow_AddToSelectedButton());
+		exportWindow_AddToSelectedButton().waitAndClick(10);
+
+		bc.waitForElement(getExportSchedulerButton());
+		getExportSchedulerButton().waitAndClick(5);
+		bc.stepInfo("Schedule Report pop up is open Successfully");
+
+		bc.waitForElement(getExportShareEmail());
+		getExportShareEmail().SendKeys(emailname);
+
+		bc.waitForElement(getExportSumbitBtn());
+		getExportSumbitBtn().waitAndClick(5);
+
+	}
+
+	public void docExloerRelease(String SecGroup) throws Exception {
+
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkReleaseBtn());
+		getBulkReleaseBtn().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible();
+			}
+		}), Input.wait60);
+		getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelease_ButtonRelease().Visible();
+			}
+		}), Input.wait60);
+		getBulkRelease_ButtonRelease().waitAndClick(20);
+
+		if (getFinalizeButton().isDisplayed()) {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFinalizeButton().Visible();
+				}
+			}), Input.wait60);
+			getFinalizeButton().waitAndClick(20);
+		}
+
+		bc.VerifySuccessMessageB("Records saved successfully");
+
+		System.out.println("performing bulk release");
+		UtilityLog.info("performing bulk release");
+
+	}
+
+	public void docExloerUnRelease(String SecGroup) throws Exception {
+
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkReleaseBtn());
+		getBulkReleaseBtn().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible();
+			}
+		}), Input.wait60);
+		getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelease_ButtonUnRelease().Visible();
+			}
+		}), Input.wait60);
+		getBulkRelease_ButtonUnRelease().waitAndClick(20);
+
+		bc.VerifySuccessMessageB("Records saved successfully");
+
+		System.out.println("performing bulk release");
+		UtilityLog.info("performing bulk release");
+
+	}
 
 }
