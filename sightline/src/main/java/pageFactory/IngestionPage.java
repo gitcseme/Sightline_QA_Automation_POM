@@ -158,8 +158,9 @@ public class IngestionPage {
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
     public Element getDateFormat(){ return driver.FindElementById("ddlDateFormat"); }
-   
+    public Element getIngestionleftmenu(){ return driver.FindElementByXPath("//a[@title='Ingestions']"); }
     
+  
     
     public IngestionPage(Driver driver){
 

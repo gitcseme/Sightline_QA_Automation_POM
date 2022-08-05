@@ -385,7 +385,7 @@ public class DocExplorer_Regression1 {
 			docExplorer.masterDateWithEmailSubject(Input.proximity, Input.masterDate);
 			
 			baseClass.stepInfo("Selecting the document in docExplorer page");
-			docExplorer.selectDocument(1);
+		//	docExplorer.selectDocument(1);
 			docExplorer.getDocumentsCheckBoxbyRowNum(1).waitAndClick(10);
 			
 			
