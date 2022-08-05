@@ -19,14 +19,18 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.ClassificationPage;
 import pageFactory.CodingForm;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -40,6 +44,9 @@ public class Assignments_Regression_2_2 {
 	BaseClass baseClass;
 	Input in;
 	SoftAssert softAssertion;
+	SecurityGroupsPage securityGroupsPage;
+	TagsAndFoldersPage tagsAndFolderPage;
+	DocViewRedactions docViewRedact;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -544,6 +551,149 @@ public class Assignments_Regression_2_2 {
 		sa.assertAll();
 		lp.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 04/08/2022 TestCase Id:RPMXCON-54033
+	 * Description :To verify that Tags displayed in Tags pop up are security group specific
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-54033",enabled = true, groups = { "regression" })
+	public void verifyTagsAreSecurityGroupSpecific() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54033");
+		baseClass.stepInfo("Verify that Tags displayed in Tags pop up are security group specific.");
+		String sgName1 = "SecurityGroup1_"+ UtilityLog.dynamicNameAppender();
+		String sgName2 = "SecurityGroup2_"+ UtilityLog.dynamicNameAppender();
+		String tagName1 = "securityGroup1_Tag" + UtilityLog.dynamicNameAppender();
+		String tagName2 = "securityGroup2_Tag" + UtilityLog.dynamicNameAppender();
+		String assignmentName1 ="assignment1" + UtilityLog.dynamicNameAppender();
+		String assignmentName2 ="assignment2" + UtilityLog.dynamicNameAppender();
+		String cfName1 = "codingForm1"+ UtilityLog.dynamicNameAppender();
+		String cfName2 = "codingForm2"+ UtilityLog.dynamicNameAppender();
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Create security groups and assign");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(sgName1);
+		securityGroupsPage.AddSecurityGroup(sgName2);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkReleaseToMultipleSecurityGroups(sgName1, sgName2);
+		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
+		driver.waitForPageToBeReady();
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("create assignment and tag for security group 1");
+		assignPage.createTagOrFolderCodingFormAssignment(sgName1, cfName1, assignmentName1, Input.testData1, "tag", tagName1);
+		baseClass.stepInfo("get tags in popup available in security group 1");
+		assignPage.verifyTagOrFolderAvailabilityInAssignment(sgName1, assignmentName1, Input.rev1userName, "tag");
+		if(!sessionSearch.getExistingTagSelectionCheckBox(tagName2).isElementAvailable(10) && 
+				sessionSearch.getExistingTagSelectionCheckBox(tagName1).isElementAvailable(10)) {
+			baseClass.passedStep("Tags are securityGroup specific");
+		}
+		else {
+			baseClass.failedStep("Tags are not securityGroup specific");
+		}
+		driver.Navigate().refresh();
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		assignPage.createTagOrFolderCodingFormAssignment(sgName2, cfName2, assignmentName2, Input.testData1, "tag", tagName2);
+		assignPage.verifyTagOrFolderAvailabilityInAssignment(sgName2, assignmentName2, Input.rev1userName, "tag");
+		if(!sessionSearch.getExistingTagSelectionCheckBox(tagName1).isElementAvailable(10) &&
+				sessionSearch.getExistingTagSelectionCheckBox(tagName2).isElementAvailable(10)) {
+			baseClass.passedStep("Tags are securityGroup specific");
+		}
+		else {
+			baseClass.failedStep("Tags are not securityGroup specific");
+		}
+		driver.Navigate().refresh();
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		//Delete security group
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		if (!sgName1.equalsIgnoreCase(Input.securityGroup) && !sgName2.equalsIgnoreCase(Input.securityGroup)) {
+		securityGroupsPage.deleteSecurityGroups(sgName1);
+		driver.waitForPageToBeReady();
+		securityGroupsPage.deleteSecurityGroups(sgName2);
+		}
+		loginPage.logout();
+				
+	}
+	
+	/**
+	 * Author :Arunkumar date: 05/08/2022 TestCase Id:RPMXCON-54034
+	 * Description :To verify that Folders displayed in Folders pop up are security group specific
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-54034",enabled = true, groups = { "regression" })
+	public void verifyFoldersAreSecurityGroupSpecific() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54034");
+		baseClass.stepInfo("To verify that Folders displayed in Folders pop up are security group specific.");
+		String sgName1 = "Security Group1_"+ UtilityLog.dynamicNameAppender();
+		String sgName2 = "Security Group2_"+ UtilityLog.dynamicNameAppender();
+		String folderName1 = "securityGroup1_Folder" + UtilityLog.dynamicNameAppender();
+		String folderName2 = "securityGroup2_Folder" + UtilityLog.dynamicNameAppender();
+		String assignmentName1 ="assignment1" + UtilityLog.dynamicNameAppender();
+		String assignmentName2 ="assignment2" + UtilityLog.dynamicNameAppender();
+		String cfName1 = "codingForm1"+ UtilityLog.dynamicNameAppender();
+		String cfName2 = "codingForm2"+ UtilityLog.dynamicNameAppender();
+		securityGroupsPage = new SecurityGroupsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Create security groups and assign");
+		securityGroupsPage.navigateToSecurityGropusPageURL();
+		securityGroupsPage.AddSecurityGroup(sgName1);
+		securityGroupsPage.AddSecurityGroup(sgName2);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkReleaseToMultipleSecurityGroups(sgName1, sgName2);
+		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
+		driver.waitForPageToBeReady();
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("create assignment and tag for security group 1");
+		assignPage.createTagOrFolderCodingFormAssignment(sgName1, cfName1, assignmentName1, Input.testData1, "folder", folderName1);
+		baseClass.stepInfo("get tags in popup available in security group 1");
+		assignPage.verifyTagOrFolderAvailabilityInAssignment(sgName1, assignmentName1, Input.rev1userName, "folder");
+		if(!sessionSearch.getExistingFolderSelectionCheckBox(folderName2).isElementAvailable(5) && 
+				sessionSearch.getExistingFolderSelectionCheckBox(folderName1).isElementAvailable(5)) {
+			baseClass.passedStep("Folders are securityGroup specific");
+		}
+		else {
+			baseClass.failedStep("Folders are not securityGroup specific");
+		}
+		driver.Navigate().refresh();
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		assignPage.createTagOrFolderCodingFormAssignment(sgName2, cfName2, assignmentName2, Input.testData1, "folder", folderName2);
+		assignPage.verifyTagOrFolderAvailabilityInAssignment(sgName2, assignmentName2, Input.rev1userName, "folder");
+		if(!sessionSearch.getExistingFolderSelectionCheckBox(folderName1).isElementAvailable(5) &&
+				sessionSearch.getExistingFolderSelectionCheckBox(folderName2).isElementAvailable(5)) {
+			baseClass.passedStep("Folders are securityGroup specific");
+		}
+		else {
+			baseClass.failedStep("Folders are not securityGroup specific");
+		}
+		driver.Navigate().refresh();
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+		//Delete security group
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		if (!sgName1.equalsIgnoreCase(Input.securityGroup) && !sgName2.equalsIgnoreCase(Input.securityGroup)) {
+		securityGroupsPage.deleteSecurityGroups(sgName1);
+		driver.waitForPageToBeReady();
+		securityGroupsPage.deleteSecurityGroups(sgName2);
+		}
+		loginPage.logout();
+				
+	}
+		
 	@DataProvider(name = "Users")
 	public Object[][] CombinedSearchwithUsers() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.pa1userName, Input.pa1password },

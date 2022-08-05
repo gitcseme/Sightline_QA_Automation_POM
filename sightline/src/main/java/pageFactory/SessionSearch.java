@@ -13036,5 +13036,48 @@ public class SessionSearch {
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 	}
+	
+	/**
+	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform bulk release docs to two security group
+	 * @param secGroup1
+	 * @param secGroup2
+	 */
+	public void bulkReleaseToMultipleSecurityGroups(String secGroup1,String secGroup2) {
+		
+		driver.waitForPageToBeReady();
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(10);
+		try {
+			base.waitForElement(getBulkReleaseAction());
+			getBulkReleaseAction().waitAndClick(5);
+		} catch (Exception e) {
+
+			getBulkReleaseActionDL().waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBulkRelDefaultSecurityGroup_CheckBox(secGroup1));
+		getBulkRelDefaultSecurityGroup_CheckBox(secGroup1).waitAndClick(10);
+		base.waitForElement(getBulkRelDefaultSecurityGroup_CheckBox(secGroup1));
+		getBulkRelDefaultSecurityGroup_CheckBox(secGroup2).waitAndClick(10);
+
+		base.waitForElement(getBulkRelease_ButtonRelease());
+		getBulkRelease_ButtonRelease().waitAndClick(5);
+
+		if (getTallyContinue().isElementAvailable(5)) {
+			getTallyContinue().waitAndClick(5);
+		}
+		base.waitForElement(getFinalizeButton());
+		if (getFinalizeButton().isElementAvailable(10)) {
+			getFinalizeButton().waitAndClick(5);
+		}
+		base.VerifySuccessMessageB("Records saved successfully");
+	}
 
 }
