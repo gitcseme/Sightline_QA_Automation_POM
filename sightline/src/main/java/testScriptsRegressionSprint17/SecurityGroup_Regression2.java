@@ -3,7 +3,10 @@ package testScriptsRegressionSprint17;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -71,7 +74,7 @@ public class SecurityGroup_Regression2 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:19/07/2022 RPMXCON-54828
 	 * @throws Exception
@@ -106,7 +109,7 @@ public class SecurityGroup_Regression2 {
 		users.navigateToUsersPAge();
 		users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", "Default Security Group",
 				false, true);
-		
+
 		baseClass.stepInfo("Impersonate SA to DA");
 		baseClass.impersonateSAtoDA();
 
@@ -117,11 +120,10 @@ public class SecurityGroup_Regression2 {
 			baseClass.failedStep("Application is not navigate to Domain Dashboard page   ");
 		}
 
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		baseClass.waitTime(10);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify default security group in selected project");
 		String actualString = "Default Security Group";
@@ -135,7 +137,7 @@ public class SecurityGroup_Regression2 {
 
 		baseClass.stepInfo("Select Another project");
 		baseClass.selectproject(projectName);
-		
+
 		baseClass.stepInfo("verify default security group in selected project");
 		if (actualString.equals(ExpectedString)) {
 			baseClass.passedStep("It is redirect to default SG in selected project successfully ");
@@ -187,11 +189,10 @@ public class SecurityGroup_Regression2 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		baseClass.waitTime(10);
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify default security group in selected project");
 		String actualString = "Default Security Group";
@@ -218,7 +219,6 @@ public class SecurityGroup_Regression2 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/07/2022 RPMXCON-47098
 	 * @throws Exception
@@ -361,7 +361,7 @@ public class SecurityGroup_Regression2 {
 		loginPage.logout();
 
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
