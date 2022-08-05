@@ -177,7 +177,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * different SG
 	 */
 
-	@Test(description = "RPMXCON 51990",groups={"regression"})
+	@Test(description = "RPMXCON-51990",groups={"regression"})
 	public void verifyPersistentHitPanelRMU1RMU2() throws Exception {
 		Input in = new Input();
 		in.loadEnvConfig();
@@ -239,7 +239,7 @@ public class VerifyingRemarsAndPersistentHitsWithSG {
 	 * different SG
 	 */
 
-	@Test(description = "RPMXCON 51991",groups={"regression"})
+	@Test(description = "RPMXCON-51991",groups={"regression"})
 	public void verifyTextRemarksRMU1RMU2() throws Exception {
 
 		Input in = new Input();
