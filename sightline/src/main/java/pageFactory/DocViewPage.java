@@ -3571,7 +3571,9 @@ public class DocViewPage {
 	public Element getDocViewDrpDwnCfChild() {
 		return driver.FindElementByXPath("//select[@id='codingFormListChild']");
 	}
-	
+	public Element getCfPopUpMsgWithoutChanges() {
+		return driver.FindElementByXPath("//*[@id='Msg1']//span[text()='Do you want to lose your changes?']");
+	}
 	
 	public DocViewPage(Driver driver) {
 
