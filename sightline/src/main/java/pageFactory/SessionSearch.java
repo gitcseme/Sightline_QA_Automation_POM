@@ -1987,6 +1987,14 @@ public class SessionSearch {
 	public Element getUnAssignRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='toUnassign']/parent::label/i");
 	}
+	
+	public Element getSelectedExistingAssignments() {
+	    return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[@class='jstree-anchor jstree-clicked']");
+	}
+	
+	public ElementCollection getassign_ExistingAssignments() {
+	    return driver.FindElementsByXPath("//*[@id='jstreeComplete']//a//parent::li");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

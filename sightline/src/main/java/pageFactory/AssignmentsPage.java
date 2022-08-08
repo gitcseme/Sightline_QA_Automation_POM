@@ -1511,6 +1511,10 @@ public class AssignmentsPage {
 	public Element getMetadataFielOkBtn() {
 		return driver.FindElementById("MetaDataSave");
 	}
+	
+	public Element getCFCancelBtn() {
+		return driver.FindElementById("btnCodingFormCancel");
+	}
 
 	public AssignmentsPage(Driver driver) {
 

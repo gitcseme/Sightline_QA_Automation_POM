@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -11,11 +12,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
+import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -68,6 +72,261 @@ public class Assignments_Regression2_3 {
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
 	}
+	
+	/**
+	 * @author krishna
+	 * @throws InterruptedException
+	 * @Description :To Verify that on selecting Parent object then all its child object gets selected
+	 * RPMXCON-53907
+	 */
+	
+	
+	 @Test(description = "RPMXCON-53907", enabled = true, groups = { "regression" })
+		public void verifyAllChildSelectOnceSlctPrntGrp() throws Exception{
+		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();	
+		   String parentAssgnGrp = "Root";
+		        
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Logged in as :"+ Input.rmu1userName);
+			baseClass.stepInfo("Test case Id: RPMXCON-53907 Assignments");
+			baseClass.stepInfo("To Verify that on selecting Parent object then all its child object gets selected");
+				
+			assignPage.createAssignment(assignmentName1, Input.codeFormName);
+			sessionSearch.basicContentSearch(Input.searchString1);
+			baseClass.waitForElement(sessionSearch.getDocsMetYourCriteriaLabel());
+			baseClass.dragAndDrop(sessionSearch.getDocsMetYourCriteriaLabel(), sessionSearch.getActionPad());  
+		    driver.waitForPageToBeReady();
+		    sessionSearch.bulkAssign();
+		    
+		    // Select An Assignment in Assign/Unassign Popup
+		    baseClass.waitForElement(sessionSearch.getSelectAssignmentExisting(assignmentName1));
+		    sessionSearch.getSelectAssignmentExisting(assignmentName1).Click(); 
+		    
+		    //Verifying Only Selected Assignment gets Selected
+		    baseClass.waitForElement(sessionSearch.getSelectedExistingAssignments());
+		   if(sessionSearch.getSelectedExistingAssignments().isElementAvailable(6)) {
+			   String assgn = sessionSearch.getSelectedExistingAssignments().getText();
+			   if(assgn.equalsIgnoreCase(assignmentName1)) {
+		    		baseClass.passedStep("selected Assignment gets selected");
+		    	}else{
+		    		baseClass.failedStep("Not Selected Assignment Gets Selected");
+		    	}
+		   }else{
+			   baseClass.failedStep("No Assignment Selected in Popup");
+		   }
+		   	    	
+		    // DeSelect the Assignment from Assign/UnAssign PopUp
+		    baseClass.waitForElement(sessionSearch.getSelectAssignmentExisting(assignmentName1));
+		    sessionSearch.getSelectAssignmentExisting(assignmentName1).Click();    
+		    
+		    //Verifying All its downline objects get selected (Assignment Group and Assignment) Once Parent Grp Selected
+		    baseClass.waitForElement(sessionSearch.getSelectAssignmentExisting(parentAssgnGrp));
+		    sessionSearch.getSelectAssignmentExisting(parentAssgnGrp).Click();		    
+		    baseClass.waitForElementCollection(sessionSearch.getassign_ExistingAssignments());	    
+		    for(WebElement ele : sessionSearch.getassign_ExistingAssignments().FindWebElements()){
+		    	String status = ele.getAttribute("aria-selected");
+		    	if(status.equalsIgnoreCase("false")) {
+		    		baseClass.failedStep("Not All its downline objects get selected (Assignment Group and Assignment).");
+		    	}}
+		    baseClass.stepInfo("All its downline objects get selected (Assignment Group and Assignment).");
+		    
+		  //Verifying All its downline objects get Deselected (Assignment Group and Assignment) Once Parent Grp DeSelected
+		    baseClass.waitForElement(sessionSearch.getSelectAssignmentExisting(parentAssgnGrp));
+		    sessionSearch.getSelectAssignmentExisting(parentAssgnGrp).Click();
+		    baseClass.waitForElementCollection(sessionSearch.getassign_ExistingAssignments());	    
+		    for(WebElement ele : sessionSearch.getassign_ExistingAssignments().FindWebElements()){
+		    	String status = ele.getAttribute("aria-selected");
+		    	if(status.equalsIgnoreCase("true")) {
+		    		baseClass.failedStep("Not All its downline objects get deselected (Assignment Group and Assignment).");	    		
+		    	}}
+		    baseClass.stepInfo("All its downline objects get deselected (Assignment Group and Assignment).");	
+		    
+		    baseClass.passedStep("Verified - that on selecting Parent object then all its child object gets selected.");
+		    assignPage.deleteAssgnmntUsingPagination(assignmentName1);
+		    loginPage.logout();		    
+	   }
+	 
+	 /**
+		 * @author krishna
+		 * @throws InterruptedException
+		 * @Description :To verify that RMU can perform Persistent Search Hits from saved search
+		 * RPMXCON-53948
+		 */
+	   
+	   @Test(description = "RPMXCON-53948", enabled = true, groups = { "regression" })
+		public void verifyRMUPerformPersisSearchHitSS() throws Exception{
+		   
+		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();	
+		   String searchName = "Search" + Utility.dynamicNameAppender();
+		   SavedSearch savedSearch = new SavedSearch(driver);
+		   
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Logged in as :"+ Input.rmu1userName);
+			baseClass.stepInfo("Test case Id: RPMXCON-53948.");
+			baseClass.stepInfo("To verify that RMU can perform Persistent Search Hits from saved search");
+			assignPage.createAssignment(assignmentName1, Input.codeFormName);			
+
+			savedSearch.navigateToSavedSearchPage();
+		    String Node = savedSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", Input.yesButton);
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.saveSearchInNewNode(searchName, Node);
+			
+			savedSearch.navigateToSavedSearchPage();
+			savedSearch.selectRootGroupTab(Input.mySavedSearch);
+			savedSearch.selectNode1(Node);
+			savedSearch.savedSearch_SearchandSelect(searchName, Input.yesButton);
+			
+			baseClass.waitForElement(savedSearch.getSavedSearchToBulkAssign());
+			savedSearch.getSavedSearchToBulkAssign().Click();
+			
+			assignPage.assignwithSamplemethod(assignmentName1, "Percentage", "10");
+			assignPage.navigateToAssignmentsPage();
+			assignPage.SelectAssignmentToViewinDocview(assignmentName1);
+			
+			DocViewPage docView = new DocViewPage(driver);
+			docView.clickOnPersistantHitEyeIcon();
+			String highlighTxt = docView.getPersistentHitWithoutClickingEyeIcon(Input.searchString1);
+			System.out.println(highlighTxt);
+			
+			if(highlighTxt.equalsIgnoreCase(Input.searchString1)) {
+				baseClass.passedStep("Text which is enter while performing search that text gets highlighted.");
+			}else {
+				baseClass.failedStep("Text which is enter while performing search that text Not gets highlighted.");
+			}
+			baseClass.passedStep("Verified -  that search text should get highlighted in Doc View");
+			assignPage.deleteAssgnmntUsingPagination(assignmentName1);
+			savedSearch.deleteNode(Input.mySavedSearch, Node);
+			baseClass.passedStep("verified - that RMU can perform Persistent Search Hits from saved search");
+			loginPage.logout();
+	   }
+	   
+	   /**
+		 * @author krishna
+		 * @throws InterruptedException
+		 * @Description :Verify that Application disallow special characters in Edit Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.
+		 * RPMXCON-54440
+		 */
+	   
+	   @Test(description = "RPMXCON-54440", groups = { "regression" })
+		public void verifyErrorMsgForSpclCharEditAssignScr() throws InterruptedException {
+		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();
+		   BaseClass baseClass = new BaseClass(driver);
+		   
+			String dataSet[][] = { { "AssignmentNameWith<test" }, { "AssignmentNameWith(test" },
+					{ "AssignmentNameWith)test" }, { "AssignmentNameWith[test" }, { "AssignmentNameWith]test" },
+					{ "AssignmentNameWith{test" }, { "AssignmentNameWith}test" }, { "AssignmentNameWith:test" },
+					{ "AssignmentNameWith\"test" }, { "AssignmentNameWith'test" }, { "AssignmentNameWith~test" },
+					{ "AssignmentNameWith*test" }, { "AssignmentNameWith?test" }, { "AssignmentNameWith&test" },
+					{ "AssignmentNameWith$test" }, { "AssignmentNameWith#test" }, { "AssignmentNameWith@test" },
+					{ "AssignmentNameWith!test" }, { "AssignmentNameWith-test" }, { "AssignmentNameWith_test" } };
+			
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+			baseClass.stepInfo("Test case Id: RPMXCON-54440");
+			baseClass.stepInfo(
+					"Verify that Application disallow special characters in Edit Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+			assignPage.createAssignment(assignmentName1, Input.codeFormName);
+			assignPage.editAssignmentUsingPaginationConcept(assignmentName1);
+			for (int i = 0; i < dataSet.length; i++) {
+				int j = 0;
+
+				String renameAssign = dataSet[i][j];			
+				baseClass.waitForElement(assignPage.getAssignmentName());
+				assignPage.getAssignmentName().Clear();
+				baseClass.copyandPasteString(renameAssign, assignPage.getAssignmentName());
+				assignPage.getAssignmentSaveButton().waitAndClick(5);
+				assignPage.verifyErrorMsginAssignmentName();
+			}
+			assignPage.deleteAssgnmntUsingPagination(assignmentName1);
+			baseClass.passedStep(
+					"Verified - that Application disallow special characters in Edit Assignments screen when user performed COPY and PASTE (Special Characters) from Notepad.");
+			loginPage.logout();
+		}
+	   
+	   /**
+		 * @author krishna
+		 * @throws InterruptedException
+		 * @Description :To check that when user clicks on \"Cancel\" button from the "
+		   		+ "\"Add/remove coding form in this Assignment\" pop-up the PopUp should get cancelled
+		 * RPMXCON-65131
+		 */
+	   @Test(description = "RPMXCON-65131", groups = { "regression" })
+		public void verifyPopupCancelBtnSortCoding() throws InterruptedException {	  
+		   CodingForm cf = new CodingForm(driver);
+		   
+		   loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		   baseClass.stepInfo("Logged In As : " + Input.rmu1userName);
+		   baseClass.stepInfo("Test case Id: RPMXCON-65131");
+		   baseClass.stepInfo("To check that when user clicks on \"Cancel\" button from the "
+		   		+ "\"Add/remove coding form in this Assignment\" pop-up the PopUp should get cancelled");
+					
+		   assignPage.navigateToAssignmentsPage();
+		   assignPage.selectAssignmentGroup("Root");
+		   assignPage.NavigateToNewEditAssignmentPage("New");
+		   
+		   // Verifying Select and sort Coding form button present in New Assignment Page
+		   if(assignPage.getSelectSortCodingForm_Tab().isElementAvailable(4)) {
+		   baseClass.passedStep("Select and sort Coding form button present in New Assignment Page");
+		   assignPage.getSelectSortCodingForm_Tab().ScrollTo();
+		   assignPage.getSelectSortCodingForm_Tab().waitAndClick(10);	
+		   baseClass.stepInfo("Select and sort Coding form button Clicked");
+		   }else {
+		   baseClass.failedStep("Select and sort Coding form button Not present in New Assignment Page");
+		   }
+		   
+		   //Verifying Add / Remove Coding Forms in this Assignment Pop Up displaying or not
+		   if(assignPage.SelectCFPopUp_Step1().Visible()) {
+		   baseClass.passedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displaying.");
+		   }else {
+		   baseClass.failedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up Not displaying.");
+		   }
+		   
+		   baseClass.waitForElement(assignPage.getCFCancelBtn());
+		   assignPage.getCFCancelBtn().Click();
+		   baseClass.stepInfo("CLicked Cancel button in Popup");
+		   
+		   //Verifying Add / Remove Coding Forms in this Assignment Pop Up displaying or not
+		   if(assignPage.SelectCFPopUp_Step1().Visible()) {
+		   baseClass.failedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displaying.");
+		   }else {
+		   baseClass.passedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up Not displaying.");
+		   }
+		   
+		   driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		   baseClass.verifyUrlLanding(Input.url + "CodingForm/Create", "Successfully Navigated to Manage Coding Form Page", "Not Navigated to Manage Coding Form Page");
+		   
+		// Verifying Select and sort Coding form button present in Manage Coding Form Page
+		   if(cf.getSetCodingFormToSG().isElementAvailable(4)) {
+		   baseClass.passedStep("Select and sort Coding form button present in Manage Coding Form Page");
+		   cf.getSetCodingFormToSG().ScrollTo();
+		   cf.getSetCodingFormToSG().waitAndClick(10);	
+		   baseClass.stepInfo("Select and sort Coding form button Clicked");
+		   }else {
+		   baseClass.failedStep("Select and sort Coding form button Not present in Manage Coding Form Page");
+		   }
+		   
+		   //Verifying Add / Remove Coding Forms in this Assignment Pop Up displaying or not in Manage Coding Form Page
+		   if(cf.getStep1CfPopUp().Visible()) {
+		   baseClass.passedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displaying.");
+		   }else {
+		   baseClass.failedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up Not displaying.");
+		   }
+			   
+		   baseClass.waitForElement(cf.getCfPopUpCancel());
+		   cf.getCfPopUpCancel().Click();
+		   baseClass.stepInfo("CLicked Cancel button in Popup");
+		   
+		 //Verifying Add / Remove Coding Forms in this Assignment Pop Up displaying or not in Manage Coding Form Page
+		   if(cf.getStep1CfPopUp().Visible()) {
+		   baseClass.failedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displaying.");
+		   }else {
+		   baseClass.passedStep("Step 01: Add / Remove Coding Forms in this Assignment Pop Up Not displaying.");
+		   }
+		   baseClass.passedStep("To check that when user clicks on \"Cancel\" button from the "
+		   		+ "\"Add/remove coding form in this Assignment\" pop-up the PopUp should get cancelled");
+		   
+		   loginPage.logout();
+	   }
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
