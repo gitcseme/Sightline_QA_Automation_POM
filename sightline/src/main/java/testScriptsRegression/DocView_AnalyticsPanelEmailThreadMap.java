@@ -967,8 +967,7 @@ public class DocView_AnalyticsPanelEmailThreadMap {
 	 * 
 	 */
 
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" },
-	priority = 36,description ="RPMXCON-50826")
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" },description ="RPMXCON-50826")
 	public void verifyNearDupeDocsDisplayedAsPerDocsSelectedFromMiniDocListPanel(String fullName, String userName,
 			String password) throws InterruptedException {
 		loginPage = new LoginPage(driver);
