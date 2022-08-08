@@ -66,7 +66,7 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when Project Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52013", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-52013", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsPA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52013 - DocViewAudio");
@@ -126,7 +126,7 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when Domain Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52012", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-52012", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsDA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52012 - DocViewAudio");
@@ -184,7 +184,7 @@ public class DocViewAudio_Regression01 {
 	 * @Description : Verify the automatically selection of the redaction tag for audio redaction when System Admin impersonates as RMU/Reviewer
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-52011", enabled = false, groups = { "regression" })
+	@Test(description = "RPMXCON-52011", enabled = true, groups = { "regression" })
 	public void verifyAutomaticSelectionOfRedactionTagForAudioDocsAsSA() throws Exception {
 	
 		base.stepInfo("Test case Id: RPMXCON-52011 - DocViewAudio");
