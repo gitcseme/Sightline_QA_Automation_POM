@@ -11,11 +11,18 @@ import automationLibrary.ElementCollection;
 import testScriptsSmoke.Input;
 
 public class CollectionPage {
-
 	Driver driver;
 	BaseClass base;
 
 	// Added BY Jeevitha
+
+	public Element getDatasetTableValue(String value) {
+		return driver.FindElementByXPath("//table[@id='dtDatasetList']//td//div[text()='" + value + "']");
+	}
+
+	public Element getPopupMsg() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxMiddle']");
+	}
 
 	public Element getNewCollectionBtn() {
 		return driver.FindElementByXPath("//input[@id='btnNewCollection']");
@@ -113,7 +120,7 @@ public class CollectionPage {
 
 	public Element getCollectionActionList(String collectionName, String actionType) {
 		return driver.FindElementByXPath(
-				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='"+actionType +"']");
+				"//div[text()='" + collectionName + "']//..//following::td//div//a[text()='" + actionType + "']");
 	}
 
 	// Added by Mohan
@@ -231,6 +238,28 @@ public class CollectionPage {
 
 	public Element getCollectionPageFirstCollectionSelect() {
 		return driver.FindElementByXPath("(//div[@id='divSourceLocations']//div[@class='popout text-wrap'])[last()]");
+	}
+
+	// added by jeevitha
+
+	public Element getApplyFilterLink() {
+		return driver.FindElementByXPath("//a[@id='ancFilterStart']");
+	}
+
+	public Element getEnableFilterStatus() {
+		return driver.FindElementByXPath("//div[@id='divSelectFilters']");
+	}
+
+	public Element getEnableFilterToggle() {
+		return driver.FindElementByXPath("//i[@id='IsEnableFilter']");
+	}
+
+	public Element getKeywordToggle() {
+		return driver.FindElementByXPath("//input[@id='rbtnKeywords']");
+	}
+
+	public Element getKeywordTextBox() {
+		return driver.FindElementByXPath("//input[@id='txtKeywords']");
 	}
 
 	public CollectionPage(Driver driver) {
@@ -727,7 +756,7 @@ public class CollectionPage {
 	 * @param additional4
 	 */
 	public void verifyDataSetContents(String[] headerList, String firstName, String lastName, String selectedApp,
-			String collectionEmailId, String dataSetNameGenerated, String selectedFolder, String additional1,
+			String collectionEmailId, String dataSetNameGenerated, String selectedFolder, String DateOrKeyword,
 			String additional2, Boolean additional3, int additional4) {
 
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
@@ -740,7 +769,7 @@ public class CollectionPage {
 		base.printHashMapDetails(colllectionDataHeadersIndex);
 
 		for (int j = 0; j <= headerList.length - 1; j++) {
-			String expValue = "-";
+			String expValue = " - ";
 
 			if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader1)) {
 				expValue = firstName + " " + lastName;
@@ -752,6 +781,8 @@ public class CollectionPage {
 				expValue = dataSetNameGenerated;
 			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader5)) {
 				expValue = selectedFolder;
+			} else if (headerList[j].equalsIgnoreCase(Input.collectionDataHeader6)) {
+				expValue = DateOrKeyword;
 			}
 			// DataSet details comparision
 			base.stepInfo(headerList[j]);
@@ -910,7 +941,7 @@ public class CollectionPage {
 
 			// verify DataSet Contents
 			verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
-					selectedFolder, "", "", false, 0);
+					selectedFolder, "-", "", false, 0);
 
 			// Next Button
 			driver.waitForPageToBeReady();
@@ -957,13 +988,159 @@ public class CollectionPage {
 	 * @Description : delete collection using collection name
 	 * @param collectionName
 	 */
-	public void deleteUsingCollectionName(String collectionName) {
+	public void deleteUsingCollectionName(String collectionName, boolean delete) {
 		if (getCollectionAction(collectionName).isElementAvailable(5)) {
 			getCollectionAction(collectionName).waitAndClick(5);
 			getCollectionActionList(collectionName, "Delete").waitAndClick(10);
-			confirmationAction("Delete", "Yes", "The collection has been deleted successfully.");
-		}else {
-			base.failedStep(collectionName +" : is not avialable");
+
+			if (getPopupMsg().isElementAvailable(3)) {
+				String expectedMsg = "Are you sure you want to delete the collection?";
+				String actualMsg = getPopupMsg().getText();
+				base.compareTextViaContains(actualMsg, expectedMsg, actualMsg, "Popup msg is not as expected");
+
+				if (delete) {
+					confirmationAction("Delete", "Yes", "The collection has been deleted successfully.");
+				} else {
+					getConfirmationBtnAction("No").waitAndClick(10);
+					base.stepInfo("Clicked No button");
+				}
+			}
+		} else {
+			base.failedStep(collectionName + " : is not avialable");
+		}
+	}
+
+	public void startCollection(String collectionName, String actionType) {
+		if (getCollectionAction(collectionName).isElementAvailable(5)) {
+			getCollectionAction(collectionName).waitAndClick(5);
+			getCollectionActionList(collectionName, actionType).waitAndClick(10);
+
+			if (actionType.equalsIgnoreCase("Start Collection")) {
+				base.VerifySuccessMessage("Collection extraction process started successfully.");
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @description : select already present collection from home page or create new
+	 *              collection
+	 * @return
+	 */
+	public HashMap<String, String> createNewCollection(HashMap<String, String> colllectionData, String dataName,
+			Boolean AutoInitiate, String expectedStatus, boolean selectCollFromList) {
+
+		String creationStatus = "0";
+
+		driver.waitForPageToBeReady();
+		if (selectCollFromList && getCollectionNameStatusElements(expectedStatus).size() > 0) {
+			String collectionId = dataName = getCollectionNameBasedOnStatusElements(expectedStatus, 1).getText();
+			dataName = getCollectionNameBasedOnStatusElements(expectedStatus, 2).getText();
+			colllectionData.put(dataName, collectionId);
+		} else {
+			creationStatus = "1";
+			// Click create New Collection
+			performCreateNewCollection();
+
+			// Select source and Click create New Collection
+			String dataSourceName = selectSourceFromTheListAvailable();
+
+			// click created source location and verify navigated page
+			colllectionData = verifyCollectionInfoPage(dataSourceName, dataName, false);
+
+			// initiate collection process
+			selectInitiateCollectionOrClickNext(AutoInitiate, true, true);
+
+		}
+		return colllectionData;
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : apply filter in dataset popup
+	 */
+	public void applyFilterInDataSet(boolean ApplyFilter, boolean Enable, boolean keyword, String keywords) {
+		if (ApplyFilter) {
+			getApplyFilterLink().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String status = getEnableFilterStatus().GetAttribute("style");
+			System.out.println(status);
+			if (status.contains("none")) {
+				base.stepInfo("Filter is Disabled");
+
+				if (Enable) {
+					getEnableFilterToggle().waitAndClick(10);
+					base.stepInfo("Filter Toggle Is Enabled");
+
+					if (keyword) {
+						driver.waitForPageToBeReady();
+						getKeywordToggle().waitAndClick(10);
+						getKeywordTextBox().SendKeys(keywords);
+						base.stepInfo("Entered Keyword is : " + keywords);
+					}
+				}
+			} else {
+				base.stepInfo("Filter Toggle Is Enabled");
+			}
+		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : add dataset by clicking btn/link and verify new row added in
+	 *              dataset selection table
+	 */
+	public void fillingDatasetSelection(String creationType, String firstName, String lastName,
+			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
+			int retryAttempt, String selectedFolder, boolean ApplyFilter, boolean Enable, boolean keyword,
+			String keywords, boolean Save, boolean Confirm) {
+
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+
+		// Add DataSets
+		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, dataName, retryAttempt);
+
+		// Folder Selection
+		folderToSelect(selectedFolder, true, false);
+
+		// apply filter
+		applyFilterInDataSet(ApplyFilter, Enable, keyword, keywords);
+
+		// click save/cancel and verify row added
+		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
+		if (Save) {
+			getActionBtn("Save").waitAndClick(5);
+			if (getFolderSelectionConfirmation().isElementAvailable(5)) {
+				String actualTxt = getPopupMsg().getText();
+				String passMsg = "Displayed Popup Msg : " + actualTxt;
+				String failMsg = "Belly band msg is not as expected";
+				base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
+
+				if (Confirm) {
+					getConfirmationBtnAction("Confirm").waitAndClick(10);
+					driver.waitForPageToBeReady();
+					base.VerifySuccessMessage("Dataset added successfully.");
+					base.CloseSuccessMsgpopup();
+
+					// verify DataSet Contents in table
+					verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId,
+							dataSetNameGenerated, selectedFolder, keywords, "", false, 0);
+				} else {
+					getConfirmationBtnAction("Cancel").waitAndClick(10);
+					base.waitForElement(getActionBtn("Cancel"));
+					getActionBtn("Cancel").waitAndClick(10);
+
+					// verify row is Not added
+					base.ValidateElement_Absence(getDatasetTableValue(collectionEmailId),
+							"Dataset is not added as expected");
+
+				}
+			}
+			driver.waitForPageToBeReady();
 		}
 	}
 }

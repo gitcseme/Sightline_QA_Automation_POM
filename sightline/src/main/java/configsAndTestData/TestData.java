@@ -354,8 +354,11 @@ public class TestData {
     public String TenantID;
     public String ApplicationID;
     public String ApplicationKey;
+    public String collection2ndEmailId;
+    public String collsecondFirstName;
+    public String collsecondlastName;
 
-	/**
+    /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
 	 *         by:Gopinath.
 	 */

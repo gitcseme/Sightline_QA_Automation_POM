@@ -474,6 +474,9 @@ public class Input {
 	public static String TenantID;
 	public static String ApplicationID;
 	public static String ApplicationKey;
+	public static String collection2ndEmailId;
+	public static String collsecondFirstName;
+	public static String collsecondlastName;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -1383,7 +1386,10 @@ public class Input {
 		TenantID = testData.getTenantID();
 		ApplicationID = testData.getApplicationID();
 		ApplicationKey = testData.getApplicationKey();
-
+		collection2ndEmailId=testData.getCollection2ndEmailId();
+		collsecondFirstName=testData.getCollsecondFirstName();
+		collsecondlastName= testData.getCollsecondlastName();
+		
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();
 		conceptualDocId02 = testData.getConceptualDocId02();

@@ -504,7 +504,7 @@ public class O365_Regression_2_2 {
 		// navigate to Collection page and Deletion
 		base.stepInfo("Initiate collection  deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.deleteUsingCollectionName(collectionName);
+		collection.deleteUsingCollectionName(collectionName,true);
 
 		// Logout
 		login.logout();

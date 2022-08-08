@@ -364,10 +364,13 @@
 	<SearchBatchFile>\BatchFiles\SearchBatchFile\</SearchBatchFile>
 	
 	<!-- Added By Jeevitha [Collection] -->
-    <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
+     <TenantID>7075191a-8d9f-44fb-94dd-11a6c2bfa196</TenantID>
     <ApplicationID>e99d0373-5049-4146-b90d-bd195f6596e7</ApplicationID>
     <ApplicationKey>Grj8Q~PKtS-NnDFYvGpqNE16MoZgyifvpgwRwbli</ApplicationKey>
-
+    <collection2ndEmailId>Jeevitha.Rajendran@consiliotest.com</collection2ndEmailId>
+    <collsecondFirstName>Jeevitha</collsecondFirstName>
+    <collsecondlastName>Rajendran</collsecondlastName>
+    
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
 	<endTime>00:00:01</endTime>
