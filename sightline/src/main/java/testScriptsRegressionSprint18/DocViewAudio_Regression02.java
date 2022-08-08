@@ -67,7 +67,7 @@ public class DocViewAudio_Regression02 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:04/08/2022 RPMXCON-52014
 	 * @throws Exception
@@ -233,13 +233,6 @@ public class DocViewAudio_Regression02 {
 		redactionPage.DeleteRedaction(RedactName);
 		softAssertion.assertAll();
 
-		// Navigate to DocView Page
-		baseClass.stepInfo("Navigate to DocView Page");
-		sessionSearch.ViewInDocViewWithoutPureHit();
-
-		// Click On redaction tag for the selected audio docs
-		docviewPage.audioRedactionUsingAudioRange(Input.defaultRedactionTag, 1, 2);
-
 		baseClass.passedStep("Last saved redaction tag is selected automatically from redaction list");
 		loginPage.logout();
 	}
@@ -354,7 +347,7 @@ public class DocViewAudio_Regression02 {
 
 		// Click On redaction tag for the selected audio docs
 		docviewPage.audioRedactionUsingAudioRange(Input.defaultRedactionTag, 1, 2);
-		
+
 		// Modififying the readction
 		docviewPage.getRedactionModify().waitAndClick(5);
 		baseClass.stepInfo("Editing the readction tag");
@@ -377,7 +370,7 @@ public class DocViewAudio_Regression02 {
 
 		loginPage.logout();
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
