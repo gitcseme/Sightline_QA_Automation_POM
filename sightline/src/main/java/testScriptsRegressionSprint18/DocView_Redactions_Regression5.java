@@ -147,7 +147,7 @@ public class DocView_Redactions_Regression5 {
 		sessionsearch.selectTagInASwp(tagName);
 		baseClass.waitForElement(sessionsearch.getQuerySearchButton());
 		sessionsearch.getQuerySearchButton().waitAndClick(3);
-		sessionsearch.viewInDocView();
+		sessionsearch.ViewInDocViews();
 		
 		// verifying a corresponding text and highlighting a document.
 		baseClass.waitTime(3);
@@ -161,7 +161,7 @@ public class DocView_Redactions_Regression5 {
 		sessionsearch.switchToWorkproduct();
 		sessionsearch.selectTagInASwp(tagName);
 		sessionsearch.getQuerySearchButton().waitAndClick(3);
-		sessionsearch.viewInDocView();
+		sessionsearch.ViewInDocViews();
 		
 		// verifying a corresponding text and highlighting a document.
 		baseClass.waitTime(3);

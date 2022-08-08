@@ -68,15 +68,17 @@ public class SecurityGroup_Regression1 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:25/07/2022 RPMXCON-54832
 	 * @throws Exception
-	 * @Description Verify that as DA user, clicking on project should redirect to DSG and select the project from header 
-	 * dropdown in which DAU is RMU assigned to other than default security group, then application should take RMU in his assigned Security group.
+	 * @Description Verify that as DA user, clicking on project should redirect to
+	 *              DSG and select the project from header dropdown in which DAU is
+	 *              RMU assigned to other than default security group, then
+	 *              application should take RMU in his assigned Security group.
 	 * 
 	 */
-	 @Test(description = "RPMXCON-54832", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54832", enabled = true, groups = { "regression" })
 	public void verifyDAClickingAnyProjectIsRMUHomePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-54832");
@@ -85,17 +87,16 @@ public class SecurityGroup_Regression1 {
 
 		userManage = new UserManagement(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
-		
+
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-		
+
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(10);
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
-		
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
+
 		baseClass.stepInfo("verify Default Security Group display");
 		driver.waitForPageToBeReady();
 		String actualString = "Default Security Group";
@@ -108,17 +109,15 @@ public class SecurityGroup_Regression1 {
 		}
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("verify RMU Home Page");
-		if(domainDash.getUserHomePage().Displayed()) {
+		if (domainDash.getUserHomePage().Displayed()) {
 			baseClass.passedStep(" Reviewer Manager home page is displayed successfully");
-		}else {
+		} else {
 			baseClass.failedStep("Reviewer Manager home page is not displayed ");
 		}
 		loginPage.logout();
-		
-	 }
 
-	   
-	
+	}
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/07/2022 RPMXCON-47083
 	 * @throws Exception
@@ -167,9 +166,9 @@ public class SecurityGroup_Regression1 {
 		baseClass.stepInfo("After Impersonate RMU Verify Default AnnotationLayer Display");
 		driver.waitForPageToBeReady();
 		annotation.navigateToAnnotationLayerPage();
-		if(annotation.getDefaultAnnotation_Layers().Displayed()) {
+		if (annotation.getDefaultAnnotation_Layers().Displayed()) {
 			baseClass.passedStep("'Default Annotation Layer' is displayed successfully");
-		}else {
+		} else {
 			baseClass.failedStep("'Default Annotation Layer' is not displayed ");
 		}
 		loginPage.logout();
@@ -184,17 +183,16 @@ public class SecurityGroup_Regression1 {
 		userManage.applyFilter();
 		userManage.deleteUser();
 		baseClass.passedStep("User is de-activated/deleted successfully");
-		
+
 		baseClass.stepInfo("Impersonate SA to PA");
 		baseClass.impersonateSAtoPA(projectName);
-		
+
 		baseClass.stepInfo("Go to Manage Annotation Layer Page Check default Annotation layer");
 		annotation.verifyAnnotationLayerInDSG(Input.securityGroup);
 		baseClass.passedStep("'Default Annotation Layer' is displayed under 'Default Security Group' successfully");
 		loginPage.logout();
 	}
-	
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:20/07/2022 RPMXCON-47084
 	 * @throws Exception
@@ -202,7 +200,7 @@ public class SecurityGroup_Regression1 {
 	 *              the Domain Admin user who created the project is in-active.
 	 * 
 	 */
-    @Test(description = "RPMXCON-47084", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47084", enabled = true, groups = { "regression" })
 	public void verifyDefaultAnnotationLayerDisplayInDA() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47084");
@@ -233,20 +231,20 @@ public class SecurityGroup_Regression1 {
 
 		baseClass.stepInfo("Impersonate DA to PA");
 		baseClass.impersonateDAtoPA();
-		
+
 		baseClass.stepInfo("Go to Manage Annotation Layer Page Check default Annotation layer");
 		annotation.verifyAnnotationLayerInDSG(Input.securityGroup);
 		baseClass.passedStep("'Default Annotation Layer' is displayed under 'Default Security Group' successfully");
 
 		baseClass.stepInfo("Impersonate PA to RMU");
 		baseClass.impersonatePAtoRMU();
-		
+
 		baseClass.stepInfo("After Impersonate RMU Verify Default AnnotationLayer Display");
 		driver.waitForPageToBeReady();
 		annotation.navigateToAnnotationLayerPage();
-		if(annotation.getDefaultAnnotation_Layers().Displayed()) {
+		if (annotation.getDefaultAnnotation_Layers().Displayed()) {
 			baseClass.passedStep("'Default Annotation Layer' is displayed successfully");
-		}else {
+		} else {
 			baseClass.failedStep("'Default Annotation Layer' is not displayed ");
 		}
 		loginPage.logout();
@@ -261,548 +259,553 @@ public class SecurityGroup_Regression1 {
 		userManage.applyFilter();
 		userManage.deleteUser();
 		baseClass.passedStep("User is de-activated/deleted successfully");
-		
+
 		baseClass.stepInfo("Impersonate SA to PA");
 		baseClass.impersonateSAtoPA(projectName);
-		
+
 		baseClass.stepInfo("Go to Manage Annotation Layer Page Check default Annotation layer");
 		annotation.verifyAnnotationLayerInDSG(Input.securityGroup);
 		baseClass.passedStep("'Default Annotation Layer' is displayed under 'Default Security Group' successfully");
 		loginPage.logout();
 	}
-	
-    /**
-   	 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54831
-   	 * @throws Exception
-   	 * @Description Verify that as DA user,clicking on project should redirect to default security group and select the other project from hedaer drop down 
-   	 * in which DAU is Reviewer,it should take the user to Reviewer home page.
-   	 * 
-   	 */
-   	@Test(description = "RPMXCON-54831", enabled = true, groups = { "regression" })
-   	public void verifyDAClickingAnyProjectIsReviewerHomePage() throws Exception {
 
-   		baseClass.stepInfo("Test case Id: RPMXCON-54831");
-   		baseClass.stepInfo(
-   				"Verify that as DA user,clicking on project should redirect to default security group and select the other project from hedaer drop down in which DAU is Reviewer,it should take the user to Reviewer home page.");
-   		userManage = new UserManagement(driver);
-   		DomainDashboard domainDash = new DomainDashboard(driver);
-   		
-   		// Login As DA
-   		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   		
-   		baseClass.stepInfo("Click on any project");
-   		driver.waitForPageToBeReady();
-   		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-   		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
-   		
-   		baseClass.stepInfo("verify Default Security Group display");
-   		driver.waitForPageToBeReady();
-   		String actualString = "Default Security Group";
-   		String ExpectedString = baseClass.getsgNames().getText();
-   		System.out.println(ExpectedString);
-   		if (actualString.equals(ExpectedString)) {
-   			baseClass.passedStep("It redirect to Security Gruop");
-   		} else {
-   			baseClass.failedStep("It is not Security Gruop");
-   		}
-   		driver.waitForPageToBeReady();
-   		baseClass.stepInfo("verify Reviewer Home Page");
-   		if(domainDash.getUserHomePage().Displayed()) {
-   			baseClass.passedStep(" Reviewer home page is displayed successfully");
-   		}else {
-   			baseClass.failedStep("Reviewer home page is not displayed ");
-   		}
-   		loginPage.logout();
-   		
-   	 }
-   	
-   	 /**
-   		 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54868
-   		 * @throws Exception
-   		 * @Description After impersonated as PAU in domain project where DAU is PAU and select the other domain project 
-   		 * from header drop down having DAU role, should redirect to the PAU home page for the selected project.
-   		 * 
-   		 */
-   		@Test(description = "RPMXCON-54868", enabled = true, groups = { "regression" })
-   		public void verifyDAAfterImpersonatedPAHomePage() throws Exception {
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54831
+	 * @throws Exception
+	 * @Description Verify that as DA user,clicking on project should redirect to
+	 *              default security group and select the other project from hedaer
+	 *              drop down in which DAU is Reviewer,it should take the user to
+	 *              Reviewer home page.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54831", enabled = true, groups = { "regression" })
+	public void verifyDAClickingAnyProjectIsReviewerHomePage() throws Exception {
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54868");
-   			baseClass.stepInfo(
-   					"After impersonated as PAU in domain project where DAU is PAU and select the other domain project from header drop down having DAU role, should redirect to the PAU home page for the selected project.");
-   			userManage = new UserManagement(driver);
-   			DataSets data = new DataSets(driver);
-   			String projectName = "PAProject" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-54831");
+		baseClass.stepInfo(
+				"Verify that as DA user,clicking on project should redirect to default security group and select the other project from hedaer drop down in which DAU is Reviewer,it should take the user to Reviewer home page.");
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
 
-   			// Login As SA
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
-   			projectPage.navigateToProductionPage();
-   			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(5);
-   			data.getNotificationMessage(0, projectName);
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
-   			UserManagement users = new UserManagement(driver);
-   			users.navigateToUsersPAge();
-   			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-   			loginPage.logout();
-   			
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   			
-   			baseClass.stepInfo("Impersonate DA to PA");
-   			driver.waitForPageToBeReady();
-   			baseClass.impersonateDAtoPA();
-   			
-   			driver.waitForPageToBeReady();
-   			if(data.getDatasetBtn().isDisplayed()) {
-   				baseClass.passedStep("It is redirect to PAU home page Successfully ");
-   			}else {
-   				baseClass.failedStep("verification failed");
-   			}
-   			
-   			baseClass.stepInfo("Select other Domain project");
-   			baseClass.selectproject(projectName);
-   			
-   			driver.waitForPageToBeReady();
-   			if(data.getDatasetBtn().isDisplayed()) {
-   				baseClass.passedStep("It is redirect to the PAU home page for the selected project Successfully");
-   			}else {
-   				baseClass.failedStep("verification failed");
-   			}
-   			loginPage.logout();
-   		}
-   		
-   		/**
-   		 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54835
-   		 * @throws Exception
-   		 * @DescriptionVerify that after clicking on project,selecting the other project from header in which DAU is Reviewer,it 
-   		 * should redirect to Reviewer homepage ,again if selects any project from header ,then it should redirect to reviewer for selected project.
-   		 * 
-   		 */
-   		@Test(description = "RPMXCON-54835", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingAnyProjectIsPAAsReviewerHomePage() throws Exception {
+		baseClass.stepInfo("verify Default Security Group display");
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify Reviewer Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer home page is not displayed ");
+		}
+		loginPage.logout();
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54835");
-   			baseClass.stepInfo(
-   					"Verify that after clicking on project,selecting the other project from header in which DAU is Reviewer,it should redirect to Reviewer homepage ,again if selects any project from header ,then it should redirect to reviewer for selected project.");
-   			userManage = new UserManagement(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			DataSets data = new DataSets(driver);
-   			String projectName = "PAProject" + Utility.dynamicNameAppender();
+	}
 
-   			// Login As SA
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54868
+	 * @throws Exception
+	 * @Description After impersonated as PAU in domain project where DAU is PAU and
+	 *              select the other domain project from header drop down having DAU
+	 *              role, should redirect to the PAU home page for the selected
+	 *              project.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54868", enabled = true, groups = { "regression" })
+	public void verifyDAAfterImpersonatedPAHomePage() throws Exception {
 
-   			projectPage.navigateToProductionPage();
-   			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(5);
-   			data.getNotificationMessage(0, projectName);
+		baseClass.stepInfo("Test case Id: RPMXCON-54868");
+		baseClass.stepInfo(
+				"After impersonated as PAU in domain project where DAU is PAU and select the other domain project from header drop down having DAU role, should redirect to the PAU home page for the selected project.");
+		userManage = new UserManagement(driver);
+		DataSets data = new DataSets(driver);
+		String projectName = "PAProject" + Utility.dynamicNameAppender();
 
-   			UserManagement users = new UserManagement(driver);
-   			users.navigateToUsersPAge();
-   			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-   			loginPage.logout();
-   			
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   			
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitTime(5);
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-   			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
-   			
-   			baseClass.stepInfo("verify Default Security Group display");
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("It redirect to Security Gruop");
-   			} else {
-   				baseClass.failedStep("It is not Security Gruop");
-   			}
-   			driver.waitForPageToBeReady();
-   			baseClass.stepInfo("verify Reviewer Home Page");
-   			if(domainDash.getUserHomePage().Displayed()) {
-   				baseClass.passedStep(" Reviewer home page is displayed successfully");
-   			}else {
-   				baseClass.failedStep("Reviewer home page is not displayed ");
-   			}
-   			baseClass.stepInfo("Select other Domain project");
-   			baseClass.selectproject(projectName);
-   			
-   			driver.waitForPageToBeReady();
-   			baseClass.stepInfo("verify Reviewer Home Page");
-   			if(domainDash.getUserHomePage().Displayed()) {
-   				baseClass.passedStep(" Reviewer home page is displayed successfully");
-   			}else {
-   				baseClass.failedStep("Reviewer home page is not displayed ");
-   			}
-   			loginPage.logout();
-   		}
-   		
-   		/**
-   		 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54829
-   		 * @throws Exception
-   		 * @Description Verify on clicking on ay Project, DAU should take to Default SG in the selected project and select Project 
-   		 * (Domain/non-domain) from drop down in which DAU is PAU, it should take the Default SG of the selected project.
-   		 * 
-   		 */
-   		@Test(description = "RPMXCON-54829", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingAnyProjectIsPAHomePage() throws Exception {
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54829");
-   			baseClass.stepInfo(
-   					"Verify on clicking on ay Project, DAU should take to Default SG in the selected project and select Project (Domain/non-domain) from drop down in which DAU is PAU, it should take the Default SG of the selected project.");
-   			userManage = new UserManagement(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			DataSets data = new DataSets(driver);
-   			String projectName = "PAProject" + Utility.dynamicNameAppender();
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
+		baseClass.waitTime(5);
+		data.getNotificationMessage(0, projectName);
 
-   			// Login As SA
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
 
-   			projectPage.navigateToProductionPage();
-   			projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
-   			baseClass.waitTime(5);
-   			data.getNotificationMessage(0, projectName);
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
-   			UserManagement users = new UserManagement(driver);
-   			users.navigateToUsersPAge();
-   			users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
-   			loginPage.logout();
-   			
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   			
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitTime(5);
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-   			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
-   			
-   			baseClass.stepInfo("verify Default Security Group display");
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("It redirect to Security Gruop");
-   			} else {
-   				baseClass.failedStep("It is not Security Gruop");
-   			}
-   		
-   			baseClass.stepInfo("Select other Domain project");
-   			baseClass.selectproject(projectName);
-   			
-   			driver.waitForPageToBeReady();
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("It redirect to Security Gruop");
-   			} else {
-   				baseClass.failedStep("It is not Security Gruop");
-   			}
-   			loginPage.logout();
-   		}
-   		
-   		/**
-   		 * @Author Krishna Date: 3/08/2022
-   		 * @Description : In Manage Security Group- 'Available in Project' list is
-   		 *              getting populated for WorkProducts and ProjectFields
-   		 * @param :
-   		 * @throws InterruptedException
-   		 */
-   		@Test(description = "RPMXCON-54977", enabled = true, groups = { "regression" })
-   		public void verifySgAvaibleProjectInListProjectFields() throws Exception {
+		baseClass.stepInfo("Impersonate DA to PA");
+		driver.waitForPageToBeReady();
+		baseClass.impersonateDAtoPA();
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54977");
-   			baseClass.stepInfo(
-   					"In Manage Security Group- 'Available in Project' list is getting populated for WorkProducts and ProjectFields");
-   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-   			
-   			// Login as PA
-   			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-   			baseClass.stepInfo("Login as in  " + Input.pa1FullName);
-   			ProjectFieldsPage projectFields = new ProjectFieldsPage(driver);
-   			String random = Input.randomText + String.valueOf(utility.dynamicNameAppender());
-   			final String random1 = random;
-   			final String random2 = random;
+		driver.waitForPageToBeReady();
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep("It is redirect to PAU home page Successfully ");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
 
-   			baseClass.stepInfo("Navigate To Project Field sPage");
-   			projectFields.navigateToProjectFieldsPage();
-   			baseClass.stepInfo("Add a new project field as project administrator");
-   			projectFields.addProjectField(random1, random2, Input.fldClassification, Input.fldDescription, Input.fieldType,
-   					Input.fieldLength);
-   			sgpage.navigateToSecurityGropusPageURL();
-   			baseClass.stepInfo("navigated to security group as expected");
+		baseClass.stepInfo("Select other Domain project");
+		baseClass.selectproject(projectName);
 
-   			sgpage.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
-   			sgpage.verifySelectedProjectField(random1);
-   			if (sgpage.getSG_GenerateEmailRadioButton(1).isDisplayed()) {
-   				baseClass.passedStep(
-   						"Use Project-level Email Inclusive and Email Duplicate Data option button is checked as per the config as expected.");
-   			} else {
-   				baseClass.failedStep("Data option button is not expected");
-   			}
-   		}
+		driver.waitForPageToBeReady();
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep("It is redirect to the PAU home page for the selected project Successfully");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+		loginPage.logout();
+	}
 
-   		/**
-   		 * @Author Krishna Date: 3/08/2022
-   		 * @Description :Verify that as DA user, clicking on project should redirect to
-   		 *              default security group and select the other domain project from
-   		 *              header drop down in which DAU is RMU, on clicking on Back to
-   		 *              Dashboard shall take the user to the last accessed domain
-   		 *              dashboard
-   		 * @param :
-   		 * @throws InterruptedException
-   		 */
-   		@Test(description = "RPMXCON-54826", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingProjectWhichRmuBackToDashBoard() throws Exception {
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54835
+	 * @throws Exception
+	 * @DescriptionVerify that after clicking on project,selecting the other project
+	 *                    from header in which DAU is Reviewer,it should redirect to
+	 *                    Reviewer homepage ,again if selects any project from
+	 *                    header ,then it should redirect to reviewer for selected
+	 *                    project.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54835", enabled = true, groups = { "regression" })
+	public void verifyDAClickingAnyProjectIsPAAsReviewerHomePage() throws Exception {
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54826");
-   			baseClass.stepInfo(
-   					"Verify that as DA user, clicking on project should redirect to default security group and select the other domain project from header drop down in which DAU is RMU, on clicking on Back to Dashboard shall take the user to the last accessed domain dashboard");
-   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitTime(5);
-   			baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.projectName));
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-   			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
-   			baseClass.stepInfo("verify default security group in selected project");
-   			
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("As user to DSG by default in selected project");
-   			} else {
-   				baseClass.failedStep("It is not  to default SG by default ");
-   			}
+		baseClass.stepInfo("Test case Id: RPMXCON-54835");
+		baseClass.stepInfo(
+				"Verify that after clicking on project,selecting the other project from header in which DAU is Reviewer,it should redirect to Reviewer homepage ,again if selects any project from header ,then it should redirect to reviewer for selected project.");
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		DataSets data = new DataSets(driver);
+		String projectName = "PAProject" + Utility.dynamicNameAppender();
 
-   			baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
-   			sgpage.backToDomain().waitAndClick(5);
-   			baseClass.waitTime(5);
-   			if (sgpage.daFirstBlock().isDisplayed()) {
-   				baseClass.passedStep("Navigated back to user to the last accessed domain dashboard page");
-   			} else {
-   				baseClass.failedStep("Not Navigated back to domain home page");
-   			}
-   		}
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
-   		
-   		/**
-   		 * @Author Krishna Date: 26/07/2022
-   		 * @Description :Verify that as DA user, clicking on project should redirect to
-   		 *              default security group and select the non-domain project from
-   		 *              header drop down where DAU is a RMU , clicking on Back to
-   		 *              Dashboard user is redirecting to last access Domain Dashboard
-   		 * @param :
-   		 * @throws InterruptedException
-   		 */
-   		@Test(description = "RPMXCON-54824", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingNonDomainProjectWhichRmuBackToDashBoard() throws Exception {
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
+		baseClass.waitTime(5);
+		data.getNotificationMessage(0, projectName);
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54824");
-   			baseClass.stepInfo(
-   					"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a RMU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
-   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			UserManagement userManagement = new UserManagement(driver);
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
 
-   			// pre-req assign nondomain projet to da user
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			userManagement.filterByName(Input.da1userName);
-   			String userName = userManagement.getfirstUserName();
-   			userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-   			loginPage.logout();
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitTime(5);
-   			baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.NonDomainProject));
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-   			domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
-   			baseClass.stepInfo("verify default security group in selected project in Rmu");
-   			driver.waitForPageToBeReady();
-   			baseClass.selectproject(Input.NonDomainProject);
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("As user to DSG by default in selected project");
-   			} else {
-   				baseClass.failedStep("It is not  to default SG by default ");
-   			}
+		baseClass.stepInfo("verify Default Security Group display");
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify Reviewer Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer home page is not displayed ");
+		}
+		baseClass.stepInfo("Select other Domain project");
+		baseClass.selectproject(projectName);
 
-   			baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
-   			sgpage.backToDomain().waitAndClick(5);
-   			baseClass.waitTime(5);
-   			if (sgpage.daFirstBlock().isDisplayed()) {
-   				baseClass.passedStep("Navigated back to last access domain Dashboard home page");
-   			} else {
-   				baseClass.failedStep("Not Navigated back to domain admin home page");
-   			}
-   			loginPage.logout();
-   			
-   			// restore default
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-   			loginPage.logout();
-   		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify Reviewer Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer home page is not displayed ");
+		}
+		loginPage.logout();
+	}
 
-   		/**
-   		 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54822
-   		 * @throws Exception
-   		 * @Description Verify that as DA user, clicking on project should redirect to
-   		 *              default security group and select the other domain project from
-   		 *              header drop down in which DAU is PAU, clicking on Back to
-   		 *              Dashboard user is redirecting to last access Domain Dashboard.
-   		 * 
-   		 */
-   		@Test(description = "RPMXCON-54822", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingAnyProjectIsPAHomePageBackToDomainDashboard() throws Exception {
+	/**
+	 * @author Vijaya.Rani ModifyDate:28/07/2022 RPMXCON-54829
+	 * @throws Exception
+	 * @Description Verify on clicking on ay Project, DAU should take to Default SG
+	 *              in the selected project and select Project (Domain/non-domain)
+	 *              from drop down in which DAU is PAU, it should take the Default
+	 *              SG of the selected project.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54829", enabled = true, groups = { "regression" })
+	public void verifyDAClickingAnyProjectIsPAHomePage() throws Exception {
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54822");
-   			baseClass.stepInfo(
-   					"Verify that as DA user, clicking on project should redirect to default security group and select the other domain project from header drop down in which DAU is PAU, clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
-   			userManage = new UserManagement(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-   			DataSets data = new DataSets(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54829");
+		baseClass.stepInfo(
+				"Verify on clicking on ay Project, DAU should take to Default SG in the selected project and select Project (Domain/non-domain) from drop down in which DAU is PAU, it should take the Default SG of the selected project.");
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		DataSets data = new DataSets(driver);
+		String projectName = "PAProject" + Utility.dynamicNameAppender();
 
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-   			domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+		projectPage.navigateToProductionPage();
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "4");
+		baseClass.waitTime(5);
+		data.getNotificationMessage(0, projectName);
 
-   			baseClass.stepInfo("verify Default Security Group display");
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("It redirect to Security Gruop");
-   			} else {
-   				baseClass.failedStep("It is not Security Gruop");
-   			}
-   			driver.waitForPageToBeReady();
-   			baseClass.stepInfo("verify PA Home Page");
-   			driver.waitForPageToBeReady();
-   			if (data.getDatasetBtn().isDisplayed()) {
-   				baseClass.passedStep("It is redirect to PAU home page Successfully ");
-   			} else {
-   				baseClass.failedStep("verification failed");
-   			}
-   			// validation for back button
-   			baseClass.stepInfo("Click on back Button");
-   			baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
-   			sgpage.backToDomain().waitAndClick(5);
-   			driver.waitForPageToBeReady();
-   			if (sgpage.daFirstBlock().isDisplayed()) {
-   				baseClass.passedStep("Navigated back to domain Dashboard home page");
-   			} else {
-   				baseClass.failedStep("Not Navigated back to domain admin home page");
-   			}
+		UserManagement users = new UserManagement(driver);
+		users.navigateToUsersPAge();
+		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
+		loginPage.logout();
 
-   			loginPage.logout();
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
-   		}
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
-   		/**
-   		 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54821
-   		 * @throws Exception
-   		 * @Description Verify that as DA user, clicking on project should redirect to
-   		 *              default security group and select the non-domain project from
-   		 *              header drop down where DAU is a PAU , clicking on Back to
-   		 *              Dashboard user is redirecting to last access Domain Dashboard
-   		 * 
-   		 */
-   		@Test(description = "RPMXCON-54821", enabled = true, groups = { "regression" })
-   		public void verifyDAClickingNonDomainProjectIsPAHomePageBackToDomainDashboard() throws Exception {
+		baseClass.stepInfo("verify Default Security Group display");
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
 
-   			baseClass.stepInfo("Test case Id: RPMXCON-54821");
-   			baseClass.stepInfo(
-   					"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a PAU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
-   			userManage = new UserManagement(driver);
-   			DomainDashboard domainDash = new DomainDashboard(driver);
-   			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-   			DataSets data = new DataSets(driver);
-   			UserManagement userManagement = new UserManagement(driver);
+		baseClass.stepInfo("Select other Domain project");
+		baseClass.selectproject(projectName);
 
-   			// pre-req assign nondomain projet to da user
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			userManagement.filterByName(Input.da1userName);
-   			String userName = userManagement.getfirstUserName();
-   			userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-   			loginPage.logout();
+		driver.waitForPageToBeReady();
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		loginPage.logout();
+	}
 
-   			// Login As DA
-   			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-   			baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+	/**
+	 * @Author Krishna Date: 3/08/2022
+	 * @Description : In Manage Security Group- 'Available in Project' list is
+	 *              getting populated for WorkProducts and ProjectFields
+	 * @param :
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54977", enabled = true, groups = { "regression" })
+	public void verifySgAvaibleProjectInListProjectFields() throws Exception {
 
-   			baseClass.stepInfo("Click on any project");
-   			driver.waitForPageToBeReady();
-   			baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-   			domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		baseClass.stepInfo("Test case Id: RPMXCON-54977");
+		baseClass.stepInfo(
+				"In Manage Security Group- 'Available in Project' list is getting populated for WorkProducts and ProjectFields");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 
-   			baseClass.stepInfo("verify Default Security Group display");
-   			driver.waitForPageToBeReady();
-   			String actualString = "Default Security Group";
-   			String ExpectedString = baseClass.getsgNames().getText();
-   			System.out.println(ExpectedString);
-   			if (actualString.equals(ExpectedString)) {
-   				baseClass.passedStep("It redirect to Security Gruop");
-   			} else {
-   				baseClass.failedStep("It is not Security Gruop");
-   			}
-   			driver.waitForPageToBeReady();
-   			baseClass.stepInfo("verify PA Home Page");
-   			driver.waitForPageToBeReady();
-   			if (data.getDatasetBtn().isDisplayed()) {
-   				baseClass.passedStep("It is redirect to PAU home page Successfully ");
-   			} else {
-   				baseClass.failedStep("verification failed");
-   			}
-   			// validation for back button
-   			baseClass.stepInfo("Click on back Button");
-   			baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
-   			sgpage.backToDomain().waitAndClick(5);
-   			driver.waitForPageToBeReady();
-   			if (sgpage.daFirstBlock().isDisplayed()) {
-   				baseClass.passedStep("Navigated back to domain Dashboard home page");
-   			} else {
-   				baseClass.failedStep("Not Navigated back to domain admin home page");
-   			}
-   			loginPage.logout();
-   			
-   			// restore default
-   			loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-   			userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-   			loginPage.logout();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		ProjectFieldsPage projectFields = new ProjectFieldsPage(driver);
+		String random = Input.randomText + String.valueOf(utility.dynamicNameAppender());
+		final String random1 = random;
+		final String random2 = random;
 
-   		}
+		baseClass.stepInfo("Navigate To Project Field sPage");
+		projectFields.navigateToProjectFieldsPage();
+		baseClass.stepInfo("Add a new project field as project administrator");
+		projectFields.addProjectField(random1, random2, Input.fldClassification, Input.fldDescription, Input.fieldType,
+				Input.fieldLength);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+
+		sgpage.selectSecurityGroupAndClickOnProjectFldLink(Input.securityGroup);
+		sgpage.verifySelectedProjectField(random1);
+		if (sgpage.getSG_GenerateEmailRadioButton(1).isDisplayed()) {
+			baseClass.passedStep(
+					"Use Project-level Email Inclusive and Email Duplicate Data option button is checked as per the config as expected.");
+		} else {
+			baseClass.failedStep("Data option button is not expected");
+		}
+	}
+
+	/**
+	 * @Author Krishna Date: 3/08/2022
+	 * @Description :Verify that as DA user, clicking on project should redirect to
+	 *              default security group and select the other domain project from
+	 *              header drop down in which DAU is RMU, on clicking on Back to
+	 *              Dashboard shall take the user to the last accessed domain
+	 *              dashboard
+	 * @param :
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54826", enabled = true, groups = { "regression" })
+	public void verifyDAClickingProjectWhichRmuBackToDashBoard() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54826");
+		baseClass.stepInfo(
+				"Verify that as DA user, clicking on project should redirect to default security group and select the other domain project from header drop down in which DAU is RMU, on clicking on Back to Dashboard shall take the user to the last accessed domain dashboard");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
+		baseClass.stepInfo("verify default security group in selected project");
+
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("As user to DSG by default in selected project");
+		} else {
+			baseClass.failedStep("It is not  to default SG by default ");
+		}
+
+		baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
+		sgpage.backToDomain().waitAndClick(5);
+		baseClass.waitTime(5);
+		if (sgpage.daFirstBlock().isDisplayed()) {
+			baseClass.passedStep("Navigated back to user to the last accessed domain dashboard page");
+		} else {
+			baseClass.failedStep("Not Navigated back to domain home page");
+		}
+	}
+
+	/**
+	 * @Author Krishna Date: 26/07/2022
+	 * @Description :Verify that as DA user, clicking on project should redirect to
+	 *              default security group and select the non-domain project from
+	 *              header drop down where DAU is a RMU , clicking on Back to
+	 *              Dashboard user is redirecting to last access Domain Dashboard
+	 * @param :
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-54824", enabled = true, groups = { "regression" })
+	public void verifyDAClickingNonDomainProjectWhichRmuBackToDashBoard() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54824");
+		baseClass.stepInfo(
+				"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a RMU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// pre-req assign nondomain projet to da user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.filterByName(Input.da1userName);
+		String userName = userManagement.getfirstUserName();
+		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
+		loginPage.logout();
+
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+		baseClass.stepInfo("Click on any project");
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.NonDomainProject));
+		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
+		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+
+		baseClass.stepInfo("verify default security group in selected project in Rmu");
+		driver.waitForPageToBeReady();
+		baseClass.selectproject(Input.NonDomainProject);
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("As user to DSG by default in selected project");
+		} else {
+			baseClass.failedStep("It is not  to default SG by default ");
+		}
+
+		baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
+		sgpage.backToDomain().waitAndClick(5);
+		baseClass.waitTime(5);
+		if (sgpage.daFirstBlock().isDisplayed()) {
+			baseClass.passedStep("Navigated back to last access domain Dashboard home page");
+		} else {
+			baseClass.failedStep("Not Navigated back to domain admin home page");
+		}
+		loginPage.logout();
+
+		// restore default
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54822
+	 * @throws Exception
+	 * @Description Verify that as DA user, clicking on project should redirect to
+	 *              default security group and select the other domain project from
+	 *              header drop down in which DAU is PAU, clicking on Back to
+	 *              Dashboard user is redirecting to last access Domain Dashboard.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54822", enabled = true, groups = { "regression" })
+	public void verifyDAClickingAnyProjectIsPAHomePageBackToDomainDashboard() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54822");
+		baseClass.stepInfo(
+				"Verify that as DA user, clicking on project should redirect to default security group and select the other domain project from header drop down in which DAU is PAU, clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DataSets data = new DataSets(driver);
+
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
+
+		baseClass.stepInfo("verify Default Security Group display");
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify PA Home Page");
+		driver.waitForPageToBeReady();
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep("It is redirect to PAU home page Successfully ");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+		// validation for back button
+		baseClass.stepInfo("Click on back Button");
+		baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
+		sgpage.backToDomain().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (sgpage.daFirstBlock().isDisplayed()) {
+			baseClass.passedStep("Navigated back to domain Dashboard home page");
+		} else {
+			baseClass.failedStep("Not Navigated back to domain admin home page");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54821
+	 * @throws Exception
+	 * @Description Verify that as DA user, clicking on project should redirect to
+	 *              default security group and select the non-domain project from
+	 *              header drop down where DAU is a PAU , clicking on Back to
+	 *              Dashboard user is redirecting to last access Domain Dashboard
+	 * 
+	 */
+	@Test(description = "RPMXCON-54821", enabled = true, groups = { "regression" })
+	public void verifyDAClickingNonDomainProjectIsPAHomePageBackToDomainDashboard() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54821");
+		baseClass.stepInfo(
+				"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a PAU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DataSets data = new DataSets(driver);
+		UserManagement userManagement = new UserManagement(driver);
+
+		// pre-req assign nondomain projet to da user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.filterByName(Input.da1userName);
+		String userName = userManagement.getfirstUserName();
+		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
+		loginPage.logout();
+
+		// Login As DA
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+
+		baseClass.stepInfo("Click on any project");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
+		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+
+		baseClass.stepInfo("verify Default Security Group display");
+		driver.waitForPageToBeReady();
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("It redirect to Security Gruop");
+		} else {
+			baseClass.failedStep("It is not Security Gruop");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify PA Home Page");
+		driver.waitForPageToBeReady();
+		if (data.getDatasetBtn().isDisplayed()) {
+			baseClass.passedStep("It is redirect to PAU home page Successfully ");
+		} else {
+			baseClass.failedStep("verification failed");
+		}
+		// validation for back button
+		baseClass.stepInfo("Click on back Button");
+		baseClass.waitTillElemetToBeClickable(sgpage.backToDomain());
+		sgpage.backToDomain().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (sgpage.daFirstBlock().isDisplayed()) {
+			baseClass.passedStep("Navigated back to domain Dashboard home page");
+		} else {
+			baseClass.failedStep("Not Navigated back to domain admin home page");
+		}
+		loginPage.logout();
+
+		// restore default
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
