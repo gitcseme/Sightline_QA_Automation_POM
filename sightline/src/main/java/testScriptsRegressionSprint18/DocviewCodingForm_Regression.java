@@ -63,7 +63,8 @@ public class DocviewCodingForm_Regression {
 	DocExplorerPage docExplorerPage;
 
 	List<String> cfName = null;
-	String codingform = "CFTag" + Utility.dynamicNameAppender();
+	String codingform = "CFA" + Utility.dynamicNameAppender();
+	String cfTwo = "CFB" + Utility.dynamicNameAppender();
 
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
@@ -209,7 +210,7 @@ public class DocviewCodingForm_Regression {
 		if (roll == "rmu") {
 			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 			driver.waitForPageToBeReady();
-			codingForm.createWithOneMetaData(codingform);
+			codingForm.createWithOneMetaData(cfTwo);
 			cfName = codingForm.checkingBelow15CFCheckboxForSG();
 			System.out.println(cfName);
 			codingForm.makingDefaultCfToSg(Input.codingFormName);
@@ -238,7 +239,7 @@ public class DocviewCodingForm_Regression {
 		baseClass.stepInfo("Assigned coding form to sg are displaying in cf panel dropdown");
 		// selecting different codingform
 		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(codingform);
+		docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(cfTwo);
 
 		// popup message without changes in cf panel
 		boolean popUPCf = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
@@ -250,7 +251,7 @@ public class DocviewCodingForm_Regression {
 		String parentWindow=docViewPage.switchTochildWindow();
 		// selecting different codingform
 		baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
-		docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(codingform);
+		docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(cfTwo);
 		// poup in child window
 		boolean popUPCfChild = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
 		softAssertion.assertFalse(popUPCfChild);
@@ -271,7 +272,7 @@ public class DocviewCodingForm_Regression {
 			docExplorerPage.docExpViewInDocView();
 			driver.waitForPageToBeReady();
 			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCf());
-			docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(codingform);
+			docViewPage.getDocViewDrpDwnCf().selectFromDropdown().selectByVisibleText(cfTwo);
 
 			// popup message without changes in cf panel
 			boolean popUPCfEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
@@ -283,7 +284,7 @@ public class DocviewCodingForm_Regression {
 			String parentWindowDoc=docViewPage.switchTochildWindow();
 			// selecting different codingform
 			baseClass.waitForElement(docViewPage.getDocViewDrpDwnCfChild());
-			docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(codingform);
+			docViewPage.getDocViewDrpDwnCfChild().selectFromDropdown().selectByVisibleText(cfTwo);
 			// poup in child window
 			boolean popUPCfChildEX = docViewPage.getCfPopUpMsgWithoutChanges().isElementAvailable(2);
 			softAssertion.assertFalse(popUPCfChildEX);
