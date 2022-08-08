@@ -111,7 +111,7 @@ public class BatchRedactionPage {
 	}
 
 	public Element getPopupMessage() {
-		return driver.FindElementByXPath("//div[@id='Msg1']//div[@class='MessageBoxMiddle']/span/span");
+		return driver.FindElementByXPath("//div[@id='Msg1']//div[@class='MessageBoxMiddle']/h2/span/span");
 	}
 
 //	Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions. Do you want to continue with the Batch Redaction?
