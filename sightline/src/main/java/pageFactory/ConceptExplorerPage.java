@@ -283,9 +283,28 @@ public class ConceptExplorerPage {
 	}
 
 	public Element getActiveFiltersElement() {
-		return driver.FindElementByXPath("//div[@id='activeFilters']//li[1]");
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li");
 	}
 
+	public Element getWaitForBgTaskToComplete() {
+		return driver.FindElementByXPath("//div[@role='dialog']//span[text()='Wait for Task to Complete?']");
+	}
+
+	public Element getWaitForBgTaskToCompleteAction(String action) {
+		return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[text()='" + action + "']");
+	}
+
+	public Element getNodeFromTab(String groupName, String nodeName) {
+		return driver.FindElementByXPath("//a[text()='" + groupName + "']//..//li//a[text()='" + nodeName + "']");
+	}
+
+	public Element getSaveSearchSelectionsBtn() {
+		return driver.FindElementByXPath("//button[@id='search']");
+	}
+
+	public Element getspinningWheel() {
+		return driver.FindElementByXPath("//div[@id= 'processingPopupDiv' and @style='']");
+	}
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -399,22 +418,7 @@ public class ConceptExplorerPage {
 		}
 	}
 
-	/**
-	 * @author Raghuram.A
-	 * @createdOn : 07/04/22
-	 * @ModifiedOn : N/A
-	 * @ModifiedBy : N/A
-	 * @Description : Click Select Sources
-	 */
-	public void clickSelectSources() {
-		try {
-			getSelectSourcedBtn().waitAndClick(3);
-			base.ValidateElement_Presence(getSelectSourcedOptions(), "Select sources popup");
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Select Sources button not available / not enabled");
-		}
-	}
+	
 
 	/**
 	 * @author Raghuram.A
@@ -797,5 +801,82 @@ public class ConceptExplorerPage {
 		getUpdateFilter().waitAndClick(20);
 
 	}
+	/**
+	 * @author Jayanthi
+	 * @Description : Click Select Sources
+	 */
+	public void clickSelectSources() {
+		try {
+			getSelectSourcedBtn().waitAndClick(3);
+			base.ValidateElement_Presence(getSelectSourcedOptions(), "Select sources popup");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Select Sources button not available / not enabled");
+		}
+	}
 
+	/**
+	 * @author Jayanthi.Ganesan
+	 * 
+	 * @param sourceToSelect
+	 * @param sgToSelect
+	 * @param searchName
+	 * @param nodeName
+	 * @param additional1
+	 * @param additional2
+	 */
+
+	public void selectSearchessource(String sourceToSelect, String sgToSelect, String searchName, String nodeName,
+			Boolean additional1, String additional2) {
+		if (getSelectSourcedOption(sourceToSelect).isElementAvailable(2)) {
+			getSelectSourcedOption(sourceToSelect).waitAndClick(5);
+		}
+		getNodeFromTab(sgToSelect, searchName).waitAndClick(10);
+		base.waitTime(5);
+		getSaveSearchSelectionsBtn().ScrollTo();
+		base.waitTime(5);
+		getSaveSearchSelectionsBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+
+	}
+
+	/**
+	 * @author Jayanthi
+	 * @param action
+	 */
+	public void backgroundWait(String action, int checkTiming) {
+
+		for (int i = 0; i < checkTiming; i++) {
+			if (getspinningWheel().isElementAvailable(1)) {
+				base.waitTime(1);
+				continue;
+			} else {
+				break;
+			}
+		}
+
+		// background Action
+		if (getWaitForBgTaskToComplete().isElementAvailable(3)) {
+			getWaitForBgTaskToCompleteAction(action).waitAndClick(3);
+			System.out.println("Bg popup handled");
+		} else {
+			System.out.println("No BG popup within the expected time : " + checkTiming);
+		}
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Jayanthi
+	 * @param action
+	 * @param bgTask
+	 * @param waitTiming
+	 */
+	public void applyFilter(String action, int waitTiming) {
+		driver.waitForPageToBeReady();
+		getApplyFilterBtn().waitAndClick(3);
+		base.stepInfo("Apply Filter action done");
+
+		// Background action Wait
+		backgroundWait(action, waitTiming);
+	}
 }
