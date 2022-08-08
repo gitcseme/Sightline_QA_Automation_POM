@@ -1438,6 +1438,10 @@ public class CodingForm {
 	public Element getStep2CfPopUp() {
 		return driver.FindElementByXPath("//span[text()='Step 02: Sort Coding Form Order']");
 	}
+	
+	public Element getCfPopUpCancel() {
+		return driver.FindElementById("btnCodingFormCancel");
+	}
 
 
 	
