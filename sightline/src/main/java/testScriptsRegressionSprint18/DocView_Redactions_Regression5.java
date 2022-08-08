@@ -99,7 +99,7 @@ public class DocView_Redactions_Regression5 {
 	 * PDF (with Uploaded Data set)
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-51985", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyDocHighlightingForSearchablePdfDataSet() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51985");
@@ -175,7 +175,7 @@ public class DocView_Redactions_Regression5 {
 	 * comments entered with < > * ; ‘ / ( ) # & from DocView
 	 * 
 	 */
-	@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+	@Test(description = "RPMXCON-65077", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyErrorMsgDisplayedDocCommentEnteredFromDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-65057");

@@ -78,7 +78,7 @@ public class ConceptExplorer_Regression {
 	 * @throws Exception
 	 */
 
-	@Test(enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
+	@Test(description = "RPMXCON-56962", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
 	public void verifyConceptExp(String User, String pwd, String SearchGroup) throws Exception {
 
 		baseClass.stepInfo("Test case Id : RPMXCON-56962: ");

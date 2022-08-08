@@ -83,13 +83,13 @@ public class DashBoard_Regression {
 		
 		/**
 		 * @author Sowndarya.Velraj created on:NA modified by:NA 
-		 * TESTCASE No:RPMXCON-54192
+		 * TESTCASE No:RPMXCON-54192, 54188
 		 * @Description:To verify that if RMU can view the details on Reviewer Progress widget on selecting specific RU.
 		 * TESTCASE No:RPMXCON-54188
 		 * @Description:To verify that RMU is able to view Review Progress By Reviewer widget on Dashboard.
 		 **/
 
-		@Test(description = "RPMXCON-54192", enabled = true, groups = { "regression" })
+		@Test(description = "RPMXCON-54192,RPMXCON-54188", enabled = true, groups = { "regression" })
 		public void verifyReviewerProgressDetails() throws Exception {
 
 			baseClass.stepInfo("Test case Id:RPMXCON-54192 Dashboard Component Sprint 18");
@@ -186,6 +186,54 @@ public class DashBoard_Regression {
 			dashBoard.DeleteWidgetFromDashboard();
 			
 		}
+		
+		/**
+		 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+		 *         No:RPMXCON-54573
+		 * @Description:PAU and DAU users should be included for "Reviewer Productivity"
+		 *                  widget on RMU Dashboard
+		 **/
+
+		@Test(description = "RPMXCON-54573", enabled = true, groups = { "regression" })
+		public void verifyReviewerProductivity_RMUDashboard() throws Exception {
+
+			baseClass.stepInfo("Test case Id:RPMXCON-54573 Dashboard Component Sprint 17");
+			baseClass.stepInfo("PAU and DAU users should be included for Reviewer Productivity widget on RMU Dashboard");
+			UtilityLog.info(Input.prodPath);
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			AssignmentsPage agnmt = new AssignmentsPage(driver);
+			Dashboard dashBoard = new Dashboard(driver);
+
+			String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+			String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
+			String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName, Input.rev1FullName, Input.da1FullName };
+			String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),
+					Input.rev1FullName.toUpperCase(), Input.da1FullName.toUpperCase() };
+
+			sessionsearch.basicContentSearch(Input.testData1);
+			baseClass.stepInfo("Search for text input completed");
+			sessionsearch.verifyPureHitsCount();
+			sessionsearch.saveSearch(SaveSearchName);
+			sessionsearch.bulkAssign();
+			// create Assignment and disturbute docs
+			agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+			agnmt.add4ReviewerAndDistribute();
+			baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
+
+			dashBoard.navigateToDashboard();
+			dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
+			dashBoard.select4Reviewers_reviewerProductivityWidget(listOfReviewers, assignmentName);
+
+			baseClass.waitForElementCollection(dashBoard.listOfReviewers());
+			int size = dashBoard.listOfReviewers().size();
+
+			List<String> availableListofElements = baseClass.availableListofElements(dashBoard.listOfReviewers());
+			String passMsg = "Reviewers list should include associated DAU, PAU, RMU and Reviewer to the project";
+			String failMsg = "Reviewers list is not displayed with assigned reviewers";
+			baseClass.compareArraywithDataList(reviewers, availableListofElements, true, passMsg, failMsg);
+		}
+
 	}
 
-}
+	}
+	
