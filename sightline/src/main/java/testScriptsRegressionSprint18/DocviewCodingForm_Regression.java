@@ -376,9 +376,9 @@ public class DocviewCodingForm_Regression {
 	 *                 see Complete and Code same as Button in Coding Panel
 	 */
 
-	@Test(description = "RPMXCON-52159",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-65197",enabled = true, groups = { "regression" })
 	public void codingFormChildWindowCodeSameAsLast() throws AWTException, InterruptedException {
-		baseClass.stepInfo("Test case Id: RPMXCON-52159");
+		baseClass.stepInfo("Test case Id: RPMXCON-65197");
 		baseClass.stepInfo("In Doc view upon selected Default Coding Form we should see Complete and "
 				+ "Code same as Button in Coding Panel");
 		// login as Rmu

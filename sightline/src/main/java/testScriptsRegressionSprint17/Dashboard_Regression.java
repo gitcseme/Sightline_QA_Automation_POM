@@ -504,51 +504,7 @@ public class Dashboard_Regression {
 		baseClass.passedStep("QC Not Distributed percent" + dashBoard.getQC_notDistirbutedPercent().getText());
 	}
 
-	/**
-	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
-	 *         No:RPMXCON-54573
-	 * @Description:PAU and DAU users should be included for "Reviewer Productivity"
-	 *                  widget on RMU Dashboard
-	 **/
-
-	//@Test(description = "RPMXCON-54573", enabled = false, groups = { "regression" })
-	public void verifyReviewerProductivity_RMUDashboard() throws Exception {
-
-		baseClass.stepInfo("Test case Id:RPMXCON-54573 Dashboard Component Sprint 17");
-		baseClass.stepInfo("PAU and DAU users should be included for Reviewer Productivity widget on RMU Dashboard");
-		UtilityLog.info(Input.prodPath);
-		SessionSearch sessionsearch = new SessionSearch(driver);
-		AssignmentsPage agnmt = new AssignmentsPage(driver);
-		Dashboard dashBoard = new Dashboard(driver);
-
-		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
-		String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
-		String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName, Input.rev1FullName, Input.da1FullName };
-		String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),
-				Input.rev1FullName.toUpperCase(), Input.da1FullName.toUpperCase() };
-
-		sessionsearch.basicContentSearch(Input.testData1);
-		baseClass.stepInfo("Search for text input completed");
-		sessionsearch.verifyPureHitsCount();
-		sessionsearch.saveSearch(SaveSearchName);
-		sessionsearch.bulkAssign();
-		// create Assignment and disturbute docs
-		agnmt.assignmentCreation(assignmentName, Input.codeFormName);
-		agnmt.add4ReviewerAndDistribute();
-		baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
-
-		dashBoard.navigateToDashboard();
-		dashBoard.AddNewWidgetToDashboard(Input.ReviewerProductivity);
-		dashBoard.select4Reviewers_reviewerProductivityWidget(listOfReviewers, assignmentName);
-
-		baseClass.waitForElementCollection(dashBoard.listOfReviewers());
-		int size = dashBoard.listOfReviewers().size();
-
-		List<String> availableListofElements = baseClass.availableListofElements(dashBoard.listOfReviewers());
-		String passMsg = "Reviewers list should include associated DAU, PAU, RMU and Reviewer to the project";
-		String failMsg = "Reviewers list is not displayed with assigned reviewers";
-		baseClass.compareArraywithDataList(reviewers, availableListofElements, true, passMsg, failMsg);
-	}
+	
 
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
