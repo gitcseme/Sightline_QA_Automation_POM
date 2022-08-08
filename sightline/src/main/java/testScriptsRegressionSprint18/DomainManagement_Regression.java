@@ -146,10 +146,10 @@ public class DomainManagement_Regression {
 	 * @Description :Validate Project Name field value for a non-domain project in
 	 *              edit mode by System Admin
 	 */
-    @Test(description = "RPMXCON-53054", enabled = true, groups = { "regression" })
+    @Test(description = "RPMXCON-52962", enabled = true, groups = { "regression" })
 	public void verifyNonDomainProjectNameModify() throws Exception {
 
-		baseClass.stepInfo("Test case Id: RPMXCON-53054");
+		baseClass.stepInfo("Test case Id: RPMXCON-52962");
 		baseClass.stepInfo("Validate Project Name field value for a non-domain project in edit mode by System Admin");
 		baseClass = new BaseClass(driver);
 		userManage = new UserManagement(driver);
@@ -577,7 +577,7 @@ public class DomainManagement_Regression {
 	 *               to navigate to the Domain tab without saving the changes, 
 	 *               it should display the confirmation message
 	 */
-	@Test(description = "RPMXCON-53036", enabled = true, groups = { "regression" })
+    @Test(description = "RPMXCON-53036", enabled = true, groups = { "regression" })
 	public void verifyUnAssignConfirmMsgWithoutSave() throws Exception {
 		baseClass.stepInfo("Test case Id: RPMXCON-53036");
 		baseClass.stepInfo(
