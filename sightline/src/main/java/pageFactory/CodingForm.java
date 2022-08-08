@@ -3485,6 +3485,9 @@ public class CodingForm {
 		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		getSaveCFBtn().waitAndClick(5);
+		if(getCodingForm_Validation_ButtonYes().isElementAvailable(10)) {
+			getCodingForm_Validation_ButtonYes().waitAndClick(5);
+		}
 		base.VerifySuccessMessage("Coding Form Saved successfully");
 		base.CloseSuccessMsgpopup();
 	
