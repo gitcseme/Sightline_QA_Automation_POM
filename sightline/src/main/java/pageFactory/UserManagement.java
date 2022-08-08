@@ -846,7 +846,7 @@ public class UserManagement {
 		return driver.FindElementByXPath("//label[normalize-space()= 'Domain:']//..//label[text()='"+Input.domainName+"']");
 	}
 	public Element getConfirmMsg() {
-		return driver.FindElementByXPath("//span[text()='User Mapping']//..//p");
+		return driver.FindElementByXPath("//span[text()='User Mapping']//..//..//p");
 	}
 	
 	public ElementCollection getAllBlockedUserRightInFuncnalityTab() {
