@@ -54,16 +54,16 @@ public class AdvancedSearchRegression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
-		// Pre requesite creation
-		// Performing Star search since this will add all avail docs from default sec
-		// group .
-		sessionSearch.basicContentSearch(Input.searchStringStar);
-		tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
-		sessionSearch.bulkTag(tagName);
-		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
-		loginPage.quitBrowser();
+//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+//
+//		// Pre requesite creation
+//		// Performing Star search since this will add all avail docs from default sec
+//		// group .
+//		sessionSearch.basicContentSearch(Input.searchStringStar);
+//		tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
+//		sessionSearch.bulkTag(tagName);
+//		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
+//		loginPage.quitBrowser();
 
 	}
 
@@ -97,8 +97,10 @@ public class AdvancedSearchRegression {
 
 	@DataProvider(name = "PaAndRevUser")
 	public Object[][] PaAndRevUser() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
-				{ Input.rev1userName, Input.rev1password, "REV" }, };
+		Object[][] users = {
+				{ Input.rev1userName, Input.rev1password, "REV" },
+				{ Input.pa1userName, Input.pa1password, "PA" },
+				};
 		return users;
 	}
 	
@@ -506,16 +508,16 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Date Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57165", dataProvider = "PaAndRevUser", groups = { "regression" }, enabled = true)
-	public void verifySgAndProdDate(String username, String Password, String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57165", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdDate() throws Exception {
 		String fromDate = "2022/07/01";
 
 		baseClass.stepInfo("Test case Id: RPMXCON-57165 Advanced Search");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with AND operator and production optional filters - Date Range in search result.");
 
-		loginPage.loginToSightLine(username, Password);
-		baseClass.stepInfo("Logged In As : " + LoginUser);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Logged In As : " + Input.pa1FullName);
 
 		// Select Work production Security group & "And" Operator
 		sessionSearch.switchToWorkproduct();
@@ -542,8 +544,8 @@ public class AdvancedSearchRegression {
 	 *              result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57164", dataProvider = "paRmuRevUsers", groups = { "regression" }, enabled = true)
-	public void verifyWPWithProd(String username, String Password, String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57164", groups = { "regression" }, enabled = true)
+	public void verifyWPWithProd() throws Exception {
 		String prodName = "Production" + Utility.dynamicNameAppender();
 		ProductionPage production = new ProductionPage(driver);
 
@@ -551,8 +553,8 @@ public class AdvancedSearchRegression {
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with AND operator in search result.");
 
-		loginPage.loginToSightLine(username, Password);
-		baseClass.stepInfo("Logged In As : " + LoginUser);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Logged In As : " + Input.pa1FullName);
 
 		// create Production to select in WP
 		production.navigateToProductionPage();
@@ -583,15 +585,15 @@ public class AdvancedSearchRegression {
 	 *              optional filters - Bates Range in search result.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-57160", dataProvider = "PaAndRevUser", groups = { "regression" }, enabled = true)
-	public void verifySgAndProdBatesRange(String username, String Password, String LoginUser) throws Exception {
+	@Test(description = "RPMXCON-57160", groups = { "regression" }, enabled = true)
+	public void verifySgAndProdBatesRange() throws Exception {
 		String batesRange = "SP23571PS";
 		baseClass.stepInfo("Test case Id: RPMXCON-57160 Advanced Search");
 		baseClass.stepInfo(
 				"Verify that - Application returns all the documents which are available under selected group with OR operator and production optional filters - Bates Range in search result.");
 
-		loginPage.loginToSightLine(username, Password);
-		baseClass.stepInfo("Logged In As : " + LoginUser);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
+		baseClass.stepInfo("Logged In As : " + Input.pa1FullName);
 
 		// Select Work production Security group & "And" Operator
 		sessionSearch.switchToWorkproduct();
