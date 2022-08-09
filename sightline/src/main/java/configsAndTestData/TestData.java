@@ -340,6 +340,8 @@ public class TestData {
 	public String collectionDataHeader6;
 	public String collectionIdHeader;
 	public String collectionStatusHeader;
+	public String expectedDateInput;
+	public String expectedToDateInput;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

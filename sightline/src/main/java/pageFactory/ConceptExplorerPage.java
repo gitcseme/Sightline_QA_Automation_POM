@@ -1,5 +1,7 @@
 package pageFactory;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -305,6 +307,35 @@ public class ConceptExplorerPage {
 	public Element getspinningWheel() {
 		return driver.FindElementByXPath("//div[@id= 'processingPopupDiv' and @style='']");
 	}
+
+	public Element getSelectedSourcesName(String sType, String sgName) {
+		return driver.FindElementByXPath("//ul[@id='bitlist-sources']//li[text()='" + sType + ": " + sgName + "']");
+	}
+
+	public Element getMasterDatePopup() {
+		return driver.FindElementByXPath("//div[@class='popover bottom in']");
+	}
+
+	public Element getMasterDateInput() {
+		return driver
+				.FindElementByXPath("//div[@class='popover bottom in']//input[@id='MasterDate-1-CONCEPTEXPLORER']");
+	}
+
+	public Element getMasterToDateInput() {
+		return driver
+				.FindElementByXPath("// div[@class='popover bottom in']//input[@id='MasterDate-2-CONCEPTEXPLORER']");
+	}
+
+	public Element getSetDateRange() {
+		return driver.FindElementByXPath(
+				"//div[text()=' Filter by MasterDate:']//..//..//form[@class='smart-form CONCEPTEXPLORER']//select");
+	}
+
+	public Element getCalenderIcon() {
+		return driver.FindElementByXPath(
+				"//div[text()=' Filter by MasterDate:']//..//..//form[@class='smart-form CONCEPTEXPLORER']//i[@class='fa fa-calendar']");
+	}
+
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -417,8 +448,6 @@ public class ConceptExplorerPage {
 			base.failedStep("Concept Explorer Report link is not  displayed in reports landing page");
 		}
 	}
-
-	
 
 	/**
 	 * @author Raghuram.A
@@ -801,6 +830,7 @@ public class ConceptExplorerPage {
 		getUpdateFilter().waitAndClick(20);
 
 	}
+
 	/**
 	 * @author Jayanthi
 	 * @Description : Click Select Sources
@@ -878,5 +908,170 @@ public class ConceptExplorerPage {
 
 		// Background action Wait
 		backgroundWait(action, waitTiming);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 8/8/22
+	 * @param expectedDateInput
+	 * @param actionType
+	 */
+	public void masterDateAsInputString(String expectedDateInput, String expectedToDateInput, String actionType) {
+		// MasterDate as filter.
+		getFilterDocumentsBy_options("MasterDate").waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSetDateRange().selectFromDropdown().selectByVisibleText(actionType);
+		driver.waitForPageToBeReady();
+		getMasterDateInput().SendKeys(expectedDateInput);
+		driver.waitForPageToBeReady();
+
+		if (actionType.equalsIgnoreCase("Between")) {
+			getMasterToDateInput().SendKeys(expectedToDateInput);
+			driver.waitForPageToBeReady();
+		}
+		getCalenderIcon().Click();
+		driver.waitForPageToBeReady();
+
+		// Add to filer Action
+		getAddToFilter().waitAndClick(20);
+		base.stepInfo("Filters Applied with " + actionType);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 */
+	public void addAllTilesToCart() {
+		// Select data to 'Add to cart'
+		base.waitForElementCollection(getDataToAddInCart());
+		int resultToAddInCart = getDataToAddInCart().size();
+		System.out.println(resultToAddInCart);
+
+		for (int i = 1; i <= resultToAddInCart; i++) {
+			System.out.println(i);
+			if (getDataToAddInCart(1).isElementAvailable(5)) {
+				hoverOnSpecificConcepTualMapReturnText(1);
+				getDataToAddInCart(1).waitAndClick(5);
+				driver.waitForPageToBeReady();
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param selectSourceList
+	 * @param sourceToSelect
+	 * @param sgToSelect
+	 * @param nameToSelect
+	 * @param type
+	 * @param verifySourceList
+	 * @param additional1
+	 * @param addtional2
+	 * @param additional3
+	 */
+	public void selectSources(String[] selectSourceList, String sourceToSelect, String sgToSelect, String nameToSelect,
+			String type, Boolean verifySourceList, String additional1, String addtional2, Boolean additional3) {
+		// Select Sources
+		clickSelectSources();
+		if (verifySourceList) {
+			base.stepInfo("**To verify to click the source option available in concept explorer page");
+			verifySourceList(selectSourceList);
+		}
+		base.stepInfo("*Select any one of the source and save selection");
+
+		if (type.equalsIgnoreCase("Search")) {
+			selectSearchessource(sourceToSelect, sgToSelect, nameToSelect, "", false, "");
+			base.ValidateElement_Presence(getSelectedSourcesName("Search", nameToSelect),
+					"Selected source : " + nameToSelect + " and Saved selection");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param selectSourceList
+	 * @param sourceToSelect
+	 * @param sgToSelect
+	 * @param nameToSelect
+	 * @param type
+	 * @param expectedDateInput
+	 * @param expectedToDateInput
+	 * @param filterType
+	 * @param addToCart
+	 * @param viewType
+	 * @param masterDateOption
+	 * @param additional1
+	 * @param addtional2
+	 * @param additional3
+	 */
+	public void customizedActions(String[] selectSourceList, String sourceToSelect, String sgToSelect,
+			String nameToSelect, String type, String expectedDateInput, String expectedToDateInput, String filterType,
+			Boolean addToCart, String viewType, String masterDateOption, String additional1, String addtional2,
+			Boolean additional3) {
+
+		// Select Sources
+		selectSources(selectSourceList, sourceToSelect, sgToSelect, nameToSelect, "Search", false, "", "", false);
+
+		if (filterType.equalsIgnoreCase("MasterDate")) {
+			// MasterDate as filter.
+			masterDateAsInputString(expectedDateInput, expectedToDateInput, masterDateOption);
+
+			// Apply filter
+			applyFilter("Yes", 10);
+			driver.waitForPageToBeReady();
+		}
+
+		// Select data to 'Add to cart'
+		if (addToCart) {
+			addAllTilesToCart();
+		}
+
+		// View in DocList
+		if (viewType.equalsIgnoreCase("View in DocList")) {
+			performDocActions("View", "View in DocList");
+			base.waitTime(6);
+			base.verifyPageNavigation("en-us/Document/DocList");
+			driver.waitForPageToBeReady();
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param selectSourceList
+	 * @param sourceToSelect
+	 * @param sgToSelect
+	 * @param savedSearchName
+	 * @param expectedDateInput
+	 * @param expectedToDateInput
+	 * @param conditionToCheck
+	 * @throws ParseException
+	 */
+	public void masterDateVerifications(String[] selectSourceList, String sourceToSelect, String sgToSelect,
+			String savedSearchName, String expectedDateInput, String expectedToDateInput, String[] conditionToCheck)
+			throws ParseException {
+
+		ReportsPage reports = new ReportsPage(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		for (int i = 0; i <= conditionToCheck.length - 1; i++) {
+			List<String> masterDateValues = new ArrayList<>();
+			String condition = conditionToCheck[i];
+			String toDateIp = " ";
+
+			if (condition.equalsIgnoreCase("Between")) {
+				toDateIp = expectedToDateInput;
+			}
+
+			// Navigate to Concept Explorer page
+			base.stepInfo("**Apply masterdate on Page filter  MasterDate: " + condition);
+			reports.navigateToReportsPage("Concept Explorer Report");
+
+			// Select Sources and Apply MasterDate filter - BEFORE - AFTER - ON - BETWEEN
+			customizedActions(selectSourceList, sourceToSelect, sgToSelect, savedSearchName, "", expectedDateInput,
+					expectedToDateInput, "MasterDate", true, "View in DocList", condition, "", "", false);
+
+			// Master date collection and comparision
+			masterDateValues = docList.getColumnValue("MasterDate", false);
+			docList.checkMaseterDateAsExpected(masterDateValues, expectedDateInput, toDateIp, condition, "yyyy/MM/dd");
+		}
 	}
 }
