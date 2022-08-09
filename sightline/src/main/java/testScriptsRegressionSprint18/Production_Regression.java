@@ -20,6 +20,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
@@ -517,47 +518,7 @@ public class Production_Regression {
 
 	}
 
-	/**
-	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
-	 *         No:RPMXCON-47847
-	 * @Description:To Verify the Create/Display/View of Template with newly created
-	 *                 Security Group.
-	 **/
-	@Test(description = "RPMXCON-47847", enabled = true, groups = { "regression" })
-	public void verifyTemplateInSecurityGroup() throws Exception {
-
-		UtilityLog.info(Input.prodPath);
-		base.stepInfo("Test case Id:RPMXCON-47847 Production Component Sprint 18");
-		base.stepInfo("To Verify the Create/Display/View of Template with newly created Security Group.");
-
-		String securityGroup = "Security" + UtilityLog.dynamicNameAppender();
-		String productionSet ="ProdSet"+ UtilityLog.dynamicNameAppender();
-		String template="Template"+  UtilityLog.dynamicNameAppender();
-		SecurityGroupsPage security = new SecurityGroupsPage(driver);
-		
-		// add new security group
-		security.navigateToSecurityGropusPageURL();
-		security.AddSecurityGroup(securityGroup);
-		
-		//select created security group
-		ProductionPage page = new ProductionPage(driver);
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.selectingCreatedSecurityGroup(securityGroup);
-		
-		//create new production set
-		page.CreateProductionSets(productionSet);
-		page.navigateToProductionPageByNewProductionSet(productionSet);
-		
-		//create production and save as custom template
-		productionname = "p" + Utility.dynamicNameAppender();
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.navigateToNextSection();
-		page.navigateToProductionPage();
-		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, template);
-		
-	}
+	
 	
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
@@ -665,6 +626,7 @@ public class Production_Regression {
 		base.passedStep("Verified Number of MP3 Files should be shown even when the count of MP3 Files among the selected document is 0.");
 		
 	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

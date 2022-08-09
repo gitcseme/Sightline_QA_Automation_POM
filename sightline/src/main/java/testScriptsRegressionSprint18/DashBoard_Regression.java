@@ -144,8 +144,8 @@ public class DashBoard_Regression {
 
 			String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 			String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
-			String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName};
-			String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase()};
+			String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName,Input.rev1FullName,Input.da1FullName};
+            String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),Input.rev1FullName.toUpperCase(),Input.da1FullName.toUpperCase()};
 
 			sessionsearch.basicContentSearch(Input.testData1);
 			baseClass.stepInfo("Search for text input completed");
