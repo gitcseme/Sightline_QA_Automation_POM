@@ -3215,6 +3215,26 @@ public class ProductionPage {
 	public Element getAdvancedArrow(String Value) {
 		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])["+Value+"()]");
 	}
+	
+	public Element getDeletOption(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Delete']");
+	}
+
+	public Element TagInTextBox(){
+		return driver.FindElementByXPath("//ul[@id='xEdit']//li/following-sibling::li//span");
+	}
+
+	public ElementCollection getDAT_SourceField() {
+		return driver.FindElementsByXPath("//select[@id='SF_0']//option");
+	}
+	public Element getNativeCheckBoxChecked(String FileType){
+		return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'"+FileType+"')]/..//input");
+	}
+	
+	public Element nativeFileTypeCheckBox(String FileType) {
+		return driver.FindElementByXPath("//input[contains(@value,'"+FileType+"')]/..//i");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
