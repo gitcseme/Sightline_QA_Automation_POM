@@ -204,6 +204,19 @@ public class ProjectPage {
 	public Element getEditProjectWindow() {
 		return driver.FindElementByXPath("//h1[normalize-space()='Edit Project']");
 	}
+	
+	//Add by Aathith
+	public Element getCancelButton() {
+		return driver.FindElementById("btnCancelProject");
+	}
+	
+	public Element getClinetNameInputBox() {
+		return driver.FindElementById("txtClientEntityLabel");
+	}
+	
+	public Element getPageTitle() {
+		return driver.FindElementByClassName("page-title");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -1028,5 +1041,84 @@ public class ProjectPage {
 		UtilityLog.info(bc.initialBgCount());
 
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param projectname
+	 * @param clientname
+	 * @Desctiprion enter project details without click save button
+	 */
+	public void AddDomainProjectDetailsWithoutSave(String projectname, String clientname) {
+		
+		driver.waitForPageToBeReady();
+		navigateToProductionPage();
+
+		bc.waitForElement(getAddProjectBtn());
+		getAddProjectBtn().waitAndClick(5);
+		
+		bc.waitForElement(getProjectName());
+		getProjectName().SendKeys(projectname);
+
+		bc.waitForElement(getSelectEntityType());
+		getSelectEntityType().selectFromDropdown().selectByVisibleText("Domain");
+
+		bc.waitForElement(getSelectEntity());
+		getSelectEntity().selectFromDropdown().selectByVisibleText(clientname);
+
+		driver.scrollingToBottomofAPage();
+
+		getProjectFolder().Clear();
+		getProjectFolder().SendKeys("Automation");
+
+		getIngestionFolder().Clear();
+		getIngestionFolder().SendKeys("Automation");
+
+		getProductionFolder().Clear();
+		getProductionFolder().SendKeys("Automation");
+
+		driver.scrollPageToTop();
+		bc.waitForElement(getAddProject_SettingsTab());
+		getAddProject_SettingsTab().waitAndClick(5);
+
+		bc.waitForElement(getNoOfDocuments());
+		getNoOfDocuments().SendKeys("20000");
+		bc.stepInfo("project details added ");
+
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param ClinetName
+	 * @Description filter table using clinet name
+	 */
+	public void filterTByClientName(String ClinetName) {
+	 	driver.waitForPageToBeReady();
+	 	bc.waitForElement(getClinetNameInputBox());
+	 	getClinetNameInputBox().SendKeys(ClinetName);
+	 	 
+	 	bc.waitForElement(getProjectFilterButton());
+	 	bc.waitTillElemetToBeClickable(getProjectFilterButton());
+	 	getProjectFilterButton().waitAndClick(5);
+	 	driver.waitForPageToBeReady();
+	 	bc.stepInfo(ClinetName+" clinet name was filtered");
+	 	
+   }
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description clear filters in project table
+	 */
+	public void clearFilter() {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSearchProjectName());
+		getSearchProjectName().Clear();
+		bc.waitForElement(getClinetNameInputBox());
+		getClinetNameInputBox().Clear();
+		bc.waitForElement(getProjectFilterButton());
+		getProjectFilterButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("filters are cleared");
+	}
+
 
 }
