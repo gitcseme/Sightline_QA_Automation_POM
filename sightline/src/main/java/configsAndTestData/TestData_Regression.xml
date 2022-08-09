@@ -337,6 +337,8 @@
 	<collectionDataHeader6>Date Range / Keyword Filter</collectionDataHeader6>
 	<collectionIdHeader>Collection Id</collectionIdHeader>
 	<collectionStatusHeader>Collection Status</collectionStatusHeader>
+	<expectedDateInput>2019/08/05</expectedDateInput>
+	<expectedToDateInput>2022/08/08</expectedToDateInput>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

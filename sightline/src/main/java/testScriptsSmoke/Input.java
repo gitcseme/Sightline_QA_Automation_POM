@@ -459,6 +459,8 @@ public class Input {
 	public static String collectionDataHeader6;
 	public static String collectionIdHeader;
 	public static String collectionStatusHeader;
+	public static String expectedDateInput;
+	public static String expectedToDateInput;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1371,6 +1373,8 @@ public class Input {
 		collectionDataHeader6 = testData.getCollectionDataHeader6();
 		collectionIdHeader = testData.getCollectionIdHeader();
 		collectionStatusHeader = testData.getCollectionStatusHeader();
+		expectedDateInput = testData.getExpectedDateInput();
+		expectedToDateInput = testData.getExpectedToDateInput();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

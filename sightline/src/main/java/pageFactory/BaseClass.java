@@ -4182,4 +4182,137 @@ public class BaseClass {
 		}
 		return flag;
 		}
+		
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 8/8/22
+		 * @param comparisionType
+		 * @param expectedDate
+		 * @param actualDate
+		 * @description : date Comparision
+		 */
+		public void dateComparision(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
+
+			// BEFORE comparison
+			if (comparisionType.equalsIgnoreCase("Before")) {
+				printResutInReport(actualDate.before(expectedDate),
+						"actualDate : " + actualDate + " comes before expected date : " + expectedDate,
+						"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
+			}
+
+			// AFTER comparison
+			else if (comparisionType.equalsIgnoreCase("After")) {
+				printResutInReport(actualDate.after(expectedDate),
+						"actualDate : " + actualDate + " comes after expected date : " + expectedDate,
+						"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
+			}
+
+			// ON comparison
+			else if (comparisionType.equalsIgnoreCase("On")) {
+				printResutInReport(actualDate.equals(expectedDate),
+						"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
+						"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate,
+						"Pass");
+			}
+
+			// BETWEEN comparison
+			else if (comparisionType.equalsIgnoreCase("Between")) {
+				if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
+					passedStep("Both dates are equal");
+				} else {
+					printResutInReport(actualDate.before(toDate) && actualDate.after(expectedDate),
+							"Actual date lies between the From " + expectedDate + " and to " + toDate + " range",
+							"Actual date doesn't lies between the From" + expectedDate + " and to " + toDate + " range",
+							"Pass");
+				}
+			}
+		}
+
+		/**
+		 * @author Raghuram.A
+		 * @createdOn : 8/8/22
+		 * @param comparisionType
+		 * @param expectedDate
+		 * @param actualDate
+		 * @description : Date Comparision return
+		 */
+		public Boolean dateComparisionReturn(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
+
+			Boolean result = false;
+
+			// BEFORE comparison
+			if (comparisionType.equalsIgnoreCase("Before")) {
+				if (actualDate.before(expectedDate)) {
+					result = true;
+				}
+			}
+
+			// AFTER comparison
+			else if (comparisionType.equalsIgnoreCase("After")) {
+				if (actualDate.after(expectedDate)) {
+					result = true;
+				}
+			}
+
+			// ON comparison
+			else if (comparisionType.equalsIgnoreCase("On")) {
+				if (actualDate.equals(expectedDate)) {
+					result = true;
+				}
+			}
+
+			// BETWEEN comparison
+			else if (comparisionType.equalsIgnoreCase("Between")) {
+
+				if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
+					result = true;
+				} else if (actualDate.before(toDate) && actualDate.after(expectedDate)) {
+					result = true;
+				}
+			}
+			return result;
+		}
+
+		/**
+		 * @author Raghuram.A
+		 * @param comparisionType
+		 * @param actualDate
+		 * @param expectedDate
+		 * @param toDate
+		 * @param status
+		 * @description : date Comparision Message
+		 */
+		public void dateComparisonMsg(String comparisionType, String actualDate, String expectedDate, String toDate,
+				Boolean status) {
+			// BEFORE comparison
+			if (comparisionType.equalsIgnoreCase("Before")) {
+				printResutInReport(status,
+						"actualDate : " + actualDate + " comes before expected date : " + expectedDate,
+						"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
+			}
+
+			// AFTER comparison
+			else if (comparisionType.equalsIgnoreCase("After")) {
+				printResutInReport(status,
+						"actualDate : " + actualDate + " comes after expected date : " + expectedDate,
+						"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
+			}
+
+			// ON comparison
+			else if (comparisionType.equalsIgnoreCase("On")) {
+				printResutInReport(status,
+						"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
+						"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate,
+						"Pass");
+			}
+
+			// BETWEEN comparison
+			else if (comparisionType.equalsIgnoreCase("Between")) {
+				printResutInReport(status,
+						"Actual date lies between the From " + expectedDate + " and to " + toDate + " range",
+						"Actual date doesn't lies between the From" + expectedDate + " and to " + toDate + " range",
+						"Pass");
+			}
+		}
+		
 }
