@@ -768,7 +768,7 @@ public class ProductionPage {
 	}
 
 	public Element getSaveSet() {
-		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']");
+		return driver.FindElementByXPath("//button[text()='Save']");
 	}
 
 	public Element getCancelSet() {
@@ -894,26 +894,36 @@ public class ProductionPage {
 
 	// added by sowndariya
 	
-	public Element btnBackToSource(){
+	public ElementCollection getAllNativeFileTypes() {
+		return driver.FindElementsByXPath("//tbody[@id='tblNativeFileGroup']//tr//td//input");
+	}
+
+	public Element countOfNumberOfNative() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number of Natives: ')]//following-sibling::label");
+	}
+
+	public Element btnBackToSource() {
 		return driver.FindElementByXPath("//div[@id='criteria']//a[text()='Back to Source']");
 	}
-	
-	public Element countOfNumberOfMP3(){
+
+	public Element countOfNumberOfMP3() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number of MP3 Files: ')]//following-sibling::label");
 	}
-	
-	public Element productionSetRadioBtn(){
-		return driver.FindElementByXPath("//div[@class='ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable']//input[@id='IsProductionSet']//parent::label//i");
+
+	public Element productionSetRadioBtn() {
+		return driver.FindElementByXPath(
+				"//div[@class='ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable']//input[@id='IsProductionSet']//parent::label//i");
 	}
-	
+
 	public Element selectSecurityGroup(String securityGroup) {
-		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='"+securityGroup+"']");
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='" + securityGroup + "']");
 	}
-	
+
 	public Element getProductionAndExportHeader() {
-		return driver.FindElementByXPath("//div[@id='content']//h1[contains(normalize-space(),'Productions and Exports')]");
+		return driver
+				.FindElementByXPath("//div[@id='content']//h1[contains(normalize-space(),'Productions and Exports')]");
 	}
-	
+
 	public Element getInProgressStatus() {
 		return driver.FindElementByXPath("//button[text()='In Progress']");
 	}
@@ -1190,7 +1200,7 @@ public class ProductionPage {
 	}
 
 	public Element numberingSortingInTemplate() {
-		return driver.FindElementByXPath("//span[contains(text(),'Numbering & Sorting')]");
+		return driver.FindElementByXPath("//span[contains(text(),'Numbering and Sorting')]");
 	}
 
 	public Element productionComponentsInTemplate() {
@@ -1359,7 +1369,6 @@ public class ProductionPage {
 	public Element getBtnMarkIncomplete() {
 		return driver.FindElementById("btnDocumentsSelectionMarkInComplete");
 	}
-
 
 	public Element getprod_Action_SaveTemplate_Reusable(String productionname) {
 		return driver.FindElementByXPath("//a[@title='" + productionname + "']/..//a[contains(.,'Save as Template')]");
@@ -3208,13 +3217,15 @@ public class ProductionPage {
 	public Element getBurnRedaction_InsertMetaData() {
 		return driver.FindElementByXPath("//div[@id='divRedaction']//a[text()='Insert Metadata Field']");
 	}
+
 	public Element getTranslationLSTToggle(String Value) {
-		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)["+Value+"()]");
+		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//parent::label//i)[" + Value + "()]");
 	}
 
 	public Element getAdvancedArrow(String Value) {
-		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])["+Value+"()]");
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[" + Value + "()]");
 	}
+
 	
 	public Element getDeletOption(String ProductionName) {
 		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Delete']");
@@ -3235,6 +3246,7 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[contains(@value,'"+FileType+"')]/..//i");
 	}
 	
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -6790,7 +6802,7 @@ public class ProductionPage {
 
 		driver.scrollingToBottomofAPage();
 
-		//excluding families
+		// excluding families
 		base.waitForElement(getIncludeFamilies());
 		getIncludeFamilies().Click();
 
@@ -8310,26 +8322,28 @@ public class ProductionPage {
 	 */
 	public void CreateProductionSets(final String prodsetName) throws InterruptedException {
 
-
 		base.waitForElement(getCreateProductionSet());
 		getCreateProductionSet().waitAndClick(10);
 
 		base.waitForElement(getSetName());
 		getSetName().SendKeys(prodsetName);
-		
+
 		base.waitForElement(productionSetRadioBtn());
+		String getCssValue = productionSetRadioBtn().GetCssValue("background-color");
+		System.out.println(getCssValue);
+
 		productionSetRadioBtn().waitAndClick(10);
-		
+		driver.waitForPageToBeReady();
+
 		base.waitForElement(getSaveSet());
-		getSaveSet().ScrollTo();
 		getSaveSet().waitAndClick(10);
-		
-		BaseClass bc = new BaseClass(driver);
-		bc.VerifySuccessMessage("Production Set Added Successfully");
-		bc.CloseSuccessMsgpopup();
+		base.waitTime(2);
+
+		base.VerifySuccessMessage("Production Set Added Successfully");
 		System.out.println("Verified created production set");
 
 	}
+
 	/**
 	 * @throws InterruptedException
 	 * @authorIndium-Sowndarya.Velraj
@@ -21044,7 +21058,8 @@ public class ProductionPage {
 
 	}
 
-	/**@Author jeevitha
+	/**
+	 * @Author jeevitha
 	 * @Description : returns priv guard textbox value
 	 * @return
 	 */
@@ -21053,14 +21068,14 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		List<String> textBoxValue = base.availableListofElements(getPrivGuardTextBox_Value());
 		base.stepInfo("Priv Guard Textbox value is : " + textBoxValue);
-		
+
 		return textBoxValue;
 	}
-	
+
 	/**
-	 * @author Brundha.T Date:8/04/2022 
-	 * Description:Navigating to production home  page
-	 *        
+	 * @author Brundha.T Date:8/04/2022 Description:Navigating to production home
+	 *         page
+	 * 
 	 */
 	public void navigatingToProductionHomePage() {
 		base.waitTime(1);
@@ -21071,8 +21086,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Brundha.T Date:8/04/2022 
-	 * Description:Filling basic info page
+	 * @author Brundha.T Date:8/04/2022 Description:Filling basic info page
 	 */
 	public void fillingBasicInfo(String productionname) {
 		getProductionName().Clear();
@@ -21081,7 +21095,7 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Brundha.T  Date:8/04/2022
+	 * @author Brundha.T Date:8/04/2022
 	 * @param ele
 	 * @param ActualColor Description: Method to verify toggle
 	 */
@@ -21099,10 +21113,10 @@ public class ProductionPage {
 	}
 
 	/**
-	 * @author Brundha.T Date:8/04/2022 
+	 * @author Brundha.T Date:8/04/2022
 	 * @param exportname
-	 * @Description:  method selects export set from dropdown and creates a new
-	 *                   export in Production homepage.
+	 * @Description: method selects export set from dropdown and creates a new
+	 *               export in Production homepage.
 	 */
 	public void addANewExportAndSave(String exportname) throws InterruptedException {
 
@@ -21115,7 +21129,7 @@ public class ProductionPage {
 		getBasicInfoMarkComplete().waitAndClick(2);
 		base.stepInfo("New Export is added");
 	}
-	
+
 	/**
 	 * @authorIndium-Sowndarya.Velraj
 	 */

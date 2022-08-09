@@ -164,9 +164,14 @@ public class ProjectFieldsPage {
 		return driver.FindElementByXPath("//*[@id='ProjectFieldsDataTable_paginate']");
 	}
 	
+	//added by sowndarya
+	public Element getIsSearcHelpBtn() {
+		return driver.FindElementByXPath("//label[text()='Is Searchable :']//following::a");
+	}
 	
-	
-	
+	public Element getIsSearcHelpTxt() {
+		return driver.FindElementByXPath("//label[text()='Is Searchable :']//following::a//following::div[@class='popover-content']");
+	}
 
 	// Annotation Layer added successfully
 	public ProjectFieldsPage(Driver driver) {
