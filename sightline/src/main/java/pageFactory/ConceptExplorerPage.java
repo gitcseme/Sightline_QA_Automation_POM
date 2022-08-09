@@ -335,6 +335,9 @@ public class ConceptExplorerPage {
 		return driver.FindElementByXPath(
 				"//div[text()=' Filter by MasterDate:']//..//..//form[@class='smart-form CONCEPTEXPLORER']//i[@class='fa fa-calendar']");
 	}
+	public ElementCollection getActiveFilters() {
+		return driver.FindElementsByXPath("//div[@id='activeFilters']//li");
+	}
 
 	public ConceptExplorerPage(Driver driver) {
 
@@ -748,7 +751,10 @@ public class ConceptExplorerPage {
 
 			// Add to filer Action
 			getAddToFilter().waitAndClick(20);
-			base.stepInfo("Filters Applied.");
+			driver.waitForPageToBeReady();
+			List<String> activeFilters = base.getAvailableListofElements(getActiveFilters());
+			base.stepInfo("Applied Filters are "+activeFilters.toString());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Error in Applying filter");
@@ -1074,4 +1080,130 @@ public class ConceptExplorerPage {
 			docList.checkMaseterDateAsExpected(masterDateValues, expectedDateInput, toDateIp, condition, "yyyy/MM/dd");
 		}
 	}
+	
+	/**
+	 * @author jayanthi
+	 * @Description : Perform Add to cart
+	 * @param CountOfTileToBeAdded
+	 */
+	public String addMultipleTilesToCart(int CountOfTileToBeAdded) {
+		String[] arrOfStr = null;
+		String aggregatedDocCount = null;
+		driver.waitForPageToBeReady();
+		if (getNoResultData().isElementAvailable(5)) {
+			base.failedStep("No results displayed[no tiles]");
+		} else {
+			for (int i = 1; i <= CountOfTileToBeAdded; i++) {
+
+				getDataToAddInCart(CountOfTileToBeAdded).waitAndClick(10);
+
+			}
+			// Segregating total docs count from the display
+			String totalSelectedDocCount = getTotalSelectedDocCount().getText();
+			arrOfStr = totalSelectedDocCount.split(" ");
+			aggregatedDocCount = arrOfStr[arrOfStr.length - 3];
+			base.stepInfo("Total Doc count added to cart : " + aggregatedDocCount);
+		}
+		return aggregatedDocCount;
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will verify the Include filter
+	 *         functionality working properly.
+	 * @param metaDataWithTwoData[meta data for which two datas are applied in
+	 *                                 filter]
+	 * @param metaDataWithOneData[meta data for which one datas are applied in
+	 *                                 filter]
+	 * @param metaData1[               data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData_1[              data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData[                data for which one data is applied in one
+	 *                                 meta data filter]
+	 */
+	public void verifyIcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
+			String metaData1, String metaData_1, String metaData) {
+		boolean status = false;
+		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
+			if ((metaDataWithTwoData.get(i).contains(metaData_1)) || (metaDataWithTwoData.get(i).contains(metaData1))) {
+				status = true;
+
+				if ((metaDataWithOneData.get(i).contains(metaData)) && status) {
+
+					continue;
+				} else {
+					base.failedStep("Meta Data are not filtered as expected.");
+				}
+
+			} else {
+				base.failedStep("Meta Data are not filtered as expected.");
+
+			}
+		}
+
+		base.passedStep(
+				"**After validating  the Include apllied filters from Concpet explorer Tiles via Doc List We observed follwing things**");
+		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
+
+		base.passedStep("2. Multiple filters should be considered as AND operator.");
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan This method will verify the Exclude filter
+	 *         functionality working properly.
+	 * @param metaDataWithTwoData[meta data for which two datas are applied in
+	 *                                 filter]
+	 * @param metaDataWithOneData[meta data for which one datas are applied in
+	 *                                 filter]
+	 * @param metaData1[               data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData_1[              data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData[                data for which one data is applied in one
+	 *                                 meta data filter]
+	 */
+	public void verifyExcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
+			String metaData1, String metaData_1, String metaData) {
+		boolean status = false;
+		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
+			if (!(metaDataWithTwoData.get(i).contains(metaData_1))
+					|| (metaDataWithTwoData.get(i).contains(metaData1))) {
+				status = true;
+				if (!(metaDataWithOneData.get(i).contains(metaData)) && status) {
+					continue;
+				} else {
+					base.failedStep("Meta Data are not filtered as expected.");
+				}
+
+			} else {
+				base.failedStep("Meta Data are not filtered as expected.");
+			}
+		}
+		base.passedStep(
+				"**After validating the apllied Exclude filters from Concpet explorer Tiles via Doc List We observed follwing things**");
+		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
+
+		base.passedStep("2. Multiple filters should be considered as AND operator.");
+	}
+
+	
+	/**
+	 * @author Jayanthi.Ganesan This method will return the apllied active filters
+	 *         and compare the active filters with expected filters list
+	 * @param expFilters
+	 * @return
+	 */
+	public List<String> verifyActiveFilters(List<String> expFilters) {
+
+		List<String> activeFilters = base.getAvailableListofElements(getActiveFilters());
+		if (expFilters == null) {
+			base.stepInfo("Applied Filters are " + activeFilters.toString());
+		}
+		if (expFilters != null)
+			base.listCompareEquals(expFilters, activeFilters,
+					"Applied Active Filters Retained " + activeFilters.toString(),
+					"Applied Active Filters not Retained");
+		return activeFilters;
+	}
+
 }
