@@ -3226,6 +3226,27 @@ public class ProductionPage {
 		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[" + Value + "()]");
 	}
 
+	
+	public Element getDeletOption(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Delete']");
+	}
+
+	public Element TagInTextBox(){
+		return driver.FindElementByXPath("//ul[@id='xEdit']//li/following-sibling::li//span");
+	}
+
+	public ElementCollection getDAT_SourceField() {
+		return driver.FindElementsByXPath("//select[@id='SF_0']//option");
+	}
+	public Element getNativeCheckBoxChecked(String FileType){
+		return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'"+FileType+"')]/..//input");
+	}
+	
+	public Element nativeFileTypeCheckBox(String FileType) {
+		return driver.FindElementByXPath("//input[contains(@value,'"+FileType+"')]/..//i");
+	}
+	
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -20983,7 +21004,7 @@ public class ProductionPage {
 		for (int i = 2; i < purehit; i++) {
 			File imageFile = new File(
 					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tiff");
-			OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
+			OCR_Verification_In_Generated_Tiff_tess4j(imageFile, searchString);
 		}
 
 	}
