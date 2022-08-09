@@ -533,6 +533,18 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//button[@id='btnUnrelease']");
 	}
 
+	public Element getDocExplorer_NewFolder() {
+		return driver.FindElementById("tabNew");
+	}
+
+	public Element getBulkFolder_SelectAllFolder() {
+		return driver.FindElementByXPath("//div[@id='FolderGroupList']//a[text()='All Folders']");
+	}
+
+	public Element getDocExplorer_NewFolderName() {
+		return driver.FindElementById("txtFolderName");
+	}
+
 	public DocExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -2826,6 +2838,87 @@ public class DocExplorerPage {
 
 		System.out.println("performing bulk release");
 		UtilityLog.info("performing bulk release");
+
+	}
+	
+	public void newBulkFolderExisting(String folderName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkFolder());
+		getBulkFolder().waitAndClick(5);
+		System.out.println("Popup is displayed");
+
+		bc.waitForElement(getDocExplorer_NewFolder());
+		getDocExplorer_NewFolder().waitAndClick(5);
+
+		bc.waitForElement(getBulkFolder_SelectAllFolder());
+		getBulkFolder_SelectAllFolder().waitAndClick(5);
+
+		bc.waitForElement(getDocExplorer_NewFolderName());
+		getDocExplorer_NewFolderName().SendKeys(folderName);
+
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getContinueButton());
+		getContinueButton().Click();
+		System.out.println("Clicked continue");
+
+		driver.waitForPageToBeReady();
+
+		bc.waitForElement(getFinalizeButton());
+
+		getFinalizeButton().Click();
+		driver.Manage().window().maximize();
+		bc.VerifySuccessMessage("Records saved successfully");
+	}
+
+	public void bulkFolderExistingInDocExplorer(String folderName) throws InterruptedException {
+		bc = new BaseClass(driver);
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_SelectAllDocs().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_SelectAllDocs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return doclist.getPopUpOkBtn().Visible();
+			}
+		}), Input.wait30);
+		doclist.getPopUpOkBtn().Click();
+
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkFolder());
+		getBulkFolder().waitAndClick(5);
+		System.out.println("Popup is displayed");
+
+		if (getBulkFolderCheckBox(folderName).isDisplayed()) {
+			bc.passedStep("Created Folder Is Displayed");
+		} else {
+			bc.failedStep("Created Folder Is not Displayed");
+		}
 
 	}
 

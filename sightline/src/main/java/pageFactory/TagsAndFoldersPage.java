@@ -2767,5 +2767,130 @@ public class TagsAndFoldersPage {
 		}
 	}
 
+	/**
+	 * @author Vijaya.Rani date: 09/08/22 Modified date: NA Modified by:
+	 *        
+	 */
+	public void createTagGroupAndCancel(String securityGroup, String tagGroupName,
+			Boolean additionalValue) {
+
+		selectActionArrow("New Tag Group");
+
+		if (getNewTagGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+			base.getCancelbutton().waitAndClick(3);
+		}
+		base.passedStep("Tag Group is not Created");
+
+	}
+	
+	public void createFolderGroupAndCancel(String securityGroup, String folderGroupName,
+			Boolean additionalValue) {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(3); // To handle abnormal loading
+		driver.waitForPageToBeReady();
+		getNewFOlderGroupAction().waitAndClick(5);
+
+		if (getNewFolderGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewFolderGroupInputTextBox().SendKeys(folderGroupName);
+			base.getCancelbutton().waitAndClick(3);
+		}
+		base.passedStep("Folder Group is not Created");
+
+	}
+	
+	public void createDuplicateTagGroup(String securityGroup, String tagGroupName, String verifyNotification,
+			Boolean additionalValue) {
+
+		selectActionArrow("New Tag Group");
+
+		if (getNewTagGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+			getNewTagGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				base.CloseSuccessMsgpopup();
+				base.VerifyErrorMessage("80001000001 : An object with same name already exists.");
+				base.CloseSuccessMsgpopup();
+			}
+		}
+
+	}
+	
+	public void createDuplicateFolderGroup(String securityGroup, String selectFolderName, 
+			String verifyNotification, Boolean additionalValue) {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitTime(3); // To handle abnormal loading
+		driver.waitForPageToBeReady();
+		getNewFOlderGroupAction().waitAndClick(5);
+
+		if (getNewFolderGroupPopup().isElementAvailable(2)) {
+			System.out.println("Create new tag group pop-up opened");
+
+			getNewFolderGroupInputTextBox().SendKeys(selectFolderName);
+			getNewFolderGroupSaveBtn().waitAndClick(3);
+
+			if (verifyNotification.equalsIgnoreCase("Failure-Error")) {
+				base.CloseSuccessMsgpopup();
+				base.VerifyErrorMessage("80001000001 : An object with same name already exists.");
+				base.CloseSuccessMsgpopup();
+			}
+		}
+			
+
+	}
+	public void deleteAllTagsGroupsClickNo(String tagName) {
+		base.waitForElement(getTagsTab());
+		getTagsTab().waitAndClick(5);
+		List<String> elementNames = new ArrayList<>();
+		elementNames = base.availableListofElements(getAllTagsOrFolder(tagName));
+		System.out.println(elementNames.size());
+		System.out.println(elementNames);
+		for (int i = 1; i <= elementNames.size(); i++) {
+			driver.scrollingToElementofAPage(getTagOrFolder(tagName));
+			base.waitTillElemetToBeClickable(getTagOrFolder(tagName));
+			getTagOrFolder(tagName).waitAndClick(5);
+			System.out.println(getTagOrFolder(tagName).GetAttribute("class"));
+			if (getTagOrFolder(tagName).GetAttribute("class").contains("jstree-clicked")) {
+				driver.scrollPageToTop();
+				base.waitForElement(getTagActionDropDownArrow());
+				getTagActionDropDownArrow().waitAndClick(5);
+				base.waitForElement(getDeleteTag());
+				getDeleteTag().waitAndClick(5);
+				base.getNOBtn().waitAndClick(5);
+				
+			}
+		}
+	}
+	
+	public void deleteAllFolderGroupClickNo(String folderName) {
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		for (int i = 1; i <= getAllTagsOrFolder(folderName).size(); i++) {
+			base.waitTillElemetToBeClickable(getTagOrFolder(folderName));
+			getTagOrFolder(folderName).waitAndClick(5);
+			if (getTagOrFolder(folderName).GetAttribute("class").contains("jstree-clicked")) {
+				driver.scrollPageToTop();
+				base.waitForElement(getFolderActionDropDownArrow());
+				getFolderActionDropDownArrow().waitAndClick(5);
+				base.waitForElement(getDeleteFolder());
+				getDeleteFolder().waitAndClick(5);
+				base.waitForElement(base.getYesBtn());
+				base.getNOBtn().waitAndClick(5);
+			}
+		}
+	}
 
 }
