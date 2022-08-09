@@ -166,7 +166,7 @@ public class TagsAndFolder_Regression {
 		baseClass.stepInfo("To verify that RMU user can create, delete, modify new Folder Group.");
 		sessionSearch = new SessionSearch(driver);
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		String folderGroup = "Folder";
+		String folderGroup = "FolderGroup";
 		String renamedFolder = "renamedFolder" + Utility.dynamicNameAppender();
 
 		// Login As RMU
