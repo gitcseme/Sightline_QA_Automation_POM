@@ -20990,7 +20990,7 @@ public class ProductionPage {
 		for (int i = 2; i < purehit; i++) {
 			File imageFile = new File(
 					Input.fileDownloadLocation + prefixID + "(" + i + ")" + suffixID + ".000" + subBates + ".tiff");
-			OCR_Verification_In_Generated_Tiff_tess4j(imageFile, Input.searchString4);
+			OCR_Verification_In_Generated_Tiff_tess4j(imageFile, searchString);
 		}
 
 	}
