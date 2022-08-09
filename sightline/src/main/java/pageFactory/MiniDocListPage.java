@@ -1534,19 +1534,19 @@ public class MiniDocListPage {
 	 */
 	public void verifyOptimizedSortOrderCase() throws InterruptedException {
 		// Assignment Creation
-//		String assignmentNameToChoose = assignmentCreationwithOptimizedTab();
-//		baseClass.stepInfo("Created Assignment " + assignmentNameToChoose);
-//
-//		driver.waitForPageToBeReady();
-//		baseClass.waitForElement(getDashBoardLink());
-//		getDashBoardLink().Click();
-//		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
-//
-//		baseClass.stepInfo("Header Fields Before Action");
-//		driver.waitForPageToBeReady();
-//		configureMiniDocList();
-//
-//		driver.waitForPageToBeReady();
+		String assignmentNameToChoose = assignmentCreationwithOptimizedTab();
+		baseClass.stepInfo("Created Assignment " + assignmentNameToChoose);
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getDashBoardLink());
+		getDashBoardLink().Click();
+		chooseAnAssignmentFromDashBoard(assignmentNameToChoose);
+
+		baseClass.stepInfo("Header Fields Before Action");
+		driver.waitForPageToBeReady();
+		configureMiniDocList();
+
+		driver.waitForPageToBeReady();
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().Click();
 
