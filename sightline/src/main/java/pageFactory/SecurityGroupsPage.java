@@ -442,6 +442,10 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//*[@onclick='FieldRightShift();']");
 	}
 	
+	public ElementCollection getSgDefaultTag() {
+		return driver.FindElementsByXPath("//div[@id='tagsJSTree_Selected']//a[contains(text(),'Default Tags')]");
+	}
+	
 	
 	public SecurityGroupsPage(Driver driver) {
 
