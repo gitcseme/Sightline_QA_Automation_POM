@@ -281,13 +281,14 @@ public class Assignments_Regression_2_2 {
 		String ActualDocs_value = agnmt.getTotalDocsCountInReviewerDashboard(assignmentName).getText().trim();
 		String TotslDocs = ActualDocs_value.substring(7, 9).trim();
 		sa.assertEquals(expDocCount, TotslDocs);
+		sa.assertAll();
 		baseClass.passedStep(
 				"Successfully Verified That - numbers set in \"Allowance of drawn document to:\" by RMU for Assignment, "
 						+ "that number of documents can be drawn from General Pool by RU on clicking \"Draw from Pool");
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName);
-		sa.assertAll();
+		
 		loginPage.logout();
 
 	}
@@ -323,6 +324,7 @@ public class Assignments_Regression_2_2 {
 
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		agnmt.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
 		for (int i = 1; i <= Integer.parseInt(docDistriCount); i++) {
 			docView.completeDocument(Input.randomText);
 		}
@@ -367,7 +369,7 @@ public class Assignments_Regression_2_2 {
 		agnmt.createAssignment(assignmentName1, Input.codeFormName);
 		agnmt.createAssignment(assignmentName2, Input.codeFormName);
 
-		search.basicContentSearch(Input.searchStringStar);
+		int purehit = search.basicContentSearch(Input.searchStringStar);
 		baseClass.waitForElement(search.getDocsMetYourCriteriaLabel());
 		baseClass.dragAndDrop(search.getDocsMetYourCriteriaLabel(), search.getActionPad());
 		driver.waitForPageToBeReady();
@@ -381,6 +383,7 @@ public class Assignments_Regression_2_2 {
 		baseClass.stepInfo(assignmentName2 + "Selected in Assign Popup");
 
 		agnmt.VerifySampleMethodDDOptions();
+		baseClass.waitTillTextToPresent(agnmt.getStartingCount(), String.valueOf(purehit));
 		baseClass.waitForElement(agnmt.getsampleMethod());
 		agnmt.getsampleMethod().selectFromDropdown().selectByVisibleText("Count of Selected Docs");
 		baseClass.stepInfo("Count of Selected Docs Option Selected in SampleMethod DD");
@@ -412,12 +415,11 @@ public class Assignments_Regression_2_2 {
 		sa.assertEquals(noToAssign, agnmt.getEditAggn_Distribute_Totaldoc().getText());
 		baseClass.stepInfo("Distribute Documents is displayed and Total Documents is displayed as 1000"
 				+ agnmt.getEditAggn_Distribute_Totaldoc().getText());
+		sa.assertAll();
 		baseClass.passedStep("verified - that Total Documents displayed on Distribute Documents are correct "
 				+ "if one/multiple assignments are selected while assigning the Assignments");
 		agnmt.deleteAssgnmntUsingPagination(assignmentName1);
 		agnmt.deleteAssgnmntUsingPagination(assignmentName2);
-		sa.assertAll();
-
 		loginPage.logout();
 
 	}
