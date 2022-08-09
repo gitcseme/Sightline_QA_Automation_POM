@@ -184,6 +184,10 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("Step 5 : Verifying that no duplication of selected fields listed");
 		// main method for RPMXCON-51890
 		miniDocListpage.verifyDuplicatefieldsInBothtabs();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+
 
 		loginPage.logout();
 
@@ -273,7 +277,9 @@ public class DocView_MiniDocList_DataProvider {
 
 //		verify header value
 		reusableDocViewPage.defaultHeaderValue();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
 
@@ -304,10 +310,12 @@ public class DocView_MiniDocList_DataProvider {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-
 		driver.waitForPageToBeReady();
 
 		miniDocListpage.fromBasicSearchToSelectWebField();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		loginPage.logout();
 	}
@@ -367,6 +375,8 @@ public class DocView_MiniDocList_DataProvider {
 
 			miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
 			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 		} else if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
 				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
 				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
@@ -376,6 +386,8 @@ public class DocView_MiniDocList_DataProvider {
 			sessionSearch.ViewInDocView();
 			miniDocListpage.afterImpersonateWebFieldsSelectionManualMode();
 			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 		}
 
 		driver.waitForPageToBeReady();
@@ -410,6 +422,9 @@ public class DocView_MiniDocList_DataProvider {
 		driver.waitForPageToBeReady();
 
 		miniDocListpage.fromSavedSearchToSelectWebField();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		loginPage.logout();
 	}
@@ -435,9 +450,10 @@ public class DocView_MiniDocList_DataProvider {
 //		Session search to docview
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
-
 		miniDocListpage.configureMiniDocListPopupOpen();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 	}
 
@@ -464,6 +480,9 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.removeCodeSameAsChildWindow();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		loginPage.logout();
 	}
@@ -516,6 +535,8 @@ public class DocView_MiniDocList_DataProvider {
 			sessionSearch.ViewInDocView();
 			miniDocListpage.removeCodeSameAsAfterImpersonate();
 			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 		}
 
 		driver.waitForPageToBeReady();
@@ -575,8 +596,10 @@ public class DocView_MiniDocList_DataProvider {
 			assignmentPage.SelectAssignmentByReviewer(assignmentNameToChoose);
 			baseClass.stepInfo("User on the doc view after selecting the assignment");
 
+			driver.Navigate().refresh();
 			miniDocListpage.afterImpersonateWebFieldsSelectionOptimizedMode();
-			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 		} else if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
 				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
 				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
@@ -585,7 +608,6 @@ public class DocView_MiniDocList_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString2);
 			sessionSearch.ViewInDocView();
 			miniDocListpage.afterImpersonateWebFieldsSelectionOptimizedMode();
-			driver.waitForPageToBeReady();
 		}
 
 		driver.waitForPageToBeReady();
@@ -614,6 +636,8 @@ public class DocView_MiniDocList_DataProvider {
 
 		miniDocListpage.removingFieldsInPopUpWindow();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 	}
 
@@ -640,6 +664,8 @@ public class DocView_MiniDocList_DataProvider {
 
 		miniDocListpage.selectedFieldInChildWindow();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 	}
 
@@ -687,6 +713,9 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		miniDocListpage.customToOptimizedSortDefaultDisplayAfterRemoval();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -729,6 +758,9 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		miniDocListpage.customToOptimizedSortDefaultDisplay();
 		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -752,6 +784,7 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.OptimizedSortToCustomDefaultDisplay();
+		driver.waitForPageToBeReady();
 
 		driver.waitForPageToBeReady();
 		loginPage.logout();
@@ -777,9 +810,7 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 
-		miniDocListpage.verifyDefaultValueInOptimizedSort();
-
-		driver.waitForPageToBeReady();
+		miniDocListpage.verifyDefaultValueInOptimizedSort();	
 		loginPage.logout();
 	}
 
@@ -804,7 +835,9 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.ViewInDocView();
 
 		miniDocListpage.currentSortOrderShouldBeDisplayed();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
@@ -835,7 +868,9 @@ public class DocView_MiniDocList_DataProvider {
 
 		sessionSearch.ViewInDocView();
 		miniDocListpage.againDocviewToViewNewChanges();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
@@ -862,6 +897,9 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.ViewInDocView();
 
 		docViewPage.verifyAllTabsForDocument();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 
@@ -957,7 +995,9 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("User navigated to docview page from saved search page");
 
 		miniDocListpage.savedSearchToSortSequence();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
@@ -987,7 +1027,9 @@ public class DocView_MiniDocList_DataProvider {
 		baseClass.stepInfo("User navigated to docview page from basic page");
 
 		miniDocListpage.savedSearchToSortSequence();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
@@ -1047,6 +1089,9 @@ public class DocView_MiniDocList_DataProvider {
 
 			miniDocListpage.savedSearchToSortSequence();
 			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
+			driver.waitForPageToBeReady();
 		} else if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
 				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
 				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
@@ -1055,6 +1100,9 @@ public class DocView_MiniDocList_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString2);
 			sessionSearch.ViewInDocView();
 			miniDocListpage.savedSearchToSortSequence();
+			driver.waitForPageToBeReady();
+			driver.Navigate().refresh();
+			miniDocListpage.removingFieldsAndDragnDropDefault();
 			driver.waitForPageToBeReady();
 		}
 
@@ -1118,7 +1166,9 @@ public class DocView_MiniDocList_DataProvider {
 
 //		Scroll down with less number of document
 		docViewPage.verifyScrollingDocumentLess();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
@@ -1145,6 +1195,9 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.ViewInDocView();
 
 		docViewPage.verifyTextTabsForDocument();
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		driver.waitForPageToBeReady();
 		loginPage.logout();
 
@@ -1240,7 +1293,9 @@ public class DocView_MiniDocList_DataProvider {
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-
+		driver.waitForPageToBeReady();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo(
 				"Step 3: Drag the fields from available fields to selected fields and click 'Save Configuration'");
 		miniDocListPage.verifyDefaultValueInOptimizedSort();
@@ -1254,7 +1309,6 @@ public class DocView_MiniDocList_DataProvider {
 		docViewPage.defaultHeaderValue(2);
 		baseClass.waitForElement(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName));
 		softAssertion.assertTrue(miniDocListPage.getDocView_MiniDoclist_Header_Webfields(fieldName).isDisplayed());
-		
 		baseClass.passedStep("Mini doc list is displayed with the selected fields for Set Document Sorting");
 		softAssertion.assertAll();
 		loginPage.logout();
@@ -1300,7 +1354,8 @@ public class DocView_MiniDocList_DataProvider {
 		// validate checkmark icon and code same as last button
 		miniDocListpage.actionOnDocsFromHistoryDropDown(docLimit, sizeofList, docIDlist, true, "", true, false, false,
 				null);
-
+		
+        driver.Navigate().refresh();
 		loginPage.logout();
 
 	}
@@ -1374,6 +1429,8 @@ public class DocView_MiniDocList_DataProvider {
 		// verify fields in manual sort available Tab
 		miniDocListpage.verifyWhetherFieldAvailableInTab(fieldValue, true);
 		miniDocListpage.getDocview_MiniDoc_GearIconCancelBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 
 	}
@@ -1470,6 +1527,7 @@ public class DocView_MiniDocList_DataProvider {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.saveSearch(savedSearchs);
 		sessionSearch.ViewInDocView();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		baseClass.stepInfo("User navigated to docview page from basic search page");
 		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
 
@@ -1495,6 +1553,7 @@ public class DocView_MiniDocList_DataProvider {
 		}
 		baseClass.stepInfo("User navigated to docview page from SavedSearch page");
 		miniDocListpage.verifyOptimizedSortIsSelected(); // validation part
+		loginPage.logout();
 		
 	}
 
@@ -1519,7 +1578,6 @@ public class DocView_MiniDocList_DataProvider {
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
-		driver.waitForPageToBeReady();
 
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(docViewPage.getDocView_Analytics_liDocumentConceptualSimilarab());
@@ -1554,7 +1612,7 @@ public class DocView_MiniDocList_DataProvider {
 
 		driver.waitForPageToBeReady();
 		docViewPage.listOfAvailableDatasToCheck(headerList2, headerList1, true);
-		
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 
 	}
@@ -1636,6 +1694,10 @@ public class DocView_MiniDocList_DataProvider {
 		savedSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
 		savedSearch.savedSearch_SearchandSelect(savedSearchs, "Yes");
 		savedSearch.docViewFromSS("View in DocView");
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		baseClass.waitTime(3);
 		driver.waitForPageToBeReady();
 		if(driver.getUrl().equals(expectedURL)) {
@@ -1803,7 +1865,10 @@ public class DocView_MiniDocList_DataProvider {
 		// validate using docid and scroll bar
 		driver.waitForPageToBeReady();
 		docViewPage.navigationOptionValidation(size);
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
+		driver.waitForPageToBeReady();
 		// logout
 		loginPage.logout();
 
@@ -2096,7 +2161,9 @@ public class DocView_MiniDocList_DataProvider {
 
 //		verify header value as Family Relationship
 		reusableDocViewPage.defaultHeaderValue();
-
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		miniDocListpage.removingFieldsAndDragnDropDefault();
 		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
 
@@ -2129,10 +2196,9 @@ public class DocView_MiniDocList_DataProvider {
 		String parentWindow=docViewPage.switchTochildWindow();
 		reusableDocViewPage.defaultHeaderValue();
 		docViewPage.childWindowToParentWindowSwitching(parentWindow);
-
-		loginPage.logout();
 		baseClass.stepInfo("Successfully logout Reviewer '" +userName+ "'");
-
+		loginPage.logout();
+		
 	}
 	
 	/**
@@ -2248,30 +2314,30 @@ public class DocView_MiniDocList_DataProvider {
 	}
 	
 	
-	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		Reporter.setCurrentTestResult(result);
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-		}
-		try {
-			loginPage.quitBrowser();
-		} catch (Exception e) {
-			loginPage.quitBrowser();
-		}
+@AfterMethod(alwaysRun = true)
+public void takeScreenShot(ITestResult result) {
+ if(ITestResult.FAILURE==result.getStatus()){
+	Utility bc = new Utility(driver);
+	bc.screenShot(result);
+ System.out.println("Executed :" + result.getMethod().getMethodName());
+ }
+ try {
+		loginPage.quitBrowser();
+	} catch (Exception e) {
+		loginPage.quitBrowser();
 	}
 
-	@AfterClass(alwaysRun = true)
+}
 
-	public void close() {
-		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
-		try {
-//			loginPage.clearBrowserCache();
-		} catch (Exception e) {
-			// no session avilable
+@AfterClass(alwaysRun = true)
+public void close(){
+	try{ 
+		loginPage.logout();
+
+		}finally {
+			loginPage.closeBrowser();
 
 		}
-	}
-
+	
+}
 }
