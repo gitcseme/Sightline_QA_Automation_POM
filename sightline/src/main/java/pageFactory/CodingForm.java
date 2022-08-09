@@ -1443,6 +1443,38 @@ public class CodingForm {
 		return driver.FindElementById("btnCodingFormCancel");
 	}
 
+	public ElementCollection sortOrderHamBurger() {
+		return driver.FindElementsByXPath("//ol[@id='sortedCodingformList']//span");
+	}
+	public Element getHamBurgerDrag(String drag) {
+		return driver.FindElementByXPath("//li[@value='"+drag+"']//div[@class='dd-handle ddcf-handle']");
+	}
+	public Element getHamBurgerDrop(String drop) {
+		return driver.FindElementByXPath("//li[@value='"+drop+"']//..//div[@class='dd-placeholder'] ");
+	}
+	public Element getErrorMsgMore15CF() {
+		return driver.FindElementByXPath("//p[text()='You cannot add more than 15 coding forms.']");
+	}
+	public Element getPopUpCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkSelectAllCodingform']//..//i//ancestor::th/label");
+	}
+	public Element getVerifyRadioBtn(String CFName) {
+		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
+				+ "']/ancestor::td/following-sibling::td//span/label");
+	}
+	public Element getSetDefaultSG() {
+		return driver.FindElementByXPath("//th[@class='sorting_disabled']/b");
+	}
+	public Element getShowHide() {
+		return driver.FindElementByXPath("//button//span[text()='Show / Hide Columns']");
+	}
+	public Element sortOrderNxtBtn() {
+		return driver.FindElementById("btnSortOrderNext");
+	}
+	public Element getSelectCodeFormRadioBtn(String CFName) {
+		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
+				+ "']/ancestor::td/following-sibling::td//span/label/i");
+	}
 
 	
 	
@@ -5091,7 +5123,7 @@ public List<String> checkingBelow15CFCheckboxForSG() {
 		List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
 		element.get(i).click();
 		// if more than 15 we can able to configure to sg
-		if (count>=15) {
+		if (i==14) {
 			break;
 		}
 	}
@@ -5165,6 +5197,68 @@ public void savingCodingForm() {
 	getSaveCFBtn().waitAndClick(5);
 	base.VerifySuccessMessage("Coding Form Saved successfully");
 	
+}
+/**
+* @author Malayala.Seenivasan
+* @description this method used to check 15 checkbox
+*/
+public List<String> configureBelow15Cf(String CFName) {
+	 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 base.waitForElement(getSetCFButton());
+	 getSetCFButton().ScrollTo();
+	 getSetCFButton().waitAndClick(10);
+	 base.waitForElement(getStep1CfPopUp());
+	 boolean flagPopup1=getStep1CfPopUp().isElementAvailable(2);
+	 base.stepInfo("Step 01 : Add / Remove Coding Forms in this Security Group");
+	 softAssertion.assertTrue(flagPopup1);
+	 int unCheck=getCfUnChecBoxUsingSize().size();
+	 for (int i = 0; i < unCheck; i++) {
+			List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+	 }
+	 int count=getCfChecBoxUsingSize().size();
+	 for (int i = 0; i < count; i++) {
+		List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
+		element.get(i).click();
+	 }
+		base.waitTime(1);
+		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
+		base.waitTime(1);
+		assgnpage.sortOrderNxtBtn().ScrollTo();
+		assgnpage.sortOrderNxtBtn().Click();
+		// if more than 15 we can able to configure to sg
+		if (getErrorMsgMore15CF().isElementAvailable(3)) {
+			base.stepInfo("User can configure only 15 cf for security group");
+		}
+		 this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		 base.waitForElement(getSetCFButton());
+		 getSetCFButton().ScrollTo();
+		 getSetCFButton().waitAndClick(10);
+		 base.waitTime(2);
+		int reCheck=getCfUnChecBoxUsingSize().size();
+		 for (int i = 0; i < reCheck; i++) {
+				List<WebElement> element=getCfUnChecBoxUsingSize().FindWebElements();
+				element.get(i).click();
+		 }
+		 base.waitTime(2);
+		 int recount=getCfChecBoxUsingSize().size();
+		 for (int i = 1; i < recount; i++) {
+			List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
+			element.get(i).click();
+			if (i==15) {
+				break;
+				
+			}
+		 }
+	 List<String> name=new ArrayList<String>();
+	 List<WebElement> element=getAssignedCfName().FindWebElements();
+	 for (WebElement assignedName : element) {
+		 name.add(assignedName.getText().trim().toString());
+	}
+	 softAssertion.assertAll();
+	 return name;
+	
+	 
 }
 }
 
