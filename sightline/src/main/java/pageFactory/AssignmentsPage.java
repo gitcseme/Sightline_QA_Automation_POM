@@ -10575,7 +10575,7 @@ public class AssignmentsPage {
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
 		bc.waitForElement(codingForm.getCodingFormName());
 		codingForm.getCodingFormName().SendKeys(codingFormName);
-	    codingForm.saveCodingForm();
+	    codingForm.savingCodingForm();
 	    driver.waitForPageToBeReady();
 	    TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	    if(type.equalsIgnoreCase("tag")) {
