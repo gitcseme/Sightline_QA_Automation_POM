@@ -1186,7 +1186,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath("//a[text()='" + assignmentName + "']/ancestor::tr/td[7]/a");
+		  return driver.FindElementByXPath("//strong[contains(text(),'"+ assignmentName +"')]/ancestor::td//following-sibling::td[2]//span[3]");
 	}
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
