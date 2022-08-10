@@ -2892,5 +2892,59 @@ public class TagsAndFoldersPage {
 			}
 		}
 	}
+	
+	public void showDocsCountisOFFTags() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getShowDocumentsCountToogle());
+		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
+		if(!base.text("All Tags (").isDisplayed()) {
+			base.passedStep("Documents Count is not Displayed");
+		}else {
+			base.failedStep("Documents Count is Displayed");
+		}
+	}
+	
+	public void showDocsCountisONTags() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getShowDocumentsCountToogle());
+		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
+		getShowDocumentsCountToogle().waitAndClick(5);
+		driver.waitForPageToBeReady();
+         Thread.sleep(10);
+		if(!base.text("All Tags (").isDisplayed()) {
+			base.passedStep("Documents Count is Displayed");
+		}else {
+			base.failedStep("Documents Count is not Displayed");
+		}
+	}
+	
+	public void showDocsCountisOFFFolder() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		base.waitForElement(getShowDocumentsCountToogle());
+		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
+		if(!base.text("All Folders (").isDisplayed()) {
+			base.passedStep("Documents Count is not Displayed");
+		}else {
+			base.failedStep("Documents Count is Displayed");
+		}
+	}
+	
+	public void showDocsCountisONFolder() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFoldersTab());
+		getFoldersTab().waitAndClick(5);
+		base.waitForElement(getShowDocumentsCountToogle());
+		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
+		getShowDocumentsCountToogle().waitAndClick(5);
+		driver.waitForPageToBeReady();
+         Thread.sleep(10);
+		if(!base.text("All Folders (").isDisplayed()) {
+			base.passedStep("Documents Count is Displayed");
+		}else {
+			base.failedStep("Documents Count is not Displayed");
+		}
+	}
 
 }
