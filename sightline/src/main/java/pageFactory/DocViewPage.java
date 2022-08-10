@@ -28475,12 +28475,14 @@ public class DocViewPage {
 			throws InterruptedException, ParseException {
 		// adding redactions
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_RedactionsTab());
 		getDocview_RedactionsTab().waitAndClick(10);
 
 		// Audio Redaction Tag deletion
 		deleteAudioRedactionTag();
 
 		// click on + icon to add redactions
+		base.waitForElement(getDocview_RedactionsTab_Add());
 		getDocview_RedactionsTab_Add().waitAndClick(10);
 		// Get Audio duration start and End time first
 		audioRedactionBasesOnTime(timeOne, timeTwo);
