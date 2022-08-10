@@ -1995,6 +1995,11 @@ public class SessionSearch {
 	public ElementCollection getassign_ExistingAssignments() {
 	    return driver.FindElementsByXPath("//*[@id='jstreeComplete']//a//parent::li");
 	}
+	
+	public Element getSelectSavedSearchResult(String savedSearchResult) {
+		return driver.FindElementByXPath("//a[contains(text(),'"+savedSearchResult+"')]");
+	}
+
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -13091,5 +13096,36 @@ public class SessionSearch {
 		}
 		base.VerifySuccessMessageB("Records saved successfully");
 	}
+	
+	/**
+	 * @author S
+	 * @createdOn : 8/9/22
+	 * @param savedSearchList
+	 * @description : insert Multiple SavedSearch Results In Wp
+	 */
+	public void insertMultipleSavedSearchResultsInWp(List<String>savedSearchList) {
+
+		base.waitForElement(getWorkproductBtn());
+		getWorkproductBtn().Click();
+		base.stepInfo("Switched to Advanced search - Work product");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearchBtn().Visible();
+			}
+		}), Input.wait60);
+		getSavedSearchBtn().Click();
+		driver.scrollingToBottomofAPage();
+		for(String SaveName : savedSearchList) {
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getSelectSavedSearchResult(SaveName).waitAndClick(10);
+		}
+		// added on 16-8-21
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(15);
+		// Click on Search button
+		driver.scrollPageToTop();
+	}
+	
 
 }
