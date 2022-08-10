@@ -715,19 +715,27 @@ public class DomainManagement_Regression {
 		
 		// login as
 		// verify from pa user , user name listed
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.NonDomainProject);
 		baseClass.stepInfo("Login as a sa user :" + Input.pa1userName);
-		baseClass.selectproject(Input.NonDomainProject);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		baseClass.stepInfo("From pa user, taking user list for project admin");
-		List<WebElement> firstName=userManage.getPAUserName(1).FindWebElements();
 		List<String> firstValue=new ArrayList<String>();
-		for (WebElement webElement : firstName) {
-			String assignUser= webElement.getText();
-			System.out.println(assignUser);
-			firstValue.add(assignUser);
+
+		int count = ((userManage.getAssgnPaginationCount().size()) - 2);
+		for (int i = 0; i < count; i++) {
+			driver.waitForPageToBeReady();
+			List<WebElement> firstName=userManage.getPAUserName(1).FindWebElements();
+			for (WebElement webElement : firstName) {
+				String assignUser[]= webElement.getText().split(" ");
+				System.out.println(assignUser);
+				firstValue.add(assignUser[0]);
+			}
+			userManage.getUserListNextButton().isElementAvailable(5);
+			userManage.getUserListNextButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
 		}
-		System.out.println(firstName);
+		
+		System.out.println(firstValue);
 		softAssertion.assertEquals(splitValue.toString(), firstValue.toString());
 		baseClass.passedStep("Who have Non-domain project access displayed in Pa user");
 		softAssertion.assertAll();
