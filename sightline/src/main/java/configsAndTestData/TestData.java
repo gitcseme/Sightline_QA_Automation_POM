@@ -342,6 +342,7 @@ public class TestData {
 	public String collectionStatusHeader;
 	public String expectedDateInput;
 	public String expectedToDateInput;
+	public String searchString10;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;
