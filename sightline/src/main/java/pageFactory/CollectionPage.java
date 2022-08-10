@@ -3,6 +3,7 @@ package pageFactory;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import automationLibrary.Driver;
@@ -242,8 +243,33 @@ public class CollectionPage {
 
 	// added by jeevitha
 
+	public Element getCickedFolder(String folderType) {
+		return driver.FindElementByXPath("//a[contains(@class,'clicked') and text()='" + folderType + "']");
+	}
+
+	public Element getCustodianLabel() {
+		return driver.FindElementByXPath("//a[@id='ancCustodianLabel']");
+	}
+
+	public ElementCollection getCompletedTagOfPopup() {
+		return driver.FindElementsByXPath("//a[text()='Completed']//preceding-sibling::a[@class='label-bold']");
+	}
+
+	public Element getCollectioNameOnPopup(String collectionName) {
+		return driver.FindElementByXPath("//label[contains(text(),'" + collectionName + "')]");
+	}
+
+	public Element getDataSetPopup() {
+		return driver.FindElementByXPath("//div[@class='ui-widget-overlay ui-front']");
+	}
+
+	public Element getEditBtnDataSelection(String custodianMailId) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + custodianMailId + "']//parent::td//following-sibling::td//a[text()='Edit']");
+	}
+
 	public Element getApplyFilterLink() {
-		return driver.FindElementByXPath("//a[@id='ancFilterStart']");
+		return driver.FindElementByXPath("//a[@id='ancFilterLabel']");
 	}
 
 	public Element getEnableFilterStatus() {
@@ -290,6 +316,7 @@ public class CollectionPage {
 	/**
 	 * @Author Jeevitha
 	 * @Description : verify Attributes of Add new soucre Location Popup
+	 *
 	 */
 	public void verifyAddNewSourcePopupAttributes() {
 		String attributeSet[] = { "Data Source Type: *", "Data Source Name: *", "Tenant ID: *", "Application ID: *",
@@ -1088,21 +1115,27 @@ public class CollectionPage {
 	}
 
 	/**
+	 * @return
 	 * @Author Jeevitha
 	 * @Description : add dataset by clicking btn/link and verify new row added in
 	 *              dataset selection table
 	 */
-	public void fillingDatasetSelection(String creationType, String firstName, String lastName,
+	public List<String> fillingDatasetSelection(String creationType, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retryAttempt, String selectedFolder, boolean ApplyFilter, boolean Enable, boolean keyword,
 			String keywords, boolean Save, boolean Confirm) {
 
+		List<String> custodianDetails = new ArrayList<>();
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
 				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
 
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
 				selectedApp, colllectionData, dataName, retryAttempt);
+
+		// custodian Name
+		base.waitForElement(getCustodianIDInputTextField());
+		String selectedcustodianName = getCustodianIDInputTextField().GetAttribute("value");
 
 		// Folder Selection
 		folderToSelect(selectedFolder, true, false);
@@ -1113,34 +1146,191 @@ public class CollectionPage {
 		// click save/cancel and verify row added
 		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
 		if (Save) {
-			getActionBtn("Save").waitAndClick(5);
-			if (getFolderSelectionConfirmation().isElementAvailable(5)) {
-				String actualTxt = getPopupMsg().getText();
-				String passMsg = "Displayed Popup Msg : " + actualTxt;
-				String failMsg = "Belly band msg is not as expected";
-				base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
+			SaveActionInDataSetPopup(Confirm, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
+					selectedFolder, keywords, true, "Dataset added successfully.");
+		}
 
-				if (Confirm) {
-					getConfirmationBtnAction("Confirm").waitAndClick(10);
-					driver.waitForPageToBeReady();
-					base.VerifySuccessMessage("Dataset added successfully.");
-					base.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		custodianDetails.add(selectedcustodianName);
+		custodianDetails.add(dataSetNameGenerated);
+		return custodianDetails;
+	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Added Dataset From Dataset selection Popup and check if
+	 *              it is Retained
+	 */
+	public void verifyAddedDataSetFrmPopup(String custodianMailId, String collectionName,
+			List<String> expectedCustodianDetaisl, String expectedFolderType, boolean ApplyFilter,
+			String expectedFilterStatus) {
+		List<String> custodianDetails = new ArrayList<>();
+
+		String headerList[] = { "Select Custodian", "Select Folders to Collect", "Apply Filter" };
+
+		driver.waitForPageToBeReady();
+		getEditBtnDataSelection(custodianMailId).waitAndClick(10);
+
+		if (getDataSetPopup().isElementAvailable(5)) {
+			base.stepInfo("Dataset Selection Popup is Displayed");
+
+			base.ValidateElement_Presence(getCollectioNameOnPopup(collectionName),
+					"Collection Name is displayed on Popup");
+
+			// verify Completed Tag
+			base.ValidateElementCollection_Presence(getCompletedTagOfPopup(), "Complete Tag ");
+
+			List<String> attributesContainComplete = base.availableListofElements(getCompletedTagOfPopup());
+			Collections.sort(attributesContainComplete);
+			System.out.println(attributesContainComplete);
+			List<String> expectedAttributes = new ArrayList<String>();
+			for (int i = 0; i < headerList.length; i++) {
+				expectedAttributes.add(headerList[i]);
+			}
+			System.out.println(expectedAttributes);
+			boolean status = base.compareListViaContains(attributesContainComplete, expectedAttributes);
+
+			String passMsg = "Complete Tag is Present On : " + attributesContainComplete;
+			String failMsg = "Completed Tag is Not present as Expected";
+			base.printResutInReport(status, passMsg, failMsg, "Pass");
+
+			// verify Custodian Details
+			getCustodianLabel().waitAndClick(10);
+
+			base.waitForElement(getCustodianIDInputTextField());
+			String actualName = getCustodianIDInputTextField().GetAttribute("value");
+			base.waitForElement(getDataSetNameTextFIeld());
+			String actualDatasetName = getDataSetNameTextFIeld().GetAttribute("value");
+			custodianDetails.add(actualName);
+			custodianDetails.add(actualDatasetName);
+
+			String passMsg2 = "Custodian Name & Dataset Name is Retained As expected : " + custodianDetails;
+			String failMsg2 = "Custodian Name & Dataset Name is not Retained";
+			base.listCompareEquals(custodianDetails, expectedCustodianDetaisl, passMsg2, failMsg2);
+
+			// verify Selected folder
+			getFolderabLabel().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.ValidateElement_Presence(getCickedFolder(expectedFolderType),
+					expectedFolderType + " : folder is selected and retained as Expected");
+
+			// Verify Filter status
+			if (ApplyFilter) {
+				verifyApplyFilterStatus(true, expectedFilterStatus);
+				driver.waitForPageToBeReady();
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : click edit and verify added Dataset and can modify any field
+	 */
+	public void editDatasetAndVerify(boolean clickEdit, String collectionEmailId, boolean editCustodianName,
+			String firstName, String collection2ndEmailId, boolean editFolder, boolean validateFolder,
+			String resetFolderType, String SelectFolderType, String expectedFilterStatus, boolean ApplyFilter) {
+		if (clickEdit) {
+			driver.waitForPageToBeReady();
+			getEditBtnDataSelection(collectionEmailId).waitAndClick(10);
+		}
+
+		if (editCustodianName) {
+			base.waitForElement(getCustodianIDInputTextField());
+			getCustodianIDInputTextField().Clear();
+
+			String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false, "");
+		}
+
+		if (editFolder) {
+			// verify Selected folder
+			getFolderabLabel().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			if (validateFolder) {
+				base.ValidateElement_Absence(getCickedFolder(resetFolderType),
+						"The Selected folder is unselected and Reset");
+			}
+			if (getCickedFolder(resetFolderType).isElementAvailable(3)) {
+				getCickedFolder(resetFolderType).waitAndClick(10);
+			}
+			folderToSelect(SelectFolderType, false, null);
+		}
+
+		if (ApplyFilter) {
+			// Apply filter
+			verifyApplyFilterStatus(true, expectedFilterStatus);
+			base.passedStep("Apply Filter Tab is Reset");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Apply Filter Status
+	 * @param applyFilter
+	 * @param expectedFilterStatus
+	 */
+	public void verifyApplyFilterStatus(boolean applyFilter, String expectedFilterStatus) {
+		if (applyFilter) {
+			getApplyFilterLink().waitAndClick(10);
+			driver.waitForPageToBeReady();
+		}
+
+		String toggleStatus;
+		String applyFilterstatus = getEnableFilterStatus().GetAttribute("style");
+		System.out.println(applyFilterstatus);
+		if (applyFilterstatus.contains("none")) {
+			base.stepInfo("Filter is Disabled");
+			toggleStatus = "Disabled";
+		} else {
+			base.stepInfo("Filter is Enabled");
+			toggleStatus = "Enabled";
+		}
+		String passMsg = "Apply Fiter is " + toggleStatus + " as Expected";
+		String failMsg = "Apply filter status is not as expected";
+		base.textCompareEquals(toggleStatus, expectedFilterStatus, passMsg, failMsg);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : CLick Save And Verify Dataset table
+	 */
+	public void SaveActionInDataSetPopup(boolean Confirm, String firstName, String lastName, String selectedApp,
+			String collectionEmailId, String dataSetNameGenerated, String selectedFolder, String keywords,
+			boolean verifyTable, String successMsg) {
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+
+		// click save/cancel and verify row added
+		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
+
+		getActionBtn("Save").waitAndClick(5);
+		if (getFolderSelectionConfirmation().isElementAvailable(5)) {
+			String actualTxt = getPopupMsg().getText();
+			String passMsg = "Displayed Popup Msg : " + actualTxt;
+			String failMsg = "Belly band msg is not as expected";
+			base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
+
+			if (Confirm) {
+				getConfirmationBtnAction("Confirm").waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.VerifySuccessMessage(successMsg);
+				base.CloseSuccessMsgpopup();
+
+				if (verifyTable) {
 					// verify DataSet Contents in table
 					verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId,
 							dataSetNameGenerated, selectedFolder, keywords, "", false, 0);
-				} else {
-					getConfirmationBtnAction("Cancel").waitAndClick(10);
-					base.waitForElement(getActionBtn("Cancel"));
-					getActionBtn("Cancel").waitAndClick(10);
+				}
+			} else {
+				getConfirmationBtnAction("Cancel").waitAndClick(10);
+				base.waitForElement(getActionBtn("Cancel"));
+				getActionBtn("Cancel").waitAndClick(10);
+				if (verifyTable) {
 
 					// verify row is Not added
 					base.ValidateElement_Absence(getDatasetTableValue(collectionEmailId),
 							"Dataset is not added as expected");
-
 				}
 			}
-			driver.waitForPageToBeReady();
 		}
 	}
 }
