@@ -118,8 +118,9 @@ public class ConceptExplorerPage {
 
 	// Added by Raghuram
 	public Element getSelectSourcedBtn() {
-		return driver.FindElementByXPath("//a[text()='Select Sources']");
+		return driver.FindElementByXPath("//*[@class = 'btn btn-primary col-md-12' and text()='Select Sources']");
 	}
+	// a[text()='Select Sources'] - reference
 
 	public Element getSelectSourcedOptions() {
 		return driver.FindElementByXPath("//div[@class='custom-popup' and @style=\"display: block;\"]");
@@ -335,6 +336,7 @@ public class ConceptExplorerPage {
 		return driver.FindElementByXPath(
 				"//div[text()=' Filter by MasterDate:']//..//..//form[@class='smart-form CONCEPTEXPLORER']//i[@class='fa fa-calendar']");
 	}
+
 	public ElementCollection getActiveFilters() {
 		return driver.FindElementsByXPath("//div[@id='activeFilters']//li");
 	}
@@ -753,8 +755,8 @@ public class ConceptExplorerPage {
 			getAddToFilter().waitAndClick(20);
 			driver.waitForPageToBeReady();
 			List<String> activeFilters = base.getAvailableListofElements(getActiveFilters());
-			base.stepInfo("Applied Filters are "+activeFilters.toString());
-			
+			base.stepInfo("Applied Filters are " + activeFilters.toString());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Error in Applying filter");
@@ -864,8 +866,9 @@ public class ConceptExplorerPage {
 
 	public void selectSearchessource(String sourceToSelect, String sgToSelect, String searchName, String nodeName,
 			Boolean additional1, String additional2) {
-		if (getSelectSourcedOption(sourceToSelect).isElementAvailable(2)) {
-			getSelectSourcedOption(sourceToSelect).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (getSelectSourcedOption(sourceToSelect).isElementAvailable(10)) {
+			getSelectSourcedOption(sourceToSelect).waitAndClick(10);
 		}
 		getNodeFromTab(sgToSelect, searchName).waitAndClick(10);
 		base.waitTime(5);
@@ -1080,7 +1083,7 @@ public class ConceptExplorerPage {
 			docList.checkMaseterDateAsExpected(masterDateValues, expectedDateInput, toDateIp, condition, "yyyy/MM/dd");
 		}
 	}
-	
+
 	/**
 	 * @author jayanthi
 	 * @Description : Perform Add to cart
@@ -1186,7 +1189,6 @@ public class ConceptExplorerPage {
 		base.passedStep("2. Multiple filters should be considered as AND operator.");
 	}
 
-	
 	/**
 	 * @author Jayanthi.Ganesan This method will return the apllied active filters
 	 *         and compare the active filters with expected filters list
