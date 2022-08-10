@@ -45,7 +45,6 @@ public class Production_Regression18 {
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
@@ -498,12 +497,12 @@ public class Production_Regression18 {
 		loginPage.logout();
 	}
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		base = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
 			loginPage.quitBrowser();
@@ -511,15 +510,12 @@ public class Production_Regression18 {
 			loginPage.quitBrowser();
 		}
 	}
-
+	
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
 
-		} catch (Exception e) {
-			System.out.println("Sessions already closed");
-		}
+	public void close() {
+		System.out.println("******TEST CASES FOR Production EXECUTED******");
+
 	}
 
 }
