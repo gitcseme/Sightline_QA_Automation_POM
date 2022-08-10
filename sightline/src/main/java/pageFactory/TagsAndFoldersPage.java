@@ -2939,7 +2939,7 @@ public class TagsAndFoldersPage {
 		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
 		getShowDocumentsCountToogle().waitAndClick(5);
 		driver.waitForPageToBeReady();
-         Thread.sleep(10);
+         Thread.sleep(1000);
 		if(!base.text("All Folders (").isDisplayed()) {
 			base.passedStep("Documents Count is Displayed");
 		}else {
