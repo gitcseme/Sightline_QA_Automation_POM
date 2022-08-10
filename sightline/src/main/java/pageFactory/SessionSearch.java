@@ -2737,10 +2737,15 @@ public class SessionSearch {
 		}), Input.wait90);
 		getPureHitsCount().isElementAvailable(10);
 		base.waitTime(5);
+		try {
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
 		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
-
+		}
+		catch(NumberFormatException e) {
+			System.out.println("NumberFormatException occured and handled");
+		}
+	
 		return pureHit;
 
 	}
