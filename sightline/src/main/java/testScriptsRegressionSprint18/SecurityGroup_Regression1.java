@@ -622,14 +622,6 @@ public class SecurityGroup_Regression1 {
 				"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a RMU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
-		UserManagement userManagement = new UserManagement(driver);
-
-		// pre-req assign nondomain projet to da user
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.filterByName(Input.da1userName);
-		String userName = userManagement.getfirstUserName();
-		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
@@ -664,12 +656,7 @@ public class SecurityGroup_Regression1 {
 		}
 		loginPage.logout();
 
-		// restore default
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 	}
-
 	/**
 	 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54822
 	 * @throws Exception
@@ -751,14 +738,6 @@ public class SecurityGroup_Regression1 {
 		DomainDashboard domainDash = new DomainDashboard(driver);
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		DataSets data = new DataSets(driver);
-		UserManagement userManagement = new UserManagement(driver);
-
-		// pre-req assign nondomain projet to da user
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.filterByName(Input.da1userName);
-		String userName = userManagement.getfirstUserName();
-		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
@@ -798,13 +777,8 @@ public class SecurityGroup_Regression1 {
 			baseClass.failedStep("Not Navigated back to domain admin home page");
 		}
 		loginPage.logout();
-
-		// restore default
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
-
 	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
