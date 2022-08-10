@@ -133,7 +133,7 @@ public class Assignments_Regression_2_2 {
 		codingForm.getAddNewCodingFormBtn().waitAndClick(10);
 		baseClass.waitForElement(codingForm.getCodingFormName());
 		codingForm.getCodingFormName().SendKeys(cfName);
-	    codingForm.CreateCodingFormWithParameter(cfName,"Responsive",null,null,"tag");
+		codingForm.CreateCodingFormWithParameter(cfName,null,"Document_Comments",null,"comment");
 	    codingForm.addcodingFormAddButton();
 	    codingForm.saveCodingForm();
 	    assignPage.createAssignment_withoutSave(assignmentName, cfName);
@@ -275,11 +275,13 @@ public class Assignments_Regression_2_2 {
 		driver.waitForPageToBeReady();
 		agnmt.verifyDrawPoolToggledisplay(assignmentName, "enabled");
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
-		agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(3);
+		agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).Click();		
+		baseClass.waitForElementToBeGone(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName), 5);
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(agnmt.getTotalDocsCountInReviewerDashboard(assignmentName));
 		driver.scrollingToElementofAPage(agnmt.getTotalDocsCountInReviewerDashboard(assignmentName));
 		String ActualDocs_value = agnmt.getTotalDocsCountInReviewerDashboard(assignmentName).getText().trim();
-		String TotslDocs = ActualDocs_value.substring(7, 9).trim();
+		String TotslDocs = ActualDocs_value.substring(6,9).trim();
 		sa.assertEquals(expDocCount, TotslDocs);
 		sa.assertAll();
 		baseClass.passedStep(
@@ -583,8 +585,10 @@ public class Assignments_Regression_2_2 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkReleaseToMultipleSecurityGroups(sgName1, sgName2);
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(sgName1, Input.rev1userName);
 		driver.waitForPageToBeReady();
 		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rev1userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("create assignment and tag for security group 1");
@@ -654,8 +658,10 @@ public class Assignments_Regression_2_2 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkReleaseToMultipleSecurityGroups(sgName1, sgName2);
 		docViewRedact.assignAccesstoSGs(sgName1, Input.rmu1userName);
+		docViewRedact.assignAccesstoSGs(sgName1, Input.rev1userName);
 		driver.waitForPageToBeReady();
 		docViewRedact.assignAccesstoSGs(sgName2, Input.rmu2userName);
+		docViewRedact.assignAccesstoSGs(sgName2, Input.rev1userName);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("create assignment and tag for security group 1");
