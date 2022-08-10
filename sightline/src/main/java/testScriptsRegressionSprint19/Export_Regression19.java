@@ -3,6 +3,7 @@ package testScriptsRegressionSprint19;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -52,7 +53,7 @@ public class Export_Regression19 {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		Reporter.log("Logged in as User: " + Input.pa1userName);
 	}
 	
 
@@ -114,6 +115,51 @@ public class Export_Regression19 {
 		page.verifyTiffFile(purehit, prefixID, suffixID, subBates, Input.tagNameTechnical);
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Arunkumar date: 10/08/2022 TestCase Id:RPMXCON-47491
+	 * Description :To verify that in Production-Export-Slip Sheet, Calculated Field should be sorted by alpha ascending 
+	 */
+	@Test(description = "RPMXCON-47491", enabled = true, groups = { "regression" })
+	public void verifyCalculatedTabSortOrder() throws Exception {
+		
+		base.stepInfo("Test case Id: RPMXCON-47491");
+		base.stepInfo("Verify that in Production-Export-Slip Sheet, Calculated Field should be sorted by alpha ascending");
+
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String newExport = "Export" + Utility.dynamicNameAppender();
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();	
+		String text = page.getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			page.selectExportSetFromDropDown();
+		} else {
+			page.createNewExport(newExport);
+		}
+		page.addANewExport(productionname);
+		base.stepInfo("Verify the order for Tiff");
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().waitAndClick(2);
+		page.slipSheetToggleEnable();
+		base.waitForElement(page.getSlipCalculatedTabSelection());
+		page.getSlipCalculatedTabSelection().waitAndClick(2);
+		driver.scrollingToBottomofAPage();
+		base.waitForElementCollection(page.getCalculatedTabMetadata());
+		List<String> Values = base.availableListofElements(page.getCalculatedTabMetadata());
+		base.verifyOriginalSortOrder(Values, Values, "Ascending", true);
+		base.passedStep("Meta data list for Tiff sorted by ascending order");
+		driver.scrollPageToTop();
+		base.stepInfo("Verify the order for pdf");
+		base.waitForElement(page.getPDFGenerateRadioButton());
+		page.getPDFGenerateRadioButton().waitAndClick(2);
+		driver.scrollingToBottomofAPage();
+		base.waitForElementCollection(page.getCalculatedTabMetadata());
+		List<String> PdfValues = base.availableListofElements(page.getCalculatedTabMetadata());
+		base.verifyOriginalSortOrder(PdfValues, PdfValues, "Ascending", true);
+		base.passedStep("Meta data list for Pdf sorted by ascending order");
 		loginPage.logout();
 
 	}

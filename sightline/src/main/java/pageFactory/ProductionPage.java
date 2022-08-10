@@ -3245,6 +3245,10 @@ public class ProductionPage {
 	public Element nativeFileTypeCheckBox(String FileType) {
 		return driver.FindElementByXPath("//input[contains(@value,'"+FileType+"')]/..//i");
 	}
+	//Added by arun
+	public ElementCollection getCalculatedTabMetadata() {
+		return driver.FindElementsByXPath("//input[@name='TiffCalculatedList']//following-sibling::strong");
+	}
 	
 
 	public ProductionPage(Driver driver) {
