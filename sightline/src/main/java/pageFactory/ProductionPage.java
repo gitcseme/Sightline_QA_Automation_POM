@@ -20753,6 +20753,7 @@ public class ProductionPage {
 			getNativeSelectTags().Click();
 			base.waitForElement(getNativeCheckBox(Tag));
 			getNativeCheckBox(Tag).Click();
+			driver.waitForPageToBeReady();
 			base.waitForElement(getNativeCheckBox(Tag1));
 			getNativeCheckBox(Tag1).Click();
 			base.waitForElement(getNativeSelect());
@@ -21022,9 +21023,10 @@ public class ProductionPage {
 		getDATTab().Click();
 		base.waitForElement(getDAT_FieldClassification(i));
 		getDAT_FieldClassification(i).selectFromDropdown().selectByVisibleText(classification);
-		getDAT_SourceField(i).selectFromDropdown().selectByVisibleText(sourceField);
-		getDAT_DATField(i).waitAndClick(3);
 		driver.waitForPageToBeReady();
+		getDAT_SourceField(i).selectFromDropdown().selectByVisibleText(sourceField);
+		driver.waitForPageToBeReady();
+		getDAT_DATField(i).waitAndClick(10);
 		getDAT_DATField(i).SendKeys(BatesNumber);
 		base.stepInfo(i + "th Dat section is filled");
 	}
