@@ -54,16 +54,16 @@ public class AdvancedSearchRegression {
 		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
 
-//		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-//
-//		// Pre requesite creation
-//		// Performing Star search since this will add all avail docs from default sec
-//		// group .
-//		sessionSearch.basicContentSearch(Input.searchStringStar);
-//		tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
-//		sessionSearch.bulkTag(tagName);
-//		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
-//		loginPage.quitBrowser();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Pre requesite creation
+		// Performing Star search since this will add all avail docs from default sec
+		// group .
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		tagHitsCount = sessionSearch.verifyPureHitsCount();// expected value
+		sessionSearch.bulkTag(tagName);
+		baseClass.stepInfo("Created a Tag " + tagName + "Count of docs bulk tagged " + tagHitsCount);
+		loginPage.quitBrowser();
 
 	}
 
