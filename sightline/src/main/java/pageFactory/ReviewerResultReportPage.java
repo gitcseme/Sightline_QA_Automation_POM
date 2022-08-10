@@ -56,7 +56,9 @@ public class ReviewerResultReportPage {
 	public Element getSavedSearch_ScheduleTime() {
 		return driver.FindElementById("txtOneTimeStartDate");
 	}
-
+	public Element sendemailidSchedule() {
+		return driver.FindElementByXPath("//textarea[@id='txtEmail']");   
+	}
 	public Element getSaveSchedulerBtn() {
 		return driver.FindElementByXPath("//button[@id='btnScheduleSubmit']");
 	}
@@ -145,7 +147,11 @@ public class ReviewerResultReportPage {
 			}
 		}), Input.wait60);
 		System.out.println(scheduleTimePlusMinutes(1));
+		String rev = Input.rev1userName;
+		System.out.println(rev);
 		getSavedSearch_ScheduleTime().SendKeys(scheduleTimePlusMinutes(1));
+		sendemailidSchedule().SendKeys(rev);
+		
 		getSaveSchedulerBtn().isElementAvailable(5);
 		getSaveSchedulerBtn().waitAndClick(10);
 		System.out.println("Review report result is scheduled to run in 1 minute!");
