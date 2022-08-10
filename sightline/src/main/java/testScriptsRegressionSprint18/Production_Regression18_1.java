@@ -557,12 +557,11 @@ public class Production_Regression18_1 {
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
-        String BatesNumber="B"+Utility.dynamicNameAppender();
         String ActualColor = "#3276b1";
         
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
@@ -572,7 +571,7 @@ public class Production_Regression18_1 {
 		String productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		page.addingDatField(0, Input.bates,Input.batesNumber,BatesNumber);
+		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
