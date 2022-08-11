@@ -946,33 +946,23 @@ public class BaseClass {
 	}
 
 	public void impersonateSAtoRMU() throws InterruptedException {
+		waitForElement(getSignoutMenu());
 		getSignoutMenu().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getChangeRole().Visible();
-			}
-		}), Input.wait60);
-		getChangeRole().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectRole().Visible();
-			}
-		}), Input.wait60);
+		waitForElement(getChangeRole());
+		getChangeRole().waitAndClick(5);
+		waitForElement(getSelectRole());
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		Thread.sleep(3000);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAvlDomain().Visible();
-			}
-		}), Input.wait30);
+		waitTime(1);
+		waitForElement(getAvlDomain());
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-		Thread.sleep(3000);
+		waitForElement(getAvlProject());
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-		Thread.sleep(3000);
+		waitForElement(getSelectSecurityGroup());
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-		getSaveChangeRole().Click();
-		System.out.println("Impersnated from SA to RMU");
-		UtilityLog.info("Impersnated from SA to RMU");
+		waitForElement(getSaveChangeRole());
+		getSaveChangeRole().waitAndClick(3);
+		System.out.println("Impersonated from SA to RMU");
+		UtilityLog.info("Impersonated from SA to RMU");
 
 		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 			try {
@@ -1944,19 +1934,16 @@ public class BaseClass {
 			}), Input.wait60);
 			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
 			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
+			waitForElement(getAvlDomain());
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-			Thread.sleep(3000);
+			waitForElement(getAvlProject());
 			getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-			Thread.sleep(3000);
+			waitForElement(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			waitForElement(getSaveChangeRole());
 			getSaveChangeRole().waitAndClick(10);
-			System.out.println("Impersnated from DA to RMU");
-			UtilityLog.info("Impersnated from DA to RMU");
+			System.out.println("Impersonated from DA to RMU");
+			UtilityLog.info("Impersonated from DA to RMU");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -1978,6 +1965,7 @@ public class BaseClass {
 
 	public void impersonateDAtoReviewer() {
 		try {
+			waitForElement(getSignoutMenu());
 			getSignoutMenu().waitAndClick(10);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -1992,19 +1980,16 @@ public class BaseClass {
 			}), Input.wait60);
 			getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
 			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
+			waitForElement(getAvlDomain());
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-			Thread.sleep(3000);
+			waitForElement(getAvlProject());
 			getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-			Thread.sleep(3000);
+			waitForElement(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			waitForElement(getSaveChangeRole());
 			getSaveChangeRole().waitAndClick(5);
-			System.out.println("Impersnated from DA to Reviewer");
-			UtilityLog.info("Impersnated from DA to Reviewer");
+			System.out.println("Impersonated from DA to Reviewer");
+			UtilityLog.info("Impersonated from DA to Reviewer");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
