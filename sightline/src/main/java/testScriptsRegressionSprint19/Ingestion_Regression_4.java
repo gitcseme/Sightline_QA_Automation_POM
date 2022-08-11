@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint18;
+package testScriptsRegressionSprint19;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
