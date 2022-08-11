@@ -120,6 +120,7 @@ public class DomainManagement_Regression {
 		softAssertion.assertEquals(role, currentRole);
 		baseClass.passedStep("Popup window opened for " + role + "");
 		userManage.getSelctRole().selectFromDropdown().selectByIndex(5);
+		baseClass.waitForElement(userManage.getbellyBandMsg());
 		String warningmsg = userManage.getbellyBandMsg().getText().trim();
 		softAssertion.assertEquals(warningmsg,
 				"The role of this user is being switched. The user permissions will be reset to the default permissions of the new role. Do you want to continue?");
@@ -130,6 +131,7 @@ public class DomainManagement_Regression {
 		userManage.getPopUpCloseBtn().waitAndClick(10);
 
 		// validating role can't be changed
+		baseClass.waitForElement(userManage.getRoleName());
 		String actual = userManage.getRoleName().getText().trim();
 		softAssertion.assertEquals(actual, role);
 		baseClass.passedStep("User role should not be changed");
@@ -715,26 +717,36 @@ public class DomainManagement_Regression {
 		
 		// login as
 		// verify from pa user , user name listed
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password,Input.NonDomainProject);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Login as a sa user :" + Input.pa1userName);
+		baseClass.selectproject(Input.NonDomainProject);
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		baseClass.stepInfo("From pa user, taking user list for project admin");
 		List<String> firstValue=new ArrayList<String>();
-
-		int count = ((userManage.getAssgnPaginationCount().size()) - 2);
-		for (int i = 0; i < count; i++) {
-			driver.waitForPageToBeReady();
-			List<WebElement> firstName=userManage.getPAUserName(1).FindWebElements();
-			for (WebElement webElement : firstName) {
-				String assignUser[]= webElement.getText().split(" ");
-				System.out.println(assignUser);
-				firstValue.add(assignUser[0]);
-			}
-			userManage.getUserListNextButton().isElementAvailable(5);
-			userManage.getUserListNextButton().waitAndClick(5);
-			driver.waitForPageToBeReady();
-		}
+		baseClass.waitTime(2);
+		driver.scrollingToBottomofAPage();
+		String count=userManage.getPaginationLastNumber().getText().toString();	
+		int foo = Integer.parseInt(count);
+		for (int i = 0; i<foo; i++) {
+			boolean status=userManage.getPAUserName(1).isElementAvailable(4);
+			if (status == true) {
+				baseClass.waitTime(3);
+				List<WebElement> firstNames =userManage.getPAUserName(1).FindWebElements();
+				for (WebElement webElement : firstNames) {
+					String assignUser= webElement.getText();
+					System.out.println(assignUser);
+					String[] split=assignUser.split("\\|\\|");
+					String[] nameSplit=split[0].split(" ");
+					firstValue.add(nameSplit[0]);
+					System.out.println(firstValue);
+				}
+					if (userManage.getUserPaginationNextButton().isElementAvailable(5)) {
+						userManage.getUserPaginationNextButton().waitAndClick(5);
+						
+					}
+				}
 		
+			}
 		System.out.println(firstValue);
 		softAssertion.assertEquals(splitValue.toString(), firstValue.toString());
 		baseClass.passedStep("Who have Non-domain project access displayed in Pa user");
