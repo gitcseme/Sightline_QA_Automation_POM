@@ -288,7 +288,7 @@ public class O365Regression_19 {
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60766", enabled = true, groups = { "regression" })
-	public void cfvfv() throws Exception {
+	public void editAddedDataset() throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		List<String> custodianDetails = new ArrayList();
 
@@ -571,6 +571,131 @@ public class O365Regression_19 {
 		
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @dsecription : Verify that delete a collection functionality is working
+	 *              proper on Collection’s home page.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61292", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCollectionAfterDeleted(String username, String password, String fullname) throws Exception {
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61292 - O365");
+		base.stepInfo("Verify that delete a collection functionality is working proper on Collection’s home page.");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
+				"");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+
+		// Click delete and click Yes button
+		collection.deleteUsingCollectionName(dataName, true);
+
+		// verify Collection Absence in Manage collection Screen
+		boolean collectionAbsence = collection.getCollectionAction(dataName).isElementAvailable(5);
+
+		String passMsg = dataName + " : is not Displayed in Manage Collection Screen";
+		String failMsg = dataName + " : is Displayed after deleting";
+		base.printResutInReport(collectionAbsence, passMsg, failMsg, "Fail");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that user can configure collection on "Manage Screen"
+	 *              screen
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61291", enabled = true, groups = { "regression" })
+	public void verifyConfigureCollection() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61291 - O365");
+		base.stepInfo("Verify that user can configure collection on \"Manage Screen\" screen");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.performCreateNewCollection();
+
+		// Add New Source Location
+		collection.performAddNewSource(null, dataSourceName, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// click created source location and verify navigated page
+		collectionData = collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add Dataset
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+
+		// Save As Draft
+		collection.clickNextBtnOnDatasetTab();
+		collection.collectionSaveAsDraft();
+
+		// Delete Source Location
+		source.deleteSourceLocation(dataSourceName, true);
+
+		// Logout
+		login.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
