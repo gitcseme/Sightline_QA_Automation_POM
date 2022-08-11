@@ -287,6 +287,87 @@ public class TagsAndFolder_Regression {
 		baseClass.passedStep("document count is displayed on Tag Group and Tag.");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-52643
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is ON then document counts is shoul be displayed on the Folder Group and Folder.
+	 */
+	@Test(description = "RPMXCON-52643", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsONFolderDocsCountIsDisplay() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52643");
+		baseClass.stepInfo(
+				"To verify that if 'Show Docs Counts' is ON then document counts is shoul be displayed on the Folder Group and Folder.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisONFolder();
+		baseClass.passedStep("document count is displayed on Folder Group and Folder.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-52644
+	 * @throws Exception
+	 * @Description To verify that if 'Show Docs Counts' is OFF then document counts is not displayed on the Folder tab.
+	 */
+	@Test(description = "RPMXCON-52644", enabled = true, groups = { "regression" })
+	public void verifyShowDocCountIsOFFFolderDocsCountNotDisplay() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52644");
+		baseClass.stepInfo(
+				"To verify that if 'Show Docs Counts' is OFF then document counts is not displayed on the Folder tab.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.showDocsCountisOFFFolder();
+		baseClass.passedStep("Document counts is not displayed for Folder Group and Folder.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:11/08/2022 RPMXCON-53279
+	 * @throws Exception
+	 * @Description Verify that RMU should be able to delete the Folder Group from application if created by him and associated to only one security group.
+	 */
+	@Test(description = "RPMXCON-53279", enabled = true, groups = { "regression" })
+	public void verifyRMUCreateFolderGroupAndDelete() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53279");
+		baseClass.stepInfo("Verify that RMU should be able to delete the Folder Group from application if created by him and associated to only one security group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		String folderGroup = "FolderGroup"+ Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo("Go to Tags and FolderPage Create folder Group");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.selectallFolderRoot();
+		tagsAndFolderPage.createFolderGroup(Input.securityGroup, folderGroup, "Success", null);
+		baseClass.passedStep("Newly created Folder Group is displayed on the Folder tab");
+
+		// Delete folder group
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllFolderGroup(folderGroup, "Success");
+		baseClass.passedStep("Folder Group is deleted from the application Deleted Folder Group is not displayed on Manage Folder tab for RMU/PAU ");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
