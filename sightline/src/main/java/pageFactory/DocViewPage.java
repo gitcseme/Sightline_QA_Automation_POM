@@ -28537,7 +28537,7 @@ public class DocViewPage {
 		deleteAudioRedactionTag();
 
 		// click on + icon to add redactions
-		base.waitForElement(getDocview_RedactionsTab_Add());
+		base.waitTillElemetToBeClickable(getDocview_RedactionsTab_Add());
 		getDocview_RedactionsTab_Add().waitAndClick(10);
 
 		// Get Audio duration start and End time first
@@ -28552,7 +28552,7 @@ public class DocViewPage {
 		getSaveButton().waitAndClick(20);
 		
 		driver.waitForPageToBeReady();
-		base.VerifySuccessMessage("Record Updated Successfully");
+		base.VerifySuccessMessage("Record added Successfully");
 		base.CloseSuccessMsgpopup();
 			
 		if (getRedactionModify().isElementAvailable(5)) {
