@@ -345,6 +345,231 @@ public class O365Regression_19 {
 		// Logout
 		login.logout();
 	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify the folders from the ‘Dataset Selection Popup’ and
+	 *              select-unselect of folders
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60778", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyFoldersDatasetSelectionPopup(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60778 - O365");
+		base.stepInfo("Verify the folders from the ‘Dataset Selection Popup’ and select-unselect of folders");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Calendars";
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+		
+		login.logout();
+		
+		//Login As PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+
+		// To add New Source Location
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String dataName = "Automation" + Utility.dynamicNameAppender();
+
+		driver.waitForPageToBeReady();
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(dataSourceName, dataName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Folder Selection
+		collection.folderToSelect(selectedFolder, true, false);
+		base.passedStep("User is able to select/unselect the folder from the pop up. Parent folder is checked, by default, the tree of folders and sub - folders under the parent folder is checked successfully");
+
+		// Logout
+		login.logout();
+	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that User can change one source location type to another from "Data Source Type" dropdown on “Add New Source Location" screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60827", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyOneSourceLocationDataSourceTypeDropDownAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60827 - O365");
+		base.stepInfo("Verify that User can change one source location type to another from 'Data Source Type' dropdown on 'Add New Source Location' screen.");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String dropDownValue = "Microsoft 365";
+
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+		
+		login.logout();
+		
+		// Login as User
+		login.loginToSightLine(username, password);
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		
+		//Add new collection
+		collection.performCreateNewCollection();
+		
+		//verify Source location type
+		collection.verifyAnotherSourceLocationCanBeSelected(dropDownValue, dataSourceName, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+		
+		// Logout
+		login.logout();
+	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60850", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyErrorMessageInDAtaSelectionPopUp(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60850 - O365");
+		base.stepInfo("Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+		
+		login.logout();
+		
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName, false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+		
+		//Verify Custodian Fields Error Message
+		collection.verifyErrorMessageInCutodianSelection("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 5);
+		
+		//verify Folder Error Message
+		collection.verifyErrorMessageInFolderSelectionFields(selectedFolder);
+		
+		//verify Apply Filter button
+		collection.verifyErrorMessageInApplyFilterField();
+		
+		//edit the Dataset and verify error message
+		collection.editDatasetAndVerifyErrorMessage(selectedFolder);
+		collection.verifyErrorMessageInFolderSelectionFields(selectedFolder);
+		
+		// Logout
+		login.logout();
+	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that on click of ‘Add Datasets’ link, Dataset selection pop up should open
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60757", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAddDatasetsLinkInDataselectionPopup(String username, String password, String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-60757 - O365");
+		base.stepInfo("Verify that on click of ‘Add Datasets’ link, Dataset selection pop up should open");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+
+		// Login as User
+		login.loginToSightLine(username, password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+		
+		login.logout();
+		
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName, false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+		
+		//verify Dataset page
+		collection.verifyDatasetsPage();
+		
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+		
+		// Folder Selection
+		collection.folderToSelect(selectedFolder, true, false);
+		
+		//logout
+		login.logout();
+		
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
