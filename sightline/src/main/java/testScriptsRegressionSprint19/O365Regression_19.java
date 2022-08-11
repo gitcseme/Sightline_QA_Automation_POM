@@ -3,7 +3,9 @@ package testScriptsRegressionSprint19;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -275,6 +277,71 @@ public class O365Regression_19 {
 		// Again verify Collection presence
 		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
 				true, false, "");
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that user should be able to edit/modify an existing
+	 *              custodian dataset folder, filters and save the modifications
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60766", enabled = true, groups = { "regression" })
+	public void cfvfv() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		List<String> custodianDetails = new ArrayList();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String collection2ndEmailId = Input.collection2ndEmailId;
+		String secondFirstName = Input.collsecondFirstName;
+		String secondlastName = Input.collsecondlastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60766 - O365");
+		base.stepInfo(
+				"Verify that user should be able to edit/modify an existing custodian dataset folder, filters and save the modifications");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Add Dataset By Applying Filter
+		custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
+				true, true);
+
+		// click Edit and verify The selected Details Are Retained
+		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetails, selectedFolder, true,
+				"Enabled");
+
+		// Edit folder name and verify Dataset Selection Table
+		collection.editDatasetAndVerify(false, null, false, null, null, true, false, selectedFolder, "Archive", null,
+				false);
+		collection.SaveActionInDataSetPopup(true, firstName, lastName, selectedApp, collectionEmailId,
+				custodianDetails.get(1), "Archive", Input.randomText, true, "Dataset updated successfully.");
+
+		//Edit Custodians Name and verify folders And application is Reset
+		driver.waitForPageToBeReady();
+		collection.editDatasetAndVerify(true, collectionEmailId, true, secondFirstName, collection2ndEmailId, true,
+				true, "Archive", selectedFolder, "Disabled", true);
+
 		// Logout
 		login.logout();
 	}
