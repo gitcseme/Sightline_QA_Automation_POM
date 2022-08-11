@@ -85,6 +85,10 @@ public class ClientsPage {
 	 public Element getEntityIdErrorMsg(){ 
 		 return driver.FindElementById("entity_domainid-error"); 
 	 }
+	 
+	 public Element getCancelBtn(){ 
+		 return driver.FindElementById("btnCancel"); 
+	 }
  	
 	
     //Annotation Layer added successfully
@@ -370,10 +374,6 @@ public class ClientsPage {
 	  	project.getProductionserverpath().waitAndClick(10);
 	  	bc.stepInfo("production path is selected");
 	  	
-	  	getProgressingInstanceOption().selectFromDropdown().selectByIndex(1);
-	  	bc.stepInfo("Processing Engine details selected");
-	  	
-	  	driver.Manage().window().fullscreen();
 	  	bc.waitForElement(getSaveBtn());
 	  	getSaveBtn().waitAndClick(10);
 	  	bc.stepInfo("save button was clicked");
