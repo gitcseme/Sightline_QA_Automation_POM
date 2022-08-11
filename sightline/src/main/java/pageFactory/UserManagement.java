@@ -764,9 +764,9 @@ public class UserManagement {
 	}
 
 	public Element getComponentBoxBlocked(String componentName) {
-        return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName
-                + "']//i[@style='background-color: grey;']");
-    }
+		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName
+				+ "']//i[@style='background-color: grey;']");
+	}
 
 	public Element getComponentCheckBoxClick(String componentName) {
 		return driver.FindElementByXPath(
@@ -800,7 +800,7 @@ public class UserManagement {
 	public Element getLastPageNum() {
 		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
 	}
-	
+
 	public Element getFunctionTable() {
 		return driver.FindElementByXPath(
 				"// li[@class='active']//a[normalize-space()='Functionality']//..//parent::ul//following-sibling::div[@id='myTabContent1']");
@@ -837,53 +837,63 @@ public class UserManagement {
 	}
 
 	public Element getRoleName() {
-		return driver.FindElementByXPath("//table[@id='dtUserList']//td[text()='"+Input.projectName+"']//..//td[@class=' spacenowrap']");
+		return driver.FindElementByXPath(
+				"//table[@id='dtUserList']//td[text()='" + Input.projectName + "']//..//td[@class=' spacenowrap']");
 	}
+
 	public Element getSelctRole() {
 		return driver.FindElementByXPath("//select[@id='ddlAllRoles']");
 	}
+
 	public Element getsingleSelectDomain() {
-		return driver.FindElementByXPath("//label[normalize-space()= 'Domain:']//..//label[text()='"+Input.domainName+"']");
+		return driver.FindElementByXPath(
+				"//label[normalize-space()= 'Domain:']//..//label[text()='" + Input.domainName + "']");
 	}
+
 	public Element getConfirmMsg() {
 		return driver.FindElementByXPath("//span[text()='User Mapping']//..//..//p");
 	}
-	
+
 	public ElementCollection getAllBlockedUserRightInFuncnalityTab() {
 		return driver.FindElementsByXPath("//i[@style='background-color: grey;']");
 	}
-	
+
 	public Element getDetailsTab() {
 		return driver.FindElementByXPath("//a[text()='Details']");
 	}
-	
+
 	public Element selectProject() {
 		return driver.FindElementById("ddlProject");
 	}
-	
 
 	public ElementCollection getAssignedUserListPA() {
-		return driver.FindElementsByXPath("//select[@id='AssignedUser']//option[contains(@title,' Project Administrator')]");
+		return driver
+				.FindElementsByXPath("//select[@id='AssignedUser']//option[contains(@title,' Project Administrator')]");
 	}
+
 	public ElementCollection getPAUserName(int count) {
-		return driver.FindElementsByXPath("//table[@id='dtUserList']//td[text()='Project Administrator']//..//td["+count+"]");
+		return driver.FindElementsByXPath(
+				"//table[@id='dtUserList']//td[text()='Project Administrator']//..//td[" + count + "]");
 	}
+
 	public ElementCollection getUnAssignedDomainUserList() {
 		return driver.FindElementsByXPath("//select[@id='UnAssignedUser']//option");
 	}
-	
+
 	public Element getPaginationLastNumber() {
-		return driver.FindElementByXPath("(//div[@id='dtUserList_paginate']//li[@class='paginate_button ']//a)[last()]");
+		return driver
+				.FindElementByXPath("(//div[@id='dtUserList_paginate']//li[@class='paginate_button ']//a)[last()]");
 	}
+
 	public Element getNthUnAssignedUser(int n) {
-		return driver.FindElementByXPath("(//*[@id='UnAssignedUsersForDomain']/option)["+n+"]");
+		return driver.FindElementByXPath("(//*[@id='UnAssignedUsersForDomain']/option)[" + n + "]");
 
 	}
 
 	public Element getNotYetLoggedInUserBtn() {
 		return driver.FindElementById("PendingUser");
 	}
-	
+
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
@@ -2221,7 +2231,7 @@ public class UserManagement {
 			driver.scrollingToElementofAPage(getAssignedDomain(AssigedUserName));
 			getAssignedDomain(AssigedUserName).waitAndClick(5);
 			getLeftBtndomainuser().waitAndClick(5);
-			if(getAssignedDomain(AssigedUserName).isElementAvailable(2)) {
+			if (getAssignedDomain(AssigedUserName).isElementAvailable(2)) {
 				getAssignedDomain(AssigedUserName).waitAndClick(5);
 				getLeftBtndomainuser().waitAndClick(5);
 			}
@@ -3927,7 +3937,7 @@ public class UserManagement {
 		}
 
 		bc.waitForElement(getCheckingAssignedUserSG(AssigedUserName));
-		boolean flag=getCheckingAssignedUserSG(AssigedUserName).isElementAvailable(3);
+		boolean flag = getCheckingAssignedUserSG(AssigedUserName).isElementAvailable(3);
 		driver.scrollingToElementofAPage(getCheckingAssignedUserSG(AssigedUserName));
 		getCheckingAssignedUserSG(AssigedUserName).waitAndClick(10);
 		bc.waitForElement(getLeftArrowForProject());
@@ -3956,7 +3966,7 @@ public class UserManagement {
 		int count = Integer.parseInt(lastPageNum);
 		for (int i = 0; i < count; i++) {
 			driver.waitForPageToBeReady();
-			if (getSelectUserToEdit(projectName).isElementAvailable(5)) {
+			if (getSelectUserToEdit(projectName).isElementAvailable(10)) {
 				driver.scrollingToElementofAPage(getSelectUserToEdit(projectName));
 				getSelectUserToEdit(projectName).waitAndClick(10);
 				driver.scrollPageToTop();
@@ -3969,7 +3979,7 @@ public class UserManagement {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description click functionality tab on edit user role tab
@@ -3981,7 +3991,7 @@ public class UserManagement {
 		bc.stepInfo("navigated to fuctionality tab");
 		driver.waitForPageToBeReady();
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description click Details tab on edit user tab
@@ -3993,7 +4003,7 @@ public class UserManagement {
 		bc.stepInfo("details tab was clicked");
 		driver.waitForPageToBeReady();
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description open add new user popup
@@ -4005,7 +4015,7 @@ public class UserManagement {
 		bc.waitForElement(getFirstName());
 		bc.stepInfo("add new user pop was opened");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description filter today created users
@@ -4020,7 +4030,7 @@ public class UserManagement {
 		driver.waitForPageToBeReady();
 		bc.stepInfo("filtered today created users");
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description open Not yet Logged in user popup

@@ -1001,10 +1001,17 @@ public class CollectionPage {
 	public HashMap<String, String> dataSetsCreationBasedOntheGridAvailability(String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String expectedStatus, String creationType, int retryAttempt,
-			Boolean AutoInitiate, String additional2) {
+			Boolean AutoInitiate, String collectionSpecificName) {
 
-		String dataName = "Automation" + Utility.dynamicNameAppender();
+		String dataName;
 		String creationStatus = "0";
+
+		// Collection Specific Name
+		if (!collectionSpecificName.equalsIgnoreCase("")) {
+			dataName = collectionSpecificName;
+		} else {
+			dataName = "Automation" + Utility.dynamicNameAppender();
+		}
 
 		driver.waitForPageToBeReady();
 		if (getCollectionNameStatusElements(expectedStatus).size() > 0) {
@@ -1708,5 +1715,43 @@ public class CollectionPage {
 		driver.scrollPageToTop();
 		getNextBtnDS().waitAndClick(10);
 		verifyCurrentTab("Summary and Start Collection");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param collectionName
+	 */
+	public void enterCollectionName(String collectionName) {
+		HashMap<String, String> colllectionData = new HashMap<>();
+
+		base.waitForElement(getCollectioName());
+		verifyCurrentTab("Collection Information");
+
+		if (getCollectioName().isElementAvailable(3)) {
+			getCollectioName().waitAndClick(5);
+			getCollectioName().SendKeys(collectionName);
+			base.stepInfo("Entered collection Name : " + collectionName);
+		} else {
+			base.failedStep("Collection Name Field is Not displayed");
+		}
+
+		String collectionID = getCollectionID().getText();
+		colllectionData.put(collectionName, collectionID);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param nextType
+	 */
+	public void nextAction(String nextType) {
+		// Next Button
+		driver.waitForPageToBeReady();
+		if (nextType.equalsIgnoreCase("DataSet")) {
+			getNextBtnDS().waitAndClick(10);
+		} else if (nextType.equalsIgnoreCase("CollectionTab")) {
+			getNextBtn().waitAndClick(10);
+		}
+		base.stepInfo("Clicked Next Button");
+		driver.waitForPageToBeReady();
 	}
 }

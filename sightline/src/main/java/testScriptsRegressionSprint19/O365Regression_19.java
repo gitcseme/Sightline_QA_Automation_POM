@@ -25,7 +25,6 @@ import pageFactory.LoginPage;
 import pageFactory.SourceLocationPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
-import testScriptsRegressionSprint18.O365_Regression_2_2;
 import testScriptsSmoke.Input;
 
 public class O365Regression_19 {
@@ -69,6 +68,13 @@ public class O365Regression_19 {
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "Review Manager" },
 				{ Input.pa1userName, Input.pa1password, "Project Administrator" }, };
+		return users;
+	}
+
+	@DataProvider(name = "PaAndRmuUserDetails")
+	public Object[][] PaAndRmuUserDetails() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator", "SA" },
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager", "SA" } };
 		return users;
 	}
 
@@ -337,7 +343,7 @@ public class O365Regression_19 {
 		collection.SaveActionInDataSetPopup(true, firstName, lastName, selectedApp, collectionEmailId,
 				custodianDetails.get(1), "Archive", Input.randomText, true, "Dataset updated successfully.");
 
-		//Edit Custodians Name and verify folders And application is Reset
+		// Edit Custodians Name and verify folders And application is Reset
 		driver.waitForPageToBeReady();
 		collection.editDatasetAndVerify(true, collectionEmailId, true, secondFirstName, collection2ndEmailId, true,
 				true, "Archive", selectedFolder, "Disabled", true);
@@ -345,7 +351,7 @@ public class O365Regression_19 {
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
 	 * @Description : Verify the folders from the ‘Dataset Selection Popup’ and
@@ -370,12 +376,12 @@ public class O365Regression_19 {
 		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-		
+
 		login.logout();
-		
-		//Login As PA
+
+		// Login As PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.stepInfo("User successfully logged into slightline webpage " +Input.pa1userName + "");
+		base.stepInfo("User successfully logged into slightline webpage " + Input.pa1userName + "");
 
 		// To add New Source Location
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -403,82 +409,88 @@ public class O365Regression_19 {
 
 		// Folder Selection
 		collection.folderToSelect(selectedFolder, true, false);
-		base.passedStep("User is able to select/unselect the folder from the pop up. Parent folder is checked, by default, the tree of folders and sub - folders under the parent folder is checked successfully");
+		base.passedStep(
+				"User is able to select/unselect the folder from the pop up. Parent folder is checked, by default, the tree of folders and sub - folders under the parent folder is checked successfully");
 
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that User can change one source location type to another from "Data Source Type" dropdown on “Add New Source Location" screen.
+	 * @Description : Verify that User can change one source location type to
+	 *              another from "Data Source Type" dropdown on “Add New Source
+	 *              Location" screen.
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60827", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyOneSourceLocationDataSourceTypeDropDownAddNewSourceLocation(String username, String password, String fullname) throws Exception {
+	public void verifyOneSourceLocationDataSourceTypeDropDownAddNewSourceLocation(String username, String password,
+			String fullname) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60827 - O365");
-		base.stepInfo("Verify that User can change one source location type to another from 'Data Source Type' dropdown on 'Add New Source Location' screen.");
+		base.stepInfo(
+				"Verify that User can change one source location type to another from 'Data Source Type' dropdown on 'Add New Source Location' screen.");
 
 		String[][] userRolesData = { { username, fullname, fullname } };
-		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String dropDownValue = "Microsoft 365";
-
 
 		// Login as User
 		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-		
+
 		login.logout();
-		
+
 		// Login as User
 		login.loginToSightLine(username, password);
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		
-		//Add new collection
+
+		// Add new collection
 		collection.performCreateNewCollection();
-		
-		//verify Source location type
-		collection.verifyAnotherSourceLocationCanBeSelected(dropDownValue, dataSourceName, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
-		
+
+		// verify Source location type
+		collection.verifyAnotherSourceLocationCanBeSelected(dropDownValue, dataSourceName, Input.TenantID,
+				Input.ApplicationID, Input.ApplicationKey);
+
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank
+	 * @Description : Verify that error message should be displayed from Dataset
+	 *              Selection pop up, when required fields are blank
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60850", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyErrorMessageInDAtaSelectionPopUp(String username, String password, String fullname) throws Exception {
+	public void verifyErrorMessageInDAtaSelectionPopUp(String username, String password, String fullname)
+			throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60850 - O365");
-		base.stepInfo("Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank");
+		base.stepInfo(
+				"Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank");
 
 		String[][] userRolesData = { { username, fullname, fullname } };
-		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String selectedFolder = "Inbox";
 
-
 		// Login as User
 		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-		
+
 		login.logout();
-		
+
 		// Login as User
 		login.loginToSightLine(username, password);
 
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		
 
 		// Click create New Collection
 		collection.performCreateNewCollection();
@@ -487,56 +499,58 @@ public class O365Regression_19 {
 		String srcLocation = collection.selectSourceFromTheListAvailable();
 
 		// click created source location and verify navigated page
-		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName, false);
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
 
 		// initiate collection process
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
-		
-		//Verify Custodian Fields Error Message
-		collection.verifyErrorMessageInCutodianSelection("Button", firstName, lastName, collectionEmailId,
-				selectedApp, collectionInfoPage, dataSourceName, 5);
-		
-		//verify Folder Error Message
+
+		// Verify Custodian Fields Error Message
+		collection.verifyErrorMessageInCutodianSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionInfoPage, dataSourceName, 5);
+
+		// verify Folder Error Message
 		collection.verifyErrorMessageInFolderSelectionFields(selectedFolder);
-		
-		//verify Apply Filter button
+
+		// verify Apply Filter button
 		collection.verifyErrorMessageInApplyFilterField();
-		
-		//edit the Dataset and verify error message
+
+		// edit the Dataset and verify error message
 		collection.editDatasetAndVerifyErrorMessage(selectedFolder);
 		collection.verifyErrorMessageInFolderSelectionFields(selectedFolder);
-		
+
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that on click of ‘Add Datasets’ link, Dataset selection pop up should open
+	 * @Description : Verify that on click of ‘Add Datasets’ link, Dataset selection
+	 *              pop up should open
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60757", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyAddDatasetsLinkInDataselectionPopup(String username, String password, String fullname) throws Exception {
+	public void verifyAddDatasetsLinkInDataselectionPopup(String username, String password, String fullname)
+			throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-60757 - O365");
 		base.stepInfo("Verify that on click of ‘Add Datasets’ link, Dataset selection pop up should open");
 
 		String[][] userRolesData = { { username, fullname, fullname } };
-		String dataSourceName = "Automation"+Utility.dynamicNameAppender();
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String selectedFolder = "Inbox";
 
-
 		// Login as User
 		login.loginToSightLine(username, password);
 		userManagement.navigateToUsersPAge();
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-		
+
 		login.logout();
-		
+
 		// Login as User
 		login.loginToSightLine(username, password);
 
@@ -550,25 +564,26 @@ public class O365Regression_19 {
 		String srcLocation = collection.selectSourceFromTheListAvailable();
 
 		// click created source location and verify navigated page
-		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName, false);
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
 
 		// initiate collection process
 		collection.selectInitiateCollectionOrClickNext(true, true, true);
-		
-		//verify Dataset page
+
+		// verify Dataset page
 		collection.verifyDatasetsPage();
-		
+
 		// Add DataSets
 		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
 				selectedApp, collectionInfoPage, dataSourceName, 3);
 		System.out.println(dataSetNameGenerated);
-		
+
 		// Folder Selection
 		collection.folderToSelect(selectedFolder, true, false);
-		
-		//logout
+
+		// logout
 		login.logout();
-		
+
 	}
 
 	/**
@@ -696,6 +711,248 @@ public class O365Regression_19 {
 		// Logout
 		login.logout();
 	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @param actionRole
+	 * @param actionUserName
+	 * @param actionPassword
+	 * @return
+	 * @throws Exception
+	 * @description : Pre-requesties for Collection draft creation
+	 */
+	public String verifyUserAbleToSaveCollectionAsDraft(String username, String password, String role,
+			String actionRole, String actionUserName, String actionPassword, String additional1, Boolean additional2)
+			throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String dataName;
+		String[][] userRolesData = { { username, role, actionRole } };
+
+		base.stepInfo("Collection as DRAFT - Pre-requesties creation before Depends on Method");
+
+		// Login as User
+		login.loginToSightLine(actionUserName, actionPassword);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
+				"");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+		base.passedStep("Pre-requestied created colleciton Name :" + dataName);
+
+		// return dataNmae created / used
+		return dataName;
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/11/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that user should be able to enter the collection name
+	 *              same as of deleted collection. RPMXCON-60648
+	 */
+	@Test(description = "RPMXCON-60648", enabled = true, groups = { "regression" })
+	public void createCollectectionWithPrevDeletedName() throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+
+		base.stepInfo("Test case Id: RPMXCON-60648 - O365");
+		base.stepInfo("Verify that user should be able to enter the collection name same as of deleted collection");
+		base.stepInfo("**Step-1 Pre-requisites: User should have Dataset, Collection rights should be checked\r\n"
+				+ "\r\n" + "		Collection should be configured with the source location/data source**");
+
+		// Pre-requesties
+		String dataName = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, "", false);
+
+		// navigate to Collection page and Deletion
+		base.stepInfo("Initiation collection deletion");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.deleteUsingCollectionName(dataName, true);
+
+		// verify Collection Absence in Manage collection Screen
+		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
+				dataName + " deleted Successfully : is not Displayed in Manage Collection Screen",
+				dataName + " : is Displayed after deleting", "Fail");
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, false, dataName);
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String dataNameCreated = base.returnKey(colllectionData, "", false);
+		System.out.println(dataNameCreated);
+		collectionID = colllectionData.get(dataNameCreated);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataNameCreated,
+				expectedCollectionStatus, true, false, "");
+
+		// Comparer with the pre-requesties created name
+		base.textCompareEquals(dataName, dataNameCreated,
+				"Collection able to add successfully with same name as of deleted collection name",
+				"Not able to create collection with the previous deleted collection name");
+
+		// navigate to Collection page and Deletion
+		base.stepInfo("Initiation collection  deletion");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.collectionDeletion(collectionID);
+
+		// verify Collection Absence in Manage collection Screen
+		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
+				dataName + " deleted Successfully : is not Displayed in Manage Collection Screen",
+				dataName + " : is Displayed after deleting", "Fail");
+
+		// Logout
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/11/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Edit a collection functionality is working proper
+	 *              on Collection’s home page.. RPMXCON-61290
+	 */
+	@Test(description = "RPMXCON-61290", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void editCollectionDraftFunctionalityCheck(String userName, String password, String role, String actionRole)
+			throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String modifiedCollectionName = "ModifiedCollection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61290 - O365");
+		base.stepInfo("Verify that Edit a collection functionality is working proper on Collection’s home page.");
+		base.stepInfo("**Step-1 Pre-requisites: User should have Dataset, Collection rights should be checked\r\n"
+				+ "\r\n" + "		Collection should be configured with the source location/data source**");
+
+		// Pre-requesties
+		String dataName = verifyUserAbleToSaveCollectionAsDraft(userName, password, role, actionRole, Input.sa1userName,
+				Input.sa1password, "", false);
+
+		// navigate to Collection page
+		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
+				"");
+
+		// navigate to Collection page and get the data
+		base.stepInfo("**Step-4 Click on  Action >> Edit Collection\"**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+
+		// Edit Verifications
+		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionID, "Edit").waitAndClick(5);
+		base.waitForElement(collection.getCollectioName());
+		collection.verifyCurrentTab("Collection Information");
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionID, "Collection id is retained ",
+				"Collection id not retained");
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// Modify Collection Name
+		base.stepInfo("**Step-5 Now Modify Collection Name >> Click on Next till Summary Page\"**");
+		collection.enterCollectionName(modifiedCollectionName);
+		collection.nextAction("CollectionTab");
+		driver.waitForPageToBeReady();
+		collection.nextAction("DataSet");
+		driver.waitForPageToBeReady();
+
+		// Save As Draft
+		base.stepInfo("**Step-6 Click on \"Save As Draft\"\"**");
+		collection.collectionSaveAsDraft();
+
+		// navigate to Collection page and get the data
+		base.stepInfo(
+				"**Step-7 Now Navigate to \"Manage Collection\" Screen and Verify that Modified Name appears on \"Manage Collection\" screen\"\"**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// verify Old old collection name is updated
+		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
+				dataName + " modified Successfully : Old name is not Displayed in Manage Collection Screen",
+				dataName + " : Old name is Displayed after modifying", "Fail");
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, modifiedCollectionName,
+				expectedCollectionStatus, true, false, "");
+
+		// Logout
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

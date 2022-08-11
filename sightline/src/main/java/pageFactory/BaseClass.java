@@ -4307,5 +4307,20 @@ public class BaseClass {
 					"Pass");
 		}
 	}
+	
+	/**
+	 * @author Raghuram.A
+	 * @param element
+	 * @param cTime
+	 * @return
+	 * @description : ValidateElement_StatusReturn
+	 */
+	public Boolean ValidateElement_StatusReturn(Element element, int cTime) {
+		if (element.isElementAvailable(cTime)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
