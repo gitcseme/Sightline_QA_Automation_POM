@@ -28547,8 +28547,8 @@ public class DocViewPage {
 		getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(Input.defaultRedactionTag);
 		driver.waitForPageToBeReady();
 
-		
 		// click on save button
+		base.waitForElement(getSaveButton());
 		getSaveButton().waitAndClick(20);
 		
 		driver.waitForPageToBeReady();
