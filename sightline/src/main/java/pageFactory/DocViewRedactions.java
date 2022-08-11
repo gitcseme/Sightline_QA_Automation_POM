@@ -875,7 +875,7 @@ public class DocViewRedactions {
 	}
 
 	public Element getBellyBandMsgHeaderFromDeleteBatchRedact() {
-		return driver.FindElementByXPath("//div[@id='Msg1']/div/span");
+		return driver.FindElementByXPath("//div[@id='Msg1']/div/h2/span");
 	}
 
 	public Element getBellyBandMessageFromDeleteBatchRedact() {
