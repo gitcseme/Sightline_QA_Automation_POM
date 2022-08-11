@@ -239,6 +239,246 @@ public class Projects_Regresssion {
 		loginPage.logout();
 	}	
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/11/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that User can create a domain with Small Size of Database.
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-55960",enabled = true, groups = {"regression" })
+	public void VerifyUserCreateSmalDatabaseDomain() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-55960");
+		base.stepInfo("Verify that User can create a domain with Small Size of Database.");
+		
+		String domianName = Utility.randomCharacterAppender(4)+Utility.dynamicNameAppender();
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//verify
+		client = new ClientsPage(driver);
+		client.AddDomainClient(domianName, domianName, "Small (less than 1000 documents)");
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.CloseSuccessMsgpopup();
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue(base.text("Small (less than 1000 documents)").isDisplayed());
+		base.passedStep("Small value was displayed in \"Initial Size of Project Database\" field");
+		client.getCancelBtn().waitAndClick(5);
+		
+		client.deleteClinet(domianName);
+		
+		softAssertion.assertAll();
+		base.passedStep("Verified that User can create a domain with Small Size of Database.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/11/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that User can create a domain with Medium Size of Database.
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-55961",enabled = true, groups = {"regression" })
+	public void VerifyUserCreateMediumDatabaseDomain() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-55961");
+		base.stepInfo("Verify that User can create a domain with Medium Size of Database.");
+		
+		String domianName = Utility.randomCharacterAppender(4)+Utility.dynamicNameAppender();
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//verify
+		client = new ClientsPage(driver);
+		client.AddDomainClient(domianName, domianName, "Medium (less than 25000 documents)");
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.CloseSuccessMsgpopup();
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue(base.text("Medium (less than 25000 documents)").isDisplayed());
+		base.passedStep("Medium value should displayed in \"Initial Size of Project Database\" field");
+		client.getCancelBtn().waitAndClick(5);
+		
+		client.deleteClinet(domianName);
+		
+		softAssertion.assertAll();
+		base.passedStep("Verified that User can create a domain with Medium Size of Database.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/11/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that User can create a domain with Big Size of Database.
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-55962",enabled = true, groups = {"regression" })
+	public void VerifyUserCreateBugDatabaseDomain() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-55962");
+		base.stepInfo("Verify that User can create a domain with Big Size of Database.");
+		
+		String domianName = Utility.randomCharacterAppender(4)+Utility.dynamicNameAppender();
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//verify
+		client = new ClientsPage(driver);
+		client.AddDomainClient(domianName, domianName, "Big (more than 25000 documents)");
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.CloseSuccessMsgpopup();
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue((boolean)base.text("Big (more than 25000 documents)").isDisplayed());
+		base.passedStep("Big value should displayed in \"Initial Size of Project Database\" field");
+		client.getCancelBtn().waitAndClick(5);
+		
+		client.deleteClinet(domianName);
+		
+		softAssertion.assertAll();
+		base.passedStep("Verify that User can create a domain with Big Size of Database.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/11/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that User can Edit a value from "Size of Database" field for Domain Project
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-55963",enabled = true, groups = {"regression" })
+	public void erifyUserEditTheSizeOfDataBase() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-55963");
+		base.stepInfo("Verify that User can Edit a value from \"Size of Database\" field for Domain Project");
+		
+		String domianName = Utility.randomCharacterAppender(4)+Utility.dynamicNameAppender();
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//pre-req
+		client = new ClientsPage(driver);
+		client.AddDomainClient(domianName, domianName, "Small (less than 1000 documents)");
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.CloseSuccessMsgpopup();
+		
+		//edit and update
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue((boolean)base.text("Small (less than 1000 documents)").isDisplayed());
+		base.passedStep("Small value should displayed in \"Initial Size of Project Database\" field ");
+		softAssertion.assertTrue((boolean)client.getDBSizeOption().Enabled());
+		base.passedStep("Initial Size of Project Database field should be enabled");
+		client.getDBSizeOption().selectFromDropdown().selectByVisibleText("Big (more than 25000 documents)");
+		base.passedStep("Big value should get selected from \"Initial Size of Project Database\" field");
+		client.getSaveBtn().waitAndClick(10);
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The client details were updated successfully");
+		base.CloseSuccessMsgpopup();
+		
+		//verify
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue((boolean)base.text("Big (more than 25000 documents)").isDisplayed());
+		base.passedStep("Big value should displayed in \"Initial Size of Project Database\" field");
+		client.getCancelBtn().waitAndClick(5);
+		
+		//delete created client
+		client.deleteClinet(domianName);
+		
+		softAssertion.assertAll();
+		base.passedStep("Verify that User can Edit a value from \"Size of Database\" field for Domain Project");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/11/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify that User can Edit a value from "Size of Database" field and applicable to only new projects created in this domain
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-55964",enabled = true, groups = {"regression" })
+	public void erifyUserEditTheSizeSmallToMediumDataBase() throws InterruptedException  {
+		
+		softAssertion = new SoftAssert();
+		
+		base.stepInfo("Test case Id: RPMXCON-55964");
+		base.stepInfo("Verify that User can Edit a value from \"Size of Database\" field and applicable to only new projects created in this domain");
+		
+		String domianName = Utility.randomCharacterAppender(4)+Utility.dynamicNameAppender();
+		
+		//login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Login as a sa user :"+Input.sa1userName);
+		
+		//pre-req
+		client = new ClientsPage(driver);
+		client.AddDomainClient(domianName, domianName, "Small (less than 1000 documents)");
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The new client was added successfully");
+		base.CloseSuccessMsgpopup();
+		
+		//edit and update
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue((boolean)base.text("Small (less than 1000 documents)").isDisplayed());
+		base.passedStep("Small value should displayed in \"Initial Size of Project Database\" field ");
+		softAssertion.assertTrue((boolean)client.getDBSizeOption().Enabled());
+		base.passedStep("Initial Size of Project Database field should be enabled");
+		client.getDBSizeOption().selectFromDropdown().selectByVisibleText("Medium (less than 25000 documents)");
+		base.passedStep("Medium value should displayed in \"Initial Size of Project Database\" field");
+		client.getSaveBtn().waitAndClick(10);
+		base.getSuccessMsgHeader().isElementAvailable(60);
+		base.VerifySuccessMessage("The client details were updated successfully");
+		base.CloseSuccessMsgpopup();
+		
+		//verify
+		client.filterClient(domianName);
+		client.getClientEditBtn(domianName).waitAndClick(5);
+		softAssertion.assertTrue((boolean)base.text("Big (more than 25000 documents)").isDisplayed());
+		base.passedStep("Big value should displayed in \"Initial Size of Project Database\" field");
+		client.getCancelBtn().waitAndClick(5);
+		
+		//delete created client
+		client.deleteClinet(domianName);
+		
+		softAssertion.assertAll();
+		base.passedStep("Verified that User can Edit a value from \"Size of Database\" field and applicable to only new projects created in this domain");
+		loginPage.logout();
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
