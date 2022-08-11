@@ -627,16 +627,14 @@ public class SecurityGroup_Regression1 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(5);
-		baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.NonDomainProject));
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify default security group in selected project in Rmu");
 		driver.waitForPageToBeReady();
-		baseClass.selectproject(Input.NonDomainProject);
-		driver.waitForPageToBeReady();
+	    baseClass.waitTime(5);
 		String actualString = "Default Security Group";
 		String ExpectedString = baseClass.getsgNames().getText();
 		System.out.println(ExpectedString);
@@ -657,6 +655,7 @@ public class SecurityGroup_Regression1 {
 		loginPage.logout();
 
 	}
+
 	/**
 	 * @author Krishna ModifyDate:05/08/2022 RPMXCON-54822
 	 * @throws Exception
@@ -743,13 +742,14 @@ public class SecurityGroup_Regression1 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify Default Security Group display");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		String actualString = "Default Security Group";
 		String ExpectedString = baseClass.getsgNames().getText();
 		System.out.println(ExpectedString);
