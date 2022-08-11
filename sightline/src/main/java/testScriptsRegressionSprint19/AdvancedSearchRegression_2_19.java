@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -19,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -34,6 +36,7 @@ public class AdvancedSearchRegression_2_19 {
 	Input in;
 	SoftAssert assertion;
 	AssignmentsPage assignmentPage;
+	DocViewPage docView;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -54,6 +57,7 @@ public class AdvancedSearchRegression_2_19 {
 		assertion = new SoftAssert();
 		savedSearch = new SavedSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
 	}
 
 	@DataProvider(name = "Users")
@@ -184,6 +188,72 @@ public class AdvancedSearchRegression_2_19 {
 		// logOut
 		loginPage.logout();
 
+	}
+
+	/**
+	 * @author S
+	 * @Date: 08/10/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Modified reviewer remarks for audio documents is
+	 *              working correctly in Advanced Search.. RPMXCON-46884
+	 */
+	@Test(description = "RPMXCON-46884", enabled = true, groups = { "regression" })
+	public void verifyModifiedReviewerRemarkForAudioDocumentsWorkingCorrectlyInAdvSearch()
+			throws InterruptedException, Exception {
+
+		String remark = "remark" + Utility.dynamicNameAppender();
+		String modifiedRemark = "modified";
+		int noOfAudioRemarkAdd = 1;
+		int ExpectedRemarkDocCountAfterModification = 0;
+		Map<String, String> updateDatas = new HashMap<String, String>();
+
+		// login as PA
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-46884");
+		baseClass.stepInfo(
+				"Verify that Modified reviewer remarks for audio documents is working correctly in  Advanced Search.");
+
+		// performing audio search and navigating to DocView
+		baseClass.stepInfo("Performing Audio Search.");
+		sessionSearch.audioSearch(Input.audioSearch, Input.language);
+		baseClass.stepInfo("adding pureHit to Shopping cart and viewing the Documents in docView page.");
+		sessionSearch.ViewInDocViews();
+
+		// adding reamrk to audio file
+		docView.audioRemark(remark);
+
+		// performing remark search and viewing the remark Documents in docView page.
+		baseClass.selectproject();
+		int remarkDocCountBeforeModification = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch("Remark", remark);
+		assertion.assertEquals(remarkDocCountBeforeModification, noOfAudioRemarkAdd);
+		baseClass.stepInfo("adding pureHit to Shopping cart and viewing the Documents in docView page.");
+		sessionSearch.ViewInDocViews();
+
+		// modifying the remark
+		docView.getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+		docView.editAndVerifyData(remark, updateDatas, modifiedRemark);
+
+		// verifying whether that Application displaying the latest count excluding the
+		// documents for which remarks was modified.
+		baseClass.selectproject();
+		int remarkDocCountAfterModification = sessionSearch.getCommentsOrRemarksCount_AdvancedSearch("Remark", remark);
+		assertion.assertEquals(remarkDocCountAfterModification, ExpectedRemarkDocCountAfterModification);
+		assertion.assertNotEquals(remarkDocCountBeforeModification, remarkDocCountAfterModification);
+		assertion.assertAll();
+		baseClass.passedStep(
+				"Verified that Application displaying the latest count excluding the documents for which remarks was modified.");
+
+		// deleting the remark
+		baseClass.selectproject();
+		sessionSearch.getCommentsOrRemarksCount_AdvancedSearch("Remark", modifiedRemark);
+		sessionSearch.ViewInDocViews();
+		baseClass.stepInfo("adding pureHit to Shopping cart and viewing the Documents in docView page.");
+		docView.deleteAudioRemark();
+
+		// logOut
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
