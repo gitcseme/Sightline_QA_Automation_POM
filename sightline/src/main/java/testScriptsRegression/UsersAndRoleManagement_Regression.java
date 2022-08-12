@@ -2728,8 +2728,8 @@ public class UsersAndRoleManagement_Regression {
 		}
 		this.driver.getWebDriver().get(Input.url + "User/UserListView");
 		driver.waitForPageToBeReady();
-		userManage.getBulkUserAccessTab().waitAndClick(5);
-		Thread.sleep(2000);
+		userManage.getBulkUserAccessTab().waitAndClick(15);
+		Thread.sleep(5000);
 		baseClass.waitForElement(userManage.getSelectRollId());
 		userManage.getSelectRollId().selectFromDropdown().selectByVisibleText(rollId);
 		if (roll == "pa") {
