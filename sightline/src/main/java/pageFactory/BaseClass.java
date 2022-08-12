@@ -2852,7 +2852,7 @@ public class BaseClass {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void visibleCheck(String text) {
-		if (text("text").isDisplayed()) {
+		if (text(text).isElementAvailable(5)) {
 			passedStep(text + " is visibled");
 			System.out.println(text + " is visible");
 		} else {
