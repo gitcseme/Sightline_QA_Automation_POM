@@ -257,5 +257,43 @@ public class SecurityGroups_Regression6 {
 				baseClass.failedStep("Default Tags labels Duplicates is appear on mappling screen");
 			}
 		}
+		
+		/**
+		 * @author Krishna Date-08/11/22 RPMXCON-54867
+		 * @throws Exception
+		 * @Description Verify after impersonated AS PAU in domain project where DAU is
+		 *              PAU and select the other domain project/non-domain from header
+		 *              drop down ,should redirect to the PAU home page for the selected
+		 *              project
+		 * 
+		 */
+		@Test(description = "RPMXCON-54867", enabled = true, groups = { "regression" })
+		public void verifyAfterImpersonatedDAURedirectToPAUHomePage() throws Exception {
+			baseClass.stepInfo("Test case Id: RPMXCON-54867");
+			baseClass.stepInfo(
+					"Verify after impersonated AS PAU in domain project where DAU is PAU and select the other domain project/non-domain from header drop down ,should redirect to the PAU home page for the selected project");
+			DataSets data = new DataSets(driver);
+
+			// Login As DA
+			loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+			baseClass.stepInfo("Logged in DAU");
+			
+			baseClass.stepInfo("Impersonate DA to PA");
+			driver.waitForPageToBeReady();
+			baseClass.impersonateDAtoPA();
+
+			baseClass.stepInfo("Select other Domain project");
+			driver.waitForPageToBeReady();
+			baseClass.selectproject(Input.projectName);
+
+			driver.waitForPageToBeReady();
+			if (data.getDatasetBtn().isDisplayed()) {
+				baseClass.passedStep("It is redirect to the PAU home page for the selected project Successfully");
+			} else {
+				baseClass.failedStep("verification failed");
+			}
+			loginPage.logout();
+		}
+
 
 }
