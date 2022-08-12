@@ -4696,7 +4696,7 @@ public class IngestionPage_Indium {
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitTime(2);
 		driver.scrollingToElementofAPage(getRunIndexing());
-
+		base.waitForElement(getRunIndexing());
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
 
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -4760,7 +4760,8 @@ public class IngestionPage_Indium {
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
-
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getRunIndexing());
 		getRunIndexing().waitAndClick(10);
 		base.waitTime(2);
 		base.VerifySuccessMessage("Ingestion Indexing has Started.");
@@ -5241,73 +5242,33 @@ public class IngestionPage_Indium {
 
 			if (dataset[i - 1].contains("AllSources") || dataset[i - 1].contains("SSAudioSpeech_Transcript")) {
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIsAudioCheckbox().Visible();
-					}
-				}), Input.wait60);
-				getIsAudioCheckbox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getLanguage().Visible();
-					}
-				}), Input.wait60);
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
 				getLanguage().selectFromDropdown().selectByVisibleText("North American English");
 			} else if (dataset[i - 1].contains("CJK_GermanAudioTestData")) {
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIsAudioCheckbox().Visible();
-					}
-				}), Input.wait60);
-				getIsAudioCheckbox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getLanguage().Visible();
-					}
-				}), Input.wait60);
+				
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
 				getLanguage().selectFromDropdown().selectByVisibleText("German");
 			} else if (dataset[i - 1].contains("CJK_JapaneseAudioTestData")) {
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIsAudioCheckbox().Visible();
-					}
-				}), Input.wait60);
-				getIsAudioCheckbox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getLanguage().Visible();
-					}
-				}), Input.wait60);
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
 				getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
 			} else if (dataset[i - 1].contains("0002_H13696_1_Latest")) {
 
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getIsAudioCheckbox().Visible();
-					}
-				}), Input.wait60);
-				getIsAudioCheckbox().waitAndClick(10);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getLanguage().Visible();
-					}
-				}), Input.wait60);
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
 				getLanguage().selectFromDropdown().selectByVisibleText("International English");
 			} else {
 				System.out.println("No need to select for other datasets");
 			}
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getRunIndexing().Visible();
-				}
-			}), Input.wait60);
-			getRunIndexing().waitAndClick(10);
+			base.waitForElement(getRunIndexing());
+			getRunIndexing().waitAndClick(5);
 
 			base.VerifySuccessMessage("Ingestion Indexing has Started.");
 
@@ -5692,52 +5653,21 @@ public class IngestionPage_Indium {
 
 		driver.waitForPageToBeReady();
 		int j = numberofingestion;
-		getIngestionDetailPopup(j).waitAndClick(Input.wait30);
-		base.waitTime(1);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return ingestionDetailActionDropdown().Visible();
-			}
-		}), Input.wait30);
-		ingestionDetailActionDropdown().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getActionApprove().Visible();
-			}
-		}), Input.wait30);
-		getActionApprove().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getApproveMessageOKButton().Visible();
-			}
-		}), Input.wait30);
-		getApproveMessageOKButton().waitAndClick(10);
-
+		base.waitForElement(getIngestionDetailPopup(j));
+		getIngestionDetailPopup(j).waitAndClick(10);
+		base.waitForElement(ingestionDetailActionDropdown());
+		ingestionDetailActionDropdown().waitAndClick(5);
+		base.waitForElement(getActionApprove());
+		getActionApprove().waitAndClick(5);
+		base.waitForElement(getApproveMessageOKButton());
+		getApproveMessageOKButton().waitAndClick(5);
 		base.VerifySuccessMessage("Approve started successfully");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCloseButton().Enabled();
-			}
-		}), Input.wait30);
-		getCloseButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByButton().Visible();
-			}
-		}), Input.wait30);
-		getFilterByButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getFilterByCOPIED().Visible();
-			}
-		}), Input.wait30);
-		getFilterByAPPROVED().waitAndClick(10);
-
+		base.waitForElement(getCloseButton());
+		getCloseButton().waitAndClick(5);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(5);
+		base.waitForElement(getFilterByAPPROVED());
+		getFilterByAPPROVED().waitAndClick(5);
 		getRefreshButton().waitAndClick(10);
 
 		for (int i = 0; i < 40; i++) {
@@ -10534,5 +10464,47 @@ public class IngestionPage_Indium {
 				}
 			}
 		}
-				
+		
+		/**
+		 * @author: Arun Created Date: 11/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will approve multiple ingestion
+		 */
+		public void approveMultipleIngestion(int numberOfIngestion) {
+			// apply filter for approved status
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(5);
+			base.waitForElement(getFilterByAPPROVED());
+			getFilterByAPPROVED().waitAndClick(5);
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			//approve ingestion
+			for(int i=1;i<=numberOfIngestion;i++) {
+				getIngestionDetailPopup(i).waitAndClick(5);
+				base.waitForElement(ingestionDetailActionDropdown());
+				ingestionDetailActionDropdown().waitAndClick(5);
+				base.waitForElement(getActionApprove());
+				getActionApprove().waitAndClick(5);
+				base.waitForElement(getApproveMessageOKButton());
+				getApproveMessageOKButton().waitAndClick(5);
+				base.VerifySuccessMessage("Approve started successfully");
+				base.waitForElement(getCloseButton());
+				getCloseButton().waitAndClick(5);
+			}
+			getRefreshButton().waitAndClick(5);
+			for (int j = 1; j <= numberOfIngestion; j++) {
+				for (int i = 0; i < 50; i++) {
+					base.waitTime(2);
+					String status = getStatus(j).getText().trim();
+					if (status.contains("Approved")) {
+						base.passedStep("Approve completed for ingestion");
+						break;
+					} else if (status.contains("In Progress")) {
+						base.waitTime(5);
+						getRefreshButton().waitAndClick(5);
+					} else if (status.contains("Failed")) {
+						base.failedStep("Approve Failed for ingestion");
+					}
+				}
+			}
+		}			
 }

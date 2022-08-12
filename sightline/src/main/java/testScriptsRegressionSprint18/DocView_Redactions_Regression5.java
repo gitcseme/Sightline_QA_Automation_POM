@@ -175,7 +175,13 @@ public class DocView_Redactions_Regression5 {
 	 * comments entered with < > * ; ‘ / ( ) # & from DocView
 	 * 
 	 */
-	@Test(description = "RPMXCON-65077", enabled = true, alwaysRun = true, groups = { "regression" })
+	/**
+	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
+	 * comments entered with < > * ; ‘ / ( ) # & from DocView
+	 * 
+	 */
+	@Test(description = "RPMXCON-65057", enabled = true, alwaysRun = true, groups = { "regression" })
 	public void verifyErrorMsgDisplayedDocCommentEnteredFromDocView() throws Exception {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-65057");
@@ -197,6 +203,9 @@ public class DocView_Redactions_Regression5 {
 		docexp.selectAllDocumentsFromCurrentPage();
 		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.editCodingForm(Specialchar);
 		docView.getCodingFormSaveThisForm().waitAndClick(3);
 		baseClass.stepInfo("edit codingform and Clicked save button");
@@ -204,6 +213,10 @@ public class DocView_Redactions_Regression5 {
 		driver.Navigate().refresh();
 		baseClass.handleAlert();
 		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_CodingFormlist());
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.editCodingForm(Specialchar);
 		docView.getSaveAndNextButton().waitAndClick(3);
 		baseClass.stepInfo("edit codingform and clicked save and next button");

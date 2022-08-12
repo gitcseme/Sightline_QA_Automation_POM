@@ -1196,8 +1196,8 @@ public class ReportsPage {
 	/**
 	 * @author Raghuram.A
 	 * @createdOn : 07/05/22
-	 * @ModifiedOn : N/A
-	 * @ModifiedBy : N/A
+	 * @ModifiedOn : 8/10/22
+	 * @ModifiedBy : Raghuram
 	 * @description : Navigation to Reports Page
 	 */
 	public void navigateToReportsPage(String componentName) {
@@ -1205,9 +1205,12 @@ public class ReportsPage {
 		navigateToReports().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		base.verifyPageNavigation("Report/ReportsLanding");
-		if (!componentName.equalsIgnoreCase("")) {
+		if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Concept Explorer Report")) {
 			getThisLink(componentName).waitAndClick(10);
 			base.verifyPageNavigation("DataAnalysisReport/ConceptExplorer");
+		} else if (!componentName.equalsIgnoreCase("") && componentName.equalsIgnoreCase("Communications Explorer")) {
+			getThisLink(componentName).waitAndClick(10);
+			base.verifyPageNavigation("DataAnalysisReport/CommunicationExplorerReport");
 		}
 	}
 

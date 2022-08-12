@@ -52,7 +52,7 @@ public class Production_Regression18_1 {
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
-		Reporter.setCurrentTestResult(result);
+		
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.info(testMethod.getName());
@@ -557,12 +557,11 @@ public class Production_Regression18_1 {
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
-        String BatesNumber="B"+Utility.dynamicNameAppender();
         String ActualColor = "#3276b1";
         
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		
+
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
@@ -572,7 +571,7 @@ public class Production_Regression18_1 {
 		String productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		page.addingDatField(0, Input.bates,Input.batesNumber,BatesNumber);
+		page.fillingDATSection();
 		page.fillingNativeSection();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
@@ -593,13 +592,14 @@ public class Production_Regression18_1 {
 		
 	}
 
+	
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		base = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-			System.out.println("Executed :" + result.getMethod().getMethodName());
-
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
 		}
 		try {
 			loginPage.quitBrowser();
@@ -607,15 +607,12 @@ public class Production_Regression18_1 {
 			loginPage.quitBrowser();
 		}
 	}
-
+	
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
-			// LoginPage.clearBrowserCache();
 
-		} catch (Exception e) {
-			System.out.println("Sessions already closed");
-		}
+	public void close() {
+		System.out.println("******TEST CASES FOR Production EXECUTED******");
+
 	}
 
 }

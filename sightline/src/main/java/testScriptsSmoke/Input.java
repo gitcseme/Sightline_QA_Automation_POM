@@ -461,6 +461,7 @@ public class Input {
 	public static String collectionStatusHeader;
 	public static String expectedDateInput;
 	public static String expectedToDateInput;
+	public static String searchString10;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1375,7 +1376,8 @@ public class Input {
 		collectionStatusHeader = testData.getCollectionStatusHeader();
 		expectedDateInput = testData.getExpectedDateInput();
 		expectedToDateInput = testData.getExpectedToDateInput();
-
+		searchString10 = testData.getSearchString10();
+		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();

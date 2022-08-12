@@ -645,7 +645,9 @@ public class MiniDocListPage {
 		for (String childWindowList : childWindowID) {
 			if (!parentWindowID.equals(childWindowList)) {
 				driver.switchTo().window(childWindowList);
-				driver.waitForPageToBeReady();
+				try {
+				driver.waitForPageToBeReady();}
+				catch(NullPointerException e) {}
 				String text = driver.getTitle();
 				System.out.println("Heading of child window is " + text);
 			}
@@ -1053,10 +1055,9 @@ public class MiniDocListPage {
 	public void clickingGearIconMultipletimes(int clicks) {
 		int i;
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(getGearIcon());
-		driver.waitForPageToBeReady();
+		
 		for (i = 1; i < clicks; i++) {
-			getGearIcon().Click();
+			getGearIcon().waitAndClick(5);
 		}
 		baseClass.stepInfo("----Total no.of times clicked : " + i);
 		System.out.println("----Total no.of times clicked : " + i);
@@ -2316,7 +2317,12 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
 		try {
-			baseClass.waitForElement(getGearIcon());
+			//baseClass.waitForElement(getGearIcon());
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getGearIcon().Visible();
+				}
+			}), Input.wait30);
 			getGearIcon().Click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2792,8 +2798,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		// Pick Column Display
 		afterActionselectedFieldsPickColumnDisplayFirstAssignment = methodForPickColumnDisplayWebFields();
-		String configureSelectedData = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString()
-				.toUpperCase();
+		String configureSelectedData = afterActionselectedFieldsPickColumnDisplayFirstAssignment.toString().toUpperCase();
 		driver.waitForPageToBeReady();
 		String headerVlaueAfterConfig = reusableDocViewPage.defaultHeaderValue();
 		softAssertion.assertEquals(configureSelectedData, headerVlaueAfterConfig);
@@ -3262,8 +3267,10 @@ public class MiniDocListPage {
 	public void verifyDefaultValueInOptimizedSort() {
 		driver.waitForPageToBeReady();
 		String defaultValue = "DocID, DocFileType, FamilyRelationship, FamilyMemberCount";
-		clickingGearIcon();
 		driver.waitForPageToBeReady();
+		//clickingGearIcon();
+		baseClass.waitForElement(getGearIcon());
+		getGearIcon().waitAndClick(3);
 		baseClass.passedStep("Optimized mode is selected");
 		baseClass.waitForElementCollection(getSelectedFieldsAvailablePickColumnDisplay());
 		ElementCollection pickColumnafterSelectedfieldList = getSelectedFieldsAvailablePickColumnDisplay();
@@ -3652,7 +3659,7 @@ public class MiniDocListPage {
 	 * @param name
 	 */
 	public boolean verifySelectedDocHighlight(String name) {
-
+		driver.waitForPageToBeReady();
 		String bgColor = getCheckSelectedBgColor(name).GetCssValue("background-color");
 
 		bgColor = rgbTohexaConvertor(bgColor);
@@ -3679,14 +3686,17 @@ public class MiniDocListPage {
 		baseClass.waitForElement(getGearIcon());
 		getGearIcon().waitAndClick(10);
 		baseClass.waitForElement(getOptimizedSortRadioButton());
+		try {
 		String value = getSelectedOptimizedSortRadioButton().GetAttribute("checked");
 		System.out.println(value);
+		driver.waitForPageToBeReady();
 		if (value.equals("true")) {
 			baseClass.passedStep("Optimized mode from mini doc list is selected by default");
 		} else {
 			baseClass.failedStep("Optimized mode from mini doc list is not selected by default");
 		}
-
+		}
+		catch(NullPointerException e) {}
 	}
 
 	/**
@@ -4005,7 +4015,6 @@ public class MiniDocListPage {
 		List<String> idList = availableListofElements(getChildWindowDocIDList());
 		int listSize = idList.size();
 		int numberToChoose = randNumber(listSize);
-
 		String currentDoc = idList.get(numberToChoose);
 		System.out.println("Childwindow selected doc id : " + currentDoc);
 		baseClass.stepInfo("Childwindow selected doc id : " + currentDoc);
@@ -4416,5 +4425,35 @@ public class MiniDocListPage {
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
 		
 	}
+	
+	public void removingFieldsAndDragnDropDefault() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		try {
+			driver.waitForPageToBeReady();
+
+			baseClass.waitForElement(getDocView_MiniDoclist_GearIcon());
+			getDocView_MiniDoclist_GearIcon().waitAndClick(10);
+
+        driver.waitForPageToBeReady();
+		ElementCollection pickColumnafterSelectedfieldList = getSelectedFieldsAvailablePickColumnDisplay();
+		afterActionselectedFieldsList = availableListofElements(pickColumnafterSelectedfieldList);
+		for (String element : afterActionselectedFieldsList) {
+			System.out.println(element);
+			getValueToRemoveFromSelectedWebFields(element).waitAndClick(3);
+		}
+		    baseClass.waitTime(5);
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("DocID");
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("DocFileType");
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("FamilyRelationship");
+			dragAndDropAvailableFieldstoSelectedfieldsPickColumDisplay("FamilyMemberCount");
+
+			getMiniDocListConfirmationButton("Save").waitAndClick(10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ConfigureMiniDocist popup is not opened");
+		}
+	}
+
 
 }

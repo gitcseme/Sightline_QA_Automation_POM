@@ -28475,12 +28475,14 @@ public class DocViewPage {
 			throws InterruptedException, ParseException {
 		// adding redactions
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_RedactionsTab());
 		getDocview_RedactionsTab().waitAndClick(10);
 
 		// Audio Redaction Tag deletion
 		deleteAudioRedactionTag();
 
 		// click on + icon to add redactions
+		base.waitForElement(getDocview_RedactionsTab_Add());
 		getDocview_RedactionsTab_Add().waitAndClick(10);
 		// Get Audio duration start and End time first
 		audioRedactionBasesOnTime(timeOne, timeTwo);
@@ -28528,10 +28530,31 @@ public class DocViewPage {
 			throws InterruptedException, ParseException {
 		// adding redactions
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocview_RedactionsTab());
 		getDocview_RedactionsTab().waitAndClick(10);
 		
-		
+		// Audio Redaction Tag deletion
+		deleteAudioRedactionTag();
 
+		// click on + icon to add redactions
+		base.waitTillElemetToBeClickable(getDocview_RedactionsTab_Add());
+		getDocview_RedactionsTab_Add().waitAndClick(10);
+
+		// Get Audio duration start and End time first
+		audioRedactionBasesOnTime(timeOne, timeTwo);
+		
+		base.waitForElement(getDocview_AudioRedactions());
+		getDocview_AudioRedactions().selectFromDropdown().selectByVisibleText(Input.defaultRedactionTag);
+		driver.waitForPageToBeReady();
+
+		// click on save button
+		base.waitForElement(getSaveButton());
+		getSaveButton().waitAndClick(20);
+		
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Record added Successfully");
+		base.CloseSuccessMsgpopup();
+			
 		if (getRedactionModify().isElementAvailable(5)) {
 			getRedactionModify().waitAndClick(5);
 			audioRedactionBasesOnTime(timeOne, timeTwo);
@@ -28554,61 +28577,7 @@ public class DocViewPage {
 			base.CloseSuccessMsgpopup();
 			
 		}else {
-			// click on + icon to add redactions
-			getDocview_RedactionsTab_Add().waitAndClick(10);
-			// Get Audio duration start and End time first
-			audioRedactionBasesOnTime(timeOne, timeTwo);
-
-			// Check Default Selection
-			String defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
-			base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
-					"In default : Application automatically selected the ‘Default Redaction Tag’",
-					"In default : invalid redaction tag selected");
-			
-			//Get size of Redaction tag
-			int audioRedactionTagSize = getDocView_AudioRedactiionTagFields().size();
-			System.out.println(audioRedactionTagSize);
-
-			// select redaction tags
-			if (audioRedactionTagSize>1) {
-				base.waitForElement(getDocview_AudioRedactions());
-				getDocview_AudioRedactions().selectFromDropdown().selectByIndex(redactionTag);
-				driver.waitForPageToBeReady();
-
-			}else {
-				base.failedStep("No RedacionTag available in the Audio file");
-			}
-			
-			// click on save button
-			getSaveButton().waitAndClick(20);
-			
-			// verify success message
-			driver.waitForPageToBeReady();
-			base.VerifySuccessMessage("Record added Successfully");
-			base.CloseSuccessMsgpopup();
-			
-			
-			driver.waitForPageToBeReady();
-			base.waitForElement(getRedactionModify());
-			getRedactionModify().waitAndClick(5);
-			audioRedactionBasesOnTime(timeOne, timeTwo);
-			// Check Default Selection
-			defautTagSelection = base.getCurrentDropdownValue(getDocview_AudioRedactions());
-			base.textCompareEquals(defautTagSelection, Input.defaultRedactionTag,
-					"In default : Application automatically selected the ‘Default Redaction Tag’",
-					"In default : invalid redaction tag selected");
-
-			base.waitForElement(getDocview_AudioRedactions());
-			getDocview_AudioRedactions().selectFromDropdown().selectByIndex(1);
-			driver.waitForPageToBeReady();
-
-			
-			// click on save button
-			getSaveButton().waitAndClick(20);
-			
-			driver.waitForPageToBeReady();
-			base.VerifySuccessMessage("Record Updated Successfully");
-			base.CloseSuccessMsgpopup();
+			base.failedStep("Redaction can't be done");
 			
 			
 

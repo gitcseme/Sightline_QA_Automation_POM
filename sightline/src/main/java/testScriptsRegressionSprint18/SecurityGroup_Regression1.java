@@ -622,29 +622,19 @@ public class SecurityGroup_Regression1 {
 				"Verify that as DA user, clicking on project should redirect to default security group and select the non-domain project from header drop down where DAU is a RMU , clicking on Back to Dashboard user is redirecting to last access Domain Dashboard");
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
-		UserManagement userManagement = new UserManagement(driver);
-
-		// pre-req assign nondomain projet to da user
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.filterByName(Input.da1userName);
-		String userName = userManagement.getfirstUserName();
-		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitTime(5);
-		baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.NonDomainProject));
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		// go to project
+		baseClass.stepInfo("Click on any project");
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify default security group in selected project in Rmu");
 		driver.waitForPageToBeReady();
-		baseClass.selectproject(Input.NonDomainProject);
-		driver.waitForPageToBeReady();
+	    baseClass.waitTime(5);
 		String actualString = "Default Security Group";
 		String ExpectedString = baseClass.getsgNames().getText();
 		System.out.println(ExpectedString);
@@ -664,10 +654,6 @@ public class SecurityGroup_Regression1 {
 		}
 		loginPage.logout();
 
-		// restore default
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 	}
 
 	/**
@@ -751,26 +737,19 @@ public class SecurityGroup_Regression1 {
 		DomainDashboard domainDash = new DomainDashboard(driver);
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		DataSets data = new DataSets(driver);
-		UserManagement userManagement = new UserManagement(driver);
-
-		// pre-req assign nondomain projet to da user
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.filterByName(Input.da1userName);
-		String userName = userManagement.getfirstUserName();
-		userManagement.AssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
 
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
 
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.NonDomainProject));
-		domainDash.getprojectnamelink(Input.NonDomainProject).waitAndClick(5);
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify Default Security Group display");
 		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
 		String actualString = "Default Security Group";
 		String ExpectedString = baseClass.getsgNames().getText();
 		System.out.println(ExpectedString);
@@ -798,13 +777,8 @@ public class SecurityGroup_Regression1 {
 			baseClass.failedStep("Not Navigated back to domain admin home page");
 		}
 		loginPage.logout();
-
-		// restore default
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.UnAssignUserToProject(Input.NonDomainProject, Input.ReviewManager, userName);
-		loginPage.logout();
-
 	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint18;
+package testScriptsRegressionSprint19;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -159,6 +159,88 @@ public class Ingestion_Regression_4 {
 		baseClass.stepInfo("verify 50 record preview details in popup");
 		ingestionPage.verifyHeaderCountInPreviewRecordPopupPage();
 		ingestionPage.validateRecordsCountInIngestionPreviewScreen();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/08/2022 TestCase Id:RPMXCON-48003
+	 * Description :To Verify email metadata field is populated correctly for ingested data 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48003",enabled = true, groups = { "regression" })
+	public void verifyEmailMetaDataField() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48003");
+		baseClass.stepInfo("To Verify email metadata field is populated correctly for ingested data");
+		String ingestionName = null;
+		String[] values = {"EmailAllDomainCount","EmailAllDomains","EmailAuthorDomain","EmailRecipientNames",
+				"EmailToAddresses","EmailToNames" , "EmailRecipientDomainCount"};
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
+		if (status == false) {
+			ingestionPage.performGD_994NativeFolderIngestion(Input.datLoadFile2,Input.nativeLoadFile2,Input.textLoadFile2);
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.GD994NativeTextForProductionFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.GD994NativeTextForProductionFolder);
+		}
+		baseClass.stepInfo("Search document and go to doclist");
+		sessionSearch.basicSearchWithMetaDataQuery(ingestionName, Input.metadataIngestion);
+		sessionSearch.ViewInDocList();
+		docList = new DocListPage(driver);
+		baseClass.stepInfo("Verify values displayed on the selected Coulumns");
+		docList.SelectColumnDisplayByRemovingAddNewValues(values);
+		for(int j =4;j<=values.length+4;j++) {
+			String data =docList.getDataInDoclist(1,j).getText();
+			if(docList.getDataInDoclist(1,j).isDisplayed() && !data.isEmpty()) {
+				baseClass.passedStep("values displayed in selected column");
+			}
+			else {
+				for(int i=2;i<=values.length;i++) {
+					String datavalue =docList.getDataInDoclist(i,j).getText();
+					if(docList.getDataInDoclist(i,j).isDisplayed() && !datavalue.isEmpty()) {
+						baseClass.passedStep("values displayed in selected column");
+						break;
+					}
+				}
+			}
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/08/2022  TestCase Id:RPMXCON-48958 
+	 * Description :Verify user should be able to run couple of new ingestion simultaneously and make sure no Indexing is failed
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48958",enabled = true, groups = { "regression" } )
+	public void verifyCoupleOfIngestionsRunSimultaneously() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48958");
+		baseClass.stepInfo("Verify user should be able to run couple of new ingestion simultaneously");
+		String[] dataset = { Input.UniCodeFilesFolder, Input.HiddenPropertiesFolder };
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status1 = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		ingestionPage.navigateToIngestionPage();
+		boolean status2 = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status1 == false && status2 == false) {
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			driver.waitForPageToBeReady();
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+			ingestionPage.multipleIngestionCopying(2);
+			ingestionPage.multipleIngestionIndexing(dataset, 2);
+			ingestionPage.approveMultipleIngestion(2);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			baseClass.failedMessage("Required Dataset already ingested in this project,unable to ingest again simultaneously");
+		}
 		loginPage.logout();
 	}
 	

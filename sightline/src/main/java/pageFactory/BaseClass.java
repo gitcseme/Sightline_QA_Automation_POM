@@ -311,20 +311,20 @@ public class BaseClass {
 	public Element getPageTitle() {
 		return driver.FindElementByXPath("//h1[@class='page-title']");
 	}
-	
+
 	public Element getSelectRole(String role) {
-		return driver.FindElementByXPath("//select[@name='Role']/option[text()='"+role+"']");
+		return driver.FindElementByXPath("//select[@name='Role']/option[text()='" + role + "']");
 	}
-	
+
 	public Element getSelectProjectTo(String project) {
-		return driver.FindElementByXPath("//select[@id='ddlAvailableProjects']/option[text()='"+project+"']");
+		return driver.FindElementByXPath("//select[@id='ddlAvailableProjects']/option[text()='" + project + "']");
 	}
-	
-	//add by Aathith
+
+	// add by Aathith
 	public Element getSelectDomain(String Domain) {
-		return driver.FindElementByXPath("//select[@id='ddlAvailableDomains']/option[text()='"+Domain+"']");
+		return driver.FindElementByXPath("//select[@id='ddlAvailableDomains']/option[text()='" + Domain + "']");
 	}
-	
+
 	public Element getLoginedUserRole() {
 		return driver.FindElementByXPath("//span[@class='badge bg-color-greenLight']");
 	}
@@ -804,6 +804,7 @@ public class BaseClass {
 			}
 		}
 	}
+
 	public void selectdomain(final String domain) {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -946,33 +947,23 @@ public class BaseClass {
 	}
 
 	public void impersonateSAtoRMU() throws InterruptedException {
+		waitForElement(getSignoutMenu());
 		getSignoutMenu().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getChangeRole().Visible();
-			}
-		}), Input.wait60);
-		getChangeRole().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectRole().Visible();
-			}
-		}), Input.wait60);
+		waitForElement(getChangeRole());
+		getChangeRole().waitAndClick(5);
+		waitForElement(getSelectRole());
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		Thread.sleep(3000);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getAvlDomain().Visible();
-			}
-		}), Input.wait30);
+		waitTime(1);
+		waitForElement(getAvlDomain());
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-		Thread.sleep(3000);
+		waitForElement(getAvlProject());
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-		Thread.sleep(3000);
+		waitForElement(getSelectSecurityGroup());
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-		getSaveChangeRole().Click();
-		System.out.println("Impersnated from SA to RMU");
-		UtilityLog.info("Impersnated from SA to RMU");
+		waitForElement(getSaveChangeRole());
+		getSaveChangeRole().waitAndClick(3);
+		System.out.println("Impersonated from SA to RMU");
+		UtilityLog.info("Impersonated from SA to RMU");
 
 		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 			try {
@@ -1944,19 +1935,16 @@ public class BaseClass {
 			}), Input.wait60);
 			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
 			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
+			waitForElement(getAvlDomain());
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-			Thread.sleep(3000);
+			waitForElement(getAvlProject());
 			getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-			Thread.sleep(3000);
+			waitForElement(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			waitForElement(getSaveChangeRole());
 			getSaveChangeRole().waitAndClick(10);
-			System.out.println("Impersnated from DA to RMU");
-			UtilityLog.info("Impersnated from DA to RMU");
+			System.out.println("Impersonated from DA to RMU");
+			UtilityLog.info("Impersonated from DA to RMU");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -1978,6 +1966,7 @@ public class BaseClass {
 
 	public void impersonateDAtoReviewer() {
 		try {
+			waitForElement(getSignoutMenu());
 			getSignoutMenu().waitAndClick(10);
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -1992,19 +1981,16 @@ public class BaseClass {
 			}), Input.wait60);
 			getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
 			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
+			waitForElement(getAvlDomain());
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-			Thread.sleep(3000);
+			waitForElement(getAvlProject());
 			getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-			Thread.sleep(3000);
+			waitForElement(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+			waitForElement(getSaveChangeRole());
 			getSaveChangeRole().waitAndClick(5);
-			System.out.println("Impersnated from DA to Reviewer");
-			UtilityLog.info("Impersnated from DA to Reviewer");
+			System.out.println("Impersonated from DA to Reviewer");
+			UtilityLog.info("Impersonated from DA to Reviewer");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -3458,7 +3444,7 @@ public class BaseClass {
 		String ExpectedColor = org.openqa.selenium.support.Color.fromString(color).asHex();
 		System.out.println(ExpectedColor);
 		if (ExpectedColor.equals("#e74735")) {
-		passedStep("BullHorn icon is highlighted red as expected");
+			passedStep("BullHorn icon is highlighted red as expected");
 		} else {
 			failedStep("Bullhorn icon is not red as expected");
 		}
@@ -3629,8 +3615,8 @@ public class BaseClass {
 					System.out.println(currentValue);
 					excelData.add(currentValue);
 				}
-				
-                  break;
+
+				break;
 			}
 		}
 		return excelData;
@@ -3639,335 +3625,293 @@ public class BaseClass {
 
 	/**
 	 * @author
+	 * @return
 	 * @Description compare list with list using contains
+	 * @Modified By :Jeevitha
 	 */
-	public void compareListViaContains(List<String> baseList, List<String> compareList) {
+
+	public boolean compareListViaContains(List<String> baseList, List<String> compareList) {
+		boolean flag = false;
+
 		for (int i = 0; i < baseList.size(); i++) {
 			if (baseList.get(i).contains(compareList.get(i))) {
 				Assert.assertEquals(true, true);
+				flag = true;
 			} else {
 				failedStep("Base String doesn't contains compare String");
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param textList
+	 * @Description verify that list of text are not available in webPage
+	 */
+	public void isTextAreNotAvailableInWebPage(String[] textList) {
+		driver.waitForPageToBeReady();
+		for (String text : textList) {
+			if (!textValue(text).isElementAvailable(1)) {
+				passedStep(text + "  is displayed");
+			} else {
+				failedStep(text + " not displayed");
 			}
 		}
 	}
 
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param textList
-		 * @Description verify that list of text are not available in webPage
-		 */
-		public void isTextAreNotAvailableInWebPage(String[] textList) {
-			driver.waitForPageToBeReady();
-			for(String text:textList) {
-				if(!textValue(text).isElementAvailable(1)) {
-					passedStep(text +"  is displayed");
-				}else {
-					failedStep(text+ " not displayed");
-				}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domain
+	 * @param projectName
+	 * @param securityGroup
+	 * @throws InterruptedException
+	 * @Descripiton imporsonate rmu to reviewer with out taken input as domain
+	 *              projectname and security group
+	 */
+	public void impersonateRMUtoReviewer(String domain, String projectName, String securityGroup)
+			throws InterruptedException {
+		getSignoutMenu().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
 			}
-		}
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param domain
-		 * @param projectName
-		 * @param securityGroup
-		 * @throws InterruptedException
-		 * @Descripiton imporsonate rmu to reviewer with out taken input as domain projectname and security group
-		 */
-		public void impersonateRMUtoReviewer(String domain,String projectName, String securityGroup) throws InterruptedException {
-			getSignoutMenu().waitAndClick(10);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getChangeRole().Visible();
-				}
-			}), Input.wait90);
-			getChangeRole().waitAndClick(10);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectRole().Visible();
-				}
-			}), Input.wait60);
-			getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
-			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
-			getAvlDomain().selectFromDropdown().selectByVisibleText(domain);
-			Thread.sleep(3000);
-			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
-			Thread.sleep(3000);
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
-			getSaveChangeRole().waitAndClick(5);
-			System.out.println("Impersnated from RMU to Reviewer");
-			UtilityLog.info("Impersnated from RMU to Reviewer");
+		}), Input.wait90);
+		getChangeRole().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(domain);
+		Thread.sleep(3000);
+		getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+		Thread.sleep(3000);
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from RMU to Reviewer");
+		UtilityLog.info("Impersnated from RMU to Reviewer");
 
-			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
-				try {
-					getGlobalMessagePopUpClose().waitAndClick(5);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @Description oprn imporsonate tab
-		 */
-		public void openImpersonateTab() {
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description oprn imporsonate tab
+	 */
+	public void openImpersonateTab() {
+		driver.waitForPageToBeReady();
+		waitForElement(getSignoutMenu());
+		getSignoutMenu().waitAndClick(10);
+		waitForElement(getChangeRole());
+		getChangeRole().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		stepInfo("open impersonate tab");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param role
+	 * @Description select role in imporsonate tab
+	 */
+	public void selectImpersonateRole(String role) {
+		driver.waitForPageToBeReady();
+		waitForElement(getSelectRole());
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+		driver.waitForPageToBeReady();
+		stepInfo("select imporsonate role");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param domain
+	 * @Description select domain in imporsonate tab
+	 */
+	public void selectImpersonateDomain(String domain) {
+		driver.waitForPageToBeReady();
+		waitForElement(getSelectDomain());
+		getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
+		stepInfo(domain + " domain was selected");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Desction wait for task should be completed and get notified
+	 */
+	public void waitForNotification() {
+		if (getRedBullHornIcon().isElementAvailable(350)) {
+			passedStep("notification got received");
+		} else {
+			failedStep("notification still not received,it's get too much time");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param dataList
+	 */
+	public void printListString(List<String> dataList) {
+		// Using For Each loop to print String list
+		stepInfo("--------------------------------");
+		for (String value : dataList) {
+			stepInfo(value);
+		}
+		stepInfo("--------------------------------");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param listarray - source array
+	 * @param dataList  - list to compare
+	 * @param sort      - sort condition if required
+	 * @param passMsg
+	 * @param failMsg
+	 */
+	public void compareArraywithDataList(String[] listarray, List<String> dataList, Boolean sort, String passMsg,
+			String failMsg) {
+
+		List<String> value = new ArrayList<String>();
+		for (int i = 0; i < listarray.length; i++) {
+			value.add(listarray[i]);
+		}
+
+		if (sort) {
+			Collections.sort(value);
+			Collections.sort(dataList);
+		}
+		listCompareEquals(dataList, value, passMsg, failMsg);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/04/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param element
+	 */
+	public void mouseHoverOnElement(Element element) {
+		try {
+			Actions ac = new Actions(driver.getWebDriver());
+			ac.moveToElement(element.getWebElement()).build().perform();
+		} catch (Exception e) {
+			e.printStackTrace();
+			failedStep("Failed to mouse hover");
+		}
+	}
+
+	/**
+	 * @author Indium Raghuram Description : Date:07/04/21 Modified date: N/A
+	 *         Modified by: N/A
+	 */
+	public Boolean stringNotEmpty(String content) {
+		if (content != "") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @author Indium Raghuram Description : Date:07/05/21 Modified date: N/A
+	 *         Modified by: N/A
+	 */
+	public Boolean ValidateElement_PresenceReturn(Element element) {
+		if (element.isElementAvailable(5)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param project
+	 * @Description selecting project name while impersonate the role
+	 */
+	public void selectImpersonateProject(String project) {
+		driver.waitForPageToBeReady();
+		waitForElement(getSelectProjectTo());
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(project);
+		stepInfo("impersonate tab project was selected");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param bgColor
+	 * @param subStringPosition
+	 * @return
+	 * @Description : Modified rgbTohexaConvertor method based on customization
+	 */
+	public String rgbTohexaConvertorCustomized(String bgColor, int subStringPosition) {
+		String s1 = bgColor.substring(subStringPosition);
+		bgColor = s1.replace('(', ' ');
+		bgColor = bgColor.replace(')', ' ');
+		StringTokenizer st = new StringTokenizer(bgColor);
+		System.out.println(bgColor);
+		int r = Integer.parseInt(st.nextToken(",").trim());
+		int g = Integer.parseInt(st.nextToken(",").trim());
+		int b = Integer.parseInt(st.nextToken(",").trim());
+
+		Color c = new Color(r, g, b);
+		String hex = "#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase();
+
+		stepInfo("RGB color " + bgColor + " is converted to hex value -" + hex);
+		return hex;
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param securityGroup
+	 * @Description select security group on impersonate tab
+	 */
+	public void selectImpersonateSecurityGroup(String securityGroup) {
+		driver.waitForPageToBeReady();
+		waitForElement(getSelectSecurityGroup());
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+		driver.waitForPageToBeReady();
+		stepInfo("impersonate tab security group was selected");
+	}
+
+	/**
+	 * @author Vijaya.Rani
+	 */
+	public void impersonateSAtoDA() {
+		try {
 			driver.waitForPageToBeReady();
 			waitForElement(getSignoutMenu());
 			getSignoutMenu().waitAndClick(10);
 			waitForElement(getChangeRole());
-			getChangeRole().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			stepInfo("open impersonate tab");
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param role
-		 * @Description select role in imporsonate tab 
-		 */
-		public void selectImpersonateRole(String role) {
-			driver.waitForPageToBeReady();
+			getChangeRole().waitAndClick(5);
 			waitForElement(getSelectRole());
-			getSelectRole().selectFromDropdown().selectByVisibleText(role);
-			driver.waitForPageToBeReady();
-			stepInfo("select imporsonate role");
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param domain
-		 * @Description select domain in imporsonate tab
-		 */
-		public void selectImpersonateDomain(String domain) {
-			driver.waitForPageToBeReady();
-			waitForElement(getSelectDomain());
-			getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
-			stepInfo(domain+" domain was selected");
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @Desction wait for task should be completed and get notified
-		 */
-		public void waitForNotification() {
-			if(getRedBullHornIcon().isElementAvailable(350)) {
-				passedStep("notification got received");
-			}else {
-				failedStep("notification still not received,it's get too much time");
-			}
-		}
-
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 07/04/22
-		 * @ModifiedOn : N/A
-		 * @ModifiedBy : N/A
-		 * @param dataList
-		 */
-		public void printListString(List<String> dataList) {
-			// Using For Each loop to print String list
-			stepInfo("--------------------------------");
-			for (String value : dataList) {
-				stepInfo(value);
-			}
-			stepInfo("--------------------------------");
-		}
-		
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 07/04/22
-		 * @ModifiedOn : N/A
-		 * @ModifiedBy : N/A
-		 * @param listarray - source array
-		 * @param dataList - list to compare
-		 * @param sort - sort condition if required
-		 * @param passMsg
-		 * @param failMsg
-		 */
-		public void compareArraywithDataList(String[] listarray, List<String> dataList, Boolean sort, String passMsg,
-				String failMsg) {
-
-			List<String> value = new ArrayList<String>();
-			for (int i = 0; i < listarray.length; i++) {
-				value.add(listarray[i]);
-			}
-
-			if (sort) {
-				Collections.sort(value);
-				Collections.sort(dataList);
-			}
-			listCompareEquals(dataList, value, passMsg, failMsg);
-		}
-		
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 07/04/22
-		 * @ModifiedOn : N/A
-		 * @ModifiedBy : N/A
-		 * @param element
-		 */
-		public void mouseHoverOnElement(Element element) {
-			try {
-				Actions ac = new Actions(driver.getWebDriver());
-				ac.moveToElement(element.getWebElement()).build().perform();
-			} catch (Exception e) {
-				e.printStackTrace();
-				failedStep("Failed to mouse hover");
-			}
-		}
-		
-		/**
-		 * @author Indium Raghuram Description : Date:07/04/21 Modified date: N/A
-		 *         Modified by: N/A
-		 */
-		public Boolean stringNotEmpty(String content) {
-			if (content != "") {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		
-		/**
-		 * @author Indium Raghuram Description : Date:07/05/21 Modified date: N/A
-		 *         Modified by: N/A
-		 */
-		public Boolean ValidateElement_PresenceReturn(Element element) {
-			if (element.isElementAvailable(5)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param project
-		 * @Description selecting project name while impersonate the role
-		 */
-		public void selectImpersonateProject(String project) {
-			driver.waitForPageToBeReady();
-			waitForElement(getSelectProjectTo());
-			getSelectProjectTo().selectFromDropdown().selectByVisibleText(project);
-			stepInfo("impersonate tab project was selected");
-		}
-		
-		/**
-		 * @author Raghuram.A
-		 * @param bgColor
-		 * @param subStringPosition
-		 * @return
-		 * @Description : Modified rgbTohexaConvertor method based on customization
-		 */
-		public String rgbTohexaConvertorCustomized(String bgColor, int subStringPosition) {
-			String s1 = bgColor.substring(subStringPosition);
-			bgColor = s1.replace('(', ' ');
-			bgColor = bgColor.replace(')', ' ');
-			StringTokenizer st = new StringTokenizer(bgColor);
-			System.out.println(bgColor);
-			int r = Integer.parseInt(st.nextToken(",").trim());
-			int g = Integer.parseInt(st.nextToken(",").trim());
-			int b = Integer.parseInt(st.nextToken(",").trim());
-
-			Color c = new Color(r, g, b);
-			String hex = "#" + Integer.toHexString(c.getRGB()).substring(2).toUpperCase();
-
-			stepInfo("RGB color " + bgColor + " is converted to hex value -" + hex);
-			return hex;
-		}
-		
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @param securityGroup
-		 * @Description select security group on impersonate tab
-		 */
-		public void selectImpersonateSecurityGroup(String securityGroup) {
-			driver.waitForPageToBeReady();
-			waitForElement(getSelectSecurityGroup());
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
-			driver.waitForPageToBeReady();
-			stepInfo("impersonate tab security group was selected");
-		}
-
-		/**
-		 * @author Vijaya.Rani
-		 */
-		public void impersonateSAtoDA() {
-			try {
-				driver.waitForPageToBeReady();
-				waitForElement(getSignoutMenu());
-				getSignoutMenu().waitAndClick(10);
-				waitForElement(getChangeRole());
-				getChangeRole().waitAndClick(5);
-				waitForElement(getSelectRole());
-				getSelectRole().selectFromDropdown().selectByVisibleText("Domain Administrator");
-				waitForElement(getAvlDomain());
-				Thread.sleep(3000);
-				getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-				Thread.sleep(3000);
-				waitForElement(getSaveChangeRole());
-				getSaveChangeRole().waitAndClick(5);
-				System.out.println("Impersnated from SA to DA");
-				UtilityLog.info("Impersnated from SA to DA");
-
-				if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
-					try {
-						getGlobalMessagePopUpClose().waitAndClick(5);
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-				}
-			} catch (Exception E) {
-				E.printStackTrace(pw);
-				UtilityLog.info(sw.toString());
-			}
-		}
-
-	
-		/**
-		 * @author Aathith.Senthilkumar
-		 * @return current logined user role
-		 * @Description get current logined user role
-		 */
-		public String getCurrentLoginedUserRole() {
-			return getLoginedUserRole().getText().trim();
-		}
-
-		
-		public void impersonateSAtoRMU(String projectName) throws InterruptedException {
-			getSignoutMenu().waitAndClick(10);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getChangeRole().Visible();
-				}
-			}), Input.wait60);
-			getChangeRole().Click();
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getSelectRole().Visible();
-				}
-			}), Input.wait60);
-			getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+			getSelectRole().selectFromDropdown().selectByVisibleText("Domain Administrator");
+			waitForElement(getAvlDomain());
 			Thread.sleep(3000);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getAvlDomain().Visible();
-				}
-			}), Input.wait30);
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 			Thread.sleep(3000);
-			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
-			Thread.sleep(3000);
-			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-			getSaveChangeRole().Click();
-			System.out.println("Impersnated from SA to RMU");
-			UtilityLog.info("Impersnated from SA to RMU");
+			waitForElement(getSaveChangeRole());
+			getSaveChangeRole().waitAndClick(5);
+			System.out.println("Impersnated from SA to DA");
+			UtilityLog.info("Impersnated from SA to DA");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -3976,77 +3920,82 @@ public class BaseClass {
 					// TODO: handle exception
 				}
 			}
-
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
 		}
-		/**
-		 * @author Krishna Description : Impersonate Reviewer to PA
-		 */
-		public void impersonateReviewertoPA(String projectName) {
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @return current logined user role
+	 * @Description get current logined user role
+	 */
+	public String getCurrentLoginedUserRole() {
+		return getLoginedUserRole().getText().trim();
+	}
+
+	public void impersonateSAtoRMU(String projectName) throws InterruptedException {
+		getSignoutMenu().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait60);
+		getChangeRole().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+		Thread.sleep(3000);
+		getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+		Thread.sleep(3000);
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+		getSaveChangeRole().Click();
+		System.out.println("Impersnated from SA to RMU");
+		UtilityLog.info("Impersnated from SA to RMU");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 			try {
-				getSignoutMenu().Click();
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getChangeRole().Visible();
-					}
-				}), Input.wait60);
-				getChangeRole().Click();
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getSelectRole().Visible();
-					}
-				}), Input.wait60);
-				getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
-
-				Thread.sleep(1000);
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getAvlDomain().Visible();
-					}
-				}), Input.wait30);
-				getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-
-				Thread.sleep(1000);
-
-				getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
-				Thread.sleep(1000);
-
-				getSaveChangeRole().waitAndClick(5);
-				System.out.println("Impersnated from Reviewer to PA");
-
-				UtilityLog.info("Impersnated from Reviewer to PA");
-
-				if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
-					try {
-						getGlobalMessagePopUpClose().waitAndClick(5);
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-				}
-			} catch (Exception E) {
-				E.printStackTrace(pw);
-				UtilityLog.info(sw.toString());
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 		}
-		
 
-		public void impersonateSAtoPA(String projectName) throws InterruptedException {
-			getSignoutMenu().waitAndClick(20);
+	}
+
+	/**
+	 * @author Krishna Description : Impersonate Reviewer to PA
+	 */
+	public void impersonateReviewertoPA(String projectName) {
+		try {
+			getSignoutMenu().Click();
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getChangeRole().Visible();
 				}
-			}), Input.wait30);
+			}), Input.wait60);
 			getChangeRole().Click();
 
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSelectRole().Visible();
 				}
-			}), Input.wait30);
+			}), Input.wait60);
 			getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
-			Thread.sleep(3000);
+
+			Thread.sleep(1000);
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getAvlDomain().Visible();
@@ -4054,13 +4003,15 @@ public class BaseClass {
 			}), Input.wait30);
 			getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 
-			getSelectProjectTo().selectFromDropdown().selectByVisibleText(projectName);
+			getAvlProject().selectFromDropdown().selectByVisibleText(projectName);
+			Thread.sleep(1000);
 
 			getSaveChangeRole().waitAndClick(5);
-			System.out.println("Impersnated from SA to PA");
-			UtilityLog.info("Impersnated from SA to PA");
+			System.out.println("Impersnated from Reviewer to PA");
+
+			UtilityLog.info("Impersnated from Reviewer to PA");
 
 			if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
 				try {
@@ -4069,250 +4020,292 @@ public class BaseClass {
 					// TODO: handle exception
 				}
 			}
-			
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+	}
+
+	public void impersonateSAtoPA(String projectName) throws InterruptedException {
+		getSignoutMenu().waitAndClick(20);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait30);
+		getChangeRole().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait30);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+		Thread.sleep(3000);
+
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(projectName);
+
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from SA to PA");
+		UtilityLog.info("Impersnated from SA to PA");
+
+		if (getGlobalMessagePopUpClose().isElementAvailable(10)) {
+			try {
+				getGlobalMessagePopUpClose().waitAndClick(5);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 
-		public void copyandPasteString(String textToCopy, Element element) {
-			Actions action = new Actions(driver.getWebDriver());
-			 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			    StringSelection str = new StringSelection(textToCopy);
-			   clipboard.setContents(str, null );
-			   
-			   waitForElement(element);
-			   element.waitAndClick(5);
-			   element.Clear();
-			   action.keyDown(Keys.CONTROL);
-			   action.sendKeys("v");
-			   action.keyUp(Keys.CONTROL);
-			   action.build().perform();
+	}
 
-		}
-		
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 07/28/22
-		 * @ModifiedOn : N/A
-		 * @ModifiedBy : N/A
-		 * @param dataPair - hash map data to print
-		 */
-		public void printHashMapDetails(HashMap<String, Integer> dataPair) {
-			// Using For Each loop to print HashMap
-			stepInfo("--------------------------------");
-			for (String key : dataPair.keySet()) {
-				System.out.println(key + " = " + dataPair.get(key));
-				stepInfo(key + " = " + dataPair.get(key));
-			}
-			stepInfo("--------------------------------");
-		}
+	public void copyandPasteString(String textToCopy, Element element) {
+		Actions action = new Actions(driver.getWebDriver());
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		StringSelection str = new StringSelection(textToCopy);
+		clipboard.setContents(str, null);
 
-		/**
-		 * @author Raghuram.A
-		 * @Description : only for single data ( modification to be done based on future
-		 *              req )
-		 * @param colllectionData
-		 * @param expectedKey
-		 * @param additional
-		 * @return
-		 */
-		public String returnKey(HashMap<String, String> colllectionData, String expectedKey, Boolean additional) {
-			String dataName = null;
-			// Invoke keySet() on the HashMap object to get the keys as a set
-			Set<String> keys = colllectionData.keySet();
-			if (expectedKey.equalsIgnoreCase("")) {
-				for (String key : keys) {
-					System.out.println(key);
-					dataName = key;
-				}
-			}
-			return dataName;
+		waitForElement(element);
+		element.waitAndClick(5);
+		element.Clear();
+		action.keyDown(Keys.CONTROL);
+		action.sendKeys("v");
+		action.keyUp(Keys.CONTROL);
+		action.build().perform();
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 07/28/22
+	 * @ModifiedOn : N/A
+	 * @ModifiedBy : N/A
+	 * @param dataPair - hash map data to print
+	 */
+	public void printHashMapDetails(HashMap<String, Integer> dataPair) {
+		// Using For Each loop to print HashMap
+		stepInfo("--------------------------------");
+		for (String key : dataPair.keySet()) {
+			System.out.println(key + " = " + dataPair.get(key));
+			stepInfo(key + " = " + dataPair.get(key));
 		}
-		
-		/**
-		 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
-		 * @Description:This method used to pass length character 
-		 * @param size passing count
-		 */
-		public String passingCharacterBasedOnSize(int size) {
-			char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-			StringBuilder sb = new StringBuilder(4000);
-			Random random = new Random();
-			for (int i = 0; i < size; i++) {
-				char c = chars[random.nextInt(chars.length)];
-				sb.append(c);
+		stepInfo("--------------------------------");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Description : only for single data ( modification to be done based on future
+	 *              req )
+	 * @param colllectionData
+	 * @param expectedKey
+	 * @param additional
+	 * @return
+	 */
+	public String returnKey(HashMap<String, String> colllectionData, String expectedKey, Boolean additional) {
+		String dataName = null;
+		// Invoke keySet() on the HashMap object to get the keys as a set
+		Set<String> keys = colllectionData.keySet();
+		if (expectedKey.equalsIgnoreCase("")) {
+			for (String key : keys) {
+				System.out.println(key);
+				dataName = key;
 			}
-			String output = sb.toString();
-			return output;
 		}
-		
-		/**
-		 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
-		 * @Description:This method used to pass length character with hyphen,underscore and space. 
-		 * @param size passing count
-		 */
-		public String passingCharacterUsingCombination(int size) {
-			char[] chars = "abcde fghi-jklmnopq_rstuvwxyz".toCharArray();
-			StringBuilder sb = new StringBuilder(4000);
-			Random random = new Random();
-			for (int i = 0; i < size; i++) {
-				char c = chars[random.nextInt(chars.length)];
-				sb.append(c);
-			}
-			String output = sb.toString();
-			return output;
+		return dataName;
+	}
+
+	/**
+	 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
+	 * @Description:This method used to pass length character
+	 * @param size passing count
+	 */
+	public String passingCharacterBasedOnSize(int size) {
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(4000);
+		Random random = new Random();
+		for (int i = 0; i < size; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
 		}
-		
-		/**
-		 * @author Indium-Baskar date: 28/07/2022 Modified date: 2/07/2022
-		 * @Description:This method used check to check dropdown value exists based on passing string in parameter
-		 * @param dropDownElement 
-		 * @param dropDownValue 
-		 */
-		public boolean dropDownValueCheck(Element dropDownElement,String dropDownValue ) {
-		String valueBeingChecked=dropDownValue;
-		boolean flag=false;
+		String output = sb.toString();
+		return output;
+	}
+
+	/**
+	 * @author Indium-Baskar date: 25/07/2022 Modified date: 25/07/2022
+	 * @Description:This method used to pass length character with hyphen,underscore
+	 *                   and space.
+	 * @param size passing count
+	 */
+	public String passingCharacterUsingCombination(int size) {
+		char[] chars = "abcde fghi-jklmnopq_rstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(4000);
+		Random random = new Random();
+		for (int i = 0; i < size; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
+		}
+		String output = sb.toString();
+		return output;
+	}
+
+	/**
+	 * @author Indium-Baskar date: 28/07/2022 Modified date: 2/07/2022
+	 * @Description:This method used check to check dropdown value exists based on
+	 *                   passing string in parameter
+	 * @param dropDownElement
+	 * @param dropDownValue
+	 */
+	public boolean dropDownValueCheck(Element dropDownElement, String dropDownValue) {
+		String valueBeingChecked = dropDownValue;
+		boolean flag = false;
 		WebElement dropdown = dropDownElement.getWebElement();
-		Select DrpDwnSel=new Select(dropdown);
-		List<WebElement> DrpDwnList=DrpDwnSel.getOptions();
+		Select DrpDwnSel = new Select(dropdown);
+		List<WebElement> DrpDwnList = DrpDwnSel.getOptions();
 		for (WebElement webElement : DrpDwnList) {
-			 if (webElement.getText().contains(valueBeingChecked)){
-				 passedStep(dropDownValue+"value displayed in dropdown");
-		         flag=true;
-		         break;
-		         }
+			if (webElement.getText().contains(valueBeingChecked)) {
+				passedStep(dropDownValue + "value displayed in dropdown");
+				flag = true;
+				break;
+			}
 		}
 		return flag;
-		}
-		
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 8/8/22
-		 * @param comparisionType
-		 * @param expectedDate
-		 * @param actualDate
-		 * @description : date Comparision
-		 */
-		public void dateComparision(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
+	}
 
-			// BEFORE comparison
-			if (comparisionType.equalsIgnoreCase("Before")) {
-				printResutInReport(actualDate.before(expectedDate),
-						"actualDate : " + actualDate + " comes before expected date : " + expectedDate,
-						"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
-			}
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 8/8/22
+	 * @param comparisionType
+	 * @param expectedDate
+	 * @param actualDate
+	 * @description : date Comparision
+	 */
+	public void dateComparision(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
 
-			// AFTER comparison
-			else if (comparisionType.equalsIgnoreCase("After")) {
-				printResutInReport(actualDate.after(expectedDate),
-						"actualDate : " + actualDate + " comes after expected date : " + expectedDate,
-						"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
-			}
-
-			// ON comparison
-			else if (comparisionType.equalsIgnoreCase("On")) {
-				printResutInReport(actualDate.equals(expectedDate),
-						"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
-						"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate,
-						"Pass");
-			}
-
-			// BETWEEN comparison
-			else if (comparisionType.equalsIgnoreCase("Between")) {
-				if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
-					passedStep("Both dates are equal");
-				} else {
-					printResutInReport(actualDate.before(toDate) && actualDate.after(expectedDate),
-							"Actual date lies between the From " + expectedDate + " and to " + toDate + " range",
-							"Actual date doesn't lies between the From" + expectedDate + " and to " + toDate + " range",
-							"Pass");
-				}
-			}
+		// BEFORE comparison
+		if (comparisionType.equalsIgnoreCase("Before")) {
+			printResutInReport(actualDate.before(expectedDate),
+					"actualDate : " + actualDate + " comes before expected date : " + expectedDate,
+					"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
 		}
 
-		/**
-		 * @author Raghuram.A
-		 * @createdOn : 8/8/22
-		 * @param comparisionType
-		 * @param expectedDate
-		 * @param actualDate
-		 * @description : Date Comparision return
-		 */
-		public Boolean dateComparisionReturn(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
-
-			Boolean result = false;
-
-			// BEFORE comparison
-			if (comparisionType.equalsIgnoreCase("Before")) {
-				if (actualDate.before(expectedDate)) {
-					result = true;
-				}
-			}
-
-			// AFTER comparison
-			else if (comparisionType.equalsIgnoreCase("After")) {
-				if (actualDate.after(expectedDate)) {
-					result = true;
-				}
-			}
-
-			// ON comparison
-			else if (comparisionType.equalsIgnoreCase("On")) {
-				if (actualDate.equals(expectedDate)) {
-					result = true;
-				}
-			}
-
-			// BETWEEN comparison
-			else if (comparisionType.equalsIgnoreCase("Between")) {
-
-				if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
-					result = true;
-				} else if (actualDate.before(toDate) && actualDate.after(expectedDate)) {
-					result = true;
-				}
-			}
-			return result;
+		// AFTER comparison
+		else if (comparisionType.equalsIgnoreCase("After")) {
+			printResutInReport(actualDate.after(expectedDate),
+					"actualDate : " + actualDate + " comes after expected date : " + expectedDate,
+					"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
 		}
 
-		/**
-		 * @author Raghuram.A
-		 * @param comparisionType
-		 * @param actualDate
-		 * @param expectedDate
-		 * @param toDate
-		 * @param status
-		 * @description : date Comparision Message
-		 */
-		public void dateComparisonMsg(String comparisionType, String actualDate, String expectedDate, String toDate,
-				Boolean status) {
-			// BEFORE comparison
-			if (comparisionType.equalsIgnoreCase("Before")) {
-				printResutInReport(status,
-						"actualDate : " + actualDate + " comes before expected date : " + expectedDate,
-						"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
-			}
+		// ON comparison
+		else if (comparisionType.equalsIgnoreCase("On")) {
+			printResutInReport(actualDate.equals(expectedDate),
+					"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
+					"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate, "Pass");
+		}
 
-			// AFTER comparison
-			else if (comparisionType.equalsIgnoreCase("After")) {
-				printResutInReport(status,
-						"actualDate : " + actualDate + " comes after expected date : " + expectedDate,
-						"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
-			}
-
-			// ON comparison
-			else if (comparisionType.equalsIgnoreCase("On")) {
-				printResutInReport(status,
-						"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
-						"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate,
-						"Pass");
-			}
-
-			// BETWEEN comparison
-			else if (comparisionType.equalsIgnoreCase("Between")) {
-				printResutInReport(status,
+		// BETWEEN comparison
+		else if (comparisionType.equalsIgnoreCase("Between")) {
+			if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
+				passedStep("Both dates are equal");
+			} else {
+				printResutInReport(actualDate.before(toDate) && actualDate.after(expectedDate),
 						"Actual date lies between the From " + expectedDate + " and to " + toDate + " range",
 						"Actual date doesn't lies between the From" + expectedDate + " and to " + toDate + " range",
 						"Pass");
 			}
 		}
-		
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @createdOn : 8/8/22
+	 * @param comparisionType
+	 * @param expectedDate
+	 * @param actualDate
+	 * @description : Date Comparision return
+	 */
+	public Boolean dateComparisionReturn(String comparisionType, Date expectedDate, Date actualDate, Date toDate) {
+
+		Boolean result = false;
+
+		// BEFORE comparison
+		if (comparisionType.equalsIgnoreCase("Before")) {
+			if (actualDate.before(expectedDate)) {
+				result = true;
+			}
+		}
+
+		// AFTER comparison
+		else if (comparisionType.equalsIgnoreCase("After")) {
+			if (actualDate.after(expectedDate)) {
+				result = true;
+			}
+		}
+
+		// ON comparison
+		else if (comparisionType.equalsIgnoreCase("On")) {
+			if (actualDate.equals(expectedDate)) {
+				result = true;
+			}
+		}
+
+		// BETWEEN comparison
+		else if (comparisionType.equalsIgnoreCase("Between")) {
+
+			if (actualDate.equals(expectedDate) || actualDate.equals(toDate)) {
+				result = true;
+			} else if (actualDate.before(toDate) && actualDate.after(expectedDate)) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param comparisionType
+	 * @param actualDate
+	 * @param expectedDate
+	 * @param toDate
+	 * @param status
+	 * @description : date Comparision Message
+	 */
+	public void dateComparisonMsg(String comparisionType, String actualDate, String expectedDate, String toDate,
+			Boolean status) {
+		// BEFORE comparison
+		if (comparisionType.equalsIgnoreCase("Before")) {
+			printResutInReport(status, "actualDate : " + actualDate + " comes before expected date : " + expectedDate,
+					"actualDate : " + actualDate + " comes after expected date : " + expectedDate, "Pass");
+		}
+
+		// AFTER comparison
+		else if (comparisionType.equalsIgnoreCase("After")) {
+			printResutInReport(status, "actualDate : " + actualDate + " comes after expected date : " + expectedDate,
+					"actualDate : " + actualDate + " comes before expected date : " + expectedDate, "Pass");
+		}
+
+		// ON comparison
+		else if (comparisionType.equalsIgnoreCase("On")) {
+			printResutInReport(status,
+					"actualDate : " + actualDate + " matches with the expectedDate : " + expectedDate,
+					"actualDate : " + actualDate + " doesn't matches with the expectedDate : " + expectedDate, "Pass");
+		}
+
+		// BETWEEN comparison
+		else if (comparisionType.equalsIgnoreCase("Between")) {
+			printResutInReport(status,
+					"Actual date lies between the From " + expectedDate + " and to " + toDate + " range",
+					"Actual date doesn't lies between the From" + expectedDate + " and to " + toDate + " range",
+					"Pass");
+		}
+	}
+
 }
