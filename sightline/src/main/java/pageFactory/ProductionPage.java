@@ -3249,6 +3249,23 @@ public class ProductionPage {
 	public ElementCollection getCalculatedTabMetadata() {
 		return driver.FindElementsByXPath("//input[@name='TiffCalculatedList']//following-sibling::strong");
 	}
+	public ElementCollection getMetaDataValues() {
+		return driver.FindElementsByXPath("//ul[@id='tiffMetadataList']//li//strong");
+	}
+	public Element getSlipSheetCalculatedTab() {
+		return driver.FindElementByXPath("//span[text()='Calculated']//parent::a");
+	}
+	public Element getMetaDataFieldCheckBox(String FieldValue) {
+		return driver.FindElementByXPath("//ul[@id='tiffCalculatedList']//Strong[text()='"+FieldValue+"']/..//i");
+	}
+	public ElementCollection getCalculatedValues() {
+		return driver.FindElementsByXPath("//ul[@id='tiffCalculatedList']//li//strong");
+	}
+
+	
+	public ElementCollection InsertMetaDataFieldValues() {
+		return driver.FindElementsByXPath("//select[@id='selectedMetadataField']//option");
+	}
 	
 
 	public ProductionPage(Driver driver) {

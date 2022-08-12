@@ -407,6 +407,283 @@ public class Production_Regression19 {
 			loginPage.logout();
 
 		}
+		
+		/**
+		 * @author Brundha TESTCASE No:RPMXCON-49376 Date:8/12/2022
+		 * @Description:To verify that when the option "do not export PDFs for natively
+		 *                 produced docs" is enabled,and document is associated to
+		 *                 'TechIssue', then production should generate without any
+		 *                 error
+		 */
+		@Test(description = "RPMXCON-49376", enabled = true, groups = { "regression" })
+
+		public void GenerateProductionForTechIssueDocument() throws Exception {
+			UtilityLog.info(Input.prodPath);
+
+			base.stepInfo("RPMXCON-49376-from Production Component");
+			base.stepInfo(
+					"To verify that when the option 'do not export PDFs for natively produced docs' is enabled,and document is associated to 'TechIssue', then production should generate without any error");
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String foldername = "folder" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			String beginningBates = page.getRandomNumber(2);
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.selectGenerateOption(true);
+			page.selectTechIssueDoc(tagname);
+			driver.scrollPageToTop();
+			page.getDoNotProduceFullContentTiff().waitAndClick(10);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPageAndPassingText(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+			tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+			loginPage.logout();
+		}
+
+		/**
+		 * @author Brundha.T No:RPMXCON-49130 Date:8/12/2022
+		 * @Description:To verify that in Production-Slip Sheet, Metadata Field should
+		 *                 be sorted by alpha ascending
+		 **/
+
+		@Test(description = "RPMXCON-49130", enabled = true, groups = { "regression" })
+		public void verifyingSlipSheetMetaData() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			BaseClass base = new BaseClass(driver);
+			base.stepInfo("Test case Id:RPMXCON-49130- Production Component");
+			base.stepInfo("To verify that in Production-Slip Sheet, Metadata Field should be sorted by alpha ascending");
+
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProductionAndSave(productionname);
+			page.selectGenerateOption(false);
+			page.slipSheetToggleEnable();
+			driver.waitForPageToBeReady();
+			List<String> MetaDataField = base.availableListofElements(page.getMetaDataValues());
+			base.verifyOriginalSortOrder(MetaDataField, MetaDataField, "Ascending", true);
+			
+			page = new ProductionPage(driver);
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProductionAndSave(productionname1);
+			page.selectGenerateOption(true);
+			page.slipSheetToggleEnable();
+			driver.scrollingToBottomofAPage();
+			List<String> PDFMetaDataField = base.availableListofElements(page.getMetaDataValues());
+			base.verifyOriginalSortOrder(PDFMetaDataField, PDFMetaDataField, "Ascending", true);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha.T No:RPMXCON-49132 Date:8/12/2022
+		 * @Description:To verify that in Production-Slip Sheet, Calculated Field should
+		 *                 be sorted by alpha ascending
+		 **/
+
+		@Test(description = "RPMXCON-49132", enabled = true, groups = { "regression" })
+		public void verifyingSlipSheetCalculatedValues() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			BaseClass base = new BaseClass(driver);
+			base.stepInfo("Test case Id:RPMXCON-49132- Production Component");
+			base.stepInfo("To verify that in Production-Slip Sheet, Calculated Field should be sorted by alpha ascending");
+
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProductionAndSave(productionname);
+			page.selectGenerateOption(false);
+			page.slipSheetToggleEnable();
+			driver.scrollingToBottomofAPage();
+			page.getSlipSheetCalculatedTab().waitAndClick(5);
+			List<String> CalculatedFieldValue = base.availableListofElements(page.getCalculatedValues());
+			base.verifyOriginalSortOrder(CalculatedFieldValue, CalculatedFieldValue, "Ascending", true);
+			
+			page = new ProductionPage(driver);
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProductionAndSave(productionname1);
+			page.selectGenerateOption(true);
+			page.slipSheetToggleEnable();
+			driver.scrollingToBottomofAPage();
+			page.getSlipSheetCalculatedTab().waitAndClick(5);
+			List<String> PDFCalculatedFieldValue = base.availableListofElements(page.getCalculatedValues());
+			base.verifyOriginalSortOrder(PDFCalculatedFieldValue, PDFCalculatedFieldValue, "Ascending", true);
+
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha.T No:RPMXCON-48319 Date:8/12/2022
+		 * @Description:To verify that When the "Natives" component is selected and if
+		 *                 no file group type OR no tag is selected, then system should
+		 *                 provide Error message "You must select at least a file group
+		 *                 type or a tag in Native component." during Mark Complete
+		 *                 action.
+		 **/
+
+		@Test(description = "RPMXCON-48319", enabled = true, groups = { "regression" })
+		public void verifyingErrorMsgInNativeSection() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			BaseClass base = new BaseClass(driver);
+			base.stepInfo("Test case Id:RPMXCON-48319- Production Component");
+			base.stepInfo(
+					"To verify that When the \"Natives\" component is selected and if no file group type OR no tag is selected, then system should provide Error message \"You must select at least a file group type or a tag in Native component.\" during Mark Complete action.");
+
+			String ExpectedMsg="To export natives, you must select at least a file group type or a tag in the Native section.";
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.getNativeTab().Click();
+			driver.waitForPageToBeReady();
+			page.nativeFileTypeCheckBox(Input.MetaDataFileType).waitAndClick(2);
+			page.nativeFileTypeCheckBox(Input.NativeFileType).waitAndClick(2);
+			driver.scrollPageToTop();
+			page.getMarkCompleteLink().waitAndClick(5);
+			base.VerifyErrorMessage(ExpectedMsg);
+			
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha TESTCASE No:RPMXCON-47615 Date:8/12/2022
+		 * @Description:To Verify ProjectAdmin will be able to enter document selection and output information on the self production wizard
+		 */
+		@Test(description = "RPMXCON-47615", enabled = true, groups = { "regression" })
+
+		public void verifyDocCountInDocumentSelectionTab() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-47615-from Production Component");
+			base.stepInfo("To Verify ProjectAdmin will be able to enter document selection and output information on the self production wizard");
+			
+			String foldername = "folder" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			String beginningBates = page.getRandomNumber(2);
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			driver.scrollPageToTop();
+			page.getMarkCompleteLink().Click();
+			base.waitTime(2);
+			String DocCount=page.getDocumentSelectionLink().getText();
+			System.out.println("Document Count is:" + DocCount);
+			base.digitCompareEquals(PureHit, Integer.valueOf(DocCount), "Total Document count is displayed ","Document is not dispalyed");
+			loginPage.logout();
+		}
+		
+		
+		/**
+		 * @author Brundha.T No:RPMXCON-47972 Date:8/12/2022
+		 * @Description:To Verify Production should not error out for (Bates Number) in SlipSheet.
+		 **/
+
+		@Test(description = "RPMXCON-47972", enabled = true, groups = { "regression" })
+		public void verifyingSlipSheetBatesNumberWithoutError() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			BaseClass base = new BaseClass(driver);
+			base.stepInfo("Test case Id:RPMXCON-47972- Production Component");
+			base.stepInfo("To Verify Production should not error out for (Bates Number) in SlipSheet.");
+
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProductionAndSave(productionname);
+			page.fillingDATSection();
+			page.selectGenerateOption(false);
+			page.slipSheetToggleEnable();
+			page.getSlipSheetCalculatedTab().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			page.getMetaDataFieldCheckBox(Input.batesNumber).waitAndClick(5);
+			driver.scrollPageToTop();
+			page.getMarkCompleteLink().waitAndClick(5);
+			base.VerifySuccessMessage("Mark Complete successful");
+			loginPage.logout();
+
+		}
+
+		/**
+		 * @author Brundha.T No:RPMXCON-49122 Date:8/12/2022
+		 * @Description:To verify that in Production-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+		 **/
+
+		@Test(description = "RPMXCON-49122", enabled = true, groups = { "regression" })
+		public void verifyingAscendingOrerInPrivDocMetaDataField() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			BaseClass base = new BaseClass(driver);
+			base.stepInfo("Test case Id:RPMXCON-49122- Production Component");
+			base.stepInfo("To verify that in Production-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascending");
+
+			ProductionPage page = new ProductionPage(driver);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.getTIFFTab().waitAndClick(5);
+			driver.scrollingToElementofAPage(page.getTIFF_EnableforPrivilegedDocs());
+			page.getPrivInsertMetadataField().waitAndClick(2);
+			List<String> CalculatedFieldValue = base.availableListofElements(page.InsertMetaDataFieldValues());
+			base.verifyOriginalSortOrder(CalculatedFieldValue, CalculatedFieldValue, "Ascending", true);
+			
+			page = new ProductionPage(driver);
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname1);
+			page.getTIFFTab().waitAndClick(5);
+			driver.scrollPageToTop();
+			page.getPDFGenerateRadioButton().waitAndClick(5);
+			driver.scrollingToElementofAPage(page.getTIFF_EnableforPrivilegedDocs());
+			page.getPrivInsertMetadataField().waitAndClick(2);
+			List<String> PDFCalculatedFieldValue = base.availableListofElements(page.InsertMetaDataFieldValues());
+			base.verifyOriginalSortOrder(PDFCalculatedFieldValue, PDFCalculatedFieldValue, "Ascending", true);
+			loginPage.logout();
+
+		}
+
 		@AfterMethod(alwaysRun = true)
 		public void takeScreenShot(ITestResult result) {
 			if (ITestResult.FAILURE == result.getStatus()) {
