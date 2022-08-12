@@ -10506,5 +10506,36 @@ public class IngestionPage_Indium {
 					}
 				}
 			}
-		}			
+		}	
+		
+		/**
+		 * @author: Arun Created Date: 12/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will do the repeated mapping on configure mapping section
+		 */
+		public void performRepeatedMapppingOnConfiguringSection(String mappingField) {
+			if(mappingField.equalsIgnoreCase("sourceField")) {
+				base.waitForElement(getMappingSourceField(6));
+				String alreadyMapped = getMappingSourceField(6).selectFromDropdown().getFirstSelectedOption().getText();
+				base.waitForElement(getMappingSourceField(7));
+				getMappingSourceField(7).selectFromDropdown().selectByVisibleText(alreadyMapped);
+				base.waitForElement(getIngestion_SaveAsDraft());
+				getIngestion_SaveAsDraft().waitAndClick(2);
+				if (getApproveMessageOKButton().isElementAvailable(5)) {
+					getApproveMessageOKButton().waitAndClick(5);
+					base.passedStep("Clicked on OK button to save as draft");
+				}
+				base.VerifySuccessMessage("Your changes to the ingestion were successfully saved.");
+				
+			}
+			else if(mappingField.equalsIgnoreCase("destinationField")) {
+				base.waitForElement(getMappingDestinationField(6));
+				String alreadyMapped = getMappingDestinationField(6).selectFromDropdown().getFirstSelectedOption().getText();
+				base.waitForElement(getMappingDestinationField(7));
+				getMappingDestinationField(7).selectFromDropdown().selectByVisibleText(alreadyMapped);
+				base.waitForElement(getIngestion_SaveAsDraft());
+				getIngestion_SaveAsDraft().waitAndClick(2);
+				base.VerifyErrorMessage("Cannot specify the same field as a destination multiple times. Please check the mapped destination fields -"+alreadyMapped+".");
+			}
+			
+		}
 }

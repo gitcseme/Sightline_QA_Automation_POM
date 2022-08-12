@@ -403,6 +403,7 @@ public class Input {
 	public static String custIdKey;
 	public static String fieldMappingWarningMessage;
 	public static String datFileASCII;
+	public static String datFile5;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1318,6 +1319,7 @@ public class Input {
 		custIdKey = testData.getCustIdKey();
 		fieldMappingWarningMessage = testData.getFieldMappingWarningMessage();
 		datFileASCII = testData.getDatFileASCII();
+		datFile5 = testData.getDatFile5();
 
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();

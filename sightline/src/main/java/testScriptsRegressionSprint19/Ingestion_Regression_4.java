@@ -244,6 +244,87 @@ public class Ingestion_Regression_4 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 11/08/2022 TestCase Id:RPMXCON-63254
+	 * Description :Validate whether the user gets the error message during "Overlay" ingestion 
+	 * that contains Destination field name's that are mapped repeatedly. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63254",enabled = true, groups = { "regression" })
+	public void verifyRepeatedDestinationFieldErrorWhenOverlay() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63254");
+		baseClass.stepInfo("Verify repeated destination field error during overlay only.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, 
+				"RPMXCON-61759");
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform repeated mapping on destination field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
+		baseClass.passedStep("User gets the error message when mapping same destination field repeatedly for overlay only ingestion");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/08/2022 TestCase Id:RPMXCON-63255
+	 * Description :Validate whether user do not get any error message during "Overlay" ingestion type when 
+	 * similar source dat field are mapped twice with different destination dat field.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63255",enabled = true, groups = { "regression" })
+	public void verifyRepeatedSourceFieldErrorWhenOverlay() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63255");
+		baseClass.stepInfo("Verify saving ingestion when repeated source dat field mapping during overlay only.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform repeated mapping on source field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("sourceField");
+		baseClass.passedStep("User able to save ingestion successfully as draft when mapping same source field repeatedly");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 11/08/2022 TestCase Id:RPMXCON-63256
+	 * Description :Validate whether the user gets the error message during "Add ONLY" ingestion type that 
+	 * contains Destination field name's that are mapped repeatedly.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-63256",enabled = true, groups = { "regression" })
+	public void verifyRepeatedDestinationFieldErrorWhenAddOnly() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-63256");
+		baseClass.stepInfo("Verify repeated destination field error during add only.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.nuix, Input.sourceLocation, "RPMXCON-61759");
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.datFile5, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("Perform repeated mapping on destination field and verify");
+		ingestionPage.performRepeatedMapppingOnConfiguringSection("destinationField");
+		baseClass.passedStep("User gets the error message when mapping same destination field repeatedly for Add only ingestion");
+		loginPage.logout();
+		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
