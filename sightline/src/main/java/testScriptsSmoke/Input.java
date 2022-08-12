@@ -463,6 +463,7 @@ public class Input {
 	public static String expectedDateInput;
 	public static String expectedToDateInput;
 	public static String searchString10;
+	public static String dataSourceHeader;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1379,6 +1380,7 @@ public class Input {
 		expectedDateInput = testData.getExpectedDateInput();
 		expectedToDateInput = testData.getExpectedToDateInput();
 		searchString10 = testData.getSearchString10();
+		dataSourceHeader = testData.getDataSourceHeader();
 		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
