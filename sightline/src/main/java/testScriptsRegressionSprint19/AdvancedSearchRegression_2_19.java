@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
@@ -37,6 +38,7 @@ public class AdvancedSearchRegression_2_19 {
 	SoftAssert assertion;
 	AssignmentsPage assignmentPage;
 	DocViewPage docView;
+	DocListPage docList;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -58,6 +60,7 @@ public class AdvancedSearchRegression_2_19 {
 		savedSearch = new SavedSearch(driver);
 		assignmentPage = new AssignmentsPage(driver);
 		docView = new DocViewPage(driver);
+		docList = new DocListPage(driver);
 	}
 
 	@DataProvider(name = "Users")
@@ -251,6 +254,144 @@ public class AdvancedSearchRegression_2_19 {
 		sessionSearch.ViewInDocViews();
 		baseClass.stepInfo("adding pureHit to Shopping cart and viewing the Documents in docView page.");
 		docView.deleteAudioRemark();
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 08/12/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that 2 Search criteria gets combined with AND/OR/NOT
+	 *              condition. RPMXCON-47612
+	 */
+	@Test(description = "RPMXCON-47612", enabled = true, groups = { "regression" })
+	public void verifyThatTwoSearchCriteriaCombinedWithAND_OR_NOTCondition() throws Exception {
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47612");
+		baseClass.stepInfo("Verify that 2 Search criteria gets combined with AND/OR/NOT condition");
+
+		// getting the metaData pureHit Count
+		int metaDataPureHitCount = sessionSearch.MetaDataSearchInAdvancedSearch(Input.metaDataName,
+				Input.metaDataCustodianNameInput);
+
+		// getting the Work Product Security Group pureHit Count
+		baseClass.selectproject();
+		sessionSearch.navigateToAdvancedSearchPage();
+		baseClass.stepInfo("performing the Work Product Security Group.");
+		sessionSearch.workProductSearch("security group", Input.securityGroup, true);
+		int workProductSGPureHitCount = sessionSearch.serarchWP();
+
+		// Work Product Security Group pureHit Count Excluding the metaData pureHit
+		// Count
+		int expectedSGNotMetaPureHitCount = workProductSGPureHitCount - metaDataPureHitCount;
+
+		// performing Combined Search of metaData with Work Product Security Group with
+		// AND Operator
+		baseClass.selectproject();
+		baseClass
+				.stepInfo("performing Combined Search of metaData with Work Product Security Group with AND Operator.");
+		sessionSearch.advancedMetaDataForDraft(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		sessionSearch.workProductSearch("security group", Input.securityGroup, true);
+		sessionSearch.selectOperator("AND", 1);
+		int metaAndSGPureHitCount = sessionSearch.serarchWP();
+		// Verifying that Search results appears which satisfied both condition
+		// 'metaData AND Work Product Security Group'
+		baseClass.digitCompareEquals(metaAndSGPureHitCount, metaDataPureHitCount,
+				"Verified that Search results appears which satisfied both condition 'metaData AND Work Product Security Group'.",
+				"Search results Doesn't match with the Expected PureHit count");
+
+		// performing Combined Search of metaData with Work Product Security Group with
+		// OR Operator
+		baseClass.selectproject();
+		baseClass.stepInfo("performing Combined Search of metaData with Work Product Security Group with OR Operator.");
+		sessionSearch.advancedMetaDataForDraft(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		sessionSearch.workProductSearch("security group", Input.securityGroup, true);
+		sessionSearch.selectOperator("OR", 1);
+		int metaOrSGPureHitCount = sessionSearch.serarchWP();
+		// Verified that Search results appears which satisfied anyone condition
+		// 'metaData OR Work Product Security Group'
+		baseClass.digitCompareEquals(metaOrSGPureHitCount, workProductSGPureHitCount,
+				"Verified that Search results appears which satisfied anyone condition 'metaData OR Work Product Security Group'.",
+				"Search results Doesn't match with the Expected PureHit count");
+
+		// performing Combined Search of Work Product Security Group with metaData with
+		// NOT Operator
+		baseClass.selectproject();
+		baseClass.stepInfo(
+				"performing Combined Search of  Work Product Security Group with metaData with NOT Operator.");
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.workProductSearch("security group", Input.securityGroup, true);
+		sessionSearch.advMetaDataSearchQueryInsertTest(Input.metaDataName, Input.metaDataCustodianNameInput);
+		sessionSearch.selectOperator("NOT", 1);
+		int SGNotMetaPureHitCount = sessionSearch.serarchWP();
+		// "Verified that Search results appears NOT having metaData Document Count
+		// 'Work Product Security Group NOT metaData'
+		baseClass.digitCompareEquals(SGNotMetaPureHitCount, expectedSGNotMetaPureHitCount,
+				"Verified that Search results appears NOT having metaData Document Count 'Work Product Security Group NOT metaData'.",
+				"Search results Doesn't match with the Expected PureHit count");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 08/12/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Advanced Search is working properly for Datasource
+	 *              Metadata. RPMXCON-57058
+	 */
+	@Test(description = "RPMXCON-57058", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyAdvancedSearchWorkingProperlyForDatasourceMetadata(String userName, String password)
+			throws Exception {
+
+		String dataSource;
+		String[] columnToSelect = { Input.dataSourceHeader };
+		DocListPage docList = new DocListPage(driver);
+		List<String> dataSourceColumnValues = new ArrayList<String>();
+
+		// login as User
+		loginPage.loginToSightLine(userName, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57058");
+		baseClass.stepInfo("Verify that Advanced Search is working properly for Datasource Metadata.");
+
+		// getting metaData DataSource SearchString
+		baseClass.stepInfo("getting metaData DataSource SearchString");
+		sessionSearch.advancedContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		docList.SelectColumnDisplayByRemovingExistingOnes(columnToSelect);
+		dataSourceColumnValues = docList.getColumnValue(columnToSelect[0], false);
+		dataSource = dataSourceColumnValues.get(0);
+		baseClass.stepInfo("DataSource searchString : '" + dataSource + "'");
+
+		// performing metaData search with DataSource
+		baseClass.selectproject();
+		baseClass.stepInfo("Performing metaData Search With DataSource");
+		sessionSearch.advancedMetaDataSearch("DataSource", null, dataSource, null);
+
+		// viewing the documents in docList
+		sessionSearch.ViewInDocList();
+
+		// adding the DataSource metaData column in DocList
+		baseClass.stepInfo("adding DataSource metaData column in DocList.");
+		docList.SelectColumnDisplayByRemovingExistingOnes(columnToSelect);
+		// getting all the values from DataSource column
+		baseClass.stepInfo("getting all the values from DataSource column.");
+		dataSourceColumnValues = docList.getColumnValue(columnToSelect[0], false);
+
+		// verifying that Advanced Search is working properly for Datasource Metadata by
+		// comparing dataSource searchString with DataSource column values in DocList
+		baseClass.compareListWithString(dataSourceColumnValues, dataSource,
+				"Verified that Advanced Search is working properly for Datasource Metadata.",
+				"Advanced Search is Not working properly for Datasource Metadata.");
 
 		// logOut
 		loginPage.logout();
