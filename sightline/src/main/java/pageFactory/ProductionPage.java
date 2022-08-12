@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.AWTException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -893,7 +894,31 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-	
+
+	public Element getLink_CustomSort() {
+		return driver.FindElementByXPath("//input[@id='file']");
+	}
+
+	public Element getRadioBtn_CustomSort() {
+		return driver.FindElementByXPath("//input[@id='rdbCustomSort']//..//i");
+	}
+
+	public Element isInprogressIsChecked() {
+		return driver.FindElementByXPath("//input[@value='INPROGRESS']/../../..");
+	}
+
+	public Element getLoadMore() {
+		return driver.FindElementByXPath("//button[@id='btnProductionDetailsLoadTile']");
+	}
+
+	public ElementCollection getTotalTagsInSorting() {
+		return driver.FindElementsByXPath("//div[@class='tab-widget']");
+	}
+
+	public Element getRadioBtnSortByMetadata() {
+		return driver.FindElementByXPath("//div[@id='divSortByMetadata_1']");
+	}
+
 	public ElementCollection getAllNativeFileTypes() {
 		return driver.FindElementsByXPath("//tbody[@id='tblNativeFileGroup']//tr//td//input");
 	}
@@ -3226,30 +3251,33 @@ public class ProductionPage {
 		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[" + Value + "()]");
 	}
 
-	
 	public Element getDeletOption(String ProductionName) {
 		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Delete']");
 	}
 
-	public Element TagInTextBox(){
+	public Element TagInTextBox() {
 		return driver.FindElementByXPath("//ul[@id='xEdit']//li/following-sibling::li//span");
 	}
 
 	public ElementCollection getDAT_SourceField() {
 		return driver.FindElementsByXPath("//select[@id='SF_0']//option");
 	}
-	public Element getNativeCheckBoxChecked(String FileType){
-		return driver.FindElementByXPath("//table[@id='native-table']//tbody//tr//td[contains(text(),'"+FileType+"')]/..//input");
+
+	public Element getNativeCheckBoxChecked(String FileType) {
+		return driver.FindElementByXPath(
+				"//table[@id='native-table']//tbody//tr//td[contains(text(),'" + FileType + "')]/..//input");
 	}
-	
+
 	public Element nativeFileTypeCheckBox(String FileType) {
-		return driver.FindElementByXPath("//input[contains(@value,'"+FileType+"')]/..//i");
+		return driver.FindElementByXPath("//input[contains(@value,'" + FileType + "')]/..//i");
 	}
+
 	//Added by arun
 	public ElementCollection getCalculatedTabMetadata() {
 		return driver.FindElementsByXPath("//input[@name='TiffCalculatedList']//following-sibling::strong");
 	}
 	
+
 
 	public ProductionPage(Driver driver) {
 
@@ -13200,38 +13228,73 @@ public class ProductionPage {
 	}
 
 	/**
+	 * Modified on 11/08/2022
 	 * @author:Sowndarya.velraj
+	 * @return 
 	 * @Description: Method for generating production without commit and with
 	 *               continue generation popup
 	 */
-	public void fillingGeneratePageWithContinueGenerationPopupWithoutCommit() throws InterruptedException {
+	public int fillingGeneratePageWithContinueGenerationPopupWithoutCommit() throws InterruptedException {
 
-		base.waitForElement(getbtnProductionGenerate());
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getbtnContinueGeneration().isElementAvailable(220);
+		getVerifyGenStatus("Reserving Bates").isElementAvailable(150);
+		getbtnContinueGeneration().isElementAvailable(60);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
-			getbtnContinueGeneration().Click();
+			getbtnContinueGeneration().waitAndClick(10);
 		}
 
 		Reporter.log("Wait for generate to complete", true);
 		System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 
-		// Get Documents Generated Text
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocumentGeneratetext().isElementAvailable(860);
-			}
-		}), Input.wait120);
+		getDocumentGeneratetext().isElementAvailable(180);
+		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
-		String expectedText = "Success";
 		System.out.println(actualText);
 
 		softAssertion.assertTrue(actualText.contains(expectedText));
 		base.passedStep("Documents Generated successfully");
-		base.stepInfo("Generation completed");
+
+	
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		base.waitTime(1);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+
+		return Doc;
 
 	}
 
@@ -20663,6 +20726,8 @@ public class ProductionPage {
 		base.stepInfo("wait until Document Generated Text is visible");
 		String actualText = getStatusSuccessTxt().getText();
 		System.out.println(actualText);
+		softAssertion.assertEquals(expectedText, actualText);
+		softAssertion.assertAll();
 	}
 
 	/**
@@ -21145,6 +21210,79 @@ public class ProductionPage {
 		base.waitForElement(selectSecurityGroup(securityGroup));
 		selectSecurityGroup(securityGroup).waitAndClick(10);
 
+	}
+
+	/**
+	 * @author NA
+	 */
+	public void filterInprogressProduction() {
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getFilterByDRAFT().waitAndClick(5);
+		getFilterByCOMPLETED().waitAndClick(5);
+		getFilterByFAILED().waitAndClick(5);
+		boolean flag = isInprogressIsChecked().GetAttribute("class").contains("active");
+		if (!flag) {
+			getFilterByINPROGRESS().waitAndClick(5);
+		}
+		base.stepInfo("Filtered Inprogress status only");
+		driver.waitForPageToBeReady();
+		getRefreshButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Indium-Sowndarya
+	 */
+	public void verifyDefaultSelection_SortByMetadata() {
+		base.waitForElement(getRadioBtnSortByMetadata());
+		driver.waitForPageToBeReady();
+		String getAttribute = getRadioBtnSortByMetadata().GetAttribute("style");
+		System.out.println(getAttribute);
+		if (getRadioBtnSortByMetadata().GetAttribute("style").contains("none")) {
+			base.failedStep("No default selection occured");
+		} else {
+			base.passedStep("Sort by metadata is clicked by default");
+		}
+
+	}
+
+	/**
+	 * @author Indium-Sowndarya
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
+	public void verifySortByTags_SortedByAscending() throws InterruptedException, AWTException {
+		base.waitForElement(getSortingRadioBtn());
+		getSortingRadioBtn().waitAndClick(10);
+
+		List<String> availableTags = base.availableListofElements(getTotalTagsInSorting());
+		List<String> availableTags2 = base.availableListofElements(getTotalTagsInSorting());
+		System.out.println(availableTags);
+		base.verifyOriginalSortOrder(availableTags, availableTags2, "Ascending", true);
+
+	}
+
+	/**
+	 * @author Indium-Sowndarya
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
+	public void verifyCustomSort_Link() throws InterruptedException, AWTException {
+
+		base.waitForElement(getRadioBtn_CustomSort());
+		getRadioBtn_CustomSort().waitAndClick(10);
+		
+		base.waitForElement(getLink_CustomSort());
+		if (getLink_CustomSort().isDisplayed()) {
+			base.passedStep("Link to upload Excel is available");
+		}
+		else {
+			base.failedStep("No link is found");
+		}
 	}
 
 }
