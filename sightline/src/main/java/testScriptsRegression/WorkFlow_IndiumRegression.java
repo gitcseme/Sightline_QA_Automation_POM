@@ -443,18 +443,57 @@ public class WorkFlow_IndiumRegression {
 		baseClass.stepInfo("Test case Id: RPMXCON-52648");
 		baseClass.stepInfo("To verify that RMU can sort all coulmn.");
 
-		workflow = new WorkflowPage(driver);
+		int Id;
+		String tagName = "tag" + Utility.dynamicNameAppender();
+		String folderName = "folder" + Utility.dynamicNameAppender();
+		String SearchName = "WF" + Utility.dynamicNameAppender();
+		String wfName = "work" + Utility.dynamicNameAppender();
+		String wfDesc = "Desc" + Utility.dynamicNameAppender();
+		String assgn = "Assgn" + Utility.dynamicNameAppender();
+
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
-		this.driver.getWebDriver().get(Input.url + "WorkFlow/Details");
+		page = new TagsAndFoldersPage(driver);
+		page.CreateTag(tagName, "Default Security Group");
+		page.CreateFolder(folderName, "Default Security Group");
+
+		// Search for any string
+		search = new SessionSearch(driver);
+		int count = search.basicContentSearch(Input.searchString1);
+
+		// Save the search
+		search.saveSearch(SearchName);
+		SavedSearch ss = new SavedSearch(driver);
+		ss.getSaveSearchID(SearchName);
+		Id = Integer.parseInt(ss.getSavedSearchID().getText());
+		System.out.println(Id);
+		UtilityLog.info(Id);
+
+		// creating new work flow
+		workflow = new WorkflowPage(driver);
+		workflow.newWorkFlowCreation(wfName, wfDesc, Id, false, folderName, true, assgn, false, 1);
+		workflow.selectWorkFlowUsingPagination(wfName);
+
+		// Running workflow
+		int workFlowId = workflow.gettingWorkFlowId(wfName);
+		workflow.actionToRunWorkFlow();
+		// Page refresh
+		workflow.refreshingThePage();
+
+		// validating sorting in action
+		workflow.actionToHistory(wfName);
+		baseClass.stepInfo("Validating in action block");
 		workflow.applyAscandingorder();
+
+		workflow.closeHistoryPopUpWindow();
+		softAssertion.assertAll();
 
 		// logout
 		loginPage.logout();
 	}
-
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
@@ -923,12 +962,12 @@ public class WorkFlow_IndiumRegression {
 
 		// verifying Next Triggered Date column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
-		List<String> listTrigger = workflow.getTableHeaderValuesPagination("NEXT TRIGGER DATE", false);
+		/*List<String> listTrigger = workflow.getTableHeaderValuesPagination("NEXT TRIGGER DATE", false);
 		workflow.applySorting(true, false, true, "NEXT TRIGGER DATE");
 		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Ascending");
 		workflow.applySorting(false, true, true, "NEXT TRIGGER DATE");
 		workflow.verifyHeaderSort("NEXT TRIGGER DATE", false, listTrigger, "Descending");
-
+*/
 		// verifying Last run actioned doc count column sorting
 		driver.getWebDriver().get(Input.url + "WorkFlow/Details");
 		List<String> listRunCount = workflow.getTableHeaderValuesPagination("LAST RUN ACTIONED DOC COUNT", false);

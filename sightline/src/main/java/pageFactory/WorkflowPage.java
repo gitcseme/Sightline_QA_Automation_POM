@@ -1306,6 +1306,7 @@ public class WorkflowPage {
 		}
 		String sortOrder;
 		int index = baseClass.getIndex(getTableHeader(), eleName);
+		try {
 		if (descending) {
 			baseClass.waitForElement(getTableHeader(index));
 			getTableHeader(index).ScrollTo();
@@ -1334,6 +1335,11 @@ public class WorkflowPage {
 			} else {
 				baseClass.stepInfo(getTableHeader(index).getText() + " column is not  sorted in ascending order");
 			}
+		}
+		}
+		catch(Exception e)
+		{
+			baseClass.stepInfo("Eelemnt data is not available");
 		}
 	}
 
