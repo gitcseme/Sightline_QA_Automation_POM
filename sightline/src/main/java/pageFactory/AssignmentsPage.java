@@ -1454,7 +1454,7 @@ public class AssignmentsPage {
 	}
 
 	public Element SelectCFPopUp_Step1() {
-		return driver.FindElementByXPath("//span[text()='Step 01: Add / Remove Coding Forms in this Assignment']");
+		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Assignment']");
 	}
 
 	public Element sortOrderNxtBtn() {
@@ -1566,6 +1566,7 @@ public class AssignmentsPage {
 		// getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.stepInfo("Assignment " + assignmentName + " created with CF " + codingForm);
+		System.out.println("Assignment created");
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
 
 	}
@@ -1775,7 +1776,7 @@ public class AssignmentsPage {
 		}), Input.wait60);
 		getSelectUserToAssign().waitAndClick(10);
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		getDistributeTab().waitAndClick(20);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2316,7 +2317,7 @@ public class AssignmentsPage {
 		getSelect2ndUserToAssign().Click();
 
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		getDistributeTab().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -2356,7 +2357,7 @@ public class AssignmentsPage {
 		getSelect2ndUserToAssign().waitAndClick(10);
 
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 
 		getAssgn_ManageRev_selectrev().waitAndClick(10);
 
@@ -2364,7 +2365,7 @@ public class AssignmentsPage {
 
 		getAssgn_ManageRev_Action_removedoc().waitAndClick(10);
 		bc.getYesBtn().waitAndClick(10);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 
 		Assert.assertEquals(0, getAssgn_ManageRev_DisDoc(1).getText());
 
@@ -2647,7 +2648,7 @@ public class AssignmentsPage {
 
 		getAssgn_Redistributepopup_save().waitAndClick(10);
 
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		Thread.sleep(2000);
 
 		Assert.assertEquals(0, getAssgn_ManageRev_DisDoc(1).getText());
@@ -3432,7 +3433,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait30);
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDistributeTab().Visible();
@@ -3451,7 +3452,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait30);
 		getDistributeBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 
 	}
 
@@ -3656,7 +3657,7 @@ public class AssignmentsPage {
 		getSelectUserToAssigReviewerManager().waitAndClick(10);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(10);
-//		bc.VerifySuccessMessage("Record saved successfully");
+//		bc.VerifySuccessMessage("Action saved successfully");
 //		bc.CloseSuccessMsgpopup();
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(10);
@@ -4201,7 +4202,7 @@ public class AssignmentsPage {
 		driver.scrollingToElementofAPage(getSelect2ndUserToAssign());
 		getSelect2ndUserToAssign().waitAndClick(5);
 		getAdduserBtn().waitAndClick(3);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		driver.waitForPageToBeReady();
 		bc.CloseSuccessMsgpopup();
 		driver.waitForPageToBeReady();
@@ -4522,7 +4523,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait30);
 		getAdduserBtn().waitAndClick(3);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDistributeTab().Visible();
@@ -4543,7 +4544,7 @@ public class AssignmentsPage {
 		}), Input.wait30);
 		bc.CloseSuccessMsgpopup();
 		getDistributeBtn().waitAndClick(7);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 
 	}
 
@@ -4918,7 +4919,7 @@ public class AssignmentsPage {
 		getSelectUserToAssigReviewerManager().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 		bc.getCloseSucessmsg().waitAndClick(10);
 		bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
@@ -6137,7 +6138,7 @@ public class AssignmentsPage {
 		getSelectUserToAssignPA().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -6405,7 +6406,7 @@ public class AssignmentsPage {
 		driver.scrollingToElementofAPage(getSelect2ndUserToAssign());
 		getSelect2ndUserToAssign().Click();
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		getDistributeTab().Click();
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
 		Boolean firstReviewer = getSelectUserInDistributeTabsReviewerManager().isDisplayed();
@@ -7060,7 +7061,7 @@ public class AssignmentsPage {
 			getSelectUserToAssigReviewerManager().waitAndClick(5);
 			bc.waitForElement(getAdduserBtn());
 			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -7166,7 +7167,7 @@ public class AssignmentsPage {
 			getSelectUserToAssigReviewerManager().waitAndClick(5);
 			bc.waitForElement(getAdduserBtn());
 			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -7340,7 +7341,7 @@ public class AssignmentsPage {
 		getSelectUserToAssigReviewerManager().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -7541,7 +7542,7 @@ public class AssignmentsPage {
 			getSelectUserToAssigReviewerManager().waitAndClick(10);
 			bc.waitForElement(getAdduserBtn());
 			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
 			bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -7573,7 +7574,7 @@ public class AssignmentsPage {
 			getAssignment_ManageReviewersTab().waitAndClick(10);
 			getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 			selectActionsInManageRev(getAssgn_ManageRev_Action_removedoc());
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.passedStep("Documents are removed for the reviewer successfully");
 			bc.waitForElement(getDistributeTab());
 			getDistributeTab().waitAndClick(5);
@@ -7862,7 +7863,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectUserToAssign());
 		getSelectUserToAssign().waitAndClick(10);
 		getAdduserBtn().Click();
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		getDistributeTab().waitAndClick(20);
 		bc.waitForElement(getSelectUserInDistributeTab());
 		getSelectUserInDistributeTab().waitAndClick(20);
@@ -8075,7 +8076,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_Action_removedoc().waitAndClick(10);
 		bc.waitTillElemetToBeClickable(bc.getYesBtn());
 		bc.getYesBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.stepInfo("Removed all the assigned document from the RMU reviewer.");
 		bc.passedStep("Documents are removed successfully for the reviewer");
 		bc.CloseSuccessMsgpopup();
@@ -8097,7 +8098,7 @@ public class AssignmentsPage {
 		bc.waitForElement(getDistributeBtn());
 		bc.waitTillElemetToBeClickable(getDistributeBtn());
 		getDistributeBtn().waitAndClick(3);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.stepInfo("Documents are distributed to reviewer successfully");
 		bc.passedStep("Documents are reassigned successfully for the reviewer");
 		bc.CloseSuccessMsgpopup();
@@ -8146,7 +8147,7 @@ public class AssignmentsPage {
 			getSelectUserToAssigReviewerManager().waitAndClick(5);
 			bc.waitForElement(getAdduserBtn());
 			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.waitForElement(getEditAggn_Distribute_UnassgndocCount(pureHits));
 			getDistributeTab().waitAndClick(5);
 			bc.waitTillElemetToBeClickable(getSelectUserInDistributeTabsReviewerManager());
@@ -8191,7 +8192,7 @@ public class AssignmentsPage {
 			getSelectUserToAssigReviewerManager().waitAndClick(10);
 			bc.waitForElement(getAdduserBtn());
 			getAdduserBtn().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.waitTillElemetToBeClickable(bc.getCloseSucessmsg());
 			bc.getCloseSucessmsg().waitAndClick(10);
 			bc.waitForElementToBeGone(bc.getCloseSucessmsg(), 30);
@@ -8229,7 +8230,7 @@ public class AssignmentsPage {
 			getSelectReviewerInRedistributedDocsTab(Input.rev1userName).waitAndClick(5);
 			bc.waitTillElemetToBeClickable(getAssgn_Redistributepopup_save());
 			getAssgn_Redistributepopup_save().waitAndClick(5);
-			bc.VerifySuccessMessage("Record saved successfully");
+			bc.VerifySuccessMessage("Action saved successfully");
 			bc.passedStep("Documents are redistributed to another reviewer successfully");
 			driver.waitForPageToBeReady();
 			bc.waitTillTextToPresent(getAssgn_TodoCountInManageRev(Input.rev1userName), Integer.toString(count));
@@ -9285,7 +9286,7 @@ public class AssignmentsPage {
 		getSelectDAUserToAssign().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelectUserInDistributeTabsReviewerManager());
@@ -9751,7 +9752,7 @@ public class AssignmentsPage {
 		getSelect2ndUserToAssign().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
@@ -9971,7 +9972,7 @@ public class AssignmentsPage {
 
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
-			bc.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			bc.waitForElement(getSelectCF_CheckBox(CFName));
 			getSelectCF_CheckBox(CFName).ScrollTo();
 			getSelectCF_CheckBox(CFName).waitAndClick(5);
@@ -10319,7 +10320,7 @@ public class AssignmentsPage {
 		getSelectDAUserToAssign().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
 		getAdduserBtn().waitAndClick(5);
-		bc.VerifySuccessMessage("Record saved successfully");
+		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		//distribute docs

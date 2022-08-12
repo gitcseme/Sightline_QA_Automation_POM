@@ -1432,7 +1432,7 @@ public class CodingForm {
 	}
 
 	public Element getStep1CfPopUp() {
-		return driver.FindElementByXPath("//span[text()='Step 01 : Add / Remove Coding Forms in this Security Group']");
+		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Security Group']");
 	}
 
 	public Element getStep2CfPopUp() {
@@ -3083,7 +3083,7 @@ public class CodingForm {
 		base.waitForElement(getSetCodingFormToSG());
 		getSetCodingFormToSG().waitAndClick(15);
 		if (assgnpage.SelectCFPopUp_Step1().isElementAvailable(2)) {
-			base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 			base.waitForElement(assgnpage.getSelectCF_CheckBox(cfName));
 			assgnpage.getSelectCF_CheckBox(cfName).ScrollTo();
 			assgnpage.getSelectCF_CheckBox(cfName).waitAndClick(5);
@@ -5025,7 +5025,7 @@ public class CodingForm {
 	 getSetCFButton().waitAndClick(10);
 
 	    assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
-		base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+		base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
 		assgnpage.getSelectCF_CheckBox(CFName).ScrollTo();
 		base.waitTime(1);
@@ -5070,7 +5070,7 @@ public class CodingForm {
 	 getSetCFButton().waitAndClick(10);
 
 	    assgnpage.SelectCFPopUp_Step1().isElementAvailable(2);
-		base.stepInfo("Step 01: Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+		base.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
 		base.waitForElement(assgnpage.getSelectCF_CheckBox(CFName));
 	
 		base.waitTime(1);
@@ -5111,7 +5111,7 @@ public List<String> checkingBelow15CFCheckboxForSG() {
 	 getSetCFButton().waitAndClick(10);
 	 base.waitForElement(getStep1CfPopUp());
 	 boolean flagPopup1=getStep1CfPopUp().isElementAvailable(2);
-	 base.stepInfo("Step 01 : Add / Remove Coding Forms in this Security Group");
+	 base.stepInfo("Add / Remove Coding Forms in this Security Group");
 	 softAssertion.assertTrue(flagPopup1);
 	 int unCheck=getCfUnChecBoxUsingSize().size();
 	 for (int i = 0; i < unCheck; i++) {
