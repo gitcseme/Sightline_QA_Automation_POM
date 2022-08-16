@@ -1308,32 +1308,40 @@ public class CollectionPage {
 			driver.waitForPageToBeReady();
 			getEditBtnDataSelection(collectionEmailId).waitAndClick(10);
 		}
+		if (getDataSetPopup().isElementAvailable(8)) {
+			base.stepInfo("DatasetPopup is displayed");
+			if (editCustodianName) {
+				driver.waitForPageToBeReady();
+				getCustodianLabel().waitAndClick(10);
 
-		if (editCustodianName) {
-			base.waitForElement(getCustodianIDInputTextField());
-			getCustodianIDInputTextField().Clear();
+				base.waitForElement(getCustodianIDInputTextField());
+				getCustodianIDInputTextField().Clear();
 
-			String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false, "");
-		}
-
-		if (editFolder) {
-			// verify Selected folder
-			getFolderabLabel().waitAndClick(10);
-			driver.waitForPageToBeReady();
-			if (validateFolder) {
-				base.ValidateElement_Absence(getCickedFolder(resetFolderType),
-						"The Selected folder is unselected and Reset");
+				String actualValue = custodianNameSelectionInNewDataSet(firstName, collection2ndEmailId, true, false,
+						"");
 			}
-			if (getCickedFolder(resetFolderType).isElementAvailable(3)) {
-				getCickedFolder(resetFolderType).waitAndClick(10);
-			}
-			folderToSelect(SelectFolderType, false, null);
-		}
 
-		if (ApplyFilter) {
-			// Apply filter
-			verifyApplyFilterStatus(true, expectedFilterStatus);
-			base.passedStep("Apply Filter Tab is Reset");
+			if (editFolder) {
+				// verify Selected folder
+				getFolderabLabel().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				if (validateFolder) {
+					base.ValidateElement_Absence(getCickedFolder(resetFolderType),
+							"The Selected folder is unselected and Reset");
+				}
+				if (getCickedFolder(resetFolderType).isElementAvailable(3)) {
+					getCickedFolder(resetFolderType).waitAndClick(10);
+				}
+				folderToSelect(SelectFolderType, false, null);
+			}
+
+			if (ApplyFilter) {
+				// Apply filter
+				verifyApplyFilterStatus(true, expectedFilterStatus);
+				base.passedStep("Apply Filter Tab is Reset");
+			}
+		} else {
+			base.failedStep("Dataset Popup is not displayed");
 		}
 	}
 
