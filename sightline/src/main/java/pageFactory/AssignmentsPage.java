@@ -4728,6 +4728,7 @@ public class AssignmentsPage {
 				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
 				getSelectAssignment(assignmentName).waitAndClick(5);
 				docCount = getDocCountInAssgnPg(assignmentName).getText();
+				bc.stepInfo("Docs count displayed for "+assignmentName+" assignment is "+docCount);
 				break;
 			} else {
 				driver.scrollingToBottomofAPage();

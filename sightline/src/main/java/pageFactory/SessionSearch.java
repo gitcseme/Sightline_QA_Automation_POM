@@ -1999,7 +1999,9 @@ public class SessionSearch {
 	public Element getSelectSavedSearchResult(String savedSearchResult) {
 		return driver.FindElementByXPath("//a[contains(text(),'"+savedSearchResult+"')]");
 	}
-
+	public Element getExistingAssignmentToUnAssign(String assignName) {
+		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[text()='"+assignName+"']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -3430,8 +3432,8 @@ public class SessionSearch {
 		}), Input.wait60);
 		getBulkAssignAction().waitAndClick(10);
 
-		base.stepInfo("performing bulk assign");
-		UtilityLog.info("performing bulk assign");
+		base.stepInfo("clicked bulk assign tab");
+		UtilityLog.info("clicked  bulk assign tab");
 
 	}
 
@@ -13131,6 +13133,31 @@ public class SessionSearch {
 		// Click on Search button
 		driver.scrollPageToTop();
 	}
-	
+	/**
+	 * @author Jayanthi.Ganesan
+	 *This method Perform unassign docs from a assignment
+	 * @param assignName
+	 */
+	public void UnAssignExistingAssignment(String assignName) {
+		base.waitForElement(getUnAssignRadioBtn());
+		base.stepInfo("Assign/UnAssign pop up displayed");
+		getUnAssignRadioBtn().Click();
+		
+		getUnassign_ExistingAssignButton().Click();
+		getExistingAssignmentToUnAssign(assignName).ScrollTo();
+		getExistingAssignmentToUnAssign(assignName).Click();
+		getContinueBulkAssign().waitAndClick(5);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		bc.VerifySuccessMessage(
+				"Bulk UnAssign has been added to background process. You will get notification on completion.");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		bc.stepInfo(" Docs Unassigned from  " + assignName);
+		
+	}
 
 }
