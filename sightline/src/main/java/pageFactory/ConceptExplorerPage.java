@@ -1127,11 +1127,13 @@ public class ConceptExplorerPage {
 	public void verifyIcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
 			String metaData1, String metaData_1, String metaData) {
 		boolean status = false;
+		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-			if ((metaDataWithTwoData.get(i).contains(metaData_1)) || (metaDataWithTwoData.get(i).contains(metaData1))) {
+			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
+			if ((metaData_twoOption.contains(metaData_1.toLowerCase())) || (metaData_twoOption.contains(metaData1.toLowerCase()))) {
 				status = true;
 
-				if ((metaDataWithOneData.get(i).contains(metaData)) && status) {
+				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
 
 					continue;
 				} else {
@@ -1168,11 +1170,13 @@ public class ConceptExplorerPage {
 	public void verifyExcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
 			String metaData1, String metaData_1, String metaData) {
 		boolean status = false;
+		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-			if (!(metaDataWithTwoData.get(i).contains(metaData_1))
-					|| (metaDataWithTwoData.get(i).contains(metaData1))) {
+			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
+			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
 				status = true;
-				if (!(metaDataWithOneData.get(i).contains(metaData)) && status) {
+				if (!(metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
 					continue;
 				} else {
 					base.failedStep("Meta Data are not filtered as expected.");

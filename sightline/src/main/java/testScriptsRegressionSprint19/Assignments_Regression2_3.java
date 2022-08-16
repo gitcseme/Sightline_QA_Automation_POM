@@ -47,8 +47,8 @@ public class Assignments_Regression2_3 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-		in = new Input();
-		in.loadEnvConfig();
+	//	in = new Input();
+	//	in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -327,7 +327,52 @@ public class Assignments_Regression2_3 {
 		   
 		   loginPage.logout();
 	   }
+	   /**
+		 * @author jayanthi
+		 * @throws InterruptedException
+		 * @Description :To verify that RMU can unassign the documents from Assignments for Saved Search.
+		 */
+		@Test(description = "RPMXCON-53644", enabled = true, groups = { "regression" })
+		public void verifyUNassignedDocsCount_savedsearch() throws InterruptedException {
 
+			baseClass.stepInfo("Test case Id: RPMXCON-53644");
+			baseClass.stepInfo("To verify that RMU can unassign the documents from Assignments for Saved Search.");
+			String assgnName = "Assgn" + Utility.dynamicNameAppender();
+			String searchName = "searchAssgn" + Utility.dynamicNameAppender();
+			// Login as Reviewer Manager
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("**Pre Req-Creating saved search and creating/assigning docs to Assignment**");
+			
+			// performing basic search
+			sessionSearch.basicContentSearch(Input.searchString1);
+		    sessionSearch.returnPurehitCount();
+			sessionSearch.saveSearch(searchName);
+			baseClass.stepInfo("Saved the search with name "+searchName);
+			
+			SavedSearch savedsearch=new  SavedSearch(driver);
+			savedsearch.savedSearch_Searchandclick(searchName);
+			savedsearch.getSavedSearchToBulkAssign().waitAndClick(10);
+			sessionSearch.bulkAssign();
+			assignPage.FinalizeAssignmentAfterBulkAssign();
+			assignPage.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
+			assignPage.getAssignmentSaveButton().waitAndClick(5);
+			baseClass.passedStep(
+					"Assignment is created and docs assigned from saved search with name -" +assgnName );
+			baseClass.stepInfo("Un Assign The docs from assingment "+assgnName+" from saved search page.");
+			savedsearch.savedSearch_Searchandclick(searchName);
+			savedsearch.getSavedSearchToBulkAssign().waitAndClick(10);
+			sessionSearch.UnAssignExistingAssignment(assgnName);
+			
+			int ActualDocCount;
+			ActualDocCount = Integer.parseInt(assignPage.verifydocsCountInAssgnPage(assgnName));
+			baseClass.digitCompareEquals(ActualDocCount, 0, "Assigned Docs Count is zero for assignment- " + assgnName,
+					"Assigned DocsCount is not zero");
+			baseClass.passedStep("Sucessfully verified doc counts un-assigned in Assignment " + assgnName);
+			assignPage.deleteAssgnmntUsingPagination(assgnName);
+			savedsearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+			// logout
+			loginPage.logout();
+		}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
