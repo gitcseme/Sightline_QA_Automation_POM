@@ -105,6 +105,9 @@ public class UserLoginActivityReport {
 	public Element getColoumnHeaderValue(String value) {
 		return driver.FindElementByXPath("//th[text()='"+value+"']");
 	}
+	public Element getRerunReportText() {
+		return driver.FindElementByXPath("//h3[text()='Please click \"Apply Changes\" button to re-run report']");
+	}
 
 
 	public UserLoginActivityReport(Driver driver) {
@@ -202,6 +205,9 @@ public class UserLoginActivityReport {
 	public void applyChanges() {
 		base.waitTillElemetToBeClickable(applyChangesBtn());
 		applyChangesBtn().waitAndClick(10);
+		if(yesBtn().isElementAvailable(10)) {
+			yesBtn().Click();
+		}
 		base.stepInfo("Changes applied successfully");
 	}
 	/**
