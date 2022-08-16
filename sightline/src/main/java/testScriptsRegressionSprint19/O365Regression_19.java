@@ -115,7 +115,8 @@ public class O365Regression_19 {
 
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
-				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
 
 		// Logout
 		login.logout();
@@ -163,11 +164,13 @@ public class O365Regression_19 {
 
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
-				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
 
 		// add Dataset By Applying Filter
 		collection.fillingDatasetSelection("Button", secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
-				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
 
 		// Logout
 		login.logout();
@@ -212,11 +215,13 @@ public class O365Regression_19 {
 
 		// Click cancel in Folder select Popup in Dataset selection
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
-				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, false);
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, false,
+				"Save", "");
 
 		// add Dataset By Applying Filter & click verify new row added
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
-				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
 
 		// Logout
 		login.logout();
@@ -331,7 +336,7 @@ public class O365Regression_19 {
 		// Add Dataset By Applying Filter
 		custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
 				selectedApp, collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText,
-				true, true);
+				true, true, "Save", "");
 
 		// click Edit and verify The selected Details Are Retained
 		collection.verifyAddedDataSetFrmPopup(collectionEmailId, collectionName, custodianDetails, selectedFolder, true,
@@ -699,7 +704,8 @@ public class O365Regression_19 {
 
 		// Add Dataset
 		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
-				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true);
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
 
 		// Save As Draft
 		collection.clickNextBtnOnDatasetTab();
@@ -951,6 +957,62 @@ public class O365Regression_19 {
 		// Logout
 		login.logout();
 
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 08/16/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that on click of ‘Save and Add New Dataset’ application
+	 *              should save the custodian dataset and should bring up the ‘Add
+	 *              dataset’ pop up. RPMXCON-60771
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60771", enabled = true, groups = { "regression" })
+	public void verifySaveAndAddNewDataSetBtnOption() throws Exception {
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60771 - O365");
+		base.stepInfo(
+				"Verify that on click of ‘Save and Add New Dataset’ application should save the custodian dataset and should bring up the ‘Add dataset’ pop up");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = collection.createNewCollection(colllectionData, collectionName, true, null, false);
+
+		// Click cancel in Folder select Popup in Dataset selection
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				colllectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save & Add New Dataset", "");
+
+		// Cancel Action
+		collection.getActionBtn("Cancel").waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.printResutInReport(collection.getDataSetSelectionPopDisplay().isDisplayed(),
+				"New Add dataset pop-up disapperared after Cancel action",
+				"New Add dataset pop-up still remains after Cancel action", "Fail");
+
+		// Logout
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
