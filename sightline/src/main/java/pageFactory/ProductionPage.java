@@ -21309,4 +21309,41 @@ public class ProductionPage {
 		}
 	}
 
+	
+	/**
+	 * @author Sakthivel
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @Description verifying text is not displayed on the tiff image file on downloaded zip file
+	 */
+	public void OCR_Verification_In_Generated_Tiff_tess4jNotDisplayed(int firstFile, int lastFile, String prefixID, String suffixID,
+			String verificationText) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+
+		for (int i = firstFile; i < lastFile; i++) {
+
+			File imageFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".tiff");
+			// ITesseract instance = new Tesseract(); // JNA Interface Mapping
+			ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+			File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+			instance.setDatapath(tessDataFolder.getPath());
+
+			try {
+				String result = instance.doOCR(imageFile);
+				System.out.println(result);
+				if (!result.contains(verificationText)) {
+					base.passedStep(verificationText + " is not displayed in " + prefixID + i + suffixID + ".tiff"
+							+ " file as expected");
+				} else {
+					base.failedStep(verificationText + " verification failed");
+				}
+			} catch (TesseractException e) {
+				System.err.println(e.getMessage());
+			}
+		}
+	}
 }
