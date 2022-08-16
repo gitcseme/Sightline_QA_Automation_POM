@@ -4690,11 +4690,11 @@ public class IngestionPage_Indium {
 	 * @description: this method will perform indexing
 	 */
 	public void ingestionIndexing(String dataset) {
-
+		driver.waitForPageToBeReady();
 		getRefreshButton().waitAndClick(10);
-		base.waitTime(2);
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
-		base.waitTime(2);
+		base.waitForElement(getActionDropdownArrow());
 		driver.scrollingToElementofAPage(getIsAudioCheckbox());
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
 			base.waitForElement(getIsAudioCheckbox());
@@ -4718,6 +4718,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getLanguage());
 			getLanguage().selectFromDropdown().selectByVisibleText("International English");
 		} else {
+			base.waitTime(5);
 			System.out.println("No need to select for other datasets");
 		}
 		base.waitForElement(getRunIndexing());
