@@ -894,7 +894,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-
+	public Element getSelectMultiFileTypeInTifffNative(int no, String fileType) {
+		return driver.FindElementByXPath("(//select[@name='TIFFFileTypesList']/option[contains(text(),'"+fileType+"')])["+ no +"]");
+	}
+	
 	public Element getLink_CustomSort() {
 		return driver.FindElementByXPath("//input[@id='file']");
 	}
@@ -7308,6 +7311,7 @@ public class ProductionPage {
 	}
 
 	/**
+	 *Modified on 16/08/2022  Added refresh statement after commit as per deployment
 	 * Modified on 03/09/2022(Replaced isElementAvailable() to avoid
 	 * e.printStackTrace in reports) Modified on 03/21/2022 return the document
 	 * count
@@ -7358,6 +7362,9 @@ public class ProductionPage {
 		if (base.getCloseSucessmsg().isElementAvailable(2)) {
 			base.CloseSuccessMsgpopup();
 		}
+		//to refresh the page after commit
+		driver.Navigate().refresh();
+		
 		String PDocCount = getProductionDocCount().getText();
 		// added thread.sleep to avoid exception while executing in batch
 		base.waitTime(1);
