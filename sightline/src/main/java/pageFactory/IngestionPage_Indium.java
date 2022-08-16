@@ -4695,72 +4695,31 @@ public class IngestionPage_Indium {
 		base.waitTime(2);
 		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitTime(2);
-		driver.scrollingToElementofAPage(getRunIndexing());
-		base.waitForElement(getRunIndexing());
+		driver.scrollingToElementofAPage(getIsAudioCheckbox());
 		if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIsAudioCheckbox().Visible();
-				}
-			}), Input.wait60);
-			getIsAudioCheckbox().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getLanguage().Visible();
-				}
-			}), Input.wait60);
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(5);
+			base.waitForElement(getLanguage());
 			getLanguage().selectFromDropdown().selectByVisibleText("North American English");
 		} else if (dataset.contains("CJK_GermanAudioTestData")) {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIsAudioCheckbox().Visible();
-				}
-			}), Input.wait60);
-			getIsAudioCheckbox().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getLanguage().Visible();
-				}
-			}), Input.wait60);
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(5);
+			base.waitForElement(getLanguage());
 			getLanguage().selectFromDropdown().selectByVisibleText("German");
 		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIsAudioCheckbox().Visible();
-				}
-			}), Input.wait60);
-			getIsAudioCheckbox().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getLanguage().Visible();
-				}
-			}), Input.wait60);
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(5);
+			base.waitForElement(getLanguage());
 			getLanguage().selectFromDropdown().selectByVisibleText("Japanese");
 		} else if (dataset.contains("0002_H13696_1_Latest")) {
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIsAudioCheckbox().Visible();
-				}
-			}), Input.wait60);
-			getIsAudioCheckbox().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getLanguage().Visible();
-				}
-			}), Input.wait60);
+			base.waitForElement(getIsAudioCheckbox());
+			getIsAudioCheckbox().waitAndClick(5);
+			base.waitForElement(getLanguage());
 			getLanguage().selectFromDropdown().selectByVisibleText("International English");
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
-		driver.scrollingToBottomofAPage();
 		base.waitForElement(getRunIndexing());
 		getRunIndexing().waitAndClick(10);
 		base.waitTime(2);
