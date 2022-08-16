@@ -356,6 +356,10 @@ public class CollectionPage {
 		return driver.FindElementByXPath("//input[@id='txtKeywords']");
 	}
 
+	public Element getDataSetSelectionPopDisplay() {
+		return driver.FindElementByXPath("//div[@id='divDatasetSelectionPopup']");
+	}
+
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
 		base = new BaseClass(driver);
@@ -744,6 +748,7 @@ public class CollectionPage {
 		try {
 			getActionBtn(type).waitAndClick(5);
 			driver.waitForPageToBeReady();
+			base.stepInfo("Clicked : " + type);
 			confirmationAction(type, saveAction, verifySuccessMsg);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -758,8 +763,15 @@ public class CollectionPage {
 	 * @param verifyMsg
 	 */
 	public void confirmationAction(String type, String action, String verifyMsg) {
-		if (type.equalsIgnoreCase("Save")) {
+		if (type.equalsIgnoreCase("Save") || type.equalsIgnoreCase("Save & Add New Dataset")) {
 			if (getFolderSelectionConfirmation().isElementAvailable(5)) {
+
+				String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
+				String actualTxt = getPopupMsg().getText();
+				String passMsg = "Displayed Popup Msg : " + actualTxt;
+				String failMsg = "Belly band msg is not as expected";
+				base.compareTextViaContains(actualTxt, expectedTxt, passMsg, failMsg);
+
 				getConfirmationBtnAction(action).waitAndClick(5);
 				driver.waitForPageToBeReady();
 				base.VerifySuccessMessage(verifyMsg);
@@ -1192,13 +1204,15 @@ public class CollectionPage {
 	/**
 	 * @return
 	 * @Author Jeevitha
+	 * @modifiedBy : Raghuram
+	 * @modifiedOn : 8/16/22 - ( Save & new )
 	 * @Description : add dataset by clicking btn/link and verify new row added in
 	 *              dataset selection table
 	 */
 	public List<String> fillingDatasetSelection(String creationType, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData, String dataName,
 			int retryAttempt, String selectedFolder, boolean ApplyFilter, boolean Enable, boolean keyword,
-			String keywords, boolean Save, boolean Confirm) {
+			String keywords, boolean Save, boolean Confirm, String saveType, String additional1) {
 
 		List<String> custodianDetails = new ArrayList<>();
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
@@ -1221,8 +1235,18 @@ public class CollectionPage {
 		// click save/cancel and verify row added
 		String expectedTxt = "You have selected to retrieve data from the following folders for this custodian:";
 		if (Save) {
-			SaveActionInDataSetPopup(Confirm, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
-					selectedFolder, keywords, true, "Dataset added successfully.");
+			if (saveType.equalsIgnoreCase("Save")) {
+				SaveActionInDataSetPopup(Confirm, firstName, lastName, selectedApp, collectionEmailId,
+						dataSetNameGenerated, selectedFolder, keywords, true, "Dataset added successfully.");
+			} else if (saveType.equalsIgnoreCase("Save & Add New Dataset")) {
+				applyAction(saveType, "Confirm", "Dataset added successfully.");
+				driver.waitForPageToBeReady();
+				System.out.println(getDataSetSelectionPopDisplay().isDisplayed());
+				base.printResutInReport(getDataSetSelectionPopDisplay().isDisplayed(),
+						"'Add Dataset' page (popup) opened, to allow the user to add another custodian dataset to the collection  after Save&New action",
+						"New Add dataset pop-up is not displayed after Save&New action", "Pass");
+			}
+
 		}
 
 		driver.waitForPageToBeReady();
