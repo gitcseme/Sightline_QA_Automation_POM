@@ -706,6 +706,7 @@ public class O365Regression_19 {
 		collection.collectionSaveAsDraft();
 
 		// Delete Source Location
+		dataSets.navigateToDataSets("Source", "Collection/SourceLocation");
 		source.deleteSourceLocation(dataSourceName, true);
 
 		// Logout
