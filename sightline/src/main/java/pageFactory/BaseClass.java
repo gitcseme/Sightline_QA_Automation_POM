@@ -2819,7 +2819,7 @@ public class BaseClass {
 			throws InterruptedException {
 		boolean compare = false;
 		for (String actualValue : source) {
-			if (actualValue.equals(compareString)) {
+			if (actualValue.equalsIgnoreCase(compareString)) {
 				compare = true;
 			} else {
 				compare = false;

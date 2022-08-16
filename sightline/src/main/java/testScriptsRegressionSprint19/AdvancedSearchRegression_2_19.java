@@ -397,6 +397,51 @@ public class AdvancedSearchRegression_2_19 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Date: 08/16/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that Advanced Search is working properly for
+	 *              DocumentFileTypeName Metadata. RPMXCON-57059
+	 */
+	@Test(description = "RPMXCON-57059", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyAdvancedSearchWorkingProperlyForDocumentFileTypeNameMetadat(String userName, String password)
+			throws Exception {
+
+		String[] columnToSelect = { Input.docFileType };
+		String docFileTypeValue = "TIFF image";
+		DocListPage docList = new DocListPage(driver);
+		List<String> docFileTypeColumnValues = new ArrayList<String>();
+
+		// login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-57059.");
+		baseClass.stepInfo("Verify that Advanced Search is working properly for  DocumentFileTypeName Metadata.");
+
+		// performing metaData search with DocFileType
+		baseClass.stepInfo("Performing metaData Search With DocFileType");
+		sessionSearch.MetaDataSearchInAdvancedSearch(Input.docFileType, Input.searchDocFileType);
+		sessionSearch.ViewInDocList();
+
+		// adding the DocFileType metaData column in DocList
+		baseClass.stepInfo("adding DocFileType metaData column in DocList.");
+		docList.SelectColumnDisplayByRemovingExistingOnes(columnToSelect);
+		// getting all the values from DocFileType column
+		baseClass.stepInfo("getting all the values from DocFileType column.");
+		docFileTypeColumnValues = docList.getColumnValue(columnToSelect[0], false);
+
+		// Verifying that Advanced Search is working properly for DocumentFileTypeName
+		// Metadata.
+		baseClass.compareListWithString(docFileTypeColumnValues, docFileTypeValue,
+				"verified that  Advanced Search is working properly for DocumentFileTypeName Metadata ",
+				"Advanced Search is Not working properly for DocumentFileTypeName Metadata");
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
