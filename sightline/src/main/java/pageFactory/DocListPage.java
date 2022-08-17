@@ -498,6 +498,13 @@ public class DocListPage {
 	public Element getDataInDoclist(int row, int column) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + row + "]//td[" + column + "]");
 	}
+	
+	public Element getDoclistNextButton() {
+		return driver.FindElementByXPath("//li[@id='dtDocList_next']//a");
+	}
+	public Element getNextButtonStatus() {
+		return driver.FindElementById("dtDocList_next");
+	}
 
 	// Added by Gopinath - 24/09/2021
 	public Element getFirstDocumentButton() {
