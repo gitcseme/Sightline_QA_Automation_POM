@@ -378,8 +378,7 @@ public class O365Regression_19 {
 		String selectedFolder = "Calendars";
 
 		// Login as User
-		login.loginToSightLine(username, password);
-		userManagement.navigateToUsersPAge();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
 		login.logout();
@@ -441,8 +440,7 @@ public class O365Regression_19 {
 		String dropDownValue = "Microsoft 365";
 
 		// Login as User
-		login.loginToSightLine(username, password);
-		userManagement.navigateToUsersPAge();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
 		login.logout();
@@ -485,8 +483,7 @@ public class O365Regression_19 {
 		String selectedFolder = "Inbox";
 
 		// Login as User
-		login.loginToSightLine(username, password);
-		userManagement.navigateToUsersPAge();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
 		login.logout();
@@ -550,8 +547,7 @@ public class O365Regression_19 {
 		String selectedFolder = "Inbox";
 
 		// Login as User
-		login.loginToSightLine(username, password);
-		userManagement.navigateToUsersPAge();
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
 		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
 
 		login.logout();
