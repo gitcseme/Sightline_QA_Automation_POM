@@ -3301,7 +3301,9 @@ public class ProductionPage {
 	public Element getFileTypeInTranslation(String fileType) {
 		return driver.FindElementByXPath("//*[@id='tblTranslationFileGroup']//input[contains(@value,'"+fileType+"')]/..");
 	}
-
+	public ElementCollection getSortingMetDataList(String Metadata) {
+		return driver.FindElementsByXPath("//select[@id='"+Metadata+"']//option");
+	}
 
 	public ProductionPage(Driver driver) {
 
@@ -21422,5 +21424,20 @@ public class ProductionPage {
 
 		base.stepInfo("Advanced production section Translation files is filled");
 	}
+	/**
+	 * @author Brundha.T
+	 * Description:verifying document count in Production wizard
+	 * @param PureHit
+	 */
 	
+	public void documentCountInProductionWizard(int PureHit ) {
+		driver.scrollPageToTop();
+		getMarkCompleteLink().waitAndClick(2);
+		base.CloseSuccessMsgpopup();
+		String DocCount=getDocumentSelectionLink().getText();
+		System.out.println("Document Count is:" + DocCount);
+		base.digitCompareEquals(PureHit, Integer.valueOf(DocCount), "Total Document count is displayed ","Document is not dispalyed");
+		driver.scrollPageToTop();
+		getMarkInCompleteBtn().waitAndClick(2);
+	}
 }
