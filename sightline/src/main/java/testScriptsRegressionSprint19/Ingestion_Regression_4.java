@@ -325,6 +325,93 @@ public class Ingestion_Regression_4 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 16/08/2022 TestCase Id:RPMXCON-47344
+	 * Description :To verify that ingestion which is Rolled back can be deleted once it is in Draft mode. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47344",enabled = true, groups = { "regression" })
+	public void verifyDeletingIngestionInDraftMode() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47344");
+		baseClass.stepInfo("verify that ingestion which is Rolled back can be deleted once it is in Draft mode");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion");
+		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+		ingestionPage.verifyDetailsAfterStartedIngestion();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		baseClass.stepInfo("Click on settings and perform Rollback option");
+		ingestionPage.rollBackIngestion();
+		ingestionPage.VerifyDraftIngestionStatusAfterRollback();
+		baseClass.stepInfo("verify available settings option");
+		ingestionPage.verifyOptionsAvailableForDraftStageIngestion();
+		baseClass.stepInfo("Delete ingestion");
+		ingestionPage.getRefreshButton().waitAndClick(5);
+		ingestionPage.deleteIngestion();
+		baseClass.passedStep("Verified that user can delete the ingestion which is in draft mode");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 17/08/2022 TestCase Id:RPMXCON-48002
+	 * Description :To Verify EmailDuplicateDocID field is populated correctly for ingested data
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48002",enabled = true, groups = { "regression" })
+	public void verifyEmailMetaDataFieldPopulatedForIngestedData() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48002");
+		baseClass.stepInfo("To Verify EmailDuplicateDocID field is populated correctly for ingested data");
+		String ingestionName = null;
+		String[] values = {"EmailDuplicateDocIDs", "EmailIsDuplicate"};
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
+		if (status == false) {
+			ingestionPage.performAutomationCollection1kIngestion(Input.sourceSystem,Input.DATFile2,Input.textFile1);
+			ingestionName=ingestionPage.publishAddonlyIngestion(Input.Collection1KFolder);
+		}
+		else {
+			ingestionName= ingestionPage.getPublishedIngestionName(Input.Collection1KFolder);
+		}
+		baseClass.stepInfo("Search document and go to doclist");
+		int docsCount=sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.ViewInDocList();
+		baseClass.stepInfo("Verify values displayed in selected column");
+		ingestionPage.verifyValuesDisplayedInSelectedColumnsDoclist(docsCount,values);
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 17/08/2022 TestCase Id:RPMXCON-48071
+	 * Description :To Verify Field ParentDocID ,HeadOfHouseholdDocID and FamilyID in Ingested Data Set.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48071",enabled = true, groups = { "regression" })
+	public void verifyFieldValuesInIngestedDataset() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48071");
+		baseClass.stepInfo("Verify fields in ingested dataset.");
+		String[] values = {"ParentDocID","HeadOfHouseholdDocID","FamilyID"};
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+			ingestionPage.publishAddonlyIngestion(Input.HiddenPropertiesFolder);
+		}
+		baseClass.stepInfo("Perform search and go to doclist");
+		int docsCount=sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.ViewInDocList();
+		baseClass.stepInfo("Verify values displayed in selected column");
+		ingestionPage.verifyValuesDisplayedInSelectedColumnsDoclist(docsCount,values);
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
