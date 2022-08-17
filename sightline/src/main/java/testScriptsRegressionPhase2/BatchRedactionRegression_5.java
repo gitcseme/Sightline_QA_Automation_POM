@@ -21,7 +21,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class BatchRedactionRegression {
+public class BatchRedactionRegression_5 {
 
 	Driver driver;
 	LoginPage login;
