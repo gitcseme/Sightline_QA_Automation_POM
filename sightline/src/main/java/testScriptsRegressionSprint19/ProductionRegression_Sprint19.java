@@ -22,6 +22,7 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -109,7 +110,7 @@ public class ProductionRegression_Sprint19 {
 		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 
-		//select created security group
+		// select created security group
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		// create new production set
@@ -514,7 +515,6 @@ public class ProductionRegression_Sprint19 {
 		loginPage.logout();
 	}
 
-	
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47896
@@ -548,17 +548,17 @@ public class ProductionRegression_Sprint19 {
 
 		// verify sort by metadata is clicked by default
 		page.verifyDefaultSelection_SortByMetadata();
-		
+
 		// verify sort by selected tags
 		page.verifySortByTags_SortedByAscending();
-		
-		//verify custom sort link
+
+		// verify custom sort link
 		page.verifyCustomSort_Link();
-		
+
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47938
@@ -592,28 +592,29 @@ public class ProductionRegression_Sprint19 {
 		// verify sort by selected tags
 		base.waitForElement(page.getSortingRadioBtn());
 		page.getSortingRadioBtn().waitAndClick(10);
-		
+
 		List<String> availableTags = base.availableListofElements(page.getTotalTagsInSorting());
 		List<String> availableTags2 = base.availableListofElements(page.getTotalTagsInSorting());
 		System.out.println(availableTags);
-		base.verifyOriginalSortOrder(availableTags, availableTags2, "Ascending",true);
+		base.verifyOriginalSortOrder(availableTags, availableTags2, "Ascending", true);
 		base.passedStep("'Available Tags' are sorted");
 		loginPage.logout();
 
 	}
 
-
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47719
-	 * @Description:To Verify ProjectAdmin will be able to enter production components information on the self production wizard
+	 * @Description:To Verify ProjectAdmin will be able to enter production
+	 *                 components information on the self production wizard
 	 **/
 	@Test(description = "RPMXCON-47719", enabled = true, groups = { "regression" })
 	public void verifySelfProductionWizard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-47719 Production Component Sprint 19");
-		base.stepInfo("To Verify ProjectAdmin will be able to enter production components information on the self production wizard");
+		base.stepInfo(
+				"To Verify ProjectAdmin will be able to enter production components information on the self production wizard");
 
 		// create a privileged tag
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -622,7 +623,7 @@ public class ProductionRegression_Sprint19 {
 		// search and bulk tag
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
-		
+
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
@@ -636,18 +637,22 @@ public class ProductionRegression_Sprint19 {
 		base.passedStep("Following components can be selected   DAT,TIFF,NATIVE,PDF,TEXT,MP3 etc");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-49101
-	 * @Description:To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.
+	 * @Description:To verify that EmailAuthorNameAndAddress,
+	 *                 EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and
+	 *                 EmailBCCNamesAndAddresses fields should be display properly
+	 *                 in the correct format in the DAT.
 	 **/
 	@Test(description = "RPMXCON-49101", enabled = true, groups = { "regression" })
 	public void verifyDATWithEmailClassification() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-49101 Production Component Sprint 19");
-		base.stepInfo("To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.");
+		base.stepInfo(
+				"To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.");
 
 		// create a privileged tag
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -656,7 +661,7 @@ public class ProductionRegression_Sprint19 {
 		// search and bulk tag
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
-		
+
 		productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
@@ -667,13 +672,13 @@ public class ProductionRegression_Sprint19 {
 		System.out.println(productionName);
 		page.fillingDATSection();
 		page.addNewFieldOnDAT();
-		page.addDatField(1,"Email", "EmailAuthorNameAndAddress");
+		page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
 		page.addNewFieldOnDAT();
-		page.addDatField(2,"Email", "EmailToNamesAndAddresses");
+		page.addDatField(2, "Email", "EmailToNamesAndAddresses");
 		page.addNewFieldOnDAT();
-		page.addDatField(3,"Email", "EmailBCCNamesAndAddresses");
+		page.addDatField(3, "Email", "EmailBCCNamesAndAddresses");
 		page.addNewFieldOnDAT();
-		page.addDatField(4,"Email", "EmailCCNamesAndAddresses");
+		page.addDatField(4, "Email", "EmailCCNamesAndAddresses");
 		page.fillingNativeSection();
 		page.fillingTIFFSection(tagname);
 		page.navigateToNextSection();
@@ -688,25 +693,26 @@ public class ProductionRegression_Sprint19 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.extractFile();
 		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, beginningBates);
-		
+
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		String name = page.getProduction().getText().trim();
 		driver.waitForPageToBeReady();
 		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
 		if (DatFile.exists()) {
-		base.passedStep("Dat file is exists in generated production");
+			base.passedStep("Dat file is exists in generated production");
 		} else {
-		base.failedStep("Dat file is not displayed as expected");
+			base.failedStep("Dat file is not displayed as expected");
 		}
-		loginPage.logout();	
+		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47741
-	 * @Description:To Verify default Filter By selections for Production status (In-Progress, ...). Verify for both Grid and Tile view
+	 * @Description:To Verify default Filter By selections for Production status
+	 *                 (In-Progress, ...). Verify for both Grid and Tile view
 	 **/
-	@Test(description="RPMXCON-47741",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47741", enabled = true, groups = { "regression" })
 	public void verifyFilterByINPROGRESS() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47741");
@@ -718,7 +724,7 @@ public class ProductionRegression_Sprint19 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		// Pre-requisites
-		// create tag 
+		// create tag
 		BaseClass base = new BaseClass(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -727,9 +733,9 @@ public class ProductionRegression_Sprint19 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-	//  Create Prod for failed state
+		// Create Prod for failed state
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);	
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -744,7 +750,7 @@ public class ProductionRegression_Sprint19 {
 		page.fillingSummaryAndPreview();
 		page.clickGenarateWaitForRegenarate();
 
-		//  Create Prod for Draft state
+		// Create Prod for Draft state
 		page = new ProductionPage(driver);
 		beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -753,7 +759,7 @@ public class ProductionRegression_Sprint19 {
 		page.fillingDATSection();
 		page.navigateToNextSection();
 
-		//  Create Prod for Inprogress state
+		// Create Prod for Inprogress state
 		page = new ProductionPage(driver);
 		beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -806,12 +812,14 @@ public class ProductionRegression_Sprint19 {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47739
-	 * @Description:To Verify the default Sorting and required sequence of sorting. And default production sorting (Most recent First). Tile View.
+	 * @Description:To Verify the default Sorting and required sequence of sorting.
+	 *                 And default production sorting (Most recent First). Tile
+	 *                 View.
 	 **/
-	@Test(description="RPMXCON-47739",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47739", enabled = true, groups = { "regression" })
 	public void verifySortByinTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47739");
@@ -834,9 +842,9 @@ public class ProductionRegression_Sprint19 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-	//  Create Prod for failed state
+//	//  Create Prod for failed state
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);	
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -851,7 +859,7 @@ public class ProductionRegression_Sprint19 {
 		page.fillingSummaryAndPreview();
 		page.clickGenarateWaitForRegenarate();
 
-		//  Create Prod for Draft state
+		// Create Prod for Draft state
 		page = new ProductionPage(driver);
 		beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -860,7 +868,7 @@ public class ProductionRegression_Sprint19 {
 		page.fillingDATSection();
 		page.navigateToNextSection();
 
-		//  Create Prod for Inprogress state
+//		  Create Prod for Inprogress state
 		page = new ProductionPage(driver);
 		beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -879,17 +887,15 @@ public class ProductionRegression_Sprint19 {
 		page.clickOnGenerateButton();
 
 		page = new ProductionPage(driver);
-		if(page.getLoadMore().isElementAvailable(5)) {
-		do {
-		driver.scrollingToBottomofAPage();
-		page.getLoadMore().waitAndClick(3);	
-		driver.scrollingToBottomofAPage();
-		}while(page.getLoadMore().Enabled()== false);	
+		page.navigateToProductionPage();
+		if (page.getLoadMore().Enabled()) {
+			do {
+				driver.scrollingToBottomofAPage();
+			} while (page.getLoadMore().Visible());
 		}
-		driver.scrollPageToTop();
-		
+
 		base.waitForElementCollection(page.getProductionSate());
-		List<String>expProdStatusOrder = base.getAvailableListofElements(page.getProductionSate());
+		List<String> expProdStatusOrder = base.getAvailableListofElements(page.getProductionSate());
 		System.out.println(expProdStatusOrder);
 		Collections.sort(expProdStatusOrder);
 		System.out.println(expProdStatusOrder);
@@ -902,26 +908,23 @@ public class ProductionRegression_Sprint19 {
 		driver.waitForPageToBeReady();
 
 		base.waitForElement(page.getLoadMore());
-		if(page.getLoadMore().isElementAvailable(5)) {
+		if (page.getLoadMore().Enabled()) {
 			do {
-			driver.scrollingToBottomofAPage();
-			page.getLoadMore().waitAndClick(3);	
-			driver.scrollingToBottomofAPage();
-			}while(page.getLoadMore().Enabled()== false);
-			}
-		driver.scrollPageToTop();
-		
+				driver.scrollingToBottomofAPage();
+			} while (page.getLoadMore().Visible());
+		}
+
 		base.waitForElementCollection(page.getProductionSate());
 		List<String> actProdStatusOrder = base.getAvailableListofElements(page.getProductionSate());
 		System.out.println(actProdStatusOrder);
-		base.stepInfo("Before Sorting : " + actProdStatusOrder);
-		
-		if(expProdStatusOrder.equals(actProdStatusOrder)) {
+		base.stepInfo("After Sorting : " + actProdStatusOrder);
+
+		if (expProdStatusOrder.equals(actProdStatusOrder)) {
 			base.passedStep("Productions list sorted as per the selected list in Tile View   ");
-		}else {
+		} else {
 			base.failedStep("Productions list Not sorted as per the selected list in Tile View   ");
 		}
-		
+
 		base.passedStep(
 				"Verified that default Sorting and required sequence of sorting. And default production sorting (Most recent First). Tile View.");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -929,35 +932,35 @@ public class ProductionRegression_Sprint19 {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47816
-	 * @Description:To Verify Production Guard Page option (close) Issue for Tag and Redaction.
+	 * @Description:To Verify Production Guard Page option (close) Issue for Tag and
+	 *                 Redaction.
 	 **/
-	@Test(description="RPMXCON-47816",enabled = true, groups = { "regression" } )
+	@Test(description = "RPMXCON-47816", enabled = true, groups = { "regression" })
 	public void verifyProdGuardCloseOpt() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47816");
-		base.stepInfo(
-				"To Verify Production Guard Page option (close) Issue for Tag and Redaction");
+		base.stepInfo("To Verify Production Guard Page option (close) Issue for Tag and Redaction");
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-		
-				// search for tag
+
+		// search for tag
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
-		
-		ProductionPage page = new ProductionPage(driver);		
+
+		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
-		
+
 		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);	
+		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSection();
 		driver.waitForPageToBeReady();
@@ -974,62 +977,62 @@ public class ProductionRegression_Sprint19 {
 		// Click Back Btn in production location page
 		page.clickBackBtnUntilElementFound(page.getAddRuleBtn());
 		base.stepInfo("Navigated Back to Priv Guard page");
-		
-        if(page.getRemoveLink().Visible()) {
+
+		if (page.getRemoveLink().Visible()) {
 			base.failedStep("Remove Option displaying after Mark Complete");
-		}else {
+		} else {
 			base.passedStep("Remove Option Not displaying after Mark Complete");
 		}
-		
+
 		base.waitForElement(page.getMarkInCompleteBtn());
 		page.getMarkInCompleteBtn().waitAndClick(3);
-		
-		if(page.getRemoveLink().Visible()) {
+
+		if (page.getRemoveLink().Visible()) {
 			base.passedStep("Remove Option displaying after Mark InComplete");
-		}else {
+		} else {
 			base.failedStep("Remove Option Not displaying after Mark Complete");
 		}
-		
-		base.passedStep(
-				"verified - that Production Guard Page option (close) Issue for Tag and Redaction");
+
+		base.passedStep("verified - that Production Guard Page option (close) Issue for Tag and Redaction");
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		base.stepInfo("deleting created tags and folders");
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47998
-	 * @Description:To Verify In Priv Guard, the message saying that the production has privileged documents
+	 * @Description:To Verify In Priv Guard, the message saying that the production
+	 *                 has privileged documents
 	 **/
-	@Test(description="RPMXCON-47998",enabled = true, dataProvider = "Users", groups = { "regression" } )
+	@Test(description = "RPMXCON-47998", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyPrivGuardNotDisWarniMSg(String userName, String password) throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
-		
+
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47998");
 		base.stepInfo("To Verify In Priv Guard, the message saying that the production has privileged documents "
 				+ "even when there are no privileged documents");
-				
+
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	    base = new BaseClass(driver);
+		base = new BaseClass(driver);
 
-	    if (userName.equals(Input.pa1userName)) {
+		if (userName.equals(Input.pa1userName)) {
 			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		} else {
 			tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
 		}
-		
-		ProductionPage page = new ProductionPage(driver);		
+
+		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);	
+		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingTIFFSection(tagname);
 		driver.waitForPageToBeReady();
@@ -1040,13 +1043,341 @@ public class ProductionRegression_Sprint19 {
 		page.navigateToNextSection();
 		page.fillingPrivGuardPage();
 		base.VerifySuccessMessage("Mark Complete successful");
-		base.passedStep(
-				"Warning message not be displayed as there is no Priv document in selected document source");
+		base.passedStep("Warning message not be displayed as there is no Priv document in selected document source");
 		base.passedStep("Verified In Priv Guard, the message saying that the production has privileged documents "
 				+ "even when there are no privileged documents");
 		loginPage.logout();
 	}
+
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-63080
+	 * @Description:To Verify production regeneration without any change in default
+	 *                 enabled native placeholder under TIFF section
+	 **/
+	@Test(description = "RPMXCON-63080", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyProdRegeFrDefNatPHTiff(String userName, String password) throws Exception {
+
+		loginPage.logout();
+		loginPage.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as" + userName);
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-63080");
+		base.stepInfo("To Verify production regeneration without any change in "
+				+ "default enabled native placeholder under TIFF section");
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		int doccount = 1;
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		base = new BaseClass(driver);
+
+		if (userName.equals(Input.pa1userName)) {
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		} else {
+			tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+		}
+
+		base.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "spreadsheet");
+		sessionSearch.ViewInDocList();
+
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(doccount);
+		doclist.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageAndRegeneratingAgain();
+		page.getbtnContinueGeneration().isElementAvailable(320);
+		if (page.getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(page.getbtnContinueGeneration());
+			page.getbtnContinueGeneration().waitAndClick(10);
+		}
+		page.getbtnContinueGeneration().waitAndClick(10);
+		base.waitForElement(page.getQC_Download());
+		page.getQC_Download().Click();
+		base.waitForElement(page.getQC_Downloadbutton_allfiles());
+		page.getQC_Downloadbutton_allfiles().Click();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		File Native = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
+		File tiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		System.out.println(DatFile);
+
+		if (Native.exists()) {
+			base.passedStep("Native placeholder generated for the selected file type ");
+		} else {
+			base.failedStep("Native placeholder Not generated for the selected file type ");
+		}
+		if (DatFile.exists()) {
+			base.passedStep("Dat file is exists in generated production");
+		} else {
+			base.failedStep("Dat file is not displayed as expected");
+		}
+		if (tiffFile.exists()) {
+			base.passedStep("Tiff is generated successfully");
+		} else {
+			base.failedStep("Tiff is not generated successfully");
+		}
+		base.passedStep("Verify production regeneration without any change in "
+				+ "default enabled native placeholder under TIFF section");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-63084
+	 * @Description:To Verify production regeneration with change(additional, change
+	 *                 existing file type to spreadsheet only) in default enabled
+	 *                 native placeholder under PDF section
+	 **/
+	@Test(description = "RPMXCON-63084", enabled = true, dataProvider = "Users", groups = { "regression" })
+	public void verifyProdRegeFrDefNatPHpdf(String userName, String password) throws Exception {
+
+		loginPage.logout();
+		loginPage.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as" + userName);
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-63084");
+		base.stepInfo("To Verify production regeneration with change(additional, change "
+				+ "existing file type to spreadsheet only) in default enabled native placeholder under PDF section");
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		int doccount = 1;
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		base = new BaseClass(driver);
+
+		if (userName.equals(Input.pa1userName)) {
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		} else {
+			tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+		}
+
+		base.stepInfo("perform basic search and bulk folder");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "spreadsheet");
+		sessionSearch.ViewInDocList();
+
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(doccount);
+		doclist.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSectionwithNativelyPlaceholder(tagname);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+
+		String name = page.getProduction().getText().trim();
+		String home = System.getProperty("user.home");
+		File file = new File(home + "/Downloads/" + name + ".zip");
+		File file1 = new File(Input.fileDownloadLocation + name + ".zip");
+
+		if (file.exists()) {
+			driver.waitForPageToBeReady();
+			file.delete();
+		} else if (file1.exists()) {
+			driver.waitForPageToBeReady();
+			file1.delete();
+		}
+
+		base.waitForElement(page.getQC_backbutton());
+		page.getQC_backbutton().waitAndClick(10);
+
+		base.waitForElement(page.getMarkInCompleteBtn());
+		page.getMarkInCompleteBtn().waitAndClick(10);
+
+		page.clickBackBtnUntilElementFound(page.getProductionName());
+		base.waitForElement(page.getNextButton());
+		page.getNextButton().Enabled();
+		page.getNextButton().waitAndClick(10);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(page.getbtnComponentsMarkIncomplete());
+		page.getbtnComponentsMarkIncomplete().waitAndClick(10);
+		;
+
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getSelectMultiFileTypeInTifffNative(2, "Images"));
+		page.getSelectMultiFileTypeInTifffNative(2, "Images").waitAndClick(5);
+		driver.scrollPageToTop();
+
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		File Native = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
+		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
+		System.out.println(DatFile);
+
+		if (Native.exists()) {
+			base.passedStep("Native placeholder generated for the selected file type ");
+		} else {
+			base.failedStep("Native placeholder Not generated for the selected file type ");
+		}
+		if (DatFile.exists()) {
+			base.passedStep("Dat file is exists in generated production");
+		} else {
+			base.failedStep("Dat file is not displayed as expected");
+		}
+		if (pdfFile.exists()) {
+			base.passedStep("Pdf is generated successfully");
+		} else {
+			base.failedStep("Pdf is not generated successfully");
+		}
+		base.passedStep(
+				"Verified - production regeneration with change(additional, change existing file type to spreadsheet only) "
+						+ "in default enabled native placeholder under PDF section");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47936
+	 * @Description:To Verify Slip Sheet->Work Product Should get saved in Production Component Section
+	 **/
+	@Test(description = "RPMXCON-47936", enabled = true,groups = { "regression" })
+	public void verifyDefaultSelection() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-47936");
+		base.stepInfo("To Verify Slip Sheet->Work Product Should get saved in Production Component Section");
+
+		productionname = "p" + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(false);
+		page.slipSheetToggleEnable();
+		page.fillingSlipSheetInTiffSection("MasterDateDateOnly");
+		page.fillingSlipSheetInTiffSection("DocID");
+		page.clickComponentMarkCompleteAndIncomplete();
+		page.getTIFFTab().waitAndClick(10);
+		page.getAdvancedTabInTIFF().waitAndClick(10);
+		page.toVerifyDefaultSelection("MasterDateDateOnly");
+		page.toVerifyDefaultSelection("DocID");
+		base.passedStep("Verified Slip Sheet->Work Product Should get saved in Production Component Section");
+		loginPage.logout();
+	}
 	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-48001
+	 * @Description:To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.
+	 **/
+	@Test(description = "RPMXCON-48001", enabled = true, groups = { "regression" })
+	public void verifySubBates() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48001 Production Component Sprint 19");
+		base.stepInfo("To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		String datField="B"+page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.addingDatField(0, Input.bates, Input.batesNumber,datField);
+		page.navigateToNextSection();
+		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates, prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		String PDocCount = page.getProductionDocCount().getText();
+		int DocCount = Integer.parseInt(PDocCount);
+		int lastfile = firstFile + DocCount;
+		page.extractFile();
+		page.verifyDATFileForSubBatesNumber(firstFile, lastfile, prefixID, suffixID);
+		base.passedStep(
+				"verified that Bates Number in DAT file should be AK01000.00001");
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
