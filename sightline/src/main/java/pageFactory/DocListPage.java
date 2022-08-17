@@ -4563,6 +4563,7 @@ public class DocListPage {
 		base.waitForElement(getSelectDropDown());
 		base.waitTillElemetToBeClickable(getSelectDropDown());
 		getSelectDropDown().Click();
+		base.waitTime(2);
 		driver.waitForPageToBeReady();
 		int i;
 		i = base.getIndex(getTableHeaders(), IndexElement);
