@@ -137,6 +137,63 @@ public class DomainManagement_Regression_05 {
 		
 	}
 	
+	/**
+	 * @Author :Aathith 
+	 * date: 08/17/2022
+	 * Modified date:NA 
+	 * Modified by:
+	 * @Description :Verify when Domain Admin assigned to 1 or more non-domain project then domain dropdown in the impersonation popup should display value "Not a Domain"
+	 * @throws InterruptedException 
+	 */
+	@Test(description = "RPMXCON-53070",enabled = true, groups = {"regression" })
+	public void verifyNOnDomainProjectInNotDomain() throws InterruptedException  {
+		
+		base = new BaseClass(driver);
+		user = new UserManagement(driver);
+		
+		base.stepInfo("Test case Id: RPMXCON-53070");
+		base.stepInfo("Verify when Domain Admin assigned to 1 or more non-domain project then domain dropdown in the impersonation popup should display value \"Not a Domain\"");
+		
+		//pre-req assign nondomain projet to da user
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.filterByName(Input.da1userName);
+		String userName = user.getfirstUserName();
+		if(!base.text(Input.NonDomainProject).isElementAvailable(2)) {
+		user.AssignUserToProject(Input.NonDomainProject, Input.ProjectAdministrator, userName);
+		}
+		loginPage.logout();
+		
+		//login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Login as a da user :"+Input.da1userName);
+		
+		base = new BaseClass(driver);
+		
+		base.openImpersonateTab();
+		if(base.getSelectRole().isDisplayed()) {
+			base.passedStep("Impersonate To' pop up is open");
+		}else {
+			base.failedStep("verification failed");
+		}
+		base.selectImpersonateRole(Input.ProjectAdministrator);
+		base.stepInfo("Select role as Project Admin  Check domain drop down from the pop up");
+		base.selectImpersonateDomain("Not a Domain");
+		base.stepInfo("Select \"Not a Domain\" from the domain dropdown,");
+		if(base.getSelectDomain("Not a Domain").isDisplayed()) {
+			base.passedStep("When the user selects \"not a domain\" from the domain dropdown, "
+					+ "the project dropdown is list non-domain type projects for which this user has access to. (is a PAU or RMU or reviewer).");
+		}else {
+			base.failedStep("Not a Domain verification failed");
+		}
+		
+		base.passedStep("Verified when Domain Admin assigned to 1 or more non-domain project then domain dropdown in the impersonation popup should display value \"Not a Domain\"");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		user.UnAssignUserToProject(Input.NonDomainProject, Input.ProjectAdministrator, userName);
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

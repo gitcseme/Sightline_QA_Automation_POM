@@ -13159,5 +13159,47 @@ public class SessionSearch {
 		bc.stepInfo(" Docs Unassigned from  " + assignName);
 		
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param sourceDocIds
+	 * @Description Search a list of document with source id's
+	 */
+	public void basicSourceDocIdsSearch(String[] sourceDocIds) {
 
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		try {
+			driver.waitForPageToBeReady();
+			
+			for(String id : sourceDocIds) {
+			base.waitForElement(getBasicSearch_MetadataBtn());
+			driver.waitForPageToBeReady();
+			getBasicSearch_MetadataBtn().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().selectFromDropdown().selectByValue("SourceDocID");
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(id);
+
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(5);
+			}
+			
+			base.waitForElement(getSearchButton());
+			getSearchButton().waitAndClick(10);
+			if(base.getYesBtn().isElementAvailable(2)) {
+				base.getYesBtn().waitAndClick(5);
+			}
+			driver.waitForPageToBeReady();
+			base.stepInfo("list of source docid's searched");
+
+		} catch (Exception e) {
+			base.failedStep("Query is not found");
+		}
+
+	}
 }

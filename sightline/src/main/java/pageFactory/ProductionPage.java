@@ -3297,6 +3297,10 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//select[@id='selectedMetadataField']//option");
 	}
 	
+	//add by Aathith
+	public Element getFileTypeInTranslation(String fileType) {
+		return driver.FindElementByXPath("//*[@id='tblTranslationFileGroup']//input[contains(@value,'"+fileType+"')]/..");
+	}
 
 
 	public ProductionPage(Driver driver) {
@@ -21346,4 +21350,77 @@ public class ProductionPage {
 			}
 		}
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description select default export otherwise create new export
+	 */
+	public void selectDefaultExport() {
+		String text = getProdExport_ProductionSets().getText();
+		if (text.contains("Export Set")) {
+			selectExportSetFromDropDown();
+		} else {
+			createNewExport("Export Set");
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param exportname
+	 * @param templateName
+	 * @throws InterruptedException
+	 * @Description filling basic page with template
+	 */
+	public void addANewExportWithTemplate(String exportname,String templateName) throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getAddNewExport());
+		getAddNewExport().waitAndClick(5);
+
+		base.waitForElement(getProductionName());
+		getProductionName().SendKeys(exportname);
+		getProductionDesc().SendKeys(exportname);
+		
+		//choose template
+		selectTemplate(templateName);
+
+		base.waitTillElemetToBeClickable(getBasicInfoMarkComplete());
+		getBasicInfoMarkComplete().waitAndClick(5);
+		base.stepInfo("New Export is added");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param templateName
+	 * @Desctiprion select template in basic page
+	 */
+	public void selectTemplate(String templateName) {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getLoadTemplate());
+		getLoadTemplate().selectFromDropdown().selectByVisibleText(templateName+" (Production)");
+		driver.waitForPageToBeReady();
+		base.stepInfo(templateName+" was selected in basic info");
+		
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param fileType
+	 * @throws InterruptedException
+	 * @Description filling advance translation component with choosing file type
+	 */
+	public void fillingTranslationByFileType(String  fileType) throws InterruptedException {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getTranslationsChkBox());
+		base.clickButton(getTranslationsCheckBox());
+		driver.scrollingToBottomofAPage();
+		getFileTypeInTranslation(fileType).waitAndClick(5);
+
+		driver.scrollPageToTop();
+
+		base.stepInfo("Advanced production section Translation files is filled");
+	}
+	
 }
