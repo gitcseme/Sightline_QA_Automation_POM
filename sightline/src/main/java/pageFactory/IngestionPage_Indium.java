@@ -26,6 +26,7 @@ public class IngestionPage_Indium {
 	public String IngestionName;
 	BaseClass base;
 	SoftAssert softAssertion;
+	DocListPage docList;
 
 	// ID's
 	public Element getSpecifySourceSystem() {
@@ -10498,4 +10499,63 @@ public class IngestionPage_Indium {
 			}
 			
 		}
+		
+		/**
+		 * @author: Arun Created Date: 17/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will start ingestion for automation collection 1k tally dataset
+		 */
+		
+		public void performAutomationCollection1kIngestion(String sourceSystem,String datFile,String textFile) {
+			
+			selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, sourceSystem, Input.sourceLocation, Input.Collection1KFolder);
+			addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			base.stepInfo("Selecting Dat file");
+			selectDATSource(datFile,Input.documentKey);
+			base.stepInfo("Selecting Text file");
+			selectTextSource(textFile, false);
+			selectDateAndTimeForamt(Input.dateFormat);
+			clickOnNextButton();
+			selectValueFromEnabledFirstThreeSourceDATFields(Input.documentKey, Input.dataSource, Input.custodian);
+			clickOnPreviewAndRunButton();
+			base.stepInfo("Ingestion started");
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 17/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will check values displayed for the selected Columns in doclist
+		 */
+		
+		public void verifyValuesDisplayedInSelectedColumnsDoclist(int docsCount,String[] values) {
+			docList = new DocListPage(driver);
+			base.stepInfo("select columns");
+			docList.SelectColumnDisplayByRemovingAddNewValues(values);
+			base.waitForElement(docList.getDocList_SelectLenthtobeshown());
+			int viewLimitCount = Integer.parseInt(docList.getDocList_SelectLenthtobeshown().selectFromDropdown().
+					getFirstSelectedOption().getText());
+			int pageCount =docsCount/viewLimitCount;
+			for(int j=4;j<values.length+4;j++) {	
+			ColumnSearch:for(int k=1;k<=pageCount+1;k++) {
+					for(int i=1;i<=viewLimitCount;i++) {
+						driver.waitForPageToBeReady();
+						String data =docList.getDataInDoclist(i,j).getText();
+						base.waitForElement(docList.getNextButtonStatus());
+						String buttonstatus =docList.getNextButtonStatus().GetAttribute("Class");
+						if(docList.getDataInDoclist(i,j).isDisplayed() && !data.isEmpty()) {
+							base.passedStep("values displayed in selected column");
+							driver.Navigate().refresh();
+							break ColumnSearch;
+						}
+						else if(i==viewLimitCount && data.isEmpty() && buttonstatus.contains("disable") ) {
+							base.failedStep("values not displayed");
+						}
+						else if(i==viewLimitCount && data.isEmpty() && !buttonstatus.contains("disable") ) {
+							base.waitForElement(docList.getNextButton());
+							docList.getNextButton().waitAndClick(2);
+						}
+					}
+				}
+			}
+		}
+			   
 }
