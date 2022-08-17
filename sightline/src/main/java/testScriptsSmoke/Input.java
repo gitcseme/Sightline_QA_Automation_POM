@@ -464,6 +464,10 @@ public class Input {
 	public static String expectedToDateInput;
 	public static String searchString10;
 	public static String dataSourceHeader;
+	public static String creatingDSstatus;
+	public static String retreivingDSstatus;
+	public static String virusScanStatus;
+	public static String copyDSstatus;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1381,6 +1385,10 @@ public class Input {
 		expectedToDateInput = testData.getExpectedToDateInput();
 		searchString10 = testData.getSearchString10();
 		dataSourceHeader = testData.getDataSourceHeader();
+		creatingDSstatus = testData.getCreatingDSstatus();
+		retreivingDSstatus = testData.getRetreivingDSstatus();
+		virusScanStatus = testData.getVirusScanStatus();
+		copyDSstatus = testData.getCopyDSstatus();
 		
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

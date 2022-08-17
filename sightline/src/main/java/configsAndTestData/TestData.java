@@ -345,6 +345,10 @@ public class TestData {
 	public String expectedToDateInput;
 	public String searchString10;
 	public String dataSourceHeader;
+	public String creatingDSstatus;
+	public String retreivingDSstatus;
+	public String virusScanStatus;
+	public String copyDSstatus;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;
