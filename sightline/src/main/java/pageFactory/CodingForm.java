@@ -3095,25 +3095,28 @@ public class CodingForm {
 			base.waitForElement(assgnpage.getSelectedCodeForm_inSortingPopUp(cfName));
 			if (assgnpage.getSelectedCodeForm_inSortingPopUp(cfName).isElementAvailable(2)) {
 				assgnpage.sortCodeFormOrderSaveBtn().waitAndClick(5);
-				base.waitTime(2);
-				base.waitForElement(assgnpage.getSelectedCodeForminAssignPAge());
-				if (assgnpage.getSelectedCodeForminAssignPAge().isDisplayed()) {
-					String acualCfName = assgnpage.getSelectedCodeForminAssignPAge().getText();
-				String passMSg=	"Selected a coding form " + cfName
-							+ " and its reflected in manage assignments page";		
-				String failMsg=	"Selected  coding form " + cfName
-							+ "  is not reflected in manage assignments page";
-				base.compareTextViaContains(acualCfName, cfName,  passMSg, failMsg);
-				
-			} else {
-				base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+				base.waitForElement(getManageCodingFormButton());
+				if(getManageCodingFormButton().Displayed()) {
+					base.waitForElement(getCodingForm_Search());
+					getCodingForm_Search().SendKeys(cfName);
+				   System.out.println( getSFFormCol(cfName).getText());
+				softAssertion.assertEquals("YES (Default)", getSFFormCol(cfName).getText());
+				softAssertion.assertAll();
+				base.passedStep("Selected a coding form and its reflected in manage coding form page as default");
+		       }
+		       else {base.failedStep("Selected  coding form is not reflected in manage coding form page as default");
+		}
 			}
-		} else {
+				else {
+			base.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+		}
+		}else {
 			base.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-	}
+			
+		}
 
-	}
+	
 
 	/**
 	 * @author Indium-Baskar date: 24/09/2021 Modified date: NA
