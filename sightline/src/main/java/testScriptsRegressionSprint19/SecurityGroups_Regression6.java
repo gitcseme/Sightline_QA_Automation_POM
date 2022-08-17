@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint19;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -24,6 +25,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -34,6 +36,7 @@ import pageFactory.ProductionPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -294,6 +297,155 @@ public class SecurityGroups_Regression6 {
 			}
 			loginPage.logout();
 		}
+
+		
+		/**
+		 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case
+		 * Id:RPMXCON-63768 Verify Production should generated without comments if user
+		 * saved Comments in the documents with 'Copy' menu in DocView
+		 * 
+		 * 
+		 */
+		@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+		public void verifyProductionGenerateWithoutCommentsDocsWithCopMenu() throws Exception {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-63768");
+			baseClass.stepInfo(
+					"Verify Production should generated without comments if user saved Comments in the documents with 'Copy' menu in DocView");
+			DocViewPage docView = new DocViewPage(driver);
+			String docid = "ID00003432";
+			// login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Login as Rmu");
+			docexp = new DocExplorerPage(driver);
+			DocListPage doclist = new DocListPage(driver);
+			// DocExploer to viewindocView Page
+			baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+			this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+			baseClass.waitForElement(docexp.getDocIdColumnTextField());
+			docexp.getDocIdColumnTextField().SendKeys(docid);
+			doclist.getApplyFilter().waitAndClick(10);
+			baseClass.waitTime(3);
+			docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+			docexp.getDocExp_SelectAllDocs().Click();
+			driver.waitForPageToBeReady();
+			docexp.docExpViewInDocView();
+			driver.waitForPageToBeReady();
+			docView.getDocView_CodingFormlist().waitAndClick(5);
+			docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+			baseClass.waitTime(3);
+			docView.verifyCopyAndPasteRedacTextOnCommentBox();
+			baseClass.waitTime(3);
+			docView.getAddComment1().isElementAvailable(5);
+			String Commenttext = docView.getAddComment1().getText();
+			System.out.println(Commenttext);
+			docView.getCodingFormSaveThisForm().waitAndClick(2);
+			baseClass.stepInfo("Document saved successfully");
+
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			int FirstFile = Integer.valueOf(beginningBates);
+			String productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSectionPrivDocs(tagname, Input.tagNamePrev);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			page.extractFile();
+			int LastFile = PureHit + FirstFile;
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			driver.waitForPageToBeReady();
+			File TiffFile = new File(
+					home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+			page.isfileisExists(TiffFile);
+			page.OCR_Verification_In_Generated_Tiff_tess4jNotDisplayed(FirstFile, LastFile, prefixID, suffixID,Commenttext);
+		}
+		
+		/**
+		 * @author Krishna Date: Modified date:N/A Modified by: Description Verify
+		 *         that if PAU impersonate as RMU,can create and generate the new
+		 *         production
+		 * 
+		 */
+		@Test(description = "RPMXCON-54869", enabled = true, groups = { "regression" })
+		public void verifyPAUImpersonateRmuGenerateNewProduction() throws Exception {
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("RPMXCON-54869");
+			baseClass
+					.stepInfo("Verify that if PAU impersonate as RMU,can create and generate the new production");
+			String foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = "p" + Utility.dynamicNameAppender();
+			String suffixID = "S" + Utility.dynamicNameAppender();
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+
+			// Login as PAU
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Login as PAU");
+			baseClass.impersonatePAtoRMU();
+			baseClass.stepInfo("Redirect to Rmu dashboard");
+			tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+			baseClass.stepInfo("New Tag created with classification " + tagname);
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			ProductionPage page = new ProductionPage(driver);
+			String beginningBates = page.getRandomNumber(2);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTIFFSection(tagname, Input.tagNameTechnical);
+			page.fillingMP3FileWithBurnRedaction(Input.defaultRedactionTag);
+			page.getMP3FilesBurnRedactionTag(Input.defaultRedactionTag).ScrollTo();
+			page.getMP3FilesBurnRedactionTag(Input.defaultRedactionTag).waitAndClick(10);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			baseClass.passedStep("Production generate completed successfully");
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+			loginPage.logout();
+		}
+		
+		
 
 
 }
