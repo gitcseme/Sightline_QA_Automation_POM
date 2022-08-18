@@ -728,15 +728,14 @@ public class O365Regression_19 {
 	 * @description : Pre-requesties for Collection draft creation
 	 */
 	public String verifyUserAbleToSaveCollectionAsDraft(String username, String password, String role,
-			String actionRole, String actionUserName, String actionPassword, String additional1, Boolean additional2)
-			throws Exception {
+			String actionRole, String actionUserName, String actionPassword, String selectedFolder, String additional1,
+			Boolean additional2) throws Exception {
 
 		HashMap<String, String> colllectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder = "Drafts";
 		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
 				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
 		String headerListDataSets[] = { "Collection Id", "Collection Status" };
@@ -810,7 +809,7 @@ public class O365Regression_19 {
 
 		// Pre-requesties
 		String dataName = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
-				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, "", false);
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
 
 		// navigate to Collection page and Deletion
 		base.stepInfo("Initiation collection deletion");
@@ -893,7 +892,7 @@ public class O365Regression_19 {
 
 		// Pre-requesties
 		String dataName = verifyUserAbleToSaveCollectionAsDraft(userName, password, role, actionRole, Input.sa1userName,
-				Input.sa1password, "", false);
+				Input.sa1password, selectedFolder, "", false);
 
 		// navigate to Collection page
 		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
@@ -1010,6 +1009,79 @@ public class O365Regression_19 {
 
 		// Logout
 		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/17/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that execute a draft collection functionality is
+	 *              working proper on Collection’s home page. RPMXCON-61294
+	 */
+	@Test(description = "RPMXCON-61294", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyExutionOfDraftStatusCollection(String userName, String password, String role, String actionRole)
+			throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[] statusListToVerify = { Input.creatingDSstatus };
+
+		base.stepInfo("Test case Id: RPMXCON-61294 - O365");
+		base.stepInfo(
+				"Verify that execute a draft collection functionality is working proper on Collection’s home page.");
+		base.failedMessage("Make sure E-mail source folder has datas - If not will end up with Data retrival error");
+		base.stepInfo("**Step-1 Pre-requisites: User should have Dataset, Collection rights should be checked\r\n"
+				+ "\r\n" + "		Collection should be configured with the source location/data source**");
+
+		// Pre-requesties
+		String dataName = verifyUserAbleToSaveCollectionAsDraft(userName, password, role, actionRole, Input.sa1userName,
+				Input.sa1password, selectedFolder, "", false);
+
+		// navigate to Collection page
+		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, false,
+				"");
+
+		// navigate to Collection page and get the data
+		base.stepInfo("**Step-4 Click on  Action >> Edit Collection\"**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		dataName = base.returnKey(colllectionData, "", false);
+		System.out.println(dataName);
+		collectionID = colllectionData.get(dataName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
+				true, false, "");
+
+		// Execute / Start collection Verifications
+		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionID, "Start Collection").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Collection extraction process started successfully.");
+
+		// Verify Collection presence with expected Status
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, dataName, statusListToVerify, 10, true,
+				false, "", "");
+
+		// Logout
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

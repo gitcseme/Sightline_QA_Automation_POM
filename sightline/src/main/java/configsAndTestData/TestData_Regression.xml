@@ -342,6 +342,10 @@
 	<expectedToDateInput>2022/08/08</expectedToDateInput>
 	<searchString10>Auto</searchString10>
 	<dataSourceHeader>DataSource</dataSourceHeader>
+	<creatingDSstatus>Creating datasets</creatingDSstatus>
+	<retreivingDSstatus>Retrieving data from Source Location</retreivingDSstatus>
+	<virusScanStatus>Virus scan for datasets in progress</virusScanStatus>
+	<copyDSstatus>Copying of data for datasets in progress</copyDSstatus>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -358,6 +360,11 @@ public class CollectionPage {
 
 	public Element getDataSetSelectionPopDisplay() {
 		return driver.FindElementByXPath("//div[@id='divDatasetSelectionPopup']");
+	}
+
+	public Element getExpCollectionStatus(String collectionName, String expStatus) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + collectionName + "']//..//..//td//b[text()='" + expStatus + "']");
 	}
 
 	public CollectionPage(Driver driver) {
@@ -1785,5 +1792,89 @@ public class CollectionPage {
 		}
 		base.stepInfo("Clicked Next Button");
 		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param headerWait
+	 * @param headerListDataSets
+	 * @param collectionName
+	 * @param expStatus
+	 * @param reTryAttempt
+	 * @param verifyCollectionStatus
+	 * @param additional1
+	 * @param additional2
+	 * @param additional3
+	 * @description : verify Expected Collection Status - (Completed status yet to
+	 *              be scripted based on future requirements)
+	 */
+	public void verifyExpectedCollectionStatus(Boolean headerWait, String[] headerListDataSets, String collectionName,
+			String[] expStatus, int reTryAttempt, Boolean verifyCollectionStatus, Boolean additional1,
+			String additional2, String additional3) {
+
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+		String collStatus = null;
+
+		if (headerWait) {
+			base.waitForElementCollection(getDataSetDetailsHeader());
+		}
+
+		// Collection Header details
+		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
+
+		// Get collection Id
+		String collId = getDataSetDetails(collectionName, colllectionDataHeadersIndex.get(Input.collectionIdHeader))
+				.getText();
+		base.stepInfo("Collection Id : " + collId);
+
+		// Status check
+		statusCheck(expStatus, reTryAttempt, collectionName, colllectionDataHeadersIndex, true, false, "", "", 0);
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param expStatus
+	 * @param reTryAttempt
+	 * @param collectionName
+	 * @param colllectionDataHeadersIndex
+	 * @param verifyCollectionStatus
+	 * @param additional1
+	 * @param addditional2
+	 * @param additional3
+	 * @param additional4
+	 */
+	public void statusCheck(String[] expStatus, int reTryAttempt, String collectionName,
+			HashMap<String, Integer> colllectionDataHeadersIndex, Boolean verifyCollectionStatus, Boolean additional1,
+			String addditional2, String additional3, int additional4) {
+		// Status check
+		String collStatus = null;
+
+		for (int i = 0; i < expStatus.length; i++) {
+			String expectedStatus = expStatus[i];
+			for (int j = 0; j <= reTryAttempt; j++) {
+				System.out.println("Attempt : " + j);
+				if (base.ValidateElement_StatusReturn(getExpCollectionStatus(collectionName, expectedStatus), 10)) {
+					break;
+				} else {
+					// Get Collection Status
+					collStatus = getDataSetDetails(collectionName,
+							colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
+					base.stepInfo("Collection Status is in : " + collStatus);
+				}
+			}
+
+			// Expected Status Validation
+			if (verifyCollectionStatus) {
+				// Get Collection Status
+				collStatus = getDataSetDetails(collectionName,
+						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
+
+				base.stepInfo("Collection Status : " + collStatus);
+				base.textCompareEquals(collStatus, expectedStatus,
+						"Collection is in " + expectedStatus + " state as Expected",
+						"Collection is not in " + expectedStatus + " state");
+			}
+		}
 	}
 }
