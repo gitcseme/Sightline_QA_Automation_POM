@@ -1515,6 +1515,12 @@ public class AssignmentsPage {
 	public Element getCFCancelBtn() {
 		return driver.FindElementById("btnCodingFormCancel");
 	}
+	public Element getPoolValueFromDistributeTab() {
+		return driver.FindElementByXPath("//label[contains(text(),'draw max')]//following-sibling::div");
+	}
+	public Element getdrawFromPoolStatus() {
+		return driver.FindElementByXPath("//label[contains(text(),'Draw From Pool:')]//following-sibling::div");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -10626,4 +10632,22 @@ public class AssignmentsPage {
 		}
 	}
 
+	/**
+	 * @author: Arun Created Date: 18/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check and verify field values in assignment distribution tab.
+	 */
+	public void verifyValuesFromDistributionTab(String limit,Element element)  {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElement(element);
+		String value =element.getText().trim();	
+		if(limit.equalsIgnoreCase(value)) {
+			bc.passedStep("Pool value displayed correctly in assignment distribute tab");
+		}
+		else {
+			bc.failedStep("pool value not displayed correctly");
+		}
+		
+	}
 }
