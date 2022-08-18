@@ -1300,9 +1300,10 @@ public class ProductionRegression_Sprint19 {
 	/**
 	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-47936
-	 * @Description:To Verify Slip Sheet->Work Product Should get saved in Production Component Section
+	 * @Description:To Verify Slip Sheet->Work Product Should get saved in
+	 *                 Production Component Section
 	 **/
-	@Test(description = "RPMXCON-47936", enabled = true,groups = { "regression" })
+	@Test(description = "RPMXCON-47936", enabled = true, groups = { "regression" })
 	public void verifyDefaultSelection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1327,18 +1328,20 @@ public class ProductionRegression_Sprint19 {
 		base.passedStep("Verified Slip Sheet->Work Product Should get saved in Production Component Section");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-48001
-	 * @Description:To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.
+	 * @Description:To Verify DAT Bates number generated should be in sync with
+	 *                 actual bates number generated for the Documents.
 	 **/
 	@Test(description = "RPMXCON-48001", enabled = true, groups = { "regression" })
 	public void verifySubBates() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-48001 Production Component Sprint 19");
-		base.stepInfo("To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.");
+		base.stepInfo(
+				"To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -1350,14 +1353,14 @@ public class ProductionRegression_Sprint19 {
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-		String datField="B"+page.getRandomNumber(2);
+		String datField = "B" + page.getRandomNumber(2);
 		String beginningBates = page.getRandomNumber(2);
 		int firstFile = Integer.parseInt(beginningBates);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		page.addingDatField(0, Input.bates, Input.batesNumber,datField);
+		page.addingDatField(0, Input.bates, Input.batesNumber, datField);
 		page.navigateToNextSection();
 		page.fillingNumberingPageWithDocumentLevelAndSubBates(beginningBates, prefixID, suffixID);
 		page.navigateToNextSection();
@@ -1373,11 +1376,198 @@ public class ProductionRegression_Sprint19 {
 		int lastfile = firstFile + DocCount;
 		page.extractFile();
 		page.verifyDATFileForSubBatesNumber(firstFile, lastfile, prefixID, suffixID);
-		base.passedStep(
-				"verified that Bates Number in DAT file should be AK01000.00001");
+		base.passedStep("verified that Bates Number in DAT file should be AK01000.00001");
 		loginPage.logout();
 	}
 
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-49110
+	 * @Description:To verify that the value of Number of Natives on
+	 *                 Production-Summary tab if Native component is selected and
+	 *                 Tags is also selected.
+	 **/
+	@Test(description = "RPMXCON-49110", enabled = true, groups = { "regression" })
+	public void verifyNativeCountInSummaryWithSelectedTags() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-49110");
+		base.stepInfo(
+				"To verify that the value of Number of Natives on Production-Summary tab if Native component is selected and Tags is also selected.");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		int doCount = sessionSearch.basicContentSearch(Input.testData1);
+		System.out.println(doCount);
+		sessionSearch.bulkTagExisting(tagname);
+
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTags(tagname);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		base.waitForElement(page.countOfNumberOfNative());
+		String count = page.countOfNumberOfNative().getText();
+		System.out.println(count);
+		int nativeCount = Integer.parseInt(count);
+		System.out.println(nativeCount);
+		softAssertion.assertEquals(nativeCount, doCount);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-49109
+	 * @Description:To verify that the value of Number of Natives on
+	 *                 Production-Summary tab if Native component is not selected.
+	 **/
+	@Test(description = "RPMXCON-49109", enabled = true, groups = { "regression" })
+	public void verifyNativeCountInSummary() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-49109");
+		base.stepInfo(
+				"To verify that the value of Number of Natives on Production-Summary tab if Native component is not selected.");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "mp3");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExisting(tagname);
+
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		base.waitForElement(page.countOfNumberOfNative());
+		String nativeCount = page.countOfNumberOfNative().getText();
+		System.out.println(nativeCount);
+		String count = "0";
+		softAssertion.assertEquals(nativeCount, count);
+		softAssertion.assertAll();
+		base.passedStep(
+				"the value of Number of Natives on  Production-Summary tab if Native component is not selected.");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-49120
+	 * @Description:To verify that in Production-Branding, Metadata Field drop down should be sorted by alpha ascending
+	 **/
+	@Test(description = "RPMXCON-49120", enabled = true, groups = { "regression" })
+	public void verifyBrandingSorting() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-49120");
+		base.stepInfo("To verify that in Production-Branding, Metadata Field drop down should be sorted by alpha ascending");
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on pdf section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderPdfSec();
+		base.stepInfo("Verify meta data list in drop down native will be in ascending order on tiff section.");
+		page.verifyMetaDataDropdownNativeAscendingOrderTiffSec();
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47858
+	 * @Description:Verify QC & Result page displays Review Production and Production location details.
+	 **/
+	@Test(description = "RPMXCON-47858", enabled = true, groups = { "regression" })
+	public void verifyQCPage() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-47858");
+		base.stepInfo("Verify QC & Result page displays Review Production and Production location details.");
+		
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		String productionNameInPA = page.addANewProduction(productionname);
+		System.out.println(productionNameInPA);
+		page.fillingDATSection();
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		base.ValidateElement_PresenceReturn(page.getConfirmProductionCommit());
+		base.printResutInReport(base.ValidateElement_PresenceReturn(page.getConfirmProductionCommit()),
+				"commit button is visible", "commit button is not  visible", "Pass");
+		
+		base.ValidateElement_PresenceReturn(page.getCopyPath());
+		base.printResutInReport(base.ValidateElement_PresenceReturn(page.getCopyPath()),
+				"copy path button is visible", "copy path button is not  visible", "Pass");
+		
+		base.ValidateElement_PresenceReturn(page.getQC_Download());
+		base.printResutInReport(base.ValidateElement_PresenceReturn(page.getQC_Download()),
+				"Download button is visible", "Download button is not  visible", "Pass");
+		
+		loginPage.logout();
+		
+		
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
@@ -1391,6 +1581,7 @@ public class ProductionRegression_Sprint19 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+
 	}
 
 	@AfterClass(alwaysRun = true)
