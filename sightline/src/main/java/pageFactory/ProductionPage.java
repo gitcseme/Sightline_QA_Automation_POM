@@ -21295,6 +21295,44 @@ public class ProductionPage {
 		base.verifyOriginalSortOrder(availableTags, availableTags2, "Ascending", true);
 
 	}
+	
+	/**
+	 * @author sowndarya
+	 * @param fieldValue
+	 * @Description:To verify default selection in slipsheet
+	 */
+	public void toVerifyDefaultSelection(String fieldValue) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCalculatedCheckBoxSelection(fieldValue));
+		getCalculatedCheckBoxSelection(fieldValue).GetAttribute("class").contains("disabled");
+		base.passedStep("Previous selected checkbox is disabled");
+	}
+
+	/**
+	 * @author sowndarya
+	 * @param DatFile
+	 * @param value
+	 * @param value1
+	 * @param CompareString
+	 * @throws IOException Description:verifying downloaded dat file
+	 */
+	public void verifyDATFileForSubBatesNumber(int firstFile, int lastFile, String prefixID, String suffixID) throws IOException {
+			driver.waitForPageToBeReady();
+			String home = System.getProperty("user.home");
+			Ocr.setUp();
+			Ocr ocr = new Ocr();
+			ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+			for (int i = firstFile; i < lastFile; i++) {
+				String DATFile = ocr.recognize(
+						new File[] {
+								new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + i + suffixID + ".00001") },
+						Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+				System.out.println(DATFile);
+
+			ocr.stopEngine();
+		}
+}
 
 	/**
 	 * @author Indium-Sowndarya
@@ -21314,6 +21352,9 @@ public class ProductionPage {
 			base.failedStep("No link is found");
 		}
 	}
+	
+
+
 
 	
 	/**
