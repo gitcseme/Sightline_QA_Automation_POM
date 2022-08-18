@@ -4063,7 +4063,7 @@ public class CodingForm {
 	 * @Description : this method used to verify the cf logic validations in parent
 	 *              and child window in doc view page
 	 */
-	public void verifyCFlogicValidationsInDocViewPg(String group) throws InterruptedException {
+	public void verifyCFlogicValidationsInDocViewPg(String group) {
 		try {
 			driver.waitForPageToBeReady();
 			doc.validateRadioOrCheckGroupInDocviewPg(group);

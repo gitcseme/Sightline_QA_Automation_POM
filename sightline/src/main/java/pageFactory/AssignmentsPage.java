@@ -3506,7 +3506,6 @@ public class AssignmentsPage {
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		//bc.waitForElement(getAssignmentCodingFormDropDown());
-		System.out.println(codingForm);
 		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
