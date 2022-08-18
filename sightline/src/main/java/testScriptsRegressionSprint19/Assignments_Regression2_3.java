@@ -3,6 +3,8 @@ package testScriptsRegressionSprint19;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
@@ -47,8 +49,8 @@ public class Assignments_Regression2_3 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-	//	in = new Input();
-	//	in.loadEnvConfig();
+//		in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -371,6 +373,74 @@ public class Assignments_Regression2_3 {
 			assignPage.deleteAssgnmntUsingPagination(assgnName);
 			savedsearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 			// logout
+			loginPage.logout();
+		}
+		/**
+		 * @author Iyappan.Kasinathan
+		 * @description Verify the Default live sequence while creating the new assignment
+		 * @throws InterruptedException
+		 */
+		@Test(description ="RPMXCON-49086",enabled = true, groups = { "regression" })
+		public void verifyDefaultLiveSequenceInNewAssignment() throws InterruptedException {
+			baseClass.stepInfo("Verify the Default live sequence while creating the new assignment");
+			baseClass.stepInfo("Test case Id:RPMXCON-49086");
+			String assignmentName = "assgn" + Utility.dynamicNameAppender();
+			SoftAssert sa = new SoftAssert();
+			List<String> expectedLiveSequenceOrder = new ArrayList<>();
+			List<String> actualLiveSequenceOrder = new ArrayList<>();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignPage.createAssignment_withoutSave(assignmentName, Input.codeFormName);
+		    expectedLiveSequenceOrder =baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+			baseClass.waitTillElemetToBeClickable(assignPage.SaveButton());
+			assignPage.SaveButton().waitAndClick(10);
+			assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+			actualLiveSequenceOrder =baseClass.getAvailableListofElements(assignPage.getLiveSequenceMetadatas());
+			sa.assertEquals(expectedLiveSequenceOrder, actualLiveSequenceOrder);
+			sa.assertAll();
+			baseClass.passedStep("The order of live sequence are selected during creation of new assignment is reflected in edit assignment successfully");
+			assignPage.deleteAssgnmntUsingPagination(assignmentName);
+			loginPage.logout();
+		}
+		/**
+		 * @author Iyappan.Kasinathan
+		 * @description To verify that if there is no documents in Assignments then instead of draw from pool link it will display zero
+		 * @throws InterruptedException
+		 */
+		@Test(description ="RPMXCON-53886",enabled = true, groups = { "regression" })
+		public void verifyDrawPoolLinkIsNotDisplayed() throws InterruptedException {
+			baseClass.stepInfo("To verify that if there is no documents in Assignments then instead of draw from pool link it will display zero");
+			baseClass.stepInfo("Test case Id:RPMXCON-53886");
+			String assignmentName = "assgn" + Utility.dynamicNameAppender();
+			SoftAssert sa = new SoftAssert();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignPage.createAssignment(assignmentName, Input.codeFormName);
+			assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(assignPage.getAssignment_ManageReviewersTab());
+			baseClass.waitTillElemetToBeClickable(assignPage.getAssignment_ManageReviewersTab());
+			assignPage.getAssignment_ManageReviewersTab().waitAndClick(10);
+			baseClass.waitForElement(assignPage.getAddReviewersBtn());
+			baseClass.waitTillElemetToBeClickable(assignPage.getAddReviewersBtn());
+			assignPage.getAddReviewersBtn().waitAndClick(10);
+			baseClass.waitForElement(assignPage.getSelectUserToAssig());
+			assignPage.getSelectUserToAssig().WaitUntilPresent().ScrollTo();
+			baseClass.waitTillElemetToBeClickable(assignPage.getSelectUserToAssig());
+			assignPage.getSelectUserToAssig().waitAndClick(10);
+			baseClass.waitForElement(assignPage.getAdduserBtn());
+			baseClass.waitTillElemetToBeClickable(assignPage.getAdduserBtn());
+			assignPage.getAdduserBtn().waitAndClick(10);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			assignPage.verifyDrawPoolToggledisplay(assignmentName, "disabled");
+			baseClass.waitForElement(assignPage.getTotalDocsCountInReviewerDashboard(assignmentName));
+			String ActualDocs_value = assignPage.getTotalDocsCountInReviewerDashboard(assignmentName).getText().trim();
+			String TotslDocs = ActualDocs_value.substring(6,9).trim();
+			sa.assertEquals("0", TotslDocs);
+			sa.assertAll();
+			baseClass.passedStep("Total documents are 0 and no draw pool link is displayed when no documents are assigned to an assignment");
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			assignPage.deleteAssgnmntUsingPagination(assignmentName);
 			loginPage.logout();
 		}
 	@AfterMethod(alwaysRun = true)
