@@ -10,7 +10,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
@@ -130,6 +132,214 @@ public class DocViewAudio_Regression1 {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:18/08/2022 RPMXCON-51699
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when
+	 *              document navigation done from Text tab of previous document.
+	 */
+
+	@Test(description = "RPMXCON-51699", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentLoadingSuccessfullyInTextTab(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51699");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document navigation done from Text tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Last());
+		docViewPage.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:18/08/2022 RPMXCON-51692
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when document navigation done from Translations tab of previous document.
+	 */
+
+	@Test(description = "RPMXCON-51692", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentLoadingSuccessfullyInTranslationsTab(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51692");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document navigation done from Translations tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		docViewPage.getDocView_TranslationTab().waitAndClick(5);
+		if (baseClass.text("Translations").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Last());
+		docViewPage.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:18/08/2022 RPMXCON-51690
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when document navigation done from Text tab of previous document.
+	 */
+
+	@Test(description = "RPMXCON-51690", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentLoadingSuccessfullyInTextTabPreviousDocs(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51690");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document navigation done from Text tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_Last());
+		docViewPage.getDocView_Last().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:18/08/2022 RPMXCON-51686
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when document viewed from mini doc list from Translations tab of previous document.
+	 */
+
+	@Test(description = "RPMXCON-51686", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentLoadingSuccessfullyInTranslationsTabInMiniDocList(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51686");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Translations tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		docViewPage.getDocView_TranslationTab().waitAndClick(5);
+		if (baseClass.text("Translations").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_Selectdoc(2));
+		docViewPage.getDocView_MiniDoc_Selectdoc(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		// logout
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
@@ -146,6 +356,13 @@ public class DocViewAudio_Regression1 {
 		}
 	}
 
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
 	@AfterClass(alwaysRun = true)
 
 	public void close() {
