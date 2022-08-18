@@ -946,8 +946,8 @@ public class CommunicationExplorerPage {
 		// Select data to view
 		if (datasToSelect) {
 			// Select data to view
-			selectAllListedDatas(getSmallerNode(), getSmallerNodesList());
-			selectAllListedDatas(getNormalNode(), getNormalNodesList());
+			selectAllListedDatas(getSmallerNode(), getSmallerNodesList(),null);
+			selectAllListedDatas(getNormalNode(), getNormalNodesList(),null);
 		}
 
 		// View in DocList
@@ -995,19 +995,36 @@ public class CommunicationExplorerPage {
 	 * @param elementCollections
 	 * @description : select All Listed Datas from the communication explorer UI
 	 */
-	public void selectAllListedDatas(Element element, ElementCollection elementCollections) {
+	public void selectAllListedDatas(Element element, ElementCollection elementCollections,
+			Integer nodeCountToSelected) {
 		driver.waitForPageToBeReady();
 		if (element.isElementAvailable(10)) {
 //			base.waitForElementCollection(elementCollections); // to  handle abnormal waits
 			base.waitTime(5);
-			int ecSize = elementCollections.size();
-			System.out.println(ecSize);
-			for (int i = 1; i <= ecSize; i++) {
-				System.out.println(i);
-				element.waitAndClick(5);
-				driver.waitForPageToBeReady();
+			if (nodeCountToSelected == null) {
+				int ecSize = elementCollections.size();
+				System.out.println(ecSize);
+				for (int i = 1; i <= ecSize; i++) {
+					System.out.println(i);
+					element.waitAndClick(5);
+					driver.waitForPageToBeReady();
+				}
 			}
+			if (nodeCountToSelected != null) {
+
+				for (int i = 1; i <= nodeCountToSelected; i++) {
+					System.out.println(i);
+					if (element.isElementAvailable(1)) {
+						base.waitTime(2);
+						// element.ScrollTo();
+						element.waitAndClick(5);
+						driver.waitForPageToBeReady();
+					}
+				}
+
+			}
+
 		}
 	}
-
+	
 }
