@@ -17055,7 +17055,7 @@ public class ProductionPage {
 		getClkCheckBox_selectingRedactionTags().isDisplayed();
 		driver.waitForPageToBeReady();
 		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
-
+		getDefaultTag().waitAndClick(10);
 		base.waitForElement(getClk_selectBtn());
 		getClk_selectBtn().isDisplayed();
 		getClk_selectBtn().waitAndClick(10);
