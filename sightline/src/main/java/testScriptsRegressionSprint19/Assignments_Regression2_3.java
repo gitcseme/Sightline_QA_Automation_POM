@@ -375,6 +375,81 @@ public class Assignments_Regression2_3 {
 			// logout
 			loginPage.logout();
 		}
+
+		
+		/**
+		 * Author :Arunkumar date: 18/08/2022 TestCase Id:RPMXCON-53649
+		 * Description :To verify that if RMU can create/edit the assignment with the Allow Reviewers to draw
+		 * max of (docs) option set from 100 to 250
+		 * @throws InterruptedException 
+		 */
+		@Test(description ="RPMXCON-53649",enabled = true, groups = { "regression" })
+		public void verifyEditDrawPoolLimit() throws InterruptedException {
+
+			baseClass.stepInfo("Test case Id: RPMXCON-53649");
+			baseClass.stepInfo("verify if RMU can create/edit the assignment to draw max of (docs) option set from 100 to 250");
+			String assignmentName ="assignment1" + Utility.dynamicNameAppender();
+			String poolValue1="100";
+			String poolValue2="250";
+			//login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Create new assignment");
+			assignPage.createAssignment_withoutSave(assignmentName, Input.codeFormName);
+			baseClass.stepInfo("Set pool setting and save assignment");
+			baseClass.waitForElement(assignPage.getAssgn_DocumnetCount());
+			assignPage.getAssgn_DocumnetCount().SendKeys(poolValue1);
+			assignPage.saveAssignment(assignmentName, Input.codeFormName);
+			baseClass.stepInfo("select assignment and verify pool value");
+			assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+			assignPage.verifyValuesFromDistributionTab(poolValue1, assignPage.getPoolValueFromDistributeTab());
+			driver.Navigate().refresh();
+			baseClass.stepInfo("set pool value from 100 to 250");
+			baseClass.waitForElement(assignPage.getAssgn_DocumnetCount());
+			assignPage.getAssgn_DocumnetCount().SendKeys(poolValue2);
+			assignPage.saveAssignment(assignmentName, Input.codeFormName);
+			baseClass.stepInfo("verify updated pool value in distribution tab");
+			assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+			assignPage.verifyValuesFromDistributionTab(poolValue2, assignPage.getPoolValueFromDistributeTab());
+			loginPage.logout();
+			
+		}
+		
+		/**
+		 * Author :Arunkumar date: 18/08/2022 TestCase Id:RPMXCON-53648
+		 * Description :To verify that if RMU created the assignment with the options ON/OFF Draw from pool,
+		 *  then in Distribute Documents it should display Draw from pool status as "Disabled"
+		 * @throws InterruptedException 
+		 */
+		@Test(description ="RPMXCON-53648",enabled = true, groups = { "regression" })
+		public void verifyDrawPoolDisabledStatus() throws InterruptedException {
+
+			baseClass.stepInfo("Test case Id: RPMXCON-53648");
+			baseClass.stepInfo("verify Draw from pool status as 'Disabled' if created assignment with options ON/OFF");
+			String assignName1 ="assignment1" + Utility.dynamicNameAppender();
+			String assignName2= "assignment2" + Utility.dynamicNameAppender();
+			String poolStatus="disabled";
+			//login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Create new assignments with toggle ON/OFF");
+			assignPage.createAssignment(assignName1, Input.codeFormName);
+			assignPage.createAssignment_withoutSave(assignName2, Input.codeFormName);
+			baseClass.stepInfo("Set pool setting and save assignment");
+			assignPage.toggleEnableOrDisableOfAssignPage(false, true,
+					assignPage.getAssgnGrp_Create_DrawPooltoggle(), "Draw From Pool", true);
+			baseClass.stepInfo("Select assignment with toggle status OFF and verify value");
+			assignPage.editAssignmentUsingPaginationConcept(assignName2);
+			assignPage.verifyValuesFromDistributionTab(poolStatus, assignPage.getdrawFromPoolStatus());
+			baseClass.stepInfo("Select assignment with toggle status ON");
+			assignPage.editAssignmentUsingPaginationConcept(assignName1);
+			assignPage.toggleEnableOrDisableOfAssignPage(false, true,
+					assignPage.getAssgnGrp_Create_DrawPooltoggle(), "Draw From Pool", true);
+			assignPage.editAssignmentUsingPaginationConcept(assignName1);
+			assignPage.verifyValuesFromDistributionTab(poolStatus, assignPage.getdrawFromPoolStatus());
+			loginPage.logout();
+		}
+		
+		
+
 		/**
 		 * @author Iyappan.Kasinathan
 		 * @description Verify the Default live sequence while creating the new assignment
@@ -443,6 +518,7 @@ public class Assignments_Regression2_3 {
 			assignPage.deleteAssgnmntUsingPagination(assignmentName);
 			loginPage.logout();
 		}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
