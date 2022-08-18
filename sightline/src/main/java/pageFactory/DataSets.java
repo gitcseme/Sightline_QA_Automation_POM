@@ -129,6 +129,16 @@ public class DataSets {
 	}
 
 	// Jeevitha
+
+	public Element getDatasetTile(int index) {
+		return driver.FindElementByXPath("(//ul[@id='dataset_tilesContainer']//li)[" + index + "]");
+	}
+
+	public ElementCollection getTotalDataset() {
+		return driver
+				.FindElementsByXPath("//ul[@id='dataset_tilesContainer']//li//span[normalize-space()='Upload Set']");
+	}
+
 	public Element getBullHornIcon() {
 		return driver.FindElementByXPath("//i[@class='fa fa-bullhorn']");
 	}
@@ -690,6 +700,49 @@ public class DataSets {
 				"'Source Locations' options are not available when User do not have Collection’s access control permission.",
 				"'Source Locations' options are available when User do not have Collection’s access control permission.",
 				"Fail");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify search box value after navigating from collection page
+	 * @param expectedSearchValue
+	 * @param expectedTileView
+	 */
+	public void verifysearchBoxValue(String expectedSearchValue, String expectedTileView) {
+		driver.waitForPageToBeReady();
+		String actualSearchValue = getSearchTheFile().GetAttribute("value");
+
+		String passMsg = "After Navigating to Dataset page from Collection Page Filter is Applied & search filter box value is : "
+				+ actualSearchValue;
+		String failMsg = "Filter is Not Applied";
+
+		base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
+		String actualType = getTileViewType();
+		base.textCompareEquals(actualType, expectedTileView,
+				"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : returns tile view type
+	 * @return
+	 */
+	public String getTileViewType() {
+		String viewType = null;
+		driver.waitForPageToBeReady();
+		int totalDoc = getTotalDataset().size();
+		base.stepInfo("Total Doc Count : " + totalDoc);
+
+		if (totalDoc > 1) {
+			int expCount = totalDoc - 1;
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDatasetTile(expCount));
+			viewType = getDatasetTile(expCount).GetCssValue("display");
+			base.stepInfo("Display Type : " + viewType);
+		} else if (totalDoc == 1) {
+			viewType = getDatasetTile(totalDoc).GetCssValue("display");
+		}
+		return viewType;
 	}
 
 }

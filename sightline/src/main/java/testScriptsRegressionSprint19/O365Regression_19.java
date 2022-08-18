@@ -1084,6 +1084,339 @@ public class O365Regression_19 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that Dataset Selection tab should present the grid with
+	 *              the list of all configured custodian datasets in the collection
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60754", enabled = true, groups = { "regression" })
+	public void verifyMouseHoverPopupMsg() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		List<String> custodianDetails = new ArrayList();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder1 = "Drafts";
+
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-60754 - O365");
+		base.stepInfo(
+				"Verify that Dataset Selection tab should present the grid with the list of all configured custodian datasets in the collection ");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Add Dataset By Applying Filter
+		custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
+				false, false, "", "");
+
+		// Select multiple Folders And Save.
+		collection.editDatasetAndVerify(false, null, false, null, null, true, false, selectedFolder1,
+				custodianDetails.get(0), null, false);
+		collection.SaveActionInDataSetPopup(true, null, null, null, null, null, null, Input.randomText, false,
+				"Dataset added successfully.");
+
+		// verify Mouse hover Popup Message is Displyed .
+		collection.verifyMouseOverAction(Input.collectionDataHeader5, collectionEmailId);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that 'View Datasets' of a collection functionality is
+	 *              working proper on Collection’s home page.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61295", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyViewDatasetsIsAsExpected(String username, String password, String fullname) throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		List<String> custodianDetails = new ArrayList();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder1 = "Drafts";
+
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61295 - O365");
+		base.stepInfo(
+				"Verify that 'View Datasets' of a collection functionality is working proper on Collection’s home page.");
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.navigateToUsersPAge();
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// get other dataset tile view
+		dataSets.navigateToDataSetsPage();
+		String otherTileView = dataSets.getTileViewType();
+
+		// Add New Collection Or get Already Present completed Collection Details
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, "Completed", true);
+
+		// navigate to Collection page and get the data
+		collectionName = base.returnKey(collectionData, "", false);
+
+		// Click View Dataset or Create collection and click View Dataset
+		if (collection.getCollectionNameElement(collectionName).isElementAvailable(2)) {
+			base.stepInfo(collectionName + " : is Completed and Displayed in Collections Page");
+		} else {
+			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
+					selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
+					false, false, "", "");
+
+			collection.clickNextBtnOnDatasetTab();
+			collection.getStartBtn().waitAndClick(10);
+		}
+
+		// click view dataset btn from collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.clickViewDataset(collectionName);
+
+		// verify is it navigating to datasets page
+		driver.waitForPageToBeReady();
+		base.verifyUrlLanding(Input.url + "en-us/ICE/Datasets", "Navigated To Dataset Page",
+				"Navigation is not as expected");
+
+		// verify if filter applied and verify collection tile view
+		dataSets.verifysearchBoxValue(collectionName, otherTileView);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that Sorting is working proper when user clicks on
+	 *              column name "Total Retrieved Count" on "Manage Collections"
+	 *              screen (Grid).
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61635", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifySortingOfTotaRetrieved(String username, String password, String fullname) throws Exception {
+		String selectedFolder = "Inbox";
+		String sortType = "Descending";
+
+		base.stepInfo("Test case Id: RPMXCON-61635 - O365");
+		base.stepInfo(
+				"Verify that Sorting is working proper when user clicks on column name \"Total Retrieved Count\" on \"Manage Collections\" screen (Grid).");
+
+		// Pre-requesties
+		String collectionName = verifyUserAbleToSaveCollectionAsDraft(username, password, fullname, "SA",
+				Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+
+		// click once and check is it sorted in Ascending
+		driver.Navigate().refresh();
+		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, Input.sortType);
+
+		// click once again and check is it sorted in Descending
+		collection.verifySortingOrderOfCollectionPage(true, Input.totalRetrievedCount, sortType);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that "Total Retrieved Count" is NOT editable on "Manage
+	 *              Collections" screen (Grid). screen (Grid).
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61637", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyTotalRetrievedCountIsNotEditable(String username, String password, String fullname)
+			throws Exception {
+		String selectedFolder = "Inbox";
+
+		base.stepInfo("Test case Id: RPMXCON-61637 - O365");
+		base.stepInfo("Verify that \"Total Retrieved Count\" is NOT editable on \"Manage Collections\" screen (Grid).");
+
+		// Pre-requesties
+		String collectionName = verifyUserAbleToSaveCollectionAsDraft(username, password, fullname, "SA",
+				Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+
+		// Try to select The Total Retrieved count for editing
+		int index = base.getIndex(collection.getDataSetDetailsHeader(), Input.totalRetrievedCount);
+		boolean status = collection.getDataSetDetails(collectionName, index).Selected();
+
+		// verify if it is editable or Not
+		if (!status) {
+			base.passedStep("Total Retrieved Count is Not Editable");
+		} else {
+			base.failedStep("Total Retrieved Count is Editable");
+		}
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that when User Refresh data on "Select Folders to
+	 *              Collect" data then entire UI is NOT frozen on "Add dataset" pop
+	 *              up screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-63870", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAddDatasetsSelectFolderClickRefreshButtonLoadingFolderIcon(String username, String password,
+			String fullname) throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-63870 - O365");
+		base.stepInfo(
+				"Verify that when User Refresh data on 'Select Folders to Collect' data then entire UI is NOT frozen on 'Add dataset' pop up screen.");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// verify Dataset page
+		collection.verifyDatasetsPage();
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Verify Loading Folder
+		collection.verifyCancelSaveAddNewDatasetSave();
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, false, true);
+		base.passedStep(
+				"When User Refresh data on 'Select Folders to Collect' data then entire UI should NOT frozen on 'Add dataset' pop up screen. and User navigated to other pages successfully");
+
+		// logout
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that when User Clicks on "Select Folders to Collect"
+	 *              data then entire UI is NOT frozen on "Add dataSet" pop up
+	 *              screen.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-63869", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyAddDatasetsSelectFolderLoadingFolderIcon(String username, String password, String fullname)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-63869 - O365");
+		base.stepInfo(
+				"Verify that when User Clicks on 'Select Folders to Collect' data then entire UI is NOT frozen on 'Add dataSet' pop up screen.");
+
+		String[][] userRolesData = { { username, fullname, fullname } };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+		// Login as User
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// verify Dataset page
+		collection.verifyDatasetsPage();
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Verify Loading Folder in
+		collection.verifyLoadingFolderMessage();
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, false, true);
+		base.passedStep(
+				"When User Refresh data on 'Select Folders to Collect' data then entire UI should NOT frozen on 'Add dataset' pop up screen. and User navigated to other pages successfully");
+
+		// logout
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

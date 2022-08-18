@@ -486,6 +486,7 @@ public class Input {
 	public static String collection2ndEmailId;
 	public static String collsecondFirstName;
 	public static String collsecondlastName;
+	public static String totalRetrievedCount;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
@@ -977,9 +978,8 @@ public class Input {
 		pa2FullName = envConfig.getPa2FullName();
 		rmu2FullName = envConfig.getRmu2FullName();
 		rev2FullName = envConfig.getRev2FullName();
-		da1FullName= envConfig.getDa1FullName();
+		da1FullName = envConfig.getDa1FullName();
 		SourceLocation = envConfig.getSourceLocation();
-		
 
 		if (mode) {
 			projectName = System.getProperty("projectName");
@@ -1005,7 +1005,7 @@ public class Input {
 			ingestDataProject = System.getProperty("ingestDataProject");
 			largeVolDataProject = System.getProperty("largeVolDataProject");
 			prodPath = System.getProperty("prodpath");
-			
+
 		} else {
 			projectName = envConfig.getProjectName();
 			ICEProjectName = envConfig.getICEProjectName();
@@ -1030,8 +1030,8 @@ public class Input {
 			ingestDataProject = envConfig.getIngestDataProject();
 			largeVolDataProject = envConfig.getLargeVolDataProject();
 			prodPath = envConfig.getProdpath();
-			
-			}
+
+		}
 		// Test data-------------------------------------------------------------
 
 		loadSuiteTestData();// Load required suite data first, smoke or regression one - Modified date :
@@ -1129,7 +1129,7 @@ public class Input {
 		projectName02 = testData.getProjectName02();
 		searchDocFileType = testData.getSearchDocFileType();
 		DocViewNativesIngestion = testData.getDocViewNativesIngestion();
-		
+
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
 		codingFormName = testData.getCodingFormName();
@@ -1389,7 +1389,7 @@ public class Input {
 		retreivingDSstatus = testData.getRetreivingDSstatus();
 		virusScanStatus = testData.getVirusScanStatus();
 		copyDSstatus = testData.getCopyDSstatus();
-		
+
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
 		metaDataCN = testData.getMetaDataCN();
@@ -1404,10 +1404,11 @@ public class Input {
 		TenantID = testData.getTenantID();
 		ApplicationID = testData.getApplicationID();
 		ApplicationKey = testData.getApplicationKey();
-		collection2ndEmailId=testData.getCollection2ndEmailId();
-		collsecondFirstName=testData.getCollsecondFirstName();
-		collsecondlastName= testData.getCollsecondlastName();
-		
+		collection2ndEmailId = testData.getCollection2ndEmailId();
+		collsecondFirstName = testData.getCollsecondFirstName();
+		collsecondlastName = testData.getCollsecondlastName();
+		totalRetrievedCount = testData.getTotalRetrievedCount();
+
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();
 		conceptualDocId02 = testData.getConceptualDocId02();
@@ -1602,25 +1603,25 @@ public class Input {
 		fileGroup = testData.getFileGroup();
 		document = testData.getDocument();
 		fileTypeInNativeDocs = testData.getFileTypeInNativeDocs();
-		filterMonth=testData.getFilterMonth();
-		filterYear=testData.getFilterYear();
-		userRole=testData.getUserRole();
-		nativeFileName=testData.getNativeFileName();
-		audioPlayerReady=testData.getAudioPlayerReady();
-		datFormatFile=testData.getDatFormatFile();
-		nativeMp3FileFormat=testData.getNativeMp3FileFormat();
-		DocCount=testData.getDocCount();
-		emailAllDomain=testData.getEmailAllDomain();
-		validationData=testData.getValidationData();
-		ingestionPrjt=testData.getIngestionPrjt();
-		AutomationAllSources=testData.getAutomationAllSources();
-		TiffImages=testData.getTiffImages();
-		advancedOptionText=testData.getAdvancedOptionText();
-		sourceDocument=testData.getSourceDocument();
-		DatFieldClassification=testData.getDatFieldClassification();
-		DatSourceClassification=testData.getDatSourceClassification();
-		MetaDataFileType=testData.getMetaDataFileType();
-		NativeFileType=testData.getNativeFileType();
+		filterMonth = testData.getFilterMonth();
+		filterYear = testData.getFilterYear();
+		userRole = testData.getUserRole();
+		nativeFileName = testData.getNativeFileName();
+		audioPlayerReady = testData.getAudioPlayerReady();
+		datFormatFile = testData.getDatFormatFile();
+		nativeMp3FileFormat = testData.getNativeMp3FileFormat();
+		DocCount = testData.getDocCount();
+		emailAllDomain = testData.getEmailAllDomain();
+		validationData = testData.getValidationData();
+		ingestionPrjt = testData.getIngestionPrjt();
+		AutomationAllSources = testData.getAutomationAllSources();
+		TiffImages = testData.getTiffImages();
+		advancedOptionText = testData.getAdvancedOptionText();
+		sourceDocument = testData.getSourceDocument();
+		DatFieldClassification = testData.getDatFieldClassification();
+		DatSourceClassification = testData.getDatSourceClassification();
+		MetaDataFileType = testData.getMetaDataFileType();
+		NativeFileType = testData.getNativeFileType();
 
 		// Added by Gopinath - 30/11/2021
 		postGenQcChecks = testData.getPostGenQcChecks();

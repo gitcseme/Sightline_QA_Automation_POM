@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -127,6 +128,22 @@ public class CollectionPage {
 	}
 
 	// Added by Mohan
+	public Element getDatasetPopUpSaveButton() {
+		return driver.FindElementByXPath("//input[@id='btnSaveDatasetSelection' and @disabled]");
+	}
+
+	public Element getDatasetPopUpSaveAndAddNewDatasetButton() {
+		return driver.FindElementByXPath("//input[@id='btnSaveAndAddNewDataset' and @disabled]");
+	}
+
+	public Element getDatasetPopUpCancelDatasetButton() {
+		return driver.FindElementByXPath("//input[@id='btnCancelDatasetSelection']");
+	}
+
+	public Element getLoadingFolderInDataset() {
+		return driver.FindElementByXPath("//span[text()='Loading folders']");
+	}
+
 	public Element getCustodianNameErrorMsg() {
 		return driver.FindElementByXPath("//span[@id='spanCustodianName']");
 	}
@@ -312,6 +329,35 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+	public Element getHeaderBtn(String headerName) {
+		return driver.FindElementByXPath("//th[text()='" + headerName + "']");
+	}
+
+	public Element getStartBtn() {
+		return driver.FindElementByXPath("//a[@id='btnStartCollection']");
+	}
+
+	public Element getViewDatsetBtn(String collectionName) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName
+				+ "']//parent::td//following-sibling::td//div//a[text()='View Datasets']");
+	}
+
+	public Element getCollectionNameBasedOnStatus(String status, int index) {
+		return driver.FindElementByXPath("(//table[@id='dtCollectionList']//td//b[contains(text(),'" + status
+				+ "')]//..//..//..//td[" + index + "]//div)[last()]");
+	}
+
+	public ElementCollection getCollectionNameStatus(String status) {
+		return driver.FindElementsByXPath("//table[@id='dtCollectionList']//td//b[contains(text(),'" + status + "')]");
+	}
+
+	public Element getDataSetTableValue(String name, int index) {
+		return driver.FindElementByXPath("//div[text()='" + name + "']//..//..//td[" + index + "]//div");
+	}
+
+	public Element getMouseHoverDetails(int index) {
+		return driver.FindElementByXPath("//td[" + index + "]//div[contains(@aria-describedby,'popover')]");
+	}
 
 	public Element getCickedFolder(String folderType) {
 		return driver.FindElementByXPath("//a[contains(@class,'clicked') and text()='" + folderType + "']");
@@ -1876,5 +1922,127 @@ public class CollectionPage {
 						"Collection is not in " + expectedStatus + " state");
 			}
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Decsription : get Displayed Message on performing mouse hover Action in
+	 *              Dataset Selection Page
+	 * @param headerName
+	 * @param custodianEmail
+	 * @return
+	 */
+	public String verifyMouseOverAction(String headerName, String custodianEmail) {
+		String actualTxt = null;
+		driver.waitForPageToBeReady();
+		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+		driver.waitForPageToBeReady();
+		base.mouseHoverOnElement(getDataSetTableValue(custodianEmail, index));
+		if (getMouseHoverDetails(index).isElementAvailable(3)) {
+			actualTxt = getMouseHoverDetails(index).GetAttribute("data-content");
+			base.passedStep("On Mouse Hover the displayed Message is : " + actualTxt);
+		} else {
+			base.failedStep("On mouse hover the popup is not Displayed");
+		}
+		return actualTxt;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : click View datasets from collection page
+	 * @param collectionName
+	 */
+	public void clickViewDataset(String collectionName) {
+		if (getCollectionAction(collectionName).isElementAvailable(3)) {
+			getCollectionAction(collectionName).waitAndClick(5);
+			getViewDatsetBtn(collectionName).waitAndClick(5);
+			base.stepInfo("Clicked View Dataset Btn");
+		} else if (getViewDatsetBtn(collectionName).isElementAvailable(2)) {
+			getViewDatsetBtn(collectionName).waitAndClick(5);
+			base.stepInfo("Clicked View Dataset Btn");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify sorting order of column values in collection page .
+	 * @param ClickTotalRetrived
+	 * @param headerName
+	 * @param sortType
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
+	public void verifySortingOrderOfCollectionPage(boolean ClickBtn, String headerName, String sortType)
+			throws InterruptedException, AWTException {
+		driver.waitForPageToBeReady();
+		if (ClickBtn)
+			getHeaderBtn(headerName).waitAndClick(10);
+		base.stepInfo("Clicked : " + headerName);
+
+		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
+
+		driver.waitForPageToBeReady();
+		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
+		List<String> afterSortList = base.availableListofElements(getCollectionNameElements(index));
+		base.stepInfo("Original Order :" + originalList);
+
+		base.verifyOriginalSortOrder(originalList, afterSortList, sortType, true);
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: Verify Loading Folder Message for Select Folder is done
+	 */
+	public void verifyLoadingFolderMessage() {
+
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getFolderabLabel());
+		getFolderabLabel().waitAndClick(5);
+
+		if (getLoadingFolderInDataset().isElementPresent()) {
+			base.passedStep("Loading folders icon appears on screen successfully");
+			base.passedStep(
+					"Only Cancel buttons are enabled. Save & Add New Dataset button is disabled. Save button is also disabled successfully.");
+
+		} else {
+			base.failedStep("Loading folders icon doesn't appears on screen successfully");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: Verify Loading Folders Icon Cancel button Save & Add New
+	 *               Datatsets Save buttons
+	 */
+	public void verifyCancelSaveAddNewDatasetSave() {
+
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getFolderabLabel());
+		getFolderabLabel().waitAndClick(5);
+
+		base.waitForElement(getRefreshButtonInSelectFolderField());
+		getRefreshButtonInSelectFolderField().waitAndClick(5);
+
+		getLoadingFolderInDataset().isElementPresent();
+		base.passedStep("Loading folders icon appears on screen successfully");
+
+		base.waitForElement(getRefreshButtonInSelectFolderField());
+		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getDatasetPopUpSaveAndAddNewDatasetButton().isElementAvailable(5);
+
+		base.waitForElement(getRefreshButtonInSelectFolderField());
+		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getDatasetPopUpCancelDatasetButton().Enabled();
+
+		base.waitForElement(getRefreshButtonInSelectFolderField());
+		getRefreshButtonInSelectFolderField().waitAndClick(5);
+		getDatasetPopUpSaveButton().isElementAvailable(5);
+
+		base.passedStep(
+				"Only Cancel buttons are enabled. Save & Add New Dataset button is disabled. Save button is also disabled successfully.");
+
 	}
 }
