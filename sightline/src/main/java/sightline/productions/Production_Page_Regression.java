@@ -1038,7 +1038,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername,Input.securityGroup);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname,Input.tagNamePrev);
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1210,7 +1210,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1249,7 +1249,7 @@ public class Production_Page_Regression {
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.createNewTagwithClassification(tagname,"Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -2062,7 +2062,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -3391,7 +3391,7 @@ public class Production_Page_Regression {
 		sessionSearch.bulkTagExisting(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);

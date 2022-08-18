@@ -6647,7 +6647,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getBeginningBates().waitAndClick(10);
 		getBeginningBates().SendKeys(beginningBates);
-		num = getRandomNumber(2);
+		num = getRandomNumber(3);
 //		System.out.println("Beginning Bates=" + num);
 //		getBeginningBates().SendKeys(getRandomNumber(2));
 
@@ -6659,9 +6659,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(1);
+		num1 = getRandomNumber(3);
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(3));
 
 		driver.scrollingToBottomofAPage();
 

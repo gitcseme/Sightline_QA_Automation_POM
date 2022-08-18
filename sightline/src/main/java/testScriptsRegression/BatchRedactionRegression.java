@@ -1724,7 +1724,7 @@ public class BatchRedactionRegression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility baseClass = new Utility(driver);
 			baseClass.screenShot(result);
-			login.switchProjectToEnglish();
+			//login.switchProjectToEnglish();
 			login.logoutWithoutAssert();
 		}
 		login.closeBrowser();
