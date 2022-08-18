@@ -29,7 +29,7 @@ import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class AdvancedSearch_Regression2_6 {
+public class AdvancedSearch_Regression2_8 {
 
 	Driver driver;
 	LoginPage loginPage;

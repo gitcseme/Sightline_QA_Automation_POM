@@ -31,7 +31,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocList_Regression1 {
+public class DocList_Regression3 {
 
 	Driver driver;
 	LoginPage loginPage;

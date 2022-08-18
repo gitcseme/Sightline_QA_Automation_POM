@@ -44,7 +44,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SecurityGroups_Regression3 {
+public class SecurityGroups_Regression5 {
 	
 	Driver driver;
 	LoginPage loginPage;

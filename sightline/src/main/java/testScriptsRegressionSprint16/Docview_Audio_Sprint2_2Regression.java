@@ -51,7 +51,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class Docview_Audio_Sprint2Regression {
+public class Docview_Audio_Sprint2_2Regression {
 
 	Driver driver;
 	LoginPage loginPage;
