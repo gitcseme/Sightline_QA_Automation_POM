@@ -2,6 +2,7 @@ package testScriptsRegression;
 
 import static org.testng.Assert.assertFalse;
 import pageFactory.DocViewPage;
+import pageFactory.IngestionPage_Indium;
 import pageFactory.KeywordPage;
 
 import static org.testng.Assert.assertTrue;
@@ -62,14 +63,15 @@ public class Assignment_Regression3 {
 	String ActualCount = null;
 	String ingestionDataName;
 	String ingestionMetaData;
+	IngestionPage_Indium ingestionPage;
 
 	@BeforeClass(alwaysRun = true)
 
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		ingestionDataName = Input.IngestionName_PT;
 		ingestionMetaData = Input.metadataIngestion;
 	}
@@ -730,6 +732,11 @@ public class Assignment_Regression3 {
 				+ " the draw will keep the entire email thread together irrespective of the size of the batch");
 
 		// Getting the ingested docs to assign to assignment
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
 		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
@@ -836,6 +843,11 @@ public class Assignment_Regression3 {
 				+ "entire family together irrespective of the size of the batch");
 
 		// assignment Creation
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
 		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
@@ -938,8 +950,12 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Test case Id: RPMXCON-59197");
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles OFF");
-
-		search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, Input.IngestionName_PT);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
+		search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
 		loginPage.logout();
@@ -1046,7 +1062,12 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with both the toggles ON ");
 		// search with Metadata & Operator and verify purehit
 		search.navigateToSessionSearchPageURL();
-		search.advancedMetaDataForDraft(Input.metadataIngestion, null, Input.IngestionName_PT, null);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
+		search.advancedMetaDataForDraft(Input.metadataIngestion, null, ingestionDataName, null);
 		search.selectOperator("AND");
 		baseClass.waitForElement(search.getAdvanceSearch_MetadataBtn());
 		search.getAdvanceSearch_MetadataBtn().Click();
@@ -1429,7 +1450,12 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families together as OFF &"
 				+ " keep email threads as ON");
 		// search with Metadata & Operator and verify purehit
-		search.metadataSearchesUsingOperators(Input.metadataIngestion, Input.IngestionName_PT, "AND", "EmailThreadID",
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
+		search.metadataSearchesUsingOperators(Input.metadataIngestion, ingestionDataName, "AND", "EmailThreadID",
 				Input.sameThreadDocs_EmailThreadID, true);
 		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
@@ -1533,7 +1559,12 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify draw from pool after editing the assignment with Keep families "
 				+ "together as ON & keep email threads as OFF ");
 		// search with Metadata & Operator and verify purehit
-		search.metadataSearchesUsingOperators(Input.metadataIngestion, Input.IngestionName_PT, "AND", "FamilyID",
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
+		search.metadataSearchesUsingOperators(Input.metadataIngestion, ingestionDataName, "AND", "FamilyID",
 				Input.sameFamilyDocs_FamilyID, true);
 		int count = search.serarchWP();
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
@@ -1638,8 +1669,13 @@ public class Assignment_Regression3 {
 		baseClass.stepInfo("Verify that for existing assignment, keep families together as enabled and keep "
 				+ "threads together as disabled toggle should be displayed");
 		// search with Metadata & Operator and verify purehit
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
 		search.navigateToSessionSearchPageURL();
-		search.advancedMetaDataForDraft(Input.metadataIngestion, null, Input.IngestionName_PT, null);
+		search.advancedMetaDataForDraft(Input.metadataIngestion, null, ingestionDataName, null);
 		search.selectOperator("AND");
 		baseClass.waitForElement(search.getAdvanceSearch_MetadataBtn());
 		search.getAdvanceSearch_MetadataBtn().Click();
@@ -1782,6 +1818,13 @@ public class Assignment_Regression3 {
 				+ "draw will keep the entire family together irrespective of the size of the batch");
 
 		// Getting the ingested docs to assign to assignment
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
+		 if (status == false) {
+	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	        }
+	        
+		 System.out.println("ingestionDataName :-"+ingestionDataName);
 		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
 		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
