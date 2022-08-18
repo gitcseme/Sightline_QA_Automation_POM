@@ -30,7 +30,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CloningProject_Regression3 {
+public class CloningProject_Regression3_2 {
 
 	Driver driver;
 	LoginPage loginPage;

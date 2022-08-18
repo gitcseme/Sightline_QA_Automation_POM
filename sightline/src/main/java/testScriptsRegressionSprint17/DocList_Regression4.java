@@ -29,7 +29,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocList_Regression2 {
+public class DocList_Regression4 {
 
 	Driver driver;
 	LoginPage loginPage;
