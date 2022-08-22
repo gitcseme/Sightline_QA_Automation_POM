@@ -369,7 +369,7 @@ public class O365Regression_19 {
 		base.stepInfo("Test case Id: RPMXCON-60778 - O365");
 		base.stepInfo("Verify the folders from the ‘Dataset Selection Popup’ and select-unselect of folders");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -435,7 +435,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that User can change one source location type to another from 'Data Source Type' dropdown on 'Add New Source Location' screen.");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String dropDownValue = "Microsoft 365";
 
@@ -474,7 +474,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that error message should be displayed from Dataset Selection pop up, when required fields are blank");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -538,7 +538,7 @@ public class O365Regression_19 {
 		base.stepInfo("Test case Id: RPMXCON-60757 - O365");
 		base.stepInfo("Verify that on click of ‘Add Datasets’ link, Dataset selection pop up should open");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -1290,7 +1290,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that when User Refresh data on 'Select Folders to Collect' data then entire UI is NOT frozen on 'Add dataset' pop up screen.");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -1359,7 +1359,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that when User Clicks on 'Select Folders to Collect' data then entire UI is NOT frozen on 'Add dataSet' pop up screen.");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
