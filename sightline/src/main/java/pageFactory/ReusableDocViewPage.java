@@ -250,7 +250,7 @@ public class ReusableDocViewPage {
 		for (String miniDocListChild : childWindow) {
 			if (!parentWindow.equals(miniDocListChild)) {
 				driver.switchTo().window(miniDocListChild);
-				driver.waitForPageToBeReady();
+			    base.waitTime(10);
 			}
 		}
 		return parentWindow;
@@ -343,10 +343,13 @@ public class ReusableDocViewPage {
 //	Minidoclist child window will open
 	public void clickGearIconOpenMiniDocList() {
 		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
 		base.waitForElement(getDocView_EditMode());
 		getDocView_EditMode().waitAndClick(5);
+		base.waitTime(10);
 		base.waitForElement(getDocView_HdrMinDoc());
 		getDocView_HdrMinDoc().waitAndClick(5);
+		driver.waitForPageToBeReady();
 	}
 
 	/**

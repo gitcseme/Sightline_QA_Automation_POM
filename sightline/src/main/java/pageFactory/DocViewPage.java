@@ -7042,8 +7042,10 @@ public class DocViewPage {
 		driver.scrollPageToTop();
 		base.waitForElement(getDocView_EditMode());
 		getDocView_EditMode().waitAndClick(5);
+		base.waitTime(10);
 		base.waitForElement(getDocView_HdrMinDoc());
 		getDocView_HdrMinDoc().waitAndClick(5);
+		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -14088,7 +14090,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		reusableDocView.clickGearIconOpenMiniDocList();
 		String parentWindow = reusableDocView.switchTochildWindow();
-		driver.waitForPageToBeReady();
+		base.waitTime(10);
 		for (int i = 5; i <= 5; i++) {
 			base.waitForElement(getClickDocviewID(i));
 			getClickDocviewID(i).waitAndClick(5);
@@ -23378,6 +23380,7 @@ public class DocViewPage {
 //		overall assertion
 		assertion.assertAll();
 		base.passedStep("While navigating to last document loading displayed with more number of document");
+		
 	}
 
 	/**
