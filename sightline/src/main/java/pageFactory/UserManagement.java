@@ -3383,8 +3383,21 @@ public class UserManagement {
 						"DataSets option has access", "Datasets option is blocked", "Fail");
 
 				// Check-In or Check-Out datasets
-				verifyStatusForComponents(getComponentCheckBoxStatus("Datasets"), "Datasets", dataSetsAccess);
+				Boolean action = verifyStatusForComponents(getComponentCheckBoxStatus("Datasets"), "Datasets",
+						dataSetsAccess);
 				driver.waitForPageToBeReady();
+
+				if (checkUpdateCollections.equals("Yes") && action == true) {
+					if (actionUser.equalsIgnoreCase("Project Administrator")
+							|| actionUser.equalsIgnoreCase("Review Manager")) {
+						editLoginUser();
+					} else {
+						selectEditUserUsingPagination(Input.projectName, false, "");
+					}
+
+					// Launch functionality pop-up
+					getFunctionalityTab().waitAndClick(5);
+				}
 
 				// Check-In or Check-Out Collections
 				Boolean actionTaken = verifyStatusForComponents(getComponentCheckBoxStatus("Collections"),
