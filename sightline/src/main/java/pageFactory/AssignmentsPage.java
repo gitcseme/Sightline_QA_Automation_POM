@@ -1453,6 +1453,10 @@ public class AssignmentsPage {
 				"//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName + "']/parent::label/i");
 	}
 
+	public Element SelectCFPopUpSG_Step1() {
+		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Security Group']");
+	}
+	
 	public Element SelectCFPopUp_Step1() {
 		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Assignment']");
 	}

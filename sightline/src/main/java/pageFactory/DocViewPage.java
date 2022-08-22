@@ -24480,7 +24480,8 @@ public class DocViewPage {
 
 			// click on remarks button
 			base.waitForElement(getAdvancedSearchAudioRemarkIcon());
-			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
+			Thread.sleep(1000);		
+			getAdvancedSearchAudioRemarkIcon().waitAndClick(10);
 
 			// Verify Remark Retained Datas
 
