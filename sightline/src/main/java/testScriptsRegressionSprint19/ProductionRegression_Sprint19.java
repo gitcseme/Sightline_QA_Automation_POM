@@ -1565,9 +1565,126 @@ public class ProductionRegression_Sprint19 {
 		
 		loginPage.logout();
 		
-		
-		
 	}
+	
+	/**
+	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47805
+	 * @Description:To Verify that Load file should be created successfully as part of the production generation
+	 **/
+	@Test(description = "RPMXCON-47805", enabled = true, groups = { "regression" })
+	public void verifyLoadFileGeneration() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-47805 Production Component Sprint 19");
+		base.stepInfo("To Verify that Load file should be created successfully as part of the production generation");
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		// create tag and folder
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+
+		String beginningBates = page.getRandomNumber(2);
+		int firstFile = Integer.parseInt(beginningBates);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		driver.waitForPageToBeReady();
+		page.fillingMP3FileWithBurnRedaction();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		String PDocCount = page.getProductionDocCount().getText();
+		int DocCount = Integer.parseInt(PDocCount);
+		int lastfile = firstFile + DocCount;
+		page.verifyLoadFileDocumentsAfterDownload(firstFile,lastfile);
+		
+		base.passedStep("Verified that Load file should be created successfully as part of the production generation");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-47982
+	 * @Description:To Verify Branding provided for a document should not overlapping/written over the actual content, on Preview
+	 **/
+	@Test(description="RPMXCON-47982",enabled = true, groups = { "regression" } )
+	public void verifyBrndOverActualText() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-47982");
+		base.stepInfo("To Verify Branding provided for a document should not overlapping/written over the actual content, on Preview");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String brandingString = "Testing";
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	    base = new BaseClass(driver);
+	    tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+	    
+	    SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);		
+		String beginningBates = page.getRandomNumber(2);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);	
+	    page.fillingDATSection();
+	    page.verifyTheTagOnRightBranding(tagname, brandingString);
+	    page.navigateToNextSection();
+	    page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.viewingPreviewButtonInSummaryTab();
+        base.waitUntilFileDownload();
+	
+		String name =prefixID + beginningBates +suffixID;
+		String home = System.getProperty("user.home");	
+		File file = new File(home + "/Downloads/" + name + ".pdf");
+		File file1 = new File(Input.fileDownloadLocation + name + ".pdf");
+		if (file.exists()) {
+		try {
+			String url = home + "/Downloads/";
+			String content = page.verifyBrandingOverlapping(url, name+".pdf", brandingString ,0);
+			System.out.println(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+		else if (file1.exists()) {
+		try {
+			String url1 = Input.fileDownloadLocation;
+			String content1 = page.verifyBrandingOverlapping(url1, name+".pdf", brandingString,0);
+			System.out.println(content1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		base.passedStep("Verified-Branding provided for a document should not overlapping/written "
+				+ "over the actual content, on Preview");
+		}
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {
