@@ -898,6 +898,20 @@ public class Input {
 	public static String Delete;
 	public static String Edit;
 
+	// Added by jayanthi
+	public static String emailRecipientName;
+	public static String emailRecipientName1;
+	public static String domainNameConsilio;
+	public static String domainNameSymphony;
+	public static String custodianName;
+	public static String emailToAdress;
+	public static String emailCCAdress;
+	public static String emailCCAdressOption1;
+	public static String emailCCAdressOption2;
+	public static String emailReciepientName2;
+	public static String emailAllDomainOption;
+	public static String masterDateOption;
+	
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -1839,6 +1853,19 @@ public class Input {
 		Delete = testData.getDelete();
 		Edit = testData.getEdit();
 
+		// Added by jayanthi
+		emailRecipientName =testData.getEmailRecipientName();
+		emailRecipientName1 =testData.getEmailRecipientName1();
+		domainNameConsilio =testData.getDomainNameConsilio();
+		domainNameSymphony =testData.getDomainNameSymphony();
+		custodianName=testData.getCustodianName();
+		emailToAdress= testData.getEmailToAdress();
+		emailCCAdress=testData.getEmailCCAdress();
+		emailCCAdressOption1= testData.getEmailCCAdressOption1();
+		emailCCAdressOption2=testData.getEmailCCAdressOption2();
+		emailReciepientName2=testData.getEmailReciepientName2();
+		emailAllDomainOption=testData.getEmailAllDomainOption();
+		masterDateOption =testData.getMasterDateOption();
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 
