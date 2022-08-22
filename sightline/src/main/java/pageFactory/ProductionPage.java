@@ -3591,7 +3591,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -4426,7 +4426,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -4996,7 +4996,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -6713,9 +6713,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(3);
+		num1 = "25";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(3));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
@@ -7757,7 +7757,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -9158,7 +9158,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
@@ -17944,7 +17944,7 @@ public class ProductionPage {
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
 		gettxtBeginningBatesIDMinNumLength().isDisplayed();
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
-		num1 = getRandomNumber(1);
+		num1 = "22";
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
 	}
@@ -18670,7 +18670,7 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("20");
 
 		driver.scrollingToBottomofAPage();
 
@@ -18929,9 +18929,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(1);
+		num1 = "20";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 
 		driver.scrollingToBottomofAPage();
 
@@ -19899,9 +19899,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(1);
+		num1 = "25";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
