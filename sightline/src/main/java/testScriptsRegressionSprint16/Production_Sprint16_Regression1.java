@@ -30,7 +30,7 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Production_Regression1 {
+public class Production_Sprint16_Regression1 {
 	Driver driver;
 	LoginPage loginPage;
 	BaseClass base;
