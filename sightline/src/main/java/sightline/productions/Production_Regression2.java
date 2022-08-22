@@ -171,7 +171,7 @@ public class Production_Regression2 {
 		doc.bulkTagExistingFromDoclist(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname1);
 		page.fillingDATSection();
@@ -192,7 +192,7 @@ public class Production_Regression2 {
 		page = new ProductionPage(driver);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		String beginningBates1 = page.getRandomNumber(2);
+		String beginningBates1 = page.getRandomNumber(1);
 		page.fillingDATSection();
 		page.selectGenerateOption(false);
 		page.selectBrandingInTiffAndPdfSection(tagname);
@@ -288,7 +288,7 @@ public class Production_Regression2 {
 
 		// Verify Pre-gen checks is in progress status on Tile view
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -436,7 +436,7 @@ public class Production_Regression2 {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		page = new ProductionPage(driver);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -608,7 +608,7 @@ public class Production_Regression2 {
 		String productionname1 = "p" + Utility.dynamicNameAppender();
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		page = new ProductionPage(driver);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -675,7 +675,7 @@ public class Production_Regression2 {
 		doc.bulkTagExistingFromDoclist(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname1);
 		page.fillingDATSection();
