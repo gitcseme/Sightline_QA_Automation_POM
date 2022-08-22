@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,8 +28,10 @@ import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -21480,5 +21483,53 @@ public class ProductionPage {
 		base.digitCompareEquals(PureHit, Integer.valueOf(DocCount), "Total Document count is displayed ","Document is not dispalyed");
 		driver.scrollPageToTop();
 		getMarkInCompleteBtn().waitAndClick(2);
+	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @param firstFile
+	 * @param lastFile
+	 * @description verify load files generated in downloaded file
+	 */
+	public void verifyLoadFileDocumentsAfterDownload(int firstFile, int lastFile) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+		for (int i = firstFile; i < lastFile; i++) {
+			String Tifffile = ocr.recognize(new File[] { new File(home + "/Downloads/VOL0001/Load Files") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+
+			ocr.stopEngine();
+		}
+	}
+	
+	/**
+	 * @author NA
+	 * @param path
+	 * @param filename
+	 *@param brandingString
+	 * @description verify pdf file in preview to check overlapping
+	 */
+	public String verifyBrandingOverlapping(String path, String filename, String brandingString, int pageNumber) throws IOException {
+		File file = new File(path + filename);
+        PDDocument document = PDDocument.load(file);        
+        Rectangle2D region = new Rectangle2D.Double(60, -100, 500, 500);
+        String regionName = "region";
+        PDFTextStripperByArea stripper;
+        PDPage page = document.getPage(pageNumber);
+        stripper = new PDFTextStripperByArea();
+        stripper.addRegion(regionName, region);
+        stripper.extractRegions(page);
+        String text = stripper.getTextForRegion(regionName);
+        if(text.contains(brandingString)) {
+			base.failedStep("Branding provided for a document overlapping/written over the actual content, on Preview");
+		}else {
+			base.passedStep("Branding provided for a document not overlapping/written over the actual content, on Preview");
+		}
+        return text;
 	}
 }
