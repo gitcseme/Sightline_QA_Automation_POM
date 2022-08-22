@@ -18,6 +18,7 @@ import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -411,6 +412,70 @@ public class Ingestion_Regression_4 {
 		ingestionPage.verifyValuesDisplayedInSelectedColumnsDoclist(docsCount,values);
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 22/08/2022 TestCase Id:RPMXCON-47370
+	 * Description :To verify that user is not able to search the Ingested data if Ingestion is in Draft Mode.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47370",enabled = true, groups = { "regression" })
+	public void verifySearchIngestionWhichIsInDraftMode() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47370");
+		baseClass.stepInfo("verify user is not able to search the data if Ingestion is in Draft Mode.");
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem, 
+				Input.sourceLocation, Input.HiddenPropertiesFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		ingestionPage.selectDATSource(Input.YYYYMMDDHHMISSDat, Input.sourceDocIdSearch);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		baseClass.stepInfo("save ingestion as draft");
+		ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+		String ingestionName =ingestionPage.getIngestionNameFromPopup();
+		baseClass.stepInfo("search ingestion data which is in draft mode");
+		int docsCount=sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		if(docsCount==0) {
+			baseClass.passedStep("User unable to search the ingestion data which is in draft mode");
+		}
+		else {
+			baseClass.failedStep("user able to search/view the ingestion data in draft mode");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 22/08/2022 TestCase Id:RPMXCON-48079
+	 * Description :To Verify HiddenProperties in Tally and Search
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48079",enabled = true, groups = { "regression" })
+	public void verifyHiddenPropertiesInTallyAndSearch() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48079");
+		baseClass.stepInfo("Verify HiddenProperties in Tally and Search.");
+		String field = "HiddenProperties";
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
+			baseClass.stepInfo("perform add only ingestion for hiddenproperties");
+			ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		baseClass.stepInfo("Verify the default field value of 'HiddenProperties'");
+		ProjectFieldsPage projectFieldPage = new ProjectFieldsPage(driver);
+		projectFieldPage.applyFilterByFilterName(field);
+		projectFieldPage.verifyFieldStatus(field);
+		projectFieldPage.verifyFieldClassification(field, Input.docBasic);
+		loginPage.logout();
+		
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
