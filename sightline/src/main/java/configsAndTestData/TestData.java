@@ -367,6 +367,7 @@ public class TestData {
     public String collsecondFirstName;
     public String collsecondlastName;
     public String totalRetrievedCount;
+    public String collectionFailedStatus;
 
     /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified
@@ -815,4 +816,21 @@ public class TestData {
   	
   	//Added by shilpi
   	public String DocViewNativesIngestion;
+  	
+  	//Added by jayanthi
+  	public String emailRecipientName;
+	public String emailRecipientName1;
+	public String  domainNameConsilio;
+	public String  domainNameSymphony;
+	public String  custodianName;
+	public String  emailToAdress;
+	public String  emailCCAdress;
+	public String  emailCCAdressOption1;
+	public String  emailCCAdressOption2;
+	public String emailReciepientName2;
+	public String emailAllDomainOption;
+	public String masterDateOption;
+	
+	
+	
 }

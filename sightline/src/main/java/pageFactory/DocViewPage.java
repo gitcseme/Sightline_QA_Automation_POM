@@ -3575,6 +3575,15 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='Msg1']//span[text()='Do you want to lose your changes?']");
 	}
 	
+	public Element getHitTermPanelLeft(String text) {
+		return driver.FindElementByXPath("//*[@id='divPersistentSearch']/div//p[text()='"+text+"']//following::i");
+	}
+	
+	//add by Aathith
+	public Element getMiniDocListData(int row, int col) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr["+row+"]//td["+col+"]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -28599,5 +28608,36 @@ public class DocViewPage {
 		
 		System.out.println("Redaction Updated successfully");
 		UtilityLog.info("Redaction Updated successfully");
+	}
+	
+	/**
+	 * @author Krishna Created Date: 18/08/2022
+	 * @description To verify selected text is highlightining on docview after clicking the
+	 *              eyeIcon
+	 */
+	public void verifyPersistingHitsHighlightingTextInSelectedDoc(String text) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPersistantHitEyeIcon().Displayed();
+			}
+		}), Input.wait30);
+		base.waitTillElemetToBeClickable(getPersistantHitEyeIcon());
+		getPersistantHitEyeIcon().waitAndClick(30);
+		base.waitTime(5);
+		base.waitForElement(getHitTermPanelLeft(text));
+		getHitTermPanelLeft(text).waitAndClick(5);
+		base.waitTime(5);
+		base.waitForElement(get_textHighlightedColor());
+		String color = get_textHighlightedColor().getWebElement().getCssValue("fill");
+		System.out.println(color);
+		if (get_textHighlightedColor().isDisplayed()) {
+			base.passedStep("selected text is  highlighted on the document successfully");
+
+		} else {
+			base.failedStep("not highlighted on selected document");
+		}
+
 	}
 }

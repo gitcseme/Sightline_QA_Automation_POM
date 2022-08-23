@@ -446,6 +446,21 @@ public class SecurityGroupsPage {
 		return driver.FindElementsByXPath("//div[@id='tagsJSTree_Selected']//a[contains(text(),'Default Tags')]");
 	}
 	
+	public Element getSGBgCompletedTask() {
+		return driver.FindElementByXPath("//*[@id='bgTask']/ul/li/span");
+	}
+	public Element getSGBgCompletedId() {
+		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr//td");
+	}
+	public Element getSgBgStatusDropDown() {
+		return driver.FindElementById("ddlStatusType");
+	}
+	public Element getSgBgFilterBtn() {
+		return driver.FindElementById("btnAppyFilter");
+	}
+	public Element getSecurityGroupBgViewAll() {
+		return driver.FindElementById("btnViewAll");
+	}
 	
 	public SecurityGroupsPage(Driver driver) {
 
@@ -1509,5 +1524,28 @@ public class SecurityGroupsPage {
 		driver.waitForPageToBeReady();
 		getSG_Field_Right().waitAndClick(5);
 		bc.passedStep("Field is displayed on all available list ");
+	}
+	
+	/**
+	 * @author Krishna
+	 * @description: Get notification msg 
+	 * @param bgCountBefore
+	 */
+	public int getNotificationMessage(int bgCountBefore) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == bgCountBefore + 1;
+			}
+		}), Input.wait120);
+		final int bgCountAfter = bc.initialBgCount();
+
+		if (bgCountAfter > bgCountBefore) {
+			bc.getBullHornIcon().waitAndClick(10);
+			
+		} else {
+			driver.Navigate().refresh();
+		}
+		return bgCountAfter;
 	}
 }

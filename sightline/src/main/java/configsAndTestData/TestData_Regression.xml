@@ -380,6 +380,7 @@
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
+    <collectionFailedStatus>Retrieve of datasets failed</collectionFailedStatus>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>
@@ -456,8 +457,7 @@
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
 	<MetaDataDomainName>gmail.com</MetaDataDomainName>
-	<MetaDataReciepientsDomain>EmailRecipientDomains
-	</MetaDataReciepientsDomain>
+	<MetaDataReciepientsDomain>EmailRecipientDomains</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
 
 	<!-- Added by Baskar Created date - 24/11/2021 -->
@@ -833,5 +833,19 @@
 	<Actions>Actions</Actions>
 	<Delete>Delete</Delete>
 	<Edit>Edit</Edit>
+
+	//Added by jayanthi
+	<emailRecipientName>EmailRecipientNames</emailRecipientName>
+	<emailRecipientName1>Gouri Dhavalikar</emailRecipientName1>
+	<domainNameConsilio>consilio.com</domainNameConsilio>
+	<domainNameSymphony>symphonyteleca.com</domainNameSymphony>
+	<custodianName>Swapnal</custodianName>
+	<emailToAdress></emailToAdress>
+	<emailCCAdress>EmailCCAddresses</emailCCAdress>
+	<emailCCAdressOption1>Sai.Theodare@Symphonyteleca.com</emailCCAdressOption1>
+	<emailCCAdressOption2>Gouri.Dhavalikar@consilio.com</emailCCAdressOption2>
+	<emailReciepientName2>swapnal sonawane</emailReciepientName2>
+	<emailAllDomainOption></emailAllDomainOption>
+	<masterDateOption></masterDateOption>
 
 </TestData>

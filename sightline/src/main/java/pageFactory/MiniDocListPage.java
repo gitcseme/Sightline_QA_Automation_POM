@@ -4461,6 +4461,37 @@ public class MiniDocListPage {
 			System.out.println("ConfigureMiniDocist popup is not opened");
 		}
 	}
+	
+	/**
+	 * @author
+	 * @description : removing All Existing Fields And AddingNewField
+	 * @param fieldValue
+	 */
+	public void removingAllExistingFieldsAndAddingNewField(String fieldValue) {
+
+		driver.waitForPageToBeReady();
+		clickManualSortButton();
+		driver.waitForPageToBeReady();
+		removingSelectedWebFieldInConfigureList();
+		ElementCollection pickColumnAvailableLists = getAvailablePickColumnDisplayFields();
+		availablePickColumnDisplayList = availableListofElements(pickColumnAvailableLists);
+		for (String element : availablePickColumnDisplayList) {
+			if (element.equals(fieldValue)) {
+				Element sourcefromPickColumDisplay = getFromAvailableFieldPickColumnDisplay(fieldValue);
+				Element destinationfromPickColumDisplay = getToSelectedField();
+				dragAndDropAction(sourcefromPickColumDisplay, destinationfromPickColumDisplay);
+			}
+		}
+		driver.waitForPageToBeReady();
+		saveConfigureMiniDocList();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(getDocView_MiniDoclist_Header_Webfields(fieldValue));
+		Boolean flag = getDocView_MiniDoclist_Header_Webfields(fieldValue).isDisplayed();
+		softAssertion.assertTrue(flag);
+		System.out.println(flag);
+		baseClass.passedStep("Newly Added Field is displayed in minidoclist");
+	}
 
 
 }

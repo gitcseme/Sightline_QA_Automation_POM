@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,8 +28,10 @@ import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -3305,6 +3308,13 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//select[@id='"+Metadata+"']//option");
 	}
 
+	public Element getLockOption(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Lock']");
+	}
+	
+	public Element getNativePlaceHolderCloseBtn() {
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[text()='×']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -3591,7 +3601,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -4426,7 +4436,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -4996,7 +5006,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -6713,9 +6723,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(3);
+		num1 = "25";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(3));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
@@ -6819,7 +6829,8 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingDocumentSelectionPage(String foldername) throws InterruptedException {
-
+		
+        driver.waitForPageToBeReady();
 		base.waitForElement(getFolderRadioButton());
 		getFolderRadioButton().waitAndClick(10);
 
@@ -7757,7 +7768,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("15");
 
 		driver.scrollingToBottomofAPage();
 
@@ -9158,7 +9169,7 @@ public class ProductionPage {
 				return gettxtBeginningBatesIDMinNumLength().Enabled();
 			}
 		}), Input.wait30);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
@@ -17944,7 +17955,7 @@ public class ProductionPage {
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
 		gettxtBeginningBatesIDMinNumLength().isDisplayed();
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
-		num1 = getRandomNumber(1);
+		num1 = "22";
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
 	}
@@ -18670,7 +18681,7 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("20");
 
 		driver.scrollingToBottomofAPage();
 
@@ -18929,9 +18940,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(1);
+		num1 = "20";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 
 		driver.scrollingToBottomofAPage();
 
@@ -19899,9 +19910,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = getRandomNumber(1);
+		num1 = "25";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
 
 		driver.scrollingToBottomofAPage();
 
@@ -21339,23 +21350,21 @@ public class ProductionPage {
 	 * @throws AWTException
 	 * @throws InterruptedException
 	 */
+	/**
+	 * @author Indium-Sowndarya
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
 	public void verifyCustomSort_Link() throws InterruptedException, AWTException {
 
 		base.waitForElement(getRadioBtn_CustomSort());
 		getRadioBtn_CustomSort().waitAndClick(10);
 		
+		getLink_CustomSort().ScrollTo();
 		base.waitForElement(getLink_CustomSort());
-		if (getLink_CustomSort().isDisplayed()) {
-			base.passedStep("Link to upload Excel is available");
-		}
-		else {
-			base.failedStep("No link is found");
-		}
+		getLink_CustomSort().isElementAvailable(10);
+		base.passedStep("Link to upload Excel is available");
 	}
-	
-
-
-
 	
 	/**
 	 * @author Sakthivel
@@ -21481,4 +21490,104 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		getMarkInCompleteBtn().waitAndClick(2);
 	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @param firstFile
+	 * @param lastFile
+	 * @description verify load files generated in downloaded file
+	 */
+	public void verifyLoadFileDocumentsAfterDownload(int firstFile, int lastFile) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		Ocr.setUp();
+		Ocr ocr = new Ocr();
+		ocr.startEngine("eng", Ocr.SPEED_FASTEST);
+
+		for (int i = firstFile; i < lastFile; i++) {
+			String Tifffile = ocr.recognize(new File[] { new File(home + "/Downloads/VOL0001/Load Files") },
+					Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+			System.out.println(Tifffile);
+
+			ocr.stopEngine();
+		}
+	}
+	
+	/**
+	 * @author NA
+	 * @param path
+	 * @param filename
+	 *@param brandingString
+	 * @description verify pdf file in preview to check overlapping
+	 */
+	public String verifyBrandingOverlapping(String path, String filename, String brandingString, int pageNumber) throws IOException {
+		File file = new File(path + filename);
+        PDDocument document = PDDocument.load(file);        
+        Rectangle2D region = new Rectangle2D.Double(60, -100, 500, 500);
+        String regionName = "region";
+        PDFTextStripperByArea stripper;
+        PDPage page = document.getPage(pageNumber);
+        stripper = new PDFTextStripperByArea();
+        stripper.addRegion(regionName, region);
+        stripper.extractRegions(page);
+        String text = stripper.getTextForRegion(regionName);
+        if(text.contains(brandingString)) {
+			base.failedStep("Branding provided for a document overlapping/written over the actual content, on Preview");
+		}else {
+			base.passedStep("Branding provided for a document not overlapping/written over the actual content, on Preview");
+		}
+        return text;
+	}
+	
+	
+	/**	
+	 * 
+	 * @author Brundha.T
+	 * @param ProductionName
+	 * Description:Selecting option In Production
+	 */
+	public void selectingOptionInProduction(String ProductionName) {
+		base.waitForElement(getDropDownToggle(ProductionName));
+		getDropDownToggle(ProductionName).waitAndClick(2);
+		base.waitForElement(getLockOption(ProductionName));
+		getLockOption(ProductionName).waitAndClick(2);
+	}
+	/**
+	 * @author Brundha.T
+	 * @Description:Lock the production
+	 */
+	public void verfyingBellyBandMsgAndLockProduction() {
+		driver.waitForPageToBeReady();
+		String ActualMsg=getErrorMsgPopupInDAT().getText();
+		String ExpectedMsg="Are You Sure You Want to Lock Production?";
+		base.textCompareEquals(ActualMsg, ExpectedMsg,"Message is displayed as expecetd", "Message is not displayed as expected");
+		getOkButton().Click();
+		base.VerifySuccessMessage("Production Lock Successfully.");
+		
+				
+	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param DatFile
+	 * @param value
+	 * @param value1
+	 * @param CompareString
+	 * @throws IOException Description:verifying downloaded dat file
+	 */
+	public void verifyingGeneratedDATFile(File DatFile, int value, int value1, String CompareString) throws IOException {
+		String line;
+		List<String> lines = new ArrayList<>();
+		BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+		while ((line = brReader.readLine()) != null) {
+			lines.add(line);}
+		driver.waitForPageToBeReady();
+		String[] arrOfStr = lines.get(value).split("þ");
+		String OutputDatValue = arrOfStr[value1];
+		if (CompareString.equals(OutputDatValue)) {
+			base.passedStep("" + CompareString + " is displayed in DAT File");
+		} else {
+			base.failedStep("" + CompareString + " is not displayed in DAT File");	}
+	}
+	
 }

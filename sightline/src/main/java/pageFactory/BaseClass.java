@@ -4307,7 +4307,7 @@ public class BaseClass {
 					"Pass");
 		}
 	}
-	
+
 	/**
 	 * @author Raghuram.A
 	 * @param element
@@ -4321,6 +4321,40 @@ public class BaseClass {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param textMsg
+	 * @param customMsg
+	 * @throws InterruptedException
+	 */
+	public void notificationSelection(String textMsg, Boolean customMsg) throws InterruptedException {
+		waitForElement(getBullHornIcon());
+		getBullHornIcon().waitAndClick(10);
+		if (customMsg) {
+			// To be added based on future requirement
+		} else {
+			clickFirstBackRoundTask();
+		}
+		getBullHornIcon().waitAndClick(2);
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param fileName
+	 * @param expectedFormat
+	 * @description : validate file format
+	 */
+	public void validateFileFormat(String fileName, String expectedFormat) {
+
+		String actualfileName = FilenameUtils.getBaseName(fileName);
+		String fileFormat = FilenameUtils.getExtension(fileName);
+
+		// Comparision
+		stepInfo("File Name : " + fileName);
+		textCompareEquals(fileFormat, expectedFormat, "File format is as Expected : " + fileFormat,
+				"File format is not as Expected : " + fileFormat);
 	}
 
 }

@@ -21,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -306,7 +307,7 @@ public class SecurityGroups_Regression6 {
 		 * 
 		 * 
 		 */
-		@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+		@Test(description="RPMXCON-63768",enabled = true, alwaysRun = true, groups = { "regression" })
 		public void verifyProductionGenerateWithoutCommentsDocsWithCopMenu() throws Exception {
 			baseClass = new BaseClass(driver);
 			baseClass.stepInfo("Test case Id: RPMXCON-63768");
@@ -444,6 +445,90 @@ public class SecurityGroups_Regression6 {
 			tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 			loginPage.logout();
 		}
+		
+		/**
+		 * @author krishna ModifyDate:02/08/2022 RPMXCON-54307
+		 * @throws Exception
+		 * @Description To verify that when the SG is set to use SG-specific attributes
+		 *              then Folder Propagation should happens using
+		 *              EmailDuplicateDocIDs attribute.
+		 * 
+		 */
+		@Test(description = "RPMXCON-54307", enabled = true, groups = { "regression" })
+		public void verifySgAttributesFolderPropogationUsingEmailDuplicateDocIds() throws Exception {
+
+			baseClass.stepInfo("Test case Id: RPMXCON-54307");
+			baseClass.stepInfo(
+					"To verify that when the SG is set to use SG-specific attributes then Folder Propagation should happens using EmailDuplicateDocIDs attribute.");
+			SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+			String Foldername = "Test" + UtilityLog.dynamicNameAppender();
+
+			// Login as PA
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			baseClass.stepInfo("Login as PA");
+			sgpage.navigateToSecurityGropusPageURL();
+			baseClass.stepInfo("navigated to security group as expected");
+			sgpage.createSecurityGroups(SGname);
+			baseClass.stepInfo(SGname + "is created successfully");
+			baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(1));
+			sgpage.getSG_GenerateEmailRadioButton(1).waitAndClick(3);
+
+			// Release the doc to security group
+			sessionsearch.basicContentSearch(Input.searchStringStar);
+			sessionsearch.bulkRelease(SGname);
+			baseClass.passedStep("  Document released to Selected.." + SGname);
+			driver.waitForPageToBeReady();
+			sgpage.navigateToSecurityGropusPageURL();
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(sgpage.getSecurityGroupList());
+			sgpage.getSecurityGroupList().selectFromDropdown().selectByVisibleText(SGname);
+			baseClass.stepInfo(SGname + "..Selected as expected");
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(1));
+			sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(3);
+			baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+			sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+			baseClass.passedStep("Generate button is clicked successfully");
+			baseClass.waitForElement(sgpage.getYesButton());
+			sgpage.getYesButton().waitAndClick(2);
+			baseClass.waitTime(5);
+			sgpage.getNotificationMessage(0);
+			driver.waitForPageToBeReady();
+			String Expected = sgpage.getSGBgCompletedTask().getText();
+			System.out.println(Expected);
+			baseClass.waitForElement(sgpage.getSecurityGroupBgViewAll());
+			sgpage.getSecurityGroupBgViewAll().waitAndClick(3);
+			baseClass.stepInfo("navigated to My Background task page");
+			driver.waitForPageToBeReady();
+			sgpage.getSgBgStatusDropDown().selectFromDropdown().selectByVisibleText("COMPLETED");
+			baseClass.waitForElement(sgpage.getSgBgFilterBtn());
+			sgpage.getSgBgFilterBtn().waitAndClick(2);
+			driver.waitForPageToBeReady();
+			baseClass.waitForElement(sgpage.getSGBgCompletedId());
+			String Actual = sgpage.getSGBgCompletedId().getText();
+			System.out.println(Actual);
+			if (Expected.contains(Actual)) {
+				baseClass.passedStep(Actual + ".. status is displayed as Completed successfully");
+
+			} else {
+				baseClass.failedMessage("failed");
+			}
+			loginPage.logout();
+
+			// Login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Login as RMU");
+
+			// Release the doc to security group
+			sessionsearch.basicContentSearch(Input.testData1);
+			sessionsearch.bulkFolderDuplicateEmailDocs(Foldername);
+			baseClass.passedStep(
+					Foldername + "...Selected documents email duplicates to selected folder is successfully associated");
+			loginPage.logout();
+		}
+
 		
 		
 

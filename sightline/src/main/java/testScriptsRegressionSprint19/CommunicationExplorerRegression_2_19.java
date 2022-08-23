@@ -139,7 +139,9 @@ public class CommunicationExplorerRegression_2_19 {
 				"Validate onpage filter for EmailRecipientNames  and EmailAllDomains on Communication Explorer Report");
 
 		String sourceToSelect = "Security Groups";
-
+		String recipientName1 = Input.emailRecipientName1;
+		String recipientName2 = Input.emailReciepientName2;
+		String domainName = Input.domainNameConsilio;
 		// Login 
 		baseClass.stepInfo("**Step-1 Login as " + role + " **");
 		loginPage.loginToSightLine(userName, password);
@@ -154,8 +156,8 @@ public class CommunicationExplorerRegression_2_19 {
 		// Apply filter
 		baseClass.stepInfo("** Set the Include filter criteria and click “Apply filter”");
 
-		conceptExplorer.filterAction("Gouri Dhavalikar", "EmailRecipientNames", "swapnal sonawane", true);
-		conceptExplorer.filterAction("consilio.com", "EmailAllDomains", null, true);
+		conceptExplorer.filterAction(recipientName1, "EmailRecipientNames", recipientName2, true);
+		conceptExplorer.filterAction(domainName, "EmailAllDomains", null, true);
 
 		communicationExpPage.clickApplyBtn();
 		// Select nodes to view in doc list
@@ -171,8 +173,8 @@ public class CommunicationExplorerRegression_2_19 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain = dlPage.getColumnValue("EmailAllDomains", false);
 		List<String> emailRecipients = dlPage.getColumnValue("EmailRecipientNames", false);
-		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailRecipients, emailAllDomain, "Gouri Dhavalikar",
-				"swapnal sonawane", "consilio.com");
+		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailRecipients, emailAllDomain, recipientName1,
+				recipientName2, domainName);
 
 		// remove filters
 		baseClass.stepInfo("** navigate from Reports - Click Communications explorer report button");
@@ -184,8 +186,8 @@ public class CommunicationExplorerRegression_2_19 {
 
 		// Apply Exclude filter
 		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
-		conceptExplorer.filterAction("Gouri Dhavalikar", "EmailRecipientNames", "swapnal sonawane", false);
-		conceptExplorer.filterAction("consilio.com", "EmailAllDomains", null, false);
+		conceptExplorer.filterAction(recipientName1, "EmailRecipientNames", recipientName2, false);
+		conceptExplorer.filterAction(domainName, "EmailAllDomains", null, false);
 		communicationExpPage.clickApplyBtn();
 		baseClass.stepInfo("Report Generated.");
 
@@ -206,9 +208,98 @@ public class CommunicationExplorerRegression_2_19 {
 		List<String> emailAllDomain_Excl = dlPage.getColumnValue("EmailAllDomains", false);
 		List<String> emailRecipients_Excl = dlPage.getColumnValue("EmailRecipientNames", false);
 		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailRecipients_Excl, emailAllDomain_Excl,
-				"Gouri Dhavalikar", "swapnal sonawane", "consilio.com");
-		conceptExplorer.getBackToSourceBtn().Click();
+				recipientName1, recipientName2, domainName);
+		
+
+		// Logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Jayanthi
+	 * @Description :Validate onpage filter for EmailAllDomains and CustodianName
+	 *              Communication Explorer Report
+	 */
+	@Test(description = "RPMXCON-56904", dataProvider = "paRmuUsers", groups = { "regression" }, enabled = true)
+	public void VerifyFiltersFunctionality_CusNAme(String userName, String password, String role)
+			throws InterruptedException, ParseException {
+		baseClass.stepInfo("Test case Id: RPMXCON-56904");
+		baseClass.stepInfo(
+				"Validate onpage filter for EmailAllDomains  and CustodianName on Communication Explorer Report");
+		String domainName1 = Input.domainNameConsilio;
+		String domainName2 = Input.domainNameSymphony;
+
+		String cusNAme = Input.custodianName;
+		String sourceToSelect = "Security Groups";
+
+		// Login
+		baseClass.stepInfo("**Step-1 Login as " + role + " **");
+		loginPage.loginToSightLine(userName, password);
+		String[] columnsToSelect = { Input.emailAllDomain, Input.metaDataName };
+
+		// Select Sources
+		reports.navigateToReportsPage("Communications Explorer");
+		conceptExplorer.clickSelectSources();
+		baseClass.stepInfo("** Select Security group as source and save selection");
+		conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
+
+		// Apply filter
+		baseClass.stepInfo("** Set the Include filter criteria and click “Apply filter”");
+
+		conceptExplorer.filterAction(domainName1, Input.emailAllDomain, domainName2, true);
+		conceptExplorer.filterAction(Input.custodianName, Input.metaDataName, null, true);
+
+		communicationExpPage.clickApplyBtn();
+		// Select nodes to view in doc list
+		communicationExpPage.selectAllListedDatas(communicationExpPage.getSmallerNode(),
+				communicationExpPage.getSmallerNodesList(), 2);
+		communicationExpPage.selectAllListedDatas(communicationExpPage.getNormalNode(),
+				communicationExpPage.getNormalNodesList(), 3);
+		// Perform View in DocView List Action
+		communicationExpPage.viewinDoclist();
+		// validation for inlcude filters
+		DocListPage dlPage = new DocListPage(driver);
+
+		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
+		List<String> custodianName = dlPage.getColumnValue(Input.metaDataName, false);
+		List<String> emailAllDomain = dlPage.getColumnValue(Input.emailAllDomain, false);
+		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain, custodianName, domainName1, domainName1,
+				cusNAme);
+
+		// remove filters
+		baseClass.stepInfo("** navigate from Reports - Click Communications explorer report button");
+		reports.navigateToReportsPage("Communications Explorer");
+
+		// Select Sources
+		conceptExplorer.clickSelectSources();
+		conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
+
+		// Apply Exclude filter
+		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
+		conceptExplorer.filterAction(domainName1, Input.emailAllDomain, domainName2, false);
+		conceptExplorer.filterAction(Input.custodianName, Input.metaDataName, null, false);
+		communicationExpPage.clickApplyBtn();
+		baseClass.stepInfo("Report Generated.");
+
+		// Select node to view in doc list
+		communicationExpPage.selectAllListedDatas(communicationExpPage.getSmallerNode(),
+				communicationExpPage.getSmallerNodesList(), 2);
+		communicationExpPage.selectAllListedDatas(communicationExpPage.getNormalNode(),
+				communicationExpPage.getNormalNodesList(), 2);
+
+		// Perform View in DocView List Action
+		communicationExpPage.viewinDoclist();
+		baseClass.waitTime(3);
+		baseClass.verifyPageNavigation("en-us/Document/DocList");
 		driver.waitForPageToBeReady();
+
+		// validation of exclude filter functionality
+		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
+		List<String> emailAllDomain_Excl = dlPage.getColumnValue("EmailAllDomains", false);
+		List<String> cusNAme_Excl = dlPage.getColumnValue("CustodianName", false);
+		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailAllDomain_Excl, cusNAme_Excl, domainName1, domainName2,
+				cusNAme);
+		
 
 		// Logout
 		loginPage.logout();
