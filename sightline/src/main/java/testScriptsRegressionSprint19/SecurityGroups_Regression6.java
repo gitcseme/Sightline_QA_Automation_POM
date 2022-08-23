@@ -307,7 +307,7 @@ public class SecurityGroups_Regression6 {
 		 * 
 		 * 
 		 */
-		@Test(enabled = true, alwaysRun = true, groups = { "regression" })
+		@Test(description="RPMXCON-63768",enabled = true, alwaysRun = true, groups = { "regression" })
 		public void verifyProductionGenerateWithoutCommentsDocsWithCopMenu() throws Exception {
 			baseClass = new BaseClass(driver);
 			baseClass.stepInfo("Test case Id: RPMXCON-63768");

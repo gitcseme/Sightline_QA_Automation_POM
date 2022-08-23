@@ -114,17 +114,16 @@ public class ProductionRegression_Sprint19 {
 		productionname = "p" + Utility.dynamicNameAppender();
 
 		// create new production set
+		page.navigateToProductionPage();
 		page.CreateProductionSets(productionSet);
 		page.navigateToProductionPageByNewProductionSet(productionSet);
 
-		String beginningBates = page.getRandomNumber(2);
 		// create production and save as custom template
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingCreatedSecurityGroup(securityGroup);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
-		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.navigateToProductionPage();
 		page.saveProductionAsTemplateAndVerifyInManageTemplateTab(productionname, template);
@@ -149,11 +148,12 @@ public class ProductionRegression_Sprint19 {
 
 		productionname = "p" + Utility.dynamicNameAppender();
 		String batesWithSpaces = " " + "B" + " " + page.getRandomNumber(2);
-
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSectionWithBates(Input.bates, Input.batesNumber, batesWithSpaces);
 		page.getComponentsMarkComplete().waitAndClick(5);
+		base =new BaseClass(driver);
 		base.VerifyErrorMessage(expected);
 		base.passedStep(
 				"verified - that if user added leading space for DAT field, then after generating the production, warning message should be displayed");
@@ -174,13 +174,15 @@ public class ProductionRegression_Sprint19 {
 		String expHelpText = "Due to the nature of the content, this field cannot be made searchable";
 		String fieldName = "AllProductionBatesRanges";
 		ProjectFieldsPage projectField = new ProjectFieldsPage(driver);
-
+        base = new BaseClass(driver);
 		projectField.navigateToProjectFieldsPage();
 		projectField.applyFilterByFilterName(fieldName);
+		base.waitTillElemetToBeClickable(projectField.getApplyButton());
 		base.waitForElement(projectField.getFieldNameEdititButton(fieldName));
-		projectField.getFieldNameEdititButton(fieldName).waitAndClick(10);
+		projectField.getFieldNameEdititButton(fieldName).waitAndClick(3);
+		base.waitTillElemetToBeClickable(projectField.getFieldNameEdititButton(fieldName));
 		base.waitForElement(projectField.getIsSearcHelpBtn());
-		projectField.getIsSearcHelpBtn().waitAndClick(10);
+		projectField.getIsSearcHelpBtn().waitAndClick(3);
 		base.waitForElement(projectField.getIsSearcHelpTxt());
 		String actHelpText = projectField.getIsSearcHelpTxt().getText();
 		if (actHelpText.equals(expHelpText)) {
@@ -219,6 +221,7 @@ public class ProductionRegression_Sprint19 {
 
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -273,6 +276,7 @@ public class ProductionRegression_Sprint19 {
 
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -326,6 +330,7 @@ public class ProductionRegression_Sprint19 {
 
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -360,7 +365,6 @@ public class ProductionRegression_Sprint19 {
 	 *                 Components, last selected Native File Group types and Tags
 	 *                 should be displayed
 	 **/
-	@Test(description = "RPMXCON-48499", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifySelectedTypesTags_MarkIncomplete(String userName, String password) throws Exception {
 		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
@@ -371,6 +375,7 @@ public class ProductionRegression_Sprint19 {
 				"To verify that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
 
 		// create tag and folder
+		base =new BaseClass(driver);
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		if (userName.equals(Input.pa1userName)) {
 			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
@@ -379,6 +384,7 @@ public class ProductionRegression_Sprint19 {
 		}
 
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		base.waitForElement(page.getNativeChkBox());
@@ -410,7 +416,6 @@ public class ProductionRegression_Sprint19 {
 		}
 		loginPage.logout();
 	}
-
 	/**
 	 * @author Sowndarya.Velraj created on:NA modified by:NA TESTCASE
 	 *         No:RPMXCON-49981
@@ -436,6 +441,7 @@ public class ProductionRegression_Sprint19 {
 
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		String productionNameInPA = page.addANewProduction(productionname);
 		System.out.println(productionNameInPA);
@@ -692,7 +698,6 @@ public class ProductionRegression_Sprint19 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.extractFile();
-		page.OCR_Verification__BatesNo_In_GeneratedFile(prefixID, suffixID, beginningBates);
 
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
@@ -741,6 +746,7 @@ public class ProductionRegression_Sprint19 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
+		base.waitForElement(page.getBeginningBates());
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -767,7 +773,7 @@ public class ProductionRegression_Sprint19 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -812,7 +818,7 @@ public class ProductionRegression_Sprint19 {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
-
+	
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47739
 	 * @Description:To Verify the default Sorting and required sequence of sorting.
@@ -876,7 +882,7 @@ public class ProductionRegression_Sprint19 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -1154,7 +1160,6 @@ public class ProductionRegression_Sprint19 {
 				+ "default enabled native placeholder under TIFF section");
 		loginPage.logout();
 	}
-
 	/**
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-63084
 	 * @Description:To Verify production regeneration with change(additional, change

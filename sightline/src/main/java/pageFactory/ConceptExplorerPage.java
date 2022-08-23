@@ -482,15 +482,11 @@ public class ConceptExplorerPage {
 	 * @param sgToSelect
 	 */
 	public void selectSGsource(String sourceToSelect, String sgToSelect) {
-		try {
-			getSelectSourcedOption(sourceToSelect).waitAndClick(5);
-			getSelectSGOption(sgToSelect).waitAndClick(5);
-			getSaveSelectionsBtn().waitAndClick(10);
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Security Group selection failed");
-		}
-	}
+        driver.waitForPageToBeReady();
+        getSelectSourcedOption(sourceToSelect).waitAndClick(15);
+        getSelectSGOption(sgToSelect).waitAndClick(5);
+        getSaveSelectionsBtn().waitAndClick(10);
+    }
 
 	/**
 	 * @author Raghuram.A
