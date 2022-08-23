@@ -6822,7 +6822,8 @@ public class ProductionPage {
 	 * @authorIndium-Sowndarya.Velraj
 	 */
 	public void fillingDocumentSelectionPage(String foldername) throws InterruptedException {
-
+		
+        driver.waitForPageToBeReady();
 		base.waitForElement(getFolderRadioButton());
 		getFolderRadioButton().waitAndClick(10);
 
