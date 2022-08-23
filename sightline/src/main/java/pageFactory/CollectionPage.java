@@ -413,6 +413,62 @@ public class CollectionPage {
 				"//div[text()='" + collectionName + "']//..//..//td//b[text()='" + expStatus + "']");
 	}
 
+	public Element getClickDownloadReport(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index + "]//a");
+	}
+
+	public Element getDataSelectionAction(String custodianMailId, String action) {
+		return driver.FindElementByXPath("//div[text()='" + custodianMailId
+				+ "']//parent::td//following-sibling::td//a[text()='" + action + "']");
+	}
+
+	public Element getDataSetDeletionRibbon() {
+		return driver.FindElementByXPath("//span[text()='Delete Dataset']");
+	}
+
+	public ElementCollection getCollectionListInCollectionHomePage() {
+		return driver.FindElementsByXPath("//table[@id='dtCollectionList']//tbody//tr");
+	}
+
+	public Element getCollectionFieldValuesInCollectionHomePage(int rowNo, int tableRow) {
+		return driver.FindElementByXPath(
+				"//table[@id='dtCollectionList']//tbody//tr[" + tableRow + "]/td[" + rowNo + "]//b");
+	}
+
+	public Element getCollectionFieldValuesRowNoInCollectionHomePage(int rowNo, int tableRow) {
+		return driver
+				.FindElementByXPath("//table[@id='dtCollectionList']//tbody//tr[" + tableRow + "]//td[" + rowNo + "]");
+	}
+
+	public Element getCollectionRetrievedCountTextFromCollectionIdsList() {
+		return driver.FindElementByXPath("//table[@class='table dataTable no-footer']//th[text()='Retrieved Count']");
+	}
+
+	public Element getCollectionRetrievedCountFromCollectionIdsList() {
+		return driver.FindElementByXPath(
+				"(//table[@class='table dataTable no-footer']//td//div[@class='text-wrap popout'])[last()]");
+	}
+
+	public Element getErrorReportPageShowDetailsButton() {
+		return driver.FindElementByXPath("//a[text()='Show Details']");
+	}
+
+	public Element getErrorReportPageRetrievalTable() {
+		return driver.FindElementByXPath("//table[@id='dtRetrieval']");
+	}
+
+	public Element getErrorReportPageRetrievalTableErrorCountNum() {
+		return driver.FindElementByXPath("//table[@id='dtRetrieval']//td[4]//p");
+	}
+
+	public Element getErrorReportPageRetrievalTableErrorCount() {
+		return driver.FindElementByXPath("//table[@id='dtRetrieval']//th[text()='Error Count']");
+	}
+
+	public Element getStartCollectionButton() {
+		return driver.FindElementByXPath("//a[@id='btnStartCollection']");
+	}
+
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
 		base = new BaseClass(driver);
@@ -2043,6 +2099,233 @@ public class CollectionPage {
 
 		base.passedStep(
 				"Only Cancel buttons are enabled. Save & Add New Dataset button is disabled. Save button is also disabled successfully.");
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param headerListDataSets
+	 * @param collectionName
+	 * @param expStatus
+	 * @param retryAttempt
+	 * @description : verify Status Using Contains TypeII
+	 */
+	public void verifyStatusUsingContainsTypeII(String[] headerListDataSets, String collectionName, String[] expStatus,
+			int retryAttempt) {
+
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
+
+		for (int i = 0; i < expStatus.length; i++) {
+			String expStatusToCheck = expStatus[i];
+			for (int j = 0; j <= retryAttempt; j++) {
+				Boolean status = false;
+				// Get Collection Status
+				base.waitTime(15); // To handle abnormal wait times in case of data processing
+				String collStatus = getDataSetDetails(collectionName,
+						colllectionDataHeadersIndex.get(Input.collectionStatusHeader)).getText();
+
+				// Contains comparision
+				if (collStatus.contains(expStatusToCheck)) {
+					base.passedStep("Collection is in " + collStatus + " state as Expected");
+					status = true;
+					break;
+				} else {
+					base.stepInfo("Collection is in " + collStatus + " state");
+				}
+
+				// Final Check
+				if (status == false && j == retryAttempt) {
+					base.failedStep("Collection is in " + collStatus + " state not as expected");
+				}
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param singleFlow
+	 * @param custodianEmailId
+	 * @param type
+	 * @param action
+	 * @param verifyMsg
+	 * @param additional1
+	 */
+	public void confirmationDataSetDelAction(Boolean singleFlow, String custodianEmailId, String type, String action,
+			String verifyMsg, String additional1) {
+
+		driver.waitForPageToBeReady();
+		getDataSelectionAction(custodianEmailId, "Delete").waitAndClick(5);
+
+		// Deletion Confirmation
+		if (getDataSetDeletionRibbon().isElementAvailable(5)) {
+			base.stepInfo("Dataset deletion confirmation ribbon is displayed");
+			getConfirmationBtnAction(action).waitAndClick(5);
+			base.stepInfo("Clicked " + action + " as confirmation Action");
+			driver.waitForPageToBeReady();
+
+			// Action notification message
+			if (action.equalsIgnoreCase("yes")) {
+				base.VerifySuccessMessage(verifyMsg);
+				base.CloseSuccessMsgpopup();
+				driver.waitForPageToBeReady();
+			}
+		} else {
+			base.failedMessage("Dataset deletion confirmation ribbon is not displayed");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param collectionName
+	 * @param headerListDataSets
+	 * @param headerName
+	 * @param additional1
+	 * @param additional2
+	 */
+	public void clickDownloadReportLink(String collectionName, String[] headerListDataSets, String headerName,
+			Boolean additional1, String additional2) {
+
+		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
+
+		// Collection Header details
+		colllectionDataHeadersIndex = getDataSetsHeaderIndex(headerListDataSets);
+
+		// Download Report
+		driver.waitForPageToBeReady();
+		try {
+			getClickDownloadReport(collectionName, colllectionDataHeadersIndex.get(headerName)).waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To get total count of collection present in Collection Wizard
+	 * @param rowNo
+	 * @return
+	 */
+	public int getTotalCountOfCollectionPresentInCollectionsPage(int rowNo) {
+
+		driver.waitForPageToBeReady();
+
+		int collectionList = getCollectionListInCollectionHomePage().size();
+		System.out.println(collectionList);
+
+		int a = 1;
+		int collectionRowNo;
+
+		for (int i = 1; i < collectionList; i++) {
+
+			base.waitForElement(getCollectionFieldValuesInCollectionHomePage(rowNo, i));
+			String collectionFieldValue = getCollectionFieldValuesInCollectionHomePage(rowNo, i).getText();
+			System.out.println("Collection Status Value: " + collectionFieldValue);
+
+			if (collectionFieldValue.contains("Completed")) {
+
+				base.passedStep("The Collection is completed successfully amd collection is present in rownNo" + i);
+				collectionRowNo = i;
+				i = a;
+				break;
+
+			} else {
+				base.stepInfo("Respective Collection is not present in row" + i);
+			}
+
+		}
+
+		return a;
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: Select collection id from the list present in Collection Wizard
+	 * @param rowNo
+	 */
+	public void selectCollectionIdFromTheCollectionListPresent(int rowNo) {
+
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getCollectionFieldValuesRowNoInCollectionHomePage(rowNo, 1));
+		getCollectionFieldValuesRowNoInCollectionHomePage(rowNo, 1).waitAndClick(5);
+
+		if (getCollectionRetrievedCountTextFromCollectionIdsList().isElementPresent()) {
+
+			base.waitForElement(getCollectionRetrievedCountFromCollectionIdsList());
+			String retrievedCount = getCollectionRetrievedCountFromCollectionIdsList().getText();
+			base.passedStep(
+					"1. Column name 'Retrieved Count' is available on 'Collections Details Pop up' successfully 2. Retrieved file count in dataset is:"
+							+ retrievedCount);
+
+		} else {
+			base.failedStep("'Collections Details Pop up' is not opened");
+		}
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To click next button and Start A Collection
+	 */
+	public void clickOnNextAndStartAnCollection() {
+
+		driver.waitForPageToBeReady();
+		if (getNextBtnDS().isElementAvailable(5)) {
+			base.waitForElement(getNextBtnDS());
+			getNextBtnDS().waitAndClick(5);
+		} else {
+			base.stepInfo("Next Button is already clicked");
+			System.out.println("Next Button is already clicked");
+		}
+
+		base.waitForElement(getStartCollectionButton());
+		getStartCollectionButton().waitAndClick(5);
+
+	}
+
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify View Error and Errored Datsets Page
+	 */
+	public void verifyViewErrorDatasetsLink() {
+
+		driver.waitForPageToBeReady();
+
+		for (int i = 1; i < 5; i++) {
+			base.stepInfo("View Error Report link is still loading in the Collection Wizard");
+			base.waitTime(10);
+			driver.Navigate().refresh();
+		}
+		String viewErrorReport = getCollectionFieldValuesRowNoInCollectionHomePage(6, 1).getText();
+		System.out.println(viewErrorReport);
+		if (viewErrorReport.contains("View Error Report")) {
+			getCollectionFieldValuesRowNoInCollectionHomePage(6, 1).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getErrorReportPageShowDetailsButton());
+			getErrorReportPageShowDetailsButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			if (getErrorReportPageRetrievalTable().isElementAvailable(5)
+					&& getErrorReportPageRetrievalTableErrorCount().isDisplayed()
+					&& getErrorReportPageRetrievalTableErrorCountNum().isDisplayed()) {
+
+				String errorCount = getErrorReportPageRetrievalTableErrorCountNum().getText();
+				System.out.println(errorCount);
+				base.passedStep(
+						"For any errored dataset - Column “Error Count“ is display in Separate column Data tables. (Dataset Creation) in Error section pop up"
+								+ "2.The displayed Error count per dataset is:" + errorCount);
+
+			} else {
+				base.failedStep("Errored Datasettable is not visible");
+			}
+		} else {
+
+			base.failedStep("View Error Report link is not present in the Collection Wizard");
+
+		}
 
 	}
 }
