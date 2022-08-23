@@ -983,7 +983,7 @@ public class ProductionPage_Regression {
 		page.fillingExportLocationPage(exportname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 		// To delete tags and folders
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);

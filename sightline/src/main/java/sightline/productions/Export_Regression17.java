@@ -113,7 +113,7 @@ public class Export_Regression17 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getCopyPath().waitAndClick(10);
 		page.verifyingExportFile(purehit,prefixID,suffixID,subBates,Input.searchString4);
 
@@ -189,7 +189,7 @@ public class Export_Regression17 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getCopyPath().waitAndClick(10);
 		page.verifyingExportFile(doc,prefixID,suffixID,subBates,ActualText);
 		
@@ -217,7 +217,7 @@ public class Export_Regression17 {
 		page.fillingExportLocationPage(productionname1);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getCopyPath().waitAndClick(10);
 		page.verifyingExportFile(doc,prefixID,suffixID,subBates1,ActualText);
 

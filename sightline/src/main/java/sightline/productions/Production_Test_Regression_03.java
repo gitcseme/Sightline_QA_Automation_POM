@@ -2444,7 +2444,7 @@ public class Production_Test_Regression_03 {
 			
 			page.navigateToNextSection();
 			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 			String name = page.getProduction().getText().trim();
 			page.getCopyPath().waitAndClick(10);
 			
