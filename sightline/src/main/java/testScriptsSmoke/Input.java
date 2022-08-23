@@ -487,6 +487,7 @@ public class Input {
 	public static String collsecondFirstName;
 	public static String collsecondlastName;
 	public static String totalRetrievedCount;
+    public static String collectionFailedStatus;
 
 	// Added by gopinath - 25/10/2021
 	public static String audioSearch;
