@@ -1414,7 +1414,7 @@ public class Production_Test_Regression_01 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 		base.passedStep(
 				"Verified that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.");
@@ -2824,7 +2824,7 @@ public class Production_Test_Regression_01 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		base.stepInfo("Export for priviledged doc in Tiff section is to generate");
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 		page = new ProductionPage(driver);
 		String text1 = page.getProdExport_ProductionSets().getText();
@@ -2847,7 +2847,7 @@ public class Production_Test_Regression_01 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		base.stepInfo("Export for priviledged doc in pdf section is to generate");
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
