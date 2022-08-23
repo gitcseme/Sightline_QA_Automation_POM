@@ -406,7 +406,7 @@ public class ProductionPage {
 	}
 
 	public Element getProductionDocCount() {
-		return driver.FindElementByXPath(".//*[@class='drk-gray-widget']/span[1]");
+		return driver.FindElementByXPath(".//*[@class='col-md-3']/div[2]/span[1]");
 	}
 
 	public Element getReviewproductionButton() {
@@ -13327,7 +13327,60 @@ public class ProductionPage {
 		return Doc;
 
 	}
+	public int fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload() throws InterruptedException {
 
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getVerifyGenStatus("Reserving Bates").isElementAvailable(150);
+		getbtnContinueGeneration().isElementAvailable(60);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		getDocumentGeneratetext().isElementAvailable(180);
+		base.stepInfo("wait until Document Generated Text is visible");
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+	
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		base.waitTime(1);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		
+
+		return Doc;
+
+	}
 	/**
 	 * @author:Aathith senthilkumar
 	 * @throws InterruptedException

@@ -136,7 +136,7 @@ public class Export_Regression1 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		driver.Navigate().refresh();
@@ -201,7 +201,7 @@ public class Export_Regression1 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		loginPage.logout();
 	}
 
@@ -247,7 +247,7 @@ public class Export_Regression1 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		loginPage.logout();
 	}
 
@@ -386,7 +386,7 @@ public class Export_Regression1 {
 			page.fillingExportLocationPage(productionname);
 			page.navigateToNextSection();
 			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 			loginPage.logout();
 			}
 	
@@ -441,7 +441,7 @@ public class Export_Regression1 {
 				page.fillingExportLocationPage(productionname);
 				page.navigateToNextSection();
 				page.fillingSummaryAndPreview();
-				page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+				page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 				loginPage.logout();
 				}
 				
@@ -598,7 +598,7 @@ public class Export_Regression1 {
 							page.fillingExportLocationPage(productionname);
 							page.navigateToNextSection();
 							page.fillingSummaryAndPreview();
-							page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+							page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 
 							this.driver.getWebDriver().get(Input.url + "Production/Home");
 							driver.Navigate().refresh();
@@ -624,7 +624,7 @@ public class Export_Regression1 {
                          *              file types for placeholdering a set of documents.(For Export).
                          * 
                          */
-                        @Test(description = "RPMXCON-48067", enabled = true, groups = { "regression" }, priority = 11)
+                        @Test(description = "RPMXCON-48067", enabled = true, groups = { "regression" })
                         public void verifyingPlaceholderTextInGeneratedFile() throws Exception {
 
                             base = new BaseClass(driver);
@@ -673,7 +673,7 @@ public class Export_Regression1 {
                             page.fillingExportLocationPage(productionname);
                             page.navigateToNextSection();
                             page.fillingSummaryAndPreview();
-                            page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+                            page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
                             page.getCopyPath().waitAndClick(10);
 
                             String actualCopedText = page.getCopiedTextFromClipBoard();
@@ -705,7 +705,7 @@ public class Export_Regression1 {
 						 *              Tags" on Production-Export-Generate Page.
 						 * 
 						 */
-						@Test(description = "RPMXCON-47977", enabled = true, groups = { "regression" }, priority = 16)
+						@Test(description = "RPMXCON-47977", enabled = true, groups = { "regression" })
 						public void verifyDocumentCountInMultipleBranding() throws Exception {
 
 							base = new BaseClass(driver);

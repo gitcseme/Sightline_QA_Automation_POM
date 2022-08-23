@@ -1852,7 +1852,7 @@ public class Production_Page_Regression {
 		page.fillingExportLocationPage(exportname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		baseClass.passedStep("Verified the name of load files should be used the name of the  Export");
 
 		// To delete tags and folders
