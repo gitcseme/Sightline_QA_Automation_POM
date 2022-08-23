@@ -81,7 +81,7 @@ public class TagsAndFolder_Regression {
 				"Verify that error message does not display and application accepts - when new Folder name entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > bulk Folder.");
 		sessionSearch = new SessionSearch(driver);
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
-		String foldername = "fol<>@#$%^" + Utility.dynamicNameAppender();
+		String foldername = "fol" + Utility.dynamicNameAppender();
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
