@@ -21343,23 +21343,21 @@ public class ProductionPage {
 	 * @throws AWTException
 	 * @throws InterruptedException
 	 */
+	/**
+	 * @author Indium-Sowndarya
+	 * @throws AWTException
+	 * @throws InterruptedException
+	 */
 	public void verifyCustomSort_Link() throws InterruptedException, AWTException {
 
 		base.waitForElement(getRadioBtn_CustomSort());
 		getRadioBtn_CustomSort().waitAndClick(10);
 		
+		getLink_CustomSort().ScrollTo();
 		base.waitForElement(getLink_CustomSort());
-		if (getLink_CustomSort().isDisplayed()) {
-			base.passedStep("Link to upload Excel is available");
-		}
-		else {
-			base.failedStep("No link is found");
-		}
+		getLink_CustomSort().isElementAvailable(10);
+		base.passedStep("Link to upload Excel is available");
 	}
-	
-
-
-
 	
 	/**
 	 * @author Sakthivel

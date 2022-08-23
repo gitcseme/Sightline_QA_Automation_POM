@@ -134,7 +134,7 @@ public class ConceptExplorerRegression_2_19 {
 	 * @throws Exception
 	 */
 
-	@Test(enabled = true, dataProvider = "paRmu", groups = { "regression" })
+	@Test(description="RPMXCON-56908",enabled = true, dataProvider = "paRmu", groups = { "regression" })
 	public void verifyConceptExpFiltersFunctionality(String User, String pwd) throws Exception {
 
 		baseClass.stepInfo("Test case Id :RPMXCON-56908 ");
