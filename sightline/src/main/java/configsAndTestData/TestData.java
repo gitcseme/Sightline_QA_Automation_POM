@@ -367,6 +367,7 @@ public class TestData {
     public String collsecondFirstName;
     public String collsecondlastName;
     public String totalRetrievedCount;
+    public String collectionFailedStatus;
 
     /**
 	 * @author : Gopinath Created date: 01-09-2021 Modified date: NA Modified

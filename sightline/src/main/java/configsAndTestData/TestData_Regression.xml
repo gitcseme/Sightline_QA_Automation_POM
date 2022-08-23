@@ -380,6 +380,7 @@
     <collsecondFirstName>Jeevitha</collsecondFirstName>
     <collsecondlastName>Rajendran</collsecondlastName>
     <totalRetrievedCount>Total Retrieved Count</totalRetrievedCount>
+    <collectionFailedStatus>Retrieve of datasets failed</collectionFailedStatus>
 
 	<!-- Added by Gopinath Created date - 23/09/2021 -->
 	<startTime>00:00:00</startTime>

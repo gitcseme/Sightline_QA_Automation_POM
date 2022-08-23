@@ -329,6 +329,11 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
+
+	public ElementCollection getAttributesOfSummaryTab() {
+		return driver.FindElementsByXPath("//div[@class='row rowPadding']//div[@class='col-md-3']");
+	}
+
 	public Element getHeaderBtn(String headerName) {
 		return driver.FindElementByXPath("//th[text()='" + headerName + "']");
 	}
@@ -1256,9 +1261,9 @@ public class CollectionPage {
 		String creationStatus = "0";
 
 		driver.waitForPageToBeReady();
-		if (selectCollFromList && getCollectionNameStatusElements(expectedStatus).size() > 0) {
-			String collectionId = dataName = getCollectionNameBasedOnStatusElements(expectedStatus, 1).getText();
-			dataName = getCollectionNameBasedOnStatusElements(expectedStatus, 2).getText();
+		if (selectCollFromList && getCollectionNameStatus(expectedStatus).size() > 0) {
+			String collectionId = dataName = getCollectionNameBasedOnStatus(expectedStatus, 1).getText();
+			dataName = getCollectionNameBasedOnStatus(expectedStatus, 2).getText();
 			colllectionData.put(dataName, collectionId);
 		} else {
 			creationStatus = "1";
@@ -2328,4 +2333,43 @@ public class CollectionPage {
 		}
 
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify summary and start Tab attributes
+	 */
+	public void verifySummaryAndStartAttributes() {
+
+		String[] expectedAttri = { "Collection ID:", "Destination Path:", "Source Location:", "Initiate Processing:",
+				"Collection Name:" };
+		List<String> attributes = base.getAvailableListofElements(getAttributesOfSummaryTab());
+
+		String passMsg = "Attributes from Collection Information is : " + attributes;
+		String failMsg = "Attributes are not as expected";
+		base.compareArraywithDataList(expectedAttri, attributes, true, passMsg, failMsg);
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description :verify bull horn notification
+	 * @param initialBg
+	 * @param expctedNotify
+	 */
+	public void verifyNotification(int initialBg, int expectedBgCount, String expctedNotify) {
+		base.checkNotificationCount(initialBg, expectedBgCount);
+		int aftrBg = base.initialBgCount();
+		if (initialBg < aftrBg) {
+			base.passedStep("Recieved Notification");
+			base.getBullHornIcon().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			String notificationMsg = base.getFirstBackRoundTask().getText();
+			if (notificationMsg.contains(expctedNotify)) {
+				base.passedStep("Recieved Notification is : " + notificationMsg);
+			}
+		} else {
+			base.failedStep("Did Not Recieve Notification");
+		}
+		base.getBullHornIcon().waitAndClick(10);
+	}
+
 }
