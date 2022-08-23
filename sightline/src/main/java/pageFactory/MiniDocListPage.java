@@ -225,7 +225,8 @@ public class MiniDocListPage {
 	}
 
 	public Element getSearchHitsTitle() {
-		return driver.FindElementByXPath("//h3[@class='remark-title' and text()='Search Hits:']");
+		//return driver.FindElementByXPath("//h3[@class='remark-title' and text()='Search Hits:']");
+		return driver.FindElementByXPath("//*[@id='divPersistentSearch']/div/div[5]/p");
 	}
 
 	public ElementCollection getChildWindowDocList() {
@@ -2106,15 +2107,17 @@ public class MiniDocListPage {
 		docViewPage.getGearIcon().waitAndClick(10);
 		baseClass.waitForElement(getDocView_MiniDoclistChildWindow());
 		getDocView_MiniDoclistChildWindow().waitAndClick(5);
+		baseClass.waitTime(10);
 		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
 		for (String eachId : allWindowsId) {
 			if (!parentWindowID.equals(eachId)) {
 				driver.switchTo().window(eachId);
 			}
 		}
-		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
 		baseClass.waitForElement(getDocView_ConfigMinidoclist());
 		getDocView_ConfigMinidoclist().waitAndClick(5);
+		baseClass.waitTime(10);
 		driver.switchTo().window(parentWindowID);
 
 	}
@@ -2190,8 +2193,8 @@ public class MiniDocListPage {
 
 		baseClass.waitForElement(getMiniDocListConfirmationButton("Save"));
 		getMiniDocListConfirmationButton("Save").waitAndClick(5);
-		driver.waitForPageToBeReady();
-		Thread.sleep(5000);
+
+	    baseClass.waitTime(5);
 
 		for (int i = 1; i <= 3; i++) {
 			String name = docIDlist.get(i);
@@ -2203,7 +2206,7 @@ public class MiniDocListPage {
 			System.out.println(currentSelectionIconFromDocumentList);
 
 			// Click on History Button
-			getHistoryBtn().waitAndClick(2);
+			getHistoryBtn().waitAndClick(5);
 			checkCurrentSelectionImapctinHistory(name);
 
 			String currentSelectionIconFromHistoryDD = getCurrentSelectionIconFromHistoryDD(name).GetAttribute("class");
@@ -3725,6 +3728,7 @@ public class MiniDocListPage {
 		driver.waitForPageToBeReady();
 		int sizeofList = getListofDocIDinCW().size();
 		System.out.println("Size : " + sizeofList);
+		driver.Navigate().refresh();
 		docIDlist = availableListofElements(getListofDocIDinCW());
 		for (int i = 0; i < 1; i++) {
 			String name = docIDlist.get(i);
@@ -3821,6 +3825,7 @@ public class MiniDocListPage {
 		docViewPage.switchToNewWindow(2);
 		int sizeofList = getListofDocIDinCW().size();
 		System.out.println("Size : " + sizeofList);
+		driver.Navigate().refresh();
 		docIDlist = availableListofElements(getListofDocIDinCW());
 		for (int i = 0; i < 1; i++) {
 			String name = docIDlist.get(i);
@@ -3872,12 +3877,14 @@ public class MiniDocListPage {
 		baseClass.waitForElement(docViewPage.getFirstDocIdOnMiniDocList());
 		int sizeofList = getListofDocIDinCW().size();
 		System.out.println("Size : " + sizeofList);
+		driver.Navigate().refresh();
 		docIDlist = availableListofElements(getListofDocIDinCW());
 		for (int i = 0; i < 1; i++) {
 			String name = docIDlist.get(i);
 			getDociD(name).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			docViewPage.switchToNewWindow(1);
+			driver.waitForPageToBeReady();
 			docViewPage.editCodingFormComplete();
 			System.out.println("Completed Document ");
 			baseClass.stepInfo("Completed Document ");
