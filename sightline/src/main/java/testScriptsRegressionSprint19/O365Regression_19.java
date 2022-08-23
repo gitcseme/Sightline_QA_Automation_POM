@@ -1590,11 +1590,11 @@ public class O365Regression_19 {
 	 *              on "Collections Details Pop up" screen (Grid).
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-63869", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-61657", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
 	public void verifyColumnNameTotalRetrievedCountInCollectionsDetailsPopUp(String username, String password,
 			String fullname) throws Exception {
 
-		base.stepInfo("Test case Id: RPMXCON-63869 - O365");
+		base.stepInfo("Test case Id: RPMXCON-61657 - O365");
 		base.stepInfo(
 				"Verify that column name 'Total Retrieved Count' is available on 'Collections Details Pop up' screen (Grid).");
 
