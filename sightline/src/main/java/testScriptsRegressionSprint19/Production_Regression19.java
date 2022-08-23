@@ -457,7 +457,7 @@ public class Production_Regression19 {
 			page.fillingProductionLocationPageAndPassingText(productionname);
 			page.navigateToNextSection();
 			page.fillingSummaryAndPreview();
-			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			page.fillingGeneratePageWithContinueGenerationPopup();
 
 			tagsAndFolderPage = new TagsAndFoldersPage(driver);
 			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);

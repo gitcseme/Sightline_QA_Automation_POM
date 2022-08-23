@@ -286,7 +286,6 @@ public class Production_Regression19_01 {
 		page.getbtnProductionGenerate().isElementAvailable(5);
 		page.getbtnProductionGenerate().Click();
 		page.verifyProductionStatusInGenPage("Draft");
-		page.visibleCheck(productionname1);
 		page.verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
 		page.getbtnContinueGeneration().isElementAvailable(10);
 		if (page.getbtnContinueGeneration().isDisplayed()) {
@@ -297,6 +296,8 @@ public class Production_Regression19_01 {
 		page.getQC_backbutton().waitAndClick(2);
 		page.verifyProductionStatusInGenPage("Post-Generation QC checks Complete");
 		base.ValidateElement_Presence(page.getRegenerateBtn(), "Regenerate Button");
+		driver.waitForPageToBeReady();
+		page.visibleCheck(productionname1);
 
 		loginPage.logout();
 	}
@@ -414,6 +415,7 @@ public class Production_Regression19_01 {
 		driver.scrollPageToTop();
 		page.getMarkCompleteLink().waitAndClick(2);
 		base.VerifySuccessMessage("Mark Complete successful");
+		base.waitTime(2);
 		String actualText = page.getBeginningBates().GetAttribute("value");
 		String actualTextInPrefix = page.gettxtBeginningBatesIDPrefix().GetAttribute("value");
 		base.textCompareEquals(actualText, beginningBates, "BatesNumber Retained on MarkComplete"," BatesNumber not Retained");
