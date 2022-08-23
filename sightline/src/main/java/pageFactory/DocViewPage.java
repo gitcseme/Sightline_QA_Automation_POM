@@ -3579,6 +3579,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id='divPersistentSearch']/div//p[text()='"+text+"']//following::i");
 	}
 	
+	//add by Aathith
+	public Element getMiniDocListData(int row, int col) {
+		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr["+row+"]//td["+col+"]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
