@@ -172,7 +172,16 @@ public class ProjectFieldsPage {
 	public Element getIsSearcHelpTxt() {
 		return driver.FindElementByXPath("//label[text()='Is Searchable :']//following::a//following::div[@class='popover-content']");
 	}
+	
+	//added by Arun
+	public Element getFieldStatus(String field,int column) {
+		return driver.FindElementByXPath("//td[@title='"+field+"']//following-sibling::td["+column+"]");
+	}
+	public Element getFieldCancelButton() {
+		return driver.FindElementById("btnProjectFieldAddCancel");
+	}
 
+	//
 	// Annotation Layer added successfully
 	public ProjectFieldsPage(Driver driver) {
 
@@ -674,5 +683,42 @@ public class ProjectFieldsPage {
 		}
 
 	}
-
+	
+	/**
+	 * @author: Arun Created Date: 22/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check values of the field is searchable and tallyable
+	 */
+	public void verifyFieldStatus(String field) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getFieldStatus(field,2));
+			String tallyStatus =getFieldStatus(field,2).getText().trim();
+			String searchStatus =getFieldStatus(field,3).getText().trim();
+			String activeStatus =getFieldStatus(field,4).getText().trim();
+			if(searchStatus.equalsIgnoreCase("True") && tallyStatus.equalsIgnoreCase("True")
+					&& activeStatus.equalsIgnoreCase("Active")) {
+				base.passedStep("Field is Tallyable,Searchable and Active by default");
+			}
+			else {
+				base.failedStep("Field is not Tallyable,Searchable and active by default");
+			}
+	}
+	/**
+	 * @author: Arun Created Date: 22/08/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check value of field classification for the field
+	 */
+	public void verifyFieldClassification(String field,String expected) {
+		base.waitForElement(getFieldNameEdititButton(field));
+		getFieldNameEdititButton(field).waitAndClick(5);
+		base.waitForElement(getFieldClassificationDropDown());
+		String value = getFieldClassificationDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		if(value.equalsIgnoreCase(expected)){
+			base.passedStep("Field classification for the '"+ field +"' is '"+value+"'");
+		}
+		else {
+			base.failedStep("default field classification type is not expected");
+		}
+		base.waitForElement(getFieldCancelButton());
+		getFieldCancelButton().waitAndClick(3);
+		
+	}
 }

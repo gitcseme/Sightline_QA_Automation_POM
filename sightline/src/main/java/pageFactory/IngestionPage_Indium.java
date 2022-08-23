@@ -10557,5 +10557,16 @@ public class IngestionPage_Indium {
 				}
 			}
 		}
+		
+		/**
+		 * @author: Arun Created Date: 22/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will return the ingestion name from ingestiondetail popup
+		 */
+		public String getIngestionNameFromPopup() {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIngestionDetailPopup(1));
+			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
+			return ingestionName;
+		}
 			   
 }
