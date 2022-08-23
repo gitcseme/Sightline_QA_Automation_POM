@@ -1474,9 +1474,6 @@ public class O365Regression_19 {
 		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, dataName, expectedCollectionStatus,
 				true, false, "");
 
-		// Initial Notification count
-		int Bgcount = base.initialBgCount();
-
 		// Execute / Start collection Verifications
 		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
 		collection.getCollectionsPageActionList(collectionID, "Start Collection").waitAndClick(5);
@@ -1489,6 +1486,10 @@ public class O365Regression_19 {
 
 		// Completed status check
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, dataName, statusList, 10);
+		driver.waitForPageToBeReady();
+
+		// Initial Notification count
+		int Bgcount = base.initialBgCount();
 
 		// Download Report
 		collection.clickDownloadReportLink(dataName, headerListDataSets, "Error Status", false, "");
@@ -1497,6 +1498,7 @@ public class O365Regression_19 {
 		// Check NotificationCount
 		base.checkNotificationCount(Bgcount, 1);
 		base.notificationSelection("", false);
+		base.waitTime(5);// for abnormal load time while downloading file
 
 		// Format validation
 		String fileName = base.GetLastModifiedFileName();
