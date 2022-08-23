@@ -3308,6 +3308,13 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//select[@id='"+Metadata+"']//option");
 	}
 
+	public Element getLockOption(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Lock']");
+	}
+	
+	public Element getNativePlaceHolderCloseBtn() {
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[text()='×']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21533,4 +21540,56 @@ public class ProductionPage {
 		}
         return text;
 	}
+	
+	
+	/**	
+	 * 
+	 * @author Brundha.T
+	 * @param ProductionName
+	 * Description:Selecting option In Production
+	 */
+	public void selectingOptionInProduction(String ProductionName) {
+		base.waitForElement(getDropDownToggle(ProductionName));
+		getDropDownToggle(ProductionName).waitAndClick(2);
+		base.waitForElement(getLockOption(ProductionName));
+		getLockOption(ProductionName).waitAndClick(2);
+	}
+	/**
+	 * @author Brundha.T
+	 * @Description:Lock the production
+	 */
+	public void verfyingBellyBandMsgAndLockProduction() {
+		driver.waitForPageToBeReady();
+		String ActualMsg=getErrorMsgPopupInDAT().getText();
+		String ExpectedMsg="Are You Sure You Want to Lock Production?";
+		base.textCompareEquals(ActualMsg, ExpectedMsg,"Message is displayed as expecetd", "Message is not displayed as expected");
+		getOkButton().Click();
+		base.VerifySuccessMessage("Production Lock Successfully.");
+		
+				
+	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param DatFile
+	 * @param value
+	 * @param value1
+	 * @param CompareString
+	 * @throws IOException Description:verifying downloaded dat file
+	 */
+	public void verifyingGeneratedDATFile(File DatFile, int value, int value1, String CompareString) throws IOException {
+		String line;
+		List<String> lines = new ArrayList<>();
+		BufferedReader brReader = new BufferedReader(new InputStreamReader(new FileInputStream(DatFile), "UTF16"));
+		while ((line = brReader.readLine()) != null) {
+			lines.add(line);}
+		driver.waitForPageToBeReady();
+		String[] arrOfStr = lines.get(value).split("þ");
+		String OutputDatValue = arrOfStr[value1];
+		if (CompareString.equals(OutputDatValue)) {
+			base.passedStep("" + CompareString + " is displayed in DAT File");
+		} else {
+			base.failedStep("" + CompareString + " is not displayed in DAT File");	}
+	}
+	
 }
