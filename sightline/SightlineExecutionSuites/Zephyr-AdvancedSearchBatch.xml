@@ -9,11 +9,11 @@
 <test name="Zephyr-AdvanceSearchBatch">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "testScriptsRegression.AdvancedSearch_Regression1" />
-<class name= "testScriptsRegression.AdvancedSearch_Regression2" />
-<class name= "testScriptsRegression.AdvancedSearch_Regression3" />
-<class name= "testScriptsRegression.AdvancedSearch_Regression4" />
-<class name= "testScriptsRegression.ModifySearchInAdvancedSearch_Regression" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression1" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression2" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression3" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression4" />
+<class name= "sightline.advancedSearch.ModifySearchInAdvancedSearch_Regression" />
 </classes>
 </test>
 
