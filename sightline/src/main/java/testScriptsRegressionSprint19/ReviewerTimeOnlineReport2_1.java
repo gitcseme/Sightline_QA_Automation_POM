@@ -77,7 +77,7 @@ public class ReviewerTimeOnlineReport2_1 {
 		String fromDate = userLoginActivityRptPg.getCurrentUtcTime();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assgnmntPg.SelectAssignmentByReviewer(assignmentName);
-		bc.waitTime(60); // This time is mandatory for this script to validate in time line reports validation
+		bc.waitTime(70); // This time is mandatory for this script to validate in time line reports validation
 		lp.logout();
 		String toDate = userLoginActivityRptPg.getCurrentUtcTime();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
