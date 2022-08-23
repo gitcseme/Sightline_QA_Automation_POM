@@ -9977,8 +9977,12 @@ public class AssignmentsPage {
 	 * 
 	 */
 	public void SelectCodingform(String CFName) {
-		
+		try {
 		getSelectSortCodingForm_Tab().ScrollTo();
+		}
+		catch(Exception e) {
+			
+		}
 		getSelectSortCodingForm_Tab().waitAndClick(10);
 
 
