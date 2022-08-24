@@ -168,13 +168,7 @@ public class DocView_Redactions_Regression5 {
 		docView.verifyDisplaysTheDefaultPdfInDocView();
 		docView.verifyCorrespondingTextIsHighlightedOnDocs(text);
 	}
-	
-	/**
-	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
-	 * comments entered with < > * ; ‘ / ( ) # & from DocView
-	 * 
-	 */
+
 	/**
 	 * Author :Krishna date: 3/08/2022 Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-65057 Verify that error message should be displayed when document
@@ -186,7 +180,7 @@ public class DocView_Redactions_Regression5 {
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-65057");
 		baseClass.stepInfo(
-				"Verify that error message should be displayed when document comments entered with < > * ; ‘ / ( ) # & from DocView");
+				"Verify that error message does not display and application accepts - when document comments entered with  < > * ; ‘ / ( ) # & ”  from DocView");
 		DocViewPage docView = new DocViewPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
@@ -207,9 +201,10 @@ public class DocView_Redactions_Regression5 {
 		docView.getDocView_CodingFormlist().waitAndClick(5);
 		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.editCodingForm(Specialchar);
-		docView.getCodingFormSaveThisForm().waitAndClick(3);
 		baseClass.stepInfo("edit codingform and Clicked save button");
-		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+		docView.getCodingFormSaveThisForm().waitAndClick(3);
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
 		driver.Navigate().refresh();
 		baseClass.handleAlert();
 		driver.Navigate().refresh();
@@ -218,9 +213,10 @@ public class DocView_Redactions_Regression5 {
 		docView.getDocView_CodingFormlist().waitAndClick(5);
 		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.editCodingForm(Specialchar);
-		docView.getSaveAndNextButton().waitAndClick(3);
 		baseClass.stepInfo("edit codingform and clicked save and next button");
-		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+		docView.getSaveAndNextButton().waitAndClick(3);
+		baseClass.VerifySuccessMessage("Applied coding saved successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
 		loginPage.logout();
 
 		// Create assignment and go to docview
@@ -234,10 +230,12 @@ public class DocView_Redactions_Regression5 {
 		assignmentsPage.SelectAssignmentByReviewer(assname);
 		driver.waitForPageToBeReady();
 		docView.editCodingForm(Specialchar);
-		docView.getCompleteDocBtn().waitAndClick(2);
 		baseClass.stepInfo("edit codingform and clicked completed button");
-		baseClass.VerifyErrorMessage("Special characters are not allowed. Prohibited characters include <>*;`/()#&");
+		docView.getCompleteDocBtn().waitAndClick(2);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Error message is NOT displayed document comments entered with Special character");
 
 	}
+
 
 }
