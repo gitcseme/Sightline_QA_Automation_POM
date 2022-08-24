@@ -897,6 +897,41 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getLastPageGridView() {
+		return driver.FindElementByXPath("(//div[@id='ProductionListGridViewTable_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	public Element getPageNumGridView(int num) {
+		return driver.FindElementByXPath(
+				"//div[@id='ProductionListGridViewTable_paginate']//li[@class='paginate_button ']//a[text()='" + num
+						+ "']");
+	}
+	
+	public ElementCollection getProdCrtDateGridView() {
+		return driver.FindElementsByXPath("//table[@id='ProductionListGridViewTable']//tbody//tr//td[9]");
+	}
+	public Element getProdSortCrtDateGridView() {
+		return driver.FindElementByXPath("//thead//tr//th[@class='sorting' and text()='Date Created']");
+	}
+	public Element getProdPaginationNext() {
+		return driver.FindElementByXPath("//li[@id='ProductionListGridViewTable_next']//a");
+	}
+	
+	public Element getProdEntriesLabel() {
+		return driver.FindElementByXPath("//div[@id='ProductionListGridViewTable_info']//span[2]");
+	}
+	
+	public Element getLoadFilePath() {
+		return driver.FindElementByXPath("//input[@id='ProductionOutputLocation_ShouldIncludeDrive']/..//i");
+	}
+	
+	public Element getCopyPathUrl() {
+		return driver.FindElementByXPath("//input[@id='ProductionDestinationPath']");
+	}
+	
+	public Element getDefRadioinNativeTab() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span[contains(text(),'Families of Privileged and Redacted Documents')]//parent::label//input");
+	}
+	
 	public Element getSelectMultiFileTypeInTifffNative(int no, String fileType) {
 		return driver.FindElementByXPath("(//select[@name='TIFFFileTypesList']/option[contains(text(),'"+fileType+"')])["+ no +"]");
 	}
