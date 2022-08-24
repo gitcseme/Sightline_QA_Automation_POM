@@ -149,6 +149,7 @@ public class DocViewAudio_Regression01 {
 		
 		//Click On redaction tag for the selected audio docs
 		docviewPage.audioRedactionUsingAudioRange(Input.defaultRedactionTag, 1, 2);
+		base.passedStep("'Default Redaction Tag' is saved for the redaction successfully");
 		
 		//logout
 		login.logout();
@@ -169,7 +170,7 @@ public class DocViewAudio_Regression01 {
 
 		// Click On redaction tag for the selected audio docs
 		docviewPage.audioRedactionUsingAudioRange(Input.defaultRedactionTag, 1, 2);
-
+		base.passedStep("'Default Redaction Tag' is saved for the redaction successfully");
 		// logout
 		login.logout();
 		
