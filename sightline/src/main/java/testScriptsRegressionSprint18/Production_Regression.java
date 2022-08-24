@@ -252,8 +252,9 @@ public class Production_Regression {
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		page.getDATChkBox().Click();
-		page.getDATTab().Click();
+		page.getDATChkBox().waitAndClick(10);
+		page.getDATTab().waitAndClick(10);
+		base.waitForElement(page.getDAT_FieldClassification1());
 		page.getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Email");
 		if (page.getDAT_SourceField1().Displayed()) {
 			page.emailAuthorNameAddress().isElementAvailable(2);
@@ -364,7 +365,6 @@ public class Production_Regression {
 	@Test(description = "RPMXCON-48498", enabled = true, groups = { "regression" })
 	public void verifySelectedTags_MarkIncomplete() throws Exception {
 
-		BaseClass base=new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-48498 Production Component Sprint 18");
 		base.stepInfo(
@@ -380,12 +380,12 @@ public class Production_Regression {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.fillingNativeSectionWithTags(tagname);
-		page.getComponentsMarkComplete().waitAndClick(10);
-		base.CloseSuccessMsgpopup();
-		page.getMarkInCompleteBtn().waitAndClick(10);
+		page.clickComponentMarkCompleteAndIncomplete();
+		base.waitForElement(page.getNativeTab());
 		page.getNativeTab().waitAndClick(10);
 		base.waitForElement(page.getNativeSelectTags());
 		page.getNativeSelectTags().waitAndClick(10);
+		page.getNativeCheckBox(tagname).ScrollTo();
 		base.waitForElement(page.getNativeCheckBox(tagname));
 		driver.waitForPageToBeReady();
 		page.getNativeCheckBox(tagname).GetAttribute("class").contains("clicked");
