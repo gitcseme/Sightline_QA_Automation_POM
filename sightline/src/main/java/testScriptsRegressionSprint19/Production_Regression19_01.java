@@ -100,7 +100,7 @@ public class Production_Regression19_01 {
 		driver.scrollingToElementofAPage(page.getNativeDocsPlaceholderText());
 		page.getNativeDocsPlaceholderText().SendKeys(Input.searchString4);
 		page.navigateToNextSection();
-		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
