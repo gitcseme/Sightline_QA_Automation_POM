@@ -66,6 +66,7 @@ public class UserLoginActivityReport_Regression2_4 {
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		driver.waitForPageToBeReady();
 		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		bc.waitTime(3);
 		userLoginActivityRptPg.selectLoginActivities("Login History");
 		userLoginActivityRptPg.selectAllUsers();
 		String today = userLoginActivityRptPg.getCurrentDate();
