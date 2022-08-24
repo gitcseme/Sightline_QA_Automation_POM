@@ -10581,5 +10581,41 @@ public class IngestionPage_Indium {
 			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 			return ingestionName;
 		}
+		
+		/**
+		 * @author: Arun Created Date: 24/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the concatenated values in doclist
+		 */
+		
+		public void verifyConcatenatedEmailValueDisplayed(String[] values) {
+			docList = new DocListPage(driver);
+			docList.SelectColumnDisplayByRemovingAddNewValues(values);
+			driver.waitForPageToBeReady();
+			for(int i=1;i<=10;i++) {
+				String field1 =docList.getDataInDoclist(i,4).getText();
+				String field2 =docList.getDataInDoclist(i,5).getText();
+				String field3 =docList.getDataInDoclist(i,6).getText(); 
+				if(!field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
+					base.passedStep("values displayed in selected columns");
+					String concatenatedValue =field2+"(".concat(field1)+")";
+					if(field3.equalsIgnoreCase(concatenatedValue)) {
+						base.passedStep("Concatenated email value displayed correctly");
+					}
+					else {
+						base.failedStep("Concatenated email value not displayed correctly");
+					}
+					break;
+				}
+				else if(field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
+					if(field3.contains(field2)) {
+						base.passedStep("Concatenated email value displayed correctly");
+					}
+					else {
+						base.failedStep("Concatenated email value not displayed correctly");
+					}
+					break;
+				}
+			}	
+		}
 			   
 }

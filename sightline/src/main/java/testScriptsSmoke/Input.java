@@ -404,6 +404,9 @@ public class Input {
 	public static String fieldMappingWarningMessage;
 	public static String datFileASCII;
 	public static String datFile5;
+	public static String datLoadFile4;
+	public static String nativeLoadFile3;
+	public static String textLoadFile3;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1340,7 +1343,11 @@ public class Input {
 		fieldMappingWarningMessage = testData.getFieldMappingWarningMessage();
 		datFileASCII = testData.getDatFileASCII();
 		datFile5 = testData.getDatFile5();
-
+		datLoadFile4 = testData.getDatLoadFile4();
+		nativeLoadFile3 = testData.getNativeLoadFile3();
+		textLoadFile3 = testData.getTextLoadFile3();
+		
+		
 		// Added by Raghuram 02/24/22
 		docSelectionHighlight = testData.getDocSelectionHighlight();
 		docHighlightColor = testData.getDocHighlightColor();

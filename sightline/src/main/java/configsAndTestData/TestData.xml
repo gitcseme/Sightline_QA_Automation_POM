@@ -98,6 +98,9 @@
 	<fieldMappingWarningMessage>Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?</fieldMappingWarningMessage>
 	<datFileASCII>ascii dat.dat</datFileASCII>
 	<datFile5>AllFieldsMapping_DAT_SourceDocID - UTF16.DAT</datFile5>
+	<datLoadFile4>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datLoadFile4>
+	<nativeLoadFile3>DAT4_STC_NativesEmailData.lst</nativeLoadFile3>
+	<textLoadFile3>DAT4_STC_TextEmailData.lst</textLoadFile3>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
