@@ -9438,7 +9438,8 @@ public class AssignmentsPage {
 				System.out.println(ELementName + " : Toggle is Already Enabled ");
 				bc.stepInfo(ELementName + " : Toggle is Already Enabled ");
 				if (ELementName.equalsIgnoreCase("Draw From Pool")) {
-					getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+					bc.waitForElement(getAssgnGrp_Create_DrawPoolCount());
+					getAssgnGrp_Create_DrawPoolCount().SendKeys(Integer.toString(20));
 				}
 
 			} else if (keepFMToggleStatus.equals(Input.TextEmpty) || keepFMToggleStatus.equalsIgnoreCase("false")) {
