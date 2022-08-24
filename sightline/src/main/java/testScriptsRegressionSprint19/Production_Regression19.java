@@ -242,7 +242,7 @@ public class Production_Regression19 {
 		 **/
 
 		@Test(description = "RPMXCON-47818", enabled = true, groups = { "regression" })
-		public void verifyRedactedDocumentCountInPrivGuard() throws Exception {
+		public void AsverifyRedactedDocumentCountInPrivGuard() throws Exception {
 
 			base.stepInfo("Test case Id:RPMXCON-47818- Production Component");
 			base.stepInfo(
@@ -267,7 +267,7 @@ public class Production_Regression19 {
 			redactionpage.manageRedactionTagsPage(Redactiontag1);
 
 			SessionSearch sessionSearch = new SessionSearch(driver);
-			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.basicContentSearch(Input.testData1);
 			sessionSearch.bulkFolderExisting(foldername);
 			sessionSearch.ViewInDocViewWithoutPureHit();
 
@@ -275,7 +275,7 @@ public class Production_Regression19 {
 			DocViewPage docView = new DocViewPage(driver);
 			docView.documentSelection(Doc);
 			driver.waitForPageToBeReady();
-			docViewRedactions.redactRectangleUsingOffset(10, 10, 50, 20);
+			docViewRedactions.redactRectangleUsingOffset(10, 10,40, 20);
 			driver.waitForPageToBeReady();
 			docViewRedactions.selectingRedactionTag2(Redactiontag1);
 
