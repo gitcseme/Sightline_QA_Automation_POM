@@ -145,7 +145,7 @@ public class DashBoard_Regression {
 			String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 			String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
 			String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName,Input.rev1FullName,Input.da1FullName};
-            String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),Input.rev1FullName.toUpperCase(),Input.da1FullName.toUpperCase()};
+            String[] reviewers = {"PRODUCTION", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),Input.rev1FullName.toUpperCase(),Input.da1FullName.toUpperCase(), "SPECIFIC REVIEWERS"};
 
 			sessionsearch.basicContentSearch(Input.testData1);
 			baseClass.stepInfo("Search for text input completed");
@@ -163,7 +163,8 @@ public class DashBoard_Regression {
 
 			baseClass.waitForElementCollection(dashBoard.listOfReviewers());
 			int size = dashBoard.listOfReviewers().size();
-
+			System.out.println(size);
+			baseClass.waitForElementCollection(dashBoard.listOfReviewers());
 			List<String> availableListofElements = baseClass.availableListofElements(dashBoard.listOfReviewers());
 			String passMsg = "Reviewers list should include associated PAU, RMU to the project";
 			String failMsg = "Reviewers list is not displayed with assigned reviewers";
@@ -207,7 +208,7 @@ public class DashBoard_Regression {
 			String assignmentName = "Assignment" + Utility.dynamicNameAppender();
 			String SaveSearchName = "NewSearch" + UtilityLog.dynamicNameAppender();
 			String[] listOfReviewers = { Input.pa1FullName, Input.rmu1FullName, Input.rev1FullName, Input.da1FullName };
-			String[] reviewers = { "SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),
+			String[] reviewers = { "PRODUCTION","SPECIFIC REVIEWERS", Input.pa1FullName.toUpperCase(), Input.rmu1FullName.toUpperCase(),
 					Input.rev1FullName.toUpperCase(), Input.da1FullName.toUpperCase() };
 
 			sessionsearch.basicContentSearch(Input.testData1);
@@ -217,6 +218,7 @@ public class DashBoard_Regression {
 			sessionsearch.bulkAssign();
 			// create Assignment and disturbute docs
 			agnmt.assignmentCreation(assignmentName, Input.codeFormName);
+			driver.waitForPageToBeReady();
 			agnmt.add4ReviewerAndDistribute();
 			baseClass.stepInfo(assignmentName + " Assignment Created and distributed to DA/PA/RMU/Rev");
 

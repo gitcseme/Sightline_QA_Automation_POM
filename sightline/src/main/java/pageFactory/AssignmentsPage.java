@@ -9305,7 +9305,7 @@ public class AssignmentsPage {
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
 		getSelectUserInDistributeTabsDA().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
+//		bc.CloseSuccessMsgpopup();
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
