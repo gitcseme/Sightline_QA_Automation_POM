@@ -75,7 +75,11 @@ public class Assignment_Regression2 {
 		agnmt.getAssignmentSaveButton().waitAndClick(5);
 		bc.stepInfo("Created assignment with name" + assignmentName);
 		bc.selectproject();
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch(Input.searchString2);
+		search.bulkAssignNearDupeDocuments();
+		search.bulkAssign_withoutshoppingCartAdd(assignmentName);
+		bc.selectproject();
+		search.basicContentSearch("this");
 		search.bulkAssignNearDupeDocuments();
 		search.bulkAssign_withoutshoppingCartAdd(assignmentName);
 		bc.selectproject();
@@ -380,6 +384,7 @@ public class Assignment_Regression2 {
 		agnmt.verifyColorBands(assignmentName, "Un Completed");
 		agnmt.completeDistributesDocsByReviewer(assignmentName);
 		bc.selectproject();
+		driver.waitForPageToBeReady();
 		agnmt.verifyColorBands(assignmentName, "Completed");
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
