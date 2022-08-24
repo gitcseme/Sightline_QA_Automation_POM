@@ -3873,10 +3873,12 @@ public class CodingForm {
 	 * @Description : this method used to click the add coding form button
 	 */
 //	Reusable method for passing coding form name
-	public void passingCodingFormName(String cfName) {
+	public String passingCodingFormName(String cfName) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getCodingFormName());
 		getCodingFormName().SendKeys(cfName);
+		String name=getCodingFormName().GetAttribute("value");
+		return name;
 	}
 
 	/**
@@ -5153,11 +5155,8 @@ public void makingDefaultCfToSg(String CFName) {
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
 		assgnpage.sortOrderNxtBtn().ScrollTo();
-		assgnpage.sortOrderNxtBtn().Click();
-		base.waitForElement(getStep2CfPopUp());
-		boolean flagPopup2=getStep2CfPopUp().isElementAvailable(2);
-		softAssertion.assertTrue(flagPopup2);
-		base.stepInfo("Step 02: Sort Coding Form Order");
+		sortOrderNxtBtn().waitAndClick(5);
+		base.stepInfo("Step 02: Coding Form Order");
 		if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
 			assgnpage.sortCodeFormOrderSaveBtn().Click();
 			base.waitTime(2);
@@ -5247,7 +5246,7 @@ public List<String> configureBelow15Cf(String CFName) {
 		 }
 		 base.waitTime(2);
 		 int recount=getCfChecBoxUsingSize().size();
-		 for (int i = 1; i < recount; i++) {
+		 for (int i = 0; i < recount-1; i++) {
 			List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
 			if (i==15) {
