@@ -1,11 +1,15 @@
 package pageFactory;
 
 import java.awt.Robot;
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Dimension;
@@ -2691,8 +2695,9 @@ public class DocExplorerPage {
 					"Arror button is   displayed for the folder '" + folder + "' which is not having sub folders");
 		}
 	}
-
-	public void docExloerExportData(String fullName, String emailname) throws Exception {
+	
+	
+	public void docExloerExportData(String fullName,String emailname) throws Exception {
 
 		bc = new BaseClass(driver);
 		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
@@ -2731,9 +2736,6 @@ public class DocExplorerPage {
 
 		bc.waitForElement(getExportShareEmail());
 		getExportShareEmail().SendKeys(emailname);
-
-		bc.waitForElement(getExportSumbitBtn());
-		getExportSumbitBtn().waitAndClick(5);
 
 	}
 

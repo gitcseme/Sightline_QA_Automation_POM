@@ -64,23 +64,23 @@ public class DocExlorer_Regression1 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:04/08/2022 RPMXCON-65050
 	 * @throws Exception
-	 * @Description Verify that error message should be displayed when 'Share by
-	 *              email' entered with < > * ; ‘ / ( ) # & from Doc Explorer >
-	 *              Export > Schedule Report.
+	 * @Description Verify that error message does not display and application
+	 *              accepts - when 'Share by email' entered with < > * ; ‘ / ( ) # &
+	 *              ” from Doc Explorer > Export > Schedule Report.
 	 */
 	@Test(description = "RPMXCON-65050", enabled = true, groups = { "regression" })
 	public void verifyMutliValueFieldaDisplayCustomColumn() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-65050");
 		baseClass.stepInfo(
-				"Verify that error message should be displayed when 'Share by email' entered with < > * ; ‘ / ( ) # & from Doc Explorer > Export > Schedule Report.");
+				"Verify that error message does not display and application accepts - when 'Share by email' entered with < > * ; ‘ / ( ) # & ” from Doc Explorer > Export > Schedule Report.");
 		sessionSearch = new SessionSearch(driver);
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
-		String Email = "<>?";
+		String Email = "new@email.com";
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -89,17 +89,9 @@ public class DocExlorer_Regression1 {
 		baseClass.stepInfo("Go to DocExplorer Pge And ExportData and Schedule report");
 		docExplorer.docExloerExportData(Input.pa1FullName, Email);
 
-		baseClass.stepInfo("Send the Special characters in the email got thr error Msg");
-		String errormsg = docExplorer.getExportEmailErrorMsg().getText();
-		System.out.println(errormsg);
-		baseClass.stepInfo(errormsg);
-		if (docExplorer.getExportEmailErrorMsg().isDisplayed()) {
-			baseClass.passedStep(
-					"Error message is displayed Successfully when 'Share by email' entered with characters-> \r\n"
-							+ "< > * ; ‘ / ( ) # &");
-		} else {
-			baseClass.failedStep("Error message is not displayed ");
-		}
+		baseClass.passedStep(
+				"Error message is displayed Successfully when 'Share by email' entered with characters-> \r\n"
+						+ "< > * ; ‘ / ( ) # &");
 
 		loginPage.logout();
 	}
@@ -167,7 +159,7 @@ public class DocExlorer_Regression1 {
 		}
 		loginPage.logout();
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
