@@ -285,6 +285,9 @@ public class TestData {
 	public String fieldMappingWarningMessage;
 	public String datFileASCII;
 	public String datFile5;
+	public String datLoadFile4;
+	public String nativeLoadFile3;
+	public String textLoadFile3;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
