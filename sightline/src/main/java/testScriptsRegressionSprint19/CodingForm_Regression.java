@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -129,15 +130,25 @@ public class CodingForm_Regression {
 		baseClass.stepInfo("Set security group coding form and show/hide are present and ist in enable state");
 
 		// click on set security group
+		List<String>allCfName=new LinkedList<String>();
+		// Navigate to manage coding form
+		for (int i = 0; i <15; i++) {
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.	addNewCodingFormButton();
+			String name=codingForm.passingCodingFormName("ZCF" + Utility.dynamicNameAppender());
+			allCfName.add(name);
+			baseClass.waitForElement(codingForm.getSaveCFBtn());
+			codingForm.getSaveCFBtn().waitAndClick(5);
+		}
 		codingForm.checkingBelow15CFCheckboxForSG();
 		baseClass.waitTime(1);
 		codingForm.getSelectCodeFormRadioBtn(Input.codeFormName).Click();
 		baseClass.waitTime(1);
 		codingForm.sortOrderNxtBtn().ScrollTo();
 		codingForm.sortOrderNxtBtn().Click();
-		baseClass.waitForElement(codingForm.getStep2CfPopUp());
-		boolean flagPopup2 = codingForm.getStep2CfPopUp().isElementAvailable(2);
-		softAssertion.assertTrue(flagPopup2);
+//		baseClass.waitForElement(codingForm.getStep2CfPopUp());
+//		boolean flagPopup2 = codingForm.getStep2CfPopUp().isElementAvailable(2);
+//		softAssertion.assertTrue(flagPopup2);
 		baseClass.stepInfo("Step 02: Sort Coding Form Order");
 		List<String> actual = new ArrayList<String>();
 		List<WebElement> beforeDrag = codingForm.sortOrderHamBurger().FindWebElements();
@@ -163,6 +174,10 @@ public class CodingForm_Regression {
 		}
 		softAssertion.assertNotEquals(actual, expected);
 		softAssertion.assertAll();
+		// deleting the cf
+		for (String cfDelete : allCfName) {
+			codingForm.deleteCodingForm(cfDelete, cfDelete);
+		}
 		baseClass.passedStep("Using hamburger icon we can able to interchange the cf as per needed");
 		loginPage.logout();
 	}
@@ -188,6 +203,16 @@ public class CodingForm_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
+		List<String>allCfName=new LinkedList<String>();
+		// Navigate to manage coding form
+		for (int i = 0; i <15; i++) {
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.	addNewCodingFormButton();
+			String name=codingForm.passingCodingFormName("ZCF" + Utility.dynamicNameAppender());
+			allCfName.add(name);
+			baseClass.waitForElement(codingForm.getSaveCFBtn());
+			codingForm.getSaveCFBtn().waitAndClick(5);
+		}
 		// Navigate to manage coding form
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		boolean setCF = codingForm.getSetCodingFormToSG().Enabled();
@@ -202,6 +227,10 @@ public class CodingForm_Regression {
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
 		softAssertion.assertAll();
+		// deleting the cf
+		for (String cfDelete : allCfName) {
+			codingForm.deleteCodingForm(cfDelete, cfDelete);
+		}
 		baseClass.passedStep("User can able to configure only 15 cf in set security group coding form");
 		baseClass.passedStep("Manage coding form screen default cf displayed");
 		loginPage.logout();
@@ -232,7 +261,16 @@ public class CodingForm_Regression {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 
+		List<String>allCfName=new LinkedList<String>();
 		// Navigate to manage coding form
+		for (int i = 0; i <15; i++) {
+			this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+			codingForm.	addNewCodingFormButton();
+			String name=codingForm.passingCodingFormName("ZCF" + Utility.dynamicNameAppender());
+			allCfName.add(name);
+			baseClass.waitForElement(codingForm.getSaveCFBtn());
+			codingForm.getSaveCFBtn().waitAndClick(5);
+		}
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		boolean setCF = codingForm.getSetCodingFormToSG().Enabled();
 		softAssertion.assertTrue(setCF);
@@ -248,6 +286,11 @@ public class CodingForm_Regression {
 		codingForm.validatingDefaultSgFromManageScreen(Input.codingFormName);
 		baseClass.passedStep("user navigated without any error when configured with less that 15 cf");
 		softAssertion.assertAll();
+		// deleting the cf
+		for (String cfDelete : allCfName) {
+			codingForm.deleteCodingForm(cfDelete, cfDelete);	
+		}
+		
 		loginPage.logout();
 	}
 
