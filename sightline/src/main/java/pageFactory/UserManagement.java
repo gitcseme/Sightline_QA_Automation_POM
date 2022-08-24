@@ -3974,8 +3974,11 @@ public class UserManagement {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 		bc.waitTime(3);
-//		int count = ((getAssgnPaginationCount().size()) - 2);
-		String lastPageNum = getLastPageNum().getText();
+		String lastPageNum = "1";
+//        int count = ((getAssgnPaginationCount().size()) - 2);
+		if (getLastPageNum().isElementAvailable(8)) {
+			lastPageNum = getLastPageNum().getText();
+		}
 		int count = Integer.parseInt(lastPageNum);
 		for (int i = 0; i < count; i++) {
 			driver.waitForPageToBeReady();
