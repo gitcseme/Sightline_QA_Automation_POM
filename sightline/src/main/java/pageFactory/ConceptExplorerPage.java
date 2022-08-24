@@ -1207,5 +1207,34 @@ public class ConceptExplorerPage {
 					"Applied Active Filters not Retained");
 		return activeFilters;
 	}
+/**
+ * @author Jayanthi.Ganesan
+ * @param limitCheck  [iteration to be checked in for loop]
+ * @param docCount[total direct sub clusters count]
+ * @param tileCountToSelect[no of tile to be selected]
+ */
+	public void tileSelctionAnalyze_BasedChildCount(int limitCheck, int docCount, int tileCountToSelect) {
+		// Verify child count
+		String clusterID = null;
+		int tileSelected = 0;
+		for (int k = 1; k <= limitCheck; k++) {
+			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
+			if (clusterCount > docCount) {
+				tileSelected = tileSelected+1;
+				 hoverOnSpecificConcepTualMapReturnText(k);
+				// Cluster ID
+				clusterID = getClusterID(false, 1, limitCheck);
+				base.stepInfo("Cluster Id : " + clusterID);
+
+				int tCid = Integer.parseInt(clusterID);
+				getTileToSelect(tCid).waitAndClick(5);
+				driver.waitForPageToBeReady();
+				if (tileCountToSelect == tileSelected) {
+					break;
+				}
+			}
+		}
+	
+	}
 
 }
