@@ -45,7 +45,7 @@ public class ConceptExplorer_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		//in = new Input();
-	//	in.loadEnvConfig();
+		//in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -97,7 +97,7 @@ public class ConceptExplorer_Regression {
 		// Pre-requesties
 		baseClass.stepInfo("Pre-requesties two saved searches  creation");
 		
-		sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.basicContentSearch(Input.searchString1);
 		String hitCount = sessionSearch.verifyPureHitsCount();
 		
 		sessionSearch.saveSearchAtAnyRootGroup(savedSearchName, SearchGroup);
@@ -136,7 +136,7 @@ public class ConceptExplorer_Regression {
 		int resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
 
 		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCountReturnClusterID(resultToAddInCart, 2);
+		conceptExplorer.tileSelctionAnalyze_BasedChildCount(resultToAddInCart, 1,2);
 
 		// Go to 2nd level
 		conceptExplorer.analyzeAction(analyze);
@@ -145,7 +145,7 @@ public class ConceptExplorer_Regression {
 		// Select data to 'Add to cart'
 		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
 		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCountReturnClusterID(resultToAddInCart, 1);
+		conceptExplorer.tileSelctionAnalyze_BasedChildCount(resultToAddInCart, 1,2);
 		
 		// Go to 3rd level
 		conceptExplorer.analyzeAction(analyze3);
