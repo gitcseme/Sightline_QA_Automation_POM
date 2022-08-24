@@ -150,6 +150,7 @@ public class DomainManagement_Regression_05 {
 		
 		base = new BaseClass(driver);
 		user = new UserManagement(driver);
+		dash = new DomainDashboard(driver);
 		
 		base.stepInfo("Test case Id: RPMXCON-53070");
 		base.stepInfo("Verify when Domain Admin assigned to 1 or more non-domain project then domain dropdown in the impersonation popup should display value \"Not a Domain\"");
@@ -167,10 +168,9 @@ public class DomainManagement_Regression_05 {
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		base.stepInfo("Login as a da user :"+Input.da1userName);
 		
-		base = new BaseClass(driver);
-		
+		dash.waitForDomainDashBoardIsReady();
 		base.openImpersonateTab();
-		if(base.getSelectRole().isDisplayed()) {
+		if(base.getSelectRole().isElementAvailable(10)) {
 			base.passedStep("Impersonate To' pop up is open");
 		}else {
 			base.failedStep("verification failed");
