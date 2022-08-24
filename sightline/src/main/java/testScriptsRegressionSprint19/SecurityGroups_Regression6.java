@@ -166,30 +166,16 @@ public class SecurityGroups_Regression6 {
 		baseClass.stepInfo("Test case Id: RPMXCON-54773");
 		baseClass.stepInfo(
 				"Verify that as DA user,clicking on project should redirect to default security group and then on changing the Project from header drop down should take to Default SG in the selected project");
-		DataSets data = new DataSets(driver);
-		ProjectPage projectPage = new ProjectPage(driver);
-		String projectName = "SecurityGroupProject" + Utility.dynamicNameAppender();
 		DomainDashboard domainDash = new DomainDashboard(driver);
-
-		// create project
-		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
-		data.getNotificationMessage(0, projectName);
-		UserManagement users = new UserManagement(driver);
-		users.navigateToUsersPAge();
-		users.ProjectSelectionForUser(projectName, Input.rmu1FullName, "Review Manager", "Default Security Group",
-				false, true);
-		loginPage.logout();
 
 		// Login As DA
 		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+
+		// go to project
 		baseClass.stepInfo("Click on any project");
-		driver.waitForPageToBeReady();
-		baseClass.waitTillElemetToBeClickable(domainDash.getprojectnamelink(Input.projectName));
-		baseClass.waitForElement(domainDash.getprojectnamelink(Input.projectName));
-		domainDash.getprojectnamelink(Input.projectName).waitAndClick(5);
+		domainDash.filterProject(Input.projectName);
+		domainDash.goToFirstProject();
 
 		baseClass.stepInfo("verify default security group in selected project");
 		String actualString = "Default Security Group";
@@ -202,14 +188,12 @@ public class SecurityGroups_Regression6 {
 		}
 		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
-		baseClass.selectproject(projectName);
 		baseClass.stepInfo("Click on other project");
 		baseClass.stepInfo("verify default security group in selected project");
-		String actualString1 = "Default Security Group";
 		String ExpectedString1 = baseClass.getsgNames().getText();
 		System.out.println(ExpectedString1);
 		if (actualString.equals(ExpectedString1)) {
-			baseClass.passedStep("DAU to Default SG in the selected project Successfully.." + projectName);
+			baseClass.passedStep("DAU to Default SG in the selected project Successfully..");
 		} else {
 			baseClass.failedStep("It is not  to default SG by default ");
 		}
@@ -425,9 +409,6 @@ public class SecurityGroups_Regression6 {
 			page.fillingDATSection();
 			page.fillingNativeSection();
 			page.fillingTIFFSection(tagname, Input.tagNameTechnical);
-			page.fillingMP3FileWithBurnRedaction(Input.defaultRedactionTag);
-			page.getMP3FilesBurnRedactionTag(Input.defaultRedactionTag).ScrollTo();
-			page.getMP3FilesBurnRedactionTag(Input.defaultRedactionTag).waitAndClick(10);
 			page.navigateToNextSection();
 			page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
 			page.navigateToNextSection();
