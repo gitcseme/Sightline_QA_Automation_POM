@@ -1598,7 +1598,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that column name 'Total Retrieved Count' is available on 'Collections Details Pop up' screen (Grid).");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 
 		// Login as User
 		login.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -1639,7 +1639,7 @@ public class O365Regression_19 {
 		base.stepInfo(
 				"Verify that for any errored dataset - Column “Error Count“ displays in all Data tables. (Dataset Creation) in \"Error section pop up\" screen.");
 
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { username, fullname, "SA" } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
