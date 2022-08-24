@@ -67,8 +67,7 @@ public class Production_Regression2 {
 	String foldername;
 	String tagname;
 	String productionname;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
+	
 
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -277,7 +276,8 @@ public class Production_Regression2 {
 				"Verify that it should displays 'Pre-Gen Check - 19999/20000 docs' status on Progress bar in Production Tile View");
 		String testData1 = Input.testData1;
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
@@ -498,7 +498,8 @@ public class Production_Regression2 {
 		sessionSearch = new SessionSearch(driver);
 		int purehit = sessionSearch.basicContentSearch(testData1);
 		sessionSearch.bulkTagExisting(tagname);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
@@ -606,7 +607,8 @@ public class Production_Regression2 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String productionname1 = "p" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(3);
 		page = new ProductionPage(driver);
@@ -1565,7 +1567,8 @@ public class Production_Regression2 {
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
@@ -1667,7 +1670,8 @@ public class Production_Regression2 {
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
@@ -1790,7 +1794,8 @@ public class Production_Regression2 {
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1878,7 +1883,8 @@ public class Production_Regression2 {
 		String productionname = "p" + Utility.dynamicNameAppender();
 		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
 		RedactionPage redactionpage = new RedactionPage(driver);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		redactionpage.selectDefaultSecurityGroup();
 		driver.waitForPageToBeReady();
 		redactionpage.manageRedactionTagsPage(Redactiontag1);
@@ -1944,7 +1950,8 @@ public class Production_Regression2 {
 
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
@@ -1991,7 +1998,8 @@ public class Production_Regression2 {
 		base.stepInfo("Admin able to view and enter production guard information on the self production wizard.");
 		String testData1 = Input.testData1;
 		String tagname = Input.randomText + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// create tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
@@ -3058,7 +3066,8 @@ public class Production_Regression2 {
 		String testData1 = Input.testData1;
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
@@ -3156,7 +3165,11 @@ public class Production_Regression2 {
 	Utility baseClass = new Utility(driver);
 	baseClass.screenShot(result);
 	}
-	loginPage.quitBrowser();
+	try {
+		loginPage.quitBrowser();
+	} catch (Exception e) {
+		loginPage.quitBrowser();
+	}
 	}
 	@AfterClass(alwaysRun = true)
 

@@ -69,7 +69,7 @@ public class ProductionPage_Regression {
 		input.loadEnvConfig();
 		baseClass = new BaseClass(driver);
 		driver = new Driver();
-		loginPage = new LoginPage(driver);
+		loginPage = new LoginPage(driver);	
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		Reporter.log("Logged in as User: " + Input.pa1password);
