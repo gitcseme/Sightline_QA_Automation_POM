@@ -441,12 +441,13 @@ public class CollectionPage {
 	}
 
 	public Element getCollectionFieldValuesRowNoInCollectionHomePage(int rowNo, int tableRow) {
-		return driver
-				.FindElementByXPath("//table[@id='dtCollectionList']//tbody//tr[" + tableRow + "]//td[" + rowNo + "]");
+		return driver.FindElementByXPath(
+				"//table[@id='dtCollectionList']//tbody//tr[" + tableRow + "]//td[" + rowNo + "]//a");
 	}
 
 	public Element getCollectionRetrievedCountTextFromCollectionIdsList() {
-		return driver.FindElementByXPath("//table[@class='table dataTable no-footer']//th[text()='Retrieved Count']");
+		return driver
+				.FindElementByXPath("//table[@class='table dataTable no-footer']//th[text()='Total Retrieved Count']");
 	}
 
 	public Element getCollectionRetrievedCountFromCollectionIdsList() {
@@ -2258,7 +2259,7 @@ public class CollectionPage {
 		base.waitForElement(getCollectionFieldValuesRowNoInCollectionHomePage(rowNo, 1));
 		getCollectionFieldValuesRowNoInCollectionHomePage(rowNo, 1).waitAndClick(5);
 
-		if (getCollectionRetrievedCountTextFromCollectionIdsList().isElementPresent()) {
+		if (getCollectionRetrievedCountTextFromCollectionIdsList().isElementAvailable(10)) {
 
 			base.waitForElement(getCollectionRetrievedCountFromCollectionIdsList());
 			String retrievedCount = getCollectionRetrievedCountFromCollectionIdsList().getText();
