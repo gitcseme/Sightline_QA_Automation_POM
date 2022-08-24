@@ -364,6 +364,7 @@ public class Production_Regression {
 	@Test(description = "RPMXCON-48498", enabled = true, groups = { "regression" })
 	public void verifySelectedTags_MarkIncomplete() throws Exception {
 
+		BaseClass base=new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-48498 Production Component Sprint 18");
 		base.stepInfo(
@@ -380,7 +381,9 @@ public class Production_Regression {
 		page.fillingDATSection();
 		page.fillingNativeSectionWithTags(tagname);
 		page.getComponentsMarkComplete().waitAndClick(10);
-		page.getbtnComponentsMarkIncomplete().waitAndClick(10);
+		base.CloseSuccessMsgpopup();
+		page.getMarkInCompleteBtn().waitAndClick(10);
+		page.getNativeTab().waitAndClick(10);
 		base.waitForElement(page.getNativeSelectTags());
 		page.getNativeSelectTags().waitAndClick(10);
 		base.waitForElement(page.getNativeCheckBox(tagname));
