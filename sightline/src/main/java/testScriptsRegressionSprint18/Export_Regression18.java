@@ -106,8 +106,7 @@ public class Export_Regression18 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		page.getCopyPath().waitAndClick(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		page.getQC_Download().isElementAvailable(1);
 		String DownloadBtn = page.getQC_Download().GetAttribute("disabled");
 		base.textCompareEquals(DownloadBtn, "true", "Download option is disabled as expected","Download option is not disabled");
@@ -180,8 +179,7 @@ public class Export_Regression18 {
 		page.fillingExportLocationPage(productionname);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		page.getCopyPath().waitAndClick(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		page.goToImageFiles();

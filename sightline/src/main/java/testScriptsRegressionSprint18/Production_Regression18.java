@@ -250,9 +250,9 @@ public class Production_Regression18 {
         page.verifyAvailbleLinkAtNumberingAndSorting();
 		base.waitForElement(page.getClickHereLink());
 		page.getClickHereLink().Click();
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		base.ValidateElement_Presence(page.getNextBatesNumber(),"Next Bates Number");
-        page.getCloseIconInManageTemplate().waitAndClick(10);;
+        page.getCloseIconInManageTemplate().waitAndClick(10);
         String actualText = page.getBeginningBates().GetAttribute("value");
 		System.out.println("The actual txt" + actualText);
 		base.digitCompareEquals(Integer.valueOf(actualText), 0, "Bates Number are not auto populated as expected","Bates Number are auto populated");
