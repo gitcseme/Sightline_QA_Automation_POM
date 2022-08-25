@@ -136,10 +136,13 @@ public class ProjectFields_IndiumRegression2 {
 		userManagementPage.getBulkUserAccessTab().waitAndClick(5);
 		baseClass.waitForElement(userManagementPage.getSelectRollId());
 		userManagementPage.getSelectRollId().selectFromDropdown().selectByVisibleText("Project Administrator");
-		userManagementPage.defaultSelectionCheckboxForAllRole(true, true, true, false, true, true, true, true, true,
-				true, true, true, true, true, true);
+		baseClass.waitTime(4);
+		userManagementPage.defaultSelectionCheckboxForAllRole(false, true, false, false, true, false, false, false, false,
+				false, false, false, false, false, false);
 		driver.scrollingToElementofAPage(userManagementPage.getEnableRadioBtn());
-		userManagementPage.getEnableRadioBtn().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getEnableRadioBtn());
+		baseClass.waitTime(4);
+		userManagementPage.getEnableRadioBtn().waitAndClick(10);
 		baseClass.waitForElement(userManagementPage.getSelectingProject());
 		userManagementPage.getSelectingProject().waitAndClick(5);
 		baseClass.waitForElement(userManagementPage.getSelectDropProject(projectName));
@@ -281,23 +284,30 @@ public class ProjectFields_IndiumRegression2 {
 		driver.waitForPageToBeReady();
 		baseClass.waitForElement(userManagementPage.getBulkUserAccessTab());
 		userManagementPage.getBulkUserAccessTab().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getSelectRollId());
 		userManagementPage.getSelectRollId().waitAndClick(5);
 		userManagementPage.getSelectRollId().selectFromDropdown().selectByVisibleText("Project Administrator");
-		userManagementPage.defaultSelectionCheckboxForAllRole(true, true, true, false, true, true, true, true, true,
-				true, true, true, true, true, true);
+		userManagementPage.defaultSelectionCheckboxForAllRole(false, true, false, false, false, false, false, false, false,
+				false, false, false, false, false, false);
 		driver.scrollingToElementofAPage(userManagementPage.getEnableRadioBtn());
-		userManagementPage.getEnableRadioBtn().waitAndClick(5);
-		userManagementPage.getSelectingProject().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getEnableRadioBtn());
+		baseClass.waitTime(4);
+		userManagementPage.getEnableRadioBtn().waitAndClick(10);
+		baseClass.waitForElement(userManagementPage.getSelectingProject());
+		userManagementPage.getSelectingProject().waitAndClick(10);
+		baseClass.waitForElement(userManagementPage.getSelectDropProject(projectName));
 		userManagementPage.getSelectDropProject(projectName).waitAndClick(10);
 		driver.scrollingToElementofAPage(userManagementPage.getSelectBulkUser(Input.pa1FullName));
-		userManagementPage.getSelectBulkUser(Input.pa1FullName).waitAndClick(5);
-		userManagementPage.getBulkUserSaveBtn().waitAndClick(5);
+		baseClass.waitForElement(userManagementPage.getSelectBulkUser(Input.pa1FullName));
+		userManagementPage.getSelectBulkUser(Input.pa1FullName).waitAndClick(10);
+		baseClass.waitForElement(userManagementPage.getBulkUserSaveBtn());
+		userManagementPage.getBulkUserSaveBtn().waitAndClick(10);
 		baseClass.VerifySuccessMessage("Access rights applied successfully");
 		loginPage.logout();
 
 		// login as pa
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, projectName);
-		
+		driver.waitForPageToBeReady();
 		// Ingestioning the documents
 		this.driver.getWebDriver().get(Input.url + "Ingestion/Home");
 		driver.waitForPageToBeReady();
@@ -322,6 +332,9 @@ public class ProjectFields_IndiumRegression2 {
 		sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").waitAndClick(10);
 		baseClass.waitForElement(sessionSearch.getBulkRelease_ButtonRelease());
 		sessionSearch.getBulkRelease_ButtonRelease().waitAndClick(20);
+		if (docViewPage.getDocview_ButtonYes().isDisplayed()) {
+			docViewPage.getDocview_ButtonYes().waitAndClick(5);
+		}
 		if (sessionSearch.getFinalizeButton().isDisplayed()) {
 			baseClass.waitForElement(sessionSearch.getFinalizeButton());
 			sessionSearch.getFinalizeButton().waitAndClick(10);
