@@ -96,15 +96,9 @@ public class O365Regression_20 {
 				"Verify the attributes of the configured collection and information on each of the selected custodian datasets");
 
 		// Login as User
-		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.navigateToUsersPAge();
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
-		// Logout
-		login.logout();
-
-		// Login as User
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
 
 		// Start Collection
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -152,15 +146,9 @@ public class O365Regression_20 {
 				"Verify that when collection gets failed then it displays a notification on the top right corner in Notification list.");
 
 		// Login as User
-		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.navigateToUsersPAge();
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
-		// Logout
-		login.logout();
-
-		// Login as User
 		login.loginToSightLine(userName, password);
+
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// Start Collection
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -213,15 +201,9 @@ public class O365Regression_20 {
 		base.stepInfo("Verify that \"View Datasets\" functionality is working fine on \"Manage Collections\" screen.");
 
 		// Login as User
-		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.navigateToUsersPAge();
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
-
-		// Logout
-		login.logout();
-
-		// Login as User
 		login.loginToSightLine(userName, password);
+
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// get other dataset tile view
 		dataSets.navigateToDataSetsPage();
