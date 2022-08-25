@@ -3354,6 +3354,13 @@ public class ProductionPage {
 	public Element getNativePlaceHolderCloseBtn() {
 		return driver.FindElementByXPath("//div[@id='divImagePHImage']//button[text()='×']");
 	}
+	public Element getNativePlaceHolderIUnsertMetaDataFeild() {
+		return driver.FindElementByXPath("//div[@id='divImagePHImage']//a[text()='Insert Metadata Field']");
+	}
+	public Element getFirstPDFImageFile(String presufix, String subBates) {
+		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".pdf']");
+	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21681,5 +21688,35 @@ public class ProductionPage {
 		} else {
 			base.failedStep("" + CompareString + " is not displayed in DAT File");	}
 	}
-	
+	/**
+	 * @author Brundha.T
+	 * @param firstFile
+	 * @param lastFile
+	 * @param prefixID
+	 * @param suffixID
+	 * @Description verify Image file is exist in downloaded pdf file
+	 */
+	public void isImageFileExistForPDF(int firstFile, int lastFile, String prefixID, String suffixID) {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		for (int i = firstFile; i < lastFile; i++) {
+			File TiffFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + i + suffixID + ".pdf");
+			if (TiffFile.exists()) {
+				base.passedStep("Tiff file are generated coreectly : " + prefixID + i + suffixID + ".pdf");
+			} else {
+				base.failedStep("verification failed");
+			}
+		}
+	}
+	/**
+	 * @author Brundha
+	 * @Description go to export Pdf file
+	 */
+	public void goToPDFImageFiles() {
+		getFileDir("VOL0001").waitAndClick(5);
+		getFileDir("PDF/").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getFileDir("0001/").waitAndClick(5);
+		driver.waitForPageToBeReady();
+	}
 }
