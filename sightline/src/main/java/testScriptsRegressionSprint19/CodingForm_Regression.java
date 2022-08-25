@@ -291,6 +291,7 @@ public class CodingForm_Regression {
 			codingForm.deleteCodingForm(cfDelete, cfDelete);	
 		}
 		
+		
 		loginPage.logout();
 	}
 
