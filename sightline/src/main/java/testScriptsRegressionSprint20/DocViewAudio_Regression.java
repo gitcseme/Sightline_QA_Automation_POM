@@ -245,6 +245,237 @@ public class DocViewAudio_Regression {
 		baseClass.passedStep("The zoom action is work as expected in Doc view.");
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/08/2022 RPMXCON-51698
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify that audio document should be loaded successfully when
+	 *              document viewed from mini doc list from Translations tab of
+	 *              previous document.
+	 */
+
+	@Test(description = "RPMXCON-51698", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocumentTranslationsTabInMiniDocList(String username, String password, String role)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51698");
+		baseClass.stepInfo(
+				"Verify that audio document should be loaded successfully when document viewed from mini doc list from Translations tab of previous document.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		SoftAssert softAssertion = new SoftAssert();
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocViews();
+
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TranslationTab());
+		docViewPage.getDocView_TranslationTab().waitAndClick(5);
+		if (baseClass.text("Translations").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_MiniDoc_Selectdoc(2));
+		docViewPage.getDocView_MiniDoc_Selectdoc(2).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		softAssertion.assertEquals(docViewPage.getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		baseClass.passedStep(
+				"Document is selected from mini doc list as per the clicked document navigation option and same audio document loaded in default view");
+		softAssertion.assertAll();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.getDocView_TextTab());
+		docViewPage.getDocView_TextTab().waitAndClick(5);
+		if (baseClass.text("TEXT").isDisplayed()) {
+			baseClass.passedStep("In text tab it displayed");
+		} else {
+			baseClass.failedStep("There is no such message");
+		}
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/08/2022 RPMXCON-51783
+	 * @throws Exception
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with common terms and different/same threshold are
+	 *              saved.
+	 */
+	@Test(description = "RPMXCON-51783", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsHitsDisplayedDifferentThershold() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51783");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with common terms and different/same threshold are saved.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search And Save
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+
+		// Added another Audio search and save
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+		// go to docview page
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		baseClass.stepInfo("Navigate to the DocView page Successfully");
+
+		// Check Display persistanthit
+		docviewPage.audioPersistantHitDisplayCheck();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docviewPage.trianglurArrowIconPositionVerification();
+		baseClass.passedStep("eye icon audio hits should be displayed and triangular arrow icon should be displayed.");
+
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+
+		// First audio search term with max threshold value
+		baseClass.stepInfo("Doing first search tems with maximum thersold");
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.language, "max");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+
+		// second audio search with same term and min threshold value
+		baseClass.stepInfo("Doing first search tems with minimum thersold");
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString3, Input.language, "min");
+		sessionSearch.getCurrentPureHitAddBtn().waitAndClick(10);
+		// go to docview page
+		sessionSearch.ViewInDocViewWithoutPureHit();
+		baseClass.stepInfo("Navigate to the DocView page Successfully");
+
+		// Check Display persistanthit
+		docviewPage.audioPersistantHitDisplayCheck();
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docviewPage.trianglurArrowIconPositionVerification();
+		baseClass.passedStep("eye icon audio hits should be displayed and triangular arrow icon should be displayed.");
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/08/2022 RPMXCON-51109
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify user can stop the audio play when play started from
+	 *              redactions.
+	 */
+
+	@Test(description = "RPMXCON-51109", enabled = true, groups = { "regression" })
+	public void verifyAudioPlayStartedFromRedaction()
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51109");
+		baseClass.stepInfo("Verify user can stop the audio play when play started from redactions.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  REV as with " + Input.rev1userName + "");
+		
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// Audio redaction tab display
+		driver.waitForPageToBeReady();
+		docViewPage.getDocview_RedactionsTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.getDocview_RedactionsTab_Add().waitAndClick(5);
+		baseClass.passedStep(
+				"Redactions tab is displayed on audio doc view, all redactions in audio file is listed in tabular format");
+		docViewPage.playAudio();
+		baseClass.passedStep(
+				"Audio file starting from redaction start time and Play of the audio file stop successfully");
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:25/08/2022 RPMXCON-51108
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 * @Description Verify user can play the redaction.
+	 */
+
+	@Test(description = "RPMXCON-51108", enabled = true, groups = { "regression" })
+	public void verifyuserCanPlayRedaction()
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51108");
+		baseClass.stepInfo("Verify user can play the redaction.");
+
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignmentPage.assignmentDistributingToReviewer();
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  REV as with " + Input.rev1userName + "");
+		
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+		// Audio redaction tab display
+		driver.waitForPageToBeReady();
+		docViewPage.getDocview_RedactionsTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.getDocview_RedactionsTab_Add().waitAndClick(5);
+		baseClass.passedStep(
+				"Redactions tab is displayed on audio doc view, all redactions in audio file is listed in tabular format");
+		docViewPage.playAudio();
+		baseClass.passedStep(
+				"Audio file play starting from redaction start time and end at the redaction end time successfully");
+		// logout
+		loginPage.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
