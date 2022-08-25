@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -14,6 +16,7 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -449,6 +452,423 @@ public class Production_Regression20 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha.T No:RPMXCON-49124 Date:8/25/2022
+	 * @Description:To verify that in Production-TechIssue Docs Placeholder section,
+	 *                 Metadata Field drop down should be sorted by alpha ascending
+	 **/
+
+	@Test(description = "RPMXCON-49124", enabled = true, groups = { "regression" })
+	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-49124- Production Component");
+		base.stepInfo(
+				"To verify that in Production-TechIssue Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.selectGenerateOption(false);
+		page.getTechissue_toggle().ScrollTo();
+		page.getTechissue_toggle().waitAndClick(5);
+		page.getTechInsertMetadataField().waitAndClick(5);
+		List<String> TechIssueMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(TechIssueMetaDataField, TechIssueMetaDataField, "Ascending", true);
+
+		page.navigatingToProductionHomePage();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.selectGenerateOption(true);
+		page.getTechissue_toggle().ScrollTo();
+		page.getTechissue_toggle().waitAndClick(5);
+		page.getTechInsertMetadataField().waitAndClick(5);
+		List<String> PDFTechIssueMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(PDFTechIssueMetaDataField, PDFTechIssueMetaDataField, "Ascending", true);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T No:RPMXCON-49126 Date:8/25/2022
+	 * @Description:To verify that in Production-File Type Group Placeholder
+	 *                 section, Metadata Field drop down should be sorted by alpha
+	 *                 ascending
+	 **/
+
+	@Test(description = "RPMXCON-49126", enabled = true, groups = { "regression" })
+	public void verifyingAscendingOrderInFileTypeMetaDataField() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-49126- Production Component");
+		base.stepInfo(
+				"To verify that in Production-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.selectGenerateOption(false);
+		page.getNativePlaceHolderIUnsertMetaDataFeild().ScrollTo();
+		page.getNativePlaceHolderIUnsertMetaDataFeild().waitAndClick(5);
+		List<String> TechIssueMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(TechIssueMetaDataField, TechIssueMetaDataField, "Ascending", true);
+
+		page.navigatingToProductionHomePage();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.selectGenerateOption(true);
+		page.getNativePlaceHolderIUnsertMetaDataFeild().ScrollTo();
+		page.getNativePlaceHolderIUnsertMetaDataFeild().waitAndClick(5);
+		List<String> PDFTechIssueMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(PDFTechIssueMetaDataField, PDFTechIssueMetaDataField, "Ascending", true);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha.T No:RPMXCON-63065 Date:25/8/2022
+	 * @Description:Verify that user should be able to remove the automatically
+	 *                     enabled native placeholdering under TIFF/PDF section from
+	 *                     new production
+	 **/
+
+	@Test(description = "RPMXCON-63065", enabled = true, groups = { "regression" })
+	public void verifyingGenerationOfTiffFileForSpreadSheet() throws Exception {
+
+		base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-63065- Production component");
+		base.stepInfo(
+				"Verify that user should be able to remove the automatically enabled native placeholdering under TIFF/PDF section from new production");
+		UtilityLog.info(Input.prodPath);
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "P" + Utility.dynamicNameAppender();
+		String prefixID1 = "P" + Utility.dynamicNameAppender();
+		String suffixID = "S" + Utility.dynamicNameAppender();
+		String suffixID1 = "S" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.SearchMetaData(Input.docFileType, Input.MetaDataFileType);
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		int doc = 3;
+		doclist.documentSelection(doc);
+		doclist.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int FirstFile = Integer.valueOf(beginningBates);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.verifyingTheDefaultSelectedOptionInNative();
+		page.getNativePlaceHolderCloseBtn().waitAndClick(2);
+		page.getEnableForNativelyToggle().waitAndClick(2);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.extractFile();
+		int Lastile = FirstFile + doc;
+		page.isImageFileExist(FirstFile, Lastile, prefixID, suffixID);
+
+		page.navigateToProductionPage();
+		String beginningBates1 = page.getRandomNumber(2);
+		int FirstFile1 = Integer.valueOf(beginningBates1);
+		String ProductionName1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(ProductionName1);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.verifyingNativeSectionFileType(Input.MetaDataFileType);
+		page.verifyingNativeSectionFileType(Input.NativeFileType);
+		page.getNativePlaceHolderCloseBtn().waitAndClick(2);
+		page.getEnableForNativelyToggle().waitAndClick(2);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID1, suffixID1, beginningBates1);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(ProductionName1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		int Lastile1 = FirstFile1 + doc;
+		page.isImageFileExistForPDF(FirstFile1, Lastile1, prefixID1, suffixID1);
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha Test case id-RPMXCON-49244 Date:8/25/2022
+	 * @DescriptionTo verify that if user select Document level option and select
+	 *                the Next BatesNumbers then value should be auto-populated
+	 * 
+	 */
+	@Test(description = "RPMXCON-49244", enabled = true, groups = { "regression" })
+	public void verifyingNextAvailableBatesNumber() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-49244 -Production component");
+		base.stepInfo(
+				"To verify that if user select Document level option and select the Next BatesNumbers then value should be auto-populated");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.getBackButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String batesno = page.getProd_BatesRange().getText();
+
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.getClickHereLink().waitAndClick(2);
+		page.getNextBatesNumber().waitAndClick(2);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.getbtnProductionGenerate().waitAndClick(10);
+		page.verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+		driver.waitForPageToBeReady();
+		String BatesNumber = page.getProd_BatesRange().getText();
+		base.textCompareNotEquals(batesno, BatesNumber, "Production Generated with modified BatesNumber",
+				"BatesNumber not modified");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-49342 Date:8/25/2022
+	 * @Description:To verify that Tiff/PDF should generate with Tech Issue
+	 *                 placeholdering even though File group placeholdering is
+	 *                 exists.
+	 */
+	@Test(description = "RPMXCON-49342", enabled = true, groups = { "regression" })
+
+	public void verifyingGeneratedTechIssuePlaceHolder() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49342-from Production Component");
+		base.stepInfo(
+				"To verify that Tiff/PDF should generate with Tech Issue placeholdering even though File group placeholdering is exists.");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String foldername = "folder" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID1 = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		int FirstFile = Integer.valueOf(beginningBates);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(false);
+		page.selectTechIssueDoc(tagname);
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(page.getNativeDocsPlaceholderText());
+		page.getNativeDocsPlaceholderText().SendKeys(Input.testData1);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		int LastFile = PureHit + FirstFile;
+		driver.waitForPageToBeReady();
+		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, LastFile, prefixID, suffixID, Input.tagNameTechnical);
+
+		page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String beginningBates1 = page.getRandomNumber(2);
+		int FirstFileNo = Integer.valueOf(beginningBates1);
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.selectTechIssueDoc(tagname);
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(page.getNativeDocsPlaceholderText());
+		page.getNativeDocsPlaceholderText().SendKeys(Input.testData1);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID1, suffixID1, beginningBates1);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		int LastFiles = PureHit + FirstFileNo;
+		driver.waitForPageToBeReady();
+		page.pdf_Verification_In_Generated_PlaceHolder(FirstFileNo, LastFiles, prefixID1, suffixID1,
+				Input.tagNameTechnical);
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-49343 Date:8/25/2022
+	 * @Description:To verify that Tiff/PDF should generate with Priv placeholdering
+	 *                 even though Tech Issue placeholdering is exists in the
+	 *                 document.
+	 */
+	@Test(description = "RPMXCON-49343", enabled = true, groups = { "regression" })
+
+	public void verifyingGeneratedPrivDocPlaceHolder() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49343-from Production Component");
+		base.stepInfo(
+				"To verify that Tiff/PDF should generate with Priv placeholdering even though Tech Issue placeholdering is exists in the document.");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String PrivTag = "Tag" + Utility.dynamicNameAppender();
+		String foldername = "folder" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID1 = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.technicalIssue);
+		tagsAndFolderPage.createNewTagwithClassification(PrivTag, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		int PureHit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(PrivTag);
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(3);
+		doclist.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		int FirstFile = Integer.valueOf(beginningBates);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionPrivDocs(PrivTag, Input.testData1);
+		page.selectTechIssueDoc(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String PrivDoc = page.getPrivDocCountInSummaryPage().getText();
+		base.digitCompareEquals(6, Integer.valueOf(PrivDoc), "DocCount Displayed Correctly", "verification failed");
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		int LastFile = PureHit + FirstFile;
+		driver.waitForPageToBeReady();
+		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, LastFile, prefixID, suffixID, Input.testData1);
+
+		page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String beginningBates1 = page.getRandomNumber(2);
+		int FirstFileNo = Integer.valueOf(beginningBates1);
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.fillingTIFFSectionPrivDocs(PrivTag, Input.testData1);
+		page.selectTechIssueDoc(tagname);
+		driver.scrollPageToTop();
+		page.getPDFGenerateRadioButton().waitAndClick(5);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID1, suffixID1, beginningBates1);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		int LastFiles = PureHit + FirstFileNo;
+		driver.waitForPageToBeReady();
+		page.pdf_Verification_In_Generated_PlaceHolder(FirstFileNo, LastFiles, prefixID1, suffixID1, Input.testData1);
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, Input.securityGroup);
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
