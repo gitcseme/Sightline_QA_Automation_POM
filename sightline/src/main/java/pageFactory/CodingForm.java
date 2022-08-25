@@ -5155,6 +5155,7 @@ public void makingDefaultCfToSg(String CFName) {
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
 		assgnpage.sortOrderNxtBtn().ScrollTo();
+		base.waitForElement(sortOrderNxtBtn());
 		sortOrderNxtBtn().waitAndClick(5);
 		base.stepInfo("Step 02: Coding Form Order");
 		if (assgnpage.getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
@@ -5229,7 +5230,8 @@ public List<String> configureBelow15Cf(String CFName) {
 		assgnpage.getSelectCodeFormRadioBtn(CFName).Click();
 		base.waitTime(1);
 		assgnpage.sortOrderNxtBtn().ScrollTo();
-		assgnpage.sortOrderNxtBtn().Click();
+		base.waitForElement(assgnpage.sortOrderNxtBtn());
+		assgnpage.sortOrderNxtBtn().waitAndClick(5);
 		// if more than 15 we can able to configure to sg
 		if (getErrorMsgMore15CF().isElementAvailable(3)) {
 			base.stepInfo("User can configure only 15 cf for security group");
@@ -5246,10 +5248,10 @@ public List<String> configureBelow15Cf(String CFName) {
 		 }
 		 base.waitTime(2);
 		 int recount=getCfChecBoxUsingSize().size();
-		 for (int i = 0; i < recount-1; i++) {
+		 for (int i = 0; i <=recount; i++) {
 			List<WebElement> element=getCfChecBoxUsingSize().FindWebElements();
 			element.get(i).click();
-			if (i==15) {
+			if (i==14) {
 				break;
 				
 			}
