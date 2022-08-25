@@ -3716,8 +3716,10 @@ public class BaseClass {
 	public void openImpersonateTab() {
 		driver.waitForPageToBeReady();
 		waitForElement(getSignoutMenu());
+		waitTillElemetToBeClickable(getSignoutMenu());
 		getSignoutMenu().waitAndClick(10);
 		waitForElement(getChangeRole());
+		waitTillElemetToBeClickable(getChangeRole());
 		getChangeRole().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		stepInfo("open impersonate tab");
