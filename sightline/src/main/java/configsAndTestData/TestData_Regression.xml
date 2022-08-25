@@ -822,6 +822,9 @@
 	<DEPIPTheft>DEP IP Theft</DEPIPTheft>
 	<Discrimination>Discrimination</Discrimination>
 	<FCPA>FCPA</FCPA>
+	<NR_Detection>NR Detection</NR_Detection>
+	<PII>PII</PII>
+	<PRIV>PRIV</PRIV>
 	<Harassment>Harassment</Harassment>
 	
 	 <!-- Added By Aathith , Client Page Details -->
