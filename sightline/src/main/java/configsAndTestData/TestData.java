@@ -352,6 +352,9 @@ public class TestData {
 	public String retreivingDSstatus;
 	public String virusScanStatus;
 	public String copyDSstatus;
+	public String collectionExtractionMsg;
+	public String cancelCollectionNotification;
+	public String progressBarHeader;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

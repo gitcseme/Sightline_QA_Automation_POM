@@ -2099,6 +2099,8 @@ public class BaseClass {
 		try {
 			System.out.println("Source String  : " + sourceString);
 			System.out.println("Compare String  : " + compreString);
+			stepInfo("Source String  : " + sourceString);
+			stepInfo("Compare String  : " + compreString);
 
 			softAssertion.assertEquals(sourceString, compreString);
 			if (!sourceString.equals(compreString)) {

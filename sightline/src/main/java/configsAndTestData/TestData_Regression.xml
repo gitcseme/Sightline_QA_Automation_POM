@@ -349,6 +349,9 @@
 	<retreivingDSstatus>Retrieving data from Source Location</retreivingDSstatus>
 	<virusScanStatus>Virus scan for datasets in progress</virusScanStatus>
 	<copyDSstatus>Copying of data for datasets in progress</copyDSstatus>
+	<collectionExtractionMsg>Collection extraction process started successfully.</collectionExtractionMsg>
+	<cancelCollectionNotification>Cancel collection initiated successfully.</cancelCollectionNotification>
+	<progressBarHeader>Collection Progress</progressBarHeader>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

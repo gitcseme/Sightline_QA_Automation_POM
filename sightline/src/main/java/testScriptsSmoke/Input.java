@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -471,6 +471,9 @@ public class Input {
 	public static String retreivingDSstatus;
 	public static String virusScanStatus;
 	public static String copyDSstatus;
+	public static String collectionExtractionMsg;
+	public static String cancelCollectionNotification;
+	public static String progressBarHeader;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1411,6 +1414,9 @@ public class Input {
 		retreivingDSstatus = testData.getRetreivingDSstatus();
 		virusScanStatus = testData.getVirusScanStatus();
 		copyDSstatus = testData.getCopyDSstatus();
+		collectionExtractionMsg = testData.getCollectionExtractionMsg();
+		cancelCollectionNotification = testData.getCancelCollectionNotification();
+		progressBarHeader = testData.getProgressBarHeader();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
