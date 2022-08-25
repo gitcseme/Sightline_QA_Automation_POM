@@ -4003,7 +4003,7 @@ public class IngestionPage_Indium {
 		// copy
 		getRefreshButton().waitAndClick(10);
 
-		getIngestionDetailPopup(1).waitAndClick(Input.wait30);
+		getIngestionDetailPopup(1).waitAndClick(15);
 
 		driver.scrollingToElementofAPage(getRunCopying());
 		base.waitForElement(getRunCopying());
@@ -4878,6 +4878,7 @@ public class IngestionPage_Indium {
 				base.failedStep("Draft failed");
 			}
 		}
+		base.waitForElement(getIngestionDetailPopup(1));
 		getIngestionDetailPopup(1).waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -5062,7 +5063,8 @@ public class IngestionPage_Indium {
 	public void IngestionFromDraftMode() {
 
 		driver.waitForPageToBeReady();
-		getIngestionDetailPopup(1).waitAndClick(5);
+		base.waitForElement(getIngestionDetailPopup(1));
+		getIngestionDetailPopup(1).waitAndClick(10);
 		base.waitForElement(getActionDropdownArrow());
 		getActionDropdownArrow().waitAndClick(5);
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -5237,6 +5239,7 @@ public class IngestionPage_Indium {
 			} else {
 				System.out.println("No need to select for other datasets");
 			}
+			base.waitTime(3);
 			base.waitForElement(getRunIndexing());
 			getRunIndexing().waitAndClick(5);
 
@@ -10453,12 +10456,12 @@ public class IngestionPage_Indium {
 			//approve ingestion
 			for(int i=1;i<=numberOfIngestion;i++) {
 				base.waitForElement(getIngestionDetailPopup(i));
-				getIngestionDetailPopup(i).waitAndClick(5);
-				base.waitTime(2);
+				getIngestionDetailPopup(i).waitAndClick(10);
+				base.waitTime(5);
 				base.waitForElement(ingestionDetailActionDropdown());
-				ingestionDetailActionDropdown().waitAndClick(5);
+				ingestionDetailActionDropdown().waitAndClick(10);
 				base.waitForElement(getActionApprove());
-				getActionApprove().waitAndClick(5);
+				getActionApprove().waitAndClick(10);
 				base.waitForElement(getApproveMessageOKButton());
 				getApproveMessageOKButton().waitAndClick(5);
 				base.VerifySuccessMessage("Approve started successfully");
