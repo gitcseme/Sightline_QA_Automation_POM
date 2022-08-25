@@ -819,12 +819,6 @@ public class ProductionRegression_Sprint19 {
 		loginPage.logout();
 	}
 	
-	/**
-	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47739
-	 * @Description:To Verify the default Sorting and required sequence of sorting.
-	 *                 And default production sorting (Most recent First). Tile
-	 *                 View.
-	 **/
 	@Test(description = "RPMXCON-47739", enabled = true, groups = { "regression" })
 	public void verifySortByinTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -856,6 +850,7 @@ public class ProductionRegression_Sprint19 {
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
 		page.navigateToNextSection();
+		base.waitForElement(page.getBeginningBates());
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionWithTag(tagname);
 		page.navigateToNextSection();
@@ -897,6 +892,9 @@ public class ProductionRegression_Sprint19 {
 		if (page.getLoadMore().Enabled()) {
 			do {
 				driver.scrollingToBottomofAPage();
+				if(page.getNoProdExistText().isElementAvailable(4)) {
+					break;
+				}
 			} while (page.getLoadMore().Visible());
 		}
 
@@ -913,10 +911,12 @@ public class ProductionRegression_Sprint19 {
 		page.getRefreshButton().Click();
 		driver.waitForPageToBeReady();
 
-		base.waitForElement(page.getLoadMore());
 		if (page.getLoadMore().Enabled()) {
 			do {
 				driver.scrollingToBottomofAPage();
+				if(page.getNoProdExistText().isElementAvailable(4)) {
+					break;
+				}
 			} while (page.getLoadMore().Visible());
 		}
 
