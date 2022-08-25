@@ -797,6 +797,14 @@ public class UserManagement {
 	}
 
 	// jeevitha
+	public Element NavigateToDataSets() {
+		return driver.FindElementByXPath("//a[@name='DataSets']//i");
+	}
+
+	public Element NavigateToDataSets(String componentName) {
+		return driver.FindElementByXPath("//a[@name='" + componentName + "']//i");
+	}
+
 	public Element getLastPageNum() {
 		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
 	}
@@ -4058,5 +4066,47 @@ public class UserManagement {
 		getNotYetLoggedInUserBtn().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("open a pop for users not yet loggen in");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify collection access
+	 * @param userRolesData
+	 * @param accessUser
+	 * @param accessPwd
+	 * @param loginPwd
+	 * @throws Exception
+	 */
+	public void verifyCollectionAccess(String[][] userRolesData, String accessUser, String accessPwd, String loginPwd)
+			throws Exception {
+		LoginPage login = new LoginPage(driver);
+		boolean action = false;
+		action = bc.ValidateElement_PresenceReturn(NavigateToDataSets());
+		if (action) {
+			NavigateToDataSets().waitAndClick(10);
+			bc.stepInfo("DataSet access is Enabled");
+			action = bc.ValidateElement_PresenceReturn(NavigateToDataSets("Collections"));
+			if (action) {
+				bc.stepInfo("Collection access is Enabled");
+
+				driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+			} else {
+				login.logout();
+			}
+		} else {
+			login.logout();
+		}
+
+		if (!action) {
+			// Login as User
+			login.loginToSightLine(accessUser, accessPwd);
+			navigateToUsersPAge();
+			verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+			login.logout();
+
+			login.loginToSightLine(userRolesData[0][0], loginPwd);
+
+		}
 	}
 }
