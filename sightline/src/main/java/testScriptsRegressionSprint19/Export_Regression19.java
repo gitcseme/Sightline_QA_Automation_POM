@@ -107,8 +107,7 @@ public class Export_Regression19 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		base.stepInfo("generate production and verify");
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		page.getCopyPath().waitAndClick(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		page.goToImageFiles();
