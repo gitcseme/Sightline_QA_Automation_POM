@@ -19,6 +19,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -285,30 +286,37 @@ public class DocView_Regression8 {
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid = Input.DocIdCopyPaste;
 		String docid1 = Input.DocIdCopyPaste1;
-
+		String docid = "T2554D";
+		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
 		docexp = new DocExplorerPage(driver);
+		DocListPage doclist = new DocListPage(driver);
 		// DocExploer to viewindocView Page
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return docView.getDocView_CodingFormlist().Displayed();
+				return docexp.getDocExp_DocFiletypeSearchName().Visible();
 			}
 		}), Input.wait30);
-		docView.getDocView_CodingFormlist().waitAndClick(5);
-		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
+		doclist.getApplyFilter().waitAndClick(10);
+		baseClass.waitTime(3);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
-		baseClass.waitTime(5);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		baseClass.waitTime(3);
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
 		baseClass.waitTime(8);
 		baseClass.waitForElement(docView.getAddComment1());
@@ -332,6 +340,8 @@ public class DocView_Regression8 {
 
 		// verify comment is same on save and next doc
 		docView.ScrollAndSelectDocument(docid);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		docView.verifyClickRightClickAndCopyPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -345,6 +355,8 @@ public class DocView_Regression8 {
 		baseClass.waitTime(5);
 		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(8);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		baseClass.waitForElement(docView.getAddComment1());
 		docView.getAddComment1().isElementAvailable(5);
 		String afterText1 = docView.getAddComment1().getText();
@@ -394,7 +406,7 @@ public class DocView_Regression8 {
 		driver.Navigate().refresh();
 
 	}
-	
+
 	/**
 	 * Author : date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-63805 Verify user can select the text including special characters
@@ -412,32 +424,37 @@ public class DocView_Regression8 {
 		DocViewPage docView = new DocViewPage(driver);
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
-		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid = Input.DocIdCopyPaste;
+		String assname = "assgnment" + Utility.dynamicNameAppender();	
 		String docid1 = Input.DocIdCopyPaste1;
-
+		String docid = "T2554D";
+		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
 		docexp = new DocExplorerPage(driver);
+		DocListPage doclist = new DocListPage(driver);
 		// DocExploer to viewindocView Page
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		baseClass.waitTime(5);
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return docView.getDocView_CodingFormlist().Displayed();
+				return docexp.getDocExp_DocFiletypeSearchName().Visible();
 			}
 		}), Input.wait30);
-		docView.getDocView_CodingFormlist().waitAndClick(5);
-		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
+		doclist.getApplyFilter().waitAndClick(10);
+		baseClass.waitTime(3);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
 		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		baseClass.waitTime(8);
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -453,7 +470,9 @@ public class DocView_Regression8 {
 		baseClass.stepInfo("clicked codesameas");
 		baseClass.waitTime(8);
 		docView.ScrollAndSelectDocument(docid);
-		baseClass.waitTime(10);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		baseClass.waitTime(5);
 		docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
 		System.out.println(afterText);
@@ -500,7 +519,7 @@ public class DocView_Regression8 {
 		driver.Navigate().refresh();
 
 	}
-	
+
 	/**
 	 * Author : date: NA Modified date: NA Modified by: NA Test Case
 	 * Id:RPMXCON-63732 Verify user can select the text and perform Copy -Paste by
@@ -519,44 +538,50 @@ public class DocView_Regression8 {
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid = Input.DocIdCopyPaste;
 		String docid1 = Input.DocIdCopyPaste1;
-
+		String docid = "T2554D";
+		
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
 		docexp = new DocExplorerPage(driver);
+		DocListPage doclist = new DocListPage(driver);
 		// DocExploer to viewindocView Page
 		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return docView.getDocView_CodingFormlist().Displayed();
+				return docexp.getDocExp_DocFiletypeSearchName().Visible();
 			}
 		}), Input.wait30);
-		docView.getDocView_CodingFormlist().waitAndClick(5);
-		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
+		docexp.getDocExp_DocFiletypeSearchName().SendKeys("Text");
+		doclist.getApplyFilter().waitAndClick(10);
+		baseClass.waitTime(3);
+		docexp.getDocExp_SelectAllDocs().isElementAvailable(10);
+		docexp.getDocExp_SelectAllDocs().Click();
+		driver.waitForPageToBeReady();
+		docexp.docExpViewInDocView();
+		driver.waitForPageToBeReady();
 		docView.selectSourceDocIdInAvailableField("SourceDocID");
 		baseClass.waitTime(2);
 		driver.Navigate().refresh();
-		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
-		baseClass.waitTime(5);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		docView.getCodingFormSaveThisForm().waitAndClick(2);
 		baseClass.stepInfo("Document saved successfully");
 		baseClass.waitTime(10);
 		docView.getAddComment1().isElementAvailable(5);
 		String beforeText = docView.getAddComment1().getText();
-		System.out.println(beforeText);		
+		System.out.println(beforeText);
 		baseClass.stepInfo("Navigate to another document in mini doc list");
 		docView.getCodeSameAsLast().waitAndClick(3);
 		baseClass.stepInfo("clicked codesameas");
 		baseClass.waitTime(5);
 		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(8);
-		 docView.getAddComment1().isElementAvailable(5);
+		docView.getAddComment1().isElementAvailable(5);
 		String afterText = docView.getAddComment1().getText();
 		System.out.println(afterText);
 		softassertion.assertEquals(beforeText, afterText);
@@ -566,6 +591,8 @@ public class DocView_Regression8 {
 		// verify comment is same on save and next doc
 		driver.waitForPageToBeReady();
 		docView.ScrollAndSelectDocument(docid);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		docView.verifyCopyAndPasteRedacTextOnCommentBox();
 		baseClass.waitTime(10);
@@ -578,6 +605,8 @@ public class DocView_Regression8 {
 		baseClass.waitTime(8);
 		docView.ScrollAndSelectDocument(docid);
 		baseClass.waitTime(10);
+		docView.getDocView_CodingFormlist().waitAndClick(5);
+		docView.getDocView_CodingFormlist().selectFromDropdown().selectByVisibleText("Default Project Coding Form");
 		driver.waitForPageToBeReady();
 		docView.getAddComment1().isElementAvailable(5);
 		String afterText1 = docView.getAddComment1().getText();
