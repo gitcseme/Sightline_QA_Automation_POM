@@ -170,11 +170,6 @@ public class DomainManagement_Regression_05 {
 		
 		dash.waitForDomainDashBoardIsReady();
 		base.openImpersonateTab();
-		if(base.getSelectRole().isElementAvailable(10)) {
-			base.passedStep("Impersonate To' pop up is open");
-		}else {
-			base.failedStep("verification failed");
-		}
 		base.selectImpersonateRole(Input.ProjectAdministrator);
 		base.stepInfo("Select role as Project Admin  Check domain drop down from the pop up");
 		base.selectImpersonateDomain("Not a Domain");
