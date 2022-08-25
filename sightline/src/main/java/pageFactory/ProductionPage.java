@@ -2059,6 +2059,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndarya.Velraj
+	public Element getNoProdExistText() {
+        return driver.FindElementByXPath("//strong[text()='No Production exist in this production set']");
+    }
+	
 	public Element redactedDocumentsInSummaryPage() {
 		return driver.FindElementByXPath("//label[contains(text(),'Redacted Documents:')]//following-sibling::label");
 	}
