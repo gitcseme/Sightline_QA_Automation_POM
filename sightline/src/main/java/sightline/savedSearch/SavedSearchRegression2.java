@@ -170,7 +170,8 @@ public class SavedSearchRegression2 {
 			"regression" })
 	public void verifyFoldersUnderPreBuiltArrow(String username, String password, String fullname)
 			throws InterruptedException {
-		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA, Input.Harassment };
+		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA,
+				Input.Harassment, Input.NR_Detection ,Input.PII,Input.PRIV};
 		List<String> actualList = new ArrayList<String>();
 
 		base.stepInfo("Test case Id: RPMXCON-64862 - Saved Search");
@@ -254,7 +255,8 @@ public class SavedSearchRegression2 {
 			throws InterruptedException {
 		String searchName = "Search" + Utility.dynamicNameAppender();
 
-		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA, Input.Harassment };
+		String dataSet[] = { Input.DEPIPTheft, Input.Discrimination, Input.FCPA,
+				Input.Harassment, Input.NR_Detection ,Input.PII,Input.PRIV};
 		List<String> actualList = new ArrayList<String>();
 
 		base.stepInfo("Test case Id: RPMXCON-64865 - Saved Search");

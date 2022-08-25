@@ -803,7 +803,10 @@ public class TestData {
 	public String Discrimination;
     public String FCPA;
     public String Harassment;
-    
+    public String NR_Detection;
+	public String PII;
+	public String PRIV;
+	
     //Added by Aathith ,Client Page details
   	public String FilterByType;
   	public String Name;
