@@ -3584,6 +3584,13 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr["+row+"]//td["+col+"]");
 	}
 	
+	public Element getVolumeMaxButton() {
+		return driver.FindElementByXPath("//div[@class='jp-volume-controls']//button[text()='max volume']");
+	}
+	public Element getVolumeLevel() {
+		return driver.FindElementByXPath("//div[@class='jp-volume-bar']//div");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
