@@ -2,6 +2,8 @@ package testScriptsRegressionSprint20;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -239,6 +241,218 @@ public class O365Regression_20 {
 
 		// verify completed collection is displayed in datasets page
 		dataSets.verifysearchBoxValue(collectionName, otherTileView);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/24/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify final report on click of 'Download Final Report' when
+	 *              Collection is in 'Completed' status. RPMXCON-61200
+	 */
+	@Test(description = "RPMXCON-61200", enabled = true, groups = { "regression" })
+	public void verifyFileFormatDwnldAutomaticInitiate() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String expectedFileFormat = "xlsx";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61200 - O365");
+		base.stepInfo(
+				"Verify final report on click of 'Download Final Report' when Collection is in 'Completed' status ");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection with datasets
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence with expected Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+		driver.waitForPageToBeReady();
+
+		// Initial Notification count
+		int Bgcount = base.initialBgCount();
+
+		// Download Report
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Error Status", false, "");
+		driver.waitForPageToBeReady();
+
+		// Check NotificationCount
+		base.checkNotificationCount(Bgcount, 1);
+		base.notificationSelection("", false);
+		base.waitTime(5);// for abnormal load time while downloading file
+
+		// Format validation
+		String fileName = base.GetLastModifiedFileName();
+		base.validateFileFormat(fileName, expectedFileFormat);
+
+		// Delete downloaded file
+		base.stepInfo("Initiating delete for downloaded file");
+		Files.deleteIfExists(Paths.get(fileName));
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/24/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Cancel Collection' action when Collection is in
+	 *              'Datasets created' status RPMXCON-61094
+	 */
+	@Test(description = "RPMXCON-61094", enabled = true, groups = { "regression" })
+	public void verifyCancelCollectionInDataSetCreationCompletedStats() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", "Collection Progress",
+				"Action" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus };
+		String[] statusList = { "Cancel in progress", "Draft" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61094 - O365");
+		base.stepInfo("Verify 'Cancel Collection' action when Collection is in 'Datasets created' status");
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// create new Collection with Datasets and Initiate
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence with expected Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, true, "", "");
+
+		// Cancel collection
+		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Action", false, "");
+		driver.waitForPageToBeReady();
+		collection.confirmationAction("Cancel", "Yes", Input.cancelCollectionNotification);
+
+		// Cancel back to draft status
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/26/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that When User starts Collection process then Manage
+	 *              collection screen Refresh Interval/ Reload automatically.
+	 *              RPMXCON-61279
+	 */
+	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role)
+			throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String[][] userRolesData = { { userName, role, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61279 - O365");
+		base.stepInfo(
+				" Verify that When User starts Collection process then Manage collection screen Refresh Interval/ Reload automatically. ");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection with datasets
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence with expected Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		base.stepInfo(
+				"When User starts Collection process then Manage collection screen should Refresh Interval/ Reload automatically. \r\n"
+						+ "\r\n"
+						+ "2.It should be refreshed to present the updated progress and status of collections.");
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+		driver.waitForPageToBeReady();
+		base.stepInfo(
+				"It's automatically refreshed to present the updated progress and status columns of collections as Expected.");
 
 		// Logout
 		login.logout();

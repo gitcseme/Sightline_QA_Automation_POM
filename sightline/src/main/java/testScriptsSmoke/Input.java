@@ -471,6 +471,9 @@ public class Input {
 	public static String retreivingDSstatus;
 	public static String virusScanStatus;
 	public static String copyDSstatus;
+	public static String collectionExtractionMsg;
+	public static String cancelCollectionNotification;
+	public static String progressBarHeader;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -888,6 +891,9 @@ public class Input {
 	public static String Discrimination;
 	public static String FCPA;
 	public static String Harassment;
+	public static String NR_Detection;
+	public static String PII;
+	public static String PRIV;
 
 	// Added by Aathith ,Client Page details
 	public static String FilterByType;
@@ -1411,6 +1417,9 @@ public class Input {
 		retreivingDSstatus = testData.getRetreivingDSstatus();
 		virusScanStatus = testData.getVirusScanStatus();
 		copyDSstatus = testData.getCopyDSstatus();
+		collectionExtractionMsg = testData.getCollectionExtractionMsg();
+		cancelCollectionNotification = testData.getCancelCollectionNotification();
+		progressBarHeader = testData.getProgressBarHeader();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -1847,7 +1856,10 @@ public class Input {
 		Discrimination = testData.getDiscrimination();
 		FCPA = testData.getFCPA();
 		Harassment = testData.getHarassment();
-
+		PII = testData.getPII();
+		PRIV = testData.getPRIV();
+        NR_Detection = testData.getNR_Detection();
+		
 		// Added by Aathith ,Client Page details
 		FilterByType = testData.getFilterByType();
 		Name = testData.getName();

@@ -62,8 +62,6 @@ public class Production_Test_Regression_03 {
 	DocViewPage docViewPage;
 	ProjectFieldsPage projectField;
 	SoftAssert softAssertion;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
 	String foldername;
 	String tagname;
 	String productionname;
@@ -1634,7 +1632,8 @@ public class Production_Test_Regression_03 {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		int[] diemen = { 1920, 1080 };
 		double[] zoom = { 0.75, 0.80, 0.90, 1, 1.25 };
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2395,7 +2394,8 @@ public class Production_Test_Regression_03 {
 			foldername = "FolderProd" + Utility.dynamicNameAppender();
 			tagname = "Tag" + Utility.dynamicNameAppender();
 			String newExport = "Ex" + Utility.dynamicNameAppender();
-
+			String prefixID = "A_" + Utility.dynamicNameAppender();
+			String suffixID = "_P" + Utility.dynamicNameAppender();
 			// Pre-requisites
 			// create tag and folder
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);

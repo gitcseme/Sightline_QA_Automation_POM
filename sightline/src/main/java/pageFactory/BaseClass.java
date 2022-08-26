@@ -2099,6 +2099,8 @@ public class BaseClass {
 		try {
 			System.out.println("Source String  : " + sourceString);
 			System.out.println("Compare String  : " + compreString);
+			stepInfo("Source String  : " + sourceString);
+			stepInfo("Compare String  : " + compreString);
 
 			softAssertion.assertEquals(sourceString, compreString);
 			if (!sourceString.equals(compreString)) {
@@ -4377,6 +4379,51 @@ public class BaseClass {
 				waitTime(1);
 			}
 		}
+
+    /*
+	 * @author Indium-Baskar
+	 * 
+	 */
+//	This method used to login As SA,PA,RMU
+//	Impersonate to SA-->rmu,rev,pa & PA-->rmu,rev &RMU-->rev
+	public void credentialsToImpersonateAsPARMUREV(String roll, String impersonate) {
+		try {
+			switch (impersonate) {
+			case "pa":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("pa")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoPA();
+				}
+				if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonateDAtoRMU();
+				}
+
+			case "rmu":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoRMU();
+				}
+				if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonatePAtoRMU();
+				}
+				
+			case "rev":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoReviewer();
+				}
+				if (roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rev")) {
+					driver.waitForPageToBeReady();
+					impersonateRMUtoReviewer();
+				}
+			}
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+
 	}
 
 }

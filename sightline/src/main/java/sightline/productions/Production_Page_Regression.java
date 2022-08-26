@@ -56,8 +56,7 @@ public class Production_Page_Regression {
 	DocListPage docPage;
 	DocViewPage docViewPage;
 	SoftAssert softAssertion;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
+	
 	String foldername;
 	String tagname;
 	String productionname;
@@ -96,7 +95,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55991- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -182,7 +182,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55992- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -246,7 +247,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56087- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
 		
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -294,7 +296,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56089- Production Sprint 06");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -374,7 +377,7 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56092- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-	
+		
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -655,7 +658,8 @@ public class Production_Page_Regression {
 	
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -714,7 +718,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-56042- Production Sprint 07");
 		baseClass.stepInfo("Test case Id: RPMXCON-56036- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -783,7 +788,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56039- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -846,7 +852,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-56038- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -901,7 +908,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-56016- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -962,7 +970,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55985- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1030,7 +1039,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-55984- Production Sprint 07");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1094,7 +1104,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48849- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1134,7 +1145,7 @@ public class Production_Page_Regression {
 		baseClass.waitForElement(page.getClkBtnDownloadDATFiles());
 		page.getClkBtnDownloadDATFiles().waitAndClick(5);
 		BaseClass baseClass=new BaseClass(driver);
-		baseClass.VerifySuccessMessage("Your Production DAT Archive download will get started shortly");
+		baseClass.VerifySuccessMessage("Your Production Archive download will get started shortly");
 		loginPage.logout();
 	}
 
@@ -1148,7 +1159,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48664- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1202,7 +1214,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1241,7 +1254,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1281,7 +1295,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49106- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1333,7 +1348,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49107- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1387,7 +1403,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48505- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String tag = "Default Redaction Tag";
@@ -1433,7 +1450,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47791- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 //		String tag = "Default Redaction Tag";
@@ -1506,7 +1524,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48502- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
@@ -1550,7 +1569,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48503- Production Sprint 08");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
@@ -1669,7 +1689,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-47821- Production Sprint 09");
 		baseClass.stepInfo("To verify Production Generation for NATIVE/PDF/TIFF/Text");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1693,7 +1714,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -1764,7 +1785,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To verify that if Blank Page Removal toggle is ON then it should produced Tiff without blank pages");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -1821,7 +1843,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1926,7 +1949,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1988,7 +2012,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"Verify that on if user paste the sharable link and gives the correct password then it should download the zip file");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2047,7 +2072,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2099,7 +2125,8 @@ public class Production_Page_Regression {
 		baseClass
 				.stepInfo("Verify that error should displays if user paste the shareable link with incorrect password");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2117,7 +2144,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -2155,7 +2182,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To verify that production should generate successfully if user disabled the 'Generate Load File'");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2216,7 +2244,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Test case Id RPMXCON-48186- Production Sprint 10");
 		baseClass.stepInfo("To Verify Generate Section for Production Name and Status.");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2286,7 +2315,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To Verify Redaction Check box along with Privilege Check box, In Generated DAT of Production.");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2345,7 +2375,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo("Test case Id RPMXCON-47822- Production Sprint 10");
 		baseClass.stepInfo("To verify Redacted Document count should get displayed on Summary & Preview tab");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2409,7 +2440,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2461,7 +2493,8 @@ public class Production_Page_Regression {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47844- Production Sprint 10");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		templateName = "templateName" + Utility.dynamicNameAppender();
 		productionSet = "productionSet" + Utility.dynamicNameAppender();
@@ -2547,7 +2580,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To Verify Sorting configured in the production is being honored by the generated production");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2637,7 +2671,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2694,7 +2729,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2757,7 +2793,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2815,7 +2852,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -2871,7 +2909,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To Verify Admin will be able to overwrite an existing production with new production documents and with new bates numbers, if the production is not flagged as Locked");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
@@ -2952,7 +2991,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3006,7 +3046,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3127,11 +3168,12 @@ public class Production_Page_Regression {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		ProductionPage page = new ProductionPage(driver);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String tagname = "TAG" + Utility.dynamicNameAppender();
 		String folder = "Folder" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48506 Production Sprint 11");
 		baseClass.stepInfo(
@@ -3192,7 +3234,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// Pre-requisites
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -3261,7 +3304,8 @@ public class Production_Page_Regression {
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		ProductionPage page = new ProductionPage(driver);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String tagname = "TAG" + Utility.dynamicNameAppender();
 		String folder = "Folder" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
@@ -3322,7 +3366,8 @@ public class Production_Page_Regression {
 
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// create tag and folder
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -3377,7 +3422,8 @@ public class Production_Page_Regression {
 		baseClass.stepInfo(
 				"To verify status on the tile of a production on the landing page should show correct production status");
 		UtilityLog.info(Input.prodPath);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
 		// create tag and folder
@@ -3548,7 +3594,7 @@ public class Production_Page_Regression {
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-			loginPage.logoutWithoutAssert();
+			//loginPage.logoutWithoutAssert();
 		}
 		try {
 			loginPage.quitBrowser();

@@ -94,6 +94,7 @@ public class Production_Test_Regression_02{
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
+		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 	}
@@ -3130,7 +3131,11 @@ public class Production_Test_Regression_02{
 	baseClass.screenShot(result);
 	}
 
-	loginPage.quitBrowser();
+	try {
+		loginPage.quitBrowser();
+	} catch (Exception e) {
+		loginPage.quitBrowser();
+	}
 
 	}
 

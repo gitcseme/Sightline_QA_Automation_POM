@@ -475,6 +475,15 @@ public class CollectionPage {
 		return driver.FindElementByXPath("//a[@id='btnStartCollection']");
 	}
 
+	public Element getRibbonHeader(String text) {
+		return driver.FindElementByXPath("//span[text()='" + text + "']");
+	}
+
+	public Element getProgressBarStats(String collectionName, int index) {
+		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
+				+ "]//div[@class='col-md-5 progressbar-blue-text']");
+	}
+
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
 		base = new BaseClass(driver);
@@ -892,9 +901,9 @@ public class CollectionPage {
 				base.VerifySuccessMessage(verifyMsg);
 				base.CloseSuccessMsgpopup();
 			}
-		} else if (type.equalsIgnoreCase("Cancel")) {
+		} else if (type.equalsIgnoreCase("CancelTo")) {
 
-		} else if (type.equalsIgnoreCase("Delete")) {
+		} else if (type.equalsIgnoreCase("Delete") || type.equalsIgnoreCase("Cancel")) {
 			getConfirmationBtnAction(action).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage(verifyMsg);
@@ -1917,7 +1926,7 @@ public class CollectionPage {
 	 *              be scripted based on future requirements)
 	 */
 	public void verifyExpectedCollectionStatus(Boolean headerWait, String[] headerListDataSets, String collectionName,
-			String[] expStatus, int reTryAttempt, Boolean verifyCollectionStatus, Boolean additional1,
+			String[] expStatus, int reTryAttempt, Boolean verifyCollectionStatus, Boolean progressBar,
 			String additional2, String additional3) {
 
 		HashMap<String, Integer> colllectionDataHeadersIndex = new HashMap<>();
@@ -1936,7 +1945,7 @@ public class CollectionPage {
 		base.stepInfo("Collection Id : " + collId);
 
 		// Status check
-		statusCheck(expStatus, reTryAttempt, collectionName, colllectionDataHeadersIndex, true, false, "", "", 0);
+		statusCheck(expStatus, reTryAttempt, collectionName, colllectionDataHeadersIndex, true, progressBar, "", "", 0);
 
 	}
 
@@ -1951,12 +1960,15 @@ public class CollectionPage {
 	 * @param addditional2
 	 * @param additional3
 	 * @param additional4
+	 * @modifiedon : 8/25/22
+	 * @modifiedBy : Raghuram
 	 */
 	public void statusCheck(String[] expStatus, int reTryAttempt, String collectionName,
-			HashMap<String, Integer> colllectionDataHeadersIndex, Boolean verifyCollectionStatus, Boolean additional1,
+			HashMap<String, Integer> colllectionDataHeadersIndex, Boolean verifyCollectionStatus, Boolean progressBar,
 			String addditional2, String additional3, int additional4) {
 		// Status check
 		String collStatus = null;
+		String collProgress = "0";
 
 		for (int i = 0; i < expStatus.length; i++) {
 			String expectedStatus = expStatus[i];
@@ -1982,6 +1994,15 @@ public class CollectionPage {
 				base.textCompareEquals(collStatus, expectedStatus,
 						"Collection is in " + expectedStatus + " state as Expected",
 						"Collection is not in " + expectedStatus + " state");
+			}
+
+			// Progress Bar
+			if (progressBar) {
+				String collProgressStats = getProgressBarStats(collectionName,
+						colllectionDataHeadersIndex.get(Input.progressBarHeader)).getText();
+				base.textCompareNotEquals(collProgress, collProgressStats, "Progress Bar value got updated",
+						"Progress Bar value remains the same");
+				collProgress = collProgressStats;
 			}
 		}
 	}
@@ -2372,5 +2393,4 @@ public class CollectionPage {
 		}
 		base.getBullHornIcon().waitAndClick(10);
 	}
-
 }
