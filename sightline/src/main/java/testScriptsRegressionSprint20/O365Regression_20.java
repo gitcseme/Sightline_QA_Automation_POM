@@ -390,6 +390,74 @@ public class O365Regression_20 {
 		login.logout();
 	}
 
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 08/26/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that When User starts Collection process then Manage
+	 *              collection screen Refresh Interval/ Reload automatically.
+	 *              RPMXCON-61279
+	 */
+	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role)
+			throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String[][] userRolesData = { { userName, role, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61279 - O365");
+		base.stepInfo(
+				" Verify that When User starts Collection process then Manage collection screen Refresh Interval/ Reload automatically. ");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection with datasets
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+		driver.waitForPageToBeReady();
+
+		// Verify Collection presence with expected Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		base.stepInfo(
+				"When User starts Collection process then Manage collection screen should Refresh Interval/ Reload automatically. \r\n"
+						+ "\r\n"
+						+ "2.It should be refreshed to present the updated progress and status of collections.");
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+		driver.waitForPageToBeReady();
+		base.stepInfo(
+				"It's automatically refreshed to present the updated progress and status columns of collections as Expected.");
+
+		// Logout
+		login.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
