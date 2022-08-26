@@ -951,10 +951,11 @@ public class DocView_MiniDocList_Regression {
 	 * Author : Mohan date: 9/07/21 Modified date:N/A Modified by: Mohan Description
 	 * : Verify Configure Mini DocList modal window should be launched on click of
 	 * the small gear icon from Mini DocList child window
+	 * @throws InterruptedException 
 	 */
 
 	@Test(description = "RPMXCON-51338", enabled = true, groups = { "regression" })
-	public void verifyConfigureMiniDocListChildWindow() {
+	public void verifyConfigureMiniDocListChildWindow() throws InterruptedException {
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass.stepInfo("Test case Id: RPMXCON-51338");
 		String searchString = Input.searchString1;
@@ -2861,7 +2862,7 @@ public class DocView_MiniDocList_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-59584" ,enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-59584",enabled = true, groups = { "regression" })
 	public void verifyNavigateDocViewManageAssignmentFromReviewerDashboard() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-59584");
