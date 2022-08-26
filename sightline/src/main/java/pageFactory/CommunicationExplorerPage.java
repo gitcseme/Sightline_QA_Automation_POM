@@ -320,6 +320,51 @@ public class CommunicationExplorerPage {
 		return driver.FindElementByXPath(
 				"//div[text()=' Filter by MasterDate:']//..//..//form[@class='smart-form comminicationmap']//i[@class='fa fa-calendar']");
 	}
+	
+	
+	//add by Aathith
+		public Element getShowHelpIcon() {
+			return driver.FindElementByXPath("//a[@data-original-title='Show Help']");
+		}
+		
+		public Element getTally_Sources(String source) {
+			return driver.FindElementByXPath("//strong[contains(.,'"+source+"')]");
+		}
+		
+		public Element getTally_NameOfTheSource(String source, String sourceName) {
+			return driver.FindElementByXPath(".//*[@id='"+source+"']/li[contains(.,'"+sourceName+"')]/label");
+		}
+		
+		public Element getTally_SaveSelections(String source) {
+			return driver.FindElementByXPath("//button[@id='"+source+"']");
+		}
+		
+		public Element getResultOption(int i) {
+			return driver.FindElementByXPath("//ul[@class='select2-results__options']/li["+i+"]");
+		}
+		
+		public Element getCloseBtn() {
+			return driver.FindElementByXPath("//*[@id='close']");
+		}
+		
+		public Element getRemoveFilter() {
+			return driver.FindElementByXPath("//a[@class='removeFilter']");
+		}
+		
+		public ElementCollection getRemoveFilters() {
+			return driver.FindElementsByXPath("//a[@class='removeFilter']");
+		}
+		
+		public Element selectOptionInFilter(int i) {
+			return driver.FindElementByXPath("//ul[contains(@id,'select2')]/li["+i+"]");
+		}
+		
+		public Element getSelectDateType(String filter) {
+			return driver.FindElementByXPath("//select[@id='"+filter+"-dtop']");
+		}
+		public Element getDateInputBox() {
+			return driver.FindElementByXPath("//input[contains(@id,'comminicationmap')]");
+		}
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -1027,4 +1072,139 @@ public class CommunicationExplorerPage {
 		}
 	}
 	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param source
+	 * @param sourceName
+	 * @throws InterruptedException
+	 * @Desscription used to select different source type in communication exploer page 
+	 */
+	public void selectSource(String source, String sourceName) throws InterruptedException {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTally_SelectSource());
+		base.waitTillElemetToBeClickable(getTally_SelectSource());
+		getTally_SelectSource().waitAndClick(5);
+		
+		//select source type
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTally_Sources(source));
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(getTally_Sources(source).getWebElement()).click().perform();
+		
+		//select source name
+		source = source.toLowerCase();
+		base.waitForElement(getTally_NameOfTheSource(source,sourceName));
+		base.waitTillElemetToBeClickable(getTally_NameOfTheSource(source,sourceName));
+		getTally_NameOfTheSource(source,sourceName).waitAndClick(5);
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTally_SaveSelections(source));
+		base.waitTillElemetToBeClickable(getTally_SaveSelections(source));
+		getTally_SaveSelections(source).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.stepInfo("selected source type : "+ source);
+		base.stepInfo("select source name : "+ sourceName);
+
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param options
+	 * @param include
+	 * @param index
+	 * @Description filter the document type filters with indexing
+	 */
+	public void filterDocumentBy(String options, boolean include, int index) {
+		getFilterDocumentsBy_options(options).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (include == true) {
+			base.waitForElement(getIncludeRadioBtn());
+			getIncludeRadioBtn().Click();
+		} else {
+			base.waitForElement(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+		}
+		driver.waitForPageToBeReady();
+		searchCriteriaTextBox().waitAndClick(5);
+		base.waitForElement(getResultOption(index));
+		base.waitTillElemetToBeClickable(getResultOption(index));
+		
+		base.moveWaitAndClick(getResultOption(index), 10);
+		base.waitForElement(getAddToFilter());
+		getAddToFilter().waitAndClick(10);
+		base.stepInfo(options +" Filters Applied.");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description remove the exits filters
+	 */
+	public void removeExitsFilters() {
+		driver.waitForPageToBeReady();
+		List<WebElement> element = getRemoveFilters().FindWebElements();
+		for(WebElement ele : element) {
+			driver.waitForPageToBeReady();
+			ele.click();
+			driver.waitForPageToBeReady();
+		}
+		base.stepInfo("filters are removed");
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @Description remove exiting filter with filter visible method
+	 */
+	public void removeFilters() {
+		driver.waitForPageToBeReady();
+		if(getRemoveFilter().isElementAvailable(1)) {
+			base.waitForElement(getRemoveFilter());
+			getRemoveFilter().waitAndClick(5);
+			removeFilters();
+		}
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param filter
+	 * @param index
+	 * @Description filter the document type with date filter
+	 */
+	public void filterDocumentByDate(String filter,int index) {
+		
+		driver.waitForPageToBeReady();
+		getFilterDocumentsBy_options(filter).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectDateType(filter).selectFromDropdown().selectByIndex(index);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDateInputBox());
+		getDateInputBox().SendKeys(""+Keys.ENTER);
+		
+		base.waitForElement(getAddToFilter());
+		getAddToFilter().waitAndClick(5);
+		base.stepInfo(filter +" Filters Applied.");
+		
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param filter
+	 * @param time
+	 * @Description filter document types date filter with time zone
+	 */
+	public void filterDocumentByDate(String filter,String time) {
+		
+		driver.waitForPageToBeReady();
+		getFilterDocumentsBy_options(filter).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getSelectDateType(filter).selectFromDropdown().selectByVisibleText(time);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDateInputBox());
+		getDateInputBox().SendKeys(""+Keys.ENTER);
+		
+		base.waitForElement(getAddToFilter());
+		getAddToFilter().waitAndClick(5);
+		base.stepInfo(filter +" Filters Applied.");
+		
+	}
 }
