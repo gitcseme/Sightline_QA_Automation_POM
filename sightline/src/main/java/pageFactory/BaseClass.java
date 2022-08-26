@@ -4358,5 +4358,25 @@ public class BaseClass {
 		textCompareEquals(fileFormat, expectedFormat, "File format is as Expected : " + fileFormat,
 				"File format is not as Expected : " + fileFormat);
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 * @param n
+	 * @Description this method is used for move to element and perform action click,
+	 * this method used action not performed in not normal click method. 
+	 */
+	public void moveWaitAndClick(Element element, int n) {
+		
+		Actions action = new Actions(driver.getWebDriver());
+		for(int i=0;i<n;i++) {
+			try {
+				action.moveToElement(element.getWebElement()).click().perform();
+				break;
+			}catch(Exception e){
+				waitTime(1);
+			}
+		}
+	}
 
 }
