@@ -39,8 +39,7 @@ public class Production_Regression {
 	TagsAndFoldersPage tagsAndFolderPage;
 	SessionSearch sessionSearch;
 	SoftAssert softAssertion;
-	String  prefixID = "A" + Utility.dynamicNameAppender();
-	String suffixID = "P" + Utility.dynamicNameAppender();
+	
 	String foldername;
 	String tagname;
 	String productionname;
@@ -86,7 +85,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -99,7 +99,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		int firstFile = Integer.parseInt(beginningBates);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -140,7 +140,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -219,7 +220,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -232,7 +234,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		String prodName=page.addANewProduction(productionname);
@@ -271,7 +273,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -321,7 +324,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -374,7 +378,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -426,7 +431,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -483,7 +489,8 @@ public class Production_Regression {
 		baseClass.selectproject();
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
@@ -547,7 +554,8 @@ public class Production_Regression {
 
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -564,7 +572,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(4);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		String prodName=page.addANewProduction(productionname);
@@ -671,7 +679,8 @@ public class Production_Regression {
 		
 		foldername = "Prod_Folder" + Utility.dynamicNameAppender();
 		tagname = "Prod_Tag" + Utility.dynamicNameAppender();
-
+		String  prefixID = "A" + Utility.dynamicNameAppender();
+		String suffixID = "P" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Create tags and folders");
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);

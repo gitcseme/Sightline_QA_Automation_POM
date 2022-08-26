@@ -65,8 +65,7 @@ public class Production_Regression1 {
 	String foldername;
 	String tagname;
 	String productionname;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
+	
 
 	@BeforeMethod(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -882,7 +881,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that in Advanced Search, search against uncommit
 	 *              Production should not display any results.
 	 */
-	@Test(description="RPMXCON-49218",enabled=true,groups = { "regression" })
+	//@Test(description="RPMXCON-49218",enabled=true,groups = { "regression" })
 	public void verifyCommitAndUnCommitProductionResults() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -1794,7 +1793,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that after uncommit if user regenerate the production ,
 	 *              it should generate successfully.
 	 */
-	@Test(description="RPMXCON-49221",enabled=true,groups = { "regression" } )
+	//@Test(description="RPMXCON-49221",enabled=true,groups = { "regression" } )
 	public void ProductionGenerateSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2074,7 +2073,7 @@ public class Production_Regression1 {
 	 *              Document Selection tab, it should regenerate and commit
 	 *              Production successfully
 	 */
-	@Test(description="RPMXCON-49224",enabled=true,groups = { "regression" })
+	//@Test(description="RPMXCON-49224",enabled=true,groups = { "regression" })
 	public void modifyingTheDocumentSelectionTabAndGenerateTheProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id: RPMXCON-49224 -Production Sprint 05");
@@ -2172,7 +2171,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that even after Uncommit the producion user can
 	 *              download the Production.
 	 */
-	@Test(description="RPMXCON-56010",enabled=true,groups = { "regression" })
+	//@Test(description="RPMXCON-56010",enabled=true,groups = { "regression" })
 	public void productionGeneratedSuccessfullyAfterUnCommit() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -2625,7 +2624,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 
@@ -3423,7 +3422,7 @@ public class Production_Regression1 {
 	 * @Description : Verify that after uncommit the production, Action "Production
 	 *              Deleted" should be displayed in 'Document Audit Report'.
 	 */
-	 @Test(description="RPMXCON-49222",enabled=true,groups = { "regression" })
+	 //@Test(description="RPMXCON-49222",enabled=true,groups = { "regression" })
 	public void verifyingTheAuditReportInGeneratedDocument() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -4170,7 +4169,8 @@ public class Production_Regression1 {
 			
 			String tagName = Input.randomText + Utility.dynamicNameAppender();
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-
+			String prefixID = "A_" + Utility.dynamicNameAppender();
+			String suffixID = "_P" + Utility.dynamicNameAppender();
 			
 			base.stepInfo("Create tag with classification");
 			tagsAndFolderPage.CreateTagwithClassification(tagName, Input.tagNamePrev);
@@ -5260,7 +5260,7 @@ public class Production_Regression1 {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(2);
+			String beginningBates = page.getRandomNumber(4);
 			base.stepInfo("Add New Production");
 			page.addANewProduction(productionname);
 
@@ -5871,7 +5871,8 @@ public class Production_Regression1 {
 			String foldername = Input.randomText + Utility.dynamicNameAppender();
 
 			String productionname = Input.randomText + Utility.dynamicNameAppender();
-
+			String prefixID = "A_" + Utility.dynamicNameAppender();
+			String suffixID = "_P" + Utility.dynamicNameAppender();
 			// Pre-requisites
 			// create tag and folder
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -5929,7 +5930,8 @@ public class Production_Regression1 {
 			String tagname = Input.randomText + Utility.dynamicNameAppender();
 			String productionname = Input.randomText + Utility.dynamicNameAppender();
 			String tagNamePrev = Input.tagNamePrev;
-
+			String prefixID = "A_" + Utility.dynamicNameAppender();
+			String suffixID = "_P" + Utility.dynamicNameAppender();
 			// Pre-requisites
 			// create tag and folder
 			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
