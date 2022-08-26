@@ -4726,7 +4726,7 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 70; i++) {
-			base.waitTime(3);
+			base.waitTime(1);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 			if (status.contains("Indexed")) {
@@ -4769,7 +4769,6 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 
 		for (int i = 0; i < 60; i++) {
-			base.waitTime(3);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -4779,6 +4778,7 @@ public class IngestionPage_Indium {
 			} else if (status.contains("In Progress")) {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(10);
+				driver.waitForPageToBeReady();
 			} else {
 				base.failedStep("rollback failed");
 			}
@@ -6059,7 +6059,7 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		// catlogging
 		for (int i = 0; i < 70; i++) {
-			base.waitTime(3);
+			base.waitTime(1);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -6129,8 +6129,7 @@ public class IngestionPage_Indium {
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 40; i++) {
-			
-			base.waitTime(2);
+			base.waitTime(1);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
