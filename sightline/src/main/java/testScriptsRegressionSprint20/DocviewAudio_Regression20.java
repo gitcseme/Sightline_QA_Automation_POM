@@ -17,6 +17,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -311,6 +312,185 @@ public class DocviewAudio_Regression20 {
 		// logout
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author:Baskar
+	 * date: 26/08/2022 Modified date: NA Modified by:
+	 * @Description IE11: Verify when user enters the document id in the "doc id input box" and hits the enter key, then 
+	 * corresponding audio doc should load in the default view prior to that document navigation is done from mini doc list child window
+	 */
+	@Test(description = "RPMXCON-51632", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
+	public void verifyDocumentLoadedFromMiniDocList(String username, String password) throws Exception {
+		
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51632");
+		baseClass.stepInfo("IE11: Verify when user enters the document id in the \"doc id input box\" and hits the enter key, then "
+				+ "corresponding audio doc should load in the default view prior to that document navigation is done from mini doc list child window");
+
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		//view in docview
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
+		baseClass.stepInfo(Input.audioSearchString1+" audio document is searched");
+		sessionSearch.ViewInDocView();
+		
+		//verify doc id from child window
+		docViewPage.clickGearIconOpenMiniDocList();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		docViewPage.selectRowFromMiniDocList(5);
+		driver.waitForPageToBeReady();
+		String minidocid = docViewPage.getMiniDocListData(5,2).getText().trim();
+		docViewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		String currentdocid = docViewPage.getDocViewSelectedDocId().getText().trim();
+		softAssertion.assertEquals(currentdocid,minidocid);
+		baseClass.passedStep("Clicked audio document was load in the default view and same document is selected from mini doc list child window");
+		
+		// verify from docid default view prior
+		docViewPage.getDocView_NumTextBox().SendKeys("3"+Keys.ENTER);
+		driver.waitForPageToBeReady();
+		currentdocid = docViewPage.getDocViewSelectedDocId().getText().trim();
+		docViewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		String idOnMiniDoc = docViewPage.getMiniDocListData(3,2).getText().trim();
+		softAssertion.assertEquals(currentdocid,idOnMiniDoc);
+		baseClass.passedStep("Corresponding audio document was load in the default view and same document is selected from mini doc list child window");
+		driver.close();
+		docViewPage.switchToNewWindow(1);
+		
+		softAssertion.assertAll();
+		baseClass.passedStep("Verified when user enters the document id in the \"doc id input box\" and hits the enter key, then corresponding audio doc "
+				+ "should load in the default view prior to that document navigation is done from mini doc list child window");
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author :Baskar
+	 * date: 26/08/2022 Modified date: NA Modified by:
+	 * @Description Verify that audio hits should be displayed when documents searched with different term and 
+	 * different/same threshold are assigned to assignment at different time from session search
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(description = "RPMXCON-51799", enabled = true, groups = { "regression" })
+	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
+		
+		baseClass = new BaseClass(driver);
+		docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51799");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with different term and "
+				+ "different/same threshold are assigned to assignment at different time from session search");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as RMU");
+
+		String searchString1 = Input.audioSearchString3;
+		String searchString2 = Input.audioSearchString4;
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		String assignmentName2 = "assgnAudio" + Utility.dynamicNameAppender();
+		// First audio Search
+		sessionSearch.audioSearch(searchString1, Input.language);
+		sessionSearch.getPureHitAddButton().waitAndClick(10);
+
+		sessionSearch.bulkAssign();
+		assignmentPage.assignDocstoNewAssgn(assignmentName);
+		assignmentPage.quickAssignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName, Input.codeFormName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName);
+		driver.waitForPageToBeReady();
+
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString1);
+
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+		
+		//second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearch(searchString2, Input.language);
+		sessionSearch.addPureHit();
+
+		sessionSearch.bulkAssign();
+		assignmentPage.assignDocstoNewAssgn(assignmentName2);
+		assignmentPage.quickAssignmentCreation(assignmentName2, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName2, Input.codeFormName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName2);
+		driver.waitForPageToBeReady();
+
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString2.toLowerCase());
+		
+		// removing the pure Hits in Selected Result
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.removePureHitsFromSelectedResult();
+				
+		// First audio search term with max threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "max");
+		sessionSearch.addPureHit();
+
+		// second audio search with same term and min threshold value
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString2, Input.language, "min");
+		sessionSearch.addPureHit();
+
+		String assignmentName1 = "assgnAudio" + Utility.dynamicNameAppender();
+		// view All audio Docs in DocList
+		sessionSearch.bulkAssign();
+		assignmentPage.assignDocstoNewAssgn(assignmentName1);
+		assignmentPage.quickAssignmentCreation(assignmentName1, Input.codeFormName);
+		assignmentPage.saveAssignment(assignmentName1, Input.codeFormName);
+
+		assignmentPage.navigateToAssignmentsPage();
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		assignmentPage.manageAssignmentToDocViewAsRmu(assignmentName1);
+
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigating to Docview Page");
+
+		baseClass.stepInfo("Verifying audio hits  displayed when documents searched with same term and different"
+				+ "threshold navigated to doc view from session search > Assignments Page>Docview");
+
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString2.toLowerCase());
+		loginPage.logout();
+
+	}
+
+@DataProvider(name = "PaRmuRev")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1userName, Input.pa1password },
+				{ Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
