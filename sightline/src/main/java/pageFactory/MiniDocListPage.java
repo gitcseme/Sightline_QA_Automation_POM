@@ -19,6 +19,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -92,6 +94,7 @@ public class MiniDocListPage {
 		sessionSearch = new SessionSearch(driver);
 		reusableDocViewPage = new ReusableDocViewPage(driver);
 	}
+	
 
 	public Element getReviewHeader() {
 		return driver
@@ -512,6 +515,22 @@ public class MiniDocListPage {
 	public Element getDashBoardReviewer() {
 		return driver.FindElementByXPath("//a[@name='ReviewerDashboard']");
 	}
+	public Element getPureHitAddButton() {
+	return driver.FindElementByXPath(".//*[@id='001']/i[2]");
+}
+public Element getBulkActionButton() {
+	return driver.FindElementByXPath("//*[@id='idAction']");
+}
+public Element getViewBtn() {
+	return driver.FindElementByXPath("//a[text()='View']");
+}
+public Element getDocViewFromDropDown() {
+	return driver.FindElementByXPath("//a[text()='View In DocView']");
+}
+
+	public Element getDocViewAction() {
+	return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]");
+}
 	
 	/**
 	 * @author Indium Raghuram ] Description : To get the list of elements
@@ -2090,13 +2109,43 @@ public class MiniDocListPage {
 		return hex;
 	}
 
-	public void viewInDocView() {
-		baseClass.waitForElement(docViewPage.getPureHitsCount());
-		docViewPage.getPureHitsCount().waitAndClick(10);
-		baseClass.waitForElement(docViewPage.getActionButton());
-		docViewPage.getActionButton().waitAndClick(5);
-		baseClass.waitForElement(docViewPage.getDocViewAction());
-		docViewPage.getDocViewAction().waitAndClick(3);
+	public void viewInDocView() throws InterruptedException {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+
+		driver.scrollPageToTop();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkActionButton().Visible();
+			}
+		}), Input.wait30);
+		baseClass.waitTime(3); // App synch
+		getBulkActionButton().waitAndClick(5);
+		baseClass.waitTime(3); // App Synch
+
+		if (getViewBtn().isElementAvailable(2)) {
+			driver.waitForPageToBeReady();
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
+			Actions actions = new Actions(driver.getWebDriver());
+			wait.until(ExpectedConditions.elementToBeClickable(getViewBtn().getWebElement()));
+			actions.moveToElement(getViewBtn().getWebElement()).build().perform();
+
+			baseClass.waitForElement(getDocViewFromDropDown());
+			getDocViewFromDropDown().waitAndClick(10);
+		} else {
+			getDocViewAction().waitAndClick(10);
+			baseClass.waitTime(3); // added for stabilization
+		}
+
+		System.out.println("Navigated to docView to view docs");
+		UtilityLog.info("Navigated to docView to view docs");
 
 	}
 

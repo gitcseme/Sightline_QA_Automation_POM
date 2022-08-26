@@ -696,11 +696,6 @@ public class DocView_MiniDocList_Regression {
 
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		sessionSearch.basicContentSearch(Input.searchString2);
-		sessionSearch.ViewInDocView();
-		miniDocListpage.removingFieldsAndDragnDropDefault();
-		
-		driver.waitForPageToBeReady();
 		miniDocListpage.checkmarkVerification(assignmentNameToCreate);
 		loginPage.logout();
 
@@ -974,7 +969,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Basic Search is done successfully");
 
 		// View in DocView
-		sessionSearch.ViewInDocView();
+		miniDocListpage.viewInDocView();
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		// Click Gear Icon and Configure MiniDoclist Popup
@@ -994,7 +989,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Basic Search is done successfully");
 
 		// View in DocView
-		sessionSearch.ViewInDocView();
+		miniDocListpage.viewInDocView();
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		// Click Gear Icon and Configure MiniDoclist Popup
@@ -1014,7 +1009,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Basic Search is done successfully");
 
 		// View in DocView
-		sessionSearch.ViewInDocView();
+		miniDocListpage.viewInDocView();
 		baseClass.stepInfo("Doc are viewed in Docview successfully");
 
 		// Click Gear Icon and Configure MiniDoclist Popup
@@ -1125,6 +1120,7 @@ public class DocView_MiniDocList_Regression {
 		baseClass.stepInfo("Selected Assignment name : " + assignmentNameToCreate);
 		miniDocListpage.VerifyArrow();
 
+		driver.waitForPageToBeReady();
 		loginPage.logout();
 	}
 
@@ -1259,25 +1255,23 @@ public class DocView_MiniDocList_Regression {
 	@Test(description = "RPMXCON-51368", enabled = true, groups = { "regression" })
 	public void verifyCodeSameAsMiniDocListChildWindowCodingParentWindow() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51368");
-		
-		  String assignment = "Assignment07" + Utility.dynamicNameAppender();
-		  
-		  // Login as Reviewer Manager 
-		  loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		  baseClass.stepInfo("Successfully login as Reviewer Manager'" +
-		  Input.rmu1userName + "'");
-		  
-		  // search to Assignment creation
-		  sessionSearch.basicContentSearch(Input.searchString2);
-		  sessionSearch.bulkAssign(); assignmentPage.assignmentCreation(assignment,
-		  Input.codingFormName); assignmentPage.toggleSaveButton();
-		  assignmentPage.assignmentDistributingToReviewer();
-		  baseClass.passedStep("Assignment created and assigned to reviewer");
-		  
-		  // logout loginPage.logout();
-		  baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName +
-		  "'");
-		 
+		String assignment = "Assignment07" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// search to Assignment creation
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignment, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+		baseClass.passedStep("Assignment created and assigned to reviewer");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer '" + Input.rmu1userName + "'");
 
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -1365,12 +1359,8 @@ public class DocView_MiniDocList_Regression {
 		// Login as a Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Project Administration'" + Input.rev1userName + "'");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-		miniDocListpage.removingFieldsAndDragnDropDefault();
-		
+
 		// Selecting the assignment from dashboard
-		baseClass.selectproject();
 		assignmentPage.SelectAssignmentByReviewer(assignmentNameToChoose);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
@@ -1571,12 +1561,8 @@ public class DocView_MiniDocList_Regression {
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		// search to Assignment creation
-		baseClass.selectproject();
 		sessionSearch.basicContentSearch(Input.searchString2);
 		sessionSearch.ViewInDocView();
 
@@ -2523,13 +2509,9 @@ public class DocView_MiniDocList_Regression {
 		// Login As Reviewer
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		// selecting the assignment
-	    baseClass.selectproject();
-		assignmentPage.SelectAssignmentByReviewer("Assignment071358068");
+		assignmentPage.SelectAssignmentByReviewer(assignName);
 		baseClass.stepInfo("User on the doc view after selecting the assignment");
 
 		// MiniDocList toggle is on
@@ -3158,12 +3140,8 @@ public class DocView_MiniDocList_Regression {
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
-		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.ViewInDocView();
-		miniDocListpage.removingFieldsAndDragnDropDefault();
 
 		// Session search to docview
-		baseClass.selectproject();
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocView();
 
