@@ -735,7 +735,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
@@ -846,7 +846,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.MetaDataSearchInAdvancedSearch(ingestionMetaData, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
@@ -953,7 +953,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.MetaDataSearchInAdvancedSearch(Input.metadataIngestion, ingestionDataName);
 		search.saveSearchAtAnyRootGroup(SearchName1, Input.shareSearchDefaultSG);
@@ -1065,7 +1065,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.advancedMetaDataForDraft(Input.metadataIngestion, null, ingestionDataName, null);
 		search.selectOperator("AND");
@@ -1453,7 +1453,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.metadataSearchesUsingOperators(Input.metadataIngestion, ingestionDataName, "AND", "EmailThreadID",
 				Input.sameThreadDocs_EmailThreadID, true);
@@ -1562,7 +1562,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.metadataSearchesUsingOperators(Input.metadataIngestion, ingestionDataName, "AND", "FamilyID",
 				Input.sameFamilyDocs_FamilyID, true);
@@ -1672,7 +1672,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 		search.navigateToSessionSearchPageURL();
 		search.advancedMetaDataForDraft(Input.metadataIngestion, null, ingestionDataName, null);
@@ -1821,7 +1821,7 @@ public class Assignment_Regression3 {
 		ingestionPage = new IngestionPage_Indium(driver);
 		boolean status = ingestionPage.verifyIngestionpublish(Input.EmailConcatenatedDataFolder);
 		 if (status == true) {
-	            ingestionDataName=ingestionPage.publishAddonlyIngestion(Input.EmailConcatenatedDataFolder);
+	            ingestionDataName=ingestionPage.getPublishedIngestionName(Input.EmailConcatenatedDataFolder);
 	        }
 	        
 		 System.out.println("ingestionDataName :-"+ingestionDataName);
