@@ -244,12 +244,16 @@ public class Ingestion_Regression_3 {
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ingestionPage = new IngestionPage_Indium(driver);
+		boolean status = ingestionPage.verifyIngestionpublish(Input.HiddenPropertiesFolder);
+		if (status == false) {
 		baseClass.stepInfo("Add new ingestion and Perform Catalogging");
 		ingestionPage.IngestionOnlyForDatFile(Input.HiddenPropertiesFolder, Input.YYYYMMDDHHMISSDat);
 		ingestionPage.ignoreErrorsAndCatlogging();
 		baseClass.stepInfo("Rollback and Delete ingestion using action dropdown menu");
 		ingestionPage.performRollbackAndDeleteIngestion();
 		baseClass.passedStep("Verified that ingestion which is rolledback can be deleted");
+		}
+		baseClass.passedStep("add only ingestion already present in this project");
 		loginPage.logout();
 	}
 	
