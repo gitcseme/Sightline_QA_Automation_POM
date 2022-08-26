@@ -13,6 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,8 +30,9 @@ import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import retry.CustomTestNGListener;
+import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
-
 public class Production_Regression19 {
 
 	Driver driver;
@@ -242,7 +244,7 @@ public class Production_Regression19 {
 		 **/
 
 		@Test(description = "RPMXCON-47818", enabled = true, groups = { "regression" })
-		public void AsverifyRedactedDocumentCountInPrivGuard() throws Exception {
+		public void verifyRedactedDocumentCountInPrivGuard() throws Exception {
 
 			base.stepInfo("Test case Id:RPMXCON-47818- Production Component");
 			base.stepInfo(

@@ -14,6 +14,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,8 +30,9 @@ import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import retry.CustomTestNGListener;
+import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
-
 public class Assignments_Regression2_3 {
 
 	
@@ -49,8 +51,8 @@ public class Assignments_Regression2_3 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
-//		in = new Input();
-//		in.loadEnvConfig();
+		in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -83,7 +85,7 @@ public class Assignments_Regression2_3 {
 	 */
 	
 	
-	 @Test(description = "RPMXCON-53907", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53907", enabled = true, groups = { "regression" })
 		public void verifyAllChildSelectOnceSlctPrntGrp() throws Exception{
 		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();	
 		   String parentAssgnGrp = "Root";
@@ -155,7 +157,7 @@ public class Assignments_Regression2_3 {
 		 * RPMXCON-53948
 		 */
 	   
-	   @Test(description = "RPMXCON-53948", enabled = true, groups = { "regression" })
+	  @Test(description = "RPMXCON-53948", enabled = true, groups = { "regression" })
 		public void verifyRMUPerformPersisSearchHitSS() throws Exception{
 		   
 		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();	
@@ -209,7 +211,7 @@ public class Assignments_Regression2_3 {
 		 * RPMXCON-54440
 		 */
 	   
-	   @Test(description = "RPMXCON-54440", groups = { "regression" })
+	  @Test(description = "RPMXCON-54440", groups = { "regression" })
 		public void verifyErrorMsgForSpclCharEditAssignScr() throws InterruptedException {
 		   String assignmentName1 = "AR2Assignment" + Utility.dynamicNameAppender();
 		   BaseClass baseClass = new BaseClass(driver);
@@ -252,7 +254,7 @@ public class Assignments_Regression2_3 {
 		   		+ "\"Add/remove coding form in this Assignment\" pop-up the PopUp should get cancelled
 		 * RPMXCON-65131
 		 */
-	   @Test(description = "RPMXCON-65131", groups = { "regression" })
+	  @Test(description = "RPMXCON-65131", groups = { "regression" })
 		public void verifyPopupCancelBtnSortCoding() throws InterruptedException {	  
 		   CodingForm cf = new CodingForm(driver);
 		   
