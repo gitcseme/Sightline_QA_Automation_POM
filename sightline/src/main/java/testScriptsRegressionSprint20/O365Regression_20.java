@@ -457,6 +457,109 @@ public class O365Regression_20 {
 		// Logout
 		login.logout();
 	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that all configured Collections and associated properties are available on "Manage Collections" screen (Grid).
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61012", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyManageCollectionScreenGridContainsTheHeaderListAndOtherDetails(String username, String password, String fullname)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-61012 - O365");
+		base.stepInfo("Verify that all configured Collections and associated properties are available on \"Manage Collections\" screen (Grid).");
+
+		
+		String[][] userRolesData = { { username, fullname, fullname } };
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+
+		// Logout
+		login.logout();
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// navigate to Collection page
+		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		
+		// Verify Collection presence
+		collection.getCollectionPageHeaderList();
+		//logout
+		login.logout();
+		
+	}
+	
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that column “Retrieved Count” displays in Final status "Error section pop up" screen.  
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61659", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyErroredDatasetsInCollectionWizard(String username, String password, String fullname)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-61659 - O365");
+		base.stepInfo(
+				"Verify that column “Retrieved Count” displays in Final status \"Error section pop up\" screen. ");
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Archive";
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(username, password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, true, true);
+		base.waitForElement(collection.getActionBtn("Save"));
+		collection.getActionBtn("Save").waitAndClick(5);
+
+		base.waitForElement(collection.getConfirmationBtnAction("Confirm"));
+		collection.getConfirmationBtnAction("Confirm").waitAndClick(5);
+		base.VerifySuccessMessage("Dataset added successfully.");
+
+		// Start A Collection
+		collection.clickOnNextAndStartAnCollection();
+		collection.verifyViewErrorDatasetsLink();
+
+		// logout
+		login.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

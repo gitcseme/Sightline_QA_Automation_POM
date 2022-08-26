@@ -128,6 +128,30 @@ public class CollectionPage {
 	}
 
 	// Added by Mohan
+	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+	}
+	
+	public Element getCollectionListDatasetValueCollectionName() {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[2]//div");
+	}
+	
+	public Element getCollectionListDatasetValue(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+	}
+	
+	public Element getCollectionListDataset(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]//a");
+	}
+	
+	public Element getCollectionHeaderList(int rowNo) {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']//th["+rowNo+"]");
+	}
+	
+	public ElementCollection getCollectionListHeaderFields() {
+		return driver.FindElementsByXPath("//*[@class='table dataTable no-footer']//thead//tr//th");
+	}
+	
 	public Element getDatasetPopUpSaveButton() {
 		return driver.FindElementByXPath("//input[@id='btnSaveDatasetSelection' and @disabled]");
 	}
@@ -2392,5 +2416,61 @@ public class CollectionPage {
 			base.failedStep("Did Not Recieve Notification");
 		}
 		base.getBullHornIcon().waitAndClick(10);
+	}
+	
+	
+	public void getCollectionPageHeaderList() {
+
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		int collectionHeaderList = getDataSetDetailsHeader().size();
+		System.out.println(collectionHeaderList);
+		
+		
+		
+		for (int i = 1; i < collectionHeaderList; i++) {
+				Element elementByIndex = getCollectionHeaderList(i);
+				base.waitTime(2);
+				String collectionHeader = elementByIndex.getText();
+				
+			
+			System.out.println("Collection HeaderList No:"+i+":"+collectionHeader);
+			base.stepInfo("Collection HeaderList No:"+i+":"+collectionHeader);
+			
+		}
+		Element collectionListDataset = getCollectionListDataset(1);
+		String collectionList = collectionListDataset.getText();
+		System.out.println("Collection ID:"+collectionList);
+		base.stepInfo("Collection ID:"+collectionList);
+		String collectionName = getCollectionListDatasetValueCollectionName().getText();
+		System.out.println("Collection Name:"+collectionName);
+		base.stepInfo("Collection Name:"+collectionList);
+		String collectionRunBy = getCollectionListFieldValueRunByAndSourceLocationText(3).getText();
+		System.out.println("Collection RunBy:"+collectionRunBy);
+		base.stepInfo("Collection RunBy:"+collectionRunBy);
+		String collectionSourceLoaction = getCollectionListFieldValueRunByAndSourceLocationText(4).getText();
+		System.out.println("Collection SourceLoaction:"+collectionSourceLoaction);
+		base.stepInfo("Collection SourceLoaction:"+collectionSourceLoaction);
+		String collectionStatus = getCollectionFieldValuesRowNoInCollectionHomePage(5, 1).getText();
+		System.out.println("Collection Status:"+collectionStatus);
+		base.stepInfo("Collection Status:"+collectionStatus);
+		Element collectionListDataset1 = getCollectionListDataset(6);
+		String collectionErrorStatus = collectionListDataset1.getText();
+		System.out.println("Collection Error Status:"+collectionErrorStatus);
+		base.stepInfo("Collection Error Status:"+collectionErrorStatus);
+		String collectionTotalRetrievedCount = getCollectionListFieldValueRunByAndSourceLocationText(7).getText();
+		System.out.println("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		base.stepInfo("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		String collectionProgress = getCollectionListFieldValueRunByAndSourceLocationText(8).getText();
+		System.out.println("Collection Progress:"+collectionProgress);
+		base.stepInfo("Collection Progress:"+collectionProgress);
+		Element collectionListDataset2 = getCollectionListDataset(9);
+		String collectionAction = collectionListDataset2.getText();
+		System.out.println("Collection Action:"+collectionAction);
+		base.stepInfo("Collection Action:"+collectionAction);
+		
+		System.out.println("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+		base.stepInfo("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+		
 	}
 }
