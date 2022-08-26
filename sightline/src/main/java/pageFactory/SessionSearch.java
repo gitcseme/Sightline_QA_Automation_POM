@@ -1972,7 +1972,7 @@ public class SessionSearch {
 	public Element getConceptualSearchResult() {
 		return driver.FindElementByXPath("//td[text()='Conceptual']/parent::tr//span[@class='badge']");
 	}
-	
+
 	public Element getBulkAssign_NewAssignment() {
 		return driver.FindElementByXPath("//li[@id='tabnewAssignment']//a[text()='New Assignment']");
 	}
@@ -1984,27 +1984,30 @@ public class SessionSearch {
 	public ElementCollection getUnassign_ExistingAssignments() {
 		return driver.FindElementsByXPath("//*[@id='jstreeUnAssign']//a");
 	}
+
 	public Element getUnAssignRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='toUnassign']/parent::label/i");
 	}
-	
+
 	public Element getSelectedExistingAssignments() {
-	    return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[@class='jstree-anchor jstree-clicked']");
+		return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[@class='jstree-anchor jstree-clicked']");
 	}
-	
+
 	public ElementCollection getassign_ExistingAssignments() {
-	    return driver.FindElementsByXPath("//*[@id='jstreeComplete']//a//parent::li");
+		return driver.FindElementsByXPath("//*[@id='jstreeComplete']//a//parent::li");
 	}
-	
+
 	public Element getSelectSavedSearchResult(String savedSearchResult) {
-		return driver.FindElementByXPath("//a[contains(text(),'"+savedSearchResult+"')]");
+		return driver.FindElementByXPath("//a[contains(text(),'" + savedSearchResult + "')]");
 	}
+
 	public Element getExistingAssignmentToUnAssign(String assignName) {
-		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[text()='"+assignName+"']");
+		return driver.FindElementByXPath("//*[@id='jstreeUnAssign']//a[text()='" + assignName + "']");
 	}
-	
+
 	public Element getPropagateFoldersCheckBox(int i) {
-		return driver.FindElementByXPath("(//*[@id='ss2']//div[@id='modalFolderAdd']//div//label[@class='checkbox']//i)["+i+"]");		
+		return driver.FindElementByXPath(
+				"(//*[@id='ss2']//div[@id='modalFolderAdd']//div//label[@class='checkbox']//i)[" + i + "]");
 	}
 
 	public SessionSearch(Driver driver) {
@@ -2744,14 +2747,13 @@ public class SessionSearch {
 		getPureHitsCount().isElementAvailable(10);
 		base.waitTime(5);
 		try {
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
-		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
-		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
-		}
-		catch(NumberFormatException e) {
+			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+			UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
+		} catch (NumberFormatException e) {
 			System.out.println("NumberFormatException occured and handled");
 		}
-	
+
 		return pureHit;
 
 	}
@@ -4789,7 +4791,6 @@ public class SessionSearch {
 		}
 		base.waitForElement(getDocViewAction());
 		getDocViewAction().waitAndClick(5);
-		
 
 		UtilityLog.info("Navigated to docView to view docs");
 		base.stepInfo("Navigated to docView to view docs");
@@ -12913,8 +12914,6 @@ public class SessionSearch {
 		}
 	}
 
-	
-
 	/**
 	 * @author Jayanthi.Ganesan This method will verify if user selects un-assign
 	 *         option then only existing tab displayed with assignments to select
@@ -12946,10 +12945,9 @@ public class SessionSearch {
 		}
 	}
 
-
 	/**
 	 * @Author Jeevitha
-	 * @Description  : enters production Date/Bates Range in Work Product
+	 * @Description : enters production Date/Bates Range in Work Product
 	 * @param productionDate
 	 * @param Bates
 	 * @param FromDate
@@ -12957,8 +12955,8 @@ public class SessionSearch {
 	 * @param ToBates
 	 * @throws InterruptedException
 	 */
-	public void selectWPWithProdBatesAndDateRange(boolean productionDate, boolean Bates, String FromDate, String FromBates,
-			String ToBates) throws InterruptedException {
+	public void selectWPWithProdBatesAndDateRange(boolean productionDate, boolean Bates, String FromDate,
+			String FromBates, String ToBates) throws InterruptedException {
 
 		base.waitForElement(getProductionBtn());
 		getProductionBtn().waitAndClick(5);
@@ -12986,13 +12984,19 @@ public class SessionSearch {
 
 	/**
 	 * @AUthor Jeevitha
-	 * @Description  :returns configured query in dome value
+	 * @Description :returns configured query in dome value
+	 * @modified date: 26/08/2022
 	 * @return
 	 */
 	public String configuredQuery() {
+		String searchTerm = "";
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		String searchTerm = getSearchTerm().GetAttribute("value");
+		if (getSearchTerm().isElementAvailable(5)) {
+			searchTerm = getSearchTerm().GetAttribute("value");
+		} else if (getModifiableSavedSearchQueryAS().isElementAvailable(5)) {
+			searchTerm = getModifiableSavedSearchQueryAS().getText();
+		}
 		base.passedStep("Configured query is : " + searchTerm);
 		return searchTerm;
 
@@ -13064,15 +13068,16 @@ public class SessionSearch {
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will perform bulk release docs to two security group
+	 * @description: this method will perform bulk release docs to two security
+	 *               group
 	 * @param secGroup1
 	 * @param secGroup2
 	 */
-	public void bulkReleaseToMultipleSecurityGroups(String secGroup1,String secGroup2) {
-		
+	public void bulkReleaseToMultipleSecurityGroups(String secGroup1, String secGroup2) {
+
 		driver.waitForPageToBeReady();
 		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
@@ -13107,14 +13112,14 @@ public class SessionSearch {
 		}
 		base.VerifySuccessMessageB("Records saved successfully");
 	}
-	
+
 	/**
 	 * @author S
 	 * @createdOn : 8/9/22
 	 * @param savedSearchList
 	 * @description : insert Multiple SavedSearch Results In Wp
 	 */
-	public void insertMultipleSavedSearchResultsInWp(List<String>savedSearchList) {
+	public void insertMultipleSavedSearchResultsInWp(List<String> savedSearchList) {
 
 		base.waitForElement(getWorkproductBtn());
 		getWorkproductBtn().Click();
@@ -13126,7 +13131,7 @@ public class SessionSearch {
 		}), Input.wait60);
 		getSavedSearchBtn().Click();
 		driver.scrollingToBottomofAPage();
-		for(String SaveName : savedSearchList) {
+		for (String SaveName : savedSearchList) {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
 			getSelectSavedSearchResult(SaveName).waitAndClick(10);
@@ -13137,16 +13142,16 @@ public class SessionSearch {
 		// Click on Search button
 		driver.scrollPageToTop();
 	}
+
 	/**
-	 * @author Jayanthi.Ganesan
-	 *This method Perform unassign docs from a assignment
+	 * @author Jayanthi.Ganesan This method Perform unassign docs from a assignment
 	 * @param assignName
 	 */
 	public void UnAssignExistingAssignment(String assignName) {
 		base.waitForElement(getUnAssignRadioBtn());
 		base.stepInfo("Assign/UnAssign pop up displayed");
 		getUnAssignRadioBtn().Click();
-		
+
 		getUnassign_ExistingAssignButton().Click();
 		getExistingAssignmentToUnAssign(assignName).ScrollTo();
 		getExistingAssignmentToUnAssign(assignName).Click();
@@ -13161,9 +13166,9 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		bc.stepInfo(" Docs Unassigned from  " + assignName);
-		
+
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param sourceDocIds
@@ -13175,27 +13180,27 @@ public class SessionSearch {
 
 		try {
 			driver.waitForPageToBeReady();
-			
-			for(String id : sourceDocIds) {
-			base.waitForElement(getBasicSearch_MetadataBtn());
-			driver.waitForPageToBeReady();
-			getBasicSearch_MetadataBtn().waitAndClick(5);
 
-			driver.waitForPageToBeReady();
-			base.waitForElement(getSelectMetaData());
-			getSelectMetaData().selectFromDropdown().selectByValue("SourceDocID");
+			for (String id : sourceDocIds) {
+				base.waitForElement(getBasicSearch_MetadataBtn());
+				driver.waitForPageToBeReady();
+				getBasicSearch_MetadataBtn().waitAndClick(5);
 
-			driver.waitForPageToBeReady();
-			base.waitForElement(getMetaDataSearchText1());
-			getMetaDataSearchText1().SendKeys(id);
+				driver.waitForPageToBeReady();
+				base.waitForElement(getSelectMetaData());
+				getSelectMetaData().selectFromDropdown().selectByValue("SourceDocID");
 
-			base.waitForElement(getMetaDataInserQuery());
-			getMetaDataInserQuery().waitAndClick(5);
+				driver.waitForPageToBeReady();
+				base.waitForElement(getMetaDataSearchText1());
+				getMetaDataSearchText1().SendKeys(id);
+
+				base.waitForElement(getMetaDataInserQuery());
+				getMetaDataInserQuery().waitAndClick(5);
 			}
-			
+
 			base.waitForElement(getSearchButton());
 			getSearchButton().waitAndClick(10);
-			if(base.getYesBtn().isElementAvailable(2)) {
+			if (base.getYesBtn().isElementAvailable(2)) {
 				base.getYesBtn().waitAndClick(5);
 			}
 			driver.waitForPageToBeReady();
@@ -13206,7 +13211,7 @@ public class SessionSearch {
 		}
 
 	}
-	
+
 	/**
 	 * @author Sakthivel date: 27/01/2021 Modified date: NA
 	 * @Description: Assign EmailDuplicate document to bulk folder
@@ -13246,7 +13251,7 @@ public class SessionSearch {
 		}), Input.wait60);
 		getFinalizeButton().Click();
 		base.VerifySuccessMessage("Records saved successfully");
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
