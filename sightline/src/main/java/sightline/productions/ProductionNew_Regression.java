@@ -47,8 +47,7 @@ public class ProductionNew_Regression {
 
 	String productionname;
 	String exportname;
-	String prefixID = "A_" + Utility.dynamicNameAppender();
-	String suffixID = "_P" + Utility.dynamicNameAppender();
+	
 	String foldername;
 	String tagname;
 
@@ -260,7 +259,8 @@ public class ProductionNew_Regression {
 
 		// create production using dat,native and display tooltip display on preview
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -376,7 +376,8 @@ public class ProductionNew_Regression {
 	sessionSearch = new SessionSearch(driver);
 	sessionSearch.basicContentSearch(Input.testData1);
 	sessionSearch.bulkFolderExisting(foldername);
-
+	String prefixID = "A_" + Utility.dynamicNameAppender();
+	String suffixID = "_P" + Utility.dynamicNameAppender();
 	// create production and verify preview tab button should display
 	ProductionPage page = new ProductionPage(driver);
 	String beginningBates = page.getRandomNumber(2);
@@ -506,7 +507,8 @@ public class ProductionNew_Regression {
             docExplorer.bulkFolderExisting(foldername);
 
             //remaining
-            
+            String prefixID = "A_" + Utility.dynamicNameAppender();
+        	String suffixID = "_P" + Utility.dynamicNameAppender();
             ProductionPage page = new ProductionPage(driver);
             String beginningBates = page.getRandomNumber(2);
                productionname = "p" + Utility.dynamicNameAppender();
@@ -686,7 +688,8 @@ public class ProductionNew_Regression {
 
 		// create production using dat/ingested text
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -778,7 +781,8 @@ public class ProductionNew_Regression {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -843,7 +847,8 @@ public class ProductionNew_Regression {
 
 		// create production using dat,native and display tooltip display on preview
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -897,7 +902,8 @@ public class ProductionNew_Regression {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(testData1);
 		sessionSearch.bulkFolderExisting(foldername);
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		// create production under default directory
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		ProductionPage page = new ProductionPage(driver);
@@ -967,10 +973,11 @@ public class ProductionNew_Regression {
 
 		// create production using dat,native and tiff for redaction
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
+		String beginningBates = page.getRandomNumber(3);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -1023,7 +1030,8 @@ public class ProductionNew_Regression {
 
 		// create production using dat,native and tiff for redaction
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -1064,7 +1072,8 @@ public class ProductionNew_Regression {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-56156 Production- Sprint 04");
 		base.stepInfo("RPMXCON-56154 Production- Sprint 04");
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		//Pre-requisites
@@ -1126,7 +1135,8 @@ public class ProductionNew_Regression {
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		//Pre-requisites
-		
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -1177,6 +1187,9 @@ public class ProductionNew_Regression {
 		base.stepInfo("RPMXCON-47968 Production- Sprint 04");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
 		//Pre-requisites
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1225,6 +1238,8 @@ public class ProductionNew_Regression {
 		base.stepInfo("RPMXCON-48308 Production- Sprint 04");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1283,6 +1298,9 @@ public class ProductionNew_Regression {
 		base.stepInfo("RPMXCON-48309 Production- Sprint 04");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
 		//Pre-requisites
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -1344,6 +1362,9 @@ public class ProductionNew_Regression {
 		base.stepInfo("RPMXCON-49225 Production- Sprint 04");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
 		//Pre-requisites
 		//create tag and folder
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
