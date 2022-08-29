@@ -60,6 +60,14 @@ public class BatchRedactionPage {
 	 * @Author Jeevitha
 	 * @return
 	 */
+	public Element manageBtn() {
+		return driver.FindElementByXPath("//label[text()='Manage']//parent::a");
+	}
+
+	public Element batchRedactionBtn() {
+		return driver.FindElementByXPath("//a[@name='BatchRedaction']");
+	}
+
 	public Element getMySavedSearchDropDown() {
 		return driver.FindElementByXPath("(//*[@id='searchTree']//i)[1]");
 	}
@@ -341,6 +349,9 @@ public class BatchRedactionPage {
 	}
 
 	// added by jeevitha
+	public Element getLoginUserEdit() {
+		return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td//a[text()='Edit']");
+	}
 	public Element preRedactionReport() {
 		return driver.FindElementByXPath("//a[text()='Download Pre-Redaction Report']");
 	}
@@ -602,7 +613,7 @@ public class BatchRedactionPage {
 			getViewReportForSavedSearch(searchname).waitAndClick(10);
 			System.out.println("Clicked on View Report");
 			base.stepInfo("Clicked on View Report");
-		} else  {
+		} else {
 			driver.Navigate().refresh();
 			base.waitForElement(getMySavedSearchDropDown());
 			getMySavedSearchDropDown().waitAndClick(20);
@@ -1527,7 +1538,7 @@ public class BatchRedactionPage {
 		final int Bgcount = base.initialBgCount();
 
 		boolean flag = verifyAnalyzeBtn(searchname, null);
-		
+
 		System.out.println(flag);
 		if (flag == false) {
 			driver.Navigate().refresh();
@@ -1683,7 +1694,6 @@ public class BatchRedactionPage {
 		// Click on redact button
 		base.waitForElement(getPopUpRedactButton());
 		getPopUpRedactButton().waitAndClick(15);
-
 
 		// verify Popup Message
 		String Expected = "Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions.";
@@ -1875,6 +1885,7 @@ public class BatchRedactionPage {
 	 * @Description : Assigning Redaction Rights to Users
 	 * @param username
 	 * @param selectEnable
+	 * @Modified : 29/08/2022
 	 * @throws InterruptedException
 	 */
 	public void assignRedactionRights(String username, boolean selectEnable) throws InterruptedException {
@@ -1892,10 +1903,8 @@ public class BatchRedactionPage {
 		actions.click().build().perform();
 		Thread.sleep(Input.wait3);
 		driver.waitForPageToBeReady();
-		wait.until(ExpectedConditions.elementToBeClickable(docViewRedact.userEditBtn().getWebElement()));
-		actions.moveToElement(docViewRedact.userEditBtn().getWebElement());
-		actions.click();
-		actions.build().perform();
+		base.waitForElement(getLoginUserEdit());
+		getLoginUserEdit().waitAndClick(5);
 
 		base.waitForElement(getManageFunctionalityTab());
 		getManageFunctionalityTab().waitAndClick(10);
@@ -2920,6 +2929,29 @@ public class BatchRedactionPage {
 					base.stepInfo("Expected Redaction : " + count);
 				}
 			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : click manage & batch redact btn and navigate.
+	 */
+	public void navigateToBRPage() {
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(manageBtn(), "Manage Button");
+		manageBtn().waitAndClick(10);
+		base.stepInfo("CLicked Manage Btn");
+		base.ValidateElement_Presence(batchRedactionBtn(), "Batch Redcation Button");
+		batchRedactionBtn().waitAndClick(10);
+		base.stepInfo("CLicked batch redaction Btn");
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectSearchHelpIcon());
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		if ((Input.url + "BatchRedaction/BatchRedaction").equals(currentUrl)) {
+			base.passedStep("Navigated to Batch redaction Page");
+		} else {
+			base.failedStep("Navigation is not as expected");
 		}
 	}
 }
