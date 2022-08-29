@@ -1987,6 +1987,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 
 		page.prodGenerationInProgressStatus(productionname);
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.getQC_Download().waitAndClick(10);
 		page.getClkBtnDownloadDATFiles().waitAndClick(10);
@@ -2053,6 +2054,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 
 		page.prodGenerationInProgressStatus(productionname);
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLink();
 		loginPage.logout();
@@ -2109,6 +2111,7 @@ public class Production_Page_Regression {
 		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus(productionname);
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingSharableLinkAndCheckErrorMessage();
 		loginPage.logout();
@@ -2165,6 +2168,7 @@ public class Production_Page_Regression {
 		page.navigateToProductionPage();
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus(productionname);
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		page.verifyDownloadProductionUsingInvalidLink();
 		loginPage.logout();
@@ -2950,7 +2954,7 @@ public class Production_Page_Regression {
 
 		page.prodGenerationInProgressStatus(productionname);
 		driver.waitForPageToBeReady();
-
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		baseClass.stepInfo("In progress productions are filtered and In progress production from homepage is selected");
 		page.getQC_backbutton().waitAndClick(10);
@@ -3272,6 +3276,7 @@ public class Production_Page_Regression {
 		driver.Navigate().refresh();
 		page.prodGenerationInProgressStatus(productionname);
 		driver.waitForPageToBeReady();
+		page.navigateToProductionPage();
 		page.getProductionFromHomepage(productionname).waitAndClick(10);
 		baseClass.stepInfo("completed productions are filtered and In progress production from homepage is selected");
 		page.getQC_backbutton().waitAndClick(10);
