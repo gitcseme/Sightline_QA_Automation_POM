@@ -1315,7 +1315,7 @@ public class IngestionPage_Indium {
 		return driver.FindElementsByXPath("//div[@id='previewRecords']//table//tbody//tr");
 	}
 	
-	
+
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -6118,13 +6118,8 @@ public class IngestionPage_Indium {
 		base.waitForElement(getRunCopying());
 		getElementStatus(getRunCopying());
 		getRunCopying().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCloseButton().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(10);
-		base.waitTime(2);
 		base.VerifySuccessMessage("Ingestion copy has Started.");
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
@@ -6140,38 +6135,26 @@ public class IngestionPage_Indium {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(5);
 			} else if (status.contains("Failed")) {
+				//ignore errors
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(getActionDropdownArrow());
 				driver.scrollingToElementofAPage(copyingErrorCount());
 				copyingErrorCount().waitAndClick(10);
 				base.waitTime(1);
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return ignoreAllButton().Enabled();
-					}
-				}), Input.wait30);
+				base.waitForElement(ignoreAllButton());
 				ignoreAllButton().waitAndClick(10);
 				if (getApproveMessageOKButton().isElementAvailable(5)) {
 					getApproveMessageOKButton().waitAndClick(10);
 					base.passedStep("Clicked on OK button to ignore all errors");
 				}
-
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return doneButton().Enabled();
-					}
-				}), Input.wait30);
+				base.waitForElement(doneButton());
 				doneButton().waitAndClick(10);
-				base.waitTime(2);
 				base.VerifySuccessMessage("Action done successfully");
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getCloseButton().Enabled();
-					}
-				}), Input.wait30);
+				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				getRefreshButton().waitAndClick(5);
-				base.waitTime(2);
+				driver.waitForPageToBeReady();
+				//start indexing again
 				base.waitForElement(getIngestionDetailPopup(1));
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(getActionDropdownArrow());
@@ -6179,16 +6162,21 @@ public class IngestionPage_Indium {
 				base.waitForElement(getRunCopying());
 				getElementStatus(getRunCopying());
 				getRunCopying().waitAndClick(10);
-				base.waitTime(5);
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getCloseButton().Enabled();
-					}
-				}), Input.wait30);
+				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
-				base.waitTime(10);
-				getRefreshButton().waitAndClick(10);
-				driver.waitForPageToBeReady();
+				for(int j=1;j<=15;j++) {
+					base.waitForElement(getIngestionDetailPopup(1));
+					String status1 = getStatus(1).getText().trim();
+					if(status1.contains("In Progress")) {
+						base.passedStep("Ignored errors and started indexing");
+						break;
+					}
+					else if(status.contains("Failed")) {
+						base.waitTime(1);
+						getRefreshButton().waitAndClick(10);
+						driver.waitForPageToBeReady();
+					}
+				}
 			}
 		}
 
@@ -6769,7 +6757,7 @@ public class IngestionPage_Indium {
 			public Boolean call() {
 				return getTotalIngestedCount().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
@@ -6792,7 +6780,7 @@ public class IngestionPage_Indium {
 			public Boolean call() {
 				return getTotalPageCount().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		String totalCount = getTotalPageCount().getText();
 		int pageCount = Integer.parseInt(getTotalPageCount().getText());
 		
@@ -6809,11 +6797,11 @@ public class IngestionPage_Indium {
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
-			if (getAllIngestionName(dataset).isElementAvailable(5)) {
+			if (getAllIngestionName(dataset).isElementAvailable(7)) {
 				status = true;
 				base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				break;
-			} else if (!getAllIngestionName(dataset).isElementAvailable(5) && count == i) {
+			} else if (!getAllIngestionName(dataset).isElementAvailable(7) && count == i) {
 				status = false;
 				base.stepInfo("Ingestion not found");
 				break;
@@ -6822,7 +6810,8 @@ public class IngestionPage_Indium {
 			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
-				getIngestionPaginationNextButton().waitAndClick(3);
+				getIngestionPaginationNextButton().waitAndClick(5);
+				driver.waitForPageToBeReady();
 				base.stepInfo("Expected Ingestion not found in the page " + i);
 
 			}
@@ -9282,13 +9271,8 @@ public class IngestionPage_Indium {
 		public String publishAddonlyIngestion(String dataset) {
 			ignoreErrorsAndCatlogging();
 			ignoreErrorsAndCopying();
-			ingestionIndexing(dataset);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getIngestionDetailPopup(1).Displayed();
-				}
-			}), Input.wait30);
-			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
+			ignoreErrorsAndIndexing(dataset);
+			String ingestionName=getIngestionNameFromPopup();
 			approveIngestion(1);
 			runFullAnalysisAndPublish();
 			return ingestionName;
@@ -10648,4 +10632,108 @@ public class IngestionPage_Indium {
 			}
 		}
 			 
+		
+		/**
+		 * @author: Arun Created Date: 26/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will ignore errors and perform indexing
+		 */
+		public void ignoreErrorsAndIndexing(String dataset) {
+			//apply filter for indexing status
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByINDEXED());
+			getFilterByINDEXED().waitAndClick(10);
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			//start indexing
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getIsAudioCheckbox());
+			if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
+				getLanguage().selectFromDropdown().selectByVisibleText("North American English");
+			} else if (dataset.contains("0002_H13696_1_Latest")) {
+				base.waitForElement(getIsAudioCheckbox());
+				getIsAudioCheckbox().waitAndClick(5);
+				base.waitForElement(getLanguage());
+				getLanguage().selectFromDropdown().selectByVisibleText("International English");
+			} else {
+				System.out.println("No need to select for other datasets");
+			}
+			driver.scrollingToElementofAPage(getRunIndexing());
+			base.waitForElement(getRunIndexing());
+			getElementStatus(getRunIndexing());
+			getRunIndexing().waitAndClick(10);
+			base.waitTime(2);
+			base.VerifySuccessMessage("Ingestion Indexing has Started.");
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			for (int i = 0; i < 70; i++) {
+				base.waitTime(1);
+				base.waitForElement(getIngestionDetailPopup(1));
+				String status = getStatus(1).getText().trim();
+				if (status.contains("Indexed")) {
+					base.passedStep("Indexing completed");
+					break; 
+				} else if (status.contains("In Progress")){
+					base.waitTime(5);
+					getRefreshButton().waitAndClick(10);
+					driver.waitForPageToBeReady();
+				}else if (status.contains("Failed")) {
+					//ignore errors 
+					base.waitForElement(getIngestionDetailPopup(1));
+					getIngestionDetailPopup(1).waitAndClick(10);
+					base.waitForElement(getActionDropdownArrow());
+					driver.scrollingToElementofAPage(indexingErrorCount());
+					indexingErrorCount().waitAndClick(10);
+					base.waitTime(1);
+					base.waitForElement(ignoreAllButton());
+					ignoreAllButton().waitAndClick(10);
+					if (getApproveMessageOKButton().isElementAvailable(5)) {
+						getApproveMessageOKButton().waitAndClick(10);
+						base.passedStep("Clicked on OK button to ignore all errors");
+					}
+					base.waitForElement(doneButton());
+					doneButton().waitAndClick(10);
+					base.VerifySuccessMessage("Action done successfully");
+					base.waitForElement(getCloseButton());
+					getCloseButton().waitAndClick(10);
+					getRefreshButton().waitAndClick(5);
+					driver.waitForPageToBeReady();
+					//start indexing process again
+					base.waitForElement(getIngestionDetailPopup(1));
+					getIngestionDetailPopup(1).waitAndClick(10);
+					base.waitForElement(getActionDropdownArrow());
+					driver.scrollingToElementofAPage(getRunIndexing());
+					base.waitForElement(getRunIndexing());
+					getElementStatus(getRunIndexing());
+					getRunIndexing().waitAndClick(10);
+					base.VerifySuccessMessage("Ingestion Indexing has Started.");
+					base.waitForElement(getCloseButton());
+					getCloseButton().waitAndClick(10);
+					for(int j=1;j<=10;j++) {
+						base.waitForElement(getIngestionDetailPopup(1));
+						String status1 = getStatus(1).getText().trim();
+						if(status1.contains("In Progress")) {
+							base.passedStep("Ignored errors and started indexing");
+							break;
+						}
+						else if(status.contains("Failed")) {
+							base.waitTime(1);
+							getRefreshButton().waitAndClick(10);
+							driver.waitForPageToBeReady();
+						}
+					}
+				}
+			}
+
+		}
+		
 }
