@@ -317,6 +317,7 @@ public class TestData {
 	public String specialString1;
 	public String specialString2;
 	public String specialString3;
+	public String specialString4;
 	public String docSelectionHighlight;
 	public String batchFileWithMultiSheetColumnMissing;
 	public String batchFileWithMultiSheetColumnDuplicate;

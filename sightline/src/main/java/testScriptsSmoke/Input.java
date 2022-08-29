@@ -436,6 +436,7 @@ public class Input {
 	public static String specialString1;
 	public static String specialString2;
 	public static String specialString3;
+	public static String specialString4;
 	public static String docSelectionHighlight;
 	public static String batchFileWithMultiSheetColumnMissing;
 	public static String batchFileWithMultiSheetColumnDuplicate;
@@ -1377,6 +1378,7 @@ public class Input {
 		specialString1 = testData.getSpecialString1();
 		specialString2 = testData.getSpecialString2();
 		specialString3 = testData.getSpecialString3();
+		specialString4 = testData.getSpecialString4();
 		batchFileWithMultiSheetColumnMissing = testData.getBatchFileWithMultiSheetColumnMissing();
 		batchFileWithMultiSheetColumnDuplicate = testData.getBatchFileWithMultiSheetColumnDuplicate();
 		searchString9 = testData.getSearchString9();
