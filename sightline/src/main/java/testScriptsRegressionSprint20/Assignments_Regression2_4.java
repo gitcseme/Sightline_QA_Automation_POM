@@ -183,7 +183,60 @@ public class Assignments_Regression2_4 {
 		// logOut
 		loginPage.logout();
 	}
-
+	/**
+	 * @author Jayanthi.ganesan
+	 * 
+	 * @description:RPMXCON-53698 To verify that in Redistribute Documents pop up only those Reviewers are displayed which are associated to the Assignments
+	 * @description:RPMXCON-53697 To verify that in Redistribute Documents screen selected Reviewer is not displayed in the Reviewers list
+	 * 
+	 */
+	@Test(description ="RPMXCON-53697,RPMXCON-53698",enabled = true, groups = { "regression" })
+	public void verifyThedistributedUserNotInRedistributeList()
+			throws InterruptedException, ParseException, IOException {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		baseClass.stepInfo(
+				"To verify that in Redistribute Documents pop up only those Reviewers are"
+				+ " displayed which are associated to the Assignments");
+		baseClass.stepInfo(
+				"To verify that in Redistribute Documents screen "
+				+ "selected Reviewer is not displayed in the Reviewers list");
+		baseClass.stepInfo("Test case Id:RPMXCON-53697,RPMXCON-536978");
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		baseClass.stepInfo("**Assignment creation -bulk assing docs**");
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		baseClass.stepInfo("Created assignment with name" + assignmentName);
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		baseClass.stepInfo("Created a assignment " + assignmentName);
+		
+		baseClass.stepInfo("**Adding 2 reviewers and distributing docs to one reviewer alone**");		
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		String Distributeduser = assignPage.addMultipleReviewersAndDistributeToOnereviewer();
+		baseClass.stepInfo("**selecting docs assigned reviewers to redistribute docs to other assignment "
+				+ "associated reviewer**"); 
+		String redistributeUser = assignPage.VerifyUserNotInListAfterRedistributedDocs();
+		
+		baseClass.stepInfo("**Validation for test case RPMXCON-53697**"); 
+		if (Distributeduser != redistributeUser) {
+			baseClass.passedStep("Selected distributed reviewer is not displayed in redistribute document pop up.");
+		} else {
+			baseClass.failedStep("selected Distributed Reviewer user appeared in redistribute document list.");
+		}
+		baseClass.stepInfo("**Validation for test case RPMXCON-53698**"); 
+		System.out.println(redistributeUser);
+		System.out.println(Input.rev1userName);
+		if ( redistributeUser.contains(Input.rev1userName)) {	
+			baseClass.passedStep("Redistribute Documents pop up displayed only those Reviewers"
+					+ " which are associated to the Assignments");
+		} else {
+			baseClass.failedStep("Redistribute Documents pop up not displayed only those Reviewers"
+					+ " which are associated to the Assignments");
+		}
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
