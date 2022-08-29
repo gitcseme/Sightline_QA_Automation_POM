@@ -10733,27 +10733,22 @@ public class SessionSearch {
 
 		base.waitForElement(getCurrentAudioButton());
 		getCurrentAudioButton().waitAndClick(10);
-
 		base.waitForElement(getCurrentLanguageSelectButton());
 		getCurrentLanguageSelectButton().selectFromDropdown().selectByVisibleText(language);
 		// Enter seatch string
 		base.waitForElement(get_Current_As_AudioText());
 		get_Current_As_AudioText().SendKeys(SearchString);
-
 		// Click on Search button
 		getAdvanceSearch_btn_Current().Click();
-
 		// verify counts for all the tiles
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
 			}
 		}), Input.wait90);
-
-		int pureHit = Integer.parseInt(getPureHitsCount().getText());
+		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
 		System.out.println("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
 		UtilityLog.info("Audio Search is done for " + SearchString + " and PureHit is : " + pureHit);
-
 		return pureHit;
 
 	}
