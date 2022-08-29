@@ -463,26 +463,21 @@ public class O365Regression_20 {
 	 * @Description : Verify that all configured Collections and associated properties are available on "Manage Collections" screen (Grid).
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-61012", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyManageCollectionScreenGridContainsTheHeaderListAndOtherDetails(String username, String password, String fullname)
+	@Test(description = "RPMXCON-61012", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
+	public void verifyManageCollectionScreenGridContainsTheHeaderListAndOtherDetails(String userName, String password, String role, String actionRole)
 			throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-61012 - O365");
 		base.stepInfo("Verify that all configured Collections and associated properties are available on \"Manage Collections\" screen (Grid).");
 
 		
-		String[][] userRolesData = { { username, fullname, fullname } };
+		String[][] userRolesData = { { userName, role, actionRole } };
 
 		// Login as User
-		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
-		login.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManagement.verifyCollectionAndDatasetsAccessForUsers(userRolesData, true, true, "Yes");
+				login.loginToSightLine(userName, password);
 
-		// Logout
-		login.logout();
-
-		// Login as User
-		login.loginToSightLine(username, password);
+				// Login as User and verify Module Access
+				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// navigate to Collection page
 		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
@@ -501,15 +496,15 @@ public class O365Regression_20 {
 	 * @Description : Verify that column “Retrieved Count” displays in Final status "Error section pop up" screen.  
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-61659", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyErroredDatasetsInCollectionWizard(String username, String password, String fullname)
+	@Test(description = "RPMXCON-61659", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
+	public void verifyErroredDatasetsInCollectionWizard(String userName, String password, String role, String actionRole)
 			throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-61659 - O365");
 		base.stepInfo(
 				"Verify that column “Retrieved Count” displays in Final status \"Error section pop up\" screen. ");
-
-		String[][] userRolesData = { { username, fullname, "SA" } };
+		
+		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -519,7 +514,7 @@ public class O365Regression_20 {
 
 		// Login as User
 		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
-		login.loginToSightLine(username, password);
+		login.loginToSightLine(userName, password);
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// navigate to Collection page
