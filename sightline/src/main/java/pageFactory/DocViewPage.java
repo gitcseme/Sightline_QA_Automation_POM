@@ -3591,6 +3591,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[@class='jp-volume-bar']//div");
 	}
 	
+	public Element getDocView_AudioPlay() {
+		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Pause']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;

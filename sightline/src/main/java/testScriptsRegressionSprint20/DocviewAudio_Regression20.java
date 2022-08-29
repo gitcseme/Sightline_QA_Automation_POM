@@ -483,6 +483,82 @@ public class DocviewAudio_Regression20 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * @author Krishna ModifyDate: RPMXCON-51824
+	 * @throws Exception
+	 * @Description Verify that when audio file is playing and clicked to apply the
+	 *              stamp, then waveform should be loaded [Less than 1 hr audio
+	 *              file] from coding form child window
+	 */
+	@Test(description = "RPMXCON-51824", enabled = true, groups = { "regression" })
+	public void verifyAudioPlayerClickedApplyStampFromChildWindow() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51824");
+		baseClass.stepInfo(
+				"Verify that when audio file is playing and clicked to apply the stamp, then waveform should be loaded [Less than 1 hr audio file] from coding form child window");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		String assign = "Assignment" + Utility.dynamicNameAppender();
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// search to Assignment creation
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreationAsPerCf(assign, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewerManager();
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.selectAssignmentToViewinDocView(assign);
+
+		driver.waitForPageToBeReady();
+		docviewPage.clickGearIconOpenMiniDocList();
+		docviewPage.closeWindow(1);
+		docviewPage.switchToNewWindow(1);
+		driver.Navigate().refresh();
+		baseClass.handleAlert();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docviewPage.audioPlayPauseIcon());
+		docviewPage.audioPlayPauseIcon().waitAndClick(10);
+		baseClass.passedStep("Audio file is played successfully");
+		docviewPage.clickGearIconOpenCodingFormChildWindow();
+		baseClass.stepInfo("Coding form and mini doc list and codingform child window is opened");
+
+		docviewPage.switchToNewWindow(2);
+		baseClass.waitTime(4);
+		docviewPage.editCodingForm();
+		baseClass.waitForElement(docviewPage.getCodingFormStampButton());
+		docviewPage.getCodingFormStampButton().waitAndClick(10);
+		docviewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		docviewPage.popUpAction(comment, Input.stampSelection);
+		docviewPage.switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docviewPage.getCodingStampLastIcon(Input.stampSelection));
+		docviewPage.getCodingStampLastIcon(Input.stampSelection).waitAndClick(10);
+		docviewPage.getCodingFormSaveThisForm().waitAndClick(5);
+		baseClass.stepInfo("Coding form saved with stamp and document saved successfully");
+		docviewPage.closeWindow(1);
+		docviewPage.switchToNewWindow(1);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(5);
+		if (docviewPage.getDocView_AudioPlay().isElementPresent()) {
+			baseClass.passedStep("Document in play mode");
+
+		} else {
+			baseClass.failedStep("failed to play");
+		}
+		driver.Navigate().refresh();
+		docviewPage.deleteStampColour(Input.stampSelection);
+
+	}
+	
+	
 
 @DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {
