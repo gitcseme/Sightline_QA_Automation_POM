@@ -254,6 +254,11 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
+	
+	public ElementCollection getSortByDDList() {
+		return driver.FindElementsByXPath("//select[@id='exportFileSortByDropDown']//option");
+	}
+	
 	public Element getSlipSheetDD_prod() {
 		return driver.FindElementByXPath("//select[@id='slipSheetsDropdown']");
 	}
