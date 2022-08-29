@@ -2419,6 +2419,10 @@ public class CollectionPage {
 	}
 	
 	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Collection Header and List of colelction present
+	 */
 	public void getCollectionPageHeaderList() {
 
 		driver.waitForPageToBeReady();
@@ -2438,32 +2442,41 @@ public class CollectionPage {
 			base.stepInfo("Collection HeaderList No:"+i+":"+collectionHeader);
 			
 		}
+		base.waitForElement(getCollectionListDataset(1));
 		Element collectionListDataset = getCollectionListDataset(1);
 		String collectionList = collectionListDataset.getText();
 		System.out.println("Collection ID:"+collectionList);
 		base.stepInfo("Collection ID:"+collectionList);
+		base.waitForElement(getCollectionListDatasetValueCollectionName());
 		String collectionName = getCollectionListDatasetValueCollectionName().getText();
 		System.out.println("Collection Name:"+collectionName);
 		base.stepInfo("Collection Name:"+collectionList);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(3));
 		String collectionRunBy = getCollectionListFieldValueRunByAndSourceLocationText(3).getText();
 		System.out.println("Collection RunBy:"+collectionRunBy);
 		base.stepInfo("Collection RunBy:"+collectionRunBy);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(4));
 		String collectionSourceLoaction = getCollectionListFieldValueRunByAndSourceLocationText(4).getText();
 		System.out.println("Collection SourceLoaction:"+collectionSourceLoaction);
 		base.stepInfo("Collection SourceLoaction:"+collectionSourceLoaction);
-		String collectionStatus = getCollectionFieldValuesRowNoInCollectionHomePage(5, 1).getText();
+		base.waitForElement(getCollectionFieldValuesInCollectionHomePage(5, 1));
+		String collectionStatus = getCollectionFieldValuesInCollectionHomePage(5, 1).getText();
 		System.out.println("Collection Status:"+collectionStatus);
 		base.stepInfo("Collection Status:"+collectionStatus);
+		base.waitForElement(getCollectionListDataset(6));
 		Element collectionListDataset1 = getCollectionListDataset(6);
 		String collectionErrorStatus = collectionListDataset1.getText();
 		System.out.println("Collection Error Status:"+collectionErrorStatus);
 		base.stepInfo("Collection Error Status:"+collectionErrorStatus);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(7));
 		String collectionTotalRetrievedCount = getCollectionListFieldValueRunByAndSourceLocationText(7).getText();
 		System.out.println("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
 		base.stepInfo("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(8));
 		String collectionProgress = getCollectionListFieldValueRunByAndSourceLocationText(8).getText();
 		System.out.println("Collection Progress:"+collectionProgress);
 		base.stepInfo("Collection Progress:"+collectionProgress);
+		base.waitForElement(getCollectionListDataset(9));
 		Element collectionListDataset2 = getCollectionListDataset(9);
 		String collectionAction = collectionListDataset2.getText();
 		System.out.println("Collection Action:"+collectionAction);
