@@ -1538,6 +1538,9 @@ public class AssignmentsPage {
 	public Element getdrawFromPoolStatus() {
 		return driver.FindElementByXPath("//label[contains(text(),'Draw From Pool:')]//following-sibling::div");
 	}
+	public ElementCollection getDistributeReviewerCount() {
+		return driver.FindElementsByXPath("//*[@id='divDistributedDocUsers']//div//label[contains(text(),'distribute documents to:')]//following-sibling::div//label");		
+	}
 
 	public AssignmentsPage(Driver driver) {
 
