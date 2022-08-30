@@ -2270,6 +2270,7 @@ public class SavedSearch {
 	public String createNewSearchGrp(String nodeName, int count) throws InterruptedException {
 
 		String childNodeName = null;
+		driver.Navigate().refresh();
 		base.waitForElement(getCreatedNodeName(nodeName));
 		getCreatedNodeName(nodeName).waitAndClick(10);
 		System.out.println("Clicked " + nodeName);
@@ -2279,10 +2280,11 @@ public class SavedSearch {
 			System.out.println("Created new group");
 			Thread.sleep(3000);
 		}
+		driver.Navigate().refresh();
 		driver.scrollingToBottomofAPage();
-		getSavedSearchNewGroupExpand().Click();
+		getSavedSearchNewGroupExpand().waitAndClick(10);
 		childNodeName = getLastChildCreatedNode(nodeName).getText();
-		base.VerifySuccessMessage("Save search tree node successfully created.");
+	//	base.VerifySuccessMessage("Save search tree node successfully created.");
 		base.stepInfo("Save search tree node successfully created under :" + childNodeName);
 		System.out.println("Save search tree node successfully created under :" + childNodeName);
 
