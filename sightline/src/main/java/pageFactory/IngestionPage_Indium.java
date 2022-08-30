@@ -1315,7 +1315,10 @@ public class IngestionPage_Indium {
 		return driver.FindElementsByXPath("//div[@id='previewRecords']//table//tbody//tr");
 	}
 	
-
+	public Element getIngestionNameTile(String name) {
+		return driver.FindElementByCssSelector("span[title*='"+name+"']");
+	}
+	
 	public IngestionPage_Indium(Driver driver) {
 
 		this.driver = driver;
@@ -10734,6 +10737,38 @@ public class IngestionPage_Indium {
 				}
 			}
 
+		}
+		
+		/**
+		 * @author: Arun Created Date: 29/08/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will open the ingestion detail popup of required ingestion
+		 */
+		public void OpenIngestionDetailPopupForPublishedFilter(String ingestionName) {
+			navigateToIngestionPage();
+			//apply filter
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(10);
+			base.waitForElement(getFilterByINPROGRESS());
+			getFilterByINPROGRESS().waitAndClick(5);
+			base.waitForElement(getFilterByPUBLISHED());
+			getFilterByPUBLISHED().waitAndClick(5);
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(5);
+			getRefreshButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIngestionDetailPopup(1));
+			
+			for(int i=1;i<=10;i++) {
+				if(getIngestionNameTile(ingestionName).isElementAvailable(10)) {
+					getIngestionNameTile(ingestionName).waitAndClick(10);
+					base.waitForElement(getActionDropdownArrow());
+					break;
+				}
+				else if(getLoadMoreButton().isElementAvailable(10)) {
+					getLoadMoreButton().waitAndClick(10);
+					driver.scrollingToBottomofAPage();
+				}
+			}
 		}
 		
 }
