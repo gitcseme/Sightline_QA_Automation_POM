@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint20;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -24,6 +25,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -358,6 +360,377 @@ public class ProductionRegression_Sprint20 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
+		loginPage.logout();	
+		}
+	
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-47872
+	 * @Description:To verify Bates No Generation should be in Sync, when using continue from Previous bates No
+	 **/
+	@Test(description = "RPMXCON-47872", enabled = true, groups = { "regression" })
+	public void verifyBatNoGenSyncwithPreBatNo() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-47872");
+		base.stepInfo(
+				"To verify Bates No Generation should be in Sync, when using continue from Previous bates No");
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+
+		// create tag 
+		base = new BaseClass(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		// Pre req - Production For Completed
+		page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		
+		page.navigateToProductionPage();
+		driver.Navigate().refresh();
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();	
+		base.waitForElement(page.getClickHereLink());
+		page.getClickHereLink().Click();	
+		base.stepInfo("Click Here Link Clicked and Next Bates Num Popup displaying Successfully");
+		base.waitForElement(page.getSelectNextBatesNumber(prefixID, suffixID));
+		page.getSelectNextBatesNumber(prefixID, suffixID).Click();
+		base.stepInfo("Bates Number Selected in Next Bates Num Popup ");
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();	
+		base.waitForElement(page.getQC_backbutton());
+		page.getQC_backbutton().waitAndClick(3);
+		
+		base.waitForElement(page.getProd_BatesRange());	
+		String actBatesno = page.getProd_BatesRange().getText();
+		System.out.println(actBatesno);		
+		if(actBatesno.contains(prefixID) && actBatesno.contains(suffixID)) {
+		base.passedStep("Bates Numbersync with previous bates number ");
+		}else {
+		base.failedStep("Bates Number Not sync with previous bates number ");
+		}	
+		base.passedStep("Verified - Bates No Generation should be in Sync, when using continue from Previous bates No");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-49060
+	 * @Description:To verify that the 'production start date' should contain and present the date when the production regeneration was started from Scratch
+	 **/
+	@Test(description = "RPMXCON-49060", enabled = true, groups = { "regression" })
+	public void verifyProdStartDateafterRegen() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-49060");
+		base.stepInfo(
+				"To verify that the 'production start date' should contain and present the date when the production regeneration was started from Scratch");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
+	
+		// create tag 
+		base = new BaseClass(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		//Create Prod For Failed State
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		base.waitForElement(page.getBeginningBates());
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.clickGenarateWaitForRegenarate();
+		
+		// Open Existing Failed Production and Perform regenerate
+		page.openExistingProduction(productionname);		
+		base.waitForElement(page.getbtnRegenerate());
+		page.getbtnRegenerate().Click();
+		base.waitForElement(page.getRegenerateAllRadioBtn());
+		page.getRegenerateAllRadioBtn().Click();
+		base.waitForElement(page.getbtnRegenerateContinue());
+		page.getbtnRegenerateContinue().Click();
+		base.stepInfo("Re-Generate started Successfully");
+				
+		String expStartDate = base.getcurrentdateinGMT();
+		System.out.println(expStartDate);
+		base.stepInfo("Expected Time: " + expStartDate);
+		page.goToProductionGridView();
+		base.waitForElement(page.getGridProdValues(productionname, 6));
+		String actStartDate = page.getGridProdValues(productionname, 6).getText();
+		System.out.println(actStartDate);
+		base.stepInfo("Actual Time: " + actStartDate);
+		
+		if(actStartDate.contains(expStartDate)) {
+		base.passedStep("The 'production start date' contain and present the date when the last regenerate was started.");
+		}else {
+		base.failedStep("The 'production start date' not contain and present the date when the last regenerate was started.");	
+		}	
+		
+		base.passedStep("Verified - that the 'production start date' should contain and present the date "
+				+ "when the production regeneration was started from Scratch");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47913
+	 * @Description:To Verify in production, the placeholders enabled for priv docs, Generated Priv Doc (PDF/TIFF/Text) should contain Placeholder with Branding
+	 **/
+	@Test(description = "RPMXCON-47913", enabled = true, groups = { "regression" })
+	public void verifyProdPhEnabPrivDocsCntPhBrand() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test Cases Id : RPMXCON-47913");
+		base.stepInfo(
+				"To Verify in production, the placeholders enabled for priv docs, Generated Priv Doc (PDF/TIFF/Text) should contain Placeholder with Branding.");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String brandingString = Input.searchString4;
+		
+		// create tag 
+		base = new BaseClass(driver);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		int pureHit = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSection(tagname, tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		String privCount = page.getPrivDocCountInSummaryPage().getText();
+		base.stepInfo("Priv Doc Count in Summary Page: " + privCount);
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();
+		
+		String home = System.getProperty("user.home");
+		String name =prefixID + beginningBates +suffixID;
+		driver.waitForPageToBeReady();
+		File file = new File(home + "/Downloads/VOL0001/PDF/0001/" + name + ".pdf");	
+		if (file.exists()) {
+		try {
+				String url = home + "/Downloads/VOL0001/PDF/0001/";
+				String content = page.verifyTopCenterBrandingInPDF(url, name+".pdf", brandingString ,0);
+				System.out.println(content);
+				base.passedStep("Verified - that branding specified (in the header and footer) applied to the placeholder documents");
+				
+		}catch (IOException e) {
+				e.printStackTrace();
+		}
+		}else {
+			base.failedStep("File Not Exists");
+		}
+		
+		if(privCount.equals(String.valueOf(pureHit))) {
+			base.passedStep("Privileged Documents' count displays correctly in Privileged Document Summary");
+		}else {
+			base.failedStep("Privileged Documents' count Not displays correctly in Privileged Document Summary");
+		}
+		
+		base.passedStep("verified - that in production, the placeholders enabled for priv docs, "
+				+ "Generated Priv Doc (PDF/TIFF/Text) should contain Placeholder with Branding.");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-63088
+	 * @Description:Verify that if spreadsheet is redacted and Native placeholder is default enabled from TIFF/PDF section then PDF should be produced with natively placeholder
+	 **/
+	@Test(description = "RPMXCON-63088", enabled = true, groups = { "regression" })
+	public void verifyRedactNativePHTiffPdf() throws Exception {
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base = new BaseClass(driver);
+		base.stepInfo("RPMXCON-63088");
+		String RedactName = "Redact" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+		base.stepInfo(
+				"Verify that if spreadsheet is redacted and Native placeholder is default enabled from "
+				+ "TIFF/PDF section then PDF should be produced with natively placeholder");
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+		redactionpage.navigateToRedactionsPageURL();
+		redactionpage.AddRedaction(RedactName, Input.rmu1FullName);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		base.stepInfo("Basic meta data search");
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(1);	
+		doclist.viewSelectedDocumentsInDocView();
+		DocViewPage doc = new DocViewPage(driver);
+		driver.waitForPageToBeReady();
+		doc.pageRedaction(RedactName);
+		
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName,  Input.tagNamePrev);
+
+		SessionSearch sessionSearch1 = new SessionSearch(driver);
+		sessionSearch1 = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch1.ViewInDocList();
+		DocListPage doclist1 = new DocListPage(driver);
+		doclist1.documentSelection(1);	
+		doclist.bulkTagExistingFromDoclist(tagName);
+		
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		String productionname = "p" + Utility.dynamicNameAppender();		
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSectionwithNativelyPlaceholder(tagName);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();	
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
+		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
+		File Native = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+		System.out.println(DatFile);
+
+		if (Native.exists()) {
+		base.passedStep("Native placeholder generated for the selected file type ");
+		} else {
+		base.failedStep("Native placeholder Not generated for the selected file type ");
+		}
+		if (DatFile.exists()) {
+		base.passedStep("Dat file is exists in generated production");
+		} else {
+		base.failedStep("Dat file is not displayed as expected");
+		}
+		if (pdfFile.exists()) {
+		base.passedStep("Pdf is generated successfully");
+		} else {
+		base.failedStep("Pdf is not generated successfully");
+		}
+			
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.fillingPDFSectionwithNativelyPlaceholder(tagName);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagName);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String name1 = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File tiffFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		File DatFile1 = new File(home + "/Downloads/VOL0001/" + name1 + "/" + name1 + "_DAT.dat");
+		File Native1 = new File(home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
+		System.out.println(DatFile);
+
+		if (Native1.exists()) {
+		base.passedStep("Native placeholder generated for the selected file type ");
+		} else {
+		base.failedStep("Native placeholder Not generated for the selected file type ");
+		}
+		if (DatFile1.exists()) {
+		base.passedStep("Dat file is exists in generated production");
+		} else {
+		base.failedStep("Dat file is not displayed as expected");
+		}
+		if (tiffFile.exists()) {
+		base.passedStep("Tiff is generated successfully");
+		} else {
+		base.failedStep("Tiff is not generated successfully");
+		}
+		loginPage.logout();
 	}
 	
 	@AfterMethod(alwaysRun = true)

@@ -897,6 +897,33 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	
+	public Element getProdRootinProdLOcTab() {
+		return driver.FindElementByXPath("//select[@id='lstProductionRootPaths']//option[@selected='selected']");
+	}
+	public Element getSelecTaginDocSelTab(String foldername) {
+		return driver.FindElementByXPath(
+				"//ul[@class='jstree-container-ul jstree-children']//a[contains(text(),'" + foldername + "')]//parent::li");
+	}
+	public Element getProdLocMarkIncomplete() {
+		return driver.FindElementById("btnProductionLocationMarkInComplete");
+	}
+	
+	public Element reservingBatesRangeFailedStatusInGenPage() {
+		return driver.FindElementByXPath("//a[contains(text(),'Reserving Bates Range Failed ')]");
+	}
+	
+	public Element selectNextBates(int i) {
+		return driver.FindElementByXPath("(//table[@id='dtNextBatesLst']//button)['" + i + "']");
+	}
+
+	public Element clickHereLink() {
+		return driver.FindElementByXPath("//a[normalize-space(text())='Click here']");
+	}
+
+	public Element getSelectNextBatesNumber(String preFix, String sufFix) {
+		return driver.FindElementByXPath("//button[@data-prefix='" + preFix + "' and @data-suffix='" + sufFix + "']");
+	}
 	public Element getLastPageGridView() {
 		return driver.FindElementByXPath("(//div[@id='ProductionListGridViewTable_paginate']//li[@class='paginate_button ']//a)[last()]");
 	}
@@ -21718,5 +21745,51 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getFileDir("0001/").waitAndClick(5);
 		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @author: NA
+	 * @Description:To apply top center Branding
+	 */
+	public String verifyTopCenterBrandingInPDF(String path, String filename, String brandingString, int pageNumber)
+			throws IOException {
+		File file = new File(path + filename);
+		PDDocument document = PDDocument.load(file);
+		Rectangle2D region = new Rectangle2D.Double(60, -100, 500, 500);
+		String regionName = "region";
+		PDFTextStripperByArea stripper;
+		PDPage page = document.getPage(pageNumber);
+		stripper = new PDFTextStripperByArea();
+		stripper.addRegion(regionName, region);
+		stripper.extractRegions(page);
+		String text = stripper.getTextForRegion(regionName);
+		if (text.contains(brandingString)) {
+			base.passedStep(brandingString + "Present in Top Center Location in PDF File");
+		} else {
+			base.failedStep(brandingString + "Not Present in Top Center Location in PDF File");
+		}
+		return text;
+	}
+
+	/**
+	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
+	 * @param beginningBates added as a argument to avoid production failure in
+	 */
+	public String toFillNumberingPageWithClickHereLink(int nextBates) {
+	
+		base.waitForElement(clickHereLink());
+		clickHereLink().waitAndClick(10);
+		
+		base.waitTime(2);
+		
+		base.waitForElement(selectNextBates(nextBates));
+		selectNextBates(nextBates).waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		
+		base.waitForElement(getBeginningBates());
+		String beginningBates = getBeginningBates().getText();
+		return beginningBates;
+		
 	}
 }
