@@ -36,6 +36,9 @@ public class UserReviewActivityReport {
 	public Element getReports_UserReviewActivity() {
 		return driver.FindElementByXPath("//span[text()='OTHER']/parent::div/parent::div//a[@href='/Review/UserActivity']");
 	}
+	public Element getReports_DocumentAudit() {
+		return driver.FindElementByXPath("//span[text()='OTHER']/parent::div/parent::div//a[@href='/Review/DocumentAudit']");
+	}
 	public Element getUserExpandIcon() {
 		return driver.FindElementByXPath("//a[@href='#collapseUserList']");
 	}
@@ -65,6 +68,12 @@ public class UserReviewActivityReport {
 	}
 	public Element waitForTaskCompletePopup() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
+	}
+	public ElementCollection actionsList() {
+		return driver.FindElementsByXPath("//div[@id='divActionTypeList']//span");
+	}
+	public Element getActionTypeExpandIcon() {
+		return driver.FindElementByXPath("//a[@href='#collapseActionType']");
 	}
 
 
@@ -227,5 +236,23 @@ public class UserReviewActivityReport {
 		 String date = getDateFromReport(docId, status).getText();
 		 return date;
 	 }
+	 /**
+		 * @Author : Iyappan.Kasinathan
+		 * @Description : This method navigates from reports landing page to document audit report page. 
+		 */
+		public void navigateToDocumentAuditReport() {
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getReports_DocumentAudit());
+			getReports_DocumentAudit().Click();
+			base.stepInfo("User review activity report is clicked");
+			driver.waitForPageToBeReady();
+			base.waitForElement(base.getPageTitle());
+			String reportName = base.getPageTitle().getText();
+			if(reportName.contains("Report: Document Audit")) {
+				base.passedStep("Navigated to document audit report page successfully");
+			}else {
+				base.failedStep("Page is not navigated to document audit report page ");
+			}
+		}
 		
 }
