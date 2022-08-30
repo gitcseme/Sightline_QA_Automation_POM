@@ -3360,7 +3360,15 @@ public class ProductionPage {
 	public Element getFirstPDFImageFile(String presufix, String subBates) {
 		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".pdf']");
 	}
-
+	public Element getWorkProductAdvancedField() {
+		return driver.FindElementByXPath("//span[text()='Work Product']/..");
+	}
+	public Element getSlipSheetSelectedText() {
+		return driver.FindElementByClassName("itemFriendlyName");
+	}
+	public Element getAdvancedOptionInTextTab() {
+		return driver.FindElementByXPath("//div[@id='TextContainer']//span[text()='Advanced']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21718,5 +21726,34 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getFileDir("0001/").waitAndClick(5);
 		driver.waitForPageToBeReady();
+	}
+	
+	/**
+	 * @author Brundha.T
+	 * @param FolderName
+	 * @param value
+	 * Description:fillling slipsheet in tiff section
+	 */
+	public void fillingSlipSheet(boolean value,String FolderName) {
+		driver.scrollingToBottomofAPage();
+		getTiffAdvancedTab().Click();
+		toggleOffCheck(getSlipSheetToogle());
+		base.ValidateElement_Absence(getSlipCalculatedTabSelection(), "Advanced field");
+		getSlipSheetToogle().Click();
+		for (int i = 1; i <= 3; i++) {
+			if(getAvailableFields(i).isElementAvailable(2)) {
+				base.passedStep("Advanced fields displayed as expected");
+			}else {base.failedStep("Advanced fields are not displayed");	}
+			}
+			if(value) {
+				driver.scrollingToBottomofAPage();
+				getWorkProductAdvancedField().waitAndClick(5);
+				getWorkProductFolderName(FolderName).waitAndClick(5);
+				getAddSelected().waitAndClick(5);
+				driver.waitForPageToBeReady();
+			}
+		
+		
+		
 	}
 }
