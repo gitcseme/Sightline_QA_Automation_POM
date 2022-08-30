@@ -2010,6 +2010,11 @@ public class SessionSearch {
 				"(//*[@id='ss2']//div[@id='modalFolderAdd']//div//label[@class='checkbox']//i)[" + i + "]");
 	}
 
+	public Element getBulkAssignPopUpClosed() {
+		return driver.FindElementByXPath(
+				"//div[contains(@class,'assignmentbulkactionpopup') and contains(@style,'display: none')]");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -13150,6 +13155,7 @@ public class SessionSearch {
 		getUnassign_ExistingAssignButton().Click();
 		getExistingAssignmentToUnAssign(assignName).ScrollTo();
 		getExistingAssignmentToUnAssign(assignName).Click();
+		base.waitTillElemetToBeClickable(getExistingAssignmentToUnAssign(assignName));
 		getContinueBulkAssign().waitAndClick(5);
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
@@ -13255,6 +13261,139 @@ public class SessionSearch {
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
 		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
 		driver.getWebDriver().navigate().refresh();
+	}
+
+	/**
+	 * @author
+	 * @param waitTime
+	 * @description : tallyContinue click
+	 */
+	public void tallyContinue(int waitTime) {
+		if (getTallyContinue().isElementAvailable(waitTime)) {
+			getTallyContinue().waitAndClick(5);
+		}
+	}
+
+	/**
+	 * @author
+	 * @param pairOfAssignmentNameAndcodingForm
+	 * @description : bulkAssignWithMultipleNewAssignmentWithPersistantHit
+	 */
+	public void bulkAssignWithMultipleNewAssignmentWithPersistantHit(String[][] pairOfAssignmentNameAndcodingForm) {
+
+		for (int i = 0; i < pairOfAssignmentNameAndcodingForm.length; i++) {
+			String assignmentName = pairOfAssignmentNameAndcodingForm[i][0];
+			String codingForm = pairOfAssignmentNameAndcodingForm[i][1];
+
+			navigateToSessionSearchPageURL();
+			AssignmentsPage assignPage = new AssignmentsPage(driver);
+			driver.waitForPageToBeReady();
+			if (getPureHitAddButton().isDisplayed()) {
+				base.waitForElement(getPureHitAddButton());
+				base.waitTime(2);
+				getPureHitAddButton().Click();
+			} else {
+				System.out.println("Pure hit block already moved to action panel");
+				UtilityLog.info("Pure hit block already moved to action panel");
+			}
+			base.waitTime(3);
+			base.waitForElement(getBulkActionButton());
+			getBulkActionButton().Click();
+			base.waitForElement(getBulkAssignAction());
+			getBulkAssignAction().Click();
+			UtilityLog.info("performing bulk assign");
+			driver.waitForPageToBeReady();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().isElementAvailable(15);
+			base.waitTillElemetToBeClickable(getAssgn_NewAssignmnet());
+			getAssgn_NewAssignmnet().waitAndClick(5);
+			base.waitForElement(getbulkassgnpopup());
+			getbulkassgnpopup().isElementAvailable(10);
+			try {
+				base.waitForElement(getContinueBulkAssign());
+				getContinueBulkAssign().isElementAvailable(15);
+				base.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(20);
+			} catch (Exception e) {
+				getPersistantHitCheckBox().isElementAvailable(15);
+				getPersistantHitCheckBox().Click();
+				base.waitForElement(getContinueBulkAssign());
+				getContinueBulkAssign().isElementAvailable(15);
+				base.waitTillElemetToBeClickable(getContinueBulkAssign());
+				getContinueBulkAssign().waitAndClick(20);
+			}
+			base.waitForElement(getAssgn_TotalCount());
+			getAssgn_TotalCount().isElementAvailable(10);
+			base.waitForElement(getFinalizeButton());
+			base.waitTillElemetToBeClickable(getFinalizeButton());
+			getFinalizeButton().isElementAvailable(10);
+			getFinalizeButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			try {
+				base.waitForElement(getAssignmentName());
+				getAssignmentName().isElementAvailable(15);
+				getAssignmentName().SendKeys(assignmentName);
+			} catch (Exception e) {
+				getAssignmentName().isElementAvailable(15);
+				base.waitForElement(getAssignmentName());
+				getAssignmentName().Clear();
+				getAssignmentName().SendKeys(assignmentName);
+			}
+			getParentAssignmentGroupName().isElementAvailable(10);
+			getParentAssignmentGroupName().isDisplayed();
+			base.waitForElement(getSelectedClassification());
+			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+			assignPage.SelectCodingform(codingForm);
+			base.waitForElement(getAssignmentSaveButton());
+			base.waitTillElemetToBeClickable(getAssignmentSaveButton());
+			getAssignmentSaveButton().waitAndClick(5);
+			try {
+				if (getAssignmentErrorText().isElementAvailable(5)) {
+					driver.waitForPageToBeReady();
+					base.waitForElement(getAssignmentName());
+					getAssignmentName().SendKeys(assignmentName);
+					base.waitForElement(getAssignmentSaveButton());
+					getAssignmentSaveButton().waitAndClick(5);
+				}
+			} catch (org.openqa.selenium.NoSuchElementException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
+			base.stepInfo("Assignment " + assignmentName + " created with CF " + codingForm);
+			UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
+		}
+	}
+
+	/**
+	 * @author
+	 * @description : UnAssignMultipleExistingAssignments
+	 * @param listOfAssignments
+	 */
+	public void UnAssignMultipleExistingAssignments(List<String> listOfAssignments) {
+
+		base.waitForElement(getUnAssignRadioBtn());
+		base.stepInfo("Assign/UnAssign pop up displayed");
+		getUnAssignRadioBtn().Click();
+
+		getUnassign_ExistingAssignButton().Click();
+		for (int i = 0; i < listOfAssignments.size(); i++) {
+			getExistingAssignmentToUnAssign(listOfAssignments.get(i)).ScrollTo();
+			getExistingAssignmentToUnAssign(listOfAssignments.get(i)).Click();
+		}
+		getContinueBulkAssign().waitAndClick(5);
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+		bc.VerifySuccessMessage(
+				"Bulk UnAssign has been added to background process. You will get notification on completion.");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		for (int i = 0; i < listOfAssignments.size(); i++) {
+			bc.stepInfo(" Docs Unassigned from  " + listOfAssignments.get(i));
+		}
 	}
 
 }
