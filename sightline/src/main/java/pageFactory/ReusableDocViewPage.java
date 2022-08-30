@@ -965,9 +965,9 @@ public class ReusableDocViewPage {
 //	Work with complete button and verify the same as appear
 	public void editingCodingFormWithCompleteButtonChild() {
 		base.waitForElement(getResponsiveCheked());
-		getResponsiveCheked().Click();
+		getResponsiveCheked().waitAndClick(5);
 		base.waitForElement(getNonPrivilegeRadio());
-		getNonPrivilegeRadio().Click();
+		getNonPrivilegeRadio().waitAndClick(5);
 		base.waitForElement(getDocument_CommentsTextBox());
 		getDocument_CommentsTextBox().SendKeys("verify check mark icon");
 		base.waitForElement(getCompleteDocBtn());

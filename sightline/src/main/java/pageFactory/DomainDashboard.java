@@ -196,6 +196,12 @@ public class DomainDashboard {
 	public Element getUserHomePage() {
 		return driver.FindElementByXPath("//h1[text()=' Review Manager Dashboard for ']");
 	}
+
+	//Added by jeevitha
+	public Element getRMUHomePageTitle() {
+		return driver.FindElementByXPath("//h1[text()=' Review Manager Dashboard for ']//strong");
+	}
+
 	public DomainDashboard(Driver driver) {
 
 		this.driver = driver;
@@ -793,20 +799,43 @@ public class DomainDashboard {
 			driver.Navigate().refresh();
 		}
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @Description go to first project on the domain dashboard web table
 	 */
 	public void goToFirstProject() {
-		 driver.waitForPageToBeReady();
-		 waitForDomainDashBoardIsReady();
-		 base.waitForElement(getFirstHyperLink());
-		 getFirstHyperLink().waitAndClick(5);
-		 base.waitForElement(getFirstGoToProject());
-		 getFirstGoToProject().waitAndClick(5);
-		 base.stepInfo("Go to first project of the domaindashboard page");
-		 driver.waitForPageToBeReady();
-		 
-	 }
+		driver.waitForPageToBeReady();
+		waitForDomainDashBoardIsReady();
+		base.waitForElement(getFirstHyperLink());
+		getFirstHyperLink().waitAndClick(5);
+		base.waitForElement(getFirstGoToProject());
+		getFirstGoToProject().waitAndClick(5);
+		base.stepInfo("Go to first project of the domaindashboard page");
+		driver.waitForPageToBeReady();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :click active project from DA dashboard and verify impersonation
+	 * @param projectName
+	 */
+	public void clickActiveProject(String projectName) {
+		getprojectnamelink(projectName).waitAndClick(10);
+		base.stepInfo("Clicked Active project link : " + projectName);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getUserHomePage());
+
+		boolean status = base.ValidateElement_PresenceReturn(getUserHomePage());
+		String passMsg = "Impersonated As Review Manager";
+		String failMsg = "Impersonation is Not as Expected";
+		base.printResutInReport(status, passMsg, failMsg, "Pass");
+
+		String currentProject = getRMUHomePageTitle().getText();
+		base.textCompareEquals(currentProject, projectName, "Impersonated with same project : " + projectName,
+				"Wrong Project Selection");
+
+	}
 }

@@ -3313,7 +3313,9 @@ public class SavedSearch {
 			base.waitTime(2);// to handle wait for observing the text
 			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
 			getSavedSearchNewGroupButton().waitAndClick(2);
-			
+
+			/*
+
 			try {
 				if (getSuccessPopup().isElementAvailable(2)) {
 					base.VerifySuccessMessage("Save search tree node successfully created.");
@@ -3326,15 +3328,13 @@ public class SavedSearch {
 			} catch (Exception e) {
 				break;
 			}
-			
-			//base.waitTime(2);// to handle wait for observing the text
-		//	driver.Navigate().refresh();
+			*/
+			driver.Navigate().refresh();
+			base.waitTime(2);// to handle wait for observing the text
 			driver.waitForPageToBeReady();
-			String newNode = currentcreateddNode().getText();
-		//	String newNode = currentClickedNode().getText();
-			
-			currentcreateddNode().waitAndClick(5);
-		//	getSelectAnode(newNode).waitAndClick(10);
+			//getSavedSearchExpandStats
+			String newNode = currentClickedNode().getText();
+
 			newNodeList.add(newNode);
 			try {
 			getSavedSearchNewGroupExpand().waitAndClick(20);

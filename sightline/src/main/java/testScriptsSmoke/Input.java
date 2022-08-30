@@ -471,6 +471,9 @@ public class Input {
 	public static String retreivingDSstatus;
 	public static String virusScanStatus;
 	public static String copyDSstatus;
+	public static String collectionExtractionMsg;
+	public static String cancelCollectionNotification;
+	public static String progressBarHeader;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -1414,6 +1417,9 @@ public class Input {
 		retreivingDSstatus = testData.getRetreivingDSstatus();
 		virusScanStatus = testData.getVirusScanStatus();
 		copyDSstatus = testData.getCopyDSstatus();
+		collectionExtractionMsg = testData.getCollectionExtractionMsg();
+		cancelCollectionNotification = testData.getCancelCollectionNotification();
+		progressBarHeader = testData.getProgressBarHeader();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

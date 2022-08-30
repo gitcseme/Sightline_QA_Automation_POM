@@ -6716,12 +6716,7 @@ public class AssignmentsPage {
 			getAssignmentName().SendKeys(assignmentName);
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 			getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
 			driver.scrollingToBottomofAPage();

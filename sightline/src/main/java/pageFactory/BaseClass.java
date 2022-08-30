@@ -2099,6 +2099,8 @@ public class BaseClass {
 		try {
 			System.out.println("Source String  : " + sourceString);
 			System.out.println("Compare String  : " + compreString);
+			stepInfo("Source String  : " + sourceString);
+			stepInfo("Compare String  : " + compreString);
 
 			softAssertion.assertEquals(sourceString, compreString);
 			if (!sourceString.equals(compreString)) {
@@ -4357,6 +4359,74 @@ public class BaseClass {
 		stepInfo("File Name : " + fileName);
 		textCompareEquals(fileFormat, expectedFormat, "File format is as Expected : " + fileFormat,
 				"File format is not as Expected : " + fileFormat);
+	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param element
+	 * @param n
+	 * @Description this method is used for move to element and perform action click,
+	 * this method used action not performed in not normal click method. 
+	 */
+	public void moveWaitAndClick(Element element, int n) {
+		
+		Actions action = new Actions(driver.getWebDriver());
+		for(int i=0;i<n;i++) {
+			try {
+				action.moveToElement(element.getWebElement()).click().perform();
+				break;
+			}catch(Exception e){
+				waitTime(1);
+			}
+		}
+
+	}
+
+
+    /*
+	 * @author Indium-Baskar
+	 * 
+	 */
+//	This method used to login As SA,PA,RMU
+//	Impersonate to SA-->rmu,rev,pa & PA-->rmu,rev &RMU-->rev
+	public void credentialsToImpersonateAsPARMUREV(String roll, String impersonate) {
+		try {
+			switch (impersonate) {
+			case "pa":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("pa")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoPA();
+				}
+				if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonateDAtoRMU();
+				}
+
+			case "rmu":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoRMU();
+				}
+				if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+					driver.waitForPageToBeReady();
+					impersonatePAtoRMU();
+				}
+				
+			case "rev":
+				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
+					driver.waitForPageToBeReady();
+					impersonateSAtoReviewer();
+				}
+				if (roll.equalsIgnoreCase("rmu") && impersonate.equalsIgnoreCase("rev")) {
+					driver.waitForPageToBeReady();
+					impersonateRMUtoReviewer();
+				}
+			}
+		} catch (Exception E) {
+			E.printStackTrace(pw);
+			UtilityLog.info(sw.toString());
+		}
+
 	}
 
 }
