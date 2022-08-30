@@ -92,7 +92,7 @@ public class Ingestion_Regression {
 	 *               Processed and Not Loaded" tab details for a project having
 	 *               Uploaded ingestions.
 	 */
-	@Test(description ="RPMXCON-50755",alwaysRun = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-50755",alwaysRun = true, groups = { "regression" } )
 	public void verifyProjectLvelExportedDataSetWithExpFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -137,7 +137,7 @@ public class Ingestion_Regression {
 	 *               Processed and Not Loaded" tab details for an existing project
 	 *               having mapped ingestions and uploaded datasets
 	 */
-	@Test(description ="RPMXCON-50756",alwaysRun = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-50756",alwaysRun = true, groups = { "regression" } )
 	public void verifyProjectLvelExportedDataSetsExistingProject() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -181,7 +181,7 @@ public class Ingestion_Regression {
 	 *               Error" tab details for an existing project having mapped and
 	 *               uploaded ingestions
 	 */
-	@Test(description ="RPMXCON-50758",alwaysRun = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-50758",alwaysRun = true, groups = { "regression" } )
 	public void verifyProjectLvelExportedDataSetWithLoadedWithErrorFields() {
 		baseClass = new BaseClass(driver);
 		String location = "C:\\\\BatchPrintFiles\\\\downloads";
@@ -228,7 +228,7 @@ public class Ingestion_Regression {
 	 * @Description: Verify that after Re-run the copy process without ignoring the
 	 *               errors, copy should continues
 	 */
-	@Test(description ="RPMXCON-50771",alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-50771",alwaysRun = true, groups = { "regression" } )
 	public void verifyRerunCopyProcessWithoutIgnoringErrors() {
 		baseClass = new BaseClass(driver);
 		String ingestionType = "Add Only";
@@ -320,7 +320,7 @@ public class Ingestion_Regression {
 	 * @Description: Verify that when rollback is in-progress then error page should
 	 *               not be displayed on Datasets page.
 	 */
-	@Test(description ="RPMXCON-50744",alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-50744",alwaysRun = true, groups = { "regression" } )
 	public void verifyRollBackIsInProgressErrorMsgNotDisplayed() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String ingestionType = Input.ingestionType;
@@ -430,7 +430,7 @@ public class Ingestion_Regression {
 	 * @Description: Verify if user ingest documents with ICE as Source System then
 	 *               same dataset cannot ingest with any other Source System
 	 */
-	@Test(description ="RPMXCON-58503",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-58503",enabled = true, groups = { "regression" } )
 	public void verifyErrorMsgDisplayedByIngestingPublishedData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		String ingestionType = Input.ingestionType;
@@ -495,7 +495,7 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Verify
 	 * Search should work by concatenated email metadata field
 	 */
-	@Test(description ="RPMXCON-49560",enabled = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-49560",enabled = true, groups = { "regression" } )
 	public void verifySearchForSelectedMetadata() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 
@@ -528,7 +528,7 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Verify
 	 * Search should work by split email metadata field
 	 */
-	@Test(description ="RPMXCON-49565",alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-49565",alwaysRun = true, groups = { "regression" } )
 	public void verifySearchForEmailMetaData() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 
@@ -566,7 +566,7 @@ public class Ingestion_Regression {
 	 * Author :Brundha date: NA Modified date: Modified by: Description :Verify
 	 * Email metadata in Manage-Project fields
 	 */
-	@Test(description ="RPMXCON-49563",alwaysRun = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-49563",alwaysRun = true, groups = { "regression" } )
 	public void verifyingEmailMetaDataInProjectField() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 
@@ -598,7 +598,7 @@ public class Ingestion_Regression {
 	 * 
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-49561",enabled = true, groups = { "regression" }, priority = 10)
+	@Test(description ="RPMXCON-49561",enabled = true, groups = { "regression" } )
 	public void verifyEmailMetadataWithIngestionName() throws Exception {
 		baseClass = new BaseClass(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
@@ -685,7 +685,7 @@ public class Ingestion_Regression {
 	 * Out" should be available so user could switch between the short and long wave
 	 * forms.
 	 */
-	@Test(description ="RPMXCON-48241",enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-48241",enabled = true, groups = { "regression" } )
 	public void verifyMoreThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -743,7 +743,7 @@ public class Ingestion_Regression {
 	 * Description:To verify for Audio less than 1 hour, in Docview, "Zoom In/Zoom
 	 * Out" is disabled or hidden.
 	 */
-	@Test(description ="RPMXCON-48239",enabled = true, groups = { "regression" }, priority = 12)
+	@Test(description ="RPMXCON-48239",enabled = true, groups = { "regression" } )
 	public void verifyLessThanHourAudioDocs() throws InterruptedException {
 		baseClass = new BaseClass(driver);
 		dataSets = new DataSets(driver);
@@ -807,7 +807,7 @@ public class Ingestion_Regression {
 	 * @param fromRole
 	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-50752",enabled = true, dataProvider = "userDataSets", groups = { "regression" }, priority =13)
+	@Test(description ="RPMXCON-50752",enabled = true, dataProvider = "userDataSets", groups = { "regression" })
 	public void verifyingTheExportIconWithDiffUsers(String userName, String password, String fromRole)
 			throws Exception {
 		String status = "true";
@@ -854,7 +854,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-50749",enabled = true, groups = { "regression" }, priority =14)
+	@Test(description ="RPMXCON-50749",enabled = true, groups = { "regression" })
 	public void validateExportingDatasetAsPA() throws InterruptedException, IOException {
 
 		
@@ -900,7 +900,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-50750",enabled = true, groups = { "regression" }, priority =15)
+	@Test(description ="RPMXCON-50750",enabled = true, groups = { "regression" })
 	public void validateExportingDatasetAsRMU() throws InterruptedException, IOException {
 
 		ingestionPage = new IngestionPage_Indium(driver);
@@ -944,7 +944,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	@Test(description ="RPMXCON-50751",enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" }, priority =16)
+	@Test(description ="RPMXCON-50751",enabled = true, dataProvider = "userDataSetsSAAndDA", groups = { "regression" })
 	public void validateExportingDatasetAsSAandDA(String userName, String password, String fromRole)
 			throws InterruptedException, IOException {
 
@@ -998,7 +998,7 @@ public class Ingestion_Regression {
 	 * 
 	 * @throws InterruptedException
 	 */
-    @Test(description ="RPMXCON-49521",enabled = true, groups = { "regression" }, priority = 17)
+    @Test(description ="RPMXCON-49521",enabled = true, groups = { "regression" } )
 	public void verifyTEXTAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException {
 
 		
@@ -1088,7 +1088,7 @@ public class Ingestion_Regression {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(description ="RPMXCON-48195",enabled = true, groups = { "regression" }, priority = 19)
+	@Test(description ="RPMXCON-48195",enabled = true, groups = { "regression" } )
 	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
 		
 

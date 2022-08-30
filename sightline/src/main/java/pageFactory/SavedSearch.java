@@ -1008,6 +1008,11 @@ public class SavedSearch {
 		return driver
 				.FindElementByXPath("(//a[contains(text(),'" + rtFolder + "')]//following-sibling::ul//a)[last()]");
 	}
+	
+	public Element currentcreateddNode() {
+		return driver.FindElementByXPath("jstree-node gp_tc_mysearch jstree-leaf jstree-last");
+	}
+
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -3306,9 +3311,11 @@ public class SavedSearch {
 			base.waitForElement(getSavedSearchNewGroupButton());
 			getSavedSearchNewGroupButton().waitAndClick(2);
 			base.waitTime(2);// to handle wait for observing the text
-//			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
+			base.hitKey(KeyEvent.VK_ENTER);// base on new implementation
 			getSavedSearchNewGroupButton().waitAndClick(2);
+
 			/*
+
 			try {
 				if (getSuccessPopup().isElementAvailable(2)) {
 					base.VerifySuccessMessage("Save search tree node successfully created.");
@@ -3327,8 +3334,18 @@ public class SavedSearch {
 			driver.waitForPageToBeReady();
 			//getSavedSearchExpandStats
 			String newNode = currentClickedNode().getText();
+
 			newNodeList.add(newNode);
+			try {
+			getSavedSearchNewGroupExpand().waitAndClick(20);
+			}
+			catch(Exception e)
+			{
+				System.out.println("No node");
+			}
+			getSavedSearchGroupName(newNode).waitAndClick(10);
 			System.out.println("Via : " + role + " Created new node : " + newNode);
+
 			base.stepInfo("Via : " + role + " Created new node : " + newNode);
 
 			if (verifyNodeEmptyInitally.equals("Yes")) {
