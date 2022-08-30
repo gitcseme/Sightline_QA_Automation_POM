@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
@@ -183,51 +185,54 @@ public class Assignments_Regression2_4 {
 		// logOut
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * 
-	 * @description:RPMXCON-53698 To verify that in Redistribute Documents pop up only those Reviewers are displayed which are associated to the Assignments
-	 * @description:RPMXCON-53697 To verify that in Redistribute Documents screen selected Reviewer is not displayed in the Reviewers list
+	 * @description:RPMXCON-53698 To verify that in Redistribute Documents pop up
+	 *                            only those Reviewers are displayed which are
+	 *                            associated to the Assignments
+	 * @description:RPMXCON-53697 To verify that in Redistribute Documents screen
+	 *                            selected Reviewer is not displayed in the
+	 *                            Reviewers list
 	 * 
 	 */
-	@Test(description ="RPMXCON-53697,RPMXCON-53698",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53697,RPMXCON-53698", enabled = true, groups = { "regression" })
 	public void verifyThedistributedUserNotInRedistributeList()
 			throws InterruptedException, ParseException, IOException {
 		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
-		baseClass.stepInfo(
-				"To verify that in Redistribute Documents pop up only those Reviewers are"
+		baseClass.stepInfo("To verify that in Redistribute Documents pop up only those Reviewers are"
 				+ " displayed which are associated to the Assignments");
-		baseClass.stepInfo(
-				"To verify that in Redistribute Documents screen "
+		baseClass.stepInfo("To verify that in Redistribute Documents screen "
 				+ "selected Reviewer is not displayed in the Reviewers list");
 		baseClass.stepInfo("Test case Id:RPMXCON-53697,RPMXCON-536978");
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
+
 		baseClass.stepInfo("**Assignment creation -bulk assing docs**");
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		baseClass.stepInfo("Created assignment with name" + assignmentName);
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkAssignExisting(assignmentName);
 		baseClass.stepInfo("Created a assignment " + assignmentName);
-		
-		baseClass.stepInfo("**Adding 2 reviewers and distributing docs to one reviewer alone**");		
+
+		baseClass.stepInfo("**Adding 2 reviewers and distributing docs to one reviewer alone**");
 		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
 		String Distributeduser = assignPage.addMultipleReviewersAndDistributeToOnereviewer();
 		baseClass.stepInfo("**selecting docs assigned reviewers to redistribute docs to other assignment "
-				+ "associated reviewer**"); 
+				+ "associated reviewer**");
 		String redistributeUser = assignPage.VerifyUserNotInListAfterRedistributedDocs();
-		
-		baseClass.stepInfo("**Validation for test case RPMXCON-53697**"); 
+
+		baseClass.stepInfo("**Validation for test case RPMXCON-53697**");
 		if (Distributeduser != redistributeUser) {
 			baseClass.passedStep("Selected distributed reviewer is not displayed in redistribute document pop up.");
 		} else {
 			baseClass.failedStep("selected Distributed Reviewer user appeared in redistribute document list.");
 		}
-		baseClass.stepInfo("**Validation for test case RPMXCON-53698**"); 
+		baseClass.stepInfo("**Validation for test case RPMXCON-53698**");
 		System.out.println(redistributeUser);
 		System.out.println(Input.rev1userName);
-		if ( redistributeUser.contains(Input.rev1userName)) {	
+		if (redistributeUser.contains(Input.rev1userName)) {
 			baseClass.passedStep("Redistribute Documents pop up displayed only those Reviewers"
 					+ " which are associated to the Assignments");
 		} else {
@@ -236,7 +241,74 @@ public class Assignments_Regression2_4 {
 		}
 		loginPage.logout();
 	}
-	
+
+	/**
+	 * @author
+	 * @Date: 25/8/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To verify that Total Documents displayed on Distribute
+	 *              Documents are correct if documents are unassigned to the
+	 *              one/multiple Assignments.RPMXCON-53646
+	 */
+
+	@Test(description = "RPMXCON-53646", enabled = true, groups = { "regression" })
+	public void verifyTotalDocumentsDisplayedOnDistributeDocumentsAreCorrectWhenDocumentsUnAssignedForMultipleAssignments()
+			throws InterruptedException {
+
+		String assignmentName01 = "Assgn" + Utility.dynamicNameAppender();
+		String assignmentName02 = "Assgn" + Utility.dynamicNameAppender();
+		int ExpectedTotalDocCountInAssign = 0;
+		List<String> listOfAssignments = new ArrayList<String>();
+		listOfAssignments.add(assignmentName01);
+		listOfAssignments.add(assignmentName02);
+		Map<String, Integer> pairOfAssignmentsAndExpectedTotalDocCountInAssign = new HashMap<String, Integer>();
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign.put(assignmentName01, ExpectedTotalDocCountInAssign);
+		pairOfAssignmentsAndExpectedTotalDocCountInAssign.put(assignmentName02, ExpectedTotalDocCountInAssign);
+		Map<String, Integer> pairOfAssignmentsAndexptedDocCountInDistrTab = pairOfAssignmentsAndExpectedTotalDocCountInAssign;
+		String[][] pairOfAssignmentNameAndcodingForm = { { assignmentName01, Input.codeFormName },
+				{ assignmentName02, Input.codeFormName } };
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-53646");
+		baseClass.stepInfo(
+				"To verify that Total Documents displayed on Distribute Documents are correct if documents are unassigned to the one/multiple Assignments.");
+
+		// create Assignments using Bulk Assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignWithMultipleNewAssignmentWithPersistantHit(pairOfAssignmentNameAndcodingForm);
+
+		// UnAssigning Documents from Assignments
+		sessionSearch.bulkAssign();
+		sessionSearch.UnAssignMultipleExistingAssignments(listOfAssignments);
+		driver.waitForPageToBeReady();
+
+		// Verify that "Assign/Unassign Documents" pop up is closed and displays Search
+		// Page
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(sessionSearch.getNewSearch()),
+				"Landed back in Session search page", "Failed in landing page", "Pass");
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(sessionSearch.getBulkAssignPopUpClosed()),
+				"Verified that \"Assign/Unassign Documents\" pop up is closed and displays Search Page.",
+				"Failed in landing page", "Pass");
+
+		// verifying Assignment Total Document Count in Manage Assignment page.
+		assignPage.navigateToAssignmentsPage();
+		assignPage.validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+				pairOfAssignmentsAndExpectedTotalDocCountInAssign);
+
+		// Verifying that "Distribute Documents" tab is displayed and Total Documents
+		// are displayed as "0"
+		assignPage.verifyTotalCountOfDocsInMultipleAssignmentsInDistributeDocumentsTab(
+				pairOfAssignmentsAndexptedDocCountInDistrTab);
+
+		// delete Assignment
+		assignPage.deleteMultipleAssgnmntUsingPagination(listOfAssignments);
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
