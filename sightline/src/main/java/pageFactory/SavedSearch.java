@@ -1008,11 +1008,14 @@ public class SavedSearch {
 		return driver
 				.FindElementByXPath("(//a[contains(text(),'" + rtFolder + "')]//following-sibling::ul//a)[last()]");
 	}
-	
+
 	public Element currentcreateddNode() {
 		return driver.FindElementByXPath("jstree-node gp_tc_mysearch jstree-leaf jstree-last");
 	}
 
+	public Element getExpansionArrow(String groupName) {
+		return driver.FindElementByXPath("//a[text()='" + groupName + "']/parent::li/i");
+	}
 
 	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -2284,7 +2287,7 @@ public class SavedSearch {
 		driver.scrollingToBottomofAPage();
 		getSavedSearchNewGroupExpand().waitAndClick(10);
 		childNodeName = getLastChildCreatedNode(nodeName).getText();
-	//	base.VerifySuccessMessage("Save search tree node successfully created.");
+		// base.VerifySuccessMessage("Save search tree node successfully created.");
 		base.stepInfo("Save search tree node successfully created under :" + childNodeName);
 		System.out.println("Save search tree node successfully created under :" + childNodeName);
 
@@ -3309,7 +3312,7 @@ public class SavedSearch {
 		List<String> newNodeList = new ArrayList<>();
 		for (int i = 1; i <= size; i++) {
 			// Create SearchGroup
-			
+
 			base.waitForElement(getSavedSearchNewGroupButton());
 			getSavedSearchNewGroupButton().waitAndClick(2);
 			base.waitTime(2);// to handle wait for observing the text
@@ -3317,32 +3320,25 @@ public class SavedSearch {
 			getSavedSearchNewGroupButton().waitAndClick(2);
 
 			/*
-
-			try {
-				if (getSuccessPopup().isElementAvailable(2)) {
-					base.VerifySuccessMessage("Save search tree node successfully created.");
-					base.CloseSuccessMsgpopup();
-				} else if (getErrorPopup().isElementAvailable(3)) {
-					base.VerifyErrorMessage("Only 5 levels deep profiling allows");
-					base.stepInfo("-------------Only 5 levels deep profiling allows----------");
-					break;
-				}
-			} catch (Exception e) {
-				break;
-			}
-			*/
+			 * 
+			 * try { if (getSuccessPopup().isElementAvailable(2)) {
+			 * base.VerifySuccessMessage("Save search tree node successfully created.");
+			 * base.CloseSuccessMsgpopup(); } else if
+			 * (getErrorPopup().isElementAvailable(3)) {
+			 * base.VerifyErrorMessage("Only 5 levels deep profiling allows");
+			 * base.stepInfo("-------------Only 5 levels deep profiling allows----------");
+			 * break; } } catch (Exception e) { break; }
+			 */
 			driver.Navigate().refresh();
 			base.waitTime(2);// to handle wait for observing the text
 			driver.waitForPageToBeReady();
-			//getSavedSearchExpandStats
+			// getSavedSearchExpandStats
 			String newNode = currentClickedNode().getText();
 
 			newNodeList.add(newNode);
 			try {
-			getSavedSearchNewGroupExpand().waitAndClick(20);
-			}
-			catch(Exception e)
-			{
+				getSavedSearchNewGroupExpand().waitAndClick(20);
+			} catch (Exception e) {
 				System.out.println("No node");
 			}
 			getSavedSearchGroupName(newNode).waitAndClick(10);
@@ -8209,8 +8205,8 @@ public class SavedSearch {
 		if (release) {
 			base.waitForElement(getReleaseBtn());
 			getReleaseBtn().waitAndClick(5);
-			
-			if(getContinueButton().isElementAvailable(5)) {
+
+			if (getContinueButton().isElementAvailable(5)) {
 				getContinueButton().waitAndClick(10);
 			}
 
@@ -8218,18 +8214,16 @@ public class SavedSearch {
 			base.waitForElement(getFinalizeReleaseButtonfromPopup());
 			getFinalizeReleaseButtonfromPopup().waitAndClick(6);
 			base.stepInfo("Released to SG : " + securityGroup);
-		
+
 		} else {
 			base.waitForElement(getUnreleaseBtn());
 			getUnreleaseBtn().waitAndClick(10);
 			base.stepInfo("Unreleased From SG : " + securityGroup);
-			if(getContinueButton().isElementAvailable(5)) {
+			if (getContinueButton().isElementAvailable(5)) {
 				getContinueButton().waitAndClick(10);
 			}
 		}
-		
-		
-		
+
 		base.VerifySuccessMessage(expected);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8257,6 +8251,49 @@ public class SavedSearch {
 		System.out.println(size);
 
 		return size;
+	}
+
+	/**
+	 * @param parentGroupAndChildGroupPair
+	 * @author
+	 * @Date : 30/08/2022 Description: verify Presence Of Expansion Arrow And its
+	 *       Clickable Of Child Saved Search Groups Under Pre-Built Models SG.
+	 */
+
+	public void verifyPresenceOfExpansionArrowAndClickableOfChildSavedSGsUnderPreBuiltModelsSG(
+			Map<String, String> parentGroupAndChildGroupPair) {
+		List<String> parentGroupList = new ArrayList<String>(parentGroupAndChildGroupPair.keySet());
+		for (int i = 0; i < parentGroupList.size(); i++) {
+			String parentGroupName = parentGroupList.get(i);
+			base.ValidateElement_Presence(getExpansionArrow(parentGroupName),
+					"'" + parentGroupName + "' saved search group Arrow ");
+			getExpansionArrow(parentGroupName).waitAndClick(5);
+			base.ValidateElement_Presence(getMainFolders(parentGroupAndChildGroupPair.get(parentGroupName)),
+					"'" + parentGroupAndChildGroupPair.get(parentGroupName) + "' saved search group");
+			base.stepInfo("Verify that little arrow present at '" + parentGroupName
+					+ "' saved search group ls present under the 'Pre-Built Models' Search Group and its clickable");
+		}
+	}
+
+	/**
+	 * @author
+	 * @param ListOfSavedSearchGroup
+	 * @param parentGroup
+	 */
+	public void verifyPresenceOfListOfSavedSearchGroups(List<String> ListOfSavedSearchGroup, String parentGroup) {
+		for (String savedSearchGroupName : ListOfSavedSearchGroup) {
+			if (getMainFolders(savedSearchGroupName).isElementAvailable(5)) {
+				getMainFolders(savedSearchGroupName).waitAndClick(5);
+				if (!parentGroup.equals(null)) {
+					base.passedStep("Verify that '" + savedSearchGroupName
+							+ "' Saved Search Group is Present Under the '" + parentGroup + "' Search Group.");
+				} else {
+					base.passedStep("Verify that '" + savedSearchGroupName + "' Saved Search Group is Present.");
+				}
+			} else {
+				base.failedStep("'" + savedSearchGroupName + "' Saved Search Group is Not Present.");
+			}
+		}
 	}
 
 }
