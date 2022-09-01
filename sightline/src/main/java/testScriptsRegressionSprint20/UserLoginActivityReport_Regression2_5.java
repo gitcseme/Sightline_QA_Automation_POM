@@ -95,7 +95,13 @@ public class UserLoginActivityReport_Regression2_5 {
 		userLoginActivityRptPg.navigateToUserLoginActivityReport();
 		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(username);
 		userLoginActivityRptPg.deselectColumn("Role");
-		userLoginActivityRptPg.deselectColumn("Project");			
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(username);
+		userLoginActivityRptPg.deselectColumn("First Name");
+		userLoginActivityRptPg.deselectColumn("Project");	
+		bc.passedStep("After deselected from the cloumn in settings icon, coloumn values are not displayed as expected");
 		lp.logout();
 	}
 	
