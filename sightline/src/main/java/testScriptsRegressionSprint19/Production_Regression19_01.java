@@ -54,9 +54,6 @@ public class Production_Regression19_01 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
 	
 	
@@ -70,6 +67,7 @@ public class Production_Regression19_01 {
 
 	public void GenerateProductionForTechIssuePlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-49346-from Production");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Tech Issue placeholdering even though File group/tag based placeholdering is exists.");
@@ -139,7 +137,7 @@ public class Production_Regression19_01 {
 		base.stepInfo("To verify that Production should generated successfully with LST which is enabled by default");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
@@ -192,6 +190,7 @@ public class Production_Regression19_01 {
 	public void verifyingUserCanEnterBranding() throws Exception {
 		BaseClass base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case Id:RPMXCON-47747- Production Component");
 		base.stepInfo(
 				"Project Admin should be able to enter branding information on the self production wizard for TIFF/PDF component");
@@ -222,7 +221,7 @@ public class Production_Regression19_01 {
 
 	public void verifyingProductionStatus() throws Exception {
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-47792-from Production Component");
 		base.stepInfo("To Verify Production Name and Status is displayed properly on the Generate tab.");
 
@@ -312,6 +311,7 @@ public class Production_Regression19_01 {
 	public void verifyDocumentSelectionInProductionWizard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-47893 -Production Component");
 		base.stepInfo("To Verify Document Selection Section on the self production wizard For Folder");
@@ -366,7 +366,7 @@ public class Production_Regression19_01 {
 				"To verify that in Production-Numbering and Sorting section,Metadata Field drop down should be sorted by alpha ascending");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ProductionPage page = new ProductionPage(driver);
 		String productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -396,6 +396,7 @@ public class Production_Regression19_01 {
 	public void verifyBatesNumberInProductionWizard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-47715 -Production Component");
 		base.stepInfo(
