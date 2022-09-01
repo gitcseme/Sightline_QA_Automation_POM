@@ -40,8 +40,8 @@ public class BasicSearchRegression {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		Input in = new Input();
-		in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 
 	}
 
@@ -124,7 +124,7 @@ public class BasicSearchRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description = "RPMXCON-57345", dataProvider = "Users", groups = { "regression" })
+	@Test(description = "RPMXCON-57345",enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyPhraseInBasicSearch(String username, String password) throws InterruptedException {
 		String search = "\"Government Agency Correspondance\"";
 
@@ -153,7 +153,7 @@ public class BasicSearchRegression {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description = "RPMXCON-57277", enabled = false, dataProvider = "reserve", groups = { "regression" })
+	@Test(description = "RPMXCON-57277", enabled = true, dataProvider = "reserve", groups = { "regression" })
 
 	public void verifyPhraseForSearch(String data1) throws InterruptedException {
 

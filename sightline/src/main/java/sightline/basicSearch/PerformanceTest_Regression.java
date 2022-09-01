@@ -56,8 +56,8 @@ public class PerformanceTest_Regression {
 
 		// Open browser
 		softAssertion = new SoftAssert();
-		Input in = new Input();
-    	in.loadEnvConfig();
+	//	Input in = new Input();
+    //	in.loadEnvConfig();
 	
 	}
 
