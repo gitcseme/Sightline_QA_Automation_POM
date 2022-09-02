@@ -52,9 +52,6 @@ public class Export_Regression20 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
 
 	/**
@@ -72,7 +69,7 @@ public class Export_Regression20 {
 		base.stepInfo(
 				"Verify that user should be able to remove the automatically enabled native placeholdering under TIFF/PDF section from new export");
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String prefixID1 = "P" + Utility.dynamicNameAppender();
@@ -115,8 +112,7 @@ public class Export_Regression20 {
 		page.fillingExportLocationPage(exportName);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-		page.getCopyPath().waitAndClick(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
 		page.goToImageFiles();
@@ -147,9 +143,7 @@ public class Export_Regression20 {
 		page.fillingExportLocationPage(exportName1);
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
-		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
-
-		page.getCopyPath().waitAndClick(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedTexts = page.getCopiedTextFromClipBoard();
 		String parentTabs = page.openNewTab(actualCopedTexts);
 		page.goToPDFImageFiles();

@@ -55,9 +55,7 @@ public class Production_Regression20 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		
 	}
 	/**
 	 * @author Brundha TESTCASE No:RPMXCON-47721 Date:8/23/2022
@@ -68,6 +66,7 @@ public class Production_Regression20 {
 
 	public void validatingLockOptionInProductionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-47721-from Production");
 		base.stepInfo(
 				"To Verify ProjectAdmin will be able to flag a production as ‘Locked’ after it has been generated.");
@@ -119,7 +118,7 @@ public class Production_Regression20 {
 		base.stepInfo("To verify the value of EndingBates on Production DAT");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
@@ -209,6 +208,7 @@ public class Production_Regression20 {
 	public void verifyNotificationOnExportInGenerateTab() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-48602 - from Production Component");
 		base.stepInfo("To verify that once export is completed notification should be displayed to the user");
@@ -273,7 +273,8 @@ public class Production_Regression20 {
 				"To Verify that in productions, the Bates Number field supports Bates Numbers as large as 1,000,000,000");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
@@ -331,6 +332,7 @@ public class Production_Regression20 {
 	public void verifyingTextInGeneratedDat() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-48327 -Production component");
 		base.stepInfo(
 				"To verify that the selected metadata is not displayed in DAT if the document has at least one of the selected PRIV tags in PRIV placeholdering for TIFF");
@@ -403,6 +405,7 @@ public class Production_Regression20 {
 	public void verifyingLoadTemplateInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-47882 -Production component");
 		base.stepInfo(
@@ -462,6 +465,7 @@ public class Production_Regression20 {
 	@Test(description = "RPMXCON-49124", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49124- Production Component");
 		base.stepInfo(
@@ -501,6 +505,7 @@ public class Production_Regression20 {
 	@Test(description = "RPMXCON-49126", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInFileTypeMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49126- Production Component");
 		base.stepInfo(
@@ -539,6 +544,7 @@ public class Production_Regression20 {
 	public void verifyingGenerationOfTiffFileForSpreadSheet() throws Exception {
 
 		base = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case Id:RPMXCON-63065- Production component");
 		base.stepInfo(
 				"Verify that user should be able to remove the automatically enabled native placeholdering under TIFF/PDF section from new production");
@@ -630,6 +636,7 @@ public class Production_Regression20 {
 	public void verifyingNextAvailableBatesNumber() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-49244 -Production component");
 		base.stepInfo(
@@ -701,6 +708,7 @@ public class Production_Regression20 {
 
 	public void verifyingGeneratedTechIssuePlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-49342-from Production Component");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Tech Issue placeholdering even though File group placeholdering is exists.");
@@ -789,6 +797,7 @@ public class Production_Regression20 {
 
 	public void verifyingGeneratedPrivDocPlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-49343-from Production Component");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Priv placeholdering even though Tech Issue placeholdering is exists in the document.");
@@ -881,6 +890,7 @@ public class Production_Regression20 {
 	@Test(description = "RPMXCON-49128", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInBurnRedactionMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49128- Production Component");
 		base.stepInfo(
@@ -920,7 +930,6 @@ public class Production_Regression20 {
 	public void validatingPresenceOfTextFile() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 		base.stepInfo("RPMXCON-47807-from Production Component");
@@ -1009,7 +1018,6 @@ public class Production_Regression20 {
 
 	public void verifyingSlipsheetValueInPDF() throws Exception {
 		UtilityLog.info(Input.prodPath);
-		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		base.stepInfo("RPMXCON-47806 -Production Component");
@@ -1069,9 +1077,9 @@ public class Production_Regression20 {
 
 	public void validatingDATSection() throws Exception {
 
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("RPMXCON-48328-from Production Component");
 		base.stepInfo(
 				"To verify that the selected metadata is not displayed only when the doc has at least one of the selected redaction tags in Burn Redactions in Tiff");
@@ -1139,7 +1147,7 @@ public class Production_Regression20 {
 	public void validatingDATSectionForPrivDoc() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-48330-from Production Component");
 		base.stepInfo(
 				"To verify that the selected metadata is not displayed in DAT if the doc has at least one of the selected PRIV tags in PRIV placeholdering for PDF");
@@ -1203,6 +1211,7 @@ public class Production_Regression20 {
 
 	public void verifyingTheProductionWithNewConfiguration() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-47717-from Production Component");
 		base.stepInfo(
 				"To Verify ProjectAdmin will be able to edit configuration of a production that hasn’t yet been locked and bates number has not been committed");
