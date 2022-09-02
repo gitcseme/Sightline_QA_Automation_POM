@@ -314,7 +314,7 @@ public class BasicSearch_Regression1 {
 	 * @throws InterruptedException
 	 */
 
-	@Test(description ="RPMXCON-46984,RPMXCON-46985,RPMXCON-46986,RPMXCON-46988",dataProvider = "reserve", groups = { "regression" })
+	@Test(description ="RPMXCON-46984,RPMXCON-46985,RPMXCON-46988",dataProvider = "reserve", groups = { "regression" })
 	public void verifyAutoSugges(String data1, String data2, String data3, String data4) throws InterruptedException {
 
 		lp = new LoginPage(driver);

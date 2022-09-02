@@ -64,9 +64,6 @@ public class Production_Regression19 {
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
 		softAssertion = new SoftAssert();
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
 	}
 
 		/**
@@ -83,7 +80,8 @@ public class Production_Regression19 {
 					"To Verify In-Progress/Complete Production the availability of 'Delete' Option in drop down action menu should be disable");
 
 			UtilityLog.info(Input.prodPath);
-
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
 			foldername = "Folder" + Utility.dynamicNameAppender();
 			String prefixID = "P" + Utility.dynamicNameAppender();
 			String suffixID = "S" + Utility.dynamicNameAppender();
@@ -140,7 +138,8 @@ public class Production_Regression19 {
 					"To Verify Admin will be able do Privileged Doc Check in Priv guard section by specifying various privileged rules.");
 
 			UtilityLog.info(Input.prodPath);
-
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
 			tagname = "tag" + Utility.dynamicNameAppender();
 			String prefixID = "P" + Utility.dynamicNameAppender();
 			String suffixID = "S" + Utility.dynamicNameAppender();
@@ -182,7 +181,10 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-47971", enabled = true, groups = { "regression" })
 		public void verifyingSourceFieldOrderInDatSection() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-47971- Production Component");
 			base.stepInfo("To Verify Type dropdown in the DAT section of the production for all the correct values");
@@ -211,7 +213,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-48497", enabled = true, groups = { "regression" })
 		public void verifyingNativeFileTypeChecked() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-48497- Production Component");
 			base.stepInfo(
@@ -249,7 +253,6 @@ public class Production_Regression19 {
 					"To verify Redacted Document Count as per Source Selection in Production on Priv Guard Page should be displayed");
 
 			UtilityLog.info(Input.prodPath);
-			loginPage.logout();
 			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
 			foldername = "Folder" + Utility.dynamicNameAppender();
@@ -312,6 +315,7 @@ public class Production_Regression19 {
 		public void verifyProductionGenerationWithSearch() throws Exception {
 
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			base = new BaseClass(driver);
 			base.stepInfo("RPMXCON-47871 -Production Component");
 			base.stepInfo("To Verify that user should be able to select search under 'Select Searches' source for Document selection tab in Production");
@@ -350,7 +354,9 @@ public class Production_Regression19 {
 		 */
 		@Test(description = "RPMXCON-48018", enabled = true, groups = { "regression" })
 		public void verifySelectedTagInNativeSection() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			base = new BaseClass(driver);
 			base.stepInfo("RPMXCON-48018 -Production component");
 			base.stepInfo("To Verify In Native section User should be able to select one or more tags without selecting any file types.");
@@ -392,7 +398,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-48324", enabled = true, groups = { "regression" })
 		public void verifyingLSTToggleInMp3Tab() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-48324- Production Component");
 			base.stepInfo("To verify that 'Generate Load File' is enabled by default for 'MP3' components.");
@@ -419,7 +427,7 @@ public class Production_Regression19 {
 
 		public void GenerateProductionForTechIssueDocument() throws Exception {
 			UtilityLog.info(Input.prodPath);
-
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			base.stepInfo("RPMXCON-49376-from Production Component");
 			base.stepInfo(
 					"To verify that when the option 'do not export PDFs for natively produced docs' is enabled,and document is associated to 'TechIssue', then production should generate without any error");
@@ -473,7 +481,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-49130", enabled = true, groups = { "regression" })
 		public void verifyingSlipSheetMetaData() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-49130- Production Component");
 			base.stepInfo("To verify that in Production-Slip Sheet, Metadata Field should be sorted by alpha ascending");
@@ -510,7 +520,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-49132", enabled = true, groups = { "regression" })
 		public void verifyingSlipSheetCalculatedValues() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-49132- Production Component");
 			base.stepInfo("To verify that in Production-Slip Sheet, Calculated Field should be sorted by alpha ascending");
@@ -552,7 +564,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-48319", enabled = true, groups = { "regression" })
 		public void verifyingErrorMsgInNativeSection() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-48319- Production Component");
 			base.stepInfo(
@@ -584,6 +598,7 @@ public class Production_Regression19 {
 
 		public void verifyDocCountInDocumentSelectionTab() throws Exception {
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			base.stepInfo("RPMXCON-47615-from Production Component");
 			base.stepInfo("To Verify ProjectAdmin will be able to enter document selection and output information on the self production wizard");
 			
@@ -625,7 +640,9 @@ public class Production_Regression19 {
 
 		@Test(description = "RPMXCON-47972", enabled = true, groups = { "regression" })
 		public void verifyingSlipSheetBatesNumberWithoutError() throws Exception {
+			
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-47972- Production Component");
 			base.stepInfo("To Verify Production should not error out for (Bates Number) in SlipSheet.");
@@ -655,6 +672,7 @@ public class Production_Regression19 {
 		@Test(description = "RPMXCON-49122", enabled = true, groups = { "regression" })
 		public void verifyingAscendingOrerInPrivDocMetaDataField() throws Exception {
 			UtilityLog.info(Input.prodPath);
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 			BaseClass base = new BaseClass(driver);
 			base.stepInfo("Test case Id:RPMXCON-49122- Production Component");
 			base.stepInfo("To verify that in Production-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascending");

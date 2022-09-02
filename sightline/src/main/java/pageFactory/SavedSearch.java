@@ -2055,6 +2055,7 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 		base.VerifySuccessMessage("Save search tree node successfully created.");
 		base.CloseSuccessMsgpopup();
+		driver.Navigate().refresh();
 
 		// Get created node text
 		String newNode = currentClickedNode().getText();
@@ -2668,7 +2669,7 @@ public class SavedSearch {
 			// base.waitForElement(getSelectWithName(searchName));
 //			getSelectWithName(searchName).isElementAvailable(5);
 			getSelectWithName(searchName).waitAndClick(6);
-			getSelectWithName(searchName).checkIn();
+		//	getSelectWithName(searchName).checkIn();
 		}
 
 	}
@@ -3430,7 +3431,7 @@ public class SavedSearch {
 		// get Search ID
 		String searchiD = null;
 		try {
-			savedSearch_SearchandSelect(searchName, "No");
+			//savedSearch_SearchandSelect(searchName, "No");
 			searchiD = getSelectSearchWithID(searchName).getText();
 			System.out.println(searchiD);
 		} catch (Exception e) {
