@@ -555,6 +555,77 @@ public class O365Regression_20 {
 		login.logout();
 
 	}
+	
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that when collection gets Paused due to errors then it displays a notification on the top right corner in Notification list.  
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61303", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
+	public void verifyErroredNotificationDatasetsInCollectionWizard(String userName, String password, String role, String actionRole)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-61303 - O365");
+		base.stepInfo(
+				"Verify that when collection gets Paused due to errors then it displays a notification on the top right corner in Notification list.");
+		
+		String[][] userRolesData = { { userName, role, actionRole } };
+		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Archive";
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(userName, password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		base.clearBullHornNotification();
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, true, true);
+		base.waitForElement(collection.getActionBtn("Save"));
+		collection.getActionBtn("Save").waitAndClick(5);
+
+		base.waitForElement(collection.getConfirmationBtnAction("Confirm"));
+		collection.getConfirmationBtnAction("Confirm").waitAndClick(5);
+		base.VerifySuccessMessage("Dataset added successfully.");
+
+		// Start A Collection
+		collection.clickOnNextAndStartAnCollection();
+		collection.verifyNotificationIcon(0);
+		base.passedStep("When collection gets Paused due to errors then a notification on the top right corner in Notification list successfully.");
+		
+		
+
+		// logout
+		login.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
