@@ -177,18 +177,20 @@ public class CommentsPage {
 
 	}
 
-	public void addComments(String CommentName) {
+	public String addComments(String CommentName) {
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getAddCommentsBtn());
 		getAddCommentsBtn().Click();
 		base.waitForElement(getCommentName());
 		getCommentName().SendKeys(CommentName);
+		String comment=getCommentName().GetAttribute("value");
 		getSaveBtn().Click();
 
 		base.VerifySuccessMessage("Comment Field added successfully");
 		Reporter.log("Comment '" + CommentName + "' added successfully", true);
 		base.CloseSuccessMsgpopup();
+		return comment;
 	}
 
 	/**
