@@ -3,6 +3,8 @@ package testScriptsRegressionSprint20;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -162,6 +164,73 @@ public class BatchRedactionRegression_20 {
 
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+
+		// logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify the "Batch Redactions" home page for RMU user
+	 *              [RPMXCON-53327]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53327", enabled = true, groups = { "regression" })
+	public void verifyBatchRedactionHomePage() throws Exception {
+		String searchName = "Search" + Utility.dynamicNameAppender();
+		String[] actualSectionList = { "Batch Redactions", "Batch Redaction History" };
+		String[] actualHistoryheader = { "BATCHID", "SAVED SEARCH", "REDACTION TAG", "# DOCS", "STATUS", "REPORT",
+				"ACTION" };
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged In As : RMU");
+
+		base.stepInfo("Test case Id:RPMXCON-53327 Batch Redaction");
+		base.stepInfo("Verify the \"Batch Redations\" home page for RMU user");
+
+		// Create saved search
+		session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+		session.saveSearchAtAnyRootGroup(searchName, Input.shareSearchDefaultSG);
+
+		// verify navigation to Batch Redaction
+		batch.navigateToBRPage();
+
+		// verify batch redaction page sections Headers
+		List<String> sectionList = base.availableListofElements(batch.HeaderTabsPresentInBR());
+		String passMsg = "Batch Redactions home page is Displayed with : " + sectionList;
+		String failMsg = "Batch Redactions home page is Headers is not as Expected";
+		base.compareArraywithDataList(actualSectionList, sectionList, true, passMsg, failMsg);
+
+		// 1st section header and icon verification
+		base.ValidateElement_Presence(batch.getSelectSearchHeader(), "Select a Search / Search Group");
+		batch.SearchGroupHelpIcon();
+
+		// verify tabs present
+		batch.verifySelectSearchSection(Input.shareSearchDefaultSG);
+		batch.verifySelectSearchSection(Input.mySavedSearch);
+
+		// perform Batch redaction
+		batch.VerifyBatchRedaction_ElementsDisplay(searchName, true);
+		batch.viewAnalysisAndBatchReport(Input.defaultRedactionTag, Input.yesButton);
+		batch.verifyBatchHistoryStatus(searchName);
+
+		// verify history table header & verify help icon
+		batch.BatchRedactionHistoryHelpIcon();
+		
+		List<String> historyHeaderList = base.availableListofElements(batch.batchRedactionHistoryHeader());
+		String passMsg2 = "Batch Redactions History Table is Displayed with : " + historyHeaderList;
+		String failMsg2 = "Batch Redactions History Table Headers is not as Expected";
+		base.compareArraywithDataList(actualHistoryheader, historyHeaderList, true, passMsg2, failMsg2);
+
+		// verify rollback & click here for report link
+		base.ValidateElement_Presence(batch.getRollbackbtn(searchName), "Rollback Link ");
+		base.ValidateElement_Presence(batch.getClickHereReportbtn(searchName), "Click here for Report Link");
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		saveSearch.deleteSearch(searchName, Input.shareSearchDefaultSG, "Yes");
 
 		// logout
 		login.logout();
