@@ -24,6 +24,7 @@ import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.Dashboard;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
@@ -306,6 +307,106 @@ public class Assignments_Regression2_4 {
 		assignPage.deleteMultipleAssgnmntUsingPagination(listOfAssignments);
 
 		// logOut
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53759
+	 * Description :To verify that copied Assignment must be displayed on RMU Dashboard and RU Dashboard
+	 * @throws InterruptedException 
+	 */
+	@Test(description ="RPMXCON-53759",enabled = true, groups = { "regression" })
+	public void verifyCopiedAssignmentAvailability() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-53759");
+		baseClass.stepInfo("verify that copied Assignment must be displayed on RMU Dashboard and RU Dashboard");
+		String assignmentName ="assignment1" + Utility.dynamicNameAppender();
+		String assignGroup ="assigGroup"+ Utility.dynamicNameAppender();
+		
+		//login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Create new assignment");
+		assignPage.navigateToAssignmentsPage();
+		assignPage.createCascadeNonCascadeAssgnGroup(assignGroup, "No");
+		assignPage.selectAssignmentGroup(assignGroup);
+		assignPage.createAssignmentFromAssgnGroup(assignmentName, Input.codingFormName);
+		baseClass.stepInfo("Copy assignment");
+		assignPage.selectAssignmentGroup(assignGroup);
+		assignPage.getSelectAssignment(assignmentName).waitAndClick(3);
+		driver.scrollPageToTop();
+		assignPage.getAssignmentActionDropdown().waitAndClick(5);
+		baseClass.waitForElement(assignPage.getAssignmentActionDropdown());
+		assignPage.getAssignmentAction_CopyAssignment().waitAndClick(5);
+		baseClass.getYesBtn().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Record copied successfully");
+		String copiedAssignName=assignPage.getSelectCopyAssignment().getText().trim();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssignExisting(copiedAssignName);
+		assignPage.selectAssignmentGroup(assignGroup);
+		assignPage.getSelectAssignment(copiedAssignName).waitAndClick(3);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(assignPage.getAssignmentActionDropdown());
+		assignPage.getAssignmentActionDropdown().waitAndClick(5);
+		assignPage.getAssignmentAction_EditAssignment().waitAndClick(5);
+		assignPage.add2ReviewerAndDistribute();
+		baseClass.stepInfo("verify copied assignment displayed in rmu dashboard");
+		Dashboard dashBoard =new Dashboard(driver);
+		dashBoard.navigateToDashboard();
+		driver.waitForPageToBeReady();
+		if(dashBoard.getSelectAssignmentFromDashborad(copiedAssignName).isElementAvailable(10)) {
+			baseClass.passedStep("Copied assignment available in RMU dashboard");
+		}
+		else {
+			baseClass.failedStep("Copied assignment not available");
+		}
+		loginPage.logout();
+		baseClass.stepInfo("Login as rev and verify copied assignment availability");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("verify copied assignment displayed in rev dashboard");
+		if(assignPage.getSelectAssignmentAsReviewer(copiedAssignName).isElementAvailable(10)) {
+			baseClass.passedStep("Copied assignment available in REV dashboard");
+		}
+		else {
+			baseClass.failedStep("Copied assignment not available");
+		}
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53652
+	 * Description :To verify that in "Select Reviewers" section in Distribute Documents tab only those 
+	 * reviewers are displayed which are added to an assignment in Manage Reviewer tab.
+	 * @throws InterruptedException 
+	 */
+	@Test(description ="RPMXCON-53652",enabled = true, groups = { "regression" })
+	public void verifyAddedReviewersInDistributeTab() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-53652");
+		baseClass.stepInfo("verify that added reviewers displayed in distribute tab");
+		String assignmentName ="assignment1" + Utility.dynamicNameAppender();
+		String[] users = {Input.rmu1userName,Input.rev1userName};
+
+		//login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
+		baseClass.stepInfo("add reviewers");
+		assignPage.assignReviewers(users);
+		baseClass.stepInfo("verify added users displayed in distribute documents tab");
+		baseClass.waitForElement(assignPage.getDistributeTab());
+		assignPage.getDistributeTab().waitAndClick(5);
+		int availableUserCount =assignPage.getDistributeReviewerCount().size();
+		if(availableUserCount == users.length) {
+			if(assignPage.getSelectUserInDistributeTabsReviewerManager().isElementAvailable(5) && 
+					assignPage.getSelect2ndUserInDistributeTab().isElementAvailable(5)) {
+				baseClass.passedStep("Only the added reviewers are displayed in distribute tab");
+			}
+			else {
+				baseClass.failedStep("added reviewers not displayed");
+			}	
+		}
+		else {
+			baseClass.failedStep("added reviewers not displayed correctly in distribute tab");
+		}
 		loginPage.logout();
 	}
 
