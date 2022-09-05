@@ -79,6 +79,31 @@ public class UserLoginActivityReport_Regression2_5 {
 		bc.passedStep("User login activity report is downloaded successfully");
 		lp.logout();
 	}
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException 
+	 * @throws ParseException 
+	 * @description: Verify that user can change the settings for the current logged-in users, user login activity report
+	 */
+	@Test(description = "RPMXCON-58640", dataProvider = "Users_PARMU",groups = {"regression" },enabled = true)
+	public void verifyChangeSettingsUserLoginActivityReport(String username,String paasword,String role) throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-58640");
+		bc.stepInfo("Verify that user can change the settings for the current logged-in users, user login activity report");	
+		lp.loginToSightLine(username, paasword);
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(username);
+		userLoginActivityRptPg.deselectColumn("Role");
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(username);
+		userLoginActivityRptPg.deselectColumn("First Name");
+		userLoginActivityRptPg.deselectColumn("Project");	
+		bc.passedStep("After deselected from the cloumn in settings icon, coloumn values are not displayed as expected");
+		lp.logout();
+	}
 	
 
 	@BeforeMethod

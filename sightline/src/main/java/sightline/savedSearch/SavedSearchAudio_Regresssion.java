@@ -436,7 +436,7 @@ public class SavedSearchAudio_Regresssion {
 		session.saveSearchInNewNode(searchName1, newNode);
 		session.bulkFolderExisting(folderName);
 		assign = new AssignmentsPage(driver);
-		assign.createAssignment(assignmentName, codingform);
+		assign.createAssignment(assignmentName, Input.codeFormName);
 
 		// impersonate As REV
 		base.impersonateRMUtoReviewer();
