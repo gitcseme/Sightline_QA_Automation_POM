@@ -1475,6 +1475,9 @@ public class CodingForm {
 		return driver.FindElementByXPath("//div[@id='dtCodingFormList_wrapper']//input[@value='" + CFName
 				+ "']/ancestor::td/following-sibling::td//span/label/i");
 	}
+	public ElementCollection getCodingForm_ListName() {
+		return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td[1]");
+	}
 
 	
 	
