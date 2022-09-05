@@ -167,6 +167,119 @@ public class DocViewAudio_Regression01 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:30/08/2022 RPMXCON-51811
+	 * @throws Exception
+	 * @Description Verify that when document present in different save searches
+	 *              with common term then, should not display repetitive search term
+	 *              on persistent hits panel when mini doc list is configured.
+	 */
+	@Test(description = "RPMXCON-51811", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsConfigureMiniDoclistRepetitiveSearchTermInDocView() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51811");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel when mini doc list is configured.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		DocListPage docListPage = new DocListPage(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search And Save
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+
+		// Added another Audio search and save
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+		// go to doclist page
+		sessionSearch.ViewInDocListWithOutPureHit();
+		baseClass.stepInfo("Navigate to the Doclist page Successfully");
+		// Select all docs and view as docview
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docListPage.getSelectAll().Visible() && docListPage.getSelectAll().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docListPage.getSelectAll());
+		docListPage.getSelectAll().waitAndClick(10);
+		docListPage.getPopUpOkBtn().Click();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Navigate to the DocView page Successfully");
+
+		// Check Display persistanthit
+		docviewPage.audioPersistantHitDisplayCheck();
+		baseClass.passedStep(
+				"eye icon audio hits is displayed and repetitive search term is not Display on persistent hits panel from saved search as term,threshold and language is same for the searches");
+		baseClass.stepInfo(" Select fields from Configure MiniDocList ");
+		docviewPage.configureMiniDocList();
+		baseClass.passedStep(
+				"Mini doc list is configured as per the selected fields and repetitive search term on persistent hits panel is not display");
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:30/08/2022 RPMXCON-51813
+	 * @throws Exception
+	 * @Description Verify that when navigates audio documents then "Assignment
+	 *              Audit Log" should not appear in console log continuously.
+	 * 
+	 */
+	@Test(description = "RPMXCON-51813", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsAssignmentAuditLogNotAppear() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51813");
+		baseClass.stepInfo(
+				"Verify that when navigates audio documents then \"Assignment Audit Log\" should not appear in console log continuously.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		DocListPage docListPage = new DocListPage(driver);
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search And Save
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+		// go to doclist page
+		sessionSearch.ViewInDocListWithOutPureHit();
+		baseClass.stepInfo("Navigate to the Doclist page Successfully");
+		// Select all docs and view as docview
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docListPage.getSelectAll().Visible() && docListPage.getSelectAll().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docListPage.getSelectAll());
+		docListPage.getSelectAll().waitAndClick(10);
+		docListPage.getPopUpOkBtn().Click();
+		docListPage.docListToDocView();
+		baseClass.stepInfo("Navigate to the DocView page Successfully");
+		//Click >> Btn
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docviewPage.getDocView_Last());
+		docviewPage.getDocView_Last().waitAndClick(5);
+		docviewPage.audiodocthruhistorydropdown();
+		driver.waitForPageToBeReady();
+		docviewPage.editCodingFormSave();
+		driver.waitForPageToBeReady();
+		docviewPage.perfromLastCodeSameAsIcon();
+		baseClass.stepInfo("Last Code Same Icon Clicked successfully");
+		baseClass.passedStep("navigate audio documents then \"Assignment Audit Log\" is not appear in console log continuously, the SP is not call frequently");
+		// logout
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

@@ -51,9 +51,7 @@ public class Export_Regression19 {
 		driver = new Driver();
 		base = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1userName);
+		
 	}
 	
 
@@ -67,7 +65,7 @@ public class Export_Regression19 {
 		
 		base.stepInfo("Test case Id: RPMXCON-49135");
 		base.stepInfo("Verify Priv placeholder text is exported");
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String foldername = "FolderProd" + Utility.dynamicNameAppender();
 		String tagname = "Tag" + Utility.dynamicNameAppender();
 		String newExport = "Export" + Utility.dynamicNameAppender();
@@ -125,6 +123,7 @@ public class Export_Regression19 {
 	@Test(description = "RPMXCON-47491", enabled = true, groups = { "regression" })
 	public void verifyCalculatedTabSortOrder() throws Exception {
 		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case Id: RPMXCON-47491");
 		base.stepInfo("Verify that in Production-Export-Slip Sheet, Calculated Field should be sorted by alpha ascending");
 
