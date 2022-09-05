@@ -18,6 +18,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
@@ -54,9 +55,7 @@ public class Production_Regression20 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		
 	}
 	/**
 	 * @author Brundha TESTCASE No:RPMXCON-47721 Date:8/23/2022
@@ -67,6 +66,7 @@ public class Production_Regression20 {
 
 	public void validatingLockOptionInProductionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-47721-from Production");
 		base.stepInfo(
 				"To Verify ProjectAdmin will be able to flag a production as ‘Locked’ after it has been generated.");
@@ -118,7 +118,7 @@ public class Production_Regression20 {
 		base.stepInfo("To verify the value of EndingBates on Production DAT");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = "P" + Utility.dynamicNameAppender();
 		String suffixID = "S" + Utility.dynamicNameAppender();
@@ -208,6 +208,7 @@ public class Production_Regression20 {
 	public void verifyNotificationOnExportInGenerateTab() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-48602 - from Production Component");
 		base.stepInfo("To verify that once export is completed notification should be displayed to the user");
@@ -272,7 +273,8 @@ public class Production_Regression20 {
 				"To Verify that in productions, the Bates Number field supports Bates Numbers as large as 1,000,000,000");
 
 		UtilityLog.info(Input.prodPath);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		foldername = "Folder" + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
@@ -330,6 +332,7 @@ public class Production_Regression20 {
 	public void verifyingTextInGeneratedDat() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-48327 -Production component");
 		base.stepInfo(
 				"To verify that the selected metadata is not displayed in DAT if the document has at least one of the selected PRIV tags in PRIV placeholdering for TIFF");
@@ -402,6 +405,7 @@ public class Production_Regression20 {
 	public void verifyingLoadTemplateInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-47882 -Production component");
 		base.stepInfo(
@@ -461,6 +465,7 @@ public class Production_Regression20 {
 	@Test(description = "RPMXCON-49124", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49124- Production Component");
 		base.stepInfo(
@@ -500,6 +505,7 @@ public class Production_Regression20 {
 	@Test(description = "RPMXCON-49126", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInFileTypeMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("Test case Id:RPMXCON-49126- Production Component");
 		base.stepInfo(
@@ -538,6 +544,7 @@ public class Production_Regression20 {
 	public void verifyingGenerationOfTiffFileForSpreadSheet() throws Exception {
 
 		base = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test case Id:RPMXCON-63065- Production component");
 		base.stepInfo(
 				"Verify that user should be able to remove the automatically enabled native placeholdering under TIFF/PDF section from new production");
@@ -629,6 +636,7 @@ public class Production_Regression20 {
 	public void verifyingNextAvailableBatesNumber() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		BaseClass base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-49244 -Production component");
 		base.stepInfo(
@@ -700,6 +708,7 @@ public class Production_Regression20 {
 
 	public void verifyingGeneratedTechIssuePlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-49342-from Production Component");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Tech Issue placeholdering even though File group placeholdering is exists.");
@@ -788,6 +797,7 @@ public class Production_Regression20 {
 
 	public void verifyingGeneratedPrivDocPlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("RPMXCON-49343-from Production Component");
 		base.stepInfo(
 				"To verify that Tiff/PDF should generate with Priv placeholdering even though Tech Issue placeholdering is exists in the document.");
@@ -869,6 +879,389 @@ public class Production_Regression20 {
 		loginPage.logout();
 	}
 
+	
+	/**
+	 * @author Brundha.T No:RPMXCON-49128 Date:8/30/2022
+	 * @Description:To verify that in Production-'Redaction Text by Selecting
+	 *                 Redaction Tags' section, Metadata Field drop down should be
+	 *                 sorted by alpha ascending
+	 **/
+
+	@Test(description = "RPMXCON-49128", enabled = true, groups = { "regression" })
+	public void verifyingAscendingOrderInBurnRedactionMetaDataField() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		BaseClass base = new BaseClass(driver);
+		base.stepInfo("Test case Id:RPMXCON-49128- Production Component");
+		base.stepInfo(
+				"To verify that in Production-'Redaction Text by Selecting Redaction Tags' section, Metadata Field drop down should be sorted by alpha ascending");
+
+		ProductionPage page = new ProductionPage(driver);
+		String productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().waitAndClick(5);
+		page.getClkLink_selectingRedactionTags().waitAndClick(5);
+		page.getBurnRedaction_InsertMetaData().waitAndClick(5);
+		List<String> BurnRedactionMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(BurnRedactionMetaDataField, BurnRedactionMetaDataField, "Ascending", true);
+
+		page.navigatingToProductionHomePage();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname1);
+		page.selectGenerateOption(true);
+		page.getClk_burnReductiontoggle().waitAndClick(5);
+		page.getClkLink_selectingRedactionTags().waitAndClick(5);
+		page.getBurnRedaction_InsertMetaData().waitAndClick(5);
+		List<String> PDFBurnRedactionMetaDataField = base.availableListofElements(page.InsertMetaDataFieldValues());
+		base.verifyOriginalSortOrder(PDFBurnRedactionMetaDataField, PDFBurnRedactionMetaDataField, "Ascending", true);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-47807 Date:8/30/2022
+	 * @Description:To Verify Text generation as part of the actual generation
+	 *                 process
+	 */
+	@Test(description = "RPMXCON-47807", enabled = true, groups = { "regression" })
+
+	public void validatingPresenceOfTextFile() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("RPMXCON-47807-from Production Component");
+		base.stepInfo("To Verify Text generation as part of the actual generation process");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID1 = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearchForTwoItems(Input.testData1, Input.telecaSearchString);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTextSection();
+		base.ValidateElement_Presence(page.getAnsiRadioBtn(), "Ansi RadioBtn");
+		base.ValidateElement_Presence(page.getAnsiDrpDwn(), "Ansi Dropdown");
+		base.ValidateElement_Presence(page.getAdvancedOptionInTextTab(), "Advanced Option");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		String home = System.getProperty("user.home");
+		File Textfile = new File(
+				home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+		page.isfileisExists(Textfile);
+
+		page = new ProductionPage(driver);
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String beginningBates1 = page.getRandomNumber(2);
+		page.addANewProduction(productionname1);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID1, suffixID1, beginningBates1);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname1);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File Textfile1 = new File(
+				home + "/Downloads/VOL0001/Text/0001/" + prefixID1 + beginningBates1 + suffixID1 + ".txt");
+		if (!Textfile1.exists()) {
+			base.passedStep("Text file is not Exist as expected");
+		} else {
+			base.failedStep("verification failed");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-47806 Date:8/30/2022
+	 * @Description:To Verify As an Admin be able to include slip sheets for the
+	 *                 documents in the generated PDF
+	 */
+	@Test(description = "RPMXCON-47806", enabled = true, groups = { "regression" })
+
+	public void verifyingSlipsheetValueInPDF() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-47806 -Production Component");
+		base.stepInfo("To Verify As an Admin be able to include slip sheets for the documents in the generated PDF");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(true);
+		page.fillingSlipSheet(true, foldername);
+		String Text = page.getSlipSheetSelectedText().getText();
+		base.compareTextViaContains(Text, foldername, "Slipsheet Text displayed", "Text not displayed");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.extractFile();
+
+		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
+		page.isfileisExists(pdfFile);
+		page.pdf_Verification_In_Generated_PlaceHolder(prefixID, suffixID, beginningBates, foldername);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-48328 Date:8/30/2022
+	 * @Description:To verify that the selected metadata is not displayed only when
+	 *                 the doc has at least one of the selected redaction tags in
+	 *                 Burn Redactions in Tiff
+	 */
+	@Test(description = "RPMXCON-48328", enabled = true, groups = { "regression" })
+
+	public void validatingDATSection() throws Exception {
+
+		
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("RPMXCON-48328-from Production Component");
+		base.stepInfo(
+				"To verify that the selected metadata is not displayed only when the doc has at least one of the selected redaction tags in Burn Redactions in Tiff");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String BatesNumber = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.ViewInDocViewWithoutPureHit();
+
+		docViewRedactions.redactRectangleUsingOffset(10, 10,120,120);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.addDATFieldAtSecondRow(Input.bates, "EndingBates", BatesNumber);
+		page.getRedactDATCheckBox(1).waitAndClick(5);
+		page.fillingNativeSection();
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().waitAndClick(5);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+		page.isdatFileExist();
+		page.verifyingGeneratedDATFile(DatFile, 1, 1, "þ");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-48330 Date:8/30/2022
+	 * @Description:To verify that the selected metadata is not displayed in DAT if
+	 *                 the doc has at least one of the selected PRIV tags in PRIV
+	 *                 placeholdering for PDF
+	 */
+	@Test(description = "RPMXCON-48330", enabled = true, groups = { "regression" })
+
+	public void validatingDATSectionForPrivDoc() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-48330-from Production Component");
+		base.stepInfo(
+				"To verify that the selected metadata is not displayed in DAT if the doc has at least one of the selected PRIV tags in PRIV placeholdering for PDF");
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String foldername = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String BatesNumber = Input.randomText + Utility.dynamicNameAppender();
+		String bates = "þ";
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		sessionSearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		doc.documentSelection(2);
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.addDATFieldAtSecondRow(Input.bates, "EndingBates", BatesNumber);
+		page.getPrivledgedDATCheckBox(1).waitAndClick(5);
+		page.selectPrivDocsInPDFSection(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		driver.waitForPageToBeReady();
+		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+		page.isdatFileExist();
+		page.verifyingGeneratedDATFile(DatFile, 1, 1, bates);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-47717 Date:8/30/2022
+	 * @Description:To Verify ProjectAdmin will be able to edit configuration of a
+	 *                 production that hasn’t yet been locked and bates number has
+	 *                 not been committed
+	 */
+	@Test(description = "RPMXCON-47717", enabled = true, groups = { "regression" })
+
+	public void verifyingTheProductionWithNewConfiguration() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-47717-from Production Component");
+		base.stepInfo(
+				"To Verify ProjectAdmin will be able to edit configuration of a production that hasn’t yet been locked and bates number has not been committed");
+
+		String foldername = "folder" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String prefixID1 = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		String beginningBates1 = page.getRandomNumber(2);
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		page.getBackButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String batesno = page.getProd_BatesRange().getText();
+
+		page.clickElementNthtime(page.getBackButton(), 5);
+		page.getMarkInCompleteBtn().waitAndClick(5);
+		page.fillingNumberingAndSortingTab(prefixID1, suffixID1, beginningBates1);
+		page.clickMArkCompleteMutipleTimes(2);
+		page.fillingPrivGuardPage();
+		page.clickMArkCompleteMutipleTimes(2);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
+		page.getBackButton().waitAndClick(5);
+		String BatesNumber = page.getProd_BatesRange().getText();
+		base.textCompareNotEquals(batesno, BatesNumber, "Production Generated with modified BatesNumber",
+				"BatesNumber not modified");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

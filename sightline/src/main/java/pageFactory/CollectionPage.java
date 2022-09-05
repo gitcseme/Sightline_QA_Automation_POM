@@ -2486,4 +2486,23 @@ public class CollectionPage {
 		base.stepInfo("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
 		
 	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Notification Icon changing
+	 */
+	public void verifyNotificationIcon(int bgCountBefore) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCountBefore + 1;
+			}
+		}), Input.wait120);
+		final int bgCountAfter = base.initialBgCount();
+		
+		
+		
+		
+	}
 }
