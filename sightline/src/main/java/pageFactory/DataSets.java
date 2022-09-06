@@ -151,6 +151,9 @@ public class DataSets {
 	public Element loadMoreOption() {
 		return driver.FindElementByXPath("//button[@id='btnLoadDataset']");
 	}
+	public Element getTotalDatasetCount() {
+		return driver.FindElementByXPath("//text[@id='totaldatasetCount']");
+	}
 
 	// added by sowndariya
 
@@ -743,6 +746,24 @@ public class DataSets {
 			viewType = getDatasetTile(totalDoc).GetCssValue("display");
 		}
 		return viewType;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check dataset menu availability
+	 */
+	public void verifyMenuAndDatasetsAvailability() {
+		navigateToDataSetsPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTotalDatasetCount());
+		int count = Integer.parseInt(getTotalDatasetCount().getText());
+		if(NavigateToDataSets().isElementAvailable(10) && count>0) {
+			base.passedStep("User have access to dataset menu and datasets available");
+		}
+		else {
+			base.failedStep("user dont have access to dataset menu and datasets not available");
+		}
+		
 	}
 
 }
