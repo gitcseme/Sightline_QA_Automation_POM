@@ -3369,6 +3369,28 @@ public class ProductionPage {
 	public Element getAdvancedOptionInTextTab() {
 		return driver.FindElementByXPath("//div[@id='TextContainer']//span[text()='Advanced']");
 	}
+	public Element getRegenerateOptions() {
+		return driver.FindElementByXPath("//input[@id='RegenerateOnlyErrors']/..");
+	}
+	public Element getRegenerateAllOptions() {
+		return driver.FindElementByXPath("//input[@id='RegenerateAll']/..");
+	}
+	public Element getNativeProduceFileOption() {
+		return driver.FindElementByXPath("//div[@id='NativeContainer']//span");
+	}
+	public Element getNativeRadioButtonChecked() {
+		return driver.FindElementByXPath("//input[@id='rdbExcludeNativesofparent']/..//span");
+	}
+	public Element getNativeRadioButtonUnChecked() {
+		return driver.FindElementByXPath("//input[@id='rdbExcludeEntireFamily']/..//span");
+	}
+	public Element getDoNotProduceNativeOption(int i) {
+		return driver.FindElementByXPath("//input[@id='rdbExcludeNativesofparent']/../../../../preceding::span["+i+"]");
+	}
+	
+	public Element getGenerateLSTOption() {
+		return driver.FindElementByXPath("//input[@id='chkProduceLoadFile']/..//strong//span");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21756,4 +21778,5 @@ public class ProductionPage {
 		
 		
 	}
+
 }
