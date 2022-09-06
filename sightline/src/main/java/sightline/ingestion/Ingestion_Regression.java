@@ -66,9 +66,7 @@ public class Ingestion_Regression {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		Input input = new Input();
-		input.loadEnvConfig();
-
+	
 	}
 
 	@BeforeMethod(alwaysRun = true)

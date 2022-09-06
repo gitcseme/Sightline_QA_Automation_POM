@@ -44,8 +44,8 @@ public class Ingestion_Regression02 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		ip = new Input();
-		ip.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 	}
 
@@ -646,6 +646,7 @@ public class Ingestion_Regression02 {
 		String[] addEmailColumn = { "EmailAuthorNameAndAddress", "EmailBCCNamesAndAddresses", "EmailCCNamesAndAddresses", "EmailToNamesAndAddresses" };
 
 		String ingestionType="Add Only";
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
 		boolean status = ingestionPage.verifyIngestionpublish(Input.GD994NativeTextForProductionFolder);
 		
