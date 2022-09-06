@@ -1478,7 +1478,63 @@ public class CodingForm {
 	public ElementCollection getCodingForm_ListName() {
 		return driver.FindElementsByXPath("//table[@id='CodingFormDataTable']//tr//td[1]");
 	}
+	
+	//add by Aathith
+		public ElementCollection getCodingFormTableHeaders() {
+			return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/thead/tr/th");
+		}
+		
+		public Element getCodingFormTableHeadColumn(int column) {
+			return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/thead/tr/th["+column+"]");
+		}
+		
+		public Element checkDefaultCodingFormIsSelected() {
+			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']");
+		}
+		
+		public Element checkDefaultCodingFormRadioBtnIsSelected() {
+			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../../following-sibling::td//input");
+		}
+		
+		public Element getDefaultCodingFormInputBox() {
+			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../i");
+		}
+		
+		public Element getDefaultCodingFormRadioBtn() {
+			return driver.FindElementByXPath("//input[@value='Default Project Coding Form']/../../following-sibling::td//input/../i");
+		}
+		
+		public Element btnCodingFormSave() {
+			return driver.FindElementById("btnCodingFormSave");
+		}
+		
+		public Element getDefaultCodingFormTableValues(int i) {
+			return driver.FindElementByXPath("//td[text()='Default Project Coding Form']/..//td["+i+"]");
+		}
+		
+		public Element getCodingFormTableValues(int row, int column) {
+			return driver.FindElementByXPath("//*[@id='CodingFormDataTable']/tbody/tr["+row+"]/td["+column+"]");
+		}
+		
+		public ElementCollection getCodingFormTableColumn(int column) {
+			return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/tbody/tr/td["+column+"]");
+		}
+		
+		public Element getCF_NthObjecttab(int i) {
+			return driver.FindElementByXPath("//*[@href='#c-"+i+"']");
+		}
 
+		public Element getHideShowBtn() {
+			return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']/span");
+		}
+		
+		public Element getColumnsHideShowCheckBox(String columnName) {
+			return driver.FindElementByXPath("//span[contains(text(),'"+columnName+"')]/../input");
+		}
+		
+		public Element getHideShowBackGroundBtn() {
+			return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
+		}
 	
 	
 	
@@ -5268,6 +5324,114 @@ public List<String> configureBelow15Cf(String CFName) {
 	 return name;
 	
 	 
+	}
+/**
+ * @author Aathith.Senthilkumar
+ * @param codingForm
+ * @return boolean
+ * @Description search codingform and return coding form is present or not
+ */
+public boolean searchCodingForm(String codingForm) {
+	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	driver.waitForPageToBeReady();
+	getCodingForm_Search().SendKeys(codingForm);
+	driver.waitForPageToBeReady();
+	if(base.text(codingForm).isElementAvailable(3)) {
+		base.stepInfo(codingForm+"coding form is available");
+		return true;
+	}
+	return false;
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param cfName
+ * @Description add codingform name and click save
+ */
+public void addCodingFormNameOnly(String cfName) {
+	
+	driver.waitForPageToBeReady();
+	getAddNewCodingFormBtn().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	getCodingFormName().SendKeys(cfName);
+	getSaveCFBtn().waitAndClick(5);
+	base.stepInfo(cfName+" click save for this cofing form");
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @Description select default coding form
+ */
+public void selectDefaultProjectCodingForm() {
+	
+	navigateToCodingFormPage();
+	driver.waitForPageToBeReady();
+	getSetCodingFormToSG().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	if(checkDefaultCodingFormIsSelected().GetAttribute("checked")==null) {
+	getDefaultCodingFormInputBox().waitAndClick(5);}
+	if(checkDefaultCodingFormRadioBtnIsSelected().GetAttribute("checked")==null) {
+	getDefaultCodingFormRadioBtn().waitAndClick(5);}
+	sortOrderNxtBtn().waitAndClick(5);
+	btnCodingFormSave().waitAndClick(5);
+	base.stepInfo("default coding form was set as default");
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param n
+ * @Description open coding form nth object
+ */
+public void openNthObject(int n) {
+	driver.waitForPageToBeReady();
+	getCF_NthObjecttab(n).waitAndClick(5);
+	base.stepInfo(n+" object was opened");
+	driver.waitForPageToBeReady();
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param n
+ * @Description remove nth codingform object
+ */
+public void removeNthCodingForm(int n) {
+	openNthObject(n);
+	getCf_RemoveLink(n).waitAndClick(5);
+	base.getYesBtn().waitAndClick(5);
+	base.stepInfo(n+"th coding form was removed");
+	driver.waitForPageToBeReady();
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @Description update a existing codingform
+ */
+public void updateCodingForm() {
+	driver.scrollPageToTop();
+	base.waitForElement(getSaveCFBtn());
+	getSaveCFBtn().waitAndClick(5);
+	if(getCodingForm_Validation_ButtonYes().isElementAvailable(10)) {
+		getCodingForm_Validation_ButtonYes().waitAndClick(5);
+	}
+	base.VerifySuccessMessage("Coding Form updated successfully");
+	base.CloseSuccessMsgpopup();
+
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param columnName
+ * @Description hide/show a column in coding from table
+ */
+public void hideOrShowColum(String columnName) {
+	navigateToCodingFormPage();
+	driver.waitForPageToBeReady();
+	getHideShowBtn().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	getColumnsHideShowCheckBox(columnName).waitAndClick(5);
+	getHideShowBackGroundBtn().waitAndClick(5);
+	base.stepInfo(columnName+" this column was hide/showned");
+	driver.waitForPageToBeReady();
 }
 }
 

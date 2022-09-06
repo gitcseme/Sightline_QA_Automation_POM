@@ -12086,6 +12086,8 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelDefaultSecurityGroup_CheckBox(SecurityGroup).waitAndClick(10);
+		
+		
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -12093,6 +12095,12 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelease_ButtonUnRelease().waitAndClick(20);
+		
+		if (getTallyContinue().isElementAvailable(2)) {
+			getTallyContinue().waitAndClick(10);
+		} else {
+			driver.waitForPageToBeReady();
+		}
 
 		if (getFinalizeButton().isDisplayed()) {
 
