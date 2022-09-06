@@ -140,9 +140,11 @@ public class ManageIPRestrictions {
 		base.waitForElement(getIPRestrictionAdd());
 		getIPRestrictionAdd().waitAndClick(5);
 		base.waitForElement(getIPDuplicateError());
-		String errorMsg=getIPDuplicateError().getText();
-		System.out.println(errorMsg);
-		base.stepInfo("The Error is " + errorMsg);
+		String expectedErrorMsg=getIPDuplicateError().getText();
+		String actualErrorMsg="The Error is IP Range already exists in the IP restrictions.";
+		softAssertion.assertEquals(expectedErrorMsg, actualErrorMsg);
+		base.passedStep("The Error Msg is Displayed");
+		softAssertion.assertAll();
 		}
 
 }
