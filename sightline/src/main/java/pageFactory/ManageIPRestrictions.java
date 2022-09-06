@@ -58,6 +58,9 @@ public class ManageIPRestrictions {
 	public Element getIPDuplicateError() {
 		return driver.FindElementByXPath("//*[@id='lblerrormsg']");
 	}
+	public Element getIPRangeErrorMsg() {
+		return driver.FindElementById("lblerrormsg");
+	}
 	public ManageIPRestrictions(Driver driver) {
 
 		this.driver = driver;
