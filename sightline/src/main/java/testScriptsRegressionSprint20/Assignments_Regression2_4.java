@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -309,20 +310,22 @@ public class Assignments_Regression2_4 {
 		// logOut
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53759
-	 * Description :To verify that copied Assignment must be displayed on RMU Dashboard and RU Dashboard
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53759 Description :To
+	 * verify that copied Assignment must be displayed on RMU Dashboard and RU
+	 * Dashboard
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53759",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53759", enabled = true, groups = { "regression" })
 	public void verifyCopiedAssignmentAvailability() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-53759");
 		baseClass.stepInfo("verify that copied Assignment must be displayed on RMU Dashboard and RU Dashboard");
-		String assignmentName ="assignment1" + Utility.dynamicNameAppender();
-		String assignGroup ="assigGroup"+ Utility.dynamicNameAppender();
-		
-		//login as RMU
+		String assignmentName = "assignment1" + Utility.dynamicNameAppender();
+		String assignGroup = "assigGroup" + Utility.dynamicNameAppender();
+
+		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Create new assignment");
 		assignPage.navigateToAssignmentsPage();
@@ -338,7 +341,7 @@ public class Assignments_Regression2_4 {
 		assignPage.getAssignmentAction_CopyAssignment().waitAndClick(5);
 		baseClass.getYesBtn().waitAndClick(5);
 		baseClass.VerifySuccessMessage("Record copied successfully");
-		String copiedAssignName=assignPage.getSelectCopyAssignment().getText().trim();
+		String copiedAssignName = assignPage.getSelectCopyAssignment().getText().trim();
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkAssignExisting(copiedAssignName);
 		assignPage.selectAssignmentGroup(assignGroup);
@@ -349,43 +352,43 @@ public class Assignments_Regression2_4 {
 		assignPage.getAssignmentAction_EditAssignment().waitAndClick(5);
 		assignPage.add2ReviewerAndDistribute();
 		baseClass.stepInfo("verify copied assignment displayed in rmu dashboard");
-		Dashboard dashBoard =new Dashboard(driver);
+		Dashboard dashBoard = new Dashboard(driver);
 		dashBoard.navigateToDashboard();
 		driver.waitForPageToBeReady();
-		if(dashBoard.getSelectAssignmentFromDashborad(copiedAssignName).isElementAvailable(10)) {
+		if (dashBoard.getSelectAssignmentFromDashborad(copiedAssignName).isElementAvailable(10)) {
 			baseClass.passedStep("Copied assignment available in RMU dashboard");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Copied assignment not available");
 		}
 		loginPage.logout();
 		baseClass.stepInfo("Login as rev and verify copied assignment availability");
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("verify copied assignment displayed in rev dashboard");
-		if(assignPage.getSelectAssignmentAsReviewer(copiedAssignName).isElementAvailable(10)) {
+		if (assignPage.getSelectAssignmentAsReviewer(copiedAssignName).isElementAvailable(10)) {
 			baseClass.passedStep("Copied assignment available in REV dashboard");
-		}
-		else {
+		} else {
 			baseClass.failedStep("Copied assignment not available");
 		}
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53652
-	 * Description :To verify that in "Select Reviewers" section in Distribute Documents tab only those 
-	 * reviewers are displayed which are added to an assignment in Manage Reviewer tab.
-	 * @throws InterruptedException 
+	 * Author :Arunkumar date: 30/08/2022 TestCase Id:RPMXCON-53652 Description :To
+	 * verify that in "Select Reviewers" section in Distribute Documents tab only
+	 * those reviewers are displayed which are added to an assignment in Manage
+	 * Reviewer tab.
+	 * 
+	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53652",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53652", enabled = true, groups = { "regression" })
 	public void verifyAddedReviewersInDistributeTab() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-53652");
 		baseClass.stepInfo("verify that added reviewers displayed in distribute tab");
-		String assignmentName ="assignment1" + Utility.dynamicNameAppender();
-		String[] users = {Input.rmu1userName,Input.rev1userName};
+		String assignmentName = "assignment1" + Utility.dynamicNameAppender();
+		String[] users = { Input.rmu1userName, Input.rev1userName };
 
-		//login as RMU
+		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		assignPage.createAssignment(assignmentName, Input.codeFormName);
 		assignPage.editAssignmentUsingPaginationConcept(assignmentName);
@@ -394,19 +397,271 @@ public class Assignments_Regression2_4 {
 		baseClass.stepInfo("verify added users displayed in distribute documents tab");
 		baseClass.waitForElement(assignPage.getDistributeTab());
 		assignPage.getDistributeTab().waitAndClick(5);
-		int availableUserCount =assignPage.getDistributeReviewerCount().size();
-		if(availableUserCount == users.length) {
-			if(assignPage.getSelectUserInDistributeTabsReviewerManager().isElementAvailable(5) && 
-					assignPage.getSelect2ndUserInDistributeTab().isElementAvailable(5)) {
+		int availableUserCount = assignPage.getDistributeReviewerCount().size();
+		if (availableUserCount == users.length) {
+			if (assignPage.getSelectUserInDistributeTabsReviewerManager().isElementAvailable(5)
+					&& assignPage.getSelect2ndUserInDistributeTab().isElementAvailable(5)) {
 				baseClass.passedStep("Only the added reviewers are displayed in distribute tab");
-			}
-			else {
+			} else {
 				baseClass.failedStep("added reviewers not displayed");
-			}	
-		}
-		else {
+			}
+		} else {
 			baseClass.failedStep("added reviewers not displayed correctly in distribute tab");
 		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 25/8/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To verify that if Documents are assigned to Reviewer and some
+	 *              documents are Unassigned then \"Unassigned Documents\" is
+	 *              displays correct count. RPMXCON-53651
+	 */
+	@Test(description = "RPMXCON-53651", enabled = true, groups = { "regression" })
+	public void verifyDocsAssignedToReviewerAndSomeDocsUnassignedThenUnassignDocsCountDisplayedCorrectly()
+			throws InterruptedException {
+
+		String assignmentName = "Assgn" + Utility.dynamicNameAppender();
+		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-53651");
+		baseClass.stepInfo(
+				"To verify that if Documents are assigned to Reviewer and some documents are Unassigned then \"Unassigned Documents\" is displays correct count.");
+
+		// create assignment
+		assignPage.createAssignment(assignmentName, Input.codeFormName);
+
+		// adding Reviewers to Assignment
+		assignPage.editAssignment(assignmentName);
+		assignPage.addReviewers(listOfReviewers);
+
+		// Bulk Assigning the pureHit Count to Assignment
+		int CountOfDocsAssignedToAssignment = sessionSearch.basicContentSearch(Input.searchString2);
+		String countOfDocs = Integer.toString(CountOfDocsAssignedToAssignment);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// navigating to Distribute Documents Tab and verifying the Total count of docs
+		// in Assignment
+		assignPage.editAssignment(assignmentName);
+		baseClass.waitForElement(assignPage.getDistributeTab());
+		assignPage.getDistributeTab().waitAndClick(5);
+		assignPage.verifyValuesFromDistributionTab(countOfDocs, assignPage.getEditAggn_Distribute_Totaldoc());
+		baseClass.passedStep("Distribute Documents Tab is displayed and Total Documents reflects the expected count : "
+				+ countOfDocs);
+
+		// Distributing the modified Doc Counts to Reviewers
+		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignPage
+				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment, listOfReviewers.size(), 1);
+		String CountOfDocsAssignToReviewers = Integer
+				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[0]);
+		assignPage.distributeGivenDocCountToReviewers(CountOfDocsAssignToReviewers);
+
+		// verifying the Unassign Documents in Distribute Documents Tab is displayed
+		// with the remaining number of unassigned documents
+		driver.Navigate().refresh();
+		baseClass.waitForElement(assignPage.getDistributeTab());
+		assignPage.getDistributeTab().waitAndClick(5);
+		String unAssignDocsCount = Integer.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]);
+		assignPage.verifyValuesFromDistributionTab(unAssignDocsCount, assignPage.getEditAggn_Distribute_Unassgndoc());
+		baseClass.passedStep(
+				"verified that Unassign Documents in Distribute Documents Tab is displayed with the remaining number of unassigned documents : "
+						+ unAssignDocsCount);
+
+		// verifying the Manage Reviewers tab is displayed and the "Distributed to User"
+		// column reflects the expected counts for each reviewer
+		baseClass.waitForElement(assignPage.getAssignment_ManageReviewersTab());
+		assignPage.getAssignment_ManageReviewersTab().waitAndClick(5);
+		String ExpectedDistributedCount = Integer
+				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2]);
+		assignPage.verifyCountMatches(Input.rev1userName, 0, ExpectedDistributedCount, true, false, false, false);
+		assignPage.verifyCountMatches(Input.rmu1userName, 0, ExpectedDistributedCount, true, false, false, false);
+		baseClass.passedStep(
+				"verified that Manage Reviewers tab is displayed and the \"Distributed to User\" column reflects the expected counts for each reviewer.");
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 02/09/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that when Keep Families Together is enabled, the draw
+	 *              will keep the entire family together irrespective of the size of
+	 *              the batch with assignment document presentation sequence with
+	 *              metadata. RPMXCON-65429
+	 */
+	@Test(description = "RPMXCON-65429", enabled = true, groups = { "regression" })
+	public void verifyFamiliesTogetherEnabledDrawKeepEntirefamilyTogetherIrrespectiveOfPresentationSequenceMetadata()
+			throws InterruptedException {
+
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-65429");
+		baseClass.stepInfo(
+				"Verify that when Keep Families Together is enabled, the draw will keep the entire family together irrespective of the size of the batch with assignment document presentation sequence with metadata.");
+
+		// creating Assignment
+		assignPage.createAssignment_withoutSave(assignmentName, Input.codeFormName);
+		// giving Limit for the Draw from pool has 20
+		assignPage.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+		// Keep Families together should be disabled
+		assignPage.toggleEnableOrDisableOfAssignPage(true, false, assignPage.getAssgn_keepFamiliesTogetherToggle(),
+				"Keep Families Together", false);
+		// Keep Email Threads Together as enabled
+		assignPage.toggleEnableOrDisableOfAssignPage(true, false, assignPage.getAssgn_keepEmailThreadTogetherToggle(),
+				"keep Email Thread Together", false);
+		// adding Sort by Metadata in the Document Presentation Sequence
+		assignPage.Assgnwithdocumentsequence(Input.metaDataName, Input.sortType);
+		baseClass.stepInfo("adding Sort by Metadata in the Document Presentation Sequence ");
+
+		// Bulk Assign docoments to assignment
+		int CountOfDocsAssignedToAssignment1 = sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		// adding reviewers to assignment
+		assignPage.editAssignment(assignmentName);
+		assignPage.addReviewers(listOfReviewers);
+		baseClass.stepInfo("adding reviewers to assignment");
+		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignPage
+				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
+		String CountOfDocsAssignToReviewers = Integer
+				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[0]);
+		// few documents should be distributed to reviewers
+		assignPage.distributeGivenDocCountToReviewers(CountOfDocsAssignToReviewers);
+
+		// Bulk Assign docoments to assignment
+		baseClass.selectproject();
+		int CountOfDocsAssignedToAssignment2 = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// logOut
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Click On Draw Link of the Assignment in DashBoard page
+		baseClass.waitForElement(assignPage.getAssignmentsDrawPoolInreviewerPg(assignmentName));
+		assignPage.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
+
+		// verify On click of Draw from pool' all documents from same thread should be
+		// assigned to the reviewer together irrespective of the draw from pool size to
+		// the reviewer
+		driver.Navigate().refresh();
+		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
+				assignPage.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
+		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
+		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
+				"Actual Total Document Count In Reviewer Dashboard : '" + actualTotalDocsCountInReviewerDashboard
+						+ "' match with Expected Total Document Count : '" + expectedTotalDocsCountInReviewerDashboard
+						+ "'",
+				"Actual Total Document Count doesn't match with Expected Total Document Count.");
+		baseClass.passedStep(
+				"verified that On click of 'Draw from pool' all documents from entire family documents should be assigned to the reviewer together irrespective of the draw from pool size.");
+
+		// delete assignment
+		assignPage.deleteAssgnmntUsingPagination(assignmentName);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	/**
+	 * @author
+	 * @Date: 02/09/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that when Email Threads Together is enabled, the draw
+	 *              will keep the entire email thread together irrespective of the
+	 *              batch with assignment document presentation sequence with
+	 *              metadata. RPMXCON-65430
+	 */
+	@Test(description = "RPMXCON-65430", enabled = true, groups = { "regression" })
+	public void verifyEmailTogetherEnabledDrawKeepEntireEmailThreadTogetherIrrespectiveOfPresentationSequenceMetadata()
+			throws InterruptedException {
+
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		List<String> listOfReviewers = new ArrayList<String>(Arrays.asList("REV", "RMU"));
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-65430");
+		baseClass.stepInfo(
+				"Verify that when Email Threads Together is enabled, the draw will keep the entire email thread together irrespective of the batch with assignment document presentation sequence with metadata.");
+
+		// creating Assignment
+		assignPage.createAssignment_withoutSave(assignmentName, Input.codeFormName);
+		// giving Limit for the Draw from pool has 20
+		assignPage.getAssgnGrp_Create_DrawPoolCount().SendKeys("20");
+		// Keep Email Threads Together as enabled
+		assignPage.toggleEnableOrDisableOfAssignPage(true, false, assignPage.getAssgn_keepEmailThreadTogetherToggle(),
+				"keep Email Thread Together", false);
+		// Keep Families together should be disabled
+		assignPage.toggleEnableOrDisableOfAssignPage(false, true, assignPage.getAssgn_keepFamiliesTogetherToggle(),
+				"Keep Families Together", false);
+		// adding Sort by Metadata in the Document Presentation Sequence
+		assignPage.Assgnwithdocumentsequence(Input.metaDataName, Input.sortType);
+		baseClass.stepInfo("adding Sort by Metadata in the Document Presentation Sequence ");
+
+		// Bulk Assign docoments to assignment
+		int CountOfDocsAssignedToAssignment1 = sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		// adding reviewers to assignment
+		assignPage.editAssignment(assignmentName);
+		assignPage.addReviewers(listOfReviewers);
+		baseClass.stepInfo("adding reviewers to assignment");
+		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = assignPage
+				.evenlyDistributedDocCountToReviewers(CountOfDocsAssignedToAssignment1, listOfReviewers.size(), 1);
+		String CountOfDocsAssignToReviewers = Integer
+				.toString(DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[0]);
+		// few documents should be distributed to reviewers
+		assignPage.distributeGivenDocCountToReviewers(CountOfDocsAssignToReviewers);
+
+		// Bulk Assign docoments to assignment
+		baseClass.selectproject();
+		int CountOfDocsAssignedToAssignment2 = sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+
+		// logOut
+		loginPage.logout();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Click On Draw Link of the Assignment in DashBoard page
+		baseClass.waitForElement(assignPage.getAssignmentsDrawPoolInreviewerPg(assignmentName));
+		assignPage.getAssignmentsDrawPoolInreviewerPg(assignmentName).waitAndClick(5);
+
+		// verify On click of Draw from pool' all documents from same thread should be
+		// assigned to the reviewer together irrespective of the draw from pool size to
+		// the reviewer
+		driver.Navigate().refresh();
+		int actualTotalDocsCountInReviewerDashboard = Integer.parseInt(
+				assignPage.getTotalDocsCountInReviewerDashboard(assignmentName).getText().split(" ")[1].trim());
+		int expectedTotalDocsCountInReviewerDashboard = CountOfDocsAssignedToAssignment2
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[1]
+				+ DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev[2];
+		baseClass.digitCompareEquals(actualTotalDocsCountInReviewerDashboard, expectedTotalDocsCountInReviewerDashboard,
+				"Actual Total Document Count In Reviewer Dashboard : '" + actualTotalDocsCountInReviewerDashboard
+						+ "' match with Expected Total Document Count : '" + expectedTotalDocsCountInReviewerDashboard
+						+ "'",
+				"Actual Total Document Count doesn't match with Expected Total Document Count.");
+		baseClass.passedStep(
+				"verified that On click of Draw from pool' all documents from same thread should be assigned to the reviewer together irrespective of the draw from pool size to the reviewer");
+
+		// delete assignment
+		assignPage.deleteAssgnmntUsingPagination(assignmentName);
+
+		// logOut
 		loginPage.logout();
 	}
 

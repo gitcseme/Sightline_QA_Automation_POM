@@ -18,6 +18,7 @@ import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -31,6 +32,7 @@ public class Ingestion_Regression_5 {
 	SessionSearch sessionSearch;
 	DocListPage docList;
 	DataSets dataSets;
+	SecurityGroupsPage securityGroup;
 	Input ip;
 
 	@BeforeClass(alwaysRun = true)
@@ -268,6 +270,82 @@ public class Ingestion_Regression_5 {
 		}
 	}
 	
+	/**
+	 * Author :Arunkumar date: 01/09/2022 TestCase Id:RPMXCON-47295
+	 * Description :New Ingestion with Overwrite option as 'Add Only' 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47295",enabled = true, groups = { "regression" })
+	public void verifyPerformingNewAddOnlyIngestion() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47295");
+		baseClass.stepInfo("New Ingestion with Overwrite option as 'Add Only'");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AllSourcesFolder);
+		if (status == false) {
+			ingestionPage.performAutomationAllsourcesIngestion(Input.DATFile1, Input.prodBeg);
+			baseClass.stepInfo("Perform post ingestion validation steps");
+			ingestionPage.verifyDetailsAfterStartedIngestion();
+			String ingestionName=ingestionPage.getIngestionNameFromPopup();
+			String modifiedDate =ingestionPage.getIngestionWizardDateFormat().getText();
+			ingestionPage.postIngestionGridViewValidation(ingestionName, Input.projectName, 
+					Input.pa1FullName, "Cataloged",modifiedDate);
+			baseClass.stepInfo("Perform Catalogging and verify status");
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.verifyStatusInTileAndIngestionDetailLink("Catalog stage");
+			baseClass.stepInfo("Perform Copy and verify status");
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.verifyStatusInTileAndIngestionDetailLink("Copy stage");
+			baseClass.stepInfo("Perform Indexing and verify status");
+			ingestionPage.ignoreErrorsAndIndexing(Input.AllSourcesFolder);
+			ingestionPage.verifyStatusInTileAndIngestionDetailLink("Indexing stage");
+			baseClass.stepInfo("Perform Approve and verify status");
+			ingestionPage.approveIngestion(1);
+			ingestionPage.verifyStatusInTileAndIngestionDetailLink("Approve stage");
+			ingestionPage.runFullAnalysisAndPublish();
+		}
+		else {
+			baseClass.passedStep("Add only ingestion already published in this project");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 02/09/2022 TestCase Id:RPMXCON-48257
+	 * Description :To Verify Unpublish for Ingested audio documents
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48257",enabled = true, groups = { "regression" })
+	public void verifyUnpublishForAudioIngestedDocs() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48257");
+		baseClass.stepInfo("To Verify Unpublish for Ingested audio documents");
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		//Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion and publish");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.performAKNativeFolderIngestion(Input.DATFile1);
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
+		}
+		baseClass.stepInfo("Release all ingested docs");
+		sessionSearch.basicContentSearch(Input.searchStringStar);
+		sessionSearch.bulkRelease(Input.securityGroup);
+		baseClass.stepInfo("do basic search and save");
+		baseClass.selectproject();
+		sessionSearch.basicSearchWithMetaDataQuery("1", Input.audioPlayerReady);
+		sessionSearch.saveSearch(BasicSearchName);
+		baseClass.stepInfo("unrelease and unpublish documents");
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.passedStep("Documents unpublished successfully without error message");
+	}
 	
 	
 	
