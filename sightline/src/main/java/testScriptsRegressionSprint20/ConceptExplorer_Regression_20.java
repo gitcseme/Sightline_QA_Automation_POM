@@ -1,7 +1,10 @@
 package testScriptsRegressionSprint20;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -20,6 +23,7 @@ import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -33,6 +37,7 @@ public class ConceptExplorer_Regression_20 {
 	SoftAssert assertion;
 	ReportsPage reports;
 	ConceptExplorerPage conceptExplorer;
+	TagsAndFoldersPage tagsAndFolderPage;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -54,16 +59,24 @@ public class ConceptExplorer_Regression_20 {
 		baseClass = new BaseClass(driver);
 		assertion = new SoftAssert();
 		savedSearch = new SavedSearch(driver);
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 	}
-	
+
+	@DataProvider(name = "paRmuUsers")
+	public Object[][] paRmuUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "PA" },
+				{ Input.rmu1userName, Input.rmu1password, "RMU" } };
+		return users;
+	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param User
 	 * @param pwd
 	 * @throws Exception
 	 */
-	
-	@Test(description="RPMXCON-56910",enabled = true, dataProvider = "paRmu", groups = { "regression" })
+
+	@Test(description = "RPMXCON-56910", enabled = true, dataProvider = "paRmu", groups = { "regression" })
 	public void verifyFilters_EmailAllDomains_DocFileType(String User, String pwd) throws Exception {
 
 		baseClass.stepInfo("Test case Id :RPMXCON-56910");
@@ -72,11 +85,11 @@ public class ConceptExplorer_Regression_20 {
 		String analyze = Input.analyzeAt2;
 		String analyze3 = Input.analyzeAt3;
 		String sourceToSelect = "Security Groups";
-		String emailDomain= "gmail.com";
-		String emailD0main_1 ="symphonyteleca.com";
-		String fileType= "MS Outlook Message";
-		
-		String[] columnsToSelect = { Input.emailAllDomain,Input.ingDocFileType };
+		String emailDomain = "gmail.com";
+		String emailD0main_1 = "symphonyteleca.com";
+		String fileType = "MS Outlook Message";
+
+		String[] columnsToSelect = { Input.emailAllDomain, Input.ingDocFileType };
 
 		baseClass.stepInfo("**Login to sightline and Select Project**");
 		loginPage.loginToSightLine(User, pwd);
@@ -92,8 +105,8 @@ public class ConceptExplorer_Regression_20 {
 
 		// Apply filter
 		baseClass.stepInfo("** Set the filter criteria and click “Apply filter”");
-		
-		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain,emailD0main_1, true);
+
+		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, true);
 		conceptExplorer.filterAction(fileType, Input.docFileType, null, true);
 		conceptExplorer.applyFilter("Yes", 10);
 
@@ -118,8 +131,8 @@ public class ConceptExplorer_Regression_20 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain = dlPage.getColumnValue(Input.emailAllDomain, false);
 		List<String> docFileType = dlPage.getColumnValue(Input.docFileType, false);
-		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain,docFileType, emailD0main_1,
-				emailDomain, fileType);
+		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain, docFileType, emailD0main_1, emailDomain,
+				fileType);
 
 		// remove filters
 		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
@@ -131,7 +144,7 @@ public class ConceptExplorer_Regression_20 {
 
 		// Apply filter
 		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
-		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain,emailD0main_1, false);
+		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, false);
 		conceptExplorer.filterAction(fileType, Input.docFileType, null, false);
 		conceptExplorer.applyFilter("Yes", 10);
 
@@ -150,9 +163,9 @@ public class ConceptExplorer_Regression_20 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain_Excl = dlPage.getColumnValue(Input.emailAllDomain, false);
 		List<String> docFileType_Excl = dlPage.getColumnValue(Input.docFileType, false);
-		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailAllDomain_Excl,docFileType_Excl, emailD0main_1,
+		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailAllDomain_Excl, docFileType_Excl, emailD0main_1,
 				emailDomain, fileType);
-		
+
 		conceptExplorer.getBackToSourceBtn().Click();
 		driver.waitForPageToBeReady();
 
@@ -185,12 +198,173 @@ public class ConceptExplorer_Regression_20 {
 
 	}
 
+	/**
+	 * @author Raghuram A
+	 * @Date: 09/04/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Validate onpage filter for Tags and MasterDate on Concept
+	 *              Explorer Report RPMXCON-56909
+	 */
+	@Test(description = "RPMXCON-56909", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
+	public void verifyConceptExpFiltersFunctionality(String userName, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id :RPMXCON-56909 ");
+		baseClass.stepInfo("Validate onpage filter for Tags and MasterDate on Concept Explorer Report");
+		baseClass.failedMessage("Make sure the project has valid expected datas");
+
+		String analyze = Input.analyzeAt2;
+		String analyze3 = Input.analyzeAt3;
+		String sourceToSelect = "Security Groups";
+		String masterDate = "1980/01/01";
+
+		baseClass.stepInfo("**Login to sightline and Select Project**");
+		loginPage.loginToSightLine(userName, password);
+
+		// Navigate to Concept Explorer page
+		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// click on Apply Filter button Tags: Include MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
+				Input.metaDataName, Input.metaDataCN, masterDate, "", true, false, "On", true, true, Input.metaDataName,
+				Input.masterDateText, "IncludeAndInclude", "masterDate", "All", false, "");
+
+		// remove filters
+		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// click on Apply Filter button Tags: Exclude MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
+				Input.metaDataName, Input.metaDataCN, masterDate, "", false, false, "On", true, true,
+				Input.metaDataName, Input.masterDateText, "ExcludeAndInclude", "masterDate", "All", false, "");
+
+		// Back to source
+		conceptExplorer.getBackToSourceBtn().Click();
+		driver.waitForPageToBeReady();
+
+		// Select tile to analyze at second level
+		baseClass.stepInfo("**Select tile to analyze at second level**");
+		baseClass.waitForElementCollection(conceptExplorer.getDataAddedInCart());
+		int resultToAddInCart = conceptExplorer.getDataAddedInCart().size();
+		conceptExplorer.addedTileSelectionBasedOnChildCount(resultToAddInCart, 3);
+
+		// Go to 2nd level
+		List<String> expActiveFilters = conceptExplorer.verifyActiveFilters(null);
+		conceptExplorer.analyzeAction(analyze);
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("2nd")),
+				"Page navigated to second level and report generated", "Page didn't navigate to second level", "Pass");
+		conceptExplorer.verifyActiveFilters(expActiveFilters);
+
+		// Select tile to analyze at third level
+		baseClass.stepInfo("**Select tile to analyze at third level**");
+		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
+
+		// Go to 3rd level
+		conceptExplorer.analyzeAction(analyze3);
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
+				"Page navigated to third level and report generated", "Page didn't navigate to third level", "Pass");
+		conceptExplorer.verifyActiveFilters(expActiveFilters);
+
+		// Logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @Date: 09/05/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Validate onpage filter for CustodianName and Tags on Concept
+	 *              Explorer Report RPMXCON-56907
+	 */
+	@Test(description = "RPMXCON-56907", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
+	public void verifyConceptExpFiltersFunctionalityEX(String userName, String password, String role) throws Exception {
+
+		baseClass.stepInfo("Test case Id :RPMXCON-56907 ");
+		baseClass.stepInfo("Validate onpage filter for CustodianName and Tags  on Concept Explorer Report");
+		baseClass.failedMessage("Make sure the project has valid expected datas");
+
+		String analyze = Input.analyzeAt2;
+		String analyze3 = Input.analyzeAt3;
+		String sourceToSelect = "Security Groups";
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		String docFileType = "MS Outlook Message";
+
+		baseClass.stepInfo("**Login to sightline and Select Project**");
+		loginPage.loginToSightLine(userName, password);
+
+		// Perform Search and Bulk Tag
+		sessionSearch.basicMetaDataSearch(Input.docFileType, null, docFileType, null);
+		sessionSearch.verifyBulkTag(TagName);
+
+		// Navigate to Concept Explorer page
+		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// click on Apply Filter button Tags: Include MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
+				Input.metaDataName, Input.metaDataCN, TagName, "", true, false, "On", true, true, Input.metaDataName,
+				Input.docFileType, "IncludeAndExclude", "Tags", "default", false, "");
+
+		// remove filters
+		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+		reports.navigateToReportsPage("Concept Explorer Report");
+
+		// click on Apply Filter button Tags: Exclude MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
+				Input.metaDataName, Input.metaDataCN, TagName, "", false, false, "On", true, true, Input.metaDataName,
+				Input.docFileType, "ExcludeAndExclude", "Tags", "default", false, "");
+
+		// Back to source
+		conceptExplorer.getBackToSourceBtn().Click();
+		driver.waitForPageToBeReady();
+
+		// Select tile to analyze at second level
+		baseClass.stepInfo("**Select tile to analyze at second level**");
+		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+		int resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 2);
+
+		// Go to 2nd level
+		List<String> expActiveFilters = conceptExplorer.verifyActiveFilters(null);
+		conceptExplorer.analyzeAction(analyze);
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("2nd")),
+				"Page navigated to second level and report generated", "Page didn't navigate to second level", "Pass");
+		conceptExplorer.verifyActiveFilters(expActiveFilters);
+
+		// Select tile to analyze at third level
+		baseClass.stepInfo("**Select tile to analyze at third level**");
+		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
+
+		// Go to 3rd level
+		conceptExplorer.analyzeAction(analyze3);
+		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
+				"Page navigated to third level and report generated", "Page didn't navigate to third level", "Pass");
+		conceptExplorer.verifyActiveFilters(expActiveFilters);
+
+		// Tag deletion
+		baseClass.stepInfo("Initiating tag deletion");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllTags(TagName);
+
+		// Logout
+		loginPage.logout();
+
+	}
+
 	@DataProvider(name = "paRmu")
 	public Object[][] paRmu() {
-		Object[][] users = { { Input.pa1userName, Input.pa1password },
-				{ Input.rmu1userName, Input.rmu1password} };
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 		return users;
 	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
