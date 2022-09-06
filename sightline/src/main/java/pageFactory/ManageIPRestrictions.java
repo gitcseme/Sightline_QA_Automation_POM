@@ -133,6 +133,7 @@ public class ManageIPRestrictions {
 	 * @Description : Create Manage IP range add Same Range
 	 */
 	public void createIPrangeErrorMsgduplicate(String IPfrom, String IPTo) {
+		SoftAssert softAssertion = new SoftAssert();
 		driver.waitForPageToBeReady();
 		getEnterFrom().SendKeys(IPfrom);
 		base.waitForElement(getIPRangeTo());
@@ -141,10 +142,9 @@ public class ManageIPRestrictions {
 		getIPRestrictionAdd().waitAndClick(5);
 		base.waitForElement(getIPDuplicateError());
 		String expectedErrorMsg=getIPDuplicateError().getText();
-		String actualErrorMsg="The Error is IP Range already exists in the IP restrictions.";
-		softAssertion.assertEquals(expectedErrorMsg, actualErrorMsg);
+		String actualErrorMsg="IP Range already exists in the IP restrictions.";
+		softAssertion.assertEquals(actualErrorMsg, expectedErrorMsg);
 		base.passedStep("The Error Msg is Displayed");
 		softAssertion.assertAll();
 		}
-
 }
