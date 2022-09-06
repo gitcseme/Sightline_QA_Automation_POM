@@ -1318,6 +1318,17 @@ public class IngestionPage_Indium {
 	public Element getIngestionNameTile(String name) {
 		return driver.FindElementByCssSelector("span[title*='"+name+"']");
 	}
+	public Element getProjectNameFromGrid(String ingestion) {
+		return driver.FindElementByXPath("//td[contains(text(),'"+ingestion+"')]//preceding-sibling::td");
+	}
+	public Element getUserNameFromGrid(String ingestion,String user) {
+		return driver.FindElementByXPath
+				("//td[contains(text(),'"+ingestion+"')]//following-sibling::td[contains(text(),'"+user+"')]");
+	}
+	public Element getStatusFromGrid(String ingestion,String status) {
+		return driver.FindElementByXPath
+				("//td[contains(text(),'"+ingestion+"')]//following-sibling::td[contains(text(),'"+status+"')]");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -6091,9 +6102,21 @@ public class IngestionPage_Indium {
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				base.VerifySuccessMessage("Action done successfully");
-				base.waitTime(5);
-				getRefreshButton().waitAndClick(5);
+				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
+				for(int j=1;j<=15;j++) {
+					base.waitForElement(getIngestionDetailPopup(1));
+					String status1 = getStatus(1).getText().trim();
+					if(status1.contains("In Progress") || status1.contains("Cataloged") ) {
+						base.passedStep("Ignored errors");
+						break;
+					}
+					else if(status.contains("Failed")) {
+						base.waitTime(1);
+						getRefreshButton().waitAndClick(10);
+						driver.waitForPageToBeReady();
+					}
+				}
 			}
 		}
 
@@ -7711,7 +7734,7 @@ public class IngestionPage_Indium {
 	 * @description: this method will verify the status of overlay ingestion till
 	 *               approving stage
 	 */
-	public void verifyApprovedStatusForOverlayIngestion() {
+	public String verifyApprovedStatusForOverlayIngestion() {
 		//apply filter for approved stage
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -7732,7 +7755,7 @@ public class IngestionPage_Indium {
 		base.waitTime(2);
 
 		getRefreshButton().waitAndClick(5);
-
+		String ingestionName=getIngestionNameFromPopup();
 		for (int i = 0; i < 120; i++) {
 			base.waitTime(5);
 			getRefreshButton().waitAndClick(5);
@@ -7767,6 +7790,7 @@ public class IngestionPage_Indium {
 				System.out.println("Ingestion Failed, will re-run after ignoring errors");
 			}
 		}
+		return ingestionName;
 	}
 
 	/**
@@ -10293,11 +10317,12 @@ public class IngestionPage_Indium {
 			
 			base.waitForElement(getIngestion_GridView());
 			getIngestion_GridView().waitAndClick(5);
+			base.waitForElement(getTotalPageCount());
 			base.waitTime(3);
 			getRefreshButton().waitAndClick(5);
 			driver.waitForPageToBeReady();
 			for(int i =0;i<fields.length;i++) {
-				if(gridViewColumn(fields[i]).isElementAvailable(5)) {
+				if(gridViewColumn(fields[i]).isElementAvailable(10)) {
 					base.passedStep("'"+fields[i]+"' present in grid view tabular column");
 				}
 				else {
@@ -10718,7 +10743,6 @@ public class IngestionPage_Indium {
 					base.waitForElement(getRunIndexing());
 					getElementStatus(getRunIndexing());
 					getRunIndexing().waitAndClick(10);
-					base.VerifySuccessMessage("Ingestion Indexing has Started.");
 					base.waitForElement(getCloseButton());
 					getCloseButton().waitAndClick(10);
 					for(int j=1;j<=10;j++) {
@@ -10771,4 +10795,110 @@ public class IngestionPage_Indium {
 			}
 		}
 		
+		/**
+		 * @author: Arun Created Date: 01/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the details displayed in ingestion link and in tile
+		 */
+		public void verifyStatusInTileAndIngestionDetailLink(String stage) {
+			
+			String popupStatus=null;
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIngestionDetailPopup(1));
+			String tileStatus = getStatus(1).getText().trim();
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			base.waitForElement(getIngestionStatusInPopup());
+			for(int i=1;i<=10;i++) {
+				popupStatus = getIngestionStatusInPopup().getText().trim();
+				if(popupStatus.equalsIgnoreCase("In Progress") || popupStatus.equalsIgnoreCase("Failed")) {
+					base.waitTime(2);
+				}
+				else {
+					popupStatus = getIngestionStatusInPopup().getText().trim();
+					break;
+				}
+			}
+			if(tileStatus.contains(popupStatus)) {
+				base.passedStep("status displayed correctly in tile and popup for"+stage);
+			}
+			else {
+				base.failedStep("Status not displayed correctly in popup");
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(5);
+		}
+		
+		/**
+		 * @author: Arun Created Date: 01/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will do the validation in grid view
+		 */
+		public void postIngestionGridViewValidation(String ingestionName,String projectName,String user,
+				String status,String date) {
+			base.waitForElement(getIngestionDetailPopup(1));
+			int sourceCount = Integer.parseInt(getSourceCount().getText());
+			int ingestedCount = Integer.parseInt(getIngestedCount().getText());
+			int errorCount = Integer.parseInt(errorCountStatus().getText());
+			if(sourceCount>=0 && ingestedCount>=0 && errorCount>=0) {
+				base.passedStep("counts displayed correctly");
+			}
+			else {
+				base.failedStep("counts not displayed correctly");
+			}
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(5);
+			base.waitForElement(getFilterByFAILED());
+			getFilterByFAILED().waitAndClick(5);
+			base.waitForElement(getFilterByButton());
+			getFilterByButton().waitAndClick(5);
+			base.waitForElement(getIngestion_GridView());
+			getIngestion_GridView().waitAndClick(10);
+			base.waitForElement(getTotalPageCount());
+			for(int i=1;i<=10;i++) {
+				if (getAllIngestionName(ingestionName).isElementAvailable(10)) {
+					String project = getProjectNameFromGrid(ingestionName).getText();
+					//verify project name
+					base.stepInfo("verify project name in grid");
+					if(project.contains(projectName)) {
+						base.passedStep("project name displayed correctly in grid");
+					}
+					else {
+						base.failedStep("project name not displayed correctly in grid");
+					}
+					//verify user last modified
+					base.stepInfo("verify last modified user and date data in grid");
+					String[] modifiedDate = date.split(" ");
+					if(getUserNameFromGrid(ingestionName,user).isElementAvailable(10)
+							&& getStatusFromGrid(ingestionName,modifiedDate[0]).isElementAvailable(10)) {
+						base.passedStep("last modified by username and date displayed correctly");
+					}
+					else {
+						base.failedStep("username and date not displayed correctly");
+					}
+					//verify status of ingestion
+					base.stepInfo("verify status of ingestion in grid");
+					if(getStatusFromGrid(ingestionName,status).isElementAvailable(10) || 
+							getStatusFromGrid(ingestionName,"In Progress").isElementAvailable(10) ||
+							getStatusFromGrid(ingestionName,"Failed").isElementAvailable(10)) {
+						base.passedStep("ingestion status matched in grid and tile");
+					}
+					else {
+						base.failedStep("ingestion status not matched");
+					}	
+					break;
+				}
+				else {
+					String nextbuttonStatus = ingestionPaginationNext().GetAttribute("class").trim();
+					if(!getAllIngestionName(ingestionName).isElementAvailable(10) &&
+						nextbuttonStatus.equalsIgnoreCase("paginate_button next disabled")){
+						base.failedStep("Ingestion not available");
+					}
+					else {
+						driver.scrollingToBottomofAPage();
+						getIngestionPaginationNextButton().waitAndClick(5);
+						driver.waitForPageToBeReady();
+					}
+				}
+			}				
+		}
 }

@@ -38,8 +38,9 @@ public class IngestionCreationClass01 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		ip = new Input();
-		ip.loadEnvConfig();
+
+		Input in = new Input();
+		in.loadEnvConfig();
 
 	}
 
@@ -1387,15 +1388,17 @@ public class IngestionCreationClass01 {
 		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-	baseClass = new BaseClass(driver);
-	loginPage = new LoginPage(driver);
-	Reporter.setCurrentTestResult(result);
-	if (ITestResult.FAILURE == result.getStatus()) {
-	Utility baseClass = new Utility(driver);
-	baseClass.screenShot(result);
-	}
-	loginPage.quitBrowser();
-
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+		}
 	}
 
 	@AfterClass(alwaysRun = true)
