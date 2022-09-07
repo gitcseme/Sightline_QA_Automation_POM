@@ -595,7 +595,6 @@ public class Production_Regression20 {
 
 		page.navigateToProductionPage();
 		String beginningBates1 = page.getRandomNumber(2);
-		int FirstFile1 = Integer.valueOf(beginningBates1);
 		String ProductionName1 = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(ProductionName1);
@@ -618,8 +617,10 @@ public class Production_Regression20 {
 
 		page.extractFile();
 		driver.waitForPageToBeReady();
-		int Lastile1 = FirstFile1 + doc;
-		page.isImageFileExistForPDF(FirstFile1, Lastile1, prefixID1, suffixID1);
+		String home = System.getProperty("user.home");
+		File PdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates1 + suffixID + ".pdf");
+		page.isfileisExists(PdfFile);
+		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
@@ -941,7 +942,7 @@ public class Production_Regression20 {
 		String suffixID1 = Input.randomText + Utility.dynamicNameAppender();
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearchForTwoItems(Input.testData1, Input.telecaSearchString);
@@ -949,6 +950,7 @@ public class Production_Regression20 {
 		sessionSearch.ViewInDocViewWithoutPureHit();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		base.waitTime(2);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
@@ -1097,6 +1099,7 @@ public class Production_Regression20 {
 		sessionSearch.bulkTagExisting(tagname);
 		sessionSearch.ViewInDocViewWithoutPureHit();
 
+		base.waitTime(2);
 		docViewRedactions.redactRectangleUsingOffset(10, 10,120,120);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
