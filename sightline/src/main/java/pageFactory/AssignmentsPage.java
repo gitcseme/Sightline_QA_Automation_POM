@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
@@ -77,6 +78,7 @@ public class AssignmentsPage {
 	public Element getAssignmentCodingFormDropDown() {
 		return driver.FindElementById("SelectedCodingForm");
 	}
+
 	public Element getAssignmentCodingFormName() {
 		return driver.FindElementById("selectedCodingFormString");
 	}
@@ -110,7 +112,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getSelectAssignment(String assignmentName) {
-		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']");
+		return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='" + assignmentName + "']");
 	}
 
 	// change this name to pop or smtg
@@ -508,8 +510,7 @@ public class AssignmentsPage {
 	}
 
 	public Element getAssgn_CodingStampAplliedToggle() {
-		return driver.FindElementByXPath(
-				"//*[@id='grayoutToggle']/following-sibling::i");
+		return driver.FindElementByXPath("//*[@id='grayoutToggle']/following-sibling::i");
 	}
 
 	public Element getAssgn_OverrideOptimizedSortToggle() {
@@ -1006,11 +1007,11 @@ public class AssignmentsPage {
 
 	// End of (added by jayanthi 28/9/21)
 	// Added by Indium-Mohan
-	
+
 	public Element getMiniDocListToggleButton() {
 		return driver.FindElementByXPath("//*[@id='AdditionalPreferences_IsShowMiniDocList']/following-sibling::i");
 	}
-	
+
 	public Element getNearDupeDocumentsIncludeToggleButton() {
 		return driver.FindElementByXPath("//input[@id='chkIncludeNearDuplicates']//following-sibling::i");
 	}
@@ -1434,7 +1435,8 @@ public class AssignmentsPage {
 	public Element getFamilyMembersCount() {
 		return driver.FindElementByXPath("//span[@id='CountTextFamilyMem']");
 	}
-	//Added by Iyappan
+
+	// Added by Iyappan
 	public Element getProgressReport() {
 		return driver.FindElementByXPath("//a[text()='Progress Report']");
 	}
@@ -1456,7 +1458,7 @@ public class AssignmentsPage {
 	public Element SelectCFPopUpSG_Step1() {
 		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Security Group']");
 	}
-	
+
 	public Element SelectCFPopUp_Step1() {
 		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Assignment']");
 	}
@@ -1476,54 +1478,74 @@ public class AssignmentsPage {
 	public Element getSelectedCodeForminAssignPAge() {
 		return driver.FindElementByXPath(" //label[@id='selectedCodingFormString']");
 	}
-	
+
 	public Element getQB_AssignemntName_ErrorMSg() {
 		return driver.FindElementByXPath("//span[@id='AssignmentName-error']");
 	}
 
 	public Element getSelectUserToAssignAsReviewer(String userName) {
-		return driver.FindElementByXPath(
-				"//*[@id='divNotAssignedUsers']//div[contains(.,'" +userName + "')]/../div/label");
+		return driver
+				.FindElementByXPath("//*[@id='divNotAssignedUsers']//div[contains(.,'" + userName + "')]/../div/label");
 	}
-	public Element getAssignmentActionManageTab_ViewinDocList() {
-		return driver.FindElementByXPath("//a[text()='View in Doc List']");}
 
-	//Added by Iyappan
+	public Element getAssignmentActionManageTab_ViewinDocList() {
+		return driver.FindElementByXPath("//a[text()='View in Doc List']");
+	}
+
+	// Added by Iyappan
 	public ElementCollection getLiveSequenceMetadatas() {
 		return driver.FindElementsByXPath("//ol[@class='dd-list']//i/parent::span");
 	}
+
 	public Element getCodingForm_AssignemntName_ErrorMSg() {
 		return driver.FindElementByXPath("//span[@id='hidCodingFormList-error']");
 
 	}
+
 	public Element getReviewerPopupCloseBtn() {
 		return driver.FindElementByXPath("//header[contains(text(),'Add Reviewers')]//button[@class='close']");
 	}
+
 	public Element getCategoryStatus() {
 		return driver.FindElementByXPath("//a[text()='Category']/parent::li");
 	}
+
 	public Element getunderAvailableCriteria(String data) {
-		return driver.FindElementByXPath("//div[@id='nestable']//span[text()='"+ data +"']//i");
+		return driver.FindElementByXPath("//div[@id='nestable']//span[text()='" + data + "']//i");
 	}
-	
-    public Element getDropElement() {
+
+	public Element getDropElement() {
 		return driver.FindElementByCssSelector("div[id='nestable2']");
 	}
-    public Element getSelectAssignedMDinAssignPage(String metaData) {
+
+	public Element getSelectAssignedMDinAssignPage(String metaData) {
 		return driver.FindElementByXPath("//select[@id='AssignedMetaData']//option[text()='" + metaData + "']");
 	}
+
 	public Element getMetadataFielOkBtn() {
 		return driver.FindElementById("MetaDataSave");
 	}
-	
+
 	public Element getCFCancelBtn() {
 		return driver.FindElementById("btnCodingFormCancel");
 	}
+
 	public Element getPoolValueFromDistributeTab() {
 		return driver.FindElementByXPath("//label[contains(text(),'draw max')]//following-sibling::div");
 	}
+
 	public Element getdrawFromPoolStatus() {
 		return driver.FindElementByXPath("//label[contains(text(),'Draw From Pool:')]//following-sibling::div");
+	}
+
+	public ElementCollection getDistributeReviewerCount() {
+		return driver.FindElementsByXPath(
+				"//*[@id='divDistributedDocUsers']//div//label[contains(text(),'distribute documents to:')]//following-sibling::div//label");
+	}
+
+	public ElementCollection selectReviewersToDistributeDocs() {
+		return driver.FindElementsByXPath(
+				"//label[contains(text(),'Select which Reviewers you want to distribute documents to:')]/parent::div//label[@class='checkbox']/i");
 	}
 
 	public AssignmentsPage(Driver driver) {
@@ -1751,7 +1773,9 @@ public class AssignmentsPage {
 		}), Input.wait60);
 		driver.scrollingToBottomofAPage();
 
-		getSelectAssignment(assignmentName).waitAndClick(5);
+		if (!getSelectAssignmentHighlightCheck(assignmentName).isDisplayed()) {
+			getSelectAssignment(assignmentName).waitAndClick(5);
+		}
 
 		driver.scrollPageToTop();
 
@@ -1854,7 +1878,7 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		
+
 		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
@@ -1920,8 +1944,8 @@ public class AssignmentsPage {
 		getAssignmentName().SendKeys(assignmentName);
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		
-		//select coding form from assignment popup
+
+		// select coding form from assignment popup
 		SelectCodingform(codingForm);
 
 		getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
@@ -2961,7 +2985,7 @@ public class AssignmentsPage {
 			}
 		}), Input.wait60);
 		getAssignmentName().SendKeys(assignmentName);
-          SelectCodingform(codingForm);
+		SelectCodingform(codingForm);
 
 		if (Reviewercheck.equals("AllRev")) {
 			getQuickBatch_Selectallrev().waitAndClick(10);
@@ -3484,7 +3508,7 @@ public class AssignmentsPage {
 		getAssgn_NewAssignmnet().waitAndClick(5);
 		bc.waitForElement(getbulkassgnpopup());
 		assertion.assertTrue(getbulkassgnpopup().isDisplayed());
-		bc.waitForElement(getPersistCB_NewAssgn());	
+		bc.waitForElement(getPersistCB_NewAssgn());
 		getPersistCB_NewAssgn().waitAndClick(15);
 		try {
 			bc.waitForElement(getContinueBulkAssign());
@@ -3511,7 +3535,7 @@ public class AssignmentsPage {
 		getParentAssignmentGroupName().isDisplayed();
 		bc.waitForElement(getSelectedClassification());
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		//bc.waitForElement(getAssignmentCodingFormDropDown());
+		// bc.waitForElement(getAssignmentCodingFormDropDown());
 		SelectCodingform(codingForm);
 		bc.waitForElement(getAssignmentSaveButton());
 		bc.waitTillElemetToBeClickable(getAssignmentSaveButton());
@@ -3529,7 +3553,7 @@ public class AssignmentsPage {
 		}
 		System.out.println("Assignment " + assignmentName + " created with CF " + codingForm);
 		UtilityLog.info("Assignment " + assignmentName + " created with CF " + codingForm);
-		
+
 		bc.waitForElement(getNumberOfAssignmentsToBeShown());
 		getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
 		driver.scrollingToBottomofAPage();
@@ -4738,7 +4762,7 @@ public class AssignmentsPage {
 				driver.scrollingToElementofAPage(getSelectAssignment(assignmentName));
 				getSelectAssignment(assignmentName).waitAndClick(5);
 				docCount = getDocCountInAssgnPg(assignmentName).getText();
-				bc.stepInfo("Docs count displayed for "+assignmentName+" assignment is "+docCount);
+				bc.stepInfo("Docs count displayed for " + assignmentName + " assignment is " + docCount);
 				break;
 			} else {
 				driver.scrollingToBottomofAPage();
@@ -5691,8 +5715,7 @@ public class AssignmentsPage {
 	 * @Description : After creating assignment distributing to Two reviewer account
 	 * @param assignmentName
 	 * @param codingForm
-	 * @param purehits
-	 * Modified as per new build
+	 * @param purehits       Modified as per new build
 	 */
 
 	public void assignDocstoNewAssgnEnableAnalyticalPanel(final String assignmentName, String codingForm,
@@ -5742,7 +5765,7 @@ public class AssignmentsPage {
 			getAssignmentName().SendKeys(assignmentName);
 		}
 		getParentAssignmentGroupName().isDisplayed();
-		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");		
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
 		SelectCodingform(codingForm);
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
 		if (!enabled.equals("true"))
@@ -5857,10 +5880,11 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 
 			driver.Navigate().refresh();
-			/*driver.waitForPageToBeReady();
-			bc.waitTillElemetToBeClickable(getAssgnPaginationNextButton());
-			getAssgnPaginationNextButton().Click();
-*/
+			/*
+			 * driver.waitForPageToBeReady();
+			 * bc.waitTillElemetToBeClickable(getAssgnPaginationNextButton());
+			 * getAssgnPaginationNextButton().Click();
+			 */
 			assignmentNameValidation(test);
 			driver.waitForPageToBeReady();
 
@@ -5902,26 +5926,25 @@ public class AssignmentsPage {
 			String expectedText = "0";
 			driver.Navigate().refresh();
 			/*
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getAssgnPaginationNextButton());
-			getAssgnPaginationNextButton().Click();
-			System.out.println("Clicked last page");
-
-			driver.waitForPageToBeReady();
-			*/
+			 * driver.waitForPageToBeReady();
+			 * bc.waitForElement(getAssgnPaginationNextButton());
+			 * getAssgnPaginationNextButton().Click();
+			 * System.out.println("Clicked last page");
+			 * 
+			 * driver.waitForPageToBeReady();
+			 */
 			assignmentNameValidation(test);
 			String DocCount = getNoOfDocuments(test).getText();
 			for (int i = 0; i < 7; i++) {
 				if (expectedText.equals(DocCount.trim())) {
 					break;
 				} else {
-					/*driver.Navigate().refresh();
-					driver.waitForPageToBeReady();
-					bc.waitTillElemetToBeClickable(getLastPage());
-					getLastPage().Click();
-
-					driver.waitForPageToBeReady();
-*/
+					/*
+					 * driver.Navigate().refresh(); driver.waitForPageToBeReady();
+					 * bc.waitTillElemetToBeClickable(getLastPage()); getLastPage().Click();
+					 * 
+					 * driver.waitForPageToBeReady();
+					 */
 					bc.waitForElement(getNoOfDocuments(test));
 					DocCount = getNoOfDocuments(test).getText();
 				}
@@ -5999,7 +6022,7 @@ public class AssignmentsPage {
 		}
 		getParentAssignmentGroupName().isDisplayed();
 		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-		
+
 		SelectCodingform(codingForm);
 
 		String enabled = getAssgnGrp_Create_DrawPooltoggle().Class();
@@ -6716,12 +6739,7 @@ public class AssignmentsPage {
 			getAssignmentName().SendKeys(assignmentName);
 			getParentAssignmentGroupName().isDisplayed();
 			getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
-			try {
-				bc.waitForElement(getAssignmentCodingFormDropDown());
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-			} catch (Exception e) {
-				getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
-			}
+			SelectCodingform(codingForm);
 
 			getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
 			driver.scrollingToBottomofAPage();
@@ -7650,9 +7668,9 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_Action().waitAndClick(10);
 		bc.waitTillElemetToBeClickable(actions);
 		actions.waitAndClick(10);
-		if(bc.getYesBtn().isElementAvailable(2)) {
-		bc.waitTillElemetToBeClickable(bc.getYesBtn());
-		bc.getYesBtn().waitAndClick(5);
+		if (bc.getYesBtn().isElementAvailable(2)) {
+			bc.waitTillElemetToBeClickable(bc.getYesBtn());
+			bc.getYesBtn().waitAndClick(5);
 		}
 //		} catch (Exception e) {
 //			bc.failedStep("Failed to select action functions");
@@ -8432,7 +8450,7 @@ public class AssignmentsPage {
 	public void Checkclickedstatus(String assignmentName1) {
 		driver.waitForPageToBeReady();
 		if (!getSelectAssignment(assignmentName1).GetAttribute("class").contains("highlight")) {
-			
+
 			getSelectAssignment(assignmentName1).Click();
 		} else {
 			bc.stepInfo("Assignments is already in clicked state");
@@ -9905,7 +9923,8 @@ public class AssignmentsPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : verifying error message for Assignmentname with special character
+	 * @Description : verifying error message for Assignmentname with special
+	 *              character
 	 * @param assignmnetName
 	 */
 	public void verifyErrorMSgForSpclChar(String assignmnetName) {
@@ -9915,8 +9934,8 @@ public class AssignmentsPage {
 		for (int i = 0; i < dataSet.length; i++) {
 			int j = 0;
 
-			String renameAssign = dataSet[i][j] +assignmnetName;
-			
+			String renameAssign = dataSet[i][j] + assignmnetName;
+
 			bc.waitForElement(getAssignmentName());
 			getAssignmentName().SendKeys(renameAssign);
 			driver.scrollPageToTop();
@@ -9925,14 +9944,14 @@ public class AssignmentsPage {
 
 			if (getAssignmentErrorText().isElementAvailable(5)) {
 				String errorMsg = getAssignmentErrorText().getText();
-				System.out.println("Error Msg "+errorMsg+"for specialchar : " +dataSet[i][j]);
-				bc.passedStep("Error Msg "+errorMsg+"for specialchar : " +dataSet[i][j]);
+				System.out.println("Error Msg " + errorMsg + "for specialchar : " + dataSet[i][j]);
+				bc.passedStep("Error Msg " + errorMsg + "for specialchar : " + dataSet[i][j]);
 			} else {
 				bc.failedStep("Application is allowing assignment name with special character");
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 24/06/2022 Modified date: NA
 	 * @Description: validating assignment available or not in manage assignment
@@ -9950,7 +9969,7 @@ public class AssignmentsPage {
 			Boolean status = getSelectAssignment(filedValue).isDisplayed();
 			if (status == true) {
 				bc.passedStep("Assignment name available in manage assignmnet");
-				bc.stepInfo("Assignment in the name of :"+filedValue+"");
+				bc.stepInfo("Assignment in the name of :" + filedValue + "");
 				break;
 			} else {
 				driver.scrollingToBottomofAPage();
@@ -9960,6 +9979,7 @@ public class AssignmentsPage {
 			}
 		}
 	}
+
 	public void verifyProgressReportIsPresent() {
 		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
 		driver.waitForPageToBeReady();
@@ -9967,25 +9987,25 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(getAssgGrptionDropdown());
 		getAssgGrptionDropdown().Click();
 		bc.waitTillElemetToBeClickable(getProgressReport());
-		if(getProgressReport().isDisplayed()) {
+		if (getProgressReport().isDisplayed()) {
 			bc.passedStep("Progress report option is present in manage assignment group actions.");
-		}else {
+		} else {
 			bc.failedStep("Progress report option is not displayed");
 		}
 	}
-	/**@author Iyappan.Kasinathan
+
+	/**
+	 * @author Iyappan.Kasinathan
 	 * @description This method used to select coding form in assignments page
 	 * 
 	 */
 	public void SelectCodingform(String CFName) {
 		try {
-		getSelectSortCodingForm_Tab().ScrollTo();
-		}
-		catch(Exception e) {
-			
+			getSelectSortCodingForm_Tab().ScrollTo();
+		} catch (Exception e) {
+
 		}
 		getSelectSortCodingForm_Tab().waitAndClick(10);
-
 
 		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
 			bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
@@ -9996,9 +10016,9 @@ public class AssignmentsPage {
 			getSelectCodeFormRadioBtn(CFName).waitAndClick(5);
 			bc.waitTime(1);
 			try {
-			sortOrderNxtBtn().ScrollTo();
-			}catch(Exception e) {
-				
+				sortOrderNxtBtn().ScrollTo();
+			} catch (Exception e) {
+
 			}
 			sortOrderNxtBtn().waitAndClick(5);
 			if (getSelectedCodeForm_inSortingPopUp(CFName).isElementAvailable(2)) {
@@ -10008,20 +10028,21 @@ public class AssignmentsPage {
 				if (getSelectedCodeForminAssignPAge().isDisplayed()) {
 					String acualCfName = getSelectedCodeForminAssignPAge().getText();
 
-				String passMSg=	"Selected a coding form " + CFName
-							+ " and its reflected in manage assignments page";		
-				String failMsg=	"Selected  coding form " + CFName
+					String passMSg = "Selected a coding form " + CFName
+							+ " and its reflected in manage assignments page";
+					String failMsg = "Selected  coding form " + CFName
 							+ "  is not reflected in manage assignments page";
-				bc.compareTextViaContains(acualCfName, CFName,  passMSg, failMsg);
-				
+					bc.compareTextViaContains(acualCfName, CFName, passMSg, failMsg);
+
+				} else {
+					bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+				}
 			} else {
-				bc.failedStep("Step-2 Sort CodeForm Pop Up Not displayed.");
+				bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 			}
-		} else {
-			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
 		}
-	}}
-	
+	}
+
 	/**
 	 * @author Indium-Baskar date: 30/6/2022 Modified date:30/6/2022 Modified
 	 *         by:Baskar *
@@ -10110,7 +10131,7 @@ public class AssignmentsPage {
 		getAssignmentAction_EditAssignment().waitAndClick(5);
 
 	}
-	
+
 	/**
 	 * @Author Mohan Created on 04/07/2022
 	 * @Description To enable the Analytics panel Toggle present in AssignPage
@@ -10122,16 +10143,17 @@ public class AssignmentsPage {
 		System.out.println(analyticalPanelFlag);
 		String miniDocListFlag = getMiniDocListToggleButton().GetAttribute("class");
 		System.out.println(miniDocListFlag);
-		
+
 		String applyRedactionFlag = getAssgn_ApplyRedactionToggle().GetAttribute("class");
 		System.out.println(applyRedactionFlag);
-		if (analyticalPanelFlag.contains("true")&&miniDocListFlag.contains("true")&&applyRedactionFlag.contains("true")) {
+		if (analyticalPanelFlag.contains("true") && miniDocListFlag.contains("true")
+				&& applyRedactionFlag.contains("true")) {
 			bc.waitForElement(getAssgn_AnalyticsPanelToggle());
 			getAssgn_AnalyticsPanelToggle().Click();
-			
+
 			bc.waitForElement(getMiniDocListToggleButton());
 			getMiniDocListToggleButton().Click();
-			
+
 			bc.waitForElement(getMiniDocListToggleButton());
 			getMiniDocListToggleButton().Click();
 		}
@@ -10140,11 +10162,11 @@ public class AssignmentsPage {
 		getAssignmentSaveButton().waitAndClick(5);
 		bc.CloseSuccessMsgpopup();
 	}
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To verify Assignmnets with toggle off condition is present in Assignmnets page.
+	 * @description: To verify Assignmnets with toggle off condition is present in
+	 *               Assignmnets page.
 	 * @param assignmentName
 	 */
 	public void verifyAssignmentsPageWithOnlyAssignments(String assignmentName) {
@@ -10158,7 +10180,8 @@ public class AssignmentsPage {
 			driver.waitForPageToBeReady();
 			Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
 			if (status == true) {
-				bc.stepInfo("The Assignment mentioned in Pre-requisite is display with the changes in properties in source template project and the Mini DocList,Analytics Panel and Allow reviewers to apply redactions toggles are OFF successfully");
+				bc.stepInfo(
+						"The Assignment mentioned in Pre-requisite is display with the changes in properties in source template project and the Mini DocList,Analytics Panel and Allow reviewers to apply redactions toggles are OFF successfully");
 				break;
 			} else {
 				driver.scrollingToBottomofAPage();
@@ -10167,8 +10190,7 @@ public class AssignmentsPage {
 				bc.stepInfo("Expected assignment not found in the page " + i);
 			}
 		}
-		
-		
+
 	}
 
 	/**
@@ -10201,39 +10223,40 @@ public class AssignmentsPage {
 		return ActualCount;
 	}
 
-
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param AssignName
 	 * @param codingForm
 	 * @param expErrorMSg
 	 */
-	
-	public void verifyErrorMSg_QuickBatchAssing(String AssignName,String codingForm,String expErrorMSg) {
-		
+
+	public void verifyErrorMSg_QuickBatchAssing(String AssignName, String codingForm, String expErrorMSg) {
+
 		bc.waitForElement(getAssignmentName());
 		getAssignmentName().SendKeys(AssignName);
-		bc.stepInfo("Entered Assignment Name as -"+AssignName);
+		bc.stepInfo("Entered Assignment Name as -" + AssignName);
 		bc.waitForElement(getAssignmentCodingFormDropDown());
 		getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
-		bc.stepInfo("Selected Coding form as -"+codingForm);
+		bc.stepInfo("Selected Coding form as -" + codingForm);
 		getContinueBulkAssign().waitAndClick(30);
-		if(	getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
-		String actualMsg=getQB_AssignemntName_ErrorMSg().getText();
-		bc.textCompareEquals(actualMsg, expErrorMSg, "ErrorAlert for assignment name with special chars Displayed as expected ",
-				"ErrorAlert Displayed for assignment name with special chars is not as expected");
-		}else {
-			
-			bc.failedStep("After entering Assginment name in "
-					+ "quick batch assign creation,Error message not displayed ");
+		if (getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
+			String actualMsg = getQB_AssignemntName_ErrorMSg().getText();
+			bc.textCompareEquals(actualMsg, expErrorMSg,
+					"ErrorAlert for assignment name with special chars Displayed as expected ",
+					"ErrorAlert Displayed for assignment name with special chars is not as expected");
+		} else {
+
+			bc.failedStep(
+					"After entering Assginment name in " + "quick batch assign creation,Error message not displayed ");
 		}
 
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param reviewersListToAssign
 	 */
-	
+
 	public void assignReviewers(String[] reviewersListToAssign) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -10253,14 +10276,14 @@ public class AssignmentsPage {
 		getAdduserBtn().waitAndClick(10);
 	}
 
-    /**
+	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method alters the order of live sequence
 	 * @param metaData
 	 * @param metaData2
 	 * @throws InterruptedException
 	 */
-	public void dragAndDropLiveSequenceFromTopToBottom(String metaData,String metaData2) throws InterruptedException {
+	public void dragAndDropLiveSequenceFromTopToBottom(String metaData, String metaData2) throws InterruptedException {
 		System.out.println(metaData);
 		driver.waitForPageToBeReady();
 		Actions actions = new Actions(driver.getWebDriver());
@@ -10269,69 +10292,69 @@ public class AssignmentsPage {
 		bc.waitForElement((liveSequenceSorts(metaData)));
 		actions.clickAndHold((liveSequenceSorts(metaData)).getWebElement());
 		System.out.println("Click and hold performed");
-		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,10);
-		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,30);
-		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20,20).build().perform();
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20, 10);
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20, 30);
+		actions.moveToElement((liveSequenceSorts(metaData2)).getWebElement(), -20, 20).build().perform();
 		actions.release();
 		actions.build().perform();
 
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method verifies the error message
 	 * @param element
 	 * @param expectedMsg
 	 */
-	public void validateErrorMessage(Element element,String expectedMsg) {
+	public void validateErrorMessage(Element element, String expectedMsg) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(element);
 		String value = element.getText();
-		if(value.equals(expectedMsg)) {
-			bc.passedStep("Error message is displayed as "+value+" as expected");
-		}else {
+		if (value.equals(expectedMsg)) {
+			bc.passedStep("Error message is displayed as " + value + " as expected");
+		} else {
 			bc.failedStep("Error message is not displayed as expected");
 		}
 
 	}
-	
+
 	/**
 	 * @author sowndarya.velraj
 	 * @description: To create Assignmnets with classification
 	 * @param assignmentName,codingForm,classification
 	 */
-	public void createAssignmentWithClassification(String assignmentName, String classification,String codingForm) throws InterruptedException {
-			try {
-				bc.waitForElement(dashBoardPageTitle());
-				bc.waitForElement(getAssignmentName());
-				driver.waitForPageToBeReady();
-				getAssignmentName().SendKeys(assignmentName);
-				driver.waitForPageToBeReady();
-				getParentAssignmentGroupName().isDisplayed();
-				getSelectedClassification().selectFromDropdown().selectByVisibleText(classification);
-				SelectCodingform(codingForm);
+	public void createAssignmentWithClassification(String assignmentName, String classification, String codingForm)
+			throws InterruptedException {
+		try {
+			bc.waitForElement(dashBoardPageTitle());
+			bc.waitForElement(getAssignmentName());
+			driver.waitForPageToBeReady();
+			getAssignmentName().SendKeys(assignmentName);
+			driver.waitForPageToBeReady();
+			getParentAssignmentGroupName().isDisplayed();
+			getSelectedClassification().selectFromDropdown().selectByVisibleText(classification);
+			SelectCodingform(codingForm);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				bc.failedStep(
-						"Exception occcured while creating new assignment for bulk assign operation" + e.getMessage());
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep(
+					"Exception occcured while creating new assignment for bulk assign operation" + e.getMessage());
 		}
-	
+	}
 
 	/**
 	 * @author sowndarya.velraj
-	 * @Description: Add 2 reviewers and distributed docs to
-	 *               them(PA/DA).
+	 * @Description: Add 2 reviewers and distributed docs to them(PA/DA).
 	 */
 	public void distributeToPAUandDAU() {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(10);
 		bc.waitForElement(getAddReviewersBtn());
 		getAddReviewersBtn().waitAndClick(10);
-		//assign to pa
+		// assign to pa
 		driver.scrollingToElementofAPage(getSelectUserToAssignPA());
 		getSelectUserToAssignPA().waitAndClick(5);
-		//assign to dau
+		// assign to dau
 		getSelectDAUserToAssign().ScrollTo();
 		getSelectDAUserToAssign().waitAndClick(5);
 		bc.waitForElement(getAdduserBtn());
@@ -10339,7 +10362,7 @@ public class AssignmentsPage {
 		bc.VerifySuccessMessage("Action saved successfully");
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
-		//distribute docs
+		// distribute docs
 		getSelectUserInDistributeTabsPA().waitAndClick(5);
 		getSelectUserInDistributeTabsDA().waitAndClick(5);
 		bc.CloseSuccessMsgpopup();
@@ -10347,9 +10370,11 @@ public class AssignmentsPage {
 		bc.stepInfo("Documents are distributed to four reviewers successfully");
 
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
-	 * @description This method is used to verify the user is present in reviewer popup
+	 * @description This method is used to verify the user is present in reviewer
+	 *              popup
 	 * @param reviewer
 	 */
 	public void verifyUserInReviewerTab(String reviewer) {
@@ -10361,21 +10386,22 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(getAddReviewersBtn());
 		getAddReviewersBtn().waitAndClick(10);
 		bc.stepInfo("Reviewer popup is opened");
-		if(getSelectUserToAssign(reviewer).isElementAvailable(5)) {
+		if (getSelectUserToAssign(reviewer).isElementAvailable(5)) {
 			bc.passedStep("Expected user is displayed in reviewer popup");
-		}else {
+		} else {
 			bc.failedStep("Expected user is not displayed in reviewer popup");
 		}
 		bc.waitTillElemetToBeClickable(getReviewerPopupCloseBtn());
 		getReviewerPopupCloseBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		if(getReviewerPopupCloseBtn().isDisplayed()) {
+		if (getReviewerPopupCloseBtn().isDisplayed()) {
 			bc.failedStep("Reviewer popup not closed successfully");
-		}else {
+		} else {
 			bc.passedStep("Reviewer popup is closed successfully");
 		}
-		
+
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param metaData
@@ -10396,6 +10422,7 @@ public class AssignmentsPage {
 		actions.release();
 		actions.build().perform();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method enables all toggles
@@ -10412,41 +10439,47 @@ public class AssignmentsPage {
 				"Display Folders Tab", "Allow access to Coding Stamps", "Display Assignment Progress Bar",
 				"Allow reviewers to see productions/images", "Allow reviewers to apply redactions",
 				"Display the Family Members Tab of Analytics Panel",
-				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel", "Display Document History Tab", "Allow users to save without completing",
-				"Complete When Coding Stamp Applied", "Save the coding form automatically when switched to different coding form"};
+				"Display the Conceptually Similar Tab of Analytics Panel", "Allow presentation of Metadata Panel",
+				"Display Document History Tab", "Allow users to save without completing",
+				"Complete When Coding Stamp Applied",
+				"Save the coding form automatically when switched to different coding form" };
 
 		// To Enable All Toogle
 		for (int D = 0; D < elementNamesEnabled.length; D++) {
 			driver.waitForPageToBeReady();
 			String value = getPresentationControlToggles(elementNamesEnabled[D]).GetAttribute("Class");
-			if(value.equalsIgnoreCase("false")) {
+			if (value.equalsIgnoreCase("false")) {
 				getPresentationControlToggles(elementNamesEnabled[D]).waitAndClick(5);
-				
-			}}
-		
+
+			}
+		}
+
 		// To Verify All Toogle is Enable or Not
 		for (int i = 0; i < elementNamesEnabled.length; i++) {
 			driver.waitForPageToBeReady();
 			String status = getPresentationControlToggles(elementNamesEnabled[i]).GetAttribute("Class");
-			if(status.equalsIgnoreCase("false")) {
-			bc.failedStep("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
-			System.out.println("All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
-			}
+			if (status.equalsIgnoreCase("false")) {
+				bc.failedStep(
+						"All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
+				System.out.println(
+						"All the toggles under 'CONTROL THE PRESENTATION OF DOCVIEW FOR REVIEWERS WHILE IN THIS ASSIGNMENT' are Not Enabled and Not in Green Color");
 			}
 		}
+	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @param instruction
 	 * @param selectAssignedMetaData
 	 */
 	public void configInstructionKeywordMDFieldinAssignPage(String instruction, String selectAssignedMetaData) {
-		driver.scrollingToBottomofAPage();		
+		driver.scrollingToBottomofAPage();
 		bc.waitForElement(configureButton());
 		configureButton().waitAndClick(3);
 		bc.waitForElement(instructionTextBox());
-		instructionTextBox().SendKeys(instruction);	
+		instructionTextBox().SendKeys(instruction);
 		instructionOkButton().waitAndClick(2);
-		bc.stepInfo("Instruction Successfully Configured For The Assignment");	
+		bc.stepInfo("Instruction Successfully Configured For The Assignment");
 		verifyAddedKeywordsChecked();
 		bc.stepInfo("KeyWords Successfully Configured For The Assignment");
 		bc.waitForElement(GetSelectMetaDataBtn());
@@ -10455,24 +10488,23 @@ public class AssignmentsPage {
 		getSelectAssignedMDinAssignPage(selectAssignedMetaData).waitAndClick(3);
 		bc.waitForElement(getMetadataFielOkBtn());
 		getMetadataFielOkBtn().waitAndClick(3);
-		bc.stepInfo("MetaData Field Successfully Configured For The Assignment");	
+		bc.stepInfo("MetaData Field Successfully Configured For The Assignment");
 	}
 
-	public void verifyErrorMsginAssignmentName(){
+	public void verifyErrorMsginAssignmentName() {
 		String expErrorMSg = "Please enter an assignment name without using special characters";
-		
-		if(	getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
-			String actualMsg=getQB_AssignemntName_ErrorMSg().getText();
-			bc.textCompareEquals(actualMsg, expErrorMSg, "ErrorAlert for assignment name with special chars Displayed as expected ",
+
+		if (getQB_AssignemntName_ErrorMSg().isElementAvailable(1)) {
+			String actualMsg = getQB_AssignemntName_ErrorMSg().getText();
+			bc.textCompareEquals(actualMsg, expErrorMSg,
+					"ErrorAlert for assignment name with special chars Displayed as expected ",
 					"ErrorAlert Displayed for assignment name with special chars is not as expected");
-			}else {
-				
-				bc.failedStep("After entering Assginment name with special chars Error message not displayed ");
-						
-			}
+		} else {
+
+			bc.failedStep("After entering Assginment name with special chars Error message not displayed ");
+
+		}
 	}
-
-
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -10533,47 +10565,52 @@ public class AssignmentsPage {
 		int ExpectedDocCount = Integer.parseInt(FinalCount);
 		int ActualDocCount = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName));
 		assertion.assertEquals(ActualDocCount, ExpectedDocCount);
-		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets[DocCount found in assignment page is "+ActualDocCount+"] using " + samplemethod + "");
+		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets[DocCount found in assignment page is "
+				+ ActualDocCount + "] using " + samplemethod + "");
 
 		assertion.assertAll();
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @param existing [Should be true if we need to check for existing assign tab]
 	 */
-	
+
 	public void verifyPersistentHitIcon(boolean existing) {
-		if(existing) {
-			bc.ValidateElement_Presence(getPersistCB_ExistAssgn(), "Persistant search option present in existing assign tab.");
-			
-		}else {
+		if (existing) {
+			bc.ValidateElement_Presence(getPersistCB_ExistAssgn(),
+					"Persistant search option present in existing assign tab.");
+
+		} else {
 			bc.waitTime(1);
 			getBulkAssign_NewAssignment().waitAndClick(20);
 			bc.ValidateElement_Presence(getPersistCB_NewAssgn(), "Persistant search option present in New assign tab.");
 		}
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @description This method is used verify the classification dd options
 	 * @return
 	 */
 	public List<String> verifyClassificationDDOptions() {
-    	List<String> actOptions = new ArrayList<String>();
-    	driver.waitForPageToBeReady();
-    	bc.waitForElement(getSelectedClassification());
+		List<String> actOptions = new ArrayList<String>();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectedClassification());
 		Select select = new Select(getSelectedClassification().getWebElement());
-		List<WebElement> options = select.getOptions();		
-		for(int i=1; i<=options.size()-1; i++)
-		{
-		    System.out.println(options.get(i).getText());
-		    bc.stepInfo(options.get(i).getText());
-		    actOptions.add(options.get(i).getText());
+		List<WebElement> options = select.getOptions();
+		for (int i = 1; i <= options.size() - 1; i++) {
+			System.out.println(options.get(i).getText());
+			bc.stepInfo(options.get(i).getText());
+			actOptions.add(options.get(i).getText());
 		}
 		return actOptions;
 	}
+
 	/**
 	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will create coding form and assignment with tag or folder
+	 * @description: this method will create coding form and assignment with tag or
+	 *               folder
 	 * @param sg
 	 * @param codingFormName
 	 * @param assignmentName
@@ -10581,26 +10618,25 @@ public class AssignmentsPage {
 	 * @param type
 	 * @param typename
 	 */
-	public void createTagOrFolderCodingFormAssignment(String sg,String codingFormName,String assignmentName,String searchstring,
-			String type,String typeName) throws InterruptedException {
+	public void createTagOrFolderCodingFormAssignment(String sg, String codingFormName, String assignmentName,
+			String searchstring, String type, String typeName) throws InterruptedException {
 		driver.waitForPageToBeReady();
 		bc.selectsecuritygroup(sg);
 		CodingForm codingForm = new CodingForm(driver);
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-	    driver.waitForPageToBeReady();
-	    bc.waitForElement(codingForm.getAddNewCodingFormBtn());
+		driver.waitForPageToBeReady();
+		bc.waitForElement(codingForm.getAddNewCodingFormBtn());
 		codingForm.getAddNewCodingFormBtn().waitAndClick(5);
 		bc.waitForElement(codingForm.getCodingFormName());
 		codingForm.getCodingFormName().SendKeys(codingFormName);
-	    codingForm.savingCodingForm();
-	    driver.waitForPageToBeReady();
-	    TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-	    if(type.equalsIgnoreCase("tag")) {
-	    	tagsAndFolderPage.CreateTag(typeName, sg);
-	    }
-	    else if(type.equalsIgnoreCase("folder")) {
-	    	tagsAndFolderPage.CreateFolder(typeName, sg);
-	    }
+		codingForm.savingCodingForm();
+		driver.waitForPageToBeReady();
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		if (type.equalsIgnoreCase("tag")) {
+			tagsAndFolderPage.CreateTag(typeName, sg);
+		} else if (type.equalsIgnoreCase("folder")) {
+			tagsAndFolderPage.CreateFolder(typeName, sg);
+		}
 		createAssignment(assignmentName, codingFormName);
 		search = new SessionSearch(driver);
 		search.basicContentSearch(searchstring);
@@ -10608,16 +10644,18 @@ public class AssignmentsPage {
 		editAssignmentUsingPaginationConcept(assignmentName);
 		addReviewerAndDistributeDocs();
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 05/08/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will select assignment and tag or folder popup to verify availability
+	 * @description: this method will select assignment and tag or folder popup to
+	 *               verify availability
 	 * @param sg
 	 * @param assignmentName
 	 * @param userName
 	 * @param type
 	 */
-	public void verifyTagOrFolderAvailabilityInAssignment(String sg,String assignmentName,String userName,String type) throws InterruptedException {
+	public void verifyTagOrFolderAvailabilityInAssignment(String sg, String assignmentName, String userName,
+			String type) throws InterruptedException {
 		bc.selectsecuritygroup(sg);
 		editAssignmentUsingPaginationConcept(assignmentName);
 		bc.waitForElement(getAssignment_ManageReviewersTab());
@@ -10626,37 +10664,205 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_selectReviewer(userName));
 		getAssgn_ManageRev_selectReviewer(userName).waitAndClick(5);
 		getAssgn_ManageRev_Action().waitAndClick(5);
-		 if(type.equalsIgnoreCase("tag")) {
-			 	bc.waitForElement(getAssgn_ManageRev_Action_tagdoc());
-				getAssgn_ManageRev_Action_tagdoc().waitAndClick(5);
-		    }
-		 else if(type.equalsIgnoreCase("folder")) {
-			 bc.waitForElement(getAssgn_ManageRev_Action_folderdoc());
-			 getAssgn_ManageRev_Action_folderdoc().waitAndClick(5);
-			 
-		    }
-		if(bc.getYesBtn().isElementAvailable(10)) {
-		bc.getYesBtn().waitAndClick(2);
-		driver.waitForPageToBeReady();
+		if (type.equalsIgnoreCase("tag")) {
+			bc.waitForElement(getAssgn_ManageRev_Action_tagdoc());
+			getAssgn_ManageRev_Action_tagdoc().waitAndClick(5);
+		} else if (type.equalsIgnoreCase("folder")) {
+			bc.waitForElement(getAssgn_ManageRev_Action_folderdoc());
+			getAssgn_ManageRev_Action_folderdoc().waitAndClick(5);
+
+		}
+		if (bc.getYesBtn().isElementAvailable(10)) {
+			bc.getYesBtn().waitAndClick(2);
+			driver.waitForPageToBeReady();
 		}
 	}
 
 	/**
 	 * @author: Arun Created Date: 18/08/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will check and verify field values in assignment distribution tab.
+	 * @description: this method will check and verify field values in assignment
+	 *               distribution tab.
 	 */
-	public void verifyValuesFromDistributionTab(String limit,Element element)  {
+	public void verifyValuesFromDistributionTab(String limit, Element element) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getDistributeTab());
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(element);
-		String value =element.getText().trim();	
-		if(limit.equalsIgnoreCase(value)) {
+		String value = element.getText().trim();
+		if (limit.equalsIgnoreCase(value)) {
 			bc.passedStep("Pool value displayed correctly in assignment distribute tab");
-		}
-		else {
+		} else {
 			bc.failedStep("pool value not displayed correctly");
 		}
-		
+
 	}
+
+	/**
+	 * @author
+	 * @param pairOfAssignmentsAndExpectedTotalDocCountInAssign
+	 */
+	public void validateTotalDocumentCountInManageAssignmentPageForMultipleAssignments(
+			Map<String, Integer> pairOfAssignmentsAndExpectedTotalDocCountInAssign) {
+
+		List<String> assignments = new ArrayList<String>(pairOfAssignmentsAndExpectedTotalDocCountInAssign.keySet());
+		for (int i = 0; i < assignments.size(); i++) {
+			String assignment = assignments.get(i);
+			int ExpectedTotalDocCountInAssign = pairOfAssignmentsAndExpectedTotalDocCountInAssign.get(assignment);
+			assignmentPagination(assignment);
+			int assignment01DocCount = Integer.parseInt(getSelectAssignmentDocCount(assignment).getText());
+			bc.digitCompareEquals(assignment01DocCount, ExpectedTotalDocCountInAssign,
+					"Assignment Total Document Count : '" + assignment01DocCount
+							+ "' in Manage Assignment page match with Expected Count : "
+							+ ExpectedTotalDocCountInAssign,
+					"Assignment Total Document Count Doesn't match with Expected Count.");
+		}
+	}
+
+	/**
+	 * @author
+	 * @param pairOfAssignmentsAndexptedDocCountInDistrTab
+	 * @throws InterruptedException
+	 */
+	public void verifyTotalCountOfDocsInMultipleAssignmentsInDistributeDocumentsTab(
+			Map<String, Integer> pairOfAssignmentsAndexptedDocCountInDistrTab) throws InterruptedException {
+		List<String> assignments = new ArrayList<String>(pairOfAssignmentsAndexptedDocCountInDistrTab.keySet());
+		for (int i = 0; i < assignments.size(); i++) {
+			String assignment = assignments.get(i);
+			editAssignment(assignment);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getDistributeTab());
+			getDistributeTab().waitAndClick(5);
+			bc.waitForElement(getEditAggn_Distribute_Totaldoc());
+			int value = Integer.parseInt(getEditAggn_Distribute_Totaldoc().getText().trim());
+			if (pairOfAssignmentsAndexptedDocCountInDistrTab.get(assignment) == value) {
+				bc.passedStep("verified that Total count of docs in Assignment: '" + value
+						+ "' in Distribute Documents Tab is match with the Expected Count : '"
+						+ pairOfAssignmentsAndexptedDocCountInDistrTab.get(assignment) + "'");
+			} else {
+				bc.failedStep(
+						"Total count of docs in Assignment in Distribute Documents Tab doesn't match with the Expected Count ");
+			}
+			bc.waitForElement(getAssignment_BackToManageButton());
+			getAssignment_BackToManageButton().waitAndClick(5);
+		}
+	}
+
+	/**
+	 * @author
+	 * @description : delete multiple assignments with list
+	 * @param listOfAssignments
+	 */
+	public void deleteMultipleAssgnmntUsingPagination(List<String> listOfAssignments) {
+
+		for (int i = 0; i < listOfAssignments.size(); i++) {
+			String assignmentName = listOfAssignments.get(i);
+			driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+			bc.waitForElement(getNumberOfAssignmentsToBeShown());
+			getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAssgnPaginationCount().Visible();
+				}
+			}), Input.wait30);
+			int count = ((getAssgnPaginationCount().size()) - 2);
+			for (int j = 0; j < count; j++) {
+				driver.waitForPageToBeReady();
+				Boolean status = getSelectAssignment(assignmentName).isElementAvailable(5);
+				if (status == true) {
+					getSelectAssignment(assignmentName).ScrollTo();
+					if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+						getSelectAssignment(assignmentName).waitAndClick(3);
+						// getSelectAssignment(assignmentName).waitAndClick(5);
+					}
+					driver.scrollPageToTop();
+					bc.waitForElement(getAssignmentActionDropdown());
+					getAssignmentActionDropdown().Click();
+					bc.stepInfo("Expected assignment found in the page " + j);
+					break;
+				} else {
+					driver.scrollingToBottomofAPage();
+					bc.waitForElement(getAssgnPaginationNextButton());
+					getAssgnPaginationNextButton().Click();
+					bc.stepInfo("Expected assignment not found in the page " + j);
+				}
+			}
+			bc.waitForElement(getAssignmentAction_DeleteAssignment());
+			getAssignmentAction_DeleteAssignment().waitAndClick(3);
+			bc.getYesBtn().waitAndClick(5);
+			bc.VerifySuccessMessage("Assignment deleted successfully");
+		}
+	}
+
+
+	/**
+	 * @author
+	 * @description : addReviewers ( handled dynamically )
+	 * @param listOfReviewers
+	 */
+	public void addReviewers(List<String> listOfReviewers) {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		for (int i = 0; i < listOfReviewers.size(); i++) {
+			String reviewer = listOfReviewers.get(i);
+			if (reviewer.equals("REV")) {
+				bc.waitForElement(getSelectUserToAssig());
+				getSelectUserToAssig().waitAndClick(5);
+			} else if (reviewer.equals("RMU")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssigReviewerManager());
+				getSelectUserToAssigReviewerManager().waitAndClick(5);
+			} else if (reviewer.equals("PA")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+				getSelectUserToAssignPA().waitAndClick(5);
+			} else if (reviewer.equals("DA")) {
+				getSelectDAUserToAssign().ScrollTo();
+				getSelectDAUserToAssign().waitAndClick(5);
+			}
+		}
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+	}
+
+	/**
+	 * @author
+	 * @param countOfDocs
+	 * @description : distributeGivenDocCountToReviewers
+	 */
+	public void distributeGivenDocCountToReviewers(String countOfDocs) {
+
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElementCollection(selectReviewersToDistributeDocs());
+		List<WebElement> listOfReviewersToDistributeDocs = selectReviewersToDistributeDocs().FindWebElements();
+		for (int i = 0; i < listOfReviewersToDistributeDocs.size(); i++) {
+			listOfReviewersToDistributeDocs.get(i).click();
+		}
+		getAssgn_docsToDistribute().SendKeys(countOfDocs);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo(countOfDocs + " Documents are distributed to reviewers successfully");
+		bc.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author
+	 * @param totalDocs
+	 * @param noOfReviewers
+	 * @param modifyDocsCount
+	 * @return
+	 */
+	public int[] evenlyDistributedDocCountToReviewers(int totalDocs, int noOfReviewers, int modifyDocsCount) {
+		int modifiedTotalDocsCount = totalDocs - modifyDocsCount;
+		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;
+		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;
+		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;
+		int DistributedCountForEachRev = DocCountDistributeToRev / noOfReviewers;
+		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = { DocCountDistributeToRev,
+				totalremainingUnAssignDocsCount, DistributedCountForEachRev };
+		return DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev;
+	}
+
 }

@@ -135,10 +135,40 @@ public class Categorization {
 	}
 
 	// Added By Jeevitha
+	public Element getAssignmentBtn() {
+		return driver.FindElementByXPath("//button[@id='btnAssign']");
+	}
+	
+	public Element getSelectYesBtn() {
+		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+	}
+
+	public Element getSelectSearchInCorpus(String searchtab, String searchName) {
+		return driver.FindElementByXPath("//div[@id='divPopup']//a[text()='" + searchtab
+				+ "']//following-sibling::ul//a[text()='" + searchName + "']");
+	}
+
+	public Element getSelectCHeckBoxInAnalyze(String name) {
+		return driver.FindElementByXPath("//div[@id='divPopup']//a[text()='" + name + "']");
+	}
+
+	public Element getAnalyzeTab(String analyzetab) {
+		return driver.FindElementByXPath("//a[normalize-space()='" + analyzetab + "']");
+	}
+
+	public Element getSelectSearchInTraining(String searchtab, String searchName) {
+		return driver.FindElementByXPath(
+				"//a[text()='" + searchtab + "']//following-sibling::ul//a[text()='" + searchName + "']");
+	}
+
+	public Element getSelectCheckBoxWithoutSpace(String name) {
+		return driver.FindElementByXPath("//a[text()='" + name + "']");
+	}
+
 	public Element selectionTable() {
 		return driver.FindElementByXPath("//div[@class='panel-body']");
 	}
-	
+
 	public Element getViewAllBtn() {
 		return driver.FindElementByXPath("//div[contains(@style,'block')]//button[@id='btnViewAll']");
 	}
@@ -442,6 +472,7 @@ public class Categorization {
 		getAnalyzeSelectFolders().ScrollTo();
 		getAnalyzeSelectFolders().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
+
 			public Boolean call() {
 				return getFolderSelectionPopUp().Visible();
 			}
@@ -449,7 +480,11 @@ public class Categorization {
 		getFolderSelectionPopUp().Click();
 		base.waitTime(3);
 		System.out.println(getCatFolderTree().FindWebElements().size());
-		for (WebElement iterable_element : getCatFolderTree().FindWebElements()) {
+		for (
+
+		WebElement iterable_element :
+
+		getCatFolderTree().FindWebElements()) {
 			System.out.println(iterable_element.getText());
 			System.out.println(folderName);
 			if (iterable_element.getText().contains(folderName)) {
@@ -477,6 +512,7 @@ public class Categorization {
 			// TODO: handle exception
 		}
 		driver.WaitUntil((new Callable<Boolean>() {
+
 			public Boolean call() {
 				return getResults().getText().matches("-?\\d+(\\.\\d+)?");
 			}
@@ -583,6 +619,137 @@ public class Categorization {
 		String currentUrl = driver.getUrl();
 		softAssertion.assertEquals(actualURL, currentUrl);
 		base.passedStep("Navigated Back to categorization Page : " + currentUrl);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : select source from training set section
+	 * @param select
+	 * @param checkBoxName
+	 * @param searchtab
+	 * @param addition
+	 * @throws InterruptedException
+	 */
+	public void fillingTrainingSetSection(String select, String checkBoxName, String searchtab, String addition)
+			throws InterruptedException {
+
+		if (select.equalsIgnoreCase("Tag")) {
+			base.waitForElement(getSelectIdentifyByTags());
+			getSelectIdentifyByTags().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			getSelectTag(checkBoxName).waitAndClick(5);
+			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
+
+		} else if (select.equalsIgnoreCase("SG")) {
+			selectTrainingSet("Identify by Security Group");
+			driver.scrollingToBottomofAPage();
+			getSGCheckbox(checkBoxName).waitAndClick(5);
+			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
+
+		} else if (select.equalsIgnoreCase("Search")) {
+			selectTrainingSet("Identify by Saved Search");
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getSelectSearchInTraining(searchtab, checkBoxName));
+			getSelectSearchInTraining(searchtab, checkBoxName).waitAndClick(10);
+			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
+
+		} else if (select.equalsIgnoreCase("Folder")) {
+			selectTrainingSet("Identify by Folder");
+			driver.scrollingToBottomofAPage();
+			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
+			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
+			
+		}else if (select.equalsIgnoreCase("Assignment")) {
+			selectTrainingSet("Identify by Assignment");
+			driver.scrollingToBottomofAPage();
+			getSelectCheckBoxWithoutSpace(checkBoxName).waitAndClick(5);
+			base.stepInfo("Selected " + select + " From Training Set is : " + checkBoxName);
+		}
+
+		driver.scrollingToBottomofAPage();
+		getGotoStep2().waitAndClick(5);
+		boolean warningStatus = base.getWarningsMsgHeader().isElementAvailable(3);
+		if (!warningStatus)
+			base.passedStep("Navigated to Step 2 section");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :  select source from step2 corpus section 
+	 * @param select
+	 * @param folderOrSearch
+	 * @param searchtab
+	 * @param save
+	 */
+	public void fillingStep2CorpusTab(String select, String folderOrSearch, String searchtab, boolean save) {
+
+		getAnalyzeSelectFolders().ScrollTo();
+		if (select.equalsIgnoreCase("Folder")) {
+			getAnalyzeSelectFolders().waitAndClick(5);
+			base.waitForElement(getFolderSelectionPopUp());
+			getFolderSelectionPopUp().waitAndClick(5);
+			base.waitForElement(getSelectCHeckBoxInAnalyze(folderOrSearch));
+			getSelectCHeckBoxInAnalyze(folderOrSearch).waitAndClick(10);
+			base.stepInfo("Selected " + select + " from corpus analyze is : " + folderOrSearch);
+
+		} else if (select.equalsIgnoreCase("Search")) {
+			getAnalyzeTab("Analyze Select Saved Search Results Sets").waitAndClick(10);
+			base.waitForElement(getSavedSearchBtn());
+			getSavedSearchBtn().waitAndClick(5);
+			base.waitForElement(getSelectSearchInCorpus(searchtab, folderOrSearch));
+			getSelectSearchInCorpus(searchtab, folderOrSearch).waitAndClick(10);
+			base.stepInfo("Selected " + select + " from corpus analyze is : " + folderOrSearch);
+			
+		}else if(select.equalsIgnoreCase("Assignment")) {
+			getAnalyzeTab("Analyze Select Assignments").waitAndClick(10);
+			base.waitForElement(getAssignmentBtn());
+			getAssignmentBtn().waitAndClick(5);
+			base.waitForElement(getSelectCHeckBoxInAnalyze(folderOrSearch));
+			getSelectCHeckBoxInAnalyze(folderOrSearch).waitAndClick(10);
+			base.stepInfo("Selected " + select + " from corpus analyze is : " + folderOrSearch);
+		}
+		if (save)
+			getSelectBtn().waitAndClick(10);
+		base.stepInfo("Selection Saved");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify run categorization
+	 * @param select
+	 */
+	public void runCategorization(String select) {
+		final int Bgcount = base.initialBgCount();
+
+		getRun().ScrollTo();
+		getRun().waitAndClick(10);
+		boolean warningStatus = base.getWarningsMsgHeader().isElementAvailable(3);
+		if (!warningStatus) {
+			base.passedStep("Clicked : Run Categorization");
+		} else {
+			base.failedStep("Warning Message Displayed");
+		}
+
+		if (getSelectYesBtn().isElementAvailable(8)) {
+			getSelectYesBtn().waitAndClick(10);
+			base.stepInfo("Clicked : YES From You have set the level below 30 Popup");
+		}
+
+		if (getPopupYesBtn().isElementAvailable(30)) {
+			if (select.equalsIgnoreCase("YES")) {
+				getPopupYesBtn().waitAndClick(10);
+				base.stepInfo("Clicked : Yes From Wait for this task to complete? Popup");
+			} else if (select.equalsIgnoreCase("NO")) {
+				getPopupNoBtn().waitAndClick(10);
+				base.stepInfo("Clicked : No From Popup");
+			}
+		}
+
+		base.checkNotificationCount(Bgcount, 1);
+		String docs = getResults().getText();
+		if (!docs.equals("")) {
+			base.passedStep("Categorization Run is Successfull & Doc Count is : " + docs);
+		}
 
 	}
 }

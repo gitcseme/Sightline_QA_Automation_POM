@@ -44,9 +44,7 @@ public class Ingestion_Regression02 {
 	private void TestStart() throws Exception, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		ip = new Input();
-		ip.loadEnvConfig();
-
+	
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -68,7 +66,7 @@ public class Ingestion_Regression02 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	@Test(description ="RPMXCON-49566",enabled = true, groups = { "regression" })
 	public void verifyingMetadataInDocListPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-49566");
 		baseClass.stepInfo("Verify Ingestion with Email metadata if 'Email Name and Address' is in incorrect format");
@@ -110,7 +108,7 @@ public class Ingestion_Regression02 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	@Test(description ="RPMXCON-48195",enabled = true, groups = { "regression" })
 	public void verifyFamilyMemberCountInDocList() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48195");
 		baseClass.stepInfo("To Very the Family Member Counts After Ingestion completed successfully.");
@@ -157,7 +155,7 @@ public class Ingestion_Regression02 {
 	 * @throws InterruptedException
 	 *
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	@Test(description ="RPMXCON-48202",enabled = true, groups = { "regression" })
 	public void verifyTiffImageInDocViewPage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48202");
 		baseClass.stepInfo("To Verify Ingestion overlay of TIFF without Unpublish");
@@ -227,7 +225,7 @@ public class Ingestion_Regression02 {
 	 * been unpublished. 'RPMXCON-49263'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 4)
+	@Test(description ="RPMXCON-49263",alwaysRun = true, groups = { "regression" })
 	public void verifyTotalUniqueCountAfterUnpublished() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -276,7 +274,7 @@ public class Ingestion_Regression02 {
 	 * Successful. 'RPMXCON-48084'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(description ="RPMXCON-48084",alwaysRun = true, groups = { "regression" })
 	public void verifyFullAnalyticsRunIngestionForOverlay() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -337,7 +335,7 @@ public class Ingestion_Regression02 {
 	 * To Verify Ingestion Overlays of PDF without unpublish. 'RPMXCON-46875'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(description ="RPMXCON-46875",alwaysRun = true, groups = { "regression" })
 	public void verifyingestionOverlayWithoutUnpublish() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -387,7 +385,7 @@ public class Ingestion_Regression02 {
 	 * 'RPMXCON-48526'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 7)
+	@Test(description ="RPMXCON-48526",alwaysRun = true, groups = { "regression" })
 	public void verifyAudioDocumentOverlayInternationEnglish() throws InterruptedException {
 		
 		baseClass = new BaseClass(driver);
@@ -451,7 +449,7 @@ public class Ingestion_Regression02 {
 	 * 'RPMXCON-48606'
 	 * 
 	 */
-	@Test(alwaysRun = true, groups = { "regression" }, priority = 8)
+	@Test(description ="RPMXCON-48606",alwaysRun = true, groups = { "regression" })
 	public void verifyOverlayTheDocViewTextWillReflectOverlaidText() throws InterruptedException {
 
 		baseClass = new BaseClass(driver);
@@ -548,7 +546,7 @@ public class Ingestion_Regression02 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	@Test(description ="RPMXCON-48201",enabled = true, groups = { "regression" })
 	public void verifyUnPublishOfNativeDocument() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48201");
 		baseClass.stepInfo("To Verify Ingestion overlay of Native without Unpublish");
@@ -603,7 +601,7 @@ public class Ingestion_Regression02 {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority =10 )
+	@Test(description ="RPMXCON-48237",enabled = true, groups = { "regression" })
 	public void verifyAudioPlayerReadyLanguage() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-48237");
 		baseClass.stepInfo("To verify In Ingestion User should be able to ignore Audio Indexing error and move ahead with Ingestion");
@@ -635,7 +633,7 @@ public class Ingestion_Regression02 {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	@Test(description ="RPMXCON-49569",enabled = true, groups = { "regression" })
 	public void verifyIngestionEmailMetaDataOnlyName() throws InterruptedException {
 
 		ingestionPage = new IngestionPage_Indium(driver);

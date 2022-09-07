@@ -4379,6 +4379,7 @@ public class BaseClass {
 				waitTime(1);
 			}
 		}
+		
 
     /*
 	 * @author Indium-Baskar
@@ -4425,5 +4426,16 @@ public class BaseClass {
 		}
 
 	}
-
+	/**
+	 * @author Brundha.T
+	 * @param ele
+	 * @param CompareString
+	 * @Description gettext String comparing method
+	 */
+	public void validatingGetTextElement(Element ele,String CompareString) {
+		String ActualString=ele.getText();
+		driver.waitForPageToBeReady();
+		compareTextViaContains(ActualString, CompareString, ""+ActualString+" is displayed", ""+ActualString+" not displayed");
+		
+	}
 }

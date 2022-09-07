@@ -79,6 +79,7 @@ public class DomainManagement_Regression_05 {
 		String email = Utility.randomCharacterAppender(6)+"@consilio.com";
 		
 		//create a user
+		driver.waitForPageToBeReady();
 		user.createNewUser(Input.randomText, Input.randomText, Input.ReviewManager, email, Input.domainName, Input.projectName);
 		base.CloseSuccessMsgpopup();
 		

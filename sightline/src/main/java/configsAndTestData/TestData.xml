@@ -315,6 +315,7 @@
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
+	<specialString4>"##U\!C Tester"</specialString4>
 	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
 	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
 	<searchString9>document</searchString9>
@@ -853,7 +854,7 @@
 	<emailCCAdress>EmailCCAddresses</emailCCAdress>
 	<emailCCAdressOption1>Sai.Theodare@Symphonyteleca.com</emailCCAdressOption1>
 	<emailCCAdressOption2>Gouri.Dhavalikar@consilio.com</emailCCAdressOption2>
-	<emailReciepientName2>swapnal sonawane</emailReciepientName2>
+	<emailReciepientName2>Swapnal Sonawane</emailReciepientName2>
 	<emailAllDomainOption></emailAllDomainOption>
 	<masterDateOption></masterDateOption>
 

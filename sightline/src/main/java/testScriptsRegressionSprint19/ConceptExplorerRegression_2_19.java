@@ -136,120 +136,100 @@ public class ConceptExplorerRegression_2_19 {
 
 	@Test(description="RPMXCON-56908",enabled = true, dataProvider = "paRmu", groups = { "regression" })
 	public void verifyConceptExpFiltersFunctionality(String User, String pwd) throws Exception {
-
 		baseClass.stepInfo("Test case Id :RPMXCON-56908 ");
-		baseClass.stepInfo("Validate onpage filter for EmailRecipientNames  and EmailAllDomain on "
-				+ "Concept Explorer Report");
-
-		String analyze = Input.analyzeAt2;
-		String analyze3 = Input.analyzeAt3;
-		String sourceToSelect = "Security Groups";
-		String[] columnsToSelect = { "EmailAllDomains", "EmailRecipientNames" };
-
-		baseClass.stepInfo("**Login to sightline and Select Project**");
-		loginPage.loginToSightLine(User, pwd);
-
-		// Navigate to Concept Explorer page
-		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
-		reports.navigateToReportsPage("Concept Explorer Report");
-
-		// Select Sources
-		conceptExplorer.clickSelectSources();
-		baseClass.stepInfo("** Select Security group as source and save selection");
-		conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
-
-		// Apply filter
-		baseClass.stepInfo("** Set the filter criteria and click “Apply filter”");
-		
-		conceptExplorer.filterAction("Gouri Dhavalikar", "EmailRecipientNames", "swapnal sonawane", true);
-		conceptExplorer.filterAction("consilio.com", "EmailAllDomains", null, true);
-		conceptExplorer.applyFilter("Yes", 10);
-
-		baseClass.waitForElement(conceptExplorer.getDocCOuntFromHeader());
-
-		// Get Doc count consolidated
-		String totalSelectedDocCount = conceptExplorer.getDocCOuntFromHeader().getText();
-		String aggregatedDocCount = conceptExplorer.extractStringFromPosition(totalSelectedDocCount, 2);
-		baseClass.passedStep("Report Generated with doc count : " + aggregatedDocCount + " which is expected");
-
-		// tiles add to cart
-		int resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.addMultipleTilesToCart(resultToAddInCart);
-
-		// view in doc list to verify filters applied returns the docs correctly.
-		conceptExplorer.performDocActions("View", "View in DocList");
-		baseClass.waitTime(4);
-		baseClass.verifyPageNavigation("en-us/Document/DocList");
-
-		// validation for inlcude filters
-		DocListPage dlPage = new DocListPage(driver);
-		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
-		List<String> emailAllDomain = dlPage.getColumnValue("EmailAllDomains", false);
-		List<String> emailRecipients = dlPage.getColumnValue("EmailRecipientNames", false);
-		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailRecipients, emailAllDomain, "Gouri Dhavalikar",
-				"swapnal sonawane", "consilio.com");
-
-		// remove filters
-		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
-		reports.navigateToReportsPage("Concept Explorer Report");
-
-		// Select Sources
-		conceptExplorer.clickSelectSources();
-		conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
-
-		// Apply filter
-		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
-		conceptExplorer.filterAction("Gouri Dhavalikar", "EmailRecipientNames", "swapnal sonawane", false);
-		conceptExplorer.filterAction("consilio.com", "EmailAllDomains", null, false);
-		conceptExplorer.applyFilter("Yes", 10);
-
-		baseClass.waitForElement(conceptExplorer.getDocCOuntFromHeader());
-		baseClass.stepInfo("Report Generated.");
-
-		// adding tiles to cart
-		conceptExplorer.addMultipleTilesToCart(2);
-
-		// Perform View in DocView List Action
-		conceptExplorer.performDocActions("View", "View in DocList");
-		baseClass.waitTime(4);
-		baseClass.verifyPageNavigation("en-us/Document/DocList");
-
-		// validation of exclude filter functionality
-		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
-		List<String> emailAllDomain_Excl = dlPage.getColumnValue("EmailAllDomains", false);
-		List<String> emailRecipients_Excl = dlPage.getColumnValue("EmailRecipientNames", false);
-		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailRecipients_Excl, emailAllDomain_Excl,
-				"Gouri Dhavalikar", "swapnal sonawane", "consilio.com");
-		conceptExplorer.getBackToSourceBtn().Click();
-		driver.waitForPageToBeReady();
-
-		// Select tile to analyze at second level
-		baseClass.stepInfo("**Select tile to analyze at second level**");
-		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
-		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 3);
-		// Go to 2nd level
-		List<String> expActiveFilters = conceptExplorer.verifyActiveFilters(null);
-		conceptExplorer.analyzeAction(analyze);
-		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("2nd")),
-				"Page navigated to second level and report generated", "Page didn't navigate to second level", "Pass");
-		conceptExplorer.verifyActiveFilters(expActiveFilters);
-
-		// Select tile to analyze at third level
-		baseClass.stepInfo("**Select tile to analyze at third level**");
-		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
-		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
-
-		// Go to 3rd level
-		conceptExplorer.analyzeAction(analyze3);
-		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
-				"Page navigated to third level and report generated", "Page didn't navigate to third level", "Pass");
-		conceptExplorer.verifyActiveFilters(expActiveFilters);
-
-		// Logout
-		loginPage.logout();
-
+        baseClass.stepInfo("Validate onpage filter for EmailRecipientNames  and EmailAllDomain on "
+                + "Concept Explorer Report");
+        String analyze = Input.analyzeAt2;
+        String analyze3 = Input.analyzeAt3;
+        String sourceToSelect = "Security Groups";
+        String[] columnsToSelect = { "EmailAllDomains", "EmailRecipientNames" };        
+        String emailrecep1 = Input.emailRecipientName1;
+        String emailrecep2 = Input.emailReciepientName2;
+        String doaminNAme = Input.domainNameConsilio;   
+        baseClass.stepInfo("**Login to sightline and Select Project**");
+        loginPage.loginToSightLine(User, pwd);
+        // Navigate to Concept Explorer page
+        baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+        reports.navigateToReportsPage("Concept Explorer Report");
+       // Select Sources
+        conceptExplorer.clickSelectSources();
+        baseClass.stepInfo("** Select Security group as source and save selection");
+        conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
+       // Apply filter
+        baseClass.stepInfo("** Set the filter criteria and click “Apply filter”");
+        
+        conceptExplorer.filterAction(emailrecep1, "EmailRecipientNames", emailrecep2, true);
+        conceptExplorer.filterAction(doaminNAme, "EmailAllDomains", null, true);
+        conceptExplorer.applyFilter("Yes", 10);
+       baseClass.waitForElement(conceptExplorer.getDocCOuntFromHeader());
+       // Get Doc count consolidated
+        String totalSelectedDocCount = conceptExplorer.getDocCOuntFromHeader().getText();
+        String aggregatedDocCount = conceptExplorer.extractStringFromPosition(totalSelectedDocCount, 2);
+        baseClass.passedStep("Report Generated with doc count : " + aggregatedDocCount + " which is expected");
+       // tiles add to cart
+        int resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+        conceptExplorer.addMultipleTilesToCart(resultToAddInCart);
+       // view in doc list to verify filters applied returns the docs correctly.
+        conceptExplorer.performDocActions("View", "View in DocList");
+        baseClass.waitTime(4);
+        baseClass.verifyPageNavigation("en-us/Document/DocList");
+       // validation for inlcude filters
+        DocListPage dlPage = new DocListPage(driver);
+        dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
+        List<String> emailAllDomain = dlPage.getColumnValue("EmailAllDomains", false);
+        List<String> emailRecipients = dlPage.getColumnValue("EmailRecipientNames", false);
+        conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailRecipients, emailAllDomain, emailrecep1,
+                emailrecep2, doaminNAme);
+       // remove filters
+        baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
+        reports.navigateToReportsPage("Concept Explorer Report");
+        // Select Sources
+        conceptExplorer.clickSelectSources();
+        conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
+       // Apply filter
+        baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
+        conceptExplorer.filterAction(emailrecep1, "EmailRecipientNames", emailrecep2, false);
+        conceptExplorer.filterAction(doaminNAme, "EmailAllDomains", null, false);
+        conceptExplorer.applyFilter("Yes", 10);
+       baseClass.waitForElement(conceptExplorer.getDocCOuntFromHeader());
+        baseClass.stepInfo("Report Generated.");
+       // adding tiles to cart
+        conceptExplorer.addMultipleTilesToCart(2);
+       // Perform View in DocView List Action
+        conceptExplorer.performDocActions("View", "View in DocList");
+        baseClass.waitTime(4);
+        baseClass.verifyPageNavigation("en-us/Document/DocList");
+       // validation of exclude filter functionality
+        dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
+        List<String> emailAllDomain_Excl = dlPage.getColumnValue("EmailAllDomains", false);
+        List<String> emailRecipients_Excl = dlPage.getColumnValue("EmailRecipientNames", false);
+        conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailRecipients_Excl, emailAllDomain_Excl,
+                emailrecep1, emailrecep2, doaminNAme);
+        conceptExplorer.getBackToSourceBtn().Click();
+        driver.waitForPageToBeReady();
+        // Select tile to analyze at second level
+        baseClass.stepInfo("**Select tile to analyze at second level**");
+        baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+        resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+        conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 3);
+        // Go to 2nd level
+        List<String> expActiveFilters = conceptExplorer.verifyActiveFilters(null);
+        conceptExplorer.analyzeAction(analyze);
+        baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("2nd")),
+                "Page navigated to second level and report generated", "Page didn't navigate to second level", "Pass");
+        conceptExplorer.verifyActiveFilters(expActiveFilters);
+        // Select tile to analyze at third level
+        baseClass.stepInfo("**Select tile to analyze at third level**");
+        baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
+        resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
+        conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
+       // Go to 3rd level
+        conceptExplorer.analyzeAction(analyze3);
+        baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
+                "Page navigated to third level and report generated", "Page didn't navigate to third level", "Pass");
+        conceptExplorer.verifyActiveFilters(expActiveFilters);
+       // Logout
+        loginPage.logout();
 	}
 	/**
 	 * @author Jayanthi.Ganesan

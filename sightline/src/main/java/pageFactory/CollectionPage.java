@@ -128,6 +128,30 @@ public class CollectionPage {
 	}
 
 	// Added by Mohan
+	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+	}
+	
+	public Element getCollectionListDatasetValueCollectionName() {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[2]//div");
+	}
+	
+	public Element getCollectionListDatasetValue(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+	}
+	
+	public Element getCollectionListDataset(int rowNo) {
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]//a");
+	}
+	
+	public Element getCollectionHeaderList(int rowNo) {
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']//th["+rowNo+"]");
+	}
+	
+	public ElementCollection getCollectionListHeaderFields() {
+		return driver.FindElementsByXPath("//*[@class='table dataTable no-footer']//thead//tr//th");
+	}
+	
 	public Element getDatasetPopUpSaveButton() {
 		return driver.FindElementByXPath("//input[@id='btnSaveDatasetSelection' and @disabled]");
 	}
@@ -2392,5 +2416,93 @@ public class CollectionPage {
 			base.failedStep("Did Not Recieve Notification");
 		}
 		base.getBullHornIcon().waitAndClick(10);
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Collection Header and List of colelction present
+	 */
+	public void getCollectionPageHeaderList() {
+
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		int collectionHeaderList = getDataSetDetailsHeader().size();
+		System.out.println(collectionHeaderList);
+		
+		
+		
+		for (int i = 1; i < collectionHeaderList; i++) {
+				Element elementByIndex = getCollectionHeaderList(i);
+				base.waitTime(2);
+				String collectionHeader = elementByIndex.getText();
+				
+			
+			System.out.println("Collection HeaderList No:"+i+":"+collectionHeader);
+			base.stepInfo("Collection HeaderList No:"+i+":"+collectionHeader);
+			
+		}
+		base.waitForElement(getCollectionListDataset(1));
+		Element collectionListDataset = getCollectionListDataset(1);
+		String collectionList = collectionListDataset.getText();
+		System.out.println("Collection ID:"+collectionList);
+		base.stepInfo("Collection ID:"+collectionList);
+		base.waitForElement(getCollectionListDatasetValueCollectionName());
+		String collectionName = getCollectionListDatasetValueCollectionName().getText();
+		System.out.println("Collection Name:"+collectionName);
+		base.stepInfo("Collection Name:"+collectionList);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(3));
+		String collectionRunBy = getCollectionListFieldValueRunByAndSourceLocationText(3).getText();
+		System.out.println("Collection RunBy:"+collectionRunBy);
+		base.stepInfo("Collection RunBy:"+collectionRunBy);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(4));
+		String collectionSourceLoaction = getCollectionListFieldValueRunByAndSourceLocationText(4).getText();
+		System.out.println("Collection SourceLoaction:"+collectionSourceLoaction);
+		base.stepInfo("Collection SourceLoaction:"+collectionSourceLoaction);
+		base.waitForElement(getCollectionFieldValuesInCollectionHomePage(5, 1));
+		String collectionStatus = getCollectionFieldValuesInCollectionHomePage(5, 1).getText();
+		System.out.println("Collection Status:"+collectionStatus);
+		base.stepInfo("Collection Status:"+collectionStatus);
+		base.waitForElement(getCollectionListDataset(6));
+		Element collectionListDataset1 = getCollectionListDataset(6);
+		String collectionErrorStatus = collectionListDataset1.getText();
+		System.out.println("Collection Error Status:"+collectionErrorStatus);
+		base.stepInfo("Collection Error Status:"+collectionErrorStatus);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(7));
+		String collectionTotalRetrievedCount = getCollectionListFieldValueRunByAndSourceLocationText(7).getText();
+		System.out.println("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		base.stepInfo("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(8));
+		String collectionProgress = getCollectionListFieldValueRunByAndSourceLocationText(8).getText();
+		System.out.println("Collection Progress:"+collectionProgress);
+		base.stepInfo("Collection Progress:"+collectionProgress);
+		base.waitForElement(getCollectionListDataset(9));
+		Element collectionListDataset2 = getCollectionListDataset(9);
+		String collectionAction = collectionListDataset2.getText();
+		System.out.println("Collection Action:"+collectionAction);
+		base.stepInfo("Collection Action:"+collectionAction);
+		
+		System.out.println("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+		base.stepInfo("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+		
+	}
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To verify Notification Icon changing
+	 */
+	public void verifyNotificationIcon(int bgCountBefore) {
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return base.initialBgCount() == bgCountBefore + 1;
+			}
+		}), Input.wait120);
+		final int bgCountAfter = base.initialBgCount();
+		
+		
+		
+		
 	}
 }
