@@ -24495,7 +24495,6 @@ public class DocViewPage {
 	public void verifyExistingRemarks(int iteration, Map<String, String> datas, Boolean editFlow, Boolean historyCHeck)
 			throws ParseException, Exception {
 		MiniDocListPage mindiocList = new MiniDocListPage(driver);
-		DocViewMetaDataPage dcMetaPage = new DocViewMetaDataPage(driver);
 		Map<String, String> updateDatas = new HashMap<String, String>();
 		String updatedRemark = "UpdatedRemark" + Utility.dynamicNameAppender();
 
@@ -24529,11 +24528,6 @@ public class DocViewPage {
 				// Edit Flow
 				editAndVerifyData(remarkText, updateDatas, updatedRemark);
 			}
-
-			if (historyCHeck) {
-				dcMetaPage.historyActivityCheck(remarkText);
-			}
-
 		}
 	}
 
