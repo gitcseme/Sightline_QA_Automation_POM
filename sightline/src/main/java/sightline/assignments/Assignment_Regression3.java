@@ -802,7 +802,7 @@ public class Assignment_Regression3 {
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
 			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if (Integer.parseInt(docCountInTODO) == 31) {
+			if (Integer.parseInt(docCountInTODO) == 35) {
 				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing "
 						+ "23 docs and clicking Draw Pool link is " + docCountInTODO);
 				baseClass.passedStep(
@@ -912,7 +912,7 @@ public class Assignment_Regression3 {
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
 			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if (Integer.parseInt(docCountInTODO) == 31) {
+			if (Integer.parseInt(docCountInTODO) == 35) {
 				baseClass.stepInfo("Doc Count displayed in ToDo Column after completing " + DocID1.size()
 						+ " docs and clicking Draw Pool link is " + docCountInTODO);
 				baseClass.passedStep(
@@ -1885,7 +1885,7 @@ public class Assignment_Regression3 {
 			driver.Navigate().refresh();
 			baseClass.waitForElement(agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName));
 			String docCountInTODO = agnmt.getAssignmentsTodoCountInreviewerPg(assignmentName).getText();
-			if (Integer.parseInt(docCountInTODO) == 37) {
+			if (Integer.parseInt(docCountInTODO) == 33) {
 				baseClass.stepInfo(
 						"Doc Count displayed in ToDo Column after  clicking Draw Pool link is " + docCountInTODO);
 				baseClass.passedStep(
