@@ -13403,5 +13403,18 @@ public class SessionSearch {
 			bc.stepInfo(" Docs Unassigned from  " + listOfAssignments.get(i));
 		}
 	}
+	
+	/**
+	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check search result count for configured query
+	 */
+	public void verifySearchResultReturnsForConfiguredQuery(int purehitCount) {
+		if(purehitCount>0) {
+			base.passedStep("Docs returned for the configured query");
+		}
+		else {
+			base.failedStep("Docs not returned for the configured query");
+		}
+	}
 
 }
