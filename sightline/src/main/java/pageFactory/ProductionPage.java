@@ -6803,7 +6803,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Advanced production section is filled");
 	}
-}
+
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
