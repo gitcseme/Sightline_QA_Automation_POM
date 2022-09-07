@@ -1041,7 +1041,7 @@ public class ProductionRegression_Sprint19 {
 	public void verifyPrivGuardNotDisWarniMSg(String userName, String password) throws Exception {
 
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(userName, password);
 		
 		base.stepInfo("Test Cases Id : RPMXCON-47998");
 		base.stepInfo("To Verify In Priv Guard, the message saying that the production has privileged documents "
@@ -1482,6 +1482,7 @@ public class ProductionRegression_Sprint19 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
