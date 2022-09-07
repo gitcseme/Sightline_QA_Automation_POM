@@ -625,6 +625,77 @@ public class O365Regression_20 {
 		login.logout();
 
 	}
+	
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that a new collections workflow instance starts from the Collections home page.  
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61015", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
+	public void verifyNewCollectionWorkFlow(String userName, String password, String role, String actionRole)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-61015 - O365");
+		base.stepInfo(
+				"Verify that a new collections workflow instance starts from the Collections home page.");
+		
+		String[][] userRolesData = { { userName, role, actionRole } };
+		String dataSourceName = "AutomationCollectionWizard" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(userName, password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, true, true);
+		collection.applyFilterToKeyword(dataSourceName);
+		base.waitForElement(collection.getActionBtn("Save"));
+		collection.getActionBtn("Save").waitAndClick(5);
+
+		base.waitForElement(collection.getConfirmationBtnAction("Confirm"));
+		collection.getConfirmationBtnAction("Confirm").waitAndClick(5);
+		base.VerifySuccessMessage("Dataset added successfully.");
+
+		// Start A Collection
+		collection.clickOnNextAndStartAnCollection();
+		
+		//Verify Collection wizards
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		collection.getCollectionPageHeaderList();
+		base.passedStep("A new collections workflow instance is started from the Collections home page.");
+		
+		// logout
+		login.logout();
+
+	}
 
 
 	@AfterMethod(alwaysRun = true)

@@ -2505,4 +2505,45 @@ public class CollectionPage {
 		
 		
 	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To enter on Keyword filter and save 
+	 */
+	public void applyFilterToKeyword(String keyword) {
+
+		driver.waitForPageToBeReady();
+		
+		if (getFilterButton().isElementAvailable(5)) {
+			
+			base.waitForElement(getFilterButton());
+			getFilterButton().waitAndClick(5);
+			
+			base.waitForElement(getFilteEnablerButton());
+			getFilteEnablerButton().waitAndClick(5);
+			base.passedStep("Filter button is Enabled successfully");
+			
+		}
+			
+			else {
+				base.failedStep("FIlter button is disabled");
+			}
+			
+			if (getKeyboardFilterButton().isElementAvailable(5)) {
+				base.waitForElement(getKeyboardFilterButton());
+				getKeyboardFilterButton().waitAndClick(5);
+				
+				base.waitForElement(getKeywordTextBox());
+				getKeywordTextBox().SendKeys(keyword);
+				
+				base.passedStep("Keywords are entered successfully");
+			}else {
+				base.failedStep("Keywords are not entered");
+			}
+		}
+	
+	
+	
+	
 }
