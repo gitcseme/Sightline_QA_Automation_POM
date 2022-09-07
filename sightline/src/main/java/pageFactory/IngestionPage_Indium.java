@@ -10605,22 +10605,23 @@ public class IngestionPage_Indium {
 				if(!field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
 					base.passedStep("values displayed in selected columns");
 					String concatenatedValue =field2+"(".concat(field1)+")";
-					if(field3.equalsIgnoreCase(concatenatedValue)) {
+					if(concatenatedValue.equalsIgnoreCase(field3)) {
 						base.passedStep("Concatenated email value displayed correctly");
+						break;
 					}
 					else {
-						base.failedStep("Concatenated email value not displayed correctly");
+						System.out.println("check next row");
 					}
-					break;
 				}
 				else if(field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
 					if(field3.contains(field2)) {
 						base.passedStep("Concatenated email value displayed correctly");
+						break;
 					}
 					else {
-						base.failedStep("Concatenated email value not displayed correctly");
+						System.out.println("check next row");
 					}
-					break;
+					
 				}
 			}	
 		}
