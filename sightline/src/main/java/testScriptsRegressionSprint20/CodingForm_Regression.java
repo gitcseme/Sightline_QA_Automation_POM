@@ -600,6 +600,85 @@ public class CodingForm_Regression {
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author : Baskar
+	 * @Description : To verify as an RMU login, I will be able to search a coding form in manage coding form page by entering coding form name in search box
+	 */
+	@Test(description = "RPMXCON-54015",enabled = true, groups = { "regression" })
+	public void verifySearchMangeCodingFormPage() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54015");
+		baseClass.stepInfo("To verify as an RMU login, I will be able to search a coding form in manage coding form page by entering coding form name in search box");
+	    
+	    codingForm = new CodingForm(driver);
+	    softAssertion  = new SoftAssert();
+		
+		String searchString = "coding";
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 baseClass.stepInfo("User navigated to Manage coding form page");
+		 softAssertion.assertTrue(driver.getPageSource().contains("Manage Coding Forms"));
+		 softAssertion.assertTrue(driver.getPageSource().contains("New Coding Form"));
+		 baseClass.stepInfo("User landed in Coding form page");
+		
+		//validation
+		 codingForm.searchCodingForm(searchString);
+	    driver.waitForPageToBeReady();
+	    baseClass.waitTime(2);
+	    List<String> result = baseClass.getAvailableListofElements(codingForm.getCodingFormTableColumn(1));
+	    for(String cfname: result) {
+	    	if(!cfname.toLowerCase().contains(searchString))
+	    		baseClass.failedStep(searchString+" is not appear in result"+cfname);
+	    }
+	    baseClass.passedStep("search string apper in result");
+	    softAssertion.assertEquals(codingForm.getCodingFormTableHeadColumn(1).GetAttribute("aria-sort"), "ascending");
+	    baseClass.passedStep("The moment user will start entering some name on search box, it will sort based on entered string");
+	    
+	    softAssertion.assertAll();
+	    baseClass.passedStep("verified as an RMU login, I will be able to search a coding form in manage coding form page by entering coding form name in search box");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar
+	 * @Description : To verify as an RMU login, I will be able to hide a column in manage coding form page
+	 */
+	@Test(description = "RPMXCON-54016",enabled = true, groups = { "regression" })
+	public void verifyRmuAbleToHideColumn() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54016");
+		baseClass.stepInfo("To verify as an RMU login, I will be able to hide a column in manage coding form page");
+	    
+	    codingForm = new CodingForm(driver);
+	    softAssertion  = new SoftAssert();
+		
+		String hideColumn = "Coding Form Name";
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		codingForm.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 baseClass.stepInfo("User navigated to Manage coding form page");
+		 softAssertion.assertTrue(driver.getPageSource().contains("Manage Coding Forms"));
+		 softAssertion.assertTrue(driver.getPageSource().contains("New Coding Form"));
+		 baseClass.stepInfo("User landed in Coding form page");
+		
+		//validation
+		 codingForm.hideOrShowColum(hideColumn);
+		 softAssertion.assertFalse(baseClass.text(hideColumn).isDisplayed());
+	    
+		 softAssertion.assertAll();
+	    baseClass.passedStep("verified as an RMU login, I will be able to hide a column in manage coding form page");
+	    loginPage.logout();
+	}
 
 
 	@AfterMethod(alwaysRun = true)
