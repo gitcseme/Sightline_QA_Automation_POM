@@ -3418,6 +3418,9 @@ public class ProductionPage {
 	public Element getGenerateLSTOption() {
 		return driver.FindElementByXPath("//input[@id='chkProduceLoadFile']/..//strong//span");
 	}
+	public ElementCollection getBatesRange(String prodName) {
+		return driver.FindElementsByXPath("//a[contains(text(),'"+prodName+"')]/parent::div/following-sibling::div[@class='row']/div[@id='batesCount']//span[contains(@class,'break-word')]/strong");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -6800,6 +6803,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Advanced production section is filled");
 	}
+}
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
@@ -21851,7 +21855,17 @@ public class ProductionPage {
 		
 		
 	}
+	
+	/**
+	 * @author JAyanthi
+	 * @param prodNAme
+	 * @return bates range in list
+	 */
+
+	public List<String> getBATES_RangeOfProduction(String prodNAme) {
+
+		List<String> batesRange = base.getAvailableListofElements(getBatesRange(prodNAme));
+		return batesRange;
+	}
 
 }
-
-

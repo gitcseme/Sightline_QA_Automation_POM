@@ -1236,5 +1236,44 @@ public class ConceptExplorerPage {
 		}
 	
 	}
+	/**
+	 * @author Jayanthi.Ganesan This method will verify the Exclude filter
+	 *         functionality working properly.
+	 * @param metaDataWithTwoData[meta data for which two datas are applied in
+	 *                                 filter]
+	 * @param metaDataWithOneData[meta data for which one datas are applied in
+	 *                                 filter]
+	 * @param metaData1[               data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData_1[              data for which two datas are applied in one
+	 *                                 meta data filter]
+	 * @param metaData[                data for which one data is applied in one
+	 *                                 meta data filter]
+	 */ //Here meta data with one options is inluded and meta data with two option is excluded
+	public void verifyExcludeIcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
+			String metaData1, String metaData_1, String metaData) {
+		boolean status = false;
+		String metaData_twoOption;
+		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
+			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
+			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+				status = true;
+				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
+					continue;
+				} else {
+					base.failedStep("Meta Data are not filtered as expected.");
+				}
+
+			} else {
+				base.failedStep("Meta Data are not filtered as expected.");
+			}
+		}
+		base.passedStep(
+				"**After validating the apllied Exclude filters from Concpet explorer Tiles via Doc List We observed follwing things**");
+		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
+
+		base.passedStep("2. Multiple filters should be considered as AND operator.");
+	}
 
 }
