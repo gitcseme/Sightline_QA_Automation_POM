@@ -1441,7 +1441,8 @@ public class Input {
 		collsecondFirstName = testData.getCollsecondFirstName();
 		collsecondlastName = testData.getCollsecondlastName();
 		totalRetrievedCount = testData.getTotalRetrievedCount();
-
+		collectionFailedStatus= testData.getCollectionFailedStatus();
+		
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();
 		conceptualDocId02 = testData.getConceptualDocId02();

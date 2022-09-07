@@ -353,7 +353,11 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
-
+	public Element getNameBasedOnCollectionName(String collectionName, String value) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + collectionName + "']//..//parent::tr//td[text()='" + value + "']");
+	}
+	
 	public ElementCollection getAttributesOfSummaryTab() {
 		return driver.FindElementsByXPath("//div[@class='row rowPadding']//div[@class='col-md-3']");
 	}
@@ -927,7 +931,7 @@ public class CollectionPage {
 			}
 		} else if (type.equalsIgnoreCase("CancelTo")) {
 
-		} else if (type.equalsIgnoreCase("Delete") || type.equalsIgnoreCase("Cancel")) {
+		} else if (type.equalsIgnoreCase("Delete")) {
 			getConfirmationBtnAction(action).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage(verifyMsg);
@@ -2543,7 +2547,22 @@ public class CollectionPage {
 			}
 		}
 	
-	
+	/**
+     * @author Raghuram.A
+     * @param action
+     * @param verifyMsg
+     */
+    public void confirmationAction(String action,String verifyMsg,boolean addition)
+    {
+        try {
+            getConfirmationBtnAction(action).waitAndClick(5);
+            driver.waitForPageToBeReady();
+            base.VerifySuccessMessage(verifyMsg);
+            base.CloseSuccessMsgpopup();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 	
 }

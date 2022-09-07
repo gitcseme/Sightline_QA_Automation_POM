@@ -195,8 +195,12 @@ public class O365Regression_20 {
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String selectedFolder1 = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusList = { "Completed" };
+		String collectionNewName = "CollectionNew" + Utility.dynamicNameAppender();
 
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
 		String[][] userRolesData = { { userName, role, actionRole } };
 
 		base.stepInfo("Test case Id: RPMXCON-61041 - O365");
@@ -206,6 +210,9 @@ public class O365Regression_20 {
 		login.loginToSightLine(userName, password);
 
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// get username
+		String username = login.getCurrentUserName();
 
 		// get other dataset tile view
 		dataSets.navigateToDataSetsPage();
@@ -219,20 +226,26 @@ public class O365Regression_20 {
 		collectionName = base.returnKey(collectionData, "", false);
 
 		// Click View Dataset or Create collection and click View Dataset
-		if (collection.getCollectionNameElement(collectionName).isElementAvailable(2)) {
+		if (collection.getNameBasedOnCollectionName(collectionName, username).isElementAvailable(3)) {
 			base.stepInfo(collectionName + " : is Completed and Displayed in Collections Page");
+			driver.waitForPageToBeReady();
+			collection.clickViewDataset(collectionName);
+
 		} else {
+			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
-					selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
-					false, false, "", "");
+					selectedApp, collectionData, collectionNewName, 3, selectedFolder1, true, true, true,
+					Input.randomText, true, true, "Save", "");
 
 			collection.clickNextBtnOnDatasetTab();
+			driver.waitForPageToBeReady();
 			collection.getStartBtn().waitAndClick(10);
-		}
 
-		// click view dataset btn from collection page
-		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.clickViewDataset(collectionName);
+			// click view dataset btn from collection page & check Completed status
+			dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+			collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionNewName, statusList, 10);
+			collection.clickViewDataset(collectionNewName);
+		}
 
 		// verify is it navigating to datasets page
 		driver.waitForPageToBeReady();
@@ -381,7 +394,7 @@ public class O365Regression_20 {
 		// Cancel collection
 		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Action", false, "");
 		driver.waitForPageToBeReady();
-		collection.confirmationAction("Cancel", "Yes", Input.cancelCollectionNotification);
+		collection.confirmationAction("Yes", Input.cancelCollectionNotification,false);
 
 		// Cancel back to draft status
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
@@ -400,8 +413,8 @@ public class O365Regression_20 {
 	 *              collection screen Refresh Interval/ Reload automatically.
 	 *              RPMXCON-61279
 	 */
-	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role)
+	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
+	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role,String actionRole)
 			throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
