@@ -151,6 +151,7 @@ public class DataSets {
 	public Element loadMoreOption() {
 		return driver.FindElementByXPath("//button[@id='btnLoadDataset']");
 	}
+
 	public Element getTotalDatasetCount() {
 		return driver.FindElementByXPath("//text[@id='totaldatasetCount']");
 	}
@@ -719,10 +720,13 @@ public class DataSets {
 				+ actualSearchValue;
 		String failMsg = "Filter is Not Applied";
 
-		base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
-		String actualType = getTileViewType();
-		base.textCompareEquals(actualType, expectedTileView,
-				"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
+		if (!expectedTileView.equals(null)) {
+			base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
+			String actualType = getTileViewType();
+			base.textCompareEquals(actualType, expectedTileView,
+					"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
+		}
+		driver.waitForPageToBeReady();
 	}
 
 	/**
@@ -747,7 +751,7 @@ public class DataSets {
 		}
 		return viewType;
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check dataset menu availability
@@ -757,13 +761,12 @@ public class DataSets {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getTotalDatasetCount());
 		int count = Integer.parseInt(getTotalDatasetCount().getText());
-		if(NavigateToDataSets().isElementAvailable(10) && count>0) {
+		if (NavigateToDataSets().isElementAvailable(10) && count > 0) {
 			base.passedStep("User have access to dataset menu and datasets available");
-		}
-		else {
+		} else {
 			base.failedStep("user dont have access to dataset menu and datasets not available");
 		}
-		
+
 	}
 
 }
