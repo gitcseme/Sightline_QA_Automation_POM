@@ -96,6 +96,7 @@ public class Production_Regression20_01 {
 
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectDoc2();
+		base.waitTime(2);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 120, 130);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
