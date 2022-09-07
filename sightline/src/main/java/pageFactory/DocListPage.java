@@ -4405,11 +4405,13 @@ public class DocListPage {
 	public String verifyingDocCount() {
 		driver.waitForPageToBeReady();
 		driver.scrollingToBottomofAPage();
+		base.waitTime(5);
 		base.waitForElement(getTableFooterDocListCount());
 		String DocListCount = getTableFooterDocListCount().getText();
-
-		driver.waitForPageToBeReady();
+		System.out.println(DocListCount);
+		driver.waitForPageToBeReady();		
 		String[] doccount = DocListCount.split(" ");
+		System.out.println(doccount);
 		String DocumentCount = doccount[5];
 		System.out.println("doclist page document count is" + DocumentCount);
 
