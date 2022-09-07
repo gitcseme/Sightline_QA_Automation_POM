@@ -284,6 +284,7 @@ public class DocviewAudio_Regression20 {
 		assignmentPage.add2ReviewerAndDistribute();
 
 		this.driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 		assignmentPage.assignmentPagination(assgn);
 		baseClass.waitForElement(assignmentPage.getAssignmentAction_ViewinDocView());
