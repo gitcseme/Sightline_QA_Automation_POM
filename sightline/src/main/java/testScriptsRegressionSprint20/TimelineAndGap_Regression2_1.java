@@ -79,6 +79,7 @@ public class TimelineAndGap_Regression2_1 {
 		sa.assertEquals(filesInDirAfterDownloading, filesInDirBeforeDownloading+1,"File is not downloaded");
 		sa.assertAll();	
 		bc.passedStep("Timeline gaps report for yearly is downloaded successfully");
+		bc.waitTime(5);
 		timelineRpt.verifyTheReportColoumnValuesInExcel(0,"Expected timeline gap report is downloaded","Expected timeline gap report is not downloaded",headerList);
 		lp.logout();
 	}
@@ -116,6 +117,7 @@ public class TimelineAndGap_Regression2_1 {
 		sa.assertEquals(filesInDirAfterDownloading, filesInDirBeforeDownloading+1,"File is not downloaded");		
 		sa.assertAll();	
 		bc.passedStep("Timeline gaps report for monthly is downloaded successfully");
+		bc.waitTime(5);
 		timelineRpt.verifyTheReportColoumnValuesInExcel(0,"Expected timeline gap report is downloaded","Expected timeline gap report is not downloaded",headerList);
 		lp.logout();
 	}
@@ -183,6 +185,7 @@ public class TimelineAndGap_Regression2_1 {
 		sa.assertEquals(filesInDirAfterDownloading, filesInDirBeforeDownloading+1,"File is not downloaded");
 		sa.assertAll();	
 		bc.passedStep("Timeline gaps report is downloaded successfully");
+		bc.waitTime(5);
 		timelineRpt.verifyTheReportColoumnValuesInExcel(0,"Column Values in the report are displayed as expected","Column Values in the report are not displayed as expected",headerList);
 		lp.logout();
 	}
