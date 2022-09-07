@@ -1169,10 +1169,10 @@ public class ConceptExplorerPage {
 		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
 			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
-			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
-					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+			if (!(metaData_twoOption.equals(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.equals(metaData1.toLowerCase()))) {
 				status = true;
-				if (!(metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
+				if (!(metaDataWithOneData.get(i).toLowerCase().equals(metaData.toLowerCase())) && status) {
 					continue;
 				} else {
 					base.failedStep("Meta Data are not filtered as expected.");
