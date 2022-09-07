@@ -21926,6 +21926,23 @@ public class ProductionPage {
 		return batesRange;
 	}
 
+	/*
+	 * @author sowndarya.velraj
+	 * @param value Description:To verifyTextinPDF
+	 */
+	public String verifyTextinPDF(File filePath, String expText) throws IOException {
+		File file = new File(filePath.toString());
+		PDDocument doc = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String text = pdfStripper.getText(doc);
+		doc.close();
+		if(text.contains(expText)) {
+			base.passedStep(expText + " Expected Text Present in PDF File");
+		}else {
+			base.failedStep(expText + " Expected Text Not Present in PDF File");
+		}
+		return text;
+	}
 
 	/*
 	 * @author sowndarya.velraj

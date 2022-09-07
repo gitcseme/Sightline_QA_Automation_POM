@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.testng.ITestResult;
@@ -16,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -32,10 +30,7 @@ import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
-import retry.CustomTestNGListener;
-import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
-@Listeners(CustomTestNGListener.class)
 public class ProductionRegression_Sprint20 {
 	
 
@@ -91,7 +86,7 @@ public class ProductionRegression_Sprint20 {
 	 *         No:RPMXCON-47794
 	 * @Description:To Verify the default selections in Production component Native section
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47794", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47794", enabled = true, groups = { "regression" })
 	public void verifyDefSelecinNativeComp() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -148,7 +143,7 @@ public class ProductionRegression_Sprint20 {
 	 *         No:RPMXCON-47740
 	 * @Description:To Verify sorting in Grid View from Productions page
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47740", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47740", enabled = true, groups = { "regression" })
 	public void verifyGridViewInProdPage() throws Exception {
 		List<String> expProdStatusOrder = new ArrayList<String>();
 		List<String> actProdStatusOrder = new ArrayList<String>();
@@ -261,7 +256,7 @@ public class ProductionRegression_Sprint20 {
 	 *         No:RPMXCON-47790
 	 * @Description:To Verify toggle control works for the Filepath and Volume under the Production Location
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47790", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47790", enabled = true, groups = { "regression" })
 	public void verifyToCtrlAndVolProdLocation() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47790");
@@ -273,8 +268,8 @@ public class ProductionRegression_Sprint20 {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();		
 		
-//		// create tag and folder
-		
+		// create tag and folder
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -322,7 +317,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author Sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-47973
 	 * @Description:To Verify Production generation for PDF and Excel Docs
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47973", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47973", enabled = true, groups = { "regression" })
 	public void verifyPDFAndExcelFileDocs() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47973");
@@ -364,7 +359,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-47872
 	 * @Description:To verify Bates No Generation should be in Sync, when using continue from Previous bates No
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47872", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47872", enabled = true, groups = { "regression" })
 	public void verifyBatNoGenSyncwithPreBatNo() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47872");
@@ -442,7 +437,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author sowndarya.velraj created on:NA modified by:NA TESTCASE No:RPMXCON-49060
 	 * @Description:To verify that the 'production start date' should contain and present the date when the production regeneration was started from Scratch
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49060", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49060", enabled = true, groups = { "regression" })
 	public void verifyProdStartDateafterRegen() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-49060");
@@ -509,7 +504,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-47913
 	 * @Description:To Verify in production, the placeholders enabled for priv docs, Generated Priv Doc (PDF/TIFF/Text) should contain Placeholder with Branding
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47913", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47913", enabled = true, groups = { "regression" })
 	public void verifyProdPhEnabPrivDocsCntPhBrand() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47913");
@@ -585,9 +580,9 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-63088
 	 * @Description:Verify that if spreadsheet is redacted and Native placeholder is default enabled from TIFF/PDF section then PDF should be produced with natively placeholder
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-63088", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-63088", enabled = true, groups = { "regression" })
 	public void verifyRedactNativePHTiffPdf() throws Exception {
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
 		base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-63088");
 		String RedactName = "Redact" + Utility.dynamicNameAppender();
@@ -597,18 +592,23 @@ public class ProductionRegression_Sprint20 {
 		base.stepInfo(
 				"Verify that if spreadsheet is redacted and Native placeholder is default enabled from "
 				+ "TIFF/PDF section then PDF should be produced with natively placeholder");
-
+ 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.selectproject(Input.largeVolDataProject);
+		
 		RedactionPage redactionpage = new RedactionPage(driver);
 		redactionpage.navigateToRedactionsPageURL();
 		redactionpage.AddRedaction(RedactName, Input.rmu1FullName);
-
 		base.stepInfo("Basic meta data search");
+		
 		sessionSearch.navigateToSessionSearchPageURL();
-		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "spreadsheet");
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch.ViewInDocList();
+		
 		DocListPage doclist = new DocListPage(driver);
-		doclist.documentSelection(1);	
+		doclist.documentSelection(3);	
 		doclist.viewSelectedDocumentsInDocView();
+		
 		DocViewPage doc = new DocViewPage(driver);
 		driver.waitForPageToBeReady();
 		doc.pageRedaction(RedactName);
@@ -624,7 +624,7 @@ public class ProductionRegression_Sprint20 {
 		doclist.bulkTagExistingFromDoclist(tagName);
 		
 		String beginningBates = page.getRandomNumber(2);
-		String productionname = "p" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();	
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -644,33 +644,14 @@ public class ProductionRegression_Sprint20 {
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		String name = page.getProduction().getText().trim();
 		driver.waitForPageToBeReady();
 		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
-
-		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
-		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
-		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
-		
-		driver.waitForPageToBeReady();
-		if (Native.exists()) {
-		base.passedStep("Native placeholder generated for the selected file type ");
-		} else {
-		base.failedStep("Native placeholder Not generated for the selected file type ");
-		}
-		if (DatFile.exists()) {
-		base.passedStep("Dat file is exists in generated production");
-		} else {
-		base.failedStep("Dat file is not displayed as expected");
-		}
-		if (pdfFile.exists()) {
-		base.passedStep("Pdf is generated successfully");
-		} else {
-		base.failedStep("Pdf is not generated successfully");
-		}
+		File pdfFile = new File(
+				home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID +".pdf");
+		String text = page.verifyTextinPDF(pdfFile, tagName);
+		base.stepInfo(text);
 			
 		String productionname1 = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
@@ -696,27 +677,9 @@ public class ProductionRegression_Sprint20 {
 		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
-		File tiffFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
-		File DatFile1 = new File(home + "/Downloads/VOL0001/" + name1 + "/" + name1 + "_DAT.dat");
-		File Native1 = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
-
-		driver.waitForPageToBeReady();
-		if (Native1.exists()) {
-		base.passedStep("Native placeholder generated for the selected file type ");
-		} else {
-		base.failedStep("Native placeholder Not generated for the selected file type ");
-		}
-		if (DatFile1.exists()) {
-		base.passedStep("Dat file is exists in generated production");
-		} else {
-		base.failedStep("Dat file is not displayed as expected");
-		}
-		if (tiffFile.exists()) {
-		base.passedStep("Tiff is generated successfully");
-		} else {
-		base.failedStep("Tiff is not generated successfully");
-		}
+		File tiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, tagName);
 		loginPage.logout();
 	}
 	
@@ -727,7 +690,7 @@ public class ProductionRegression_Sprint20 {
 	 *                 displayed on right top corner
 	 **/
 
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49181", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49181", enabled = true, groups = { "regression" })
 	public void verifyCommitMessage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -779,7 +742,7 @@ public class ProductionRegression_Sprint20 {
 	 * @Description:To verify Production should be failed if Bates Numbers is duplicate
 	 **/
 
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49254", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49254", enabled = true, groups = { "regression" })
 	public void verfyBatesRangeFailedStatus() throws Exception {
 
 		base = new BaseClass(driver);
@@ -844,7 +807,7 @@ public class ProductionRegression_Sprint20 {
 	 * @Description:To Verify Project Admin will have the ability to confirm production. Upon confirmation, bates numbers in the documents in the database shall be committed
 	 **/
 
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-46867", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-46867", enabled = true, groups = { "regression" })
 	public void verifyCommittedProdAsUneditable() throws Exception {
 
 		base = new BaseClass(driver);
@@ -892,26 +855,24 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA No:RPMXCON-47861
 	 * @Description:Verify the regeneration of Production with same configuration and some new documents; before commit and confirm bates number for that Production
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47861", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47861", enabled = true, groups = { "regression" })
 	public void verifyRegenProdWithNewDoc() throws Exception {
-		
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+		base = new BaseClass(driver);
 		base.stepInfo("Test Cases Id : RPMXCON-47861");
 		base.stepInfo(
 				"Verify the regeneration of Production with same configuration and some new documents; before commit and confirm bates number for that Production");
+	
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String bates = "B" + Utility.dynamicNameAppender();
-		int noOfDoc1 = 2;
-		int noOfDoc2 = 2;
-		int expTotalDoc = noOfDoc1 + noOfDoc2 ;
-//		
-//		// create tag 
-		base = new BaseClass(driver);
+		int noOfDoc1 = 1;
+		int noOfDoc2 = 4;
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// create tag 	
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -922,10 +883,8 @@ public class ProductionRegression_Sprint20 {
 		sessionSearch.ViewInDocList();
 		DocListPage doclist = new DocListPage(driver);
 		doclist.documentSelection(noOfDoc1);
-		doclist.bulkTagExisting(tagname);
-//		
-		ProductionPage page = new ProductionPage(driver);
-		String productionname = "p" + Utility.dynamicNameAppender();
+		doclist.bulkTagExistingFromDoclist(tagname);
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -945,17 +904,18 @@ public class ProductionRegression_Sprint20 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		String exptotaldoc = page.getDoc_Count().getText();
+		page.clickBackBtnUntilElementFound(page.getBatesRange());
 		
 		SessionSearch sessionSearch1 = new SessionSearch(driver);
 		sessionSearch1.navigateToSessionSearchPageURL();
-		sessionSearch1.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch1.ViewInDocList();
 		DocListPage doclist1 = new DocListPage(driver);
 		doclist1.documentSelection(noOfDoc2);
-		doclist1.bulkTagExisting(tagname);
+		doclist1.bulkTagExistingFromDoclist(tagname);
 		
 		page.navigateToProductionPage();
-		page.openExistingProduction("p9368103");
+		page.openExistingProduction(productionname);
 		page.clickBackBtnUntilElementFound(page.getDATTab());
 
 		driver.waitForPageToBeReady();
@@ -983,8 +943,10 @@ public class ProductionRegression_Sprint20 {
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
 		driver.waitForPageToBeReady();
-		page.fillingGeneratePageAndVerfyingBatesRange(suffixID);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		String acttotaldoc = page.getDoc_Count().getText();
+		page.clickBackBtnUntilElementFound(page.getBatesRange());
+		String actBatesnum = page.getBatesRange().getText();
 		
 		SoftAssert asserts = new SoftAssert();
 		asserts.assertEquals(tagStatus, "true");
@@ -992,23 +954,25 @@ public class ProductionRegression_Sprint20 {
 		asserts.assertEquals(expPrivGuard, actPrivGuard);
 		asserts.assertEquals(expRootProdLocPage, actRootProdLocPage);
 		asserts.assertEquals(expProdOut, actProdOut);
+		asserts.assertTrue(actBatesnum.contains(prefixID));
 		asserts.assertAll();
 		
-		if(String.valueOf(expTotalDoc).equals(acttotaldoc)) {
-			base.passedStep("Pass");
+		if(Integer.parseInt(exptotaldoc) < Integer.parseInt(acttotaldoc)) {
+			base.passedStep("Production should generate successfully including new documents");
 		} else {
-			base.failedStep("Fail");
+			base.failedStep("Production should generate successfully Not including new documents");
 		}	
 		base.passedStep("Verify the regeneration of Production with same configuration and some new documents; before commit and confirm bates number for that Production");
 		loginPage.logout();
 	}
-	
+
+
 
 	/**
 	 * @author sowndarya.velraj No:RPMXCON-47862
 	 * @Description:Verify the regeneration of already produced document with different location
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47862", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47862", enabled = true, groups = { "regression" })
 	public void verifyRegenProdWithNewLoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1116,7 +1080,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA Testcase No:RPMXCON-47970
 	 * @Description: Verify Bates Number Generated is correct for All Documents in Production
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47970", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47970", enabled = true, groups = { "regression" })
 	public void verifyBatesNoSyncwithProdDoc() throws Exception {
 		
 		UtilityLog.info(Input.prodPath);
@@ -1172,7 +1136,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA Testcase No:RPMXCON-63081
 	 * @Description: Verify production regeneration without any change in default enabled native placeholder under PDF section
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-63081", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-63081", enabled = true, groups = { "regression" })
 	public void verifyProdRegeFrDefNatPHPDF() throws Exception {
 		
 		UtilityLog.info(Input.prodPath);
@@ -1267,7 +1231,7 @@ public class ProductionRegression_Sprint20 {
 	 * @author NA Testcase No:RPMXCON-49819
 	 * @Description: Verify that Pagination the next tiles get loaded on 'Manage Production' screen
 	 **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49819", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-49819", enabled = true, groups = { "regression" })
 	public void verifyPaginationNextTilesgetLoad() throws Exception {
 		
 		UtilityLog.info(Input.prodPath);
@@ -1287,7 +1251,7 @@ public class ProductionRegression_Sprint20 {
      * @author NA Testcase No:RPMXCON-47863
      * @Description: verify regenerate of production, before commit and confirm bates number, overwrites any previously produced document(s)
      **/
-	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47863", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-47863", enabled = true, groups = { "regression" })
 	public void verifyRegenProdOverwritePrePD() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1390,7 +1354,7 @@ public class ProductionRegression_Sprint20 {
      *               is default enabled from TIFF section then production should be
      *               generated for Priv placeholder [RPMXCON-63085]
      **/
-    @Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-63085", enabled = true, dataProvider = "Users", groups = { "regression" })
+    @Test(description = "RPMXCON-63085", enabled = true, dataProvider = "Users", groups = { "regression" })
     public void verifyProdRegeFrDefNatPHpdf(String userName, String password) throws Exception {
     	
         tagname = "Tag" + Utility.dynamicNameAppender();
