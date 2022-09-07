@@ -3449,6 +3449,12 @@ public class ProductionPage {
 		return driver.FindElementsByXPath("//a[contains(text(),'"+prodName+"')]/parent::div/following-sibling::div[@class='row']/div[@id='batesCount']//span[contains(@class,'break-word')]/strong");
 	}
 
+	public Element getTextFirstRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']/..");
+	}
+	public Element getTextSecondRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']/..");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21956,4 +21962,28 @@ public class ProductionPage {
 		}
 	}
 
+
+	/**
+	 * @author Brundha
+	 * @param prefixID
+	 * @param suffixID
+	 * @param beginningBates
+	 * @throws TesseractException 
+	 * @Description verify that generated tiff file
+	 */
+	public void verifyingTiffImage(File fileName,String CompareString) throws TesseractException {
+
+		ITesseract instance = new Tesseract1(); 
+		File tessDataFolder = LoadLibs.extractTessResources("tessdata"); 
+		instance.setDatapath(tessDataFolder.getPath());
+
+			String result = instance.doOCR(fileName);
+			System.out.println(result);
+			if (!result.contains(CompareString)) {
+				base.passedStep("PlaceholderText is not displayed as expected");
+			} else {
+				base.failedStep("Placeholder text is Displayed");
+			}
+			
+		}
 }
