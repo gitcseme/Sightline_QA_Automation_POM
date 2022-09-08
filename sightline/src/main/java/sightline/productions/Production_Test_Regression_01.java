@@ -1262,7 +1262,8 @@ public class Production_Test_Regression_01 {
 	 *               is searchable and if this field has been edited and is make it
 	 *               non-searchable, then this field cannot make as searchable again
 	 */
-	@Test(description="RPMXCON-50018",enabled = true, groups = { "regression" } )
+	//commenting since the functionality is not present
+	//@Test(description="RPMXCON-50018",enabled = true, groups = { "regression" } )
 	public void verifyAllProductionBatesRangesNotSearchable() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-50018 -Production Sprint 09");
@@ -3811,7 +3812,10 @@ public class Production_Test_Regression_01 {
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
 		// doc1
-		docViewRedactions.selectDoc1();
+		//docViewRedactions.selectDoc1();
+		DocViewPage doc = new DocViewPage(driver);
+		// doc1
+		doc.documentSelection(1);
 
 		driver.waitForPageToBeReady();
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
