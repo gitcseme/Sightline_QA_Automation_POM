@@ -2786,7 +2786,7 @@ public class Production_Test_Regression_02{
 
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();

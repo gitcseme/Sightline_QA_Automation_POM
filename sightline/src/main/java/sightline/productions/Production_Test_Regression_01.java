@@ -122,7 +122,7 @@ public class Production_Test_Regression_01 {
 
 		// Verify archive status on Grid view
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);

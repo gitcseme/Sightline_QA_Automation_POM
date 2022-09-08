@@ -170,7 +170,7 @@ public class Production_Regression2 {
 		doc.bulkTagExistingFromDoclist(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname1);
 		page.fillingDATSection();
@@ -191,7 +191,7 @@ public class Production_Regression2 {
 		page = new ProductionPage(driver);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
-		String beginningBates1 = page.getRandomNumber(1);
+		String beginningBates1 = page.getRandomNumber(2);
 		page.fillingDATSection();
 		page.selectGenerateOption(false);
 		page.selectBrandingInTiffAndPdfSection(tagname);
@@ -288,7 +288,7 @@ public class Production_Regression2 {
 
 		// Verify Pre-gen checks is in progress status on Tile view
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -436,7 +436,7 @@ public class Production_Regression2 {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		page = new ProductionPage(driver);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -610,7 +610,7 @@ public class Production_Regression2 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		page = new ProductionPage(driver);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -677,7 +677,7 @@ public class Production_Regression2 {
 		doc.bulkTagExistingFromDoclist(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname1);
 		page.fillingDATSection();
@@ -1735,7 +1735,7 @@ public class Production_Regression2 {
 
 		ProductionPage page = new ProductionPage(driver);
 		page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();

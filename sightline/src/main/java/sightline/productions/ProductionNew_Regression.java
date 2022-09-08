@@ -977,7 +977,7 @@ public class ProductionNew_Regression {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
