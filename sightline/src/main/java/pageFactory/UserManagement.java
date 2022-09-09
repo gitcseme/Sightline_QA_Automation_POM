@@ -2259,6 +2259,7 @@ public class UserManagement {
 	 * @Description get data from tableuser table
 	 */
 	public String getTableData(String ColumName, int row) {
+		driver.waitForPageToBeReady();
 		int colum = bc.getIndex(userDetailsTableHeader(), ColumName);
 		String data = tableValue(row, colum).getText().trim();
 		return data;

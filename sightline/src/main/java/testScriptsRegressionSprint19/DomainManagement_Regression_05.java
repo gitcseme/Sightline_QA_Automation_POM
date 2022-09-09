@@ -94,6 +94,7 @@ public class DomainManagement_Regression_05 {
 		base.CloseSuccessMsgpopup();
 		
 		//verify
+		driver.waitForPageToBeReady();
 		String getRole = user.getTableData("ROLE", 1);
 		softAssertion.assertEquals(getRole, Input.DomainAdministrator);
 		base.passedStep("User should be updated to Domain Admin");
@@ -116,6 +117,7 @@ public class DomainManagement_Regression_05 {
 		base.VerifySuccessMessage("User profile was successfully modified");
 		base.CloseSuccessMsgpopup();
 		
+		driver.waitForPageToBeReady();
 		getRole = user.getTableData("ROLE", 1);
 		softAssertion.assertEquals(getRole, Input.ProjectAdministrator);
 		base.passedStep("User should be updated to Domain Admin");
