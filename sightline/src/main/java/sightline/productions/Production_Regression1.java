@@ -2624,7 +2624,7 @@ public class Production_Regression1 {
 		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		base.stepInfo("Add New Production");
 		page.addANewProduction(productionname);
 
@@ -5260,7 +5260,7 @@ public class Production_Regression1 {
 			sessionSearch.bulkFolderExisting(foldername);
 
 			ProductionPage page = new ProductionPage(driver);
-			String beginningBates = page.getRandomNumber(4);
+			String beginningBates = page.getRandomNumber(2);
 			base.stepInfo("Add New Production");
 			page.addANewProduction(productionname);
 

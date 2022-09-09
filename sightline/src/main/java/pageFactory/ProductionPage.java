@@ -6852,7 +6852,7 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getBeginningBates().waitAndClick(10);
 		getBeginningBates().SendKeys(beginningBates);
-		num = getRandomNumber(3);
+		num = getRandomNumber(2);
 //		System.out.println("Beginning Bates=" + num);
 //		getBeginningBates().SendKeys(getRandomNumber(2));
 
@@ -6864,9 +6864,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = "25";
+		num1 = "2";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
 
 		driver.scrollingToBottomofAPage();
 
@@ -18148,7 +18148,7 @@ public class ProductionPage {
 		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
 		gettxtBeginningBatesIDMinNumLength().isDisplayed();
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
-		num1 = "22";
+		num1 = "2";
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 		base.stepInfo("Numbering and sorting page is filled without checked 'Family members together' checkbox");
 	}
@@ -18874,7 +18874,7 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("20");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
 
 		driver.scrollingToBottomofAPage();
 
@@ -19133,7 +19133,7 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = "20";
+		num1 = "2";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
 		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
 
@@ -20103,9 +20103,9 @@ public class ProductionPage {
 
 		base.waitForElement(gettxtBeginningBatesIDMinNumLength());
 		gettxtBeginningBatesIDMinNumLength().waitAndClick(10);
-		num1 = "25";
+		num1 = "2";
 		System.out.println("Beginning BatesID Min Num Length=" + num1);
-		gettxtBeginningBatesIDMinNumLength().SendKeys("25");
+		gettxtBeginningBatesIDMinNumLength().SendKeys("2");
 
 		driver.scrollingToBottomofAPage();
 
