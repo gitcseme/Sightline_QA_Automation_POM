@@ -238,7 +238,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-46885",enabled = true, groups = { "regression" })
-	public void TCA7verifyAudioIndexingForAudioDocs() throws InterruptedException {
+	public void TCA5verifyAudioIndexingForAudioDocs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46885");
 		baseClass.stepInfo("Verify audio indexing for audio documents when audio indexing option is selected");
@@ -276,7 +276,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47295",enabled = true, groups = { "regression" })
-	public void TCA8verifyPerformingNewAddOnlyIngestion() throws InterruptedException {
+	public void TCA7verifyPerformingNewAddOnlyIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47295");
 		baseClass.stepInfo("New Ingestion with Overwrite option as 'Add Only'");
@@ -321,7 +321,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48257",enabled = true, groups = { "regression" })
-	public void TCA5verifyUnpublishForAudioIngestedDocs() throws InterruptedException {
+	public void TCA8verifyUnpublishForAudioIngestedDocs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48257");
 		baseClass.stepInfo("To Verify Unpublish for Ingested audio documents");
