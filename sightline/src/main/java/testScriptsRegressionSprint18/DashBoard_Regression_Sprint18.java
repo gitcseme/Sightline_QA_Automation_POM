@@ -25,7 +25,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DashBoard_Regression {
+public class DashBoard_Regression_Sprint18 {
 	
 	public class Dashboard_Regression {
 
