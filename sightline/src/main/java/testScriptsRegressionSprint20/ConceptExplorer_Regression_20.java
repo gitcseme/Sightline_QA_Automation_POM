@@ -217,27 +217,38 @@ public class ConceptExplorer_Regression_20 {
 		String analyze3 = Input.analyzeAt3;
 		String sourceToSelect = "Security Groups";
 		String masterDate = "1980/01/01";
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		String TagName1 = "Tag1" + Utility.dynamicNameAppender();
 
 		baseClass.stepInfo("**Login to sightline and Select Project**");
 		loginPage.loginToSightLine(userName, password);
+
+		// Perform Search and Bulk Tag - 1
+		sessionSearch.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCustodianNameInput, null);
+		sessionSearch.verifyBulkTag(TagName);
+		baseClass.selectproject();
+
+		// Perform Search and Bulk Tag - 2
+		sessionSearch.basicMetaDataSearch(Input.metaDataName, null, Input.metaDataCN, null);
+		sessionSearch.verifyBulkTag(TagName1);
 
 		// Navigate to Concept Explorer page
 		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
 		reports.navigateToReportsPage("Concept Explorer Report");
 
-		// click on Apply Filter button Tags: Include MasterDate: On
-		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
-				Input.metaDataName, Input.metaDataCN, masterDate, "", true, false, "On", true, true, Input.metaDataName,
-				Input.masterDateText, "IncludeAndInclude", "masterDate", "All", false, "");
+		// click on Apply Filter button Tags: Include - true - MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, TagName, "Tags", TagName1,
+				masterDate, "", true, false, "On", true, true, Input.metaDataName, Input.masterDateText,
+				"CustomizedOR-AND", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false, "");
 
 		// remove filters
 		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
 		reports.navigateToReportsPage("Concept Explorer Report");
 
-		// click on Apply Filter button Tags: Exclude MasterDate: On
-		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
-				Input.metaDataName, Input.metaDataCN, masterDate, "", false, false, "On", true, true,
-				Input.metaDataName, Input.masterDateText, "ExcludeAndInclude", "masterDate", "All", false, "");
+		// click on Apply Filter button Tags: Exclude - false - MasterDate: On
+		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, TagName, "Tags", TagName1,
+				masterDate, "", false, false, "On", true, true, Input.metaDataName, Input.masterDateText,
+				"CustomizedOR-AND", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false, "");
 
 		// Back to source
 		conceptExplorer.getBackToSourceBtn().Click();
@@ -267,6 +278,13 @@ public class ConceptExplorer_Regression_20 {
 		baseClass.printResutInReport(baseClass.ValidateElement_PresenceReturn(conceptExplorer.getPageLevel("3rd")),
 				"Page navigated to third level and report generated", "Page didn't navigate to third level", "Pass");
 		conceptExplorer.verifyActiveFilters(expActiveFilters);
+
+		// Tag deletion
+		baseClass.stepInfo("Initiating tag deletion");
+		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+		tagsAndFolderPage.deleteAllTags(TagName);
+		tagsAndFolderPage.deleteAllTags(TagName1);
 
 		// Logout
 		loginPage.logout();
@@ -308,7 +326,8 @@ public class ConceptExplorer_Regression_20 {
 		// click on Apply Filter button Tags: Include MasterDate: On
 		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
 				Input.metaDataName, Input.metaDataCN, TagName, "", true, false, "On", true, true, Input.metaDataName,
-				Input.docFileType, "IncludeAndExclude", "Tags", "default", false, "");
+				Input.docFileType, "IncludeAndExclude", "Tags", "default", Input.metaDataCustodianNameInput,
+				Input.metaDataCN, false, "");
 
 		// remove filters
 		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
@@ -317,7 +336,8 @@ public class ConceptExplorer_Regression_20 {
 		// click on Apply Filter button Tags: Exclude MasterDate: On
 		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, Input.metaDataCustodianNameInput,
 				Input.metaDataName, Input.metaDataCN, TagName, "", false, false, "On", true, true, Input.metaDataName,
-				Input.docFileType, "ExcludeAndExclude", "Tags", "default", false, "");
+				Input.docFileType, "ExcludeAndExclude", "Tags", "default", Input.metaDataCustodianNameInput,
+				Input.metaDataCN, false, "");
 
 		// Back to source
 		conceptExplorer.getBackToSourceBtn().Click();
