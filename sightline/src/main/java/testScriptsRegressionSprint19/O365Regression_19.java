@@ -1146,7 +1146,8 @@ public class O365Regression_19 {
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-61295", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyViewDatasetsIsAsExpected(String usernameDetail, String password, String fullname) throws Exception {
+	public void verifyViewDatasetsIsAsExpected(String usernameDetail, String password, String fullname)
+			throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		List<String> custodianDetails = new ArrayList();
 
@@ -1158,7 +1159,7 @@ public class O365Regression_19 {
 		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
 		String[] statusList = { "Completed" };
 		String collectionNewName = "CollectionNew" + Utility.dynamicNameAppender();
-
+		String actualCollectionName;
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
 		String[][] userRolesData = { { usernameDetail, fullname, "SA" } };
 
@@ -1198,7 +1199,8 @@ public class O365Regression_19 {
 			base.stepInfo(collectionName + " : is Completed and Displayed in Collections Page");
 			driver.waitForPageToBeReady();
 			collection.clickViewDataset(collectionName);
-
+			driver.waitForPageToBeReady();
+			actualCollectionName=collectionName;
 		} else {
 			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
@@ -1213,6 +1215,9 @@ public class O365Regression_19 {
 			dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 			collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionNewName, statusList, 10);
 			collection.clickViewDataset(collectionNewName);
+			driver.waitForPageToBeReady();
+			actualCollectionName=collectionNewName;
+
 		}
 
 		// verify is it navigating to datasets page
@@ -1221,7 +1226,7 @@ public class O365Regression_19 {
 				"Navigation is not as expected");
 
 		// verify completed collection is displayed in datasets page
-		dataSets.verifysearchBoxValue(collectionName, otherTileView);
+		dataSets.verifysearchBoxValue(actualCollectionName, otherTileView);
 
 		// Logout
 		login.logout();
