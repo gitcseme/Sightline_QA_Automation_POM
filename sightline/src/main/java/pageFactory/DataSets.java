@@ -720,7 +720,7 @@ public class DataSets {
 				+ actualSearchValue;
 		String failMsg = "Filter is Not Applied";
 
-		if (!expectedTileView.equals(null)) {
+		if (!expectedTileView.equals("")) {
 			base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
 			String actualType = getTileViewType();
 			base.textCompareEquals(actualType, expectedTileView,
@@ -735,9 +735,11 @@ public class DataSets {
 	 * @return
 	 */
 	public String getTileViewType() {
-		String viewType = null;
+		String viewType = "";
 		driver.waitForPageToBeReady();
-		int totalDoc = getTotalDataset().size();
+		base.waitForElement(getTotalDatasetCount());
+		String datasetCount = getTotalDatasetCount().getText();
+		int totalDoc=Integer.parseInt(datasetCount);
 		base.stepInfo("Total Doc Count : " + totalDoc);
 
 		if (totalDoc > 1) {
