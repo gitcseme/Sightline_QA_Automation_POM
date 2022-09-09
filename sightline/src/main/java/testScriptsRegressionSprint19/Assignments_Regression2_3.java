@@ -104,6 +104,8 @@ public class Assignments_Regression2_3 {
 		    baseClass.waitForElement(sessionSearch.getSelectAssignmentExisting(assignmentName1));
 		    sessionSearch.getSelectAssignmentExisting(assignmentName1).Click(); 
 		    
+		    //after clicking on assignments moving the cursor near to continue button
+            sessionSearch.getContinueButton().ScrollTo();
 		    //Verifying Only Selected Assignment gets Selected
 		    baseClass.waitForElement(sessionSearch.getSelectedExistingAssignments());
 		   if(sessionSearch.getSelectedExistingAssignments().isElementAvailable(6)) {
