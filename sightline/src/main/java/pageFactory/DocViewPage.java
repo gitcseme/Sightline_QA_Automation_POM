@@ -24497,10 +24497,10 @@ public class DocViewPage {
 		MiniDocListPage mindiocList = new MiniDocListPage(driver);
 		Map<String, String> updateDatas = new HashMap<String, String>();
 		String updatedRemark = "UpdatedRemark" + Utility.dynamicNameAppender();
-
+		 driver.waitForPageToBeReady();
 		// Verify Existing remarks
 		for (int i = 0; i < iteration; i++) {
-
+			 driver.waitForPageToBeReady();
 			String dociID = datas.get("DocID-" + i);
 			String remarkText = datas.get("remark-" + i);
 			String remarkTime = datas.get("Time-" + i);
@@ -24514,7 +24514,7 @@ public class DocViewPage {
 			getAdvancedSearchAudioRemarkIcon().waitAndClick(5);
 
 			// Verify Remark Retained Datas
-
+			 driver.waitForPageToBeReady();
 			verifyResults(remarkText, remarkTime, dateAndTime, remarkauthorName, "Retained");
 
 			base.failedMessage(
@@ -24526,6 +24526,7 @@ public class DocViewPage {
 
 			if (editFlow) {
 				// Edit Flow
+				 driver.waitForPageToBeReady();
 				editAndVerifyData(remarkText, updateDatas, updatedRemark);
 			}
 		}
