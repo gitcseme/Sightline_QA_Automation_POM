@@ -113,7 +113,7 @@ public class ICE_SL_Regression_1 {
 		baseClass.stepInfo("verify dataset menu access and datasets availability");
 		dataSets.verifyMenuAndDatasetsAvailability();
 		baseClass.stepInfo("Perform metadata 'FamilyRelationShip' in advanced search");
-		int docsCount=sessionSearch.MetaDataSearchInAdvancedSearch("FamilyRelationShip", "Parent");
+		int docsCount=sessionSearch.MetaDataSearchInAdvancedSearch("FamilyRelationship", "Parent");
 		sessionSearch.verifySearchResultReturnsForConfiguredQuery(docsCount);
 		loginPage.logout();
 	}
