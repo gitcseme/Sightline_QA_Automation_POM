@@ -91,6 +91,9 @@ public class SystemLavelTemp_Regression {
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as PA with " + Input.pa1userName + "");
+		
+		baseClass.stepInfo("Select NonDomain Project");
+		baseClass.selectproject(Input.NonDomainProject);
 
 		baseClass.stepInfo("Go to Manage Tags And Folder Page");
 		tagAndFolder.navigateToTagsAndFolderPage();
