@@ -5020,6 +5020,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).ScrollTo();
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 		getAssgn_ManageRev_Action().waitAndClick(20);
+		bc.waitTime(2);
 		bc.waitForElement(getAssgn_RedistributeDoc());
 		getAssgn_RedistributeDoc().waitAndClick(20);
 		bc.waitForElement(bc.getYesBtn());
