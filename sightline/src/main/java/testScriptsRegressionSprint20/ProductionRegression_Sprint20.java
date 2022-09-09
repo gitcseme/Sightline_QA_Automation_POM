@@ -1,6 +1,9 @@
 package testScriptsRegressionSprint20;
 
 import java.io.File;
+
+
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -15,6 +18,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -30,7 +34,11 @@ import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import retry.CustomTestNGListener;
+import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
+
+@Listeners(CustomTestNGListener.class)
 public class ProductionRegression_Sprint20 {
 	
 
@@ -145,8 +153,8 @@ public class ProductionRegression_Sprint20 {
 	 **/
 	@Test(description = "RPMXCON-47740", enabled = true, groups = { "regression" })
 	public void verifyGridViewInProdPage() throws Exception {
-		List<String> expProdStatusOrder = new ArrayList<String>();
-		List<String> actProdStatusOrder = new ArrayList<String>();
+		List<String> beforeSortOrder = new ArrayList<String>();
+		List<String> afterSortOrder = new ArrayList<String>();
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47740");
 		base.stepInfo(
@@ -157,14 +165,13 @@ public class ProductionRegression_Sprint20 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-//		// create tag 
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
 		// search for tag
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-	//  Create Prod for failed state
+	    //  Create Prod for failed state
 		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
@@ -210,21 +217,19 @@ public class ProductionRegression_Sprint20 {
 		page.clickOnGenerateButton();
 
 		page.goToProductionGridView();
+		base=new BaseClass(driver);
 		base.waitForElementCollection(page.getProdCrtDateGridView());	
-		expProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+		beforeSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 		driver.scrollingToBottomofAPage();
 		for(int i = 2; i <= Integer.parseInt(page.getLastPageGridView().getText()); i++) {
 			driver.scrollingToBottomofAPage();
 			if(page.getPageNumGridView(i).isElementAvailable(4)) {
 				page.getPageNumGridView(i).waitAndClick(4);
 				base.waitTime(1);	
-				expProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+				beforeSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 			}
 		}
-		
-	    Collections.sort(expProdStatusOrder);   
-		System.out.println(expProdStatusOrder);
-		base.stepInfo("Before Sorting : " + expProdStatusOrder);
+		base.stepInfo("Before Sorting : " + beforeSortOrder);
 
 		page.goToProductionGridView();
 		base.waitForElement(page.getProdSortCrtDateGridView());
@@ -232,23 +237,21 @@ public class ProductionRegression_Sprint20 {
 		driver.waitForPageToBeReady();
 		
 		base.waitForElementCollection(page.getProdCrtDateGridView());
-		actProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+		afterSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 		driver.scrollingToBottomofAPage();
 		for(int i = 2; i <= Integer.parseInt(page.getLastPageGridView().getText()); i++) {
 			driver.scrollingToBottomofAPage();
 			if(page.getPageNumGridView(i).isElementAvailable(4)) {
 				page.getPageNumGridView(i).waitAndClick(4);
 				base.waitTime(1);	
-				actProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+				afterSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 			}
 		}
-		base.stepInfo("After Sorting : " + actProdStatusOrder);
-
-		if (expProdStatusOrder.equals(actProdStatusOrder)) {
-			base.passedStep("Productions list sorted as per the selected list in Grid View   ");
-		} else {
-			base.failedStep("Productions list Not sorted as per the selected list in Grid View   ");
-		}
+		base.stepInfo("After Sorting : " + afterSortOrder);
+		base.verifyOriginalSortOrder(afterSortOrder, beforeSortOrder, "Ascending", true);
+		base.stepInfo("Productions list sorted as per the selected list in Grid View");
+		base.passedStep("To Verify sorting in Grid View from Productions page");
+		loginPage.logout();
 	}
 	
 	/**
