@@ -255,6 +255,9 @@ public class BatchPrintPage {
 
 	// Added By Jeevitha
 	
+	public Element getAscAndDescDDlist() {
+		return driver.FindElementByXPath("//select[@id='exportFileSortingOrderDropDown']");
+	}
 	public ElementCollection getSortByDDList() {
 		return driver.FindElementsByXPath("//select[@id='exportFileSortByDropDown']//option");
 	}
@@ -2665,5 +2668,10 @@ public class BatchPrintPage {
 	public void selectDropdownFromSlipSheet_prod(String ddValue) {
 		base.waitForElement(getSlipSheetDD_prod());
 		getSlipSheetDD_prod().selectFromDropdown().selectByVisibleText(ddValue);
+	}
+	
+	public void selectSortingFromExportPage(String ddValue) {
+		base.waitForElement(getAscAndDescDDlist());
+		getAscAndDescDDlist().selectFromDropdown().selectByVisibleText(ddValue);
 	}
 }
