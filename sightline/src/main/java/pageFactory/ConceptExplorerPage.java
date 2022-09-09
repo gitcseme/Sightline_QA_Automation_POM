@@ -1418,49 +1418,6 @@ public class ConceptExplorerPage {
 					masterDate1);
 		} else if (comparisonType.equalsIgnoreCase("ExcludeAndExclude")) {
 			verifyExcludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2, masterDate1);
-		} else if (comparisonType.equalsIgnoreCase("CustomizedOR-AND")) {
-			verifyORANDWithTwoAndOneVariable(column1NameList, column2NameList, input1, input2, masterDate1);
 		}
 	}
-
-	/**
-	 * @author Raghuram.A
-	 * @param metaDataWithTwoData
-	 * @param metaDataWithOneData
-	 * @param metaData1
-	 * @param metaData_1
-	 * @param metaData
-	 * @description : verifyORANDWithTwoAndOneVariable
-	 */
-	public void verifyORANDWithTwoAndOneVariable(List<String> metaDataWithTwoData, List<String> metaDataWithOneData,
-			String metaData1, String metaData_1, String metaData) {
-		String metaData_twoOption;
-
-		// Condition validation
-		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
-
-			// OR condition check for 2 inputs witn AND
-			if ((metaData_twoOption.contains(metaData_1.toLowerCase()))
-					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
-				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase()))) {
-					continue;
-				} else {
-					base.failedStep("Meta Data are not filtered as expected.");
-				}
-			} else {
-				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase()))) {
-					continue;
-				} else {
-					base.failedStep("Meta Data are not filtered as expected.");
-				}
-			}
-		}
-
-		base.passedStep(
-				"**After validating  the Include / Exclude apllied filters from Concpet explorer Tiles via Doc List We observed follwing things**");
-		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
-		base.passedStep("2. Multiple filters should be considered as AND operator.");
-	}
-
 }

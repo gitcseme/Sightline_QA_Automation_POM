@@ -209,6 +209,7 @@ public class ConceptExplorer_Regression_20 {
 	@Test(description = "RPMXCON-56909", enabled = true, dataProvider = "paRmuUsers", groups = { "regression" })
 	public void verifyConceptExpFiltersFunctionality(String userName, String password, String role) throws Exception {
 
+		baseClass.failedMessage("Test case Id :RPMXCON-56909 - Expected Failure");
 		baseClass.stepInfo("Test case Id :RPMXCON-56909 ");
 		baseClass.stepInfo("Validate onpage filter for Tags and MasterDate on Concept Explorer Report");
 		baseClass.failedMessage("Make sure the project has valid expected datas");
@@ -239,7 +240,8 @@ public class ConceptExplorer_Regression_20 {
 		// click on Apply Filter button Tags: Include - true - MasterDate: On
 		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, TagName, "Tags", TagName1,
 				masterDate, "", true, false, "On", true, true, Input.metaDataName, Input.masterDateText,
-				"CustomizedOR-AND", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false, "");
+				"IncludeAndInclude", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false,
+				"");
 
 		// remove filters
 		baseClass.stepInfo("** navigate from Reports - Click concept explorer report button");
@@ -248,7 +250,8 @@ public class ConceptExplorer_Regression_20 {
 		// click on Apply Filter button Tags: Exclude - false - MasterDate: On
 		conceptExplorer.customizedFilterCheck(sourceToSelect, Input.securityGroup, TagName, "Tags", TagName1,
 				masterDate, "", false, false, "On", true, true, Input.metaDataName, Input.masterDateText,
-				"CustomizedOR-AND", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false, "");
+				"ExcludeAndInclude", "masterDate", "All", Input.metaDataCustodianNameInput, Input.metaDataCN, false,
+				"");
 
 		// Back to source
 		conceptExplorer.getBackToSourceBtn().Click();
