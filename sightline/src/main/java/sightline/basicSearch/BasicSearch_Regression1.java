@@ -38,6 +38,8 @@ public class BasicSearch_Regression1 {
 	SoftAssert softAssertion;
 	SessionSearch ss;
 	BaseClass bc;
+	DocViewRedactions docViewRedact ;
+	MiniDocListPage miniDocListpage ;
 
 	String searchName = "Search" + Utility.dynamicNameAppender();
 
@@ -45,8 +47,8 @@ public class BasicSearch_Regression1 {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-	////	Input in = new Input();
-    //	in.loadEnvConfig();
+		Input in = new Input();
+    	in.loadEnvConfig();
 	}
 
 	@BeforeMethod
@@ -59,6 +61,8 @@ public class BasicSearch_Regression1 {
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
 		lp = new LoginPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		miniDocListpage = new MiniDocListPage(driver);
 
 	}
 
@@ -887,6 +891,45 @@ public class BasicSearch_Regression1 {
 		softAssertion.assertAll();
 		lp.logout();
 	}
+
+	@Test(description ="RPMXCON-61593",enabled = true, groups = { "regression" })
+	public void verifyExclamatorymarkInSearch() throws Exception {
+
+		String[] datasToVerify = { "U&C", "U& C", "U C", "U/C", "U &C", "U!C", "U%C", "U:C", "U)C", "U(C", "U>C", "U<C",
+				"U?C", "U=C", "U;C", "U & C", "U", "C" };
+		List<String> docIDlist = new ArrayList<>();
+		String wildInputString = Input.specialString4;
+
+		bc.stepInfo("Test case Id:RPMXCON-61593 Sprint 11");
+		bc.stepInfo(
+				"Verify that Application is not displaying warning message when white-space character (exclamation mark ! ) embedded within a Regular Expression query.");
+		// login as RMU
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Search and View in DocView
+		bc.stepInfo("Configured Regular Expression query with Right Curly Brace }   : " + wildInputString);
+		
+		ss.basicContentSearch(wildInputString);
+		ss.ViewInDocView();
+		driver.waitForPageToBeReady();
+
+		// Collect total doc datas
+		docIDlist = miniDocListpage.getDocListDatas();
+		docViewRedact.verifyContentPresentForListOfDocs(docIDlist, datasToVerify);
+
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+		bc.passedStep(
+				"Right Curly Brace } treated as whitespace and it returned all documents  having word mentioned \"U and C Tester \"on basic search screen. like\r\n"
+						+ "U&C Tester\r\n" + "U C Tester\r\n" + "U\\C Tester etc.");
+		bc.stepInfo(
+				"---------------------------------------------------------------------------------------------------------------------------------------------------");
+
+		lp.logout();
+
+	}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
