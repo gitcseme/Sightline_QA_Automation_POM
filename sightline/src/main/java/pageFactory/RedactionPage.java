@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -358,6 +359,25 @@ public class RedactionPage {
 			
 		}else {
 			bc.failedStep("There is no Redaction Tags in this project");
+		}
+  		
+  		
+	}
+  	
+  	/**
+  	 * @author Mohan.Venugopal
+  	 * @description: To validate Redaction Tag page Tags present 
+  	 */
+  	public void verifyRedactionTagPage() {
+		
+  		
+  		driver.waitForPageToBeReady();
+  		if (getSelectredaction("Default Redaction Tag").isElementAvailable(5)&&getSelectredaction("Redacted Privacy").isElementAvailable(5)&&getSelectredaction("Redacted Privilege").isElementAvailable(5)) {
+			
+  			bc.passedStep("The provisioned Redaction Tags are available in RedactionTag Page successfully");
+		}else {
+			
+			bc.failedStep("The provisioned Redaction Tags are not available in RedactionTag Page");
 		}
   		
   		

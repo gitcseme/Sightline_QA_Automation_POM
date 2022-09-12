@@ -17,7 +17,10 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -155,6 +158,89 @@ public class SystemLavelTemp_Regression {
 		softassertion.assertAll();
 		loginPage.logout();
 
+	}
+	
+	/**
+	 * @author Mohan.Venugopal ModifyDate:12/09/2022 RPMXCON-52980 
+	 * @throws Exception 
+	 * @Description Verify that provisioned Redaction Tags is working properly in DocView in the Project- RMU
+	 * 
+	 */
+	@Test(description = "RPMXCON-52980", enabled = true, groups = { "regression" })
+	public void verifyProvisionedRedactionTagsForRMU() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52980");
+		baseClass.stepInfo(
+				"Verify that provisioned Redaction Tags is working properly in DocView in the Project- RMU");
+
+		sessionSearch = new SessionSearch(driver);
+		RedactionPage redactionPage  = new RedactionPage(driver);
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Navigate to Redaction Tag Page and verify redaction tag provisioned
+		redactionPage.navigateToRedactionsPageURL();
+		redactionPage.verifyRedactionTagPage();
+		
+		//Search for docs and Navigate to DocView
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.viewInDocView();
+		
+		//Verify that provisioned Redaction Tags is working properly in DocView in the Project- RMU
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		docViewRedactions.selectMiniDocListAndViewInDocView(2);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(3);
+		baseClass.waitForElement(docViewRedactions.redactionIcon());
+		docViewRedactions.redactionIcon().waitAndClick(5);
+		docViewRedactions.performThisPageRedaction("Default Redaction Tag");
+		docViewRedactions.selectMiniDocListAndViewInDocView(3);
+		driver.waitForPageToBeReady();
+		docViewRedactions.performThisPageRedaction("Redacted Privacy");
+		docViewRedactions.selectMiniDocListAndViewInDocView(4);
+		docViewRedactions.performThisPageRedaction("Redacted Privilege");
+		baseClass.passedStep("Provisioned Redaction Tags are working properly in DocView in the Project- RMU successfully");
+		
+		//logout
+		loginPage.logout();
+		
+		
+		
+		
+	}
+	
+	/**
+	 * @author Mohan.Venugopal ModifyDate:12/09/2022 RPMXCON-52974 
+	 * @throws Exception 
+	 * @Description Verify that When a Domain project is created then provisioned CF with Specific logic  is  available in the Project- RMU
+	 * 
+	 */
+	@Test(description = "RPMXCON-52974", enabled = true, groups = { "regression" })
+	public void verifyCodingFormWithSpecificLogicInDomainProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52974");
+		baseClass.stepInfo(
+				"Verify that When a Domain project is created then provisioned CF with Specific logic is available in the Project- RMU");
+
+		sessionSearch = new SessionSearch(driver);
+		CodingForm codingForm = new CodingForm(driver);
+		String codingFormName="SpecificLogic"+Utility.dynamicNameAppender();
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Navigate to CF Page.
+		codingForm.navigateToCodingFormPage();
+		codingForm.PreviewValidations(codingFormName,"tag","Check Item","Make It Optional");
+		baseClass.passedStep("Provisioned CF gets created with Specific logic are available in the Project- RMU.");
+		
+		
+		//logout
+		loginPage.logout();
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
