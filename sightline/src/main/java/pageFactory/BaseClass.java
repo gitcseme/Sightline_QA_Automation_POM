@@ -4442,4 +4442,34 @@ public class BaseClass {
 				"" + ActualString + " not displayed");
 
 	}
+	
+	/**
+	 * @Author jeevitha
+	 * @Description : compare list via contains & trim Space
+	 * @param baseList
+	 * @param compareList
+	 * @return
+	 */
+	public boolean compareListViaContainsTrimSpace(List<String> baseList, List<String> compareList) {
+		boolean flag = false;
+
+		for (int i = 0; i < baseList.size(); i++) {
+			
+			String source=baseList.get(i).trim().replace(" ", "");
+			String compare=compareList.get(i).trim().replace(" ", "");
+			
+			System.out.println("Source : " + source);
+			System.out.println("Compare : " + compare);
+
+			if (source.contains(compare)) {
+				Assert.assertEquals(true, true);
+				flag = true;
+			} else {
+				failedStep("Base String doesn't contains compare String");
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
 }

@@ -498,10 +498,11 @@ public class DocListPage {
 	public Element getDataInDoclist(int row, int column) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//tbody//tr[" + row + "]//td[" + column + "]");
 	}
-	
+
 	public Element getDoclistNextButton() {
 		return driver.FindElementByXPath("//li[@id='dtDocList_next']//a");
 	}
+
 	public Element getNextButtonStatus() {
 		return driver.FindElementById("dtDocList_next");
 	}
@@ -1386,6 +1387,10 @@ public class DocListPage {
 	}
 
 	// jeevitha
+	public Element getheaderName(String headerName) {
+		return driver.FindElementByXPath("//table[@id='dtDocList']//th[text()='" + headerName + "']");
+	}
+
 	public Element getSourcePanel() {
 		return driver.FindElementByXPath("//div[@id='accordion']//div[@class='panel-body']");
 	}
@@ -2046,6 +2051,10 @@ public class DocListPage {
 		base.waitForElement(getFinalizeButton());
 		getFinalizeButton().Click();
 
+		if (getPopUpOkBtn().isElementAvailable(5)) {
+			getPopUpOkBtn().waitAndClick(10);
+		}
+		driver.waitForPageToBeReady();
 		driver.Manage().window().maximize();
 
 	}
@@ -4409,7 +4418,7 @@ public class DocListPage {
 		base.waitForElement(getTableFooterDocListCount());
 		String DocListCount = getTableFooterDocListCount().getText();
 		System.out.println(DocListCount);
-		driver.waitForPageToBeReady();		
+		driver.waitForPageToBeReady();
 		String[] doccount = DocListCount.split(" ");
 		System.out.println(doccount);
 		String DocumentCount = doccount[5];
@@ -6156,6 +6165,91 @@ public class DocListPage {
 
 		// Date comparison msg
 		base.dateComparisonMsg(comparisionType, actualDateVlue, expectedDateInput, toDateInput, status);
+	}
+
+	/**
+	 * @Author jeevitha
+	 * @Description : verify whether expected column is present else add column
+	 * @param columnName
+	 */
+	public void verifyAndAddColumn(String columnName) {
+		List<String> doclistHeader = base.availableListofElements(getColumnHeader());
+		boolean flag = false;
+		for (int i = 0; i < doclistHeader.size(); i++) {
+			if (doclistHeader.get(i).equalsIgnoreCase(columnName)) {
+				base.stepInfo(columnName + " : Column Already Present");
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			SelectColumnDisplay(getSelectAvailMetadata(columnName));
+			base.stepInfo(columnName + " : Column Added Successfully");
+		}
+	}
+
+	/**
+	 * @Author Sort Any column in ascending or Descending order
+	 * @param clickHeader
+	 * @param headerName
+	 * @param ascending
+	 */
+	public void sortColumn(boolean clickHeader, String headerName, boolean ascending) {
+		if (clickHeader) {
+			base.waitForElement(getheaderName(headerName));
+			getheaderName(headerName).waitAndClick(10);
+		}
+
+		driver.waitForPageToBeReady();
+		base.waitTime(2);
+		String sortStatus = getheaderName(headerName).GetAttribute("aria-sort");
+		if (ascending) {
+
+			if (sortStatus.equalsIgnoreCase("ascending")) {
+				base.stepInfo(headerName + " : column is in sorted in Ascending Order");
+			} else if (sortStatus.equalsIgnoreCase("descending")) {
+				getheaderName(headerName).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				String sortStatus2 = getheaderName(headerName).GetAttribute("aria-sort");
+				base.stepInfo(headerName + " : column is in sorted in " + sortStatus2);
+			}
+
+		} else if (!ascending) {
+			if (sortStatus.equalsIgnoreCase("descending")) {
+				base.stepInfo(headerName + " : column is in sorted in Descending Order");
+			} else if (sortStatus.equalsIgnoreCase("ascending")) {
+				driver.waitForPageToBeReady();
+				getheaderName(headerName).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				String sortStatus4 = getheaderName(headerName).GetAttribute("aria-sort");
+				base.stepInfo(headerName + " : column is in sorted in " + sortStatus4);
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription : get available list of elements for element collection
+	 * @param element
+	 * @return
+	 */
+	public List<String> availableListofElementsForDocList(ElementCollection element) {
+		try {
+			List<String> elementNames = new ArrayList<>();
+			List<WebElement> elementList = null;
+			elementList = element.FindWebElements();
+			for (WebElement wenElementNames : elementList) {
+				String elementName = wenElementNames.getText();
+
+				if (elementName.equals("")) {
+					elementName = "No Name";
+				}
+				elementNames.add(elementName);
+			}
+			return elementNames;
+		} catch (Exception E) {
+			return null;
+		}
 	}
 
 }
