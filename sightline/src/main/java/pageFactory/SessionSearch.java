@@ -2617,10 +2617,12 @@ public class SessionSearch {
 
 		// two handle twosearch strings
 		if (metaDataField.equalsIgnoreCase("CustodianName") || metaDataField.equalsIgnoreCase("EmailAuthorName")
-				|| metaDataField.equalsIgnoreCase("EmailRecipientNames")) {
+				|| metaDataField.equalsIgnoreCase("EmailRecipientNames")
+				|| metaDataField.equalsIgnoreCase(Input.docFileType)) {
 
 			try {
-				if (getTallyContinue().isElementAvailable(5)) {
+				driver.waitForPageToBeReady();
+				if (getTallyContinue().isElementAvailable(10)) {
 					getTallyContinue().waitAndClick(10);
 				}
 			} catch (Exception e) {

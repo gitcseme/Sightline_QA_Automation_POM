@@ -341,6 +341,14 @@ public class ConceptExplorerPage {
 		return driver.FindElementsByXPath("//div[@id='activeFilters']//li");
 	}
 
+	public ElementCollection getDataAddedInCart() {
+		return driver.FindElementsByXPath("//div[@class='node cedefault added']//i");
+	}
+
+	public Element getAddedSquareToSelect(int i) {
+		return driver.FindElementByXPath("//div[contains(@class,'node cedefault added')][" + i + "]");
+	}
+
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -482,11 +490,13 @@ public class ConceptExplorerPage {
 	 * @param sgToSelect
 	 */
 	public void selectSGsource(String sourceToSelect, String sgToSelect) {
-        driver.waitForPageToBeReady();
-        getSelectSourcedOption(sourceToSelect).waitAndClick(15);
-        getSelectSGOption(sgToSelect).waitAndClick(5);
-        getSaveSelectionsBtn().waitAndClick(10);
-    }
+		driver.waitForPageToBeReady();
+		getSelectSourcedOption(sourceToSelect).waitAndClick(15);
+		driver.waitForPageToBeReady();
+		getSelectSGOption(sgToSelect).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getSaveSelectionsBtn().waitAndClick(10);
+	}
 
 	/**
 	 * @author Raghuram.A
@@ -1125,8 +1135,9 @@ public class ConceptExplorerPage {
 		boolean status = false;
 		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
-			if ((metaData_twoOption.contains(metaData_1.toLowerCase())) || (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
+			if ((metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
 				status = true;
 
 				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
@@ -1168,9 +1179,12 @@ public class ConceptExplorerPage {
 		boolean status = false;
 		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
-			if (!(metaData_twoOption.equals(metaData_1.toLowerCase()))
-					|| (metaData_twoOption.equals(metaData1.toLowerCase()))) {
+
+			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
+			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+
+			
 				status = true;
 				if (!(metaDataWithOneData.get(i).toLowerCase().equals(metaData.toLowerCase())) && status) {
 					continue;
@@ -1207,12 +1221,13 @@ public class ConceptExplorerPage {
 					"Applied Active Filters not Retained");
 		return activeFilters;
 	}
-/**
- * @author Jayanthi.Ganesan
- * @param limitCheck  [iteration to be checked in for loop]
- * @param docCount[total direct sub clusters count]
- * @param tileCountToSelect[no of tile to be selected]
- */
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param limitCheck           [iteration to be checked in for loop]
+	 * @param docCount[total       direct sub clusters count]
+	 * @param tileCountToSelect[no of tile to be selected]
+	 */
 	public void tileSelctionAnalyze_BasedChildCount(int limitCheck, int docCount, int tileCountToSelect) {
 		// Verify child count
 		String clusterID = null;
@@ -1220,8 +1235,8 @@ public class ConceptExplorerPage {
 		for (int k = 1; k <= limitCheck; k++) {
 			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
 			if (clusterCount > docCount) {
-				tileSelected = tileSelected+1;
-				 hoverOnSpecificConcepTualMapReturnText(k);
+				tileSelected = tileSelected + 1;
+				hoverOnSpecificConcepTualMapReturnText(k);
 				// Cluster ID
 				clusterID = getClusterID(false, 1, limitCheck);
 				base.stepInfo("Cluster Id : " + clusterID);
@@ -1234,7 +1249,75 @@ public class ConceptExplorerPage {
 				}
 			}
 		}
-	
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param metaDataWithTwoData
+	 * @param metaDataWithOneData
+	 * @param metaData1
+	 * @param metaData_1
+	 * @param metaData
+	 */
+	public void verifyExcludeWithIncludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData,
+			List<String> metaDataWithOneData, String metaData1, String metaData_1, String metaData) {
+		boolean status = false;
+		String metaData_twoOption;
+		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
+			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
+			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+				status = true;
+				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
+					continue;
+				} else {
+					base.failedStep("Meta Data are not filtered as expected.");
+				}
+
+			} else {
+				base.failedStep("Meta Data are not filtered as expected.");
+			}
+		}
+		base.passedStep(
+				"**After validating the applied Exclude filters from Concpet explorer Tiles via Doc List We observed follwing things**");
+		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
+
+		base.passedStep("2. Multiple filters should be considered as AND operator.");
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param metaDataWithTwoData
+	 * @param metaDataWithOneData
+	 * @param metaData1
+	 * @param metaData_1
+	 * @param metaData
+	 */
+	public void verifyincludeWithExcludeFiltersLikeOR_Operator(List<String> metaDataWithTwoData,
+			List<String> metaDataWithOneData, String metaData1, String metaData_1, String metaData) {
+		boolean status = false;
+		String metaData_twoOption;
+		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
+			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
+			if ((metaData_twoOption.contains(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+				status = true;
+				if (!(metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
+					continue;
+				} else {
+					base.failedStep("Meta Data are not filtered as expected.");
+				}
+
+			} else {
+				base.failedStep("Meta Data are not filtered as expected.");
+			}
+		}
+		base.passedStep(
+				"**After validating the applied Exclude filters from Concpet explorer Tiles via Doc List We observed follwing things**");
+		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
+
+		base.passedStep("2. Multiple filters should be considered as AND operator.");
 	}
 	/**
 	 * @author Jayanthi.Ganesan This method will verify the Exclude filter
@@ -1276,4 +1359,107 @@ public class ConceptExplorerPage {
 		base.passedStep("2. Multiple filters should be considered as AND operator.");
 	}
 
+	/**
+	 * @author Raghuram.A
+	 * @param limitCheck
+	 * @param docCount
+	 */
+	public void addedTileSelectionBasedOnChildCount(int limitCheck, int docCount) {
+		for (int k = 1; k <= limitCheck; k++) {
+			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
+			if (clusterCount > docCount) {
+				getAddedSquareToSelect(k).waitAndClick(3);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : customized Filter Check can be modifed based on future
+	 *              requirement
+	 */
+	public void customizedFilterCheck(String sourceToSelect, String sourceName, String input1, String metaDataType,
+			String input2, String masterDate1, String masterDate2, Boolean incExl1, Boolean incExl2, String range,
+			Boolean flow1, Boolean validation, String cloumn1, String column2, String comparisonType, String filterType,
+			String addTile, String columnText1, String columnText2, Boolean additional1, String additional2) {
+		// Select Sources
+		clickSelectSources();
+		base.stepInfo("** Select Security group as source and save selection");
+		selectSGsource(sourceToSelect, sourceName);
+
+		// Apply filter - Custodian Name | MasterDate - Apply
+		base.stepInfo("** Set the filter criteria and click “Apply filter”");
+		filterAction(input1, metaDataType, input2, incExl1);
+
+		// Action
+		if (filterType.equalsIgnoreCase("masterDate")) {
+			masterDateAsInputString(masterDate1, "", range);
+		} else {
+			filterAction(masterDate1, filterType, null, incExl2);
+		}
+		applyFilter("Yes", 10);
+		base.waitForElement(getDocCOuntFromHeader());
+
+		// Get Doc count consolidated
+		String totalSelectedDocCount = getDocCOuntFromHeader().getText();
+		String aggregatedDocCount = extractStringFromPosition(totalSelectedDocCount, 2);
+		base.passedStep("Report Generated with doc count : " + aggregatedDocCount + " which is expected");
+
+		// Add tiles to cart
+		addTiles(addTile, 0);
+
+		// view in doc list to verify filters applied returns the docs correctly.
+		performDocActions("View", "View in DocList");
+		base.waitTime(5);
+		base.verifyPageNavigation("en-us/Document/DocList");
+
+		// validation for inlcude filters
+		if (validation) {
+			filterValidation(comparisonType, cloumn1, column2, columnText1, columnText2, masterDate1, false, "");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param addTile
+	 * @param count
+	 */
+	public void addTiles(String addTile, int count) {
+		// Add tiles to cart
+		if (addTile.equalsIgnoreCase("All")) {
+			addAllTilesToCart();
+		} else if (addTile.equalsIgnoreCase("default")) {
+			addMultipleTilesToCart(2);
+		} else if (addTile.equalsIgnoreCase("userDefined")) {
+			addMultipleTilesToCart(count);
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param comparisonType
+	 * @param cloumn1
+	 * @param column2
+	 * @param input1
+	 * @param input2
+	 * @param masterDate1
+	 */
+	public void filterValidation(String comparisonType, String cloumn1, String column2, String input1, String input2,
+			String masterDate1, Boolean additional1, String additional2) {
+		DocListPage dlPage = new DocListPage(driver);
+		List<String> column1NameList = dlPage.getColumnValue(cloumn1, false);
+		List<String> column2NameList = dlPage.getColumnValue(column2, false);
+		if (comparisonType.equalsIgnoreCase("IncludeAndInclude")) {
+			verifyIcludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2, masterDate1);
+		} else if (comparisonType.equalsIgnoreCase("ExcludeAndInclude")) {
+			verifyExcludeWithIncludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2,
+					masterDate1);
+		} else if (comparisonType.equalsIgnoreCase("IncludeAndExclude")) {
+			verifyincludeWithExcludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2,
+					masterDate1);
+		} else if (comparisonType.equalsIgnoreCase("ExcludeAndExclude")) {
+			verifyExcludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2, masterDate1);
+		}
+	}
 }
