@@ -80,8 +80,9 @@ public class BatchPrintRegression_21 {
 	 * @throws IOException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-49189", enabled = true, groups = { "regression" })
-	public void validateSortingByDocDate() throws InterruptedException, IOException, AWTException {
+	@Test(description = "RPMXCON-49189", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void validateSortingByDocDate(String username, String password)
+			throws InterruptedException, IOException, AWTException {
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String columnName = "DocDate";
 		DocListPage doclist = new DocListPage(driver);
@@ -161,8 +162,9 @@ public class BatchPrintRegression_21 {
 	 * @throws IOException
 	 * @throws AWTException
 	 */
-	@Test(description = "RPMXCON-49184", enabled = true, groups = { "regression" })
-	public void validateSortingByLastSaveDate() throws InterruptedException, IOException, AWTException {
+	@Test(description = "RPMXCON-49184", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void validateSortingByLastSaveDate(String username, String password)
+			throws InterruptedException, IOException, AWTException {
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		String columnName = "LastSaveDate";
 		DocListPage doclist = new DocListPage(driver);
