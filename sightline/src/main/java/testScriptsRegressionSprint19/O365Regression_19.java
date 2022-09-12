@@ -847,7 +847,8 @@ public class O365Regression_19 {
 		base.stepInfo("Initiation collection  deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.collectionDeletion(collectionID);
-
+		driver.waitForPageToBeReady();
+        base.waitTime(3);
 		// verify Collection Absence in Manage collection Screen
 		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
 				dataName + " deleted Successfully : is not Displayed in Manage Collection Screen",
