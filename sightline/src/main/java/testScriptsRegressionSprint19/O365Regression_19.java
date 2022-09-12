@@ -813,6 +813,8 @@ public class O365Regression_19 {
 		base.stepInfo("Initiation collection deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.deleteUsingCollectionName(dataName, true);
+		driver.waitForPageToBeReady();
+		base.waitTime(3); // To handle abnormal load time
 
 		// verify Collection Absence in Manage collection Screen
 		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),

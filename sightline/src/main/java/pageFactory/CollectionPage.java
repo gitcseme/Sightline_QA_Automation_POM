@@ -129,29 +129,29 @@ public class CollectionPage {
 
 	// Added by Mohan
 	public Element getCollectionListFieldValueRunByAndSourceLocationText(int rowNo) {
-		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]");
 	}
-	
+
 	public Element getCollectionListDatasetValueCollectionName() {
 		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[2]//div");
 	}
-	
+
 	public Element getCollectionListDatasetValue(int rowNo) {
-		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]");
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]");
 	}
-	
+
 	public Element getCollectionListDataset(int rowNo) {
-		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td["+rowNo+"]//a");
+		return driver.FindElementByXPath("//*[@id='dtCollectionList']//tbody//tr[1]//td[" + rowNo + "]//a");
 	}
-	
+
 	public Element getCollectionHeaderList(int rowNo) {
-		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']//th["+rowNo+"]");
+		return driver.FindElementByXPath("//div[@class='dataTables_scrollHeadInner']//th[" + rowNo + "]");
 	}
-	
+
 	public ElementCollection getCollectionListHeaderFields() {
 		return driver.FindElementsByXPath("//*[@class='table dataTable no-footer']//thead//tr//th");
 	}
-	
+
 	public Element getDatasetPopUpSaveButton() {
 		return driver.FindElementByXPath("//input[@id='btnSaveDatasetSelection' and @disabled]");
 	}
@@ -357,7 +357,7 @@ public class CollectionPage {
 		return driver.FindElementByXPath(
 				"//div[text()='" + collectionName + "']//..//parent::tr//td[text()='" + value + "']");
 	}
-	
+
 	public ElementCollection getAttributesOfSummaryTab() {
 		return driver.FindElementsByXPath("//div[@class='row rowPadding']//div[@class='col-md-3']");
 	}
@@ -1755,6 +1755,7 @@ public class CollectionPage {
 		base.waitForElement(getFilterButton());
 		getFilterButton().waitAndClick(5);
 
+		driver.waitForPageToBeReady();
 		base.waitForElement(getFilteEnablerButton());
 		getFilteEnablerButton().waitAndClick(5);
 
@@ -2421,8 +2422,7 @@ public class CollectionPage {
 		}
 		base.getBullHornIcon().waitAndClick(10);
 	}
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To verify Collection Header and List of colelction present
@@ -2433,64 +2433,63 @@ public class CollectionPage {
 		base.waitTime(2);
 		int collectionHeaderList = getDataSetDetailsHeader().size();
 		System.out.println(collectionHeaderList);
-		
-		
-		
+
 		for (int i = 1; i < collectionHeaderList; i++) {
-				Element elementByIndex = getCollectionHeaderList(i);
-				base.waitTime(2);
-				String collectionHeader = elementByIndex.getText();
-				
-			
-			System.out.println("Collection HeaderList No:"+i+":"+collectionHeader);
-			base.stepInfo("Collection HeaderList No:"+i+":"+collectionHeader);
-			
+			Element elementByIndex = getCollectionHeaderList(i);
+			base.waitTime(2);
+			String collectionHeader = elementByIndex.getText();
+
+			System.out.println("Collection HeaderList No:" + i + ":" + collectionHeader);
+			base.stepInfo("Collection HeaderList No:" + i + ":" + collectionHeader);
+
 		}
 		base.waitForElement(getCollectionListDataset(1));
 		Element collectionListDataset = getCollectionListDataset(1);
 		String collectionList = collectionListDataset.getText();
-		System.out.println("Collection ID:"+collectionList);
-		base.stepInfo("Collection ID:"+collectionList);
+		System.out.println("Collection ID:" + collectionList);
+		base.stepInfo("Collection ID:" + collectionList);
 		base.waitForElement(getCollectionListDatasetValueCollectionName());
 		String collectionName = getCollectionListDatasetValueCollectionName().getText();
-		System.out.println("Collection Name:"+collectionName);
-		base.stepInfo("Collection Name:"+collectionList);
+		System.out.println("Collection Name:" + collectionName);
+		base.stepInfo("Collection Name:" + collectionList);
 		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(3));
 		String collectionRunBy = getCollectionListFieldValueRunByAndSourceLocationText(3).getText();
-		System.out.println("Collection RunBy:"+collectionRunBy);
-		base.stepInfo("Collection RunBy:"+collectionRunBy);
+		System.out.println("Collection RunBy:" + collectionRunBy);
+		base.stepInfo("Collection RunBy:" + collectionRunBy);
 		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(4));
 		String collectionSourceLoaction = getCollectionListFieldValueRunByAndSourceLocationText(4).getText();
-		System.out.println("Collection SourceLoaction:"+collectionSourceLoaction);
-		base.stepInfo("Collection SourceLoaction:"+collectionSourceLoaction);
+		System.out.println("Collection SourceLoaction:" + collectionSourceLoaction);
+		base.stepInfo("Collection SourceLoaction:" + collectionSourceLoaction);
 		base.waitForElement(getCollectionFieldValuesInCollectionHomePage(5, 1));
 		String collectionStatus = getCollectionFieldValuesInCollectionHomePage(5, 1).getText();
-		System.out.println("Collection Status:"+collectionStatus);
-		base.stepInfo("Collection Status:"+collectionStatus);
+		System.out.println("Collection Status:" + collectionStatus);
+		base.stepInfo("Collection Status:" + collectionStatus);
 		base.waitForElement(getCollectionListDataset(6));
 		Element collectionListDataset1 = getCollectionListDataset(6);
 		String collectionErrorStatus = collectionListDataset1.getText();
-		System.out.println("Collection Error Status:"+collectionErrorStatus);
-		base.stepInfo("Collection Error Status:"+collectionErrorStatus);
+		System.out.println("Collection Error Status:" + collectionErrorStatus);
+		base.stepInfo("Collection Error Status:" + collectionErrorStatus);
 		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(7));
 		String collectionTotalRetrievedCount = getCollectionListFieldValueRunByAndSourceLocationText(7).getText();
-		System.out.println("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
-		base.stepInfo("Collection TotalRetrievedCount:"+collectionTotalRetrievedCount);
+		System.out.println("Collection TotalRetrievedCount:" + collectionTotalRetrievedCount);
+		base.stepInfo("Collection TotalRetrievedCount:" + collectionTotalRetrievedCount);
 		base.waitForElement(getCollectionListFieldValueRunByAndSourceLocationText(8));
 		String collectionProgress = getCollectionListFieldValueRunByAndSourceLocationText(8).getText();
-		System.out.println("Collection Progress:"+collectionProgress);
-		base.stepInfo("Collection Progress:"+collectionProgress);
+		System.out.println("Collection Progress:" + collectionProgress);
+		base.stepInfo("Collection Progress:" + collectionProgress);
 		base.waitForElement(getCollectionListDataset(9));
 		Element collectionListDataset2 = getCollectionListDataset(9);
 		String collectionAction = collectionListDataset2.getText();
-		System.out.println("Collection Action:"+collectionAction);
-		base.stepInfo("Collection Action:"+collectionAction);
-		
-		System.out.println("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
-		base.stepInfo("All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
-		
+		System.out.println("Collection Action:" + collectionAction);
+		base.stepInfo("Collection Action:" + collectionAction);
+
+		System.out.println(
+				"All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+		base.stepInfo(
+				"All configured Collections and associated properties are available on 'Manage Collections screen (Grid).");
+
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal
 	 * @description: To verify Notification Icon changing
@@ -2504,65 +2503,59 @@ public class CollectionPage {
 			}
 		}), Input.wait120);
 		final int bgCountAfter = base.initialBgCount();
-		
-		
-		
-		
+
 	}
-	
-	
+
 	/**
 	 * @author Mohan.Venugopal
-	 * @description: To enter on Keyword filter and save 
+	 * @description: To enter on Keyword filter and save
 	 */
 	public void applyFilterToKeyword(String keyword) {
 
 		driver.waitForPageToBeReady();
-		
+
 		if (getFilterButton().isElementAvailable(5)) {
-			
+
 			base.waitForElement(getFilterButton());
 			getFilterButton().waitAndClick(5);
-			
+
 			base.waitForElement(getFilteEnablerButton());
 			getFilteEnablerButton().waitAndClick(5);
 			base.passedStep("Filter button is Enabled successfully");
-			
+
 		}
-			
-			else {
-				base.failedStep("FIlter button is disabled");
-			}
-			
-			if (getKeyboardFilterButton().isElementAvailable(5)) {
-				base.waitForElement(getKeyboardFilterButton());
-				getKeyboardFilterButton().waitAndClick(5);
-				
-				base.waitForElement(getKeywordTextBox());
-				getKeywordTextBox().SendKeys(keyword);
-				
-				base.passedStep("Keywords are entered successfully");
-			}else {
-				base.failedStep("Keywords are not entered");
-			}
+
+		else {
+			base.failedStep("FIlter button is disabled");
 		}
-	
+
+		if (getKeyboardFilterButton().isElementAvailable(5)) {
+			base.waitForElement(getKeyboardFilterButton());
+			getKeyboardFilterButton().waitAndClick(5);
+
+			base.waitForElement(getKeywordTextBox());
+			getKeywordTextBox().SendKeys(keyword);
+
+			base.passedStep("Keywords are entered successfully");
+		} else {
+			base.failedStep("Keywords are not entered");
+		}
+	}
+
 	/**
-     * @author Raghuram.A
-     * @param action
-     * @param verifyMsg
-     */
-    public void confirmationAction(String action,String verifyMsg,boolean addition)
-    {
-        try {
-            getConfirmationBtnAction(action).waitAndClick(5);
-            driver.waitForPageToBeReady();
-            base.VerifySuccessMessage(verifyMsg);
-            base.CloseSuccessMsgpopup();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-	
-	
+	 * @author Raghuram.A
+	 * @param action
+	 * @param verifyMsg
+	 */
+	public void confirmationAction(String action, String verifyMsg, boolean addition) {
+		try {
+			getConfirmationBtnAction(action).waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage(verifyMsg);
+			base.CloseSuccessMsgpopup();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
