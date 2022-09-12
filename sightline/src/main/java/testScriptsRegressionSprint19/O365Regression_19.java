@@ -1155,7 +1155,7 @@ public class O365Regression_19 {
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder1 = "Drafts";
+		String selectedFolder1 = "Inbox";
 		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
 		String[] statusList = { "Completed" };
 		String collectionNewName = "CollectionNew" + Utility.dynamicNameAppender();
@@ -1200,7 +1200,7 @@ public class O365Regression_19 {
 			driver.waitForPageToBeReady();
 			collection.clickViewDataset(collectionName);
 			driver.waitForPageToBeReady();
-			actualCollectionName=collectionName;
+			actualCollectionName = collectionName;
 		} else {
 			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
@@ -1216,7 +1216,7 @@ public class O365Regression_19 {
 			collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionNewName, statusList, 10);
 			collection.clickViewDataset(collectionNewName);
 			driver.waitForPageToBeReady();
-			actualCollectionName=collectionNewName;
+			actualCollectionName = collectionNewName;
 
 		}
 

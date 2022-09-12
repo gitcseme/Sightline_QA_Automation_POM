@@ -732,6 +732,7 @@ public class DataSets {
 	/**
 	 * @Author Jeevitha
 	 * @Description : returns tile view type
+	 * @modifiedOn : 9/12/22 - handling abnormal load time
 	 * @return
 	 */
 	public String getTileViewType() {
@@ -739,16 +740,17 @@ public class DataSets {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getTotalDatasetCount());
 		String datasetCount = getTotalDatasetCount().getText();
-		int totalDoc=Integer.parseInt(datasetCount);
+		int totalDoc = Integer.parseInt(datasetCount);
 		base.stepInfo("Total Doc Count : " + totalDoc);
 
 		if (totalDoc > 1) {
-			int expCount = totalDoc - 1;
+			int expCount = totalDoc - totalDoc + 1;// to avoid abnormal wait handles
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDatasetTile(expCount));
 			viewType = getDatasetTile(expCount).GetCssValue("display");
 			base.stepInfo("Display Type : " + viewType);
 		} else if (totalDoc == 1) {
+			base.waitForElement(getDatasetTile(totalDoc));
 			viewType = getDatasetTile(totalDoc).GetCssValue("display");
 		}
 		return viewType;
