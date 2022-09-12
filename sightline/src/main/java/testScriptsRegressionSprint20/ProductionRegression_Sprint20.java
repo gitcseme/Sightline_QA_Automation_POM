@@ -34,11 +34,8 @@ import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
-import retry.CustomTestNGListener;
-import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
 
-@Listeners(CustomTestNGListener.class)
 public class ProductionRegression_Sprint20 {
 	
 
