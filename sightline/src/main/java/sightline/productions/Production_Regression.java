@@ -99,7 +99,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		int firstFile = Integer.parseInt(beginningBates);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -234,7 +234,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		String prodName=page.addANewProduction(productionname);
@@ -572,7 +572,7 @@ public class Production_Regression {
 
 		baseClass.stepInfo("Create production using required inputs");
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		String prodName=page.addANewProduction(productionname);

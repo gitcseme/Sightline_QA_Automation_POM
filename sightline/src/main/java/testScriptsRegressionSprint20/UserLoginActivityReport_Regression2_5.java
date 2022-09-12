@@ -66,8 +66,10 @@ public class UserLoginActivityReport_Regression2_5 {
 		int filesInDirAfterDownloading = bc.getDirFilesCount();
 		sa.assertEquals(filesInDirAfterDownloading, filesInDirBeforeDownloading+1,"File is not downloaded");
 		sa.assertAll();	
-		userLoginActivityRptPg.selectLoginActivities("Current Logged-in Users");
-		userLoginActivityRptPg.applyChanges();
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.pa1userName);
 		int filesInDirBeforeDownloading1 = bc.getDirFilesCount();
 		int Bgcount1 = bc.initialBgCount();
 		userLoginActivityRptPg.exportReport();

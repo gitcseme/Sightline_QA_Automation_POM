@@ -1,9 +1,11 @@
-package testScriptsRegressionSprint20;
+package testScriptsRegressionSprint21;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -170,6 +172,128 @@ public class ManageIPRestrictions_Regression {
 		
 		loginPage.logout();
 	}
+	/**
+	 * @author  ModifyDate:2/09/2022 RPMXCON-52461
+	 * @throws Exception
+	 * @Description To verify that error message is displayed if invalid values
+	 *              entered for IP Range
+	 */
+	@Test(description = "RPMXCON-52461", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgDisplayedInvalidValues() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52461");
+		base.stepInfo(" To verify  that error message is displayed if invalid values entered for IP Range.");
+		manageIp = new ManageIPRestrictions(driver);
+		String name = "abcd";
+		String errormsgActual = "Invalid IP range format";
+		SoftAssert softassertion = new SoftAssert();
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		manageIp.navigateToManageIPPageURL();
+		base.stepInfo("user navigated to IP Restrictions page successfully");
+		base.waitForElement(manageIp.getIPRestrictionCheck());
+		manageIp.getIPRestrictionCheck().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		manageIp.getEnterFrom().SendKeys(name);
+		base.waitForElement(manageIp.getIPRestrictionAdd());
+		manageIp.getIPRestrictionAdd().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		String errorMsgExpected = manageIp.getIPRestrictionAddError().getText();		
+		if (manageIp.getIPRestrictionAddError().isDisplayed()) {
+			softassertion.assertEquals(errorMsgExpected, errormsgActual,"error msg is not displayed as expected");
+			softassertion.assertAll();
+			base.passedStep(errorMsgExpected + "  error message is displayed ");
+
+		} else {
+			base.failedStep("eror msg is not displayed");
+		}
+		
+
+	}
+
+	/**
+	 * @author  date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *         RPMXCON-52462
+	 * @throws Exception
+	 * @Description To verify that error message should be displayed if user enters
+	 *              'IP Range To' less than 'IP Range From'.
+	 */
+	@Test(description = "RPMXCON-52462", enabled = true, groups = { "regression" })
+	public void verifyErrorMsgDisplayedEntersIPRangeToLessRangeFrom() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52462");
+		base.stepInfo(
+				" To verify that error message should be displayed if user enters  'IP Range To' less than 'IP Range From'.");
+		manageIp = new ManageIPRestrictions(driver);
+		String from = "10.55.79.50";
+		String to = "10.55.79.25";
+		String errorMsgActual = "IP Range To value must be greater than IP Range From value";	
+		SoftAssert softassertion = new SoftAssert();
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		manageIp.navigateToManageIPPageURL();
+		base.stepInfo("user navigated to IP Restrictions page successfully");
+		driver.waitForPageToBeReady();
+		manageIp.createIPrange(from, to);
+		driver.waitForPageToBeReady();
+		String errorMsgExpected = manageIp.getIPRangeErrorMsg().getText();	
+		if (manageIp.getIPRangeErrorMsg().isDisplayed()) {
+			softassertion.assertEquals(errorMsgExpected, errorMsgActual);
+			softassertion.assertAll();
+			base.passedStep(errorMsgExpected + "  error message is displayed");
+
+		} else {
+			base.failedStep("error msg is not displayed");
+		}
+		
+
+	}
+
+	/**
+	 * @author  date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *         RPMXCON-52462
+	 * @throws Exception
+	 * @Description UI- Verify tabbing order from project IP Settings page
+	 */
+	@Test(description = "RPMXCON-52451", enabled = true, groups = { "regression" })
+	public void verifyTabbingIPSettingPage() throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-52451");
+		base.stepInfo("UI- Verify tabbing order from project IP Settings page");
+		manageIp = new ManageIPRestrictions(driver);
+		String from = "10.55.79.50";
+		String to = "10.55.79.70";
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		manageIp.navigateToManageIPPageURL();
+		base.stepInfo("user navigated to IP Restrictions page successfully");
+		driver.waitForPageToBeReady();
+		base.waitForElement(manageIp.getIPRestrictionCheck());
+		manageIp.getIPRestrictionCheck().waitAndClick(5);
+		base.stepInfo("Click uncheck no ip restriction");
+		Actions actions = new Actions(driver.getWebDriver());
+		actions.sendKeys(Keys.TAB).perform();
+		driver.waitForPageToBeReady();
+		manageIp.getEnterFrom().SendKeys(from);
+		actions.sendKeys(Keys.TAB).perform();
+		base.waitForElement(manageIp.getIPRangeTo());
+		manageIp.getIPRangeTo().SendKeys(to);
+		base.waitForElement(manageIp.getIPRestrictionAdd());
+		manageIp.getIPRestrictionAdd().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		if (manageIp.getDeleteIPRange().isDisplayed()) {
+			base.passedStep("Using Tab its go to one by one control successfully");			
+		}else {
+			base.failedStep("Tab control is not performed as expected");
+		}
+		manageIp.deleteIPrange(from);
+		
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

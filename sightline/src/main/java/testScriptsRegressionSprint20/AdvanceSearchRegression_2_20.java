@@ -128,7 +128,7 @@ public class AdvanceSearchRegression_2_20 {
 		sessionSearch.navigateToAdvancedSearchPage();
 		int countOfSearchInPanel = sessionSearch.getSearchPanelCount().size();
 		assertion.assertEquals(countOfSearchInPanel, defaultSearchCount);
-		assertion.assertEquals(sessionSearch.getPureHitsCountNumText().isDisplayed(), false);
+		assertion.assertEquals((boolean)sessionSearch.getPureHitsCountNumText().isDisplayed(), false);
 		assertion.assertAll();
 		baseClass.passedStep(
 				"verified that all session searches are purged at the time of logout on Advanced search Result  Screen.");

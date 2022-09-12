@@ -353,7 +353,11 @@ public class CollectionPage {
 	}
 
 	// added by jeevitha
-
+	public Element getNameBasedOnCollectionName(String collectionName, String value) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + collectionName + "']//..//parent::tr//td[text()='" + value + "']");
+	}
+	
 	public ElementCollection getAttributesOfSummaryTab() {
 		return driver.FindElementsByXPath("//div[@class='row rowPadding']//div[@class='col-md-3']");
 	}
@@ -927,7 +931,7 @@ public class CollectionPage {
 			}
 		} else if (type.equalsIgnoreCase("CancelTo")) {
 
-		} else if (type.equalsIgnoreCase("Delete") || type.equalsIgnoreCase("Cancel")) {
+		} else if (type.equalsIgnoreCase("Delete")) {
 			getConfirmationBtnAction(action).waitAndClick(5);
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage(verifyMsg);
@@ -2505,4 +2509,60 @@ public class CollectionPage {
 		
 		
 	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal
+	 * @description: To enter on Keyword filter and save 
+	 */
+	public void applyFilterToKeyword(String keyword) {
+
+		driver.waitForPageToBeReady();
+		
+		if (getFilterButton().isElementAvailable(5)) {
+			
+			base.waitForElement(getFilterButton());
+			getFilterButton().waitAndClick(5);
+			
+			base.waitForElement(getFilteEnablerButton());
+			getFilteEnablerButton().waitAndClick(5);
+			base.passedStep("Filter button is Enabled successfully");
+			
+		}
+			
+			else {
+				base.failedStep("FIlter button is disabled");
+			}
+			
+			if (getKeyboardFilterButton().isElementAvailable(5)) {
+				base.waitForElement(getKeyboardFilterButton());
+				getKeyboardFilterButton().waitAndClick(5);
+				
+				base.waitForElement(getKeywordTextBox());
+				getKeywordTextBox().SendKeys(keyword);
+				
+				base.passedStep("Keywords are entered successfully");
+			}else {
+				base.failedStep("Keywords are not entered");
+			}
+		}
+	
+	/**
+     * @author Raghuram.A
+     * @param action
+     * @param verifyMsg
+     */
+    public void confirmationAction(String action,String verifyMsg,boolean addition)
+    {
+        try {
+            getConfirmationBtnAction(action).waitAndClick(5);
+            driver.waitForPageToBeReady();
+            base.VerifySuccessMessage(verifyMsg);
+            base.CloseSuccessMsgpopup();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
 }

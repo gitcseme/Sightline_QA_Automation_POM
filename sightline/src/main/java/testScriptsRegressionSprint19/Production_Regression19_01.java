@@ -240,7 +240,9 @@ public class Production_Regression19_01 {
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 		page.addANewProduction(productionname);
+		driver.waitForPageToBeReady();
 		page.fillingDATSection();
+		driver.scrollingToBottomofAPage();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
@@ -272,7 +274,9 @@ public class Production_Regression19_01 {
 		String productionname1 = "p" + Utility.dynamicNameAppender();
 		String beginningBates1 = page.getRandomNumber(2);
 		page.addANewProduction(productionname1);
+		driver.waitForPageToBeReady();
 		page.fillingDATSection();
+		driver.scrollingToBottomofAPage();
 		page.navigateToNextSection();
 		page.fillingNumberingAndSortingPage(prefixID, suffixID, beginningBates1);
 		page.navigateToNextSection();

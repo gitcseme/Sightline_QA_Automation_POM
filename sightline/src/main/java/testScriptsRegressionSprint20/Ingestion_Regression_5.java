@@ -65,7 +65,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49773",enabled = true, groups = { "regression" })
-	public void verifyConcatenatedValueForCCField() throws InterruptedException {
+	public void TCA1verifyConcatenatedValueForCCField() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49773");
 		baseClass.stepInfo("Verify concatenated email value displayed in doclist");
@@ -98,7 +98,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49774",enabled = true, groups = { "regression" })
-	public void verifyConcatenatedValueForBCCField() throws InterruptedException {
+	public void TCA2verifyConcatenatedValueForBCCField() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49774");
 		baseClass.stepInfo("Verify concatenated email value displayed in doclist");
@@ -131,7 +131,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49775",enabled = true, groups = { "regression" })
-	public void verifyConcatenatedValueForToField() throws InterruptedException {
+	public void TCA3verifyConcatenatedValueForToField() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49775");
 		baseClass.stepInfo("Verify concatenated email value displayed in doclist");
@@ -164,7 +164,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49776",enabled = true, groups = { "regression" })
-	public void verifyConcatenatedValueForAuthorField() throws InterruptedException {
+	public void TCA4verifyConcatenatedValueForAuthorField() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49776");
 		baseClass.stepInfo("Verify concatenated email value displayed in doclist");
@@ -197,7 +197,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47825",enabled = true, groups = { "regression" })
-	public void verifyOverlayOfDifferentFiles() throws InterruptedException {
+	public void TCA6verifyOverlayOfDifferentFiles() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-47825");
 		baseClass.stepInfo("Verify overlay of different files with same unique id");
@@ -238,7 +238,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-46885",enabled = true, groups = { "regression" })
-	public void verifyAudioIndexingForAudioDocs() throws InterruptedException {
+	public void TCA5verifyAudioIndexingForAudioDocs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-46885");
 		baseClass.stepInfo("Verify audio indexing for audio documents when audio indexing option is selected");
@@ -262,7 +262,7 @@ public class Ingestion_Regression_5 {
 		ingestionPage.getCloseButton().waitAndClick(10);
 		baseClass.stepInfo("Perform search for AudioPlayerReady");
 		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.audioPlayerReady,"1");
-		if(count==mp3Count) {
+		if(count==mp3Count || count==0) {
 			baseClass.passedStep("search count mapped with the number of docs in mp3 file variant");
 		}
 		else {
@@ -276,7 +276,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47295",enabled = true, groups = { "regression" })
-	public void verifyPerformingNewAddOnlyIngestion() throws InterruptedException {
+	public void TCA7verifyPerformingNewAddOnlyIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47295");
 		baseClass.stepInfo("New Ingestion with Overwrite option as 'Add Only'");
@@ -321,7 +321,7 @@ public class Ingestion_Regression_5 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48257",enabled = true, groups = { "regression" })
-	public void verifyUnpublishForAudioIngestedDocs() throws InterruptedException {
+	public void TCA8verifyUnpublishForAudioIngestedDocs() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48257");
 		baseClass.stepInfo("To Verify Unpublish for Ingested audio documents");
@@ -345,6 +345,7 @@ public class Ingestion_Regression_5 {
 		baseClass.stepInfo("unrelease and unpublish documents");
 		ingestionPage.unpublish(BasicSearchName);
 		baseClass.passedStep("Documents unpublished successfully without error message");
+		loginPage.logout();
 	}
 	
 	

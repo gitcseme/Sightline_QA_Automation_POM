@@ -502,6 +502,14 @@ public class TagsAndFoldersPage {
 		return driver.FindElementsByXPath("//ul[@class='jstree-children']//a");
 	}
 
+	public Element getFolderExpand() {
+		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/a/following-sibling::ul");
+	}
+	
+	public Element getFolderExpandIcon() {
+		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/i");
+	}
+	
 	public TagsAndFoldersPage(Driver driver) {
 
 		this.driver = driver;

@@ -71,6 +71,7 @@ public class UserReviewActivityReport_Regression2_3 {
 		userActivityRptPg.navigateToUserReviewActivityReport();
 		bc.waitTillElemetToBeClickable(userActivityRptPg.getActionTypeExpandIcon());
 		userActivityRptPg.getActionTypeExpandIcon().waitAndClick(10);
+		bc.waitTime(3);
 		actualActionsListInUserReviewActivityRpt =bc.getAvailableListofElements(userActivityRptPg.actionsList());
 		sa.assertEquals(expectedList, actualActionsListInUserReviewActivityRpt,"Actions list are not displayed as expected");
 		sa.assertAll();		
@@ -79,6 +80,7 @@ public class UserReviewActivityReport_Regression2_3 {
 		userActivityRptPg.navigateToDocumentAuditReport();
 		bc.waitTillElemetToBeClickable(userActivityRptPg.getActionTypeExpandIcon());
 		userActivityRptPg.getActionTypeExpandIcon().waitAndClick(10);
+		bc.waitTime(3);
 		actualActionsListInDocumentAuditRpt =bc.getAvailableListofElements(userActivityRptPg.actionsList());
 		sa.assertEquals(expectedList, actualActionsListInDocumentAuditRpt,"Actions list are not displayed as expected");
 		sa.assertAll();		
@@ -121,7 +123,7 @@ public class UserReviewActivityReport_Regression2_3 {
 	@DataProvider(name = "Users_PARMU")
 	public Object[][] PA_RMU() {
 		Object[][] users = { { Input.rmu1userName, Input.rmu1password, "RMU" },
-//				{ Input.pa1userName, Input.pa1password, "PA" } 
+				{ Input.pa1userName, Input.pa1password, "PA" } 
 				};
 		return users;
 	}

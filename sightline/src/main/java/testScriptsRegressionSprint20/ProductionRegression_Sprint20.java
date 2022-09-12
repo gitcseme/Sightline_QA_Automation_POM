@@ -1,12 +1,14 @@
 package testScriptsRegressionSprint20;
 
 import java.io.File;
+
+
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.testng.ITestResult;
@@ -16,6 +18,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -147,8 +150,8 @@ public class ProductionRegression_Sprint20 {
 	 **/
 	@Test(description = "RPMXCON-47740", enabled = true, groups = { "regression" })
 	public void verifyGridViewInProdPage() throws Exception {
-		List<String> expProdStatusOrder = new ArrayList<String>();
-		List<String> actProdStatusOrder = new ArrayList<String>();
+		List<String> beforeSortOrder = new ArrayList<String>();
+		List<String> afterSortOrder = new ArrayList<String>();
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test Cases Id : RPMXCON-47740");
 		base.stepInfo(
@@ -158,20 +161,15 @@ public class ProductionRegression_Sprint20 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
-//		// Pre-requisites
-//		// create tag 
-		base = new BaseClass(driver);
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
-
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
 		// search for tag
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-//	//  Create Prod for failed state
-		ProductionPage page = new ProductionPage(driver);
+	    //  Create Prod for failed state
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -216,21 +214,19 @@ public class ProductionRegression_Sprint20 {
 		page.clickOnGenerateButton();
 
 		page.goToProductionGridView();
+		base=new BaseClass(driver);
 		base.waitForElementCollection(page.getProdCrtDateGridView());	
-		expProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+		beforeSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 		driver.scrollingToBottomofAPage();
 		for(int i = 2; i <= Integer.parseInt(page.getLastPageGridView().getText()); i++) {
 			driver.scrollingToBottomofAPage();
 			if(page.getPageNumGridView(i).isElementAvailable(4)) {
 				page.getPageNumGridView(i).waitAndClick(4);
 				base.waitTime(1);	
-				expProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+				beforeSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 			}
 		}
-		
-	    Collections.sort(expProdStatusOrder);   
-		System.out.println(expProdStatusOrder);
-		base.stepInfo("Before Sorting : " + expProdStatusOrder);
+		base.stepInfo("Before Sorting : " + beforeSortOrder);
 
 		page.goToProductionGridView();
 		base.waitForElement(page.getProdSortCrtDateGridView());
@@ -238,23 +234,21 @@ public class ProductionRegression_Sprint20 {
 		driver.waitForPageToBeReady();
 		
 		base.waitForElementCollection(page.getProdCrtDateGridView());
-		actProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+		afterSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 		driver.scrollingToBottomofAPage();
 		for(int i = 2; i <= Integer.parseInt(page.getLastPageGridView().getText()); i++) {
 			driver.scrollingToBottomofAPage();
 			if(page.getPageNumGridView(i).isElementAvailable(4)) {
 				page.getPageNumGridView(i).waitAndClick(4);
 				base.waitTime(1);	
-				actProdStatusOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
+				afterSortOrder.addAll(base.getAvailableListofElements(page.getProdCrtDateGridView()));
 			}
 		}
-		base.stepInfo("After Sorting : " + actProdStatusOrder);
-
-		if (expProdStatusOrder.equals(actProdStatusOrder)) {
-			base.passedStep("Productions list sorted as per the selected list in Grid View   ");
-		} else {
-			base.failedStep("Productions list Not sorted as per the selected list in Grid View   ");
-		}
+		base.stepInfo("After Sorting : " + afterSortOrder);
+		base.verifyOriginalSortOrder(afterSortOrder, beforeSortOrder, "Ascending", true);
+		base.stepInfo("Productions list sorted as per the selected list in Grid View");
+		base.passedStep("To Verify sorting in Grid View from Productions page");
+		loginPage.logout();
 	}
 	
 	/**
@@ -274,8 +268,8 @@ public class ProductionRegression_Sprint20 {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();		
 		
-//		// create tag and folder
-		
+		// create tag and folder
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 		
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -333,18 +327,16 @@ public class ProductionRegression_Sprint20 {
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 
-//		// create tag 
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// create tag 
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for tag
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		sessionSearch.MetaDataSearchInBasicSearch("DocFileExtension", ".pdf");
 		sessionSearch.bulkTagExisting(tagname);
 
-//	//  Create Prod for failed state
-		ProductionPage page = new ProductionPage(driver);
+	//  Create Prod for failed state
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
@@ -379,20 +371,17 @@ public class ProductionRegression_Sprint20 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag 
-		base = new BaseClass(driver);
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for tag
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		
 		// Pre req - Production For Completed
-		page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -457,19 +446,16 @@ public class ProductionRegression_Sprint20 {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 	
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag 
-		base = new BaseClass(driver);
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for tag
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		
 		//Create Prod For Failed State
-		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -530,18 +516,15 @@ public class ProductionRegression_Sprint20 {
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String brandingString = Input.searchString4;
 		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag 
-		base = new BaseClass(driver);
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
 		// search for tag
-		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch = new SessionSearch(driver);
 		int pureHit = sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 		
-		ProductionPage page = new ProductionPage(driver);
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -599,8 +582,7 @@ public class ProductionRegression_Sprint20 {
 	 **/
 	@Test(description = "RPMXCON-63088", enabled = true, groups = { "regression" })
 	public void verifyRedactNativePHTiffPdf() throws Exception {
-		loginPage.logout();
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
 		base = new BaseClass(driver);
 		base.stepInfo("RPMXCON-63088");
 		String RedactName = "Redact" + Utility.dynamicNameAppender();
@@ -610,24 +592,27 @@ public class ProductionRegression_Sprint20 {
 		base.stepInfo(
 				"Verify that if spreadsheet is redacted and Native placeholder is default enabled from "
 				+ "TIFF/PDF section then PDF should be produced with natively placeholder");
-
+ 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.selectproject(Input.largeVolDataProject);
+		
 		RedactionPage redactionpage = new RedactionPage(driver);
 		redactionpage.navigateToRedactionsPageURL();
 		redactionpage.AddRedaction(RedactName, Input.rmu1FullName);
-
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		base.stepInfo("Basic meta data search");
+		
 		sessionSearch.navigateToSessionSearchPageURL();
-		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "spreadsheet");
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch.ViewInDocList();
+		
 		DocListPage doclist = new DocListPage(driver);
-		doclist.documentSelection(1);	
+		doclist.documentSelection(3);	
 		doclist.viewSelectedDocumentsInDocView();
+		
 		DocViewPage doc = new DocViewPage(driver);
 		driver.waitForPageToBeReady();
 		doc.pageRedaction(RedactName);
 		
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagName,  Input.tagNamePrev);
 
 		SessionSearch sessionSearch1 = new SessionSearch(driver);
@@ -638,9 +623,9 @@ public class ProductionRegression_Sprint20 {
 		doclist1.documentSelection(1);	
 		doclist.bulkTagExistingFromDoclist(tagName);
 		
-		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
-		String productionname = "p" + Utility.dynamicNameAppender();		
+		String productionname = "p" + Utility.dynamicNameAppender();	
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -659,33 +644,14 @@ public class ProductionRegression_Sprint20 {
 		base.waitUntilFileDownload();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		String name = page.getProduction().getText().trim();
 		driver.waitForPageToBeReady();
 		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
-
-		File DatFile = new File(home + "/Downloads/VOL0001/" + name + "/" + name + "_DAT.dat");
-		File pdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
-		File Native = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
-		
-		driver.waitForPageToBeReady();
-		if (Native.exists()) {
-		base.passedStep("Native placeholder generated for the selected file type ");
-		} else {
-		base.failedStep("Native placeholder Not generated for the selected file type ");
-		}
-		if (DatFile.exists()) {
-		base.passedStep("Dat file is exists in generated production");
-		} else {
-		base.failedStep("Dat file is not displayed as expected");
-		}
-		if (pdfFile.exists()) {
-		base.passedStep("Pdf is generated successfully");
-		} else {
-		base.failedStep("Pdf is not generated successfully");
-		}
+		File pdfFile = new File(
+				home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID +".pdf");
+		String text = page.verifyTextinPDF(pdfFile, tagName);
+		base.stepInfo(text);
 			
 		String productionname1 = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
@@ -711,27 +677,9 @@ public class ProductionRegression_Sprint20 {
 		page.deleteFiles();
 		page.extractFile();
 		driver.waitForPageToBeReady();
-		File tiffFile = new File(home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
-		File DatFile1 = new File(home + "/Downloads/VOL0001/" + name1 + "/" + name1 + "_DAT.dat");
-		File Native1 = new File(
-				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + ".xls");
-
-		driver.waitForPageToBeReady();
-		if (Native1.exists()) {
-		base.passedStep("Native placeholder generated for the selected file type ");
-		} else {
-		base.failedStep("Native placeholder Not generated for the selected file type ");
-		}
-		if (DatFile1.exists()) {
-		base.passedStep("Dat file is exists in generated production");
-		} else {
-		base.failedStep("Dat file is not displayed as expected");
-		}
-		if (tiffFile.exists()) {
-		base.passedStep("Tiff is generated successfully");
-		} else {
-		base.failedStep("Tiff is not generated successfully");
-		}
+		File tiffFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, tagName);
 		loginPage.logout();
 	}
 	
@@ -753,18 +701,16 @@ public class ProductionRegression_Sprint20 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag and folder
-		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
-		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkTagExisting(tagname);
 
-		ProductionPage page = new ProductionPage(driver);
-		SavedSearch saveSearch = new SavedSearch(driver);
 		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -804,8 +750,8 @@ public class ProductionRegression_Sprint20 {
 		base.stepInfo("To verify Production should be failed if Bates Numbers is duplicate");
 		UtilityLog.info(Input.prodPath);
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String foldername = "Folder" + Utility.dynamicNameAppender();
-
 		String productionname = "p" + Utility.dynamicNameAppender();
 		page.navigateToProductionPage();
 		page.selectingDefaultSecurityGroup();
@@ -911,24 +857,22 @@ public class ProductionRegression_Sprint20 {
 	 **/
 	@Test(description = "RPMXCON-47861", enabled = true, groups = { "regression" })
 	public void verifyRegenProdWithNewDoc() throws Exception {
-		
 		UtilityLog.info(Input.prodPath);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+		base = new BaseClass(driver);
 		base.stepInfo("Test Cases Id : RPMXCON-47861");
 		base.stepInfo(
 				"Verify the regeneration of Production with same configuration and some new documents; before commit and confirm bates number for that Production");
+	
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		productionname = "p" + Utility.dynamicNameAppender();
 		String prefixID = "A_" + Utility.dynamicNameAppender();
 		String suffixID = "_P" + Utility.dynamicNameAppender();
 		String bates = "B" + Utility.dynamicNameAppender();
-		int noOfDoc1 = 2;
-		int noOfDoc2 = 2;
-		int expTotalDoc = noOfDoc1 + noOfDoc2 ;
-//		
-//		// create tag 
-		base = new BaseClass(driver);
+		int noOfDoc1 = 1;
+		int noOfDoc2 = 4;
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// create tag 	
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -939,10 +883,8 @@ public class ProductionRegression_Sprint20 {
 		sessionSearch.ViewInDocList();
 		DocListPage doclist = new DocListPage(driver);
 		doclist.documentSelection(noOfDoc1);
-		doclist.bulkTagExisting(tagname);
-//		
-		ProductionPage page = new ProductionPage(driver);
-		String productionname = "p" + Utility.dynamicNameAppender();
+		doclist.bulkTagExistingFromDoclist(tagname);
+		page.navigateToProductionPage();
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -962,17 +904,18 @@ public class ProductionRegression_Sprint20 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		String exptotaldoc = page.getDoc_Count().getText();
+		page.clickBackBtnUntilElementFound(page.getBatesRange());
 		
 		SessionSearch sessionSearch1 = new SessionSearch(driver);
 		sessionSearch1.navigateToSessionSearchPageURL();
-		sessionSearch1.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
 		sessionSearch1.ViewInDocList();
 		DocListPage doclist1 = new DocListPage(driver);
 		doclist1.documentSelection(noOfDoc2);
-		doclist1.bulkTagExisting(tagname);
+		doclist1.bulkTagExistingFromDoclist(tagname);
 		
 		page.navigateToProductionPage();
-		page.openExistingProduction("p9368103");
+		page.openExistingProduction(productionname);
 		page.clickBackBtnUntilElementFound(page.getDATTab());
 
 		driver.waitForPageToBeReady();
@@ -1000,8 +943,10 @@ public class ProductionRegression_Sprint20 {
 		page.fillingPrivGuardPage();
 		page.clickMArkCompleteMutipleTimes(2);
 		driver.waitForPageToBeReady();
-		page.fillingGeneratePageAndVerfyingBatesRange(suffixID);
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		String acttotaldoc = page.getDoc_Count().getText();
+		page.clickBackBtnUntilElementFound(page.getBatesRange());
+		String actBatesnum = page.getBatesRange().getText();
 		
 		SoftAssert asserts = new SoftAssert();
 		asserts.assertEquals(tagStatus, "true");
@@ -1009,17 +954,19 @@ public class ProductionRegression_Sprint20 {
 		asserts.assertEquals(expPrivGuard, actPrivGuard);
 		asserts.assertEquals(expRootProdLocPage, actRootProdLocPage);
 		asserts.assertEquals(expProdOut, actProdOut);
+		asserts.assertTrue(actBatesnum.contains(prefixID));
 		asserts.assertAll();
 		
-		if(String.valueOf(expTotalDoc).equals(acttotaldoc)) {
-			base.passedStep("Pass");
+		if(Integer.parseInt(exptotaldoc) < Integer.parseInt(acttotaldoc)) {
+			base.passedStep("Production should generate successfully including new documents");
 		} else {
-			base.failedStep("Fail");
+			base.failedStep("Production should generate successfully Not including new documents");
 		}	
 		base.passedStep("Verify the regeneration of Production with same configuration and some new documents; before commit and confirm bates number for that Production");
 		loginPage.logout();
 	}
-	
+
+
 
 	/**
 	 * @author sowndarya.velraj No:RPMXCON-47862

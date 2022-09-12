@@ -1575,7 +1575,7 @@ public class UserManagement {
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
-		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
 		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
 				|| role.equalsIgnoreCase("Reviewer")) {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -2259,6 +2259,7 @@ public class UserManagement {
 	 * @Description get data from tableuser table
 	 */
 	public String getTableData(String ColumName, int row) {
+		driver.waitForPageToBeReady();
 		int colum = bc.getIndex(userDetailsTableHeader(), ColumName);
 		String data = tableValue(row, colum).getText().trim();
 		return data;

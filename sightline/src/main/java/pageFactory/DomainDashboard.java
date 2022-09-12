@@ -198,6 +198,10 @@ public class DomainDashboard {
 	}
 
 	//Added by jeevitha
+	public Element getActiveProjectLink(String projectname) {
+        return driver.FindElementByXPath("(//a[contains(text(),'" + Input.projectName + "')])[1]");
+    }
+	
 	public Element getRMUHomePageTitle() {
 		return driver.FindElementByXPath("//h1[text()=' Review Manager Dashboard for ']//strong");
 	}
@@ -822,7 +826,7 @@ public class DomainDashboard {
 	 * @param projectName
 	 */
 	public void clickActiveProject(String projectName) {
-		getprojectnamelink(projectName).waitAndClick(10);
+		getActiveProjectLink(projectName).waitAndClick(10);
 		base.stepInfo("Clicked Active project link : " + projectName);
 
 		driver.waitForPageToBeReady();

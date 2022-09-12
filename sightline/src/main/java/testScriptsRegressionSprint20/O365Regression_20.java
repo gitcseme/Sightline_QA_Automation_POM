@@ -195,8 +195,12 @@ public class O365Regression_20 {
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
 		String selectedFolder1 = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusList = { "Completed" };
+		String collectionNewName = "CollectionNew" + Utility.dynamicNameAppender();
 
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String actualCollectionName;
 		String[][] userRolesData = { { userName, role, actionRole } };
 
 		base.stepInfo("Test case Id: RPMXCON-61041 - O365");
@@ -206,6 +210,9 @@ public class O365Regression_20 {
 		login.loginToSightLine(userName, password);
 
 		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// get username
+		String username = login.getCurrentUserName();
 
 		// get other dataset tile view
 		dataSets.navigateToDataSetsPage();
@@ -219,20 +226,30 @@ public class O365Regression_20 {
 		collectionName = base.returnKey(collectionData, "", false);
 
 		// Click View Dataset or Create collection and click View Dataset
-		if (collection.getCollectionNameElement(collectionName).isElementAvailable(2)) {
+		if (collection.getNameBasedOnCollectionName(collectionName, username).isElementAvailable(3)) {
 			base.stepInfo(collectionName + " : is Completed and Displayed in Collections Page");
+			driver.waitForPageToBeReady();
+			collection.clickViewDataset(collectionName);
+			driver.waitForPageToBeReady();
+			actualCollectionName=collectionName;
 		} else {
+			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
-					selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
-					false, false, "", "");
+					selectedApp, collectionData, collectionNewName, 3, selectedFolder1, true, true, true,
+					Input.randomText, true, true, "Save", "");
 
 			collection.clickNextBtnOnDatasetTab();
+			driver.waitForPageToBeReady();
 			collection.getStartBtn().waitAndClick(10);
-		}
 
-		// click view dataset btn from collection page
-		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.clickViewDataset(collectionName);
+			// click view dataset btn from collection page & check Completed status
+			dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+			collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionNewName, statusList, 10);
+			collection.clickViewDataset(collectionNewName);
+			driver.waitForPageToBeReady();
+			actualCollectionName=collectionNewName;
+
+		}
 
 		// verify is it navigating to datasets page
 		driver.waitForPageToBeReady();
@@ -240,7 +257,7 @@ public class O365Regression_20 {
 				"Navigation is not as expected");
 
 		// verify completed collection is displayed in datasets page
-		dataSets.verifysearchBoxValue(collectionName, otherTileView);
+		dataSets.verifysearchBoxValue(actualCollectionName, otherTileView);
 
 		// Logout
 		login.logout();
@@ -381,7 +398,7 @@ public class O365Regression_20 {
 		// Cancel collection
 		collection.clickDownloadReportLink(collectionName, headerListDataSets, "Action", false, "");
 		driver.waitForPageToBeReady();
-		collection.confirmationAction("Cancel", "Yes", Input.cancelCollectionNotification);
+		collection.confirmationAction("Yes", Input.cancelCollectionNotification, false);
 
 		// Cancel back to draft status
 		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
@@ -400,9 +417,10 @@ public class O365Regression_20 {
 	 *              collection screen Refresh Interval/ Reload automatically.
 	 *              RPMXCON-61279
 	 */
-	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role)
-			throws Exception {
+	@Test(description = "RPMXCON-61279", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyStausWorksWithoutRefresOrReloadingpageAuto(String userName, String password, String role,
+			String actionRole) throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
 		String firstName = Input.collectionDataFirstName;
@@ -457,53 +475,56 @@ public class O365Regression_20 {
 		// Logout
 		login.logout();
 	}
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that all configured Collections and associated properties are available on "Manage Collections" screen (Grid).
+	 * @Description : Verify that all configured Collections and associated
+	 *              properties are available on "Manage Collections" screen (Grid).
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-61012", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
-	public void verifyManageCollectionScreenGridContainsTheHeaderListAndOtherDetails(String userName, String password, String role, String actionRole)
-			throws Exception {
+	@Test(description = "RPMXCON-61012", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyManageCollectionScreenGridContainsTheHeaderListAndOtherDetails(String userName, String password,
+			String role, String actionRole) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-61012 - O365");
-		base.stepInfo("Verify that all configured Collections and associated properties are available on \"Manage Collections\" screen (Grid).");
+		base.stepInfo(
+				"Verify that all configured Collections and associated properties are available on \"Manage Collections\" screen (Grid).");
 
-		
 		String[][] userRolesData = { { userName, role, actionRole } };
 
 		// Login as User
-				login.loginToSightLine(userName, password);
+		login.loginToSightLine(userName, password);
 
-				// Login as User and verify Module Access
-				userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// navigate to Collection page
 		base.stepInfo("**Step-3 Click on left menu Datasets > Collections**");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		
+
 		// Verify Collection presence
 		collection.getCollectionPageHeaderList();
-		//logout
+		// logout
 		login.logout();
-		
+
 	}
-	
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that column “Retrieved Count” displays in Final status "Error section pop up" screen.  
+	 * @Description : Verify that column “Retrieved Count” displays in Final status
+	 *              "Error section pop up" screen.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-61659", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
-	public void verifyErroredDatasetsInCollectionWizard(String userName, String password, String role, String actionRole)
-			throws Exception {
+	@Test(description = "RPMXCON-61659", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyErroredDatasetsInCollectionWizard(String userName, String password, String role,
+			String actionRole) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-61659 - O365");
 		base.stepInfo(
 				"Verify that column “Retrieved Count” displays in Final status \"Error section pop up\" screen. ");
-		
+
 		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -555,21 +576,23 @@ public class O365Regression_20 {
 		login.logout();
 
 	}
-	
-	
+
 	/**
 	 * @Author Mohan
-	 * @Description : Verify that when collection gets Paused due to errors then it displays a notification on the top right corner in Notification list.  
+	 * @Description : Verify that when collection gets Paused due to errors then it
+	 *              displays a notification on the top right corner in Notification
+	 *              list.
 	 * @throws Exception
 	 */
-	@Test(description = "RPMXCON-61303", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = { "regression" })
-	public void verifyErroredNotificationDatasetsInCollectionWizard(String userName, String password, String role, String actionRole)
-			throws Exception {
+	@Test(description = "RPMXCON-61303", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyErroredNotificationDatasetsInCollectionWizard(String userName, String password, String role,
+			String actionRole) throws Exception {
 
 		base.stepInfo("Test case Id: RPMXCON-61303 - O365");
 		base.stepInfo(
 				"Verify that when collection gets Paused due to errors then it displays a notification on the top right corner in Notification list.");
-		
+
 		String[][] userRolesData = { { userName, role, actionRole } };
 		String dataSourceName = "Automation" + Utility.dynamicNameAppender();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -617,15 +640,85 @@ public class O365Regression_20 {
 		// Start A Collection
 		collection.clickOnNextAndStartAnCollection();
 		collection.verifyNotificationIcon(0);
-		base.passedStep("When collection gets Paused due to errors then a notification on the top right corner in Notification list successfully.");
-		
-		
+		base.passedStep(
+				"When collection gets Paused due to errors then a notification on the top right corner in Notification list successfully.");
 
 		// logout
 		login.logout();
 
 	}
 
+	/**
+	 * @Author Mohan
+	 * @Description : Verify that a new collections workflow instance starts from
+	 *              the Collections home page.
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61015", dataProvider = "PaAndRmuUserDetails", enabled = true, groups = {
+			"regression" })
+	public void verifyNewCollectionWorkFlow(String userName, String password, String role, String actionRole)
+			throws Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-61015 - O365");
+		base.stepInfo("Verify that a new collections workflow instance starts from the Collections home page.");
+
+		String[][] userRolesData = { { userName, role, actionRole } };
+		String dataSourceName = "AutomationCollectionWizard" + Utility.dynamicNameAppender();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+
+		// Login as User
+		base.stepInfo("**Step-2 Login as Project Admin/RMU**");
+		login.loginToSightLine(userName, password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String srcLocation = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		HashMap<String, String> collectionInfoPage = collection.verifyCollectionInfoPage(srcLocation, dataSourceName,
+				false);
+
+		// initiate collection process
+		collection.selectInitiateCollectionOrClickNext(true, true, true);
+
+		// Add DataSets
+		String dataSetNameGenerated = collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId,
+				selectedApp, collectionInfoPage, dataSourceName, 3);
+		System.out.println(dataSetNameGenerated);
+
+		// Select Folder
+		collection.folderToSelect(selectedFolder, true, true);
+		collection.applyFilterToKeyword(dataSourceName);
+		base.waitForElement(collection.getActionBtn("Save"));
+		collection.getActionBtn("Save").waitAndClick(5);
+
+		base.waitForElement(collection.getConfirmationBtnAction("Confirm"));
+		collection.getConfirmationBtnAction("Confirm").waitAndClick(5);
+		base.VerifySuccessMessage("Dataset added successfully.");
+
+		// Start A Collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Collection wizards
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		collection.getCollectionPageHeaderList();
+		base.passedStep("A new collections workflow instance is started from the Collections home page.");
+
+		// logout
+		login.logout();
+
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -6783,8 +6783,7 @@ public class IngestionPage_Indium {
 			public Boolean call() {
 				return getTotalIngestedCount().Visible();
 			}
-		}), Input.wait60);
-		
+		}), Input.wait90);
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
@@ -6823,11 +6822,11 @@ public class IngestionPage_Indium {
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
-			if (getAllIngestionName(dataset).isElementAvailable(7)) {
+			if (getAllIngestionName(dataset).isElementAvailable(10)) {
 				status = true;
 				base.passedStep("The Ingestion " + dataset + " is already done for this project");
 				break;
-			} else if (!getAllIngestionName(dataset).isElementAvailable(7) && count == i) {
+			} else if (!getAllIngestionName(dataset).isElementAvailable(10) && count == i) {
 				status = false;
 				base.stepInfo("Ingestion not found");
 				break;
@@ -10605,22 +10604,23 @@ public class IngestionPage_Indium {
 				if(!field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
 					base.passedStep("values displayed in selected columns");
 					String concatenatedValue =field2+"(".concat(field1)+")";
-					if(field3.equalsIgnoreCase(concatenatedValue)) {
+					if(concatenatedValue.equalsIgnoreCase(field3)) {
 						base.passedStep("Concatenated email value displayed correctly");
+						break;
 					}
 					else {
-						base.failedStep("Concatenated email value not displayed correctly");
+						System.out.println("check next row");
 					}
-					break;
 				}
 				else if(field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty()) {
 					if(field3.contains(field2)) {
 						base.passedStep("Concatenated email value displayed correctly");
+						break;
 					}
 					else {
-						base.failedStep("Concatenated email value not displayed correctly");
+						System.out.println("check next row");
 					}
-					break;
+					
 				}
 			}	
 		}
