@@ -37,7 +37,42 @@ public class UserLoginActivityReport_Regression2_6 {
 
 	}
 	
-	
+	/**
+	 * @author Iyappan.Kasinathan
+	 * @throws InterruptedException 
+	 * @throws ParseException 
+	 * @description: Verify after impersonating as PA/RMU, by default user login activity report should present currently logged in PAUs, RMUs and reviewers in project
+	 */
+	@Test(description = "RPMXCON-58635",groups = {"regression" },enabled = true)
+	public void verifyCurrentLoggedInUserAfterImpersonation() throws InterruptedException, ParseException {
+		bc.stepInfo("Test case Id: RPMXCON-58635");
+		bc.stepInfo("Verify after impersonating as PA/RMU, by default user login activity report should present currently logged in PAUs, RMUs and reviewers in project");
+		SoftAssert sa = new SoftAssert();
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+		bc.impersonateSAtoPA();
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.sa1userName);
+		String actualPARole = userLoginActivityRptPg.getColoumnValue(userLoginActivityRptPg.columnHeader(), "Role", Input.sa1userName);
+		sa.assertEquals("Project Administrator", actualPARole);
+		sa.assertAll();
+		userLoginActivityRptPg.verifySelectionCriteria("Current Logged-in Users");
+		bc.passedStep("After impersonating from SA to PA, able to view the SA user in currently logged in user as PA user");
+		lp.logout();		
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+		bc.impersonateSAtoRMU();
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		driver.waitForPageToBeReady();
+		userLoginActivityRptPg.navigateToUserLoginActivityReport();
+		userLoginActivityRptPg.verifyCurrentLoggedInUserPresent(Input.sa1userName);
+		String actualRMURole = userLoginActivityRptPg.getColoumnValue(userLoginActivityRptPg.columnHeader(), "Role", Input.sa1userName);
+		sa.assertEquals("Review Manager", actualRMURole);
+		userLoginActivityRptPg.verifySelectionCriteria("Current Logged-in Users");
+		sa.assertAll();
+		bc.passedStep("After impersonating from SA to RMU, able to view the SA user in currently logged in user as RMU user");
+		lp.logout();
+	}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
