@@ -81,6 +81,8 @@ public class Assignments_Regression_2_5 {
 		String DocsBeforeClickDrawAction = agnmt.getTotalDocsCountInReviewerDashboard(assignmentName).getText().trim();
 		String TotalDocsBeforeClickDrawAction = DocsBeforeClickDrawAction.substring(6,9).trim();
 		sa.assertEquals(TotalDocsBeforeClickDrawAction, count);
+		sa.assertAll();
+		baseClass.passedStep("The expected value "+TotalDocsBeforeClickDrawAction+" is displayed in reviewer page before draw action exactly");
 		baseClass.waitForElement(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName));
 		agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName).Click();		
 		baseClass.waitForElementToBeGone(agnmt.getAssignmentsDrawPoolInreviewerPg(assignmentName), 5);
@@ -91,6 +93,7 @@ public class Assignments_Regression_2_5 {
 		String TotalDocsAfterClickDrawAction = DocsAfterClickDrawAction.substring(6,9).trim();
 		sa.assertEquals(Integer.toString(purehit), TotalDocsAfterClickDrawAction);
 		sa.assertAll();
+		baseClass.passedStep("The expected value of remaining docs "+TotalDocsAfterClickDrawAction+" is displayed in reviewer page after draw action exactly");
 		baseClass.passedStep("Successfully verified that if documents are less than the value in \"Allowance of drawn document to:\" then RU can draw all the documents.");
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
