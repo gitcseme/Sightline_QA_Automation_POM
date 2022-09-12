@@ -148,6 +148,38 @@ public class AdvancedSearch_21 {
 		loginPage.logout();
 
 	}
+	
+	/**
+	 * Author :Jayanthi TestCase Id:RPMXCON-49309 Description Verify that Conceptual
+	 * tile return the result for WorkProduct >> Production Search in Advanced
+	 * Search Screen.
+	 * 
+	 * 
+	 */
+	@Test(description = "RPMXCON-49309", groups = { "regression" })
+	public void verifyConceptualTileForProductions() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-49309");
+		baseClass.stepInfo("Verify that Conceptual tile return the result for WorkProduct >> Production "
+				+ "Search in Advanced Search Screen.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		baseClass.stepInfo("Production with name " + productionname + " is generated with doc count " + ""
+				+ docsAddedToPRoduction + " in @Before class");
+		
+		baseClass.stepInfo("Configure query with workproduct-Production and search");
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectProductionstInASwp(productionname);
+		baseClass.passedStep("Inserted Production " + productionname + " into  WP query");
+		sessionSearch.serarchWP();
+		baseClass.stepInfo("verify query search result and conceptually similar tile return result");
+		sessionSearch.verifySearchResultAndConceptualTileReturnResult();
+		
+		loginPage.logout();
+
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
