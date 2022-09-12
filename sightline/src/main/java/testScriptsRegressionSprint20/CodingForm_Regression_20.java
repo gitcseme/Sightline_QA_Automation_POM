@@ -395,6 +395,153 @@ public class CodingForm_Regression_20 {
 	    loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description : To verify, As an RMU login, When I will edit an existing coding form, In edit page I can remove any of tags, comments or Metadata that associated with this coding form, & save it after removing
+	 */
+	@Test(description = "RPMXCON-54003",enabled = true, groups = { "regression" })
+	public void verifyEditCFRemoveTag() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54003");
+	    base.stepInfo("To verify, As an RMU login, When I will edit an existing coding form, In edit page I can remove any of tags, comments or Metadata that associated with this coding form, & save it after removing");
+	    
+		cf = new CodingForm(driver);
+		
+		String cfName = "codingForm"+Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//validation
+	    cf.createCodingform(cfName);
+	    cf.editCodingForm(cfName);
+	    cf.removeNthCodingForm(0);
+	    cf.updateCodingForm();
+	    base.passedStep("Page is saved successfully after removing");
+	    
+	    //delete created coding form
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    base.passedStep("verified, As an RMU login, When I will edit an existing coding form, In edit page I can remove any of tags, comments or Metadata that associated with this coding form, & save it after removing");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : As an RMU login, When user will apply edit on any exiting coding form, & when user modified something, & will navigate to some other page, it should ask for save the changes
+	 */
+	@Test(description = "RPMXCON-54004",enabled = true, groups = { "regression" })
+	public void verifyEditCFRemoveTagNavigatePage() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54004");
+	    base.stepInfo("As an RMU login, When user will apply edit on any exiting coding form, & when user modified something, & will navigate to some other page, it should ask for save the changes");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "codingForm"+Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//remove one of the form in codingform
+	    cf.createCodingform(cfName);
+	    cf.editCodingForm(cfName);
+	    cf.removeNthCodingForm(0);
+	    
+	    //click navigate and verify popup msg
+	    cf.getManageCodingFormButton().waitAndClick(5);
+	    String actualtext = cf.getCF_ValidationAlert().getText().trim();
+	    System.out.println(actualtext);
+	    soft.assertEquals(actualtext, "You have made changes to this Coding Form that have not yet been saved. Do you want to SAVE this Coding Form before navigating away from it?");
+	    
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("As an RMU login, When user will apply edit on any exiting coding form, & when user modified something, & will navigate to some other page, it should ask for save the changes");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : To verify, As an RMU login, When I will edit an existing coding form, I can be able to select a new Comment & able to save this change
+	 */
+	@Test(description = "RPMXCON-54008",enabled = true, groups = { "regression" })
+	public void verifyRmuAbleToSelectCommentInExitCF() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54008");
+	    base.stepInfo("To verify, As an RMU login, When I will edit an existing coding form, I can be able to select a new Comment & able to save this change");
+	    
+		cf = new CodingForm(driver);
+		
+		String cfName = "codingForm"+Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//edit cf
+	    cf.createTagsSavedInCf(cfName);
+	    cf.editCodingForm(cfName);
+	    
+	    //add comment and save cf
+	    cf.addTwoCheckBox("comment");
+	    cf.updateCodingForm();
+	    
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    base.passedStep("verified As an RMU login, When I will edit an existing coding form, I can be able to select a new Comment & able to save this change");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : Verify that long coding form name appears properly on Coding Form screen
+	 */
+	@Test(description = "RPMXCON-54009",enabled = true, groups = { "regression" })
+	public void verifyLongNameApeersProperly() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54009");
+	    base.stepInfo("Verify that long coding form name appears properly on Coding Form screen");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "LongCodingFormNameLongCodingFormNameLongCodingFormName";
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//EXECUTE SHARED STEPS IN TC#2517 
+		 cf.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 base.stepInfo("User navigated to Manage coding form page");
+		 soft.assertTrue(driver.getPageSource().contains("Manage Coding Forms"));
+		 soft.assertTrue(driver.getPageSource().contains("New Coding Form"));
+		 base.stepInfo("coding opens properly");
+		
+		//create a long name cf 
+	    cf.createCodingform(cfName);
+	    cf.navigateToCodingFormPage();
+	    
+	    //verify name display properly
+	    cf.searchCodingForm(cfName);
+	    String actual = cf.getCodingFormTableValues(1, 1).getText().trim();
+	    soft.assertEquals(actual, cfName);
+	    
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("Verified that long coding form name appears properly on Coding Form screen");
+	    loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
