@@ -288,6 +288,10 @@ public class TestData {
 	public String datLoadFile4;
 	public String nativeLoadFile3;
 	public String textLoadFile3;
+	public String datFile6;
+	public String datFile7;
+	public String attachDocFolder;
+	public String folder61759;
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

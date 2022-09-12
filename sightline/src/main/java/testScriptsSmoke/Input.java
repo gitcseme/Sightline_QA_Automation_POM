@@ -407,6 +407,10 @@ public class Input {
 	public static String datLoadFile4;
 	public static String nativeLoadFile3;
 	public static String textLoadFile3;
+	public static String datFile6;
+	public static String datFile7;
+	public static String attachDocFolder;
+	public static String folder61759;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1353,6 +1357,10 @@ public class Input {
 		datLoadFile4 = testData.getDatLoadFile4();
 		nativeLoadFile3 = testData.getNativeLoadFile3();
 		textLoadFile3 = testData.getTextLoadFile3();
+		datFile6 = testData.getDatFile6();
+		datFile7 = testData.getDatFile7();
+		attachDocFolder= testData.getAttachDocFolder();
+		folder61759 = testData.getFolder61759();
 		
 		
 		// Added by Raghuram 02/24/22

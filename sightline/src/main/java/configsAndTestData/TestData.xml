@@ -101,6 +101,10 @@
 	<datLoadFile4>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datLoadFile4>
 	<nativeLoadFile3>DAT4_STC_NativesEmailData.lst</nativeLoadFile3>
 	<textLoadFile3>DAT4_STC_TextEmailData.lst</textLoadFile3>
+	<datFile6>AllFieldsMapping_DAT_ProdBeg - UTF16.DAT</datFile6>
+	<datFile7>AttachDocIDs.dat</datFile7>
+	<attachDocFolder>AttachDocument</attachDocFolder>
+	<folder61759>RPMXCON-61759</folder61759>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
