@@ -3205,6 +3205,9 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".tiff']");
 	}
 
+	public Element verifyingNativeFiles(String presufix, String subBates,String FileType) {
+		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ""+FileType+"']");
+	}	
 	public ElementCollection getDATSourceField() {
 		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
 	}
@@ -16951,7 +16954,7 @@ public class ProductionPage {
 		}
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
 	}
 
 	/**
@@ -22003,4 +22006,55 @@ public class ProductionPage {
 			}
 			
 		}
+	/**
+	 * @author Brundha.T
+	 * @param Beginningbates
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws IOException
+	 * @Description: verifying the generated pdf file
+	 */
+	public void pdf_Verification_In_Generated_File(String Beginningbates, String prefixID, String suffixID,
+			String verificationText) throws IOException {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+			PDDocument document = PDDocument
+					.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + Beginningbates + suffixID + ".pdf"));
+			if (!document.isEncrypted()) {
+				PDFTextStripper stripper = new PDFTextStripper();
+				String text = stripper.getText(document);
+				System.out.println("Text:" + text);
+				if (text.contains(verificationText)) {
+					base.passedStep("Documents is Generated with expected text");
+				}else {
+					base.failedStep("Verification failed");
+				}
+
+			}
+			document.close();
+		}
+	
+	/**
+	 * @author Brundha.T
+	 * @param Tag
+	 * @param Test
+	 * @Description: filling tiff branding section
+	 */
+	
+	public void FillingBrandingInTiffSection(String Tag,String Test) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys(Input.testData1);
+		base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTag());
+		getSpecifyBrandingBySelectingTag().Click();
+		base.waitForElement(getbtnSelectTags());
+		getbtnSelectTags().Click();
+		base.waitForElement(getChkBoxSelect(Tag));
+		getChkBoxSelect(Tag).waitAndClick(5);
+		getbtnSelect().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+	}
 }
