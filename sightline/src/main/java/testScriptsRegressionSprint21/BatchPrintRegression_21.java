@@ -88,7 +88,7 @@ public class BatchPrintRegression_21 {
 		DocListPage doclist = new DocListPage(driver);
 
 		// Login As User
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(username, password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49189 Batch Print");
 		baseClass.stepInfo(
@@ -170,7 +170,7 @@ public class BatchPrintRegression_21 {
 		DocListPage doclist = new DocListPage(driver);
 
 		// Login As User
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(username, password);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-49184 Batch Print");
 		baseClass.stepInfo(
