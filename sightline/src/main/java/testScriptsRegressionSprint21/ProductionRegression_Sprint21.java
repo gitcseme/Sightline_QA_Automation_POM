@@ -119,6 +119,7 @@ public class ProductionRegression_Sprint21 {
 		page.getprod_Action_SaveTemplate_Reusable(productionname).waitAndClick(5);
 		driver.waitForPageToBeReady();
 		page.saveTemplate(tempName);
+		base.stepInfo("Detail Panel with Header Basic Information & Template Selection Should have been displayed.");
 		
 //		 Verifying Name Field
 		page.navigatingToProductionHomePage();
@@ -126,11 +127,13 @@ public class ProductionRegression_Sprint21 {
 		page.addANewProduction(nameSpChar);
 		driver.waitForPageToBeReady();
 		base.textFromElementToVerify(page.getProdNameError(), expErrorFrSch);
+		base.stepInfo("error message displayed as 'Special characters are not allowed in a production name'");
 		
 		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(nameLenChar);
 		base.textFromElementToVerify(page.getProdNameError(), expErrorLenChar);
+		base.stepInfo("error message displayed as 'It is mandatory to provide the production name");
 		
 		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
@@ -138,6 +141,7 @@ public class ProductionRegression_Sprint21 {
 		base.VerifySuccessMessageB("Mark Complete successful");
 		page.navigatingToProductionHomePage();
 		page.deleteProduction(nameAlpha);
+		base.stepInfo("Alpha characters got accepted as name field");
 		
 		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
@@ -145,10 +149,13 @@ public class ProductionRegression_Sprint21 {
 		base.VerifySuccessMessageB("Mark Complete successful");
 		page.navigatingToProductionHomePage();
 		page.deleteProduction(nameAlphaNum);
+		base.stepInfo("Alpha numeric characters got accepted as name field");
+		
 		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction("");
 		base.textFromElementToVerify(page.getProdNameError(), expErrorFrBlField);
+		base.stepInfo("error message displayed as 'It is mandatory to provide the production name'");
 		
 //		 Verifying Description Field
 		page.navigatingToProductionHomePage();
@@ -170,7 +177,6 @@ public class ProductionRegression_Sprint21 {
 		page.verifyDATAndTIFFField();
 		page.navigateToNextSection();
 		page.verifyingPrefixAndSuffixText(prefixID, suffixID);
-		base.passedStep("");
 		page.navigatingToProductionHomePage();
 		page.deleteProduction(nameAlphaNum);
 		
@@ -185,6 +191,7 @@ public class ProductionRegression_Sprint21 {
 		base.waitForElement(page.getBasicInfoMarkComplete());
 		page.getBasicInfoMarkComplete().waitAndClick(4);
 		base.textFromElementToVerify(page.getProdNameError(), expErrorFrBlField);
+		base.stepInfo("Warning Message displayed for Blank Field");
 		
 		page.navigatingToProductionHomePage();
 		page.selectingDefaultSecurityGroup();
@@ -251,6 +258,7 @@ public class ProductionRegression_Sprint21 {
    		page.fillingDATSection();
    		page.fillingTiffSectionDisablePrivilegedDocs();
    		page.addAdditionalNativPlaceHolder("Images", tagName);
+   		base.stepInfo("Native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files");
    		driver.waitForPageToBeReady();
    		page.navigateToNextSection();
    		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
@@ -277,6 +285,8 @@ public class ProductionRegression_Sprint21 {
    		softAssertion.assertTrue(tiff1.contains("Document Produced in Native Format")  || tiff1.contains(tagName));
    		softAssertion.assertTrue(tiff2.contains("Document Produced in Native Format")  || tiff2.contains(tagName));
    		
+   		base.stepInfo("Native placeholder should be generated in TIFF for the selected file type as part of selected source of document selection.Make sure that for other file types apart from Native placeholder TIFF file should be generated");
+   		
    		page.navigateToProductionPage();
    		productionname = "p" + Utility.dynamicNameAppender();	
    		page.selectingDefaultSecurityGroup();
@@ -284,6 +294,7 @@ public class ProductionRegression_Sprint21 {
    		page.fillingDATSection();
    		page.fillingPDFSectionDisablePrivilegedDocs();
    		page.addAdditionalNativPlaceHolder("Images", tagName);
+   		base.stepInfo("Native placeholdering should be enabled by default with requested text for spreadsheets and multimedia files");
    		driver.waitForPageToBeReady();
    		page.navigateToNextSection();
    		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
@@ -307,6 +318,7 @@ public class ProductionRegression_Sprint21 {
    		softAssertion.assertTrue(pdf1.contains("Document Produced in Native Format")  || pdf1.contains(tagName));
    		softAssertion.assertTrue(pdf2.contains("Document Produced in Native Format")  || pdf2.contains(tagName));
    		softAssertion.assertAll();
+   		base.stepInfo("Native placeholder should be generated in PDF for the selected file type as part of selected source of document selection.Make sure that for other file types apart from Native placeholder PDF file should be generated");
    		base.passedStep("Verified  - that new production should be generated with additional placeholder sections "
    				+ "in addition to the default enabled native placeholdering under TIFF/PDF section");
    		loginPage.logout();
@@ -333,6 +345,7 @@ public class ProductionRegression_Sprint21 {
 		tagsAndFolderPage.createNewTagwithClassification(tagName,  Input.tagNamePrev);
 		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.metaDataSearchInBasicSearch("SourceDocID",  "STC4_00001009");
+		base.stepInfo("Source document ID is selected as per pre requisite");
 		sessionSearch.ViewInDocList();		
 		DocListPage doclist = new DocListPage(driver);
 		doclist.documentSelection(doc);
@@ -376,6 +389,7 @@ public class ProductionRegression_Sprint21 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		int Lastile = FirstFile + doc;
+		base.stepInfo("Production should be generate successfully along with placeholder");
 		File TiffFile1 = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + FirstFile + suffixID + ".tiff");
 		File TiffFile2 = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + Lastile + suffixID + ".tiff");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(TiffFile1, "Document Produced in Native Format");
@@ -439,6 +453,8 @@ public class ProductionRegression_Sprint21 {
 		driver.waitForPageToBeReady();
 		page.deleteFiles();
 		page.extractFile();
+		
+		base.stepInfo("Priv placeholder should be generated for PDF file for the selected file type as part of selected source of document selection");
 		File pdfFile = new File(
 				home + "/Downloads/VOL0001/PDF/0001/" +  prefixID + beginningBates + suffixID + ".pdf");
 		String text = page.verifyTextinPDF(pdfFile, Input.tagNameTechnical);
@@ -530,6 +546,7 @@ public class ProductionRegression_Sprint21 {
 		driver.waitForPageToBeReady();
 		page.deleteFiles();
 		page.extractFile();	
+		base.stepInfo("Tech placeholder should be generated for TIFF file for the selected file type as part of selected source of document selection");
 		File tiffFile = new File(
 				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
 		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, Input.tagNameTechnical);
