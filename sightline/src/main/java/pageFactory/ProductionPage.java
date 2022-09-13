@@ -897,7 +897,14 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
-
+	public Element getProdNameError() {
+		return driver.FindElementByXPath("//span[@id='ProductionName-error']");
+	}
+	
+	public Element getBasicInfoSaveDisable() {
+		return driver.FindElementByXPath("//button[@id='BasicInfoNext' and @disabled='disabled']");
+	}
+	
 	public Element getProdRootinProdLOcTab() {
 		return driver.FindElementByXPath("//select[@id='lstProductionRootPaths']//option[@selected='selected']");
 	}
@@ -22006,6 +22013,7 @@ public class ProductionPage {
 			}
 			
 		}
+
 	/**
 	 * @author Brundha.T
 	 * @param Beginningbates
@@ -22057,4 +22065,86 @@ public class ProductionPage {
 		driver.waitForPageToBeReady();
 		getBrandingBySelectingTagPlaceholder().SendKeys(Test);
 	}
+
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileType
+	 * @param tagname
+	 * @Description addAdditionalNativPlaceHolder
+	 */
+	public void addAdditionalNativPlaceHolder(String fileType, String tagname) throws InterruptedException {
+		driver.scrollingToElementofAPage(getNativePlaceholderLink());
+		getNativePlaceholderLink().ScrollTo();
+		base.waitForElement(getNativePlaceholderLink());
+		getNativePlaceholderLink().waitAndClick(3);
+		base.waitForElement(getSelectMultiFileTypeInTifffNative(2, fileType));
+		getSelectMultiFileTypeInTifffNative(2, fileType).Click();
+		base.waitForElement(getclkSelectTags());
+		getclkSelectTags().waitAndClick(10);
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder());
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+		}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @param prodName
+	 * @param templateName
+	 * @Description addANewProductiontWithTemplate
+	 */
+	public void addANewProductiontWithTemplate(String prodName,String templateName) throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getAddNewProductionbutton());
+		getAddNewProductionbutton().waitAndClick(5);
+
+		base.waitForElement(getProductionName());
+		getProductionName().SendKeys(prodName);
+		base.waitForElement(getProductionDesc());
+		getProductionDesc().SendKeys(prodName);
+		
+		//choose template
+		selectTemplate(templateName);
+
+		base.waitTillElemetToBeClickable(getBasicInfoMarkComplete());
+		getBasicInfoMarkComplete().waitAndClick(5);
+		base.stepInfo("New Production added");
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileName
+	 * @Description extractTextFromTiff
+	 */
+	public String extractTextFromTiff(File fileName) throws TesseractException {
+		ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		instance.setDatapath(tessDataFolder.getPath());
+		String result = instance.doOCR(fileName);
+		System.out.println(result);
+		return result;
+	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileName
+	 * @Description extractTextFromPdf
+	 */
+	public String extractTextFromPdf(File fileName) throws Exception {
+		File file = new File(fileName.toString());
+		PDDocument doc = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String text = pdfStripper.getText(doc);
+		doc.close();
+		System.out.println(text);
+		return text;
+	}
+
+
 }
