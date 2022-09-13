@@ -11,6 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -19,6 +20,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DomainDashboard;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -334,6 +336,152 @@ public class SecurityGroup_Regression21 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:13/09/2022 RPMXCON-54750
+	 * @throws Exception
+	 * @Description Verify that RMU can regenerate the production.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54750", enabled = true, groups = { "regression" })
+	public void verifyRMURegenerateTheProduction() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54750");
+		baseClass.stepInfo("Verify that RMU can regenerate the production.");
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		UtilityLog.info(Input.prodPath);
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String tagname1 = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		tagsAndFolderPage.CreateTagwithClassification(tagname1, "Select Tag Classification");
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.bulkTagExisting(tagname);
+		sessionSearch.bulkTagExisting(tagname1);
+
+		ProductionPage page = new ProductionPage(driver);
+		page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		int nativefile = Integer.parseInt(beginningBates);
+		int NativeDocStart = nativefile + 3;
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname1);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+
+		driver.waitForPageToBeReady();
+		page.clickBackBtnandSelectingNative(7, tagname);
+		driver.scrollingToBottomofAPage();
+		page.getTIFF_EnableforPrivilegedDocs().isDisplayed();
+		page.getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+		page.clickMArkCompleteMutipleTimes(3);
+		page.fillingPrivGuardPage();
+		page.clickMArkCompleteMutipleTimes(2);
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:13/09/2022 RPMXCON-54771
+	 * @throws Exception
+	 * @Description Verify that if RMU changes the SG from header ,Productions menu should be displays.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54771", enabled = true, groups = { "regression" })
+	public void verifyRMUHeaderSGProductionDisplay() throws Exception {
+
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-54771");
+		baseClass.stepInfo("Verify that if RMU changes the SG from header ,Productions menu should be displays.");
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		
+		baseClass.waitForElement(sgpage.securityGroupTab());
+		String getAttribute = sgpage.securityGroupTab().GetAttribute("title");
+		if (getAttribute.equalsIgnoreCase("Default Security Group")) {
+			baseClass.passedStep("Default security group is selcted");
+		} else {
+			baseClass.failedStep("Default security group is not selcted");
+		}
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		baseClass.waitTillElemetToBeClickable(sgpage.productionPageSelectedSG());
+		String sgname = sgpage.productionPageSelectedSG().getText();
+		if (sgname.equalsIgnoreCase(getAttribute)) {
+			baseClass.passedStep("Default security group is selcted");
+		} else {
+			baseClass.failedStep("Default security group is not selcted");
+		}
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:19/07/2022 RPMXCON-54784
+	 * @throws Exception
+	 * @Description Verify that if SAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.
+	 * 
+	 */
+    @Test(description = "RPMXCON-54784", enabled = true, groups = { "regression" })
+	public void verifySAImpersonateAsRMUHomePageProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54784");
+		baseClass.stepInfo(
+				"Verify that if SAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.");
+		
+		UserManagement userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Impersonate SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify RMU Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer Manager home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer Manager home page is not displayed ");
+		}
+		baseClass.stepInfo("verify RMU Home Page Selected project");
+		String actualProject=Input.projectName;
+		String expectedProject=baseClass.getProjectNames().getText();
+		softassert.assertEquals(actualProject, expectedProject);
+		baseClass.passedStep("RMU Dashboard Successfully Clicked the Slected project");
+		softassert.assertAll();
+		loginPage.logout();
+    }
+    
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
