@@ -1329,6 +1329,9 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath
 				("//td[contains(text(),'"+ingestion+"')]//following-sibling::td[contains(text(),'"+status+"')]");
 	}
+	public Element sourceFieldOption(int row,String value) {
+		return driver.FindElementByXPath("//select[@id='SF_"+row+"']//option[(text()='"+value+"')]");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -6073,7 +6076,7 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		// catlogging
 		for (int i = 0; i < 70; i++) {
-			base.waitTime(1);
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -6144,13 +6147,13 @@ public class IngestionPage_Indium {
 		base.waitForElement(getRunCopying());
 		getElementStatus(getRunCopying());
 		getRunCopying().waitAndClick(10);
+		base.VerifySuccessMessage("Ingestion copy has Started.");
 		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(10);
-		base.VerifySuccessMessage("Ingestion copy has Started.");
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 40; i++) {
-			base.waitTime(1);
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -6180,7 +6183,7 @@ public class IngestionPage_Indium {
 				getCloseButton().waitAndClick(10);
 				getRefreshButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
-				//start indexing again
+				//start copying again
 				base.waitForElement(getIngestionDetailPopup(1));
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(getActionDropdownArrow());
@@ -6194,7 +6197,7 @@ public class IngestionPage_Indium {
 					base.waitForElement(getIngestionDetailPopup(1));
 					String status1 = getStatus(1).getText().trim();
 					if(status1.contains("In Progress")) {
-						base.passedStep("Ignored errors and started indexing");
+						base.passedStep("Ignored errors and started copy");
 						break;
 					}
 					else if(status.contains("Failed")) {
@@ -6835,6 +6838,7 @@ public class IngestionPage_Indium {
 			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
+				base.waitForElement(getIngestionPaginationNextButton());
 				getIngestionPaginationNextButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
 				base.stepInfo("Expected Ingestion not found in the page " + i);
@@ -9183,6 +9187,7 @@ public class IngestionPage_Indium {
 
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 
@@ -9295,6 +9300,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will perform all the ingestion process and publish ingestion
 		 */
 		public String publishAddonlyIngestion(String dataset) {
+			driver.waitForPageToBeReady();
 			ignoreErrorsAndCatlogging();
 			ignoreErrorsAndCopying();
 			ignoreErrorsAndIndexing(dataset);
@@ -10900,5 +10906,20 @@ public class IngestionPage_Indium {
 					}
 				}
 			}				
+		}
+		
+		/**
+		 * @author: Arun Created Date: 13/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will map row in configure mapping section
+		 */
+		public void performMappingInConfigureSection(int row,String value1,String value2,String value3) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMappingSourceField(row));
+			getMappingSourceField(row).selectFromDropdown().selectByVisibleText(value1);
+			base.waitForElement(getMappingCategoryField(row));
+			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(value2);
+			base.waitForElement(getMappingDestinationField(row));
+			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(value3);
+			
 		}
 }
