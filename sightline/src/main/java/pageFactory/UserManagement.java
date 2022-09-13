@@ -3733,7 +3733,7 @@ public class UserManagement {
 			} else {
 				getDisableRadioBtn().waitAndClick(5);
 			}
-			System.out.println(userName);
+			
 			// Select user
 			getSelectBulkUser(userName).waitAndClick(10);
 			driver.waitForPageToBeReady();
