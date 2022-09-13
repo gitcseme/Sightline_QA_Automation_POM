@@ -760,7 +760,8 @@ public class UserManagement {
 
 	// Added by Raghuram
 	public Element getComponentName(String componentName) {
-		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
+//		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
+		return driver.FindElementByXPath("//label[contains(.,'"+componentName+"')]");
 	}
 
 	public Element getComponentBoxBlocked(String componentName) {
@@ -3732,7 +3733,7 @@ public class UserManagement {
 			} else {
 				getDisableRadioBtn().waitAndClick(5);
 			}
-
+			System.out.println(userName);
 			// Select user
 			getSelectBulkUser(userName).waitAndClick(10);
 			driver.waitForPageToBeReady();
