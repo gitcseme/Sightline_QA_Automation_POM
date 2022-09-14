@@ -542,6 +542,7 @@ public class CodingForm_Regression_20 {
 	    loginPage.logout();
 	}
 	
+		
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
