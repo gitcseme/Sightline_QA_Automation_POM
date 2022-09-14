@@ -22146,5 +22146,31 @@ public class ProductionPage {
 		return text;
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description :generate Production By selecting folder
+	 * @param folderName
+	 * @return
+	 * @throws Exception
+	 */
+	public String preRequisiteGenerateProduction(String folderName) throws Exception {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
 
+		// Generate Production with TIFF
+		String productionname = "P" + Utility.dynamicNameAppender();
+		navigateToProductionPage();
+		String beginningBates = getRandomNumber(2);
+		System.out.println(productionname);
+		selectingDefaultSecurityGroup();
+		addANewProduction(productionname);
+		fillingDATSection();
+		fillingTIFFSectionwithBurnRedaction();
+		navigateToNextSection();
+		InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, folderName, productionname,
+				beginningBates);
+
+		return productionname;
+	}
+	
 }
