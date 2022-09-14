@@ -2015,6 +2015,10 @@ public class SessionSearch {
 				"//div[contains(@class,'assignmentbulkactionpopup') and contains(@style,'display: none')]");
 	}
 
+	public Element selectOperatorBetweenAdvancedSearchBlocks() {
+		return driver.FindElementByXPath("(//div[@id='op']//select)[last()-1]");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -12088,8 +12092,6 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelDefaultSecurityGroup_CheckBox(SecurityGroup).waitAndClick(10);
-		
-		
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -12097,7 +12099,7 @@ public class SessionSearch {
 			}
 		}), Input.wait60);
 		getBulkRelease_ButtonUnRelease().waitAndClick(20);
-		
+
 		if (getTallyContinue().isElementAvailable(2)) {
 			getTallyContinue().waitAndClick(10);
 		} else {
@@ -13405,17 +13407,64 @@ public class SessionSearch {
 			bc.stepInfo(" Docs Unassigned from  " + listOfAssignments.get(i));
 		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
 	 * @description: this method will check search result count for configured query
 	 */
 	public void verifySearchResultReturnsForConfiguredQuery(int purehitCount) {
-		if(purehitCount>0) {
+		if (purehitCount > 0) {
 			base.passedStep("Docs returned for the configured query");
-		}
-		else {
+		} else {
 			base.failedStep("Docs not returned for the configured query");
+		}
+	}
+
+	/**
+	 * @author
+	 * @date: 9/13/21 NA
+	 * @Modifieddate: N/A
+	 * @Modifiedby:
+	 * @Description :
+	 * @param searchResult
+	 */
+	public void advanceWorkProductSearchResult(String searchResult) {
+		getWorkproductBtnC().waitAndClick(5);
+		getSavedSearchResult().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getSelectWorkProductSSResults(searchResult));
+		getSelectWorkProductSSResults(searchResult).waitAndClick(5);
+		getInsertInToQueryBtn().waitAndClick(10);
+	}
+	
+	/**
+	 * @author
+	 * @date: 9/13/21 NA
+	 * @Modifieddate: N/A
+	 * @Modifiedby:
+	 * @Description :
+	 * @param SearchStrings
+	 * @param operator
+	 */
+	public void advancedMultipleContentSearchWithOperator(List<String> SearchStrings, String operator) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDatabtn().Visible();
+			}
+		}), Input.wait30);
+		getContentAndMetaDatabtn().Click();
+		for (int i = 0; i < SearchStrings.size(); i++) {
+			if (i != 0) {
+				selectOperator(operator);
+			}
+			base.waitForElement(getAdvancedContentSearchInputCurrent());
+			try {
+				getAdvancedContentSearchInputCurrent().SendKeys(SearchStrings.get(i));
+			} catch (Exception e) {
+				base.waitTime(5);
+				getAdvancedContentSearchInputCurrent().SendKeys(SearchStrings.get(i));
+			}
 		}
 	}
 

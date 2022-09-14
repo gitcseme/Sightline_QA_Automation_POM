@@ -1535,6 +1535,9 @@ public class CodingForm {
 		public Element getHideShowBackGroundBtn() {
 			return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
 		}
+		public Element getTagGroupValues(int objectNo) {
+			return driver.FindElementByXPath("//span[@id='l_it_" + objectNo + "']/parent::div/div");
+		}
 	
 	
 	

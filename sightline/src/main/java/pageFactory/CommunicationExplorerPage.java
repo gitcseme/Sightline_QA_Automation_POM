@@ -1207,4 +1207,21 @@ public class CommunicationExplorerPage {
 		base.stepInfo(filter +" Filters Applied.");
 		
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @param nodeCount
+	 */
+	public void verifyNodesCount(int nodeCount) {
+	if(getfindAllNodes().isElementAvailable(3)) {
+	int nodeCount_displayed=getfindAllNodes().size();
+	if(nodeCount_displayed<=nodeCount || nodeCount_displayed!=0) {
+	base.passedStep("Communication explorer report is generated successfully when show option is "
+			+ "Top "+nodeCount+" and number of nodes displayed "+nodeCount_displayed);
+	}else {
+		base.failedStep("Nodes count displayed upon selecting Top"+nodeCount+" is "+nodeCount_displayed);
+	}
+	}else {
+		base.failedMessage("Nodes not available in communication explorer page.");
+	}
+	}
 }

@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -20,11 +18,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;

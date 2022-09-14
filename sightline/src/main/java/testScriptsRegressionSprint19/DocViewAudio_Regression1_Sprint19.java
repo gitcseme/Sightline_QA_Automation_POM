@@ -29,7 +29,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class DocViewAudio_Regression1 {
+public class DocViewAudio_Regression1_Sprint19 {
 
 	Driver driver;
 	LoginPage loginPage;

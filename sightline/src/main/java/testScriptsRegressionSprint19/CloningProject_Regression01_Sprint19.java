@@ -27,7 +27,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class CloningProject_Regression01 {
+public class CloningProject_Regression01_Sprint19 {
 	
 	Driver driver;
 	LoginPage loginPage;
