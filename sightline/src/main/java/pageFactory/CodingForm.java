@@ -1535,6 +1535,7 @@ public class CodingForm {
 		public Element getHideShowBackGroundBtn() {
 			return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
 		}
+
 		
 		public Element getPreviewComment() {
 			return driver.FindElementByXPath("//textarea[@name='COMMENT']");
@@ -1562,6 +1563,10 @@ public class CodingForm {
 		
 		public Element getPreviewCheckBox() {
 			return driver.FindElementByXPath("//input[contains(@id,'checkbox')]");
+
+		public Element getTagGroupValues(int objectNo) {
+			return driver.FindElementByXPath("//span[@id='l_it_" + objectNo + "']/parent::div/div");
+
 		}
 	
 	

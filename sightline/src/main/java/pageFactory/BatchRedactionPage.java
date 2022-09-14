@@ -33,8 +33,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sqlite.SQLiteConfig.DateClass;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;

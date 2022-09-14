@@ -897,6 +897,13 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getProdNameError() {
+		return driver.FindElementByXPath("//span[@id='ProductionName-error']");
+	}
+
+	public Element getBasicInfoSaveDisable() {
+		return driver.FindElementByXPath("//button[@id='BasicInfoNext' and @disabled='disabled']");
+	}
 
 	public Element getProdRootinProdLOcTab() {
 		return driver.FindElementByXPath("//select[@id='lstProductionRootPaths']//option[@selected='selected']");
@@ -3205,6 +3212,10 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + ".tiff']");
 	}
 
+	public Element verifyingNativeFiles(String presufix, String subBates, String FileType) {
+		return driver.FindElementByXPath("//a[text()='" + presufix + ".000" + subBates + "" + FileType + "']");
+	}
+
 	public ElementCollection getDATSourceField() {
 		return driver.FindElementsByXPath("//*[@id='SF_0']//option");
 	}
@@ -3446,15 +3457,18 @@ public class ProductionPage {
 	}
 
 	public ElementCollection getBatesRange(String prodName) {
-		return driver.FindElementsByXPath("//a[contains(text(),'"+prodName+"')]/parent::div/following-sibling::div[@class='row']/div[@id='batesCount']//span[contains(@class,'break-word')]/strong");
+		return driver.FindElementsByXPath("//a[contains(text(),'" + prodName
+				+ "')]/parent::div/following-sibling::div[@class='row']/div[@id='batesCount']//span[contains(@class,'break-word')]/strong");
 	}
 
 	public Element getTextFirstRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']/..");
 	}
+
 	public Element getTextSecondRadioBtn() {
 		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']/..");
 	}
+
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -6837,7 +6851,6 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		base.stepInfo("Advanced production section is filled");
 	}
-
 
 	/**
 	 * @authorIndium-Sowndarya.Velraj.Modified on 01/06/22
@@ -16951,7 +16964,7 @@ public class ProductionPage {
 		}
 		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
 		getTIFF_EnableforPrivilegedDocs().Enabled();
-		getTIFF_EnableforPrivilegedDocs().Click();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
 	}
 
 	/**
@@ -21900,6 +21913,7 @@ public class ProductionPage {
 
 	/*
 	 * @author sowndarya.velraj
+	 * 
 	 * @param value Description:To verifyBatesSyncWithAllDoc
 	 */
 	public void verifyBatesSyncWithAllDoc(File dirPath, String prefixID, String suffixID) {
@@ -21918,13 +21932,12 @@ public class ProductionPage {
 			base.failedStep("No Files Present In Directory");
 		}
 	}
-	
+
 	/**
 	 * @author JAyanthi
 	 * @param prodNAme
 	 * @return bates range in list
 	 */
-
 
 	public List<String> getBATES_RangeOfProduction(String prodNAme) {
 
@@ -21934,6 +21947,7 @@ public class ProductionPage {
 
 	/*
 	 * @author sowndarya.velraj
+	 * 
 	 * @param value Description:To verifyTextinPDF
 	 */
 	public String verifyTextinPDF(File filePath, String expText) throws IOException {
@@ -21942,9 +21956,9 @@ public class ProductionPage {
 		PDFTextStripper pdfStripper = new PDFTextStripper();
 		String text = pdfStripper.getText(doc);
 		doc.close();
-		if(text.contains(expText)) {
+		if (text.contains(expText)) {
 			base.passedStep(expText + " Expected Text Present in PDF File");
-		}else {
+		} else {
 			base.failedStep(expText + " Expected Text Not Present in PDF File");
 		}
 		return text;
@@ -21952,6 +21966,7 @@ public class ProductionPage {
 
 	/*
 	 * @author sowndarya.velraj
+	 * 
 	 * @param value Description: To verifyLoadMorePagination
 	 */
 	public void verifyLoadMorePagination() {
@@ -21979,28 +21994,186 @@ public class ProductionPage {
 		}
 	}
 
-
 	/**
 	 * @author Brundha
 	 * @param prefixID
 	 * @param suffixID
 	 * @param beginningBates
-	 * @throws TesseractException 
+	 * @throws TesseractException
 	 * @Description verify that generated tiff file
 	 */
-	public void verifyingTiffImage(File fileName,String CompareString) throws TesseractException {
+	public void verifyingTiffImage(File fileName, String CompareString) throws TesseractException {
 
-		ITesseract instance = new Tesseract1(); 
-		File tessDataFolder = LoadLibs.extractTessResources("tessdata"); 
+		ITesseract instance = new Tesseract1();
+		File tessDataFolder = LoadLibs.extractTessResources("tessdata");
 		instance.setDatapath(tessDataFolder.getPath());
 
-			String result = instance.doOCR(fileName);
-			System.out.println(result);
-			if (!result.contains(CompareString)) {
-				base.passedStep("PlaceholderText is not displayed as expected");
-			} else {
-				base.failedStep("Placeholder text is Displayed");
-			}
-			
+		String result = instance.doOCR(fileName);
+		System.out.println(result);
+		if (!result.contains(CompareString)) {
+			base.passedStep("PlaceholderText is not displayed as expected");
+		} else {
+			base.failedStep("Placeholder text is Displayed");
 		}
+
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Beginningbates
+	 * @param prefixID
+	 * @param suffixID
+	 * @param verificationText
+	 * @throws IOException
+	 * @Description: verifying the generated pdf file
+	 */
+	public void pdf_Verification_In_Generated_File(String Beginningbates, String prefixID, String suffixID,
+			String verificationText) throws IOException {
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		PDDocument document = PDDocument
+				.load(new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + Beginningbates + suffixID + ".pdf"));
+		if (!document.isEncrypted()) {
+			PDFTextStripper stripper = new PDFTextStripper();
+			String text = stripper.getText(document);
+			System.out.println("Text:" + text);
+			if (text.contains(verificationText)) {
+				base.passedStep("Documents is Generated with expected text");
+			} else {
+				base.failedStep("Verification failed");
+			}
+
+		}
+		document.close();
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param Tag
+	 * @param Test
+	 * @Description: filling tiff branding section
+	 */
+
+	public void FillingBrandingInTiffSection(String Tag, String Test) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys(Input.testData1);
+		base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTag());
+		getSpecifyBrandingBySelectingTag().Click();
+		base.waitForElement(getbtnSelectTags());
+		getbtnSelectTags().Click();
+		base.waitForElement(getChkBoxSelect(Tag));
+		getChkBoxSelect(Tag).waitAndClick(5);
+		getbtnSelect().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileType
+	 * @param tagname
+	 * @Description addAdditionalNativPlaceHolder
+	 */
+	public void addAdditionalNativPlaceHolder(String fileType, String tagname) throws InterruptedException {
+		driver.scrollingToElementofAPage(getNativePlaceholderLink());
+		getNativePlaceholderLink().ScrollTo();
+		base.waitForElement(getNativePlaceholderLink());
+		getNativePlaceholderLink().waitAndClick(3);
+		base.waitForElement(getSelectMultiFileTypeInTifffNative(2, fileType));
+		getSelectMultiFileTypeInTifffNative(2, fileType).Click();
+		base.waitForElement(getclkSelectTags());
+		getclkSelectTags().waitAndClick(10);
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitTillElemetToBeClickable(getNativeDocsPlaceholder());
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param prodName
+	 * @param templateName
+	 * @Description addANewProductiontWithTemplate
+	 */
+	public void addANewProductiontWithTemplate(String prodName, String templateName) throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitTillElemetToBeClickable(getAddNewProductionbutton());
+		getAddNewProductionbutton().waitAndClick(5);
+
+		base.waitForElement(getProductionName());
+		getProductionName().SendKeys(prodName);
+		base.waitForElement(getProductionDesc());
+		getProductionDesc().SendKeys(prodName);
+
+		// choose template
+		selectTemplate(templateName);
+
+		base.waitTillElemetToBeClickable(getBasicInfoMarkComplete());
+		getBasicInfoMarkComplete().waitAndClick(5);
+		base.stepInfo("New Production added");
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileName
+	 * @Description extractTextFromTiff
+	 */
+	public String extractTextFromTiff(File fileName) throws TesseractException {
+		ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+		File tessDataFolder = LoadLibs.extractTessResources("tessdata"); // Maven build bundles English data
+		instance.setDatapath(tessDataFolder.getPath());
+		String result = instance.doOCR(fileName);
+		System.out.println(result);
+		return result;
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param fileName
+	 * @Description extractTextFromPdf
+	 */
+	public String extractTextFromPdf(File fileName) throws Exception {
+		File file = new File(fileName.toString());
+		PDDocument doc = PDDocument.load(file);
+		PDFTextStripper pdfStripper = new PDFTextStripper();
+		String text = pdfStripper.getText(doc);
+		doc.close();
+		System.out.println(text);
+		return text;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :generate Production By selecting folder
+	 * @param folderName
+	 * @return
+	 * @throws Exception
+	 */
+	public String preRequisiteGenerateProduction(String folderName) throws Exception {
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+
+		// Generate Production with TIFF
+		String productionname = "P" + Utility.dynamicNameAppender();
+		navigateToProductionPage();
+		String beginningBates = getRandomNumber(2);
+		System.out.println(productionname);
+		selectingDefaultSecurityGroup();
+		addANewProduction(productionname);
+		fillingDATSection();
+		fillingTIFFSectionwithBurnRedaction();
+		navigateToNextSection();
+		InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, folderName, productionname,
+				beginningBates);
+
+		return productionname;
+	}
+	
 }

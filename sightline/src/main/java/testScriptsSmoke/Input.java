@@ -411,6 +411,8 @@ public class Input {
 	public static String datFile7;
 	public static String attachDocFolder;
 	public static String folder61759;
+	public static String sourceParentDocId;
+	public static String overlayDatFile;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1361,6 +1363,8 @@ public class Input {
 		datFile7 = testData.getDatFile7();
 		attachDocFolder= testData.getAttachDocFolder();
 		folder61759 = testData.getFolder61759();
+		sourceParentDocId = testData.getSourceParentDocId();
+		overlayDatFile = testData.getOverlayDatFile();
 		
 		
 		// Added by Raghuram 02/24/22

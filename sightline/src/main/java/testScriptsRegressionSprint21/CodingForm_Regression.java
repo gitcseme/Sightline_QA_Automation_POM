@@ -1,33 +1,19 @@
 package testScriptsRegressionSprint21;
 
-import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -48,7 +34,6 @@ import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
-import views.html.helper.input;
 
 public class CodingForm_Regression {
 
@@ -175,6 +160,103 @@ public class CodingForm_Regression {
 		baseClass.stepInfo("Instrumental text present for check group");
 		baseClass.passedStep("Additional fields are displayed for both radio and check group");
 		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan
+	 * @Description : Verify that radio group association should be saved for the Tag when coding form is saved
+	 */
+	@Test(description = "RPMXCON-54500", enabled = true, groups = { "regression" })
+	public void verifyRadioGrpAssociationOfSavedCF() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54500");
+		baseClass.stepInfo("Verify that radio group association should be saved for the Tag when coding form is saved");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		commentsPage = new CommentsPage(driver);
+		String codingform = "cf"+Utility.dynamicNameAppender();
+		String tagname = "tag"+Utility.dynamicNameAppender();
+		int index = 1;
+		String expectedRadioGrp = "radiogroup_"+index+""; 
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		// Create tag
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		baseClass.stepInfo("Created the tag sucessfully");
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");		
+		codingForm.addNewCodingFormButton();
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,tagname,null,null,"tag");
+		codingForm.addcodingFormAddButton();
+		codingForm.specialObjectsBox(Input.radioGroup);
+		codingForm.addcodingFormAddButton();
+		codingForm.selectTagTypeByIndex("radio item",index,0);
+		baseClass.stepInfo("Radio group is associated to the created tag");
+		codingForm.saveCodingForm();
+		baseClass.stepInfo("Coding form saved successfully");
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getTagGroupValues(index));
+		String actualRadioGroup = codingForm.getTagGroupValues(index).GetAttribute("systemcontrolname");
+		softAssertion.assertEquals(expectedRadioGrp, actualRadioGroup);
+		softAssertion.assertAll();
+		baseClass.passedStep("The radio group associated in tag is successfully reflected after saving the coding form");
+		codingForm.deleteCodingForm(codingform, codingform);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.deleteAllTags(tagname);
+		loginPage.logout();
+	}
+	/**
+	 * @Author :Iyappan.Kasinathan
+	 * @Description : Verify that radio group association should be saved for the Tag when coding form is edited
+	 */
+	@Test(description = "RPMXCON-54501", enabled = true, groups = { "regression" })
+	public void verifyRadioGrpAssociationOfEditedCF() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54501");
+		baseClass.stepInfo("Verify that radio group association should be saved for the Tag when coding form is edited");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		commentsPage = new CommentsPage(driver);
+		String codingform = "cf"+Utility.dynamicNameAppender();
+		String tagname = "tag"+Utility.dynamicNameAppender();
+		int index = 1;
+		String expectedRadioGrp = "radiogroup_"+index+"";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+		baseClass.stepInfo("Created the tag sucessfully");
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");		
+		codingForm.addNewCodingFormButton();
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,tagname,null,null,"tag");
+		codingForm.addcodingFormAddButton();
+		codingForm.specialObjectsBox(Input.radioGroup);
+		codingForm.addcodingFormAddButton();
+		codingForm.selectTagTypeByIndex("radio item",index,0);
+		baseClass.stepInfo("Radio group is associated to the created tag");
+		codingForm.saveCodingForm();
+		baseClass.stepInfo("Coding form saved successfully");
+		//Edit the existing coding form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		//verify the radio group associated with tag
+		codingForm.editCodingForm(codingform);
+		baseClass.stepInfo("Edited the coding form sucessfully");
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getTagGroupValues(index));
+		String actualRadioGroup = codingForm.getTagGroupValues(index).GetAttribute("systemcontrolname");
+		softAssertion.assertEquals(expectedRadioGrp, actualRadioGroup);
+		softAssertion.assertAll();
+		baseClass.passedStep("The radio group associated in tag is successfully reflected after editing the saved coding form");
+		//Deleting the tag and cf
+		codingForm.deleteCodingForm(codingform, codingform);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.deleteAllTags(tagname);
 		loginPage.logout();
 	}
 
