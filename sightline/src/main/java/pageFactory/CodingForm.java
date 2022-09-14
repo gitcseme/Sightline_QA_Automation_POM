@@ -1535,6 +1535,34 @@ public class CodingForm {
 		public Element getHideShowBackGroundBtn() {
 			return driver.FindElementByXPath("//div[@class='ColVis_collectionBackground']");
 		}
+		
+		public Element getPreviewComment() {
+			return driver.FindElementByXPath("//textarea[@name='COMMENT']");
+		}
+		
+		public Element getPreviewMetaData() {
+			return driver.FindElementByXPath("//input[@name='FIELD']");
+		}
+		
+		public Element getPreviewRadioBtn() {
+			return driver.FindElementByXPath("//input[@type='radio']");
+		}
+		
+		public Element getPrevError(int i) {
+			return driver.FindElementByXPath("(//span[@class='validationSpan'])["+i+"]");
+		}
+		
+		public Element getPreview1stRadioBtn() {
+			return driver.FindElementByXPath("//input[@name='radiogroup_2']");
+		}
+		
+		public Element getPreview2ndRadioBtn() {
+			return driver.FindElementByXPath("//input[@name='radiogroup_3']");
+		}
+		
+		public Element getPreviewCheckBox() {
+			return driver.FindElementByXPath("//input[contains(@id,'checkbox')]");
+		}
 	
 	
 	
@@ -4659,24 +4687,30 @@ public class CodingForm {
 	 * @author Aathith.Senthilkumar
 	 */
 	public void addLogicOptionWithIndex(int i, int indexNum, String Condition, String rule) {
+		driver.waitForPageToBeReady();
 		base.waitForElement(getCF_AddLogicButton(i + 1));
-		getCF_AddLogicButton(i + 1).waitAndClick(5);
+		driver.scrollingToElementofAPage(getCF_AddLogicButton(i + 1));
+		driver.waitForPageToBeReady();
+		getCF_AddLogicButton(i + 1).waitAndClick(10);
 		getCF_Object1(i).selectFromDropdown().selectByIndex(indexNum);
 		getCF_FieldLogicCondition(i).selectFromDropdown().selectByVisibleText(Condition);
 		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
-
+		base.stepInfo(Condition+" is selected in the role "+ rule);
 	}
 
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void addLogicOptionWithIndexWithoutIncreace(int i, int indexNum, String Condition, String rule) {
+		driver.waitForPageToBeReady();
 		base.waitForElement(getCF_AddLogicButton(i));
-		getCF_AddLogicButton(i).waitAndClick(5);
+		driver.scrollingToElementofAPage(getCF_AddLogicButton(i));
+		driver.waitForPageToBeReady();
+		getCF_AddLogicButton(i).waitAndClick(10);
 		getCF_Object1(i).selectFromDropdown().selectByIndex(indexNum);
 		getCF_FieldLogicCondition(i).selectFromDropdown().selectByVisibleText(Condition);
 		getCF_FieldLogicAction(i).selectFromDropdown().selectByVisibleText(rule);
-
+		base.stepInfo(Condition+" is selected in the role "+ rule);
 	}
 
 	/**
@@ -5424,7 +5458,6 @@ public void updateCodingForm() {
  * @Description hide/show a column in coding from table
  */
 public void hideOrShowColum(String columnName) {
-	navigateToCodingFormPage();
 	driver.waitForPageToBeReady();
 	getHideShowBtn().waitAndClick(5);
 	driver.waitForPageToBeReady();
@@ -5432,6 +5465,55 @@ public void hideOrShowColum(String columnName) {
 	getHideShowBackGroundBtn().waitAndClick(5);
 	base.stepInfo(columnName+" this column was hide/showned");
 	driver.waitForPageToBeReady();
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param TagType
+ * @param nthTag
+ * @param index
+ * @Description selecting tag type in coding form
+ */
+public void selectTagType(String TagType, int nthTag, int index) {
+	switch (TagType) {
+	case "check item":
+		if (TagType.equalsIgnoreCase("check item"))
+			getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Check Item");
+			getCF_CheckGroup(nthTag).selectFromDropdown().selectByIndex(index);
+	case "radio item":
+		if (TagType.equalsIgnoreCase("radio item")) {
+			getCF_TagTypes(nthTag).selectFromDropdown().selectByVisibleText("Radio Item");
+			getCF_RadioGroup(nthTag).selectFromDropdown().selectByIndex(index);
+		}
+	}
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @param cfName
+ * @Description add coding form name in input box
+ */
+public void addCodingFormName(String cfName) {
+	navigateToCodingFormPage();
+	 driver.waitForPageToBeReady();
+	 base.waitForElement(getAddNewCodingFormBtn());
+	 getAddNewCodingFormBtn().waitAndClick(10);
+	 base.waitForElement(getCodingFormName());
+	 getCodingFormName().SendKeys(cfName);
+	 base.stepInfo(cfName+" coding form name is added ");
+}
+
+/**
+ * @author Aathith.Senthilkumar
+ * @Description click preview button in coding form 
+ */
+public void clickPreviewButon() {
+	driver.waitForPageToBeReady();
+	driver.scrollPageToTop();
+	base.waitTillElemetToBeClickable(getCF_PreviewButton());
+	getCF_PreviewButton().waitAndClick(5);
+	driver.waitForPageToBeReady();
+	base.stepInfo("preview button was clicked");
 }
 }
 
