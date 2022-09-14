@@ -87,7 +87,6 @@ public class BatchRedactionRegression_20 {
 
 		// Login as a DA
 		login.loginToSightLine(Input.da1userName, Input.da1password);
-		base.selectdomain(Input.domainName);
 		base.stepInfo("Logged In As : DA");
 
 		// click active Project and verify Impersonation to RMU
