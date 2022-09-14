@@ -242,6 +242,79 @@ public class SystemLavelTemp_Regression {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * @author Mohan.Venugopal ModifyDate:13/09/2022 RPMXCON-52978 
+	 * @throws Exception 
+	 * @Description Verify that When a Non-Domain project is created then provisioned CF with Specific logic  is  available in the Project- RMU
+	 * 
+	 */
+	@Test(description = "RPMXCON-52978", enabled = true, groups = { "regression" })
+	public void verifyCodingFormWithSpecificLogicInNonDomainProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52978");
+		baseClass.stepInfo(
+				"Verify that When a Non-Domain project is created then provisioned CF with Specific logic  is  available in the Project- RMU");
+
+		sessionSearch = new SessionSearch(driver);
+		CodingForm codingForm = new CodingForm(driver);
+		String codingFormName="SpecificLogic"+Utility.dynamicNameAppender();
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Select Non-Domain Project
+		baseClass.selectproject(Input.NonDomainProject);
+		
+		//Navigate to CF Page.
+		codingForm.navigateToCodingFormPage();
+		codingForm.PreviewValidations(codingFormName,"tag","Check Item","Make It Optional");
+		baseClass.passedStep("Provisioned CF gets created with Specific logic are available in the Project- RMU.");
+		
+		
+		//logout
+		loginPage.logout();
+		
+	}
+	
+	
+	/**
+	 * @author Mohan.Venugopal ModifyDate:13/09/2022 RPMXCON-52977 
+	 * @throws Exception 
+	 * @Description Verify that When a Non-Domain project is created then provisioned CF with Specific Tags and Order is  available in the Project- RMU
+	 * 
+	 */
+	@Test(description = "RPMXCON-52977", enabled = true, groups = { "regression" })
+	public void verifyCodingFormWithSpecificTagsAndOrdersInNonDomainProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52977");
+		baseClass.stepInfo(
+				"Verify that When a Non-Domain project is created then provisioned CF with Specific Tags and Order is  available in the Project- RMU");
+
+		sessionSearch = new SessionSearch(driver);
+		CodingForm codingForm = new CodingForm(driver);
+		String codingFormName="SpecificTagsAndOrders"+Utility.dynamicNameAppender();
+		
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+		
+		//Select Non-Domain Project
+		baseClass.selectproject(Input.NonDomainProject);
+		
+		//Navigate to CF Page.
+		codingForm.navigateToCodingFormPage();
+		codingForm.validateSpecificTagsAndOrdersInCodingForm(codingFormName,"tag","check item","Make It Required");
+		baseClass.passedStep("Provisioned CF are created with Specific Tags and Order are available in the Project- RMU.");
+		
+		
+		//logout
+		loginPage.logout();
+		
+	}
+	
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

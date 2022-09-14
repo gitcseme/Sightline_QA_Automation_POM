@@ -962,6 +962,20 @@ public class CodingForm {
 	}
 
 //    Added by baskar
+	
+	public Element getCF_PreviewFieldMandatoryFieldText() {
+		return driver.FindElementByXPath("//span[text()='*']");
+	}
+	
+	public Element getCF_PreviewCheckboxValue() {
+		return driver.FindElementByXPath("//*[@id='_checkgroup']");
+	}
+	
+	
+	public Element getCF_CheckGroup() {
+		return driver.FindElementById("TagChk_0");
+	}
+	
 	public Element getAddCodingFormCheckToSG(String fieldValue) {
 		return driver.FindElementByXPath(".//*[@id='CodingFormDataTable']//td[text()='" + fieldValue + "']//..//td//i");
 	}
@@ -2912,6 +2926,7 @@ public class CodingForm {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		base.waitTillElemetToBeClickable(getSaveCFBtn());
@@ -5433,6 +5448,108 @@ public void hideOrShowColum(String columnName) {
 	base.stepInfo(columnName+" this column was hide/showned");
 	driver.waitForPageToBeReady();
 }
+
+
+
+/**
+ * @author Mohan.Venugopal 
+ * @description: To validate Specific tags and Orders In CodingForm
+ * @param cfName
+ * @param ObjectName
+ * @param TagType
+ * @param action
+ * @throws InterruptedException
+ */
+public void validateSpecificTagsAndOrdersInCodingForm(String cfName,String ObjectName, String TagType,String action ) throws InterruptedException {
+
+	
+	
+	getAddNewCodingFormBtn().waitAndClick(10);
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getCodingFormName().Visible();
+		}
+	}), Input.wait30);
+	getCodingFormName().SendKeys(cfName);
+	switch (ObjectName) {
+	case "tag":
+		if (ObjectName.equalsIgnoreCase("tag"))
+			getCodingForm_FirstTag().waitAndClick(10);
+		base.stepInfo("First Tag is added from the CodingForm");
+	case "comment":
+		if (ObjectName.equalsIgnoreCase("comment")) {
+			getCodingForm_CommentTab().waitAndClick(10);
+			getCodingForm_FirstComment().waitAndClick(10);
+			base.stepInfo("First Comment is added from the CodingForm");
+		}
+	case "metadata":
+		if (ObjectName.equalsIgnoreCase("metadata")) {
+			getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+			getCodingForm_FirstMetadata().waitAndClick(10);
+			base.stepInfo("First MetaData is added from the CodingForm");
+		}
+	}
+	getCodingForm_AddToFormButton().waitAndClick(10);
+	base.stepInfo("CodingForm with the "+ObjectName+" is successfully added to the form");
+	
+	base.waitTime(2);
+	
+	base.waitForElement(getCF_CheckGrpObject());
+	getCF_CheckGrpObject().waitAndClick(10);
+	
+	base.waitForElement(getCodingForm_AddToFormButton());
+	getCodingForm_AddToFormButton().waitAndClick(10);
+	
+	
+	driver.scrollingToBottomofAPage();
+	
+	base.waitForElement(getRGDefaultAction());
+	getRGDefaultAction().selectFromDropdown().selectByVisibleText(action);
+	
+	driver.scrollPageToTop();
+	
+	if (ObjectName.equalsIgnoreCase("tag")) {
+		switch (TagType) {
+		case "check item":
+			if (TagType.equalsIgnoreCase("check item"))
+				getCF_TagTypes().selectFromDropdown().selectByVisibleText("Check Item");
+				getCF_CheckGroup().selectFromDropdown().selectByVisibleText("Check Group(checkgroup_1)");
+		case "radio item":
+			if (TagType.equalsIgnoreCase("radio item")) {
+				getCF_TagTypes().selectFromDropdown().selectByVisibleText("Radio Item");
+				getCF_RadioGrpObject().waitAndClick(10);
+				getCodingForm_AddToFormButton().waitAndClick(10);
+
+				base.waitTime(3);
+
+				getCF_RadioGroup().selectFromDropdown().selectByIndex(1);
+			}
+		}
+	}
+	
+	driver.scrollPageToTop();
+
+	getCF_PreviewButton().waitAndClick(10);
+	
+	
+	if (ObjectName.equalsIgnoreCase("tag") && TagType.equalsIgnoreCase("check item")
+			&& action.equalsIgnoreCase("Make It Required")) {
+		System.out.println(getCF_PreviewCheckboxValue().GetAttribute("class"));
+		softAssertion.assertEquals(getCF_PreviewCheckboxValue().GetAttribute("class"),"check-group");
+		softAssertion.assertTrue(getCF_PreviewCheckboxValue().Displayed());
+		softAssertion.assertTrue(getCF_PreviewFieldMandatoryFieldText().Displayed());
+		softAssertion.assertAll();
+		base.passedStep("Coding Form is Previewed Successfully");
+	}else {
+		base.failedStep("Preview has some error");
+	}
+	
+	
+	
+	
+	
 }
 
+
+}
 
