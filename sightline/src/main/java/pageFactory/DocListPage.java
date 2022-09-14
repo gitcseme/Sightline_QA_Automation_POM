@@ -1387,6 +1387,11 @@ public class DocListPage {
 	}
 
 	// jeevitha
+
+	public Element getDocfileDetailByID(String docid, String index) {
+		return driver.FindElementByXPath("//td[text()='" + docid + "']//parent::tr//td[" + index + "]");
+	}
+
 	public Element getheaderName(String headerName) {
 		return driver.FindElementByXPath("//table[@id='dtDocList']//th[text()='" + headerName + "']");
 	}
@@ -1820,7 +1825,7 @@ public class DocListPage {
 		Thread.sleep(10000);
 		base.waitForElement(getContinueCount());
 
-		getContinueCount().Click();
+		getContinueCount().waitAndClick(10);
 
 		System.out.println("Click continue");
 		final BaseClass bc = new BaseClass(driver);
@@ -4954,10 +4959,12 @@ public class DocListPage {
 		}
 
 		driver.WaitUntil((new Callable<Boolean>() {
+
 			public Boolean call() {
 				return getDataInDoclist(1, 13).Visible();
 			}
 		}), Input.wait30);
+
 		String dateFormat = getDataInDoclist(1, 13).getText();
 		String firstSectionInDateFormat[] = dateFormat.split("/");
 		int firstsectionLength = firstSectionInDateFormat[0].length();
@@ -6244,12 +6251,39 @@ public class DocListPage {
 				if (elementName.equals("")) {
 					elementName = "No Name";
 				}
+
 				elementNames.add(elementName);
 			}
 			return elementNames;
 		} catch (Exception E) {
 			return null;
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : ignore DocType which is not downloadable format and add
+	 *              remaining to the list
+	 * @param docIdOrName
+	 * @return
+	 */
+	public List<String> addDocsToListOfOnlyDownloadableFormat(List<String> docIdOrName) {
+		String[] ignoreFileTypeId = { "MP3", "wav" };
+		List<String> elementNames = new ArrayList<>();
+		int index = base.getIndex(getColumnHeader(), Input.docFileType);
+
+		for (int i = 0; i < docIdOrName.size(); i++) {
+			base.waitForElement(getDocfileDetailByID(docIdOrName.get(i), String.valueOf(index)));
+			String docfileType = getDocfileDetailByID(docIdOrName.get(i), String.valueOf(index)).getText();
+
+			if (docfileType.equalsIgnoreCase(ignoreFileTypeId[0])
+					|| docfileType.equalsIgnoreCase(ignoreFileTypeId[1])) {
+				System.out.println("Ignored file : " + docfileType);
+			} else {
+				elementNames.add(docIdOrName.get(i));
+			}
+		}
+		return elementNames;
 	}
 
 }
