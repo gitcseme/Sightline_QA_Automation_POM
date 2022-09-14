@@ -104,6 +104,97 @@ public class Ingestion_Regression_6 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 13/09/2022 TestCase Id:RPMXCON-48420
+	 * Description :To Verify Media Overlay Ingestion (with Unpublish). 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48420",enabled = true, groups = { "regression" })
+	public void verifyMediaOverlayIngestion() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48420");
+		baseClass.stepInfo("To Verify Media Overlay Ingestion (with Unpublish).");
+		String ingestionName =null;
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.passedStep("perform add only ingestion without media indexing");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		if (status == false) {
+			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
+			ingestionName = ingestionPage.publishAddonlyIngestion(Input.audio96DocsFolder);			
+		}
+		baseClass.stepInfo("unpublish docs");
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("Perform overlay ingestion without DAT");
+		ingestionPage.OverlayIngestionWithoutDat(Input.audio96DocsFolder, "mp3", Input.selectMp3File);
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		baseClass.stepInfo("perform media indexing with language pack");
+		ingestionPage.startIndexing(true, Input.language);
+		ingestionPage.validateIndexingStatus();
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.stepInfo("Perform overlay ingestion with DAT and language pack");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, null, Input.sourceLocation, Input.audio96DocsFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat and mp3 file");
+		ingestionPage.selectDATSource( Input.audioDatFile, Input.docIdKey);
+		ingestionPage.selectMP3VarientSource(Input.selectMp3File, false);
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		ingestionPage.clickOnNextButton();
+		ingestionPage.performMappingInConfigureSection(2, Input.docIdKey,Input.ingDocBasic, Input.sourceParentDocId);
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.startIndexing(true, Input.language);
+		ingestionPage.validateIndexingStatus();
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 12/09/2022 TestCase Id:RPMXCON-49357
+	 * Description :To verify that Overlay should work for  'SourceParentDocID' metadata. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-49357",enabled = true, groups = { "regression" })
+	public void verifyIngestionOverlayForDifferentMetadata() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-49357");
+		baseClass.stepInfo("To verify that Overlay should work for  'SourceParentDocID' metadata");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.passedStep("perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.attachDocFolder);
+		if (status == false) {
+			baseClass.stepInfo("Add new ingestion");
+			ingestionPage.IngestionOnlyForDatFile(Input.attachDocFolder, Input.datFile7);
+			ingestionPage.publishAddonlyIngestion(Input.attachDocFolder);			
+		}
+		baseClass.stepInfo("Perform overlay ingestion with 'SourceParentDocID'");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.attachDocFolder, Input.datFile7, Input.sourceDocIdSearch);
+		if(ingestionPage.sourceFieldOption(1,Input.sourceParentDocId).isElementAvailable(10)) {
+			baseClass.passedStep("metadata 'SourceParentDocID' available for overlay");
+		}
+		else {
+			baseClass.failedStep("metadata not available for overlay");
+		}
+		ingestionPage.clickOnPreviewAndRunButton();
+		driver.waitForPageToBeReady();
+		ingestionPage.ignoreErrorsAndCatlogging();
+		ingestionPage.ignoreErrorsAndCopying();
+		ingestionPage.ingestionIndexing(Input.attachDocFolder);
+		ingestionPage.approveIngestion(1);
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.passedStep("Ingestion overlay performed successfully");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
