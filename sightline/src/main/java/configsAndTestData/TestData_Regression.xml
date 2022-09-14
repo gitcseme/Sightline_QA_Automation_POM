@@ -105,6 +105,9 @@
 	<datFile7>AttachDocIDs.dat</datFile7>
 	<attachDocFolder>AttachDocument</attachDocFolder>
 	<folder61759>RPMXCON-61759</folder61759>
+	<SourceParentDocId>SourceParentDocID</SourceParentDocId>
+	<overlayDatFile>DAT4_STC_newdateformat1_OverlayCName_MDate.dat</overlayDatFile>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
