@@ -1332,6 +1332,9 @@ public class IngestionPage_Indium {
 	public Element sourceFieldOption(int row,String value) {
 		return driver.FindElementByXPath("//select[@id='SF_"+row+"']//option[(text()='"+value+"')]");
 	}
+	public Element getLanguagePack(String language) {
+		return driver.FindElementByXPath("//select[@id='worldSelect']//option[text()='"+language+"']");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -10921,5 +10924,27 @@ public class IngestionPage_Indium {
 			base.waitForElement(getMappingDestinationField(row));
 			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(value3);
 			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 14/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the available language in popup
+		 */
+		public void verifyAvailableLanguagePack() {
+			String[] language = {"Japanese","North American English","International English","German"};
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getLanguage());
+			for(int i=0;i<=language.length;i++) {
+				if(getLanguagePack(language[i]).isElementAvailable(10)) {
+					base.passedStep(language[i] +"language pack available");
+				}
+				else {
+					base.failedStep(language[i] +"language pack not available");
+				}
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
 		}
 }

@@ -196,6 +196,79 @@ public class Ingestion_Regression_6 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * Author :Arunkumar date: 14/09/2022 TestCase Id:RPMXCON-47155
+	 * Description :New Project - Ingestion audio documents, verify language packs and audio search
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-47155",enabled = true, groups = { "regression" })
+	public void verifyAudioDocsSearchIngestion() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-47155");
+		baseClass.stepInfo("New Project -Ingestion audio documents, verify language packs and audio search");
+		String[] audioSearch = {Input.audioSearchString1,Input.audioSearchString2};
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.passedStep("perform audio ingestion and publish docs");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.audio96DocsFolder);
+		if (status == false) {
+			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
+			driver.waitForPageToBeReady();
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.ignoreErrorsAndCopying();
+			baseClass.stepInfo("verify availability of language pack");
+			ingestionPage.verifyAvailableLanguagePack();
+			ingestionPage.ignoreErrorsAndIndexing(Input.audio96DocsFolder);
+			ingestionPage.approveIngestion(1);
+			ingestionPage.runFullAnalysisAndPublish();
+					
+		}
+		baseClass.stepInfo("Execute few audio searches");
+		for(int i=1;i<=audioSearch.length;i++) {
+			baseClass.selectproject();
+			int docsCount = sessionSearch.audioSearch(audioSearch[i], Input.language);
+			sessionSearch.verifySearchResultReturnsForConfiguredQuery(docsCount);
+		}
+		baseClass.passedStep("Audio searches returned results");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 14/09/2022 TestCase Id:RPMXCON-48199
+	 * Description :To Verify Ingestion Overlays of DAT without unpublish. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48199",enabled = true, groups = { "regression" })
+	public void verifyIngestionOverlaywithoutUnpublish() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48199");
+		baseClass.stepInfo("To Verify Ingestion Overlays of DAT without unpublish.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Add new ingestion with overwrite option as 'Add only'.");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.Collection1KFolder);
+		if (status == false) {
+			ingestionPage.performCollection1kTallyIngestion(Input.sourceSystem,Input.datLoadFile3, Input.textFile1);
+			ingestionPage.publishAddonlyIngestion(Input.Collection1KFolder);
+		}
+		baseClass.stepInfo("Perform overlay ingestion with modified dat file");
+		ingestionPage.OverlayIngestionForDATWithMappingFieldSection(Input.Collection1KFolder,
+				Input.overlayDatFile, Input.docId);
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.passedStep("Overlay ingestion performed successfully without unpublish");
+		baseClass.stepInfo("Search for custodian name docs");
+		baseClass.selectproject();
+		int docsCount=sessionSearch.MetaDataSearchInBasicSearch(Input.metaDataName, Input.custodianName_allen);
+		sessionSearch.verifySearchResultReturnsForConfiguredQuery(docsCount);
+		baseClass.passedStep("Able to perform overlay without unpublish");
+		loginPage.logout();
+		
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
