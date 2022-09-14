@@ -184,7 +184,7 @@ public class BatchRedactionPage {
 		return driver.FindElementById("tblResults");
 	}
 
-	//added by jeevitha
+	// added by jeevitha
 	public ElementCollection HeaderTabsPresentInBR() {
 		return driver.FindElementsByXPath("//div[@class='h1 br-page-title']");
 	}
@@ -206,7 +206,7 @@ public class BatchRedactionPage {
 	public ElementCollection batchRedactionHistoryHeader() {
 		return driver.FindElementsByXPath("//table[@id='BatchRedactionsDataTable']//th");
 	}
-	
+
 	// Added by Raghuram
 	public Element getInProgressStatus(String ssName) {
 		return driver.FindElementByXPath(
@@ -2963,9 +2963,9 @@ public class BatchRedactionPage {
 		base.ValidateElement_Presence(manageBtn(), "Manage Button");
 		manageBtn().waitAndClick(10);
 		base.stepInfo("CLicked Manage Btn");
-		base.ValidateElement_Presence(batchRedactionBtn(), "Batch Redcation Button");
+		driver.waitForPageToBeReady();
 		batchRedactionBtn().waitAndClick(10);
-		base.stepInfo("CLicked batch redaction Btn");
+		base.stepInfo("CLicked batch redaction Btn & batchRedactio btn is Available");
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSelectSearchHelpIcon());
@@ -2979,7 +2979,8 @@ public class BatchRedactionPage {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description :  verifcation method for tabs & analyze btn present in select serach group section 
+	 * @Description : verifcation method for tabs & analyze btn present in select
+	 *              serach group section
 	 * @param tabName
 	 */
 	public void verifySelectSearchSection(String tabName) {
@@ -2988,14 +2989,14 @@ public class BatchRedactionPage {
 			String ddStatus = getDDStatus(tabName).GetAttribute("class");
 			base.compareTextViaContains(ddStatus, "closed", tabName + " is in Collaped Mode",
 					"Dropdown status is not as expected");
-			
-			if(getAnalyzeGroupForTab(tabName).isElementAvailable(5)) {
+
+			if (getAnalyzeGroupForTab(tabName).isElementAvailable(5)) {
 				base.passedStep("Analyze Group for Redactions button is Displayed for " + tabName);
-			}else {
+			} else {
 				base.failedStep("Analyze group button is displayed for " + tabName);
 			}
-		}else {
-			base.failedStep(tabName +" is not displayed");
+		} else {
+			base.failedStep(tabName + " is not displayed");
 		}
 	}
 }
