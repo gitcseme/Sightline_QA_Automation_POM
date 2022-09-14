@@ -62,7 +62,7 @@ public class Production_Regression20 {
 	 * @Description:To Verify ProjectAdmin will be able to flag a production as
 	 *                 ‘Locked’ after it has been generated.
 	 */
-	@Test(description = "RPMXCON-47721", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47721", enabled = true, groups = { "regression" })
 
 	public void validatingLockOptionInProductionPage() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -111,7 +111,7 @@ public class Production_Regression20 {
 	 * @Description:To verify the value of EndingBates on Production DAT
 	 **/
 
-	@Test(description = "RPMXCON-48303", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48303", enabled = true, groups = { "regression" })
 	public void verifyingDATFileWithEndingBates() throws Exception {
 
 		base.stepInfo("Test case Id:RPMXCON-48303- Production Component");
@@ -204,7 +204,7 @@ public class Production_Regression20 {
 	 *              displayed to the user
 	 * 
 	 */
-	@Test(description = "RPMXCON-48602", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48602", enabled = true, groups = { "regression" })
 	public void verifyNotificationOnExportInGenerateTab() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -265,7 +265,7 @@ public class Production_Regression20 {
 	 *                 Bates Numbers as large as 1,000,000,000
 	 **/
 
-	@Test(description = "RPMXCON-48981", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48981", enabled = true, groups = { "regression" })
 	public void verifyingBatesNumberInGeneratedProduction() throws Exception {
 
 		base.stepInfo("Test case Id:RPMXCON-48981- Production Component");
@@ -328,7 +328,7 @@ public class Production_Regression20 {
 	 *              placeholdering for TIFF
 	 * 
 	 */
-	@Test(description = "RPMXCON-48327", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48327", enabled = true, groups = { "regression" })
 	public void verifyingTextInGeneratedDat() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -401,7 +401,7 @@ public class Production_Regression20 {
 	 *              with Production
 	 * 
 	 */
-	@Test(description = "RPMXCON-47882", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47882", enabled = true, groups = { "regression" })
 	public void verifyingLoadTemplateInProduction() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -462,7 +462,7 @@ public class Production_Regression20 {
 	 *                 Metadata Field drop down should be sorted by alpha ascending
 	 **/
 
-	@Test(description = "RPMXCON-49124", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49124", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInTechDocMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -502,7 +502,7 @@ public class Production_Regression20 {
 	 *                 ascending
 	 **/
 
-	@Test(description = "RPMXCON-49126", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49126", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInFileTypeMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -618,7 +618,7 @@ public class Production_Regression20 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		File PdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates1 + suffixID + ".pdf");
+		File PdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID1 + beginningBates1 + suffixID1 + ".pdf");
 		page.isfileisExists(PdfFile);
 		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
@@ -633,7 +633,7 @@ public class Production_Regression20 {
 	 *                the Next BatesNumbers then value should be auto-populated
 	 * 
 	 */
-	@Test(description = "RPMXCON-49244", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49244", enabled = true, groups = { "regression" })
 	public void verifyingNextAvailableBatesNumber() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
@@ -705,7 +705,7 @@ public class Production_Regression20 {
 	 *                 placeholdering even though File group placeholdering is
 	 *                 exists.
 	 */
-	@Test(description = "RPMXCON-49342", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49342", enabled = true, groups = { "regression" })
 
 	public void verifyingGeneratedTechIssuePlaceHolder() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -888,7 +888,7 @@ public class Production_Regression20 {
 	 *                 sorted by alpha ascending
 	 **/
 
-	@Test(description = "RPMXCON-49128", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-49128", enabled = true, groups = { "regression" })
 	public void verifyingAscendingOrderInBurnRedactionMetaDataField() throws Exception {
 		UtilityLog.info(Input.prodPath);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -926,7 +926,7 @@ public class Production_Regression20 {
 	 * @Description:To Verify Text generation as part of the actual generation
 	 *                 process
 	 */
-	@Test(description = "RPMXCON-47807", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47807", enabled = true, groups = { "regression" })
 
 	public void validatingPresenceOfTextFile() throws Exception {
 
@@ -1016,7 +1016,7 @@ public class Production_Regression20 {
 	 * @Description:To Verify As an Admin be able to include slip sheets for the
 	 *                 documents in the generated PDF
 	 */
-	@Test(description = "RPMXCON-47806", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47806", enabled = true, groups = { "regression" })
 
 	public void verifyingSlipsheetValueInPDF() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -1075,7 +1075,7 @@ public class Production_Regression20 {
 	 *                 the doc has at least one of the selected redaction tags in
 	 *                 Burn Redactions in Tiff
 	 */
-	@Test(description = "RPMXCON-48328", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48328", enabled = true, groups = { "regression" })
 
 	public void validatingDATSection() throws Exception {
 
@@ -1145,7 +1145,7 @@ public class Production_Regression20 {
 	 *                 the doc has at least one of the selected PRIV tags in PRIV
 	 *                 placeholdering for PDF
 	 */
-	@Test(description = "RPMXCON-48330", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-48330", enabled = true, groups = { "regression" })
 
 	public void validatingDATSectionForPrivDoc() throws Exception {
 
@@ -1210,7 +1210,7 @@ public class Production_Regression20 {
 	 *                 production that hasn’t yet been locked and bates number has
 	 *                 not been committed
 	 */
-	@Test(description = "RPMXCON-47717", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47717", enabled = true, groups = { "regression" })
 
 	public void verifyingTheProductionWithNewConfiguration() throws Exception {
 		UtilityLog.info(Input.prodPath);
