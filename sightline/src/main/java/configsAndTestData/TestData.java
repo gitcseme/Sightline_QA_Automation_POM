@@ -292,6 +292,9 @@ public class TestData {
 	public String datFile7;
 	public String attachDocFolder;
 	public String folder61759;
+	public String SourceParentDocId;
+	public String overlayDatFile;
+	
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;

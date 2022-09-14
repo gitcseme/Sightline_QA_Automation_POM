@@ -26,7 +26,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -49,7 +48,7 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 import views.html.helper.input;
 
-public class CodingForm_Regression {
+public class CodingForm_Regression_Sprint19 {
 
 	Driver driver;
 	LoginPage loginPage;
