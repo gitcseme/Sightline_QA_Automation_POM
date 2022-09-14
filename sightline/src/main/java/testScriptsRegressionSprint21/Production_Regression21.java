@@ -741,6 +741,62 @@ public class Production_Regression21 {
 
 		loginPage.logout();
 	}
+	/**
+	 * @author Brundha RPMXCON-55655 Date:9/14/2022
+	 * @Description To Verify ProjectAdmin will be able to view the produced documents at production path
+	 */
+	@Test(description = "RPMXCON-55655", enabled = true, groups = { "regression" })
+	public void verifyingPAUserCopyPathInGeneratedFile() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-55655 -Production component");
+		base.stepInfo("To Verify ProjectAdmin will be able to view the produced documents at production path");
+
+		String foldername = "FolderProd" + Utility.dynamicNameAppender();
+		String productionname = "P" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		page.getCopyPath().waitAndClick(10);
+		String actualCopedText = page.getCopiedTextFromClipBoard();
+		String parentTab = page.openNewTab(actualCopedText);
+		page.getFileDir("VOL0001").waitAndClick(5);
+		page.getLoadFileLink().waitAndClick(3);
+		if (page.getDatFileLink(productionname).isElementAvailable(2)) {
+			base.passedStep("Documents are generated for production path");
+		} else {
+			base.failedStep("Documents are not generated for production path");
+		}
+		driver.close();
+		driver.getWebDriver().switchTo().window(parentTab);
+		
+		loginPage.logout();
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)

@@ -3469,6 +3469,10 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']/..");
 	}
 
+	public Element getNativeFileType(String fileType) {
+		return driver.FindElementByXPath(
+				"//div[@id='divImageTIFFPHImage_1']//option[contains(text(),'" + fileType + "')]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -13505,7 +13509,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 
-		getVerifyGenStatus("Reserving Bates").isElementAvailable(150);
+		getVerifyGenStatus("Reserving Bates").isElementAvailable(180);
 		getbtnContinueGeneration().isElementAvailable(60);
 		if (getbtnContinueGeneration().isDisplayed()) {
 			base.waitForElement(getbtnContinueGeneration());
@@ -22175,5 +22179,33 @@ public class ProductionPage {
 
 		return productionname;
 	}
+	/**
+	 * @author Brundha.T
+	 * @param ntimes
+	 * Description:navigating nth times back
+	 */
+		public void navigatingBack(int ntimes) {
+			for(int i=0;i<ntimes;i++) {
+				driver.waitForPageToBeReady();
+				driver.Navigate().back();
+			}
+			
+		}
 	
+		/**
+		 * @author Brundha.T
+		 * @param Doc
+		 * @param prefixID
+		 * @param suffixID
+		 * @param subBates
+		 * @Description:verifying Generated text file in export
+		 */
+			public void verifyingGeneratedExporttedfile(int Doc,String prefixID,String suffixID,String subBates,String DocType) {
+				if (verifyingNativeFiles(prefixID + "(" + Doc + ")" + suffixID, subBates,DocType ).isElementAvailable(2)) {
+					base.passedStep("Files are generated successfully");
+				} else {
+					base.failedStep("Files are not generated");
+				}
+			}
+		
 }
