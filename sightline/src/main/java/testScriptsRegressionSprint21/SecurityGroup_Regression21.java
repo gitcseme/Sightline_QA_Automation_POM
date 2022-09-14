@@ -482,6 +482,88 @@ public class SecurityGroup_Regression21 {
 		loginPage.logout();
     }
     
+    /**
+	 * @author Vijaya.Rani ModifyDate:14/09/2022 RPMXCON-54785
+	 * @throws Exception
+	 * @Description Verify thatif SAU user impersonate as RMU,and changes the SG in SG Dropdown then it should take the corresponding SG in the same project.
+	 * 
+	 */
+    @Test(description = "RPMXCON-54785", enabled = true, groups = { "regression" })
+	public void verifySAImpersonateAsRMUDropDownSG() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54785");
+		baseClass.stepInfo(
+				"Verify thatif SAU user impersonate as RMU,and changes the SG in SG Dropdown then it should take the corresponding SG in the same project.");
+
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
+
+		baseClass.stepInfo("Impersonate SA to RMU");
+		baseClass.impersonateSAtoRMU();
+		
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify RMU Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer Manager home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer Manager home page is not displayed ");
+		}
+		baseClass.stepInfo("verify default security group in selected project");
+		String actualString = "Default Security Group";
+		String ExpectedString = baseClass.getsgNames().getText();
+		System.out.println(ExpectedString);
+		if (actualString.equals(ExpectedString)) {
+			baseClass.passedStep("As user to DSG by default");
+		} else {
+			baseClass.failedStep("It is not  to default SG by default ");
+		}
+		loginPage.logout();
+    }
+    
+    /**
+	 * @author Vijaya.Rani ModifyDate:14/09/2022 RPMXCON-54786
+	 * @throws Exception
+	 * @Description Verify that when PAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.
+	 * 
+	 */
+    @Test(description = "RPMXCON-54786", enabled = true, groups = { "regression" })
+	public void verifyPAImpersonateAsRMUSelectedProject() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54786");
+		baseClass.stepInfo(
+				"Verify that when PAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.");
+
+		userManage = new UserManagement(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SoftAssert softassert = new SoftAssert();
+		
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("Impersonate PA to RMU");
+		baseClass.impersonatePAtoRMU();
+		
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify RMU Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep(" Reviewer Manager home page is displayed successfully");
+		} else {
+			baseClass.failedStep("Reviewer Manager home page is not displayed ");
+		}
+		baseClass.stepInfo("verify RMU Home Page Selected project");
+		String actualProject=Input.projectName;
+		String expectedProject=baseClass.getProjectNames().getText();
+		softassert.assertEquals(actualProject, expectedProject);
+		baseClass.passedStep("RMU Dashboard Successfully Clicked the Slected project");
+		softassert.assertAll();
+		loginPage.logout();
+    }
+    
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
