@@ -564,6 +564,91 @@ public class SecurityGroup_Regression21 {
 		loginPage.logout();
     }
     
+    /**
+	 * @author Vijaya.Rani ModifyDate:15/09/2022 RPMXCON-54306
+	 * @throws Exception
+	 * @Description To verify that if user select option 'Use Security Group specific Email Inclusive and Email Duplicate data', belly band message should be displayed.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54306", enabled = true, groups = { "regression" })
+	public void verifySelectSGEmailInclusiveDataInBellyBandMsg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54306");
+		baseClass.stepInfo(
+				"To verify that if user select option 'Use Security Group specific Email Inclusive and Email Duplicate data', belly band message should be displayed.");
+
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+		savedsearch = new SavedSearch(driver);
+		SoftAssert softassert = new SoftAssert();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		driver.waitForPageToBeReady();
+		sgpage.createSecurityGroups(SGname);
+		baseClass.stepInfo(SGname + "is created successfully");
+		baseClass.waitForElement(sgpage.getSecurityGroupList());
+		sgpage.getSecurityGroupList().selectFromDropdown().selectByVisibleText(SGname);
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(5);
+		baseClass.stepInfo("Use Security Group-Specific Email inclusive check mark is selected");
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+		sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+		baseClass.passedStep("Generate button is clicked successfully");
+		driver.waitForPageToBeReady();
+
+		// verify warning message
+		String Actualwarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		String expectWarningmsg = "You have elected to regenerate and overwrite all previous values for the four Security Group-specific email inclusiveness and email duplicate fields. This will wipe away all prior stored data for these attributes, and will overlay new values for each record currently in the Security Group. No prior work product or logic will be undone, which may mean that your Assignments and workflow may need to be altered. Do you want to proceed?";
+		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
+		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
+		baseClass.passedStep("Warning message is displayed successfully");
+		baseClass.getNOBtn().Click();
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.stepInfo("Successfully Clicked Save Button");
+		softassert.assertAll();
+
+		sgpage.deleteSecurityGroups(SGname);
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:15/09/2022 RPMXCON-54314
+	 * @throws Exception
+	 * @Description To verify that when the SG is set to use project level fields that Tag and Folder Propagation happens using EmailDuplicateDocIDs attribute.
+	 * 
+	 */
+	@Test(description = "RPMXCON-54314", enabled = true, groups = { "regression" })
+	public void verifySGTagUsingEmailDuplicateDocIdInDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54314");
+		baseClass.stepInfo(
+				"To verify that when the SG is set to use project level fields that Tag and Folder Propagation happens using EmailDuplicateDocIDs attribute.");
+
+		userManage = new UserManagement(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocListPage doclist = new DocListPage(driver);
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		doclist.documentSelection(1);
+		doclist.addNewBulkTagEmailDuplicates(tagname);
+		
+		baseClass.passedStep("All EmailDuplicateDocIds' including the selected document is tagged.");
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

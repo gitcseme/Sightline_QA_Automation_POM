@@ -1403,6 +1403,10 @@ public class DocListPage {
 	public Element getDocListPerviewBtn() {
 		return driver.FindElementByXPath("//a[text()='Preview Document']");
 	}
+	
+	public Element getTagEmailDuplicate() {
+		return driver.FindElementByXPath("//div/div[@id='dtDocList']/label/i");
+	}
 
 	public DocListPage(Driver driver) {
 
@@ -6284,6 +6288,66 @@ public class DocListPage {
 			}
 		}
 		return elementNames;
+	}
+	
+	/**
+	 * @Author:Vijaya.Rani Modified on 15/09/2022 
+	 * @param tagname Select EmailDuplicates
+	 * @throws InterruptedException
+	 * @throws AWTException
+	 */
+	public void addNewBulkTagEmailDuplicates(String tagname) throws InterruptedException, AWTException {
+
+		if (getPureHitAddButton().isElementAvailable(5)) {
+			getPureHitAddButton().waitAndClick(10);
+		} else {
+	
+			UtilityLog.info("Pure hit block already moved to action panel");
+			Reporter.log("Pure hit block already moved to action panel", true);
+		}
+		// click Action button
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().waitAndClick(10);
+
+		// click on Bulk Tag
+		base.waitForElement(getBulkTagAction());
+		getBulkTagAction().Click();
+
+		base.waitForElement(getTagUntagDocumentsDialogBox());
+		getTagUntagDocumentsDialogBox().waitAndClick(5);
+
+		driver.Manage().window().fullscreen();
+
+		base.waitForElement(getNewTagBtn());
+		getNewTagBtn().Click();
+
+		base.waitForElement(getAction_Bulktag_AllTag());
+		getAction_Bulktag_AllTag().Click();
+
+		driver.waitForPageToBeReady();
+		getNameField().SendKeys(tagname);
+		System.out.println("New tag is created-" + tagname);
+
+		base.waitForElement(getSelectTagClassificationDrp());
+		getSelectTagClassificationDrp().selectFromDropdown().selectByVisibleText("Privileged");
+
+		base.waitForElement(getTagEmailDuplicate());
+		getTagEmailDuplicate().Click();
+		
+		base.waitTillElemetToBeClickable(getContinueBulkAssign());
+		getContinueBulkAssign().waitAndClick(25);
+
+		base.waitForElement(getTotalSelectedDocuments());
+
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().Click();
+
+		driver.Manage().window().maximize();
+		
+		base.waitForElement(getPopUpOkBtn());
+		getPopUpOkBtn().Click();
+		
+		base.VerifySuccessMessage("Records saved successfully");
 	}
 
 }
