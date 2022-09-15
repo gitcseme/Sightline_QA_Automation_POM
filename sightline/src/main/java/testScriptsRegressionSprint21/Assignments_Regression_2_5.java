@@ -1,5 +1,6 @@
 package testScriptsRegressionSprint21;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -101,7 +102,29 @@ public class Assignments_Regression_2_5 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Jayanthi.ganesan
+	 *  Verify that 3 tabs appear as defined when the user has elected to Assign documents
+	 */
+	@Test(description = "RPMXCON-54335", groups = { "regression" }, enabled = true)
+	public void verifyAssignOptions() throws InterruptedException, AWTException {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-54335");
+		baseClass.stepInfo("Verify that 3 tabs appear as defined when the user has elected to Assign documents");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+
+		baseClass.stepInfo("Performing basic content search and dragging pure hit to cart.");
+		sessionSearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Clicking on bulk assign button");
+		sessionSearch.bulkAssign();
+		//verification of tab under assign radio button
+		sessionSearch.verifyBulkAssignOptions();
+		
+		loginPage.logout();
+		
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
