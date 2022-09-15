@@ -128,7 +128,7 @@ public class ICE_SL_Regression_1 {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-50079");
 		baseClass.stepInfo("Verify that Metadata works correctly in Advanced Search screen");
-		String fromDate = "2019-03-13";
+		String fromDate = "2011-03-13";
 		String toDate = "2022-09-01";
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);

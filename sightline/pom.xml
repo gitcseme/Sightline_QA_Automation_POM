@@ -45,12 +45,12 @@
 				<version>2.18.1</version>
 				<configuration>
 					<forkCount>0</forkCount>
-			<suiteXmlFiles>
+	<!--		<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
+					</suiteXmlFiles>  -->
 					
-					<!-- This is used to execute from Jenkins --> 
-						<!-- 	
+			<!--			 This is used to execute from Jenkins --> 
+					
     <systemPropertyVariables>
 		<environment>${environment}</environment>
 		<browser>${browser}</browser>
@@ -83,7 +83,7 @@
 
 <suiteXmlFiles>
             <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
-     </suiteXmlFiles>     -->
+     </suiteXmlFiles>    
 				</configuration>
 			</plugin>
 		</plugins>

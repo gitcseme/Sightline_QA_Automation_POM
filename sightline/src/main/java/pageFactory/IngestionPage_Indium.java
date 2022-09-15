@@ -1329,6 +1329,12 @@ public class IngestionPage_Indium {
 		return driver.FindElementByXPath
 				("//td[contains(text(),'"+ingestion+"')]//following-sibling::td[contains(text(),'"+status+"')]");
 	}
+	public Element sourceFieldOption(int row,String value) {
+		return driver.FindElementByXPath("//select[@id='SF_"+row+"']//option[(text()='"+value+"')]");
+	}
+	public Element getLanguagePack(String language) {
+		return driver.FindElementByXPath("//select[@id='worldSelect']//option[text()='"+language+"']");
+	}
 	
 	public IngestionPage_Indium(Driver driver) {
 
@@ -2041,6 +2047,7 @@ public class IngestionPage_Indium {
 			getSourceSelectionDATKey().ScrollTo();
 			base.waitForElement(getSourceSelectionDATKey());
 			getSourceSelectionDATKey().isElementAvailable(15);
+			base.waitTime(2);
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(documentKey);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -5938,7 +5945,7 @@ public class IngestionPage_Indium {
 				nextButton().isElementAvailable(10);
 				nextButton().waitAndClick(10);
 				if (disabledNextButton().isDisplayed()) {
-					base.waitTime(3);
+					base.waitTime(1);
 					unPunlishSearch(savedSearch).isElementAvailable(10);
 					if (unPunlishSearch(savedSearch).isDisplayed()) {
 						base.passedStep("Unpublish of '" + savedSearch + "' is in progess");
@@ -6073,7 +6080,7 @@ public class IngestionPage_Indium {
 		driver.waitForPageToBeReady();
 		// catlogging
 		for (int i = 0; i < 70; i++) {
-			base.waitTime(1);
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -6144,13 +6151,13 @@ public class IngestionPage_Indium {
 		base.waitForElement(getRunCopying());
 		getElementStatus(getRunCopying());
 		getRunCopying().waitAndClick(10);
+		base.VerifySuccessMessage("Ingestion copy has Started.");
 		base.waitForElement(getCloseButton());
 		getCloseButton().waitAndClick(10);
-		base.VerifySuccessMessage("Ingestion copy has Started.");
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		for (int i = 0; i < 40; i++) {
-			base.waitTime(1);
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(1).getText().trim();
 
@@ -6180,7 +6187,7 @@ public class IngestionPage_Indium {
 				getCloseButton().waitAndClick(10);
 				getRefreshButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
-				//start indexing again
+				//start copying again
 				base.waitForElement(getIngestionDetailPopup(1));
 				getIngestionDetailPopup(1).waitAndClick(10);
 				base.waitForElement(getActionDropdownArrow());
@@ -6194,7 +6201,7 @@ public class IngestionPage_Indium {
 					base.waitForElement(getIngestionDetailPopup(1));
 					String status1 = getStatus(1).getText().trim();
 					if(status1.contains("In Progress")) {
-						base.passedStep("Ignored errors and started indexing");
+						base.passedStep("Ignored errors and started copy");
 						break;
 					}
 					else if(status.contains("Failed")) {
@@ -6770,7 +6777,7 @@ public class IngestionPage_Indium {
 		getFilterByINPROGRESS().waitAndClick(5);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
-
+		base.waitTime(3);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
 		base.waitTime(3);
@@ -6796,6 +6803,7 @@ public class IngestionPage_Indium {
 			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
 			
 		}
+		getRefreshButton().waitAndClick(5);
 		if(ingestedCount==0) {
 			base.passedStep("No ingestion is currently present");
 			count =1;
@@ -6808,7 +6816,7 @@ public class IngestionPage_Indium {
 		}), Input.wait60);
 		String totalCount = getTotalPageCount().getText();
 		int pageCount = Integer.parseInt(getTotalPageCount().getText());
-		
+		getRefreshButton().waitAndClick(5);
 		if ((String.valueOf(totalCount)).contains("0")) {
 			count = Integer.parseInt(totalCount) / 10;
 		} else if (pageCount < 10) {
@@ -6818,7 +6826,7 @@ public class IngestionPage_Indium {
 		}
 		}
 		System.out.println(count);
-		
+		getRefreshButton().waitAndClick(5);
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
@@ -6835,6 +6843,7 @@ public class IngestionPage_Indium {
 			else {
 				status = false;
 				driver.scrollingToBottomofAPage();
+				base.waitForElement(getIngestionPaginationNextButton());
 				getIngestionPaginationNextButton().waitAndClick(5);
 				driver.waitForPageToBeReady();
 				base.stepInfo("Expected Ingestion not found in the page " + i);
@@ -8280,8 +8289,9 @@ public class IngestionPage_Indium {
 		getFilterByPUBLISHED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
-		base.waitTime(3);
+		base.waitTime(5);
 
+		base.waitForElement(getTotalIngestedCount());
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
@@ -9183,6 +9193,7 @@ public class IngestionPage_Indium {
 
 			getRefreshButton().waitAndClick(10);
 			driver.waitForPageToBeReady();
+			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String ingestionName =getIngestionDetailPopup(1).GetAttribute("title");
 
@@ -9295,6 +9306,7 @@ public class IngestionPage_Indium {
 		 * @description: this method will perform all the ingestion process and publish ingestion
 		 */
 		public String publishAddonlyIngestion(String dataset) {
+			driver.waitForPageToBeReady();
 			ignoreErrorsAndCatlogging();
 			ignoreErrorsAndCopying();
 			ignoreErrorsAndIndexing(dataset);
@@ -10900,5 +10912,42 @@ public class IngestionPage_Indium {
 					}
 				}
 			}				
+		}
+		
+		/**
+		 * @author: Arun Created Date: 13/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will map row in configure mapping section
+		 */
+		public void performMappingInConfigureSection(int row,String value1,String value2,String value3) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMappingSourceField(row));
+			getMappingSourceField(row).selectFromDropdown().selectByVisibleText(value1);
+			base.waitForElement(getMappingCategoryField(row));
+			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(value2);
+			base.waitForElement(getMappingDestinationField(row));
+			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(value3);
+			
+		}
+		
+		/**
+		 * @author: Arun Created Date: 14/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify the available language in popup
+		 */
+		public void verifyAvailableLanguagePack() {
+			String[] language = {"Japanese","North American English","International English","German"};
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getLanguage());
+			for(int i=0;i<=language.length;i++) {
+				if(getLanguagePack(language[i]).isElementAvailable(10)) {
+					base.passedStep(language[i] +"language pack available");
+				}
+				else {
+					base.failedStep(language[i] +"language pack not available");
+				}
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
 		}
 }

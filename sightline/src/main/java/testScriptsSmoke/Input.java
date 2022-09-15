@@ -411,6 +411,8 @@ public class Input {
 	public static String datFile7;
 	public static String attachDocFolder;
 	public static String folder61759;
+	public static String sourceParentDocId;
+	public static String overlayDatFile;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -926,6 +928,13 @@ public class Input {
 	public static String emailReciepientName2;
 	public static String emailAllDomainOption;
 	public static String masterDateOption;
+	public static String emailAddressinput1;
+	public static String emailAddressinput2;
+	public static String emailAddressinput3;
+	public static String filterDataInput;
+	public static String filterDataInput1;
+	public static String filterDataInput2;
+    public static String filterDataInput3; 
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1361,6 +1370,8 @@ public class Input {
 		datFile7 = testData.getDatFile7();
 		attachDocFolder= testData.getAttachDocFolder();
 		folder61759 = testData.getFolder61759();
+		sourceParentDocId = testData.getSourceParentDocId();
+		overlayDatFile = testData.getOverlayDatFile();
 		
 		
 		// Added by Raghuram 02/24/22
@@ -1897,6 +1908,13 @@ public class Input {
 		emailReciepientName2=testData.getEmailReciepientName2();
 		emailAllDomainOption=testData.getEmailAllDomainOption();
 		masterDateOption =testData.getMasterDateOption();
+		emailAddressinput1=testData.getEmailAddressinput1();
+		emailAddressinput2=testData.getEmailAddressinput2();
+		emailAddressinput3=testData.getEmailAddressinput3();
+		filterDataInput=testData.getFilterDataInput();
+		filterDataInput1=testData.getFilterDataInput1();
+		filterDataInput2=testData.getFilterDataInput2();
+        filterDataInput3=testData.getFilterDataInput3();  
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

@@ -145,11 +145,9 @@ public class ConceptExplorerPage {
 	public Element getApplyFilterBtn() {
 		return driver.FindElementByXPath("//a[@id='btnAppyFilter']");
 	}
-
 	public ElementCollection getDataToAddInCart() {
-		return driver.FindElementsByXPath("//div[@class='node cedefault']//i");
+		return driver.FindElementsByXPath("//div[contains(@class,'node cedefault')]//i");
 	}
-
 	public Element getDataToAddInCart(int i) {
 		return driver.FindElementByXPath("(//div[@class='node cedefault']//i)[" + i + "]");
 	}
@@ -348,7 +346,21 @@ public class ConceptExplorerPage {
 	public Element getAddedSquareToSelect(int i) {
 		return driver.FindElementByXPath("//div[contains(@class,'node cedefault added')][" + i + "]");
 	}
-
+	public Element getnodeToAddInCart() {
+		return driver.FindElementByXPath("(//div[@class='node cedefault']//i)");
+	}
+	public ElementCollection getAutosuggestElements() {
+		return driver.FindElementsByXPath("//ul[@class='select2-results__options']/li");
+	}
+	public Element getAutosuggestElement_Index(int i) {
+		return driver.FindElementByXPath("(//ul[@class='select2-results__options']/li)["+i+"]");
+	}
+	public Element getRemoveIcon() {
+		return driver.FindElementByXPath("//i[contains(@Class,'removeTile')]");
+	}
+	public ElementCollection getRemoveIconCount() {
+		return driver.FindElementsByXPath("//i[contains(@Class,'removeTile')]");
+	}
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
@@ -740,6 +752,7 @@ public class ConceptExplorerPage {
 	 * @param options   - action options
 	 * @param data1     - autosuggest data
 	 * @param selection - include or exclude
+	 * Modified by jayanthi 
 	 */
 	public void filterAction(String data, String options, String data1, Boolean include) {
 		try {
@@ -748,13 +761,15 @@ public class ConceptExplorerPage {
 
 			// Input text for applying filter
 			searchCriteriaTextBox().SendKeys(data);
-			base.waitForElement(getAutosuggestElement(data));
-			getAutosuggestElement(data).waitAndClick(20);
+			base.waitForElement(getAutosuggestElement_Index(1));
+			 handleAutoSuggest(data); 
+
+		
 			if (data1 != null) {
 				driver.waitForPageToBeReady();
 				searchCriteriaTextBox().SendKeys(data1);
-				base.waitForElement(getAutosuggestElement(data1));
-				getAutosuggestElement(data1).waitAndClick(20);
+				base.waitTime(1);
+				handleAutoSuggest(data1);
 			}
 
 			// Add to filer Action
@@ -768,6 +783,20 @@ public class ConceptExplorerPage {
 			base.failedStep("Error in Applying filter");
 		}
 	}
+/**
+ * @author Jayanthi.Ganesan
+ * @param data1
+ */
+	public void handleAutoSuggest(String data1) {
+		base.waitTime(1);
+		int eleCount=getAutosuggestElements().size();
+		if(eleCount==1) {
+			getAutosuggestElement_Index(1).waitAndClick(20);
+		}else {
+			getAutosuggestElement_Index(base.getIndex(getAutosuggestElements(), data1)).waitAndClick(10);
+		}
+	}
+
 
 	/**
 	 * @author Raghuram.A
@@ -1090,6 +1119,7 @@ public class ConceptExplorerPage {
 		}
 	}
 
+
 	/**
 	 * @author jayanthi
 	 * @Description : Perform Add to cart
@@ -1103,8 +1133,9 @@ public class ConceptExplorerPage {
 			base.failedStep("No results displayed[no tiles]");
 		} else {
 			for (int i = 1; i <= CountOfTileToBeAdded; i++) {
-
-				getDataToAddInCart(CountOfTileToBeAdded).waitAndClick(10);
+				if (getnodeToAddInCart().isElementAvailable(1))
+					getnodeToAddInCart().waitAndClick(10);
+				base.waitTime(1);
 
 			}
 			// Segregating total docs count from the display
@@ -1115,7 +1146,6 @@ public class ConceptExplorerPage {
 		}
 		return aggregatedDocCount;
 	}
-
 	/**
 	 * @author Jayanthi.Ganesan This method will verify the Include filter
 	 *         functionality working properly.
@@ -1178,21 +1208,25 @@ public class ConceptExplorerPage {
 			String metaData1, String metaData_1, String metaData) {
 		boolean status = false;
 		String metaData_twoOption;
+		
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
-
-			metaData_twoOption = metaDataWithTwoData.get(i).toLowerCase();
-			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
-					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
-
-			
+			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
+			if (!(metaData_twoOption.equals(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.equals(metaData1.toLowerCase()))) {
 				status = true;
 				if (!(metaDataWithOneData.get(i).toLowerCase().equals(metaData.toLowerCase())) && status) {
 					continue;
 				} else {
 					base.failedStep("Meta Data are not filtered as expected.");
+					base.failedMessage("actual"+metaDataWithOneData.get(i).toLowerCase());
+					base.failedMessage("expected"+metaData.toLowerCase());
 				}
 
 			} else {
+				base.failedMessage("actual"+metaData_twoOption.toLowerCase());
+				base.failedMessage("expected"+metaData_1.toLowerCase());
+				base.failedMessage("expected"+metaData1.toLowerCase());
+				base.failedStep("Meta Data are not filtered as expected.");
 				base.failedStep("Meta Data are not filtered as expected.");
 			}
 		}
@@ -1201,8 +1235,8 @@ public class ConceptExplorerPage {
 		base.passedStep("1. Multiple values for a filter is considered as OR operator.");
 
 		base.passedStep("2. Multiple filters should be considered as AND operator.");
+		
 	}
-
 	/**
 	 * @author Jayanthi.Ganesan This method will return the apllied active filters
 	 *         and compare the active filters with expected filters list
@@ -1339,16 +1373,23 @@ public class ConceptExplorerPage {
 		String metaData_twoOption;
 		for (int i = 0; i < metaDataWithTwoData.size(); i++) {
 			 metaData_twoOption=metaDataWithTwoData.get(i).toLowerCase();
-			if (!(metaData_twoOption.contains(metaData_1.toLowerCase()))
-					|| (metaData_twoOption.contains(metaData1.toLowerCase()))) {
+			if (!(metaData_twoOption.equals(metaData_1.toLowerCase()))
+					|| (metaData_twoOption.equals(metaData1.toLowerCase()))) {
 				status = true;
 				if ((metaDataWithOneData.get(i).toLowerCase().contains(metaData.toLowerCase())) && status) {
 					continue;
 				} else {
+					base.failedMessage("actual"+metaDataWithOneData.get(i).toLowerCase());
+					base.failedMessage("expected"+metaData.toLowerCase());	  
+					base.failedStep("Meta Data are not filtered as expected.");
 					base.failedStep("Meta Data are not filtered as expected.");
 				}
 
 			} else {
+				base.failedMessage("actual"+metaData_twoOption.toLowerCase());
+				base.failedMessage("expected"+metaData_1.toLowerCase());
+				base.failedMessage("expected"+metaData1.toLowerCase());
+				base.failedStep("Meta Data are not filtered as expected.");
 				base.failedStep("Meta Data are not filtered as expected.");
 			}
 		}
@@ -1460,6 +1501,46 @@ public class ConceptExplorerPage {
 					masterDate1);
 		} else if (comparisonType.equalsIgnoreCase("ExcludeAndExclude")) {
 			verifyExcludeFiltersLikeOR_Operator(column1NameList, column2NameList, input1, input2, masterDate1);
+		}
+	}
+	/**
+	 * Jayanthi.ganesan
+	 */
+	
+	public void tileSelctionBasedOnChildCount(int limitCheck, int docCount,int tileCounToSelect) {
+		int tilesSelected=0;
+		for (int k = 1; k<=limitCheck; k++) {
+			int clusterCount = Integer.parseInt(getAttributefromSquare(k).GetAttribute("childcount"));
+			if (clusterCount >=docCount) {
+				getSquareToSelect(1).waitAndClick(3);
+				tilesSelected++;
+				if(tilesSelected<tileCounToSelect) {
+					continue;
+				}else{
+				break;
+			}
+		}
+	}
+		base.stepInfo("Count of Tile selected to analyze is"+tilesSelected);
+	}
+
+
+	/**
+	 * @author Jayanthi This method will remove the tiles added in cart in concept
+	 *         explorer page
+	 * @param NoOfTiles [No of tile to be removed]
+	 */
+	public void removeTilesFromCart() {
+
+		if (getRemoveIcon().isElementAvailable(2)) {
+			int NoOfTiles = getRemoveIconCount().size();
+			base.stepInfo("Cart area  have  " + NoOfTiles + " nodes into it.");
+			for (int i = 1; i <= NoOfTiles; i++) {
+				getRemoveIcon().Click();
+			}
+		} else {
+			base.stepInfo("Cart area dnt have any nodes into it.");
+
 		}
 	}
 }

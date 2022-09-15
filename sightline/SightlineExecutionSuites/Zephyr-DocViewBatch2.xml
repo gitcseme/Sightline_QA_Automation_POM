@@ -10,11 +10,13 @@
 <classes>
 <class name="testScriptsSmoke.Input" />
 
-<class name= "testScriptsRegression.DocView_CodingForm_IndiumRegression2" />
-<class name= "testScriptsRegression.DocView_CodingForm_Regression" />
-<class name= "testScriptsRegression.DocView_MetaData_Regression" />
-<class name= "testScriptsRegression.DocView_Redaction_Regression1" />
-<class name= "testScriptsRegression.DocView_Redactions_Regression" />
+<class name= "sightline.docviewCodingForms.DocView_CodingForm_IndiumRegression2" />
+<class name= "sightline.docviewCodingForms.DocView_CodingForm_Regression" />
+<class name= "sightline.docviewMetaData.DocView_MetaData_Regression" />
+<class name= "Sightline.DocviewRedactions.DocView_Redaction_Regression1" />
+<class name= "Sightline.DocviewRedactions.DocView_Redaction_Regression" />
+<class name= "Sightline.DocviewRedactions.DocView_Redaction_Regression4" />
+
 </classes>
 </test>
 

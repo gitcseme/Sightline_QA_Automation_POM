@@ -618,7 +618,7 @@ public class Production_Regression20 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
-		File PdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID + beginningBates1 + suffixID + ".pdf");
+		File PdfFile = new File(home + "/Downloads/VOL0001/PDF/0001/" + prefixID1 + beginningBates1 + suffixID1 + ".pdf");
 		page.isfileisExists(PdfFile);
 		
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);

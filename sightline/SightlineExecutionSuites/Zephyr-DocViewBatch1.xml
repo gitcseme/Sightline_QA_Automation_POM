@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-DocViewBatch1" preserve-order="true">
+<suite name="Sightline-Jenkins-Docview-MiniDoclist" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>	
     
-<!-- *********************************************DocView************************************ -->     
-<test name="Zephyr-DocViewBatch1">
+<!-- *********************************************DocView Component************************************ -->     
+<test name="Sightline-Jenkins-Docview-MiniDoclist">
 <classes>
 <class name="testScriptsSmoke.Input"></class>
-<class name="testScriptsRegression.DocView_Regression1"></class>
-<class name="testScriptsRegression.DocView_Regression2"></class>
-<class name="testScriptsRegression.DocView_Regression4"></class>
-<class name="testScriptsRegression.DocView_Regression5"></class>
-<class name="testScriptsRegression.DocView_Sprint2_Regression"></class>
-<class name="testScriptsRegression.DocView_Regression6"></class>
-<class name="testScriptsRegression.DocView_ProductionFlow_Regression"></class>
-<class name="testScriptsRegression.DocView_Regression3"></class>
-<class name="testScriptsRegression.DocView_Regression3_2"></class>
-<class name="testScriptsRegression.DocView_MiniDocList_DataProvider"></class>
-<class name="testScriptsRegression.DocView_MiniDocList_Regression"></class>
-	
+<class name="sightline.docview.DocView_ProductionFlow_Regression"></class>
+<class name="sightline.docview.DocView_Regression1"></class>
+<class name="sightline.docview.DocView_Regression2"></class>
+<class name="sightline.docview.DocView_Regression3_2"></class>
+<class name="sightline.docview.DocView_Regression3"></class>
+<class name="sightline.docview.DocView_Regression4"></class>
+<class name="sightline.docview.DocView_Regression5"></class>
+<class name="sightline.docview.DocView_Regression6"></class>
+<class name="sightline.docview.DocView_Regression8"></class>
+<class name="sightline.docview.DocView_Sprint2_Regression"></class>
+<class name="sightline.docview.DocviewAnnotation"></class>	
+<class name= "sightline.docviewMiniDocList.DocView_MiniDocList_DataProvider" />
+<class name= "sightline.docviewMiniDocList.DocView_MiniDocList_Regression" />
+<class name= "sightline.docviewMiniDocList.DocViewMiniDocList_Regression_2_1" />
+
 </classes>
 </test>
 
 </suite>
-<!-- Suite -->

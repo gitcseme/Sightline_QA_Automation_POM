@@ -292,6 +292,9 @@ public class TestData {
 	public String datFile7;
 	public String attachDocFolder;
 	public String folder61759;
+	public String SourceParentDocId;
+	public String overlayDatFile;
+	
 
 	// Added by Raghuram - Last Modified 02/24/22
 	public String docHighlightColor;
@@ -844,7 +847,13 @@ public class TestData {
 	public String emailReciepientName2;
 	public String emailAllDomainOption;
 	public String masterDateOption;
-	
+	public  String emailAddressinput1;
+	public  String emailAddressinput2;
+	public  String emailAddressinput3;
+	public  String filterDataInput;
+	public  String filterDataInput1;
+	public  String filterDataInput2;
+    public  String filterDataInput3;
 	
 	
 }

@@ -191,7 +191,7 @@ public class DocviewAudio_Regression20 {
 		baseClass.stepInfo("User navigated to audio docview page");
 
 		// verify transcript tab
-		boolean flagTans = docViewPage.getTranscriptsTab().isDisplayed();
+		boolean flagTans = docViewPage.getTranscriptsTab().isElementAvailable(15);
 		softAssertion.assertTrue(flagTans);
 		baseClass.passedStep("Transcript tab not displayed for audio docs");
 		softAssertion.assertAll();
@@ -201,8 +201,8 @@ public class DocviewAudio_Regression20 {
 
 	/**
 	 * Author : Baskar date: NA Modified date: 25/08/2022 Modified by: Baskar
-	 * Description:Verify user after impersonation can see the persistent search on 
-	 *              audio doc view in context of an assignment
+	 * Description:Verify user after impersonation can see the persistent search on
+	 * audio doc view in context of an assignment
 	 * 
 	 */
 
@@ -232,12 +232,12 @@ public class DocviewAudio_Regression20 {
 		// Login as rev
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		assignmentPage.SelectAssignmentByReviewer(assgn);
-		
+
 		// verifying the audio hits and triangular arrow Icon
 		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
 		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
-		
+
 		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
 		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
 		baseClass.stepInfo("clicked on hit forward");
@@ -255,11 +255,11 @@ public class DocviewAudio_Regression20 {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * Author : Baskar date: NA Modified date: 25/08/2022 Modified by: Baskar
-	 * Description:Verify triangular arrow to highlight the position should be displayed at the
-	 *              position where the search term occurs with the score
+	 * Description:Verify triangular arrow to highlight the position should be
+	 * displayed at the position where the search term occurs with the score
 	 * 
 	 */
 
@@ -295,9 +295,10 @@ public class DocviewAudio_Regression20 {
 		baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
 		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
-		
+
 		baseClass.waitForElement(docViewPage.audioPersistentForwardNavigate());
 		docViewPage.audioPersistentForwardNavigate().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		baseClass.stepInfo("clicked on hit forward");
 
 		baseClass.elementDisplayCheck(docViewPage.getTriangularIcon());
@@ -313,84 +314,89 @@ public class DocviewAudio_Regression20 {
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * @author:Baskar
-	 * date: 26/08/2022 Modified date: NA Modified by:
-	 * @Description IE11: Verify when user enters the document id in the "doc id input box" and hits the enter key, then 
-	 * corresponding audio doc should load in the default view prior to that document navigation is done from mini doc list child window
+	 * @author:Baskar date: 26/08/2022 Modified date: NA Modified by:
+	 * @Description IE11: Verify when user enters the document id in the "doc id
+	 *              input box" and hits the enter key, then corresponding audio doc
+	 *              should load in the default view prior to that document
+	 *              navigation is done from mini doc list child window
 	 */
 	@Test(description = "RPMXCON-51632", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
 	public void verifyDocumentLoadedFromMiniDocList(String username, String password) throws Exception {
-		
+
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
 		softAssertion = new SoftAssert();
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51632");
-		baseClass.stepInfo("IE11: Verify when user enters the document id in the \"doc id input box\" and hits the enter key, then "
-				+ "corresponding audio doc should load in the default view prior to that document navigation is done from mini doc list child window");
+		baseClass.stepInfo(
+				"IE11: Verify when user enters the document id in the \"doc id input box\" and hits the enter key, then "
+						+ "corresponding audio doc should load in the default view prior to that document navigation is done from mini doc list child window");
 
 		// Login As user
 		loginPage.loginToSightLine(username, password);
 		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
-		//view in docview
+		// view in docview
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.audioLanguage);
-		baseClass.stepInfo(Input.audioSearchString1+" audio document is searched");
+		baseClass.stepInfo(Input.audioSearchString1 + " audio document is searched");
 		sessionSearch.ViewInDocView();
-		
-		//verify doc id from child window
+
+		// verify doc id from child window
 		docViewPage.clickGearIconOpenMiniDocList();
 		docViewPage.switchToNewWindow(2);
 		driver.waitForPageToBeReady();
 		docViewPage.selectRowFromMiniDocList(5);
 		driver.waitForPageToBeReady();
-		String minidocid = docViewPage.getMiniDocListData(5,2).getText().trim();
+		String minidocid = docViewPage.getMiniDocListData(5, 2).getText().trim();
 		docViewPage.switchToNewWindow(1);
 		driver.waitForPageToBeReady();
 		String currentdocid = docViewPage.getDocViewSelectedDocId().getText().trim();
-		softAssertion.assertEquals(currentdocid,minidocid);
-		baseClass.passedStep("Clicked audio document was load in the default view and same document is selected from mini doc list child window");
-		
+		softAssertion.assertEquals(currentdocid, minidocid);
+		baseClass.passedStep(
+				"Clicked audio document was load in the default view and same document is selected from mini doc list child window");
+
 		// verify from docid default view prior
-		docViewPage.getDocView_NumTextBox().SendKeys("3"+Keys.ENTER);
+		docViewPage.getDocView_NumTextBox().SendKeys("3" + Keys.ENTER);
 		driver.waitForPageToBeReady();
 		currentdocid = docViewPage.getDocViewSelectedDocId().getText().trim();
 		docViewPage.switchToNewWindow(2);
 		driver.waitForPageToBeReady();
-		String idOnMiniDoc = docViewPage.getMiniDocListData(3,2).getText().trim();
-		softAssertion.assertEquals(currentdocid,idOnMiniDoc);
-		baseClass.passedStep("Corresponding audio document was load in the default view and same document is selected from mini doc list child window");
+		String idOnMiniDoc = docViewPage.getMiniDocListData(3, 2).getText().trim();
+		softAssertion.assertEquals(currentdocid, idOnMiniDoc);
+		baseClass.passedStep(
+				"Corresponding audio document was load in the default view and same document is selected from mini doc list child window");
 		driver.close();
 		docViewPage.switchToNewWindow(1);
-		
+
 		softAssertion.assertAll();
-		baseClass.passedStep("Verified when user enters the document id in the \"doc id input box\" and hits the enter key, then corresponding audio doc "
-				+ "should load in the default view prior to that document navigation is done from mini doc list child window");
+		baseClass.passedStep(
+				"Verified when user enters the document id in the \"doc id input box\" and hits the enter key, then corresponding audio doc "
+						+ "should load in the default view prior to that document navigation is done from mini doc list child window");
 		loginPage.logout();
 
 	}
-	
+
 	/**
-	 * Author :Baskar
-	 * date: 26/08/2022 Modified date: NA Modified by:
-	 * @Description Verify that audio hits should be displayed when documents searched with different term and 
-	 * different/same threshold are assigned to assignment at different time from session search
+	 * Author :Baskar date: 26/08/2022 Modified date: NA Modified by:
+	 * 
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with different term and different/same threshold are
+	 *              assigned to assignment at different time from session search
 	 * @throws InterruptedException
 	 * 
 	 */
 	@Test(description = "RPMXCON-51799", enabled = true, groups = { "regression" })
 	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
-		
+
 		baseClass = new BaseClass(driver);
 		docViewPage = new DocViewPage(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		softAssertion = new SoftAssert();
-		
+
 		baseClass.stepInfo("Test case id :RPMXCON-51799");
-		baseClass.stepInfo(
-				"Verify that audio hits should be displayed when documents searched with different term and "
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with different term and "
 				+ "different/same threshold are assigned to assignment at different time from session search");
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -423,8 +429,8 @@ public class DocviewAudio_Regression20 {
 		// removing the pure Hits in Selected Result
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.removePureHitsFromSelectedResult();
-		
-		//second audio search
+
+		// second audio search
 		sessionSearch.clickOnNewSearch();
 		sessionSearch.newAudioSearch(searchString2, Input.language);
 		sessionSearch.addPureHit();
@@ -444,11 +450,11 @@ public class DocviewAudio_Regression20 {
 		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
 		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
 		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString2.toLowerCase());
-		
+
 		// removing the pure Hits in Selected Result
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.removePureHitsFromSelectedResult();
-				
+
 		// First audio search term with max threshold value
 		sessionSearch.clickOnNewSearch();
 		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "max");
@@ -484,7 +490,7 @@ public class DocviewAudio_Regression20 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @author Krishna ModifyDate: RPMXCON-51824
 	 * @throws Exception
@@ -558,16 +564,12 @@ public class DocviewAudio_Regression20 {
 		docviewPage.deleteStampColour(Input.stampSelection);
 
 	}
-	
-	
 
-@DataProvider(name = "PaRmuRev")
+	@DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1userName, Input.pa1password },
-				{ Input.rmu1userName, Input.rmu1password },
+		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } };
 	}
-	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
@@ -585,6 +587,7 @@ public class DocviewAudio_Regression20 {
 			loginPage.quitBrowser();
 		}
 	}
+
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
@@ -595,6 +598,4 @@ public class DocviewAudio_Regression20 {
 		}
 	}
 
-
-	
 }

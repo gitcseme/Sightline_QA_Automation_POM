@@ -2517,10 +2517,10 @@ public class CollectionPage {
 		if (getFilterButton().isElementAvailable(5)) {
 
 			base.waitForElement(getFilterButton());
-			getFilterButton().waitAndClick(5);
+			getFilterButton().waitAndClick(15);
 
 			base.waitForElement(getFilteEnablerButton());
-			getFilteEnablerButton().waitAndClick(5);
+			getFilteEnablerButton().waitAndClick(15);
 			base.passedStep("Filter button is Enabled successfully");
 
 		}
@@ -2529,9 +2529,9 @@ public class CollectionPage {
 			base.failedStep("FIlter button is disabled");
 		}
 
-		if (getKeyboardFilterButton().isElementAvailable(5)) {
+		if (getKeyboardFilterButton().isElementAvailable(15)) {
 			base.waitForElement(getKeyboardFilterButton());
-			getKeyboardFilterButton().waitAndClick(5);
+			getKeyboardFilterButton().waitAndClick(15);
 
 			base.waitForElement(getKeywordTextBox());
 			getKeywordTextBox().SendKeys(keyword);
