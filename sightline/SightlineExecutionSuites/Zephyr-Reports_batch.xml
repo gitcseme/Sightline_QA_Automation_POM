@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-Reports_batch" preserve-order="true">
+<suite name="Sightline-Jenkins-Reports" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
-<!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Zephyr-Reports_batch">
+<!-- *********************************************Reports Component************************************ -->
+<test name="Sightline-Jenkins-Reports">
 <classes>
 <class name="testScriptsSmoke.Input" />
-
-<class name="testScriptsRegression.Tally_Regression1"></class>
-<class name="testScriptsRegression.Tally_Regression2"></class>
-<class name="testScriptsRegression.ReviewerProductiviytReport_Regression"></class>
-<class name="testScriptsRegression.ReviewResultReport_Regression"></class>
-<class name="testScriptsRegression.CommunicationExplorer_Regression1"></class>
-<class name= "testScriptsRegression.SearchTermReport_Regression1" />
-<class name= "testScriptsRegression.TagCountByTagsReport_Regression" />
-<class name= "testScriptsRegression.DocumentAuditReport_Regression" />
-<class name= "testScriptsRegression.CustomDocumentDataReport_Regression1" />
-<class name= "testScriptsRegression.ConceptExplorerRegression" />
-<class name= "testScriptsRegression.Reports_Regression1" />
-
+<class name="sightline.reports.AssignmentReviewProgressReport2_1"/>
+<class name="sightline.reports.CommunicationExplorer_Regression1"/>
+<class name="sightline.reports.CommunicationExplorer_Regression2_1"/>
+<class name="sightline.reports.CommunicationExplorer_Regression2_2"/>
+<class name="sightline.reports.ConceptExplorerRegression" />
+<class name="sightline.reports.ConceptExplorer_Regression_2_1"/>
+<class name= "sightline.reports.CustomDocumentDataReport_Regression1" />
+<class name= "sightline.reports.DocumentAuditReport_Regression" />
+<class name= "sightline.reports.Reports_Regression1" />
+<class name="sightline.reports.ReviewerProductiviytReport_Regression"/>
+<class name="sightline.reports.ReviewResultReport_Regression"/>
+<class name= "sightline.reports.SearchTermReport_Regression1" />
+<class name= "sightline.reports.TagCountByTagsReport_Regression" />
+<class name="sightline.reports.Tally_Regression1"/>
+<class name="sightline.reports.Tally_Regression2"/>
+<class name="sightline.reports.Tally_Regression2_1"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_1"/>
+<class name="sightline.reports.UserLoginActivityReport_Regression2_2"/>
+<class name="sightline.reports.UserReviewActivityReport_Regression2_1"/>
+<class name="sightline.reports.UserReviewActivityReport_Regression2_2"/>
 </classes>
 </test>
-
-
 
 </suite>
 <!-- Suite -->
