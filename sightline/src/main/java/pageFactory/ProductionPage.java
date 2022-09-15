@@ -897,6 +897,22 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getBrandingDefTextFontStyle(String location) {
+		return driver.FindElementByXPath("//b[text()='" + location
+				+ "']//parent::div//parent::fieldset//preceding-sibling::div[contains(text(),'Branding text font:')]"
+				+ "//select[@id='editor_font_0']//option[@selected='selected']");
+	}
+
+	public Element getBrandingDefTextFontSize(String location) {
+		return driver.FindElementByXPath("//b[text()='" + location
+				+ "']//parent::div//parent::fieldset//preceding-sibling::div[contains(text(),'Branding text font:')]"
+				+ "//select[@id='editor_fontsize_0']//option[@selected='selected']");
+	}
+
+	public Element getDisclaimerBasicInfoTab() {
+		return driver.FindElementByXPath("//*[contains(text(),'Sightline goes here')]");
+	}
+
 	public Element getProdNameError() {
 		return driver.FindElementByXPath("//span[@id='ProductionName-error']");
 	}
@@ -7073,15 +7089,16 @@ public class ProductionPage {
 				}
 			}), Input.wait30);
 			getbtnPopupPreviewMarkComplete().waitAndClick(10);
-		}
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getbtnProductionGuardNext().Enabled();
-			}
-		}), Input.wait30);
-		getbtnProductionGuardNext().waitAndClick(5);
-		base.stepInfo("Priv Guard Page section is filled");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGuardNext().Enabled();
+				}
+			}), Input.wait30);
+
+			getbtnProductionGuardNext().waitAndClick(5);
+			base.stepInfo("Priv Guard Page section is filled");
+		}
 	}
 
 	/**
@@ -22150,6 +22167,126 @@ public class ProductionPage {
 	}
 
 	/**
+	 * @author sowndarya.velraj
+	 * @param tagname
+	 * @Description fillingAndverifySixBrandingMultiLine
+	 */
+	public void fillingAndverifySixBrandingMultiLine(String tagname) throws Exception {
+		String[] branding = { "Top - Left", "Top - Center", "Top - Right", "Bottom - Left", "Bottom - Center",
+				"Bottom - Right" };
+		SoftAssert asserts = new SoftAssert();
+		for (String brandingLoc : branding) {
+			if (brandingLoc.equals("Top - Left")) {
+				base.waitForElement(getLeftHeaderBranding());
+				getLeftHeaderBranding().ScrollTo();
+				getLeftHeaderBranding().Click();
+			} else if (brandingLoc.equals("Top - Center")) {
+				base.waitForElement(getTIFF_CenterHeaderBranding());
+				getTIFF_CenterHeaderBranding().Click();
+			} else if (brandingLoc.equals("Top - Right")) {
+				base.waitForElement(getRightHeaderBranding());
+				getRightHeaderBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Left")) {
+				base.waitForElement(getLeftFooterBranding());
+				getLeftFooterBranding().ScrollTo();
+				getLeftFooterBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Center")) {
+				base.waitForElement(getTIFF_CenterFooterBranding());
+				getTIFF_CenterFooterBranding().Click();
+			} else if (brandingLoc.equals("Bottom - Right")) {
+				base.waitForElement(getRightFooterBranding());
+				getRightFooterBranding().Click();
+			}
+
+			base.waitForElement(getEnterBranding(brandingLoc));
+			new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
+			driver.waitForPageToBeReady();
+			getEnterBranding(brandingLoc)
+					.SendKeys(brandingLoc + " Multiple Line Branding " + " " + Utility.randomCharacterAppender(50));
+			base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
+			String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
+			base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
+			String textSize = getBrandingDefTextFontSize(brandingLoc).Value();
+			asserts.assertEquals(textStyle, "Arial");
+			asserts.assertEquals(textSize, "10");
+			asserts.assertAll();
+		}
+		base.stepInfo("Successfully Verified default Font Style after Enter Branding");
+		base.stepInfo("Successfully Verified default Font Size after Enter Branding");
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().Click();
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		Thread.sleep(3000);
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+		getPriveldge_TagTree_SelectButton().Click();
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		getPriveldge_TextArea().SendKeys(tagname);
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("PDF section is filled");
+	}
+
+	/**
+	 * @author sowndarya.velraj
+	 * @param tagname
+	 * @Description fillingAndverifySixBrandingSingleLine
+	 */
+	public void fillingAndverifySixBrandingSingleLine(String tagname) throws Exception{
+		String[] branding = {"Top - Left", "Top - Center", "Top - Right", "Bottom - Left", "Bottom - Center", "Bottom - Right"};
+		SoftAssert asserts = new SoftAssert();
+		for(String brandingLoc : branding) {
+		if(brandingLoc.equals("Top - Left")) {
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().ScrollTo();
+			getLeftHeaderBranding().Click();
+		} else if(brandingLoc.equals("Top - Center")) {
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+		}else if(brandingLoc.equals("Top - Right")) {
+			base.waitForElement(getRightHeaderBranding());
+			getRightHeaderBranding().Click();
+		}else if(brandingLoc.equals("Bottom - Left")) {
+			base.waitForElement(getLeftFooterBranding());
+			getLeftFooterBranding().ScrollTo();
+			getLeftFooterBranding().Click();
+		}else if(brandingLoc.equals("Bottom - Center")) {
+			base.waitForElement(getTIFF_CenterFooterBranding());
+			getTIFF_CenterFooterBranding().Click();
+		}else if(brandingLoc.equals("Bottom - Right")) {
+			base.waitForElement(getRightFooterBranding());
+			getRightFooterBranding().Click();
+		}
+		
+		base.waitForElement(getEnterBranding(brandingLoc));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(brandingLoc).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(brandingLoc).SendKeys(brandingLoc + " Branding");	
+		base.waitForElement(getBrandingDefTextFontStyle(brandingLoc));
+		String textStyle = getBrandingDefTextFontStyle(brandingLoc).Value();
+		base.waitForElement(getBrandingDefTextFontSize(brandingLoc));
+		String textSize =  getBrandingDefTextFontSize(brandingLoc).Value();
+		asserts.assertEquals(textStyle, "Arial");
+		asserts.assertEquals(textSize, "10");
+		asserts.assertAll();
+	}		
+		base.stepInfo("Successfully Verified default Font Style after Enter Branding");
+		base.stepInfo("Successfully Verified default Font Size after Enter Branding");
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().Click();
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		Thread.sleep(3000);
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+		getPriveldge_TagTree_SelectButton().Click();
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		getPriveldge_TextArea().SendKeys(tagname);
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("PDF section is filled");
+/*
 	 * @Author Jeevitha
 	 * @Description :generate Production By selecting folder
 	 * @param folderName
@@ -22174,6 +22311,7 @@ public class ProductionPage {
 				beginningBates);
 
 		return productionname;
+
 	}
 	
 }
