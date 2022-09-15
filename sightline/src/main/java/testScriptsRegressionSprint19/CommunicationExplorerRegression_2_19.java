@@ -220,16 +220,26 @@ public class CommunicationExplorerRegression_2_19 {
 	 * @Description :Validate onpage filter for EmailAllDomains and CustodianName
 	 *              Communication Explorer Report
 	 */
+	/**
+	 * @author Jayanthi
+	 * @Description :Validate onpage filter for EmailAllDomains and CustodianName
+	 *              Communication Explorer Report
+	 */
 	@Test(description = "RPMXCON-56904", dataProvider = "paRmuUsers", groups = { "regression" }, enabled = true)
 	public void VerifyFiltersFunctionality_CusNAme(String userName, String password, String role)
 			throws InterruptedException, ParseException {
 		baseClass.stepInfo("Test case Id: RPMXCON-56904");
 		baseClass.stepInfo(
 				"Validate onpage filter for EmailAllDomains  and CustodianName on Communication Explorer Report");
+		//data for emailAlldomain- include(1st iteration of filter)
 		String domainName1 = Input.domainNameConsilio;
 		String domainName2 = Input.domainNameSymphony;
-
-		String cusNAme = Input.custodianName;
+		
+		//data for emailAlldomain-exclude(2nd iteration of filter)
+		String domainExclName1 = Input.MetaDataDomainName;
+		String domainExclName2 = Input.filterDataInput3;
+        //custodian name remain same on bith iteration 
+		String cusNAme = Input.metaDataCN;
 		String sourceToSelect = "Security Groups";
 
 		// Login
@@ -245,9 +255,10 @@ public class CommunicationExplorerRegression_2_19 {
 
 		// Apply filter
 		baseClass.stepInfo("** Set the Include filter criteria and click “Apply filter”");
-
+		
+		// Apply Include"emailAllDomain-2 options"/include"CustodianName-1 option" filter
 		conceptExplorer.filterAction(domainName1, Input.emailAllDomain, domainName2, true);
-		conceptExplorer.filterAction(Input.custodianName, Input.metaDataName, null, true);
+		conceptExplorer.filterAction(cusNAme, Input.metaDataName, null, true);
 
 		communicationExpPage.clickApplyBtn();
 		// Select nodes to view in doc list
@@ -263,7 +274,7 @@ public class CommunicationExplorerRegression_2_19 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> custodianName = dlPage.getColumnValue(Input.metaDataName, false);
 		List<String> emailAllDomain = dlPage.getColumnValue(Input.emailAllDomain, false);
-		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain, custodianName, domainName1, domainName1,
+		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain, custodianName, domainName1, domainName2,
 				cusNAme);
 
 		// remove filters
@@ -274,10 +285,10 @@ public class CommunicationExplorerRegression_2_19 {
 		conceptExplorer.clickSelectSources();
 		conceptExplorer.selectSGsource(sourceToSelect, Input.securityGroup);
 
-		// Apply Exclude filter
+		// Apply Exclude"emailAllDomain"/include"CustodianName " filter
 		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
-		conceptExplorer.filterAction(domainName1, Input.emailAllDomain, domainName2, false);
-		conceptExplorer.filterAction(Input.custodianName, Input.metaDataName, null, false);
+		conceptExplorer.filterAction(domainExclName1, Input.emailAllDomain, domainExclName2, false);
+		conceptExplorer.filterAction(cusNAme, Input.metaDataName, null, true);
 		communicationExpPage.clickApplyBtn();
 		baseClass.stepInfo("Report Generated.");
 
@@ -297,14 +308,13 @@ public class CommunicationExplorerRegression_2_19 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain_Excl = dlPage.getColumnValue("EmailAllDomains", false);
 		List<String> cusNAme_Excl = dlPage.getColumnValue("CustodianName", false);
-		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailAllDomain_Excl, cusNAme_Excl, domainName1, domainName2,
+		conceptExplorer.verifyExcludeWithIncludeFiltersLikeOR_Operator(emailAllDomain_Excl, cusNAme_Excl, domainExclName1, domainExclName2,
 				cusNAme);
 		
 
 		// Logout
 		loginPage.logout();
 	}
-
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
