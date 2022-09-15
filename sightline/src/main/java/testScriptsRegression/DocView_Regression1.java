@@ -4899,7 +4899,7 @@ public class DocView_Regression1 {
 	@Test(description ="RPMXCON-51100",alwaysRun = true, groups = { "regression" })
 	public void verifyAssociatedFileDownloadOptions() throws InterruptedException {
 		String docId1 = "ID00001069";
-		String docId2 = "ID00001004";// id to download translation 1
+		String docId2 = "STC4_00000001";// id to download translation 1
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51100");
 		baseClass.stepInfo(
@@ -4924,7 +4924,7 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("select document to download Native,tiff,txt");
 		docView.selectDocToViewInDocViewPanal(docId1);
 
-		docView.downloadSelectedFormaats(Input.fileDownloadLocation, "txt", "native", null, null);
+		docView.downloadSelectedFormats(Input.fileDownloadLocation, "native", "txt");
 
 		baseClass.stepInfo("select document to download translation 1 ");
 		docView.selectDocToViewInDocViewPanal(docId2);
@@ -4946,13 +4946,13 @@ public class DocView_Regression1 {
 		baseClass.stepInfo("Test case id : RPMXCON-51437");
 		baseClass.stepInfo(
 				"###Verify on navigating to other Text, Images or Translations tab and returning to Default tab should show the N, P, T, X as per the document###");
-		String N_DocID = "ID00001351";
+		String N_DocID = "T2396D";
 		String N_DocToolTipMessage = "Native file variant of the document being displayed";
-		String X_DocID = "ID00000102";
+		String X_DocID = "ID00000204";
 		String X_DocToolTipMessage = "Text file variant of the document being displayed";
-		String T_DocID = "ID00001012";
+		String T_DocID = "STC4_00000039";
 		String T_DocToolTipMessage = "TIFF file variant of the document being displayed";
-		String P_DocId = "ID00001464";
+		String P_DocId = "STC4_00000560";
 		String P_DocToolTipMessage = "PDF file variant of the document being displayed";
 		SessionSearch session = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -6132,7 +6132,7 @@ public class DocView_Regression1 {
 		session.basicContentSearch(Input.testData1);
 
 		baseClass.stepInfo("view in docview");
-		session.ViewInDocView();
+		session.ViewInDocViews();
 
 		String currentUrl = driver.getUrl();
 
@@ -6145,7 +6145,7 @@ public class DocView_Regression1 {
 		String parentWindowHandle = reusableDocView.switchTochildWindow();
 
 		baseClass.stepInfo("Getting : " + currentUrl + " url in second tab");
-		driver.getWebDriver().get(currentUrl);
+		//driver.getWebDriver().get(currentUrl);
 
 		baseClass.stepInfo("Perform this page annotation");
 		docView.performNonAudioAnnotation();
