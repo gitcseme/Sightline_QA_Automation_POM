@@ -85,7 +85,7 @@ public class ConceptExplorer_Regression_20 {
 		String analyze = Input.analyzeAt2;
 		String analyze3 = Input.analyzeAt3;
 		String sourceToSelect = "Security Groups";
-		String emailDomain = "consilio.com";//Input.MetaDataDomainName;
+		String emailDomain = Input.MetaDataDomainName;
 		String emailD0main_1 =Input.domainNameSymphony;
 		String fileType = Input.filterDataInput1;
 
