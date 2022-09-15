@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-AdvanceSearchBatch" preserve-order="true">
+<suite name="Sightline-Jenkins-AdvancedSearch" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
-<!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Zephyr-AdvanceSearchBatch">
+<!-- *******************************************AdvancedSearch Component********************************* -->
+<test name="Sightline-Jenkins-AdvancedSearch">
 <classes>
-<class name="testScriptsSmoke.Input" />
+
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression1" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_6" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_7" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression2_8" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression2" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression3" />
 <class name= "sightline.advancedSearch.AdvancedSearch_Regression4" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression5_2" />
+<class name= "sightline.advancedSearch.AdvancedSearch_Regression5" />
+<class name= "sightline.advancedSearch.AdvancedSearchRegression1" />
+<class name= "sightline.advancedSearch.AdvancedSearchRegression2" />
+<class name= "sightline.advancedSearch.AdvancedSearchRegression" />
 <class name= "sightline.advancedSearch.ModifySearchInAdvancedSearch_Regression" />
 </classes>
 </test>
 
-
-
 </suite>
-<!-- Suite -->
 
