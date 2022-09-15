@@ -5652,6 +5652,33 @@ public void clickPreviewButon() {
 }
 
 
+/**
+ * @author Baskar
+ * @Description copying the codingform
+ */
+
+public void copyCodingForm(String cfName) {
+	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	driver.waitForPageToBeReady();
+	base.waitForElement(getCodingForm_Search());
+	getCodingForm_Search().SendKeys(cfName);
+	driver.waitForPageToBeReady();
+	base.waitForElement(getCodingForm_CopyButton(cfName));
+	getCodingForm_CopyButton(cfName).waitAndClick(5);
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return base.getYesBtn().Visible();
+		}
+	}), Input.wait60);
+	String msg = getCF_DeletePopup().getText();
+	System.out.println(msg);
+	Assert.assertEquals("Are you sure you want to copy?", msg);
+	base.getYesBtn().Click();
+
+	base.VerifySuccessMessage("Coding form copied successfully");
+	base.CloseSuccessMsgpopup();
+}
+
 
 }
 

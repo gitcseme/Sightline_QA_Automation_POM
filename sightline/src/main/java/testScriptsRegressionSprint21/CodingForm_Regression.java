@@ -3,8 +3,10 @@ package testScriptsRegressionSprint21;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -362,6 +364,145 @@ public class CodingForm_Regression {
 		tagsAndFolderPage.deleteAllTags(tagname);
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author :Indium-Baskar
+	 * @Description : Verify that "Save Confirmation" message appears on "Coding Form" Screen
+	 */
+	@Test(description = "RPMXCON-54007", enabled = true, groups = { "regression" })
+	public void verifySaveConfrmMsg() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54007");
+		baseClass.stepInfo("Verify that \"Save Confirmation\" message appears on \"Coding Form\" Screen");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		tagsAndFoldersPage=new TagsAndFoldersPage(driver);
+		String tag="cf" + Utility.dynamicNameAppender();
+		String cfName="cfName" + Utility.dynamicNameAppender();
+		String fdName="fname" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		tagsAndFoldersPage.CreateTag(tag, Input.securityGroup);
+		// creating
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.addNewCodingFormButton();
+		codingForm.basedOnCreatingNewObject(tag, null, null, "tag");
+		codingForm.addcodingFormAddButton();
+		codingForm.passingCodingFormName(cfName);
+		codingForm.saveCodingForm();
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		// editing the codingform
+		codingForm.editCodingForm(cfName);
+		baseClass.waitForElement(codingForm.getTag_Object(tag));
+		codingForm.getTag_Object(tag).waitAndClick(5);
+		codingForm.getCF_objectName(0).SendKeys(fdName);
+		baseClass.stepInfo("editing the friendly label for tag");
+		codingForm.getManageCodingFormButton().waitAndClick(5);
+		baseClass.stepInfo("clicking on manage coding form tab");
+		// validation of confirm message
+		boolean flag=codingForm.getSaveWarningMsg().isElementAvailable(2);
+		softAssertion.assertTrue(flag);
+		codingForm.getValidationButtonYes().waitAndClick(5);
+		boolean flagCnfrm=codingForm.getSaveConformMsg().isElementAvailable(2);
+		softAssertion.assertTrue(flagCnfrm);
+		baseClass.passedStep("confirmation displayed after user edit label when clicked manage coding form tab");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author :Indium-Baskar
+	 * @Description :Verify that duplicate customized coding form does not get 
+	 *                created on Using Copy functionality "Manage Coding Forms" screen
+	 */
+	@Test(description = "RPMXCON-54011", enabled = true, groups = { "regression" })
+	public void verifyDuplicateCF() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54011");
+		baseClass.stepInfo("Verify that duplicate customized coding form does not get created on Using "
+				+ "Copy functionality \"Manage Coding Forms\" screen");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		tagsAndFoldersPage=new TagsAndFoldersPage(driver);
+		String cfName="cfName" + Utility.dynamicNameAppender();
+		String rename="cfName" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		// creating
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		codingForm.addNewCodingFormButton();
+		codingForm.passingCodingFormName(cfName);
+		driver.scrollPageToTop();
+		baseClass.waitForElement(codingForm.getSaveCFBtn());
+		codingForm.getSaveCFBtn().waitAndClick(5);
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		// copying the codingform
+		for (int i = 1; i <=4; i++) {
+			if (i==3) {
+				codingForm.editCodingForm(cfName);
+				codingForm.passingCodingFormName(rename);
+				baseClass.waitForElement(codingForm.getSaveCFBtn());
+				codingForm.getSaveCFBtn().waitAndClick(5);
+			}
+			if (i==1||i==2||i==4) {
+				if (i==1||i==2) {
+					codingForm.copyCodingForm(cfName);
+				}
+				if (i==4) {
+					codingForm.copyCodingForm(rename);
+				}
+				if (i==1||i==2) {
+					baseClass.waitForElement(codingForm.getCodingForm_Search());
+					codingForm.getCodingForm_Search().SendKeys(cfName);
+				}
+				if (i==4) {
+					baseClass.waitForElement(codingForm.getCodingForm_Search());
+					codingForm.getCodingForm_Search().SendKeys(rename);
+				}
+				if (i==1||i==2||i==4) {
+				baseClass.waitTime(3);
+				List<String> manageScreen = new LinkedList<String>();
+				List<WebElement>data=codingForm.getCFnames().FindWebElements();
+				for (WebElement codingName : data) {
+					String value = codingName.getText().toString();
+					if (i==1||i==2) {
+						if (value.equals(cfName)) {
+						}
+						else {
+							manageScreen.add(value);
+						}
+					}
+					if (i==4) {
+						if (value.equals(rename)) {
+						}
+						else {
+							manageScreen.add(value);
+						}
+					}
+					
+				}
+				if (i==2) {
+					manageScreen.remove(0);
+				}
+				String datas=manageScreen.get(0).toString();
+				System.out.println(datas);
+				baseClass.stepInfo("while copying codingform name generated with new name as '"+datas+"'" );
+				softAssertion.assertNotEquals(cfName, datas);
+				manageScreen.remove(0);
+				}
+			}
+		}
+		baseClass.passedStep("No duplicated coding form present at manage codingform screen while copying");
+		baseClass.passedStep("Successfull message received as ,Coding form copied successfully");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
+
 
 
 	@AfterMethod(alwaysRun = true)
