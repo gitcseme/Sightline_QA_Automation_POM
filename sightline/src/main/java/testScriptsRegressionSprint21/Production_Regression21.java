@@ -1,4 +1,5 @@
 package testScriptsRegressionSprint21;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,8 +61,6 @@ public class Production_Regression21 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
-	
 
 	/**
 	 * @author Brundha TESTCASE No:RPMXCON-48645 Date:9/7/2022
@@ -125,14 +124,15 @@ public class Production_Regression21 {
 		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile, Lastile, prefixID, suffixID, Input.searchString4);
 
 		int File = FirstFile + Doc + Integer.valueOf(Input.pageCount);
-		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + File+ suffixID + ".tiff");
+		File TiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + File + suffixID + ".tiff");
 		page.verifyingTiffImage(TiffFile, Input.searchString4);
 
 		File NativeFile = new File(home + "/Downloads/VOL0001/Natives/0001/");
 		page.isfileisExists(NativeFile);
 		File[] dir_contents = NativeFile.listFiles();
 		int nativefile = dir_contents.length;
-		base.digitCompareEquals(nativefile, Doc, "Native files are generated as expected","Native files are not generated as expected");
+		base.digitCompareEquals(nativefile, Doc, "Native files are generated as expected",
+				"Native files are not generated as expected");
 		loginPage.logout();
 	}
 
@@ -152,7 +152,7 @@ public class Production_Regression21 {
 		String foldername = "Folder" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
-		int Count=Integer.valueOf(Input.pageCount);
+		int Count = Integer.valueOf(Input.pageCount);
 
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
@@ -164,7 +164,7 @@ public class Production_Regression21 {
 		ProductionPage page = new ProductionPage(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
-		int beginningBate=Integer.valueOf(beginningBates)+Count+Count;
+		int beginningBate = Integer.valueOf(beginningBates) + Count + Count;
 		System.out.println(beginningBate);
 		page.addANewProduction(productionname);
 		page.fillingDATSection();
@@ -185,17 +185,18 @@ public class Production_Regression21 {
 		page.extractFile();
 		driver.waitForPageToBeReady();
 		File NativeFile = new File(home + "/Downloads/VOL0001/Natives/0001/");
-		
+
 		File NativeFileType = new File(
 				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBate + suffixID + ".jpg");
 		page.isfileisExists(NativeFile);
-		if(NativeFileType.exists()) {
-			base.passedStep(""+NativeFileType+" is displayed");
-		}else {
-			base.failedStep(""+NativeFileType+" is not displayed");
+		if (NativeFileType.exists()) {
+			base.passedStep("" + NativeFileType + " is displayed");
+		} else {
+			base.failedStep("" + NativeFileType + " is not displayed");
 		}
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Brundha TESTCASE No:RPMXCON-47859 Date:9/7/2022
 	 * @Description:Verify the static and dynamic display of 'QC & confirmation'
@@ -275,8 +276,9 @@ public class Production_Regression21 {
 
 		page.getBackButton().waitAndClick(5);
 		String BatesNumber = page.getProd_BatesRange().getText();
-		base.textCompareNotEquals(Batesno, BatesNumber, "Dynamic display of production is dsiplayed","Dynamic display of production is not displayed");
-				
+		base.textCompareNotEquals(Batesno, BatesNumber, "Dynamic display of production is dsiplayed",
+				"Dynamic display of production is not displayed");
+
 		loginPage.logout();
 	}
 
@@ -322,17 +324,17 @@ public class Production_Regression21 {
 		page.fillingTIFFSectionPrivDocs(tagname, Input.searchString4);
 		page.fillingTextSection();
 		page.navigateToNextSection();
-		
+
 		page.navigateToProductionPage();
 		page.selectSavedTemplateAndManageTemplate(productionname, Templatename);
 		driver.waitForPageToBeReady();
 		page.getTextTab().waitAndClick(5);
 		driver.scrollingToBottomofAPage();
 		page.getCheckBoxCheckedVerification(page.getTextRadioBtn());
-		base.validatingGetTextElement(page.getTextFirstRadioBtn(),"Do not OCR. Export blank text files");
-		base.validatingGetTextElement(page.getTextSecondRadioBtn(),"OCR non-redacted documents without text");
+		base.validatingGetTextElement(page.getTextFirstRadioBtn(), "Do not OCR. Export blank text files");
+		base.validatingGetTextElement(page.getTextSecondRadioBtn(), "OCR non-redacted documents without text");
 		page.getCloseIconInManageTemplate().waitAndClick(5);
-		
+
 		page.navigateToProductionPage();
 		page.baseInfoLoadTemplate(productionname1, Templatename);
 		page.getCheckBoxCheckedVerification(page.chkIsDATSelected());
@@ -341,13 +343,12 @@ public class Production_Regression21 {
 		page.getTextTab().waitAndClick(5);
 		page.getCheckBoxCheckedVerification(page.getTextRadioBtn());
 		driver.scrollingToBottomofAPage();
-		base.validatingGetTextElement(page.getTextFirstRadioBtn(),"Do not OCR. Export blank text files");
-		base.validatingGetTextElement(page.getTextSecondRadioBtn(),"OCR non-redacted documents without text");
+		base.validatingGetTextElement(page.getTextFirstRadioBtn(), "Do not OCR. Export blank text files");
+		base.validatingGetTextElement(page.getTextSecondRadioBtn(), "OCR non-redacted documents without text");
 		loginPage.logout();
 
 	}
-	
-	
+
 	/**
 	 * @author Brundha RPMXCON-55948 Date:9/12/2022
 	 * @DescriptionVerify if user included default branding text along with branding
@@ -416,9 +417,9 @@ public class Production_Regression21 {
 		page.OCR_Verification_In_Generated_Tiff_tess4j(FirstFile1, LastFile1, prefixID1, suffixID1,
 				Input.searchString4);
 		int PDFFirstBrandingTextFiles = PureHit + FirstFile1;
-		int PDFBrandingTextFile = PureHit + FirstFile1 +Integer.valueOf(Input.pageCount);
-		page.OCR_Verification_In_Generated_Tiff_tess4j(PDFFirstBrandingTextFiles, PDFBrandingTextFile, prefixID1, suffixID1,
-				Input.testData1);
+		int PDFBrandingTextFile = PureHit + FirstFile1 + Integer.valueOf(Input.pageCount);
+		page.OCR_Verification_In_Generated_Tiff_tess4j(PDFFirstBrandingTextFiles, PDFBrandingTextFile, prefixID1,
+				suffixID1, Input.testData1);
 
 		page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -502,7 +503,6 @@ public class Production_Regression21 {
 		sessionSearch.basicContentSearch(Input.telecaSearchString);
 		sessionSearch.bulkRelease(Input.securityGroup);
 		sessionSearch.bulkFolderExisting(foldername);
-		
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -679,7 +679,7 @@ public class Production_Regression21 {
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
 		driver.waitForPageToBeReady();
-		docViewRedactions.redactRectangleUsingOffset(10, 10,100, 80);
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
 
@@ -690,7 +690,7 @@ public class Production_Regression21 {
 		sessionSearch.basicContentSearch(Input.telecaSearchString);
 		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkRelease(Input.securityGroup);
-		
+
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
 		page.selectingDefaultSecurityGroup();
@@ -724,7 +724,7 @@ public class Production_Regression21 {
 				home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
 		page.isdatFileExist();
 		page.isfileisExists(TextFile);
-		
+
 		String Content;
 		String totaltext = "";
 		try (BufferedReader brReader = new BufferedReader(
@@ -741,9 +741,11 @@ public class Production_Regression21 {
 
 		loginPage.logout();
 	}
+
 	/**
 	 * @author Brundha RPMXCON-55655 Date:9/14/2022
-	 * @Description To Verify ProjectAdmin will be able to view the produced documents at production path
+	 * @Description To Verify ProjectAdmin will be able to view the produced
+	 *              documents at production path
 	 */
 	@Test(description = "RPMXCON-55655", enabled = true, groups = { "regression" })
 	public void verifyingPAUserCopyPathInGeneratedFile() throws Exception {
@@ -784,6 +786,8 @@ public class Production_Regression21 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
 		page.getCopyPath().waitAndClick(10);
 		String actualCopedText = page.getCopiedTextFromClipBoard();
+		System.out.println(actualCopedText);
+		base.stepInfo("Production Path"+actualCopedText);
 		String parentTab = page.openNewTab(actualCopedText);
 		page.getFileDir("VOL0001").waitAndClick(5);
 		page.getLoadFileLink().waitAndClick(3);
@@ -794,11 +798,12 @@ public class Production_Regression21 {
 		}
 		driver.close();
 		driver.getWebDriver().switchTo().window(parentTab);
-		
+
 		loginPage.logout();
 	}
+
 	
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
