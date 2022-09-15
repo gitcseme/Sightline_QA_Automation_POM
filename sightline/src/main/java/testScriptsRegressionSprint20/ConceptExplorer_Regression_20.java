@@ -85,9 +85,9 @@ public class ConceptExplorer_Regression_20 {
 		String analyze = Input.analyzeAt2;
 		String analyze3 = Input.analyzeAt3;
 		String sourceToSelect = "Security Groups";
-		String emailDomain = "gmail.com";
-		String emailD0main_1 = "symphonyteleca.com";
-		String fileType = "MS Outlook Message";
+		String emailDomain = "consilio.com";//Input.MetaDataDomainName;
+		String emailD0main_1 =Input.domainNameSymphony;
+		String fileType = Input.filterDataInput1;
 
 		String[] columnsToSelect = { Input.emailAllDomain, Input.ingDocFileType };
 
@@ -106,7 +106,7 @@ public class ConceptExplorer_Regression_20 {
 		// Apply filter
 		baseClass.stepInfo("** Set the filter criteria and click “Apply filter”");
 
-		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, true);
+		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, false);
 		conceptExplorer.filterAction(fileType, Input.docFileType, null, true);
 		conceptExplorer.applyFilter("Yes", 10);
 
@@ -131,7 +131,7 @@ public class ConceptExplorer_Regression_20 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain = dlPage.getColumnValue(Input.emailAllDomain, false);
 		List<String> docFileType = dlPage.getColumnValue(Input.docFileType, false);
-		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain, docFileType, emailD0main_1, emailDomain,
+		conceptExplorer.verifyExcludeIcludeFiltersLikeOR_Operator(emailAllDomain, docFileType, emailD0main_1, emailDomain,
 				fileType);
 
 		// remove filters
@@ -144,8 +144,8 @@ public class ConceptExplorer_Regression_20 {
 
 		// Apply filter
 		baseClass.stepInfo("** Set the Exclude filter criteria and click “Apply filter”");
-		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, false);
-		conceptExplorer.filterAction(fileType, Input.docFileType, null, false);
+		conceptExplorer.filterAction(emailDomain, Input.emailAllDomain, emailD0main_1, true);
+		conceptExplorer.filterAction(fileType, Input.docFileType, null, true);
 		conceptExplorer.applyFilter("Yes", 10);
 
 		baseClass.waitForElement(conceptExplorer.getDocCOuntFromHeader());
@@ -163,17 +163,18 @@ public class ConceptExplorer_Regression_20 {
 		dlPage.SelectColumnDisplayByRemovingExistingOnes(columnsToSelect);
 		List<String> emailAllDomain_Excl = dlPage.getColumnValue(Input.emailAllDomain, false);
 		List<String> docFileType_Excl = dlPage.getColumnValue(Input.docFileType, false);
-		conceptExplorer.verifyExcludeFiltersLikeOR_Operator(emailAllDomain_Excl, docFileType_Excl, emailD0main_1,
+		conceptExplorer.verifyIcludeFiltersLikeOR_Operator(emailAllDomain_Excl, docFileType_Excl, emailD0main_1,
 				emailDomain, fileType);
 
 		conceptExplorer.getBackToSourceBtn().Click();
 		driver.waitForPageToBeReady();
+		conceptExplorer.removeTilesFromCart();
 
 		// Select tile to analyze at second level
 		baseClass.stepInfo("**Select tile to analyze at second level**");
 		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
 		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 3);
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart,1,3);
 		// Go to 2nd level
 		List<String> expActiveFilters = conceptExplorer.verifyActiveFilters(null);
 		conceptExplorer.analyzeAction(analyze);
@@ -185,7 +186,7 @@ public class ConceptExplorer_Regression_20 {
 		baseClass.stepInfo("**Select tile to analyze at third level**");
 		baseClass.waitForElementCollection(conceptExplorer.getDataToAddInCart());
 		resultToAddInCart = conceptExplorer.getDataToAddInCart().size();
-		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1);
+		conceptExplorer.tileSelctionBasedOnChildCount(resultToAddInCart, 1,2);
 
 		// Go to 3rd level
 		conceptExplorer.analyzeAction(analyze3);

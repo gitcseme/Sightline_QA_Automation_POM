@@ -844,7 +844,13 @@ public class TestData {
 	public String emailReciepientName2;
 	public String emailAllDomainOption;
 	public String masterDateOption;
-	
+	public  String emailAddressinput1;
+	public  String emailAddressinput2;
+	public  String emailAddressinput3;
+	public  String filterDataInput;
+	public  String filterDataInput1;
+	public  String filterDataInput2;
+    public  String filterDataInput3;
 	
 	
 }
