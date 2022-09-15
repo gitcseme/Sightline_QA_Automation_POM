@@ -121,7 +121,10 @@ public class Export_Regression21 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
+		System.out.println(actualCopedText);
+		base.stepInfo("Export Path"+actualCopedText);
 		String parentTab = page.openNewTab(actualCopedText);
+		
 		page.goToImageFiles();
 		for (int i = 2; i < 6; i++) {
 			if (page.getFirstImageFile(prefixID + "(" + i + ")" + suffixID, subBates).isElementAvailable(2)) {
@@ -165,6 +168,8 @@ public class Export_Regression21 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedTexts = page.getCopiedTextFromClipBoard();
+		System.out.println(actualCopedTexts);
+		base.stepInfo("Export Path"+actualCopedTexts);
 		String parentTabs = page.openNewTab(actualCopedTexts);
 		page.goToPDFImageFiles();
 		for (int i = 2; i < 6; i++) {
@@ -240,6 +245,8 @@ public class Export_Regression21 {
 		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommitandDownload();
 		String actualCopedText = page.getCopiedTextFromClipBoard();
 		String parentTab = page.openNewTab(actualCopedText);
+		System.out.println(actualCopedText);
+		base.stepInfo("Export Path"+actualCopedText);
 		page.getFileDir("VOL0001").waitAndClick(10);
 		page.getFileDir("Natives/").waitAndClick(10);
 		page.getFileDir("0001/").waitAndClick(10);
