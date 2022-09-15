@@ -2047,6 +2047,7 @@ public class IngestionPage_Indium {
 			getSourceSelectionDATKey().ScrollTo();
 			base.waitForElement(getSourceSelectionDATKey());
 			getSourceSelectionDATKey().isElementAvailable(15);
+			base.waitTime(2);
 			getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(documentKey);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -5944,7 +5945,7 @@ public class IngestionPage_Indium {
 				nextButton().isElementAvailable(10);
 				nextButton().waitAndClick(10);
 				if (disabledNextButton().isDisplayed()) {
-					base.waitTime(3);
+					base.waitTime(1);
 					unPunlishSearch(savedSearch).isElementAvailable(10);
 					if (unPunlishSearch(savedSearch).isDisplayed()) {
 						base.passedStep("Unpublish of '" + savedSearch + "' is in progess");
@@ -6776,7 +6777,7 @@ public class IngestionPage_Indium {
 		getFilterByINPROGRESS().waitAndClick(5);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
-
+		base.waitTime(3);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
 		base.waitTime(3);
@@ -6802,6 +6803,7 @@ public class IngestionPage_Indium {
 			ingestedCount = Integer.parseInt(totalDocsIngestedCount);
 			
 		}
+		getRefreshButton().waitAndClick(5);
 		if(ingestedCount==0) {
 			base.passedStep("No ingestion is currently present");
 			count =1;
@@ -6814,7 +6816,7 @@ public class IngestionPage_Indium {
 		}), Input.wait60);
 		String totalCount = getTotalPageCount().getText();
 		int pageCount = Integer.parseInt(getTotalPageCount().getText());
-		
+		getRefreshButton().waitAndClick(5);
 		if ((String.valueOf(totalCount)).contains("0")) {
 			count = Integer.parseInt(totalCount) / 10;
 		} else if (pageCount < 10) {
@@ -6824,7 +6826,7 @@ public class IngestionPage_Indium {
 		}
 		}
 		System.out.println(count);
-		
+		getRefreshButton().waitAndClick(5);
 		boolean status = false;
 		for (int i = 1; i <= count; i++) {
 
@@ -8287,8 +8289,9 @@ public class IngestionPage_Indium {
 		getFilterByPUBLISHED().waitAndClick(10);
 
 		getRefreshButton().waitAndClick(5);
-		base.waitTime(3);
+		base.waitTime(5);
 
+		base.waitForElement(getTotalIngestedCount());
 		String totalDocsIngestedCount = getTotalIngestedCount().getText();	
 		int ingestedCount;
 		
