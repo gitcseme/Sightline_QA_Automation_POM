@@ -1577,9 +1577,22 @@ public class CodingForm {
 		
 		public Element getPreviewCheckBox() {
 			return driver.FindElementByXPath("//input[contains(@id,'checkbox')]");
-
+		}
 		public Element getTagGroupValues(int objectNo) {
 			return driver.FindElementByXPath("//span[@id='l_it_" + objectNo + "']/parent::div/div");
+
+		}
+		
+		public Element getTag_Object(String tagName) {
+			return driver.FindElementByXPath("//span[@class='itemFriendlyName'][text()='"+tagName +"']");
+
+		}
+		public Element getSaveWarningMsg() {
+			return driver.FindElementByXPath("//span[text()='Wait - please make a decision before you leave this page']");
+
+		}
+		public Element getSaveConformMsg() {
+			return driver.FindElementByXPath("//span[text()='Coding Form Save']");
 
 		}
 	
@@ -5582,6 +5595,7 @@ public void validateSpecificTagsAndOrdersInCodingForm(String cfName,String Objec
 	}else {
 		base.failedStep("Preview has some error");
 	}
+}
 	
 	
 	
@@ -5637,7 +5651,6 @@ public void clickPreviewButon() {
 	base.stepInfo("preview button was clicked");
 }
 
-}
 
 
 }
