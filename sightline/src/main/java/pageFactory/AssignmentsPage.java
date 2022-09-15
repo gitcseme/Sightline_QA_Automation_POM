@@ -1186,9 +1186,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//td[contains(text(),'" + username + "')]/parent::tr/td[6]");
 	}
 
-	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		  return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[1]/a[contains(text(),'"+assignmentName+"')]/ancestor::td/following-sibling::td[6]");
-	}
+	//modified 14/09/2022
+    public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
+          return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"+assignmentName+"')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
+    }
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
 		return driver.FindElementByXPath("//h2[contains(text(),'" + assignmentName + "')]");
