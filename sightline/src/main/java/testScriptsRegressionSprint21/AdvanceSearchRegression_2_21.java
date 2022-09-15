@@ -323,6 +323,61 @@ public class AdvanceSearchRegression_2_21 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author
+	 * @Date: 15/9/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :To verify as an user login into the Application, I will be able
+	 *              to select All Search group as an search criteria & I am able to
+	 *              search a query based on that.RPMXCON-47693
+	 */
+	@Test(description = "RPMXCON-47693", dataProvider = "Users", groups = { "regression" }, enabled = true)
+	public void verifyUserLoginApplicationAbleToSelectAllSearchGroupAsSearchCriteriaAndAbleToSearchQueryBasedOnThat(
+			String username, String password) throws InterruptedException {
+
+		String searchName = "savedSearch" + Utility.dynamicNameAppender();
+		baseClass.stepInfo("Test case Id: RPMXCON-47693 Advanced Search");
+		baseClass.stepInfo(
+				"To verify as an user login into the Application, I will be able to select All Search group as an search criteria & I am able to search a query based on that.");
+
+		// login as Users
+		baseClass.stepInfo("**Step-1 Login as User**");
+		loginPage.loginToSightLine(username, password);
+
+		// creating new Search Group under My Saved Search
+		String searchGroup = savedSearch.createNewSearchGrp(Input.mySavedSearch);
+
+		// performing searching and saving it in newly created node
+		sessionSearch.advancedContentSearch(Input.searchString1);
+		sessionSearch.saveAdvanceSearchInNode(searchName, searchGroup);
+
+		// Select All search group from work product tab
+		baseClass.stepInfo(
+				"**Step-2 & 3 & 4 Go to advanced search page | Select All search group from work product tab and Enter some search query in Content & Metadata tab**");
+		baseClass.selectproject();
+		sessionSearch.navigateToAdvancedSearchPage();
+		sessionSearch.getWorkproductBtn().waitAndClick(10);
+		sessionSearch.searchSavedSearch(Input.mySavedSearch);
+		baseClass.stepInfo("Selecting All search group from work product tab.");
+
+		// configuring Content & Metadata search
+		sessionSearch.advancedContentSearchConfigure(Input.searchString1);
+		baseClass.stepInfo("Configuring Content & Metadata Search.");
+
+		// perform search
+		sessionSearch.searchAndReturnPureHit_BS();
+		baseClass.passedStep(
+				"Verified that We Will get some search result based on search criteria applied on work product.");
+
+		// delete savedSearch node
+		baseClass.stepInfo("Initiating delete node");
+		savedSearch.deleteNode(Input.mySavedSearch, searchGroup);
+
+		// logout
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
