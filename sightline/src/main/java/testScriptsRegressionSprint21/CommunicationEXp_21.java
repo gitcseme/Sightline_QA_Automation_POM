@@ -444,9 +444,12 @@ public class CommunicationEXp_21 {
 		//
 		int docCount_displayed=Integer.parseInt(communicationExpPage.VerifyTaggedDocsCountDisplay());
 		baseClass.stepInfo("Doc Count displayed after selecting two folders as source in communication exp report is"+String.valueOf(docCount_displayed));
-		baseClass.digitCompareEquals(docCount_displayed,purehit,"The report generated with expected count of Folders "
-				+ "containing documents ","The report  generated is not  with expected count of Folders containing documents");
-		
+		if(docCount_displayed<=purehit){
+			baseClass.passedStep("The report generated with expected count of Folders "
+				+ "containing documents ");  }
+		else{
+			baseClass.failedStep("The report  generated is not  with expected count of Folders containing documents");
+		}
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tf.deleteAllFolders("comExp");
 		
