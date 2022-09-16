@@ -7093,16 +7093,13 @@ public class ProductionPage {
 				}
 			}), Input.wait30);
 			getbtnPopupPreviewMarkComplete().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getbtnProductionGuardNext().Enabled();
-				}
-			}), Input.wait30);
-
-			getbtnProductionGuardNext().waitAndClick(5);
-			base.stepInfo("Priv Guard Page section is filled");
 		}
+			driver.waitForPageToBeReady();
+			base.CloseSuccessMsgpopup();
+			base.waitTillElemetToBeClickable(getbtnProductionGuardNext());
+			getbtnProductionGuardNext().waitAndClick(10);
+			base.stepInfo("Priv Guard Page section is filled");
+		
 	}
 
 	/**
