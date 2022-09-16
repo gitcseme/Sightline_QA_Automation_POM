@@ -2018,6 +2018,25 @@ public class SessionSearch {
 	public Element selectOperatorBetweenAdvancedSearchBlocks() {
 		return driver.FindElementByXPath("(//div[@id='op']//select)[last()-1]");
 	}
+	
+	public Element getbulkAssignTotalCountLoad() {
+		return driver.FindElementByXPath(
+				"//div[@class='col-md-3 bulkActionsSpanLoderTotal' and @style='padding-bottom: 5px; display: none;']");
+	}
+
+	public Element getContinueBtnDisabled() {
+		return driver.FindElementByXPath(
+				".//*[@id='divBulkAction']//button[contains(.,'Continue') and @class='btn btn-primary btn-sm disabled']");
+	}
+
+	public Element performBulkAction(String action) {
+		return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'" + action + "')]");
+	}
+
+	public Element getTotalDocCount(String action) {
+		return driver.FindElementByXPath(
+				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -13437,7 +13456,7 @@ public class SessionSearch {
 		getSelectWorkProductSSResults(searchResult).waitAndClick(5);
 		getInsertInToQueryBtn().waitAndClick(10);
 	}
-	
+
 	/**
 	 * @author
 	 * @date: 9/13/21 NA
@@ -13467,9 +13486,10 @@ public class SessionSearch {
 			}
 		}
 	}
+
 	/**
 	 * @author Jayanthi.Ganesan This method will verify if user selects assign
-	 *         option then  existing assignment and new assignment tab displayed.
+	 *         option then existing assignment and new assignment tab displayed.
 	 */
 	public void verifyBulkAssignOptions() {
 		base.waitForElement(getUnAssignRadioBtn());
@@ -13484,7 +13504,81 @@ public class SessionSearch {
 				&& BulkUnAssign_Existing.equals("display: none;")) {
 			base.passedStep("If user click assign tab Only existing assignment tab and new assignment is displayed");
 		} else {
-			base.failedStep("If user click assign tab  existing assign tab and new assignment is not displayed as expected.");
+			base.failedStep(
+					"If user click assign tab  existing assign tab and new assignment is not displayed as expected.");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : add pure Hit if available
+	 */
+	public void checkAddPureHit() {
+		driver.waitForPageToBeReady();
+		if (getPureHitAddButton().isElementAvailable(1)) {
+			getPureHitAddButton().waitAndClick(5);
+		} else {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param action
+	 * @description : performBulkActionM
+	 */
+	public void performBulkActionM(String action) {
+		// Perform Bulk Action
+		base.waitForElement(getBulkActionButton());
+		getBulkActionButton().Click();
+		base.waitForElement(performBulkAction(action));
+		performBulkAction(action).waitAndClick(5);
+		base.stepInfo("performing " + action + " assign");
+		UtilityLog.info("performing " + action + " assign");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @description : unassign radio btn Click
+	 */
+	public void unassignClick() {
+		try {
+			base.waitForElement(getUnAssignRadioBtn());
+			base.stepInfo("Assign/UnAssign pop up displayed");
+			getUnAssignRadioBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param status
+	 * @param assignmentType
+	 * @description : verifyContinuButtonIsStatus
+	 */
+	public void verifyContinuButtonIsStatus(String status, String assignmentType) {
+
+		if (status.equalsIgnoreCase("Disabled")) {
+			// Verify doc count load
+			if (getbulkAssignTotalCountLoad().isElementAvailable(3)) {
+				base.stepInfo("Total doc count is loading...");
+				base.printResutInReport(base.ValidateElement_PresenceReturn(getContinueBtnDisabled()),
+						"Continue Button is in disabled state", "Continue Button is in enabled state", "Pass");
+			} else {
+				base.failedMessage("Total doc count loaded");
+			}
+		} else if (status.equalsIgnoreCase("Enabled")) {
+			// Wait for Some time and check count loaded
+			if (!getbulkAssignTotalCountLoad().isElementAvailable(5)) {
+				base.stepInfo("Total doc count is displayed : " + getTotalDocCount(assignmentType).getText());
+				base.printResutInReport(base.ValidateElement_PresenceReturn(getContinueBtnDisabled()),
+						"Continue Button is in enabled state", "Continue Button is in disabled state", "Fail");
+			} else {
+				base.failedMessage("Total doc count not yet loaded");
+			}
 		}
 	}
 

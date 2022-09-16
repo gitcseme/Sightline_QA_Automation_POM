@@ -10517,7 +10517,18 @@ public class AssignmentsPage {
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	public void assignwithSamplemethod(String assignmentName, String samplemethod, String countToAssign)
+	/**
+	 * @author Jayanthi.ganesan
+	 * @Description-This method will assign documents to assignments using sample
+	 *                   methods and verify the Doc counts assigned in manage
+	 *                   assignment page.
+	 * @param assignmentName
+	 * @param sampleMethod
+	 * @return 
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public String assignwithSamplemethod(String assignmentName, String samplemethod, String countToAssign)
 			throws NumberFormatException, InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -10540,11 +10551,14 @@ public class AssignmentsPage {
 			getCountToAssign().SendKeys(countToAssign);
 			bc.stepInfo(
 					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
+		} else if (samplemethod.equalsIgnoreCase("Parent Level Docs Only")) {
+			getsampleMethod().selectFromDropdown().selectByVisibleText("Parent Level Docs Only");
+			bc.stepInfo(
+					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
 		}
 		bc.waitForElement(getSelectAssignmentToBulkAssign(assignmentName));
 		getSelectAssignmentToBulkAssign(assignmentName).waitAndClick(20);
 		getContinueBulkAssign().waitAndClick(15);
-		driver.waitForPageToBeReady();
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
@@ -10570,6 +10584,8 @@ public class AssignmentsPage {
 				+ ActualDocCount + "] using " + samplemethod + "");
 
 		assertion.assertAll();
+		
+		return FinalCount;
 	}
 
 	/**
