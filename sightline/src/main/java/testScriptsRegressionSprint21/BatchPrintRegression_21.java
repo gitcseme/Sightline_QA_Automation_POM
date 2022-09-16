@@ -776,7 +776,8 @@ public class BatchPrintRegression_21 {
 
 		// Generate Production with TIFF
 		String productionname = page.preRequisiteGenerateProduction(Folder);
-
+		baseClass.waitUntilFileDownload();
+		
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
