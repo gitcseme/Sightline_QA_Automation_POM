@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-SavedSearch_Batch" preserve-order="true">
+<suite name="Sightline-Jenkins-SavedSearch" preserve-order="true">
 <listeners>
 		<listener class-name="executionMaintenance.TestListener" />
 	</listeners>
+<!-- *******************************************SavedSearch Component********************************** -->
 	
-	<test name="Zephyr-SavedSearch_Batch">
+	<test name="Sightline-Jenkins-SavedSearch">
 		<classes>
-		    <class name="testScriptsSmoke.Input"></class>
-			
-			<class name="testScriptsRegression.SavedSearch_Regression_Set_01"></class>
-			
-			<class name="testScriptsRegression.SavedSearch_Regression1"></class>
-			<class name="testScriptsRegression.SavedSearchAudio_Regresssion"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New_Set_01"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New_Set_02"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New_Set_03"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New_Set_04"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New_Set_05"></class>
-			<class name="testScriptsRegression.SavedsearchRegression_New_Set_06"></class>
-			<class name="testScriptsRegression.SavedSearchRegression_New"></class>
-			<class name="testScriptsRegression.SavedSearch_Audio_Regression_Set_02"></class>
-			<class name="testScriptsRegression.SavedSearch_Audio_Regression_Set_03"></class>
-			<class name="testScriptsRegression.SavedSearch_Audio_Regression_Set_04"></class>
-		
-		</classes>
-	</test> <!-- Test -->
-
+		    <class name="testScriptsSmoke.Input"></class>			
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_02"></class>
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_03"></class>
+			<class name="sightline.savedSearch.SavedSearch_Audio_Regression_Set_04"></class>
+			<class name="sightline.savedSearch.SavedSearch_Regression_Set_01"></class>			
+			<class name="sightline.savedSearch.SavedSearch_Regression1"></class>
+			<class name="sightline.savedSearch.SavedSearchAudio_Regresssion"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_01"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_01"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_02"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_03"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_04"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New_Set_05"></class>
+			<class name="sightline.savedSearch.SavedsearchRegression_New_Set_06"></class>
+			<class name="sightline.savedSearch.SavedSearchRegression_New"></class>
+		    <class name="sightline.savedSearch.SavedSearchRegression2"></class>
+			</classes>
+	</test> 
 </suite>
-<!-- Suite -->

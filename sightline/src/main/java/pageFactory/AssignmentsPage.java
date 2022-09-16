@@ -1186,10 +1186,10 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//td[contains(text(),'" + username + "')]/parent::tr/td[6]");
 	}
 
-	public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
-		return driver.FindElementByXPath(
-				"//strong[contains(text(),'" + assignmentName + "')]/ancestor::td//following-sibling::td[2]//span[3]");
-	}
+	//modified 14/09/2022
+    public Element getAssignmentsDrawPoolInreviewerPg(String assignmentName) {
+          return driver.FindElementByXPath("//table[@id='dt_basic']/tbody/tr/td[3]/a/strong[contains(text(),'"+assignmentName+"')]/parent::a/parent::td/following-sibling::td[2]//a[contains(text(),'Draw')]");
+    }
 
 	public Element assignmentNameInDocViewPg(String assignmentName) {
 		return driver.FindElementByXPath("//h2[contains(text(),'" + assignmentName + "')]");
@@ -1539,6 +1539,16 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//label[contains(text(),'Draw From Pool:')]//following-sibling::div");
 	}
 
+	public ElementCollection getDistributeReviewerCount() {
+		return driver.FindElementsByXPath(
+				"//*[@id='divDistributedDocUsers']//div//label[contains(text(),'distribute documents to:')]//following-sibling::div//label");
+	}
+
+	public ElementCollection selectReviewersToDistributeDocs() {
+		return driver.FindElementsByXPath(
+				"//label[contains(text(),'Select which Reviewers you want to distribute documents to:')]/parent::div//label[@class='checkbox']/i");
+	}
+
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1764,7 +1774,9 @@ public class AssignmentsPage {
 		}), Input.wait60);
 		driver.scrollingToBottomofAPage();
 
-		getSelectAssignment(assignmentName).waitAndClick(5);
+		if (!getSelectAssignmentHighlightCheck(assignmentName).isDisplayed()) {
+			getSelectAssignment(assignmentName).waitAndClick(5);
+		}
 
 		driver.scrollPageToTop();
 
@@ -5009,6 +5021,7 @@ public class AssignmentsPage {
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).ScrollTo();
 		getAssgn_ManageRev_selectReviewer(Input.rmu1userName).waitAndClick(10);
 		getAssgn_ManageRev_Action().waitAndClick(20);
+		bc.waitTime(2);
 		bc.waitForElement(getAssgn_RedistributeDoc());
 		getAssgn_RedistributeDoc().waitAndClick(20);
 		bc.waitForElement(bc.getYesBtn());
@@ -10781,6 +10794,77 @@ public class AssignmentsPage {
 			bc.getYesBtn().waitAndClick(5);
 			bc.VerifySuccessMessage("Assignment deleted successfully");
 		}
+	}
+
+
+	/**
+	 * @author
+	 * @description : addReviewers ( handled dynamically )
+	 * @param listOfReviewers
+	 */
+	public void addReviewers(List<String> listOfReviewers) {
+
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		for (int i = 0; i < listOfReviewers.size(); i++) {
+			String reviewer = listOfReviewers.get(i);
+			if (reviewer.equals("REV")) {
+				bc.waitForElement(getSelectUserToAssig());
+				getSelectUserToAssig().waitAndClick(5);
+			} else if (reviewer.equals("RMU")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssigReviewerManager());
+				getSelectUserToAssigReviewerManager().waitAndClick(5);
+			} else if (reviewer.equals("PA")) {
+				driver.scrollingToElementofAPage(getSelectUserToAssignPA());
+				getSelectUserToAssignPA().waitAndClick(5);
+			} else if (reviewer.equals("DA")) {
+				getSelectDAUserToAssign().ScrollTo();
+				getSelectDAUserToAssign().waitAndClick(5);
+			}
+		}
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+	}
+
+	/**
+	 * @author
+	 * @param countOfDocs
+	 * @description : distributeGivenDocCountToReviewers
+	 */
+	public void distributeGivenDocCountToReviewers(String countOfDocs) {
+
+		bc.waitForElement(getDistributeTab());
+		getDistributeTab().waitAndClick(5);
+		bc.waitForElementCollection(selectReviewersToDistributeDocs());
+		List<WebElement> listOfReviewersToDistributeDocs = selectReviewersToDistributeDocs().FindWebElements();
+		for (int i = 0; i < listOfReviewersToDistributeDocs.size(); i++) {
+			listOfReviewersToDistributeDocs.get(i).click();
+		}
+		getAssgn_docsToDistribute().SendKeys(countOfDocs);
+		getDistributeBtn().waitAndClick(3);
+		bc.stepInfo(countOfDocs + " Documents are distributed to reviewers successfully");
+		bc.CloseSuccessMsgpopup();
+	}
+
+	/**
+	 * @author
+	 * @param totalDocs
+	 * @param noOfReviewers
+	 * @param modifyDocsCount
+	 * @return
+	 */
+	public int[] evenlyDistributedDocCountToReviewers(int totalDocs, int noOfReviewers, int modifyDocsCount) {
+		int modifiedTotalDocsCount = totalDocs - modifyDocsCount;
+		int remainingUnAssignDocsCount = modifiedTotalDocsCount % noOfReviewers;
+		int DocCountDistributeToRev = modifiedTotalDocsCount - remainingUnAssignDocsCount;
+		int totalremainingUnAssignDocsCount = remainingUnAssignDocsCount + modifyDocsCount;
+		int DistributedCountForEachRev = DocCountDistributeToRev / noOfReviewers;
+		int[] DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev = { DocCountDistributeToRev,
+				totalremainingUnAssignDocsCount, DistributedCountForEachRev };
+		return DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev;
 	}
 
 }

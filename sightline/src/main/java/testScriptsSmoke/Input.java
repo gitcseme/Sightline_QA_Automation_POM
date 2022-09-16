@@ -407,6 +407,12 @@ public class Input {
 	public static String datLoadFile4;
 	public static String nativeLoadFile3;
 	public static String textLoadFile3;
+	public static String datFile6;
+	public static String datFile7;
+	public static String attachDocFolder;
+	public static String folder61759;
+	public static String sourceParentDocId;
+	public static String overlayDatFile;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -436,6 +442,7 @@ public class Input {
 	public static String specialString1;
 	public static String specialString2;
 	public static String specialString3;
+	public static String specialString4;
 	public static String docSelectionHighlight;
 	public static String batchFileWithMultiSheetColumnMissing;
 	public static String batchFileWithMultiSheetColumnDuplicate;
@@ -921,6 +928,13 @@ public class Input {
 	public static String emailReciepientName2;
 	public static String emailAllDomainOption;
 	public static String masterDateOption;
+	public static String emailAddressinput1;
+	public static String emailAddressinput2;
+	public static String emailAddressinput3;
+	public static String filterDataInput;
+	public static String filterDataInput1;
+	public static String filterDataInput2;
+    public static String filterDataInput3; 
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1352,6 +1366,12 @@ public class Input {
 		datLoadFile4 = testData.getDatLoadFile4();
 		nativeLoadFile3 = testData.getNativeLoadFile3();
 		textLoadFile3 = testData.getTextLoadFile3();
+		datFile6 = testData.getDatFile6();
+		datFile7 = testData.getDatFile7();
+		attachDocFolder= testData.getAttachDocFolder();
+		folder61759 = testData.getFolder61759();
+		sourceParentDocId = testData.getSourceParentDocId();
+		overlayDatFile = testData.getOverlayDatFile();
 		
 		
 		// Added by Raghuram 02/24/22
@@ -1383,6 +1403,7 @@ public class Input {
 		specialString1 = testData.getSpecialString1();
 		specialString2 = testData.getSpecialString2();
 		specialString3 = testData.getSpecialString3();
+		specialString4 = testData.getSpecialString4();
 		batchFileWithMultiSheetColumnMissing = testData.getBatchFileWithMultiSheetColumnMissing();
 		batchFileWithMultiSheetColumnDuplicate = testData.getBatchFileWithMultiSheetColumnDuplicate();
 		searchString9 = testData.getSearchString9();
@@ -1439,7 +1460,8 @@ public class Input {
 		collsecondFirstName = testData.getCollsecondFirstName();
 		collsecondlastName = testData.getCollsecondlastName();
 		totalRetrievedCount = testData.getTotalRetrievedCount();
-
+		collectionFailedStatus= testData.getCollectionFailedStatus();
+		
 		// Added by Mohan
 		conceptualDocId01 = testData.getConceptualDocId01();
 		conceptualDocId02 = testData.getConceptualDocId02();
@@ -1886,6 +1908,13 @@ public class Input {
 		emailReciepientName2=testData.getEmailReciepientName2();
 		emailAllDomainOption=testData.getEmailAllDomainOption();
 		masterDateOption =testData.getMasterDateOption();
+		emailAddressinput1=testData.getEmailAddressinput1();
+		emailAddressinput2=testData.getEmailAddressinput2();
+		emailAddressinput3=testData.getEmailAddressinput3();
+		filterDataInput=testData.getFilterDataInput();
+		filterDataInput1=testData.getFilterDataInput1();
+		filterDataInput2=testData.getFilterDataInput2();
+        filterDataInput3=testData.getFilterDataInput3();  
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
 

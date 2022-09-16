@@ -172,6 +172,9 @@ public class DocViewAudio_Regression_20 {
 		base.stepInfo("Test case Id: RPMXCON-51612");
 		base.stepInfo("When a user submits an audio search with spaces, Sightline treats the space as a keyword separator and returns results for a multi-keyword audio search.");
 		
+		boolean market = false;
+		boolean supply = false;
+		boolean demand = false;
 
 		// Login As user
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password );
@@ -185,9 +188,25 @@ public class DocViewAudio_Regression_20 {
 		// eye icon
 		docview.getEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		soft.assertTrue(base.text("MARKET").isElementAvailable(3), "market");
-		soft.assertTrue(base.text("SUPPLY").isElementAvailable(3), "supply");
-		soft.assertTrue(base.text("DEMAND").isElementAvailable(3), "demand");
+		for(int i=0;i<10;i++) {
+		if(!market&&base.text("MARKET").isElementAvailable(3)) {
+			market=true;
+		}
+		if(!supply&&base.text("SUPPLY").isElementAvailable(3)) {
+			supply=true;
+		}
+		if(!demand&&base.text("DEMAND").isElementAvailable(3)) {
+			demand=true;
+		}
+		if(market&&supply&&demand) {
+			break;
+		}
+		docview.getDocView_Next().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		}
+		soft.assertTrue(market, "market");
+		soft.assertTrue(supply, "supply");
+		soft.assertTrue(demand, "demand");
 		
 		soft.assertAll();
 		base.passedStep("When a user submits an audio search with spaces, Sightline treats the space as a keyword separator and returns results for a multi-keyword audio search.");

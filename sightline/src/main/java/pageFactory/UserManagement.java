@@ -760,7 +760,8 @@ public class UserManagement {
 
 	// Added by Raghuram
 	public Element getComponentName(String componentName) {
-		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
+//		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
+		return driver.FindElementByXPath("//label[contains(.,'"+componentName+"')]");
 	}
 
 	public Element getComponentBoxBlocked(String componentName) {
@@ -1575,7 +1576,7 @@ public class UserManagement {
 			}
 		}), Input.wait30);
 		getEmail().SendKeys(emailId);
-		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
 		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
 				|| role.equalsIgnoreCase("Reviewer")) {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -2259,6 +2260,7 @@ public class UserManagement {
 	 * @Description get data from tableuser table
 	 */
 	public String getTableData(String ColumName, int row) {
+		driver.waitForPageToBeReady();
 		int colum = bc.getIndex(userDetailsTableHeader(), ColumName);
 		String data = tableValue(row, colum).getText().trim();
 		return data;
@@ -3731,7 +3733,7 @@ public class UserManagement {
 			} else {
 				getDisableRadioBtn().waitAndClick(5);
 			}
-
+			
 			// Select user
 			getSelectBulkUser(userName).waitAndClick(10);
 			driver.waitForPageToBeReady();

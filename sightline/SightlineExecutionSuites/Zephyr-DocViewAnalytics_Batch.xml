@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-DocViewAnalytics_Batch" preserve-order="true">
+<suite name="Sightline-Jenkins-DocviewAnalyticsPanel" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
-<!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Zephyr-DocViewAnalytics_Batch">
+<!-- ********************************************DocviewAnalyticsPanel Component********************************** -->
+<test name="Sightline_Jenkins-DocviewAnalyticsPanel">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_DataProvider" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_NearDupes" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_NewRegression" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_NewRegression01" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_NewRegression02" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_NewRegression03" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanel_Regression" />
-<class name= "testScriptsRegression.DocView_AnalyticsPanelEmailThreadMap" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_DataProvider" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NearDupes" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression01" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression02" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_NewRegression03" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanel_Regression" />
+<class name= "sightline.docviewAnalyticsPanel.DocView_AnalyticsPanelEmailThreadMap" />
 
 </classes>
 </test>
-
-
-
 </suite>
-<!-- Suite -->
-

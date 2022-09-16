@@ -33,8 +33,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sqlite.SQLiteConfig.DateClass;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -184,6 +182,29 @@ public class BatchRedactionPage {
 
 	public Element viewReportAndBatchReport() {
 		return driver.FindElementById("tblResults");
+	}
+
+	// added by jeevitha
+	public ElementCollection HeaderTabsPresentInBR() {
+		return driver.FindElementsByXPath("//div[@class='h1 br-page-title']");
+	}
+
+	public Element getSelectSearchHeader() {
+		return driver.FindElementByXPath("//label[@class='labelAlign control-label']");
+	}
+
+	public Element getDDStatus(String type) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + type + "']//..//..//i[@class='jstree-icon jstree-ocl']//parent::li");
+	}
+
+	public Element getAnalyzeGroupForTab(String tabName) {
+		return driver.FindElementByXPath(
+				"//div[text()='" + tabName + "']//parent::a//button[text()='Analyze Group for Redactions']");
+	}
+
+	public ElementCollection batchRedactionHistoryHeader() {
+		return driver.FindElementsByXPath("//table[@id='BatchRedactionsDataTable']//th");
 	}
 
 	// Added by Raghuram
@@ -352,6 +373,7 @@ public class BatchRedactionPage {
 	public Element getLoginUserEdit() {
 		return driver.FindElementByXPath("//table[@id='dtUserList']//tr//td//a[text()='Edit']");
 	}
+
 	public Element preRedactionReport() {
 		return driver.FindElementByXPath("//a[text()='Download Pre-Redaction Report']");
 	}
@@ -2941,9 +2963,9 @@ public class BatchRedactionPage {
 		base.ValidateElement_Presence(manageBtn(), "Manage Button");
 		manageBtn().waitAndClick(10);
 		base.stepInfo("CLicked Manage Btn");
-		base.ValidateElement_Presence(batchRedactionBtn(), "Batch Redcation Button");
+		driver.waitForPageToBeReady();
 		batchRedactionBtn().waitAndClick(10);
-		base.stepInfo("CLicked batch redaction Btn");
+		base.stepInfo("CLicked batch redaction Btn & batchRedactio btn is Available");
 
 		driver.waitForPageToBeReady();
 		base.waitForElement(getSelectSearchHelpIcon());
@@ -2952,6 +2974,29 @@ public class BatchRedactionPage {
 			base.passedStep("Navigated to Batch redaction Page");
 		} else {
 			base.failedStep("Navigation is not as expected");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verifcation method for tabs & analyze btn present in select
+	 *              serach group section
+	 * @param tabName
+	 */
+	public void verifySelectSearchSection(String tabName) {
+		if (getOptionDropdown(tabName).isElementAvailable(5)) {
+			base.passedStep(tabName + " Tab is Displayed");
+			String ddStatus = getDDStatus(tabName).GetAttribute("class");
+			base.compareTextViaContains(ddStatus, "closed", tabName + " is in Collaped Mode",
+					"Dropdown status is not as expected");
+
+			if (getAnalyzeGroupForTab(tabName).isElementAvailable(5)) {
+				base.passedStep("Analyze Group for Redactions button is Displayed for " + tabName);
+			} else {
+				base.failedStep("Analyze group button is displayed for " + tabName);
+			}
+		} else {
+			base.failedStep(tabName + " is not displayed");
 		}
 	}
 }

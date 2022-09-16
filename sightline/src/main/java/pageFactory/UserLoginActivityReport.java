@@ -398,5 +398,21 @@ public class UserLoginActivityReport {
 			 base.failedStep("The logged out user is present in currently logged in user report page");
 		 }		 
 	 }
+	 public void deselectColumn(String value) {	     
+	     driver.waitForPageToBeReady();
+		 base.waitTillElemetToBeClickable(getSettingsIcon());
+		 getSettingsIcon().waitAndClick(5);
+		 base.waitTillElemetToBeClickable(getColumn(value));
+		 getColumn(value).ScrollTo();		 
+		 getColumn(value).waitAndClick(10);
+		 Boolean status = getColoumnHeaderValue(value).isElementAvailable(10);
+		 if(status==false) {
+			 base.passedStep("Deselected coloumn is not displayed in report");
+			
+			}else {
+				base.failedStep("Deselected coloumn is displayed in report");
+			}
+		 
+	 }
 		
 }

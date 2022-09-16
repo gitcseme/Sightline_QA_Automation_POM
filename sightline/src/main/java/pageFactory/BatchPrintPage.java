@@ -254,11 +254,15 @@ public class BatchPrintPage {
 	}
 
 	// Added By Jeevitha
-	
+
+	public Element getAscAndDescDDlist() {
+		return driver.FindElementByXPath("//select[@id='exportFileSortingOrderDropDown']");
+	}
+
 	public ElementCollection getSortByDDList() {
 		return driver.FindElementsByXPath("//select[@id='exportFileSortByDropDown']//option");
 	}
-	
+
 	public Element getSlipSheetDD_prod() {
 		return driver.FindElementByXPath("//select[@id='slipSheetsDropdown']");
 	}
@@ -2250,7 +2254,7 @@ public class BatchPrintPage {
 			base.VerifySuccessMessage(
 					"The Batch Print has been successfully initiated. You will be notified once it has completed.");
 		}
-		
+
 		// verifying In Background ask Page
 		driver.waitForPageToBeReady();
 		base.waitForElement(getBgPageDD());
@@ -2666,4 +2670,45 @@ public class BatchPrintPage {
 		base.waitForElement(getSlipSheetDD_prod());
 		getSlipSheetDD_prod().selectFromDropdown().selectByVisibleText(ddValue);
 	}
+
+	public void selectSortingFromExportPage(String ddValue) {
+		base.waitForElement(getAscAndDescDDlist());
+		getAscAndDescDDlist().selectFromDropdown().selectByVisibleText(ddValue);
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : to verify downloaded filename is as expected when downloaded
+	 *              for one pdf for all doc
+	 * @param source
+	 * @param compareString
+	 * @param passMsg
+	 * @param failMsg
+	 * @throws InterruptedException
+	 */
+	public void compareListWithStringviaContains(List<String> source, String compareString, String passMsg,
+			String failMsg) throws InterruptedException {
+		boolean compare = false;
+		for (String actualValue : source) {
+
+			String basevalue = actualValue.replace(":", " ");
+			String compare1 = compareString.replace(".pdf", "");
+			String compare2 = compare1.replaceAll("\\[.*?\\]", "");
+			String compareValue = compare2.replace("_", " ");
+
+			if (basevalue.trim().contains(compareValue.trim())) {
+				base.stepInfo("Expected Name & Compare Name are Same : " + compareValue);
+				compare = true;
+				break;
+			} else {
+				compare = false;
+			}
+		}
+		if (compare) {
+			base.passedStep(passMsg);
+		} else {
+			base.failedStep(failMsg);
+		}
+	}
+	
 }

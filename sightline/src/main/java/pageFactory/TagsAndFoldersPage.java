@@ -502,6 +502,14 @@ public class TagsAndFoldersPage {
 		return driver.FindElementsByXPath("//ul[@class='jstree-children']//a");
 	}
 
+	public Element getFolderExpand() {
+		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/a/following-sibling::ul");
+	}
+
+	public Element getFolderExpandIcon() {
+		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/i");
+	}
+
 	public TagsAndFoldersPage(Driver driver) {
 
 		this.driver = driver;
@@ -1118,8 +1126,15 @@ public class TagsAndFoldersPage {
 
 	}
 
+	/**
+	 * @Modified By : Jeevitha
+	 * @param strtag
+	 */
 	public void ViewinDocListthrTag(final String strtag) {
 		driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		driver.waitForPageToBeReady();
+		getTagName(strtag).ScrollTo();
+		base.waitTime(2);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTagName(strtag).Visible();
@@ -1127,20 +1142,13 @@ public class TagsAndFoldersPage {
 		}), Input.wait30);
 		getTagName(strtag).waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagActionDropDownArrow().Visible();
-			}
-		}), Input.wait30);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTagActionDropDownArrow());
 		getTagActionDropDownArrow().waitAndClick(10);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getTagViewDoclist().Visible();
-			}
-		}), Input.wait30);
+		base.waitForElement(getTagViewDoclist());
 		getTagViewDoclist().waitAndClick(10);
-
 	}
 
 	public void ViewinDocListthrFolder(final String strFolder) {
@@ -2718,7 +2726,7 @@ public class TagsAndFoldersPage {
 		}
 
 	}
-	
+
 	public void validateFolderPageCount() {
 
 		driver.waitForPageToBeReady();
@@ -2736,7 +2744,7 @@ public class TagsAndFoldersPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author
 	 * @param createTag
@@ -2769,10 +2777,9 @@ public class TagsAndFoldersPage {
 
 	/**
 	 * @author Vijaya.Rani date: 09/08/22 Modified date: NA Modified by:
-	 *        
+	 * 
 	 */
-	public void createTagGroupAndCancel(String securityGroup, String tagGroupName,
-			Boolean additionalValue) {
+	public void createTagGroupAndCancel(String securityGroup, String tagGroupName, Boolean additionalValue) {
 
 		selectActionArrow("New Tag Group");
 
@@ -2785,9 +2792,8 @@ public class TagsAndFoldersPage {
 		base.passedStep("Tag Group is not Created");
 
 	}
-	
-	public void createFolderGroupAndCancel(String securityGroup, String folderGroupName,
-			Boolean additionalValue) {
+
+	public void createFolderGroupAndCancel(String securityGroup, String folderGroupName, Boolean additionalValue) {
 
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
@@ -2805,7 +2811,7 @@ public class TagsAndFoldersPage {
 		base.passedStep("Folder Group is not Created");
 
 	}
-	
+
 	public void createDuplicateTagGroup(String securityGroup, String tagGroupName, String verifyNotification,
 			Boolean additionalValue) {
 
@@ -2825,9 +2831,9 @@ public class TagsAndFoldersPage {
 		}
 
 	}
-	
-	public void createDuplicateFolderGroup(String securityGroup, String selectFolderName, 
-			String verifyNotification, Boolean additionalValue) {
+
+	public void createDuplicateFolderGroup(String securityGroup, String selectFolderName, String verifyNotification,
+			Boolean additionalValue) {
 
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
@@ -2848,9 +2854,9 @@ public class TagsAndFoldersPage {
 				base.CloseSuccessMsgpopup();
 			}
 		}
-			
 
 	}
+
 	public void deleteAllTagsGroupsClickNo(String tagName) {
 		base.waitForElement(getTagsTab());
 		getTagsTab().waitAndClick(5);
@@ -2870,11 +2876,11 @@ public class TagsAndFoldersPage {
 				base.waitForElement(getDeleteTag());
 				getDeleteTag().waitAndClick(5);
 				base.getNOBtn().waitAndClick(5);
-				
+
 			}
 		}
 	}
-	
+
 	public void deleteAllFolderGroupClickNo(String folderName) {
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
@@ -2892,45 +2898,45 @@ public class TagsAndFoldersPage {
 			}
 		}
 	}
-	
+
 	public void showDocsCountisOFFTags() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getShowDocumentsCountToogle());
 		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
-		if(!base.text("All Tags (").isDisplayed()) {
+		if (!base.text("All Tags (").isDisplayed()) {
 			base.passedStep("Documents Count is not Displayed");
-		}else {
+		} else {
 			base.failedStep("Documents Count is Displayed");
 		}
 	}
-	
+
 	public void showDocsCountisONTags() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getShowDocumentsCountToogle());
 		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
 		getShowDocumentsCountToogle().waitAndClick(5);
 		driver.waitForPageToBeReady();
-         Thread.sleep(10);
-		if(!base.text("All Tags (").isDisplayed()) {
+		Thread.sleep(10);
+		if (!base.text("All Tags (").isDisplayed()) {
 			base.passedStep("Documents Count is Displayed");
-		}else {
+		} else {
 			base.failedStep("Documents Count is not Displayed");
 		}
 	}
-	
+
 	public void showDocsCountisOFFFolder() {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFoldersTab());
 		getFoldersTab().waitAndClick(5);
 		base.waitForElement(getShowDocumentsCountToogle());
 		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
-		if(!base.text("All Folders (").isDisplayed()) {
+		if (!base.text("All Folders (").isDisplayed()) {
 			base.passedStep("Documents Count is not Displayed");
-		}else {
+		} else {
 			base.failedStep("Documents Count is Displayed");
 		}
 	}
-	
+
 	public void showDocsCountisONFolder() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getFoldersTab());
@@ -2939,10 +2945,10 @@ public class TagsAndFoldersPage {
 		base.waitTillElemetToBeClickable(getShowDocumentsCountToogle());
 		getShowDocumentsCountToogle().waitAndClick(5);
 		driver.waitForPageToBeReady();
-         Thread.sleep(1000);
-		if(!base.text("All Folders (").isDisplayed()) {
+		Thread.sleep(1000);
+		if (!base.text("All Folders (").isDisplayed()) {
 			base.passedStep("Documents Count is Displayed");
-		}else {
+		} else {
 			base.failedStep("Documents Count is not Displayed");
 		}
 	}

@@ -813,6 +813,8 @@ public class O365Regression_19 {
 		base.stepInfo("Initiation collection deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.deleteUsingCollectionName(dataName, true);
+		driver.waitForPageToBeReady();
+		base.waitTime(3); // To handle abnormal load time
 
 		// verify Collection Absence in Manage collection Screen
 		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
@@ -845,7 +847,8 @@ public class O365Regression_19 {
 		base.stepInfo("Initiation collection  deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		collection.collectionDeletion(collectionID);
-
+		driver.waitForPageToBeReady();
+        base.waitTime(3);
 		// verify Collection Absence in Manage collection Screen
 		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(dataName), 3),
 				dataName + " deleted Successfully : is not Displayed in Manage Collection Screen",
@@ -1146,7 +1149,8 @@ public class O365Regression_19 {
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-61295", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public void verifyViewDatasetsIsAsExpected(String username, String password, String fullname) throws Exception {
+	public void verifyViewDatasetsIsAsExpected(String usernameDetail, String password, String fullname)
+			throws Exception {
 		HashMap<String, String> collectionData = new HashMap<>();
 		List<String> custodianDetails = new ArrayList();
 
@@ -1154,10 +1158,13 @@ public class O365Regression_19 {
 		String firstName = Input.collectionDataFirstName;
 		String lastName = Input.collectionDataLastName;
 		String selectedApp = Input.collectionDataselectedApp;
-		String selectedFolder1 = "Drafts";
-
+		String selectedFolder1 = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusList = { "Completed" };
+		String collectionNewName = "CollectionNew" + Utility.dynamicNameAppender();
+		String actualCollectionName;
 		String collectionName = "Collection" + Utility.dynamicNameAppender();
-		String[][] userRolesData = { { username, fullname, "SA" } };
+		String[][] userRolesData = { { usernameDetail, fullname, "SA" } };
 
 		base.stepInfo("Test case Id: RPMXCON-61295 - O365");
 		base.stepInfo(
@@ -1172,7 +1179,12 @@ public class O365Regression_19 {
 		login.logout();
 
 		// Login as User
-		login.loginToSightLine(username, password);
+		login.loginToSightLine(usernameDetail, password);
+
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// get username
+		String username = login.getCurrentUserName();
 
 		// get other dataset tile view
 		dataSets.navigateToDataSetsPage();
@@ -1186,28 +1198,38 @@ public class O365Regression_19 {
 		collectionName = base.returnKey(collectionData, "", false);
 
 		// Click View Dataset or Create collection and click View Dataset
-		if (collection.getCollectionNameElement(collectionName).isElementAvailable(2)) {
+		if (collection.getNameBasedOnCollectionName(collectionName, username).isElementAvailable(3)) {
 			base.stepInfo(collectionName + " : is Completed and Displayed in Collections Page");
+			driver.waitForPageToBeReady();
+			collection.clickViewDataset(collectionName);
+			driver.waitForPageToBeReady();
+			actualCollectionName = collectionName;
 		} else {
+			collectionData = collection.createNewCollection(collectionData, collectionNewName, true, null, false);
 			custodianDetails = collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId,
-					selectedApp, collectionData, collectionName, 3, selectedFolder1, true, true, true, Input.randomText,
-					false, false, "", "");
+					selectedApp, collectionData, collectionNewName, 3, selectedFolder1, true, true, true,
+					Input.randomText, true, true, "Save", "");
 
 			collection.clickNextBtnOnDatasetTab();
+			driver.waitForPageToBeReady();
 			collection.getStartBtn().waitAndClick(10);
-		}
 
-		// click view dataset btn from collection page
-		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.clickViewDataset(collectionName);
+			// click view dataset btn from collection page & check Completed status
+			dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+			collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionNewName, statusList, 10);
+			collection.clickViewDataset(collectionNewName);
+			driver.waitForPageToBeReady();
+			actualCollectionName = collectionNewName;
+
+		}
 
 		// verify is it navigating to datasets page
 		driver.waitForPageToBeReady();
 		base.verifyUrlLanding(Input.url + "en-us/ICE/Datasets", "Navigated To Dataset Page",
 				"Navigation is not as expected");
 
-		// verify if filter applied and verify collection tile view
-		dataSets.verifysearchBoxValue(collectionName, otherTileView);
+		// verify completed collection is displayed in datasets page
+		dataSets.verifysearchBoxValue(actualCollectionName, otherTileView);
 
 		// Logout
 		login.logout();

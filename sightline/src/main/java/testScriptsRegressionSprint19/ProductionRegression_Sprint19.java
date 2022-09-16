@@ -75,9 +75,7 @@ public class ProductionRegression_Sprint19 {
 		saveSearch = new SavedSearch(driver);
 		sessionSearch = new SessionSearch(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		Reporter.log("Logged in as User: " + Input.pa1password);
+		
 	}
 
 	@DataProvider(name = "Users")
@@ -96,14 +94,14 @@ public class ProductionRegression_Sprint19 {
 	public void verifyTemplateInSecurityGroup() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-47847 Production Component Sprint 19");
 		base.stepInfo("To Verify the Create/Display/View of Template with newly created Security Group.");
-
+		
 		String securityGroup = "Security" + UtilityLog.dynamicNameAppender();
 		String productionSet = "ProdSet" + UtilityLog.dynamicNameAppender();
 		String template = "Template" + UtilityLog.dynamicNameAppender();
-		String prefixID = Input.randomText + Utility.dynamicNameAppender();
-		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 
 		// add new security group
 		SecurityGroupsPage security = new SecurityGroupsPage(driver);
@@ -141,6 +139,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyErrorMessageinDATWithLeadSpc() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-48869");
 		base.stepInfo(
 				"To verify that if user added leading space for DAT field, then after generating the production, warning message should be displayed");
@@ -168,11 +168,14 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-50015", enabled = true, groups = { "regression" })
 	public void verifyHelpTxtForAllProdBateRange() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-50015");
 		base.stepInfo(
 				"To Verify that help text should be displays as This is not a searchable field for 'AllProductionBatesRanges' metadata");
 		String expHelpText = "Due to the nature of the content, this field cannot be made searchable";
 		String fieldName = "AllProductionBatesRanges";
+		
 		ProjectFieldsPage projectField = new ProjectFieldsPage(driver);
         base = new BaseClass(driver);
 		projectField.navigateToProjectFieldsPage();
@@ -205,6 +208,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-49111", enabled = true, groups = { "regression" })
 	public void verifyNativeCount() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49111");
 		base.stepInfo(
 				"To verify that the value of Number of Natives on Production-Summary tab if Native component is selected with few File types");
@@ -212,7 +217,7 @@ public class ProductionRegression_Sprint19 {
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -260,6 +265,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyMP3Count() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49115 Production Component Sprint 19");
 		base.stepInfo(
 				"To verify that the value of Number of MP3 Files on Production-Summary tab if MP3 Files component is selected.");
@@ -313,6 +320,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-49112", enabled = true, groups = { "regression" })
 	public void verifyNativeCountWithPrivTag() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49112");
 		base.stepInfo(
 				"To verify that the value of Number of Natives on Production-Summary tab if Native component is selected and document is Privileged");
@@ -366,7 +375,6 @@ public class ProductionRegression_Sprint19 {
 	 *                 should be displayed
 	 **/
 	public void verifySelectedTypesTags_MarkIncomplete(String userName, String password) throws Exception {
-		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 		UtilityLog.info(Input.prodPath);
@@ -426,13 +434,15 @@ public class ProductionRegression_Sprint19 {
 	public void verifyProductionFromRMU() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49981 Production Component Sprint 19");
 		base.stepInfo("To verify that RMU can view the existing productions in his Security Group");
 
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
-
+		
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -481,6 +491,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyBatesWithHypensAndSpace() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49816 Production Component Sprint 19");
 		base.stepInfo(
 				"To verify that Audio production with redaction should generate successfully if bates number includes hyphens with space");
@@ -531,6 +543,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyDefaultSelectionInNumbering() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-47896 Production Component Sprint 19");
 		base.stepInfo("To Verify Sorting options from numbering and sorting Section of production wizard");
 
@@ -574,6 +588,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifySortingInTag() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-47938 Production Component Sprint 19");
 		base.stepInfo("To Verify Sorting Based on Tag in Production");
 
@@ -618,6 +634,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifySelfProductionWizard() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-47719 Production Component Sprint 19");
 		base.stepInfo(
 				"To Verify ProjectAdmin will be able to enter production components information on the self production wizard");
@@ -656,6 +674,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyDATWithEmailClassification() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-49101 Production Component Sprint 19");
 		base.stepInfo(
 				"To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.");
@@ -720,6 +740,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-47741", enabled = true, groups = { "regression" })
 	public void verifyFilterByINPROGRESS() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47741");
 		base.stepInfo(
 				"To Verify default Filter By selections for Production status (In-Progress, ...). Verify for both Grid and Tile view");
@@ -822,6 +844,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-47739", enabled = true, groups = { "regression" })
 	public void verifySortByinTileView() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47739");
 		base.stepInfo(
 				"To Verify the default Sorting and required sequence of sorting. And default production sorting (Most recent First). Tile View.");
@@ -947,6 +971,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-47816", enabled = true, groups = { "regression" })
 	public void verifyProdGuardCloseOpt() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47816");
 		base.stepInfo("To Verify Production Guard Page option (close) Issue for Tag and Redaction");
 		tagname = "Tag" + Utility.dynamicNameAppender();
@@ -1013,11 +1039,10 @@ public class ProductionRegression_Sprint19 {
 	 **/
 	@Test(description = "RPMXCON-47998", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyPrivGuardNotDisWarniMSg(String userName, String password) throws Exception {
-		loginPage.logout();
-		loginPage.loginToSightLine(userName, password);
-		base.stepInfo("Logged in as" + userName);
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(userName, password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47998");
 		base.stepInfo("To Verify In Priv Guard, the message saying that the production has privileged documents "
 				+ "even when there are no privileged documents");
@@ -1063,7 +1088,6 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-63080", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyProdRegeFrDefNatPHTiff(String userName, String password) throws Exception {
 
-		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 
@@ -1169,7 +1193,6 @@ public class ProductionRegression_Sprint19 {
 	@Test(description = "RPMXCON-63084", enabled = true, dataProvider = "Users", groups = { "regression" })
 	public void verifyProdRegeFrDefNatPHpdf(String userName, String password) throws Exception {
 
-		loginPage.logout();
 		loginPage.loginToSightLine(userName, password);
 		base.stepInfo("Logged in as" + userName);
 
@@ -1312,6 +1335,7 @@ public class ProductionRegression_Sprint19 {
 	public void verifyDefaultSelection() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Test Cases Id : RPMXCON-47936");
 		base.stepInfo("To Verify Slip Sheet->Work Product Should get saved in Production Component Section");
 
@@ -1344,6 +1368,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifySubBates() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-48001 Production Component Sprint 19");
 		base.stepInfo(
 				"To Verify DAT Bates number generated should be in sync with actual bates number generated for the Documents.");
@@ -1396,6 +1422,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyNativeCountInSummaryWithSelectedTags() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-49110");
 		base.stepInfo(
 				"To verify that the value of Number of Natives on Production-Summary tab if Native component is selected and Tags is also selected.");
@@ -1454,6 +1482,7 @@ public class ProductionRegression_Sprint19 {
 		String suffixID = Input.randomText + Utility.dynamicNameAppender();
 		tagname = "Tag" + Utility.dynamicNameAppender();
 
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		// create tag and folder
 		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
 
@@ -1500,6 +1529,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyBrandingSorting() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-49120");
 		base.stepInfo("To verify that in Production-Branding, Metadata Field drop down should be sorted by alpha ascending");
 
@@ -1524,6 +1555,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyQCPage() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47858");
 		base.stepInfo("Verify QC & Result page displays Review Production and Production location details.");
 		
@@ -1581,6 +1614,8 @@ public class ProductionRegression_Sprint19 {
 	public void verifyLoadFileGeneration() throws Exception {
 
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test case Id:RPMXCON-47805 Production Component Sprint 19");
 		base.stepInfo("To Verify that Load file should be created successfully as part of the production generation");
 		foldername = "FolderProd" + Utility.dynamicNameAppender();
@@ -1630,6 +1665,8 @@ public class ProductionRegression_Sprint19 {
 	@Test(description="RPMXCON-47982",enabled = true, groups = { "regression" } )
 	public void verifyBrndOverActualText() throws Exception {
 		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		base.stepInfo("Test Cases Id : RPMXCON-47982");
 		base.stepInfo("To Verify Branding provided for a document should not overlapping/written over the actual content, on Preview");
 		tagname = "Tag" + Utility.dynamicNameAppender();

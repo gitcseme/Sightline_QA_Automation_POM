@@ -152,6 +152,10 @@ public class DataSets {
 		return driver.FindElementByXPath("//button[@id='btnLoadDataset']");
 	}
 
+	public Element getTotalDatasetCount() {
+		return driver.FindElementByXPath("//text[@id='totaldatasetCount']");
+	}
+
 	// added by sowndariya
 
 	public Element allSourcesDataset() {
@@ -716,33 +720,57 @@ public class DataSets {
 				+ actualSearchValue;
 		String failMsg = "Filter is Not Applied";
 
-		base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
-		String actualType = getTileViewType();
-		base.textCompareEquals(actualType, expectedTileView,
-				"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
+		if (!expectedTileView.equals("")) {
+			base.textCompareEquals(actualSearchValue, expectedSearchValue, passMsg, failMsg);
+			String actualType = getTileViewType();
+			base.textCompareEquals(actualType, expectedTileView,
+					"the same tile for the datasets in the collection is Displayed", "The Tile Is different");
+		}
+		driver.waitForPageToBeReady();
 	}
 
 	/**
 	 * @Author Jeevitha
 	 * @Description : returns tile view type
+	 * @modifiedOn : 9/12/22 - handling abnormal load time
 	 * @return
 	 */
 	public String getTileViewType() {
-		String viewType = null;
+		String viewType = "";
 		driver.waitForPageToBeReady();
-		int totalDoc = getTotalDataset().size();
+		base.waitForElement(getTotalDatasetCount());
+		String datasetCount = getTotalDatasetCount().getText();
+		int totalDoc = Integer.parseInt(datasetCount);
 		base.stepInfo("Total Doc Count : " + totalDoc);
 
 		if (totalDoc > 1) {
-			int expCount = totalDoc - 1;
+			int expCount = totalDoc - totalDoc + 1;// to avoid abnormal wait handles
 			driver.waitForPageToBeReady();
 			base.waitForElement(getDatasetTile(expCount));
 			viewType = getDatasetTile(expCount).GetCssValue("display");
 			base.stepInfo("Display Type : " + viewType);
 		} else if (totalDoc == 1) {
+			base.waitForElement(getDatasetTile(totalDoc));
 			viewType = getDatasetTile(totalDoc).GetCssValue("display");
 		}
 		return viewType;
+	}
+
+	/**
+	 * @author: Arun Created Date: 06/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check dataset menu availability
+	 */
+	public void verifyMenuAndDatasetsAvailability() {
+		navigateToDataSetsPage();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTotalDatasetCount());
+		int count = Integer.parseInt(getTotalDatasetCount().getText());
+		if (NavigateToDataSets().isElementAvailable(10) && count > 0) {
+			base.passedStep("User have access to dataset menu and datasets available");
+		} else {
+			base.failedStep("user dont have access to dataset menu and datasets not available");
+		}
+
 	}
 
 }

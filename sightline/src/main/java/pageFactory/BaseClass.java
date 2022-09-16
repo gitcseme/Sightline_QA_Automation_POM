@@ -4360,30 +4360,30 @@ public class BaseClass {
 		textCompareEquals(fileFormat, expectedFormat, "File format is as Expected : " + fileFormat,
 				"File format is not as Expected : " + fileFormat);
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param element
 	 * @param n
-	 * @Description this method is used for move to element and perform action click,
-	 * this method used action not performed in not normal click method. 
+	 * @Description this method is used for move to element and perform action
+	 *              click, this method used action not performed in not normal click
+	 *              method.
 	 */
 	public void moveWaitAndClick(Element element, int n) {
-		
+
 		Actions action = new Actions(driver.getWebDriver());
-		for(int i=0;i<n;i++) {
+		for (int i = 0; i < n; i++) {
 			try {
 				action.moveToElement(element.getWebElement()).click().perform();
 				break;
-			}catch(Exception e){
+			} catch (Exception e) {
 				waitTime(1);
+
 			}
 		}
-
 	}
 
-
-    /*
+	/*
 	 * @author Indium-Baskar
 	 * 
 	 */
@@ -4411,7 +4411,7 @@ public class BaseClass {
 					driver.waitForPageToBeReady();
 					impersonatePAtoRMU();
 				}
-				
+
 			case "rev":
 				if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
 					driver.waitForPageToBeReady();
@@ -4427,6 +4427,49 @@ public class BaseClass {
 			UtilityLog.info(sw.toString());
 		}
 
+	}
+
+	/**
+	 * @author Brundha.T
+	 * @param ele
+	 * @param CompareString
+	 * @Description gettext String comparing method
+	 */
+	public void validatingGetTextElement(Element ele, String CompareString) {
+		String ActualString = ele.getText();
+		driver.waitForPageToBeReady();
+		compareTextViaContains(ActualString, CompareString, "" + ActualString + " is displayed",
+				"" + ActualString + " not displayed");
+
+	}
+	
+	/**
+	 * @Author jeevitha
+	 * @Description : compare list via contains & trim Space
+	 * @param baseList
+	 * @param compareList
+	 * @return
+	 */
+	public boolean compareListViaContainsTrimSpace(List<String> baseList, List<String> compareList) {
+		boolean flag = false;
+
+		for (int i = 0; i < baseList.size(); i++) {
+			
+			String source=baseList.get(i).trim().replace(" ", "");
+			String compare=compareList.get(i).trim().replace(" ", "");
+			
+			System.out.println("Source : " + source);
+			System.out.println("Compare : " + compare);
+
+			if (source.contains(compare)) {
+				Assert.assertEquals(true, true);
+				flag = true;
+			} else {
+				failedStep("Base String doesn't contains compare String");
+				flag = false;
+			}
+		}
+		return flag;
 	}
 
 }

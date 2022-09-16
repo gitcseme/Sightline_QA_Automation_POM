@@ -30,7 +30,7 @@ import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SecurityGroup_Regression1 {
+public class SecurityGroup_Regression1_Sprint18 {
 
 	Driver driver;
 	LoginPage loginPage;

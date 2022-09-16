@@ -1,16 +1,12 @@
 package sightline.savedSearch;
 
-import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -21,23 +17,16 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
-import pageFactory.BatchPrintPage;
-import pageFactory.Categorization;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
-import pageFactory.ProductionPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
-import pageFactory.SchedulesPage;
 import pageFactory.SearchTermReportPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;

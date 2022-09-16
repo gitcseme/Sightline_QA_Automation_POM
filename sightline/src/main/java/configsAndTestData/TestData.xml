@@ -101,6 +101,13 @@
 	<datLoadFile4>DAT4_STC_newdateformatEmailData -differentformatdata.dat</datLoadFile4>
 	<nativeLoadFile3>DAT4_STC_NativesEmailData.lst</nativeLoadFile3>
 	<textLoadFile3>DAT4_STC_TextEmailData.lst</textLoadFile3>
+	<datFile6>AllFieldsMapping_DAT_ProdBeg - UTF16.DAT</datFile6>
+	<datFile7>AttachDocIDs.dat</datFile7>
+	<attachDocFolder>AttachDocument</attachDocFolder>
+	<folder61759>RPMXCON-61759</folder61759>
+	<SourceParentDocId>SourceParentDocID</SourceParentDocId>
+	<overlayDatFile>DAT4_STC_newdateformat1_OverlayCName_MDate.dat</overlayDatFile>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -315,6 +322,7 @@
 	<specialString1>"##U\}C Tester"</specialString1>
 	<specialString2>"##U\"C Tester"</specialString2>
 	<specialString3>"##U\{C Tester"</specialString3>
+	<specialString4>"##U\!C Tester"</specialString4>
 	<batchFileWithMultiSheetColumnMissing>Batch_columnHeader_Error - MS</batchFileWithMultiSheetColumnMissing>
 	<batchFileWithMultiSheetColumnDuplicate>Batch_columnHeader_Error - MS - Duplicate</batchFileWithMultiSheetColumnDuplicate>
 	<searchString9>document</searchString9>
@@ -853,8 +861,8 @@
 	<emailCCAdress>EmailCCAddresses</emailCCAdress>
 	<emailCCAdressOption1>Sai.Theodare@Symphonyteleca.com</emailCCAdressOption1>
 	<emailCCAdressOption2>Gouri.Dhavalikar@consilio.com</emailCCAdressOption2>
-	<emailReciepientName2>swapnal sonawane</emailReciepientName2>
-	<emailAllDomainOption></emailAllDomainOption>
-	<masterDateOption></masterDateOption>
+	<emailAllDomainOption>Satish Pawal</emailAllDomainOption>
+	<masterDateOption>Sai.Theodare@symphonyteleca.com</masterDateOption>
+	<emailReciepientName2>Swapnal Sonawane</emailReciepientName2>
 
 </TestData>

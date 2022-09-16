@@ -241,7 +241,37 @@ public class Dashboard {
 		return driver.FindElementByXPath("//a[@id='wCancel']");
 	}
 
-	
+	// Added By Jeevitha
+
+	public Element getPopupCloseBtn() {
+		return driver.FindElementByXPath("//div[@id='PreviewHeader']//button");
+	}
+
+	public Element widgetPopupHeader() {
+		return driver.FindElementByXPath("//div[@id='PreviewHeader']//h4");
+	}
+
+	public ElementCollection widgetsPresentInPopup() {
+		return driver.FindElementsByXPath("//ul[@id='DataCollection']//span");
+	}
+
+	public Element DashboardWidgetHeader(String widgetName) {
+		return driver.FindElementByXPath("//section[@id='widget-grid']//span[contains(text(),'" + widgetName + "')]");
+	}
+
+	public Element saveWidgetIcon() {
+		return driver.FindElementByXPath("//a[@id='wSave']");
+	}
+
+	public Element widgetLibraryPopup() {
+		return driver.FindElementByXPath(
+				"//div[@class='modal-backdrop fade in']//..//..//div//div[@id='myModal']//div[@class='modal-content']");
+	}
+
+	public ElementCollection getReviewerProdTop6Header() {
+		return driver.FindElementsByXPath("//div[@id='divReviewerProuctivity']//tbody//td//strong");
+	}
+
 	public Dashboard(Driver driver) {
 
 		this.driver = driver;
@@ -320,7 +350,7 @@ public class Dashboard {
 		int count = countOfWidget().size();
 		System.out.println("count of widget from dashboard: " + count);
 
-		for (int i = count; i > 0 ; i--) {
+		for (int i = count; i > 0; i--) {
 
 			base.waitForElement(dashboardWidgetIcon());
 			dashboardWidgetIcon().waitAndClick(10);
@@ -507,7 +537,6 @@ public class Dashboard {
 		driver.waitForPageToBeReady();
 		base.waitForElement(selectSpecificReviewer());
 		selectSpecificReviewer().ScrollTo();
-		
 
 		selectSpecificReviewer().selectFromDropdown().selectByVisibleText(reviewers[0]);
 		for (int i = 1; i < reviewers.length; i++) {
@@ -556,4 +585,84 @@ public class Dashboard {
 		base.waitForElement(btnSave_reviewProductivity());
 		btnSave_reviewProductivity().waitAndClick(10);
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Click wheel button & verify Buttons displayed. Also if we
+	 *              click add new widget then verifies the popup dispalyed
+	 * @param ClickAddNew
+	 */
+	public void ClickWheelIconAndVerify(boolean ClickAddNew) {
+		dashboardWidgetIcon().waitAndClick(10);
+		base.stepInfo("Clicked : Wheel Icon");
+
+		driver.waitForPageToBeReady();
+		if (btnAddNewWidget().isElementAvailable(3) && cancelDeleteWidgetIcon().isElementAvailable(2)
+				&& saveWidgetIcon().isElementAvailable(1)) {
+			base.stepInfo("Three buttons is Displayed as Add New Widget, Add Button and Cancel Button.");
+		} else {
+			base.failedStep("Three buttons are not Displayed As expected");
+		}
+
+		if (ClickAddNew) {
+			btnAddNewWidget().waitAndClick(10);
+			base.stepInfo("Clicked : Add new Widget Button");
+
+			driver.waitForPageToBeReady();
+			if (widgetLibraryPopup().isElementAvailable(5)) {
+				base.stepInfo("Widget Library Popup is Displayed");
+			} else {
+				base.failedStep("Widget Library Popup is Not Displayed");
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : on click on widgets present in Popup verify preview popup is
+	 *              Displayed
+	 * @param ClickAddNew
+	 */
+	public void clickWidgetAndVerifyPopUp(String widgetName, boolean close, boolean addToDashBoard) {
+		if (widgetLibraryPopup().isElementAvailable(5)) {
+			driver.waitForPageToBeReady();
+			List<String> widgetsNameList = base.availableListofElements(widgetsPresentInPopup());
+			System.out.println("Widgets Present in Popup is: " + widgetsNameList);
+
+			for (int i = 0; i < widgetsNameList.size(); i++) {
+				String actualWidget;
+
+				if (widgetName.equals("")) {
+					driver.waitForPageToBeReady();
+					actualWidget = widgetsNameList.get(i);
+					selectWidget(actualWidget).waitAndClick(10);
+					base.stepInfo("Clicked Widget From Popup Is : " + widgetsNameList.get(i));
+				} else {
+					actualWidget = widgetName;
+					selectWidget(widgetName).waitAndClick(10);
+					base.stepInfo("Clicked Widget From Popup Is : " + widgetName);
+				}
+
+				driver.waitForPageToBeReady();
+				if (widgetPopupHeader().isElementAvailable(5)) {
+					String popupHeader = widgetPopupHeader().getText();
+					base.compareTextViaContains(popupHeader, actualWidget, actualWidget + " Popup is displayed",
+							"Displayed popup is not as expected");
+
+					if (close) {
+						getPopupCloseBtn().waitAndClick(10);
+						base.stepInfo("Clicked : Close Btn");
+					}
+					if (addToDashBoard) {
+						driver.scrollingToBottomofAPage();
+						btnAddToDashboard().waitAndClick(10);
+						base.stepInfo(actualWidget + " : Widget is added");
+					}
+				} else {
+					base.failedStep("Popup is not displayed");
+				}
+			}
+		}
+	}
+
 }

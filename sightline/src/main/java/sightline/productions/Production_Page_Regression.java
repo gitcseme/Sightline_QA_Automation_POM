@@ -1714,7 +1714,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -2090,7 +2090,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -2147,7 +2147,7 @@ public class Production_Page_Regression {
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);
@@ -3177,7 +3177,7 @@ public class Production_Page_Regression {
 		String tagname = "TAG" + Utility.dynamicNameAppender();
 		String folder = "Folder" + Utility.dynamicNameAppender();
 		String productionname = "p" + Utility.dynamicNameAppender();
-		String beginningBates = page.getRandomNumber(3);
+		String beginningBates = page.getRandomNumber(2);
 
 		baseClass.stepInfo("Test case Id: RPMXCON-48506 Production Sprint 11");
 		baseClass.stepInfo(
@@ -3442,7 +3442,7 @@ public class Production_Page_Regression {
 		sessionSearch.bulkTagExisting(tagname);
 
 		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(4);
+		String beginningBates = page.getRandomNumber(2);
 		productionname = "p" + Utility.dynamicNameAppender();
 		page.selectingDefaultSecurityGroup();
 		page.addANewProduction(productionname);

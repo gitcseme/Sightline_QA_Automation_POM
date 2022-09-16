@@ -195,7 +195,7 @@ public class DocViewAudio_Regression {
 
 		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
 		sessionSearch.ViewInDocViews();
-
+        driver.waitForPageToBeReady();
 		datas = docviewPage.addRemarkToDocumentsT(iteration, remark, true, "Success");
 		loginPage.logout();
 
@@ -207,6 +207,7 @@ public class DocViewAudio_Regression {
 		sessionSearch.ViewInDocViews();
 
 		// Verify Existing remarks + Edit File
+		 driver.waitForPageToBeReady();
 		docviewPage.verifyExistingRemarks(iteration, datas, true, true);
 
 		loginPage.logout();

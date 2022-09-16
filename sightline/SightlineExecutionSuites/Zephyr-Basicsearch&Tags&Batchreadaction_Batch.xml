@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Zephyr-Basicsearch-Tags-Batchreadaction_Batch" preserve-order="true">
+<suite name="Sightline-Jenkins-Basicsearch-Tags-Batchreadaction_Batch" preserve-order="true">
 
 <listeners>
 <listener class-name="executionMaintenance.TestListener" />
 </listeners>
 <!-- *********************************************Zephyr-BatchRun1************************************ -->
-<test name="Zephyr-Basicsearch-Tags-Batchreadaction_Batch">
+<test name="Sightline-Jenkins-Basicsearch-Tags-Batchreadaction_Batch">
 <classes>
 <class name="testScriptsSmoke.Input" />
-<class name= "testScriptsRegression.BasicSearch_Regression1" />
-<class name= "testScriptsRegression.PerformanceTest_Regression" />
-<class name= "testScriptsRegression.BulkActions_Regression" />
-<class name= "testScriptsRegression.ProjectField_Regression" />
-<class name= "testScriptsRegression.Projects_Regression" />
-<class name= "testScriptsRegression.Proview_Regression" />
-<class name= "testScriptsRegression.TagAndFolder" />
-<class name= "testScriptsRegression.BatchPrint_Regression1" />
-<class name= "testScriptsRegression.BatchRedactionRegression" />
-<class name= "testScriptsRegression.BatchRedactionRegression2" />
-<class name= "testScriptsRegression.BatchRedactionRegression3" />
-<class name= "testScriptsRegression.BatchRedaction_Production" />
+<class name= "sightline.basicSearch.BasicSearch_Regression1" />
+<class name= "sightline.basicSearch.BasicSearchRegression" />
+<class name= "sightline.basicSearch.BasicSearchRegression2" />
+<class name= "sightline.basicSearch.PerformanceTest_Regression" />
+<class name= "sightline.projects.ProjectField_Regression" />
+<class name= "sightline.projects.Projects_Regression" />
+<class name= "sightline.proview.Proview_Regression" />
+<class name= "sightline.tagsAndFolders.TagAndFolder" />
+<class name= "sightline.batchPrint.BatchPrint_Regression1" />
+<class name= "sightline.batchPrint.BatchPrintRegression" />
+<class name= "sightline.batchPrint.BatchPrintRegression2" />
+<class name= "sightline.batchRedaction.BatchRedaction_Production" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression_5" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression2" />
+<class name= "sightline.batchRedaction.BatchRedactionRegression3" />
+<class name= "sightline.bulkActions.BulkAction_IndiumRegressionPhase2" />
+<class name= "sightline.bulkActions.BulkAction_IndiumRegression2" />
+<class name= "sightline.bulkActions.BulkActions_Regression" />
+
+
+
 </classes>
 </test>
 
