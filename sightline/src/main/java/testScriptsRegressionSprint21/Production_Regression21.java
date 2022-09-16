@@ -289,7 +289,7 @@ public class Production_Regression21 {
 	 *                    section and Production should be generated successfully
 	 *                    using same template
 	 */
-	@Test(description = "RPMXCON-63190", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-63190", enabled = true, groups = { "regression" })
 	public void verifyingTemplateInProductionComponent() throws Exception {
 
 		base = new BaseClass(driver);
@@ -356,7 +356,7 @@ public class Production_Regression21 {
 	 *                    based on the tagging should displays on 'Preview' document
 	 *                    and on produced documents also
 	 */
-	@Test(description = "RPMXCON-55948", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-55948", enabled = true, groups = { "regression" })
 	public void verifyBrandingSectionInTIFFAndPdfGenration() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
@@ -492,6 +492,8 @@ public class Production_Regression21 {
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
 		base.waitTime(2);
+		docViewRedactions.selectDoc2();
+		driver.waitForPageToBeReady();
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 80, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
@@ -502,7 +504,6 @@ public class Production_Regression21 {
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.telecaSearchString);
 		sessionSearch.bulkRelease(Input.securityGroup);
-		sessionSearch.bulkFolderExisting(foldername);
 
 		ProductionPage page = new ProductionPage(driver);
 		String beginningBates = page.getRandomNumber(2);
@@ -516,7 +517,7 @@ public class Production_Regression21 {
 		page.fillingTextSection();
 		page.textComponentVerification();
 		page.navigateToNextSection();
-		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
 		page.navigateToNextSection();
 		page.fillingDocumentSelectionPage(foldername);
 		page.navigateToNextSection();
@@ -528,11 +529,12 @@ public class Production_Regression21 {
 		driver.waitForPageToBeReady();
 		String home = System.getProperty("user.home");
 		page.extractFile();
+		int Bates=Integer.valueOf(beginningBates)+4;
 		driver.waitForPageToBeReady();
 		File TiffFile = new File(home + "/Downloads/VOL0001/Load Files/" + productionname + "_TIFF.OPT");
 		File Textfile = new File(home + "/Downloads/VOL0001/Text/0001");
 		File TextFile = new File(
-				home + "/Downloads/VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+				home + "/Downloads/VOL0001/Text/0001/" + prefixID + Bates + suffixID + ".txt");
 		page.isdatFileExist();
 		page.isfileisExists(Textfile);
 		if (TiffFile.exists()) {
@@ -688,7 +690,6 @@ public class Production_Regression21 {
 
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.telecaSearchString);
-		sessionSearch.bulkFolderExisting(foldername);
 		sessionSearch.bulkRelease(Input.securityGroup);
 
 		ProductionPage page = new ProductionPage(driver);
