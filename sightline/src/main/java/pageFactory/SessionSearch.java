@@ -13467,5 +13467,25 @@ public class SessionSearch {
 			}
 		}
 	}
+	/**
+	 * @author Jayanthi.Ganesan This method will verify if user selects assign
+	 *         option then  existing assignment and new assignment tab displayed.
+	 */
+	public void verifyBulkAssignOptions() {
+		base.waitForElement(getUnAssignRadioBtn());
+		base.stepInfo("Assign/UnAssign pop up displayed");
+		String BulkAssign_Existing = getBulkAssignSelectedExistingAssignment().GetAttribute("style");
+		System.out.println(BulkAssign_Existing);
+		String BulkAssign_New = getBulkAssign_NewAssignment().GetAttribute("style");
+		System.out.println(BulkAssign_New);
+		String BulkUnAssign_Existing = getUnassign_ExistingAssignButton().GetAttribute("style");
+		System.out.println(BulkUnAssign_Existing);
+		if (BulkAssign_Existing.contains("") && BulkAssign_New.contains("")
+				&& BulkUnAssign_Existing.equals("display: none;")) {
+			base.passedStep("If user click assign tab Only existing assignment tab and new assignment is displayed");
+		} else {
+			base.failedStep("If user click assign tab  existing assign tab and new assignment is not displayed as expected.");
+		}
+	}
 
 }

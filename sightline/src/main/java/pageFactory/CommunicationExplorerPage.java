@@ -212,7 +212,7 @@ public class CommunicationExplorerPage {
 	}
 
 	public Element getCommunicationExplorer_Result() {
-		return driver.FindElementByXPath("(//div[@class='font-lg col-md-8']//strong)[last()]");
+		return driver.FindElementByXPath("(//div//strong[contains(text(),'Documents Across ')])[last()]");
 	}
 
 	public Element getViewInDocView() {
@@ -364,6 +364,18 @@ public class CommunicationExplorerPage {
 		}
 		public Element getDateInputBox() {
 			return driver.FindElementByXPath("//input[contains(@id,'comminicationmap')]");
+		}
+
+		public Element getFoldersCheckBox(String checkBoxName) {
+			return driver.FindElementByXPath("//*[@id='divFolderGroupTree']//*[text()='" + checkBoxName + "']");
+		}
+
+		public Element getfoldersSaveSelections() {
+			return driver.FindElementByXPath("//button[@id='folder']");
+		}
+
+		public Element getFolders() {
+			return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
 		}
 
 	public CommunicationExplorerPage(Driver driver) {
@@ -1223,5 +1235,39 @@ public class CommunicationExplorerPage {
 	}else {
 		base.failedMessage("Nodes not available in communication explorer page.");
 	}
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SelectSource_Folder(String folderName, String folderName2) {
+		base.stepInfo("**Selecting source as Folder--" + folderName + "**");
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getFolders());
+		base.waitTime(2);
+		getFolders().Click();
+		driver.scrollingToElementofAPage(getFoldersCheckBox(folderName));
+		base.waitTime(2);
+		getFoldersCheckBox(folderName).ScrollTo();
+		getFoldersCheckBox(folderName).waitAndClick(5);
+		base.waitTime(2);
+		if (folderName2 != null) {
+			getFoldersCheckBox(folderName2).ScrollTo();
+			getFoldersCheckBox(folderName2).waitAndClick(5);
+		}
+		driver.scrollingToElementofAPage(getfoldersSaveSelections());
+		getfoldersSaveSelections().ScrollTo();
+		base.waitForElement(getfoldersSaveSelections());
+		getfoldersSaveSelections().Click();
+		base.stepInfo("selected folders as source");
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(getSelectedSourcesName("Folder", folderName),
+				"'Selected source : " + folderName + "' retained as expected.");
+		if (folderName2 != null) {
+			base.ValidateElement_Presence(getSelectedSourcesName("Folder", folderName2),
+					"'Selected source : " + folderName2 + "' retained as expected.");
+		}
+		
 	}
 }
