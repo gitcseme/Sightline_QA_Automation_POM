@@ -9789,7 +9789,6 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
 		getAssgn_docsToDistribute().SendKeys(count);
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
