@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -25,8 +26,10 @@ import pageFactory.RedactionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import retry.CustomTestNGListener;
+import retry.RetryAnalyzer;
 import testScriptsSmoke.Input;
-
+@Listeners(CustomTestNGListener.class)
 public class Production_Regression20_01 {
 	Driver driver;
 	LoginPage loginPage;
@@ -66,7 +69,7 @@ public class Production_Regression20_01 {
 	 *                 exists in the document.
 	 */
 
-	@Test(description = "RPMXCON-49341", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49341", enabled = true, groups = { "regression" })
 
 	public void AsverifyingGenerationOfTechPlaceholder() throws Exception {
 
@@ -167,7 +170,7 @@ public class Production_Regression20_01 {
 	 * @Description:Verify the admin able to regenerate the already completed
 	 *                     production.
 	 */
-	@Test(description = "RPMXCON-47860", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47860", enabled = true, groups = { "regression" })
 
 	public void verifyingRegenerationOfProduction() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -231,7 +234,7 @@ public class Production_Regression20_01 {
 	 * @Description:Verify the availability of the options on Production
 	 *                     Components-Native
 	 */
-	@Test(description = "RPMXCON-47793", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-47793", enabled = true, groups = { "regression" })
 
 	public void verifyingNativeSectionInComponentTab() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -269,7 +272,7 @@ public class Production_Regression20_01 {
 	 *                 'TechIssue', then production should generate without any
 	 *                 error
 	 */
-	@Test(description = "RPMXCON-49375", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-49375", enabled = true, groups = { "regression" })
 
 	public void verifyingTiffImageForNativeDoc() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -337,7 +340,7 @@ public class Production_Regression20_01 {
 	 *                 Docs" is disabled, then TIFFs is generated for all docs being
 	 *                 produced.
 	 */
-	@Test(description = "RPMXCON-48644", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-48644", enabled = true, groups = { "regression" })
 
 	public void verifyTiffGenerationWhenNativeToggleOff() throws Exception {
 		UtilityLog.info(Input.prodPath);
@@ -401,7 +404,7 @@ public class Production_Regression20_01 {
 	 * @author Brundha TESTCASE No:RPMXCON-48333 Date:5/9/2022
 	 * @Description:To verify that if "Do Not Produce TIFFs for Natively Produced Docs" is disabled , then TIFFs is generated with Placeholder
 	 */
-	@Test(description = "RPMXCON-48333", enabled = true, groups = { "regression" })
+	@Test(retryAnalyzer = RetryAnalyzer.class,description = "RPMXCON-48333", enabled = true, groups = { "regression" })
 
 	public void verifyingDatSectionForBurnRedactionDocument() throws Exception {
 
