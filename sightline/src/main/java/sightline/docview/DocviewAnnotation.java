@@ -86,7 +86,7 @@ public class DocviewAnnotation {
 	 *         security groups after resetting the RMU to default
 	 */
 
-	@Test(enabled =true,groups = { "regression" }, priority = 1)
+	@Test(description = "RPMXCON-52259", enabled =true,groups = { "regression" }, priority = 1)
 	public void verifyAnnotationLayer() throws Exception {
 		AnnotationLayer annotation = new AnnotationLayer(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
