@@ -194,7 +194,7 @@ public class BulkActions_Regression_21 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		System.out.println("**Executed Advanced search AdvanceSearchRegression_2_21**");
+		System.out.println("**Executed Advanced search BulkActions_Regression_21**");
 	}
 
 }
