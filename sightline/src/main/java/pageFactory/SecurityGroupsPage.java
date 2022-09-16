@@ -462,6 +462,21 @@ public class SecurityGroupsPage {
 		return driver.FindElementById("btnViewAll");
 	}
 	
+	public Element getSG_EmailGenerateWarningMsgBulkReleaseText(String text) {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p[contains(text(),'"+text+"')]");
+		
+	}
+	
+	public Element getSG_EmailGenerateWarningMsgBulkRelease() {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
+		
+	}
+	
+	public Element getVerifySG_EmailGenerateWarningMsgText(String text) {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b[contains(text(),'"+text+"')]");
+		
+	}
+	
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
