@@ -289,7 +289,7 @@ public class Production_Regression21 {
 	 *                    section and Production should be generated successfully
 	 *                    using same template
 	 */
-	//@Test(description = "RPMXCON-63190", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-63190", enabled = true, groups = { "regression" })
 	public void verifyingTemplateInProductionComponent() throws Exception {
 
 		base = new BaseClass(driver);
@@ -356,7 +356,7 @@ public class Production_Regression21 {
 	 *                    based on the tagging should displays on 'Preview' document
 	 *                    and on produced documents also
 	 */
-	//@Test(description = "RPMXCON-55948", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-55948", enabled = true, groups = { "regression" })
 	public void verifyBrandingSectionInTIFFAndPdfGenration() throws Exception {
 		base = new BaseClass(driver);
 		UtilityLog.info(Input.prodPath);
