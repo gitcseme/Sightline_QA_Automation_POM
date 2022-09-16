@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
-
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocListPage;
@@ -66,7 +66,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-63253",enabled = true, groups = { "regression" })
-	public void verifyRepeatedDestinationFieldErrorWhenOverlay() throws InterruptedException {
+	public void TCA1verifyRepeatedDestinationFieldErrorWhenOverlay() throws InterruptedException {
 		
 		String[] ExpectedDatFields={"DocID","RecBegAttach","RecEndAttach","ProdBeg","ProdEnd","ProdBegAttach","ProdEndAttach","AttachCount","DocPages","Custodian","Date",
 				"MasterDate","Author","AuthorAddress","RecipientName","RecipientAddress","CCName","CCAddress","BCCName","BCCAddress","Subject","Container","DataSet","Datasource",
@@ -110,7 +110,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48420",enabled = true, groups = { "regression" })
-	public void verifyMediaOverlayIngestion() throws InterruptedException {
+	public void TCA3verifyMediaOverlayIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48420");
 		baseClass.stepInfo("To Verify Media Overlay Ingestion (with Unpublish).");
@@ -124,6 +124,9 @@ public class Ingestion_Regression_6 {
 		if (status == false) {
 			ingestionPage.performAudio96DocsIngestion(Input.audioDatFile, Input.docIdKey);
 			ingestionName = ingestionPage.publishAddonlyIngestion(Input.audio96DocsFolder);			
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.audio96DocsFolder);
 		}
 		baseClass.stepInfo("unpublish docs");
 		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
@@ -163,7 +166,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-49357",enabled = true, groups = { "regression" })
-	public void verifyIngestionOverlayForDifferentMetadata() throws InterruptedException {
+	public void TCA5verifyIngestionOverlayForDifferentMetadata() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-49357");
 		baseClass.stepInfo("To verify that Overlay should work for  'SourceParentDocID' metadata");
@@ -202,7 +205,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47155",enabled = true, groups = { "regression" })
-	public void verifyAudioDocsSearchIngestion() throws InterruptedException {
+	public void TCA2verifyAudioDocsSearchIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47155");
 		baseClass.stepInfo("New Project -Ingestion audio documents, verify language packs and audio search");
@@ -240,7 +243,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48199",enabled = true, groups = { "regression" })
-	public void verifyIngestionOverlaywithoutUnpublish() throws InterruptedException {
+	public void TCA4verifyIngestionOverlaywithoutUnpublish() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48199");
 		baseClass.stepInfo("To Verify Ingestion Overlays of DAT without unpublish.");
@@ -268,6 +271,7 @@ public class Ingestion_Regression_6 {
 		loginPage.logout();
 		
 	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
