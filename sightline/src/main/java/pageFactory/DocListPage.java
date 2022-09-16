@@ -1405,7 +1405,7 @@ public class DocListPage {
 	}
 	
 	public Element getTagEmailDuplicate() {
-		return driver.FindElementByXPath("//div/div[@id='dtDocList']/label/i");
+		return driver.FindElementByXPath("//div/div[4]/label/i");
 	}
 
 	public DocListPage(Driver driver) {
