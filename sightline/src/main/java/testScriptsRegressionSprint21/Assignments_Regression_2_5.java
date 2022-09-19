@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -17,6 +19,8 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
+import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -125,6 +129,56 @@ public class Assignments_Regression_2_5 {
 		loginPage.logout();
 		
 	}
+	
+	/**
+	 * Author :Arunkumar date: 19/09/2022 TestCase Id:RPMXCON-54751
+	 * Description :New Assignment - By default all keywords part of the security group 
+	 * should be selected for the assignment 
+	 * @throws Exception 
+	 */
+	@Test(description ="RPMXCON-54751",enabled = true, groups = { "regression" })
+	public void verifyKeywordSelectionInAssignment() throws Exception {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-54751");
+		baseClass.stepInfo(
+				"By default all keywords part of the security group should be selected for the assignment ");
+		String assignmentName = "assign"+Utility.dynamicNameAppender();
+		String[] keywords= {"test","the","and","in","of","to","at","are","for","on"};
+		List<String> keys =  Arrays.asList(keywords);
+		String color= "Red";
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logged in as RMU");
+		baseClass.stepInfo("Create keywords");
+		KeywordPage keyPage = new KeywordPage(driver);
+		for(int i=0;i<keywords.length;i++) {
+			keyPage.addKeyword(keywords[i], color);
+		}
+		baseClass.stepInfo("Create new assignment");
+		agnmt.createAssignment_withoutSave(assignmentName, Input.codingFormName);
+		baseClass.stepInfo("Check keyword popup and save assignment details");
+		agnmt.verifyKeywordsAvailabilityInAssignment(keywords);
+		baseClass.waitForElement(agnmt.getAssignmentSaveButton());
+		agnmt.getAssignmentSaveButton().waitAndClick(10);
+		baseClass.stepInfo("Assign document , add reviewer and distribute documents");
+		sessionSearch.MetaDataSearchInBasicSearch(Input.sourceDocIdSearch, Input.sourceKeyDocId);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.addReviewerAndDistributeDocs();
+		loginPage.logout();
+		baseClass.stepInfo("Login as reviewer and verify keyword highlight in docview");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.waitForElement(agnmt.getSelectAssignmentAsReviewer(assignmentName));
+		agnmt.getSelectAssignmentAsReviewer(assignmentName).waitAndClick(10);;
+		driver.waitForPageToBeReady();
+		DocViewPage docView = new DocViewPage(driver);
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(10);
+		docView.verifyPersistantHitsWithDocView(keys);
+		baseClass.passedStep("All keywords related to assignment highlighted");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
