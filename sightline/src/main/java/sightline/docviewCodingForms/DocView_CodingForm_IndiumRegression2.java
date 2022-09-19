@@ -6165,7 +6165,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * 			RPMXCON-52087
 	 * @Description : To  Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tags and Check group combined with Check Item in context of security group.
 	 */
-	@Test(description = "RPMXCON-52087",enabled=false,groups = { "regression" })
+	@Test(description = "RPMXCON-52087",enabled = true,groups = { "regression" })
 	public void verifyCustomizedCodingFormUsingTagAndCheckGroupInDocView() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52087");
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tags and Check group combined with Check Item in context of security group");
@@ -6510,7 +6510,7 @@ public class DocView_CodingForm_IndiumRegression2 {
 	 * 			RPMXCON-52089
 	 * @Description : To  Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tag objects along with "Selected" condition in context of security group.
 	 */
-	@Test(description = "RPMXCON-52089",enabled=false,groups = { "regression" })
+	@Test(description = "RPMXCON-52089",enabled = true,groups = { "regression" })
 	public void verifyCodingFormWithNotSelectableAndOption() throws InterruptedException, AWTException {
 	    baseClass.stepInfo("Test case Id: RPMXCON-52089");
 	    baseClass.stepInfo(" Verify on click of 'Save and Next' button coding form should be validated as per the customized coding form using Tag objects along with \"Selected\" condition in context of security group");
