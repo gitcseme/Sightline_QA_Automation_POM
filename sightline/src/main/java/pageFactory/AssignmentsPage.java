@@ -10881,5 +10881,27 @@ public class AssignmentsPage {
 				totalremainingUnAssignDocsCount, DistributedCountForEachRev };
 		return DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev;
 	}
+	
+	/**
+	 * @author: Arun Created Date: 19/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the availability of keyword in assignment keywords popup
+	 *               
+	 */
+	public void verifyKeywordsAvailabilityInAssignment(String[] keywords) {
+		bc.waitForElement(getAssgn_Keywordsbutton());
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+		
+		for(int i=0;i<keywords.length;i++) {
+			if (getKeywordCheckBox(keywords[i]).isElementAvailable(5)) {
+				bc.passedStep("Added keyword available");
+			} else {
+				bc.failedStep("Added keyword not available");
+			}
+		}
+		bc.waitForElement(getKeywordPopUpCancelBtn());
+		getKeywordPopUpCancelBtn().waitAndClick(10);
+		
+	}
 
 }

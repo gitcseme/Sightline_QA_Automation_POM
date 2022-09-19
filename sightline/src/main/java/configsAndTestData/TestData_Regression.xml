@@ -107,6 +107,7 @@
 	<folder61759>RPMXCON-61759</folder61759>
 	<SourceParentDocId>SourceParentDocID</SourceParentDocId>
 	<overlayDatFile>DAT4_STC_newdateformat1_OverlayCName_MDate.dat</overlayDatFile>
+	<sourceKeyDocId>ID00000204</sourceKeyDocId>
 	
 
 	<!-- Production path for redaction master doc -->
