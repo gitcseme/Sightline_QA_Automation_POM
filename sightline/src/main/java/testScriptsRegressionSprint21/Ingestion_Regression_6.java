@@ -110,7 +110,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48420",enabled = true, groups = { "regression" })
-	public void TCA3verifyMediaOverlayIngestion() throws InterruptedException {
+	public void TCA2verifyMediaOverlayIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48420");
 		baseClass.stepInfo("To Verify Media Overlay Ingestion (with Unpublish).");
@@ -205,7 +205,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-47155",enabled = true, groups = { "regression" })
-	public void TCA2verifyAudioDocsSearchIngestion() throws InterruptedException {
+	public void TCA3verifyAudioDocsSearchIngestion() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47155");
 		baseClass.stepInfo("New Project -Ingestion audio documents, verify language packs and audio search");
@@ -228,7 +228,7 @@ public class Ingestion_Regression_6 {
 					
 		}
 		baseClass.stepInfo("Execute few audio searches");
-		for(int i=1;i<=audioSearch.length;i++) {
+		for(int i=1;i<audioSearch.length;i++) {
 			baseClass.selectproject();
 			int docsCount = sessionSearch.audioSearch(audioSearch[i], Input.language);
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(docsCount);
