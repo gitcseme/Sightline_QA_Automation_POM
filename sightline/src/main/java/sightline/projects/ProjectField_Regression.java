@@ -65,7 +65,7 @@ public class ProjectField_Regression {
 	 * @Description :Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.'RPMXCON-47066'
 	 * 
 	 */
-	@Test(description = "RPMXCON-47066", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47066", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldsByClickingApplyAndEnterButton() {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-47066");
@@ -97,17 +97,17 @@ public class ProjectField_Regression {
 	
 	/**
 	 * @author Gopinath
-	 * @TestCase ID:47070 Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
+	 * //@TestCase ID:47070 Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
 	 * @Description:To Verify that message should be displayed when there is no matching text for the 'Filter Fields By' for project fields- Covered localization
 	 */
-	@Test(description = "RPMXCON-47070", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47070", enabled = true, groups = { "regression" })
 	public void verifyNoDataMessageForNoMatchingText() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47070");
 		baseClass.stepInfo("Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.");
 		utility = new Utility(driver);
 		String fieldName = "Test" +  Utility.dynamicNameAppender();
-		String germanLanguage="German - Germany";
-		String englishLanguage="English - United States";
+//		String germanLanguage="German - Germany";
+//		String englishLanguage="English - United States";
 		
 		baseClass.stepInfo("Step 1: Login as Project Admin");
 		loginPage = new LoginPage(driver);
@@ -124,20 +124,20 @@ public class ProjectField_Regression {
 		baseClass.stepInfo("Verify filter return no data");
 		projectFieldsPage.verifyfilterReturnNoData();
 		
-		baseClass.stepInfo("Step 3:change localization to German");
-		loginPage.editProfile(germanLanguage);
+//		baseClass.stepInfo("Step 3:change localization to German");
+//		loginPage.editProfile(germanLanguage);
 		
-		baseClass.stepInfo("verify text field and apply button are localise to German");
-		projectFieldsPage.verifyfilterLabelApplyButtonLocaliseToGerman();
+//		baseClass.stepInfo("verify text field and apply button are localise to German");
+//		projectFieldsPage.verifyfilterLabelApplyButtonLocaliseToGerman();
 		
-		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
-		projectFieldsPage.applyFilterByFilterName(fieldName);
+//		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
+//		projectFieldsPage.applyFilterByFilterName(fieldName);
 		
-		baseClass.stepInfo("Verify filter return no data after localised to german");
-		projectFieldsPage.verifyfilterReturnNoDataGerman();
+//		baseClass.stepInfo("Verify filter return no data after localised to german");
+//		projectFieldsPage.verifyfilterReturnNoDataGerman();
 		
-		baseClass.stepInfo("Change localization to English");
-		loginPage.editProfile(englishLanguage);
+//		baseClass.stepInfo("Change localization to English");
+//		loginPage.editProfile(englishLanguage);
 		loginPage.logout();
 	}
 	
@@ -145,10 +145,10 @@ public class ProjectField_Regression {
 	
 	/**
 	 * @author Gopinath
-	 * @TestCase Id:47069 Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
+	 * //@TestCase Id:47069 Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
 	 * @Description:To Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields
 	 */
-	@Test(description = "RPMXCON-47069", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47069", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldBeforeAndAfterClearFilter() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47069");
 		baseClass.stepInfo("Verify that once user applied filter then after clearing filter text on click of Apply or hitting enter key should display the list of all project fields");
@@ -180,10 +180,10 @@ public class ProjectField_Regression {
 	}
 		/**
 	 * @author Gopinath
-	 * @TestCase ID:47065 Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
+	 * //@TestCase ID:47065 Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
 	 * @Description:To Verify that 'Filter Fields By' should be displayed on Manage > Project Fields
 	 */
-	@Test(description = "RPMXCON-47065", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-47065", enabled = true, groups = { "regression" })
 	public void verifyFilterFieldByAppliyButtonDisplayed() {
 		baseClass.stepInfo("Test case Id: RPMXCON-47065");
 		baseClass.stepInfo("Verify that 'Filter Fields By' should be displayed on Manage > Project Fields");
@@ -204,7 +204,7 @@ public class ProjectField_Regression {
 	}
 	/**
 	 * @author Gopinath
-	 * @TestCase ID:47068:Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
+	 * //@TestCase ID:47068:Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
 	 * @Description:To Verify that when filter applied user edits a project field and "saves" the edit, the application should be on the same "page number", where the user picked the field to edit
 	 */
 	@Test(description = "RPMXCON-47068", enabled = true, groups = { "regression" })
@@ -213,7 +213,7 @@ public class ProjectField_Regression {
 		baseClass.stepInfo("Verify that when filter applied user edits a project field and 'saves' the edit, the application should be on the same \"page number\", where the user picked the field to edit");
 		utility = new Utility(driver);
 		String filterValue="data";
-		String fieldName =  filterValue+  Utility.dynamicNameAppender();
+		String fieldName =  filterValue+Utility.dynamicNameAppender();
 		String fieldDescription= "Edit"+Utility.dynamicNameAppender();
 		
 		baseClass.stepInfo("Step 1: Login as Project Admin");
@@ -232,7 +232,7 @@ public class ProjectField_Regression {
 		projectFieldsPage.applyFilterByFilterName(filterValue);
 		
 		baseClass.stepInfo("verify All field Names in project grid Contains filter value");
-		projectFieldsPage.validateFilterFieldsByContainsFieldName(filterValue);
+		projectFieldsPage.validateFilterFieldsByContainsFieldName(fieldName);
 		
 		baseClass.stepInfo("Step 4 :Navigate to field avaliable page number");
 		projectFieldsPage.navigateTofieldPageInProjectFieldTable(fieldName);
