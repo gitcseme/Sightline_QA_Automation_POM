@@ -2665,6 +2665,10 @@ public class DocViewPage {
 	public ElementCollection getPersistantNames() {
 		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
 	}
+	
+	public ElementCollection getPersistantNamesList() {
+		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p");
+	}
 
 	// Added By Vijaya.Rani
 	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
@@ -19816,9 +19820,9 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getPersistantHitEyeIcon());
-			List<WebElement> persistantNames = getPersistantNames().FindWebElements();
+			List<WebElement> persistantNames = getPersistantNamesList().FindWebElements();
 			for (WebElement persistantName : persistantNames) {
-				persisatantNames.add(persistantName.getAttribute("data-custom-id").trim());
+				persisatantNames.add(persistantName.getText().trim());
 			}
 			base.passedStep("Persistant hits are : " + persisatantNames);
 			if (persisatantNames.containsAll(keywords)) {
