@@ -3,6 +3,7 @@ package testScriptsRegressionSprint21;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import junit.framework.Assert;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
@@ -501,6 +503,167 @@ public class CodingForm_Regression {
 		softAssertion.assertAll();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @Author :Baskar
+	 * @Description : Verify that after removing the radio/check group association of the tag, 
+	 *                tag label should be displayed in preview of coding form
+	 */
+	@Test(description = "RPMXCON-54305", enabled = true, groups = { "regression" })
+	public void verifyTagLabelAfterRemovingGroup() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54305");
+		baseClass.stepInfo("Verify that after removing the radio/check group association of the tag, tag label should be displayed in preview of coding form");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
+		String codingform = "cf"+Utility.dynamicNameAppender();
+		String tagname = "tag"+Utility.dynamicNameAppender();
+		String tagTwo = "tag"+Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		tagsAndFoldersPage.CreateTag(tagname, Input.securityGroup);
+		tagsAndFoldersPage.CreateTag(tagTwo, Input.securityGroup);
+		baseClass.stepInfo("Created the tag sucessfully");
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");		
+		codingForm.addNewCodingFormButton();
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,tagname,null,null,"tag");
+		codingForm.CreateCodingFormWithParameter(codingform,tagTwo,null,null,"tag");
+		codingForm.addcodingFormAddButton();
+		codingForm.specialObjectsBox(Input.radioGroup);
+		codingForm.specialObjectsBox(Input.checkGroup);
+		codingForm.addcodingFormAddButton();
+		codingForm.selectTagTypeByIndex("radio item",1,0);
+		baseClass.stepInfo("Radio group is associated to the created tag");
+		codingForm.selectTagTypeByIndex("check item",1,1);
+		baseClass.stepInfo("check group is associated to the created tag");
+		codingForm.saveCodingForm();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Coding form saved successfully");
+		
+		// validation for radio and checkgroup button
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitTime(10);
+		boolean radio=codingForm.getCF_Preview_Radio(tagname).isElementAvailable(5);
+		System.out.println(radio);
+		baseClass.stepInfo("In Preview validation radio button are displayed");
+		softAssertion.assertTrue(radio);
+		boolean checkBox=codingForm.getCF_Preview_CheckBox(tagTwo).isElementAvailable(5);
+		System.out.println(checkBox);
+		baseClass.stepInfo("In Preview validation checkbox button are displayed");
+		softAssertion.assertTrue(checkBox);
+		codingForm.getCF_Preview_OkBtn().waitAndClick(5);
+		codingForm.getCodingForm_SelectRemoveLink(2).ScrollTo();
+		baseClass.waitForElement(codingForm.getCodingForm_SelectRemoveLink(2));
+		codingForm.getCodingForm_SelectRemoveLink(2).waitAndClick(5);
+		codingForm.getCodingForm_SelectRemoveLink(3).ScrollTo();
+		baseClass.waitForElement(codingForm.getCodingForm_SelectRemoveLink(3));
+		codingForm.getCodingForm_SelectRemoveLink(3).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Removed both radio and checkbox special objects");
+		
+		// validation of tag label after remove group
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		baseClass.waitTime(5);
+		driver.waitForPageToBeReady();
+		boolean checkBoxOne=codingForm.getCF_Preview_TagLabel(tagname,0).isElementAvailable(5);
+		System.out.println(checkBoxOne);
+		Assert.assertTrue(checkBoxOne);
+		boolean checkBoxTwo=codingForm.getCF_Preview_TagLabel(tagTwo,1).isElementAvailable(5);
+		System.out.println(checkBoxTwo);
+		softAssertion.assertTrue(checkBoxTwo);
+		codingForm.getCF_Preview_OkBtn().waitAndClick(5);
+		
+		softAssertion.assertAll();
+		baseClass.passedStep("After removing the group tag, Tag label displayed as expected");
+		//Deleting the tag and cf
+		codingForm.deleteCodingForm(codingform, codingform);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFoldersPage.deleteAllTags(tagname);
+		tagsAndFoldersPage.deleteAllTags(tagTwo);
+		loginPage.logout();
+	}
+	
+	
+	/**
+	 * @Author :Indium-Baskar
+	 * @Description :Verify that Proper validation message appears 
+	 *               when a user deletes added object(s) from coding form screen
+	 */
+	@Test(description = "RPMXCON-54226", enabled = true, groups = { "regression" })
+	public void verifyRemoveAllTabsInAsc() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54226");
+		baseClass.stepInfo("Verify that Proper validation message appears when a user "
+				+ "deletes added object(s) from coding form screen");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		commentsPage = new CommentsPage(driver);
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		tagsAndFoldersPage=new TagsAndFoldersPage(driver);
+		String metadata = "DataINT" + Utility.dynamicNameAppender();
+		String tag = "tag" + Utility.dynamicNameAppender();
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		// creating metadata
+		List<String> collectionData=new ArrayList<String>();
+		projectPage.addCustomFieldProjectDataType(metadata, "INT");
+		securityGroupPage.addProjectFieldtoSG(metadata);
+		collectionData.add(metadata);
+		// logout
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		// creating comments
+		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
+		String comments = commentsPage.addComments("com1" + Utility.dynamicNameAppender());
+		collectionData.add(comments);
+		// creating tags
+		tagsAndFoldersPage.CreateTag(tag, Input.codeFormName);
+		collectionData.add(tag);
+		// Navigating to manage cf
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.addNewCodingFormButton();
+		codingForm.basedOnCreatingNewObject(tag, null, null, "tag");
+		baseClass.stepInfo("Adding tag into coding form structure");
+		codingForm.basedOnCreatingNewObject(null, comments, null, "comment");
+		baseClass.stepInfo("Adding comment into coding form structure");
+		codingForm.basedOnCreatingNewObject(null, null, metadata, "metadata");
+		baseClass.stepInfo("Adding metadata into coding form structure");
+		codingForm.addcodingFormAddButton();
+		boolean flagMeta = codingForm.getCf_MetaDataDisabled(metadata).isElementAvailable(2);
+		softAssertion.assertTrue(flagMeta);
+		boolean flagTag = codingForm.getCf_TagDisabled(tag).isElementAvailable(2);
+		softAssertion.assertTrue(flagTag);
+		boolean flagComment = codingForm.getCf_CommentsDisabled(comments).isElementAvailable(2);
+		softAssertion.assertTrue(flagComment);
+		baseClass.stepInfo("Added object inside the coding form structure are disappeared");
+		// removing the all data using remove link
+		for (int i = 0; i <= 2; i++) {
+			codingForm.selectRemoveLinkWithValidation(i);
+		}
+		baseClass.stepInfo("Removing all data from codingform structure");
+		// After removing all data , values should appear
+		boolean flagMetaFalse = codingForm.getCf_MetaDataDisabled(metadata).isElementAvailable(2);
+		softAssertion.assertFalse(flagMetaFalse);
+		boolean flagTagFalse = codingForm.getCf_TagDisabled(tag).isElementAvailable(2);
+		softAssertion.assertFalse(flagTagFalse);
+		boolean flagCommentFalse = codingForm.getCf_CommentsDisabled(comments).isElementAvailable(2);
+		softAssertion.assertFalse(flagCommentFalse);
+		baseClass.passedStep("Removed  from the coding from structure, value are appeared in left tab");
+		softAssertion.assertAll();
+		loginPage.logout();
+	}
+	
 	
 
 
