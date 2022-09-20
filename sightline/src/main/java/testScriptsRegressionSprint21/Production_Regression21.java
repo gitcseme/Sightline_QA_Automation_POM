@@ -494,9 +494,9 @@ public class Production_Regression21 {
 		sessionSearch.ViewInDocViewWithoutPureHit();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		base.waitTime(2);
-		docViewRedactions.selectDoc2();
 		driver.waitForPageToBeReady();
+		docViewRedactions.selectDoc2();
+		base.waitTime(2);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 80, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
@@ -683,7 +683,7 @@ public class Production_Regression21 {
 		sessionSearch.ViewInDocViewWithoutPureHit();
 
 		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
-		driver.waitForPageToBeReady();
+		base.waitTime(2);
 		docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 80);
 		driver.waitForPageToBeReady();
 		docViewRedactions.selectingRedactionTag2(Redactiontag1);
