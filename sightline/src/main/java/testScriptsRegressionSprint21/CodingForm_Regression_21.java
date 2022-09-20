@@ -414,6 +414,262 @@ public class CodingForm_Regression_21 {
 	    loginPage.logout();
 	}
 	
+	/**
+	 * @Author : 
+	 * @Description : To verify as an RMU login, I will be able to Un-hide a column in manage coding form page
+	 */
+	@Test(description = "RPMXCON-54017",enabled = true, groups = { "regression" })
+	public void verifyRmuAbleToHideUnhideColumn() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54017");
+	    base.stepInfo("To verify as an RMU login, I will be able to Un-hide a column in manage coding form page");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String hideColumn = "Coding Form Name";
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		 cf.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 base.stepInfo("User navigated to Manage coding form page");
+		 soft.assertTrue(driver.getPageSource().contains("Manage Coding Forms"));
+		 soft.assertTrue(driver.getPageSource().contains("New Coding Form"));
+		 base.stepInfo("User landed in Coding form page");
+		
+		//validation
+		 cf.hideOrShowColum(hideColumn);
+		 soft.assertFalse(base.text(hideColumn).isDisplayed());
+		 cf.hideOrShowColum(hideColumn);
+		 soft.assertTrue(base.text(hideColumn).isDisplayed());
+		 base.passedStep("Selected check box from hide/Unhide dropdown Unhide from Home page of manage coding form page");
+	    
+	    soft.assertAll();
+	    base.passedStep("verified as an RMU login, I will be able to Un-hide a column in manage coding form page");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that Preview displays correctly and properly for Tags objects 
+	 * along with Selected and "Not Selected" condition on coding form screen
+	 */
+	@Test(description = "RPMXCON-54064",enabled = true, groups = { "regression" })
+	public void verifyPreviewDisplayCrctlyTagAlongRadioFroup() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54064");
+	    base.stepInfo("Verify that Preview displays correctly and properly for Tags "
+	    		+ "objects along with Selected and \"Not Selected\" condition on coding form screen");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//EXECUTE SHARED STEPS IN TC#2547 
+		 cf.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(cf.getAddNewCodingFormBtn());
+		 cf.getAddNewCodingFormBtn().waitAndClick(10);
+		 base.waitForElement(cf.getCodingFormName());
+		 cf.getCodingFormName().SendKeys(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.tag);
+		 cf.addcodingFormAddButton();
+		 cf.addTwoCheckBox(Input.tag);
+		 cf.specialObjectsBox(Input.radioGroup);
+		 cf.addcodingFormAddButton();
+		 cf.specialObjectsBox(Input.radioGroup);
+		 cf.addcodingFormAddButton();
+		 
+		 //enter action details
+		 cf.selectDefaultActions(0, Input.hidden);
+		 cf.selectDefaultActions(1, Input.notSelectable);
+		 cf.selectTagType("radio item", 0, 1);
+		 cf.selectTagType("radio item", 1, 2);
+		 cf.selectDefaultActions(2, Input.optional);
+		 cf.selectDefaultActions(3, Input.required);
+		 
+		 //add logic
+		 driver.scrollPageToTop();
+		 cf.addLogicOptionWithIndex(2, 1, Input.select, Input.thisOptional);
+		 cf.addLogicOptionWithIndex(3, 1, Input.notSelect, Input.thisOptional);
+		 cf.saveCodingForm();
+		 
+		 //edit codingform
+		 cf.editCodingForm(cfName);
+		 
+		 //validate
+		 cf.clickPreviewButon();
+		 base.moveWaitAndClick(cf.getPreview1stRadioBtn(), 15);
+		 soft.assertTrue(cf.getCodingForm_PreviewText(2).isElementAvailable(3));
+		 soft.assertTrue(cf.getCodingForm_PreviewText(3).isElementAvailable(3));
+		 soft.assertTrue(cf.getPreviewRadioBtn().isElementAvailable(3));
+		 soft.assertTrue(cf.getPreview1stRadioBtn().Selected());
+		 soft.assertFalse(cf.getPreview2ndRadioBtn().Selected());
+		 base.passedStep("Preview Should get displayed correctly");
+		 
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("Verified that Preview displays correctly and properly for Tags objects along "
+	    		+ "with Selected and \"Not Selected\" condition on coding form screen");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that Preview displays correctly and properly for all
+	 *  objects along with all condition and Check Item on coding form screen
+	 */
+	@Test(description = "RPMXCON-54067",enabled = true, groups = { "regression" })
+	public void verifyPreviewDisplaysCorreclyCheckItem() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54067");
+	    base.stepInfo("Verify that Preview displays correctly and properly for all objects"
+	    		+ " along with all condition and Check Item on coding form screen");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//EXECUTE SHARED STEPS IN TC#2547 
+		 cf.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(cf.getAddNewCodingFormBtn());
+		 cf.getAddNewCodingFormBtn().waitAndClick(10);
+		 base.waitForElement(cf.getCodingFormName());
+		 cf.getCodingFormName().SendKeys(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.tag);
+		 cf.firstCheckBox(Input.comments);
+		 cf.firstCheckBox(Input.metaData);
+		 cf.specialObjectsBox(Input.staticText);
+		 cf.specialObjectsBox(Input.radioGroup);
+		 cf.specialObjectsBox(Input.checkGroup);
+		 cf.addcodingFormAddButton();
+		 
+		 //enter action details
+		 cf.selectDefaultActions(0, Input.hidden);
+		 cf.selectTagType(Input.checkItem, 0, 1);
+		 cf.selectDefaultActions(1, Input.notSelectable);
+		 cf.selectDefaultActions(2, Input.optional);
+		 cf.enterErrorAndHelpMsg(2, "Yes", Input.errorMsg, Input.helpText);
+		 cf.selectDefaultActions(4, Input.required);
+		 cf.selectDefaultActions(5, Input.required);
+		 
+		 //add logic
+		 driver.scrollPageToTop();
+		 cf.addLogicOptionWithIndex(1, 1, Input.select, Input.thisHidden);
+		 cf.addLogicOptionWithIndex(2, 1, Input.notSelect, Input.thisReadOnly);
+		 cf.addLogicOptionWithIndexWithoutIncreace(4, 1, Input.select, Input.thisOptional);
+		 cf.addLogicOptionWithIndexWithoutIncreace(5, 1, Input.notSelect, Input.thisRequired);
+		 cf.saveCodingForm();
+		 
+		 //edit codingform
+		 cf.editCodingForm(cfName);
+		 
+		 //validate
+		 cf.clickPreviewButon();
+		 soft.assertFalse(cf.getCodingForm_PreviewText(0).isElementAvailable(1));
+		 soft.assertTrue(cf.getCodingForm_PreviewText(1).isElementAvailable(3));
+		 soft.assertTrue(cf.getCodingForm_PreviewText(2).isElementAvailable(3));
+		 soft.assertTrue(cf.getCodingForm_PreviewText(3).isElementAvailable(3));
+		 soft.assertFalse(cf.getCodingForm_PreviewText(4).isElementAvailable(1));
+		 soft.assertTrue(cf.getCodingForm_PreviewText(5).isElementAvailable(3));
+		 base.passedStep("Preview displayed correctly and properly");
+		 
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("Verified that Preview displays correctly and properly for all objects along with all "
+	    		+ "condition and Check Item on coding form screen");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : Verify that Preview displays correctly and properly for Metadata objects along with "Not Selected" condition on coding form screen
+	 */
+	@Test(description = "RPMXCON-54065",enabled = true, groups = { "regression" })
+	public void verifyPreviewDisplayCrctlyForMetadataalongwithCheckItem() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54065");
+	    base.stepInfo("Verify that Preview displays correctly and properly for Metadata objects along "
+	    		+ "with \"Not Selected\" condition on coding form screen");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//EXECUTE SHARED STEPS IN TC#2547 
+		 cf.navigateToCodingFormPage();
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(cf.getAddNewCodingFormBtn());
+		 cf.getAddNewCodingFormBtn().waitAndClick(10);
+		 base.waitForElement(cf.getCodingFormName());
+		 cf.getCodingFormName().SendKeys(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.metaData);
+		 cf.addcodingFormAddButton();
+		 cf.addTwoCheckBox(Input.metaData);
+		 cf.specialObjectsBox(Input.checkGroup);
+		 cf.addcodingFormAddButton();
+		 cf.specialObjectsBox(Input.checkGroup);
+		 cf.addcodingFormAddButton();
+		 
+		 //enter action details
+		 cf.selectDefaultActions(0, Input.hidden);
+		 cf.selectDefaultActions(1, Input.notSelectable);
+		 cf.selectDefaultActions(2, Input.optional);
+		 cf.selectDefaultActions(3, Input.required);
+		 
+		 //add logic
+		 driver.scrollPageToTop();
+		 cf.addLogicOptionWithIndex(2, 1, Input.notSelect, Input.thisRequired);
+		 cf.saveCodingForm();
+		 
+		 //edit codingform
+		 cf.editCodingForm(cfName);
+		 
+		 //validate
+		 cf.clickPreviewButon();
+		 soft.assertFalse(cf.getCodingForm_PreviewText(0).isDisplayed());
+		 soft.assertTrue(cf.getCodingForm_PreviewText(1).isDisplayed());
+		 soft.assertFalse(cf.getCodingForm_PreviewText(1).Selected());
+		 base.passedStep("Preview displayed correctly and properly");
+		 
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("Verify that Preview displays correctly and properly for Metadata objects "
+	    		+ "along with \"Not Selected\" condition on coding form screen");
+	    loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

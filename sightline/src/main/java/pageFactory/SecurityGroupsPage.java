@@ -462,6 +462,35 @@ public class SecurityGroupsPage {
 		return driver.FindElementById("btnViewAll");
 	}
 	
+	public Element getSG_EmailGenerateWarningMsgBulkReleaseText(String text) {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p[contains(text(),'"+text+"')]");
+		
+	}
+	
+	public Element getSG_EmailGenerateWarningMsgBulkRelease() {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
+		
+	}
+	
+	public Element getVerifySG_EmailGenerateWarningMsgText(String text) {
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b[contains(text(),'"+text+"')]");
+		
+	}
+	
+	public Element getSelectedAnnotationLayerCheckBox(String Annotation) {
+		return driver.FindElementByXPath("//*[@id='annotationJSTree_Selected']//a[text()='" + Annotation
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getSG_AddAnnotationLayer_Left() {
+		return driver.FindElementByXPath("//*[@onclick='AnnotationLeftShift();']");
+	}
+	
+	public Element getAnnotationLayerCheckBox(String Annotation) {
+		return driver.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + Annotation
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
+	}
+	
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1547,5 +1576,59 @@ public class SecurityGroupsPage {
 			driver.Navigate().refresh();
 		}
 		return bgCountAfter;
+	}
+	
+	/**
+	 * @author Krishna Modified date:NA
+	 * @Description: selected annotation layer is moved in selected list
+	 */
+	public void getAssignedAnnotationLayerAddedSg(String annotationTag) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSG_AnnLayerbutton().Visible();
+			}
+		}), Input.wait30);
+		getSG_AnnLayerbutton().waitAndClick(5);
+		bc.stepInfo("Selected Annotation layer");
+		bc.waitForElement(getAnnotationLayerCheckBox(annotationTag));
+		getAnnotationLayerCheckBox(annotationTag).waitAndClick(10);
+		bc.waitForElement(getSG_AddAnnLayer_Right());
+		getSG_AddAnnLayer_Right().waitAndClick(15);
+		if (getAnnotationLayerCheckBox(annotationTag).isElementAvailable(5)) {
+			bc.passedStep(annotationTag + "   Selected Annotation Layer is displayed in the Selected list. ");
+
+		} else {
+			bc.failedMessage("Annotation layer is not displayed");
+		}
+	}
+	
+	/**
+	 * @author Krishna Modified date:NA
+	 * @Description: Unassigned selected annotation layer is removed in selected
+	 *               list
+	 */
+	public void unAssigningTheTagInAnnotation(String Sgannotation, String annotation) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectedAnnotationLayerCheckBox(Sgannotation).Visible();
+			}
+		}), Input.wait90);
+		System.out.println(Sgannotation);
+		bc.waitTime(3);
+		bc.waitForElement(getSelectedAnnotationLayerCheckBox(Sgannotation));
+		getSelectedAnnotationLayerCheckBox(Sgannotation).waitAndClick(10);
+		bc.waitForElement(getSG_AddAnnotationLayer_Left());
+		getSG_AddAnnotationLayer_Left().waitAndClick(10);
+		bc.waitTime(3);
+		bc.waitForElement(getAnnotationLayerCheckBox(annotation));
+		if (getAnnotationLayerCheckBox(annotation).isDisplayed()) {
+			bc.passedStep(annotation + "After removed from selected list is displayed on Available list");
+
+		} else {
+			bc.failedStep(annotation + "After removed annotation layer is not displayed on available list");
+
+		}
+
 	}
 }

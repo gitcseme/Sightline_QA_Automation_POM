@@ -1595,6 +1595,27 @@ public class CodingForm {
 			return driver.FindElementByXPath("//span[text()='Coding Form Save']");
 
 		}
+		public Element getCF_Preview_OkBtn() {
+			return driver.FindElementByXPath("(//button[@id='btnYes'])[last()]");
+		}
+		public Element getCF_Preview_Radio(String tagName) {
+			return driver.FindElementByXPath("//span[text()='"+tagName+"']//..//parent::div//input[@type='radio']");
+		}
+		public Element getCF_Preview_CheckBox(String tagName) {
+			return driver.FindElementByXPath("//span[text()='"+tagName+"']//..//parent::div//input[@type='checkbox']");
+		}
+		public Element getCF_Preview_TagLabel(String tagName,int i) {
+			return driver.FindElementByXPath("//span[text()='"+tagName+"']//ancestor::div[@id='item" + i + "']");
+		}
+		
+		public Element getRemoveLinkMsg_YNButton() {
+			return driver.FindElementByXPath("//p[text()='Are you sure?']");
+
+		}
+		public Element getRemoveLinkMsg_Delete() {
+			return driver.FindElementByXPath("//h2//span[text()='Delete']");
+
+		}
 	
 	
 	
@@ -5596,11 +5617,6 @@ public void validateSpecificTagsAndOrdersInCodingForm(String cfName,String Objec
 		base.failedStep("Preview has some error");
 	}
 }
-	
-	
-	
-	
-	
 
 /**
  * @author Aathith.Senthilkumar
@@ -5651,6 +5667,56 @@ public void clickPreviewButon() {
 	base.stepInfo("preview button was clicked");
 }
 
+
+/**
+ * @author Baskar
+ * @Description copying the codingform
+ */
+
+public void copyCodingForm(String cfName) {
+	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	driver.waitForPageToBeReady();
+	base.waitForElement(getCodingForm_Search());
+	getCodingForm_Search().SendKeys(cfName);
+	driver.waitForPageToBeReady();
+	base.waitForElement(getCodingForm_CopyButton(cfName));
+	getCodingForm_CopyButton(cfName).waitAndClick(5);
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return base.getYesBtn().Visible();
+		}
+	}), Input.wait60);
+	String msg = getCF_DeletePopup().getText();
+	System.out.println(msg);
+	Assert.assertEquals("Are you sure you want to copy?", msg);
+	base.getYesBtn().Click();
+
+	base.VerifySuccessMessage("Coding form copied successfully");
+	base.CloseSuccessMsgpopup();
+}
+
+
+/**
+ * @author Baskar
+ * @Description : this method used to remove all the object based on parameter
+ */
+public void selectRemoveLinkWithValidation(int rowNo) {
+     String expectedYesNo="Are you sure?";
+     String expectedDel="Delete";
+	driver.waitForPageToBeReady();
+	getCodingForm_SelectRemoveLink(rowNo).ScrollTo();
+	base.waitForElement(getCodingForm_SelectRemoveLink(rowNo));
+	getCodingForm_SelectRemoveLink(rowNo).waitAndClick(5);
+	String actualYesNo=getRemoveLinkMsg_YNButton().getText();
+	softAssertion.assertEquals(expectedYesNo, actualYesNo);
+	String actualDel=getRemoveLinkMsg_Delete().getText();
+	softAssertion.assertEquals(actualDel, expectedDel);
+	base.passedStep("validation messsage as"+actualYesNo+" you want to "+actualDel+ "");
+	base.waitForElement(getCodingForm_SGValidation_ButtonYes());
+	getCodingForm_SGValidation_ButtonYes().waitAndClick(10);
+	softAssertion.assertAll();
+
+}
 
 
 }

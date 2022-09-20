@@ -413,6 +413,7 @@ public class Input {
 	public static String folder61759;
 	public static String sourceParentDocId;
 	public static String overlayDatFile;
+	public static String sourceKeyDocId;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1372,6 +1373,7 @@ public class Input {
 		folder61759 = testData.getFolder61759();
 		sourceParentDocId = testData.getSourceParentDocId();
 		overlayDatFile = testData.getOverlayDatFile();
+		sourceKeyDocId = testData.getSourceKeyDocId();	
 		
 		
 		// Added by Raghuram 02/24/22

@@ -13,9 +13,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -28,6 +30,7 @@ import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
+import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -312,5 +315,350 @@ public class SecurityGroup_Regression21_2 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		sgpage.deleteSecurityGroups(sgName);
 		loginPage.logout();
+	}
+	
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54787
+	 * @throws Exception
+	 * @Description Verify that when PAU impersonate as RMU,and changes the SG in SG
+	 *              Dropdown then it should take the corresponding SG in the same
+	 *              project
+	 */
+	@Test(description = "RPMXCON-54787", enabled = true, groups = { "regression" })
+	public void verifyPAUUserImpersonateRmuChangesSgTakeCorrospondingSg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54787");
+		baseClass.stepInfo(
+				"Verify that when PAU impersonate as RMU,and changes the SG in SG Dropdown then it should take the corresponding SG in the same project");
+		DocViewMetaDataPage docViewMetaData = new DocViewMetaDataPage(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String sgName = "Security Group1_" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Create security groups and assign");
+		sgpage.navigateToSecurityGropusPageURL();
+		sgpage.AddSecurityGroup(sgName);
+		docViewRedact.assignAccesstoSGs(sgName, Input.rmu1userName);
+		loginPage.logout();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+		baseClass.impersonatePAtoRMU();
+
+		// verify RMU home page
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("verify Reviewer manager Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass
+					.passedStep("Redirect to Reviewer manager home page is displayed in selected project successfully");
+		} else {
+			baseClass.failedStep("Reviewer home page is not displayed ");
+		}
+
+		// verify corresponding SG
+		driver.waitForPageToBeReady();
+		docViewMetaData.getSecurityGroupDropDownButton().waitAndClick(3);
+		baseClass.waitForElement(docViewMetaData.getSecurityGroup(sgName));
+		if (docViewMetaData.getSecurityGroup(sgName).isElementPresent()) {
+			baseClass.passedStep("Corresponding SG in the same project is displayed successfuly");
+		} else {
+			baseClass.failedStep("Sg is not displayed");
+
+		}
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sgpage.deleteSecurityGroups(sgName);
+		loginPage.logout();
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54319
+	 * @throws Exception
+	 * @Description To verify that if user select SG level attribute and click on
+	 *              Save, "belly band"message should be displayed
+	 */
+	@Test(description = "RPMXCON-54319", enabled = true, groups = { "regression" })
+	public void verifyBellyBandWarningMsgDisplayClickingRegenrateBtn() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54319");
+		baseClass.stepInfo(
+				"To verify that if user select SG level attribute and click on Save, \"belly band\"message should be displayed");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(5);
+		baseClass.stepInfo("Use Security Group-Specific Email inclusive check mark is selected");
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+
+		// verify warning message
+		String errormsg = "Use Security Group-Specific Email Inclusive and Email Duplicate data";
+		baseClass.waitForElement(sgpage.getVerifySG_EmailGenerateWarningMsg());
+		String Actualwarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
+		String expectWarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsgText(errormsg).getText();
+		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
+		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
+		driver.waitForPageToBeReady();
+		if (Actualwarningmsg.contains(expectWarningmsg)) {
+			baseClass.passedStep("Warning message is displayed successfully");
+		} else {
+			baseClass.failedStep("Warning msg is not displayed");
+		}
+		softassert.assertAll();
+		sgpage.deleteSecurityGroups(SGname);
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54320
+	 * @throws Exception
+	 * @Description To verify that when PA, unrelease any documents from a Security
+	 *              Group then belly band" reminder should be displayed
+	 */
+	@Test(description = "RPMXCON-54320", enabled = true, groups = { "regression" })
+	public void verifyPAUnReleaseDocsFromSgBellyBandMsgDisplayed() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54320");
+		baseClass.stepInfo(
+				"To verify that when PA, unrelease any documents from a Security Group then belly band\" reminder should be displayed");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		System.out.println(SGname);
+
+		// Release the doc to security group
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.bulkRelease(SGname);
+		driver.waitForPageToBeReady();
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.waitForElement(sgpage.getSelectSecurityGroup());
+		sgpage.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(SGname);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(1));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(3);
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+		sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+		baseClass.passedStep("Generate button is clicked successfully");
+		baseClass.waitForElement(sgpage.getYesButton());
+		sgpage.getYesButton().waitAndClick(2);
+
+		// verify warning message displayed
+		driver.waitForPageToBeReady();
+		sessionsearch.navigateToSessionSearchPageURL();
+		driver.scrollPageToTop();
+		baseClass.waitForElement(sessionsearch.getBulkActionButton());
+		sessionsearch.getBulkActionButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sessionsearch.getBulkReleaseActionDL());
+		sessionsearch.getBulkReleaseActionDL().waitAndClick(10);
+		baseClass.waitForElement(sessionsearch.getBulkRelDefaultSecurityGroup_CheckBox(SGname));
+		sessionsearch.getBulkRelDefaultSecurityGroup_CheckBox(SGname).waitAndClick(10);
+		baseClass.waitForElement(sessionsearch.getBulkRelease_ButtonRelease());
+		sessionsearch.getBulkRelease_ButtonRelease().waitAndClick(20);
+
+		String errormsg = "Please be aware that the Security Group is set to use Security Group-specific attributes for email inclusiveness and email duplicate analysis";
+		baseClass.waitForElement(sgpage.getSG_EmailGenerateWarningMsgBulkRelease());
+		String Actualwarningmsg = sgpage.getSG_EmailGenerateWarningMsgBulkRelease().getText();
+		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
+		String expectWarningmsg = sgpage.getSG_EmailGenerateWarningMsgBulkReleaseText(errormsg).getText();
+		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
+		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
+		driver.waitForPageToBeReady();
+		if (Actualwarningmsg.contains(expectWarningmsg)) {
+			baseClass.passedStep("Warning message is displayed successfully");
+		} else {
+			baseClass.failedStep("Warning msg is not displayed");
+		}
+		softassert.assertAll();
+		sgpage.deleteSecurityGroups(SGname);
+
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54310
+	 * @throws Exception
+	 * @Description To verify that if Security Group is at SG level attribute and if
+	 *              PA release documents to Security Group then belly band" message
+	 *              should be displayed.
+	 */
+	@Test(description = "RPMXCON-54310", enabled = true, groups = { "regression" })
+	public void verifyPAReleaseDocsFromSgBellyBandMsgDisplayed() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54310");
+		baseClass.stepInfo(
+				"To verify that if Security Group is at SG level attribute and if  PA release documents to  Security Group then belly band\" message should be displayed.");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+		String searchname = "New" + UtilityLog.dynamicNameAppender();
+		SavedSearch saveSearch = new SavedSearch(driver);
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		System.out.println(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(1));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(3);
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+		sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+		baseClass.passedStep("Generate button is clicked successfully");
+		baseClass.waitForElement(sgpage.getYesButton());
+		sgpage.getYesButton().waitAndClick(2);
+
+		// basic Saved search
+		sessionsearch.basicContentSearch(Input.testData1);
+		sessionsearch.saveSearch(searchname);
+		saveSearch.savedSearch_Searchandclick(searchname);
+		baseClass.waitForElement(saveSearch.getChooseSearchRadiobtn(searchname));
+		saveSearch.getChooseSearchRadiobtn(searchname);
+		saveSearch.getReleaseIcon().waitAndClick(3);
+		baseClass.waitForElement(saveSearch.getReleaseDocToSG(SGname));
+		saveSearch.getReleaseDocToSG(SGname).waitAndClick(5);
+
+		// Click Release Button and verify warning msg
+		baseClass.waitForElement(saveSearch.getReleaseBtn());
+		saveSearch.getReleaseBtn().waitAndClick(5);
+		String errormsg = "Please be aware that the Security Group is set to use Security Group-specific attributes for email inclusiveness and email duplicate analysis";
+		baseClass.waitForElement(sgpage.getSG_EmailGenerateWarningMsgBulkRelease());
+		String Actualwarningmsg = sgpage.getSG_EmailGenerateWarningMsgBulkRelease().getText();
+		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
+		String expectWarningmsg = sgpage.getSG_EmailGenerateWarningMsgBulkReleaseText(errormsg).getText();
+		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
+		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
+		driver.waitForPageToBeReady();
+		if (Actualwarningmsg.contains(expectWarningmsg)) {
+			baseClass.passedStep("Warning message is displayed successfully");
+		} else {
+			baseClass.failedStep("Warning msg is not displayed");
+		}
+		softassert.assertAll();
+		sgpage.deleteSecurityGroups(SGname);
+	}
+	
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54492
+	 * @throws Exception
+	 * @Description Security Groups Email Analytics InCorrect Warning Message
+	 */
+	@Test(description = "RPMXCON-54492", enabled = true, groups = { "regression" })
+	public void verifyPAChangeProjectLevelSgLevelAttributeSelectedSg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54492");
+		baseClass.stepInfo("Security Groups Email Analytics InCorrect Warning Message");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSelectSecurityGroup());
+		sgpage.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(SGname);
+		baseClass.passedStep("Click on save button without change anything");
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+
+		// verify warning message
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(3);
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+		sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+		baseClass.waitForElement(sgpage.getVerifySG_EmailGenerateWarningMsg());
+		baseClass.stepInfo("Selected email generate button");
+		String warningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		baseClass.stepInfo(" Warning message...." + warningmsg);
+		if (sgpage.getVerifySG_EmailGenerateWarningMsg().isDisplayed()) {
+			baseClass.passedStep(
+					"when user select re-generate security group specific email inclusive & email duplicate data is warning message is displayed ");
+		} else {
+			baseClass.failedStep(
+					" user select re-generate security group specific email inclusive is warning msg not displayed");
+		}
+		sgpage.deleteSecurityGroups(SGname);
+
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54091
+	 * @throws Exception
+	 * @Description Verify after impersonation user can assign/un-assign annotation
+	 *              layer to security group
+	 */
+	@Test(description = "RPMXCON-54091", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserAssignUnassignAnnatoationLayer() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54091");
+		baseClass.stepInfo("Verify after impersonation user can assign/un-assign annotation layer to security group");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		String addName = "test" + Utility.dynamicNameAppender();
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoPA();
+		driver.waitForPageToBeReady();
+		annotationLayer.AddAnnotation(addName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSelectSecurityGroup());
+		sgpage.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(SGname);
+		sgpage.getAssignedAnnotationLayerAddedSg(addName);
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		sgpage.unAssigningTheTagInAnnotation(addName, addName);
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		sgpage.deleteSecurityGroups(SGname);
+		driver.waitForPageToBeReady();
+		annotationLayer.deleteAnnotationByPagination(addName);
+
 	}
 }

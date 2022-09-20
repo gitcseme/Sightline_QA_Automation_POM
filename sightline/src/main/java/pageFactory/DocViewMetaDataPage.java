@@ -430,7 +430,8 @@ public class DocViewMetaDataPage {
 	}
 
 	public Element getCodingNewWindow() {
-		return driver.FindElementById("lblCodingFormName");
+		return driver.FindElementByXPath("//option[contains(text(),'Default Project Coding Form')]");
+		
 	}
 
 	public Element getDocumentMetaDataMaximizeBtn() {
@@ -2262,9 +2263,9 @@ public class DocViewMetaDataPage {
 			getCodingMaximizeBtn().Click();
 
 			driver.waitForPageToBeReady();
-			Set<String> handles = driver.WindowHandles();
+			Set<String> handle1 = driver.WindowHandles();
 			driver.waitForPageToBeReady();
-			Iterator<String> iterating = handles.iterator();
+			Iterator<String> iterating = handle1.iterator();
 			String parentWindow2 = iterating.next();
 			String childwindow2 = iterating.next();
 			driver.switchTo().window(childwindow2);

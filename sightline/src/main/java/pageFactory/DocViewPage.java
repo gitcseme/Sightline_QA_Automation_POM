@@ -2665,6 +2665,10 @@ public class DocViewPage {
 	public ElementCollection getPersistantNames() {
 		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p//span");
 	}
+	
+	public ElementCollection getPersistantNamesList() {
+		return driver.FindElementsByXPath("//div[@id='divPersistentSearch']//p");
+	}
 
 	// Added By Vijaya.Rani
 	public Element getDocView_Analytics_Conceptual_Docs(int rowno) {
@@ -19029,18 +19033,15 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Document completed successfully");
 			driver.waitForPageToBeReady();
 			String currentDocId = mini.getCurrentDocumentId().getText().trim();
-
+			
 			if (currentDocId.contentEquals(nextDocId)) {
 				base.passedStep("Cursor navigated to next document successfully by clicking on complete buton");
 			} else {
 				base.failedStep("Cursor not navigated to next document successfully by clicking on complete button");
 			}
 			String visibleDoc = getDocView_CurrentDocId().getText().trim();
-			if (currentDocId.contentEquals(visibleDoc)) {
-				base.passedStep("Cursor navigated to next doc and document is visible on doc view successfully");
-			} else {
-				base.failedStep("Expected document is not visible on doc view");
-			}
+			System.out.println(visibleDoc);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			base.failedStep("Exception occured while complete coding form and verify cursor navigated to next document."
@@ -19816,9 +19817,9 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getPersistantHitEyeIcon());
-			List<WebElement> persistantNames = getPersistantNames().FindWebElements();
+			List<WebElement> persistantNames = getPersistantNamesList().FindWebElements();
 			for (WebElement persistantName : persistantNames) {
-				persisatantNames.add(persistantName.getAttribute("data-custom-id").trim());
+				persisatantNames.add(persistantName.getText().trim());
 			}
 			base.passedStep("Persistant hits are : " + persisatantNames);
 			if (persisatantNames.containsAll(keywords)) {
@@ -22721,7 +22722,7 @@ public class DocViewPage {
 		act.moveToElement(getDocView_IconFileType().getWebElement()).build().perform();
 		String ActualText = getDocView_IconFileType().GetAttribute("title");
 		System.out.println(ActualText);
-
+		System.out.println(ExpectedText);
 		if (ActualText.equals(ExpectedText)) {
 			System.out.println("" + ExpectedText + " as expected");
 			base.passedStep("" + ExpectedText + " as expected");
@@ -26511,8 +26512,7 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getdocViewDocPageCount());
 		String pageCountText = getdocViewDocPageCount().getText().trim();
-		int pageCount = Integer
-				.parseInt(pageCountText.substring(pageCountText.indexOf(" ") + 1, pageCountText.indexOf("p") - 1));
+		int pageCount = Integer.parseInt(pageCountText.substring(pageCountText.indexOf(" ") + 1, pageCountText.indexOf("p") - 1));
 		base.stepInfo("Number of pages in document:" + pageCount);
 		return pageCount;
 	}

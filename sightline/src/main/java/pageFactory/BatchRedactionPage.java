@@ -2999,4 +2999,52 @@ public class BatchRedactionPage {
 			base.failedStep(tabName + " is not displayed");
 		}
 	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param searchname
+	 * @throws ParseException
+	 */
+	public void verifySearchTree(String searchname) throws ParseException {
+		base.waitForElement(getViewReportForSavedSearch(searchname));
+		String displayedText = getSearchHitCount(searchname).getText();
+		String dataTimeOfSearchGP = displayedText.substring(displayedText.indexOf("(") + 1, displayedText.indexOf(")"));
+
+		if (displayedText.contains("Hit Count") && displayedText.contains("Redactable Documents")
+				&& !dataTimeOfSearchGP.equals("")) {
+			base.stepInfo(displayedText);
+			base.passedStep("Search Tree shows Hit Count {Date of Search} # Redactable Documents ");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Dsecription : verify redact btn is disabled
+	 * @param searchname
+	 * @param clickViewBtn
+	 */
+	public void verifyRedactBtnDisabled(String searchname, boolean clickViewBtn) {
+		if (clickViewBtn) {
+			if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
+				getViewReportForSavedSearch(searchname).waitAndClick(10);
+			} else {
+				loadBatchRedactionPage(Input.mySavedSearch);
+				getViewReportForSavedSearch(searchname).waitAndClick(10);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getPreRedactReportMessage2());
+		String actualRedactDoc = getPreRedactReportMessage2().getText();
+		String expectedRedactCount = "Redactable Docs: 0";
+		if (actualRedactDoc.contains(expectedRedactCount)) {
+			base.passedStep(actualRedactDoc);
+
+			String btnStatus = getPopUpRedactButton().GetAttribute("disabled");
+			base.textCompareEquals(btnStatus, "true", "Redact Button is Disabled", "Redact btn is not as expected");
+		} else {
+			base.failedStep("Redactable Docs: 0 is not Displayed");
+		}
+	}
+
 }

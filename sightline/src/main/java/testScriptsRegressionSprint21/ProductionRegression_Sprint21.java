@@ -83,7 +83,63 @@ public class ProductionRegression_Sprint21 {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 		return users;
 	}
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-48499
+	 * @Description:To verify that after clicking on InComplete button on Production
+	 *                 Components, last selected Native File Group types and Tags
+	 *                 should be displayed
+	 **/
+	@Test(description = "RPMXCON-48499", enabled = true, groups = { "regression" })
+	public void verifySelectedTypesTags_MarkIncomplete(String userName, String password) throws Exception {
+		loginPage.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as" + userName);
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("Test case Id:RPMXCON-48499 Production");
+		base.stepInfo(
+				"To verify that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
 
+		// create tag and folder
+		base =new BaseClass(driver);
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		if (userName.equals(Input.pa1userName)) {
+			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		} else {
+			tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, Input.tagNamePrev);
+		}
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		base.waitForElement(page.getNativeChkBox());
+		page.getNativeChkBox().Click();
+		page.fillingDATSection();
+		page.fillingNativeSectionWithTags(tagname);
+		page.clickComponentMarkCompleteAndIncomplete();
+		base.waitForElement(page.getNativeTab());
+		page.getNativeTab().Click();
+
+		List<String> types = base.availableListofElementsWithAttributeValues(page.getAllNativeFileTypes(), "value");
+		for (String type : types) {
+			System.out.println(type);
+			page.verifyingNativeSectionFileType(type);
+		}
+		base.passedStep("All Native File Types are Selected After Mark InComplete");
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(page.getNativeSelectTags());
+		page.getNativeSelectTags().waitAndClick(10);
+		base.waitForElement(page.getNativeCheckBox(tagname));
+		driver.waitForPageToBeReady();
+		if (page.getNativeCheckBox(tagname).GetAttribute("class").contains("clicked")) {
+			base.passedStep(
+					"Verified - that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
+		} else {
+			base.failedStep(
+					"after clicking on InComplete button on Production Components, last selected Tags not displayed");
+		}
+		loginPage.logout();
+	}
 	/**
 	 * @author NA Testcase No:RPMXCON-47614
 	 * @Description: To Verify ProjectAdmin will be able to enter basic information

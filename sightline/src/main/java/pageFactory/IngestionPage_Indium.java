@@ -6109,6 +6109,7 @@ public class IngestionPage_Indium {
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				base.VerifySuccessMessage("Action done successfully");
+				base.CloseSuccessMsgpopup();
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				for(int j=1;j<=15;j++) {
@@ -6183,6 +6184,7 @@ public class IngestionPage_Indium {
 				base.waitForElement(doneButton());
 				doneButton().waitAndClick(10);
 				base.VerifySuccessMessage("Action done successfully");
+				base.CloseSuccessMsgpopup();
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				getRefreshButton().waitAndClick(5);
@@ -9279,24 +9281,12 @@ public class IngestionPage_Indium {
 		 */
 		
 		public void performMapping(int row,String source,String category,String destination) {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingSourceField(row).Visible();
-				}
-			}), Input.wait30);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMappingSourceField(row));
 			getMappingSourceField(row).selectFromDropdown().selectByVisibleText(source);
-			
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingCategoryField(row).Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getMappingCategoryField(row));
 			getMappingCategoryField(row).selectFromDropdown().selectByVisibleText(category);
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getMappingDestinationField(row).Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getMappingDestinationField(row));
 			getMappingDestinationField(row).selectFromDropdown().selectByVisibleText(destination);
 				
 		}
@@ -9379,26 +9369,13 @@ public class IngestionPage_Indium {
 				base.passedStep("Clicked on OK button to continue without text files");
 			}
 
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getPreviewRun().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getPreviewRun());
 			getPreviewRun().waitAndClick(10);
 
 			if (getApproveMessageOKButton().isElementAvailable(10)) {
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getApproveMessageOKButton().Visible();
-					}
-				}), Input.wait30);
 				getApproveMessageOKButton().waitAndClick(10);
 			}
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getbtnRunIngestion().Visible();
-				}
-			}), Input.wait30);
+			base.waitForElement(getbtnRunIngestion());
 			getbtnRunIngestion().waitAndClick(10);
 
 		}
@@ -10938,8 +10915,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getIngestionDetailPopup(1));
 			getIngestionDetailPopup(1).waitAndClick(10);
 			base.waitForElement(getActionDropdownArrow());
-			driver.scrollingToElementofAPage(getLanguage());
-			for(int i=0;i<=language.length;i++) {
+			for(int i=0;i<language.length;i++) {
 				if(getLanguagePack(language[i]).isElementAvailable(10)) {
 					base.passedStep(language[i] +"language pack available");
 				}

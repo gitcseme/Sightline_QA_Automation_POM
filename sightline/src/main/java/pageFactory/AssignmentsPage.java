@@ -1548,6 +1548,12 @@ public class AssignmentsPage {
 		return driver.FindElementsByXPath(
 				"//label[contains(text(),'Select which Reviewers you want to distribute documents to:')]/parent::div//label[@class='checkbox']/i");
 	}
+	public ElementCollection getHeaders_AssignmentTable() {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHeadInner']/table[@role='grid']/thead/tr/th");
+	}
+	public Element getRowValuesinAssignmentTAble(String assignmentName,int i) {
+		return driver.FindElementByXPath("//td[text()='"+assignmentName+"']/ancestor::tr//td["+i+"]");
+	}
 
 	public AssignmentsPage(Driver driver) {
 
@@ -9789,7 +9795,6 @@ public class AssignmentsPage {
 		getDistributeTab().waitAndClick(5);
 		bc.waitForElement(getSelect2ndUserInDistributeTab());
 		getSelect2ndUserInDistributeTab().waitAndClick(5);
-		bc.CloseSuccessMsgpopup();
 		getAssgn_docsToDistribute().SendKeys(count);
 		getDistributeBtn().waitAndClick(3);
 		bc.stepInfo(count + " Documents are distributed to reviewer successfully");
@@ -10518,7 +10523,18 @@ public class AssignmentsPage {
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	public void assignwithSamplemethod(String assignmentName, String samplemethod, String countToAssign)
+	/**
+	 * @author Jayanthi.ganesan
+	 * @Description-This method will assign documents to assignments using sample
+	 *                   methods and verify the Doc counts assigned in manage
+	 *                   assignment page.
+	 * @param assignmentName
+	 * @param sampleMethod
+	 * @return 
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	public String assignwithSamplemethod(String assignmentName, String samplemethod, String countToAssign)
 			throws NumberFormatException, InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -10530,10 +10546,8 @@ public class AssignmentsPage {
 		if (samplemethod.equalsIgnoreCase("Percentage")) {
 			getsampleMethod().selectFromDropdown().selectByVisibleText("Percent of Selected Docs");
 			getCountToAssign().SendKeys(countToAssign);
-			long PercentageOfDocAssigned = calculatePercentageOfDocAlloted();
-			System.out.println(PercentageOfDocAssigned);
 			bc.stepInfo("Bulk assigned using sample method/Precentage with precentage of " + " doc count  -"
-					+ countToAssign + "% /" + PercentageOfDocAssigned);
+					+ countToAssign + "% ." );
 			getPersistCB_ExistAssgn().waitAndClick(5);
 
 		} else if (samplemethod.equalsIgnoreCase("Count of Selected Docs")) {
@@ -10541,11 +10555,14 @@ public class AssignmentsPage {
 			getCountToAssign().SendKeys(countToAssign);
 			bc.stepInfo(
 					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
+		} else if (samplemethod.equalsIgnoreCase("Parent Level Docs Only")) {
+			getsampleMethod().selectFromDropdown().selectByVisibleText("Parent Level Docs Only");
+			bc.stepInfo(
+					"Bulk assigned using sample method/Count of Selected Docs with" + " doc count  -" + countToAssign);
 		}
 		bc.waitForElement(getSelectAssignmentToBulkAssign(assignmentName));
 		getSelectAssignmentToBulkAssign(assignmentName).waitAndClick(20);
 		getContinueBulkAssign().waitAndClick(15);
-		driver.waitForPageToBeReady();
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
 
@@ -10568,9 +10585,11 @@ public class AssignmentsPage {
 		int ActualDocCount = Integer.parseInt(verifydocsCountInAssgnPage(assignmentName));
 		assertion.assertEquals(ActualDocCount, ExpectedDocCount);
 		bc.passedStep("Sucesfuly verified doc counts assigned in Assignmnets[DocCount found in assignment page is "
-				+ ActualDocCount + "] using " + samplemethod + "");
+				+ ActualDocCount + "] using " + samplemethod + " sample method.");
 
 		assertion.assertAll();
+		
+		return FinalCount;
 	}
 
 	/**
@@ -10866,5 +10885,76 @@ public class AssignmentsPage {
 				totalremainingUnAssignDocsCount, DistributedCountForEachRev };
 		return DocCountDistrRevAndremUnAssignDocsCountAndDistrCountForEachRev;
 	}
+	
+	/**
+	 * @author: Arun Created Date: 19/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the availability of keyword in assignment keywords popup
+	 *               
+	 */
+	public void verifyKeywordsAvailabilityInAssignment(String[] keywords) {
+		bc.waitForElement(getAssgn_Keywordsbutton());
+		getAssgn_Keywordsbutton().waitAndClick(10);
+		bc.waitForElement(getAssgn_Keywordspopup());
+		
+		for(int i=0;i<keywords.length;i++) {
+			if (getKeywordCheckBox(keywords[i]).isElementAvailable(5)) {
+				bc.passedStep("Added keyword available");
+			} else {
+				bc.failedStep("Added keyword not available");
+			}
+		}
+		bc.waitForElement(getKeywordPopUpCancelBtn());
+		getKeywordPopUpCancelBtn().waitAndClick(10);
+		
+	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * returns row  values from assignmetn table [ex -ToDo Count,completed do count] 
+	 */
+	public String getRowValueFromAssignmentTable(String rowName,String assignmentName ) {
+	int index=bc.getIndex(getHeaders_AssignmentTable(), rowName);
+	bc.stepInfo("Value of "+rowName+" for "+assignmentName+"is "+getRowValuesinAssignmentTAble(assignmentName,index).getText());
+	return   getRowValuesinAssignmentTAble(assignmentName,index).getText();
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 */
+	public void uncompleteAllDocs(String assignmentName) {
+		
+		getSelectAssignment(assignmentName).isElementAvailable(2);
+		getSelectAssignment(assignmentName).ScrollTo();
+		getSelectAssignment(assignmentName).Click();
+		driver.scrollPageToTop();
+		getAssignmentActionDropdown().waitAndClick(3);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssgn_ManageRev_Action_UnCompleteAllDocs());
+		getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
 
+		bc.waitForElement(getUnComplePopOutYes());
+		getUnComplePopOutYes().waitAndClick(10);
+		bc.VerifySuccessMessage("All Documents successfully un-completed.");
+		driver.waitForPageToBeReady();
+
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @Description-This method will let the RMU  View All Docs in
+	 *                   DocList option in manage assignment page
+	 */
+	public void ViewAllDocsinDocListBtnINActionDD() {
+		
+		bc.waitForElement(getAssignmentActionDropdown());
+		getAssignmentActionDropdown().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("clicked Action dropdown");
+		if (getAssignmentAction_ViewinDocList().isDisplayed()) {
+			bc.passedStep("View All Docs in DocList option is displayed");
+			getAssignmentAction_ViewinDocList().Click();
+		} else {
+			bc.failedStep("View All Docs in DocList is not displayed in manage assignment page under action dropdown");
+		}
+
+	}
 }

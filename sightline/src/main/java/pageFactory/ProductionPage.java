@@ -3489,6 +3489,16 @@ public class ProductionPage {
 		return driver.FindElementByXPath(
 				"//div[@id='divImageTIFFPHImage_1']//option[contains(text(),'" + fileType + "')]");
 	}
+	public Element getOperatorInPrivGuard(String Operator) {
+		return driver.FindElementByXPath("//div[@id='c-1']//ul//li//a[text()='"+Operator+"']");
+	}
+	public Element getAddRulePrivTag() {
+		return driver.FindElementByXPath("//div[@id='c-2']//button[@id='tagsHelper']");
+	}
+	public Element getInsertQueryBtnInPrivGuard() {
+		return driver.FindElementByXPath("//div[@id='c-2']//a[@id='insertQueryBtn']");
+	}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -7093,16 +7103,13 @@ public class ProductionPage {
 				}
 			}), Input.wait30);
 			getbtnPopupPreviewMarkComplete().waitAndClick(10);
-
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-					return getbtnProductionGuardNext().Enabled();
-				}
-			}), Input.wait30);
-
-			getbtnProductionGuardNext().waitAndClick(5);
-			base.stepInfo("Priv Guard Page section is filled");
 		}
+			driver.waitForPageToBeReady();
+			base.CloseSuccessMsgpopup();
+			base.waitTillElemetToBeClickable(getbtnProductionGuardNext());
+			getbtnProductionGuardNext().waitAndClick(10);
+			base.stepInfo("Priv Guard Page section is filled");
+		
 	}
 
 	/**
@@ -22347,4 +22354,24 @@ public class ProductionPage {
 				}
 			}
 		
+			/**
+			 * @author Brundha.T
+			 * @param tagname
+			 * @param Value
+			 * @param Operator
+			 * Description:Adding rules and operators in privguard section
+			 */
+			public void addingRulesWithOperatorsInPrivGuardSection(String tagname,boolean Value,String Operator) {
+				driver.waitForPageToBeReady();
+				getTagsBtn().waitAndClick(5);
+				base.waitForElement(getTagsHeader());
+				base.waitForElement(selectPrivGuardTag(tagname));
+				selectPrivGuardTag(tagname).waitAndClick(10);
+				base.waitForElement(getInsertQueryBtn());
+				getInsertQueryBtn().waitAndClick(10);
+				if(Value) {
+					getOperator().waitAndClick(5);
+					getOperatorInPrivGuard(Operator).waitAndClick(5);
+				}
+			}
 }

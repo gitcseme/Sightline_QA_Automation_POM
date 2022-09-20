@@ -509,6 +509,10 @@ public class TagsAndFoldersPage {
 	public Element getFolderExpandIcon() {
 		return driver.FindElementByXPath("//div[@id='folderJSTree']/ul/li/i");
 	}
+	// Added by arun
+	public Element getReleaseCancelButton() {
+		return driver.FindElementById("btnReleaseCancel");
+	}
 
 	public TagsAndFoldersPage(Driver driver) {
 
@@ -2951,6 +2955,73 @@ public class TagsAndFoldersPage {
 		} else {
 			base.failedStep("Documents Count is not Displayed");
 		}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 20/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the warning message when tag/folder release without selecting SG               
+	 */
+	public void verifyWarningMessageForTagOrFolderReleaseWithoutSG(String type,String name) {
+		
+		if(type.equalsIgnoreCase("folder")) {
+			base.waitForElement(getFoldersTab());
+			getFoldersTab().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			getFolderName(name).ScrollTo();
+			base.waitForElement(getFolderName(name));
+			getFolderName(name).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitForElement(getFolderActionDropDownArrow());
+			getFolderActionDropDownArrow().waitAndClick(10);
+			base.waitForElement(getBulkReleaseFolder());
+			getBulkReleaseFolder().waitAndClick(10);
+			getBulkRelease_ButtonRelease().waitAndClick(10);
+			base.VerifyWarningMessage("Please select Security Group");
+			base.CloseSuccessMsgpopup();
+			base.waitForElement(getReleaseCancelButton());
+			getReleaseCancelButton().waitAndClick(10);
+		}
+		else if(type.equalsIgnoreCase("tag")) {
+				base.waitForElement(getTagsTab());
+				getTagsTab().waitAndClick(5);
+				driver.scrollingToBottomofAPage();
+				getTagName(name).ScrollTo();
+				base.waitForElement(getTagName(name));
+				getTagName(name).waitAndClick(10);
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				base.waitForElement(getTagActionDropDownArrow());
+				getTagActionDropDownArrow().waitAndClick(10);
+				base.waitForElement(getBulkReleaseAction());
+				getBulkReleaseAction().waitAndClick(10);
+				getBulkRelease_ButtonRelease().waitAndClick(10);
+				base.VerifyWarningMessage("Please select Security Group");
+				base.CloseSuccessMsgpopup();
+				base.waitForElement(getReleaseCancelButton());
+				getReleaseCancelButton().waitAndClick(10);
+			}
+		}
+	
+	/**
+	 * @author: Arun Created Date: 20/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will perform bulk release folder action to SG               
+	 */
+	public void bulkReleaseFolderToSecurityGroup(String securityGroupName) {
+
+		driver.waitForPageToBeReady();
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitForElement(getBulkReleaseFolder());
+		getBulkReleaseFolder().waitAndClick(10);
+		base.waitForElement(getBulkRelOther_CheckBox(securityGroupName));
+		getBulkRelOther_CheckBox(securityGroupName).waitAndClick(10);
+		base.waitForElement(getBulkRelease_ButtonRelease());
+		getBulkRelease_ButtonRelease().waitAndClick(10);
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Records saved successfully");
+
 	}
 
 }

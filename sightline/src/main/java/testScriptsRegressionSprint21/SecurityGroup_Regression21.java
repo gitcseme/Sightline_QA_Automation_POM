@@ -261,9 +261,6 @@ public class SecurityGroup_Regression21 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 	
@@ -454,9 +451,7 @@ public class SecurityGroup_Regression21 {
 		baseClass.stepInfo(
 				"Verify that if SAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.");
 		
-		UserManagement userManage = new UserManagement(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
-		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		SoftAssert softassert = new SoftAssert();
 		
 		// Login As SA
@@ -578,7 +573,6 @@ public class SecurityGroup_Regression21 {
 				"To verify that if user select option 'Use Security Group specific Email Inclusive and Email Duplicate data', belly band message should be displayed.");
 
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
 		savedsearch = new SavedSearch(driver);
 		SoftAssert softassert = new SoftAssert();
 
@@ -589,10 +583,6 @@ public class SecurityGroup_Regression21 {
 		sgpage.navigateToSecurityGropusPageURL();
 		baseClass.stepInfo("navigated to security group as expected");
 		driver.waitForPageToBeReady();
-		sgpage.createSecurityGroups(SGname);
-		baseClass.stepInfo(SGname + "is created successfully");
-		baseClass.waitForElement(sgpage.getSecurityGroupList());
-		sgpage.getSecurityGroupList().selectFromDropdown().selectByVisibleText(SGname);
 		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
 		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(5);
 		baseClass.stepInfo("Use Security Group-Specific Email inclusive check mark is selected");
@@ -603,18 +593,12 @@ public class SecurityGroup_Regression21 {
 
 		// verify warning message
 		String Actualwarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
 		String expectWarningmsg = "You have elected to regenerate and overwrite all previous values for the four Security Group-specific email inclusiveness and email duplicate fields. This will wipe away all prior stored data for these attributes, and will overlay new values for each record currently in the Security Group. No prior work product or logic will be undone, which may mean that your Assignments and workflow may need to be altered. Do you want to proceed?";
 		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
 		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
 		baseClass.passedStep("Warning message is displayed successfully");
-		baseClass.getNOBtn().Click();
-		sgpage.getSG_AnnSaveButton().waitAndClick(5);
-		baseClass.VerifySuccessMessage("Your selections were saved successfully");
-		baseClass.CloseSuccessMsgpopup();
-		baseClass.stepInfo("Successfully Clicked Save Button");
 		softassert.assertAll();
-
-		sgpage.deleteSecurityGroups(SGname);
 		loginPage.logout();
 	}
 	
@@ -649,6 +633,55 @@ public class SecurityGroup_Regression21 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-54740 Date:9/19/2022
+	 * @Description:Verify that RMU can view the existing Proudction Export details
+	 */
+	@Test(description = "RPMXCON-54740", enabled = true, groups = { "regression" })
+
+	public void verifyingNativeFilesInGenreratedExport() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-54740-from Security Groups");
+		base.stepInfo("Verify that RMU can view the existing Proudction Export details");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = Input.randomText + Utility.dynamicNameAppender();
+		String exportName1 = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		
+		page.navigatingToProductionHomePage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName1);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(page.getProductionNameLink(exportName), exportName);
+		base.ValidateElement_Presence(page.getProductionNameLink(exportName1), exportName1);
+		baseClass.passedStep("RMU can view the existing Proudction Export details");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

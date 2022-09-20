@@ -356,7 +356,7 @@ public class O365_Regression_2_2 {
 	 * @throws Exception
 	 */
 	@Test(description = "RPMXCON-60970", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public String verifyUserAbleToSaveCollectionAsDraft(String username, String password, String fullname)
+	public void verifyUserAbleToSaveCollectionAsDraft(String username, String password, String fullname)
 			throws Exception {
 		HashMap<String, String> colllectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -402,7 +402,6 @@ public class O365_Regression_2_2 {
 
 		// Logout
 		login.logout();
-		return dataName;
 	}
 
 	/**
@@ -463,17 +462,35 @@ public class O365_Regression_2_2 {
 		String expectedErrorMsg = "16001000009 : Collection already exists. Please enter unique name.";
 		String collectionNewName = "Collection" + Utility.dynamicNameAppender();
 
-		// Create Collection
-		String collectionName = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
-				"Project Administrator");
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Drafts";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		// Login as User
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		base.stepInfo("--------------------------------------------");
 		base.stepInfo("Test case Id: RPMXCON-60649 - O365");
 		base.stepInfo(
 				"Verify that error message should be displayed if user adds collection name same as of existing collection");
 
-		// Login as User
-		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Pre-Requisite
+		// Add DataSets To draft
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, null, "Button", 3, true, "");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String collectionName = base.returnKey(colllectionData, "", false);
 
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -504,7 +521,7 @@ public class O365_Regression_2_2 {
 		// navigate to Collection page and Deletion
 		base.stepInfo("Initiate collection  deletion");
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
-		collection.deleteUsingCollectionName(collectionName,true);
+		collection.deleteUsingCollectionName(collectionName, true);
 
 		// Logout
 		login.logout();

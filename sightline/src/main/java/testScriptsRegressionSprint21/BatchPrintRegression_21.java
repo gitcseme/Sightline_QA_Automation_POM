@@ -35,6 +35,7 @@ public class BatchPrintRegression_21 {
 	BatchPrintPage batchPrint;
 	SessionSearch session;
 	TagsAndFoldersPage tagsAndFolderPage;
+	ProductionPage page;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -60,6 +61,7 @@ public class BatchPrintRegression_21 {
 		batchPrint = new BatchPrintPage(driver);
 		session = new SessionSearch(driver);
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		page = new ProductionPage(driver);
 	}
 
 	@DataProvider(name = "Users")
@@ -319,34 +321,6 @@ public class BatchPrintRegression_21 {
 
 	/**
 	 * @Author Jeevitha
-	 * @Description : Generate Production For Batch Print
-	 * @param folderName
-	 * @return
-	 * @throws Exception
-	 */
-	@Test(enabled = true, groups = { "regression" })
-	public String preRequisiteGenerateProduction(String folderName) throws Exception {
-		String prefixID = "A_" + Utility.dynamicNameAppender();
-		String suffixID = "_P" + Utility.dynamicNameAppender();
-
-		// Generate Production with TIFF
-		String productionname = "P" + Utility.dynamicNameAppender();
-		ProductionPage page = new ProductionPage(driver);
-		String beginningBates = page.getRandomNumber(2);
-		System.out.println(productionname);
-		page.selectingDefaultSecurityGroup();
-		page.addANewProduction(productionname);
-		page.fillingDATSection();
-		page.fillingTIFFSectionwithBurnRedaction();
-		page.navigateToNextSection();
-		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, folderName, productionname,
-				beginningBates);
-
-		return productionname;
-	}
-
-	/**
-	 * @Author Jeevitha
 	 * @Description : Validate Batch Print Sorting docs by LastEditDate [Prior
 	 *              Productions (TIFFs/PDFs)]with one PDF for all docs in ascending
 	 *              order [RPMXCON-49188]
@@ -404,7 +378,7 @@ public class BatchPrintRegression_21 {
 		List<String> docFileNameList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocNameList);
 
 		// Generate Production with TIFF
-		String productionname = preRequisiteGenerateProduction(Folder);
+		String productionname = page.preRequisiteGenerateProduction(Folder);
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -503,7 +477,7 @@ public class BatchPrintRegression_21 {
 		List<String> docIDList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocIdList);
 
 		// Generate Production with TIFF
-		String productionname = preRequisiteGenerateProduction(Folder);
+		String productionname = page.preRequisiteGenerateProduction(Folder);
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -604,7 +578,7 @@ public class BatchPrintRegression_21 {
 		List<String> docIDList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocIdList);
 
 		// Generate Production with TIFF
-		String productionname = preRequisiteGenerateProduction(Folder);
+		String productionname = page.preRequisiteGenerateProduction(Folder);
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -705,7 +679,7 @@ public class BatchPrintRegression_21 {
 		List<String> docFileNameList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocNameList);
 
 		// Generate Production with TIFF
-		String productionname = preRequisiteGenerateProduction(Folder);
+		String productionname = page.preRequisiteGenerateProduction(Folder);
 
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
@@ -801,8 +775,9 @@ public class BatchPrintRegression_21 {
 		List<String> actualdocNameList = doclist.availableListofElementsForDocList(doclist.GetColumnData(index));
 
 		// Generate Production with TIFF
-		String productionname = preRequisiteGenerateProduction(Folder);
-
+		String productionname = page.preRequisiteGenerateProduction(Folder);
+		baseClass.waitUntilFileDownload();
+		
 		// Select Tag & Production
 		batchPrint.navigateToBatchPrintPage();
 		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
@@ -840,7 +815,7 @@ public class BatchPrintRegression_21 {
 
 		loginPage.logout();
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
