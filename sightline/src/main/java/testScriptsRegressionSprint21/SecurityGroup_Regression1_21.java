@@ -26,6 +26,7 @@ import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -45,6 +46,7 @@ public class SecurityGroup_Regression1_21 {
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
 	ProjectPage projectPage;
+	TagsAndFoldersPage tagsAndFolderPage;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -264,7 +266,87 @@ public class SecurityGroup_Regression1_21 {
 				"Newly created annotation layer is displayed though the System Admin user who created the project, annotation layer is in-active");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53909
+	 * Description :verify that warning message is displayed if user release the tag
+	 * without selecting any security group. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-53909",enabled = true, groups = { "regression" })
+	public void verifyReleaseTagWarningMessage() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53909");
+		baseClass.stepInfo("Verify warning message for releasing tag without selecting SG");
+		String tagName = "tag"+Utility.dynamicNameAppender();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTag(tagName, Input.securityGroup);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+		baseClass.stepInfo("Verify warning message for releasing tag");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.verifyWarningMessageForTagOrFolderReleaseWithoutSG("tag", tagName);
+		baseClass.passedStep("Warning message displayed when releasing tag without selecting any Security Group");
+		loginPage.logout();
+		
+	}
 
+	/**
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53910
+	 * Description :verify that warning message is displayed if user release the folder without 
+	 * selecting any security group. 
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-53910",enabled = true, groups = { "regression" })
+	public void verifyReleaseFolderWarningMessage() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53910");
+		baseClass.stepInfo("Verify warning message for releasing folder without selecting SG");
+		String folderName = "folder"+Utility.dynamicNameAppender();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(folderName, Input.securityGroup);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(folderName);
+		baseClass.stepInfo("Verify warning message for releasing folder");
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
+		tagsAndFolderPage.verifyWarningMessageForTagOrFolderReleaseWithoutSG("folder", folderName);
+		baseClass.stepInfo("Select security group and release");
+		tagsAndFolderPage.bulkReleaseFolderToSecurityGroup(Input.securityGroup);
+		baseClass.passedStep("Warning message displayed when releasing folder without selecting any Security Group");
+		loginPage.logout();
+		
+	}
+	
+	/**
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53674
+	 * Description :Verify that Project Admin can release document for the 
+	 * selected security group from “Bulk Release" functionality.
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-53674",enabled = true, groups = { "regression" })
+	public void verifyBulkReleaseFunctionality() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-53674");
+		baseClass.stepInfo("Verify PA can release document for security group from bulk release");
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		baseClass.stepInfo("perform search and add search result");
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		baseClass.stepInfo("Select security group and perform bulk release");
+		sessionSearch.bulkRelease(Input.securityGroup);
+		baseClass.passedStep("PA user can release documents for the selected security group");
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
