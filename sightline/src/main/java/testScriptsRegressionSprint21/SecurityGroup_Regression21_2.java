@@ -17,6 +17,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
@@ -564,5 +565,100 @@ public class SecurityGroup_Regression21_2 {
 		}
 		softassert.assertAll();
 		sgpage.deleteSecurityGroups(SGname);
+	}
+	
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54492
+	 * @throws Exception
+	 * @Description Security Groups Email Analytics InCorrect Warning Message
+	 */
+	@Test(description = "RPMXCON-54492", enabled = true, groups = { "regression" })
+	public void verifyPAChangeProjectLevelSgLevelAttributeSelectedSg() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54492");
+		baseClass.stepInfo("Security Groups Email Analytics InCorrect Warning Message");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Login as in  " + Input.pa1FullName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSelectSecurityGroup());
+		sgpage.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(SGname);
+		baseClass.passedStep("Click on save button without change anything");
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+
+		// verify warning message
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
+		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(3);
+		baseClass.waitForElement(sgpage.getSG_GenerateEmailButton());
+		sgpage.getSG_GenerateEmailButton().waitAndClick(3);
+		baseClass.waitForElement(sgpage.getVerifySG_EmailGenerateWarningMsg());
+		baseClass.stepInfo("Selected email generate button");
+		String warningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		baseClass.stepInfo(" Warning message...." + warningmsg);
+		if (sgpage.getVerifySG_EmailGenerateWarningMsg().isDisplayed()) {
+			baseClass.passedStep(
+					"when user select re-generate security group specific email inclusive & email duplicate data is warning message is displayed ");
+		} else {
+			baseClass.failedStep(
+					" user select re-generate security group specific email inclusive is warning msg not displayed");
+		}
+		sgpage.deleteSecurityGroups(SGname);
+
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-54091
+	 * @throws Exception
+	 * @Description Verify after impersonation user can assign/un-assign annotation
+	 *              layer to security group
+	 */
+	@Test(description = "RPMXCON-54091", enabled = true, groups = { "regression" })
+	public void verifyAfterImpersonationUserAssignUnassignAnnatoationLayer() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54091");
+		baseClass.stepInfo("Verify after impersonation user can assign/un-assign annotation layer to security group");
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		AnnotationLayer annotationLayer = new AnnotationLayer(driver);
+		String addName = "test" + Utility.dynamicNameAppender();
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login as SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoPA();
+		driver.waitForPageToBeReady();
+		annotationLayer.AddAnnotation(addName);
+		sgpage.navigateToSecurityGropusPageURL();
+		baseClass.stepInfo("navigated to security group as expected");
+		sgpage.createSecurityGroups(SGname);
+		baseClass.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(sgpage.getSelectSecurityGroup());
+		sgpage.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(SGname);
+		sgpage.getAssignedAnnotationLayerAddedSg(addName);
+		baseClass.waitForElement(sgpage.getSG_AnnSaveButton());
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		sgpage.unAssigningTheTagInAnnotation(addName, addName);
+		sgpage.getSG_AnnSaveButton().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Your selections were saved successfully");
+		baseClass.CloseSuccessMsgpopup();
+		sgpage.deleteSecurityGroups(SGname);
+		driver.waitForPageToBeReady();
+		annotationLayer.deleteAnnotationByPagination(addName);
+
 	}
 }
