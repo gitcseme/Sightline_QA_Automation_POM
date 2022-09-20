@@ -649,6 +649,55 @@ public class SecurityGroup_Regression21 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Brundha TESTCASE No:RPMXCON-54740 Date:9/19/2022
+	 * @Description:Verify that RMU can view the existing Proudction Export details
+	 */
+	@Test(description = "RPMXCON-54740", enabled = true, groups = { "regression" })
+
+	public void verifyingNativeFilesInGenreratedExport() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-54740-from Security Groups");
+		base.stepInfo("Verify that RMU can view the existing Proudction Export details");
+
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String exportName = Input.randomText + Utility.dynamicNameAppender();
+		String exportName1 = Input.randomText + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		String subBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		page.fillingExportNumberingAndSortingPage(prefixID, suffixID, subBates);
+		page.navigateToNextSection();
+		
+		page.navigatingToProductionHomePage();
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		page.addANewExport(exportName1);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.navigateToNextSection();
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.selectDefaultExport();
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(page.getProductionNameLink(exportName), exportName);
+		base.ValidateElement_Presence(page.getProductionNameLink(exportName1), exportName1);
+		baseClass.passedStep("RMU can view the existing Proudction Export details");
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

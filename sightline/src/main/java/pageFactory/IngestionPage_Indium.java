@@ -6109,6 +6109,7 @@ public class IngestionPage_Indium {
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				base.VerifySuccessMessage("Action done successfully");
+				base.CloseSuccessMsgpopup();
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				for(int j=1;j<=15;j++) {
@@ -6183,6 +6184,7 @@ public class IngestionPage_Indium {
 				base.waitForElement(doneButton());
 				doneButton().waitAndClick(10);
 				base.VerifySuccessMessage("Action done successfully");
+				base.CloseSuccessMsgpopup();
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
 				getRefreshButton().waitAndClick(5);
@@ -10913,8 +10915,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getIngestionDetailPopup(1));
 			getIngestionDetailPopup(1).waitAndClick(10);
 			base.waitForElement(getActionDropdownArrow());
-			driver.scrollingToElementofAPage(getLanguage());
-			for(int i=0;i<=language.length;i++) {
+			for(int i=0;i<language.length;i++) {
 				if(getLanguagePack(language[i]).isElementAvailable(10)) {
 					base.passedStep(language[i] +"language pack available");
 				}

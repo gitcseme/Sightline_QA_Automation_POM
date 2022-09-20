@@ -18,11 +18,13 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.BatchRedactionPage;
+import pageFactory.DocViewPage;
 import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -96,6 +98,87 @@ public class BatchRedactionRegression_21 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify when user selects the saved search with work
+	 *              product/comment/remark document count for batch redaction
+	 *              [RPMXCON-53388]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-53388", enabled = true, groups = { "regression" })
+	public void verifyRedactBtnIsDisabledForWpComment() throws Exception {
+		String wpFolder = "Search1" + Utility.dynamicNameAppender();
+		String wpTag = "Search2" + Utility.dynamicNameAppender();
+		String wpRedactTag = "Search3" + Utility.dynamicNameAppender();
+		String commentSearch = "Comment" + Utility.dynamicNameAppender();
+
+		String folder = "Folder" + Utility.dynamicNameAppender();
+		String tag = "Tag" + Utility.dynamicNameAppender();
+		String docComment1 = "Comment" + Utility.dynamicNameAppender();
+
+		DocViewPage docview = new DocViewPage(driver);
+		String[] searchList = { wpFolder, wpTag, wpRedactTag, commentSearch };
+
+		// Login as a User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Logged In As : RMU");
+
+		base.stepInfo("Test case Id: RPMXCON-53388 Batch Redaction");
+		base.stepInfo(
+				"Verify when user selects the saved search with work product/comment/remark document count for batch redactionF");
+
+		//Add redacion tag, bulk tag, bulk folder, And Add comment 
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(tag);
+		session.bulkFolderWithOutHitADD(folder);
+		session.ViewInDocViewWithoutPureHit();
+		docview.addCommentAndSave(docComment1, true, 1);
+
+		//configure search with comment
+		base.selectproject();
+		session.getCommentsOrRemarksCount(Input.documentComments, docComment1);
+		session.saveSearch(commentSearch);
+
+		// configure workProduct Folder
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("folder", folder, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpFolder);
+
+		// configure workProduct Tag
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("tag", tag, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpTag);
+
+		// configure workProduct Redaction
+		base.selectproject();
+		session.switchToWorkproduct();
+		session.workProductSearch("redactions", Input.defaultRedactionTag, false);
+		session.saveAndReturnPureHitCount();
+		driver.scrollPageToTop();
+		session.saveSearch(wpRedactTag);
+
+		for (int i = 0; i < searchList.length; i++) {
+			// Navigate to Batch redaction & verify Analyze Button
+			batch.performAnalysisGroupForRedcation(searchList[i], null, 0, false, true);
+
+			// verify search hit count , Readact doc
+			batch.verifySearchTree(searchList[i]);
+
+			// verify readct btn disabled
+			batch.verifyRedactBtnDisabled(searchList[i], true);
+
+			saveSearch.deleteSearch(searchList[i], Input.mySavedSearch, "Yes");
+		}
+
+		// logout
+		login.logout();
+	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
