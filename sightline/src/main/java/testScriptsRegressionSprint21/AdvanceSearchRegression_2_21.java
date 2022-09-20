@@ -92,8 +92,8 @@ public class AdvanceSearchRegression_2_21 {
 	 *              Proximity with Left double quotes only and combined with other
 	 *              criteria in Advanced Search Query Screen. RPMXCON-57300
 	 */
-	@Test(description = "RPMXCON-57300", enabled = true, dataProvider = "invaildProximitySearchQueriesLeftQuotesOnly", groups = {
-			"regression" }, priority = 6)
+//   @Test(description = "RPMXCON-57300", enabled = true, dataProvider = "invaildProximitySearchQueriesLeftQuotesOnly", groups = {
+//			"regression" }, priority = 6)
 	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingLeftDoubleQuoteOnly(String[] searches,
 			String[] operator) throws InterruptedException {
 
@@ -139,8 +139,8 @@ public class AdvanceSearchRegression_2_21 {
 	 *              Proximity with Right double quotes only and combined with other
 	 *              criteria in Advanced Search Query Screen. RPMXCON-57301
 	 */
-	@Test(description = "RPMXCON-57301", enabled = true, dataProvider = "invaildProximitySearchQueriesRightQuotesOnly", groups = {
-			"regression" })
+	//@Test(description = "RPMXCON-57301", enabled = true, dataProvider = "invaildProximitySearchQueriesRightQuotesOnly", groups = {
+	//		"regression" })
 	public void verifyBellyBandMessageForSearchQueriesWithOperatorHavingRightDoubleQuoteOnly(String searchString1,
 			String searchString2, String operator) throws InterruptedException {
 
@@ -395,7 +395,8 @@ public class AdvanceSearchRegression_2_21 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		System.out.println("**Executed Advanced search AdvanceSearchRegression_2_21**");
+		
+		System.out.println("**Executed Advanced search Regression2_21**");
 	}
 
 }
