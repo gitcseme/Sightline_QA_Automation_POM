@@ -2615,6 +2615,7 @@ public void popOutCodingFormChildWindow() {
 			driver.waitForPageToBeReady();
 			base.waitForElement(getRedactedPage());
 			Actions actions = new Actions(driver.getWebDriver());
+			base.waitTime(10);
 			actions.moveToElement(getDocView_Redactrec_textarea().getWebElement()).click();
 			actions.build().perform();
 			if (isSavedFlag) {
@@ -4028,8 +4029,10 @@ public void popOutCodingFormChildWindow() {
 		Actions actions = new Actions(driver.getWebDriver());
 		redactionIcon().waitAndClick(30);
 		driver.waitForPageToBeReady();
+		base.waitTime(15);
 		textSelectionRedactionIcon().waitAndClick(10);
 		driver.waitForPageToBeReady();
+		base.waitTime(5);
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
