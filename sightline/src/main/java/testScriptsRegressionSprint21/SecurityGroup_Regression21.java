@@ -261,9 +261,6 @@ public class SecurityGroup_Regression21 {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-
-		tagsAndFolderPage = new TagsAndFoldersPage(driver);
-		tagsAndFolderPage.DeleteTagWithClassification(tagname, Input.securityGroup);
 		loginPage.logout();
 	}
 	
@@ -454,9 +451,7 @@ public class SecurityGroup_Regression21 {
 		baseClass.stepInfo(
 				"Verify that if SAU impersonate as RMU,and changes the Project from header drop down should take to Default SG in the selected project.");
 		
-		UserManagement userManage = new UserManagement(driver);
 		DomainDashboard domainDash = new DomainDashboard(driver);
-		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
 		SoftAssert softassert = new SoftAssert();
 		
 		// Login As SA
@@ -578,7 +573,6 @@ public class SecurityGroup_Regression21 {
 				"To verify that if user select option 'Use Security Group specific Email Inclusive and Email Duplicate data', belly band message should be displayed.");
 
 		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
 		savedsearch = new SavedSearch(driver);
 		SoftAssert softassert = new SoftAssert();
 
@@ -589,10 +583,6 @@ public class SecurityGroup_Regression21 {
 		sgpage.navigateToSecurityGropusPageURL();
 		baseClass.stepInfo("navigated to security group as expected");
 		driver.waitForPageToBeReady();
-		sgpage.createSecurityGroups(SGname);
-		baseClass.stepInfo(SGname + "is created successfully");
-		baseClass.waitForElement(sgpage.getSecurityGroupList());
-		sgpage.getSecurityGroupList().selectFromDropdown().selectByVisibleText(SGname);
 		baseClass.waitForElement(sgpage.getSG_GenerateEmailRadioButton(2));
 		sgpage.getSG_GenerateEmailRadioButton(2).waitAndClick(5);
 		baseClass.stepInfo("Use Security Group-Specific Email inclusive check mark is selected");
@@ -603,18 +593,12 @@ public class SecurityGroup_Regression21 {
 
 		// verify warning message
 		String Actualwarningmsg = sgpage.getVerifySG_EmailGenerateWarningMsg().getText();
+		baseClass.stepInfo("Actual Warning message...." + Actualwarningmsg);
 		String expectWarningmsg = "You have elected to regenerate and overwrite all previous values for the four Security Group-specific email inclusiveness and email duplicate fields. This will wipe away all prior stored data for these attributes, and will overlay new values for each record currently in the Security Group. No prior work product or logic will be undone, which may mean that your Assignments and workflow may need to be altered. Do you want to proceed?";
 		baseClass.stepInfo("Expected warning message..." + expectWarningmsg);
 		softassert.assertEquals(Actualwarningmsg, expectWarningmsg);
 		baseClass.passedStep("Warning message is displayed successfully");
-		baseClass.getNOBtn().Click();
-		sgpage.getSG_AnnSaveButton().waitAndClick(5);
-		baseClass.VerifySuccessMessage("Your selections were saved successfully");
-		baseClass.CloseSuccessMsgpopup();
-		baseClass.stepInfo("Successfully Clicked Save Button");
 		softassert.assertAll();
-
-		sgpage.deleteSecurityGroups(SGname);
 		loginPage.logout();
 	}
 	

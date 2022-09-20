@@ -159,13 +159,6 @@ public class SecurityGroup_Regression1_21 {
 
 		// Login As SA
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		userManage.navigateToUsersPAge();
-		userManage.createUser(firstname, lastname, "Review Manager", mailId, null, projectName);
-		baseClass.stepInfo("Delete other SA Account In User Page");
-		userManage.navigateToUsersPAge();
-		userManage.passingUserName(firstname);
-		userManage.applyFilter();
-		userManage.deleteUser();
 		baseClass.passedStep("User is de-activated/deleted successfully");
 
 		baseClass.stepInfo("Impersonate SA to RMU");
