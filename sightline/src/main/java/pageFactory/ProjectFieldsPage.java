@@ -438,6 +438,16 @@ public class ProjectFieldsPage {
 	 * @param fieldName(Name of the applied filter)
 	 */
 	public void validateFilterFieldsByContainsFieldName(String fieldName) {
+		try {
+			driver.waitForPageToBeReady();
+		base.waitForElement(getFiltersByTextField());
+		getFiltersByTextField().SendKeys(fieldName);
+		getApplyButton().Click();
+	}catch (Exception e) {
+		base.failedStep("Exception occcured while appling filter by filter name" + e.getMessage());
+		e.printStackTrace();
+	}
+		
 		base.waitForElementCollection(getFieldNames());
 		for (WebElement fieldNamesAfterFilter : getFieldNames().FindWebElements()) {
 			if (!fieldNamesAfterFilter.getText().contains(fieldName)) {

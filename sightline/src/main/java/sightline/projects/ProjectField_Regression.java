@@ -106,8 +106,8 @@ public class ProjectField_Regression {
 		baseClass.stepInfo("Verify that after entering 'Filter Fields By' and on click of 'Apply' should search Project Fields.");
 		utility = new Utility(driver);
 		String fieldName = "Test" +  Utility.dynamicNameAppender();
-		String germanLanguage="German - Germany";
-		String englishLanguage="English - United States";
+//		String germanLanguage="German - Germany";
+//		String englishLanguage="English - United States";
 		
 		baseClass.stepInfo("Step 1: Login as Project Admin");
 		loginPage = new LoginPage(driver);
@@ -124,20 +124,20 @@ public class ProjectField_Regression {
 		baseClass.stepInfo("Verify filter return no data");
 		projectFieldsPage.verifyfilterReturnNoData();
 		
-		baseClass.stepInfo("Step 3:change localization to German");
-		loginPage.editProfile(germanLanguage);
+//		baseClass.stepInfo("Step 3:change localization to German");
+//		loginPage.editProfile(germanLanguage);
 		
-		baseClass.stepInfo("verify text field and apply button are localise to German");
-		projectFieldsPage.verifyfilterLabelApplyButtonLocaliseToGerman();
+//		baseClass.stepInfo("verify text field and apply button are localise to German");
+//		projectFieldsPage.verifyfilterLabelApplyButtonLocaliseToGerman();
 		
-		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
-		projectFieldsPage.applyFilterByFilterName(fieldName);
+//		baseClass.stepInfo(" Enter the text in 'Filter Fields By' and click on Apply");
+//		projectFieldsPage.applyFilterByFilterName(fieldName);
 		
-		baseClass.stepInfo("Verify filter return no data after localised to german");
-		projectFieldsPage.verifyfilterReturnNoDataGerman();
+//		baseClass.stepInfo("Verify filter return no data after localised to german");
+//		projectFieldsPage.verifyfilterReturnNoDataGerman();
 		
-		baseClass.stepInfo("Change localization to English");
-		loginPage.editProfile(englishLanguage);
+//		baseClass.stepInfo("Change localization to English");
+//		loginPage.editProfile(englishLanguage);
 		loginPage.logout();
 	}
 	
@@ -213,7 +213,7 @@ public class ProjectField_Regression {
 		baseClass.stepInfo("Verify that when filter applied user edits a project field and 'saves' the edit, the application should be on the same \"page number\", where the user picked the field to edit");
 		utility = new Utility(driver);
 		String filterValue="data";
-		String fieldName =  filterValue+  Utility.dynamicNameAppender();
+		String fieldName =  filterValue+Utility.dynamicNameAppender();
 		String fieldDescription= "Edit"+Utility.dynamicNameAppender();
 		
 		baseClass.stepInfo("Step 1: Login as Project Admin");
@@ -232,7 +232,7 @@ public class ProjectField_Regression {
 		projectFieldsPage.applyFilterByFilterName(filterValue);
 		
 		baseClass.stepInfo("verify All field Names in project grid Contains filter value");
-		projectFieldsPage.validateFilterFieldsByContainsFieldName(filterValue);
+		projectFieldsPage.validateFilterFieldsByContainsFieldName(fieldName);
 		
 		baseClass.stepInfo("Step 4 :Navigate to field avaliable page number");
 		projectFieldsPage.navigateTofieldPageInProjectFieldTable(fieldName);

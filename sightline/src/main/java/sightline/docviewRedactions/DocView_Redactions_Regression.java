@@ -239,7 +239,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 
 		baseClass.stepInfo("Adding Text redaction");
-		docViewRedact.redactTextUsingOffset();
+		docViewRedact.RedactTextInDocView(1, 1, 10, 10);
 		docViewRedact.selectingRectangleRedactionTag();
 
 		baseClass.passedStep("Text redaction is added successfully");
@@ -329,7 +329,7 @@ public class DocView_Redactions_Regression {
 		sessionsearch.ViewInDocView();
 
 		baseClass.stepInfo("Adding Text redaction");
-		docViewRedact.redactTextUsingOffset();
+		docViewRedact.RedactTextInDocView(1, 1, 10, 10);
 		docViewRedact.selectingRectangleRedactionTag();
 
 		baseClass.passedStep("Text redaction is added successfully");
