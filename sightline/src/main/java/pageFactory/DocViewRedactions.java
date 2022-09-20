@@ -1325,7 +1325,9 @@ public Element hiddenInfoIconToolTip() {
 			}
 		}), Input.wait30);
 		rectangleClick().waitAndClick(8);
-
+		if(deleteRedactioBtn().isElementAvailable(2)) {
+			deleteRedactioBtn().waitAndClick(5);
+		}
 		actions.moveToElement(getDocView_Redactrec_textarea().getWebElement(), x, y).clickAndHold()
 				.moveByOffset(offsetx, offsety).release().build().perform();
 
