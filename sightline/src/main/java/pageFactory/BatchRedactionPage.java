@@ -3025,8 +3025,12 @@ public class BatchRedactionPage {
 	 */
 	public void verifyRedactBtnDisabled(String searchname, boolean clickViewBtn) {
 		if (clickViewBtn) {
-			base.waitForElement(getViewReportForSavedSearch(searchname));
-			getViewReportForSavedSearch(searchname).waitAndClick(10);
+			if (getViewReportForSavedSearch(searchname).isElementAvailable(20)) {
+				getViewReportForSavedSearch(searchname).waitAndClick(10);
+			} else {
+				loadBatchRedactionPage(Input.mySavedSearch);
+				getViewReportForSavedSearch(searchname).waitAndClick(10);
+			}
 		}
 
 		driver.waitForPageToBeReady();
@@ -3043,5 +3047,4 @@ public class BatchRedactionPage {
 		}
 	}
 
-	
 }
