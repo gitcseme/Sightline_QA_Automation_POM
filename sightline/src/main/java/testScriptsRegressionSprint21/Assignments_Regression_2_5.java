@@ -178,7 +178,57 @@ public class Assignments_Regression_2_5 {
 		baseClass.passedStep("All keywords related to assignment highlighted");
 		loginPage.logout();
 	}
-	
+	@Test(description = "RPMXCON-53716", enabled = true, groups = { "regression" })
+	public void verifyUncompleteAllDocs() throws Exception {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String count ="2";
+
+		SoftAssert sa = new SoftAssert();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id: RPMXCON-53716");
+		baseClass.stepInfo("To verify that RMU is able to mark as Incompleted for the remaining documents in the Assignments");
+		
+		baseClass.stepInfo("***Creating assignment and bulk assign docs and distributing docs to user*");
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		int purehit =sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+		agnmt.distributeTheGivenDocCountToReviewer(count);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Logged in as reviewer user");
+		baseClass.stepInfo("*Completing "+count+" docs from distributed documents for assignment-"+assignmentName+" **");
+		// navigating from Dashboard to DocView
+		DocViewPage docViewPage = new DocViewPage(driver);
+		docViewPage.selectAssignmentfromDashborad(assignmentName);
+		// Completing the  documents
+		driver.waitForPageToBeReady();
+	    docViewPage.CompleteTheDocumentInMiniDocList(Integer.parseInt(count));
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("** uncompleting All docs **");
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		agnmt.viewSelectedAssgnUsingPagination(assignmentName);
+		agnmt.uncompleteAllDocs(assignmentName);
+		
+		// Taking count of Left To Do /Total Docs In Assignment/ Distributed to User/
+		// Complete columns from manage assignments page .
+		baseClass.stepInfo("**After uncompleting All docs verifying Various counts of docs coulumn in asignemnt**");
+		String leftToDo = agnmt.getRowValueFromAssignmentTable("Left To Do", assignmentName);
+		String totalDocsInAsign = agnmt.getRowValueFromAssignmentTable("Total Docs In Assignment", assignmentName);
+		String distributesDocsCount = agnmt.getRowValueFromAssignmentTable("Distributed to User", assignmentName);
+		String completedDocsCount = agnmt.getRowValueFromAssignmentTable("Complete", assignmentName);
+		
+		sa.assertEquals(leftToDo, count);
+		sa.assertEquals(totalDocsInAsign, String.valueOf(purehit));
+		sa.assertEquals(distributesDocsCount, count);
+		sa.assertEquals(completedDocsCount,"0");
+		sa.assertAll();
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

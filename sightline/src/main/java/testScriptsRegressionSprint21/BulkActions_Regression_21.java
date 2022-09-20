@@ -3,6 +3,7 @@ package testScriptsRegressionSprint21;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -177,6 +178,99 @@ public class BulkActions_Regression_21 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54461", enabled = true, groups = { "regression" })
+	public void verifyBulkActions_BulkAssign_Precentage() throws Exception {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String SearchName1 = "ss" + Utility.dynamicNameAppender();
+		AssignmentsPage assign = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("TestCase ID-RPMXCON-54461");
+		baseClass.stepInfo(
+				"To verify that in Bulk Assign, the % sampling method is selecting a truly random selection of documents");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("**Creating Assignment and saved serch as Pre Requisites**");
+		assign.createAssignment(assignmentName, Input.codeFormName);
+		sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.saveSearchAtAnyRootGroup(SearchName1, Input.mySavedSearch);
+		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
+		savedSearch = new SavedSearch(driver);
+		// Launch DocView via Saved Search>Assignment
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
+		baseClass.stepInfo("**Selecting SavedSearch and navigating to doc list to take doc ids of all docs**");
+		savedSearch.saveSearchToDoclist();
+		DocListPage dlPage = new DocListPage(driver);
+		List<String> docID = dlPage.getColumnValue("DOCID", false);
+		
+		baseClass.stepInfo("**Bulk assign docs with Percentage sample method**");
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
+		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
+		savedSearch.getSavedSearchToBulkAssign().Click();
+		int countAssigned = Integer.parseInt(assign.assignwithSamplemethod(assignmentName, "Percentage", "50"));
+		
+		// taking first half of the docids froms DocId's list retrieved from
+		// savedSerch>DocList Page before performing bulk assign
+		List<String> docId_subList = docID.subList(0, countAssigned);
+		assign.ViewAllDocsinDocListBtnINActionDD();
+		List<String> docID_randomAssign = dlPage.getColumnValue("DOCID", false);
+		
+		SoftAssert sa = new SoftAssert();
+		baseClass.stepInfo("DocIds of Assigned Docs from ASsignment" + docID_randomAssign.toString());
+		baseClass.stepInfo("DocIds of first 50 % of docfroms saved saerch which we used as source to assign \n");
+		baseClass.stepInfo(docID_randomAssign.toString());
+		// Verifying whether docs are assigned randomly
+		sa.assertNotEquals(docID_randomAssign, docId_subList);
+		assign.deleteAssgnmntUsingPagination(assignmentName);
+		sa.assertAll();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54462", enabled = true, groups = { "regression" })
+	public void verifyBulkActions_BulkAssign_Standard() throws Exception {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String SearchName1 = "ss" + Utility.dynamicNameAppender();
+		String countToAssign = "5";
+		AssignmentsPage assign = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("TestCase ID-RPMXCON-54462");
+		baseClass.stepInfo("To verify that in Bulk Assign, the " + "standard sampling method is assigning documents");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		baseClass.stepInfo("**Creating Assignment and saved search as Pre Requisites**");
+		assign.createAssignment(assignmentName, Input.codeFormName);
+		sessionSearch.basicContentSearch(Input.TallySearch);
+		sessionSearch.saveSearchAtAnyRootGroup(SearchName1, Input.mySavedSearch);
+		baseClass.stepInfo("Created a SavedSearch " + SearchName1);
+
+		savedSearch = new SavedSearch(driver);
+		baseClass.stepInfo("**Bulk assign docs with Standard sample method**");
+		savedSearch.navigateToSSPage();
+		savedSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(3);
+		savedSearch.savedSearch_SearchandSelect(SearchName1, "Yes");
+		savedSearch.getSavedSearchToBulkAssign().ScrollTo();
+		savedSearch.getSavedSearchToBulkAssign().Click();
+		// assign docs using sample method and verifies the same no of docs is
+		// updated in assignment page
+		assign.assignwithSamplemethod(assignmentName, "Count of Selected Docs", countToAssign);
+		baseClass.passedStep("The Docs in the saved search  assigned to assignment .");
+
+		assign.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -194,7 +288,7 @@ public class BulkActions_Regression_21 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		System.out.println("**Executed Advanced search BulkActions_Regression_21**");
+		System.out.println("**Executed BulkActions_Regression_21**");
 	}
 
 }
