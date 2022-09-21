@@ -435,7 +435,107 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Audio button docs are in play mode after zoom in");
 		softAssertion.assertAll();
 	}
+	/**
+	 * @author Jayanthi.Ganesan
+	 * 
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with same term and different/same threshold are
+	 *              assigned to assignment at different time from session search
+	 * @throws InterruptedException
+	 * 
+	 */
+	@Test(description = "RPMXCON-51782", enabled = true, groups = { "regression" })
+	public void verifySameDifferentThresholdInSessionSearchBulkAssign() throws InterruptedException {
 
+		DocViewPage docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		savedsearch = new SavedSearch(driver);
+
+		baseClass.stepInfo("Test case id :RPMXCON-51782");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
+				+ "different/same threshold are assigned to assignment at different time from session search");
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as RMU");
+
+		String searchString1 = Input.audioSearchString3;
+
+		String searchName = "Audio" + Utility.dynamicNameAppender();
+		String searchName1 = "Audio" + Utility.dynamicNameAppender();
+
+		String searchName2 = "Audio" + Utility.dynamicNameAppender();
+		String searchName3 = "Audio" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo(
+				"**Search Node creation for saving two  audio serches with same term/same threshold scenario**");
+		// Create Node
+		baseClass.stepInfo("Node (or) New Search Group creation");
+		String newNode = savedsearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "Yes");
+		// First audio Search
+		sessionSearch.audioSearch(searchString1, Input.language);
+		sessionSearch.saveSearchInNewNode(searchName, newNode);
+		baseClass.stepInfo("**first search creation same term/same threshold[deafult-70]**");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		baseClass.stepInfo("**second  search creation same as first search  term/ threshold[deafult-70] **");
+		// second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearch(searchString1, Input.language);
+		sessionSearch.saveSearchInNewNode(searchName1, newNode);
+
+		baseClass.stepInfo("**Navigating to Saved saerch>select node>view in doc view**");
+		savedsearch.navigateToSSPage();
+		savedsearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
+		savedsearch.selectNode1(newNode);
+		driver.scrollPageToTop();
+
+		savedsearch.getToDocViewoption().ScrollTo();
+		savedsearch.getToDocView().ScrollTo();
+		savedsearch.getToDocView().Click();
+		baseClass.stepInfo(
+				"** verifying the audio hits and triangular arrow Icon for two searches with same serach term/same threshold saved in a node**");
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString1);
+
+		baseClass.stepInfo(
+				"**search node creation saving two  audio serches with same term/different threshold scenario** **");
+		// Create Node
+		baseClass.stepInfo("Node (or) New Search Group creation");
+		String newNode_differentThreshld = savedsearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "Yes");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		sessionSearch.clickOnNewSearch();
+		baseClass.stepInfo("**first  search creation same  search  term/ threshold[deafult-70] **");
+
+		// First audio Search
+		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "max");
+		sessionSearch.saveSearchInNewNode(searchName3, newNode_differentThreshld);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+
+		baseClass.stepInfo("**second  search creation same as first search  term/ different threshold[deafult-70] **");
+		// second audio search
+		sessionSearch.clickOnNewSearch();
+		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "min");
+		sessionSearch.saveSearchInNewNode(searchName2, newNode_differentThreshld);
+
+		baseClass.stepInfo("**Navigating to Saved search>select node>view in doc view**");
+		savedsearch.navigateToSSPage();
+		savedsearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(10);
+		savedsearch.selectNode1(newNode_differentThreshld);
+
+		savedsearch.getToDocViewoption().ScrollTo();
+		savedsearch.getToDocView().ScrollTo();
+		savedsearch.getToDocView().Click();
+		baseClass.stepInfo(
+				"** verifying the audio hits and triangular arrow Icon fro two searches with same serach term/different threshold saved in a node**");
+		// verifying the audio hits and triangular arrow Icon
+		baseClass.waitForElement(docViewPage.getAudioPersistantHitEyeIcon());
+		docViewPage.getAudioPersistantHitEyeIcon().waitAndClick(10);
+		docViewPage.verifyingThePresenceOfPersistentHit(true, searchString1.toLowerCase());
+
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
