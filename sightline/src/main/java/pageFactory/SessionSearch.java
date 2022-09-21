@@ -2018,7 +2018,7 @@ public class SessionSearch {
 	public Element selectOperatorBetweenAdvancedSearchBlocks() {
 		return driver.FindElementByXPath("(//div[@id='op']//select)[last()-1]");
 	}
-	
+
 	public Element getbulkAssignTotalCountLoad() {
 		return driver.FindElementByXPath(
 				"//div[@class='col-md-3 bulkActionsSpanLoderTotal' and @style='padding-bottom: 5px; display: none;']");
@@ -9251,7 +9251,7 @@ public class SessionSearch {
 		}), Input.wait120);
 		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
 		System.out.println("Search is done  " + " and PureHit is :" + pureHit);
-		UtilityLog.info("Search is done " + " and PureHit is : " + pureHit);
+		base.stepInfo("Search is done " + " and PureHit is : " + pureHit);
 		return pureHit;
 	}
 
@@ -12834,18 +12834,25 @@ public class SessionSearch {
 	/**
 	 * @Author Jeevitha
 	 */
-	public void verifyWarningMessage(boolean search, int MessageNumber) {
+	public void verifyWarningMessage(boolean search,  boolean verifyHeader,int MessageNumber) {
 		if (search) {
-			base.waitForElement(getAdvanceSearch_btn_Current());
-			getAdvanceSearch_btn_Current().waitAndClick(10);
+			if (getAdvanceSearch_btn_Current().isDisplayed()) {
+				getAdvanceSearch_btn_Current().waitAndClick(10);
+			} else if (getSearchButtonSec().isDisplayed()) {
+				getSearchButtonSec().waitAndClick(10);
+			}
 		}
-		if (MessageNumber == 1) {
+
+		if (verifyHeader) {
 			if (getWarningAudioBlackListChar_Header().isDisplayed()) {
 				String header = getWarningAudioBlackListChar_Header().getText();
 				softAssert.assertEquals(header, "Possible Wrong Query Alert");
 				base.stepInfo("Displayed Header is : " + header);
 				System.out.println("Displayed Header is : " + header);
 			}
+		}
+
+		if (MessageNumber == 1) {
 
 			String msg = "Only alphanumeric characters and hyphens (-) can be specified in an audio search term";
 			base.waitTime(2);
@@ -12855,6 +12862,30 @@ public class SessionSearch {
 			base.stepInfo(actualMsg);
 
 			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+		}
+
+		if (MessageNumber == 2) {
+
+			String msg = " Your query may contain an invalid Proximity Query. Any Double Quoted phrases as part of a Proximity Query must also be wrapped in Parentheses, e.g. \"Term1 (\"Specific Phrase\")\"~4.";
+			base.waitTime(2);
+			base.waitForElement(getWarningAudioBlackListChar_Message());
+			String actualMsg = getWarningAudioBlackListChar_Message().getText();
+			System.out.println(actualMsg);
+
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+			base.passedStep(actualMsg);
+		}
+
+		if (MessageNumber == 3) {
+
+			String msg = " Double quotes are missing in your search query. Please correct the query to include double quotes.";
+			base.waitTime(2);
+			base.waitForElement(getWarningAudioBlackListChar_Message());
+			String actualMsg = getWarningAudioBlackListChar_Message().getText();
+			System.out.println(actualMsg);
+
+			softAssert.assertEquals(msg.replaceAll(" ", ""), actualMsg.replaceAll(" ", "").replaceAll("\n", ""));
+			base.passedStep(actualMsg);
 		}
 		softAssert.assertAll();
 	}
