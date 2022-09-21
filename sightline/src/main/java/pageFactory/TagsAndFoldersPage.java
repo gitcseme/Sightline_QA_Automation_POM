@@ -465,7 +465,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditFolderWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/parent::div//label");
+		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 	public Element getEditTagPopup() {
@@ -481,7 +481,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditTagWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/parent::div//label");
+		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 //Added by Krishna
