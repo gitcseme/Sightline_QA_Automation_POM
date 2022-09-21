@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -73,7 +74,7 @@ public class SecurityGroup_Regression1_21 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:19/09/2022 RPMXCON-47087
 	 * @throws Exception
@@ -262,19 +263,20 @@ public class SecurityGroup_Regression1_21 {
 				"Newly created annotation layer is displayed though the System Admin user who created the project, annotation layer is in-active");
 		loginPage.logout();
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53909
-	 * Description :verify that warning message is displayed if user release the tag
-	 * without selecting any security group. 
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53909 Description
+	 * :verify that warning message is displayed if user release the tag without
+	 * selecting any security group.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53909",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53909", enabled = true, groups = { "regression" })
 	public void verifyReleaseTagWarningMessage() throws InterruptedException {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-53909");
 		baseClass.stepInfo("Verify warning message for releasing tag without selecting SG");
-		String tagName = "tag"+Utility.dynamicNameAppender();
+		String tagName = "tag" + Utility.dynamicNameAppender();
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
@@ -288,21 +290,22 @@ public class SecurityGroup_Regression1_21 {
 		tagsAndFolderPage.verifyWarningMessageForTagOrFolderReleaseWithoutSG("tag", tagName);
 		baseClass.passedStep("Warning message displayed when releasing tag without selecting any Security Group");
 		loginPage.logout();
-		
+
 	}
 
 	/**
-	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53910
-	 * Description :verify that warning message is displayed if user release the folder without 
-	 * selecting any security group. 
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53910 Description
+	 * :verify that warning message is displayed if user release the folder without
+	 * selecting any security group.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53910",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53910", enabled = true, groups = { "regression" })
 	public void verifyReleaseFolderWarningMessage() throws InterruptedException {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-53910");
 		baseClass.stepInfo("Verify warning message for releasing folder without selecting SG");
-		String folderName = "folder"+Utility.dynamicNameAppender();
+		String folderName = "folder" + Utility.dynamicNameAppender();
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
@@ -318,21 +321,22 @@ public class SecurityGroup_Regression1_21 {
 		tagsAndFolderPage.bulkReleaseFolderToSecurityGroup(Input.securityGroup);
 		baseClass.passedStep("Warning message displayed when releasing folder without selecting any Security Group");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53674
-	 * Description :Verify that Project Admin can release document for the 
-	 * selected security group from “Bulk Release" functionality.
+	 * Author :Arunkumar date: 20/09/2022 TestCase Id:RPMXCON-53674 Description
+	 * :Verify that Project Admin can release document for the selected security
+	 * group from “Bulk Release" functionality.
+	 * 
 	 * @throws InterruptedException
 	 */
-	@Test(description ="RPMXCON-53674",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53674", enabled = true, groups = { "regression" })
 	public void verifyBulkReleaseFunctionality() throws InterruptedException {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-53674");
 		baseClass.stepInfo("Verify PA can release document for security group from bulk release");
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Logged in as PA");
 		baseClass.stepInfo("perform search and add search result");
@@ -343,15 +347,15 @@ public class SecurityGroup_Regression1_21 {
 		baseClass.passedStep("PA user can release documents for the selected security group");
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:21/09/2022 RPMXCON-53908
 	 * @throws Exception
 	 * @Description To verify that user can release all the documents tagged by that
 	 *              tag into a security group.
 	 */
-	@Test(description = "RPMXCON-53908", enabled = true, groups = { "regression" })
-	public void verifyReleaseTheDocsTagWithSG() throws Exception {
+	@Test(description = "RPMXCON-53908", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyReleaseTheDocsTagWithSG(String username, String password, String role) throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-53908");
 		baseClass.stepInfo(
@@ -362,9 +366,9 @@ public class SecurityGroup_Regression1_21 {
 		List<String> securityGroup = new ArrayList<String>();
 		securityGroup.add(Input.securityGroup);
 
-		// Login As PA
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		// Login As user
+		loginPage.loginToSightLine(username, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkTag(tagName);
@@ -412,10 +416,9 @@ public class SecurityGroup_Regression1_21 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
 		baseClass.waitForElement(baseClass.getsgNames());
 		baseClass.getsgNames().waitAndClick(5);
-		if(!baseClass.getSelectsg(SGname).isDisplayed()) {
-			baseClass.passedStep("User cannot able to access the security group" );
-		}
-		else {
+		if (!baseClass.getSelectsg(SGname).isDisplayed()) {
+			baseClass.passedStep("User cannot able to access the security group");
+		} else {
 			baseClass.failedStep("User can able to access the security group");
 		}
 		loginPage.logout();
@@ -435,6 +438,14 @@ public class SecurityGroup_Regression1_21 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	@AfterClass(alwaysRun = true)
