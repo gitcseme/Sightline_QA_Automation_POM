@@ -3599,6 +3599,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Pause']");
 	}
 	
+	public Element getDocView_AudioPause() {
+		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Play']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
