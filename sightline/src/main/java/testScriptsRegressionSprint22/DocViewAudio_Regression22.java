@@ -505,14 +505,14 @@ public class DocViewAudio_Regression22 {
 		String newNode_differentThreshld = savedsearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "Yes");
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		sessionSearch.clickOnNewSearch();
-		baseClass.stepInfo("**first  search creation same  search  term/ threshold[deafult-70] **");
+		baseClass.stepInfo("**first  search creation same  search  term/ different threshold[max] **");
 
 		// First audio Search
 		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "max");
 		sessionSearch.saveSearchInNewNode(searchName3, newNode_differentThreshld);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
-		baseClass.stepInfo("**second  search creation same as first search  term/ different threshold[deafult-70] **");
+		baseClass.stepInfo("**second  search creation same as first search  term/ different thresholdmin] **");
 		// second audio search
 		sessionSearch.clickOnNewSearch();
 		sessionSearch.newAudioSearchThreshold(searchString1, Input.language, "min");
