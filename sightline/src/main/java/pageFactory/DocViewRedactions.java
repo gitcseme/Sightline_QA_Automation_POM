@@ -2087,10 +2087,10 @@ public void popOutCodingFormChildWindow() {
 		searchTextIcon().waitAndClick(10);
 
 		set_searchText().getWebElement().sendKeys("S");
-		Thread.sleep(2000); // needed here implicitly
+		Thread.sleep(3000); // needed here implicitly
 
 		Robot robot = new Robot();
-
+		
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		base.waitTime(5); // needed here implicitly
