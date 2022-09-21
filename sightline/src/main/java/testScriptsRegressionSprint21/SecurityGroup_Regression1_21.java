@@ -3,6 +3,8 @@ package testScriptsRegressionSprint21;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -20,6 +22,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
@@ -341,6 +344,84 @@ public class SecurityGroup_Regression1_21 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:21/09/2022 RPMXCON-53908
+	 * @throws Exception
+	 * @Description To verify that user can release all the documents tagged by that
+	 *              tag into a security group.
+	 */
+	@Test(description = "RPMXCON-53908", enabled = true, groups = { "regression" })
+	public void verifyReleaseTheDocsTagWithSG() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53908");
+		baseClass.stepInfo(
+				"To verify that user can release all the documents tagged by that tag into a security group.");
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagAndFolder = new TagsAndFoldersPage(driver);
+		String tagName = "newTag" + Utility.dynamicNameAppender();
+		List<String> securityGroup = new ArrayList<String>();
+		securityGroup.add(Input.securityGroup);
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkTag(tagName);
+
+		// bulk releasing tag to security group
+		driver.waitForPageToBeReady();
+		tagAndFolder.navigateToTagsAndFolderPage();
+		tagAndFolder.selectallTagRoot();
+		tagAndFolder.verifyNodePresent(tagName, true, "Tag");
+		driver.scrollPageToTop();
+		tagAndFolder.bulkReleaseTag(securityGroup);
+		baseClass.stepInfo("Tag Released to Security Group");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:21/09/2022 RPMXCON-53673
+	 * @throws Exception
+	 * @Description To verify that after deleting the Security Group, RMU or
+	 *              Reviewer cannot access the details.
+	 */
+	@Test(description = "RPMXCON-53673", enabled = true, groups = { "regression" })
+	public void verifyDeleteSGCannotAccessInRMU() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-53673");
+		baseClass.stepInfo(
+				"To verify that after deleting the Security Group, RMU or Reviewer cannot access the details.");
+		sessionSearch = new SessionSearch(driver);
+		SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		String SGname = "Security Group_" + UtilityLog.dynamicNameAppender();
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		baseClass.stepInfo("navigate To SecurityGroupPage Create and assign user");
+		sgpage.createSecurityGroups(SGname);
+		docViewRedact.assignAccesstoSGs(SGname, Input.rmu1userName);
+		sgpage.deleteSecurityGroups(SGname);
+		loginPage.logout();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		baseClass.waitForElement(baseClass.getsgNames());
+		baseClass.getsgNames().waitAndClick(5);
+		if(!baseClass.getSelectsg(SGname).isDisplayed()) {
+			baseClass.passedStep("User cannot able to access the security group" );
+		}
+		else {
+			baseClass.failedStep("User can able to access the security group");
+		}
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
