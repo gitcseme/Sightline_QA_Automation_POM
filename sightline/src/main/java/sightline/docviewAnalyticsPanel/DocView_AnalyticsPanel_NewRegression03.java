@@ -3,28 +3,20 @@ package sightline.docviewAnalyticsPanel;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.Set;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
-import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
-import pageFactory.MiniDocListPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -58,7 +50,11 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 		Input in = new Input();
 		in.loadEnvConfig();
 		driver = new Driver();
+		loginPage = new LoginPage(driver);
 		baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
 	}
 	
 	/**
@@ -100,27 +96,22 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 *               document contains email attachment. 'RPMXCON-51509' Sprint-13
 	 * 
 	 */
-	@Test(description="RPMXCON-51509",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51509",enabled = true, groups = { "regression" })
 	public void verifyThreadMapEmailsInDocViewEmailAttachment()
 			throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51509");
-		baseClass.stepInfo(
-				"Verify that thread map presents only emails when threaded document contains email attachment.");
+		baseClass.stepInfo(	"Verify that thread map presents only emails when threaded document contains email attachment.");
 
 		// login as PA
-		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName01);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		softAssertion = new SoftAssert();
-
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		// Select Configure Mini DocList Add AttachCount
@@ -152,7 +143,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(description="RPMXCON-51510",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51510",enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsEmailAttachment()
 			throws ParseException, InterruptedException, IOException {
 
@@ -161,18 +152,14 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 				"Verify that thread map presents only emails when threaded document contains email attachment.");
 
 		// login as RMU
-		loginPage = new LoginPage(driver);
+	
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName01);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+		baseClass.stepInfo(	"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		softAssertion = new SoftAssert();
-
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		// Select Configure Mini DocList Add AttachCount
@@ -203,7 +190,7 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(description="RPMXCON-51511",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51511",enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsNonThreadedEmailAttachment() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51511");
@@ -211,18 +198,14 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 				"Verify that thread map presents only threaded emails when threaded document contains email attachment which is not parent/child of any other document [non threaded email attachment].");
 
 		// login as RMU
-		loginPage = new LoginPage(driver);
+	
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName01);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+		baseClass.stepInfo(	"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		softAssertion = new SoftAssert();
-		
+		//baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		//Select Configure Mini DocList Add AttachCount
@@ -231,8 +214,8 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 		
 		baseClass.stepInfo("Step 4 :Select Email Attach Docs in MiniDocList");
 		driver.waitForPageToBeReady();
-		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(55));
-		docView.getDocView_MiniDoc_Selectdoc(55).waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_MiniDoc_Selectdoc(15));
+		docView.getDocView_MiniDoc_Selectdoc(15).waitAndClick(5);
 		baseClass.stepInfo("Successfully Selected Email Attach Count Document");
 		
 		//MetaData AttachIds Display
@@ -253,26 +236,21 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	 * 
 	 * 
 	 */
-	@Test(description="RPMXCON-51512",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51512",enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsPresentsContainsParentThreadedEmail() throws ParseException, InterruptedException, IOException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51512");
-		baseClass.stepInfo(
-				"Verify that thread map presents only threaded emails when threaded document contains email attachment which is parent/child of any other document [threaded email attachment].");
+		baseClass.stepInfo("Verify that thread map presents only threaded emails when threaded document contains email attachment which is parent/child of any other document [threaded email attachment].");
 
 		// login as RMU
-		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName01);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
-		baseClass.stepInfo(
-				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+		baseClass.stepInfo("User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
-		sessionSearch = new SessionSearch(driver);
-		docView = new DocViewPage(driver);
-		softAssertion = new SoftAssert();
 		
+		baseClass.selectproject(Input.additionalDataProject);
 		baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-		sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+		sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 		sessionSearch.ViewThreadedDocsInDocViews();
 
 		//Select Configure Mini DocList Add AttachCount
@@ -302,26 +280,19 @@ public class DocView_AnalyticsPanel_NewRegression03 {
 	*
 	*
 	*/
-	@Test(description="RPMXCON-51513",enabled = true, groups = { "regression" })
+	@Test(description ="RPMXCON-51513",enabled = true, groups = { "regression" })
 	public void verifyThreadedMapEmailsDoesnotPresentEmailsdocs() throws ParseException, InterruptedException, IOException {
 
 	baseClass.stepInfo("Test case Id: RPMXCON-51513");
-	baseClass.stepInfo(
-	"Verify that thread map presents only emails and doesn't present any attachments of type email that itself is a parent for other docs.");
+	baseClass.stepInfo("Verify that thread map presents only emails and doesn't present any attachments of type email that itself is a parent for other docs.");
 
 	// login as RMU
-	loginPage = new LoginPage(driver);
 	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password, Input.projectName01);
 	UtilityLog.info("Logged in as User: " + Input.pa1userName);
-	baseClass.stepInfo(
-	"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+	baseClass.stepInfo("User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
 
-	sessionSearch = new SessionSearch(driver);
-	docView = new DocViewPage(driver);
-	softAssertion = new SoftAssert();
-
-	baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
-	sessionSearch.SearchMetaData("IngestionName", "ZipDocviewNativesAttachCount");
+    baseClass.stepInfo("Step 2 : Search for Meta Data Docs and go to Docview");
+	sessionSearch.SearchMetaData("IngestionName", Input.DocViewNativesIngestion);
 	sessionSearch.ViewThreadedDocsInDocViews();
 
 	//Select Configure Mini DocList Add AttachCount
