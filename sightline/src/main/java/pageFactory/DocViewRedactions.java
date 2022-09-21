@@ -1318,13 +1318,15 @@ public Element hiddenInfoIconToolTip() {
 				return redactionIcon().Displayed() && redactionIcon().Enabled();
 			}
 		}), Input.wait30);
+		base.waitTime(3);
 		redactionIcon().waitAndClick(20);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return rectangleClick().Visible() && rectangleClick().Enabled();
 			}
 		}), Input.wait30);
-		rectangleClick().waitAndClick(8);
+		base.waitTime(3);
+		rectangleClick().waitAndClick(10);
 		if(deleteRedactioBtn().isElementAvailable(2)) {
 			deleteRedactioBtn().waitAndClick(5);
 		}
