@@ -66,9 +66,9 @@ public class Ingestion_Regression01 {
 
 	@DataProvider(name = "userDetails")
 	public Object[][] userLoginDetails() {
-		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.projectName02 },
-				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.projectName02 },
-				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.projectName02 } };
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password, Input.projectName01 },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password, Input.projectName01 },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password, Input.projectName01 } };
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class Ingestion_Regression01 {
 
 		baseClass.stepInfo(
 				"Step 5 : Select all documents   Click on View in Doc List   Verify the Date fields from the metadata");
-		baseClass.selectproject(Input.projectName02);
+		baseClass.selectproject(Input.projectName01);
 		sessionSearch.basicContentSearch(fieldName);
 		sessionSearch.ViewInDocList();
 		DocListPage docListPage = new DocListPage(driver);
@@ -892,31 +892,22 @@ public class Ingestion_Regression01 {
 
 	
 	@AfterMethod(alwaysRun = true)
-	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
-		baseClass = new BaseClass(driver);
-		loginPage = new LoginPage(driver);
+	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
-			loginPage.logoutWithoutAssert();
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			System.out.println("Executed :" + result.getMethod().getMethodName());
 		}
 		try {
-//			loginPage.logout();
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			// LoginPage.clearBrowserCache();
 		}
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close2() {
-		try {
-			// LoginPage.clearBrowserCache();
-		} catch (Exception e) {
-			// no such session
-		}
-
+	public void close() {
+		System.out.println("**Executed Advanced search Regression6**");
 	}
 }
