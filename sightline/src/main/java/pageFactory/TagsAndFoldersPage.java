@@ -481,7 +481,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditTagWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
+		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 //Added by Krishna
