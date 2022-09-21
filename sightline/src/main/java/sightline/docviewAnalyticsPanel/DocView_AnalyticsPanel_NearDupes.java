@@ -525,7 +525,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * 
 	 *                              stabilization done
 	 */
-	@Test(description="RPMXCON-51381",enabled = true, groups = { "regression" }, priority = 6)
+	@Test(description="RPMXCON-51381",enabled = true, groups = { "regression" })
 	public void verifyCodeAsSameNearDupeSimilarChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -3435,7 +3435,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 * @throws AWTException
 	 * pls stabilize this Mohan
 	 */
-	//@Test(description="RPMXCON-51718",enabled = true, groups = { "regression" }, priority = 27)
+	@Test(description="RPMXCON-51718",enabled = true, groups = { "regression" })
 	public void verifyDocsCompletedSameAslastInAnalyticsPanelChildWindow() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
