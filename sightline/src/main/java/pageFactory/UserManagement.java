@@ -761,7 +761,7 @@ public class UserManagement {
 	// Added by Raghuram
 	public Element getComponentName(String componentName) {
 //		return driver.FindElementByXPath("//label[@class='checkbox' and normalize-space()='" + componentName + "']");
-		return driver.FindElementByXPath("//label[contains(.,'"+componentName+"')]");
+		return driver.FindElementByXPath("//label[contains(.,'" + componentName + "')]");
 	}
 
 	public Element getComponentBoxBlocked(String componentName) {
@@ -3732,7 +3732,7 @@ public class UserManagement {
 			} else {
 				getDisableRadioBtn().waitAndClick(5);
 			}
-			
+
 			// Select user
 			getSelectBulkUser(userName).waitAndClick(10);
 			driver.waitForPageToBeReady();
@@ -4109,5 +4109,18 @@ public class UserManagement {
 			login.loginToSightLine(userRolesData[0][0], loginPwd);
 
 		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Role dropdown is Present or absent
+	 * @param role
+	 * @return
+	 */
+	public boolean verifyRoleDD(String role) {
+		bc.waitForElement(bc.getSelectRole());
+		bc.getSelectRole().waitAndClick(10);
+		boolean status = bc.getSelectRole(role).isElementAvailable(10);
+		return status;
 	}
 }
