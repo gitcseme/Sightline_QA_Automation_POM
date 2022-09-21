@@ -2370,7 +2370,7 @@ public void popOutCodingFormChildWindow() {
 		for (String miniDocListChild : childWindow) {
 			if (!parentWindow.equals(miniDocListChild)) {
 				driver.switchTo().window(miniDocListChild);
-				driver.waitForPageToBeReady();
+//				driver.waitForPageToBeReady();
 			}
 		}
 
