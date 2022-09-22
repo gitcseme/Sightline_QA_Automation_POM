@@ -2158,11 +2158,11 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			
+			/*
 			getTIFFCheckBox().ScrollTo();
 			getTIFFCheckBox().isElementAvailable(15);
 			getTIFFCheckBox().Click();
-	
+	*/
 			getTIFFLST().ScrollTo();
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
