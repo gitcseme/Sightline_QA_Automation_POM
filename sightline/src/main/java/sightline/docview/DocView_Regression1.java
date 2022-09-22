@@ -2534,7 +2534,6 @@ public class DocView_Regression1 {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		sessionSearch = new SessionSearch(driver);
-
 		baseClass.stepInfo("Basic meta data search");
 		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
 		//sessionSearch.basicContentSearch(DocId);
