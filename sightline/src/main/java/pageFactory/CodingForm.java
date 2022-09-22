@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -5718,6 +5719,19 @@ public void selectRemoveLinkWithValidation(int rowNo) {
 
 }
 
+/**
+ * @author Aathith.Senthilkumar
+ * @Description validate coding form using validate button in coding form
+ */
+public void validateCodingForm() {
+	driver.scrollPageToTop();
+	 getCFValidateBtn().waitAndClick(10);
+	 driver.waitForPageToBeReady();
+	 softAssertion.assertTrue(base.text("Coding Form Validation Successful.").isElementAvailable(3));
+	 getCodingForm_Validation_ButtonYes().waitAndClick(5);
+	 softAssertion.assertAll();
+	 base.passedStep("coding form validation validate successfully");
+}
 
 }
 
