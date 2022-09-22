@@ -2511,20 +2511,21 @@ public class DocView_Regression1 {
 		baseClass.stepInfo(
 				"#### Verify that if the document native is being presented, the 'N' icon with the accompanying mouse over tool tip must appear ####");
 
-		String DocId = "ID00001155";
+		String DocId = "STC4_00000995";
 		String ExpectedText = "Native file variant of the document being displayed";
 		baseClass.stepInfo("Basic meta data search");
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.basicContentSearch(DocId);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
+		//sessionSearch.basicContentSearch(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
 
 		DocViewPage docView = new DocViewPage(driver);
-		docView.navigateToDocViewPageURL();
+		//docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Verify Native Document Tooltip");
 		docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
@@ -2535,13 +2536,14 @@ public class DocView_Regression1 {
 		sessionSearch = new SessionSearch(driver);
 
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(DocId);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
+		//sessionSearch.basicContentSearch(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
 
 		docView = new DocViewPage(driver);
-		docView.navigateToDocViewPageURL();
+		//docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Verify Native Document Tooltip");
 		docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
@@ -2551,7 +2553,8 @@ public class DocView_Regression1 {
 
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(DocId);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
+		//sessionSearch.basicContentSearch(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
@@ -2582,53 +2585,53 @@ public class DocView_Regression1 {
 		SessionSearch sessionSearch = new SessionSearch(driver);
 
 		String ExpectedText = "PDF file variant of the document being displayed";
-		String Doc = "ID00001036";
+		String DocId = "STC4_00000964";
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		Reporter.log("Logged in as User: " + Input.rmu1password);
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Doc);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
 
 		DocViewPage docView = new DocViewPage(driver);
 
-		docView.navigateToDocViewPageURL();
+		//docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Verify PDF Document Tooltip");
-		docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+		docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
 
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Doc);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
 
 		docView = new DocViewPage(driver);
-		docView.navigateToDocViewPageURL();
+		//docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Verify PDF Document Tooltip");
-		docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+		docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 
 		sessionSearch = new SessionSearch(driver);
 		baseClass.stepInfo("Basic meta data search");
-		sessionSearch.basicContentSearch(Doc);
+		sessionSearch.basicSearchWithMetaDataQueryUsingSourceDOCID(DocId);
 
 		baseClass.stepInfo("Navigating to docview page");
 		sessionSearch.ViewInDocView();
 
 		docView = new DocViewPage(driver);
-		docView.navigateToDocViewPageURL();
+		//docView.navigateToDocViewPageURL();
 
 		baseClass.stepInfo("Verify PDF Document Tooltip");
-		docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+		docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
 		loginPage.logout();
 
 	}
@@ -5491,7 +5494,7 @@ public class DocView_Regression1 {
 
 		baseClass.stepInfo("Getting : " + currentUrl + " url in second tab");
 		driver.getWebDriver().get(currentUrl);
-
+		session.ViewInDocView();
 		baseClass.stepInfo("Adding remark to document");
 		docView.addRemarkToNonAudioDocument(5,55, remark);
 
