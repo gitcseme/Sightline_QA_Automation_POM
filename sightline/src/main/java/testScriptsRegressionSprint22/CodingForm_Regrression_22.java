@@ -14,9 +14,11 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocViewPage;
 import pageFactory.KeywordPage;
@@ -24,6 +26,7 @@ import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -454,6 +457,89 @@ public class CodingForm_Regrression_22 {
 	    		+ "all objects along with all condition and Check Item for new coding form");
 	    loginPage.logout();
 	}
+	
+
+	/**
+	 * @Author :Baskar
+	 * @Description : Verify that Preview displays correctly and properly when Tag 
+	 *                   and Check group combined along with Check Item for New coding form
+	 */
+	@Test(description = "RPMXCON-54074", enabled = true, groups = { "regression" })
+	public void verifyPreviewAlongWithCheckItem() throws Exception {
+		base.stepInfo("Test case Id: RPMXCON-54074");
+		base.stepInfo("Verify that Preview displays correctly and properly when Tag and"
+				+ " Check group combined along with Check Item for New coding form");
+		soft = new SoftAssert();
+		cf = new CodingForm(driver);
+		String codingform = "cf"+Utility.dynamicNameAppender();
+		String tagname = "tag"+Utility.dynamicNameAppender();
+		int index = 1;
+		String expectedCheckGrp = "checkgroup_"+index+"";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		base.stepInfo("Created the tag sucessfully");
+		
+		// creating codingform
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");		
+		cf.addNewCodingFormButton();
+		base.waitForElement(cf.getCodingFormName());
+		cf.getCodingFormName().SendKeys(codingform);
+		cf.CreateCodingFormWithParameter(codingform,tagname,null,null,"tag");
+		cf.addcodingFormAddButton();
+		cf.specialObjectsBox(Input.checkGroup);
+		cf.addcodingFormAddButton();
+		cf.selectTagTypeByIndex("check item",index,0);
+		cf.getRGDefaultAction().ScrollTo();
+		base.waitForElement(cf.getRGDefaultAction());
+		cf.getRGDefaultAction().selectFromDropdown().selectByVisibleText(Input.notSelectable);
+		base.stepInfo("check group is associated to the created tag");
+		driver.scrollPageToTop();
+		
+		// validating the success message in validate button
+		base.waitForElement(cf.getCFValidateBtn());
+		cf.getCFValidateBtn().waitAndClick(5);
+		String validationExpected="Coding Form Validation Successful.";
+		String validationActual=cf.getCFValidateMsg().getText();
+		soft.assertEquals(validationActual, validationExpected);
+		base.passedStep("without any error ,successfull validation message displayed");
+		base.waitForElement(cf.getCFValidationPopUpOkBtn());
+		cf.getCFValidationPopUpOkBtn().waitAndClick(5);
+		base.waitForElement(cf.getSaveCFBtn());
+		cf.getSaveCFBtn().waitAndClick(5);
+		base.waitForElement(cf.getValidationButtonYes());
+		cf.getValidationButtonYes().waitAndClick(5);
+		base.stepInfo("Coding form saved successfully");
+		
+		//Edit the existing coding form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		//verify the radio group associated with tag
+		cf.editCodingForm(codingform);
+		base.stepInfo("Edited the coding form sucessfully");
+		
+		// preview validation
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(cf.getCF_PreviewButton());
+		cf.getCF_PreviewButton().waitAndClick(10);
+		boolean notSelect=cf.getDisabledTagsInPreviewBox(tagname).isElementAvailable(2);
+		soft.assertTrue(notSelect);
+		base.waitForElement(cf.getTagGroupValues(index));
+		String actualCheckGroup = cf.getTagGroupValues(index).GetAttribute("systemcontrolname");
+		soft.assertEquals(expectedCheckGrp, actualCheckGroup);
+		soft.assertAll();
+		base.passedStep("The check group associated in tag is successfully reflected after editing the saved coding form");
+		base.passedStep("preview display correctly along with checkgroup and tag in notselectable state");
+		
+		//Deleting the tag and cf
+		cf.deleteCodingForm(codingform, codingform);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.deleteAllTags(tagname);
+
+		loginPage.logout();
+	}
+	
+	
 	
 	
 	@AfterMethod(alwaysRun = true)
