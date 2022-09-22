@@ -1554,7 +1554,17 @@ public class AssignmentsPage {
 	public Element getRowValuesinAssignmentTAble(String assignmentName,int i) {
 		return driver.FindElementByXPath("//td[text()='"+assignmentName+"']/ancestor::tr//td["+i+"]");
 	}
-
+	
+	public Element getReviewerInDistributeTab(String userName) {
+		return driver.FindElementByXPath("//*[@id='divDistributedDocUsers']//div[contains(text(),'"+userName+"')]");
+	}
+	
+	public Element getassignmentTabTreeView() {
+		return driver.FindElementByXPath("//div[@class='tree-wrapper']//div[@id='jstreeComplete']//ul");
+	}
+	public Element bulkAssignCancelButton() {
+		return driver.FindElementById("btnAssignCancel");
+	}
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -10956,5 +10966,50 @@ public class AssignmentsPage {
 			bc.failedStep("View All Docs in DocList is not displayed in manage assignment page under action dropdown");
 		}
 
+	}
+	
+	/**
+	 * @author: Arun Created Date: 21/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will add the reviewer in manage reviewer tab present in assignment
+	 *               
+	 */
+	public void addReviewerInManageReviewerTab() {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitForElement(getAddReviewersBtn());
+		getAddReviewersBtn().waitAndClick(10);
+		bc.waitForElement(getSelectUserToAssig());
+		getSelectUserToAssig().waitAndClick(5);
+		bc.waitForElement(getAdduserBtn());
+		getAdduserBtn().waitAndClick(5);
+		bc.VerifySuccessMessage("Action saved successfully");
+		
+	}
+	/**
+	 * @author: Arun Created Date: 22/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will check the bulkassign popup default selection and assignments
+	 *               
+	 */
+	public void verifyBulkAssignPopupWrtToProject(String assign1,String assign2) {
+		
+		bc.stepInfo("verify assign/unassign popup");
+		driver.waitForPageToBeReady();
+		if(getsampleMethod().isDisplayed() && 
+				getassignmentTabTreeView().isElementAvailable(10)) {
+			bc.passedStep("assign document option is selected by default and"
+					+ " displayed existing assignments in a tree");
+		}
+		else {
+			bc.failedStep("unassign document option selected by default");
+		}
+		if(getSelectAssignmentToBulkAssign(assign1).isElementAvailable(10) &&
+				!getSelectAssignmentToBulkAssign(assign2).isElementAvailable(5)) {
+			bc.passedStep("assignment group and assignments in popup are available wrt to projects");
+		}
+		else {
+			bc.failedStep("assignments in popup not available wrt to projects");
+		}
+		bc.waitForElement(bulkAssignCancelButton());
+		bulkAssignCancelButton().waitAndClick(10);
 	}
 }
