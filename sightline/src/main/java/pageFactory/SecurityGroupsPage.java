@@ -490,7 +490,16 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + Annotation
 				+ "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
-	
+	public Element getRenameBtn() {
+		return driver.FindElementById("btnRenameSecurtyGroup");
+	}
+	public Element getRadioBn() {
+		return driver.FindElementByXPath("//input[@id='projlevelemail']");
+		
+	}
+	public Element getProjectSelector() {
+		return driver.FindElementById("project-selector");
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
