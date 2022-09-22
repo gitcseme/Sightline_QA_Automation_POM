@@ -291,11 +291,10 @@ public class DocView_Regression8 {
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
-		docexp = new DocExplorerPage(driver);
-		// DocExploer to viewindocView Page
-		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
+		baseClass.waitTime(5);
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return docView.getDocView_CodingFormlist().Displayed();
@@ -408,23 +407,24 @@ public class DocView_Regression8 {
 		baseClass.stepInfo("Test case Id: RPMXCON-63805");
 		baseClass.stepInfo(
 				"Verify user can select the text including special characters and perform Copy -Paste by using \"Ctrl C\" from viewer file and \"Ctrl V\" in to coding form field");
-		SessionSearch sessionsearch = new SessionSearch(driver);
+		SessionSearch sessionsearch = new 
+				SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
 		SoftAssert softassertion = new SoftAssert();
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String docid = Input.DocIdCopyPaste;
+		String docid = 	Input.DocIdCopyPaste;
 		String docid1 = Input.DocIdCopyPaste1;
+		
 
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
-		docexp = new DocExplorerPage(driver);
-		// DocExploer to viewindocView Page
-		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
+
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
 		baseClass.waitTime(5);
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return docView.getDocView_CodingFormlist().Displayed();
@@ -525,11 +525,10 @@ public class DocView_Regression8 {
 		// login as RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Login as Rmu");
-		docexp = new DocExplorerPage(driver);
-		// DocExploer to viewindocView Page
-		baseClass.stepInfo("DocExplorer Navigate To ViewInDocView");
-		docexp.selectAllDocumentsFromCurrentPage();
-		docexp.docExpViewInDocView();
+		baseClass.stepInfo("Search Navigate To ViewInDocView");
+		baseClass.waitTime(5);
+		sessionsearch.basicSearchWithMetaDataQueryUsingSourceDOCID(docid);
+		sessionsearch.viewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return docView.getDocView_CodingFormlist().Displayed();
