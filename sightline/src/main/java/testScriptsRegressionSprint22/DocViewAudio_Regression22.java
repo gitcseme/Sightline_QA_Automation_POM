@@ -3,6 +3,8 @@ package testScriptsRegressionSprint22;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -20,6 +22,7 @@ import pageFactory.AnnotationLayer;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
@@ -435,6 +438,147 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Audio button docs are in play mode after zoom in");
 		softAssertion.assertAll();
 	}
+
+	
+	/**
+	 * @author Raghuram.A
+	 * @Description : Verify that when document present in different session
+	 *              searches with common term then, should not display repetitive
+	 *              search term on persistent hits panel from session search > Doc
+	 *              List> Doc View. [RPMXCON-51797]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-51797", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsNotDisplayPersistentHitInDocView(String userName, String password, String fullName)
+			throws Exception {
+
+		DocViewPage docview = new DocViewPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+
+		String audioSearch = Input.audioSearchString2 + " AND " + Input.audioSearchString3;
+		List<String> searchTerm = new ArrayList<String>();
+
+		// Login As User
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("LoggedIn as : " + fullName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51797 Docview/Audio");
+		baseClass.stepInfo(
+				"Verify that when document present in different session searches with common term then, should not display repetitive search term on persistent hits panel from session search > Doc List> Doc View");
+
+		// Audio search
+		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docview.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docview.getMiniDocListDocIdText());
+
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.addPureHit();
+
+		// Added another Audio search and add
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		searchTerm.add(Input.audioSearchString2.toLowerCase());
+		searchTerm.add(Input.audioSearchString3.toLowerCase());
+
+		// Go to doclist page
+		baseClass.stepInfo("Navigating to DocList page via Session Search");
+		sessionSearch.ViewInDocListWithOutPureHit();
+		driver.waitForPageToBeReady();
+
+		// View in docview
+		doclist.selectingAllDocFromAllPagesAndAllChildren();
+		baseClass.stepInfo("View selected docs in Doc View");
+		doclist.viewSelectedDocumentsInDocView();
+
+		// Check Display persistant hit - notrepetative
+		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
+		driver.waitForPageToBeReady();
+		docview.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Description : Verify that when document present in different save searches
+	 *              with common term then, should not display repetitive search term
+	 *              on persistent hits panel from saved search [RPMXCON-51796]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-51796", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsNotDisplayPersistentHitInDocViewViaSS(String userName, String password, String fullName)
+			throws Exception {
+
+		DocViewPage docview = new DocViewPage(driver);
+		DocListPage doclist = new DocListPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+
+		String audioSearch = Input.audioSearchString2 + " AND " + Input.audioSearchString3;
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+		String searchName2 = "Search Name" + UtilityLog.dynamicNameAppender();
+		List<String> searchTerm = new ArrayList<String>();
+
+		// Login As User
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("LoggedIn as : " + fullName);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51796 Docview/Audio");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel from saved search");
+
+		// Create Node
+		baseClass.stepInfo("Node (or) New Search Group creation");
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "PA", "Yes");
+
+		// Audio search
+		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docview.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docview.getMiniDocListDocIdText());
+
+		// Audio search
+		baseClass.selectproject();
+		sessionSearch.verifyaudioSearchWarning(Input.audioSearchString2, Input.language);
+		sessionSearch.saveSearchInNewNode(searchName1, newNode);
+
+		// Added another Audio search and add
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.saveSearchInNewNode(searchName2, newNode);
+		searchTerm.add(Input.audioSearchString2.toLowerCase());
+		searchTerm.add(Input.audioSearchString3.toLowerCase());
+
+		// View in DocView via SS
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.selectNode1(newNode);
+		saveSearch.getToDocList().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Navigated to DocList page vis SavedSearch page");
+
+		// view in docview
+		doclist.selectingAllDocFromAllPagesAndAllChildren();
+		baseClass.stepInfo("View selected docs in Doc View");
+		doclist.viewSelectedDocumentsInDocView();
+
+		// Check Display persistant hit - notrepetative
+		docview.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
+		driver.waitForPageToBeReady();
+		docview.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+
+		// Initiate delete search
+		saveSearch.deleteNode(Input.mySavedSearch, newNode, true, true);
+
+		// logout
+		loginPage.logout();
+	}
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * 
@@ -454,6 +598,7 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Test case id :RPMXCON-51782");
 		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with same term and "
 				+ "different/same threshold are assigned to assignment at different time from session search");
+
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Successfully login as RMU");

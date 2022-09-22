@@ -7456,6 +7456,8 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			selectSourceDocIdInAvailableField("SourceDocID");
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			for (int i = 0; i < 20; i++) {
 				try {
 					driver.waitForPageToBeReady();
@@ -26240,9 +26242,10 @@ public class DocViewPage {
 		base.waitForElement(getAudioPersistantHitEyeIcon());
 		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		
 		List<WebElement> AudioPersistentHitsPanels = getAudioPersistentHitsPanels().FindWebElements();
 		List<WebElement> AudioSearchTerms = getDocView_Audio_HitTerms(1).FindWebElements();
-
+		
 		if (AudioPersistentHitsPanels.size() == searchTerms.size() && AudioSearchTerms.size() == searchTerms.size()) {
 			getAudioPersistentHits().isElementAvailable(10);
 			for (int i = 0; i < AudioPersistentHitsPanels.size(); i++) {
