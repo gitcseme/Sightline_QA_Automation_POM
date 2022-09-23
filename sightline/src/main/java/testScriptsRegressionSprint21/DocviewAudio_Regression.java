@@ -155,9 +155,7 @@ public class DocviewAudio_Regression {
 		baseClass.stepInfo("Test case Id: RPMXCON-51822");
 		baseClass.stepInfo("Verify that when audio file is playing and clicked to apply the stamp, "
 				+ "then waveform should be loaded [Less than 1 hr audio file]");
-		// Login as Reviewer Manager
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String comment = "comment" + Utility.dynamicNameAppender();
 		String stamp = "stamp" + Utility.dynamicNameAppender();
@@ -174,6 +172,7 @@ public class DocviewAudio_Regression {
 		sessionSearch.audioSearch(Input.audioSearch, Input.language);
 		sessionSearch.bulkAssign();
 		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignmentPage.toggleSaveButton();
 		assignmentPage.assignmentDistributingToReviewer();
 
 		// logout
@@ -229,7 +228,7 @@ public class DocviewAudio_Regression {
 		// logout
 		loginPage.logout();
 	}
-
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

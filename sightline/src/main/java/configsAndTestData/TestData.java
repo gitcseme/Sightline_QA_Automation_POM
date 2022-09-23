@@ -364,6 +364,7 @@ public class TestData {
 	public String collectionExtractionMsg;
 	public String cancelCollectionNotification;
 	public String progressBarHeader;
+	public String splCharEmailFolder;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

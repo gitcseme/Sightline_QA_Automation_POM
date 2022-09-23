@@ -2464,6 +2464,9 @@ public class BaseClass {
 			String failMessage) {
 		System.out.println("Source String  : " + sourceList);
 		System.out.println("Compare String  : " + compreList);
+		
+		stepInfo("Source String  : " + sourceList);
+		stepInfo("Compare String  : " + compreList);
 
 		softAssertion.assertEquals(sourceList, compreList);
 		if (sourceList.equals(compreList)) {

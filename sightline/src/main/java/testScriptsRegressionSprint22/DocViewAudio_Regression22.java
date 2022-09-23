@@ -51,6 +51,8 @@ public class DocViewAudio_Regression22 {
 	KeywordPage keywordPage;
 	SavedSearch savedsearch;
 	ProjectPage projectPage;
+	DocViewPage docViewPage;
+	SoftAssert softAssertion;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -682,6 +684,83 @@ public class DocViewAudio_Regression22 {
 
 	}
 	
+
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 09/22/2022 Modified by: Baskar
+	 * Description:Verify that when audio file is playing and clicked to Save the document, 
+	 * then waveform should be loaded [Less than 1 hr audio file] from coding form child window
+	 */
+
+	@Test(description = "RPMXCON-51820", enabled = true, groups = { "regression" })
+	public void validatePlayIconInCfChild() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51820");
+		baseClass.stepInfo("Verify that when audio file is playing and clicked to Save the document, "
+				+ "then waveform should be loaded [Less than 1 hr audio file] from coding form child window");
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		String comment = "comments" + Utility.dynamicNameAppender();
+
+		// search to Assignment creation
+		int audioPurehit = sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.ViewInDocView();
+		baseClass.stepInfo("Navigating to docview with audio docs: " + audioPurehit + " document");
+
+		driver.waitForPageToBeReady();
+		String oneHourDocs=docViewPage.getVerifyPrincipalDocument().getText();
+
+		// verifying more than one hour audio docs
+		String overAllAudioTime = docViewPage.getDocview_Audio_EndTime().getText();
+		String[] splitData = overAllAudioTime.split(":");
+		String data = splitData[0].toString();
+		System.out.println(data);
+		if (Integer.parseInt(data) <= 01) {
+			baseClass.stepInfo("Audio document duration is lesser than one hour");
+		} else {
+			baseClass.failedMessage("More than one hour");
+		}
+		
+		// playing audio file
+		docViewPage.audioPlayPauseIcon().waitAndClick(5);
+		
+		// opening Coding form child and minidcolist child window
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		baseClass.waitForElement(docViewPage.getDocView_HdrMinDoc());
+		docViewPage.getDocView_HdrMinDoc().waitAndClick(5);
+		baseClass.stepInfo("Coding form and minidoclist child window opened");
+
+		// switching to coding form child window
+		docViewPage.switchToNewWindow(3);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		baseClass.stepInfo("Document saved successfully");
+		docViewPage.closeWindow(2);
+		docViewPage.closeWindow(1);
+
+		// validating waveform displaying for same document
+		docViewPage.switchToNewWindow(1);
+		String childactiveId = docViewPage.getDocView_CurrentDocId().getText();
+		softAssertion.assertEquals(oneHourDocs, childactiveId);
+		boolean childwaveform = docViewPage.getAudioWaveForm().GetAttribute("style").contains("hidden");
+		softAssertion.assertTrue(childwaveform);
+		baseClass.passedStep("Waveform is displayed for same document");
+
+		// validating audio is still playing
+		boolean childaudioPlay = docViewPage.audioPlayPauseIcon().GetAttribute("title").contains("Pause");
+		softAssertion.assertTrue(childaudioPlay);
+		baseClass.stepInfo("Audio  docs are in play mode");
+
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+
+
 	/**
 	 * @author Jayanthi.Ganesan
 	 * @throws InterruptedException
@@ -885,6 +964,7 @@ public class DocViewAudio_Regression22 {
 
 		loginPage.logout();
 	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);

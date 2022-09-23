@@ -13,6 +13,7 @@
 			<class name ="sightline.ingestion.Ingestion_Regression_2" />
 			<class name ="sightline.ingestion.Ingestion_Regression_3" />
 			<class name ="sightline.ingestion.Ingestion_Regression_4" />
+			<class name ="sightline.ingestion.Ingestion_Regression_5" />
 			<class name ="sightline.ingestion.Ingestion_Regression" />
 			<class name ="sightline.ingestion.Ingestion_Regression01" />
 			<class name ="sightline.ingestion.Ingestion_Regression02" />
