@@ -361,6 +361,7 @@
 	<collectionExtractionMsg>Collection extraction process started successfully.</collectionExtractionMsg>
 	<cancelCollectionNotification>Cancel collection initiated successfully.</cancelCollectionNotification>
 	<progressBarHeader>Collection Progress</progressBarHeader>
+	<splCharEmailFolder>ZAutomation$@</splCharEmailFolder>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

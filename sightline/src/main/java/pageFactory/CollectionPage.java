@@ -511,6 +511,10 @@ public class CollectionPage {
 		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
 				+ "]//div[@class='col-md-5 progressbar-blue-text']");
 	}
+	
+	public ElementCollection getCollectionDatas() {
+		return driver.FindElementsByXPath("//table[@id='dtCollectionList']//tr");
+	}
 
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
@@ -951,7 +955,13 @@ public class CollectionPage {
 			getFolderabLabel().waitAndClick(5);
 		}
 		// Respective folder to select
-		getFolderNameToSelect(folderName).waitAndClick(5);
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
+			getFolderNameToSelect(folderName).waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -2090,13 +2100,14 @@ public class CollectionPage {
 		if (ClickBtn)
 			getHeaderBtn(headerName).waitAndClick(10);
 		base.stepInfo("Clicked : " + headerName);
+		driver.waitForPageToBeReady();
 
 		int index = base.getIndex(getDataSetDetailsHeader(), headerName);
 
 		driver.waitForPageToBeReady();
 		List<String> originalList = base.availableListofElements(getCollectionNameElements(index));
 		List<String> afterSortList = base.availableListofElements(getCollectionNameElements(index));
-		base.stepInfo("Original Order :" + originalList);
+//		base.stepInfo("Original Order :" + originalList);
 
 		base.verifyOriginalSortOrder(originalList, afterSortList, sortType, true);
 	}
