@@ -1619,8 +1619,10 @@ public class BatchPrintPage {
 	/**
 	 * @author Jeevitha Description: Verifies Search in BAtch Print Page
 	 * @param SearchName
+	 * @return
 	 */
-	public void saveSearchRadiobutton(String SearchName) {
+	public boolean saveSearchRadiobutton(String SearchName) {
+		boolean searchStatus = false;
 		try {
 			getSelectRadioButton().waitAndClick(5);
 
@@ -1639,18 +1641,22 @@ public class BatchPrintPage {
 				}), Input.wait120);
 				getSelectSavedSearch(SearchName).waitAndClick(20);
 				System.out.println(SearchName + " is Selected");
-			} else {
-				System.out.println("not Displayed");
-			}
-			driver.scrollPageToTop();
-			getbtnNext().waitAndClick(20);
-			UtilityLog.info("Saved search with  name  " + SearchName);
+				base.stepInfo(SearchName + " is Selected");
 
+				driver.scrollPageToTop();
+				getbtnNext().waitAndClick(20);
+				UtilityLog.info("Saved search with  name  " + SearchName);
+
+				searchStatus = true;
+			} else {
+				base.stepInfo(SearchName + " is Not Displayed");
+			}
 		} catch (Exception e) {
 			System.out.println("Search Group of Rmu is not Present in Project Administration");
 			UtilityLog.info("Search Group of RMU is not Present in Project Administration");
 
 		}
+		return searchStatus;
 	}
 
 	/**
@@ -2710,5 +2716,41 @@ public class BatchPrintPage {
 			base.failedStep(failMsg);
 		}
 	}
+
+	/**
+	 * @authorJeevitha
+	 * @Description  : clcik back button and verify current and navigated tab
+	 * @param elementName
+	 */
+	public void ClickBackButtonAndVerify(boolean verifyCurrentPage, String expectCurrentTab, int noOfTime,
+			boolean verifyNavigatedTab, String expectNavigationTab) {
+		boolean flag = true;
+		for (int i = 1; i <= noOfTime; i++) {
+
+			if (verifyCurrentPage) {
+				base.waitForElement(getPageHeader());
+				String Header = getPageHeader().getText();
+				base.compareTextViaContains(Header, expectCurrentTab,
+						"Current Tab before Clicking back button is : " + Header, "Current tab is not as expected");
+			}
+
+			if (getBackButton().isElementAvailable(3)) {
+				getBackButton().waitAndClick(10);
+				driver.waitForPageToBeReady();
+				base.stepInfo("Clicked Back Button ");
+			} else {
+				base.failedStep("Back button is not available");
+			}
+
+			if (verifyNavigatedTab) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getPageHeader());
+				String Header = getPageHeader().getText();
+				base.compareTextViaContains(Header, expectNavigationTab,
+						"Navigated Tab After Clicking back button is : " + Header, "Navigated tab is not as expected");
+			}
+		}
+	}
+
 	
 }
