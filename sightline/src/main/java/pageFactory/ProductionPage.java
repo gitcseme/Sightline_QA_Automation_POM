@@ -3501,6 +3501,9 @@ public class ProductionPage {
 	public Element getProdPaginationPreviousBtn() {
 		return driver.FindElementByXPath("//li[@id='ProductionListGridViewTable_previous']//a");
 	}
+	public Element getAbbreviatedText() {
+		return driver.FindElementByXPath("//input[contains(@name,'AbbrivatedText')]");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -22393,4 +22396,34 @@ public class ProductionPage {
 			base.listCompareEquals(PreviousProductionPage, DefaultProductionPage, "Production grid view navigated to previous page successfully", "not moved to previous page");
 			
 }
+			/**
+			 * @author Brundha.T
+			 * @param Tag
+			 * @param fontColor
+			 * @param Value
+			 * @param TagName
+			 * @param placeHolderValue
+			 * Description: filling burn redaction
+			 */
+			public void fillingBurnRedaction(String Tag, String fontColor, boolean Value, String TagName,
+					String placeHolderValue) {
+				driver.waitForPageToBeReady();
+				getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+				driver.scrollingToBottomofAPage();
+				base.waitTillElemetToBeClickable(BurnRedactionCheckBox(Tag));
+				BurnRedactionCheckBox(Tag).waitAndClick(10);
+				getSelectDropDown().selectFromDropdown().selectByVisibleText(fontColor);
+				if (Value) {
+					getClkLink_selectingRedactionTags().waitAndClick(5);
+					getClkBtn_selectingRedactionTags().waitAndClick(5);
+					base.waitTillElemetToBeClickable(getPriveldged_TagTree(TagName));
+					getPriveldged_TagTree(TagName).waitAndClick(5);
+					getClk_selectBtn().waitAndClick(5);
+					base.waitForElement(gettextRedactionPlaceHolder());
+					gettextRedactionPlaceHolder().Click();
+					gettextRedactionPlaceHolder().SendKeys(Input.tag);
+					getAbbreviatedText().Click();
+					getAbbreviatedText().SendKeys(placeHolderValue);
+				}
+			}
 }

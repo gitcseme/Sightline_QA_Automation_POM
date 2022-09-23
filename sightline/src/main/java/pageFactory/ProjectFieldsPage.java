@@ -180,6 +180,9 @@ public class ProjectFieldsPage {
 	public Element getFieldCancelButton() {
 		return driver.FindElementById("btnProjectFieldAddCancel");
 	}
+	public Element getProjectFieldactiveButton(String projectFieldName) {
+		return driver.FindElementByXPath("//td[text()='" + projectFieldName + "']//..//a[text()='Active']");
+	}
 
 	//
 	// Annotation Layer added successfully
