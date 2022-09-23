@@ -55,6 +55,14 @@ public class RedactionPage {
 		public Element redactionTagErrorMsg() {
 			return driver.FindElementById("redactionTagErrorMsg");
 		}
+		
+		public Element getRedactedPrivacy() {
+			return driver.FindElementById("3_anchor");
+		}
+
+		public Element getRedactedPrivilege() {
+			return driver.FindElementById("2_anchor");
+		}
 
     
 
@@ -381,6 +389,29 @@ public class RedactionPage {
 		}
   		
   		
+	}
+  	
+  	/**
+	 * @author Krishna
+	 * @description: To verify Redaction tag below provisioned privacy and privilege
+	 *               tag is available
+	 */
+	public void verifyReductionTagPrivacyAndPriviledge() {
+		SoftAssert softassertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		String getPrivacy = getRedactedPrivacy().getText();
+		String getPrivilege = getRedactedPrivilege().getText();
+		softassertion.assertTrue(getRedactedPrivacy().isElementPresent());
+		softassertion.assertTrue(getRedactedPrivilege().isElementPresent());
+		driver.waitForPageToBeReady();
+		if (getRedactedPrivacy().isDisplayed() && getRedactedPrivilege().isElementPresent()) {
+			bc.passedStep("In Redaction Tags below provisioned  " + getPrivacy + getPrivilege
+					+ "  is available successfully");
+
+		} else {
+			bc.failedStep("Redaction Tags below provisioned is not available");
+		}
+
 	}
 
 
