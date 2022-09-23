@@ -229,6 +229,52 @@ public class Assignments_Regression_2_5 {
 		sa.assertAll();
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author
+	 * @Date: 21/9/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that belly band message appears when user configured
+	 *              Proximity with Left double quotes only and combined with other
+	 *              criteria in Advanced Search Query Screen. RPMXCON-57300
+	 */
+	@Test(description = "RPMXCON-54317", enabled = true, groups = { "regression" })
+	public void verifyEmailAuthorNameAndAddressFieldDisplayedOnMetadataList() throws InterruptedException {
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+		String metaData = "EmailAuthorNameAndAddress";
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-54317");
+		baseClass.stepInfo(
+				"Verify that 'EmailAuthorNameAndAddress' field should be displayed on metadata list while editing the assignment");
+
+		// creating assignment
+		baseClass.stepInfo("Step-2 Go to Manage > Assignment and select the assignment to edit**");
+		agnmt.createAssignment(assignmentName, Input.codingFormName);
+		agnmt.editAssignmentUsingPaginationConcept(assignmentName);
+
+		// verify that EmailAuthorNameAndAddress field should be displayed in the
+		// metadata pop up under Assigned Metadata list
+		baseClass.stepInfo(
+				"Step-3 Click 'Select Metadata' button to configure metadata to assignment and check for the EmailAuthorNameAndAddress field from pop up under Assigned Metadata list**");
+		baseClass.waitForElement(agnmt.GetSelectMetaDataBtn());
+		agnmt.GetSelectMetaDataBtn().waitAndClick(10);
+		baseClass.ValidateElement_Presence(agnmt.getSelectAssignedMDinAssignPage(metaData),
+				"EmailAuthorNameAndAddress Metadata field");
+		baseClass.passedStep(
+				"Verified That EmailAuthorNameAndAddress field is displayed in the metadata pop up under Assigned Metadata list.");
+
+		// delete assignment
+		baseClass.stepInfo("Initiating Delete assignment");
+		agnmt.deleteAssgnmntUsingPagination(assignmentName);
+
+		// logOut
+		loginPage.logout();
+	}
+
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

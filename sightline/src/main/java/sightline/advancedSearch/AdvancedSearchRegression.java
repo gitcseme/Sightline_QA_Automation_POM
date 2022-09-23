@@ -141,7 +141,7 @@ public class AdvancedSearchRegression {
 		sessionSearch.verifyCopyToNewSearch();
 
 		// verify warning message
-		sessionSearch.verifyWarningMessage(true, 1);
+		sessionSearch.verifyWarningMessage(true,false, 1);
 
 		// logOut
 		loginPage.logout();

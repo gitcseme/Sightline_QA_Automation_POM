@@ -3599,6 +3599,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Pause']");
 	}
 	
+	public Element getDocView_AudioPause() {
+		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Play']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -7452,6 +7456,8 @@ public class DocViewPage {
 		try {
 			driver.waitForPageToBeReady();
 			selectSourceDocIdInAvailableField("SourceDocID");
+			driver.waitForPageToBeReady();
+			base.waitTime(3);
 			for (int i = 0; i < 20; i++) {
 				try {
 					driver.waitForPageToBeReady();
@@ -26236,9 +26242,10 @@ public class DocViewPage {
 		base.waitForElement(getAudioPersistantHitEyeIcon());
 		getAudioPersistantHitEyeIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
+		
 		List<WebElement> AudioPersistentHitsPanels = getAudioPersistentHitsPanels().FindWebElements();
 		List<WebElement> AudioSearchTerms = getDocView_Audio_HitTerms(1).FindWebElements();
-
+		
 		if (AudioPersistentHitsPanels.size() == searchTerms.size() && AudioSearchTerms.size() == searchTerms.size()) {
 			getAudioPersistentHits().isElementAvailable(10);
 			for (int i = 0; i < AudioPersistentHitsPanels.size(); i++) {
@@ -28641,5 +28648,53 @@ public class DocViewPage {
 
 	}
 	
-	
+
+	/*
+	 * @Author Jayanthi
+	 * 
+	 * @Description :Method to verify persistant hit terms for audio files[for two search strings]
+	 * 
+	 */
+	public void verifyingAudioPersistantHitTerms(int docCount,String SearchString,String SearchString1) {
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getAudioPersistantHitEyeIcon());
+		getAudioPersistantHitEyeIcon().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getAudioPersistentHits().isElementAvailable(10);
+		if (getAudioPersistentHits().isDisplayed()) {
+			base.passedStep("Persistent hits panel is displayed as expected");
+		} else {
+			base.failedStep("Persistent Hit panel is not displayed as expected");
+		}
+		for (int i = 0; i < docCount; i++) {
+			base.waitForElement(getDocView_Audio_Hit());
+			List<WebElement> elementList = null;
+			
+				elementList = getDocView_Audio_HitTerms(1).FindWebElements();
+				for (WebElement wenElementNames : elementList) {
+
+					String elementName = wenElementNames.getText().trim().toLowerCase();
+					System.out.println(elementName);
+				
+					if (elementName.contains(SearchString) || elementName.contains(SearchString1)) {
+						continue;
+					} else {
+						base.failedStep("Search string is not displayed as expected in persistent hit panel");
+					}  }
+					
+				base.waitForElement(getDocView_Next());
+				getDocView_Next().waitAndClick(10);
+				driver.waitForPageToBeReady();
+			}
+		if (getTriangularIcon().isDisplayed()) {
+			base.passedStep("Triangular Arrow icon in the Persistent Hits panel is Dislplayed");
+		} else {
+			base.failedStep("Triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
+		}
+		}
+
 }
+
+

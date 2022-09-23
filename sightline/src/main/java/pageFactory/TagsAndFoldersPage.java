@@ -465,7 +465,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditFolderWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/parent::div//label");
+		return driver.FindElementByXPath("//span[text()='Edit Folder' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 	public Element getEditTagPopup() {
@@ -481,7 +481,7 @@ public class TagsAndFoldersPage {
 	}
 
 	public Element getEditTagWaringMessageText() {
-		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/parent::div//label");
+		return driver.FindElementByXPath("//span[text()='Edit Tag' and @class='MsgTitle']/../following-sibling::p/label");
 	}
 
 //Added by Krishna
@@ -513,6 +513,10 @@ public class TagsAndFoldersPage {
 	public Element getReleaseCancelButton() {
 		return driver.FindElementById("btnReleaseCancel");
 	}
+	
+	public Element getBulkRelease_ButtonUnRelease() {
+        return driver.FindElementById("btnUnrelease");
+    }
 
 	public TagsAndFoldersPage(Driver driver) {
 
@@ -3023,5 +3027,65 @@ public class TagsAndFoldersPage {
 		base.VerifySuccessMessage("Records saved successfully");
 
 	}
+	
+	/**
+	 * @author Krishna
+	 * @Description - Tag is Unreleased to securitygroup - Folder
+	 * @param - SecGroup
+	 */
+	public void verifyBulk_UnreleaseTagInSg(String SecGroup) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getBulkRelDefaultSecurityGroup_CheckBox(SecGroup));
+		getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(8);
+		base.waitForElement(getBulkRelease_ButtonUnRelease());
+		getBulkRelease_ButtonUnRelease().waitAndClick(8);
+		base.VerifySuccessMessageB("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+
+	}
+
+	/**
+	 * @author Krishna
+	 * @Description - Folder is released to securitygroup - Folder
+	 * @param - Foldername securityGroupName
+	 */
+	public void bulkReleaseFolderInSg(String Foldername, String securityGroupName) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFolderName(Foldername));
+		getFolderName(Foldername).waitAndClick(5);
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitForElement(getBulkReleaseFolder());
+		getBulkReleaseFolder().waitAndClick(10);
+		base.waitForElement(getBulkRelOther_CheckBox(securityGroupName));
+		getBulkRelOther_CheckBox(securityGroupName).waitAndClick(10);
+		getBulkRelease_ButtonRelease().waitAndClick(10);
+		getFinalizeButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+	}
+	
+	/**
+	 * @author Krishna
+	 * @Description - Folder is unreleased to securitygroup - Folder
+	 * @param - SecGroup
+	 */
+
+	public void verifyBulk_UnreleaseFolderInSg(String SecGroup) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getFolderActionDropDownArrow());
+		getFolderActionDropDownArrow().waitAndClick(10);
+		base.waitForElement(getBulkReleaseFolder());
+		getBulkReleaseFolder().waitAndClick(10);
+		base.waitForElement(getBulkRelDefaultSecurityGroup_CheckBox(SecGroup));
+		getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(8);
+		base.waitForElement(getBulkRelease_ButtonUnRelease());
+		getBulkRelease_ButtonUnRelease().waitAndClick(8);
+		base.VerifySuccessMessageB("Records saved successfully");
+		base.CloseSuccessMsgpopup();
+
+	}
+
 
 }

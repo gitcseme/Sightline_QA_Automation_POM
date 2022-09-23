@@ -490,7 +490,16 @@ public class SecurityGroupsPage {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + Annotation
 				+ "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
-	
+	public Element getRenameBtn() {
+		return driver.FindElementById("btnRenameSecurtyGroup");
+	}
+	public Element getRadioBn() {
+		return driver.FindElementByXPath("//input[@id='projlevelemail']");
+		
+	}
+	public Element getProjectSelector() {
+		return driver.FindElementById("project-selector");
+	}
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -1628,6 +1637,32 @@ public class SecurityGroupsPage {
 		} else {
 			bc.failedStep(annotation + "After removed annotation layer is not displayed on available list");
 
+		}
+
+	}
+	
+	/**
+	 * @author Krishna Modified date:NA
+	 * @Description: selected annotation layer is moved in selected list getting
+	 *               warning msg
+	 */
+	public void verifyAssignedlayertoSgInWarningMsg() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSG_AddAnnLayer().Visible();
+			}
+		}), Input.wait30);
+		getSG_AddAnnLayer().waitAndClick(15);
+		System.out.println("Selected another Annotation layer");
+		bc.stepInfo("Selected another Annotation layer");
+		getSG_AddAnnLayer_Right().waitAndClick(15);
+		try {
+			bc.VerifyWarningMessage("Cannot add more than one security group. "
+					+ "A security group can have only one annotation layer at a time.");
+			bc.CloseSuccessMsgpopup();
+		} catch (Exception e) {
+			System.out.println("Annotation layer already added");
+			UtilityLog.info("Annotation layer already added");
 		}
 
 	}

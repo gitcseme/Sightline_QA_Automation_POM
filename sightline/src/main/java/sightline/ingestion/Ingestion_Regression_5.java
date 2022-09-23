@@ -1,3 +1,4 @@
+
 package sightline.ingestion;
 
 import java.io.IOException;
@@ -373,3 +374,4 @@ public class Ingestion_Regression_5 {
 	}
 
 }
+

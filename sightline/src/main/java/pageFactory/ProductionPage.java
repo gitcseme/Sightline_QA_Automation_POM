@@ -3498,7 +3498,9 @@ public class ProductionPage {
 	public Element getInsertQueryBtnInPrivGuard() {
 		return driver.FindElementByXPath("//div[@id='c-2']//a[@id='insertQueryBtn']");
 	}
-	
+	public Element getProdPaginationPreviousBtn() {
+		return driver.FindElementByXPath("//li[@id='ProductionListGridViewTable_previous']//a");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -21426,7 +21428,6 @@ public class ProductionPage {
 	public void navigatingToProductionHomePage() {
 		base.waitTime(1);
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
-		driver.Navigate().refresh();
 		driver.waitForPageToBeReady();
 
 	}
@@ -22374,4 +22375,22 @@ public class ProductionPage {
 					getOperatorInPrivGuard(Operator).waitAndClick(5);
 				}
 			}
+			
+			/**
+			 * @author Brundha.T
+			 * Description:verifying pagination in gridview 
+			 */
+			public void verifyingGridView() {
+			List<String> DefaultProductionPage = base.availableListofElements(getGridViewWebTable(1));
+			driver.scrollingToBottomofAPage();
+			getProdPaginationNext().waitAndClick(5);
+			base.waitTime(1);
+			List<String> NextProductioPage = base.availableListofElements(getGridViewWebTable(1));
+			base.listCompareNotEquals(DefaultProductionPage, NextProductioPage, "Production grid view navigated to next page successfully", "Production grid view not navigated");
+			getProdPaginationPreviousBtn().waitAndClick(5);
+			base.waitTime(1);
+			List<String> PreviousProductionPage = base.availableListofElements(getGridViewWebTable(1));
+			base.listCompareEquals(PreviousProductionPage, DefaultProductionPage, "Production grid view navigated to previous page successfully", "not moved to previous page");
+			
+}
 }

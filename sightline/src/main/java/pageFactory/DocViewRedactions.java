@@ -1318,13 +1318,15 @@ public Element hiddenInfoIconToolTip() {
 				return redactionIcon().Displayed() && redactionIcon().Enabled();
 			}
 		}), Input.wait30);
+		base.waitTime(3);
 		redactionIcon().waitAndClick(20);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return rectangleClick().Visible() && rectangleClick().Enabled();
 			}
 		}), Input.wait30);
-		rectangleClick().waitAndClick(8);
+		base.waitTime(3);
+		rectangleClick().waitAndClick(10);
 		if(deleteRedactioBtn().isElementAvailable(2)) {
 			deleteRedactioBtn().waitAndClick(5);
 		}
@@ -2087,10 +2089,10 @@ public void popOutCodingFormChildWindow() {
 		searchTextIcon().waitAndClick(10);
 
 		set_searchText().getWebElement().sendKeys("S");
-		Thread.sleep(2000); // needed here implicitly
+		Thread.sleep(3000); // needed here implicitly
 
 		Robot robot = new Robot();
-
+		
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		base.waitTime(5); // needed here implicitly
@@ -2370,7 +2372,7 @@ public void popOutCodingFormChildWindow() {
 		for (String miniDocListChild : childWindow) {
 			if (!parentWindow.equals(miniDocListChild)) {
 				driver.switchTo().window(miniDocListChild);
-				driver.waitForPageToBeReady();
+//				driver.waitForPageToBeReady();
 			}
 		}
 
