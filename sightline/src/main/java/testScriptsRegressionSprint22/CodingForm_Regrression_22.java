@@ -3,7 +3,12 @@ package testScriptsRegressionSprint22;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -23,6 +28,7 @@ import pageFactory.KeywordPage;
 import pageFactory.LoginPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
@@ -453,6 +459,141 @@ public class CodingForm_Regrression_22 {
 	    base.passedStep("Verified that Preview displays correctly and properly for "
 	    		+ "all objects along with all condition and Check Item for new coding form");
 	    loginPage.logout();
+	}
+	/**
+	 * @throws ParseException 
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify validation from preview of coding form when coding form is created
+	 *                with the editable metadata field of data type DateOnly
+	 */
+	
+	@Test(description = "RPMXCON-54413",enabled = true, groups = { "regression" })
+	public void validateNonDateFormatInPreviewCf() throws InterruptedException, ParseException {
+		base.stepInfo("Test case Id: RPMXCON-54413");
+		base.stepInfo("Verify validation from preview of coding form when coding form is created with the editable metadata field of data type DateOnly");
+	    String codingform = "CFDate"+Utility.dynamicNameAppender();
+	    String date = "Date" + Utility.dynamicNameAppender();
+	    System.out.println(date);
+	    CodingForm codingForm = new CodingForm(driver);
+	    ProjectPage projectPage = new ProjectPage(driver);
+	    SecurityGroupsPage securityGroupPage = new SecurityGroupsPage(driver);
+	    SoftAssert softAssertion = new SoftAssert();
+	    DocViewPage docviewPg = new DocViewPage(driver);
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		SimpleDateFormat ldf = new SimpleDateFormat("dd/MM/yyyy");
+		Date d1 = ldf.parse(sdf.format(new Date()));
+		String d2 = ldf.format(d1);
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+	
+		// Custom Field created with DATE DataType
+		projectPage.addCustomFieldDataType(date, "Date");
+		base.stepInfo("Custom meta data field created with DATE datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(date);
+		base.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		base.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.addNewCodingFormButton();
+		base.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,null,null,date,"metadata");
+		codingForm.addcodingFormAddButton();
+		codingForm.saveCodingForm();
+		base.stepInfo("Coding form saved successfully");
+		base.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		base.waitTillElemetToBeClickable(docviewPg.getDateFormat());
+		docviewPg.getDateFormat().SendKeys(d2);
+		Actions action = new Actions(driver.getWebDriver());
+		action.sendKeys(Keys.TAB).build().perform();
+		base.waitTillElemetToBeClickable(codingForm.getTestUrCodeClick());
+		codingForm.getTestUrCodeClick().waitAndClick(5);
+		String errorMessage = codingForm.geErrMsgInPreviewBox().getText();
+		softAssertion.assertEquals(errorMessage,"Invalid DateTime");
+		softAssertion.assertAll();
+		base.passedStep("When passing non formatted date, getting the error messsage as "+errorMessage+" successfully as expected");
+		codingForm.deleteCodingForm(codingform, codingform);
+		loginPage.logout();
+	}
+	/**
+	 * @throws ParseException 
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :Verify validation from preview of coding form when coding form is created with the editable metadata field of data type DateTime
+	 */
+	
+	@Test(description = "RPMXCON-54412",enabled = true, groups = { "regression" })
+	public void validateNonDateTimeFormatInPreviewCf() throws InterruptedException, ParseException {
+		base.stepInfo("Test case Id: RPMXCON-54412");
+		base.stepInfo("Verify validation from preview of coding form when coding form is created with the editable metadata field of data type DateTime");
+	    String codingform = "CFDate"+Utility.dynamicNameAppender();
+	    String dateTime = "DateTime" + Utility.dynamicNameAppender();
+	    System.out.println(dateTime);
+	    CodingForm codingForm = new CodingForm(driver);
+	    ProjectPage projectPage = new ProjectPage(driver);
+	    SecurityGroupsPage securityGroupPage = new SecurityGroupsPage(driver);
+	    SoftAssert softAssertion = new SoftAssert();
+	    DocViewPage docviewPg = new DocViewPage(driver);
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		SimpleDateFormat ldf = new SimpleDateFormat("dd/MM/yyyy");
+		Date d1 = ldf.parse(sdf.format(new Date()));
+		String d2 = ldf.format(d1);
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+	
+		// Custom Field created with DateTime DataType
+		projectPage.addCustomFieldDataType(dateTime, "DATETIME");
+		base.stepInfo("Custom meta data field created with DateTime datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(dateTime);
+		base.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		base.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		codingForm.addNewCodingFormButton();
+		base.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,null,null,dateTime,"metadata");
+		codingForm.addcodingFormAddButton();
+		codingForm.saveCodingForm();
+		base.stepInfo("Coding form saved successfully");
+		base.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		base.waitTillElemetToBeClickable(docviewPg.getDateFormat());
+		docviewPg.getDateFormat().SendKeys(d2);
+		Actions action = new Actions(driver.getWebDriver());
+		action.sendKeys(Keys.TAB).build().perform();
+		base.waitTillElemetToBeClickable(codingForm.getTestUrCodeClick());
+		codingForm.getTestUrCodeClick().waitAndClick(5);
+		String errorMessage = codingForm.geErrMsgInPreviewBox().getText();
+		softAssertion.assertEquals(errorMessage,"Invalid DateTime");
+		softAssertion.assertAll();
+		base.passedStep("When passing non formatted datetime, getting the error messsage as "+errorMessage+" successfully as expected");
+		codingForm.deleteCodingForm(codingform, codingform);
+		loginPage.logout();
 	}
 	
 	
