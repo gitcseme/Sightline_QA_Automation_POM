@@ -1403,7 +1403,7 @@ public class DocListPage {
 	public Element getDocListPerviewBtn() {
 		return driver.FindElementByXPath("//a[text()='Preview Document']");
 	}
-	
+
 	public Element getTagEmailDuplicate() {
 		return driver.FindElementByXPath("//div/div[4]/label/i");
 	}
@@ -6265,14 +6265,14 @@ public class DocListPage {
 	}
 
 	/**
-	 * @Author Jeevitha
+	 * @Author Jeevitha  @Modified date: 23/09/2022
 	 * @Description : ignore DocType which is not downloadable format and add
 	 *              remaining to the list
 	 * @param docIdOrName
 	 * @return
 	 */
 	public List<String> addDocsToListOfOnlyDownloadableFormat(List<String> docIdOrName) {
-		String[] ignoreFileTypeId = { "MP3", "wav" };
+		String[] ignoreFileTypeId = { "MP3", "wav", "MP4" };
 		List<String> elementNames = new ArrayList<>();
 		int index = base.getIndex(getColumnHeader(), Input.docFileType);
 
@@ -6280,18 +6280,24 @@ public class DocListPage {
 			base.waitForElement(getDocfileDetailByID(docIdOrName.get(i), String.valueOf(index)));
 			String docfileType = getDocfileDetailByID(docIdOrName.get(i), String.valueOf(index)).getText();
 
-			if (docfileType.equalsIgnoreCase(ignoreFileTypeId[0])
-					|| docfileType.equalsIgnoreCase(ignoreFileTypeId[1])) {
-				System.out.println("Ignored file : " + docfileType);
-			} else {
+			boolean status = true;
+			for (int j = 0; j < ignoreFileTypeId.length; j++) {
+				if (docfileType.equalsIgnoreCase(ignoreFileTypeId[j])) {
+					System.out.println("Ignored file : " + docfileType);
+					status = false;
+					break;
+				}
+			}
+
+			if (status) {
 				elementNames.add(docIdOrName.get(i));
 			}
 		}
 		return elementNames;
 	}
-	
+
 	/**
-	 * @Author:Vijaya.Rani Modified on 15/09/2022 
+	 * @Author:Vijaya.Rani Modified on 15/09/2022
 	 * @param tagname Select EmailDuplicates
 	 * @throws InterruptedException
 	 * @throws AWTException
@@ -6301,7 +6307,7 @@ public class DocListPage {
 		if (getPureHitAddButton().isElementAvailable(5)) {
 			getPureHitAddButton().waitAndClick(10);
 		} else {
-	
+
 			UtilityLog.info("Pure hit block already moved to action panel");
 			Reporter.log("Pure hit block already moved to action panel", true);
 		}
@@ -6333,7 +6339,7 @@ public class DocListPage {
 
 		base.waitForElement(getTagEmailDuplicate());
 		getTagEmailDuplicate().Click();
-		
+
 		base.waitTillElemetToBeClickable(getContinueBulkAssign());
 		getContinueBulkAssign().waitAndClick(25);
 
@@ -6343,10 +6349,10 @@ public class DocListPage {
 		getFinalizeButton().Click();
 
 		driver.Manage().window().maximize();
-		
+
 		base.waitForElement(getPopUpOkBtn());
 		getPopUpOkBtn().Click();
-		
+
 		base.VerifySuccessMessage("Records saved successfully");
 	}
 
