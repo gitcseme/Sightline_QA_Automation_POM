@@ -29,6 +29,7 @@ import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
 import pageFactory.ProjectPage;
 import pageFactory.SavedSearch;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.UserManagement;
@@ -83,8 +84,9 @@ public class ProductionRegression_Sprint21 {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
 		return users;
 	}
+
 	/**
-	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-48499
+	 * @author sowndarya.velraj  created on:NA modified by:NA TESTCASE No:RPMXCON-48499
 	 * @Description:To verify that after clicking on InComplete button on Production
 	 *                 Components, last selected Native File Group types and Tags
 	 *                 should be displayed
@@ -99,7 +101,7 @@ public class ProductionRegression_Sprint21 {
 				"To verify that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
 
 		// create tag and folder
-		base =new BaseClass(driver);
+		base = new BaseClass(driver);
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		if (userName.equals(Input.pa1userName)) {
 			tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
@@ -140,8 +142,9 @@ public class ProductionRegression_Sprint21 {
 		}
 		loginPage.logout();
 	}
+
 	/**
-	 * @author NA Testcase No:RPMXCON-47614
+	 * @author  sowndarya.velraj  Testcase No:RPMXCON-47614
 	 * @Description: To Verify ProjectAdmin will be able to enter basic information
 	 *               on the self production wizard
 	 **/
@@ -718,13 +721,16 @@ public class ProductionRegression_Sprint21 {
 		} else {
 			base.passedStep("'Disclaimer Sighline goes here' Removed as Expected");
 		}
-		base.passedStep("Verified - that from Productions Basic Info tab Disclaimer for Sightline goes here is be removed");
+		base.passedStep(
+				"Verified - that from Productions Basic Info tab Disclaimer for Sightline goes here is be removed");
 		loginPage.logout();
 	}
 
 	/**
 	 * @author NA Testcase No:RPMXCON-48887
-	 * @Description:Add Single line branding to all six locations (TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a PDF file
+	 * @Description:Add Single line branding to all six locations (TOP LEFT, TOP
+	 *                  RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE)
+	 *                  for a PDF file
 	 **/
 	@Test(description = "RPMXCON-48887", enabled = true, groups = { "regression" })
 	public void VerifySingleBrandingFrPDF() throws Exception {
@@ -784,7 +790,9 @@ public class ProductionRegression_Sprint21 {
 
 	/**
 	 * @author NA Testcase No:RPMXCON-48888
-	 * @Description:Add Multiple line branding to all six locations (TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a PDF file
+	 * @Description:Add Multiple line branding to all six locations (TOP LEFT, TOP
+	 *                  RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE)
+	 *                  for a PDF file
 	 **/
 	@Test(description = "RPMXCON-48888", enabled = true, groups = { "regression" })
 	public void VerifyMultiLineBrandingFrPDF() throws Exception {
@@ -841,15 +849,16 @@ public class ProductionRegression_Sprint21 {
 		page.verifyTextinPDF(pdfFile, "Bottom - Right Multiple Line Branding");
 		loginPage.logout();
 	}
-	
+
 	/**
-  * @author NA Testcase No:RPMXCON-48883
-  * @Description: Add Single line branding to all six locations "
-				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a Tiff file
-  **/
-    @Test(description = "RPMXCON-48883", enabled = true, groups = { "regression" })
-    public void VerifySingleLineBrandingFrTiff() throws Exception {
-    	UtilityLog.info(Input.prodPath);
+	 * @author NA Testcase No:RPMXCON-48883
+	 * @Description: Add Single line branding to all six locations " + "(TOP LEFT,
+	 *               TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM
+	 *               MIDDLE) for a Tiff file
+	 **/
+	@Test(description = "RPMXCON-48883", enabled = true, groups = { "regression" })
+	public void VerifySingleLineBrandingFrTiff() throws Exception {
+		UtilityLog.info(Input.prodPath);
 		base.stepInfo("RPMXCON-48883");
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String prefixID = Input.randomText + Utility.dynamicNameAppender();
@@ -857,17 +866,17 @@ public class ProductionRegression_Sprint21 {
 
 		base.stepInfo("Add Single line branding to all six locations "
 				+ "(TOP LEFT, TOP RIGHT, TOP MIDDLE, BOTTOM LEFT, BOTTOM RIGHT, BOTTOM MIDDLE) for a Tiff file");
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Logged in As " + Input.pa1userName);
-   		tagsAndFolderPage.createNewTagwithClassification(tagname,  Input.tagNamePrev);
-   		sessionSearch.navigateToSessionSearchPageURL();
-   		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
-   		sessionSearch.ViewInDocList();		
-   		DocListPage doclist = new DocListPage(driver);
-   		doclist.documentSelection(2);
-   		doclist.bulkTagExistingFromDoclist(tagname);
-        base = new BaseClass(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		base = new BaseClass(driver);
 		productionname = "p" + Utility.dynamicNameAppender();
 		String beginningBates = page.getRandomNumber(2);
 		page.navigateToProductionPage();
@@ -892,55 +901,57 @@ public class ProductionRegression_Sprint21 {
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
 		base.waitUntilFileDownload();
-   		driver.waitForPageToBeReady();
-   		String home = System.getProperty("user.home");
-   		page.deleteFiles();
-   		page.extractFile();
-   		driver.waitForPageToBeReady();		
-   		File tiffFile = new File(home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Left");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Center");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Right");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Left");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Center");
-   		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Right");
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File tiffFile = new File(
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Left");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Center");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Top - Right");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Left");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Center");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(tiffFile, "Bottom - Right");
 		loginPage.logout();
-    }
-  
+	}
+
 	/**
-  * @author NA Testcase No:RPMXCON-50014
-  * @Description: Verify that for 'AllProductionsBatesRange' field 'isSearchable' option is disabled
-  **/
-	@Test(description = "RPMXCON-50014",enabled = true, groups = {"regression" })
-	public void verifyIsSearchableDisabled() throws InterruptedException  {
-		
+	 * @author NA Testcase No:RPMXCON-50014
+	 * @Description: Verify that for 'AllProductionsBatesRange' field 'isSearchable'
+	 *               option is disabled
+	 **/
+	@Test(description = "RPMXCON-50014", enabled = true, groups = { "regression" })
+	public void verifyIsSearchableDisabled() throws InterruptedException {
+
 		base = new BaseClass(driver);
 		ProjectPage project = new ProjectPage(driver);
 		DomainDashboard dash = new DomainDashboard(driver);
-		
+
 		base.stepInfo("Test case Id: RPMXCON-50014");
 		base.stepInfo("Verify that for 'AllProductionsBatesRange' field 'isSearchable' option is disabled");
-		
+
 		String projectName = Input.randomText + Utility.dynamicNameAppender();
 		String fieldName = "AllProductionBatesRanges";
-		
+
 //		//login as sa
 		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
-		base.stepInfo("Login as a sa user :"+Input.sa1userName);
-		
+		base.stepInfo("Login as a sa user :" + Input.sa1userName);
+
 		project.navigateToProductionPage();
 		base.clearBullHornNotification();
-		project.AddDomainProject(projectName,Input.domainName);
+		project.AddDomainProject(projectName, Input.domainName);
 		base.waitForNotification();
 		dash.getNotificationMessage(0, projectName);
-	
+
 		UserManagement users = new UserManagement(driver);
 		users.navigateToUsersPAge();
 		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
 		loginPage.logout();
-		
+
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		base.selectproject(projectName);	
+		base.selectproject(projectName);
 		ProjectFieldsPage projectField = new ProjectFieldsPage(driver);
 		projectField.navigateToProjectFieldsPage();
 		projectField.applyFilterByFilterName(fieldName);
@@ -949,14 +960,184 @@ public class ProductionRegression_Sprint21 {
 		projectField.getFieldNameEdititButton(fieldName).waitAndClick(3);
 		base.waitForElement(projectField.getIsSearchableCheckBox());
 		projectField.getIsSearchableCheckBox().waitAndClick(2);
-		if(projectField.getIsSearchableCheckBox().Selected()) {
+		if (projectField.getIsSearchableCheckBox().Selected()) {
 			base.failedStep("Is Searchable Field Is Enabled");
-		} else{
+		} else {
 			base.passedStep("Is Searchable Field Is Disabled As Expected");
 		}
 		base.passedStep("Verified - that for 'AllProductionsBatesRange' field 'isSearchable' option is disabled");
-	    loginPage.logout();	
+		loginPage.logout();
 	}
+	
+	/**
+	 * @author N/A Testcase No:RPMXCON-48295
+	 * @Description: Verify New Line delimiters on Production.
+	 **/
+	@Test(description = "RPMXCON-48295", enabled = true, groups = { "regression" })
+	public void verifyNewLineDelimiter() throws Exception {
+		base.stepInfo("RPMXCON-48295");
+		base.stepInfo("To Verify -  New Line delimiters on Production");
+		base = new BaseClass(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As " + Input.pa1userName);
+
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.verifyNewLineDimiOptions();
+		base.passedStep("Verified - that New Line delimiters on Production");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author  sowndarya.velraj  Testcase No:RPMXCON-48980
+	 * @throws Exception
+	 * @Description: Verify that branding text should be truncated when Branding
+	 *               text exceeds the space and no space after wrapping while
+	 *               production for a PDF file
+	 **/
+	@Test(description = "RPMXCON-48980", enabled = true, groups = { "regression" })
+	public void verifyBrandingTextTruncated() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48980");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		base.stepInfo("Verify that branding text should be truncated when Branding text exceeds the "
+				+ "space and no space after wrapping while production for a PDF file");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingPDFSection();
+		page.fillingAndverifySixBrandingMultiLine(tagname);
+		base.stepInfo("Added a Multi line branding to all six  locations");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+
+		String url = home + "/Downloads/VOL0001/PDF/0001/";
+		String name = prefixID + beginningBates + suffixID;
+
+		String topLeftText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Left", 0);
+		softAssertion.assertTrue(topLeftText.contains("..."));
+
+		String topCenterText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Center", 0);
+		softAssertion.assertFalse(topCenterText.contains("..."));
+
+		String topRightText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Top - Right", 0);
+		softAssertion.assertTrue(topRightText.contains("..."));
+
+		String bottomLeftText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Left", 0);
+		softAssertion.assertTrue(bottomLeftText.contains("..."));
+
+		String bottomCenterText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Center", 0);
+		softAssertion.assertFalse(bottomCenterText.contains("..."));
+
+		String bottomRightText = page.verifyMultiLineBrandingText(url, name + ".pdf", "Bottom - Right", 0);
+		softAssertion.assertTrue(bottomRightText.contains("..."));
+		softAssertion.assertAll();
+		base.passedStep("Verified - that branding text should be truncated when Branding text exceeds the space"
+				+ " and no space after wrapping while production for a PDF file");
+		loginPage.logout();
+	}
+
+	/**
+	 * @author NA created on:NA modified by:NA TESTCASE No:RPMXCON-49047
+	 * @Description: Verify Priv tag of a document from one security is correctly
+	 *               considered for the same document in another security group
+	 **/
+	@Test(description = "RPMXCON-49047", enabled = true, groups = { "regression" })
+	public void verifyPrivCountDiffSG() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49047 -Production Component");
+		base.stepInfo("Verify Priv tag of a document from one security is correctly"
+				+ "considered for the same document in another security group");
+
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String securityGroup = "Production_Security_Group" + Utility.dynamicNameAppender();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		sg.navigateToSecurityGropusPageURL();
+		sg.createSecurityGroups(securityGroup);
+
+		// search for folder
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		DocListPage doc = new DocListPage(driver);
+		doc.selectAllDocs();
+		doc.docListToBulkRelease(securityGroup);
+		driver.waitForPageToBeReady();
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		sg.navigateToSecurityGropusPageURL();
+		sg.addTagToSecurityGroup(securityGroup, tagname);
+
+		base = new BaseClass(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingSecurityGroup(securityGroup);
+		driver.waitForPageToBeReady();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTiffSectionDisablePrivilegedDocs();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		driver.waitForPageToBeReady();
+		String privCount = page.getPrivDocCountInSummaryPage().getText();
+		if (Integer.valueOf(privCount).equals(0)) {
+			base.passedStep("Priv Doc Count in Summary Tab as Expected");
+		} else {
+			base.failedStep("Priv Doc Count in Summary Tab Not as Expected");
+		}
+		base.passedStep("Verified - that Priv tag of a document from one security is correctly considered"
+				+ " for the same document in another security group");
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		if (ITestResult.FAILURE == result.getStatus()) {

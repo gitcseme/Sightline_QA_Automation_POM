@@ -897,6 +897,25 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getSlipMetadatTabSelection() {
+		return driver.FindElementByXPath("//span[text()='Metadata']//parent::a");
+	}
+
+	public Element getMetadataCheckBoxSelection(String fieldValue) {
+		return driver.FindElementByXPath("//strong[text()='" + fieldValue + "']//parent::label//following-sibling::i");
+	}
+	public Element getExportProdToogle() {
+		return driver.FindElementByXPath("//input[@name='ProductionBasicInfoModel.IsExportProduction']/following-sibling::i");
+	}
+	
+	public Element getSelectProdinExport() {
+		return driver.FindElementByXPath("//select[@name='ExportProductionId']");
+	}
+
+	public Element NewLineSeperatorDD() {
+		return driver.FindElementByXPath("//select[@id='lstNewLineSeparator']");
+	}
+	
 	public Element getBrandingDefTextFontStyle(String location) {
 		return driver.FindElementByXPath("//b[text()='" + location
 				+ "']//parent::div//parent::fieldset//preceding-sibling::div[contains(text(),'Branding text font:')]"
@@ -22377,6 +22396,134 @@ public class ProductionPage {
 			}
 			
 			/**
+			 * @author sowndarya.velraj
+			 * Description:verify Multi line branding
+			 */
+			public String verifyMultiLineBrandingText(String path, String filename, String branding, int pageNumber)
+					throws IOException {
+				File file = new File(path + filename);
+				PDDocument document = PDDocument.load(file);
+				String regionName = "region";
+				PDFTextStripperByArea stripper = null;
+				PDPage page = document.getPage(pageNumber);
+				if(branding.equalsIgnoreCase("Top - Center")) {
+//				Top Center
+				Rectangle2D region = new Rectangle2D.Double(200, -100, 200, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				} else if(branding.equalsIgnoreCase("Top - Left")) {
+//				Top Left
+				Rectangle2D region = new Rectangle2D.Double(0, -100, 201, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				} else if(branding.equalsIgnoreCase("Top - Right")) {
+//				Top Right
+				Rectangle2D region = new Rectangle2D.Double(405, -100, 200, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				} else if(branding.equalsIgnoreCase("Bottom - Center")) {
+//				Bottom Centre
+				Rectangle2D region = new Rectangle2D.Double(200, 500, 200, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				} else if(branding.equalsIgnoreCase("Bottom - Left")) {
+//				Bottom Left
+				Rectangle2D region = new Rectangle2D.Double(0, 500, 200, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				} else if(branding.equalsIgnoreCase("Bottom - Right")) {
+//				Bottom Right
+				Rectangle2D region = new Rectangle2D.Double(405, 500, 200, 500);
+				stripper = new PDFTextStripperByArea();
+				stripper.addRegion(regionName, region);
+				}
+				stripper.extractRegions(page);
+				String text = stripper.getTextForRegion(regionName);
+				return text;
+			}
+			
+			/**
+			 * @author sowndarya.velraj
+			 * Description:verify NewLine Delimiters Options
+			 */
+			public void verifyNewLineDimiOptions() {
+				driver.scrollPageToTop();
+		   		base.waitForElement(NewLineSeperatorDD());
+		   		NewLineSeperatorDD().waitAndClick(3);
+		       	base.stepInfo("New Line Seperator Drop Down Clicked ");
+		        List<WebElement> options = NewLineSeperatorDD().selectFromDropdown().getOptions();
+		        for(int i =1 ; i < options.size(); i++) {
+		        	if(options.get(i).isDisplayed()) {
+		        		base.hitDownKey(1);
+		        		base.passedStep(options.get(i).getText() + "Displaying as Expected");
+		        	} else {
+		        		base.failedStep("All Options Not Displaying as Expected");
+		        	}
+		        }
+			}
+			
+			/**
+			 * @author sowndarya.velraj
+			 * Description:selectFieldinMetadataTab 
+			 */
+			public void selectFieldinMetadataTab(String fieldValue) {
+				driver.waitForPageToBeReady();
+				base.clickButton(getSlipMetadatTabSelection());
+				base.clickButton(getMetadataCheckBoxSelection(fieldValue));
+				base.clickButton(getAddSelected());
+			}
+			
+
+			/**
+			 * @author sowndarya.velraj
+			 * Description: addANewExportwithProduction 
+			 */
+			public void addANewExportwithProduction(String exportname, String prodName) throws InterruptedException {
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getAddNewExport().Visible() && getAddNewExport().Enabled();
+					}
+				}), Input.wait30);
+				getAddNewExport().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getProductionName().Visible() && getProductionName().Enabled();
+					}
+				}), Input.wait30);
+				getProductionName().SendKeys(exportname);
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getProductionDesc().Enabled() && getProductionDesc().Visible();
+					}
+				}), Input.wait30);
+				getProductionDesc().SendKeys(exportname);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getExportProdToogle().Visible() && getExportProdToogle().Enabled();
+					}
+				}), Input.wait30);
+				getExportProdToogle().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSelectProdinExport().Visible() && getSelectProdinExport().Enabled();
+					}
+				}), Input.wait30);
+				getSelectProdinExport().selectFromDropdown().selectByVisibleText(prodName);
+				
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getBasicInfoMarkComplete().Visible() && getBasicInfoMarkComplete().Enabled();
+					}
+				}), Input.wait30);
+				getBasicInfoMarkComplete().Click();
+				base.stepInfo("New Export is added");
+			}
+/**
 			 * @author Brundha.T
 			 * Description:verifying pagination in gridview 
 			 */
@@ -22393,4 +22540,5 @@ public class ProductionPage {
 			base.listCompareEquals(PreviousProductionPage, DefaultProductionPage, "Production grid view navigated to previous page successfully", "not moved to previous page");
 			
 }
+
 }
