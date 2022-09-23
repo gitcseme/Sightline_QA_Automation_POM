@@ -225,5 +225,59 @@ public class SecurityGroups_Regression22 {
 		baseClass.passedStep(Foldername1 +"   Folder count is displayed as 0 successfully");
 	
 }
+	/**
+	 * @author Brundha Date:22/09/2022 RPMXCON-53672
+	 * @Description To verify that Project Admin can view the Security group page details.
+	 * 
+	 */
+	@Test(description = "RPMXCON-53672", enabled = true, groups = { "regression" })
+	public void verifyingSecurityGroupDetails() throws Exception {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-53672");
+		baseClass.stepInfo("To verify that Project Admin can view the Security group page details.");
+		
+       SecurityGroupsPage SG=new SecurityGroupsPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		SG.createSecurityGroups(securityGroup);
+		
+		baseClass.stepInfo("verifying Security group page details");
+		baseClass.ValidateElement_Presence(SG.getProjectSelector(), "Project Selector");
+		
+		baseClass.ValidateElement_Presence(SG.getReductionTagLink(), "Redaction Tag");
+		baseClass.ValidateElement_Presence(SG.getCommentLink(), "Comments");
+		baseClass.ValidateElement_Presence(SG.getProjectFieldsLink(), "Project Field");
+		baseClass.ValidateElement_Presence(SG.getKeywordsLink(), "Keywords");
+		baseClass.ValidateElement_Presence(SG.getTagsLink(), "Tags");
+		baseClass.ValidateElement_Presence(SG.getAnnotationLayerLink(), "Annotation layer");
+		baseClass.ValidateElement_Presence(SG.getReductionTagLink(), "Redaction Tag");		
+		
+		baseClass.ValidateElement_Presence(SG.getSecurityGroupCreateButton(), "Create Button");	
+		baseClass.ValidateElement_Presence(SG.getRenameBtn(), "Rename Button");
+		baseClass.ValidateElement_Presence(SG.SG_deleteButton(), "Delete Button");
+		baseClass.ValidateElement_Presence(SG.getSG_AnnSaveButton(), "Save Button");
+		baseClass.ValidateElement_Presence(SG.getSG_CancelBtn(), "Cancel Button");
+		
+		if(SG.getRadioBn().Selected()) {
+			baseClass.passedStep("Project level Email is selected as default");
+		}else {
+			baseClass.failedStep("Project level Email is not selected");
+		}
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+		driver.waitForPageToBeReady();
+		SG.getSecurityGroupList().waitAndClick(5);
+		baseClass.waitForElement(SG.selectSGFromDropdown(securityGroup));
+		SG.selectSGFromDropdown(securityGroup).waitAndClick(2);
+		baseClass.waitForElement(SG.SG_deleteButton());
+		SG.SG_deleteButton().Click();
+		baseClass.getNOBtn().waitAndClick(5);
+		baseClass.ValidateElement_Presence(SG.getSGGrpList(securityGroup),securityGroup);
+		SG.deleteSecurityGroups(securityGroup);
+		baseClass.ValidateElement_Absence(SG.getSGGrpList(securityGroup),securityGroup);
+		
+	}
+	
+	
+	
 }

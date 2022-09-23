@@ -108,6 +108,14 @@ public class LoginPage {
 	
 	}
 	
+	//Added by arun
+	public Element getFirstName() {
+		return driver.FindElementById("txtBxUserName");
+	}
+	public Element getLastName() {
+		return driver.FindElementById("txtBxUserLastName");
+	}
+	
 	public LoginPage(Driver driver) {
 
 		this.driver = driver;

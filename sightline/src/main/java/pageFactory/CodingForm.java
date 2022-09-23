@@ -1617,6 +1617,10 @@ public class CodingForm {
 			return driver.FindElementByXPath("//h2//span[text()='Delete']");
 
 		}
+		
+		public Element getCFHelpmsgTitle() {
+			return driver.FindElementByXPath("//td[@id='td_TAG_2']//span");
+		}
 	
 	
 	

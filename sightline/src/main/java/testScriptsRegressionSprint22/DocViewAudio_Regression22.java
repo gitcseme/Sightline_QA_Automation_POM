@@ -684,6 +684,7 @@ public class DocViewAudio_Regression22 {
 
 	}
 	
+
 	
 	/**
 	 * Author : Baskar date: NA Modified date: 09/22/2022 Modified by: Baskar
@@ -756,6 +757,211 @@ public class DocViewAudio_Regression22 {
 
 		softAssertion.assertAll();
 		// logout
+		loginPage.logout();
+	}
+
+
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-51785", enabled = true, groups = { "regression" })
+	public void verifySameDifferentThresholdAndSearchTerms() throws InterruptedException {
+		DocViewPage	docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51785");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with common terms and "
+				+ "different/same threshold are assigned to assignment from session search");
+		
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		String assgName = "assgnaudio" + Utility.dynamicNameAppender();
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+
+		// Performing advanced search with audio common terms/same threshold
+		 sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getCurrentPureHitAddBtn());
+		baseClass.stepInfo("Search result is displayed");
+
+		// add to shop cart
+		sessionSearch.addPureHit();
+
+		// perform new search
+		sessionSearch.addNewSearch();
+		 sessionSearch.newAudioSearch(Input.audioSearchString2, Input.audioSearchString3,"", Input.language);
+
+		// add to shop cart
+		sessionSearch.addPureHit();
+		
+		// creating Assignment with Audio Document
+		sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login As Rev");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+
+		
+		// click eye icon and triangular arrow /search term hits display check
+		docViewPage.verifyingAudioPersistantHitTerms(5,Input.audioSearchString2, Input.audioSearchString3);
+
+		loginPage.logout();
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		
+		// add new search with different threshold/common terms
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.language, "max");
+		sessionSearch.addPureHit();
+
+		// add new search with different threshold
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.audioSearchString3,
+				"", Input.language, "min");
+		sessionSearch.addPureHit();
+		
+		// creating Assignment with Audio Document
+    	sessionSearch.bulkAssign_Persistant(true);
+		assignmentPage.assignmentCreation(assgName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login As Rev");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgName);
+		driver.waitForPageToBeReady();
+		
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+
+
+		// click eye icon and triangular arrow display  and persistent hits check
+		docViewPage.verifyingAudioPersistantHitTerms(5,Input.audioSearchString2, Input.audioSearchString3);
+
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException
+	 */
+	@Test(description = "RPMXCON-51792", enabled = true, groups = { "regression" })
+	public void verifySameDifferentThresholdAndSearchTerms_viaDocList() throws InterruptedException {
+		DocViewPage	docViewPage = new DocViewPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		DocListPage docListPage= new DocListPage(driver);
+		
+		baseClass.stepInfo("Test case id :RPMXCON-51792");
+		baseClass.stepInfo("Verify that audio hits should be displayed when documents searched with common term and different/same"
+				+ " threshold are assigned to assignment from session search > Doc List");
+		
+		String assignmentName = "assgnAudio" + Utility.dynamicNameAppender();
+		String assgName = "assgnaudio" + Utility.dynamicNameAppender();
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+
+		// Performing advanced search with audio common terms/same threshold
+		 sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
+		baseClass.elementDisplayCheck(sessionSearch.getCurrentPureHitAddBtn());
+		baseClass.stepInfo("Search result is displayed");
+
+		// add to shop cart
+		sessionSearch.addPureHit();
+
+		// perform new search
+		sessionSearch.addNewSearch();
+		 sessionSearch.newAudioSearch(Input.audioSearchString2, Input.audioSearchString3,"", Input.language);
+
+		// add to shop cart
+		sessionSearch.addPureHit();
+		//Session search>DocList>bulk assign
+		sessionSearch.ViewInDocListWithOutPureHit();
+		docListPage.DoclisttobulkAssign(null, "100");
+		
+		// creating Assignment with Audio Document
+		assignmentPage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login As Rev");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		driver.waitForPageToBeReady();
+		
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+
+		
+		// click eye icon and triangular arrow /search term hits display check
+		docViewPage.verifyingAudioPersistantHitTerms(5,Input.audioSearchString2, Input.audioSearchString3);
+
+		loginPage.logout();
+		
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
+		
+		// add new search with different threshold/common terms
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.language, "max");
+		sessionSearch.addPureHit();
+
+		// add new search with different threshold
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.audioSearchString3,
+				"", Input.language, "min");
+		sessionSearch.addPureHit();
+		
+		//Session serach>DocList>bulk assign
+		sessionSearch.ViewInDocListWithOutPureHit();
+		docListPage.DoclisttobulkAssign(null, "100");
+		
+		// creating Assignment with Audio Document
+		assignmentPage.assignmentCreation(assgName, Input.codeFormName);
+		assignmentPage.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Login As Rev");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgName);
+		driver.waitForPageToBeReady();
+		
+		// view selected documents from assignment in Docview
+		baseClass.stepInfo("After selected  Assignment user navigate to Docview Page");
+
+
+		// click eye icon and triangular arrow display  and persistent hits check
+		docViewPage.verifyingAudioPersistantHitTerms(5,Input.audioSearchString2, Input.audioSearchString3);
+
 		loginPage.logout();
 	}
 
