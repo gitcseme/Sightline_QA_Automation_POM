@@ -680,7 +680,148 @@ public class CodingForm_Regrression_22 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description : Verify that if comment or metadata objects have no configured help text, 
+	 * no mouse over tool tip should appear for that field in either Coding Form Preview or Coding Form panel of DocView
+	 */
+	@Test(description = "RPMXCON-54267",enabled = true, groups = { "regression" })
+	public void verifyNoToolTipMsg() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54267");
+	    base.stepInfo("Verify that if comment or metadata objects have no configured help text, no mouse over tool tip "
+	    		+ "should appear for that field in either Coding Form Preview or Coding Form panel of DocView");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		docview = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		cf.addCodingFormName(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.comments);
+		 cf.firstCheckBox(Input.metaData);
+		 cf.addcodingFormAddButton();
+		 cf.saveCodingForm();
+		 
+		 //validate in preview
+		 cf.clickPreviewButon();
+		 soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), "");
+		 soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), "");
+		 base.passedStep("No tool tip is displayed on mouse over of the objects");
+		 
+	    cf.AssignCFstoSG(cfName);
+	    sessionSearch.basicContentSearch(Input.testData1);
+	    sessionSearch.ViewInDocViews();
+	    
+	    //validate in docview
+	    soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), "");
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), "");
+		base.passedStep("No tool tip is displayed on mouse over of the objects");
+		
+		//validate in docview child window
+		docview.clickGearIconOpenCodingFormChildWindow();
+		docview.switchToNewWindow(2);
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), "");
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), "");
+		base.passedStep("No tool tip is displayed on mouse over of the objects");
+		driver.close();
+		docview.switchToNewWindow(1);
+		
+		//restore default codingform
+		driver.waitForPageToBeReady();
+		cf.navigateToCodingFormPage();
+		docview.acceptBrowserAlert(true);
+		cf.AssigndefaultCFstoSG(Input.codeFormName);
+	    
+		//delete created cf
+		cf.deleteCodingForm(cfName, cfName);
+		
+	    soft.assertAll();
+	    base.passedStep("Verify that if comment or metadata objects have no configured help text, no mouse over tool tip "
+	    		+ "should appear for that field in either Coding Form Preview or Coding Form panel of DocView");
+	    loginPage.logout();
+	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that if comment or metadata objects have configured help text, on mouse over tool tip should 
+	 * appear for that field in either Coding Form Preview or Coding Form panel of DocView
+	 */
+	@Test(description = "RPMXCON-54268",enabled = true, groups = { "regression" })
+	public void verifyToolTipMsg() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54268");
+	    base.stepInfo("Verify that if comment or metadata objects have configured help text, on mouse over tool tip should"
+	    		+ " appear for that field in either Coding Form Preview or Coding Form panel of DocView");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		docview = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		cf.addCodingFormName(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.comments);
+		 cf.firstCheckBox(Input.metaData);
+		 cf.addcodingFormAddButton();
+		 cf.enterErrorAndHelpMsg(0, "Yes", Input.helpText, Input.errorMsg);
+		 cf.enterErrorAndHelpMsg(1, "Yes", Input.helpText, Input.errorMsg);
+		 cf.saveCodingForm();
+		 
+		 //validate in preview
+		 cf.clickPreviewButon();
+		 soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), Input.helpText);
+		 soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), Input.helpText);
+		 base.passedStep("Configured tool tip is displayed on mouse over of the objects");
+		 
+	    cf.AssignCFstoSG(cfName);
+	    sessionSearch.basicContentSearch(Input.testData1);
+	    sessionSearch.ViewInDocViews();
+	    
+	    //validate in docview
+	    driver.waitForPageToBeReady();
+	    soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), Input.helpText);
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), Input.helpText);
+		base.passedStep("Configured tool tip is displayed on mouse over of the objects");
+		
+		//validate in docview child window
+		docview.clickGearIconOpenCodingFormChildWindow();
+		docview.switchToNewWindow(2);
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(0)), Input.helpText);
+		soft.assertEquals(base.getToolTipMsg(cf.getCodingForm_PreviewText(1)), Input.helpText);
+		base.passedStep("Configured tool tip is displayed on mouse over of the objects");
+		driver.close();
+		docview.switchToNewWindow(1);
+		
+		//restore default codingform
+		driver.waitForPageToBeReady();
+		cf.navigateToCodingFormPage();
+		docview.acceptBrowserAlert(true);
+		cf.AssigndefaultCFstoSG(Input.codeFormName);
+	    
+		//delete created cf
+		cf.deleteCodingForm(cfName, cfName);
+		
+	    soft.assertAll();
+	    base.passedStep("Verify that if comment or metadata objects have configured help text, on mouse over tool tip "
+	    		+ "should appear for that field in either Coding Form Preview or Coding Form panel of DocView");
+	    loginPage.logout();
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)

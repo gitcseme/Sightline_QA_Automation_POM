@@ -4474,5 +4474,20 @@ public class BaseClass {
 		}
 		return flag;
 	}
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param web element
+	 * @return tool tip message of the element
+	 * @Description hover on the element and get the tool tip message of the element
+	 */
+	public String getToolTipMsg(Element ele) {
+		driver.waitForPageToBeReady();
+		waitForElement(ele);
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(ele.getWebElement()).build().perform();
+		stepInfo("moves hover to the elemet and get tool tip message");
+		return ele.GetAttribute("title");
+	}
 
 }
