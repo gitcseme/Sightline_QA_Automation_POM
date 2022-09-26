@@ -5273,6 +5273,7 @@ public class DocView_Sprint2_Regression {
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
 				.moveByOffset(200, 100).release().build().perform();
 		baseClass.stepInfo("text for remarks has been selected");
+		baseClass.waitForElement(docViewRedact.addRemarksBtn());
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
 		if (baseClass.getSuccessMsgHeader().isDisplayed()) {
