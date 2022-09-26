@@ -107,6 +107,88 @@ public class Production_Regression22 {
 
 	}
 
+	/**
+	 * @author Brundha Test case id-RPMXCON-48027
+	 * @Description To Verify Redaction Style in PDF & TIFF Section "White with
+	 *              Black font" works the same for both larger redactions or smaller
+	 *              redactions that trigger the abbreviated text
+	 * 
+	 */
+	@Test(description = "RPMXCON-48027", enabled = true, groups = { "regression" })
+	public void verifyRedactionPlaceholderInGeneratedProduction() throws Exception {
+
+		UtilityLog.info(Input.prodPath);
+		BaseClass base = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("RPMXCON-48027 -Production Component");
+		base.stepInfo(
+				"To Verify Redaction Style in PDF & TIFF Section 'White with Black font' works the same for both larger redactions or smaller redactions that trigger the abbreviated text");
+
+		String foldername = "Folder" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+		String PlaceholderText = Input.tag;
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+
+		RedactionPage redactionpage = new RedactionPage(driver);
+		driver.waitForPageToBeReady();
+		redactionpage.manageRedactionTagsPage(Redactiontag1);
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		sessionSearch.viewInDocView();
+
+		DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+		
+		driver.waitForPageToBeReady();
+		docViewRedactions.redactRectangleUsingOffset(10, 10, 20, 20);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag1);
+		
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		docViewRedactions.redactRectangleUsingOffset(10, 10,120,120);
+		driver.waitForPageToBeReady();
+		docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(false);
+		page.getClk_burnReductiontoggle().ScrollTo();
+		page.getClk_burnReductiontoggle().waitAndClick(10);
+		page.fillingBurnRedaction(Redactiontag1, "White with black font", true, Redactiontag1, PlaceholderText);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSorting(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		page.extractFile();
+		String home = System.getProperty("user.home");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(prefixID, suffixID, beginningBates);
+		File imageFile = new File(
+				home + "/Downloads/VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		page.OCR_Verification_In_Generated_Tiff_tess4j(imageFile, PlaceholderText);
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
