@@ -27,6 +27,7 @@ import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -41,13 +42,18 @@ public class Production_Regression22 {
 	String foldername;
 	String tagname;
 	String productionname;
+	ProductionPage page;
+	SessionSearch sessionSearch;
+	SavedSearch saveSearch;
+	TagsAndFoldersPage tagsAndFolderPage;
+	SoftAssert softAssertion;
+
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		base = new BaseClass(driver);
 		Input input = new Input();
 		input.loadEnvConfig();
 
@@ -61,6 +67,11 @@ public class Production_Regression22 {
 
 		driver = new Driver();
 		loginPage = new LoginPage(driver);
+		base = new BaseClass(driver);
+		saveSearch = new SavedSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		softAssertion=new SoftAssert();
 
 	}
 	/**
@@ -106,7 +117,7 @@ public class Production_Regression22 {
 		loginPage.logout();
 
 	}
-
+	
 	/**
 	 * @author Brundha Test case id-RPMXCON-48027
 	 * @Description To Verify Redaction Style in PDF & TIFF Section "White with
@@ -189,6 +200,147 @@ public class Production_Regression22 {
 
 	}
 
+
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-48979
+	 * @Description: Verify that branding text should be truncated when Branding text
+	 *  exceeds the space and no space after wrapping while production for a TIFF file
+	 **/
+	@Test(description = "RPMXCON-48979", enabled = true, groups = { "regression" })
+	public void VerifyMultiLineBrTrunFrTiff() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48979");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		base.stepInfo("Verify that branding text should be truncated when Branding text "
+				+ "exceeds the space and no space after wrapping while production for a TIFF file");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As " + Input.pa1userName);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		driver.scrollPageToTop();
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		base = new BaseClass(driver);
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		base.waitForElement(page.getTIFFChkBox());
+		page.getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		page.fillingAndverifySixBrandingMultiLine(tagname);
+		base.stepInfo("Added a Multi line branding to all six  locations");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File tiffFile = new File(
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Top - Lef"));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Top - Center Multiple Line Branding Text Verify"));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Top - Right Multiple Line Branding Text Ve..."));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Bottom - Left Multiple Line Branding Text..."));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Bottom - Center Multiple Line Branding Text Ve"));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Bottom - Right Multiple Line Branding Tex.."));
+		softAssertion.assertAll();
+		base.passedStep("Verify that branding text should be truncated when Branding text "
+				+ "exceeds the space and no space after wrapping while production for a TIFF file");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-48976
+	 * @Description: Verify that branding text should be wrapped when Branding text 
+	 * to all the six locations exceeds the space while production for a TIFF file
+	 **/
+	@Test(description = "RPMXCON-48976", enabled = true, groups = { "regression" })
+	public void VerifyMultiLineBrWrapFrTiff() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-48976");
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		base.stepInfo("Verify that branding text should be wrapped when Branding text "
+				+ "to all the six locations exceeds the space while production for a TIFF file");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in As " + Input.pa1userName);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, Input.tagNamePrev);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		String beginningBates = page.getRandomNumber(2);
+		page.navigateToProductionPage();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		base.waitForElement(page.getTIFFChkBox());
+		page.getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		page.fillingAndverifySixBrandingMultiLine(tagname);
+		base.stepInfo("Added a Multi line branding to all six  locations");
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPageAndPassingText(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File tiffFile = new File(
+				home + "/Downloads/" + "VOL0001/Images/0001/" + prefixID + beginningBates + suffixID + ".tiff");
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Top - Center Multiple Line Branding Text Verify"));
+		softAssertion.assertTrue(page.extractTextFromTiff(tiffFile).contains("Bottom - Center Multiple Line Branding Text Ve"));
+		softAssertion.assertAll();
+   		base.passedStep("Verified -  that branding text should be wrapped when Branding text "
+				+ "to all the six locations exceeds the space while production for a TIFF file");
+		loginPage.logout();
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
