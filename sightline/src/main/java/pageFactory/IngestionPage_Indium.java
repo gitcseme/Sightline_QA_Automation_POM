@@ -27,7 +27,6 @@ public class IngestionPage_Indium {
 	BaseClass base;
 	SoftAssert softAssertion;
 	DocListPage docList;
-
 	// ID's
 	public Element getSpecifySourceSystem() {
 		return driver.FindElementById("ddlSourceSystem");
