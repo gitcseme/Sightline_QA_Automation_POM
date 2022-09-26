@@ -1565,6 +1565,23 @@ public class AssignmentsPage {
 	public Element bulkAssignCancelButton() {
 		return driver.FindElementById("btnAssignCancel");
 	}
+	
+	public Element getCodingFormOrderPopUpHeader() {
+		return driver.FindElementByXPath("//span[text()='Coding Form Order']");
+	}
+	
+	public Element getCodingFormOrderHamburgerIcons(int listIteam) {
+		return driver.FindElementByXPath("//ol[@id='sortedCodingformList']/li["+listIteam+"]/div[@class='dd-handle ddcf-handle']");
+	}
+	
+	public ElementCollection listOfCFInCodingFormOrderPopUp() {
+		return driver.FindElementsByXPath("//ol[@id='sortedCodingformList']//li");
+	}
+	
+	public Element getSelectAllCodingForm() {
+		return driver.FindElementByXPath("//input[@id='chkSelectAllCodingform']/following-sibling::i");
+	}
+	
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -11011,5 +11028,174 @@ public class AssignmentsPage {
 		}
 		bc.waitForElement(bulkAssignCancelButton());
 		bulkAssignCancelButton().waitAndClick(10);
+	}
+	
+	/**
+	 * @author
+	 * @param assignmentGroup
+	 * @param assignmentName
+	 */
+	public void editAssignmentInAssignGroup(String assignmentGroup, String assignmentName) {
+		selectAssignmentGroup(assignmentGroup);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getSelectAssignment(assignmentName));
+		if (!getSelectAssignmentHighlightCheck(assignmentName).isElementAvailable(5)) {
+			getSelectAssignment(assignmentName).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		NavigateToNewEditAssignmentPage("Edit");
+	}
+
+	/**
+	 * @author
+	 * @param setDefaultCodingForm
+	 * @return
+	 */
+	public List<String> SelectAllCodingFormAndChangeSortingSequence(String setDefaultCodingForm) {
+		List<String> listOfCFAfterSorting = new ArrayList<String>();
+		try {
+			getSelectSortCodingForm_Tab().ScrollTo();
+		} catch (Exception e) {
+
+		}
+		getSelectSortCodingForm_Tab().waitAndClick(10);
+
+		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
+			bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			bc.waitForElement(getSelectAllCodingForm());
+			getSelectAllCodingForm().ScrollTo();
+			getSelectAllCodingForm().waitAndClick(5);
+			bc.waitTime(1);
+			getSelectCodeFormRadioBtn(setDefaultCodingForm).waitAndClick(5);
+			bc.waitTime(1);
+			try {
+				sortOrderNxtBtn().ScrollTo();
+			} catch (Exception e) {
+
+			}
+			sortOrderNxtBtn().waitAndClick(5);
+			bc.waitForElement(getCodingFormOrderPopUpHeader());
+			int noOfCFInCodingFormOrderPopUp = listOfCFInCodingFormOrderPopUp().size();
+			if (noOfCFInCodingFormOrderPopUp > 2) {
+				Actions action = new Actions(driver.getWebDriver());
+				action.clickAndHold(getCodingFormOrderHamburgerIcons(3).getWebElement());
+				action.moveToElement(getCodingFormOrderHamburgerIcons(2).getWebElement());
+				action.release(getCodingFormOrderHamburgerIcons(2).getWebElement());
+				action.build().perform();
+			}
+			listOfCFAfterSorting = bc.availableListofElements(listOfCFInCodingFormOrderPopUp());
+
+			sortCodeFormOrderSaveBtn().waitAndClick(5);
+			bc.waitTime(2);
+			bc.waitForElement(getSelectedCodeForminAssignPAge());
+			String acualCfName = getSelectedCodeForminAssignPAge().getText();
+			List<String> listOfAcualCfName = Arrays.asList(acualCfName.split(", "));
+			bc.listCompareEquals(listOfCFAfterSorting, listOfAcualCfName,
+					"list of coding form in Coding Form Order PopUp Match with the coding forms displayed under 'Coding Form' section in New Assignment",
+					"Expected result don't match with Actual Result");
+
+		} else {
+			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
+		}
+		return listOfCFAfterSorting;
+	}
+
+	/**
+	 * @author
+	 * @param listOfCFName
+	 * @param codingFormSetAsDefault
+	 * @param sort
+	 * @return
+	 */
+	public List<String> editExistingCodingForm(List<String> listOfCFName, String codingFormSetAsDefault, boolean sort) {
+		List<String> listOfCFAfterSorting = new ArrayList<String>();
+		try {
+			getSelectSortCodingForm_Tab().ScrollTo();
+		} catch (Exception e) {
+
+		}
+		getSelectSortCodingForm_Tab().waitAndClick(10);
+
+		if (SelectCFPopUp_Step1().isElementAvailable(2)) {
+			bc.stepInfo("Add / Remove Coding Forms in this Assignment Pop Up displayed.");
+			getSelectAllCodingForm().waitAndClick(5);
+			bc.waitTime(2);
+			getSelectAllCodingForm().waitAndClick(5);
+			for (String CFName : listOfCFName) {
+				if (getSelectCF_CheckBox(CFName).isElementAvailable(5)) {
+					getSelectCF_CheckBox(CFName).ScrollTo();
+					getSelectCF_CheckBox(CFName).waitAndClick(5);
+				} else {
+					bc.failedStep("CodingForm : '" + CFName + "' not present");
+				}
+			}
+			bc.waitTime(1);
+			getSelectCodeFormRadioBtn(codingFormSetAsDefault).waitAndClick(5);
+			bc.waitTime(1);
+			try {
+				sortOrderNxtBtn().ScrollTo();
+			} catch (Exception e) {
+
+			}
+			sortOrderNxtBtn().waitAndClick(5);
+			bc.waitForElement(getCodingFormOrderPopUpHeader());
+			if (sort) {
+				int noOfCFInCodingFormOrderPopUp = listOfCFInCodingFormOrderPopUp().size();
+				if (noOfCFInCodingFormOrderPopUp > 2) {
+					Actions action = new Actions(driver.getWebDriver());
+					action.clickAndHold(getCodingFormOrderHamburgerIcons(3).getWebElement());
+					action.moveToElement(getCodingFormOrderHamburgerIcons(2).getWebElement());
+					action.release(getCodingFormOrderHamburgerIcons(2).getWebElement());
+					action.build().perform();
+				}
+			}
+			listOfCFAfterSorting = bc.availableListofElements(listOfCFInCodingFormOrderPopUp());
+
+			sortCodeFormOrderSaveBtn().waitAndClick(5);
+			bc.waitTime(2);
+			bc.waitForElement(getSelectedCodeForminAssignPAge());
+			String acualCfName = getSelectedCodeForminAssignPAge().getText();
+			List<String> listOfAcualCfName = Arrays.asList(acualCfName.split(", "));
+			bc.listCompareEquals(listOfCFAfterSorting, listOfAcualCfName,
+					"list of coding form in Coding Form Order PopUp Match with the coding forms displayed under 'Coding Form' section in New Assignment",
+					"Expected result don't match with Actual Result");
+
+		} else {
+			bc.failedStep("Step-1 Select CodingForm Pop Up Not displayed.");
+		}
+		return listOfCFAfterSorting;
+	}
+
+	/**
+	 * @author
+	 * @param assignmentName
+	 * @param setDefaultCodingForm
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public List<String> createAssignmentFromAssgnGroupByChangeSortingSequenceOfCF(String assignmentName,
+			String setDefaultCodingForm) throws InterruptedException {
+		List<String> listOfCFAfterSorting = new ArrayList<String>();
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(getAssignmentActionDropdown());
+		bc.waitForElement(getAssignmentActionDropdown());
+		getAssignmentActionDropdown().waitAndClick(10);
+		bc.waitTillElemetToBeClickable(getAssignmentAction_NewAssignment());
+		bc.waitForElement(getAssignmentAction_NewAssignment());
+		getAssignmentAction_NewAssignment().waitAndClick(20);
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAssignmentName());
+		getAssignmentName().SendKeys(assignmentName);
+		driver.waitForPageToBeReady();
+		getParentAssignmentGroupName().isDisplayed();
+		bc.waitForElement(getSelectedClassification());
+		getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+		driver.waitForPageToBeReady();
+		listOfCFAfterSorting = SelectAllCodingFormAndChangeSortingSequence(setDefaultCodingForm);
+		bc.waitForElement(getAssignmentSaveButton());
+		getAssignmentSaveButton().waitAndClick(3);
+		bc.stepInfo("Assignment " + assignmentName + " created.");
+		return listOfCFAfterSorting;
 	}
 }

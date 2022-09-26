@@ -5737,5 +5737,54 @@ public void validateCodingForm() {
 	 base.passedStep("coding form validation validate successfully");
 }
 
+/**
+ * @author
+ * @param noOfCFRequired
+ * @return
+ */
+public List<String> createCodingformBasedOnCondition(int noOfCFRequired) {
+	List<String> listOfCodingForm = new ArrayList<String>();
+	navigateToCodingFormPage();
+	int noOfCodingForm = getCFTableTotalShowingCount().size();
+	if (noOfCodingForm < noOfCFRequired) {
+		for (int i = noOfCodingForm; i < noOfCFRequired; i++) {
+			String codingFormName = "codingFormName" + Utility.dynamicNameAppender();
+			addCodingFormNameOnly(codingFormName);
+			listOfCodingForm.add(codingFormName);
+			base.stepInfo("Coding Form Created : " + codingFormName);
+		}
+	}
+	return listOfCodingForm;
+}
+
+/**
+ * @author
+ * @param listOfCfName
+ */
+public void DeleteMultipleCodingform(List<String> listOfCfName) throws InterruptedException {
+	if (listOfCfName.size() > 0) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCodingForm_NumberToShow().Visible();
+			}
+		}), Input.wait60);
+		getCodingForm_NumberToShow().selectFromDropdown().selectByVisibleText("100");
+		base.waitTime(3);
+		driver.waitForPageToBeReady();
+		for (String codingForm : listOfCfName) {
+			getCodingForm_DeleteButton(codingForm).waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getYesBtn().Visible();
+				}
+			}), Input.wait60);
+			base.getYesBtn().Click();
+
+			base.VerifySuccessMessage("Coding form deleted successfully");
+			base.CloseSuccessMsgpopup();
+		}
+	}
+}
+
 }
 
