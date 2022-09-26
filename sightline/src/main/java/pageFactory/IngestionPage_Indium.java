@@ -4732,12 +4732,6 @@ public class IngestionPage_Indium {
 		} else {
 			System.out.println("No need to select for other datasets");
 		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		base.waitForElement(getRunIndexing());
 		getElementStatus(getRunIndexing());
 		getRunIndexing().waitAndClick(10);
@@ -9316,7 +9310,6 @@ public class IngestionPage_Indium {
 			ignoreErrorsAndCopying();
 			ignoreErrorsAndIndexing(dataset);
 			String ingestionName=getIngestionNameFromPopup();
-			System.out.println(ingestionName);
 			approveIngestion(1);
 			runFullAnalysisAndPublish();
 			return ingestionName;
@@ -10701,12 +10694,6 @@ public class IngestionPage_Indium {
 			}
 			driver.scrollingToElementofAPage(getRunIndexing());
 			base.waitForElement(getRunIndexing());
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			getElementStatus(getRunIndexing());
 			getRunIndexing().waitAndClick(10);
 			base.waitTime(2);
