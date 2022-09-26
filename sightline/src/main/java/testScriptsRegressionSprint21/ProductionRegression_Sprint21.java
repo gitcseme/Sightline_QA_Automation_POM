@@ -91,15 +91,16 @@ public class ProductionRegression_Sprint21 {
 	 *                 Components, last selected Native File Group types and Tags
 	 *                 should be displayed
 	 **/
-	@Test(description = "RPMXCON-48499", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-48499", enabled = true, groups = { "regression" },dataProvider = "Users")
 	public void verifySelectedTypesTags_MarkIncomplete(String userName, String password) throws Exception {
-		loginPage.loginToSightLine(userName, password);
-		base.stepInfo("Logged in as" + userName);
 		UtilityLog.info(Input.prodPath);
 		base.stepInfo("Test case Id:RPMXCON-48499 Production");
 		base.stepInfo(
 				"To verify that after clicking on InComplete button on Production Components, last selected Native File Group types and Tags should be displayed");
 
+		loginPage.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as" + userName);
+		
 		// create tag and folder
 		base = new BaseClass(driver);
 		tagname = "Tag" + Utility.dynamicNameAppender();
