@@ -315,6 +315,7 @@ public class CodingForm_Regression {
 		tagsAndFolderPage.deleteAllTags(tagname);
 		loginPage.logout();
 	}
+	
 	/**
 	 * @Author :Iyappan.Kasinathan
 	 * @Description : Verify that radio group association should be saved for the Tag when coding form is edited
@@ -517,8 +518,8 @@ public class CodingForm_Regression {
 		codingForm = new CodingForm(driver);
 		tagsAndFoldersPage = new TagsAndFoldersPage(driver);
 		String codingform = "cf"+Utility.dynamicNameAppender();
-		String tagname = "tag"+Utility.dynamicNameAppender();
-		String tagTwo = "tag"+Utility.dynamicNameAppender();
+		String tagname = "tag1"+Utility.dynamicNameAppender();
+		String tagTwo = "tag2"+Utility.dynamicNameAppender();
 		
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
@@ -540,6 +541,7 @@ public class CodingForm_Regression {
 		codingForm.selectTagTypeByIndex("check item",1,1);
 		baseClass.stepInfo("check group is associated to the created tag");
 		codingForm.saveCodingForm();
+		baseClass.waitTime(10);
 		driver.waitForPageToBeReady();
 		baseClass.stepInfo("Coding form saved successfully");
 		
@@ -548,15 +550,17 @@ public class CodingForm_Regression {
 		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
 		codingForm.getCF_PreviewButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
-		baseClass.waitTime(10);
+//		baseClass.waitForElement(codingForm.getCF_Preview_Radio(tagname));
 		boolean radio=codingForm.getCF_Preview_Radio(tagname).isElementAvailable(5);
 		System.out.println(radio);
 		baseClass.stepInfo("In Preview validation radio button are displayed");
 		softAssertion.assertTrue(radio);
+//		baseClass.waitForElement(codingForm.getCF_Preview_CheckBox(tagTwo));
 		boolean checkBox=codingForm.getCF_Preview_CheckBox(tagTwo).isElementAvailable(5);
 		System.out.println(checkBox);
 		baseClass.stepInfo("In Preview validation checkbox button are displayed");
 		softAssertion.assertTrue(checkBox);
+		baseClass.waitForElement(codingForm.getCF_Preview_OkBtn());
 		codingForm.getCF_Preview_OkBtn().waitAndClick(5);
 		codingForm.getCodingForm_SelectRemoveLink(2).ScrollTo();
 		baseClass.waitForElement(codingForm.getCodingForm_SelectRemoveLink(2));
@@ -575,7 +579,7 @@ public class CodingForm_Regression {
 		driver.waitForPageToBeReady();
 		boolean checkBoxOne=codingForm.getCF_Preview_TagLabel(tagname,0).isElementAvailable(5);
 		System.out.println(checkBoxOne);
-		Assert.assertTrue(checkBoxOne);
+		softAssertion.assertTrue(checkBoxOne);
 		boolean checkBoxTwo=codingForm.getCF_Preview_TagLabel(tagTwo,1).isElementAvailable(5);
 		System.out.println(checkBoxTwo);
 		softAssertion.assertTrue(checkBoxTwo);
@@ -614,22 +618,27 @@ public class CodingForm_Regression {
 		// Login as a PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+		
 		// creating metadata
 		List<String> collectionData=new ArrayList<String>();
 		projectPage.addCustomFieldProjectDataType(metadata, "INT");
 		securityGroupPage.addProjectFieldtoSG(metadata);
 		collectionData.add(metadata);
+		
 		// logout
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		
 		// creating comments
 		this.driver.getWebDriver().get(Input.url + "Comments/CommentsList");
 		String comments = commentsPage.addComments("com1" + Utility.dynamicNameAppender());
 		collectionData.add(comments);
+		
 		// creating tags
 		tagsAndFoldersPage.CreateTag(tag, Input.codeFormName);
 		collectionData.add(tag);
+		
 		// Navigating to manage cf
 		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
 		codingForm.addNewCodingFormButton();
@@ -664,6 +673,87 @@ public class CodingForm_Regression {
 		loginPage.logout();
 	}
 	
+	
+	/**
+	 * @Author :Baskar
+	 * @Description : Verify that Preview displays correctly and properly when Tag 
+	 *                   and Check group combined along with Check Item for New coding form
+	 */
+	@Test(description = "RPMXCON-54074", enabled = true, groups = { "regression" })
+	public void verifyPreviewAlongWithCheckItem() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-54074");
+		baseClass.stepInfo("Verify that Preview displays correctly and properly when Tag and"
+				+ " Check group combined along with Check Item for New coding form");
+		softAssertion = new SoftAssert();
+		codingForm = new CodingForm(driver);
+		commentsPage = new CommentsPage(driver);
+		String codingform = "cf"+Utility.dynamicNameAppender();
+		String tagname = "tag"+Utility.dynamicNameAppender();
+		int index = 1;
+		String expectedCheckGrp = "checkgroup_"+index+"";
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTag(tagname, Input.securityGroup);
+		baseClass.stepInfo("Created the tag sucessfully");
+		
+		// creating codingform
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");		
+		codingForm.addNewCodingFormButton();
+		baseClass.waitForElement(codingForm.getCodingFormName());
+		codingForm.getCodingFormName().SendKeys(codingform);
+		codingForm.CreateCodingFormWithParameter(codingform,tagname,null,null,"tag");
+		codingForm.addcodingFormAddButton();
+		codingForm.specialObjectsBox(Input.checkGroup);
+		codingForm.addcodingFormAddButton();
+		codingForm.selectTagTypeByIndex("check item",index,0);
+		codingForm.getRGDefaultAction().ScrollTo();
+		baseClass.waitForElement(codingForm.getRGDefaultAction());
+		codingForm.getRGDefaultAction().selectFromDropdown().selectByVisibleText(Input.notSelectable);
+		baseClass.stepInfo("check group is associated to the created tag");
+		driver.scrollPageToTop();
+		
+		// validating the success message in validate button
+		baseClass.waitForElement(codingForm.getCFValidateBtn());
+		codingForm.getCFValidateBtn().waitAndClick(5);
+		String validationExpected="Coding Form Validation Successful.";
+		String validationActual=codingForm.getCFValidateMsg().getText();
+		softAssertion.assertEquals(validationActual, validationExpected);
+		baseClass.passedStep("without any error ,successfull validation message displayed");
+		baseClass.waitForElement(codingForm.getCFValidationPopUpOkBtn());
+		codingForm.getCFValidationPopUpOkBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getSaveCFBtn());
+		codingForm.getSaveCFBtn().waitAndClick(5);
+		baseClass.waitForElement(codingForm.getValidationButtonYes());
+		codingForm.getValidationButtonYes().waitAndClick(5);
+		baseClass.stepInfo("Coding form saved successfully");
+		
+		//Edit the existing coding form
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		//verify the radio group associated with tag
+		codingForm.editCodingForm(codingform);
+		baseClass.stepInfo("Edited the coding form sucessfully");
+		
+		// preview validation
+		driver.scrollPageToTop();
+		baseClass.waitTillElemetToBeClickable(codingForm.getCF_PreviewButton());
+		codingForm.getCF_PreviewButton().waitAndClick(10);
+		boolean notSelect=codingForm.getDisabledTagsInPreviewBox(tagname).isElementAvailable(2);
+		softAssertion.assertTrue(notSelect);
+		baseClass.waitForElement(codingForm.getTagGroupValues(index));
+		String actualCheckGroup = codingForm.getTagGroupValues(index).GetAttribute("systemcontrolname");
+		softAssertion.assertEquals(expectedCheckGrp, actualCheckGroup);
+		softAssertion.assertAll();
+		baseClass.passedStep("The check group associated in tag is successfully reflected after editing the saved coding form");
+		baseClass.passedStep("preview display correctly along with checkgroup and tag in notselectable state");
+		
+		//Deleting the tag and cf
+		codingForm.deleteCodingForm(codingform, codingform);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.deleteAllTags(tagname);
+
+		loginPage.logout();
+	}
 	
 
 
