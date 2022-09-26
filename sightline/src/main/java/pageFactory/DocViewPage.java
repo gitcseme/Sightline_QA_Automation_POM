@@ -3603,6 +3603,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//i[@id='btnPlayPause'][@title='Play']");
 	}
 	
+	public ElementCollection listOfCodingFormInDocViewDropDown() {
+		return driver.FindElementsByXPath("//select[@id='codingFormList']/option");
+	}
+	
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
