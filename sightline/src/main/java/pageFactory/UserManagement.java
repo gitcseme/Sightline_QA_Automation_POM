@@ -902,6 +902,20 @@ public class UserManagement {
 	public Element getNotYetLoggedInUserBtn() {
 		return driver.FindElementById("PendingUser");
 	}
+	public Element getBulkUserPopUp() {
+		return driver.FindElementByXPath("//span//div[normalize-space()='Modify Multiple User Profiles At Once']");
+	}
+	public Element getProjectPageLastNumber() {
+		return driver
+				.FindElementByXPath("(//div[@id='ProjectDataTable_paginate']//li[@class='paginate_button ']//a)[last()]");
+	}
+	public ElementCollection getProjectName(int count) {
+		return driver.FindElementsByXPath(
+				"//table[@id='ProjectDataTable']//tbody/tr/td[5][text()='Active']/../td[" + count + "]");
+	}
+	public Element getPaSecurityGroupDisabled() {
+		return driver.FindElementByXPath("//select[@id='ddlBulkUserSecurityGroup'][@disabled]");
+	}
 
 	public UserManagement(Driver driver) {
 
