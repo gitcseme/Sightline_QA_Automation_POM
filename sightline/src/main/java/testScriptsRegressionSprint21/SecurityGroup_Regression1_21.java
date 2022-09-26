@@ -206,13 +206,13 @@ public class SecurityGroup_Regression1_21 {
 		String lastname = "consilio";
 		String mailId = "tempcar@conilio.com";
 
-		// Login As DA
-		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage  DA as with " + Input.da1userName + "");
+		// Login As SA
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  SA as with " + Input.sa1userName + "");
 
-		driver.waitForPageToBeReady();
 		projectPage.navigateToProductionPage();
-		projectPage.selectProjectToBeCopiedInDA(projectName, Input.projectName, "4");
+		projectPage.selectProjectToBeCopied(projectName, Input.domainName, Input.projectName, "0");
+		driver.waitForPageToBeReady();
 		baseClass.waitTime(10);
 		data.getNotificationMessage(0, projectName);
 
@@ -220,8 +220,8 @@ public class SecurityGroup_Regression1_21 {
 		users.navigateToUsersPAge();
 		users.ProjectSelectionForUser(projectName, Input.pa1FullName, "Project Administrator", "", false, false);
 
-		baseClass.stepInfo("Impersonate DA to PA");
-		baseClass.impersonateDAtoPA();
+		baseClass.stepInfo("Impersonate SA to PA");
+		baseClass.impersonateSAtoPA();
 
 		baseClass.stepInfo("Go to Manage Annotation Layer Page and Add new Annotation");
 		annotation.AddAnnotation(annoName);
@@ -354,8 +354,8 @@ public class SecurityGroup_Regression1_21 {
 	 * @Description To verify that user can release all the documents tagged by that
 	 *              tag into a security group.
 	 */
-	@Test(description = "RPMXCON-53908", dataProvider = "AllTheUsers", enabled = true, groups = { "regression" })
-	public void verifyReleaseTheDocsTagWithSG(String username, String password, String role) throws Exception {
+	@Test(description = "RPMXCON-53908", enabled = true, groups = { "regression" })
+	public void verifyReleaseTheDocsTagWithSG() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-53908");
 		baseClass.stepInfo(
@@ -366,9 +366,8 @@ public class SecurityGroup_Regression1_21 {
 		List<String> securityGroup = new ArrayList<String>();
 		securityGroup.add(Input.securityGroup);
 
-		// Login As user
-		loginPage.loginToSightLine(username, password);
-		baseClass.stepInfo("User successfully logged into slightline webpage as with " + username + "");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage as with " + Input.pa1userName + "");
 
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.bulkTag(tagName);

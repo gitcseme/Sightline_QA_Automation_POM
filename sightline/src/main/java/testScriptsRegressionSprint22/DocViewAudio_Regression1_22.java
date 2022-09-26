@@ -222,13 +222,11 @@ public class DocViewAudio_Regression1_22 {
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
-		docviewPage.perfromLastCodeSameAsIcon();
 
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
 		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
-		docviewPage.editingCodingFormWithCompleteButton();
 
 		// logout
 		loginPage.logout();
