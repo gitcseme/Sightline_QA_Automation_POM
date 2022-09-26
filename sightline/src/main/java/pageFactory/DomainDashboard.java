@@ -210,6 +210,16 @@ public class DomainDashboard {
 	public Element getRMUHomePageTitle() {
 		return driver.FindElementByXPath("//h1[text()=' Review Manager Dashboard for ']//strong");
 	}
+	public Element getCurrentDomainValue(String domain) {
+		return driver.FindElementByXPath("//header[@id='header']/div/span[text()='Domain:']//../span[@title='"+domain+"']");
+	}
+	public Element getDomainDrpDwn() {
+		return driver.FindElementByXPath("//span[@id='project-selector']/../i[@class='fa fa-chevron-down']");
+	}
+	
+	
+	
+	
 
 	public DomainDashboard(Driver driver) {
 
