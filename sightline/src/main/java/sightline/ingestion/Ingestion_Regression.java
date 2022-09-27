@@ -59,12 +59,16 @@ public class Ingestion_Regression {
 	DocListPage doclist;
 	DocViewPage docview;
 	IngestionPage_Indium ingestionPage;
+	Input ip;
 
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
+		ip = new Input();
+		ip.loadEnvConfig();
 
 	
 	}
@@ -1042,7 +1046,7 @@ public class Ingestion_Regression {
 	 * Description :Verify that if PA ingested Native, PDF and TIFF's file and the "Generate Searchable PDFs" option is set to true, then PDF should be generated from the TIFF's
      * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-50377",enabled = true,  groups = {"regression" },priority = 18)
+	@Test(description ="RPMXCON-50377",enabled = true,  groups = {"regression" })
 	public void verifyNativePDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 	
@@ -1132,7 +1136,7 @@ public class Ingestion_Regression {
 	 * Description :Verify that if PA ingested both PDF and TIFF's file,the "Generate Searchable PDFs"is true and TIFF is missing then it PDF should displays PDF in viewer
      * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-49520",enabled = true,  groups = {"regression" },priority = 20)
+	@Test(description ="RPMXCON-49520",enabled = true,  groups = {"regression" })
 	public void verifyPDFAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as User: " + Input.pa1userName);
@@ -1171,7 +1175,7 @@ public class Ingestion_Regression {
 	 * Description :Verify that if PA ingested both Native and TIFF's file, the "Generate Searchable PDFs"is true and TIFF is missing then searchable PDF's should be generated from the Natives.
      * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-49519",enabled = true,  groups = {"regression" },priority = 21)
+	@Test(description ="RPMXCON-49519",enabled = true,  groups = {"regression" })
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsTrue() throws InterruptedException  {
 		
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -1213,7 +1217,7 @@ public class Ingestion_Regression {
 	 * Description :Verify that if PA ingested both native's and TIFF's file,and the "Generate Searchable PDFs" option is set to false then it should display TIFF in default viewer
      * @throws InterruptedException 
 	 */
-	@Test(description ="RPMXCON-49509",enabled = true,  groups = {"regression" },priority = 22)
+	@Test(description ="RPMXCON-49509",enabled = true,  groups = {"regression" })
 	public void verifyNativeAndTIFFSFileGenerateSearchablePDFsIsFalse() throws InterruptedException  {
 		
 		
