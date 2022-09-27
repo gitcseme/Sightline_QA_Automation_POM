@@ -3,6 +3,7 @@ package testScriptsRegressionSprint22;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.List;
 
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -94,7 +95,7 @@ public class Notification_22 {
 	 * @author NA Testcase No:RPMXCON-53874
 	 * @Description:To Verify As an RM user login, I will get an notification when I will execute any folder under My Search in saved search
 	 **/
-	@Test(description = "RPMXCON-53874", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-53874", enabled = true, groups = { "regression" })
 	public void verifyNotificationAfterExecute() throws Exception {
 		base.stepInfo("RPMXCON-53874");
 		base.stepInfo("To Verify As an RM user login, I will get an notification "
@@ -133,7 +134,7 @@ public class Notification_22 {
 	 * @author NA Testcase No:RPMXCON-53903
 	 * @Description:To verify, As an Sys Admin user login I will able to Impersonate from Sys Admin to RM & I will be able to go to Doc List page from saved search & able to perform Doc List actions
 	 **/
-	@Test(description = "RPMXCON-53903", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-53903", enabled = true, groups = { "regression" })
 	public void verifySAableToNavDocListPage() throws Exception {
 		base.stepInfo("RPMXCON-53903");
 		base.stepInfo("To verify, As an Sys Admin user login I will able to Impersonate from Sys Admin to RM & "
@@ -182,7 +183,7 @@ public class Notification_22 {
 	 * @author sowndarya Testcase No:RPMXCON-54459
 	 * @Description:Verify that on click of 'View All' displays in the pop up on click of megaphone 'My Background Tasks' page should be displayed with all tasks
 	 **/
-	@Test(description = "RPMXCON-54459", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-54459", enabled = true, groups = { "regression" })
 	public void verifyMegaPhoneIcon() throws Exception {
 		base.stepInfo("RPMXCON-54459");
 		base.stepInfo("Verify that on click of 'View All' displays in the pop up on click of megaphone 'My Background Tasks' page should be displayed with all tasks");
@@ -219,7 +220,7 @@ public class Notification_22 {
 	 * @author sowndarya Testcase No:RPMXCON-54157
 	 * @Description: To verify as an PA user login into the Application, When user applying Bulk Release from Saved Search, user will be able to see the background task in notification window
 	 **/
-	@Test(description = "RPMXCON-54157", enabled = true, groups = { "regression" })
+	//@Test(description = "RPMXCON-54157", enabled = true, groups = { "regression" })
 	public void verifyNotificationAfterBulkRelease() throws Exception {
 		base.stepInfo("RPMXCON-54157");
 		base.stepInfo("To verify as an PA user login into the Application, When user applying Bulk Release from Saved Search, user will be able to see the background task in notification window");
@@ -241,5 +242,218 @@ public class Notification_22 {
 		base.checkNotificationCount(initialBg,1);
 		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
 		base.verifyMegaPhoneIconAndBackgroundTasks(false,true);
+	}
+	
+	/**
+	 * @author Brundha.T TestCase Id:53589 Date:27/9/2022
+	 * @Description :To Verify, As a Reviewer user login, After seeing the
+	 *              Notification, it should not show the same notification after
+	 *              re-login the session
+	 */
+	@Test(description = "RPMXCON-53589", enabled = true, groups = { "regression" })
+	public void verifyNotificationAfterReLogin_Reviewer() throws InterruptedException, Exception {
+
+		base.stepInfo("Test case Id: RPMXCON-53589 Notification Component ");
+		base.stepInfo(
+				"To Verify, As a Reviewer user login, After seeing the Notification, it should not show the same notification after re-login the session");
+
+		// Login as User
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("logged in as : " + Input.rmu1userName);
+
+		String tagName = "Tag" + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagName, "Select Tag Classification");
+
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("logged in as : " + Input.rev1userName);
+
+		int initialBg = base.initialBgCount();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+		System.out.println("Bulk Tag done");
+
+		// verify notification for bulk tag
+		base.checkNotificationCount(initialBg, 1);
+		List<String> notifyId_1 = saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+		// Re-login
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		int initialBG = base.initialBgCount();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkTagExisting(tagName);
+		System.out.println("Bulk Tag done");
+
+		List<String> notifyId_2 = saveSearch.verifyExecuteAndReleaseNotify(initialBG, 1);
+		if (notifyId_1 == notifyId_2) {
+			base.failedStep("shows same notification");
+		} else {
+			base.passedStep("Doesn't show same notification after re-login the session");
+		}
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Brundha.T TestCase Id:53895 Date:27/9/2022
+	 * @Description :To verify, As an Sys Admin user login I will able to
+	 *              Impersonate from Sys Admin to Project Admin & I will be able to
+	 *              go to Doc List page from current search & able to perform Doc
+	 *              List actions
+	 */
+	@Test(description = "RPMXCON-53895", enabled = true, groups = { "regression" })
+	public void verifyingNotificationInDocListPage() throws InterruptedException, Exception {
+		DocListPage docList = new DocListPage(driver);
+		base.stepInfo("Test case Id: RPMXCON-53895 Notification Component");
+		base.stepInfo(
+				"To verify, As an Sys Admin user login I will able to Impersonate from Sys Admin to Project Admin & I will be able to go to Doc List page from current search & able to perform Doc List actions");
+
+		String Tag = "Tag" + Utility.dynamicNameAppender();
+		int DocCount = 2;
+		// Login as User
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("logged in as : " + Input.sa1userName);
+
+		// impersonate SA to PA
+		base.impersonateSAtoPA();
+
+		// create Tag
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(Tag, "Select Tag Classification");
+
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(docList.getBackToSourceBtn(), "DocList Page");
+		int initialBg = base.initialBgCount();
+		docList.documentSelection(DocCount);
+		docList.bulkTagExisting(Tag);
+
+//		verify notification in Doclist Page
+		base.checkNotificationCount(initialBg, 1);
+		saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+
+		TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		tf.navigateToTagsAndFolderPage();
+		base.waitTillElemetToBeClickable(tf.getTag_ToggleDocCount());
+		tf.getTag_ToggleDocCount().waitAndClick(2);
+		driver.waitForPageToBeReady();
+		base.ValidateElement_Presence(tf.getTagandCount(Tag,DocCount),"BulkAction document Count");
+		// logout
+		loginPage.logout();
+
+	}
+	
+	
+	
+	
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-54154 Date:27/09/2022
+	 * @Description To verify as an user login into the Application, When user
+	 *              applying/unapplying Bulk Folder from Doc List, user will be able
+	 *              to see the background task in notification window
+	 */
+	@Test(description = "RPMXCON-54154", enabled = true, groups = { "regression" })
+	public void verifyingBulkfolder_UnFolderAllUsersNotification() throws Exception {
+		DocListPage docList = new DocListPage(driver);
+		String foldername = "Folder" + UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-54154 Notification Component");
+		base.stepInfo(
+				"To verify as an user login into the Application, When user applying/unapplying Bulk Folder from Doc List, user will be able to see the background task in notification window");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		loginPage.logout();
+
+		String[] username = { Input.pa1userName, Input.rmu1userName, Input.rev1userName };
+		String[] password = { Input.pa1password, Input.rmu1password, Input.rev1password };
+
+		for (int i = 0; i < username.length; i++) {
+			loginPage.loginToSightLine(username[i], password[i]);
+			base.stepInfo("User successfully logged into slightline webpage as with " + username[i]);
+
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.ViewInDocList();
+			base.ValidateElement_Presence(docList.getBackToSourceBtn(), "DocList Page");
+			int initialBg = base.initialBgCount();
+			docList.documentSelection(2);
+			docList.bulkFolderExisting(foldername);
+
+			// verify bulkFolder Notification
+			base.checkNotificationCount(initialBg, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Folder");
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			docList.documentSelection(2);
+			driver.scrollPageToTop();
+			sessionSearch.bulkUnFolder(foldername);
+
+			// verify unfolder Notification
+			base.checkNotificationCount(initialBg, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Unfolder");
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * @authorBrundha TestCase id:RPMXCON-54153 Date:27/09/2022
+	 * @Description To verify as an user login into the Application, When user
+	 *              applying/unapplying Bulk Folder from Basic search, user will be
+	 *              able to see the background task in notification window
+	 */
+	@Test(description = "RPMXCON-54153", enabled = true, groups = { "regression" })
+	public void verifyingBulkfolder_UnFolderInSearchPage() throws Exception {
+
+		String foldername = "Folder" + UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-54153 Notification component");
+		base.stepInfo(
+				"To verify as an user login into the Application, When user applying/unapplying Bulk Folder from Basic search, user will be able to see the background task in notification window");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, Input.securityGroup);
+		loginPage.logout();
+
+		// Login As user
+		String[] username = { Input.pa1userName, Input.rmu1userName, Input.rev1userName };
+		String[] password = { Input.pa1password, Input.rmu1password, Input.rev1password };
+
+		for (int i = 0; i < username.length; i++) {
+			loginPage.loginToSightLine(username[i], password[i]);
+			base.stepInfo("User successfully logged into slightline webpage as with "+username[i]);
+
+			sessionSearch.basicContentSearch(Input.testData1);
+			int initialBg = base.initialBgCount();
+			sessionSearch.bulkFolderExisting(foldername);
+
+			// verify bulkFolder Notification
+			base.checkNotificationCount(initialBg, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Folder");
+			driver.Navigate().refresh();
+			driver.waitForPageToBeReady();
+			sessionSearch.bulkUnFolder(foldername);
+
+			// verify unfolder Notification
+			base.checkNotificationCount(initialBg, 1);
+			saveSearch.verifyExecuteAndReleaseNotify(initialBg, 1);
+			base.validatingGetTextElement(saveSearch.getNotificationStatus(1), "Bulkaction-Unfolder");
+
+			loginPage.logout();
+
+		}
+
 	}
 }

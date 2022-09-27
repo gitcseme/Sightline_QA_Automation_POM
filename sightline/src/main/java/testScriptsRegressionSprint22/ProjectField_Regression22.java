@@ -165,6 +165,84 @@ public class ProjectField_Regression22 {
 
 	}
 
+	/**
+	 * @author Brundha.T TestCase id:55922 DATE:27/09/2022
+	 * @Description: Verify that MasterDate is correctly showing with the values in the security group
+	 */
+	@Test(description = "RPMXCON-55922", enabled = true, groups = { "regression" })
+	public void verifyingMasterDateValuesInDoclistPage() throws Exception {
+		baseClass.stepInfo("RPMXCON-55922 -Project Field");
+		baseClass.stepInfo("Verify that MasterDate is correctly showing with the values in the security group");
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String ExpectedString = "MASTERDATE";
+
+		SecurityGroupsPage sg = new SecurityGroupsPage(driver);
+		this.driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+
+		baseClass.stepInfo("Creating new Security Group");
+		sg.createSecurityGroups(securityGroup);
+
+		baseClass.stepInfo("Releasing the document to " + securityGroup + " in search page");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkRelease(securityGroup);
+		sessionSearch.ViewInDocList();
+		
+		DocListPage doc = new DocListPage(driver);
+		baseClass.ValidateElementCollection_Presence(doc.getHeaderText(), "Column Header in doclist");
+		int ColValue = baseClass.getIndex(doc.getHeaderText(),ExpectedString);
+		List<String> GetMasterDateValues = baseClass.availableListofElements(doc.GetColumnData(ColValue));
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Validating Master date values in Default security Group");
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		doc = new DocListPage(driver);
+
+		List<String> CompareString = baseClass.availableListofElements(doc.getHeaderText());
+		if (CompareString.contains(ExpectedString)) {
+            baseClass.passedStep("" + ExpectedString + " is Displayed as expecetd");
+        } else {
+            baseClass.failedStep("" + ExpectedString + " is Displayed as expecetd");
+        }		
+		int MasterDateValuesInRMU = baseClass.getIndex(doc.getHeaderText(),ExpectedString);
+		List<String> GetMasterDateValuesRMU = baseClass.availableListofElements(doc.GetColumnData(MasterDateValuesInRMU));
+		baseClass.listCompareEquals(GetMasterDateValues, GetMasterDateValuesRMU, "MasterDate values are displayed", "MasterDate values are not available");
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		
+		baseClass.stepInfo("Assigning newly created securityGroup to RMU");
+		baseClass.SelectSecurityGrp(Input.rmu1userName, securityGroup);
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Validating Master date values  in " + securityGroup + "");
+		baseClass.selectsecuritygroup(securityGroup);
+		driver.waitForPageToBeReady();
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.ViewInDocList();
+		List<String> ListString = baseClass.availableListofElements(doc.getHeaderText());
+		if (ListString.contains(ExpectedString)) {
+            baseClass.passedStep("" + ExpectedString + " is Displayed as expecetd");
+        } else {
+            baseClass.failedStep("" + ExpectedString + " is Displayed as expecetd");
+        }			
+		int MasterDateValuesInRMUNewSG = baseClass.getIndex(doc.getHeaderText(),ExpectedString);
+		List<String> GetMasterDateValuesRMUNewSG = baseClass.availableListofElements(doc.GetColumnData(MasterDateValuesInRMUNewSG));
+		
+		baseClass.listCompareEquals(GetMasterDateValues, GetMasterDateValuesRMUNewSG, "MasterDate values are displayed", "MasterDate values are not available");
+		baseClass.selectsecuritygroup(Input.securityGroup);
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
