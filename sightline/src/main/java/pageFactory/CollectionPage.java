@@ -515,6 +515,10 @@ public class CollectionPage {
 	public ElementCollection getCollectionDatas() {
 		return driver.FindElementsByXPath("//table[@id='dtCollectionList']//tr");
 	}
+	
+	public Element getBackBtn() {
+        return driver.FindElementByXPath("//a[text()='Back']");
+    }
 
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
@@ -2351,7 +2355,8 @@ public class CollectionPage {
 
 		base.waitForElement(getStartCollectionButton());
 		getStartCollectionButton().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		base.stepInfo("Clicked Start and Initiated collection");
 	}
 
 	/**

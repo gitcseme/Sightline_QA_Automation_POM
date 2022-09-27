@@ -69,6 +69,14 @@ public class SourceLocationPage {
 		return driver.FindElementByXPath("//table[@id='dtSourceList']//tr//td[text()='"+sourceName+"']");
 	}
 	
+	public Element columnHeader(String headerName) {
+		return driver.FindElementByXPath("//th[text()='" + headerName + "']");
+	}
+
+	public Element getSrcActionBtn(String srceLoc, String actionType) {
+		return driver.FindElementByXPath("//td[text()='" + srceLoc + "']//parent::tr//a[text()='" + actionType + "']");
+	}
+	
 	
 	
 	
