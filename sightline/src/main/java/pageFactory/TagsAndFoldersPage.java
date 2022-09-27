@@ -2570,13 +2570,12 @@ public class TagsAndFoldersPage {
 	public void verifyTagDocCount(String tagName, int count) {
 		base.waitForElement(getTag_ToggleDocCount());
 		getTag_ToggleDocCount().waitAndClick(20);
-		getTagandCount(tagName, count).waitAndGet(30);
-		System.out.println(getTagandCount(tagName, 0).getText());
-		if (getTagandCount(tagName, 0).isElementAvailable(3)) {
-			base.passedStep(tagName + " with zero count  could be seen under tags and folder page -"
-					+ getTagandCount(tagName, 0).getText());
+		base.waitTime(2);
+		if (getTagandCount(tagName, count).isElementAvailable(3)) {
+			base.passedStep(tagName + " with " + count + " count  could be seen under tags and folder page -"
+					+ getTagandCount(tagName, count).getText());
 		} else {
-			base.failedStep(tagName + " with zero count is not displayed");
+			base.failedStep(tagName + " with " + count + " count is not displayed");
 		}
 	}
 

@@ -11198,4 +11198,28 @@ public class AssignmentsPage {
 		bc.stepInfo("Assignment " + assignmentName + " created.");
 		return listOfCFAfterSorting;
 	}
+	
+	/**
+     * @author Jayanthi.Ganesan
+     * @param listOfReviewers
+     * @param userType
+     */
+    public void addReviewersUsingList(List<String> listOfReviewers, String userType) {
+        bc.waitForElement(getAssignment_ManageReviewersTab());
+        getAssignment_ManageReviewersTab().waitAndClick(10);
+        bc.waitForElement(getAddReviewersBtn());
+        getAddReviewersBtn().waitAndClick(10);
+        for (int i = 0; i < listOfReviewers.size(); i++) {
+            bc.waitForElement(getSelectUserToAssignAsReviewer(listOfReviewers.get(i)));
+            if (getSelectUserToAssignAsReviewer(listOfReviewers.get(i)).isElementAvailable(1)) {
+                bc.passedStep("Users list shows " + userType + " user" + listOfReviewers.get(i));
+                getSelectUserToAssignAsReviewer(listOfReviewers.get(i)).ScrollTo();
+                getSelectUserToAssignAsReviewer(listOfReviewers.get(i)).waitAndClick(5);
+            } else {
+                bc.failedStep("Users list not  showing  " + userType + " user" + listOfReviewers.get(i));
+            }
+       }
+        getAdduserBtn().waitAndClick(5);
+        bc.VerifySuccessMessage("Action saved successfully");
+    }
 }
