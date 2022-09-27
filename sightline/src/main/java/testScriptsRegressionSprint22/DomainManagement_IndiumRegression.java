@@ -320,6 +320,38 @@ public class DomainManagement_IndiumRegression {
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
 	    loginPage.logout();
 	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:27/09/2021 Modified by: Baskar
+	 * Description :Verify that error /validation message should be displayed when 
+	 *              domain admin user adds system admin as domain admin user
+	 */
+	@Test(description ="RPMXCON-52838",alwaysRun = true, groups = { "regression" })
+	public void createNewUserForDomain() throws Exception {
+		baseClass = new BaseClass(driver);
+		String firstName = Input.randomText + Utility.dynamicNameAppender();
+		String lastName = Input.randomText + Utility.dynamicNameAppender();
+		String role = "Domain Administrator";
+		String emailId = Input.sa1userName;
+		baseClass.stepInfo("Test case Id: RPMXCON-52838");
+		utility = new Utility(driver);
+		baseClass.stepInfo("Verify that error /validation message should be displayed "
+				+ "when domain admin user adds system admin as domain admin user");
+		userManage = new UserManagement(driver);
+		softAssertion =new SoftAssert();
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		UtilityLog.info("Logged in as User: " + Input.da1userName);
+		Reporter.log("Logged in as User: " + Input.da1userName);
+
+		this.driver.getWebDriver().get(Input.url + "User/UserListView");
+		baseClass.stepInfo("Create new user for domain administration, validating error message");
+		boolean errorText=userManage.validateErrorMsgForNewUser(firstName, lastName, role, emailId, " ", Input.projectName);
+        softAssertion.assertTrue(errorText);
+		softAssertion.assertAll();
+		baseClass.passedStep("Error validation message displayed when creating a new domain user with sa emailid");
+		loginPage.logout();
+
+	}
 
 	
 	@AfterMethod(alwaysRun = true)
