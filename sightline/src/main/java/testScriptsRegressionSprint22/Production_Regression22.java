@@ -341,6 +341,46 @@ public class Production_Regression22 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Brundha RPMXCON-47744 Date:9/27/2022
+	 * @Description To verify the DAT section in Production Components tab, on
+	 *              selection.
+	 */
+	@Test(description = "RPMXCON-47744", enabled = true, groups = { "regression" })
+	public void verifyingDATSection() throws Exception {
+
+		base = new BaseClass(driver);
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("RPMXCON-47744 -Production component");
+		base.stepInfo("To verify the DAT section in Production Components tab, on selection.");
+
+		String productionname = "P" + Utility.dynamicNameAppender();
+
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		base.waitForElement(page.getDATChkBox());
+		page.getDATTab().waitAndClick(10);
+		base.stepInfo("verifying DAT Section");
+		base.ValidateElement_Presence(page.getDAT_FieldClassification1(), "Field Classification");
+		base.ValidateElement_Presence(page.getDAT_SourceField1(), "Source Field");
+		base.ValidateElement_Presence(page.getDAT_DATField1(), "DAT Field");
+		base.ValidateElement_Presence(base.text("Encoding"), "Encoding");
+		base.ValidateElement_Presence(base.text("Field Delimiters"), "Field Delimiter");
+		base.ValidateElement_Presence(base.text("Date Format"), "DateFormat");
+		base.ValidateElement_Presence(page.getDatDateFormate(), "Date Format dropdown");
+		base.ValidateElement_Presence(page.defaultFielsSeperator(), "Field Classification");
+		base.ValidateElement_Presence(page.defaultTextQualifier(), "Text qualifier");
+		base.ValidateElement_Presence(page.defaultMultiValue(), "MultiValue");
+		base.ValidateElement_Presence(page.defaultNewLineSeperator(), "New line");
+		base.ValidateElement_Presence(base.text("Unicode"), "Unicode");
+		base.ValidateElement_Presence(page.getANSIDropDown(), "ANSI DropDown");
+		
+		loginPage.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

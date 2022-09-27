@@ -4440,6 +4440,10 @@ public class BaseClass {
 	 */
 	public void validatingGetTextElement(Element ele, String CompareString) {
 		String ActualString = ele.getText();
+		stepInfo("The actual string is"+ActualString);
+		System.out.println("The actual string is"+ActualString);
+		System.out.println("The CompareString is"+CompareString);
+		stepInfo("The CompareString is"+CompareString);
 		driver.waitForPageToBeReady();
 		compareTextViaContains(ActualString, CompareString, "" + ActualString + " is displayed",
 				"" + ActualString + " not displayed");

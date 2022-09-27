@@ -3523,6 +3523,9 @@ public class ProductionPage {
 	public Element getAbbreviatedText() {
 		return driver.FindElementByXPath("//input[contains(@name,'AbbrivatedText')]");
 	}
+	public Element getANSIDropDown() {
+		return driver.FindElementByXPath("//select[@id='lstANSIType']");
+	}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
