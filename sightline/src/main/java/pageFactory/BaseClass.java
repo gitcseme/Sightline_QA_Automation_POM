@@ -4502,4 +4502,26 @@ public class BaseClass {
 		}
 	}
 
+
+	/**
+	 * @author sowndarya.velraj
+	 * @Description hover on the element and get the tool tip message of the element
+	 */
+	public void verifyMegaPhoneIconAndBackgroundTasks(boolean bullHorn,boolean viewAll) {
+		if (bullHorn) {
+			waitForElement(getBullHornIcon());
+	        getBullHornIcon().waitAndClick(10);
+		}
+		
+        if (viewAll) {
+        	 waitForElement(getBckTask_SelectAll());
+             getBckTask_SelectAll().waitAndClick(20);
+		}
+
+       // verify Background Task page
+        String url = driver.getUrl();
+        String expURL = Input.url + "Background/BackgroundTask";
+        softAssertion.assertEquals(expURL, url);
+        stepInfo("Navigated to My backgroud task page.");
+	}
 }
