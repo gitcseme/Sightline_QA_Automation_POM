@@ -3017,4 +3017,60 @@ public class DocExplorerPage {
 			}
 		}
 	}
+	
+	public void docExplorerRelease(String SecGroup) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(5);
+
+		bc.waitForElement(getBulkReleaseBtn());
+		getBulkReleaseBtn().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible();
+			}
+		}), Input.wait60);
+		getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBulkRelease_ButtonUnRelease().Visible();
+			}
+		}), Input.wait60);
+		getBulkRelease_ButtonUnRelease().waitAndClick(20);
+
+		bc.VerifySuccessMessageB("Records saved successfully");
+
+		System.out.println("performing bulk release");
+		UtilityLog.info("performing bulk release");
+
+	
+     }
+	
+	public void docExplorerexportData() throws InterruptedException {
+		bc.waitForElement(actionDropdown());
+		actionDropdown().waitAndClick(10);
+
+		bc.waitForElement(exportDataFromActionDropdown());
+		exportDataFromActionDropdown().waitAndClick(10);
+
+		bc.waitForElement(exportWindow_AllCustodiansCheckbox());
+		exportWindow_AllCustodiansCheckbox().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(exportWindow_AddToSelectedButton());
+		exportWindow_AddToSelectedButton().waitAndClick(10);
+
+		driver.scrollPageToTop();
+		bc.waitForElement(exportWindow_RunExport());
+		exportWindow_RunExport().waitAndClick(10);
+
+		bc.waitForElement(exportWindow_closeButton());
+		exportWindow_closeButton().waitAndClick(10);
+
+		System.out.println("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
+		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
+	}
 }
