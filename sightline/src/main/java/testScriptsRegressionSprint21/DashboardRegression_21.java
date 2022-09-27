@@ -175,7 +175,7 @@ public class DashboardRegression_21 {
 		String headerName = "TOP 6 REVIEWERS WITH LOWEST PRODUCTIVITY";
 
 		// login As RMU
-		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		login.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 
 		base.stepInfo("Test case Id:RPMXCON-54189 Dashboard");
 		base.stepInfo(
@@ -191,7 +191,7 @@ public class DashboardRegression_21 {
 
 		// verify top 6 reviewers table is displayed
 		List<String> reviewProgressTable = base.availableListofElements(dashBoard.getReviewerProdTop6Header());
-		base.compareListWithString(reviewProgressTable, headerName,
+		base.compareListWithOnlyOneString(reviewProgressTable, headerName,
 				headerName + " : Review Progress is Displayed As default", "Review Progress is Not Displayed");
 
 		// logout
