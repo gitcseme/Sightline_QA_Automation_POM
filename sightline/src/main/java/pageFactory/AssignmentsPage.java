@@ -10946,6 +10946,7 @@ public class AssignmentsPage {
 	
 	/**
 	 * @author Jayanthi.Ganesan
+	 * This method will perform uncomplete all dcos from manage assignments page.
 	 */
 	public void uncompleteAllDocs(String assignmentName) {
 		
@@ -10955,9 +10956,8 @@ public class AssignmentsPage {
 		driver.scrollPageToTop();
 		getAssignmentActionDropdown().waitAndClick(3);
 		driver.waitForPageToBeReady();
-		bc.waitForElement(getAssgn_ManageRev_Action_UnCompleteAllDocs());
-		getAssgn_ManageRev_Action_UnCompleteAllDocs().waitAndClick(10);
-
+		bc.waitForElement(getAssignmentAction_UnCompletedoc());
+		getAssignmentAction_UnCompletedoc().waitAndClick(10);
 		bc.waitForElement(getUnComplePopOutYes());
 		getUnComplePopOutYes().waitAndClick(10);
 		bc.VerifySuccessMessage("All Documents successfully un-completed.");
@@ -11222,4 +11222,34 @@ public class AssignmentsPage {
         getAdduserBtn().waitAndClick(5);
         bc.VerifySuccessMessage("Action saved successfully");
     }
+    /**
+	 * @author Jayanthi.ganesan
+	 * @description This method verifies the todo count in manage redistributed
+	 *              documents
+	 */
+	public void VerifyWarnignMSGinManageRevTab_RedistributeDocs(String user1,String user2) {
+		bc.waitForElement(getAssignment_ManageReviewersTab());
+		getAssignment_ManageReviewersTab().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		getAssgn_ManageRev_selectReviewer(user1).ScrollTo();
+		getAssgn_ManageRev_selectReviewer(user1).waitAndClick(10);
+		if(user2!=null) {
+			getAssgn_ManageRev_selectReviewer(user2).ScrollTo();
+			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
+		}
+		bc.stepInfo("Selected the Reviewer that is assigned with few docs");
+		getAssgn_ManageRev_Action().waitAndClick(20);
+		getAssgn_ManageRev_Action().waitAndClick(20);
+		bc.waitForElement(getAssgn_RedistributeDoc());
+		getAssgn_RedistributeDoc().waitAndClick(20);
+		try {
+			bc.VerifyWarningMessage("No documents available to do the selected action");
+			bc.passedStep(
+					"Warning Message Displayed As Exepcted When we tried to Redistribute Docs to a Reviewer user with completed docs.");
+		} catch (Exception e) {
+			bc.failedStep("Warning Message not displayed");
+
+		}
+	}
+
 }
