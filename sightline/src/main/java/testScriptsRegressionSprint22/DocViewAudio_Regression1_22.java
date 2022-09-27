@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
@@ -230,6 +231,181 @@ public class DocViewAudio_Regression1_22 {
 
 		// logout
 		loginPage.logout();
+	}
+	
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-51788
+	 * @throws Exception
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with same term and different/same threshold are
+	 *              assigned to assignment from saved search with search group > Doc
+	 *              List
+	 */
+	@Test(description = "RPMXCON-51788", enabled = true, groups = { "regression" })
+	public void verifyAudioHitsDocsSearchedAssignmentSavedSearch() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51788");
+		baseClass.stepInfo(
+
+				"Verify that audio hits should be displayed when documents searched with same term and different/same threshold are assigned to assignment from saved search with search group > Doc List");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
+				"assgnment2" + Utility.dynamicNameAppender() };
+		String[] searchname = { "search1" + Utility.dynamicNameAppender(), "search2" + Utility.dynamicNameAppender() };
+
+		for (int i = 0; i < searchname.length; i++) {
+			// Login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+			sessionsearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+			sessionsearch.addPureHit();
+			sessionsearch.saveSearch(searchname[i]);
+			saveSearch.SaveSearchToBulkAssign(searchname[i], assignmentname[i], Input.codeFormName,
+					SessionSearch.pureHit);
+			loginPage.logout();
+
+			// Login as REVU
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer Manager with "
+					+ Input.rev1userName + "");
+
+			// Select the Assignment from dashboard
+			assignmentsPage.SelectAssignmentByReviewer(assignmentname[i]);
+			baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+			// verifying the audio hits and triangular arrow Icon
+			baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+			docViewPage.getAudioPersistantHitEyeIcon().Click();
+			docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+			baseClass.passedStep("Triangular arrow icon is displayed in jplayer at the position.");
+			loginPage.logout();
+
+		}
+
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-51789
+	 * @throws Exception
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with common terms and different/same threshold are
+	 *              assigned to assignment from saved search with search group
+	 */
+	@Test(description = "RPMXCON-51789", enabled = true, groups = { "regression" })
+	public void verifyAudioHitsDocsAssignmentSavedSearchWithSearchGroup() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51789");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with common terms and different/same threshold are assigned to assignment from saved search with search group");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
+				"assgnment2" + Utility.dynamicNameAppender() };
+		String[] searchname = { "search1" + Utility.dynamicNameAppender(), "search2" + Utility.dynamicNameAppender() };
+
+		for (int i = 0; i < searchname.length; i++) {
+			// Login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+			sessionsearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+			sessionsearch.addPureHit();
+			sessionsearch.saveSearch(searchname[i]);
+			saveSearch.SaveSearchToBulkAssign(searchname[i], assignmentname[i], Input.codeFormName,
+					SessionSearch.pureHit);
+			loginPage.logout();
+
+			// Login as REVU
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer Manager with "
+					+ Input.rev1userName + "");
+
+			// Select the Assignment from dashboard
+			assignmentsPage.SelectAssignmentByReviewer(assignmentname[i]);
+			baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+			// verifying the audio hits and triangular arrow Icon
+			baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+			docViewPage.getAudioPersistantHitEyeIcon().Click();
+			docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+			baseClass.passedStep("Triangular arrow icon is displayed in jplayer at the position.");
+			driver.Navigate().refresh();
+			baseClass.waitTime(5);
+			docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+			baseClass.passedStep(
+					"Documents common in both searches term is displayed on the hits panel and icon on the jplayer");
+			loginPage.logout();
+		}
+
+	}
+
+	/**
+	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
+	 *                   RPMXCON-51790
+	 * @throws Exception
+	 * @Description Verify that audio hits should be displayed when documents
+	 *              searched with common terms and different/same threshold are
+	 *              assigned to assignment from saved search with search group > Doc
+	 *              List
+	 */
+	@Test(description = "RPMXCON-51790", enabled = true, groups = { "regression" })
+	public void verifyAudioHitsDocsSearchedAssignmentSavedSearchDocList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51790");
+		baseClass.stepInfo(
+				"Verify that audio hits should be displayed when documents searched with common terms and different/same threshold are assigned to assignment from saved search with search group > Doc List");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		String[] assignmentname = { "assgnment1" + Utility.dynamicNameAppender(),
+				"assgnment2" + Utility.dynamicNameAppender() };
+		String[] searchname = { "search1" + Utility.dynamicNameAppender(), "search2" + Utility.dynamicNameAppender() };
+
+		for (int i = 0; i < searchname.length; i++) {
+			// Login as RMU
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+			sessionsearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+			sessionsearch.addPureHit();
+			sessionsearch.saveSearch(searchname[i]);
+			saveSearch.SaveSearchToBulkAssign(searchname[i], assignmentname[i], Input.codeFormName,
+					SessionSearch.pureHit);
+			loginPage.logout();
+
+			// Login as REVU
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer Manager with "
+					+ Input.rev1userName + "");
+
+			// Select the Assignment from dashboard
+			assignmentsPage.SelectAssignmentByReviewer(assignmentname[i]);
+			baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+			// verifying the audio hits and triangular arrow Icon
+			baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
+			docViewPage.getAudioPersistantHitEyeIcon().Click();
+			docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
+			baseClass.passedStep("Searched in common terms in docview Triangular arrow icon is displayed in jplayer at the position.");
+			loginPage.logout();
+
+		}
+
+	}
+
+	@DataProvider(name = "PaRmuRev")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
 	}
 	
 	@AfterMethod(alwaysRun = true)

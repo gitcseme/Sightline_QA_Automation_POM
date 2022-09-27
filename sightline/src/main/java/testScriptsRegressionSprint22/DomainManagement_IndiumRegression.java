@@ -139,6 +139,7 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 	}
 	
+
 	@DataProvider(name = "sada")
 	public Object[][] sada() {
 		Object[][] users = {
@@ -255,6 +256,71 @@ public class DomainManagement_IndiumRegression {
 		loginPage.logout();
 	}
 	
+
+	/**
+	 * @Author : Aathith
+	 * @Description : To verify that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.
+	 */
+	@Test(description = "RPMXCON-52792",enabled = true, groups = { "regression" })
+	public void verifyDomainNameEmpty() throws Exception {
+		
+	    baseClass.stepInfo("Test case Id: RPMXCON-52792");
+	    baseClass.stepInfo("To verify that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
+		
+	    UserManagement user = new UserManagement(driver);
+	    SoftAssert soft = new SoftAssert();
+				
+		String email = Input.randomText+Utility.dynamicNameAppender()+"@consilio.com";
+		
+		// login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Successfully login as sa user'" + Input.sa1userName + "'");
+		
+		user.createNewUser(Input.randomText, Input.randomText, Input.ProjectAdministrator, email, null, Input.NonDomainProject);
+		user.filterByName(email);
+		driver.waitForPageToBeReady();
+		soft.assertEquals(user.getTableData("DOMAIN",1),"");
+		baseClass.passedStep("Domain column value is blank.");
+		
+		user.deleteAddedUser(Input.randomText);
+	    
+	    soft.assertAll();
+	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
+	    loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : To verify that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.
+	 */
+	@Test(description = "RPMXCON-52793",enabled = true, groups = { "regression" })
+	public void verifyDomainDisplayCrctly() throws Exception {
+		
+	    baseClass.stepInfo("Test case Id: RPMXCON-52793");
+	    baseClass.stepInfo("To verify that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
+		
+	    UserManagement user = new UserManagement(driver);
+	    SoftAssert soft = new SoftAssert();
+				
+		String email = Input.randomText+Utility.dynamicNameAppender()+"@consilio.com";
+		
+		// login as sa
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Successfully login as sa user'" + Input.sa1userName + "'");
+		
+		user.createNewUser(Input.randomText, Input.randomText, Input.ProjectAdministrator, email, Input.domainName, Input.projectName);
+		user.filterByName(email);
+		driver.waitForPageToBeReady();
+		soft.assertEquals(user.getTableData("DOMAIN",1), Input.domainName);
+		baseClass.passedStep("Domain column is populated with a correct value ");
+		
+		user.deleteAddedUser(Input.randomText);
+	    
+	    soft.assertAll();
+	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
+	    loginPage.logout();
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
