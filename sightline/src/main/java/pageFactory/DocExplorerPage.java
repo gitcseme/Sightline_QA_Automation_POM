@@ -3008,6 +3008,7 @@ public class DocExplorerPage {
 			int docsCount=getDocumentCountFromListView();
 			String fieldValue=getDocExpFieldValues(familyValues[j]).GetAttribute("data-content");
 			System.out.println("field Value for" +familyValues[j]+":" +fieldValue);
+			bc.stepInfo("field Value for" +familyValues[j]+":" +fieldValue);
 			if(docsCount>0 && fieldValue.equalsIgnoreCase(values[j])){
 				bc.passedStep(values[j]+" family field values displayed correctly");
 			}
