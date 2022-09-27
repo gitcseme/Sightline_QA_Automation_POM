@@ -95,7 +95,7 @@ public class Notification_22 {
 	 * @author NA Testcase No:RPMXCON-53874
 	 * @Description:To Verify As an RM user login, I will get an notification when I will execute any folder under My Search in saved search
 	 **/
-	//@Test(description = "RPMXCON-53874", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53874", enabled = true, groups = { "regression" })
 	public void verifyNotificationAfterExecute() throws Exception {
 		base.stepInfo("RPMXCON-53874");
 		base.stepInfo("To Verify As an RM user login, I will get an notification "
@@ -134,7 +134,7 @@ public class Notification_22 {
 	 * @author NA Testcase No:RPMXCON-53903
 	 * @Description:To verify, As an Sys Admin user login I will able to Impersonate from Sys Admin to RM & I will be able to go to Doc List page from saved search & able to perform Doc List actions
 	 **/
-	//@Test(description = "RPMXCON-53903", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53903", enabled = true, groups = { "regression" })
 	public void verifySAableToNavDocListPage() throws Exception {
 		base.stepInfo("RPMXCON-53903");
 		base.stepInfo("To verify, As an Sys Admin user login I will able to Impersonate from Sys Admin to RM & "
@@ -183,7 +183,7 @@ public class Notification_22 {
 	 * @author sowndarya Testcase No:RPMXCON-54459
 	 * @Description:Verify that on click of 'View All' displays in the pop up on click of megaphone 'My Background Tasks' page should be displayed with all tasks
 	 **/
-	//@Test(description = "RPMXCON-54459", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54459", enabled = true, groups = { "regression" })
 	public void verifyMegaPhoneIcon() throws Exception {
 		base.stepInfo("RPMXCON-54459");
 		base.stepInfo("Verify that on click of 'View All' displays in the pop up on click of megaphone 'My Background Tasks' page should be displayed with all tasks");
@@ -220,7 +220,7 @@ public class Notification_22 {
 	 * @author sowndarya Testcase No:RPMXCON-54157
 	 * @Description: To verify as an PA user login into the Application, When user applying Bulk Release from Saved Search, user will be able to see the background task in notification window
 	 **/
-	//@Test(description = "RPMXCON-54157", enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-54157", enabled = true, groups = { "regression" })
 	public void verifyNotificationAfterBulkRelease() throws Exception {
 		base.stepInfo("RPMXCON-54157");
 		base.stepInfo("To verify as an PA user login into the Application, When user applying Bulk Release from Saved Search, user will be able to see the background task in notification window");
