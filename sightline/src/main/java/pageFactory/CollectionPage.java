@@ -2351,7 +2351,8 @@ public class CollectionPage {
 
 		base.waitForElement(getStartCollectionButton());
 		getStartCollectionButton().waitAndClick(5);
-
+		driver.waitForPageToBeReady();
+		base.stepInfo("Clicked Start and Initiated collection");
 	}
 
 	/**

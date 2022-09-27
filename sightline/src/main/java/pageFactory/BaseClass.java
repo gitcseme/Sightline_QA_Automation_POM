@@ -4489,5 +4489,17 @@ public class BaseClass {
 		stepInfo("moves hover to the elemet and get tool tip message");
 		return ele.GetAttribute("title");
 	}
+	
+	/**
+	 * @author Indium Raghuram Description : Date:09/26/21 Modified date: N/A
+	 *         Modified by: N/A
+	 */
+	public Boolean ValidateElement_AbsenceReturn(Element element) {
+		if (element.isElementAvailable(1)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }

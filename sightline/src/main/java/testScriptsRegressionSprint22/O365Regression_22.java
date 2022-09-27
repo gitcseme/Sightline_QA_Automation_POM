@@ -66,6 +66,13 @@ public class O365Regression_22 {
 		source = new SourceLocationPage(driver);
 	}
 
+	@DataProvider(name = "PaAndRmuUser")
+	public Object[][] PaAndRmuUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, "Project Administrator" },
+				{ Input.rmu1userName, Input.rmu1password, "Review Manager" } };
+		return users;
+	}
+
 	/**
 	 * @author Raghuram A
 	 * @throws Exception
@@ -289,6 +296,124 @@ public class O365Regression_22 {
 		// navigate to Collection page and Deletion
 		base.stepInfo("Initiation collection deletion");
 		collection.deleteUsingCollectionName(colllectionData.get(collectionId), true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 09/26/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify sorting from Manage Collection page. RPMXCON-60913
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60913", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyEditAnDeleteNotInCollWorkFlow(String username, String password, String fullname)
+			throws Exception {
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String dataname = "AASourceLocation" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60913 - O365");
+		base.stepInfo(
+				"Verify that edit or delete option(s) are not available for a source location in a collection’s workflow.");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection
+		collection.performCreateNewCollection();
+
+		// Add new source location
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// verify Added source location is displayed
+		collection.verifyAddedSourceLocation(dataname, null);
+
+		// Verify Edit and Delete options are not available in Collection flow
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(source.getSrcActionBtn(dataname, "Edit")),
+				"Edit option(s) not available for a source location in a collection’s workflow.",
+				"Edit option(s) should is available for a source location in a collection’s workflow.", "Pass");
+		base.printResutInReport(base.ValidateElement_AbsenceReturn(source.getSrcActionBtn(dataname, "Delete")),
+				"Delete option(s) not available for a source location in a collection’s workflow.",
+				"Delete option(s) should is available for a source location in a collection’s workflow.", "Pass");
+
+		// delete created source location
+		base.stepInfo("Initiating delete for created source location");
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+		source.columnHeader("Data Source Name").waitAndClick(3);
+		source.deleteSourceLocation(dataname, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 09/26/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify that User can View the status and monitor the progress
+	 *              of collection(s) on "Manage Screen" screen RPMXCON-61038
+	 */
+	@Test(description = "RPMXCON-61038", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyStausWorkProgress(String userName, String password, String role) throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String[][] userRolesData = { { userName, role, "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61038 - O365");
+		base.stepInfo(
+				"Verify that User can View the status and monitor the progress of collection(s) on \"Manage Screen\" screen");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
+
+		// create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Click create New Collection with datasets
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, true, true, true, Input.randomText, true, true,
+				"Save", "");
+
+		// Start Collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		base.verifyPageNavigation(Input.collectionPageUrl);
+		base.passedStep("User should Navigate to \"Manage Collections\" screen.");
+		base.stepInfo(
+				"Verify that User can View the status and monitor the progress of collection(s) on \"Manage Screen\" screen");
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, true, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+		driver.waitForPageToBeReady();
 
 		// Logout
 		login.logout();
