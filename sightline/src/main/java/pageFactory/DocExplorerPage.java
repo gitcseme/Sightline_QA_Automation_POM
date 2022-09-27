@@ -548,6 +548,14 @@ public class DocExplorerPage {
 	public Element getDocExplorer_NewFolderName() {
 		return driver.FindElementById("txtFolderName");
 	}
+	//added by arun
+	public Element getDocExpField(String field) {
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='"+field+"']");
+	}
+	public Element getDocExpFieldValues(String value) {
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div[text()='"+value+"']");
+		
+	}
 
 	public DocExplorerPage(Driver driver) {
 
@@ -1791,10 +1799,11 @@ public class DocExplorerPage {
 	 */
 	public void navigateToDoclistFromDocExplorer() {
 		try {
+			driver.scrollPageToTop();
 			bc.waitForElement(getDocExp_actionButton());
 			getDocExp_actionButton().waitAndClick(10);
-			bc.waitTime(2);
-			if (getView().isDisplayed()) {
+			
+			if (getView().isElementAvailable(10)) {
 				driver.waitForPageToBeReady();
 				Actions act = new Actions(driver.getWebDriver());
 				act.moveToElement(getView().getWebElement()).build().perform();
@@ -2923,5 +2932,89 @@ public class DocExplorerPage {
 		}
 
 	}
-
+	
+	/**
+	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will return the docsCount from selected folder tree view
+	 */
+	public int getFolderCountFromTreeView(String folderNumber) {
+		bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
+		getfolderFromTreeByNumber(folderNumber).waitAndClick(10);
+		String folderName = getfolderFromTreeByNumber(folderNumber).getText();
+		String folderCount = folderName.substring(folderName.indexOf("(") + 1, folderName.indexOf(")"));
+		int treeviewCount = Integer.parseInt(folderCount.replace(",", ""));
+		return treeviewCount;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will return the docsCount for selected folder in right side list view
+	 */
+	public int getDocumentCountFromListView() {
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getDocExp_DocumentList_info());
+		String count =getDocExp_DocumentList_info().getText().toString();
+		String docsCount=count.substring(count.indexOf("of")+3, count.indexOf(" entries"));
+		int listViewCount = Integer.parseInt(docsCount.replace(",", ""));
+		return listViewCount;
+	}
+	
+	/**
+	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the count in folder tree view and right side list view
+	 */
+	public void verifyDocsCountInFolderAndListView(int treeCount,int listCount) {
+		if(treeCount==listCount) {
+			bc.passedStep("Document count on the list view is same as in folder tree view");
+			}
+			else {
+				bc.failedStep("document count in tree view and list view not matched");
+			}
+	}
+	
+	/**
+	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the fields in doc explorer table list view
+	 */
+	public void verifyDocExpFieldAvailabilityInListView() {
+		
+		String[] fields = {"DOCID","FAMILY","CUSTODIANNAME","DOCFILETYPE","EMAILSUBJECT/FILENAME",
+				"MASTERDATE","EMAILAUTHOR","EMAILRECIPIENTS"};
+		driver.waitForPageToBeReady();
+		for(int i=0;i<fields.length;i++) {
+			bc.waitForElement(getDocExpField(fields[i]));
+			if(getDocExpField(fields[i]).isElementAvailable(10)) {
+				bc.passedStep(fields[i] +" field available in doc explorer list view");
+			}
+			else {
+				bc.failedStep(fields[i] +" field not available in doc explorer list view");
+			}
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will verify the family field values in doc exp list view
+	 */
+	public void verifyFamilyFieldValuesInDocExp(String[] familyValues,String[]values) {
+		
+		for(int j=0;j<familyValues.length;j++) {
+			bc.waitForElement(getDocExpField("FAMILY"));
+			getDocExpField("FAMILY").SendKeys(familyValues[j]);
+			getDocExpField("FAMILY").SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			int docsCount=getDocumentCountFromListView();
+			String fieldValue=getDocExpFieldValues(familyValues[j]).GetAttribute("data-content");
+			System.out.println("field Value for" +familyValues[j]+":" +fieldValue);
+			bc.stepInfo("field Value for" +familyValues[j]+":" +fieldValue);
+			if(docsCount>0 && fieldValue.equalsIgnoreCase(values[j])){
+				bc.passedStep(values[j]+" family field values displayed correctly");
+			}
+			else {
+				bc.failedStep(values[j]+" family field values not displayed");
+			}
+		}
+	}
 }
