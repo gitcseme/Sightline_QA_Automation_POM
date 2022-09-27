@@ -90,6 +90,7 @@ public class SystemLavelTemp_Regression {
 		sessionSearch = new SessionSearch(driver);
 		TagsAndFoldersPage tagAndFolder = new TagsAndFoldersPage(driver);
 		SoftAssert softassertion = new SoftAssert();
+		String folder="new" + Utility.dynamicNameAppender();
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -106,6 +107,8 @@ public class SystemLavelTemp_Regression {
 		baseClass.stepInfo("Select Default Security Group in DropDown");
 		tagAndFolder.getSecurityGroup().selectFromDropdown().selectByVisibleText(Input.securityGroup);
 
+		tagAndFolder.CreateFolder(folder, Input.securityGroup);
+		driver.waitForPageToBeReady();
 		tagAndFolder.getFolderExpandIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		tagAndFolder.getFolderExpandIcon().Click();
@@ -134,6 +137,7 @@ public class SystemLavelTemp_Regression {
 		sessionSearch = new SessionSearch(driver);
 		TagsAndFoldersPage tagAndFolder = new TagsAndFoldersPage(driver);
 		SoftAssert softassertion = new SoftAssert();
+		String folder="new" + Utility.dynamicNameAppender();
 
 		// Login As PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -150,6 +154,8 @@ public class SystemLavelTemp_Regression {
 		baseClass.stepInfo("Select Default Security Group in DropDown");
 		tagAndFolder.getSecurityGroup().selectFromDropdown().selectByVisibleText(Input.securityGroup);
 		
+		tagAndFolder.CreateFolder(folder, Input.securityGroup);
+		driver.waitForPageToBeReady();
 		tagAndFolder.getFolderExpandIcon().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		tagAndFolder.getFolderExpandIcon().Click();
