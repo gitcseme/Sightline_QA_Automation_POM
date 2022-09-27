@@ -419,6 +419,55 @@ public class O365Regression_22 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify that user can go to ‘Source Selection’ step on click of
+	 *              ‘Back’ button from collection information’ step [RPMXCON-60654]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60654", enabled = true, groups = { "regression" })
+	public void verifyUserCanGoToSrceSelect() throws Exception {
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60654 - O365");
+		base.stepInfo(
+				"Verify that user can go to ‘Source Selection’ step on click of ‘Back’ button from collection information’ step");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// verify collection page
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+
+		// click created source location & enter collection name
+		collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+
+		// select Do Not auto initiate collection process
+		collection.selectInitiateCollectionOrClickNext(false, false, false);
+
+		// click back button
+		driver.waitForPageToBeReady();
+		collection.getBackBtn().waitAndClick(10);
+
+		// verify navigated to source selection tab
+		driver.waitForPageToBeReady();
+		collection.verifyCurrentTab("Source Selection");
+
+		// Logout
+		login.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
