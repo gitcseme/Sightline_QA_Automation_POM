@@ -27,7 +27,7 @@ public class IngestionPage_Indium {
 	BaseClass base;
 	SoftAssert softAssertion;
 	DocListPage docList;
-
+	
 	// ID's
 	public Element getSpecifySourceSystem() {
 		return driver.FindElementById("ddlSourceSystem");
@@ -2158,11 +2158,11 @@ public class IngestionPage_Indium {
 		try {
 			driver.scrollingToBottomofAPage();
 			driver.waitForPageToBeReady();
-			/*
+			
 			getTIFFCheckBox().ScrollTo();
 			getTIFFCheckBox().isElementAvailable(15);
 			getTIFFCheckBox().Click();
-	*/
+	
 			getTIFFLST().ScrollTo();
 			base.waitForElement(getTIFFLST());
 			getTIFFLST().isElementAvailable(15);
@@ -5179,7 +5179,7 @@ public class IngestionPage_Indium {
 			for (int i = 0; i < 50; i++) {
 				base.waitTime(2);
 				String status = getStatus(k).getText().trim();
-
+				getRefreshButton().waitAndClick(5);
 				if (status.contains("Copied")) {
 					base.passedStep("Copied completed for ingestion - " + k + "");
 					break;
@@ -5625,7 +5625,7 @@ public class IngestionPage_Indium {
 		getFilterByAPPROVED().waitAndClick(5);
 		base.waitForElement(getFilterByButton());
 		getFilterByButton().waitAndClick(10);
-		base.waitTime(2);
+		base.waitTime(5);
 		getRefreshButton().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		//start approve
@@ -5648,7 +5648,7 @@ public class IngestionPage_Indium {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
 			String status = getStatus(j).getText().trim();
-
+			getRefreshButton().waitAndClick(5);
 			if (status.contains("Approved")) {
 				base.passedStep("Approve completed for ingestion");
 				break;
@@ -7766,6 +7766,7 @@ public class IngestionPage_Indium {
 
 		getRefreshButton().waitAndClick(5);
 		String ingestionName=getIngestionNameFromPopup();
+		String statusOfIngestion = getStatus(1).getText().trim();
 		for (int i = 0; i < 120; i++) {
 			base.waitTime(5);
 			getRefreshButton().waitAndClick(5);
@@ -7789,6 +7790,7 @@ public class IngestionPage_Indium {
 
 			} else if (status.contains("Approved")) {
 				base.passedStep("Approved completed");
+				runFullAnalysisAndPublish();
 				break;
 
 			} else if (status.contains("In Progress")) {
@@ -7798,7 +7800,11 @@ public class IngestionPage_Indium {
 				base.waitTime(5);
 				getRefreshButton().waitAndClick(5);
 				System.out.println("Ingestion Failed, will re-run after ignoring errors");
+				statusOfIngestion=status;
 			}
+		}
+		if (statusOfIngestion.contains("Failed")){
+			base.failedStep("Overlay has failed");		
 		}
 		return ingestionName;
 	}
@@ -9153,22 +9159,25 @@ public class IngestionPage_Indium {
 			base.waitTime(2);
 			base.stepInfo("Selecting Dat file");
 			selectDATSource(datFile,docKey );
-			base.waitTime(1);
+			base.waitTime(2);
 			base.stepInfo("Selecting Native file");
 			selectNativeSource(Input.NativeFile, false);
+			base.waitTime(2);
 			base.stepInfo("Selecting Text file");
 			selectTextSource(Input.TextFile, false);
-			base.waitTime(1);
+			base.waitTime(2);
 			base.stepInfo("Selecting Pdf file");
 			selectPDFSource(Input.PDFFile, false);
+			base.waitTime(2);
 			base.stepInfo("Selecting Tiff file");
 			selectTIFFSource(Input.TIFFFile, false,false);
-			base.waitTime(1);
+			base.waitTime(2);
 			base.stepInfo("Selecting Mp3 file");
 			selectMP3VarientSource(Input.MP3File, false);
-			base.waitTime(1);
+			base.waitTime(2);
 			base.stepInfo("Selecting Transcript file");
 			selectAudioTranscriptSource(Input.TranscriptFile, false);
+			base.waitTime(2);
 			base.stepInfo("Selecting Translation file");
 			selectOtherSource("Translation", Input.TranslationFile, false);
 			
@@ -10668,6 +10677,7 @@ public class IngestionPage_Indium {
 			base.waitForElement(getIngestionDetailPopup(1));
 			getIngestionDetailPopup(1).waitAndClick(10);
 			base.waitForElement(getActionDropdownArrow());
+			driver.scrollingToElementofAPage(getRunIndexing());
 			driver.scrollingToElementofAPage(getIsAudioCheckbox());
 			if (dataset.contains("AllSources") || dataset.contains("SSAudioSpeech_Transcript")) {
 				base.waitForElement(getIsAudioCheckbox());
