@@ -58,20 +58,21 @@ public class Assignment_Regression22 {
 		softAssert = new SoftAssert();
 
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 21/09/2022 TestCase Id:RPMXCON-53654
-	 * Description :To verify that in Distribute Document section it displays Reviewers name 
-	 * as Last name First Name and User Name 
-	 * @throws Exception 
+	 * Author :Arunkumar date: 21/09/2022 TestCase Id:RPMXCON-53654 Description :To
+	 * verify that in Distribute Document section it displays Reviewers name as Last
+	 * name First Name and User Name
+	 * 
+	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53654",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53654", enabled = true, groups = { "regression" })
 	public void verifyReviewerNameFormat() throws Exception {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-53654");
 		baseClass.stepInfo("verify reviewers name display in distribute document section");
-		String assignmentName = "assign"+Utility.dynamicNameAppender();
-		
+		String assignmentName = "assign" + Utility.dynamicNameAppender();
+
 		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
 		baseClass.stepInfo("Logged in as REV");
 		baseClass.stepInfo("get first and last name of reviewer");
@@ -96,41 +97,42 @@ public class Assignment_Regression22 {
 		baseClass.waitForElement(assignment.getDistributeTab());
 		assignment.getDistributeTab().waitAndClick(10);
 		baseClass.waitForElement(assignment.getReviewerInDistributeTab(Input.rev1userName));
-		if(assignment.getReviewerInDistributeTab(Input.rev1userName).isElementAvailable(10)) {
+		if (assignment.getReviewerInDistributeTab(Input.rev1userName).isElementAvailable(10)) {
 			String actualUser = assignment.getReviewerInDistributeTab(Input.rev1userName).getText().trim();
-			baseClass.stepInfo("Actual username format: " +actualUser);
-			String expected =lastName+", "+firstName+"("+Input.rev1userName+")";
-			baseClass.stepInfo("Expected username format: " +expected);
+			baseClass.stepInfo("Actual username format: " + actualUser);
+			String expected = lastName + ", " + firstName + "(" + Input.rev1userName + ")";
+			baseClass.stepInfo("Expected username format: " + expected);
 			softAssert.assertEquals(actualUser, expected);
 			softAssert.assertAll();
-		}
-		else {
+		} else {
 			baseClass.failedStep("Added reviewer not available in distribute docs tab");
 		}
 		baseClass.passedStep("Reviewer name displayed in expected format");
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
-	 * Author :Arunkumar date: 22/09/2022 TestCase Id:RPMXCON-53634
-	 * Description :To verify that RMU is able to view Assingment Group and Assignments tree 
-	 * in Assign/Unassign Document pop up wrt to Projects. 
-	 * @throws Exception 
+	 * Author :Arunkumar date: 22/09/2022 TestCase Id:RPMXCON-53634 Description :To
+	 * verify that RMU is able to view Assingment Group and Assignments tree in
+	 * Assign/Unassign Document pop up wrt to Projects.
+	 * 
+	 * @throws Exception
 	 */
-	@Test(description ="RPMXCON-53634",enabled = true, groups = { "regression" })
+	@Test(description = "RPMXCON-53634", enabled = true, groups = { "regression" })
 	public void verifyAssiignUnassignPopupAsRMU() throws Exception {
-		
+
 		baseClass.stepInfo("Test case Id: RPMXCON-53634");
 		baseClass.stepInfo("verify assign/Unassign popup wrt projects");
-		String[] project = {Input.projectName,Input.additionalDataProject};
-		String[] assignName ={"assign1"+Utility.dynamicNameAppender(),"assign2"+Utility.dynamicNameAppender()};
-		String[] assignGroup ={"assignGroup1"+Utility.dynamicNameAppender(),"assignGroup2"+Utility.dynamicNameAppender()};
-		
+		String[] project = { Input.projectName, Input.additionalDataProject };
+		String[] assignName = { "assign1" + Utility.dynamicNameAppender(), "assign2" + Utility.dynamicNameAppender() };
+		String[] assignGroup = { "assignGroup1" + Utility.dynamicNameAppender(),
+				"assignGroup2" + Utility.dynamicNameAppender() };
+
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("Logged in as RMU");
 		baseClass.stepInfo("create assignment and group wrt to project");
-		for(int i=0;i<project.length;i++) {
+		for (int i = 0; i < project.length; i++) {
 			baseClass.selectproject(project[i]);
 			assignment.createAssgnGroup(assignGroup[i]);
 			assignment.selectAssignmentGroup(assignGroup[i]);
@@ -142,7 +144,7 @@ public class Assignment_Regression22 {
 		baseClass.stepInfo("drag the search result tile and select bulk assign");
 		sessionSearch.addPureHit();
 		sessionSearch.bulkAssign();
-		assignment.verifyBulkAssignPopupWrtToProject(assignName[0],assignName[1]);
+		assignment.verifyBulkAssignPopupWrtToProject(assignName[0], assignName[1]);
 		baseClass.stepInfo("change the project and verify the bulk assign popup");
 		baseClass.selectproject(project[1]);
 		driver.waitForPageToBeReady();
@@ -150,11 +152,11 @@ public class Assignment_Regression22 {
 		baseClass.stepInfo("drag the search result tile and select bulk assign");
 		sessionSearch.addPureHit();
 		sessionSearch.bulkAssign();
-		assignment.verifyBulkAssignPopupWrtToProject(assignName[1],assignName[0]);
+		assignment.verifyBulkAssignPopupWrtToProject(assignName[1], assignName[0]);
 		loginPage.logout();
-		
+
 	}
-	
+
 	/**
 	 * @author
 	 * @Date: 23/9/22
@@ -292,7 +294,7 @@ public class Assignment_Regression22 {
 		assignment.DeleteAssgnGroup(assignmentGroup01);
 		assignment.deleteAssignmentFromSingleAssgnGrp(assignmentGroup02, assignmentName02);
 		assignment.DeleteAssgnGroup(assignmentGroup02);
-		
+
 		// delete multiplecoding form
 		codingForm.navigateToCodingFormPage();
 		codingForm.DeleteMultipleCodingform(listOfCodingForm);
@@ -301,7 +303,7 @@ public class Assignment_Regression22 {
 		loginPage.logout();
 
 	}
-	
+
 	/**
 	 * @author
 	 * @Date: 23/9/22
@@ -437,7 +439,83 @@ public class Assignment_Regression22 {
 		// logout
 		loginPage.logout();
 	}
-	
+
+	/**
+	 * @author
+	 * @Date: 27/9/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that configured metadata as per the assignmnet group
+	 *              should retain for assignment after distributing documents to the
+	 *              user. RPMXCON-54281
+	 */
+
+	@Test(description = "RPMXCON-54281", enabled = true, groups = { "regression" })
+	public void verifyConfiguredMetadataAsPerAssignmentGroupRetainAssignmentAfterDistributingDocumentsToUser()
+			throws InterruptedException {
+
+		String assignGroup = "assignmentGroup" + Utility.dynamicNameAppender();
+		String assignmentName = "Assignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Test case Id:RPMXCON-54281");
+		baseClass.stepInfo(
+				"Verify that configured metadata as per the assignmnet group should retain for assignment after distributing documents to the user");
+
+		// create Assignment Group
+		baseClass.stepInfo("creating Assignment Group");
+		assignment.navigateToAssignmentsPage();
+		assignment.createCascadeNonCascadeAssgnGroup_withoutSave(assignGroup, "Yes");
+
+		// getting the list of assigned metadata from assignment group
+		baseClass.stepInfo("getting the list of assigned metadata from assignment group");
+		List<String> ListOfAssignedMetadata = assignment.getAllAssignedOrUnAssignedMetadataFromConfigureMetadata(true);
+
+		// getting the list of keywords from assignment group
+		baseClass.stepInfo(" getting the list of keywords from assignment group");
+		List<String> ListOfKeywords = assignment.getAllKeywordsFromAddKeywordPopup();
+		assignment.getAssignmentSaveButton().waitAndClick(5);
+
+		// peforming basic search and creating assignment using bulk assign
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignWithNewAssgn(assignGroup);
+		assignment.createAssignmentByBulkAssignOperation(assignmentName, Input.codingFormName);
+
+		// adding reviewer and Distributing the Documents
+		assignment.editAssignmentInAssignGroup(assignGroup, assignmentName);
+		assignment.add2ReviewerAndDistribute();
+		baseClass.waitForElement(assignment.getAssignmentSaveButton());
+		assignment.getAssignmentSaveButton().waitAndClick(5);
+
+		// getting the list of assigned metadata from assignment
+		baseClass.stepInfo("getting the list of assigned metadata from assignment");
+		List<String> ListOfAssignedMetadata02 = assignment
+				.getAllAssignedOrUnAssignedMetadataFromConfigureMetadata(true);
+		// getting the list of keywords from assignment
+		baseClass.stepInfo("getting the list of keywords from assignment");
+		List<String> ListOfKeywords02 = assignment.getAllKeywordsFromAddKeywordPopup();
+
+		// verify that Configured metadata and keywords are retained in the same
+		// assignment as per the assignment group
+		baseClass.listCompareEquals(ListOfAssignedMetadata, ListOfAssignedMetadata02,
+				"List of Assigned Metadata in Assigment Group match with the List of Assigned Metadata in Assigment",
+				"Actual doesn't macth with Expected");
+		baseClass.listCompareEquals(ListOfKeywords, ListOfKeywords02,
+				"List of KeyWord in Assignment Group match List of KeyWord in Assignment",
+				"Actual doesn't macth with Expected");
+		baseClass.passedStep(
+				"Verified that Configured metadata and keywords are retained in the same assignment as per the assignment group");
+
+		// delete assignments and assignment Groups
+		assignment.navigateToAssignmentsPage();
+		assignment.deleteAssignmentFromSingleAssgnGrp(assignGroup, assignmentName);
+		assignment.DeleteAssgnGroup(assignGroup);
+
+		// logOut
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

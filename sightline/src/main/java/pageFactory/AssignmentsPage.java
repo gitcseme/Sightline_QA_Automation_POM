@@ -1582,6 +1582,15 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//input[@id='chkSelectAllCodingform']/following-sibling::i");
 	}
 	
+	public ElementCollection getUnAssignedMetadataListInAssgnPage() {
+		return driver.FindElementsByXPath("//*[@id='UnAssignedMetaData']//option");
+	}
+
+	public ElementCollection getCheckedKeywordList() {
+		return driver.FindElementsByXPath(
+				"//input[@name='assKeywordsList' and @checked='checked']/parent::*/following-sibling::div");
+	}
+	
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -11250,6 +11259,48 @@ public class AssignmentsPage {
 			bc.failedStep("Warning Message not displayed");
 
 		}
+	}
+	
+	/**
+	 * @author
+	 * @param ListOfAssignedMetadata
+	 * @description : get All Assigned Or UnAssigned Metadata From ConfigureMetadata
+	 * @return
+	 */
+	public List<String> getAllAssignedOrUnAssignedMetadataFromConfigureMetadata(boolean ListOfAssignedMetadata) {
+		List<String> listOfResultMetadata = new ArrayList<String>();
+		bc.waitForElement(GetSelectMetaDataBtn());
+		GetSelectMetaDataBtn().waitAndClick(5);
+		if (ListOfAssignedMetadata) {
+			bc.waitForElementCollection(getAssignedMetadataListInAssgnPage());
+			listOfResultMetadata = bc.availableListofElements(getAssignedMetadataListInAssgnPage());
+		} else {
+			bc.waitForElementCollection(getUnAssignedMetadataListInAssgnPage());
+			listOfResultMetadata = bc.availableListofElements(getUnAssignedMetadataListInAssgnPage());
+		}
+
+		bc.waitForElement(getMetadataFielOkBtn());
+		getMetadataFielOkBtn().waitAndClick(5);
+
+		return listOfResultMetadata;
+	}
+
+	/**
+	 * @author
+	 * @description : get All Keywords From Add Keyword Popup
+	 * @return
+	 */
+	public List<String> getAllKeywordsFromAddKeywordPopup() {
+		List<String> listOfKeywords = new ArrayList<String>();
+		bc.waitForElement(getAssgn_Keywordsbutton());
+		getAssgn_Keywordsbutton().waitAndClick(5);
+		bc.waitForElementCollection(getCheckedKeywordList());
+		listOfKeywords = bc.availableListofElements(getCheckedKeywordList());
+		getAssgn_Keywordokbutton().waitAndClick(5);
+		if (bc.getYesBtn().isElementAvailable(10)) {
+			bc.getYesBtn().waitAndClick(5);
+		}
+		return listOfKeywords;
 	}
 
 }
