@@ -3007,6 +3007,7 @@ public class DocExplorerPage {
 			driver.waitForPageToBeReady();
 			int docsCount=getDocumentCountFromListView();
 			String fieldValue=getDocExpFieldValues(familyValues[j]).GetAttribute("data-content");
+			System.out.println("field Value:" +fieldValue);
 			if(docsCount>0 && fieldValue.equalsIgnoreCase(values[j])){
 				bc.passedStep(values[j]+" family field values displayed correctly");
 			}
