@@ -317,6 +317,7 @@ public class Dashboard {
 			base.waitForElement(dashboardWidgetIcon());
 			dashboardWidgetIcon().waitAndClick(10);
 			selectProjectName(Input.projectName).ScrollTo();
+			base.waitTime(2);
 			base.waitForElement(btndeleteWidgetInDashboard());
 			btndeleteWidgetInDashboard().waitAndClick(10);
 

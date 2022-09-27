@@ -2464,7 +2464,7 @@ public class BaseClass {
 			String failMessage) {
 		System.out.println("Source String  : " + sourceList);
 		System.out.println("Compare String  : " + compreList);
-		
+
 		stepInfo("Source String  : " + sourceList);
 		stepInfo("Compare String  : " + compreList);
 
@@ -4445,7 +4445,7 @@ public class BaseClass {
 				"" + ActualString + " not displayed");
 
 	}
-	
+
 	/**
 	 * @Author jeevitha
 	 * @Description : compare list via contains & trim Space
@@ -4457,10 +4457,10 @@ public class BaseClass {
 		boolean flag = false;
 
 		for (int i = 0; i < baseList.size(); i++) {
-			
-			String source=baseList.get(i).trim().replace(" ", "");
-			String compare=compareList.get(i).trim().replace(" ", "");
-			
+
+			String source = baseList.get(i).trim().replace(" ", "");
+			String compare = compareList.get(i).trim().replace(" ", "");
+
 			System.out.println("Source : " + source);
 			System.out.println("Compare : " + compare);
 
@@ -4474,7 +4474,7 @@ public class BaseClass {
 		}
 		return flag;
 	}
-	
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 * @param web element
@@ -4489,7 +4489,7 @@ public class BaseClass {
 		stepInfo("moves hover to the elemet and get tool tip message");
 		return ele.GetAttribute("title");
 	}
-	
+
 	/**
 	 * @author Indium Raghuram Description : Date:09/26/21 Modified date: N/A
 	 *         Modified by: N/A
@@ -4502,26 +4502,48 @@ public class BaseClass {
 		}
 	}
 
-
 	/**
 	 * @author sowndarya.velraj
 	 * @Description hover on the element and get the tool tip message of the element
 	 */
-	public void verifyMegaPhoneIconAndBackgroundTasks(boolean bullHorn,boolean viewAll) {
+	public void verifyMegaPhoneIconAndBackgroundTasks(boolean bullHorn, boolean viewAll) {
 		if (bullHorn) {
 			waitForElement(getBullHornIcon());
-	        getBullHornIcon().waitAndClick(10);
-		}
-		
-        if (viewAll) {
-        	 waitForElement(getBckTask_SelectAll());
-             getBckTask_SelectAll().waitAndClick(20);
+			getBullHornIcon().waitAndClick(10);
 		}
 
-       // verify Background Task page
-        String url = driver.getUrl();
-        String expURL = Input.url + "Background/BackgroundTask";
-        softAssertion.assertEquals(expURL, url);
-        stepInfo("Navigated to My backgroud task page.");
+		if (viewAll) {
+			waitForElement(getBckTask_SelectAll());
+			getBckTask_SelectAll().waitAndClick(20);
+		}
+
+		// verify Background Task page
+		String url = driver.getUrl();
+		String expURL = Input.url + "Background/BackgroundTask";
+		softAssertion.assertEquals(expURL, url);
+		stepInfo("Navigated to My backgroud task page.");
+	}
+
+	/**
+	 * @author Jeevitha
+	 */
+	public void compareListWithOnlyOneString(List<String> source, String compareString, String passMsg, String failMsg)
+			throws InterruptedException {
+		boolean compare = false;
+		for (String actualValue : source) {
+			if (actualValue.equalsIgnoreCase(compareString)) {
+				compare = true;
+				break;
+			} else {
+				compare = false;
+
+			}
+		}
+		if (compare) {
+			passedStep(passMsg);
+		} else {
+			failedStep(failMsg);
+		}
+
 	}
 }
