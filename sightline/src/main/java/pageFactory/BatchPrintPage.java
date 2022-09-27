@@ -2719,7 +2719,7 @@ public class BatchPrintPage {
 
 	/**
 	 * @authorJeevitha
-	 * @Description  : clcik back button and verify current and navigated tab
+	 * @Description : clcik back button and verify current and navigated tab
 	 * @param elementName
 	 */
 	public void ClickBackButtonAndVerify(boolean verifyCurrentPage, String expectCurrentTab, int noOfTime,
@@ -2752,5 +2752,15 @@ public class BatchPrintPage {
 		}
 	}
 
-	
+	/**
+	 * @Author jeevitha
+	 * @Description : verify current tab
+	 */
+	public void verifyCurrentTab(String expectCurrentTab) {
+		base.waitForElement(getPageHeader());
+		String Header = getPageHeader().getText();
+		base.compareTextViaContains(Header, expectCurrentTab, "Current Tab is as Expected : " + Header,
+				"Current tab is not as expected");
+	}
+
 }

@@ -67,10 +67,7 @@ public class BatchPrintRegression_22 {
 
 	@DataProvider(name = "Users")
 	public Object[][] Users() {
-		Object[][] users = {
-				{ Input.pa1userName, Input.pa1password },
-				{ Input.rmu1userName, Input.rmu1password },
-		};
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, };
 		return users;
 	}
 
@@ -184,7 +181,8 @@ public class BatchPrintRegression_22 {
 	 * @throws AWTException
 	 */
 	@Test(description = "RPMXCON-47835", dataProvider = "Users", enabled = true, groups = { "regression" })
-	public void verifyPdfFileGeneratedInDescOrder(String username, String password) throws InterruptedException, IOException, AWTException {
+	public void verifyPdfFileGeneratedInDescOrder(String username, String password)
+			throws InterruptedException, IOException, AWTException {
 		String Tag = "TAG" + Utility.dynamicNameAppender();
 		DocListPage doclist = new DocListPage(driver);
 
@@ -199,7 +197,7 @@ public class BatchPrintRegression_22 {
 		session.basicContentSearch(Input.searchStringStar);
 		session.ViewInDocList();
 
-		//Sort in Docfilename in Desc Order 
+		// Sort in Docfilename in Desc Order
 		driver.waitForPageToBeReady();
 		doclist.verifyAndAddColumn(Input.docFileName);
 		driver.waitForPageToBeReady();
@@ -255,6 +253,141 @@ public class BatchPrintRegression_22 {
 				"Sorting is not as Expected", "Pass");
 
 		loginPage.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify PDF file should be generated with the production
+	 *              slipsheet fields for the production set with DocID as export
+	 *              file name [RPMXCON-47850]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-47850", dataProvider = "Users", enabled = true, groups = { "regression" })
+	public void verifyPdfFileGenerated(String username, String password)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+		DocListPage doclist = new DocListPage(driver);
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47850 Batch Print");
+		baseClass.stepInfo(
+				"Verify PDF file should be generated with the production slipsheet fields for the production set with DocID as export file name");
+
+		// configure query & view in doclist
+		session.basicContentSearch(Input.testData1);
+		session.ViewInDocList();
+
+		// Sort in Docfilename in Desc Order
+		driver.waitForPageToBeReady();
+		doclist.verifyAndAddColumn(Input.documentKey);
+		driver.waitForPageToBeReady();
+		doclist.sortColumn(true, Input.documentKey, false);
+		doclist.selectAllDocs();
+
+		// expected Downloaded Document Names list ,Desc Order of Docfilename
+		int index = baseClass.getIndex(doclist.getColumnHeader(), Input.documentKey);
+		baseClass.waitForElementCollection(doclist.GetColumnData(index));
+		List<String> actualdocIdList = doclist.availableListofElementsForDocList(doclist.GetColumnData(index));
+
+		// bulk tag selected docs
+		doclist.addNewBulkTag(Tag);
+
+		// Remove not downloadable Docid's from list
+		List<String> docIdList = doclist.addDocsToListOfOnlyDownloadableFormat(actualdocIdList);
+
+		// Select TAG & Native
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+		batchPrint.navigateToNextPage(1);
+
+		// Filling Export File Name as 'DocID', select Sort by 'DocFileName'
+		batchPrint.selectSortingFromExportPage("DESC");
+		batchPrint.fillingExportFormatPage(Input.documentKey, Input.documentKey, false, 20);
+
+		// Download Batch Print File
+		String fileName = batchPrint.DownloadBatchPrintFile();
+
+		// extract zip file
+		String extractedFile = batchPrint.extractFile(fileName);
+
+		// verify Downloaded File Count ,filename and Format
+		List<String> actualFileName = batchPrint
+				.verifyDownloadedFileCountAndFormat(Input.fileDownloadLocation + "\\" + extractedFile);
+
+		// verify DocId DESC Sorting order of Downloaded File is As Expected
+		boolean result = baseClass.compareListViaContainsTrimSpace(actualFileName, docIdList);
+		baseClass.printResutInReport(result, "Downloaded FileNames Sorted as per LastSaveDate DESC order ",
+				"Sorting is not as Expected", "Pass");
+
+		loginPage.logout();
+	}
+
+	@DataProvider(name = "UsersToImp")
+	public Object[][] UsersToImp() {
+		Object[][] UsersToImp = { { Input.sa1userName, Input.sa1password, "SA", "PA" },
+				{ Input.sa1userName, Input.sa1password, "SA", "RMU" },
+				{ Input.pa1userName, Input.pa1password, "PA", "RMU" } };
+		return UsersToImp;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify after impersonation user can go to the Branding and
+	 *              Redactions tab [RPMXCON-47465]
+	 * @throws IOException
+	 * @throws AWTException
+	 */
+	@Test(description = "RPMXCON-47465", dataProvider = "UsersToImp", enabled = true, groups = { "regression" })
+	public void verifyBrandingTabAfterImp(String username, String password, String role, String roleToImp)
+			throws InterruptedException, IOException, AWTException {
+		String Tag = "TAG" + Utility.dynamicNameAppender();
+
+		// Login As User
+		loginPage.loginToSightLine(username, password);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47465 Batch Print");
+		baseClass.stepInfo("Verify after impersonation user can go to the Branding and Redactions tab");
+
+		// Impersonate to PA
+		baseClass.rolesToImp(role, roleToImp);
+
+		// configure query & view in doclist
+		session.basicContentSearch(Input.testData1);
+		session.bulkTag(Tag);
+
+		// Select TAG & Native
+		batchPrint.navigateToBatchPrintPage();
+		batchPrint.fillingSourceSelectionTab(Input.tag, Tag, true);
+		batchPrint.fillingBasisForPrinting(true, true, null);
+		batchPrint.navigateToNextPage(1);
+		batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+		// filling SlipSheet With metadata
+		batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+
+		//verify current tab
+		batchPrint.verifyCurrentTab("Branding");
+		
+		//verify Warning msg is not displayed
+		driver.waitForPageToBeReady();
+		baseClass.ValidateElement_Absence(baseClass.getWarningsMsgHeader(), "Warning Message is not Displayed");
+		
+		//verify navigation to export page
+		batchPrint.navigateToNextPage(1);
+		batchPrint.verifyCurrentTab("Export Format");
+
+		//logout
+		loginPage.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)
