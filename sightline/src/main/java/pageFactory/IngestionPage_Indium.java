@@ -141,258 +141,6 @@ public class IngestionPage_Indium {
 		return driver.FindElementById("AddButton");
 	}
 
-	public Element getMappingSOURCEFIELD2() {
-		return driver.FindElementById("SF_2");
-	}
-
-	public Element getMappingSOURCEFIELD3() {
-		return driver.FindElementById("SF_3");
-	}
-
-	public Element getMappingSOURCEFIELD4() {
-		return driver.FindElementById("SF_4");
-	}
-
-	public Element getMappingSOURCEFIELD5() {
-		return driver.FindElementById("SF_5");
-	}
-
-	public Element getMappingSOURCEFIELD6() {
-		return driver.FindElementById("SF_6");
-	}
-
-	public Element getMappingSOURCEFIELD7() {
-		return driver.FindElementById("SF_7");
-	}
-
-	public Element getMappingSOURCEFIELD8() {
-		return driver.FindElementById("SF_8");
-	}
-
-	public Element getMappingSOURCEFIELD9() {
-		return driver.FindElementById("SF_9");
-	}
-
-	public Element getMappingSOURCEFIELD10() {
-		return driver.FindElementById("SF_10");
-	}
-
-	public Element getMappingSOURCEFIELD11() {
-		return driver.FindElementById("SF_11");
-	}
-
-	public Element getMappingSOURCEFIELD13() {
-		return driver.FindElementById("SF_13");
-	}
-
-	public Element getMappingSOURCEFIELD14() {
-		return driver.FindElementById("SF_14");
-	}
-
-	public Element getMappingSOURCEFIELD73() {
-		return driver.FindElementById("SF_73");
-	}
-
-	public Element getMappingSOURCEFIELD75() {
-		return driver.FindElementById("SF_75");
-	}
-
-	public Element getMappingSOURCEFIELD76() {
-		return driver.FindElementById("SF_76");
-	}
-
-	public Element getMappingFIELDCAT2() {
-		return driver.FindElementById("TY_2");
-	}
-
-	public Element getMappingFIELDCAT5() {
-		return driver.FindElementById("TY_5");
-	}
-
-	public Element getMappingFIELDCAT6() {
-		return driver.FindElementById("TY_6");
-	}
-
-	public Element getMappingFIELDCAT7() {
-		return driver.FindElementById("TY_7");
-	}
-
-	public Element getMappingFIELDCAT8() {
-		return driver.FindElementById("TY_8");
-	}
-
-	public Element getMappingFIELDCAT9() {
-		return driver.FindElementById("TY_9");
-	}
-
-	public Element getMappingFIELDCAT10() {
-		return driver.FindElementById("TY_10");
-	}
-
-	public Element getMappingFIELDCAT11() {
-		return driver.FindElementById("TY_11");
-	}
-
-	public Element getMappingFIELDCAT13() {
-		return driver.FindElementById("TY_13");
-	}
-
-	public Element getMappingFIELDCAT14() {
-		return driver.FindElementById("TY_14");
-	}
-
-	public Element getMappingFIELDCAT25() {
-		return driver.FindElementById("TY_25");
-	}
-
-	public Element getMappingFIELDCAT26() {
-		return driver.FindElementById("TY_26");
-	}
-
-	public Element getMappingFIELDCAT27() {
-		return driver.FindElementById("TY_27");
-	}
-
-	public Element getMappingFIELDCAT28() {
-		return driver.FindElementById("TY_28");
-	}
-
-	public Element getMappingFIELDCAT29() {
-		return driver.FindElementById("TY_29");
-	}
-
-	public Element getMappingFIELDCAT31() {
-		return driver.FindElementById("TY_31");
-	}
-
-	public Element getMappingFIELDCAT46() {
-		return driver.FindElementById("TY_46");
-	}
-
-	public Element getMappingFIELDCAT49() {
-		return driver.FindElementById("TY_49");
-	}
-
-	public Element getMappingFIELDCAT50() {
-		return driver.FindElementById("TY_50");
-	}
-
-	public Element getMappingFIELDCAT51() {
-		return driver.FindElementById("TY_51");
-	}
-
-	public Element getMappingFIELDCAT73() {
-		return driver.FindElementById("TY_73");
-	}
-
-	public Element getMappingFIELDCAT75() {
-		return driver.FindElementById("TY_75");
-	}
-
-	public Element getMappingFIELDCAT76() {
-		return driver.FindElementById("TY_76");
-	}
-
-	public Element getMappingDESTINATIONFIELD2() {
-		return driver.FindElementById("DF_2");
-	}
-
-	public Element getMappingDESTINATIONFIELD3() {
-		return driver.FindElementById("DF_3");
-	}
-
-	public Element getMappingDESTINATIONFIELD4() {
-		return driver.FindElementById("DF_4");
-	}
-
-	public Element getMappingDESTINATIONFIELD5() {
-		return driver.FindElementById("DF_5");
-	}
-
-	public Element getMappingDESTINATIONFIELD6() {
-		return driver.FindElementById("DF_6");
-	}
-
-	public Element getMappingDESTINATIONFIELD7() {
-		return driver.FindElementById("DF_7");
-	}
-
-	public Element getMappingDESTINATIONFIELD8() {
-		return driver.FindElementById("DF_8");
-	}
-
-	public Element getMappingDESTINATIONFIELD9() {
-		return driver.FindElementById("DF_9");
-	}
-
-	public Element getMappingDESTINATIONFIELD10() {
-		return driver.FindElementById("DF_10");
-	}
-
-	public Element getMappingDESTINATIONFIELD11() {
-		return driver.FindElementById("DF_11");
-	}
-
-	public Element getMappingDESTINATIONFIELD13() {
-		return driver.FindElementById("DF_13");
-	}
-
-	public Element getMappingDESTINATIONFIELD14() {
-		return driver.FindElementById("DF_14");
-	}
-
-	public Element getMappingDESTINATIONFIELD25() {
-		return driver.FindElementById("DF_25");
-	}
-
-	public Element getMappingDESTINATIONFIELD26() {
-		return driver.FindElementById("DF_26");
-	}
-
-	public Element getMappingDESTINATIONFIELD27() {
-		return driver.FindElementById("DF_27");
-	}
-
-	public Element getMappingDESTINATIONFIELD28() {
-		return driver.FindElementById("DF_28");
-	}
-
-	public Element getMappingDESTINATIONFIELD29() {
-		return driver.FindElementById("DF_29");
-	}
-
-	public Element getMappingDESTINATIONFIELD31() {
-		return driver.FindElementById("DF_31");
-	}
-
-	public Element getMappingDESTINATIONFIELD46() {
-		return driver.FindElementById("DF_46");
-	}
-
-	public Element getMappingDESTINATIONFIELD49() {
-		return driver.FindElementById("DF_49");
-	}
-
-	public Element getMappingDESTINATIONFIELD50() {
-		return driver.FindElementById("DF_50");
-	}
-
-	public Element getMappingDESTINATIONFIELD51() {
-		return driver.FindElementById("DF_51");
-	}
-
-	public Element getMappingDESTINATIONFIELD73() {
-		return driver.FindElementById("DF_73");
-	}
-
-	public Element getMappingDESTINATIONFIELD75() {
-		return driver.FindElementById("DF_75");
-	}
-
-	public Element getMappingDESTINATIONFIELD76() {
-		return driver.FindElementById("DF_76");
-	}
-
 	public Element getPreviewRun() {
 		return driver.FindElementById("PreviewRun");
 	}
@@ -1261,18 +1009,18 @@ public class IngestionPage_Indium {
 	 }
 	 
 	 public Element getMappingSourceField(int row) {
-			return driver.FindElementById("SF_"+row+"");
+			return driver.FindElementById("SF_"+row);
 		}
 		
 		public Element getMappingCategoryField(int row) {
-			return driver.FindElementById("TY_"+row+"");
+			return driver.FindElementById("TY_"+row);
 		}
 		public Element getMappingDestinationField(int row) {
-			return driver.FindElementById("DF_"+row+"");
+			return driver.FindElementById("DF_"+row);
 		}
 		public Element indexTableDataValue(String term, int row) {
 			return driver.FindElementByXPath("//*[@id='Indexingblock']//table//td[contains(text(),'" + term
-					+ "')]/following-sibling::td['" + row + "']");
+					+ "')]/following-sibling::td[" + row + "]");
 		}
 	public Element sourceLocationMandatoryError() {
 		return driver.FindElementById("ddlServerLocation-error");
@@ -1620,282 +1368,282 @@ public class IngestionPage_Indium {
 				base.passedStep("Clicked on OK button to continue without text files");
 			}
 
-			base.waitForElement(getMappingSOURCEFIELD2());
+			base.waitForElement(getMappingSourceField(2));
 			if (dataset.contains("Collection1K_Tally")) {
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 			}
 
 			else if (dataset.contains("20Family_20Threaded")) {
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT9());
-				getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+				base.waitForElement(getMappingCategoryField(9));
+				getMappingCategoryField(9).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(9).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
-				base.waitForElement(getMappingFIELDCAT10());
-				getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(10));
+				getMappingCategoryField(10).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(10).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-				base.waitForElement(getMappingFIELDCAT13());
-				getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(13));
+				getMappingCategoryField(13).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(13).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("FAMILY");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("FamilyRelationship");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT29());
-				getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(29));
+				getMappingCategoryField(29).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(29).selectFromDropdown().selectByVisibleText("DocFileType");
 
-				base.waitForElement(getMappingFIELDCAT31());
-				getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+				base.waitForElement(getMappingCategoryField(31));
+				getMappingCategoryField(31).selectFromDropdown().selectByVisibleText("FAMILY");
+				getMappingDestinationField(31).selectFromDropdown().selectByVisibleText("FamilyID");
 
-				base.waitForElement(getMappingFIELDCAT49());
-				getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+				base.waitForElement(getMappingCategoryField(49));
+				getMappingCategoryField(49).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(49).selectFromDropdown().selectByVisibleText("EmailReceivedDate");
 
-				base.waitForElement(getMappingFIELDCAT51());
-				getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(51));
+				getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 			}
 
 			else if (dataset.contains("AllSources")) {
 
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 			}
 
 			else if (dataset.contains("0002_H13696_1_Latest")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DOCID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DOCID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DOCID");
 			} else if (dataset.contains("16JanMultiPTIFF")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
 			}
 
 			else if (dataset.contains("27MarSinglePageTIFF")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-				getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-				getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
+				getMappingSourceField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+				getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
 			}
 
 			else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BatesNumber");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DataSource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
 
 			}
 
 			else if (dataset.contains("SSAudioSpeech_Transcript")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 			}
 
 			else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DocID");
 
-				base.waitForElement(getMappingFIELDCAT5());
-				getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-				getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-				getAddButton().waitAndClick(15);
-				base.waitTime(2);
-
-				base.waitForElement(getMappingFIELDCAT6());
-				getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-				getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(5));
+				getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+				getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
 				getAddButton().waitAndClick(15);
 				base.waitTime(2);
 
-				base.waitForElement(getMappingFIELDCAT7());
-				getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-				getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(6));
+				getMappingSourceField(6).selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+				getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
 				getAddButton().waitAndClick(15);
 				base.waitTime(2);
 
-				base.waitForElement(getMappingFIELDCAT8());
-				getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-				getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(7));
+				getMappingSourceField(7).selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+				getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+				getAddButton().waitAndClick(15);
+				base.waitTime(2);
+
+				base.waitForElement(getMappingCategoryField(8));
+				getMappingSourceField(8).selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+				getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 			}
 
 			else if (dataset.contains("GNon searchable PDF Load file")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 			}
 
 			else if (dataset.contains("HiddenProperties_IngestionData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 			}
 
 			else if (dataset.contains("UniCodeFiles")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 			}
 
 			else if (dataset.contains("IngestionEmailData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocumentID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocumentID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustID");
 
-				base.waitForElement(getMappingFIELDCAT76());
-				getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(76));
+				getMappingCategoryField(76).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(76).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT73());
-				getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(73));
+				getMappingCategoryField(73).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(73).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT75());
-				getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(75));
+				getMappingCategoryField(75).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(75).selectFromDropdown().selectByVisibleText("DocFileType");
 			} else if (dataset.contains("CJK_GermanAudioTestData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 			} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 			}
 			clickOnPreviewAndRunButton();
@@ -3114,282 +2862,282 @@ public class IngestionPage_Indium {
 			base.passedStep("Clicked on OK button to continue without text files");
 		}
 
-		base.waitForElement(getMappingSOURCEFIELD2());
+		base.waitForElement(getMappingSourceField(2));
 		if (dataset.contains("Collection1K_Tally")) {
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		else if (dataset.contains("20Family_20Threaded")) {
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT9());
-			getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			base.waitForElement(getMappingCategoryField(9));
+			getMappingCategoryField(9).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(9).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
-			base.waitForElement(getMappingFIELDCAT10());
-			getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(10));
+			getMappingCategoryField(10).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(10).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-			base.waitForElement(getMappingFIELDCAT13());
-			getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(13));
+			getMappingCategoryField(13).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(13).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("FamilyRelationship");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT29());
-			getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(29));
+			getMappingCategoryField(29).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(29).selectFromDropdown().selectByVisibleText("DocFileType");
 
-			base.waitForElement(getMappingFIELDCAT31());
-			getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+			base.waitForElement(getMappingCategoryField(31));
+			getMappingCategoryField(31).selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDestinationField(31).selectFromDropdown().selectByVisibleText("FamilyID");
 
-			base.waitForElement(getMappingFIELDCAT49());
-			getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+			base.waitForElement(getMappingCategoryField(49));
+			getMappingCategoryField(49).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(49).selectFromDropdown().selectByVisibleText("EmailReceivedDate");
 
-			base.waitForElement(getMappingFIELDCAT51());
-			getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(51));
+			getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
 
 		else if (dataset.contains("AllSources")) {
 
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		else if (dataset.contains("0002_H13696_1_Latest")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DOCID");
 		} else if (dataset.contains("16JanMultiPTIFF")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
 		}
 
 		else if (dataset.contains("27MarSinglePageTIFF")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
+			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
 		}
 
 		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BatesNumber");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DataSource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
 
 		}
 
 		else if (dataset.contains("SSAudioSpeech_Transcript")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		}
 
 		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DocID");
 
-			base.waitForElement(getMappingFIELDCAT5());
-			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-			getAddButton().waitAndClick(15);
-			base.waitTime(2);
-
-			base.waitForElement(getMappingFIELDCAT6());
-			getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(5));
+			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
 			getAddButton().waitAndClick(15);
 			base.waitTime(2);
 
-			base.waitForElement(getMappingFIELDCAT7());
-			getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(6));
+			getMappingSourceField(6).selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+			getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
 			getAddButton().waitAndClick(15);
 			base.waitTime(2);
 
-			base.waitForElement(getMappingFIELDCAT8());
-			getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-			getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(7));
+			getMappingSourceField(7).selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+			getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			getAddButton().waitAndClick(15);
+			base.waitTime(2);
+
+			base.waitForElement(getMappingCategoryField(8));
+			getMappingSourceField(8).selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+			getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
 
 		else if (dataset.contains("GNon searchable PDF Load file")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
 
 		else if (dataset.contains("HiddenProperties_IngestionData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
 
 		else if (dataset.contains("UniCodeFiles")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
 
 		else if (dataset.contains("IngestionEmailData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustID");
 
-			base.waitForElement(getMappingFIELDCAT76());
-			getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(76));
+			getMappingCategoryField(76).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(76).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT73());
-			getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(73));
+			getMappingCategoryField(73).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(73).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT75());
-			getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(75));
+			getMappingCategoryField(75).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(75).selectFromDropdown().selectByVisibleText("DocFileType");
 		} else if (dataset.contains("CJK_GermanAudioTestData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		driver.scrollPageToTop();
@@ -3638,292 +3386,292 @@ public class IngestionPage_Indium {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getMappingSOURCEFIELD2().Visible();
+				return getMappingSourceField(2).Visible();
 			}
 		}), Input.wait30);
 
 		if (dataset.contains("Collection1K_Tally")) {
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		else if (dataset.contains("20Family_20Threaded")) {
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT9());
-			getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			base.waitForElement(getMappingCategoryField(9));
+			getMappingCategoryField(9).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(9).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
-			base.waitForElement(getMappingFIELDCAT10());
-			getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(10));
+			getMappingCategoryField(10).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(10).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-			base.waitForElement(getMappingFIELDCAT13());
-			getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(13));
+			getMappingCategoryField(13).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(13).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("FamilyRelationship");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT29());
-			getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(29));
+			getMappingCategoryField(29).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(29).selectFromDropdown().selectByVisibleText("DocFileType");
 
-			base.waitForElement(getMappingFIELDCAT31());
-			getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-			getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+			base.waitForElement(getMappingCategoryField(31));
+			getMappingCategoryField(31).selectFromDropdown().selectByVisibleText("FAMILY");
+			getMappingDestinationField(31).selectFromDropdown().selectByVisibleText("FamilyID");
 
-			base.waitForElement(getMappingFIELDCAT49());
-			getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+			base.waitForElement(getMappingCategoryField(49));
+			getMappingCategoryField(49).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(49).selectFromDropdown().selectByVisibleText("EmailReceivedDate");
 
-			base.waitForElement(getMappingFIELDCAT51());
-			getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(51));
+			getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
 
 		else if (dataset.contains("AllSources")) {
 
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 		}
 
 		else if (dataset.contains("0002_H13696_1_Latest")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DOCID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DOCID");
 		} else if (dataset.contains("16JanMultiPTIFF")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
 		}
 
 		else if (dataset.contains("27MarSinglePageTIFF")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
+			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
 		}
 
 		else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BatesNumber");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DataSource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
 
 		}
 
 		else if (dataset.contains("SSAudioSpeech_Transcript")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		}
 
 		else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DocID");
 
-			base.waitForElement(getMappingFIELDCAT5());
-			getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-			getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-			
-			base.waitTime(2);
-
-			base.waitForElement(getMappingFIELDCAT6());
-			getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-			getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(5));
+			getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+			getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
 			
 			base.waitTime(2);
 
-			base.waitForElement(getMappingFIELDCAT7());
-			getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-			getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(6));
+			getMappingSourceField(6).selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+			getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
 			
 			base.waitTime(2);
 
-			base.waitForElement(getMappingFIELDCAT8());
-			getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-			getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-			getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+			base.waitForElement(getMappingCategoryField(7));
+			getMappingSourceField(7).selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+			getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+			
+			base.waitTime(2);
+
+			base.waitForElement(getMappingCategoryField(8));
+			getMappingSourceField(8).selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+			getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
+			getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 		}
 
 		else if (dataset.contains("GNon searchable PDF Load file")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
 
 		else if (dataset.contains("HiddenProperties_IngestionData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 		}
 
 		else if (dataset.contains("UniCodeFiles")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
 
 		else if (dataset.contains("IngestionEmailData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocumentID");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustID");
 
-			base.waitForElement(getMappingFIELDCAT76());
-			getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(76));
+			getMappingCategoryField(76).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(76).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT73());
-			getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(73));
+			getMappingCategoryField(73).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(73).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT75());
-			getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(75));
+			getMappingCategoryField(75).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(75).selectFromDropdown().selectByVisibleText("DocFileType");
 		} else if (dataset.contains("CJK_GermanAudioTestData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-			base.waitForElement(getMappingFIELDCAT25());
-			getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+			base.waitForElement(getMappingCategoryField(25));
+			getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-			base.waitForElement(getMappingFIELDCAT26());
-			getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+			base.waitForElement(getMappingCategoryField(26));
+			getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-			base.waitForElement(getMappingFIELDCAT27());
-			getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+			base.waitForElement(getMappingCategoryField(27));
+			getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-			base.waitForElement(getMappingFIELDCAT28());
-			getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-			getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+			base.waitForElement(getMappingCategoryField(28));
+			getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+			getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 		} else if (dataset.contains("Tiff_Images")) {
 
-			base.waitForElement(getMappingSOURCEFIELD2());
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			base.waitForElement(getMappingSourceField(2));
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 		}
 
 		driver.scrollPageToTop();
@@ -4910,9 +4658,9 @@ public class IngestionPage_Indium {
 		getPreviewRun().waitAndClick(10);
 		base.VerifyErrorMessage("Please specify a mapping for the mandatory fields.");
 
-		getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Field1);
-		getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Field2);
-		getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(Field3);
+		getMappingSourceField(2).selectFromDropdown().selectByVisibleText(Field1);
+		getMappingSourceField(3).selectFromDropdown().selectByVisibleText(Field2);
+		getMappingSourceField(4).selectFromDropdown().selectByVisibleText(Field3);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -4930,9 +4678,9 @@ public class IngestionPage_Indium {
 
 		goBackButton().waitAndClick(5);
 
-		String mappedParentDocID = getMappingSOURCEFIELD2().selectFromDropdown().getFirstSelectedOption().getText();
-		String mappedDataSource = getMappingSOURCEFIELD3().selectFromDropdown().getFirstSelectedOption().getText();
-		String mappedCustodian = getMappingSOURCEFIELD4().selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedParentDocID = getMappingSourceField(2).selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedDataSource = getMappingSourceField(3).selectFromDropdown().getFirstSelectedOption().getText();
+		String mappedCustodian = getMappingSourceField(4).selectFromDropdown().getFirstSelectedOption().getText();
 
 		if (mappedParentDocID.equalsIgnoreCase(Field1) && mappedDataSource.equalsIgnoreCase(Field2)
 				&& mappedCustodian.equalsIgnoreCase(Field3)) {
@@ -7342,204 +7090,204 @@ public class IngestionPage_Indium {
 			}
 
 			if (ingestionType.contains("Add")) {
-			base.waitForElement(getMappingSOURCEFIELD2());
+			base.waitForElement(getMappingSourceField(2));
 			if (dataset.contains("Collection1K_Tally")) {
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 			}
 
 			else if (dataset.contains("20Family_20Threaded")) {
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdEnd");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdEnd");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT9());
-				getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+				base.waitForElement(getMappingCategoryField(9));
+				getMappingCategoryField(9).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(9).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
-				base.waitForElement(getMappingFIELDCAT10());
-				getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(10));
+				getMappingCategoryField(10).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(10).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
-				base.waitForElement(getMappingFIELDCAT13());
-				getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(13));
+				getMappingCategoryField(13).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(13).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("FamilyRelationship");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("FAMILY");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("FamilyRelationship");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT29());
-				getMappingFIELDCAT29().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD29().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(29));
+				getMappingCategoryField(29).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(29).selectFromDropdown().selectByVisibleText("DocFileType");
 
-				base.waitForElement(getMappingFIELDCAT31());
-				getMappingFIELDCAT31().selectFromDropdown().selectByVisibleText("FAMILY");
-				getMappingDESTINATIONFIELD31().selectFromDropdown().selectByVisibleText("FamilyID");
+				base.waitForElement(getMappingCategoryField(31));
+				getMappingCategoryField(31).selectFromDropdown().selectByVisibleText("FAMILY");
+				getMappingDestinationField(31).selectFromDropdown().selectByVisibleText("FamilyID");
 
-				base.waitForElement(getMappingFIELDCAT49());
-				getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
+				base.waitForElement(getMappingCategoryField(49));
+				getMappingCategoryField(49).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(49).selectFromDropdown().selectByVisibleText("EmailReceivedDate");
 
-				base.waitForElement(getMappingFIELDCAT51());
-				getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(51));
+				getMappingCategoryField(51).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(51).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 			}
 
 			else if (dataset.contains("AllSources")) {
 
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 			}
 			else if(dataset.contains("PP_PDFGen_10Docs")||dataset.contains(Input.AK_NativeFolder)){
 				
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("ProdBeg");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("ProdBeg");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 				
 			}
 
 			else if (dataset.contains("0002_H13696_1_Latest")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DOCID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DOCID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DOCID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DOCID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DOCID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DOCID");
 			} else if (dataset.contains("16JanMultiPTIFF")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
 			}
 
 			else if (dataset.contains("27MarSinglePageTIFF")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("BNum");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CName");
-				getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
-				getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("BNum");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CName");
+				getMappingSourceField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
+				getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("RequirePDFGeneration");
 			}
 
 			else if (dataset.contains("QA_EmailConcatenatedData_SS")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("BatesNumber");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DataSource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustodianName");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("BatesNumber");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DataSource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustodianName");
 
 			}
 
 			else if (dataset.contains("SSAudioSpeech_Transcript")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 			}
 
 			else if (dataset.contains("GD_994_Native_Text_ForProduction")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("DocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("DocID");
 
-				base.waitForElement(getMappingFIELDCAT5());
-				getMappingSOURCEFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-				getMappingFIELDCAT5().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD5().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-
-				getAddButton().waitAndClick(15);
-				base.waitTime(2);
-
-				base.waitForElement(getMappingFIELDCAT6());
-				getMappingSOURCEFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
-				getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(5));
+				getMappingSourceField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+				getMappingCategoryField(5).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(5).selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
 
 				getAddButton().waitAndClick(15);
 				base.waitTime(2);
 
-				base.waitForElement(getMappingFIELDCAT7());
-				getMappingSOURCEFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
-				getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(6));
+				getMappingSourceField(6).selectFromDropdown().selectByVisibleText("EmailBCCNameAndBCCAddress");
+				getMappingCategoryField(6).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(6).selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
 
 				getAddButton().waitAndClick(15);
 				base.waitTime(2);
 
-				base.waitForElement(getMappingFIELDCAT8());
-				getMappingSOURCEFIELD8().selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
-				getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-				getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+				base.waitForElement(getMappingCategoryField(7));
+				getMappingSourceField(7).selectFromDropdown().selectByVisibleText("EmailCCNamAndCCAddress");
+				getMappingCategoryField(7).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(7).selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+
+				getAddButton().waitAndClick(15);
+				base.waitTime(2);
+
+				base.waitForElement(getMappingCategoryField(8));
+				getMappingSourceField(8).selectFromDropdown().selectByVisibleText("EmailToNameAndAddress");
+				getMappingCategoryField(8).selectFromDropdown().selectByVisibleText("EMAIL");
+				getMappingDestinationField(8).selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
 				
 				
 				if(getCloseBtn().isDisplayed()) {
@@ -7555,87 +7303,87 @@ public class IngestionPage_Indium {
 
 			else if (dataset.contains("GNon searchable PDF Load file")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 			}
 
 			else if (dataset.contains("HiddenProperties_IngestionData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("SourceDocID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("SourceDocID");
 			}
 
 			else if (dataset.contains("UniCodeFiles")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 			}
 
 			else if (dataset.contains("IngestionEmailData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocumentID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("DocumentID");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("CustID");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocumentID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("DocumentID");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("CustID");
 
-				base.waitForElement(getMappingFIELDCAT76());
-				getMappingFIELDCAT76().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD76().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(76));
+				getMappingCategoryField(76).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(76).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT73());
-				getMappingFIELDCAT73().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD73().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(73));
+				getMappingCategoryField(73).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(73).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT75());
-				getMappingFIELDCAT75().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD75().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(75));
+				getMappingCategoryField(75).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(75).selectFromDropdown().selectByVisibleText("DocFileType");
 			} else if (dataset.contains("CJK_GermanAudioTestData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 
 			} else if (dataset.contains("CJK_JapaneseAudioTestData")) {
 
-				base.waitForElement(getMappingSOURCEFIELD2());
-				getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText("DocID");
-				getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText("Datasource");
-				getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+				base.waitForElement(getMappingSourceField(2));
+				getMappingSourceField(2).selectFromDropdown().selectByVisibleText("DocID");
+				getMappingSourceField(3).selectFromDropdown().selectByVisibleText("Datasource");
+				getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
-				base.waitForElement(getMappingFIELDCAT25());
-				getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD25().selectFromDropdown().selectByVisibleText("DocFileExtension");
+				base.waitForElement(getMappingCategoryField(25));
+				getMappingCategoryField(25).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(25).selectFromDropdown().selectByVisibleText("DocFileExtension");
 
-				base.waitForElement(getMappingFIELDCAT26());
-				getMappingFIELDCAT26().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD26().selectFromDropdown().selectByVisibleText("DocFileName");
+				base.waitForElement(getMappingCategoryField(26));
+				getMappingCategoryField(26).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(26).selectFromDropdown().selectByVisibleText("DocFileName");
 
-				base.waitForElement(getMappingFIELDCAT27());
-				getMappingFIELDCAT27().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD27().selectFromDropdown().selectByVisibleText("DocFileSize");
+				base.waitForElement(getMappingCategoryField(27));
+				getMappingCategoryField(27).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(27).selectFromDropdown().selectByVisibleText("DocFileSize");
 
-				base.waitForElement(getMappingFIELDCAT28());
-				getMappingFIELDCAT28().selectFromDropdown().selectByVisibleText("DOCBASIC");
-				getMappingDESTINATIONFIELD28().selectFromDropdown().selectByVisibleText("DocFileType");
+				base.waitForElement(getMappingCategoryField(28));
+				getMappingCategoryField(28).selectFromDropdown().selectByVisibleText("DOCBASIC");
+				getMappingDestinationField(28).selectFromDropdown().selectByVisibleText("DocFileType");
 				
 			}
 			}
@@ -8941,9 +8689,9 @@ public class IngestionPage_Indium {
 		public void fillingSourceField() {
 			driver.waitForPageToBeReady();
 			driver.scrollPageToTop();
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.prodBeg);
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(Input.prodBeg);
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText("Custodian");
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText(Input.prodBeg);
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText("Custodian");
 
 		}
 			
@@ -9011,9 +8759,9 @@ public class IngestionPage_Indium {
 		 * @Description map the datafield
 		 */
 		public void ingestionMapping(String map1,String map2,String map3) {
-			getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(map1);
-			getMappingSOURCEFIELD3().selectFromDropdown().selectByVisibleText(map2);
-			getMappingSOURCEFIELD4().selectFromDropdown().selectByVisibleText(map3);
+			getMappingSourceField(2).selectFromDropdown().selectByVisibleText(map1);
+			getMappingSourceField(3).selectFromDropdown().selectByVisibleText(map2);
+			getMappingSourceField(4).selectFromDropdown().selectByVisibleText(map3);
 		}
 		
 		/**
@@ -10569,6 +10317,9 @@ public class IngestionPage_Indium {
 						else if(i==viewLimitCount && data.isEmpty() && !buttonstatus.contains("disable") ) {
 							base.waitForElement(docList.getNextButton());
 							docList.getNextButton().waitAndClick(2);
+						}
+						else if(!docList.getDataInDoclist(i,j).isDisplayed() && buttonstatus.contains("disable")) {
+							base.failedStep("values not displayed");
 						}
 					}
 				}
