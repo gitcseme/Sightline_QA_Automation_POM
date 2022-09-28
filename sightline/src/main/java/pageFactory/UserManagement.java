@@ -916,6 +916,9 @@ public class UserManagement {
 	public Element getPaSecurityGroupDisabled() {
 		return driver.FindElementByXPath("//select[@id='ddlBulkUserSecurityGroup'][@disabled]");
 	}
+	public Element getSameEmailErrorMsg() {
+		return driver.FindElementByXPath("//p[text()='20001000014 : The given user is already a system administrator and cannot be assigned another role.']");
+	}
 
 	public UserManagement(Driver driver) {
 
@@ -4137,4 +4140,60 @@ public class UserManagement {
 		boolean status = bc.getSelectRole(role).isElementAvailable(10);
 		return status;
 	}
+	
+	/**
+	 * @author Baskar
+	 * @Description : Method for creating new user with same email to verify error message
+	 */
+	public void validateErrorMsgForNewUser(String firstName, String lastName, String role, String emailId, String domain,
+			String project) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddUserBtn().Visible();
+			}
+		}), Input.wait30);
+		getAddUserBtn().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFirstName().Visible();
+			}
+		}), Input.wait30);
+		getFirstName().SendKeys(firstName);
+		getLastName().SendKeys(lastName);
+		getSelectRole().selectFromDropdown().selectByVisibleText(role);
+
+		if (role.equalsIgnoreCase("Domain Administrator")) {
+			getSelectDomain().isElementAvailable(10);
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEmail().Exists();
+			}
+		}), Input.wait30);
+		getEmail().SendKeys(emailId);
+//		getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		if (role.equalsIgnoreCase("Project Administrator") || role.equalsIgnoreCase("Review Manager")
+				|| role.equalsIgnoreCase("Reviewer")) {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectProject().Visible();
+				}
+			}), Input.wait30);
+			getSelectProject().Click();
+			getSelectProject(project).Click();
+		}
+
+		if (role.equalsIgnoreCase("Review Manager") || role.equalsIgnoreCase("Reviewer")) {
+			getSecurityDropDown().isElementAvailable(10);
+			getSecurityDropDown().selectFromDropdown().selectByVisibleText("Default Security Group");
+
+		}
+		getSave().waitAndClick(10);
+		String expected="20001000014 : The given user is already a system administrator and cannot be assigned another role.";
+		String actual=getSameEmailErrorMsg().getText();
+		softAssertion.assertEquals(actual, expected);
+		softAssertion.assertAll();
+	}
+
 }
