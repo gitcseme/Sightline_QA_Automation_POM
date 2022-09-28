@@ -823,6 +823,149 @@ public class CodingForm_Regrression_22 {
 	    loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.
+	 */
+	@Test(description = "RPMXCON-54536",enabled = true, groups = { "regression" })
+	public void verifyDefaultActionFeildLogicInTechIssueGroup() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54536");
+	    base.stepInfo("Verify that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		//open cf in edit mode
+		cf.navigateToCodingFormPage();
+		cf.editCodingForm(Input.codingFormName);
+		
+		//expand tech issue group
+		base.waitForElement(cf.getCfObjectHeader("Tech Issue Group"));
+		cf.getCfObjectHeader("Tech Issue Group").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		//verify 
+		soft.assertTrue(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Default Action").isElementAvailable(3));
+		soft.assertTrue(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Field Logic").isElementAvailable(3));
+		soft.assertTrue(cf.getCfObjectHeader("Tech Issue Group").getText().contains("CHECKGROUP"));
+		base.passedStep("CheckGroup's Default Action along with field logic NOT miss in coding form.     For - CheckGroup's  -"
+				+ " Default action and field logic presented as is (Special Objects) when user edit the same Coding Form.");
+		
+	    soft.assertAll();
+	    base.passedStep("Verified that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.");
+	    loginPage.logout();
+	    
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.
+	 */
+	@Test(description = "RPMXCON-54537",enabled = true, groups = { "regression" })
+	public void verifyDefaultActionFeildLogicInTechIssueGroupCheckGroup() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54537");
+	    base.stepInfo("Verify that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//open cf in edit mode
+		cf.navigateToCodingFormPage();
+		cf.editCodingForm(Input.codingFormName);
+		base.stepInfo("coding form open in edit mode");
+		
+		//expand texh issue group
+		driver.waitForPageToBeReady();
+		base.waitForElement(cf.getCfObjectHeader("Tech Issue Group"));
+		cf.getCfObjectHeader("Tech Issue Group").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.stepInfo("Tch Issue group was expanded");
+		
+		//verify default action feild logic values 
+		soft.assertTrue(cf.getCfObjectHeader("Tech Issue Group").getText().contains("CHECKGROUP"));
+		soft.assertEquals(cf.getCfObjectDefaultActionLabelInput("Tech Issue Group", "Error Message").GetAttribute("value"),
+				"If the document has a technical issue and cannot be reviewed, you must select a reason why from this list above");
+		soft.assertEquals(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Default Action").selectFromDropdown().getFirstSelectedOption().getText(), Input.hidden);
+		soft.assertEquals(cf.getCfObjectFeildLogicDropDrownByIndex("Tech Issue Group", 2).selectFromDropdown().getFirstSelectedOption().getText(), Input.select);
+		soft.assertEquals(cf.getCfObjectFeildLogicDropDrownByIndex("Tech Issue Group", 3).selectFromDropdown().getFirstSelectedOption().getText(), Input.thisRequired);
+		base.passedStep("As per Attachment - CF for Special Objects (Check Group) should saved with default action and field logic.");
+		
+	    soft.assertAll();
+	    base.passedStep("Verified that default action and field logic presented as is (Special Objects - Check Group) when user edit the same Coding Form.");
+	    loginPage.logout();
+	    
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description : Verify that Preview displays correctly and properly for Tag/Comments/Metadata objects 
+	 * along with Check/Radio Group and Radio Item on coding form screen
+	 */
+	@Test(description = "RPMXCON-54061",enabled = true, groups = { "regression" })
+	public void verifyPreviewDisplaysCorrecly() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54061");
+	    base.stepInfo("Verify that Preview displays correctly and properly for Tag/Comments/Metadata"
+	    		+ " objects along with Check/Radio Group and Radio Item on coding form screen");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//EXECUTE SHARED STEPS IN TC#2547 
+		 cf.addCodingFormName(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.tag);
+		 cf.firstCheckBox(Input.comments);
+		 cf.firstCheckBox(Input.metaData);
+		 cf.specialObjectsBox(Input.staticText);
+		 cf.specialObjectsBox(Input.radioGroup);
+		 cf.specialObjectsBox(Input.checkGroup);
+		 cf.addcodingFormAddButton();
+		 
+		 //enter details
+		 cf.getCF_TagTypes(0).selectFromDropdown().selectByVisibleText("Check Item");
+		 cf.selectDefaultActions(0, Input.hidden);
+		 cf.selectDefaultActions(1, Input.required);
+		 cf.selectDefaultActions(2, Input.optional);
+		 cf.enterErrorAndHelpMsg(2, "Yes", Input.errorMsg, Input.helpText);
+		 cf.selectDefaultActions(4, Input.hidden);
+		 cf.selectDefaultActions(5, Input.notSelectable);
+		 cf.saveCodingForm();
+		 
+		 //edit codingform
+		 cf.editCodingForm(cfName);
+		 cf.clickPreviewButon();
+		 
+		 //verify
+		 soft.assertTrue(cf.getPreviewComment().isElementAvailable(3));
+		 soft.assertTrue(cf.getPreviewMetaData().isElementAvailable(3));
+		 base.passedStep("Preview displayed correctly and properly");
+		 
+	    //delete created cf
+	    cf.deleteCodingForm(cfName,cfName);
+	    
+	    soft.assertAll();
+	    base.passedStep("Verified that Preview displays correctly and properly for Tag/Comments/Metadata "
+	    		+ "objects along with Check/Radio Group and Radio Item on coding form screen");
+	    loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

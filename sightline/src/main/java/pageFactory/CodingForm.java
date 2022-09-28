@@ -1622,6 +1622,26 @@ public class CodingForm {
 			return driver.FindElementByXPath("//td[@id='td_TAG_2']//span");
 		}
 	
+		//add by Aathith
+		public Element getCfObjectHeader(String objectName) {
+			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/..");
+		}
+		
+		public Element getCfObjectDefaultActionLabelDropDrown(String objectName, String label) {
+			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/../../..//label[text()='"+label+"']/..//select");
+		}
+		
+		public Element getCfObjectDefaultActionLabelInput(String objectName, String label) {
+			return driver.FindElementByXPath("//span[contains(text(),'"+objectName+"')]/../../..//label[text()='"+label+"']/..//input");
+		}
+		
+		public Element getCfObjectFeildLogicDropDrownByIndex(String objectName, int index) {
+			return driver.FindElementByXPath("(//span[contains(text(),'"+objectName+"')]/../../..//label[text()='Field Logic']/..//select)["+index+"]");
+		}
+		
+		public Element getPopUpCloseBtn() {
+			return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+		}
 	
 	
 	public CodingForm(Driver driver) {
