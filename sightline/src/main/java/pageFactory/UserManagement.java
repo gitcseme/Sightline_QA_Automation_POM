@@ -4145,7 +4145,7 @@ public class UserManagement {
 	 * @author Baskar
 	 * @Description : Method for creating new user with same email to verify error message
 	 */
-	public boolean validateErrorMsgForNewUser(String firstName, String lastName, String role, String emailId, String domain,
+	public void validateErrorMsgForNewUser(String firstName, String lastName, String role, String emailId, String domain,
 			String project) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -4190,8 +4190,10 @@ public class UserManagement {
 
 		}
 		getSave().waitAndClick(10);
-		boolean errorMsg=getSameEmailErrorMsg().isElementAvailable(2);
-        return errorMsg;
+		String expected="20001000014 : The given user is already a system administrator and cannot be assigned another role.";
+		String actual=getSameEmailErrorMsg().getText();
+		softAssertion.assertEquals(actual, expected);
+		softAssertion.assertAll();
 	}
 
 }
