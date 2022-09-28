@@ -24,6 +24,7 @@ import pageFactory.SourceLocationPage;
 import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
+
 public class O365_Regression_21 {
 
 	Driver driver;
@@ -76,8 +77,9 @@ public class O365_Regression_21 {
 	 *              draft
 	 * @throws Exception
 	 */
+	
 	@Test(description = "RPMXCON-60970", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
-	public String verifyUserAbleToSaveCollectionAsDraft(String username, String password, String fullname)
+	public void verifyUserAbleToSaveCollectionAsDraft(String username, String password, String fullname)
 			throws Exception {
 		HashMap<String, String> colllectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -123,7 +125,6 @@ public class O365_Regression_21 {
 
 		// Logout
 		login.logout();
-		return dataName;
 	}
 
 	
