@@ -185,6 +185,10 @@ public class BatchRedactionPage {
 	}
 
 	// added by jeevitha
+	public Element getHistoryEnteries(int index) {
+		return driver.FindElementByXPath("(//table[@id='BatchRedactionsDataTable']//tr//td)[" + index + "]");
+	}
+
 	public ElementCollection HeaderTabsPresentInBR() {
 		return driver.FindElementsByXPath("//div[@class='h1 br-page-title']");
 	}
@@ -3047,4 +3051,19 @@ public class BatchRedactionPage {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : verify Allignment of enteries
+	 */
+	public void verifyAllignmentOfHistoryEnteries() {
+		List<String> headerList = base.availableListofElements(batchRedactionHistoryHeader());
+		for (int i = 1; i <= headerList.size(); i++) {
+			String positionStatus = getHistoryEnteries(i).GetCssValue("vertical-align");
+			String passMsg = " The Position of the values in  " + headerList.get(i - 1)
+					+ " column is in center as expected";
+			String failMsg = " History Enteries position is not as expected";
+
+			base.textCompareEquals(positionStatus, "middle", passMsg, failMsg);
+		}
+	}
 }
