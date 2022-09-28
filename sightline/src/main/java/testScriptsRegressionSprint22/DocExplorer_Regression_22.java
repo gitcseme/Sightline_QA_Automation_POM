@@ -16,8 +16,10 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -233,6 +235,146 @@ public class DocExplorer_Regression_22 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:27/09/2022 RPMXCON-47227
+	 * @throws Exception
+	 * @Description Shared Steps: Doc Explorer Login Screen.
+	 */
+	@Test(description = "RPMXCON-47227", enabled = true, groups = { "regression" })
+	public void verifyDocExplorerLoginScreen() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-47227");
+		baseClass.stepInfo("Shared Steps: Doc Explorer Login Screen.");
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		DomainDashboard domainDash = new DomainDashboard(driver);
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		
+		//verify home page display
+		baseClass.stepInfo("verify RMU Home Page");
+		if (domainDash.getUserHomePage().Displayed()) {
+			baseClass.passedStep("Application Home Page is displayed successfully");
+		} else {
+			baseClass.failedStep("Application Home Page is not displayed ");
+		}
+		//Click Left menu docexplorer icon
+ 		driver.waitForPageToBeReady();
+ 		baseClass.waitForElement(docExplorer.getDocExplorerTab());
+		docExplorer.getDocExplorerTab().waitAndClick(5);
+		if(docExplorer.getPresentDocCount().Displayed()) {
+			baseClass.passedStep("Doc Explorer Page is appeared Successfully");
+		}else {
+			baseClass.failedStep("Doc Explorer Page is not appeared.");
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:27/09/2022 RPMXCON-54627
+	 * @throws Exception
+	 * @Description Verify that user can select all documents from current page from List view, and select action as Bulk Release from Actions drop down to Release documents.
+	 */
+	@Test(description = "RPMXCON-54627", enabled = true, groups = { "regression" })
+	public void verifySlectAllDocsInCurrentpageBulkRelease() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54627");
+		baseClass.stepInfo("Verify that user can select all documents from current page from List view, and select action as Bulk Release from Actions drop down to Release documents.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		sessionSearch = new SessionSearch(driver);
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		SoftAssert softAssert=new SoftAssert(); 
+		DocListPage docList=new DocListPage(driver);
+		
+		//verify DocExplorer  home Page
+		softAssert.assertTrue(docExplorer.getPresentDocCount().isDisplayed());
+		baseClass.passedStep("User is logged in successfully and it is \"Doc Explorer\" page ");
+		 
+		//Select folder In Treeview
+		driver.waitForPageToBeReady();
+		docExplorer.getAllDocumentsCount().waitAndClick(5);
+		baseClass.stepInfo(" Successfully clicked a folder, it show the docs corresponding to that folder in the list view on the right hand side.");
+		
+		//Select All Documents verify popup
+		baseClass.waitForElement(docExplorer.getDocExp_SelectAllDocs());
+		docExplorer.getDocExp_SelectAllDocs().waitAndClick(5);
+		String Actualmsg =docList.getSelectDocsOnAllPages().getText();
+		String expectmsg ="Do you want to make selection across all the pages?";
+		softAssert.assertEquals(Actualmsg, expectmsg);
+		baseClass.passedStep("Message is displayed to select the documents from current page or from all pages 'Cancel' and 'Ok' buttons is displayed");
+		
+		//Click OK btn
+		baseClass.waitForElement(docList.getPopUpOkBtn());
+		docList.getPopUpOkBtn().waitAndClick(5);
+		baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
+		
+		//BulkRelease
+		docExplorer.docExplorerRelease(Input.securityGroup);
+		baseClass.passedStep("Success message is displayed as Success! Records saved successfully and selected documents from current page is released to the selected security group(s)");
+		softAssert.assertAll();
+		loginPage.logout();
+			
+	}
+	
+	/**
+	 * @author Vijaya.Rani ModifyDate:27/09/2022 RPMXCON-54632
+	 * @throws Exception
+	 * @Description Verify that user can select all documents from all pages from List view, and select action as Export Data from Actions drop down to export.
+	 */
+	@Test(description = "RPMXCON-54632", enabled = true, groups = { "regression" })
+	public void verifySlectAllDocsInCurrentpageExportData() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54632");
+		baseClass.stepInfo("Verify that user can select all documents from all pages from List view, and select action as Export Data from Actions drop down to export.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+		
+		sessionSearch = new SessionSearch(driver);
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		SoftAssert softAssert=new SoftAssert(); 
+		DataSets data = new DataSets(driver);
+		DocListPage docList=new DocListPage(driver);
+		
+		//verify DocExplorer  home Page
+		softAssert.assertTrue(docExplorer.getPresentDocCount().isDisplayed());
+		baseClass.passedStep("User is logged in successfully and it is \"Doc Explorer\" page ");
+		 
+		//Select folder In Treeview
+		driver.waitForPageToBeReady();
+		docExplorer.getAllDocumentsCount().waitAndClick(5);
+		baseClass.stepInfo(" Successfully clicked a folder, it show the docs corresponding to that folder in the list view on the right hand side.");
+		
+		//Select All Documents verify popup
+		baseClass.waitForElement(docExplorer.getDocExp_SelectAllDocs());
+		docExplorer.getDocExp_SelectAllDocs().waitAndClick(5);
+		String Actualmsg =docList.getSelectDocsOnAllPages().getText();
+		String expectmsg ="Do you want to make selection across all the pages?";
+		softAssert.assertEquals(Actualmsg, expectmsg);
+		baseClass.passedStep("Message is displayed to select the documents from current page or from all pages 'Cancel' and 'Ok' buttons is displayed");
+		
+		//Click OK btn
+		baseClass.waitForElement(docList.getPopUpOkBtn());
+		docList.getPopUpOkBtn().waitAndClick(5);
+		baseClass.stepInfo("Documents from current page of List view is selected with checkmark for the checkbox");
+		
+		//Export data
+		docExplorer.docExplorerexportData();
+		driver.waitForPageToBeReady();
+		data.getBullHornIcon().waitAndClick(5);
+		String downloadMsg = data.getNotificationMsg().getText();
+		String expected="Your export is ready please click here to download";
+		softAssert.assertEquals(downloadMsg, expected);
+		baseClass.passedStep("Notification is displayed and on click of the same download the file  Make sure that in downloaded file is selected all documents from all pages");
+		softAssert.assertAll();
+		loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

@@ -402,6 +402,125 @@ public class DocViewAudio_Regression1_22 {
 
 	}
 
+	/**
+	 * @author Vijaya.Rani ModifyDate:27/09/2022 RPMXCON-51807
+	 * @throws Exception
+	 * @Description Verify that when document present in different save searches
+	 *              with common term then, should not display repetitive search term
+	 *              on persistent hits panel on completing the document.
+	 */
+	@Test(description = "RPMXCON-51807", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsHitSaveSeachesWithCommonTerm() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51807");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel on completing the document.");
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docviewPage = new DocViewPage(driver);
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
+		List<String> searchTerm = new ArrayList<String>();
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+
+		// Audio search
+		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
+		sessionSearch.viewInDocView();
+		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
+		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
+
+		// Audio search And Save
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+
+		// Added another Audio search and save
+		sessionSearch.addNewSearch();
+		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
+		sessionSearch.addPureHit();
+		sessionSearch.saveSearch(searchName1);
+		// Click on bulkAssign
+		sessionSearch.bulkAssignWithNewAssignmentWithPersistantHit(Asssignment, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+		loginPage.logout();
+
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  REV as with " + Input.rev1userName + "");
+
+		// Assignment Selection and Reviewer
+		assignmentPage.SelectAssignmentByReviewer(Asssignment);
+
+		// Check Display persistant hit - notrepetative
+		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
+		driver.waitForPageToBeReady();
+		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+
+		// Complete the document And Navigate >>
+		docviewPage.editingCodingFormWithCompleteButton();
+		baseClass.waitForElement(docviewPage.getDocView_Last());
+		docviewPage.getDocView_Last().waitAndClick(5);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:27/09/2022 RPMXCON-51794
+	 * @throws Exception
+	 * @Description Verify that when document present in different save searches
+	 *              with common term then, should not display repetitive search term
+	 *              on persistent hits panel from assignment.
+	 */
+	@Test(description = "RPMXCON-51794", enabled = true, groups = { "regression" })
+	public void verifyAudioDocsDifferentSaveSearchWithCommonTerm() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51794");
+		baseClass.stepInfo(
+				"Verify that when document present in different save searches with common term then, should not display repetitive search term on persistent hits panel from assignment.");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		SavedSearch saveSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		String assignmentname = "assgnment1" + Utility.dynamicNameAppender();
+		String searchname = "search1" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Login as in  " + Input.rmu1FullName);
+		sessionsearch.verifyaudioSearchWarning(Input.audioSearchString1, Input.language);
+		sessionsearch.addPureHit();
+		sessionsearch.saveSearch(searchname);
+		saveSearch.SaveSearchToBulkAssign(searchname, assignmentname, Input.codeFormName, SessionSearch.pureHit);
+		loginPage.logout();
+
+		// Login as REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assignmentname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// verifying the audio hits 
+		driver.waitForPageToBeReady();
+		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
+		baseClass.passedStep(
+				"Documents common in both searches term is displayed on the hits panel and icon on the jplayer");
+		loginPage.logout();
+
+	}
 	@DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
