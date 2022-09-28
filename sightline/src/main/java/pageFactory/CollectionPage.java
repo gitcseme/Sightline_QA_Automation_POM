@@ -511,14 +511,14 @@ public class CollectionPage {
 		return driver.FindElementByXPath("//div[text()='" + collectionName + "']//..//..//td[" + index
 				+ "]//div[@class='col-md-5 progressbar-blue-text']");
 	}
-	
+
 	public ElementCollection getCollectionDatas() {
 		return driver.FindElementsByXPath("//table[@id='dtCollectionList']//tr");
 	}
-	
+
 	public Element getBackBtn() {
-        return driver.FindElementByXPath("//a[text()='Back']");
-    }
+		return driver.FindElementByXPath("//a[text()='Back']");
+	}
 
 	public CollectionPage(Driver driver) {
 		this.driver = driver;
@@ -645,6 +645,7 @@ public class CollectionPage {
 
 		} else {
 			base.VerifySuccessMessage("Source Location added successfully");
+			base.CloseSuccessMsgpopup();
 		}
 	}
 
@@ -941,6 +942,7 @@ public class CollectionPage {
 
 		} else if (type.equalsIgnoreCase("Delete")) {
 			getConfirmationBtnAction(action).waitAndClick(5);
+			base.stepInfo("Clicked : " + action);
 			driver.waitForPageToBeReady();
 			base.VerifySuccessMessage(verifyMsg);
 			base.CloseSuccessMsgpopup();

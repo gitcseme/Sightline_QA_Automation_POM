@@ -216,8 +216,8 @@ public class O365Regression_22 {
 	 * @description : Pre-requesties for Collection draft creation
 	 */
 	public HashMap<String, String> verifyUserAbleToSaveCollectionAsDraft(String username, String password, String role,
-			String actionRole, String actionUserName, String actionPassword, String selectedFolder, String additional1,
-			Boolean additional2) throws Exception {
+			String actionRole, String actionUserName, String actionPassword, String selectedFolder,
+			String additional1Status, Boolean additional2) throws Exception {
 
 		HashMap<String, String> colllectionData = new HashMap<>();
 		String collectionEmailId = Input.collectionDataEmailId;
@@ -235,8 +235,7 @@ public class O365Regression_22 {
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
 		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
-				selectedApp, colllectionData, selectedFolder, headerList, expectedCollectionStatus, "Button", 3, true,
-				"");
+				selectedApp, colllectionData, selectedFolder, headerList, additional1Status, "Button", 3, true, "");
 
 		// navigate to Collection page and get the data
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -463,6 +462,240 @@ public class O365Regression_22 {
 		// verify navigated to source selection tab
 		driver.waitForPageToBeReady();
 		collection.verifyCurrentTab("Source Selection");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 09/28/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description :Verify that User can View the status and monitor the progress
+	 *              of collection(s) on \"Manage Screen\" screen. RPMXCON-61639
+	 */
+	@Test(description = "RPMXCON-61639", enabled = true, groups = { "regression" })
+	public void verifyCollectionNameInDSpage() throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61639 - O365");
+		base.stepInfo(
+				"Verify that User can View the status and monitor the progress of collection(s) on \"Manage Screen\" screen");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("Test case Id: RPMXCON-61633 - O365");
+		base.stepInfo("Verify sorting from Manage Collection page");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Collection Draft creation
+		colllectionData = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Execute / Start collection Verifications
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Start Collection").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Collection extraction process started successfully.");
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, true, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+		driver.waitForPageToBeReady();
+
+		// View in datasets page
+		collection.clickViewDataset(collectionName);
+		driver.waitForPageToBeReady();
+
+		// Get collectioname from Dataset page and validate
+		String collectionIdFromDS = base.getSpecifiedTextViaSplit(dataSets.getDataSetNameViaViewDS(), "_", 0);
+		base.textCompareEquals(collectionId, collectionIdFromDS, "CollectionID is displayed on Dataset",
+				"Collection ID mismatch in datasets page");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 09/28/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Delete' action when Collection is in 'Draft' status.
+	 *              RPMXCON-61036
+	 */
+	@Test(description = "RPMXCON-61036", enabled = true, groups = { "regression" })
+	public void verifyDraftStatusCollectionDeletion() throws Exception {
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status", Input.progressBarHeader,
+				"Action" };
+		String expectedCollectionStatus = "Draft";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61036 - O365");
+		base.stepInfo("Verify 'Delete' action when Collection is in 'Draft' status");
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		String collectionId = "";
+
+		base.stepInfo("Test case Id: RPMXCON-61633 - O365");
+		base.stepInfo("Verify sorting from Manage Collection page");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Collection Draft creation
+		colllectionData = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "Draft", false);
+		collectionId = base.returnKey(colllectionData, "", false);
+		collectionName = colllectionData.get(collectionId);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName,
+				expectedCollectionStatus, true, false, "");
+
+		// navigate to Collection page and Deletion
+		base.stepInfo("Initiation collection  deletion");
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Collection Deletion with Action "No"
+		base.stepInfo("Collection Deletion with Action \"No\"");
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Delete").waitAndClick(5);
+		collection.getConfirmationBtnAction("No").waitAndClick(5);
+		base.stepInfo("Clicked No as delete confirmation");
+
+		// verify Collection Presence in Manage collection Screen
+		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(collectionName), 3),
+				collectionName + " is Displayed in Manage Collection Screen",
+				collectionName + " : is not Displayed after applying No as confirmation", "Pass");
+
+		// Collection Deletion with Action "Yes"
+		collection.collectionDeletion(collectionId);
+		driver.waitForPageToBeReady();
+		base.waitTime(3);
+
+		// verify Collection Absence in Manage collection Screen
+		base.printResutInReport(base.ValidateElement_StatusReturn(collection.getCollectionAction(collectionName), 3),
+				collectionName + " deleted Successfully : is not Displayed in Manage Collection Screen",
+				collectionName + " : is Displayed after deleting", "Fail");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify that user can configure the collection with ‘Not
+	 *              automatically initiate processing’ and can move to ‘Next’ step
+	 *              of collection [RPMXCON-60652]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60652", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyUserCanMoveNext(String username, String password, String fullname) throws Exception {
+		String[][] userRolesData = { { username, fullname, "SA" } };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60652 - O365");
+		base.stepInfo(
+				"Verify that user can configure the collection with ‘Not automatically initiate processing’ and can move to ‘Next’ step of collection");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// verify collection page
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+
+		// click created source location & enter collection name
+		collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+
+		// select Do Not auto initiate collection process
+		collection.selectInitiateCollectionOrClickNext(false, true, true);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that User can edit an existing source location from
+	 *              “Source Locations “screen(grid). [RPMXCON-60795]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-60795", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyUserCanEditSrceName(String username, String password, String fullname) throws Exception {
+		String dataname = "AAAutomation" + Utility.dynamicNameAppender();
+		String RenamedDataName = "AARenamed" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-60795 - O365");
+		base.stepInfo("Verify that User can edit an existing source location from “Source Locations “screen(grid).");
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+
+		// Login as User
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Source page
+		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
+
+		// Add new source location on Source Page
+		collection.performAddNewSource(null, dataname, Input.TenantID, Input.ApplicationID, Input.ApplicationKey);
+
+		// Edit Data Source name from popup and save
+		driver.waitForPageToBeReady();
+		source.columnHeader("Data Source Name").waitAndClick(10);
+		source.editSourceLocationDetails(dataname, true, collection.getDataSourceName(), "Data Source Name",
+				RenamedDataName);
+
+		// verify renamed dataname is dispalyed in grid
+		driver.waitForPageToBeReady();
+		source.columnHeader("Data Source Name").waitAndClick(10);
+		source.verifySourceLocationName(RenamedDataName);
+
+		// delete created source location
+		source.deleteSourceLocation(RenamedDataName, false);
 
 		// Logout
 		login.logout();

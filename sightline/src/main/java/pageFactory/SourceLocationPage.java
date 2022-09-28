@@ -77,6 +77,15 @@ public class SourceLocationPage {
 		return driver.FindElementByXPath("//td[text()='" + srceLoc + "']//parent::tr//a[text()='" + actionType + "']");
 	}
 	
+	public Element getSourceLocationPopUp() {
+		return driver.FindElementByXPath("//div[@class='ui-widget-overlay ui-front']");
+	}
+
+	public Element getSrceLocPopup_SaveBtn() {
+		return driver.FindElementByXPath(
+				"//div[@class='ui-widget-overlay ui-front']//preceding::input[@id='btnSaveSourceLocation']");
+	}
+	
 	
 	
 	
@@ -206,6 +215,49 @@ public class SourceLocationPage {
 
 	}
 	
+	/**
+	 * @Author Jeevitha
+	 * @Description : edit any field from source location popup
+	 * @param dataSrcName
+	 * @param edit
+	 * @param editElement
+	 * @param editText
+	 */
+	public void editSourceLocationDetails(String dataSrcName, boolean clickYes, Element editElement, String elementName,
+			String newValue) {
 
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSrcActionBtn(dataSrcName, "Edit"));
+		(getSrcActionBtn(dataSrcName, "Edit")).waitAndClick(10);
+
+		String expectedMsg = "If you change the attributes of this source location, all existing collections configured with this source location will use the modified attributes. Do you wish to continue?";
+
+		base.waitForElement(getDeletePopUpHeader());
+		softassert.assertEquals("Edit Source Location", getDeletePopUpHeader().getText().toString());
+		base.passedStep("Displayed Header is : Edit Source Location");
+
+		base.waitForElement(getDeleteMsg());
+		softassert.assertEquals(expectedMsg, getDeleteMsg().getText().toString());
+		base.passedStep("Displayed message - " + expectedMsg);
+
+		if (clickYes) {
+			getDeleteYesBtn().waitAndClick(10);
+			if (getSourceLocationPopUp().isElementAvailable(10)) {
+				base.stepInfo("Edit Source location Popup is Displayed");
+
+				String beforeEdit = editElement.getText();
+				base.stepInfo(elementName + "value Before Editing is :" + beforeEdit);
+
+				editElement.SendKeys(newValue);
+				base.stepInfo(elementName + " New value is : " + newValue);
+
+				base.waitTillElemetToBeClickable(getSrceLocPopup_SaveBtn());
+				getSrceLocPopup_SaveBtn().waitAndClick(10);
+
+				base.VerifySuccessMessage("Source Location updated successfully");
+				base.CloseSuccessMsgpopup();
+			}
+		}
+	}
 
 }

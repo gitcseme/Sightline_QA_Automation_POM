@@ -4550,4 +4550,26 @@ public class BaseClass {
 		}
 
 	}
+	
+	/**
+	 * @author Raghuram.A
+	 * @param element
+	 * @param splitUsing
+	 * @param reqIndex
+	 * @return
+	 */
+	public String getSpecifiedTextViaSplit(Element element, String splitUsing, int reqIndex) {
+		String textValue, valueToReturn;
+		String[] arrOfStr;
+
+		textValue = element.getText();
+		arrOfStr = textValue.split(splitUsing);
+		for (String a : arrOfStr) {
+			System.out.println(a);
+		}
+		valueToReturn = arrOfStr[reqIndex].toString();
+		System.out.println(valueToReturn);
+
+		return valueToReturn;
+	}
 }

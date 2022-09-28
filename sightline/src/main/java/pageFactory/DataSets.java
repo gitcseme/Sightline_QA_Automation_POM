@@ -180,6 +180,10 @@ public class DataSets {
 	public Element NavigateToDataSets(String componentName) {
 		return driver.FindElementByXPath("//a[@name='" + componentName + "']//i");
 	}
+	
+	public Element getDataSetNameViaViewDS() {
+		return driver.FindElementByXPath("//a[@class='tileTooltipText']//strong");
+	}
 
 	public DataSets(Driver driver) {
 
