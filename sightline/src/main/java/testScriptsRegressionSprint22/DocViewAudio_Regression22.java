@@ -964,6 +964,98 @@ public class DocViewAudio_Regression22 {
 
 		loginPage.logout();
 	}
+	
+
+	@DataProvider(name = "PaRmuRev")
+	public Object[][] PaRmuRev() {
+		Object[][] users = {
+				{ Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date: 29/09/2022 Modified by: Baskar
+	 * Description:Verify user can see the transcript in audio doc view outside of an assignment
+	 * 
+	 */
+
+	@Test(description = "RPMXCON-51123", dataProvider = "PaRmuRev", enabled = true, groups = { "regression" })
+	public void validateTranscriptTabOutSideAssgn(String userName, String password,String fullName) throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51123");
+		baseClass.stepInfo("Verify user can see the transcript in audio doc view outside of an assignment");
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion=new SoftAssert();
+
+		// Login as
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Successfully login as '" + userName + "'");
+
+		// search to docview
+		sessionSearch.MetaDataSearchInBasicSearch("SourceDocID", Input.transcriptId);
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("User navigated to audio docview page outside of assignment");
+
+		// verify transcript tab display
+		baseClass.waitForElement(docViewPage.getTranscriptsTab());
+		boolean flagTans = docViewPage.getTranscriptsTab().isDisplayed();
+		softAssertion.assertTrue(flagTans);
+		baseClass.passedStep("Transcript tab displayed for audio docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * Author : Baskar date: NA Modified date: 29/09/2022 Modified by: Baskar
+	 * Description:Verify user can see the transcript in audio doc view in context of an assignment
+	 * 
+	 */
+
+	@Test(description = "RPMXCON-51124", enabled = true, groups = { "regression" })
+	public void validateTranscriptTabContextAssgn() throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51124");
+		baseClass.stepInfo("Verify user can see the transcript in audio doc view in context of an assignment");
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignPage = new AssignmentsPage(driver);
+		softAssertion=new SoftAssert();
+		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
+
+		// Login as
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as '" + Input.rmu1userName + "'");
+
+		// search to docview
+		sessionSearch.MetaDataSearchInBasicSearch("SourceDocID", Input.transcriptId);
+		sessionSearch.bulkAssign();
+		assignPage.assignmentCreation(Asssignment, Input.codingFormName);
+		assignPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+
+		docViewPage.selectAssignmentfromDashborad(Asssignment);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		
+
+		// verify transcript tab display
+		baseClass.waitForElement(docViewPage.getTranscriptsTab());
+		boolean flagTans = docViewPage.getTranscriptsTab().isDisplayed();
+		softAssertion.assertTrue(flagTans);
+		baseClass.passedStep("Transcript tab displayed for audio docs");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = true;
+	public static boolean mode = false;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -37,6 +37,7 @@ public class Input {
 
 	public static TestData testData;
 	// ConfigMain data---------------------------------------------
+	public static String transcriptId;
 	public static String newProject;
 	public static String ingestion;
 	public static String suite;
@@ -941,6 +942,7 @@ public class Input {
 	public static String filterDataInput1;
 	public static String filterDataInput2;
     public static String filterDataInput3; 
+    public static String transcript;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1927,7 +1929,8 @@ public class Input {
 		filterDataInput1=testData.getFilterDataInput1();
 		filterDataInput2=testData.getFilterDataInput2();
         filterDataInput3=testData.getFilterDataInput3();  
-		System.out.println("*****************************************************");
+        transcriptId=testData.getTranscriptId();
+		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
 		// createproject if configured

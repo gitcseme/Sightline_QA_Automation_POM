@@ -860,6 +860,7 @@ public class TestData {
 	public  String filterDataInput1;
 	public  String filterDataInput2;
     public  String filterDataInput3;
+    public String transcriptId;
 	
 	
 }

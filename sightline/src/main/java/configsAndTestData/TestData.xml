@@ -112,6 +112,7 @@
 	<pdfPathDat>DAT4_STC_09172014_PDF_Native_Path.dat</pdfPathDat>
 	<pdfPathKey>PDFPath</pdfPathKey>
 	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -284,7 +285,7 @@
 	<SinglePageTiffSourceDocID>ID00001483</SinglePageTiffSourceDocID>
 	<DocIdWithTrackChanges>ID00000191</DocIdWithTrackChanges>
 	<DocIdWithComments>ID00000173</DocIdWithComments>
-	<DocIdCopyPaste>ICE001318-2-00000003</DocIdCopyPaste>
+	<DocIdCopyPaste>ID00000215</DocIdCopyPaste>
 	<DocIdCopyPaste1>H16135-0188-003147</DocIdCopyPaste1>
 
 
@@ -876,5 +877,7 @@
 	<filterDataInput1>MS Outlook Message</filterDataInput1>
 	<filterDataInput2>Adobe Acrobat Document</filterDataInput2>
 	<filterDataInput3>enron.com</filterDataInput3>
+	<transcriptId>STC4_00001000</transcriptId>
+	
 
 </TestData>
