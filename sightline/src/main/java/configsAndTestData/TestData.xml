@@ -108,7 +108,10 @@
 	<SourceParentDocId>SourceParentDocID</SourceParentDocId>
 	<overlayDatFile>DAT4_STC_newdateformat1_OverlayCName_MDate.dat</overlayDatFile>
 	<sourceKeyDocId>ID00000204</sourceKeyDocId>
-	
+	<char400Dat>DAT4_STC_09172014_Modified_Value_for_Some_FieldsHema_Fullpath more than 400chars.DAT</char400Dat>
+	<pdfPathDat>DAT4_STC_09172014_PDF_Native_Path.dat</pdfPathDat>
+	<pdfPathKey>PDFPath</pdfPathKey>
+	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>

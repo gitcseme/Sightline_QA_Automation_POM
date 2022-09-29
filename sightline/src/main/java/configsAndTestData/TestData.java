@@ -295,6 +295,10 @@ public class TestData {
 	public String SourceParentDocId;
 	public String overlayDatFile;
 	public String sourceKeyDocId;
+	public String char400Dat;
+	public String pdfPathDat;
+	public String pdfPathKey;
+	public String char400Error;
 	
 
 	// Added by Raghuram - Last Modified 02/24/22

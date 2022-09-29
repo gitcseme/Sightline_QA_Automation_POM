@@ -28,7 +28,7 @@ public class Input {
 	LoginPage lp;
 
 	// Default should be true, Make it false during Development
-	public static boolean mode = false;
+	public static boolean mode = true;
 
 	BaseClass bc;
 	// Config and test data files---------------------------------//
@@ -414,6 +414,10 @@ public class Input {
 	public static String sourceParentDocId;
 	public static String overlayDatFile;
 	public static String sourceKeyDocId;
+	public static String char400Dat;
+	public static String pdfPathDat;
+	public static String pdfPathKey;
+	public static String char400Error;
 
 	// Added by Raghuram - Modified 02/24/22
 	public static String docHighlightColor;
@@ -1375,6 +1379,10 @@ public class Input {
 		sourceParentDocId = testData.getSourceParentDocId();
 		overlayDatFile = testData.getOverlayDatFile();
 		sourceKeyDocId = testData.getSourceKeyDocId();	
+		char400Dat = testData.getChar400Dat();
+		pdfPathDat = testData.getPdfPathDat();
+		pdfPathKey = testData.getPdfPathKey();
+		char400Error = testData.getChar400Error();
 		
 		
 		// Added by Raghuram 02/24/22
