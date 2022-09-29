@@ -967,6 +967,139 @@ public class CodingForm_Regrression_22 {
 	    loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description : Verify that default action and field logic (Special Objects - Check Group) works in the context of a document review in Parent Window
+	 */
+	@Test(description = "RPMXCON-54538",enabled = true, groups = { "regression" })
+	public void verifyCheckGroupInDocView() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54538");
+	    base.stepInfo("Verify that default action and field logic (Special Objects - Check Group) works in the context of a document review in Parent Window");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		sessionSearch = new SessionSearch(driver);
+		docview = new DocViewPage(driver);
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//check default codingform in default
+		cf.selectDefaultProjectCodingForm();
+		
+		//drag and drop query
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.viewInDocView();
+		
+		//verify
+		driver.waitForPageToBeReady();
+		docview.Hot_DocCheckBox().waitAndClick(1);
+		soft.assertFalse(base.text("Processing_Issue").isDisplayed()," progressing_issue");
+		soft.assertFalse(base.text("Processing_Issue").isDisplayed(), "Foreign_Language");
+		base.passedStep("Tech issue group check box is as per default action");
+		
+	    soft.assertAll();
+	    base.passedStep("Verified that default action and field logic (Special Objects - Check Group) works in the context of a document review in Parent Window");
+	    loginPage.logout();
+	    
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that comment label should be allowed to be upto 255 characters in length and should wrap around properly if goes beyond the edge of the box
+	 */
+	@Test(description = "RPMXCON-54522",enabled = true, groups = { "regression" })
+	public void verifyCommentTextWrapProperly() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54522");
+	    base.stepInfo("Verify that comment label should be allowed to be upto 255 characters in length and should wrap around properly if goes beyond the edge of the box");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		docview = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		String cfName = "codingform" + Utility.dynamicNameAppender();
+		String moreChar  = Utility.randomCharacterAppender(300);
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		cf.addCodingFormName(cfName);
+		
+		 //add cf field
+		 cf.firstCheckBox(Input.comments);
+		 cf.addcodingFormAddButton();
+		 cf.enterErrorAndHelpMsg(0, "Yes", Input.helpText, Input.errorMsg);
+		 String cmdLabel = cf.getCodingForm_TagNames(1).getText().trim();
+		 
+		 //validate in preview
+		 cf.clickPreviewButon();
+		 soft.assertEquals(cf.getCodingForm_PreviewText(0).getText().trim(), cmdLabel);
+		 base.passedStep("Coding form saved  Presentation of the Comment Field Name should be immediately above the Comment Box in Coding Form Preview pop up");
+		 
+		 //edit comment more than 255
+		 driver.waitForPageToBeReady();
+		 cf.getPopUpCloseBtn().waitAndClick(5);
+		 cf.getCF_objectName(0).SendKeys(moreChar);
+		 cf.saveCodingForm();
+		 cf.clickPreviewButon();
+		 
+		 //validate length 
+		 soft.assertTrue(cf.getCodingForm_TagNames(1).getText().length()<256);
+		 base.passedStep("Comment label should be allowed to be upto 255 characters in length");
+		 
+		 //text wrap verification
+		 soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "preview wrap check");
+		 base.passedStep("Comment label should wrap around around properly in cf preview");
+		 
+		 
+	    cf.AssignCFstoSG(cfName);
+	    sessionSearch.basicContentSearch(Input.testData1);
+	    sessionSearch.ViewInDocViews();
+	    
+	    //pre-req-save stamp
+	    base.waitForElement(docview.getDocument_CommentsTextBox());
+		docview.getDocument_CommentsTextBox().SendKeys("add some comment for cf stamp");
+		docview.stampColourSelection("stamp"+Utility.dynamicNameAppender(), Input.stampColour);
+		
+	    //validate in docview
+	    driver.waitForPageToBeReady();
+	    soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview parent window check");
+	    base.passedStep("Comment label should wrap around around properly in parent window");
+		
+		//validate in docview child window
+		docview.clickGearIconOpenCodingFormChildWindow();
+		docview.switchToNewWindow(2);
+		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview child window check");
+		base.passedStep("Comment label should wrap around around properly in child window");
+		
+		//stamp check
+		docview.lastAppliedStamp(Input.stampColour);
+		soft.assertTrue(cf.getCodingForm_PreviewText(0).getWebElement().getSize().height>19, "docview check from stamp");
+		base.passedStep("Comment label should wrap around around properly for stamp");
+		
+		driver.close();
+		docview.switchToNewWindow(1);
+		
+		//restore default codingform
+		driver.waitForPageToBeReady();
+		cf.navigateToCodingFormPage();
+		docview.acceptBrowserAlert(true);
+		cf.AssigndefaultCFstoSG(Input.codeFormName);
+	    
+		//delete created cf
+		cf.deleteCodingForm(cfName, cfName);
+		
+	    soft.assertAll();
+	    base.passedStep("Verified that comment label should be allowed to be upto 255 characters in length and should wrap around properly if goes beyond the edge of the box");
+	    loginPage.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

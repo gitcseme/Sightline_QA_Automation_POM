@@ -3607,6 +3607,9 @@ public class DocViewPage {
 		return driver.FindElementsByXPath("//select[@id='codingFormList']/option");
 	}
 	
+	public Element Hot_DocCheckBox() {
+		return driver.FindElementByXPath("//input[@id='8_checkbox']/..");
+	}
 	
 	public DocViewPage(Driver driver) {
 
