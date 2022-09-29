@@ -37,7 +37,6 @@ public class Input {
 
 	public static TestData testData;
 	// ConfigMain data---------------------------------------------
-	public static String transcriptId;
 	public static String newProject;
 	public static String ingestion;
 	public static String suite;
@@ -942,7 +941,7 @@ public class Input {
 	public static String filterDataInput1;
 	public static String filterDataInput2;
     public static String filterDataInput3; 
-    public static String transcript;
+	public static String transcriptId;
 	
 	@BeforeSuite(alwaysRun = true)
 
