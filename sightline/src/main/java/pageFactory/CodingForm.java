@@ -1640,7 +1640,11 @@ public class CodingForm {
 		}
 		
 		public Element getPopUpCloseBtn() {
-			return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+			return driver.FindElementByXPath("(//button[@class='ui-dialog-titlebar-close'])[last()]");
+		}
+		
+		public Element getCF_YesBtn() {
+			return driver.FindElementByXPath("(//button[@id='btnYes' and text()='Yes'])[last()]");
 		}
 	
 	
@@ -3691,8 +3695,8 @@ public class CodingForm {
 		driver.scrollPageToTop();
 		base.waitForElement(getSaveCFBtn());
 		getSaveCFBtn().waitAndClick(5);
-		if(getCodingForm_Validation_ButtonYes().isElementAvailable(10)) {
-			getCodingForm_Validation_ButtonYes().waitAndClick(5);
+		if(getCF_YesBtn().isElementAvailable(10)) {
+			getCF_YesBtn().waitAndClick(5); // updated xpath on 09/29/2022
 		}
 		base.VerifySuccessMessage("Coding Form Saved successfully");
 		base.CloseSuccessMsgpopup();
