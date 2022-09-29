@@ -516,6 +516,34 @@ public class Assignment_Regression22 {
 		loginPage.logout();
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	@Test(description = "RPMXCON-53700", enabled = true, groups = { "regression" })
+	public void VerifyRedistributefunctionality_CompletedDocs()
+			throws InterruptedException, ParseException, IOException {
+		baseClass.stepInfo("To verify the functionality of the ReDistribute Document for Completed Document.");
+		baseClass.stepInfo("Test case Id: RPMXCON-53700");
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+
+		assignment.createAssignment(assignmentName, Input.codeFormName);
+		baseClass.stepInfo("Created assignment with name" + assignmentName);
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignExisting(assignmentName);
+		baseClass.stepInfo("bulk assigned the assignment " + assignmentName);
+
+		assignment.editAssignmentUsingPaginationConcept(assignmentName);
+		assignment.addReviewerAndDistributeDocs();
+		baseClass.waitTime(2);
+		assignment.completeDocs(Input.rev1userName);
+		baseClass.waitTime(4);
+		assignment.VerifyWarnignMSGinManageRevTab_RedistributeDocs(Input.rev1userName, null);
+
+		assignment.deleteAssgnmntUsingPagination(assignmentName);
+		loginPage.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);

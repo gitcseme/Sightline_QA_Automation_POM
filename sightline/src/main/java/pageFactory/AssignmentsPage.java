@@ -8708,6 +8708,7 @@ public class AssignmentsPage {
 	public void completeDocs(String user) {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(10);
+		bc.waitTime(2);
 		getAssgn_ManageRev_selectReviewer(user).waitAndClick(20);
 		bc.waitTillElemetToBeClickable(getAssgn_ManageRev_Action());
 		getAssgn_ManageRev_Action().waitAndClick(10);
@@ -8716,6 +8717,7 @@ public class AssignmentsPage {
 		bc.waitTillElemetToBeClickable(bc.getYesBtn());
 		bc.getYesBtn().waitAndClick(5);
 		bc.VerifySuccessMessage("Documents successfully completed for user.");
+		bc.CloseSuccessMsgpopup();
 		bc.passedStep("Documents are completed successfully for the " + user);
 	}
 
@@ -11231,23 +11233,23 @@ public class AssignmentsPage {
         getAdduserBtn().waitAndClick(5);
         bc.VerifySuccessMessage("Action saved successfully");
     }
-    /**
+
+	/**
 	 * @author Jayanthi.ganesan
-	 * @description This method verifies the todo count in manage redistributed
-	 *              documents
+	 * @description This method verifies warning message if we try to do
+	 *              redistribute completed documents
 	 */
-	public void VerifyWarnignMSGinManageRevTab_RedistributeDocs(String user1,String user2) {
+	public void VerifyWarnignMSGinManageRevTab_RedistributeDocs(String user1, String user2) {
 		bc.waitForElement(getAssignment_ManageReviewersTab());
 		getAssignment_ManageReviewersTab().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		getAssgn_ManageRev_selectReviewer(user1).ScrollTo();
 		getAssgn_ManageRev_selectReviewer(user1).waitAndClick(10);
-		if(user2!=null) {
+		if (user2 != null) {
 			getAssgn_ManageRev_selectReviewer(user2).ScrollTo();
 			getAssgn_ManageRev_selectReviewer(user2).waitAndClick(10);
 		}
 		bc.stepInfo("Selected the Reviewer that is assigned with few docs");
-		getAssgn_ManageRev_Action().waitAndClick(20);
 		getAssgn_ManageRev_Action().waitAndClick(20);
 		bc.waitForElement(getAssgn_RedistributeDoc());
 		getAssgn_RedistributeDoc().waitAndClick(20);
@@ -11260,7 +11262,7 @@ public class AssignmentsPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author
 	 * @param ListOfAssignedMetadata
