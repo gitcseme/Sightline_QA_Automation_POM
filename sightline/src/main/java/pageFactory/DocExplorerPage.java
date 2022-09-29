@@ -3073,4 +3073,90 @@ public class DocExplorerPage {
 		System.out.println("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 	}
+	
+	public void DocumentInDocFileTypeFilters(String document) throws InterruptedException {
+
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_DocFiletypeSearchName().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_DocFiletypeSearchName().SendKeys(document);
+
+		doclist.getApplyFilter().waitAndClick(10);
+		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
+		if(bc.text("MS Word").isDisplayed()) {
+			bc.passedStep("It return documents filter functionality by docs is working as expected");
+		}else {
+			bc.failedStep("It return documents filter functionality by docs is not working as expected");
+		}
+	}
+	
+	/**
+	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude filter for DocFileType.
+	 */
+	public void performExculdeDocFileTypeFilter(String fileType) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getDocExp_GetDocFIleTypeFilter());
+			bc.waitTillElemetToBeClickable(getDocExp_GetDocFIleTypeFilter());
+			getDocExp_GetDocFIleTypeFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(fileType);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getAddToFilter());
+			bc.waitTillElemetToBeClickable(getAddToFilter());
+			getAddToFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method for performing exclude another filter for DocFileType.
+	 * @param folderName : folderName is a string value that name of folder need to
+	 *                   select.
+	 */
+	public void performUpdateExculdeDocFileTypeFilter(String fileType) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			bc.waitForElement(getActiveFilter());
+			bc.waitTillElemetToBeClickable(getActiveFilter());
+			getActiveFilter().Click();
+			bc.waitForElement(getExcludeRadioBtn());
+			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+			getSearchTextArea().SendKeys(fileType);
+			Thread.sleep(Input.wait30 / 30);
+			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getUpdateFilter());
+			bc.waitTillElemetToBeClickable(getUpdateFilter());
+			getUpdateFilter().Click();
+			bc.waitForElement(getApplyFilter());
+			bc.waitTillElemetToBeClickable(getApplyFilter());
+			getApplyFilter().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
+		}
+	}
+	
 }
