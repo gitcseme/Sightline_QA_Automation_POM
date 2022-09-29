@@ -351,6 +351,51 @@ public class DomainManagement_IndiumRegression {
 
 	}
 
+	/**
+	* Author : Baskar date: NA Modified date:28/09/2021 Modified by: Baskar
+	 * @Description : Verify that for DA user, rights should be greyed out
+	 *                 as per the selected role from drop down
+	 */
+	@Test(description = "RPMXCON-52806",enabled = true, groups = { "regression" })
+	public void verifyRightInGrayForSelectedRole() throws Exception {
+		
+	    baseClass.stepInfo("Test case Id: RPMXCON-52806");
+	    baseClass.stepInfo("Verify that for DA user, rights should be greyed out "
+	    		+ "as per the selected role from drop down");
+		
+	    userManage = new UserManagement(driver);
+		softAssertion =new SoftAssert();
+		DomainDashboard dash =  new DomainDashboard(driver);		
+		
+		// login as da
+		loginPage.loginToSightLine(Input.da1userName, Input.da1password);
+		baseClass.stepInfo("Successfully login as da user'" + Input.da1userName + "'");
+		
+		baseClass.selectproject(Input.domainName);
+		dash.waitForDomainDashBoardIsReady();
+		
+		//check for rmu
+		userManage.navigateToUsersPAge();
+		userManage.selectRoleBulkUserAccessControl(Input.ReviewManager, Input.projectName, Input.securityGroup);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(userManage.getBulkIngestion().GetAttribute("style").contains("grey"));
+		baseClass.passedStep("For RMU 'Ingestion' should be greyed out.");
+		
+		//check with rev
+		userManage.navigateToUsersPAge();
+		userManage.selectRoleBulkUserAccessControl(Input.Reviewer, Input.projectName, Input.securityGroup);
+		driver.waitForPageToBeReady();
+		softAssertion.assertTrue(userManage.getBulkManage().GetAttribute("style").contains("grey"));
+		softAssertion.assertTrue(userManage.getBulkIngestion().GetAttribute("style").contains("grey"));
+		softAssertion.assertTrue(userManage.getBulkProduction().GetAttribute("style").contains("grey"));
+		softAssertion.assertTrue(userManage.getBulkCatagories().GetAttribute("style").contains("grey"));
+		softAssertion.assertTrue(userManage.getBulkDataSet().GetAttribute("style").contains("grey"));
+		softAssertion.assertTrue(userManage.getBulkReport().GetAttribute("style").contains("grey"));
+		baseClass.passedStep("For Reviewer below rights greyed out  - Manage  - Ingestion  - Productions  - Categorize  - DataSets  - All Reports");
+		softAssertion.assertAll();
+	    baseClass.passedStep("Verified that for DA user, rights should be greyed out as per the selected role from drop down");
+	    loginPage.logout();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
