@@ -272,6 +272,154 @@ public class Ingestion_Regression_6 {
 		
 	}
 	
+	/**
+	 * Author :Arunkumar date: 28/09/2022 TestCase Id:RPMXCON-60860
+	 * Description :Check whether user is able to ignore the error obtained at cataloged stage 
+	 * while ingesting 'Dat' file containing Splitted fullpath(folder name) data having 
+	 * more than 400 chars in size  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-60860",enabled = true, groups = { "regression" })
+	public void verifyDatIngestionMoreThan400Chars() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-60860");
+		baseClass.stepInfo("Verify ingestion Dat file data having more than 400 chars.");
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("perform add only ingestion with more than 400 char dat");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AutomationAllSources);
+		if (status == false) {
+			ingestionPage.IngestionOnlyForDatFile(Input.AutomationAllSources,Input.char400Dat);
+			baseClass.stepInfo("Ignore catalog error message and verify error");
+			ingestionPage.ignoreErrorsAndCatlogging();
+			ingestionPage.verifyCatalogedIngestionErrorMessage(Input.char400Error);
+			baseClass.stepInfo("Perform copy,indexing and approve ingestion");
+			ingestionPage.ignoreErrorsAndCopying();
+			ingestionPage.ignoreErrorsAndIndexing(Input.AutomationAllSources);
+			ingestionPage.approveIngestion(1);
+			baseClass.stepInfo("Publish ingestion");
+			ingestionPage.runFullAnalysisAndPublish();
+			baseClass.passedStep("User able to ignore error and publish ingestion");
+		}
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 29/09/2022 TestCase Id:RPMXCON-59386
+	 * Description :Verify that error should not be displayed while running Ingestion 
+	 * when PDF option is selected with Is Path in DAT option  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-59386",enabled = true, groups = { "regression" })
+	public void verifyPdfIsPathInDatAddOnly() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-59386");
+		baseClass.stepInfo("Verify add only ingestion with pdf option is path in dat");
+		String ingestionName=null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Logged in as PA");
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.AK_NativeFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.pdfPathDat, Input.prodBeg);
+			baseClass.stepInfo("Select PDF with is  path in DAT");
+			ingestionPage.selectPDFSource(Input.PDFFile, true);
+			baseClass.waitForElement(ingestionPage.getPDFFilePathFieldinDAT());
+			ingestionPage.getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(Input.pdfPathKey);
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			baseClass.stepInfo("Save as draft and verify status");
+			ingestionPage.verifyIngestionStatusAfterSaveAsDraft();
+			baseClass.stepInfo("action as open in wizard");
+			ingestionPage.performActionAsOpenWizardOption();
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			baseClass.stepInfo("perform mapping and run ingestion");
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish ingestion");
+			ingestionName= ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.AK_NativeFolder);
+		}
+		baseClass.stepInfo("view docs in docview");
+		dataSets = new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(ingestionName);
+		baseClass.verifyUrlLanding(Input.url + "DocumentViewer/DocView", " on docview page",
+					"Not on docview page");
+		baseClass.passedStep("Error not disaplayed when pdf is path in Dat option");
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author :Arunkumar date: 29/09/2022 TestCase Id:RPMXCON-59387
+	 * Description :Verify that error should not be displayed with Ingestion overlay
+	 * when PDF option is selected with Is Path in DAT option  
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-59387",enabled = true, groups = { "regression" })
+	public void verifyPdfIsPathInDatOverlay() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-59387");
+		baseClass.stepInfo("Verify overlay inegstion with pdf option is path in dat");
+		String ingestionName = null;
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.AK_NativeFolder);
+		if (status == false) {
+			ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.ingestionType, Input.sourceSystem,
+					Input.sourceLocation, Input.AK_NativeFolder);
+			ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+			baseClass.stepInfo("Selecting Dat file");
+			ingestionPage.selectDATSource(Input.pdfPathDat, Input.prodBeg);
+			baseClass.stepInfo("Select date format");
+			ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+			baseClass.stepInfo("click on next button");
+			ingestionPage.clickOnNextButton();
+			baseClass.stepInfo("perform mapping and run ingestion");
+			ingestionPage.selectValueFromEnabledFirstThreeSourceDATFields(Input.prodBeg, Input.prodBeg, Input.custodian);
+			ingestionPage.clickOnPreviewAndRunButton();
+			baseClass.stepInfo("Publish ingestion");
+			ingestionPage.publishAddonlyIngestion(Input.AK_NativeFolder);
+		}
+		baseClass.stepInfo("Perform overlay ingestion");
+		ingestionPage.selectIngestionTypeAndSpecifySourceLocation(Input.overlayOnly, Input.sourceSystem,
+				Input.sourceLocation, Input.AK_NativeFolder);
+		ingestionPage.addDelimitersInIngestionWizard(Input.fieldSeperator,Input.textQualifier,Input.multiValue);
+		baseClass.stepInfo("Selecting Dat file");
+		ingestionPage.selectDATSource(Input.pdfPathDat, Input.prodBeg);
+		baseClass.stepInfo("Select PDF with is  path in DAT");
+		ingestionPage.selectPDFSource(Input.PDFFile, true);
+		baseClass.waitForElement(ingestionPage.getPDFFilePathFieldinDAT());
+		ingestionPage.getPDFFilePathFieldinDAT().selectFromDropdown().selectByVisibleText(Input.pdfPathKey);
+		baseClass.stepInfo("Select date format");
+		ingestionPage.selectDateAndTimeForamt(Input.dateFormat);
+		baseClass.stepInfo("click on next button and run ingestion");
+		ingestionPage.clickOnNextButton();
+		ingestionPage.clickOnPreviewAndRunButton();
+		ingestionName =ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		ingestionPage.runFullAnalysisAndPublish();
+		baseClass.stepInfo("view docs in docview");
+		dataSets = new DataSets(driver);
+		dataSets.navigateToDataSetsPage();
+		dataSets.selectDataSetWithNameInDocView(ingestionName);
+		baseClass.verifyUrlLanding(Input.url + "DocumentViewer/DocView", " on docview page",
+					"Not on docview page");
+		baseClass.passedStep("Error not disaplayed when pdf is path in Dat option after performing overlay");
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

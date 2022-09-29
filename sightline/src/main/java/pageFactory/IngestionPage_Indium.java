@@ -5395,6 +5395,9 @@ public class IngestionPage_Indium {
 		for (int i = 0; i < 40; i++) {
 			base.waitTime(2);
 			base.waitForElement(getIngestionDetailPopup(1));
+			if(!getStatus(j).isElementAvailable(5)) {
+				base.waitTime(2);
+			}
 			String status = getStatus(j).getText().trim();
 			getRefreshButton().waitAndClick(5);
 			if (status.contains("Approved")) {
@@ -10687,4 +10690,57 @@ public class IngestionPage_Indium {
 			base.waitForElement(getCloseButton());
 			getCloseButton().waitAndClick(10);
 		}
+		
+		/**
+		 * @author: Arun Created Date: 29/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will verify error message in catalog stage
+		 */
+		public void verifyCatalogedIngestionErrorMessage(String errorMsg) {
+		
+			getRefreshButton().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(5);
+			base.waitForElement(getActionDropdownArrow());
+			if(!errorCountCatalogingStage().isElementAvailable(10)) {
+				base.failedStep("No catalog error present");
+			}
+			else {
+				errorCountCatalogingStage().waitAndClick(10);
+				base.waitForElement(ingestionErrorNote(1));
+				String errorMessage = ingestionErrorNote(1).getText();
+				if (errorMessage.contains(errorMsg)) {
+					base.stepInfo("Error Message :"+errorMessage);
+					base.passedStep("Cataloging Error displayed when ingesting"+errorMsg);
+				} else {
+					base.failedStep("Error not belonged to "+errorMsg);
+				}
+			}
+			base.waitForElement(getCloseButton());
+			getCloseButton().waitAndClick(10);
+		}
+		
+		
+		/**
+		 * @author: Arun Created Date: 29/09/2022 Modified by: NA Modified Date: NA
+		 * @description: this method will perform action  open in wizard option
+		 */
+
+		public void performActionAsOpenWizardOption() {
+
+			base.waitForElement(getIngestionDetailPopup(1));
+			getIngestionDetailPopup(1).waitAndClick(10);
+			base.waitForElement(getActionDropdownArrow());
+			getActionDropdownArrow().waitAndClick(10);
+			base.waitForElement(getActionOpenWizard());
+			getActionOpenWizard().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			if(getDATDelimitersFieldSeparator().isElementAvailable(10)) {
+				base.passedStep("performed action open in wizard");
+			}
+			else {
+				base.failedStep("action failed");
+			}
+		}
+	
 }
