@@ -11251,7 +11251,6 @@ public class AssignmentsPage {
 		}
 		bc.stepInfo("Selected the Reviewer that is assigned with few docs");
 		getAssgn_ManageRev_Action().waitAndClick(20);
-		getAssgn_ManageRev_Action().waitAndClick(20);
 		bc.waitForElement(getAssgn_RedistributeDoc());
 		getAssgn_RedistributeDoc().waitAndClick(20);
 		try {
