@@ -22576,5 +22576,52 @@ public class ProductionPage {
 					getAbbreviatedText().SendKeys(placeHolderValue);
 				}
 			}
+			/**
+			 * 
+			 * @param BatesNumber
+			 * @param pageNumber
+			 * @param BrandingText
+			 * @param Text
+			 * @throws IOException
+			 * @Description: verfying branding text applied in generated production
+			 */
+			public void pdfVerificationInDownloadedFile(String BatesNumber, int pageNumber,String BrandingText,String Text) throws IOException {
+				String home = System.getProperty("user.home");
+				base.stepInfo("verfying the generated pdf file");
+				File fileName=new File(home + "/Downloads/VOL0001/PDF/0001/"+BatesNumber+".pdf");
+				PDDocument doc = PDDocument.load(fileName);                   
+				PDFTextStripper stripper = new PDFTextStripper();
+				
+				for(int i=1;i<=pageNumber;i++) {
+				stripper.setStartPage(i);
+				String Result = stripper.getText(doc);
+				System.out.println(Result);
+				if(Result.contains(BrandingText)&&Result.contains(Text)) {
+					System.out.println("Branding Text is displayed");
+					base.passedStep(Text+"is Displayed as expected");
+				}else {
+					System.out.println("Branding Text is not  displayed");
+					base.failedStep(BrandingText+"is not Displayed as expected");
+				}
+				}
+				doc.close();
 
+			}
+			/**
+			 * @author Brundha.T
+			 * @param metaData
+			 * @param BrandingText
+			 * @Description: filling branding section with metadata
+			 */
+			public void fillingBrandingInTiffSection(String metaData,String BrandingText) {
+				getTIFF_CenterHeaderBranding().waitAndClick(5);
+				getCenterHeaderInsertMetadataField().waitAndClick(5);
+				base.waitForElement(getTIFF_selectedMetadataField());
+				getTIFF_selectedMetadataField().waitAndClick(5);
+				getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText(metaData);
+				base.waitForElement(getPopUpOkButtonInserMetaData());
+				getPopUpOkButtonInserMetaData().waitAndClick(5);
+				getLeftHeaderBranding().waitAndClick(10);
+				getEnterBranding("Top - Left").SendKeys(BrandingText);
+			}
 }

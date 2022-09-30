@@ -21,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
@@ -381,6 +382,198 @@ public class Production_Regression22 {
 
 	}
 
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49378
+	 * @Description: To verify that in Production, DocFileExtension should be used
+	 *               in the file name as Native , when DocFileExtension as non-blank
+	 *               value for Uploaded documents
+	 **/
+	@Test(description = "RPMXCON-49378", enabled = true, groups = { "regression" })
+	public void verifyingDocFileExtensionInDownloadedFiles() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("RPMXCON-49378 -Production Component");
+		base.stepInfo(
+				"To verify that in Production, DocFileExtension should be used in the file name as Native , when DocFileExtension as non-blank value for Uploaded documents");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Select Tag Classification");
+
+		DataSets dataset = new DataSets(driver);
+		base.stepInfo("Navigating to dataset page");
+		dataset.navigateToDataSetsPage();
+		dataset.SelectingUploadedDataSet();
+
+		DocListPage doc = new DocListPage(driver);
+		driver.waitForPageToBeReady();
+		doc.selectingSingleValueInCoumnAndRemovingExistingOne(Input.docFileExt);
+		int DocFileExtension = base.getIndex(doc.getHeaderText(), Input.docFileExt);
+		List<String> FileExtense = base.availableListofElements(doc.GetColumnData(DocFileExtension));
+		String FirstFile = FileExtense.get(0).toString().trim();
+		System.out.println(FirstFile);
+		String SecondFileFile = FileExtense.get(1).toString().trim();
+		System.out.println(SecondFileFile);
+		String ThirdFile = FileExtense.get(2).toString().trim();
+		System.out.println(ThirdFile);
+		doc.documentSelection(3);
+		doc.bulkTagExistingFromDoclist(tagname);
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.addDATFieldAtSecondRow(Input.productionText, Input.tiffPageCountNam, Input.tiffPageCountText);
+		page.fillingNativeSection();
+		page.fillingTIFFSectionwithNativelyPlaceholder(tagname);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		
+		base.stepInfo("verifying the docfile extension in downloaded nativefile");
+		int Count = Integer.valueOf(beginningBates) + Integer.valueOf(Input.pageCount);
+        int ThirdDoc=Count+ + Integer.valueOf(Input.pageCount);
+		File Native = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + beginningBates + suffixID + FirstFile);
+		File Native2File = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + Count + suffixID + SecondFileFile);
+		File Native3File = new File(
+				home + "/Downloads/VOL0001/Natives/0001/" + prefixID + ThirdDoc + suffixID + ThirdFile);
+		if (Native.exists()) {
+			base.passedStep("Native file is generated with DocFileExtension ");
+		} else {
+			base.failedStep("verification failed");
+		}
+		if (Native2File.exists()) {
+			base.passedStep("Native file is generated with DocFileExtension");
+		} else {
+			base.failedStep("verification failed");
+		}
+
+		if (Native3File.exists()) {
+			base.passedStep("Native file is generated with DocFileExtension");
+		} else {
+			base.failedStep("verification failed");
+		}
+
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		loginPage.logout();
+
+	}
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49730
+	 * @Description: Verify that production is generated using custom template
+	 *               having branding then it should be applied on all
+	 *               pages/documents on generated files
+	 **/
+	@Test(description = "RPMXCON-49730", enabled = true, groups = { "regression" })
+	public void verifyingBrandingTextInGeneratedDocuments() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		DocViewPage Doc = new DocViewPage(driver);
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		base.stepInfo("RPMXCON-49730 -Production Component");
+		base.stepInfo(
+				"Verify that production is generated using custom template having branding then it should be applied on all pages/documents on generated files");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String productionname1 = "p" + Utility.dynamicNameAppender();
+		String Templatename = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String PlaceholderText = "Confidentiality";
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
+		sessionSearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		doc.documentSelection(3);
+		sessionSearch.bulkTagExisting(tagname);
+
+		doc.documentSelection(3);
+		doc.viewSelectedDocumentsInDocView();
+		DocRedactions.redactRectangleUsingOffset(10, 10, 20, 20);
+		driver.waitForPageToBeReady();
+		DocRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+		int PageCount = Doc.getTotalPagesCount();
+
+		driver.Navigate().refresh();
+		DocRedactions.selectDoc2();
+		DocRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+		DocRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+		int PageCount2Doc = Doc.getTotalPagesCount();
+
+		DocRedactions.doclistTable(3).waitAndClick(10);
+		int PageCount3Doc = Doc.getTotalPagesCount();
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.selectGenerateOption(true);
+		page.fillingBrandingInTiffSection(Input.batesNumber, PlaceholderText);
+		page.navigateToNextSection();
+		page.navigatingToProductionHomePage();
+		
+		//production saved as template 
+		page.savedTemplateAndNewProdcution(productionname, Templatename);
+		page.baseInfoLoadTemplate(productionname1, Templatename);
+		driver.waitForPageToBeReady();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+
+		int Count = Integer.valueOf(beginningBates) + PageCount;
+		int LastDoc = Count + PageCount2Doc;
+		page.extractFile();
+
+		String BatesNumber = prefixID + beginningBates + suffixID;
+		String BatesNumber1 = prefixID + Count + suffixID;
+		String BatesNumber2 = prefixID + LastDoc + suffixID;
+
+		page.pdfVerificationInDownloadedFile(BatesNumber, PageCount, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber1, PageCount2Doc, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, PlaceholderText);
+
+		//Delete tag
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
