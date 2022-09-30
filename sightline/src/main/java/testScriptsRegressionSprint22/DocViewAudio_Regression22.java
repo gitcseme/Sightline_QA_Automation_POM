@@ -826,6 +826,7 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
 		
 		// add new search with different threshold/common terms
+		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.addNewSearch();
 		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.language, "max");
 		sessionSearch.addPureHit();
@@ -928,6 +929,7 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Logined user : " + Input.rmu1userName);
 		
 		// add new search with different threshold/common terms
+		sessionSearch.navigateToAdvancedSearchPage();
 		sessionSearch.addNewSearch();
 		sessionSearch.newAudioSearchThreshold(Input.audioSearchString2, Input.language, "max");
 		sessionSearch.addPureHit();
