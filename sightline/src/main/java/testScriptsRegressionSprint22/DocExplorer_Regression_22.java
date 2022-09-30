@@ -23,6 +23,7 @@ import pageFactory.DomainDashboard;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -376,6 +377,141 @@ public class DocExplorer_Regression_22 {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @author Vijaya.Rani ModifyDate:29/09/2022 RPMXCON-54638
+	 * @throws Exception
+	 * @Description Verify that user should be able to remove all documents from Tag
+	 *              from Doc Explorer.
+	 */
+	@Test(description = "RPMXCON-54638", enabled = true, groups = { "regression" })
+	public void verifyRemoveAllDocumentsFromTagInDocExplorer() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54638");
+		baseClass.stepInfo("Verify that user should be able to remove all documents from Tag from Doc Explorer.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		TagsAndFoldersPage tagAndFol = new TagsAndFoldersPage(driver);
+		String random = "Tag" + Utility.dynamicNameAppender();
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+
+		baseClass.stepInfo("Create a new tag contains word between");
+		tagAndFol.CreateTag(random, Input.securityGroup);
+
+		// Select folder In Treeview
+		driver.waitForPageToBeReady();
+		docExplorer.navigateToDocExplorerURL();
+		docExplorer.getAllDocumentsCount().waitAndClick(5);
+		baseClass.stepInfo(
+				" Successfully clicked a folder, it show the docs corresponding to that folder in the list view on the right hand side.");
+
+		baseClass.stepInfo("Select a mulitple document and select bulk Tag action");
+		docExplorer.selectDocument(10);
+
+		docExplorer.selectDocAndBulkUnTagDocs(random);
+		baseClass.passedStep("Success message is displayed, Documents should be Untagged from the selected tag");
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:29/09/2022 RPMXCON-54691
+	 * @throws Exception
+	 * @Description Verify that “DocFileType” Filter with "Exclude" functionality is
+	 *              working correctly on Doc Explorer list.
+	 */
+	@Test(description = "RPMXCON-54691", enabled = true, groups = { "regression" })
+	public void verifyDocFileTypeWithExcludeInDocExplorerList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54691");
+		baseClass.stepInfo(
+				"Verify that “DocFileType” Filter with \"Exclude\" functionality is working correctly on Doc Explorer list.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		String random = "Document";
+		String random1 = "Image";
+
+		baseClass.stepInfo("Perform exclude filter by DocFileType");
+		docExplorer.performExculdeDocFileTypeFilter(random,null);
+
+		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
+		docExplorer.verifyExcludeFunctionlityForDocFileType();
+		
+		docExplorer.refreshPage();
+		baseClass.stepInfo("Perform exclude filter by DocFileType");
+		docExplorer.performExculdeDocFileTypeFilter(random,random1);
+
+		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
+		docExplorer.verifyExcludeFunctionlityForDocFileType();
+	
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani ModifyDate:29/09/2022 RPMXCON-54661
+	 * @throws Exception
+	 * @Description Verify that “DocFileType” Column header Filter is working
+	 *              correctly on Doc Explorer list.
+	 */
+	@Test(description = "RPMXCON-54661", enabled = true, groups = { "regression" })
+	public void verifyDocFileTypeColumnheaderInDocExploerList() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54661");
+		baseClass.stepInfo(
+				"Verify that “DocFileType” Filter with \"Exclude\" functionality is working correctly on Doc Explorer list.");
+
+		// Login As PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+		String random1 = "Document";
+
+		baseClass.stepInfo("Perform exclude filter by DocFileType");
+		docExplorer.DocumentInDocFileTypeFilters(random1);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * Author :Vijaya.Rani date: 29/09/2022 TestCase Id:RPMXCON-54651 Description
+	 * :Verify the default list view from doc explorer.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-54651", enabled = true, groups = { "regression" })
+	public void verifyDefaultListViewInDocExplorer() throws Exception {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54651");
+		baseClass.stepInfo("Verify the default list view from doc explorer");
+
+		DocExplorerPage docExplorer = new DocExplorerPage(driver);
+
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		
+		docExplorer.navigateToDocExplorerPage();
+		//Select Default All documents form Treeview 
+		int treeViewCount = docExplorer.getFolderCountFromTreeView("1");
+		baseClass.stepInfo("Docs count in folder tree view:" + treeViewCount);
+		
+		//ListView count
+		int listViewCount = docExplorer.getDocumentCountFromListView();
+		baseClass.stepInfo("Docs count in rightside list view:" + listViewCount);
+		
+		//verify all documents display
+		docExplorer.verifyDocsCountInFolderAndListView(treeViewCount, listViewCount);
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
