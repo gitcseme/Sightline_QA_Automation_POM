@@ -327,6 +327,7 @@ public class Input {
 	public static String SinglePageTiffSourceDocID;
 	public static String DocIdCopyPaste;
 	public static String DocIdCopyPaste1;
+	public static String searchnameenron;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -1657,7 +1658,7 @@ public class Input {
 		radioGroup = testData.getRadioGroup();
 		checkGroup = testData.getCheckGroup();
 		yesButton = testData.getYesButton();
-
+		searchnameenron = testData.getSearchnameenron();	
 		// Added by Brundha-1/12/2021
 
 		documentId = testData.getDocumentID();

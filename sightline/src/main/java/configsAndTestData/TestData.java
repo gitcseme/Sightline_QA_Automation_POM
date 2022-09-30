@@ -220,6 +220,7 @@ public class TestData {
 	public String SinglePageTiffSourceDocID;
 	public String DocIdCopyPaste;
 	public String DocIdCopyPaste1;
+	public String searchnameenron;
 
 	// Added by arunkumar
 	public String pageRange1;

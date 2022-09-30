@@ -1296,6 +1296,12 @@ public Element hiddenInfoIconToolTip() {
 		return driver.FindElementByXPath("//li[@id='hiddenProperty']/a");
 	}
 
+public Element get_textHighlightedColorOnRectangleSubMenu() {
+	return driver.FindElementByXPath("//li[@id='blackRectRedact_divDocViewer' and @class=\"state-active\"]/a");
+}
+
+
+
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -4134,6 +4140,42 @@ public void popOutCodingFormChildWindow() {
 	    System.out.println(hex);
 	    base.passedStep("The text for keyword is highlited in the document");
 	 
+	}
+
+	
+	/**
+	 * @author Krishna
+	 * @Description -- Verify select the ‘Default Redaction Tag’ from the pop up if
+	 *              ‘Default Redaction Tag’ does not exist then first redaction tag
+	 *              is automatically selected.
+	 * @param redactiontag , redactiontagfirst
+	 */
+	public void verifySelectDefaultRedactionTag(String redactiontag, String redactiontagfirst) {
+		try {
+			base = new BaseClass(driver);
+			base.waitForElement(getSelectReductionTagDropDown());
+			String redactiontagname = getSelectReductionTagDropDown().getText();
+			System.out.println(redactiontagname);
+			driver.waitForPageToBeReady();
+			if (redactiontagname.contains("Default Redaction Tag")) {
+				base.waitForElement(getSelectReductionTagDropDown());
+				getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontag);
+				base.stepInfo("Select default redaction tag");
+
+			} else {
+				base.waitForElement(getSelectReductionTagDropDown());
+				getSelectReductionTagDropDown().selectFromDropdown().selectByVisibleText(redactiontagfirst);
+				base.stepInfo("First redaction tag from the list is automatically selected");
+			}
+			getSaveButton().isElementAvailable(15);
+			base.waitForElement(getSaveButton());
+			getSaveButton().Click();
+			base.VerifySuccessMessage("Redaction tags saved successfully.");
+			base.getCloseSucessmsg();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while setting this page redaction" + e.getMessage());
+		}
 	}
 
 }
