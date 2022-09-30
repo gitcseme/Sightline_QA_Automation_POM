@@ -5809,6 +5809,67 @@ public void DeleteMultipleCodingform(List<String> listOfCfName) throws Interrupt
 		}
 	}
 }
-
+	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param codingform
+	 * @throws InterruptedException
+	 * @Description create codingform like default codingform as per attachment
+	 */
+	public void createCodingFormLikeDefaultCodingForm(String codingform) throws InterruptedException {
+		
+		//add name
+		addCodingFormName(codingform);
+		
+		//add tags
+		CreateCodingFormWithParameter(codingform,"Responsive",null,null,"tag");
+	    addcodingFormAddButton();
+	    CreateCodingFormWithParameter(codingform,"Technical_Issue",null,null,"tag");	  
+	    addcodingFormAddButton();
+	    CreateCodingFormWithParameter(codingform,"Processing_Issue",null,null,"tag");
+	    addcodingFormAddButton();
+	    CreateCodingFormWithParameter(codingform,"Foreign_Language",null,null,"tag");
+	    addcodingFormAddButton();
+	    base.stepInfo("All tags are added to coding form");
+	    
+	    //add check items
+	    getCF_CheckGrpObject().waitAndClick(10);
+	    addcodingFormAddButton();
+	    selectTagTypeByIndex(Input.checkItem,1,0);
+	    selectTagTypeByIndex(Input.checkItem,1,1);
+	    
+	    //add radio item
+	    driver.scrollPageToTop();
+	    getCF_RadioGrpObject().waitAndClick(10);
+	    addcodingFormAddButton();
+	    selectTagTypeByIndex("radio item",1,2);
+	    selectTagTypeByIndex("radio item",1,3);	
+	    
+	    //add name to spl object
+	    enterObjectName(4, "Responsive Group");
+	    enterObjectName(5, "Tech Issue Group");
+	    selectDefaultActions(5, Input.hidden);	    
+	    base.stepInfo("Two check group and one radio group are added to coding form");
+	    
+	    //add help text msg
+	    enterErrorAndHelpMsg(1, "No",expectedTIHelpText,null);
+	    enterErrorAndHelpMsg(2, "No",expectedPIHelpText,null);
+	    enterErrorAndHelpMsg(3, "No",expectedFLHelpText,null);
+	    
+	    //add error msg
+	    base.waitForElement(getCodingForm_ErrorMsg(5));
+	    getCodingForm_ErrorMsg(5).SendKeys(expectedTIGErrorMsgText);
+	    
+	    //add spl obj help text
+	    enterErrorAndHelpMsg(4, "No","Responsiveness",null);
+	    
+	    //apply field action
+	    String expectedFirstObjectName = getCFObjectsLabel(1);
+	    selectFieldLogicValues(5,expectedFirstObjectName,"Selected",Input.thisRequired);
+	    
+	    //save cf
+	    saveCodingForm();
+	    base.stepInfo("codingform was created like default coding form");
+	}
 }
 
