@@ -1099,6 +1099,98 @@ public class CodingForm_Regrression_22 {
 	    loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that when user edit the Coding Form then User can edit default action and field logic Special Objects.(Radio Group)
+	 */
+	@Test(description = "RPMXCON-54540",enabled = true, groups = { "regression" })
+	public void verifyUserCanEditDAandFL() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54540");
+	    base.stepInfo("Verify that when user edit the Coding Form then User can edit default action and field logic Special Objects.(Radio Group)");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String codingform = "Default Project Coding Form_Copy"+ Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//create cf as per attachment
+		cf.createCodingFormLikeDefaultCodingForm(codingform);
+		
+		//edit cf
+		cf.editCodingForm(codingform);
+		
+		//expand
+		base.waitForElement(cf.getCfObjectHeader("Tech Issue Group"));
+		cf.getCfObjectHeader("Tech Issue Group").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		//verify user can edit
+		cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Default Action").selectFromDropdown().selectByVisibleText(Input.required);
+		cf.getCfObjectFeildLogicDropDrownByIndex("Tech Issue Group", 3).selectFromDropdown().selectByVisibleText(Input.thisOptional);
+		driver.waitForPageToBeReady();
+		soft.assertEquals(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Default Action").selectFromDropdown().getFirstSelectedOption().getText(), Input.required);
+		soft.assertEquals(cf.getCfObjectFeildLogicDropDrownByIndex("Tech Issue Group", 3).selectFromDropdown().getFirstSelectedOption().getText(), Input.thisOptional);
+		base.passedStep("When user edit the Coding Form then User  able to  edit default action and field logic Special Objects.(Radio Group)");
+		
+		//delete created cf
+		cf.deleteCodingForm(codingform, codingform);
+		
+	    soft.assertAll();
+	    base.passedStep("Verify that when user edit the Coding Form then User can edit default action and field logic Special Objects.(Radio Group)");
+	    loginPage.logout();
+	    
+	}
+	
+	/**
+	 * @Author : Aathith
+	 * @Description :Verify that default action and field logic presented as is (Special Objects - Radio Group) when user edit the same Coding Form.
+	 */
+	@Test(description = "RPMXCON-54541",enabled = true, groups = { "regression" })
+	public void verifyDefaultActionFieldLogic() throws Exception {
+		
+	    base.stepInfo("Test case Id: RPMXCON-54541");
+	    base.stepInfo("Verify that default action and field logic presented as is (Special Objects - Radio Group) when user edit the same Coding Form.");
+	    
+		cf = new CodingForm(driver);
+		soft  = new SoftAssert();
+		
+		String codingform = "Copy_of_Default Project Coding Form"+ Utility.dynamicNameAppender();
+		
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		//create cf as per attachment
+		cf.createCodingFormLikeDefaultCodingForm(codingform);
+		
+		//edit cf
+		cf.editCodingForm(codingform);
+		
+		//expand
+		base.waitForElement(cf.getCfObjectHeader("Tech Issue Group"));
+		cf.getCfObjectHeader("Tech Issue Group").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		
+		System.out.println(cf.getCfObjectHeader("Tech Issue Group").getText());
+		soft.assertTrue(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Default Action").isElementAvailable(3) , " default action present");
+		soft.assertTrue(cf.getCfObjectDefaultActionLabelDropDrown("Tech Issue Group", "Field Logic").isElementAvailable(3), " field logic present");
+		soft.assertTrue(cf.getCfObjectHeader("Tech Issue Group").getText().contains("RADIOGROUP"), "spl obj verification");
+		base.passedStep("Radio Group's Default Action along with field logic should NOT miss in coding form.     For - Radio Group's - "
+				+ "Default action and field logic presented as is (Special Objects) when user edit the same Coding Form.");
+		
+		//delete created cf
+		cf.deleteCodingForm(codingform, codingform);
+		
+	    soft.assertAll();
+	    base.passedStep("Verified that default action and field logic presented as is (Special Objects - Radio Group) when user edit the same Coding Form.");
+	    loginPage.logout();
+	    
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

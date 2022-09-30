@@ -282,7 +282,9 @@ public class DomainManagement_IndiumRegression {
 		soft.assertEquals(user.getTableData("DOMAIN",1),"");
 		baseClass.passedStep("Domain column value is blank.");
 		
-		user.deleteAddedUser(Input.randomText);
+		user.filterTodayCreatedUser();
+		user.filterByName(email);
+		user.deleteUser();
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
@@ -314,7 +316,9 @@ public class DomainManagement_IndiumRegression {
 		soft.assertEquals(user.getTableData("DOMAIN",1), Input.domainName);
 		baseClass.passedStep("Domain column is populated with a correct value ");
 		
-		user.deleteAddedUser(Input.randomText);
+		user.filterTodayCreatedUser();
+		user.filterByName(email);
+		user.deleteUser();
 	    
 	    soft.assertAll();
 	    baseClass.passedStep("verified that if user is a part of non-domain Projects, then ‘Domain’ column should be blank.");
