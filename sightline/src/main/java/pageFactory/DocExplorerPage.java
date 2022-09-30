@@ -556,6 +556,11 @@ public class DocExplorerPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div[text()='"+value+"']");
 		
 	}
+	
+	public Element getDocExplorer_UnTagDocuments() {
+		return driver.FindElementById("toUnassign");
+	}
+	
 
 	public DocExplorerPage(Driver driver) {
 
@@ -3159,4 +3164,80 @@ public class DocExplorerPage {
 		}
 	}
 	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA 
+	 * @Description: Method for selecting documents and Untag them..
+	 * @param tagName : tagName is a string value that name of tag need to select.
+	 */
+	public void selectDocAndBulkUnTagDocs(String tagName) {
+		try {
+			driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+			for (int i = 0; i < 20; i++) {
+				try {
+					getAllDocSelectedCheckBox().Click();
+					break;
+				} catch (Exception e) {
+					bc.waitForElement(getAllDocSelectedCheckBox());
+					bc.waitTillElemetToBeClickable(getAllDocSelectedCheckBox());
+				}
+			}
+			if (getOkButton().isDisplayed()) {
+				bc.waitTillElemetToBeClickable(getOkButton());
+				getOkButton().Click();
+			} else {
+				bc.stepInfo("Ok button is not appered");
+			}
+			for (int i = 0; i < 10; i++) {
+				try {
+					bc.waitTime(2);
+					bc.waitForElement(getDocExp_actionButton());
+					bc.waitTillElemetToBeClickable(getDocExp_actionButton());
+					getDocExp_actionButton().Click();
+					break;
+				} catch (Exception e) {
+					bc.waitTime(2);
+				}
+			}
+			bc.waitTillElemetToBeClickable(getBulkTagButton());
+			getBulkTagButton().Click();
+			bc.waitForElement(getDocExplorer_UnTagDocuments());
+			getDocExplorer_UnTagDocuments().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			bc.waitForElement(getDocBoard());
+			getDocBoard().Click();
+			bc.waitTime(2);
+			getTag(tagName).Click();
+			for (int i = 0; i < 20; i++) {
+				try {
+					bc.waitTime(4);
+					bc.waitTillElemetToBeClickable(getContinueButton());
+					getContinueButton().Click();
+					break;
+				} catch (Exception e) {
+					bc.waitTillElemetToBeClickable(getContinueButton());
+				}
+			}
+			bc.waitForElement(getFinalizeButton());
+			bc.waitTillElemetToBeClickable(getFinalizeButton());
+			getFinalizeButton().Click();
+			try {
+				bc.waitForElement(getOkButton());
+				bc.waitTillElemetToBeClickable(getOkButton());
+				getOkButton().Click();
+			} catch (Exception e) {
+				bc.stepInfo("Ok button is not appered after bulk tag operation");
+			}
+			bc.waitForElement(bc.getSuccessMsg());
+			bc.getSuccessMsg().waitAndFind(10);
+			Assert.assertEquals("Success message is not displayed", true,
+					bc.getSuccessMsg().getWebElement().isDisplayed());
+			if (bc.getSuccessMsg().getWebElement().isDisplayed()) {
+				bc.passedStep("Success message is displayed successfully");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while selecting documents or bulk tag" + e.getMessage());
+
+		}
+	}
 }

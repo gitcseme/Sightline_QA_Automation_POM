@@ -411,8 +411,8 @@ public class DocExplorer_Regression_22 {
 		baseClass.stepInfo("Select a mulitple document and select bulk Tag action");
 		docExplorer.selectDocument(10);
 
-		docExplorer.selectDocAndBulkTag(random);
-		baseClass.passedStep("Success message is displayed, Documents should be tagged from the selected tag");
+		docExplorer.selectDocAndBulkUnTagDocs(random);
+		baseClass.passedStep("Success message is displayed, Documents should be Untagged from the selected tag");
 
 		loginPage.logout();
 	}
