@@ -13083,18 +13083,19 @@ public class SessionSearch {
 	 * @Modified by: N/A
 	 * @param waitTime
 	 */
-	public void handleWhenPureHitsAreReadyInBellyBandPopup(int waitTime) {
+	public String handleWhenPureHitsAreReadyInBellyBandPopup(int waitTime) {
+		String ID = null;
 		if (getWhenPureHitsAreReadyPopup().isElementAvailable(waitTime)) {
 			getWhenPureHitsAreReadyPopup().waitAndClick(3);
 			System.out.println("*** Clicked 'When PureHit Are Ready' Button ***");
-			String ID = getWhenAllResultsAreReadyID().getText();
+			ID = getWhenAllResultsAreReadyID().getText();
 			base.stepInfo(" When Pure Hits are ready Clicked And Generated ID is: " + ID);
 			getBulkTagConfirmationButton().waitAndClick(3);
 		} else {
 			base.stepInfo("Page Loaded and PopUp Did not Appear");
 		}
+		return ID;
 	}
-
 	/**
 	 * @author
 	 * @Date: 02/08/22

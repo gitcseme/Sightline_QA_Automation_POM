@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -456,4 +457,128 @@ public class Notification_22 {
 		}
 
 	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-54430
+	 * @Description: Saved Search to DocView navigation - Verify user must be able
+	 *               to click on Notification once background task get completed.
+	 **/
+	@Test(description = "RPMXCON-54430", enabled = true, groups = { "regression" })
+	public void verifyNavigationToDocview() throws Exception {
+		base.stepInfo("RPMXCON-54157");
+		base.stepInfo(
+				"Saved Search to DocView navigation - Verify user must be able to click on Notification once background task get completed.");
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		saveSearch.navigateToSavedSearchPage();
+		base.stepInfo("User navigated successfully");
+
+		base.stepInfo("Navigate to docview");
+		base.waitForElement(saveSearch.getLaunchDocView());
+		saveSearch.getLaunchDocView().waitAndClick(10);
+
+		docView = new DocViewPage(driver);
+		if (docView.getActionButton().isElementAvailable(8)) {
+			base.passedStep("Navigate from Saved Search to Doc view is  completed in 8 SECONDS.");
+		} else {
+			base.passedStep(
+					"Entry in the Background Tasks Page are clickable, and will take the user to Doc View for the completed action, and that action will complete within 8 seconds");
+		}
+	}
+
+	/**
+	 * @author NA testcase No:RPMXCON-53875
+	 * @Description: To Verify As an REV user login, I will get an notification when I will execute any folder under My Search in saved search
+	 **/
+	@Test(description = "RPMXCON-53875", enabled = true, groups = { "regression" })
+	public void verifyNotificationAfterExecuteRev() throws Exception {
+		base.stepInfo("RPMXCON-53875");
+		base.stepInfo("To Verify As an REV user login, I will get an notification "
+				+ "when I will execute any folder under My Search in saved search");
+		
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Node (or) New Search Group creation");
+		saveSearch.navigateToSavedSearchPage();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "Yes");
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		int pureHit = sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchInNewNode(searchName, newNode);
+		
+		saveSearch.navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		String searchID = saveSearch.getSavedSearchID().getText();
+		saveSearch.savedSearchExecute(searchName, pureHit);
+		
+		base = new BaseClass(driver);
+	    base.waitForElement(base.getBullHornIcon());
+		base.getBullHornIcon().waitAndClick(10);
+		
+		String actStatus = saveSearch.getNotificationStatus(1).getText();
+		String expStatus = "Your Save Search with Save Search Id "+ searchID +" is COMPLETED";		
+		if(expStatus.equalsIgnoreCase(actStatus)) {
+			base.passedStep("After completion the execution, notification id created in notify with status compledted");
+		} else {
+			base.failedStep("After completion the execution, notification id Not created in notify with status compledted");
+		}
+		base.passedStep("Verified - that, As an REV user login, I will get an notification when I will execute any folder under My Search in saved search");
+		loginPage.logout();
+	}
+	
+
+	/**
+	 * @author NA testcase No:RPMXCON-54161
+	 * @Description: o verify as an RMU login into the Application, When user applying Bulk Assign from Saved Search, user will be able to see the background task in notification window"
+	 **/
+	@Test(description = "RPMXCON-54161", enabled = true, groups = { "regression" })
+	public void verifyNotificationAfterBulkAssignRMU() throws Exception {
+		base.stepInfo("RPMXCON-54161");
+		base.stepInfo("To verify as an RMU login into the Application, When user applying Bulk Assign from Saved Search,"
+				+ " user will be able to see the background task in notification window");
+		
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();	
+		String assigname = "assgnment" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Node (or) New Search Group creation");
+		saveSearch.navigateToSavedSearchPage();
+		String newNode = saveSearch.createSearchGroupAndReturn(Input.mySavedSearch, "RMU", "Yes");
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+        sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearchInNewNode(searchName, newNode);
+		
+		saveSearch.navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		saveSearch.selectNodeUnderSpecificSearchGroup(Input.mySavedSearch, newNode);
+	
+		base.waitForElement(saveSearch.getSavedSearchToBulkAssign());
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+		
+		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignDocstoNewAssgn(assigname);
+		assignmentPage.quickAssignCreation(assigname, Input.codeFormName);
+		
+		base = new BaseClass(driver);	
+		int initialBg = base.initialBgCount();
+
+		// verify Notification 
+		base.checkNotificationCount(initialBg,1);
+		
+	    base.waitForElement(base.getBullHornIcon());
+		base.getBullHornIcon().waitAndClick(10);
+		
+		String actStatus = saveSearch.getNotificationStatus(1).getText();
+		String expStatus = "Your Bulkaction-Assign with Bulkaction-Assign Id";		
+		
+		if(actStatus.contains(expStatus) && actStatus.contains("COMPLETED")) {
+			base.passedStep("User able to see background in the notification window");
+		} else {
+			base.failedStep("User Not able to see background in the notification window");
+		}
+		base.passedStep("Verified - as an RMU login into the Application, When user applying Bulk Assign from Saved Search,"
+				+ " user will be able to see the background task in notification window");
+		loginPage.logout();
+	}
+
 }
