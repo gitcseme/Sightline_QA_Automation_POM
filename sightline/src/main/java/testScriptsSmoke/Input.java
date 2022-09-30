@@ -942,6 +942,7 @@ public class Input {
 	public static String filterDataInput1;
 	public static String filterDataInput2;
     public static String filterDataInput3; 
+	public static String transcriptId;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -1928,7 +1929,8 @@ public class Input {
 		filterDataInput1=testData.getFilterDataInput1();
 		filterDataInput2=testData.getFilterDataInput2();
         filterDataInput3=testData.getFilterDataInput3();  
-		System.out.println("*****************************************************");
+        transcriptId=testData.getTranscriptId();
+		System.out.println("****************************************************");
 		UtilityLog.info("*****************************************************");
 
 		// createproject if configured

@@ -878,5 +878,7 @@
 	<filterDataInput1>MS Outlook Message</filterDataInput1>
 	<filterDataInput2>Adobe Acrobat Document</filterDataInput2>
 	<filterDataInput3>enron.com</filterDataInput3>
+	<transcriptId>STC4_00001000</transcriptId>
+	
 
 </TestData>

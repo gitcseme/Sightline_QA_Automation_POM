@@ -113,6 +113,7 @@
 	<pdfPathDat>DAT4_STC_09172014_PDF_Native_Path.dat</pdfPathDat>
 	<pdfPathKey>PDFPath</pdfPathKey>
 	<char400Error>Splitted fullpath data is greater than 400 characters</char400Error>
+	
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
@@ -877,5 +878,7 @@
 	<filterDataInput1>MS Outlook Message</filterDataInput1>
 	<filterDataInput2>Adobe Acrobat Document</filterDataInput2>
 	<filterDataInput3>enron.com</filterDataInput3>
+	<transcriptId>STC4_00001000</transcriptId>
+	
 
 </TestData>
