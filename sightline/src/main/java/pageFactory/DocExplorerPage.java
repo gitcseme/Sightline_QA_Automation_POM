@@ -548,19 +548,20 @@ public class DocExplorerPage {
 	public Element getDocExplorer_NewFolderName() {
 		return driver.FindElementById("txtFolderName");
 	}
-	//added by arun
+
+	// added by arun
 	public Element getDocExpField(String field) {
-		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='"+field+"']");
+		return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr//th//input[@id='" + field + "']");
 	}
+
 	public Element getDocExpFieldValues(String value) {
-		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div[text()='"+value+"']");
-		
+		return driver.FindElementByXPath("//table[@id='dtDocumentList']//tbody//td//div[text()='" + value + "']");
+
 	}
-	
+
 	public Element getDocExplorer_UnTagDocuments() {
 		return driver.FindElementById("toUnassign");
 	}
-	
 
 	public DocExplorerPage(Driver driver) {
 
@@ -1807,7 +1808,7 @@ public class DocExplorerPage {
 			driver.scrollPageToTop();
 			bc.waitForElement(getDocExp_actionButton());
 			getDocExp_actionButton().waitAndClick(10);
-			
+
 			if (getView().isElementAvailable(10)) {
 				driver.waitForPageToBeReady();
 				Actions act = new Actions(driver.getWebDriver());
@@ -2709,9 +2710,8 @@ public class DocExplorerPage {
 					"Arror button is   displayed for the folder '" + folder + "' which is not having sub folders");
 		}
 	}
-	
-	
-	public void docExloerExportData(String fullName,String emailname) throws Exception {
+
+	public void docExloerExportData(String fullName, String emailname) throws Exception {
 
 		bc = new BaseClass(driver);
 		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
@@ -2856,7 +2856,7 @@ public class DocExplorerPage {
 		UtilityLog.info("performing bulk release");
 
 	}
-	
+
 	public void newBulkFolderExisting(String folderName) throws InterruptedException {
 		bc = new BaseClass(driver);
 		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
@@ -2937,10 +2937,11 @@ public class DocExplorerPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will return the docsCount from selected folder tree view
+	 * @description: this method will return the docsCount from selected folder tree
+	 *               view
 	 */
 	public int getFolderCountFromTreeView(String folderNumber) {
 		bc.waitForElement(getfolderFromTreeByNumber(folderNumber));
@@ -2950,79 +2951,80 @@ public class DocExplorerPage {
 		int treeviewCount = Integer.parseInt(folderCount.replace(",", ""));
 		return treeviewCount;
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will return the docsCount for selected folder in right side list view
+	 * @description: this method will return the docsCount for selected folder in
+	 *               right side list view
 	 */
 	public int getDocumentCountFromListView() {
 		driver.scrollingToBottomofAPage();
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getDocExp_DocumentList_info());
-		String count =getDocExp_DocumentList_info().getText().toString();
-		String docsCount=count.substring(count.indexOf("of")+3, count.indexOf(" entries"));
+		String count = getDocExp_DocumentList_info().getText().toString();
+		String docsCount = count.substring(count.indexOf("of") + 3, count.indexOf(" entries"));
 		int listViewCount = Integer.parseInt(docsCount.replace(",", ""));
 		return listViewCount;
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 26/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the count in folder tree view and right side list view
+	 * @description: this method will verify the count in folder tree view and right
+	 *               side list view
 	 */
-	public void verifyDocsCountInFolderAndListView(int treeCount,int listCount) {
-		if(treeCount==listCount) {
+	public void verifyDocsCountInFolderAndListView(int treeCount, int listCount) {
+		if (treeCount == listCount) {
 			bc.passedStep("Document count on the list view is same as in folder tree view");
-			}
-			else {
-				bc.failedStep("document count in tree view and list view not matched");
-			}
+		} else {
+			bc.failedStep("document count in tree view and list view not matched");
+		}
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the fields in doc explorer table list view
+	 * @description: this method will verify the fields in doc explorer table list
+	 *               view
 	 */
 	public void verifyDocExpFieldAvailabilityInListView() {
-		
-		String[] fields = {"DOCID","FAMILY","CUSTODIANNAME","DOCFILETYPE","EMAILSUBJECT/FILENAME",
-				"MASTERDATE","EMAILAUTHOR","EMAILRECIPIENTS"};
+
+		String[] fields = { "DOCID", "FAMILY", "CUSTODIANNAME", "DOCFILETYPE", "EMAILSUBJECT/FILENAME", "MASTERDATE",
+				"EMAILAUTHOR", "EMAILRECIPIENTS" };
 		driver.waitForPageToBeReady();
-		for(int i=0;i<fields.length;i++) {
+		for (int i = 0; i < fields.length; i++) {
 			bc.waitForElement(getDocExpField(fields[i]));
-			if(getDocExpField(fields[i]).isElementAvailable(10)) {
-				bc.passedStep(fields[i] +" field available in doc explorer list view");
-			}
-			else {
-				bc.failedStep(fields[i] +" field not available in doc explorer list view");
+			if (getDocExpField(fields[i]).isElementAvailable(10)) {
+				bc.passedStep(fields[i] + " field available in doc explorer list view");
+			} else {
+				bc.failedStep(fields[i] + " field not available in doc explorer list view");
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * @author: Arun Created Date: 27/09/2022 Modified by: NA Modified Date: NA
-	 * @description: this method will verify the family field values in doc exp list view
+	 * @description: this method will verify the family field values in doc exp list
+	 *               view
 	 */
-	public void verifyFamilyFieldValuesInDocExp(String[] familyValues,String[]values) {
-		
-		for(int j=0;j<familyValues.length;j++) {
+	public void verifyFamilyFieldValuesInDocExp(String[] familyValues, String[] values) {
+
+		for (int j = 0; j < familyValues.length; j++) {
 			bc.waitForElement(getDocExpField("FAMILY"));
 			getDocExpField("FAMILY").SendKeys(familyValues[j]);
 			getDocExpField("FAMILY").SendKeysNoClear("" + Keys.ENTER);
 			driver.waitForPageToBeReady();
-			int docsCount=getDocumentCountFromListView();
-			String fieldValue=getDocExpFieldValues(familyValues[j]).GetAttribute("data-content");
-			System.out.println("field Value for" +familyValues[j]+":" +fieldValue);
-			bc.stepInfo("field Value for" +familyValues[j]+":" +fieldValue);
-			if(docsCount>0 && fieldValue.equalsIgnoreCase(values[j])){
-				bc.passedStep(values[j]+" family field values displayed correctly");
-			}
-			else {
-				bc.failedStep(values[j]+" family field values not displayed");
+			int docsCount = getDocumentCountFromListView();
+			String fieldValue = getDocExpFieldValues(familyValues[j]).GetAttribute("data-content");
+			System.out.println("field Value for" + familyValues[j] + ":" + fieldValue);
+			bc.stepInfo("field Value for" + familyValues[j] + ":" + fieldValue);
+			if (docsCount > 0 && fieldValue.equalsIgnoreCase(values[j])) {
+				bc.passedStep(values[j] + " family field values displayed correctly");
+			} else {
+				bc.failedStep(values[j] + " family field values not displayed");
 			}
 		}
 	}
-	
+
 	public void docExplorerRelease(String SecGroup) {
 		driver.waitForPageToBeReady();
 		bc.waitForElement(actionDropdown());
@@ -3051,9 +3053,8 @@ public class DocExplorerPage {
 		System.out.println("performing bulk release");
 		UtilityLog.info("performing bulk release");
 
-	
-     }
-	
+	}
+
 	public void docExplorerexportData() throws InterruptedException {
 		bc.waitForElement(actionDropdown());
 		actionDropdown().waitAndClick(10);
@@ -3078,14 +3079,12 @@ public class DocExplorerPage {
 		System.out.println("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 	}
-	
-	
-	
+
 	/**
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method for performing exclude filter for DocFileType.
 	 */
-	public void performExculdeDocFileTypeFilter(String fileType) {
+	public void performExculdeDocFileTypeFilter(String fileType, String filetype1) {
 		try {
 
 			driver.waitForPageToBeReady();
@@ -3103,6 +3102,17 @@ public class DocExplorerPage {
 			bc.waitForElement(getAddToFilter());
 			bc.waitTillElemetToBeClickable(getAddToFilter());
 			getAddToFilter().Click();
+			if (filetype1 != null) {
+				bc.waitForElement(doclist.getMakeSureSelectedValue());
+				bc.waitTillElemetToBeClickable(doclist.getMakeSureSelectedValue());
+				doclist.getMakeSureSelectedValue().Click();
+				getSearchTextArea().SendKeys(fileType);
+				Thread.sleep(Input.wait30 / 30);
+				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
+				bc.waitForElement(getAddToFilter());
+				bc.waitTillElemetToBeClickable(getAddToFilter());
+				getAddToFilter().Click();
+			}
 			bc.waitForElement(getApplyFilter());
 			bc.waitTillElemetToBeClickable(getApplyFilter());
 			getApplyFilter().Click();
@@ -3111,43 +3121,9 @@ public class DocExplorerPage {
 			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
 		}
 	}
-	
-	
-	/**
-	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
-	 * @Description: Method for performing exclude another filter for DocFileType.
-	 * @param folderName : folderName is a string value that name of folder need to
-	 *                   select.
-	 */
-	public void performUpdateExculdeDocFileTypeFilter(String fileType) {
-		try {
 
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			bc.waitForElement(getActiveFilter());
-			bc.waitTillElemetToBeClickable(getActiveFilter());
-			getActiveFilter().Click();
-			bc.waitForElement(getExcludeRadioBtn());
-			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
-			getExcludeRadioBtn().Click();
-			getSearchTextArea().SendKeys(fileType);
-			Thread.sleep(Input.wait30 / 30);
-			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getUpdateFilter());
-			bc.waitTillElemetToBeClickable(getUpdateFilter());
-			getUpdateFilter().Click();
-			bc.waitForElement(getApplyFilter());
-			bc.waitTillElemetToBeClickable(getApplyFilter());
-			getApplyFilter().Click();
-		} catch (Exception e) {
-			e.printStackTrace();
-			bc.failedStep("Exception occcured while performing exclude filter for folder" + e.getMessage());
-		}
-	}
-	
 	/**
-	 * @author : Vijaya.Rani Created date: NA Modified date: NA 
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA
 	 * @Description: Method for selecting documents and Untag them..
 	 * @param tagName : tagName is a string value that name of tag need to select.
 	 */
@@ -3222,11 +3198,11 @@ public class DocExplorerPage {
 
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Document In DocFileType Filters
-	 *               
+	 * 
 	 */
 	public void DocumentInDocFileTypeFilters(String document) throws InterruptedException {
 
@@ -3241,20 +3217,20 @@ public class DocExplorerPage {
 
 		doclist.getApplyFilter().waitAndClick(10);
 		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
-		String documentMsg=getDocExp_DocumentList_info().getText();
+		String documentMsg = getDocExp_DocumentList_info().getText();
 		bc.stepInfo(documentMsg);
-		if(bc.text(document).isDisplayed()) {
+		if (bc.text(document).isDisplayed()) {
 			bc.passedStep("It return documents filter functionality by docs is working as expected");
-		}else {
+		} else {
 			bc.failedStep("It return documents filter functionality by docs is not working as expected");
 		}
 	}
-	
+
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
 	 * @Description: Method to verify documents after applying exclude functionality
 	 *               by Docfiletype.
-	 *               
+	 * 
 	 */
 	public void verifyExcludeFunctionlityForDocFileType() {
 
@@ -3262,7 +3238,7 @@ public class DocExplorerPage {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
-			String documentMsg=getDocExp_DocumentList_info().getText();
+			String documentMsg = getDocExp_DocumentList_info().getText();
 			bc.stepInfo(documentMsg);
 			if (doclist.getDocListFilterTable().Displayed()) {
 				bc.passedStep("Exclude filter functionality by folder is working as expected");
@@ -3271,8 +3247,9 @@ public class DocExplorerPage {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			bc.failedStep("Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
-					+ e.getMessage());
+			bc.failedStep(
+					"Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
+							+ e.getMessage());
 		}
 	}
 }

@@ -439,17 +439,14 @@ public class DocExplorer_Regression_22 {
 		String random1 = "Image";
 
 		baseClass.stepInfo("Perform exclude filter by DocFileType");
-		docExplorer.performExculdeDocFileTypeFilter(random1);
+		docExplorer.performExculdeDocFileTypeFilter(random1,null);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForDocFileType();
 		
 		docExplorer.refreshPage();
 		baseClass.stepInfo("Perform exclude filter by DocFileType");
-		docExplorer.performExculdeDocFileTypeFilter(random1);
-
-		//Add another exclude filter by DocFileType
-		docExplorer.performUpdateExculdeDocFileTypeFilter(random);
+		docExplorer.performExculdeDocFileTypeFilter(random1,random);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForDocFileType();
