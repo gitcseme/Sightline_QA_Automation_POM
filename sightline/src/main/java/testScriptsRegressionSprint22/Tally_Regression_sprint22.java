@@ -21,6 +21,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -60,6 +61,74 @@ public class Tally_Regression_sprint22 {
 					+ "we wil get the error message as expected.");
 
 		}
+	}
+
+	/**
+	 *   @author Jayanthi.ganesan     @throws InterruptedException      
+	 */
+
+	@Test(description = "RPMXCON-56216", groups = { "regression" })
+	public void verifyErrorMsg_BulkAssign() throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56216");
+		bc.stepInfo("To Verify Proper Notification for Not Selecting Any documents and "
+				+ "performing Action \"Assign\" in Tally");
+		
+		String SearchName = "Tally" + Utility.dynamicNameAppender();
+		String assgnName = "Tally" + Utility.dynamicNameAppender();
+		String folderName = "Tally" + Utility.dynamicNameAppender();
+
+		String[] sourceName_RMU = { assgnName, folderName, SearchName, "Default Security Group" };
+
+		String[] tallyBy = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		SessionSearch ss = new SessionSearch(driver);
+		TagsAndFoldersPage tfPage = new TagsAndFoldersPage(driver);
+
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("Logged in as RMU.");
+
+		bc.stepInfo("**Pre Requisite Creation [folders/searches/assignment].**");
+		
+		ss.basicContentSearch(Input.TallySearch);
+
+		ss.saveSearchAtAnyRootGroup(SearchName, Input.mySavedSearch);
+
+		ss.bulkFolder(folderName);
+
+		ss.bulkAssign();
+		agnmt.FinalizeAssignmentAfterBulkAssign();
+		agnmt.createAssignment_fromAssignUnassignPopup(assgnName, Input.codeFormName);
+		agnmt.getAssignmentSaveButton().waitAndClick(5);
+		bc.stepInfo("Created a assignment " + assgnName);
+		driver.waitForPageToBeReady();
+		
+		bc.stepInfo("**PreRequisite Creation Ended.**");
+
+// iterating this for loop to change the sources for every iteration of loop
+		for (int k = 0; k < sourceName_RMU.length; k++) {
+			
+			// iterating this for loop to change the tally by option for every iteration of loop
+			for (int i = 0; i < tallyBy.length; i++) {
+				tp.navigateTo_Tallypage();
+				tp.sourceSelectionUsers("RMU", sourceName_RMU, k);
+				tp.selectTallyByMetaDataField(tallyBy[i]);
+				tp.verifyTallyChart();
+				tp.getTally_tallyactionbtn().ScrollTo();
+				tp.getTally_tallyactionbtn().waitAndClick(10);
+				tp.getBulkAssignAction(1).ScrollTo();
+				tp.getBulkAssignAction(1).Click();
+
+				bc.VerifyErrorMessage("Please select documents");
+
+				bc.passedStep("if we select source option as " + sourceName_RMU[k] + ""
+						+ " selecting tally by field as " + tallyBy[i]
+						+ " with out selecting docs if we click 'Assign' button error message displayed as expected.");
+			}
+		}
+		agnmt.deleteAssgnmntUsingPagination(assgnName);
+		tfPage.navigateToTagsAndFolderPage();
+		tfPage.deleteAllFolders(folderName);
 	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
