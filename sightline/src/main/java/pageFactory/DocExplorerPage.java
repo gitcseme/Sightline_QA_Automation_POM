@@ -3241,7 +3241,7 @@ public class DocExplorerPage {
 
 		doclist.getApplyFilter().waitAndClick(10);
 		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
-		if(bc.text("MS Word").isDisplayed()) {
+		if(bc.text(document).isDisplayed()) {
 			bc.passedStep("It return documents filter functionality by docs is working as expected");
 		}else {
 			bc.failedStep("It return documents filter functionality by docs is not working as expected");
