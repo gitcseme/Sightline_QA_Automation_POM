@@ -453,6 +453,7 @@ public class DocExplorer_Regression_22 {
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForDocFileType();
+		docExplorer.DocumentInDocFileTypeFilters(random1);
 
 		loginPage.logout();
 
