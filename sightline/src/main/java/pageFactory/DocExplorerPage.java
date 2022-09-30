@@ -3079,25 +3079,7 @@ public class DocExplorerPage {
 		bc.passedStep("DocView and Doc Explorer_Performance_Navigate through documents one by one- Successfully");
 	}
 	
-	public void DocumentInDocFileTypeFilters(String document) throws InterruptedException {
-
-		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocExp_DocFiletypeSearchName().Visible();
-			}
-		}), Input.wait30);
-		getDocExp_DocFiletypeSearchName().SendKeys(document);
-
-		doclist.getApplyFilter().waitAndClick(10);
-		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
-		if(bc.text("MS Word").isDisplayed()) {
-			bc.passedStep("It return documents filter functionality by docs is working as expected");
-		}else {
-			bc.failedStep("It return documents filter functionality by docs is not working as expected");
-		}
-	}
+	
 	
 	/**
 	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
@@ -3238,6 +3220,55 @@ public class DocExplorerPage {
 			e.printStackTrace();
 			bc.failedStep("Exception occcured while selecting documents or bulk tag" + e.getMessage());
 
+		}
+	}
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Document In DocFileType Filters
+	 *               
+	 */
+	public void DocumentInDocFileTypeFilters(String document) throws InterruptedException {
+
+		this.driver.getWebDriver().get(Input.url + "DocExplorer/Explorer");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocExp_DocFiletypeSearchName().Visible();
+			}
+		}), Input.wait30);
+		getDocExp_DocFiletypeSearchName().SendKeys(document);
+
+		doclist.getApplyFilter().waitAndClick(10);
+		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
+		if(bc.text("MS Word").isDisplayed()) {
+			bc.passedStep("It return documents filter functionality by docs is working as expected");
+		}else {
+			bc.failedStep("It return documents filter functionality by docs is not working as expected");
+		}
+	}
+	
+	/**
+	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
+	 * @Description: Method to verify documents after applying exclude functionality
+	 *               by Docfiletype.
+	 *               
+	 */
+	public void verifyExcludeFunctionlityForDocFileType() {
+
+		try {
+			driver.waitForPageToBeReady();
+			bc.waitForElement(getPresentDocCount());
+			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			if (doclist.getDocListFilterTable().Displayed()) {
+				bc.passedStep("Exclude filter functionality by folder is working as expected");
+			} else {
+				bc.failedStep("Exclude filter functionality by folder is not working as expected.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bc.failedStep("Exception occcured while verifying documents after applying exclude functionality by Docfiletype"
+					+ e.getMessage());
 		}
 	}
 }
