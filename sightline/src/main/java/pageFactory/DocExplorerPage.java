@@ -3241,6 +3241,8 @@ public class DocExplorerPage {
 
 		doclist.getApplyFilter().waitAndClick(10);
 		bc.stepInfo(" Value applied only to the \"DocFileType\" corresponding field.");
+		String documentMsg=getDocExp_DocumentList_info().getText();
+		bc.stepInfo(documentMsg);
 		if(bc.text(document).isDisplayed()) {
 			bc.passedStep("It return documents filter functionality by docs is working as expected");
 		}else {
@@ -3260,6 +3262,8 @@ public class DocExplorerPage {
 			driver.waitForPageToBeReady();
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
+			String documentMsg=getDocExp_DocumentList_info().getText();
+			bc.stepInfo(documentMsg);
 			if (doclist.getDocListFilterTable().Displayed()) {
 				bc.passedStep("Exclude filter functionality by folder is working as expected");
 			} else {
