@@ -467,6 +467,7 @@ public class Ingestion_Regression_6 {
 		ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
 		baseClass.selectproject();
 		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		baseClass.stepInfo("count :"+count);
 		if(count==0) {
 			baseClass.passedStep("Result of overlaid text not displayed when docs are not published");
 		}
