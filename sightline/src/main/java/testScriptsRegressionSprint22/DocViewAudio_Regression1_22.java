@@ -69,7 +69,7 @@ public class DocViewAudio_Regression1_22 {
 		loginPage = new LoginPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:22/09/2022 RPMXCON-51800
 	 * @throws Exception
@@ -89,9 +89,7 @@ public class DocViewAudio_Regression1_22 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String Assignname = "Assignment" + Utility.dynamicNameAppender();
-
 		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
-		List<String> searchTerm = new ArrayList<String>();
 
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -127,20 +125,11 @@ public class DocViewAudio_Regression1_22 {
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
-		//Advanced  Audio search1
-		sessionSearch.audioSearch(Input.audioSearchString2, Input.language);
-		sessionSearch.addPureHit();
-
-		// Audio search2
-		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString3, Input.language);
-		sessionSearch.addPureHit();
-
-		// Audio search3 And bulkassign
-		sessionSearch.addNewSearch();
-		sessionSearch.newAudioSearch(Input.audioSearchString1, Input.language);
+		sessionSearch.navigateToSessionSearchPageURL();
 		sessionSearch.bulkAssign();
 
 		// Select Assignment goto docview
@@ -151,12 +140,14 @@ public class DocViewAudio_Regression1_22 {
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:22/09/2022 RPMXCON-51808
 	 * @throws Exception
@@ -176,9 +167,7 @@ public class DocViewAudio_Regression1_22 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
-
 		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
-		List<String> searchTerm = new ArrayList<String>();
 
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -219,7 +208,9 @@ public class DocViewAudio_Regression1_22 {
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// Complete the document And SameAs Last
 		docviewPage.editingCodingFormWithCompleteButton();
@@ -227,15 +218,17 @@ public class DocViewAudio_Regression1_22 {
 		// Check Display persistant hit - notrepetative
 		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
+		docviewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString2);
 
 		// logout
 		loginPage.logout();
 	}
-	
+
 	/**
 	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
-	 *                   RPMXCON-51788
+	 *                 RPMXCON-51788
 	 * @throws Exception
 	 * @Description Verify that audio hits should be displayed when documents
 	 *              searched with same term and different/same threshold are
@@ -291,7 +284,7 @@ public class DocViewAudio_Regression1_22 {
 
 	/**
 	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
-	 *                   RPMXCON-51789
+	 *                 RPMXCON-51789
 	 * @throws Exception
 	 * @Description Verify that audio hits should be displayed when documents
 	 *              searched with common terms and different/same threshold are
@@ -349,7 +342,7 @@ public class DocViewAudio_Regression1_22 {
 
 	/**
 	 * @author:Krishna date: NA Modified date: NA Modified by: NA TestCase ID:
-	 *                   RPMXCON-51790
+	 *                 RPMXCON-51790
 	 * @throws Exception
 	 * @Description Verify that audio hits should be displayed when documents
 	 *              searched with common terms and different/same threshold are
@@ -395,7 +388,8 @@ public class DocViewAudio_Regression1_22 {
 			baseClass.waitTillElemetToBeClickable(docViewPage.getAudioPersistantHitEyeIcon());
 			docViewPage.getAudioPersistantHitEyeIcon().Click();
 			docViewPage.verifyingThePresenceOfPersistentHit(true, Input.audioSearchString1);
-			baseClass.passedStep("Searched in common terms in docview Triangular arrow icon is displayed in jplayer at the position.");
+			baseClass.passedStep(
+					"Searched in common terms in docview Triangular arrow icon is displayed in jplayer at the position.");
 			loginPage.logout();
 
 		}
@@ -420,9 +414,7 @@ public class DocViewAudio_Regression1_22 {
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
 		String Asssignment = "Assignment" + Utility.dynamicNameAppender();
 		String searchName1 = "Search Name" + UtilityLog.dynamicNameAppender();
-
 		String audioSearch = Input.audioSearchString2 + Input.audioSearchString3;
-		List<String> searchTerm = new ArrayList<String>();
 
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -432,7 +424,6 @@ public class DocViewAudio_Regression1_22 {
 		int purehit = sessionSearch.audioSearch(audioSearch, Input.language);
 		sessionSearch.viewInDocView();
 		baseClass.waitForElementCollection(docviewPage.getMiniDocListDocIdText());
-		List<String> DocIDInMiniDocList = baseClass.availableListofElements(docviewPage.getMiniDocListDocIdText());
 
 		// Audio search And Save
 		sessionSearch.navigateToSessionSearchPageURL();
@@ -447,7 +438,10 @@ public class DocViewAudio_Regression1_22 {
 		sessionSearch.addPureHit();
 		sessionSearch.saveSearch(searchName1);
 		// Click on bulkAssign
-		sessionSearch.bulkAssignWithNewAssignmentWithPersistantHit(Asssignment, Input.codingFormName);
+		sessionSearch.bulkAssignWithOutPureHit();
+
+		// Create Assigment
+		assignmentPage.assignmentCreation(Asssignment, Input.codingFormName);
 		assignmentPage.toggleCodingStampEnabled();
 		assignmentPage.add2ReviewerAndDistribute();
 		loginPage.logout();
@@ -460,9 +454,9 @@ public class DocViewAudio_Regression1_22 {
 		assignmentPage.SelectAssignmentByReviewer(Asssignment);
 
 		// Check Display persistant hit - notrepetative
-		docviewPage.selectDocIdInMiniDocList(DocIDInMiniDocList.get(purehit - 1));
 		driver.waitForPageToBeReady();
-		docviewPage.verifyingAudioPersistantHitPanelWithMoreThanOneSearcTerm(searchTerm);
+		baseClass.waitTillElemetToBeClickable(docviewPage.getAudioPersistantHitEyeIcon());
+		docviewPage.getAudioPersistantHitEyeIcon().Click();
 
 		// Complete the document And Navigate >>
 		docviewPage.editingCodingFormWithCompleteButton();
@@ -513,7 +507,7 @@ public class DocViewAudio_Regression1_22 {
 		assignmentsPage.SelectAssignmentByReviewer(assignmentname);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		// verifying the audio hits 
+		// verifying the audio hits
 		driver.waitForPageToBeReady();
 		docViewPage.verifyingAudioPersistantHitPanel(Input.audioSearchString1);
 		baseClass.passedStep(
@@ -521,12 +515,13 @@ public class DocViewAudio_Regression1_22 {
 		loginPage.logout();
 
 	}
+
 	@DataProvider(name = "PaRmuRev")
 	public Object[][] userLoginDetails() {
 		return new Object[][] { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
 				{ Input.rev1userName, Input.rev1password } };
 	}
-	
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		baseClass = new BaseClass(driver);
