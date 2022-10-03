@@ -897,6 +897,13 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getSecondOptInText() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRSecond']");
+	}
+	public Element getFirstOptInText() {
+		return driver.FindElementByXPath("//input[@id='rdbOCRFirst']/following-sibling::i");
+	}
+	
 	public Element getSlipMetadatTabSelection() {
 		return driver.FindElementByXPath("//span[text()='Metadata']//parent::a");
 	}

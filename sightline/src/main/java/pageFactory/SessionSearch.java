@@ -2037,7 +2037,12 @@ public class SessionSearch {
 		return driver.FindElementByXPath(
 				"//div[@id='" + action + "']//..//div[@class='col-md-3 bulkActionsSpanLoderTotal']");
 	}
-
+	//added by sowndarya
+	
+		public Element getTxtDownloadFile(String id ) {
+			return driver.FindElementByXPath("//table[@id='dt_basic']//td[contains(text(),'"+id+"')]//..//a[contains(text(),'Download File')]");
+		}
+	
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");

@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,6 +19,7 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.BatchPrintPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -90,6 +92,12 @@ public class Notification_22 {
 		} catch (Exception e) {
 			System.out.println("Sessions already closed");
 		}
+	}
+	
+	@DataProvider(name = "Users")
+	public Object[][] users() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password} };
+		return users;
 	}
 	
 	/**
@@ -581,4 +589,206 @@ public class Notification_22 {
 		loginPage.logout();
 	}
 
+
+/**
+ * @author sowndarya Testcase No:RPMXCON-54447
+ * @Description: Verify that correct status "Completed" appears on My BackGround screen when user performed Batch Print with 100+ documents from Shared with Me group
+ **/
+@Test(description = "RPMXCON-54447", enabled = true, groups = { "regression" })
+public void verifyCompletedOnBackgroundScreen() throws Exception {
+	base.stepInfo("RPMXCON-54447");
+	base.stepInfo(
+			"Verify that correct status Completed appears on My BackGround screen when user performed Batch Print with 100+ documents from shared With me group");
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	String Tag = "TAG" + Utility.dynamicNameAppender();
+	DocListPage doclist = new DocListPage(driver);
+
+	//create a tag
+	tagsAndFolderPage =new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(Tag, Input.securityGroup);
+	// configure query & view in doclist
+	sessionSearch.basicContentSearch(Input.searchStringStar);
+	sessionSearch.ViewInDocList();
+
+	// Sort in Docfilename in Desc Order
+	doclist.Selectpagelength("100");
+	doclist.selectAllDocumentsInCurrentPageOnly();
+
+	// bulk tag selected docs
+	driver.waitForPageToBeReady();
+	doclist.addNewBulkTag(Tag);
+
+	// Select TAG & Native
+	BatchPrintPage batchPrint= new BatchPrintPage(driver);
+	batchPrint.navigateToBatchPrintPage();
+	batchPrint.fillingSourceSelectionTab(Input.tag,Tag, true);
+	batchPrint.fillingBasisForPrinting(true, true, null);
+	batchPrint.navigateToNextPage(1);
+	batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+	// filling SlipSheet With metadata
+	batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+	batchPrint.navigateToNextPage(1);
+
+	// Filling Export File Name as 'DocID', select Sort by 'DocFileName' In
+	// "DESC" Order
+	batchPrint.selectSortingFromExportPage("DESC");
+	batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, true);
+	
+	base.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+	
+	String idValue=batchPrint.getBatchId(1).getText();
+	System.out.println("Id : "+ idValue);
+	sessionSearch.getTxtDownloadFile(idValue).isElementAvailable(200);
+	driver.Navigate().refresh();
+	
+	driver.waitForPageToBeReady();
+	String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
+	System.out.println("status is : "+status);
+
+	String passMsg="Batch Print status of Id : "+idValue +"is : "+status;
+	String failedMsg="Batch print status is not displayed as expected";
+	base.textCompareEquals(status, "COMPLETED", passMsg, failedMsg);
+	loginPage.logout();
+}
+
+/**
+ * @author sowndarya Testcase No:RPMXCON-54448
+ * @Description: Verify that correct status "InProgress" appears on My
+ *               BackGround screen when user performed Batch Print with 100+
+ *               documents from shared With me group
+ **/
+@Test(description = "RPMXCON-54448", enabled = true, groups = { "regression" })
+public void verifyInProgressOnBackgroundScreen() throws Exception {
+	base.stepInfo("RPMXCON-54448");
+	base.stepInfo(
+			"Verify that correct status InProgress appears on My BackGround screen when user performed Batch Print with 100+ documents from shared With me group");
+	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+	String Tag = "TAG" + Utility.dynamicNameAppender();
+	DocListPage doclist = new DocListPage(driver);
+
+	//create a tag
+	tagsAndFolderPage =new TagsAndFoldersPage(driver);
+	tagsAndFolderPage.createNewTagwithClassification(Tag, Input.securityGroup);
+	// configure query & view in doclist
+	sessionSearch.basicContentSearch(Input.searchStringStar);
+	sessionSearch.ViewInDocList();
+
+	// Sort in Docfilename in Desc Order
+	doclist.Selectpagelength("100");
+	doclist.selectAllDocumentsInCurrentPageOnly();
+
+	// bulk tag selected docs
+	driver.waitForPageToBeReady();
+	doclist.addNewBulkTag(Tag);
+
+	// Select TAG & Native
+	BatchPrintPage batchPrint= new BatchPrintPage(driver);
+	batchPrint.navigateToBatchPrintPage();
+	batchPrint.fillingSourceSelectionTab(Input.tag,Tag, true);
+	batchPrint.fillingBasisForPrinting(true, true, null);
+	batchPrint.navigateToNextPage(1);
+	batchPrint.fillingExceptioanlFileTypeTab(false, Input.documentKey, null, true);
+
+	// filling SlipSheet With metadata
+	batchPrint.fillingSlipSheetWithMetadata(Input.documentKey, true, null);
+	batchPrint.navigateToNextPage(1);
+
+	// Filling Export File Name as 'DocID', select Sort by 'DocFileName' In
+	// "DESC" Order
+	batchPrint.selectSortingFromExportPage("DESC");
+	batchPrint.generateBatchPrint(Input.documentKey, Input.documentKey, true);
+	
+	base.verifyMegaPhoneIconAndBackgroundTasks(true, true);
+	
+	String idValue=batchPrint.getBatchId(1).getText();
+	System.out.println("Id : "+ idValue);
+	String status = sessionSearch.getRowData_BGT_Page("STATUS", idValue);
+
+	String passMsg="Batch Print status of Id : "+idValue +"is : "+status;
+	String failedMsg="Batch print status is not displayed as expected";
+	base.textCompareEquals(status, "INPROGRESS", passMsg, failedMsg);
+	loginPage.logout();
+}
+
+/**
+ * @author NA Testcase No:RPMXCON-54418
+ * @Description: Verify that correct status In Progress appears on My BackGround screen when user clicks When All Results Are Ready button and search results are in progress on Advanced Search Screen
+ **/
+@Test(description = "RPMXCON-54418", dataProvider = "Users", enabled = true, groups = { "regression" })
+public void verifyStatusInprogressAllResReady(String userName, String passWord) throws Exception {
+	base.stepInfo("RPMXCON-54418");
+	base.stepInfo("Verify that correct status In Progress appears on My BackGround screen when user clicks \"When All Results Are Ready\" "
+			+ "button and search results are in progress on Advanced Search Screen.");
+	
+	loginPage.loginToSightLine(userName, passWord);
+	base.stepInfo("Logged in As " + userName);
+	base = new BaseClass(driver);
+	base.selectproject(Input.largeVolDataProject);
+	
+	sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR", Input.metaDataName, Input.searchStringStar, true);
+	sessionSearch.SearchBtnAction();
+	
+	sessionSearch.verifyTileSpinning();
+	String backGroundID = sessionSearch.handleWhenAllResultsPopUpDynamic();
+	
+	base.waitForElement(sessionSearch.getBullHornIcon());
+	sessionSearch.getBullHornIcon().waitAndClick(20);
+		
+	base.waitForElement(sessionSearch.getViewAllBtn());
+	sessionSearch.getViewAllBtn().waitAndClick(20);
+	
+	driver.waitForPageToBeReady();
+	base.stepInfo("Navigated to My BackGround Task Page...");
+	
+	String status = sessionSearch.getRowData_BGT_Page("STATUS", backGroundID);
+
+	SoftAssert asserts = new SoftAssert();
+	asserts.assertEquals(status, "INPROGRESS");
+	asserts.assertAll();
+	base.passedStep("Verify that correct status In Progress appears on My BackGround screen when user clicks When All Results Are Ready button and search results are in progress on Advanced Search Screen.");
+	loginPage.logout();
+}
+
+/**
+ * @author NA Testcase No:RPMXCON-54419
+ * @Description: Verify that correct statusIn Progress appears on My BackGround screen when user clicks When Pure Hits Are Ready button and search results are in progress on Advanced Search Screen
+ **/
+@Test(description = "RPMXCON-54419", dataProvider = "Users",enabled = true, groups = { "regression" })
+public void verifyStatusInprogressPurHitReady(String userName, String passWord) throws Exception {
+	base.stepInfo("RPMXCON-54419");
+	base.stepInfo("Verify that correct status \"In Progress\" appears on My BackGround screen when user clicks \"When Pure Hits Are Ready\" "
+			+ "button and search results are in progress on Advanced Search Screen");
+	
+	loginPage.loginToSightLine(userName, passWord);
+	base.stepInfo("Logged in As " + userName);
+	base = new BaseClass(driver);
+	base.selectproject(Input.largeVolDataProject);
+	
+	sessionSearch.metadataSearchesUsingOperators(Input.metaDataName, Input.custodianName_Andrew, "OR", Input.metaDataName, Input.searchStringStar, true);
+	sessionSearch.SearchBtnAction();
+	
+	sessionSearch.verifyTileSpinning();
+	String backGroundID = sessionSearch.handleWhenPureHitsAreReadyInBellyBandPopup(20);
+	
+	base.waitForElement(sessionSearch.getBullHornIcon());
+	sessionSearch.getBullHornIcon().waitAndClick(20);
+		
+	base.waitForElement(sessionSearch.getViewAllBtn());
+	sessionSearch.getViewAllBtn().waitAndClick(20);
+	
+	driver.waitForPageToBeReady();
+	base.stepInfo("Navigated to My BackGround Task Page...");
+	
+	String status = sessionSearch.getRowData_BGT_Page("STATUS", backGroundID);
+
+	SoftAssert asserts = new SoftAssert();
+	asserts.assertEquals(status, "INPROGRESS");
+	asserts.assertAll();
+	base.passedStep("Verify that correct status \"In Progress\" appears on My BackGround screen when user clicks \"When Pure Hits Are Ready\""
+			+ " button and search results are in progress on Advanced Search Screen.");
+	loginPage.logout();
+}
 }

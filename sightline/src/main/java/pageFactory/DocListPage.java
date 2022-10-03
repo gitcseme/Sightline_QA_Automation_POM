@@ -351,7 +351,7 @@ public class DocListPage {
 	}
 
 	public Element getTagUntagDocumentsDialogBox() {
-		return driver.FindElementByXPath("//span[text()='Tag/Untag Documents']");
+		return driver.FindElementByXPath("//h3[text()='Tag/Untag Documents']");
 	}
 
 	public Element getDocListDocCheckbox(String documentID) {

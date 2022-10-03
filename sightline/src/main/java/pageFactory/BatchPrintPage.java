@@ -456,6 +456,14 @@ public class BatchPrintPage {
 				"//table[@id='dt_basic']//tbody//td[text()[normalize-space()='" + id + "']]//following-sibling::td[8]");
 	}
 
+	//added by sowndarya
+	
+	public Element getBatchId(int i) {
+		return driver.FindElementByXPath(
+				"//table[@id='dt_basic']//td[@class='sorting_1']["+ i+"]");
+	}
+	
+	
 	public BatchPrintPage(Driver driver) {
 
 		this.driver = driver;
@@ -2421,7 +2429,8 @@ public class BatchPrintPage {
 	}
 
 	/**
-	 * @Author Baskar
+	 * @Author Baskar.Modified by sowndarya on 03/10/22
+	 * (changes success message as per new deployment)
 	 * @Description :filling and generate the batch print
 	 * @param exportFile   :export Filen Name
 	 * @param sortBy       : sort by DropDown
@@ -2445,7 +2454,7 @@ public class BatchPrintPage {
 		getGenerateButton().waitAndClick(5);
 
 		base.VerifySuccessMessage(
-				"Successfully initiated the batch print. You will be prompted with notification once completed.");
+				"The Batch Print has been successfully initiated. You will be notified once it has completed.");
 	}
 
 	/**
