@@ -919,7 +919,11 @@ public class UserManagement {
 	public Element getSameEmailErrorMsg() {
 		return driver.FindElementByXPath("//p[text()='20001000014 : The given user is already a system administrator and cannot be assigned another role.']");
 	}
+	public Element getRmuDashBoardPage() {
+		return driver.FindElementByXPath("//h1[text()[normalize-space()='Review Manager Dashboard for']]");
+	}
 
+	
 	public UserManagement(Driver driver) {
 
 		this.driver = driver;
