@@ -881,6 +881,8 @@ public class CollectionPage {
 
 		String expectedValue = collecctionName + "_" + defaultText + "_" + firstName + " " + lastName;
 		Boolean status = false;
+		System.out.println(actualValue);
+		System.out.println(expectedValue);
 
 		if (comparision) {
 			base.textCompareEquals(expectedValue, actualValue, "DataSet Name retrived as expected",
@@ -2574,6 +2576,69 @@ public class CollectionPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param dataName
+	 * @param colllectionData
+	 * @param AutoInitiate
+	 * @return
+	 */
+	public HashMap<String, String> dataSetsCreationBasedOntheGridAvailabilityT(String dataName,
+			HashMap<String, String> colllectionData, Boolean AutoInitiate) {
+
+		base.waitForElement(getCollectioName());
+		verifyCurrentTab("Collection Information");
+
+		// Enter Collection Name an initiate collection process
+		enterCollectionName(dataName);
+		String collectionID = getCollectionID().getText();
+		colllectionData.put(dataName, collectionID);
+		selectInitiateCollectionOrClickNext(AutoInitiate, true, true);
+
+		return colllectionData;
+
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @param dataName
+	 * @param firstName
+	 * @param lastName
+	 * @param collectionEmailId
+	 * @param selectedApp
+	 * @param colllectionData
+	 * @param selectedFolder
+	 * @param headerList
+	 * @param creationType
+	 * @param retryAttempt
+	 * @param AutoInitiate
+	 * @param saveAction
+	 * @param additional1
+	 * @param additional2
+	 * @return
+	 */
+	public HashMap<String, String> fillinDS(String dataName, String firstName, String lastName,
+			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
+			String selectedFolder, String[] headerList, String creationType, int retryAttempt, Boolean AutoInitiate,
+			String saveAction,Boolean additional1,String additional2) {
+
+		// Add DataSets
+		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, dataName, retryAttempt);
+
+		// Folder Selection
+		folderToSelect(selectedFolder, true, false);
+		applyAction("Save", "Confirm", "Dataset added successfully.");
+		driver.waitForPageToBeReady();
+
+		// verify DataSet Contents
+		verifyDataSetContents(headerList, firstName, lastName, selectedApp, collectionEmailId, dataSetNameGenerated,
+				selectedFolder, "-", "", false, 0);
+
+		return colllectionData;
+
 	}
 
 }

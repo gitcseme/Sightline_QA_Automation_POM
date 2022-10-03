@@ -701,6 +701,164 @@ public class O365Regression_22 {
 		login.logout();
 	}
 
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 09/29/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Start Collection' action when Collection is in 'Draft'
+	 *              status. RPMXCON-61037
+	 */
+	@Test(description = "RPMXCON-61037", enabled = true, groups = { "regression" })
+	public void verifyStartCollectionFromManageScreen() throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+		String selectedFolder = "Inbox";
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus };
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+
+		base.stepInfo("Test case Id: RPMXCON-61037 - O365");
+		base.stepInfo("Verify 'Start Collection' action when Collection is in 'Draft' status.");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Create new Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Collection Draft creation
+		collectionData = verifyUserAbleToSaveCollectionAsDraft(Input.pa1userName, Input.pa1password,
+				"Project Administrator", "SA", Input.sa1userName, Input.sa1password, selectedFolder, "", false);
+		String collectionId = base.returnKey(collectionData, "", false);
+		collectionName = collectionData.get(collectionId);
+
+		// Execute / Start collection Verifications
+		collection.getCollectionsPageAction(collectionId).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionId, "Start Collection").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Collection extraction process started successfully.");
+
+		// Verify Collection presence with expected Status
+		base.stepInfo(
+				"The application should start the collection process execution for the collection beginning with the first step i.e. 'Creation' - 'Retrieval'.");
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A
+	 * @throws Exception
+	 * @Date: 09/30/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : Verify 'Edit' action when Collection is in 'Draft' status.
+	 *              RPMXCON-61035
+	 */
+	@Test(description = "RPMXCON-61035", enabled = true, groups = { "regression" })
+	public void editCollectionDraftCheck() throws Exception {
+
+		HashMap<String, String> colllectionData = new HashMap<>();
+		HashMap<String, String> colllectionData2 = new HashMap<>();
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String headerList[] = { Input.collectionDataHeader1, Input.collectionDataHeader2, Input.collectionDataHeader3,
+				Input.collectionDataHeader4, Input.collectionDataHeader5, Input.collectionDataHeader6 };
+		String headerListDataSets[] = { "Collection Id", "Collection Status" };
+		String expectedCollectionStatus = "Draft";
+		String collectionID = "";
+		String[][] userRolesData = { { Input.pa1userName, "Project Administrator", "SA" } };
+		String collection2ndEmailId = Input.collection2ndEmailId;
+		String secondFirstName = Input.collsecondFirstName;
+		String secondlastName = Input.collsecondlastName;
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+
+		base.stepInfo("Test case Id: RPMXCON-61035 - O365");
+		base.stepInfo("Verify 'Edit' action when Collection is in 'Draft' status");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Login as User and verify Module Access
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// navigate to Collection page
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+
+		// Add DataSets
+		colllectionData = collection.dataSetsCreationBasedOntheGridAvailability(firstName, lastName, collectionEmailId,
+				selectedApp, colllectionData, selectedFolder, headerList, "", "Button", 3, false, "");
+
+		// navigate to Collection page and get the data
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		String collectionName = base.returnKey(colllectionData, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// Verify Collection presence
+		collection.verifyExpectedCollectionIsPresentInTheGrid(headerListDataSets, collectionName,
+				expectedCollectionStatus, true, false, "");
+
+		// Edit Verifications
+		collection.getCollectionsPageAction(collectionID).waitAndClick(5);
+		collection.getCollectionsPageActionList(collectionID, "Edit").waitAndClick(5);
+		base.waitForElement(collection.getCollectioName());
+		collection.verifyCurrentTab("Collection Information");
+		base.textCompareEquals(collection.getCollectionID().getText(), collectionID, "Collection id is retained ",
+				"Collection id not retained");
+		base.printResutInReport(base.ValidateElement_PresenceReturn(collection.getDisabledBackBtn()),
+				"Back button is disabled as Expected", "Back button is not disabled", "Pass");
+
+		// Add DataSets - 2nd
+		collectionName = collectionName + "Re";
+		colllectionData2 = collection.dataSetsCreationBasedOntheGridAvailabilityT(collectionName, colllectionData2,
+				false);
+		collectionName = base.returnKey(colllectionData2, "", false);
+		System.out.println(collectionName);
+		collectionID = colllectionData.get(collectionName);
+
+		// DataSet creation
+		collection.fillinDS(collectionName, secondFirstName, secondlastName, collection2ndEmailId, selectedApp,
+				colllectionData2, selectedFolder, headerList, "Button", 3, false, "Save", false, "");
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// Verify Page Navigation
+		driver.waitForPageToBeReady();
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 15);
+		driver.waitForPageToBeReady();
+
+		// Result
+		base.stepInfo(
+				"--------------------------------------------------------------------------------------------------------------------------");
+		base.stepInfo(
+				"Verified 'Edit' action when Collection is in 'Draft' status - Updated collection Name - Added datasets - Initiated Run");
+		base.stepInfo(
+				"--------------------------------------------------------------------------------------------------------------------------");
+
+		// Logout
+		login.logout();
+
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);
