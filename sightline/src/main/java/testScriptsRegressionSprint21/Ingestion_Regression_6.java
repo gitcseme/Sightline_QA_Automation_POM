@@ -19,6 +19,7 @@ import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.IngestionPage_Indium;
 import pageFactory.LoginPage;
+import pageFactory.ProjectPage;
 import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
@@ -35,6 +36,7 @@ public class Ingestion_Regression_6 {
 	DataSets dataSets;
 	SecurityGroupsPage securityGroup;
 	Input ip;
+	ProjectPage project;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -370,7 +372,7 @@ public class Ingestion_Regression_6 {
 	public void verifyPdfIsPathInDatOverlay() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-59387");
-		baseClass.stepInfo("Verify overlay inegstion with pdf option is path in dat");
+		baseClass.stepInfo("Verify overlay ingestion with pdf option is path in dat");
 		String ingestionName = null;
 		// Login as PA
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -416,9 +418,69 @@ public class Ingestion_Regression_6 {
 		dataSets.selectDataSetWithNameInDocView(ingestionName);
 		baseClass.verifyUrlLanding(Input.url + "DocumentViewer/DocView", " on docview page",
 					"Not on docview page");
-		baseClass.passedStep("Error not disaplayed when pdf is path in Dat option after performing overlay");
+		baseClass.passedStep("Error not displayed when pdf is path in Dat option after performing overlay");
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author :Arunkumar date: 03/10/2022 TestCase Id:RPMXCON-48627
+	 * Description :To verify that search result for overlaid text is not displays
+	 *  if document is not published
+	 * @throws InterruptedException
+	 */
+	@Test(description ="RPMXCON-48627",enabled = true, groups = { "regression" })
+	public void verifyResultOfOverlaidText() throws InterruptedException {
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-48627");
+		baseClass.stepInfo("Verify search result for overlaid text");
+		String ingestionName = null;
+		String BasicSearchName = "search"+Utility.dynamicNameAppender();
+		
+		//pre-requisite
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.stepInfo("Logged in as SA");
+		baseClass.stepInfo("Navigating to manage project page");
+		project = new ProjectPage(driver);
+		project.navigateToProductionPage();
+		baseClass.stepInfo("Disable auto analytics");
+		project.disableOrEnableKickOffAnalytics(Input.projectName,"Disable");
+		loginPage.logout();
+		// Login as PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		ingestionPage = new IngestionPage_Indium(driver);
+		baseClass.stepInfo("Perform add only ingestion with text files");
+		boolean status = ingestionPage.verifyIngestionpublish(Input.UniCodeFilesFolder);
+		if (status == false) {
+			ingestionPage.unicodeFilesIngestion(Input.datLoadFile1, Input.textFile1, Input.documentKey);
+			ingestionName =ingestionPage.publishAddonlyIngestion(Input.UniCodeFilesFolder);		
+		}
+		else {
+			ingestionName = ingestionPage.getPublishedIngestionName(Input.UniCodeFilesFolder);
+		}
+		baseClass.stepInfo("Unpublish docs");
+		sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		sessionSearch.saveSearch(BasicSearchName);
+		ingestionPage.unpublish(BasicSearchName);
+		baseClass.stepInfo("Perform overlay ingestion for unpublished text files");
+		ingestionPage.OverlayIngestionWithDat(Input.UniCodeFilesFolder, Input.datLoadFile1, Input.documentKey,
+				"text", Input.textFile1);
+		ingestionName=ingestionPage.verifyApprovedStatusForOverlayIngestion();
+		baseClass.selectproject();
+		int count =sessionSearch.MetaDataSearchInBasicSearch(Input.metadataIngestion,ingestionName);
+		if(count==0) {
+			baseClass.passedStep("Result of overlaid text not displayed when docs are not published");
+		}
+		else {
+			baseClass.failedStep("Result of overlaid text displayed without publishing docs");
+		}
+		loginPage.logout();
+		//setting kick off analytics back to default
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		ingestionPage.navigateToManageProjectPage();
+		project.disableOrEnableKickOffAnalytics(Input.projectName,"Enable");
+		loginPage.logout();
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)

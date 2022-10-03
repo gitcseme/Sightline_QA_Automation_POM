@@ -217,6 +217,17 @@ public class ProjectPage {
 	public Element getPageTitle() {
 		return driver.FindElementByClassName("page-title");
 	}
+	
+	//added by arun
+	public Element getKickOffAnalyticsCheckbox() {
+		 return driver.FindElementByXPath("//input[@id='chkAutoAnalytics']//following-sibling::i");
+	 }
+	 public Element getOptionStatus() {
+		 return driver.FindElementById("chkAutoIncrAnalytics");
+	 }
+	 public Element getIncrementalAnalyticsCheckbox() {
+		 return driver.FindElementByXPath("//input[@id='chkAutoIncrAnalytics']//following-sibling::i");
+	 }
 
 	// Annotation Layer added successfully
 	public ProjectPage(Driver driver) {
@@ -1118,6 +1129,64 @@ public class ProjectPage {
 		getProjectFilterButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		bc.stepInfo("filters are cleared");
+	}
+	
+	/**
+	 * @author: Arun Created Date: 03/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will select the project and click edit button
+	 *               
+	 */
+	public void selectProjectAndEdit(String projectName) {
+		filterTheProject(projectName);
+		bc.waitForElement(getEditBtn());
+		getEditBtn().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if(getProjectName().isElementAvailable(15)) {
+			bc.passedStep("Edit project page section displayed");
+		}
+		else {
+			bc.failedStep("edit project section not displayed");
+		}
+		
+	}
+	
+	/**
+	 * @author: Arun Created Date: 03/10/2022 Modified by: NA Modified Date: NA
+	 * @description: this method will disable/enable kickoff analytics
+	 *               
+	 */
+	public void disableOrEnableKickOffAnalytics(String project,String action) {
+		//select project and edit
+		selectProjectAndEdit(project);
+		driver.scrollingToBottomofAPage();
+		bc.waitForElement(getKickOffAnalyticsCheckbox());
+		String status = getOptionStatus().GetAttribute("disabled");
+		bc.stepInfo("status of kickoff analytics :" + status);
+		if(action.equalsIgnoreCase("Disable")) {
+			if(status=="true") {
+				bc.passedStep("kick off analytics disabled");
+			}
+			else if(status==null) {
+				getKickOffAnalyticsCheckbox().waitAndClick(10);
+				bc.passedStep("kick off analytics disabled");
+			}	
+		}
+		else if(action.equalsIgnoreCase("Enable")) {
+			if(status==null) {
+				bc.waitForElement(getIncrementalAnalyticsCheckbox());
+				getIncrementalAnalyticsCheckbox().waitAndClick(10);
+				bc.passedStep("kick off analytics already in enabled state");
+			}
+			else {
+				getKickOffAnalyticsCheckbox().waitAndClick(10);
+				bc.waitForElement(getIncrementalAnalyticsCheckbox());
+				getIncrementalAnalyticsCheckbox().waitAndClick(10);
+				bc.passedStep("kick off analytics enabled");
+			}
+		}
+		bc.waitForElement(getButtonSaveProject());
+		getButtonSaveProject().waitAndClick(10);
+		bc.VerifySuccessMessage("Project updated successfully");
 	}
 
 
