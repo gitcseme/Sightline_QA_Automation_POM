@@ -283,7 +283,7 @@ public class DocListPage {
 
 	public Element getSelectFolderExisting(String folderName) {
 		return driver.FindElementByXPath(
-				"//div[@id='divBulkFolderJSTree']//a[text()='" + folderName + "']/i[contains(@class,'checkbox')]");
+				"//div[@id='divBulkFolderJSTree']//a[text()='" + folderName + "']");
 	}
 
 	public Element getContinueCount() {
@@ -338,7 +338,7 @@ public class DocListPage {
 		// return
 		// driver.FindElementByXPath("//div[@id='divBulkFolderJSTree']//a[text()='FolderProd2462676']/i[contains(@class,'checkbox')]");
 		return driver.FindElementByXPath(
-				"//div[@id='divBulkTagJSTree']//a[text()='" + tagname + "']/i[contains(@class,'checkbox')]");
+				"//*[@id='divBulkTagJSTree']//a[contains(.,'"+tagname+"')]");
 	}
 
 	public Element getContinueButton() {
