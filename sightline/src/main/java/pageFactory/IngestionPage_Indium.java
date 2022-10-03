@@ -7541,7 +7541,6 @@ public class IngestionPage_Indium {
 
 			} else if (status.contains("Approved")) {
 				base.passedStep("Approved completed");
-				runFullAnalysisAndPublish();
 				break;
 
 			} else if (status.contains("In Progress")) {
