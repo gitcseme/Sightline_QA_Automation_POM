@@ -28702,7 +28702,20 @@ public class DocViewPage {
 			base.failedStep("Triangular Arrow icon in the Persistent Hits panel is Not Dislplayed");
 		}
 		}
-
+	/**
+	 * @author Brundha.T
+	 * @return
+	 * @Description:get total pages count in docview 
+	 */
+	public int  getTotalPagesCount() {
+		base.stepInfo("Getting pagecount of document in docview");
+		base.waitTime(2);
+		String pagesCount = totalPageCount().getText();
+		String[] pageCnt = pagesCount.split(" ");
+		int pagesCnt = Integer.parseInt(pageCnt[1].trim());
+		System.out.println(pagesCnt);
+		return pagesCnt;
+	}
 }
 
 
