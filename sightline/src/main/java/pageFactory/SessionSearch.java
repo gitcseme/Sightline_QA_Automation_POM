@@ -105,7 +105,10 @@ public class SessionSearch {
 	}
 
 	// added by jeevitha
-
+	public Element contentAndMetaDataResult() {
+        return driver.FindElementByXPath("//td[text()='Content and Metadata']/parent::tr//span[@class='badge']");
+    }
+	
 	public Element getFromBatesBtn() {
 		return driver.FindElementByXPath("//input[@id='BatesFrom']");
 	}

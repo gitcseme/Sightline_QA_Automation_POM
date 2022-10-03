@@ -859,6 +859,145 @@ public class O365Regression_22 {
 
 	}
 
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify the validation message for Custodian name on clearing
+	 *              the same field [RPMXCON-61631]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61631", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyValidationMessage(String username, String password, String fullname) throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+
+		String[][] userRolesData = { { username, fullname, "SA" } };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61631 - O365");
+		base.stepInfo("Verify the validation message for Custodian name on clearing the same field");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Add DataSets
+		collection.addDataSetWithHandles("Button", firstName, lastName, collectionEmailId, selectedApp, collectionData,
+				collectionName, 3);
+
+		// Edit folder name and verify Dataset Selection Table
+		driver.waitForPageToBeReady();
+		base.clearATextBoxValue(collection.getCustodianIDInputTextField());
+
+		// Verify Custodian Fields Error Message
+		collection.verifyErrorMessageOfDatasetTab(true, true, false);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify that user can initiate collection on "Manage Screen"
+	 *              screen [RPMXCON-61034]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61034", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyCanInitiateCollection(String username, String password, String fullname) throws Exception {
+		HashMap<String, String> collectionData = new HashMap<>();
+
+		String collectionEmailId = Input.collectionDataEmailId;
+		String firstName = Input.collectionDataFirstName;
+		String lastName = Input.collectionDataLastName;
+		String selectedApp = Input.collectionDataselectedApp;
+		String selectedFolder = "Inbox";
+		String headerListDataSets[] = { "Collection Id", "Collection Status", "Error Status" };
+		String[] statusListToVerify = { Input.creatingDSstatus, Input.retreivingDSstatus, Input.virusScanStatus,
+				Input.copyDSstatus };
+		String[] statusList = { "Completed" };
+		String[][] userRolesData = { { username, fullname, "SA" } };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61034 - O365");
+		base.stepInfo("Verify that user can initiate collection on \"Manage Screen\" screen");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Start Collection
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collectionData = collection.createNewCollection(collectionData, collectionName, true, null, false);
+
+		// Add Dataset
+		collection.fillingDatasetSelection("Button", firstName, lastName, collectionEmailId, selectedApp,
+				collectionData, collectionName, 3, selectedFolder, false, false, false, "-", true, true, "Save", "");
+
+		// Initiate collection
+		collection.clickOnNextAndStartAnCollection();
+
+		// verify Completed Status
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.verifyExpectedCollectionStatus(false, headerListDataSets, collectionName, statusListToVerify, 10,
+				true, false, "", "");
+
+		// Completed status check
+		collection.verifyStatusUsingContainsTypeII(headerListDataSets, collectionName, statusList, 10);
+
+		// Logout
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha R
+	 * @Description : Verify that if Tenant ID is configured for the source location
+	 *              then data source authentication will not perform [RPMXCON-61043]
+	 * @throws Exception
+	 */
+	@Test(description = "RPMXCON-61043", dataProvider = "PaAndRmuUser", enabled = true, groups = { "regression" })
+	public void verifyyAuthenticationIsNotRequired(String username, String password, String fullname) throws Exception {
+		String[][] userRolesData = { { username, fullname, "SA" } };
+		String collectionName = "Collection" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-61043 - O365");
+		base.stepInfo(
+				"Verify that if Tenant ID is configured for the source location then data source authentication will not perform");
+
+		// Login and Pre-requesties
+		login.loginToSightLine(username, password);
+
+		// Pre-requesties - Access verification
+		base.stepInfo("Collection Access Verification");
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+
+		// Add DataSets
+		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
+		collection.performCreateNewCollection();
+
+		// Select source and Click create New Collection
+		String dataSourceName = collection.selectSourceFromTheListAvailable();
+
+		// click created source location and verify navigated page
+		collection.verifyCollectionInfoPage(dataSourceName, collectionName, false);
+		base.passedStep(" tenant id is stored, it is not require to authenticate to the data source");
+
+		// Logout
+		login.logout();
+	}
+
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		Reporter.setCurrentTestResult(result);

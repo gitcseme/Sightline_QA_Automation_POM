@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
@@ -36,8 +37,8 @@ public class BulkActions_Sprint22 {
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-	//	in = new Input();
-	//	in.loadEnvConfig();
+//		in = new Input();
+//		in.loadEnvConfig();
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 	}
@@ -167,6 +168,64 @@ public class BulkActions_Sprint22 {
 		saveSearch.deleteSearch(searchName1, Input.mySavedSearch, "Yes");
 		loginPage.logout();
 
+	}
+
+	/**
+	 * @author Raghuram.A
+	 * @Date: 10/03/22
+	 * @Modified date:N/A
+	 * @Modified by: N/A
+	 * @Description : To verify that in Bulk Assign, the Email inclusive sampling
+	 *              method working as expected. RPMXCON-54464
+	 */
+	@Test(description = "RPMXCON-54464", groups = { "regression" }, enabled = true)
+	public void verifyParentDocCountDisplayedAsExpected() throws InterruptedException {
+
+		AssignmentsPage assign = new AssignmentsPage(driver);
+		DocListPage docList = new DocListPage(driver);
+
+		String finalCount;
+		String docCount;
+		String assignName = "assignName" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-54464 Bulk Actions");
+		baseClass.stepInfo("To verify that in Bulk Assign, the Email inclusive sampling method working as expected");
+
+		// login as Users
+		baseClass.stepInfo("**Step-1 Login as User**");
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Assignment creation
+		baseClass.stepInfo("**Step-2 Create new assignment from assignments**");
+		assign.createAssignment(assignName, Input.codingFormName);
+
+		// performing searching and saving it in newly created node
+		baseClass.stepInfo("**Step-3 Search for inclusive email  and click on assign to bulk assign**");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+
+		// Bulk Assign via SessionSearch
+		baseClass.stepInfo("**Step-4 Select assignment name and sampling method as inclusive email  and finalize**");
+		finalCount = assign.assignwithSamplemethod(assignName, "Inclusive Email", null);
+
+		baseClass.stepInfo("**Step-5 Go to assignments and select the assignment  created**");
+		assign.Viewindoclistfromassgn(assignName);
+		driver.waitForPageToBeReady();
+
+		// Parent doc count verification
+		baseClass.stepInfo(
+				"**Step-6 Navigate to doc list of assignment and check if the parent level docs are assigned**");
+		docCount = docList.verifyingDocCount();
+
+		// Doc count comparision
+		baseClass.stepInfo(
+				"Verify that count displayed in the \"Total\" are the count of inclusive email Documents only.");
+		baseClass.textCompareEquals(finalCount, docCount,
+				"Only Inclusive Email Documents are listed in the doclist page",
+				"Other than parent level docs are listed - Count mismatches");
+
+		// logout
+		loginPage.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
