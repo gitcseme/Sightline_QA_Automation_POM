@@ -2622,7 +2622,7 @@ public class CollectionPage {
 	public HashMap<String, String> fillinDS(String dataName, String firstName, String lastName,
 			String collectionEmailId, String selectedApp, HashMap<String, String> colllectionData,
 			String selectedFolder, String[] headerList, String creationType, int retryAttempt, Boolean AutoInitiate,
-			String saveAction,Boolean additional1,String additional2) {
+			String saveAction, Boolean additional1, String additional2) {
 
 		// Add DataSets
 		String dataSetNameGenerated = addDataSetWithHandles(creationType, firstName, lastName, collectionEmailId,
@@ -2639,6 +2639,30 @@ public class CollectionPage {
 
 		return colllectionData;
 
+	}
+
+	public void verifyErrorMessageOfDatasetTab(boolean clickSaveBtn, boolean custodianErrorMsg,
+			boolean datasetErrorMsg) {
+		if (clickSaveBtn) {
+			base.waitForElement(getActionBtn("Save"));
+			getActionBtn("Save").waitAndClick(5);
+		}
+
+		driver.waitForPageToBeReady();
+		if (custodianErrorMsg) {
+			base.waitForElement(getCustodianNameErrorMsg());
+			String actualErrorMsg = getCustodianNameErrorMsg().getText();
+			String expectedErrorMsg = "Please select a custodian name/email.";
+			base.textCompareEquals(actualErrorMsg, expectedErrorMsg, "Custodian Error Msg is : " + actualErrorMsg,
+					" as expected");
+		}
+		if (datasetErrorMsg) {
+			base.waitForElement(getDatasetNameErrorMsg());
+			String actualDatasetsErrorMsg = getDatasetNameErrorMsg().getText();
+			String expectedDatasetsErrorMsg = "Please enter dataset name.";
+			base.textCompareEquals(actualDatasetsErrorMsg, expectedDatasetsErrorMsg,
+					"Datasets Error Msg is : " + actualDatasetsErrorMsg, " as expected");
+		}
 	}
 
 }

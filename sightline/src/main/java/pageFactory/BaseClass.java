@@ -4572,4 +4572,11 @@ public class BaseClass {
 
 		return valueToReturn;
 	}
+	
+	public void clearATextBoxValue(Element element) {
+		element.waitAndClick(10);
+		waitForElement(element);
+		element.Clear();
+
+	}
 }
