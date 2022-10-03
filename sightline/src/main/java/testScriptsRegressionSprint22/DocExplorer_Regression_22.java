@@ -411,7 +411,7 @@ public class DocExplorer_Regression_22 {
 		baseClass.stepInfo("Select a mulitple document and select bulk Tag action");
 		docExplorer.selectDocument(10);
 
-		docExplorer.selectDocAndBulkUnTagDocs(random);
+		docExplorer.selectDocAndBulkTag(random);
 		baseClass.passedStep("Success message is displayed, Documents should be Untagged from the selected tag");
 
 		loginPage.logout();
@@ -439,17 +439,23 @@ public class DocExplorer_Regression_22 {
 		String random1 = "Image";
 
 		baseClass.stepInfo("Perform exclude filter by DocFileType");
-		docExplorer.performExculdeDocFileTypeFilter(random,null);
+		docExplorer.performExculdeDocFileTypeFilter(random1);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForDocFileType();
-		
+
+		baseClass.stepInfo("Refresh page");
 		docExplorer.refreshPage();
+
 		baseClass.stepInfo("Perform exclude filter by DocFileType");
-		docExplorer.performExculdeDocFileTypeFilter(random,random1);
+		docExplorer.performExculdeDocFileTypeFilter(random1);
+
+		baseClass.stepInfo("Perform another exclude filter by DocFileType");
+		docExplorer.performUpdateExculdeDocFileTypeFilter(random);
 
 		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForDocFileType();
+
 	
 		loginPage.logout();
 
