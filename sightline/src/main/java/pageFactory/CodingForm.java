@@ -1447,7 +1447,7 @@ public class CodingForm {
 	}
 
 	public Element getStep1CfPopUp() {
-		return driver.FindElementByXPath("//span[text()='Add / Remove Coding Forms in this Security Group']");
+		return driver.FindElementByXPath("//h3[text()='Add / Remove Coding Forms in this Security Group']");
 	}
 
 	public Element getStep2CfPopUp() {
