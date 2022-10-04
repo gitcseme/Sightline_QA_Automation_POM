@@ -318,4 +318,112 @@ public class DocView_Redactions_22 {
 		redactac.DeleteRedaction(RedactName);
 	}
 
+	/**
+	 * 
+	 * @author Krishna Date: Modified date:N/A Modified by::N/A Test caseID:48037
+	 *         Description: Verify that on Saving
+	 *         document/Redactions/Annotations/Reviewer Remarks should not affect
+	 *         the displayed tab of the Analytics Panel
+	 */
+
+	@Test(description = "RPMXCON-48037", enabled = true, dataProvider = "userDetails", groups = { "regression" })
+
+	public void verifySavingDocNotAffectDisplayedTabAnalayticalPanel(String fullName, String userName, String password)
+			throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-48037");
+		baseClass.stepInfo(
+				"Verify that on Saving document/Redactions/Annotations/Reviewer Remarks should not affect the displayed tab of the Analytics Panel");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		SoftAssert softassert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		final String remark = Input.randomText + Utility.dynamicNameAppender();
+
+		// login as
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("User successfully logged into slightline webpage  RMU as with " + Input.rmu1userName + "");
+		baseClass.stepInfo(
+				"Verify that when applies ‘This Page’ redaction, the redaction popup should automatically select the redaction tag that was last applied across user session(s)");
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewNearDupeDocumentsInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(15);
+		baseClass.stepInfo("Neardupe Tab is selected from the analytical panel");
+		driver.waitForPageToBeReady();
+		docView.editCodingFormSave();
+		softassert.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeWholeTabel().isDisplayed());
+		softassert.assertAll();
+		baseClass.passedStep("After saved document and Selected tab of analytics panel is not get affected ");
+
+		driver.waitForPageToBeReady();
+		docViewMetaDataPage.clickOnRedactAndRectangle();
+		docViewMetaDataPage.redactbyrectangle(10, 15, Input.defaultRedactionTag);
+		softassert.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeWholeTabel().isDisplayed());
+		softassert.assertAll();
+		baseClass.passedStep("After saved document and Selected tab of analytics panel is not get affected ");
+
+		driver.waitForPageToBeReady();
+		docView.performNonAudioAnnotation();
+		softassert.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeWholeTabel().isDisplayed());
+		softassert.assertAll();
+		baseClass.passedStep("After saved document and Selected tab of analytics panel is not get affected ");
+
+		baseClass.stepInfo("Perform Remark with save");
+		driver.waitForPageToBeReady();
+		docViewMetaDataPage.performRemarkWithSaveOperation(5, 55, remark);
+		softassert.assertTrue(docView.getDocView_AnalyticsPanel_NearDupeWholeTabel().isDisplayed());
+		softassert.assertAll();
+		baseClass.passedStep("After saved document and Selected tab of analytics panel is not get affected ");
+
+	}
+
+	/**
+	 * 
+	 * @author Krishna Date: Modified date:N/A Modified by::N/A Test caseID:49987
+	 *         Description :Verify that after editing a redaction and applies a
+	 *         redaction tag to a redaction, then this applied redaction tag should
+	 *         be considered as the latest redaction tag
+	 */
+
+	@Test(description = "RPMXCON-49987", enabled = true, groups = { "regression" })
+
+	public void verifyAfterEditingRedactionApplyRedactionTag() throws Exception {
+		baseClass.stepInfo("Test case Id: RPMXCON-49987");
+		baseClass.stepInfo(
+				"Verify that after editing a redaction and applies a redaction tag to a redaction, then this applied redaction tag should be considered as the latest redaction tag");
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		DocViewMetaDataPage docViewMetaDataPage = new DocViewMetaDataPage(driver);
+		DocViewRedactions redact = new DocViewRedactions(driver);
+		String RedactName = "newRedac" + Utility.dynamicNameAppender();
+		RedactionPage redactac = new RedactionPage(driver);
+
+		// Login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
+		redactac.AddRedaction(RedactName, Input.rmu1FullName);
+		redactac.EditRedaction(RedactName);
+		driver.waitForPageToBeReady();
+
+		// document searched and navigated to DocView
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Clicked on reduction button ");
+		baseClass.waitForElement(docViewMetaDataPage.getRedactIcon());
+		docViewMetaDataPage.getRedactIcon().waitAndClick(15);
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(redact.thisPageRedaction());
+		baseClass.waitTillElemetToBeClickable(redact.thisPageRedaction());
+		redact.thisPageRedaction().waitAndClick(5);
+		baseClass.stepInfo("Selected on this page add redaction");
+		redact.verifySelectDefaultRedactionTag(Input.defaultRedactionTag, RedactName);
+		baseClass.passedStep("After editing a redaction as the latest redaction tag is saved successfully");
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		redactac.DeleteRedaction(RedactName);
+	}
 }
