@@ -574,6 +574,242 @@ public class Production_Regression22 {
 		tagsAndFolderPage.DeleteTagWithClassificationInRMU(tagname);
 		loginPage.logout();
 	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-63236
+	 * @Description: Verify that existing Production template should display with 'Skip text generation/OCR for non-redacted docs' "
+				+ "under Text section and Production should be generated successfully using same template
+	 **/
+	@Test(description = "RPMXCON-63236", enabled = true, groups = { "regression" })
+	public void verifyExProdTemplWIthSkipTextGen() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base = new BaseClass(driver);
+		base.stepInfo("Test Cases Id : RPMXCON-63236");
+		base.stepInfo(
+				"Verify that existing Production template should display with 'Skip text generation/OCR for non-redacted docs' "
+				+ "under Text section and Production should be generated successfully using same template");
+	
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String bates = "B" + Utility.dynamicNameAppender();
+		String templateName = "Temp" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// create tag 	
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.removeAllAddedTiles();
+		sessionSearch.newMetaDataSearchInBasicSearch("DocFileType", "TEXT");
+		sessionSearch.ViewInDocList();
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		page.navigateToProductionPage();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSectionWithBates(Input.bates, Input.batesNumber, bates);
+		page.fillingPDFSection(tagname);
+		page.fillingTextSection();
+		base.waitForElement(page.getRdbOcr());
+		page.getRdbOcr().waitAndClick(5);
+		base.waitForElement(page.getOkButton());
+		page.getOkButton().waitAndClick(4);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();	
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		page.navigateToProductionPage();
+		page.selectSavedTemplateAndManageTemplate(productionname, templateName);
+		driver.waitForPageToBeReady();
+		page.getTextTab().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		String option = page.getSecondOptInText().Value();
+		System.out.println(option);
+		softAssertion.assertEquals(option, "True");
+		softAssertion.assertAll();
+		
+		page.navigateToProductionPage();
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProductiontWithTemplate(productionname, templateName);
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();	
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();		
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		String name = page.getProduction().getText().trim();
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File DatFile = new File(home + "/Downloads/VOL0001/Load Files/" + name + "_DAT.dat");
+		File pdfFile = new File(
+				home + "/Downloads/" + "VOL0001/PDF/0001/" + prefixID + beginningBates + suffixID + ".pdf");
+		File textFile = new File(
+				home + "/Downloads/" + "VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+		
+		if (DatFile.exists()) {
+			base.passedStep("Dat File Generated As Expected");
+		} else {
+			base.failedStep("Dat File Not Generated As Expected");
+		}
+		if (pdfFile.exists()) {
+			base.passedStep("PDF File Generated As Expected");
+		} else {
+			base.failedStep("PDF File Not Generated As Expected");
+		}
+		if (textFile.exists()) {
+			base.passedStep("TEXT File Generated As Expected");
+		} else {
+			base.failedStep("TEXT File Not Generated As Expected");
+		}
+		base.passedStep("Verify that existing Production template should display with 'Skip text generation/OCR for non-redacted docs' under"
+				+ " Text section and Production should be generated successfully using same template");
+		loginPage.logout();
+	}
+	
+	/**
+	 * @author sowndarya Testcase No:RPMXCON-63237
+	 * @Description: Verify when user selects existing production template and selects 'Do not OCR non-redacted docs...' "
+				+ "in Production-text component then it should export blank text for non-redacted document.
+	 **/
+	@Test(description = "RPMXCON-63237", enabled = true, groups = { "regression" })
+	public void verifyExProdTemplWIthSkipTextGenDoNotOCR() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base = new BaseClass(driver);
+		base.stepInfo("Test Cases Id : RPMXCON-63237");
+		base.stepInfo(
+				"Verify when user selects existing production template and selects 'Do not OCR non-redacted docs...' "
+				+ "in Production-text component then it should export blank text for non-redacted document.");
+	
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = "A_" + Utility.dynamicNameAppender();
+		String suffixID = "_P" + Utility.dynamicNameAppender();
+		String bates = "B" + Utility.dynamicNameAppender();
+		String templateName = "Temp" + Utility.dynamicNameAppender();
+		
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		// create tag 	
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+
+		// search for tag
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.metaDataSearchInBasicSearch("DocFileType", "Spreadsheet");
+		sessionSearch.ViewInDocList();
+		DocListPage doclist = new DocListPage(driver);
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		sessionSearch.navigateToSessionSearchPageURL();
+		sessionSearch.addNewSearch();
+		sessionSearch.removeAllAddedTiles();
+		sessionSearch.newMetaDataSearchInBasicSearch("DocFileType", "TEXT");
+		sessionSearch.ViewInDocList();
+		doclist.documentSelection(2);
+		doclist.bulkTagExistingFromDoclist(tagname);
+		
+		page.navigateToProductionPage();
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSectionWithBates(Input.bates, Input.batesNumber, bates);
+		page.fillingPDFSection(tagname);
+		page.fillingTextSection();
+		base.waitForElement(page.getRdbOcr());
+		page.getRdbOcr().waitAndClick(5);
+		base.waitForElement(page.getOkButton());
+		page.getOkButton().waitAndClick(4);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();	
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		
+		page.navigateToProductionPage();
+		page.selectSavedTemplateAndManageTemplate(productionname, templateName);
+		driver.waitForPageToBeReady();
+		
+		page.navigateToProductionPage();
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.addANewProductiontWithTemplate(productionname, templateName);	
+		base.waitForElement(page.getTextTab());
+		page.getTextTab().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		String option = page.getSecondOptInText().Value();
+		System.out.println(option);
+		softAssertion.assertEquals(option, "True");
+		
+		base.waitForElement(page.getbtnComponentsMarkIncomplete());
+		page.getbtnComponentsMarkIncomplete().waitAndClick(3);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(page.getFirstOptInText());
+		page.getFirstOptInText().waitAndClick(5);
+		
+		page.navigateToNextSection();
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();	
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		base.waitUntilFileDownload();
+		driver.waitForPageToBeReady();
+		String home = System.getProperty("user.home");
+		page.deleteFiles();
+		page.extractFile();
+		driver.waitForPageToBeReady();
+		File textFile = new File(
+				home + "/Downloads/" + "VOL0001/Text/0001/" + prefixID + beginningBates + suffixID + ".txt");
+		
+		if (textFile.exists()) {
+			base.passedStep("Text File Generated As Expected");
+		} else {
+			base.failedStep("Text File Not Generated As Expected");
+		}
+		base.passedStep("Verify when user selects existing production template and selects 'Do not OCR non-redacted docs...'"
+				+ " in Production-text component then it should export blank text for non-redacted document.");
+		loginPage.logout();
+		}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);
