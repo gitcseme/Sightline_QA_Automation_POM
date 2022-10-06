@@ -1,4 +1,4 @@
-package testScriptsRegressionSprint21;
+package testScriptsRegressionSprint22;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -282,7 +282,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-60860",enabled = true, groups = { "regression" })
-	public void verifyDatIngestionMoreThan400Chars() throws InterruptedException {
+	public void TCA6verifyDatIngestionMoreThan400Chars() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-60860");
 		baseClass.stepInfo("Verify ingestion Dat file data having more than 400 chars.");
@@ -304,6 +304,9 @@ public class Ingestion_Regression_6 {
 			ingestionPage.runFullAnalysisAndPublish();
 			baseClass.passedStep("User able to ignore error and publish ingestion");
 		}
+		else {
+			baseClass.passedStep("Ingestion already present in the project");
+		}
 		loginPage.logout();
 	}
 	
@@ -314,7 +317,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-59386",enabled = true, groups = { "regression" })
-	public void verifyPdfIsPathInDatAddOnly() throws InterruptedException {
+	public void TCA7verifyPdfIsPathInDatAddOnly() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-59386");
 		baseClass.stepInfo("Verify add only ingestion with pdf option is path in dat");
@@ -369,7 +372,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-59387",enabled = true, groups = { "regression" })
-	public void verifyPdfIsPathInDatOverlay() throws InterruptedException {
+	public void TCA8verifyPdfIsPathInDatOverlay() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-59387");
 		baseClass.stepInfo("Verify overlay ingestion with pdf option is path in dat");
@@ -429,7 +432,7 @@ public class Ingestion_Regression_6 {
 	 * @throws InterruptedException
 	 */
 	@Test(description ="RPMXCON-48627",enabled = true, groups = { "regression" })
-	public void verifyResultOfOverlaidText() throws InterruptedException {
+	public void TCA9verifyResultOfOverlaidText() throws InterruptedException {
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-48627");
 		baseClass.stepInfo("Verify search result for overlaid text");
