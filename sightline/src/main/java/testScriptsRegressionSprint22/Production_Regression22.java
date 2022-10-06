@@ -809,7 +809,106 @@ public class Production_Regression22 {
 		loginPage.logout();
 		}
 	
-	
+	/**
+	 * @author Brundha Testcase No:RPMXCON-49731
+	 * @Description:Verify regeneration of production if user add/edit branding in
+	 *                     TIFF/PDF section
+	 **/
+	@Test(description = "RPMXCON-49731", enabled = true, groups = { "regression" })
+	public void verifyingBrandingTextInReGeneratedDocuments() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("RPMXCON-49731 -Production Component");
+		base.stepInfo("Verify regeneration of production if user add/edit branding in TIFF/PDF section");
+
+		String tagname = "Tag" + Utility.dynamicNameAppender();
+		String productionname = "p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+		String PlaceholderText = "Confidentiality";
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.createNewTagwithClassificationInRMU(tagname, "Select Tag Classification");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.SearchMetaData("RequirePDFGeneration", Input.pageCount);
+		sessionSearch.ViewInDocList();
+
+		DocListPage doc = new DocListPage(driver);
+		doc.documentSelection(3);
+		sessionSearch.bulkTagExisting(tagname);
+		doc.documentSelection(3);
+		doc.viewSelectedDocumentsInDocView();
+
+		DocViewPage Doc = new DocViewPage(driver);
+		DocViewRedactions DocRedactions = new DocViewRedactions(driver);
+		base.waitTime(3);
+		DocRedactions.redactRectangleUsingOffset(10, 10, 20, 20);
+		driver.waitForPageToBeReady();
+		DocRedactions.selectingRedactionTag2(Input.defaultRedactionTag);
+		int PageCount = Doc.getTotalPagesCount();
+
+		DocRedactions.selectDoc2();
+		driver.waitForPageToBeReady();
+		int PageCount2Doc = Doc.getTotalPagesCount();
+
+		DocRedactions.doclistTable(3).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		int PageCount3Doc = Doc.getTotalPagesCount();
+
+		ProductionPage page = new ProductionPage(driver);
+		String beginningBates = page.getRandomNumber(2);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.selectGenerateOption(true);
+		page.fillingBrandingInTiffSection(Input.batesNumber, PlaceholderText);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingTab(prefixID, suffixID, beginningBates);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+		driver.waitForPageToBeReady();
+		int Count = Integer.valueOf(beginningBates) + PageCount;
+		int LastDoc = Count + PageCount2Doc;
+		page.extractFile();
+        
+		String BatesNumber = prefixID + beginningBates + suffixID;
+		String BatesNumber1 = prefixID + Count + suffixID;
+		String BatesNumber2 = prefixID + LastDoc + suffixID;
+		page.pdfVerificationInDownloadedFile(BatesNumber, 2, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber1, PageCount2Doc, prefixID, PlaceholderText);
+		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, PlaceholderText);
+		driver.waitForPageToBeReady();
+		page.deleteFiles();
+		page.deleteProducedZipFile();
+		String ReGeneratedText = Input.searchString1;
+		driver.waitForPageToBeReady();
+		page.clickElementNthtime(page.getBackButton(), 7);
+		page.getMarkInCompleteBtn().waitAndClick(10);
+		base.waitForElement(page.getTIFFTab());
+		page.getTIFFTab().Click();
+		driver.scrollingToElementofAPage(page.getPrivPlaceholderTextboInPrivGaurd());
+		page.getPrivPlaceholderTextboInPrivGaurd().Clear();
+		page.getPrivPlaceholderTextboInPrivGaurd().SendKeys(ReGeneratedText);
+		page.clickMArkCompleteMutipleTimes(3);
+		page.fillingPrivGuardPage();
+		page.clickMArkCompleteMutipleTimes(2);
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	    page.extractFile();
+		driver.waitForPageToBeReady();
+		page.pdfVerificationInDownloadedFile(BatesNumber, 2, prefixID, ReGeneratedText);
+		page.pdfVerificationInDownloadedFile(BatesNumber1, PageCount2Doc, prefixID, ReGeneratedText);
+		page.pdfVerificationInDownloadedFile(BatesNumber2, PageCount3Doc, prefixID, ReGeneratedText);
+
+		loginPage.logout();
+	}
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
 		base = new BaseClass(driver);

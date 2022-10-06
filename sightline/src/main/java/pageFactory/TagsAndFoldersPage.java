@@ -517,7 +517,13 @@ public class TagsAndFoldersPage {
 	public Element getBulkRelease_ButtonUnRelease() {
         return driver.FindElementById("btnUnrelease");
     }
+	public Element getTagPropagatePopup() {
+		return driver.FindElementByXPath("//*[contains(text(),'Propagate Tag To: ')]/..//a");
+	}
 
+	public Element getTextInTag() {
+		return driver.FindElementByXPath("//*[contains(text(),'Propagate Tag To: ')]/..//p");
+	}
 	public TagsAndFoldersPage(Driver driver) {
 
 		this.driver = driver;
@@ -3085,6 +3091,64 @@ public class TagsAndFoldersPage {
 		base.CloseSuccessMsgpopup();
 
 	}
+	/**
+	 * @author Brundha.T
+	 * @param securityGroup
+	 * @Description: verifying Propagate popup in Tags
+	 */
+	public void verifyingPopupInTags(String securityGroup) {
+
+		base.waitTillElemetToBeClickable(getSecurityGroupTag());
+		getSecurityGroupTag().selectFromDropdown().selectByVisibleText(securityGroup);
+		base.waitForElement(getAddTagTable());
+		getAddTagTable().waitAndClick(5);
+		driver.scrollPageToTop();
+		getAllTagRoot().waitAndClick(5);
+		base.waitForElement(getTagActionDropDownArrow());
+		getTagActionDropDownArrow().waitAndClick(5);
+		getAddTag().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getTagPropagatePopup());
+		getTagPropagatePopup().waitAndClick(2);
+		String PropagateCompareString = "Please specify the relevant options for tag/folder propagation. For example, select the 'Family Members' option, "
+				+ "if you would like the same tag/folder to be propagated/applied to all the other family members of this document, when a document "
+				+ "is being tagged/foldered. Similarly, you can propagate this tag to Exact Duplicates, Email Threads (all other documents with the same ThreadID) "
+				+ "and Email Duplicates by selecting the corresponding options. Note that Exact Duplicates propagates tag/folder to all other docs having the same"
+				+ " MD5Hash metadata, irrespective of whether these docs are parents, children or standalone docs.";
+		String PropagatePopupText = getTextInTag().getText();
+		base.compareTextViaContains(PropagatePopupText, PropagateCompareString,
+				"" + PropagatePopupText + " is displayed as expected",
+				"" + PropagatePopupText + " not displayed as expected");
+
+	}
+/**
+ * @author Brundha.T
+ * @param securityGroup
+ * @param tagGroupName
+ * @Description:creating new tag group
+ */
+	public void CreatingNewTagGroup(String securityGroup,String tagGroupName) {
+		base.waitTillElemetToBeClickable(getSecurityGroupTag());
+		getSecurityGroupTag().selectFromDropdown().selectByVisibleText(securityGroup);
+		base.waitForElement(getAddTagTable());
+		getAddTagTable().waitAndClick(5);
+		driver.scrollPageToTop();
+		base.waitForElement(getAllTagRoot());
+		getAllTagRoot().waitAndClick(5);
+		selectActionArrow("New Tag Group");
+		getNewTagGroupInputTextBox().SendKeys(tagGroupName);
+		getNewTagGroupSaveBtn().waitAndClick(3);
+
+	}
+	/**
+	 * @author Brundha.T
+	 * @description: verifying all tag group
+	 */
+public void verifyingAllTagsGroup() {
+	String ActualText=getAllTagRoot().GetAttribute("data-content");
+	System.out.println(ActualText);
+	String ExpectedText="All Tags";
+	base.textCompareEquals(ActualText, ExpectedText, "All Tags group is displayed as expected","All tag group is not displayed");
+}
 
 
 }
