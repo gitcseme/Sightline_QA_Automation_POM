@@ -323,7 +323,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -633,7 +633,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// navigate to Collection page
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -675,7 +675,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password,password);
 
 		// navigate to Source page
 		dataSets.navigateToDataSets("Source", Input.sourceLocationPageUrl);
@@ -885,7 +885,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -936,7 +936,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// Start Collection
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
@@ -981,7 +981,7 @@ public class O365Regression_22 {
 
 		// Pre-requesties - Access verification
 		base.stepInfo("Collection Access Verification");
-		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, Input.pa1password);
+		userManagement.verifyCollectionAccess(userRolesData, Input.sa1userName, Input.sa1password, password);
 
 		// Add DataSets
 		dataSets.navigateToDataSets("Collections", Input.collectionPageUrl);
