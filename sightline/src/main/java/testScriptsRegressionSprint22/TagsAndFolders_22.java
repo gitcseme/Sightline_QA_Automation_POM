@@ -96,7 +96,9 @@ public class TagsAndFolders_22 {
 
 		String tagGroupName = "Tg" + Utility.dynamicNameAppender();
 		String tagGroupName1 = "Tg" + Utility.dynamicNameAppender();
+		String tagGroupName2 = "Tg" + Utility.dynamicNameAppender();
 		String securityGroup = "SG" + Utility.dynamicNameAppender();
+		String securityGroup1 = "SG" + Utility.dynamicNameAppender();
 
 		base.stepInfo("RPMXCON-52491 in Tags And Folders");
 		base.stepInfo("To verify Tag and Folder group is displayed at project level.");
@@ -114,16 +116,19 @@ public class TagsAndFolders_22 {
 		tf.CreatingNewTagGroup(Input.securityGroup, tagGroupName);
 		base.CloseSuccessMsgpopup();
 		tf.CreatingNewTagGroup(securityGroup, tagGroupName1);
-		tf.verifyingAllTagsGroup();
+		tf.verifyingAllTagsGroup(tagGroupName1);
 
 		base.stepInfo("Switching to another project and verifying all tags group");
 		base.switchProject(Input.projectName);
 		driver.waitForPageToBeReady();
+		
+		base.stepInfo("Creating a security group");
+		sg.createSecurityGroups(securityGroup1);
+		System.out.println(securityGroup1);
+		
 		tf.navigateToTagsAndFolderPage();
-		base.waitTillElemetToBeClickable(tf.getAddTagTable());
-		tf.getAddTagTable().waitAndClick(5);
-		tf.getSecurityGroupTag().selectFromDropdown().selectByVisibleText(Input.securityGroup);
-		tf.verifyingAllTagsGroup();
+		tf.CreatingNewTagGroup(securityGroup1, tagGroupName2);
+		tf.verifyingAllTagsGroup(tagGroupName2);
 		
 		loginPage.logout();
 	}

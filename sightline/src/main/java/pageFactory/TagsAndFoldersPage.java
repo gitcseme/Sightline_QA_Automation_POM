@@ -3143,11 +3143,13 @@ public class TagsAndFoldersPage {
 	 * @author Brundha.T
 	 * @description: verifying all tag group
 	 */
-public void verifyingAllTagsGroup() {
+public void verifyingAllTagsGroup(String TagGroup) {
 	String ActualText=getAllTagRoot().GetAttribute("data-content");
 	System.out.println(ActualText);
 	String ExpectedText="All Tags";
 	base.textCompareEquals(ActualText, ExpectedText, "All Tags group is displayed as expected","All tag group is not displayed");
+	base.ValidateElement_Presence(getTagName(TagGroup),TagGroup);
+	
 }
 
 
