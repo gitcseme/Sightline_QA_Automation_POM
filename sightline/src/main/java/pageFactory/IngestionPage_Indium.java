@@ -5863,7 +5863,7 @@ public class IngestionPage_Indium {
 				base.CloseSuccessMsgpopup();
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
-				for(int j=1;j<=15;j++) {
+				for(int j=1;j<=30;j++) {
 					base.waitForElement(getIngestionDetailPopup(1));
 					String status1 = getStatus(1).getText().trim();
 					if(status1.contains("In Progress") || status1.contains("Cataloged") ) {
