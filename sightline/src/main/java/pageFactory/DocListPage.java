@@ -1301,6 +1301,11 @@ public class DocListPage {
 
 	}
 
+	public Element getRemovePureHit() {
+		return driver.FindElementByXPath(
+				"//label[text()='Docs That Met Your Criteria']//..//..//..//i[@title='Remove from Selected Results']");
+	}
+	
 	public Element getDocList_FamilyMemberCount() {
 		return driver.FindElementById("CountTextFamilyMem");
 
@@ -1767,98 +1772,69 @@ public class DocListPage {
 		getPopUpOkBtn().Click();
 	}
 
-	public void bulkFolderExisting(final String folderName) throws AWTException, InterruptedException {
-
-		try {
-			// getPureHitAddButton().waitAndClick(10);
-
-		} catch (Exception e) {
-
-			// System.out.println("Pure hit block already moved to action panel");
-
+	/**
+	 * Modified on 03/14/2022 Function to perform bulk folder with existing folder
+	 */
+	public void bulkFolderExisting(final String folderName) throws InterruptedException {
+		if (getRemovePureHit().isElementAvailable(3)) {
+			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
-			Reporter.log("Pure hit block already moved to action panel", true);
-
+		} else if (getPureHitAddButton().isElementAvailable(2)) {
+			getPureHitAddButton().waitAndClick(10);
 		}
 
+		driver.scrollPageToTop();
+		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
-
 			public Boolean call() {
-
 				return getBulkFolderAction().Visible();
-
 			}
-
 		}), Input.wait60);
 
-		getBulkFolderAction().Click();
-
+		getBulkFolderAction().waitAndClick(10);
 		driver.Manage().window().fullscreen();
-		base.waitForElement(getFolderUnfolderDocumentsDialogBox());
 
-		getFolderUnfolderDocumentsDialogBox().Click();
-
-		System.out.println("Popup is displayed");
-		base.hitTabKey(3);
-		base.hitEnterKey(2);
-
-		Actions actions = new Actions(driver.getWebDriver());
-
-		while (true) {
-
-			actions.sendKeys(Keys.PAGE_DOWN).build().perform();
-
-			try {
-
-				getSelectFolderExisting(folderName).Click();
-
-				System.out.println("Clicked Folder");
-
-				break;
-
-			} catch (Exception e) {
-
-				System.out.println("Searching for folder");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolderExisting(folderName).Visible();
 			}
+		}), Input.wait60);
 
-			Thread.sleep(2000);
-		}
+		getSelectFolderExisting(folderName).waitAndClick(5);
 
-		Thread.sleep(10000);
-		base.waitForElement(getContinueCount());
-
-		getContinueCount().waitAndClick(10);
-
-		System.out.println("Click continue");
-		final BaseClass bc = new BaseClass(driver);
-		final int Bgcount = bc.initialBgCount();
-		base.waitForElement(getFinalizeButton());
-		getFinalizeButton().Click();
-
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getContinueButton().waitAndClick(10);
 		driver.Manage().window().maximize();
 
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		getFinalizeButton().waitAndClick(10);
+
 		base.VerifySuccessMessage("Records saved successfully");
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 1;
 			}
-
 		}), Input.wait60);
-
 		// System.out.println("Bulk folder is done, folder is : "+folderName);
-
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
-
 		Reporter.log("Bulk folder is done, folder is : " + folderName, true);
-
 		// Since page is freezing after bulk actiononly in automation, lets reload page
-
 		// to avoid it..
-
 		driver.getWebDriver().navigate().refresh();
-
 	}
 
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
@@ -6356,4 +6332,5 @@ public class DocListPage {
 		base.VerifySuccessMessage("Records saved successfully");
 	}
 
+	
 }
