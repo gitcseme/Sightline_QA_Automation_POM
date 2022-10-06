@@ -1589,11 +1589,11 @@ public class CodingForm {
 
 		}
 		public Element getSaveWarningMsg() {
-			return driver.FindElementByXPath("//span[text()='Wait - please make a decision before you leave this page']");
+			return driver.FindElementByXPath("//h3[text()='Wait - please make a decision before you leave this page']");
 
 		}
 		public Element getSaveConformMsg() {
-			return driver.FindElementByXPath("//span[text()='Coding Form Save']");
+			return driver.FindElementByXPath("//h3[text()='Coding Form Save']");
 
 		}
 		public Element getCF_Preview_OkBtn() {
