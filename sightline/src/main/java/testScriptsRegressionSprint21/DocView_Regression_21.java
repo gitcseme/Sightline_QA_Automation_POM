@@ -53,8 +53,8 @@ import testScriptsSmoke.Input;
 
 			System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-//			Input in = new Input();
-//			in.loadEnvConfig();
+			Input in = new Input();
+			in.loadEnvConfig();
 		}
 
 		@BeforeMethod(alwaysRun = true)
@@ -104,7 +104,7 @@ import testScriptsSmoke.Input;
 			baseClass.stepInfo("Verify that \"Text Highlighting\" functionality is working proper on DocView Screen.");
 			SessionSearch sessionsearch = new SessionSearch(driver);
 			KeywordPage keywordPage = new KeywordPage(driver);
-			String hitTerms = "Test";
+			String hitTerms = "Test" + Utility.dynamicNameAppender();;
 			String color = "Red";
 			DocViewPage docView = new DocViewPage(driver);
 
@@ -126,6 +126,7 @@ import testScriptsSmoke.Input;
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
 			baseClass.stepInfo("page is refreshed");
+			driver.scrollPageToTop();
 			docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
 			loginPage.logout();
 	       
@@ -137,10 +138,12 @@ import testScriptsSmoke.Input;
 			sessionsearch.ViewInDocView();
 			baseClass.stepInfo("Docs Viewed in Doc View");
 			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
 			docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
 			driver.Navigate().refresh();
 			driver.waitForPageToBeReady();
 			baseClass.stepInfo("page is refreshed");
+			driver.scrollPageToTop();
 			docView.verifyPersistingHitsHighlightingTextInSelectedDoc(hitTerms);
 			keywordPage.deleteKeywordByName(hitTerms);
 		}
