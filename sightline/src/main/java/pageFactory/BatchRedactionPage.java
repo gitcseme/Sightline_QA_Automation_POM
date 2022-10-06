@@ -342,7 +342,7 @@ public class BatchRedactionPage {
 	// added by jayanthi
 	// modifed by jeevitha
 	public Element getAnalysisReportPopup() {
-		return driver.FindElementByXPath("//div//span[contains(text(),'View Analysis Report and Batch Redact')]");
+		return driver.FindElementByXPath("//div//h3[contains(text(),'View Analysis Report and Batch Redact')]");
 	}
 
 	// Added By Jeevitha
@@ -1611,7 +1611,7 @@ public class BatchRedactionPage {
 		}
 		try {
 			base.waitForElement(getAnalysisReportPopup());
-			if (getAnalysisReportPopup().Displayed()) {
+			if (getAnalysisReportPopup().isElementAvailable(10)) {
 				softassert.assertTrue(true);
 				base.passedStep("View Report & Apply Redactions pop up appeared on screen.");
 			}

@@ -69,16 +69,16 @@ public class BatchRedactionRegression_22 {
 		RedactionPage redact = new RedactionPage(driver);
 		AnnotationLayer layer = new AnnotationLayer(driver);
 
-		//Login As PA
+		// Login As PA
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 
-		//Craete Redaction Tag & annotation layer
+		// Craete Redaction Tag & annotation layer
 		redact.navigateToRedactionsPageURL();
 		redact.manageRedactionTagsPage(ReadctionTag);
 		layer.navigateToAnnotationLayerPage();
 		layer.AddAnnotation(Annotation);
 
-		//Add SG & assign Redaction tag & assign annoattion layer
+		// Add SG & assign Redaction tag & assign annoattion layer
 		sg.navigateToSecurityGropusPageURL();
 		sg.AddSecurityGroup(securityGrp);
 		driver.Navigate().refresh();
@@ -88,15 +88,15 @@ public class BatchRedactionRegression_22 {
 		sg.assignRedactionTagtoSG(ReadctionTag);
 		sg.assignAnnotationToSG(Annotation);
 
-		//assign access to users
+		// assign access to users
 		user.navigateToUsersPAge();
 		user.assignAccessToSecurityGroups(securityGrp, Input.rmu1userName);
 		user.assignAccessToSecurityGroups(securityGrp, Input.rmu2userName);
 
-		//bulk release doc's to SG
+		// bulk release doc's to SG
 		session.basicContentSearch(Input.testData1);
 		session.bulkRelease(securityGrp);
-
+		
 		// logout
 		login.logout();
 
