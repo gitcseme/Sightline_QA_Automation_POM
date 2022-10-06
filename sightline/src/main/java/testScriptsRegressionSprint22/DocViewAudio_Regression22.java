@@ -302,6 +302,7 @@ public class DocViewAudio_Regression22 {
 		} else {
 			baseClass.failedStep("Redaction tag is not displayed");
 		}
+		baseClass.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
 
 		// Login as REV
@@ -336,6 +337,7 @@ public class DocViewAudio_Regression22 {
 		} else {
 			baseClass.failedStep("Redaction tag is not displayed");
 		}
+		baseClass.selectsecuritygroup(Input.securityGroup);
 		loginPage.logout();
 
 		// Delete security group
