@@ -702,6 +702,7 @@ public class DocViewAudio_Regression22 {
 		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
 
 		docViewPage = new DocViewPage(driver);
+		softAssertion=new SoftAssert();
 		sessionSearch = new SessionSearch(driver);
 
 		String comment = "comments" + Utility.dynamicNameAppender();

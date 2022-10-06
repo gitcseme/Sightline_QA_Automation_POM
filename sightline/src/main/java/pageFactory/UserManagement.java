@@ -903,7 +903,7 @@ public class UserManagement {
 		return driver.FindElementById("PendingUser");
 	}
 	public Element getBulkUserPopUp() {
-		return driver.FindElementByXPath("//span//div[normalize-space()='Modify Multiple User Profiles At Once']");
+		return driver.FindElementByXPath("//h3//div[normalize-space()='Modify Multiple User Profiles At Once']");
 	}
 	public Element getProjectPageLastNumber() {
 		return driver
