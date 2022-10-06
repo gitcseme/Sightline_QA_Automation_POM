@@ -123,7 +123,7 @@ public class SecurityGroupsPage {
 
 	public Element getSelectSecurityGroup() {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']");
-		
+
 	}
 
 	public Element getAllFolderCheckBox() {
@@ -331,15 +331,15 @@ public class SecurityGroupsPage {
 	}
 
 	// Added by Mohan
-	
-	public Element getAllFolder(String treeName,String fieldTab) {
-		return driver.FindElementByXPath("//div[@id='"+treeName+"']//a[text()='"+fieldTab+"']");
+
+	public Element getAllFolder(String treeName, String fieldTab) {
+		return driver.FindElementByXPath("//div[@id='" + treeName + "']//a[text()='" + fieldTab + "']");
 	}
-	
+
 	public Element getAllSecurityPageTabsInProjects(String projectFieldValue) {
-		return driver.FindElementByXPath("//a[text()='"+projectFieldValue+"']");
+		return driver.FindElementByXPath("//a[text()='" + projectFieldValue + "']");
 	}
-	
+
 	public Element getProjectFieldsAvailableInProjects(String projectFieldValue) {
 		return driver.FindElementByXPath("//div[@id='fieldJSTree']//a[text()='" + projectFieldValue + "']");
 	}
@@ -347,21 +347,22 @@ public class SecurityGroupsPage {
 	public Element getProjectFieldsAddToSecurityGroup(String projectFieldValue) {
 		return driver.FindElementByXPath("//div[@id='fieldJSTree_Selected']//a[text()='" + projectFieldValue + "']");
 	}
-	
+
 //Added by Krishna
-	
+
 	public Element getSGGrpList(String sgname) {
 		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupsList']//option[text()='" + sgname + "']");
 	}
-	
+
 	public Element getSGSelectAccessControlTages(String TagName) {
 		return driver.FindElementByXPath("//ul[@id='myTab1']//a[text()='" + TagName + "']");
 	}
 
 	public Element getFoldersCheckBox(String folder) {
-		return driver.FindElementByXPath("//*[@id='folderJSTree']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath(
+				"//*[@id='folderJSTree']//a[text()='" + folder + "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
-	
+
 	public Element getSG_Folder_Right() {
 		return driver.FindElementByXPath("//*[@onclick='FolderRightShift();']");
 	}
@@ -371,9 +372,10 @@ public class SecurityGroupsPage {
 	}
 
 	public Element getSelectedFoldersCheckBox(String folder) {
-		return driver.FindElementByXPath("//*[@id='folderJSTree_Selected']//a[text()='"+folder+"']/./i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//*[@id='folderJSTree_Selected']//a[text()='" + folder
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
-	
+
 	public Element getReductionCheckBox(String Reduction) {
 		return driver.FindElementByXPath(
 				"//*[@id='redactionJSTree']//a[text()='" + Reduction + "']/./i[@class='jstree-icon jstree-checkbox']");
@@ -391,7 +393,7 @@ public class SecurityGroupsPage {
 	public Element getSG_Reduction_Left() {
 		return driver.FindElementByXPath("//*[@onclick='RedactionLeftShift();']");
 	}
-	
+
 	public Element getTagsCheckBox(String Tag) {
 		return driver.FindElementByXPath(
 				"//*[@id='tagsJSTree']//a[text()='" + Tag + "']/./i[@class='jstree-icon jstree-checkbox']");
@@ -417,6 +419,7 @@ public class SecurityGroupsPage {
 	public Element getSG_GenerateEmailRadioButton(int RatioBtn) {
 		return driver.FindElementByXPath("(//*[@id='content']//section//div/label/i)[" + RatioBtn + "]");
 	}
+
 	public Element getVerifySG_EmailGenerateWarningMsg() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b");
 	}
@@ -426,57 +429,62 @@ public class SecurityGroupsPage {
 	}
 
 	public Element getSG_AnnotationLayer(String annotation) {
-		return driver
-				.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + annotation + "']/./i[@class='jstree-icon jstree-checkbox']");
+		return driver.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + annotation
+				+ "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
 
 	public Element getSGAddAnnonationLayer() {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree_Selected']/ul/li/ul/li[1]");
 	}
-	
+
 	public Element getProjectFieldCheckBox(String field) {
 		return driver.FindElementByXPath(
 				"//*[@id='fieldJSTree']//a[text()='" + field + "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public Element getSG_Field_Right() {
 		return driver.FindElementByXPath("//*[@onclick='FieldRightShift();']");
 	}
-	
+
 	public ElementCollection getSgDefaultTag() {
 		return driver.FindElementsByXPath("//div[@id='tagsJSTree_Selected']//a[contains(text(),'Default Tags')]");
 	}
-	
+
 	public Element getSGBgCompletedTask() {
 		return driver.FindElementByXPath("//*[@id='bgTask']/ul/li/span");
 	}
+
 	public Element getSGBgCompletedId() {
 		return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr//td");
 	}
+
 	public Element getSgBgStatusDropDown() {
 		return driver.FindElementById("ddlStatusType");
 	}
+
 	public Element getSgBgFilterBtn() {
 		return driver.FindElementById("btnAppyFilter");
 	}
+
 	public Element getSecurityGroupBgViewAll() {
 		return driver.FindElementById("btnViewAll");
 	}
-	
+
 	public Element getSG_EmailGenerateWarningMsgBulkReleaseText(String text) {
-		return driver.FindElementByXPath("//*[@id='Msg1']/div/p[contains(text(),'"+text+"')]");
-		
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p[contains(text(),'" + text + "')]");
+
 	}
-	
+
 	public Element getSG_EmailGenerateWarningMsgBulkRelease() {
 		return driver.FindElementByXPath("//*[@id='Msg1']/div/p");
-		
+
 	}
-	
+
 	public Element getVerifySG_EmailGenerateWarningMsgText(String text) {
-		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b[contains(text(),'"+text+"')]");
-		
+		return driver.FindElementByXPath("//*[@id='Msg1']/div/p/b[contains(text(),'" + text + "')]");
+
 	}
-	
+
 	public Element getSelectedAnnotationLayerCheckBox(String Annotation) {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree_Selected']//a[text()='" + Annotation
 				+ "']/./i[@class='jstree-icon jstree-checkbox']");
@@ -485,21 +493,25 @@ public class SecurityGroupsPage {
 	public Element getSG_AddAnnotationLayer_Left() {
 		return driver.FindElementByXPath("//*[@onclick='AnnotationLeftShift();']");
 	}
-	
+
 	public Element getAnnotationLayerCheckBox(String Annotation) {
 		return driver.FindElementByXPath("//*[@id='annotationJSTree']//a[text()='" + Annotation
 				+ "']/./i[@class='jstree-icon jstree-checkbox']");
 	}
+
 	public Element getRenameBtn() {
 		return driver.FindElementById("btnRenameSecurtyGroup");
 	}
+
 	public Element getRadioBn() {
 		return driver.FindElementByXPath("//input[@id='projlevelemail']");
-		
+
 	}
+
 	public Element getProjectSelector() {
 		return driver.FindElementById("project-selector");
 	}
+
 	public SecurityGroupsPage(Driver driver) {
 
 		this.driver = driver;
@@ -821,7 +833,7 @@ public class SecurityGroupsPage {
 			bc.waitForElement(getSelectSecurityGroup());
 			bc.waitTillElemetToBeClickable(getSelectSecurityGroup());
 			getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroupName);
-			
+
 			bc.stepInfo("Selected " + securityGroupName + " from available SG's");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1298,7 +1310,8 @@ public class SecurityGroupsPage {
 
 	/**
 	 * @author Mohan.Venugopal
-	 * @Description To verify UnassignField is not present in the newly created project
+	 * @Description To verify UnassignField is not present in the newly created
+	 *              project
 	 */
 	public void verifyUnAssignedInSecurityGroup(String fieldName) {
 
@@ -1326,82 +1339,83 @@ public class SecurityGroupsPage {
 		getProjectFieldLabel().waitAndClick(5);
 
 		bc.waitForElement(getProjectFieldsAddToSecurityGroup(fieldName));
-		if (getProjectFieldsAddToSecurityGroup(fieldName).isElementAvailable(5)&&getProjectFieldsAvailableInProjects(fieldName).isElementAvailable(5)) {
+		if (getProjectFieldsAddToSecurityGroup(fieldName).isElementAvailable(5)
+				&& getProjectFieldsAvailableInProjects(fieldName).isElementAvailable(5)) {
 			bc.passedStep("Released Field is Available in newly created Project.");
 
 		} else {
 			bc.failedStep("Released Field is not Available in newly created Project.");
 		}
 	}
-	
+
 	public void verifyAllFieldsArePresentInSecurityHomePage() {
 
 		driver.waitForPageToBeReady();
 		bc.waitForElement(getSecurityGroupList());
 		getSecurityGroupList().selectFromDropdown().selectByVisibleText("Default Security Group");
-		
-		if (getAllFolder("folderJSTree","All Folders").isElementPresent()) {
+
+		if (getAllFolder("folderJSTree", "All Folders").isElementPresent()) {
 			bc.passedStep("Folders Tab is clicked and all folders are present under Folders tab");
-		}else {
+		} else {
 			bc.failedStep("All Foders are nor present under Folders Tab");
 		}
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Keywords"));
 		getAllSecurityPageTabsInProjects("Keywords").waitAndClick(5);
-		if (getAllFolder("keywordJSTree","All Keywords").isElementPresent()) {
+		if (getAllFolder("keywordJSTree", "All Keywords").isElementPresent()) {
 			bc.passedStep("Keyword Tab is clicked and all keywords are present under Keyword tab");
-		}else {
+		} else {
 			bc.failedStep("All Keyword are nor present under Keyword Tab");
 		}
-		
+
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Tags"));
 		getAllSecurityPageTabsInProjects("Tags").waitAndClick(5);
-		if (getAllFolder("tagsJSTree","All Tags").isElementPresent()) {
+		if (getAllFolder("tagsJSTree", "All Tags").isElementPresent()) {
 			bc.passedStep("Tags Tab is clicked and all Tags are present under Tags tab");
-		}else {
+		} else {
 			bc.failedStep("All Tags are nor present under Tags Tab");
 		}
-		
+
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Comments"));
 		getAllSecurityPageTabsInProjects("Comments").waitAndClick(5);
-		if (getAllFolder("commentJSTree","All Comments").isElementPresent()) {
+		if (getAllFolder("commentJSTree", "All Comments").isElementPresent()) {
 			bc.passedStep("Comments Tab is clicked and all Comments are present under Comments tab");
-		}else {
+		} else {
 			bc.failedStep("All Comments are nor present under Comments Tab");
 		}
-		
+
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Annotation Layers"));
 		getAllSecurityPageTabsInProjects("Annotation Layers").waitAndClick(5);
-		if (getAllFolder("annotationJSTree","All AnnotationLayers").isElementPresent()) {
-			bc.passedStep("AnnotationLayers Tab is clicked and all AnnotationLayers are present under AnnotationLayers tab");
-		}else {
+		if (getAllFolder("annotationJSTree", "All AnnotationLayers").isElementPresent()) {
+			bc.passedStep(
+					"AnnotationLayers Tab is clicked and all AnnotationLayers are present under AnnotationLayers tab");
+		} else {
 			bc.failedStep("All AnnotationLayers are nor present under AnnotationLayers Tab");
 		}
-		
-		
-		
+
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Project Fields"));
 		getAllSecurityPageTabsInProjects("Project Fields").waitAndClick(5);
-		
-		if (getAllFolder("fieldJSTree","All Fields").isElementAvailable(5)) {
+
+		if (getAllFolder("fieldJSTree", "All Fields").isElementAvailable(5)) {
 			bc.passedStep("Project Fields Tab is clicked and all Project Fields are present under Project Fields tab");
-		}else {
+		} else {
 			bc.failedStep("All Project Fields are nor present under Fields Tab");
 		}
-		
+
 		bc.waitForElement(getAllSecurityPageTabsInProjects("Redaction Tags"));
 		getAllSecurityPageTabsInProjects("Redaction Tags").waitAndClick(5);
-		
-		if (getAllFolder("redactionJSTree","All Redaction Tags").isElementAvailable(5)) {
+
+		if (getAllFolder("redactionJSTree", "All Redaction Tags").isElementAvailable(5)) {
 			bc.passedStep("Redaction Tags Tab is clicked and all Redaction Tags are present under Redaction Tags tab");
-		}else {
+		} else {
 			bc.failedStep("All Redaction Tags are nor present under Redaction Tags Tab");
 		}
-		
-		}
-	
+
+	}
+
 	/**
-	 * @author  date:Modified date:
-	 * @Description: verify selected folder on avalaible field and assign selected fields 
+	 * @author date:Modified date:
+	 * @Description: verify selected folder on avalaible field and assign selected
+	 *               fields
 	 */
 	public void verifySelectFolderisAssignedInSelectedList(String foldername) {
 		driver.waitForPageToBeReady();
@@ -1415,7 +1429,7 @@ public class SecurityGroupsPage {
 		bc.waitTillElemetToBeClickable(getFoldersCheckBox(foldername));
 		getFoldersCheckBox(foldername).waitAndClick(5);
 		driver.waitForPageToBeReady();
-	    getSG_Folder_Right().waitAndClick(5);
+		getSG_Folder_Right().waitAndClick(5);
 		bc.waitForElement(getSelectedFoldersCheckBox(foldername));
 		System.out.println(foldername);
 		softassert.assertTrue(getSelectedFoldersCheckBox(foldername).isElementAvailable(5));
@@ -1426,7 +1440,7 @@ public class SecurityGroupsPage {
 			bc.failedMessage("folder is not displayed");
 		}
 	}
-	
+
 	/**
 	 * @author Krishna date:Modified date:
 	 * @Description: verify selected Tags on available field and assign selected
@@ -1506,7 +1520,7 @@ public class SecurityGroupsPage {
 			bc.failedMessage("folder is not displayed");
 		}
 	}
-	
+
 	/*
 	 * @author Vijaya.Rani
 	 * 
@@ -1539,7 +1553,7 @@ public class SecurityGroupsPage {
 		bc.VerifySuccessMessage("Your selections were saved successfully");
 		bc.CloseSuccessMsgpopup();
 	}
-	
+
 	/**
 	 * @author Krishna date:Modified date:
 	 * @Description: verify selected Project filed available field and assign
@@ -1563,10 +1577,10 @@ public class SecurityGroupsPage {
 		getSG_Field_Right().waitAndClick(5);
 		bc.passedStep("Field is displayed on all available list ");
 	}
-	
+
 	/**
 	 * @author Krishna
-	 * @description: Get notification msg 
+	 * @description: Get notification msg
 	 * @param bgCountBefore
 	 */
 	public int getNotificationMessage(int bgCountBefore) {
@@ -1580,13 +1594,13 @@ public class SecurityGroupsPage {
 
 		if (bgCountAfter > bgCountBefore) {
 			bc.getBullHornIcon().waitAndClick(10);
-			
+
 		} else {
 			driver.Navigate().refresh();
 		}
 		return bgCountAfter;
 	}
-	
+
 	/**
 	 * @author Krishna Modified date:NA
 	 * @Description: selected annotation layer is moved in selected list
@@ -1610,7 +1624,7 @@ public class SecurityGroupsPage {
 			bc.failedMessage("Annotation layer is not displayed");
 		}
 	}
-	
+
 	/**
 	 * @author Krishna Modified date:NA
 	 * @Description: Unassigned selected annotation layer is removed in selected
@@ -1640,7 +1654,7 @@ public class SecurityGroupsPage {
 		}
 
 	}
-	
+
 	/**
 	 * @author Krishna Modified date:NA
 	 * @Description: selected annotation layer is moved in selected list getting
