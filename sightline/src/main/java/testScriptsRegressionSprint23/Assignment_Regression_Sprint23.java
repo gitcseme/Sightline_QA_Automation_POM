@@ -63,7 +63,7 @@ public class Assignment_Regression_Sprint23 {
 	 * @author Jayanthi.ganesan
 	 */
 	@Test(description = "RPMXCON-54484", enabled = true, groups = { "regression" })
-	public void VerifyRedistributefunctionality_CompletedDocs()
+	public void VerifyTotalDocsSelectedFluctuation()
 			throws InterruptedException, ParseException, IOException {
 
 		// login as RMU
