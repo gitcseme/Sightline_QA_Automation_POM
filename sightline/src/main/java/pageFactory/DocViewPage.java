@@ -26793,7 +26793,7 @@ public class DocViewPage {
 				Actions action = new Actions(driver.getWebDriver());
 				action.moveToElement(getSelectRemarkDocArea().getWebElement()).click().build().perform();
 				
-			//	getSelectRemarkDocArea().Click();
+				getSelectRemarkDocArea().Click();
 			} else if (remarkElement().isElementAvailable(20)) {
 				remarkElement().Click();
 			}
