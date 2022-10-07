@@ -1776,6 +1776,7 @@ public class DocListPage {
 	 * Modified on 03/14/2022 Function to perform bulk folder with existing folder
 	 */
 	public void bulkFolderExisting(final String folderName) throws InterruptedException {
+
 		if (getRemovePureHit().isElementAvailable(3)) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
@@ -1836,7 +1837,6 @@ public class DocListPage {
 		// to avoid it..
 		driver.getWebDriver().navigate().refresh();
 	}
-
 	public void bulkTagExisting(final String tagname) throws AWTException, InterruptedException {
 
 		if (getPureHitAddButton().isDisplayed()) {

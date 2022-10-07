@@ -10,6 +10,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -19,6 +20,7 @@ import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -164,7 +166,7 @@ public class DocList_Regression23 {
 		// Login As RMU
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
-		
+
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagName, "Select Tag Classification");
 		loginPage.logout();
@@ -179,12 +181,14 @@ public class DocList_Regression23 {
 		// select multiple Documents
 		docList.documentSelection(5);
 		// BulkTag
-		docList.bulkTagExisting(tagName);
+		sessionSearch.bulkTagExisting(tagName);
 		baseClass.passedStep("Tag will apply on the selected documents Successfully");
 
 		// logout
 		loginPage.logout();
 	}
+
+	
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
@@ -199,6 +203,14 @@ public class DocList_Regression23 {
 		} catch (Exception e) {
 			loginPage.quitBrowser();
 		}
+	}
+
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
+				{ Input.rmu1userName, Input.rmu1password, Input.rmu1FullName },
+				{ Input.rev1userName, Input.rev1password, Input.rev1FullName } };
+		return users;
 	}
 
 	@AfterClass(alwaysRun = true)

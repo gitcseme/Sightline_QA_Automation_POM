@@ -59,11 +59,12 @@ public class DocExplorer_Regression23 {
 		docExplorer = new DocExplorerPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:06/10/2022 RPMXCON-54697
 	 * @throws Exception
-	 * @Description Verify that “IngestionName” (Only For PA) Filter with "Exclude" functionality is working correctly on Doc Explorer list.
+	 * @Description Verify that “IngestionName” (Only For PA) Filter with "Exclude"
+	 *              functionality is working correctly on Doc Explorer list.
 	 */
 	@Test(description = "RPMXCON-54697", enabled = true, groups = { "regression" })
 	public void verifyIngestionNameWithExcludeInDocExplorerList() throws Exception {
@@ -80,24 +81,26 @@ public class DocExplorer_Regression23 {
 		String random = Input.ingestionAutomationAllSource;
 		String random1 = Input.JanMultiPTIFF;
 
-		baseClass.stepInfo("Perform exclude filter by IngestionName");
-		docExplorer.performExculdeIngestionNameFilter(random,null);
+		baseClass.stepInfo("Perform exclude filter by DocFileType");
+		docExplorer.performExculdeIngestionNameFilter(random);
 
-		baseClass.stepInfo("Verify documents after applying exclude functionality by IngestionName");
+		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForIngestionName();
 
 		baseClass.stepInfo("Refresh page");
 		docExplorer.refreshPage();
 
-		baseClass.stepInfo("Perform exclude filter by IngestionName");
-		docExplorer.performExculdeIngestionNameFilter(random,random1);
-		
-		baseClass.stepInfo("Verify documents after applying exclude functionality by IngestionName");
+		baseClass.stepInfo("Perform exclude filter by DocFileType");
+		docExplorer.performExculdeIngestionNameFilter(random);
+		docExplorer.performUpdateExculdeIngestionNameFilter(random1);
+
+		baseClass.stepInfo("Verify documents after applying exclude functionality by DocFileType");
 		docExplorer.verifyExcludeFunctionlityForIngestionName();
 
 		loginPage.logout();
 
 	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

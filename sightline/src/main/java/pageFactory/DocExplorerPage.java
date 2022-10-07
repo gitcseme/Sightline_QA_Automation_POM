@@ -3298,47 +3298,6 @@ public class DocExplorerPage {
 		}
 	}
 	
-	/**
-	 * @author :Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
-	 * @Description: Method for performing exclude filter for IngestionName
-	 */
-	public void performExculdeIngestionNameFilter(String ingestionName,String ingestionName1) {
-		try {
-            DocListPage docList=new DocListPage(driver);
-			driver.waitForPageToBeReady();
-			driver.scrollPageToTop();
-			bc.waitForElement(getDocExp_IngestionNameFilter());
-			bc.waitTillElemetToBeClickable(getDocExp_IngestionNameFilter());
-			getDocExp_IngestionNameFilter().Click();
-			bc.waitForElement(getExcludeRadioBtn());
-			bc.waitTillElemetToBeClickable(getExcludeRadioBtn());
-			getExcludeRadioBtn().Click();
-			getSearchTextArea().SendKeys(ingestionName);
-			Thread.sleep(Input.wait30 / 30);
-			getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
-			driver.waitForPageToBeReady();
-			bc.waitForElement(getAddToFilter());
-			bc.waitTillElemetToBeClickable(getAddToFilter());
-			getAddToFilter().Click();
-			if (ingestionName1 != null) {
-				bc.waitForElement(docList.getMakeSureSelectedValue());
-				bc.waitTillElemetToBeClickable(docList.getMakeSureSelectedValue());
-				docList.getMakeSureSelectedValue().Click();
-				getSearchTextArea().SendKeys(ingestionName1);
-				Thread.sleep(Input.wait30 / 30);
-				getSearchTextArea().SendKeysNoClear("" + Keys.ENTER);
-				bc.waitForElement(getAddToFilter());
-				bc.waitTillElemetToBeClickable(getAddToFilter());
-				getAddToFilter().Click();
-			}
-			bc.waitForElement(getApplyFilter());
-			bc.waitTillElemetToBeClickable(getApplyFilter());
-			getApplyFilter().Click();
-		} catch (Exception e) {
-			e.printStackTrace();
-			bc.failedStep("Exception occcured while performing exclude filter for IngestionName" + e.getMessage());
-		}
-	}
 	
 	/**
 	 * @author : Vijaya.Rani Created date: NA Modified date: NA Modified by:NA.
@@ -3385,12 +3344,10 @@ public class DocExplorerPage {
 			bc.waitForElement(getPresentDocCount());
 			bc.waitTillElemetToBeClickable(getPresentDocCount());
 			driver.waitForPageToBeReady();
-			String documentMsg = getDocExp_DocumentList_info().getText();
-			bc.stepInfo(documentMsg);
-			if (doclist.getDocListFilterTable().Displayed()) {
-				bc.passedStep("Exclude filter functionality by folder is working as expected");
+			if(bc.text("ID000").isDisplayed()) {
+				bc.passedStep("Exclude filter functionality by IngestionName is working as expected");
 			} else {
-				bc.failedStep("Exclude filter functionality by folder is not working as expected.");
+				bc.failedStep("Exclude filter functionality by IngestionName is not working as expected.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
