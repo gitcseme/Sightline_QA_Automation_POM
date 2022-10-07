@@ -22631,4 +22631,24 @@ public class ProductionPage {
 				getLeftHeaderBranding().waitAndClick(10);
 				getEnterBranding("Top - Left").SendKeys(BrandingText);
 			}
+			/**
+			 * @author Brundha.T
+			 * Description: method to delete downloaded zip file
+			 */
+					public void deleteProducedZipFile() {
+						String name = getProduction().getText().trim();
+						String home = System.getProperty("user.home");
+						File file = new File(home + "/Downloads/" + name + ".zip");
+						File file1 = new File(Input.fileDownloadLocation + name + ".zip");
+				   
+						if(file.exists()) {                   
+							file.delete();
+							System.out.println(file);
+						} else if (file1.exists()) {
+							file1.delete();
+							System.out.println(file);
+						} else {
+							base.failedStep("File not exist");
+						}
+						}
 }
