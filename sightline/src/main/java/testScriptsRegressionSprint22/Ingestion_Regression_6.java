@@ -230,10 +230,10 @@ public class Ingestion_Regression_6 {
 					
 		}
 		baseClass.stepInfo("Execute few audio searches");
-		for(int i=1;i<audioSearch.length;i++) {
-			baseClass.selectproject();
+		for(int i=0;i<audioSearch.length;i++) {
 			int docsCount = sessionSearch.audioSearch(audioSearch[i], Input.language);
 			sessionSearch.verifySearchResultReturnsForConfiguredQuery(docsCount);
+			baseClass.selectproject();
 		}
 		baseClass.passedStep("Audio searches returned results");
 		loginPage.logout();
