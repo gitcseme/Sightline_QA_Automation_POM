@@ -922,7 +922,26 @@ public class UserManagement {
 	public Element getRmuDashBoardPage() {
 		return driver.FindElementByXPath("//h1[text()[normalize-space()='Review Manager Dashboard for']]");
 	}
+	
+	public Element getEnableRole() {
+		return driver.FindElementByXPath("//input[@id='rbEnable']");
+	}
 
+	public Element getDisableRole() {
+		return driver.FindElementByXPath("//input[@id='rbDisable']");
+	}
+	
+	public Element getReleasedCount() {
+		return driver.FindElementByXPath("//label[text()='RELEASED:']/../span");
+	}
+	
+	public Element getReleasedCountRev() {
+		return driver.FindElementByXPath("//label[contains(text(),' Count of unique')]");
+	}
+
+	
+	
+	
 	
 	public UserManagement(Driver driver) {
 
