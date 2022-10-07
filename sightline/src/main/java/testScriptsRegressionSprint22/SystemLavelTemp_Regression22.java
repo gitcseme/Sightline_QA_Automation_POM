@@ -152,11 +152,13 @@ public class SystemLavelTemp_Regression22 {
 		base.waitForElement(codingForm.getCodingForm_Validation_ButtonYes());
 		codingForm.getCodingForm_Validation_ButtonYes().Click();
 		base.VerifySuccessMessage("Coding Form Saved successfully");
+		base.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+		String helptext = codingForm.getCodingForm_HelpText().getText();
 		base.waitTime(5);
 		codingForm.getCF_PreviewButton().waitAndClick(3);
-		String helptext = codingForm.getCodingForm_HelpText().getText();
 		System.out.println(helptext);
-		String text = codingForm.getCFHelpmsgTitle().GetAttribute("title");
+		String text = codingForm.getCFHelpmsgTitleInCodingForm().GetAttribute("title");
 		if (text.contains(comment)) {
 			base.passedStep("Provisioned CF is created  " + text
 					+ "  specific help messages is  available in the Project- RMU successfully ");
@@ -208,6 +210,8 @@ public class SystemLavelTemp_Regression22 {
 		base.waitForElement(codingForm.getCodingForm_Validation_ButtonYes());
 		codingForm.getCodingForm_Validation_ButtonYes().Click();
 		base.VerifySuccessMessage("Coding Form Saved successfully");
+		base.CloseSuccessMsgpopup();
+		base.waitTime(5);
 		codingForm.getCF_PreviewButton().waitAndClick(3);
 		String helptext = codingForm.getCodingForm_HelpText().getText();
 		System.out.println(helptext);
