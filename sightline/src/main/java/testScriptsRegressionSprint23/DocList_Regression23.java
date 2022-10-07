@@ -62,7 +62,7 @@ public class DocList_Regression23 {
 		docExplorer = new DocExplorerPage(driver);
 
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani ModifyDate:06/10/2022 RPMXCON-53767
 	 * @throws Exception
@@ -161,12 +161,16 @@ public class DocList_Regression23 {
 		DocListPage docList = new DocListPage(driver);
 		String tagName = "tag" + UtilityLog.dynamicNameAppender();
 
-		// Login As REV
-		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
+		// Login As RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage RMU as with " + Input.rmu1userName + "");
 		
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		tagsAndFolderPage.createNewTagwithClassification(tagName, "Select Tag Classification");
+		loginPage.logout();
+		// Login As REV
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("User successfully logged into slightline webpage REV as with " + Input.rev1userName + "");
 
 		// Searching Content document go to doclist
 		sessionSearch.basicContentSearch(Input.searchStringStar);
@@ -182,7 +186,6 @@ public class DocList_Regression23 {
 		loginPage.logout();
 	}
 
-	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {
 		Reporter.setCurrentTestResult(result);
@@ -202,5 +205,5 @@ public class DocList_Regression23 {
 	public void close() {
 		System.out.println("**Executed  DocExplorer_Regression_22.**");
 	}
-	
+
 }

@@ -77,8 +77,8 @@ public class DocExplorer_Regression23 {
 		baseClass.stepInfo("User successfully logged into slightline webpage  PA as with " + Input.pa1userName + "");
 
 		DocExplorerPage docExplorer = new DocExplorerPage(driver);
-		String random = "EnronData";
-		String random1 = "SonyData";
+		String random = Input.ingestionAutomationAllSource;
+		String random1 = Input.JanMultiPTIFF;
 
 		baseClass.stepInfo("Perform exclude filter by IngestionName");
 		docExplorer.performExculdeIngestionNameFilter(random,null);
