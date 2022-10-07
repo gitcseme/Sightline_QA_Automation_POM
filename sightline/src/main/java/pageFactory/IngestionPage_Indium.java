@@ -5857,10 +5857,13 @@ public class IngestionPage_Indium {
 				}
 				base.waitForElement(doneButton());
 				doneButton().waitAndClick(10);
+				base.VerifySuccessMessage("Action done successfully");
+				if(base.getCloseSucessmsg().isElementAvailable(2)) {
+				base.CloseSuccessMsgpopup();
+				}
 				base.waitForElement(getCloseButton());
 				getCloseButton().waitAndClick(10);
-				base.VerifySuccessMessage("Action done successfully");
-				base.CloseSuccessMsgpopup();
+				
 				getRefreshButton().waitAndClick(10);
 				driver.waitForPageToBeReady();
 				for(int j=1;j<=30;j++) {
@@ -6530,11 +6533,12 @@ public class IngestionPage_Indium {
 		getFilterByINPROGRESS().waitAndClick(5);
 		base.waitForElement(getFilterByPUBLISHED());
 		getFilterByPUBLISHED().waitAndClick(5);
-		base.waitTime(3);
+		base.waitForElement(getFilterByButton());
+		getFilterByButton().waitAndClick(10);
+		base.waitTime(5);
 		base.waitForElement(getIngestion_GridView());
 		getIngestion_GridView().waitAndClick(10);
 		base.waitTime(3);
-		getRefreshButton().waitAndClick(5);
 		driver.waitForPageToBeReady();
 		base.stepInfo("Searching for Datasets");
 		driver.scrollingToBottomofAPage();
