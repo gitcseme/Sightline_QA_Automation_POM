@@ -796,9 +796,9 @@
 	<iceSourceSystem>ICE</iceSourceSystem>
 	<multiPageTIFFSourceFolder>27Mar_MultiPageTIFF</multiPageTIFFSourceFolder>
 	<multiPageTIFFDATLoadFile>9552EFE2-4EFF-433B-82DD-7B1BD543F16F_DAT.dat</multiPageTIFFDATLoadFile>
-	<documentKeyBNum>BNum</documentKeyBNum>
+	<documentKeyBNum>BatesNum</documentKeyBNum>
 	<documentKeyDSource>DSource</documentKeyDSource>
-	<documentKeyCName>CName</documentKeyCName>
+	<documentKeyCName>CustodianName</documentKeyCName>
 
 	<!-- Added by Gopinath Created date - 23/03/2022 -->
 	<pageNum>2</pageNum>
